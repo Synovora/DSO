@@ -84,10 +84,11 @@ Public Class RadFParcoursHistoListe
 
         'Initialisation des variables de comparaison
         Dim CacherComp, InactifComp As Boolean
-        Dim CommentaireComp, baseComp As String
+        Dim CommentaireComp, baseComp, IntervenantComp As String
         Dim RythmeComp As Integer
 
         CommentaireComp = ""
+        IntervenantComp = ""
         baseComp = ""
         RythmeComp = 0
         InactifComp = False
@@ -117,13 +118,14 @@ Public Class RadFParcoursHistoListe
                 If specialiteId <> 0 Then
                     specialiteString = Environnement.Table_specialite.GetSpecialiteDescription(specialiteId)
                 End If
-                intervenantId = Coalesce(parcoursHistoDataTable.Rows(i)("oa_parcours_ror_id"), 0)
-                If intervenantId <> 0 Then
-                    Dim rordao As New RorDao
-                    Dim ror As Ror
-                    ror = rordao.getRorById(intervenantId)
-                    intervenantString = ror.Nom
-                End If
+            End If
+
+            intervenantId = Coalesce(parcoursHistoDataTable.Rows(i)("oa_parcours_ror_id"), 0)
+            If intervenantId <> 0 Then
+                Dim rordao As New RorDao
+                Dim ror As Ror
+                ror = rordao.getRorById(intervenantId)
+                intervenantString = ror.Nom
             End If
 
             'Alimentation de la >Grid
@@ -148,7 +150,12 @@ Public Class RadFParcoursHistoListe
 
             'Spécialité et intervenant
             RadParcoursDataGridView.Rows(iGrid).Cells("specialite").Value = specialiteString
+
             RadParcoursDataGridView.Rows(iGrid).Cells("intervenant").Value = intervenantString
+            If intervenantString <> IntervenantComp And premierPassage = False Then
+                RadParcoursDataGridView.Rows(iGrid).Cells("intervenant").Style.ForeColor = Color.Red
+            End If
+            IntervenantComp = intervenantString
 
             'Commentaire
             RadParcoursDataGridView.Rows(iGrid).Cells("commentaire").Value = parcoursHistoDataTable.Rows(i)("oa_parcours_commentaire")

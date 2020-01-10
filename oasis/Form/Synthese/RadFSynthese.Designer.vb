@@ -84,7 +84,6 @@ Partial Class RadFSynthese
         Me.ModifierLordreDunAntécédentToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.ChangerLaffectationDunAntecedentToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.TransformerEnMajeurToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-        Me.ToolStripSeparator5 = New System.Windows.Forms.ToolStripSeparator()
         Me.HistoriqueDesModificationsToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.RadGroupBoxAntecedent = New Telerik.WinControls.UI.RadGroupBox()
         Me.RadChkMajeurSeul = New Telerik.WinControls.UI.RadCheckBox()
@@ -93,7 +92,6 @@ Partial Class RadFSynthese
         Me.RadGroupBoxTraitement = New Telerik.WinControls.UI.RadGroupBox()
         Me.TraitementContextMenuStrip = New System.Windows.Forms.ContextMenuStrip(Me.components)
         Me.CréerUnTraitementToolStripMenuItem1 = New System.Windows.Forms.ToolStripMenuItem()
-        Me.ToolStripSeparator2 = New System.Windows.Forms.ToolStripSeparator()
         Me.GérerUneFenêtreThérapeutiqueToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.HistoriqueToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.ToolStripSeparator1 = New System.Windows.Forms.ToolStripSeparator()
@@ -112,7 +110,6 @@ Partial Class RadFSynthese
         Me.RadGroupBoxContexte = New Telerik.WinControls.UI.RadGroupBox()
         Me.ContexteMedicalContextMenuStrip = New System.Windows.Forms.ContextMenuStrip(Me.components)
         Me.ToolStripMenuItem1 = New System.Windows.Forms.ToolStripMenuItem()
-        Me.ToolStripSeparator4 = New System.Windows.Forms.ToolStripSeparator()
         Me.HistoriqueDesModificationsToolStripMenuItem1 = New System.Windows.Forms.ToolStripMenuItem()
         Me.RadContexteDataGridView = New Telerik.WinControls.UI.RadGridView()
         Me.RadGroupBoxPPS = New Telerik.WinControls.UI.RadGroupBox()
@@ -145,6 +142,7 @@ Partial Class RadFSynthese
         Me.RadBtnEpisodeList = New Telerik.WinControls.UI.RadButton()
         Me.RadDesktopAlert1 = New Telerik.WinControls.UI.RadDesktopAlert(Me.components)
         Me.RadBtnRefresh = New Telerik.WinControls.UI.RadButton()
+        Me.ToolStripSeparator6 = New System.Windows.Forms.ToolStripSeparator()
         CType(Me.RadGroupBoxEtatCivil, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.RadGroupBoxEtatCivil.SuspendLayout()
         Me.EtatCivilContextMenuStrip.SuspendLayout()
@@ -435,9 +433,9 @@ Partial Class RadFSynthese
         '
         'AntecedentContextMenuStrip
         '
-        Me.AntecedentContextMenuStrip.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.CréerAntecedentToolStripMenuItem, Me.ModifierUnAntécédentToolStripMenuItem, Me.ToolStripSeparator3, Me.ModifierLordreDunAntécédentToolStripMenuItem, Me.ChangerLaffectationDunAntecedentToolStripMenuItem, Me.TransformerEnMajeurToolStripMenuItem, Me.ToolStripSeparator5, Me.HistoriqueDesModificationsToolStripMenuItem})
+        Me.AntecedentContextMenuStrip.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.CréerAntecedentToolStripMenuItem, Me.ModifierUnAntécédentToolStripMenuItem, Me.HistoriqueDesModificationsToolStripMenuItem, Me.ToolStripSeparator3, Me.ModifierLordreDunAntécédentToolStripMenuItem, Me.ChangerLaffectationDunAntecedentToolStripMenuItem, Me.TransformerEnMajeurToolStripMenuItem})
         Me.AntecedentContextMenuStrip.Name = "AntecedentContextMenuStrip"
-        Me.AntecedentContextMenuStrip.Size = New System.Drawing.Size(316, 148)
+        Me.AntecedentContextMenuStrip.Size = New System.Drawing.Size(316, 142)
         '
         'CréerAntecedentToolStripMenuItem
         '
@@ -473,11 +471,6 @@ Partial Class RadFSynthese
         Me.TransformerEnMajeurToolStripMenuItem.Name = "TransformerEnMajeurToolStripMenuItem"
         Me.TransformerEnMajeurToolStripMenuItem.Size = New System.Drawing.Size(315, 22)
         Me.TransformerEnMajeurToolStripMenuItem.Text = "Transformer en majeur"
-        '
-        'ToolStripSeparator5
-        '
-        Me.ToolStripSeparator5.Name = "ToolStripSeparator5"
-        Me.ToolStripSeparator5.Size = New System.Drawing.Size(312, 6)
         '
         'HistoriqueDesModificationsToolStripMenuItem
         '
@@ -546,7 +539,7 @@ Partial Class RadFSynthese
         '
         'TraitementContextMenuStrip
         '
-        Me.TraitementContextMenuStrip.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.CréerUnTraitementToolStripMenuItem1, Me.ToolStripSeparator2, Me.GérerUneFenêtreThérapeutiqueToolStripMenuItem, Me.HistoriqueToolStripMenuItem, Me.ToolStripSeparator1, Me.TraitementsObsoletesToolStripMenuItem, Me.ListeDesMédicamentsDéclarésAllergiquesToolStripMenuItem, Me.ListeDesMédicamentsDéclarésContreindiquésToolStripMenuItem, Me.OrdonnanceToolStripMenuItem})
+        Me.TraitementContextMenuStrip.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.CréerUnTraitementToolStripMenuItem1, Me.GérerUneFenêtreThérapeutiqueToolStripMenuItem, Me.HistoriqueToolStripMenuItem, Me.ToolStripSeparator1, Me.TraitementsObsoletesToolStripMenuItem, Me.ListeDesMédicamentsDéclarésAllergiquesToolStripMenuItem, Me.ListeDesMédicamentsDéclarésContreindiquésToolStripMenuItem, Me.ToolStripSeparator6, Me.OrdonnanceToolStripMenuItem})
         Me.TraitementContextMenuStrip.Name = "TraitementContextMenuStrip"
         Me.TraitementContextMenuStrip.Size = New System.Drawing.Size(346, 170)
         '
@@ -555,11 +548,6 @@ Partial Class RadFSynthese
         Me.CréerUnTraitementToolStripMenuItem1.Name = "CréerUnTraitementToolStripMenuItem1"
         Me.CréerUnTraitementToolStripMenuItem1.Size = New System.Drawing.Size(345, 22)
         Me.CréerUnTraitementToolStripMenuItem1.Text = "Créer un traitement"
-        '
-        'ToolStripSeparator2
-        '
-        Me.ToolStripSeparator2.Name = "ToolStripSeparator2"
-        Me.ToolStripSeparator2.Size = New System.Drawing.Size(342, 6)
         '
         'GérerUneFenêtreThérapeutiqueToolStripMenuItem
         '
@@ -855,20 +843,15 @@ Partial Class RadFSynthese
         '
         'ContexteMedicalContextMenuStrip
         '
-        Me.ContexteMedicalContextMenuStrip.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ToolStripMenuItem1, Me.ToolStripSeparator4, Me.HistoriqueDesModificationsToolStripMenuItem1})
+        Me.ContexteMedicalContextMenuStrip.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ToolStripMenuItem1, Me.HistoriqueDesModificationsToolStripMenuItem1})
         Me.ContexteMedicalContextMenuStrip.Name = "ContexteContextMenuStrip"
-        Me.ContexteMedicalContextMenuStrip.Size = New System.Drawing.Size(302, 54)
+        Me.ContexteMedicalContextMenuStrip.Size = New System.Drawing.Size(302, 48)
         '
         'ToolStripMenuItem1
         '
         Me.ToolStripMenuItem1.Name = "ToolStripMenuItem1"
         Me.ToolStripMenuItem1.Size = New System.Drawing.Size(301, 22)
         Me.ToolStripMenuItem1.Text = "Créer un contexte"
-        '
-        'ToolStripSeparator4
-        '
-        Me.ToolStripSeparator4.Name = "ToolStripSeparator4"
-        Me.ToolStripSeparator4.Size = New System.Drawing.Size(298, 6)
         '
         'HistoriqueDesModificationsToolStripMenuItem1
         '
@@ -1224,6 +1207,11 @@ Partial Class RadFSynthese
         Me.RadBtnRefresh.TabIndex = 38
         Me.RadBtnRefresh.Text = "Rafraîchir"
         '
+        'ToolStripSeparator6
+        '
+        Me.ToolStripSeparator6.Name = "ToolStripSeparator6"
+        Me.ToolStripSeparator6.Size = New System.Drawing.Size(342, 6)
+        '
         'RadFSynthese
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -1377,7 +1365,6 @@ Partial Class RadFSynthese
     Friend WithEvents LblSubstance As Label
     Friend WithEvents ToolStripSeparator1 As ToolStripSeparator
     Friend WithEvents ToolStripSeparator3 As ToolStripSeparator
-    Friend WithEvents ToolStripSeparator4 As ToolStripSeparator
     Friend WithEvents RadContexteDataGridView As Telerik.WinControls.UI.RadGridView
     Friend WithEvents RadChkContextePublie As Telerik.WinControls.UI.RadCheckBox
     Friend WithEvents RadChkContexteTous As Telerik.WinControls.UI.RadCheckBox
@@ -1391,7 +1378,6 @@ Partial Class RadFSynthese
     Friend WithEvents RadBtnImprimer As Telerik.WinControls.UI.RadButton
     Friend WithEvents ModifierUnAntécédentToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents TransformerEnMajeurToolStripMenuItem As ToolStripMenuItem
-    Friend WithEvents ToolStripSeparator5 As ToolStripSeparator
     Friend WithEvents RadChkMajeurSeul As Telerik.WinControls.UI.RadCheckBox
     Friend WithEvents RadChkMajeurTous As Telerik.WinControls.UI.RadCheckBox
     Friend WithEvents RadChkParcoursNonCache As Telerik.WinControls.UI.RadCheckBox
@@ -1403,10 +1389,10 @@ Partial Class RadFSynthese
     Friend WithEvents RadChkMesureMax As Telerik.WinControls.UI.RadCheckBox
     Friend WithEvents RadBtnEpisodeList As Telerik.WinControls.UI.RadButton
     Friend WithEvents CréerUnTraitementToolStripMenuItem1 As ToolStripMenuItem
-    Friend WithEvents ToolStripSeparator2 As ToolStripSeparator
     Friend WithEvents CréerUnSuiviToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents LblTraitementArret As Label
     Friend WithEvents RadDesktopAlert1 As Telerik.WinControls.UI.RadDesktopAlert
     Friend WithEvents RadBtnRefresh As Telerik.WinControls.UI.RadButton
+    Friend WithEvents ToolStripSeparator6 As ToolStripSeparator
 End Class
 

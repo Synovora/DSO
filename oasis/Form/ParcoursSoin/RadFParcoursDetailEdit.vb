@@ -291,6 +291,7 @@ Public Class RadFParcoursDetailEdit
         TxtSpecialiteDescription.Text = specialite.Code
         If specialite.Oasis = True Then
             CbxOasisExterne.Text = "Oasis"
+            RadBtnRORSelect.Hide()
         Else
             CbxOasisExterne.Text = "Externe"
         End If

@@ -481,7 +481,7 @@ Public Class RadFOrdonnanceListeDetail
         If RadTraitementDataGridView.CurrentRow IsNot Nothing Then
             Dim aRow As Integer = Me.RadTraitementDataGridView.Rows.IndexOf(Me.RadTraitementDataGridView.CurrentRow)
             If aRow >= 0 Then
-                Dim OrdonnanceId As Integer = RadTraitementDataGridView.Rows(aRow).Cells("ordonnanceId").Value
+                Dim OrdonnanceId As Integer = RadTraitementDataGridView.Rows(aRow).Cells("ordonnanceLigneId").Value
                 'Tester si l'ordonnance sélectionnée est à valider
 
             End If
