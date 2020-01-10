@@ -360,7 +360,7 @@ Public Class RadFPPSDetailEdit
             .AddWithValue("@drcId", TxtDrcId.Text)
             .AddWithValue("@commentaire", TxtCommentaire.Text)
             .AddWithValue("@utilisateurCreation", UtilisateurConnecte.UtilisateurId.ToString)
-            .AddWithValue("@dateCreation", Date.Now.ToString)
+            .AddWithValue("@dateCreation", Date.Now.ToString("yyyy-MM-dd HH:mm:ss"))
             .AddWithValue("@affichageSynthese", 1)
         End With
 

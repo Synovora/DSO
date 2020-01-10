@@ -150,7 +150,7 @@ Public Class EpisodeObservationDao
             .AddWithValue("@natureObservation", episodeObservation.NatureObservation)
             .AddWithValue("@naturePresence", episodeObservation.NaturePresence)
             .AddWithValue("@observation", episodeObservation.Observation)
-            .AddWithValue("@dateCreation", Date.Now().ToString)
+            .AddWithValue("@dateCreation", Date.Now().ToString("yyyy-MM-dd HH:mm:ss"))
             .AddWithValue("@dateModification", DBNull.Value)
             .AddWithValue("@inactif", episodeObservation.Inactif)
         End With
@@ -193,7 +193,7 @@ Public Class EpisodeObservationDao
             .AddWithValue("@naturePresence", episodeObservation.NaturePresence)
             .AddWithValue("@observation", episodeObservation.Observation)
             .AddWithValue("@dateCreation", episodeObservation.DateCreation)
-            .AddWithValue("@dateModification", Date.Now().ToString)
+            .AddWithValue("@dateModification", Date.Now().ToString("yyyy-MM-dd HH:mm:ss"))
             .AddWithValue("@inactif", episodeObservation.Inactif)
         End With
 

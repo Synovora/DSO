@@ -226,7 +226,7 @@ Public Class DrcStandardDao
             .AddWithValue("@Id", drcStandard.Id)
             .AddWithValue("@ageMin", drcStandard.AgeMin)
             .AddWithValue("@ageMax", drcStandard.AgeMax)
-            .AddWithValue("@dateModification", Date.Now())
+            .AddWithValue("@dateModification", Date.Now().ToString("yyyy-MM-dd HH:mm:ss"))
         End With
 
         Try
@@ -263,7 +263,7 @@ Public Class DrcStandardDao
         With cmd.Parameters
             .AddWithValue("@Id", Id)
             .AddWithValue("@inactif", True)
-            .AddWithValue("@dateModification", Date.Now())
+            .AddWithValue("@dateModification", Date.Now().ToString("yyyy-MM-dd HH:mm:ss"))
         End With
 
         Try

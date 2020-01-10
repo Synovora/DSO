@@ -216,8 +216,8 @@ Public Class EpisodeActeParamedicalDao
             .AddWithValue("@observation", Observation)
             .AddWithValue("@typeObservation", typeObservation)
             .AddWithValue("@userId", userLog.UtilisateurId)
-            .AddWithValue("@dateSaisieObservation", Date.Now())
-            .AddWithValue("@dateModificationObservation", Date.Now())
+            .AddWithValue("@dateSaisieObservation", Date.Now().ToString("yyyy-MM-dd HH:mm:ss"))
+            .AddWithValue("@dateModificationObservation", Date.Now().ToString("yyyy-MM-dd HH:mm:ss"))
         End With
 
         Try

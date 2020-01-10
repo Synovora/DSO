@@ -124,7 +124,7 @@ Public Class RorDao
             .AddWithValue("@adeli", ror.Adeli)
             .AddWithValue("@inactif", ror.Inactif)
             .AddWithValue("@userCreation", userLog.UtilisateurId)
-            .AddWithValue("@dateCreation", Date.Now.ToString)
+            .AddWithValue("@dateCreation", Date.Now.ToString("yyyy-MM-dd HH:mm:ss"))
         End With
 
         Try
@@ -177,7 +177,7 @@ Public Class RorDao
             .AddWithValue("@adeli", ror.Adeli)
             .AddWithValue("@inactif", ror.Inactif)
             .AddWithValue("@userModification", userLog.UtilisateurId)
-            .AddWithValue("@dateModification", Date.Now.ToString)
+            .AddWithValue("@dateModification", Date.Now.ToString("yyyy-MM-dd HH:mm:ss"))
         End With
 
         Try

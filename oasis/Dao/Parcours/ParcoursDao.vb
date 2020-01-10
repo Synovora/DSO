@@ -326,7 +326,7 @@ Public Class ParcoursDao
             .AddWithValue("@cacher", parcours.Cacher)
             .AddWithValue("@inactif", parcours.Inactif)
             .AddWithValue("@userCreation", parcours.UserCreation)
-            .AddWithValue("@dateCreation", parcours.DateCreation.ToString)
+            .AddWithValue("@dateCreation", parcours.DateCreation.ToString("yyyy-MM-dd HH:mm:ss"))
         End With
 
         Try
@@ -417,7 +417,7 @@ Public Class ParcoursDao
             .AddWithValue("@cacher", parcours.Cacher)
             .AddWithValue("@inactif", parcours.Inactif)
             .AddWithValue("@userModification", userLog.UtilisateurId.ToString)
-            .AddWithValue("@dateModification", Date.Now.ToString)
+            .AddWithValue("@dateModification", Date.Now.ToString("yyyy-MM-dd HH:mm:ss"))
         End With
 
         Try
@@ -477,7 +477,7 @@ Public Class ParcoursDao
             .AddWithValue("@Id", parcours.Id)
             .AddWithValue("@inactif", True)
             .AddWithValue("@userModification", userLog.UtilisateurId.ToString)
-            .AddWithValue("@dateModification", Date.Now.ToString)
+            .AddWithValue("@dateModification", Date.Now.ToString("yyyy-MM-dd HH:mm:ss"))
         End With
 
         Try

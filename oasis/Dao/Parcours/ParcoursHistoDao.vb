@@ -27,7 +27,7 @@ Public Class ParcoursHistoDao
         Dim cmd As New SqlCommand(SQLstring, con)
 
         With cmd.Parameters
-            .AddWithValue("@dateHistorisation", DateTime.Now())
+            .AddWithValue("@dateHistorisation", DateTime.Now().ToString("yyyy-MM-dd HH:mm:ss"))
             .AddWithValue("@utilisateurHistorisation", UtilisateurConnecte.UtilisateurId.ToString)
             .AddWithValue("@etat", EtatHistorisation.ToString)
             .AddWithValue("@ParcoursId", ParcoursHistoACreer.Id.ToString)

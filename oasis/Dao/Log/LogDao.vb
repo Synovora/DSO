@@ -66,7 +66,7 @@ Public Class LogDao
             .AddWithValue("@description", log.Description)
             .AddWithValue("@typelog", log.TypeLog)
             .AddWithValue("@origine", log.Origine)
-            .AddWithValue("@dateCreation", Date.Now())
+            .AddWithValue("@dateCreation", Date.Now().ToString("yyyy-MM-dd HH:mm:ss"))
             .AddWithValue("@userCreation", userLog.UtilisateurId)
         End With
 
