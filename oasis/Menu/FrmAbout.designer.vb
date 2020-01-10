@@ -26,21 +26,21 @@ Public Partial Class FrmAbout
     Private Sub InitializeComponent()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(FrmAbout))
         Me.tableLayoutPanel = New System.Windows.Forms.TableLayoutPanel()
+        Me.logoPictureBox = New System.Windows.Forms.PictureBox()
         Me.radLabelProductName = New Telerik.WinControls.UI.RadLabel()
         Me.radLabelVersion = New Telerik.WinControls.UI.RadLabel()
         Me.radLabelCopyright = New Telerik.WinControls.UI.RadLabel()
         Me.radLabelCompanyName = New Telerik.WinControls.UI.RadLabel()
         Me.radTextBoxDescription = New Telerik.WinControls.UI.RadTextBox()
         Me.okRadButton = New Telerik.WinControls.UI.RadButton()
-        Me.logoPictureBox = New System.Windows.Forms.PictureBox()
         Me.tableLayoutPanel.SuspendLayout()
+        CType(Me.logoPictureBox, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.radLabelProductName, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.radLabelVersion, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.radLabelCopyright, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.radLabelCompanyName, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.radTextBoxDescription, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.okRadButton, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.logoPictureBox, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
@@ -69,6 +69,18 @@ Public Partial Class FrmAbout
         Me.tableLayoutPanel.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 10.0!))
         Me.tableLayoutPanel.Size = New System.Drawing.Size(388, 265)
         Me.tableLayoutPanel.TabIndex = 0
+        '
+        'logoPictureBox
+        '
+        Me.logoPictureBox.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.logoPictureBox.Image = CType(resources.GetObject("logoPictureBox.Image"), System.Drawing.Image)
+        Me.logoPictureBox.Location = New System.Drawing.Point(3, 3)
+        Me.logoPictureBox.Name = "logoPictureBox"
+        Me.tableLayoutPanel.SetRowSpan(Me.logoPictureBox, 6)
+        Me.logoPictureBox.Size = New System.Drawing.Size(122, 259)
+        Me.logoPictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage
+        Me.logoPictureBox.TabIndex = 12
+        Me.logoPictureBox.TabStop = False
         '
         'radLabelProductName
         '
@@ -158,18 +170,6 @@ Public Partial Class FrmAbout
         Me.okRadButton.TabIndex = 24
         Me.okRadButton.Text = "&OK"
         '
-        'logoPictureBox
-        '
-        Me.logoPictureBox.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.logoPictureBox.Image = CType(resources.GetObject("logoPictureBox.Image"), System.Drawing.Image)
-        Me.logoPictureBox.Location = New System.Drawing.Point(3, 3)
-        Me.logoPictureBox.Name = "logoPictureBox"
-        Me.tableLayoutPanel.SetRowSpan(Me.logoPictureBox, 6)
-        Me.logoPictureBox.Size = New System.Drawing.Size(122, 259)
-        Me.logoPictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage
-        Me.logoPictureBox.TabIndex = 12
-        Me.logoPictureBox.TabStop = False
-        '
         'FrmAbout
         '
         Me.AcceptButton = Me.okRadButton
@@ -192,13 +192,13 @@ Public Partial Class FrmAbout
         Me.Text = "A Propos ..."
         Me.tableLayoutPanel.ResumeLayout(False)
         Me.tableLayoutPanel.PerformLayout()
+        CType(Me.logoPictureBox, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.radLabelProductName, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.radLabelVersion, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.radLabelCopyright, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.radLabelCompanyName, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.radTextBoxDescription, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.okRadButton, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.logoPictureBox, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
 

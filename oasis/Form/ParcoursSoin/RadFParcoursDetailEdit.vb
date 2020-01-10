@@ -230,6 +230,7 @@ Public Class RadFParcoursDetailEdit
         CbxBase.Items.Add(ParcoursDao.EnumParcoursBaseItem.TousLes3Ans)
         CbxBase.Items.Add(ParcoursDao.EnumParcoursBaseItem.TousLes4Ans)
         CbxBase.Items.Add(ParcoursDao.EnumParcoursBaseItem.TousLes5Ans)
+        CbxBase.Items.Add("")
 
         Me.RadDesktopAlert1.Popup.AlertElement.CaptionElement.TextAndButtonsElement.TextElement.ForeColor = Color.Red
         Me.RadDesktopAlert1.Popup.AlertElement.CaptionElement.CaptionGrip.BackColor = Color.DarkBlue
@@ -846,6 +847,11 @@ Public Class RadFParcoursDetailEdit
                 If CreationRendezVous(dateRendezVous, TacheDao.EtatTache.TERMINEE.ToString) = True Then
                     Dim tache As Tache = tacheDao.GetProchainRendezVousByPatientId(SelectedPatient.patientId, SelectedParcoursId)
                     MessageBox.Show("Rendez-vous programmé et clôturé pour le " & NumDateRV.Value.ToString("dd.MM.yyyy"))
+                    'Si l'intervenant est masqué, il faut l'afficher par défaut
+                    If ParcoursUpdate.Cacher = True Then
+                        ParcoursUpdate.Cacher = False
+                        ParcoursDao.ModificationIntervenantParcours(ParcoursUpdate)
+                    End If
                     Me.CodeRetour = True
                     Close()
                 End If
@@ -853,6 +859,11 @@ Public Class RadFParcoursDetailEdit
                 If CreationRendezVous(dateRendezVous, TacheDao.EtatTache.EN_ATTENTE.ToString) = True Then
                     Dim tache As Tache = tacheDao.GetProchainRendezVousByPatientId(SelectedPatient.patientId, SelectedParcoursId)
                     MessageBox.Show("Rendez-vous programmé pour le " & NumDateRV.Value.ToString("dd.MM.yyyy"))
+                    'Si l'intervenant est masqué, il faut l'afficher par défaut
+                    If ParcoursUpdate.Cacher = True Then
+                        ParcoursUpdate.Cacher = False
+                        ParcoursDao.ModificationIntervenantParcours(ParcoursUpdate)
+                    End If
                     Me.CodeRetour = True
                     Close()
                 End If

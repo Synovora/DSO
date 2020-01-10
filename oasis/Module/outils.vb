@@ -32,15 +32,19 @@ Friend Module outils
     Public Sub afficheTitleForm(form As RadForm, titre As String)
         ' --- centrage et chgt de style du titre du formulaire
         With form
-            .Text = titre & " -" & GetProfilUserString()
+            .Text = titre & " -" & GetProfilUserString() & " - " & String.Format("Version {0}", AssemblyVersion)
             .FormElement.TitleBar.TitlePrimitive.StretchHorizontally = True
             .FormElement.TitleBar.TitlePrimitive.TextAlignment = ContentAlignment.MiddleCenter
             .FormElement.TitleBar.TitlePrimitive.ForeColor = Color.DarkRed
             .FormElement.TitleBar.TitlePrimitive.Font = New Font(.FormElement.TitleBar.Font, FontStyle.Bold)
         End With
-
-
     End Sub
+
+    Public ReadOnly Property AssemblyVersion() As String
+        Get
+            Return System.Reflection.Assembly.GetExecutingAssembly().GetName().Version.ToString()
+        End Get
+    End Property
 
     Public Function CalculDuree(dateDebut As Date, dateFin As Date) As String
         Dim DureeString As String = ""

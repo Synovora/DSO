@@ -138,67 +138,71 @@ Public Class RadFPatientListe
         maxRow = RadPatientGridView.Rows.Count - 1
 
         If aRow <= maxRow And aRow > -1 Then
+            TxtIdSelected.Text = RadPatientGridView.Rows(aRow).Cells("oa_patient_id").Value
+            If RadPatientGridView.Rows(aRow).Cells("oa_patient_nir").Value Is DBNull.Value Then
+                TxtNirSelected.Text = 0
+            Else
+                TxtNirSelected.Text = RadPatientGridView.Rows(aRow).Cells("oa_patient_nir").Value
+            End If
+            TxtPrenomSelected.Text = RadPatientGridView.Rows(aRow).Cells("oa_patient_prenom").Value
+            TxtNomSelected.Text = RadPatientGridView.Rows(aRow).Cells("oa_patient_nom").Value
+
+            If RadPatientGridView.Rows(aRow).Cells("oa_patient_date_naissance").Value <> "" Then
+                dateNaissance = Coalesce(RadPatientGridView.Rows(aRow).Cells("oa_patient_date_naissance").Value, Nothing)
+                LblDateNaissanceSelected.Text = dateNaissance.ToString("dd.MM.yyyy")
+                LblDateNaissanceSelected.Show()
+                LblAgeSelected.Text = outils.CalculAgeString(dateNaissance)
+                LblAgeSelected.Show()
+            Else
+                LblDateNaissanceSelected.Hide()
+                LblAgeSelected.Hide()
+            End If
+
+            DateSortie = DateIllimite
+            If RadPatientGridView.Rows(aRow).Cells("oa_patient_date_sortie_oasis").Value <> "" Then
+                DateSortie = Coalesce(RadPatientGridView.Rows(aRow).Cells("oa_patient_date_sortie_oasis").Value, Nothing)
+            End If
+
+            DateEntree = DateIllimite
+            If RadPatientGridView.Rows(aRow).Cells("oa_patient_date_entree_oasis").Value <> "" Then
+                DateEntree = RadPatientGridView.Rows(aRow).Cells("oa_patient_date_entree_oasis").Value
+            End If
+
+            If DateSortie < Date.Now() Then
+                LblDateSortie.Text = DateSortie.ToString("dd.MM.yyyy")
+                LblLabelDateSortie.Show()
+                LblDateSortie.Show()
+                LblPatientSorti.Text = "Attention, ce patient est sorti du dispositif Oasis"
+                LblPatientSorti.Show()
+            Else
+                LblLabelDateSortie.Hide()
+                LblDateSortie.Hide()
+                LblPatientSorti.Hide()
+            End If
+
+            If DateEntree > Date.Now() Then
+                LblPatientSorti.Text = "Attention, ce patient ne fait pas partie du dispositif Oasis"
+                LblPatientSorti.Show()
+            End If
+
+            TxtIdSelected.Show()
+            TxtNirSelected.Show()
+            TxtPrenomSelected.Show()
+            TxtNomSelected.Show()
+            RadPnlSelectedPatient.Show()
+            RadBtnDetailPatient.Show()
+            RadBtnSynthese.Show()
+            RadBtnRendezVous.Show()
+            RadBtnEpisode.Show()
+
             TxtSite.Text = RadPatientGridView.Rows(aRow).Cells("site").Value
             If TxtSite.Text = "" Then
-                InitZonesSelectionPatient()
-                MessageBox.Show("Sélection interdite, ce patient n'a pas de site d'affecté !")
+                RadBtnSynthese.Hide()
+                RadBtnRendezVous.Hide()
+                RadBtnEpisode.Hide()
+                'InitZonesSelectionPatient()
+                MessageBox.Show("Options limitées, ce patient n'a pas de site d'affecté !")
             Else
-                TxtIdSelected.Text = RadPatientGridView.Rows(aRow).Cells("oa_patient_id").Value
-                If RadPatientGridView.Rows(aRow).Cells("oa_patient_nir").Value Is DBNull.Value Then
-                    TxtNirSelected.Text = 0
-                Else
-                    TxtNirSelected.Text = RadPatientGridView.Rows(aRow).Cells("oa_patient_nir").Value
-                End If
-                TxtPrenomSelected.Text = RadPatientGridView.Rows(aRow).Cells("oa_patient_prenom").Value
-                TxtNomSelected.Text = RadPatientGridView.Rows(aRow).Cells("oa_patient_nom").Value
-
-                If RadPatientGridView.Rows(aRow).Cells("oa_patient_date_naissance").Value <> "" Then
-                    dateNaissance = Coalesce(RadPatientGridView.Rows(aRow).Cells("oa_patient_date_naissance").Value, Nothing)
-                    LblDateNaissanceSelected.Text = dateNaissance.ToString("dd.MM.yyyy")
-                    LblDateNaissanceSelected.Show()
-                    LblAgeSelected.Text = outils.CalculAgeString(dateNaissance)
-                    LblAgeSelected.Show()
-                Else
-                    LblDateNaissanceSelected.Hide()
-                    LblAgeSelected.Hide()
-                End If
-
-                DateSortie = DateIllimite
-                If RadPatientGridView.Rows(aRow).Cells("oa_patient_date_sortie_oasis").Value <> "" Then
-                    DateSortie = Coalesce(RadPatientGridView.Rows(aRow).Cells("oa_patient_date_sortie_oasis").Value, Nothing)
-                End If
-
-                DateEntree = DateIllimite
-                If RadPatientGridView.Rows(aRow).Cells("oa_patient_date_entree_oasis").Value <> "" Then
-                    DateEntree = RadPatientGridView.Rows(aRow).Cells("oa_patient_date_entree_oasis").Value
-                End If
-
-                If DateSortie < Date.Now() Then
-                    LblDateSortie.Text = DateSortie.ToString("dd.MM.yyyy")
-                    LblLabelDateSortie.Show()
-                    LblDateSortie.Show()
-                    LblPatientSorti.Text = "Attention, ce patient est sorti du dispositif Oasis"
-                    LblPatientSorti.Show()
-                Else
-                    LblLabelDateSortie.Hide()
-                    LblDateSortie.Hide()
-                    LblPatientSorti.Hide()
-                End If
-
-                If DateEntree > Date.Now() Then
-                    LblPatientSorti.Text = "Attention, ce patient ne fait pas partie du dispositif Oasis"
-                    LblPatientSorti.Show()
-                End If
-
-                TxtIdSelected.Show()
-                TxtNirSelected.Show()
-                TxtPrenomSelected.Show()
-                TxtNomSelected.Show()
-                RadPnlSelectedPatient.Show()
-                RadBtnDetailPatient.Show()
-                RadBtnSynthese.Show()
-                RadBtnEpisode.Show()
-
                 Dim episodeDao As New EpisodeDao
                 Dim episode As Episode
                 Dim patientId As Integer = CInt(TxtIdSelected.Text)
@@ -216,9 +220,8 @@ Public Class RadFPatientListe
                     RadBtnEpisode.Font = New Font(RadBtnEpisode.Font, FontStyle.Regular)
                     ToolTip.SetToolTip(RadBtnEpisode, "Ce patient n'a pas d'épisode en cours")
                 End If
-
-                IndexGrid = aRow
             End If
+            IndexGrid = aRow
         Else
             InitZonesSelectionPatient()
         End If

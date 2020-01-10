@@ -10,11 +10,11 @@ Imports System.Runtime.InteropServices
 ' Vérifiez les valeurs des attributs de l'assembly
 
 <Assembly: AssemblyTitle("Oasis_WF")>
-<Assembly: AssemblyDescription("")>
-<Assembly: AssemblyCompany("")>
+<Assembly: AssemblyDescription("Dossier Patient Informatisé")>
+<Assembly: AssemblyCompany("Synovora")>
 <Assembly: AssemblyProduct("Oasis_WF")>
 <Assembly: AssemblyCopyright("Copyright ©  2019")>
-<Assembly: AssemblyTrademark("")>
+<Assembly: AssemblyTrademark("Synovora")>
 
 <Assembly: ComVisible(False)>
 
@@ -32,7 +32,7 @@ Imports System.Runtime.InteropServices
 ' en utilisant '*', comme indiqué ci-dessous :
 ' <Assembly: AssemblyVersion("1.0.*")>
 
-<Assembly: AssemblyVersion("1.0.0.0")>
+<Assembly: AssemblyVersion("1.0.0.1")>
 <Assembly: AssemblyFileVersion("1.0.0.0")>
 <Assembly: NeutralResourcesLanguage("fr-FR")>
 <Assembly: DebuggerDisplay("{ToString}", Target:=GetType(Date))>
