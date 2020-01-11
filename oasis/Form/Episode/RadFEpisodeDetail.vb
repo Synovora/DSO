@@ -659,7 +659,8 @@ Public Class RadFEpisodeDetail
 
         'Positionnement du grid sur la première occurrence
         If RadObsSpeParDataGridView.Rows.Count > 0 Then
-            Me.RadObsSpeParDataGridView.CurrentRow = RadObsSpeParDataGridView.Rows(0)
+            RadObsSpeParDataGridView.CurrentRow = RadObsSpeParDataGridView.ChildRows(0)
+            RadObsSpeParDataGridView.TableElement.VScrollBar.Value = 0
         End If
 
         If userLog.TypeProfil <> ProfilDao.EnumProfilType.PARAMEDICAL.ToString Then
@@ -776,7 +777,8 @@ Public Class RadFEpisodeDetail
 
         'Positionnement du grid sur la première occurrence
         If RadObsSpeMedDataGridView.Rows.Count > 0 Then
-            Me.RadObsSpeMedDataGridView.CurrentRow = RadObsSpeMedDataGridView.Rows(0)
+            RadObsSpeMedDataGridView.CurrentRow = RadObsSpeMedDataGridView.ChildRows(0)
+            RadObsSpeMedDataGridView.TableElement.VScrollBar.Value = 0
         End If
 
         If userLog.TypeProfil <> ProfilDao.EnumProfilType.MEDICAL.ToString Then
@@ -929,10 +931,12 @@ Public Class RadFEpisodeDetail
 
         If RadGridViewObsMed.Rows.Count > 0 Then
             Me.RadGridViewObsMed.CurrentRow = RadGridViewObsMed.Rows(0)
+            RadGridViewObsMed.TableElement.VScrollBar.Value = 0
         End If
 
         If RadGridViewObsIde.Rows.Count > 0 Then
             Me.RadGridViewObsIde.CurrentRow = RadGridViewObsIde.Rows(0)
+            RadGridViewObsIde.TableElement.VScrollBar.Value = 0
         End If
     End Sub
 
