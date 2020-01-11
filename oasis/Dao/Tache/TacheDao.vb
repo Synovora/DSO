@@ -1237,7 +1237,7 @@ Public Class TacheDao
 
     End Sub
 
-    Friend Function ModificationRendezVous(tache As Tache) As Boolean
+    Friend Function ModificationDemandeRendezVous(tache As Tache) As Boolean
         Dim da As SqlDataAdapter = New SqlDataAdapter()
         Dim isOK As Boolean = True
         Dim con As SqlConnection = Nothing
@@ -1276,7 +1276,46 @@ Public Class TacheDao
             End If
         End Try
         Return isOK
+    End Function
 
+    Friend Function ModificationRendezVous(tache As Tache) As Boolean
+        Dim da As SqlDataAdapter = New SqlDataAdapter()
+        Dim isOK As Boolean = True
+        Dim con As SqlConnection = Nothing
+        Dim nbUpdate As Integer
+
+        Try
+            con = GetConnection()
+
+            Dim SQLstring As String = "UPDATE oasis.oa_tache SET" &
+            " date_rendez_vous = @dateRendezVous, emetteur_commentaire = @commentaire" &
+            " WHERE id = @Id AND etat = @etat"
+
+            Dim cmd As New SqlCommand(SQLstring, con)
+            With cmd.Parameters
+                .AddWithValue("@Id", tache.Id)
+                .AddWithValue("@dateRendezVous", tache.DateRendezVous)
+                .AddWithValue("@commentaire", tache.EmetteurCommentaire)
+                .AddWithValue("@etat", tache.Etat)
+            End With
+
+            da.UpdateCommand = cmd
+            nbUpdate = da.UpdateCommand.ExecuteNonQuery()
+            If nbUpdate <= 0 Then
+                Throw New Exception("Collision , Annulation de la modification, la tâche n'est plus disponible !")
+            End If
+        Catch ex As Exception
+            MessageBox.Show(ex.Message)
+            isOK = False
+        Finally
+            If IsNothing(con) = False Then
+                Try
+                    con.Close()
+                Catch
+                End Try
+            End If
+        End Try
+        Return isOK
     End Function
 
     Private Sub SetFonctionsIdFromUserLogAnParcours(tache As Tache, parcours As Parcours, Optional tacheParent As Tache = Nothing)

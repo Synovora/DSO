@@ -1183,7 +1183,7 @@ Public Class RadFParcoursDetailEdit
             If tache.Etat = TacheDao.EtatTache.EN_ATTENTE.ToString Then
                 Cursor.Current = Cursors.WaitCursor
                 Me.Enabled = False
-                Using form As New RadFTacheModificationRendezVous
+                Using form As New RadFTacheModificationDemandeRendezVous
                     form.SelectedPatient = Me.SelectedPatient
                     form.SelectedTacheId = tache.Id
                     form.ShowDialog()

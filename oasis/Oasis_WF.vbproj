@@ -376,6 +376,12 @@
     <Compile Include="Form\Episode\RadFWkfDemandeAvis.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="Form\tache\RadFTacheModificationDemandeRendezVous.Designer.vb">
+      <DependentUpon>RadFTacheModificationDemandeRendezVous.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Form\tache\RadFTacheModificationDemandeRendezVous.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Form\tache\RadFTacheModificationRendezVous.Designer.vb">
       <DependentUpon>RadFTacheModificationRendezVous.vb</DependentUpon>
     </Compile>
@@ -1075,6 +1081,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Form\Episode\RadFWkfDemandeAvis.resx">
       <DependentUpon>RadFWkfDemandeAvis.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form\tache\RadFTacheModificationDemandeRendezVous.resx">
+      <DependentUpon>RadFTacheModificationDemandeRendezVous.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Form\tache\RadFTacheModificationRendezVous.resx">
       <DependentUpon>RadFTacheModificationRendezVous.vb</DependentUpon>

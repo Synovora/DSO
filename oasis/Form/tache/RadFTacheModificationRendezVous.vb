@@ -30,31 +30,77 @@
         End Set
     End Property
 
-    Dim EmetteurFonctionId As Long
-
     Dim tache As Tache
     Dim tacheDao As New TacheDao
 
     Private Sub RadFTacheModificationRendezVous_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        afficheTitleForm(Me, "Modification rendez-vous")
         ChargementEtatCivil()
         tache = tacheDao.getTacheById(SelectedTacheId)
-        Select Case tache.TypedemandeRendezVous
-            Case TacheDao.typeDemandeRendezVous.ANNEE.ToString
-                NumAn.Value = tache.DateRendezVous.Year()
-                RadChkDRVAnneeSeulement.Checked = True
-            Case TacheDao.typeDemandeRendezVous.ANNEEMOIS.ToString
-                NumAn.Value = tache.DateRendezVous.Year()
-                NumMois.Value = tache.DateRendezVous.Month()
-                RadChkDRVAnneeSeulement.Checked = False
-            Case Else
-                NumAn.Value = tache.DateRendezVous.Year()
-                NumMois.Value = tache.DateRendezVous.Month()
-                RadChkDRVAnneeSeulement.Checked = False
-        End Select
-
         TxtRDVCommentaire.Text = tache.EmetteurCommentaire
-
+        NumDateRV.Value = tache.DateRendezVous.ToString("dd.MM.yyyy")
+        Dim Minute As Integer = tache.DateRendezVous.ToString("mm")
+        Select Case Minute
+            Case 0
+                RadioBtn0.Checked = True
+            Case 15
+                RadioBtn15.Checked = True
+            Case 30
+                RadioBtn30.Checked = True
+            Case 45
+                RadioBtn45.Checked = True
+            Case Else
+                RadioBtn0.Checked = True
+        End Select
     End Sub
+
+    Private Function Validation() As Boolean
+        Me.CodeRetour = False
+        If NumDateRV.Value.Date < Date.Now().Date Then
+            Dim message As String = "Attention, La date de rendez-vous à programmer (" & NumDateRV.Value.ToString("dd.MM.yyyy") & "), est antérieure à la date du jour (" & Date.Now().ToString("dd.MM.yyyy") & "), confirmation de la date du rendez-vous"
+            If MsgBox(message, MsgBoxStyle.YesNo, "") = MsgBoxResult.No Then
+                Return False
+                Exit Function
+            End If
+        End If
+        Dim minutesRV As Integer = CalculMinutes()
+        Dim dateRendezVous As New DateTime(NumDateRV.Value.Year, NumDateRV.Value.Month, NumDateRV.Value.Day, NumheureRV.Value, minutesRV, 0)
+        If NumDateRV.Value.Date < Date.Now().Date Then
+            'Clôture du rendez-vous
+            If ModificationRendezVous(dateRendezVous, TacheDao.EtatTache.TERMINEE.ToString) = True Then
+                MessageBox.Show("Rendez-vous programmé et clôturé pour le " & NumDateRV.Value.ToString("dd.MM.yyyy"))
+                Me.CodeRetour = True
+                Close()
+            End If
+        Else
+            If ModificationRendezVous(dateRendezVous, TacheDao.EtatTache.EN_ATTENTE.ToString) = True Then
+                MessageBox.Show("Rendez-vous programmé pour le " & NumDateRV.Value.ToString("dd.MM.yyyy"))
+                Me.CodeRetour = True
+                Close()
+            End If
+        End If
+
+        Return CodeRetour
+    End Function
+
+    Private Function ModificationRendezVous(dateRendezVous As DateTime, etatRendezVous As String) As Boolean
+        Dim CodeRetour As Boolean = False
+        Dim tache As New Tache
+        Dim tacheDao As New TacheDao
+
+        tache.EmetteurCommentaire = TxtRDVCommentaire.Text
+        tache.Etat = etatRendezVous
+        If etatRendezVous = TacheDao.EtatTache.TERMINEE.ToString Then
+            tache.Cloture = True
+        End If
+        tache.DateRendezVous = dateRendezVous
+
+        If tacheDao.ModificationRendezVous(tache) = True Then
+            CodeRetour = True
+        End If
+
+        Return CodeRetour
+    End Function
 
     Private Sub ChargementEtatCivil()
         LblPatientNIR.Text = SelectedPatient.PatientNir.ToString
@@ -84,61 +130,29 @@
         End If
     End Sub
 
-    Private Sub Validation()
-        If NumAn.Value < Date.Now().Year Then
-            MessageBox.Show("Erreur : l'année de la demande de rendez-vous à créer : " & NumAn.Value.ToString & " est inférieure à l'année en cours")
+    Private Function CalculMinutes() As Integer
+        Dim minutes As Integer = 0
+        If RadioBtn0.Checked = True Then
+            minutes = 0
         Else
-            If RadChkDRVAnneeSeulement.Checked = True Then
-                'Création demande de rendez-vous pour une année donnée (AAAA)
-                Dim dateRendezVous As New DateTime(NumAn.Value, 1, 1, 0, 0, 0)
-                If ModificationDemandeRendezVous(dateRendezVous, TacheDao.typeDemandeRendezVous.ANNEE.ToString) = True Then
-                    MessageBox.Show("demande de rendez-vous modifiée pour " & NumAn.Value.ToString)
-                    Me.CodeRetour = True
-                    Close()
-                End If
+            If RadioBtn15.Checked = True Then
+                minutes = 15
             Else
-                If NumAn.Value = Date.Now().Year And NumMois.Value < Date.Now().Month Then
-                    MessageBox.Show("Erreur : la période demandée (" & NumMois.Value.ToString & "/" & NumAn.Value.ToString & ") est inférieure à la période en cours")
+                If RadioBtn30.Checked = True Then
+                    minutes = 30
                 Else
-                    'Création demande de rendez-vous pour une période donnée (MM/AAAA)
-                    Dim dateRendezVous As New DateTime(NumAn.Value, NumMois.Value, 1, 0, 0, 0)
-                    If ModificationDemandeRendezVous(dateRendezVous, TacheDao.typeDemandeRendezVous.ANNEEMOIS.ToString) = True Then
-                        MessageBox.Show("Demande de rendez-vous modifiée pour " & NumMois.Value.ToString & "/" & NumAn.Value.ToString)
-                        Me.CodeRetour = True
-                        Close()
-                    End If
+                    minutes = 45
                 End If
             End If
         End If
-    End Sub
-
-    Private Function ModificationDemandeRendezVous(dateRendezVous As DateTime, typedemandeRendezVous As String) As Boolean
-        Dim CodeRetour As Boolean = False
-        tache = tacheDao.getTacheById(SelectedTacheId)
-        tache.DateRendezVous = dateRendezVous
-        tache.TypedemandeRendezVous = typedemandeRendezVous
-        tache.EmetteurCommentaire = TxtRDVCommentaire.Text
-        Try
-            If tacheDao.ModificationRendezVous(tache) = True Then
-                CodeRetour = True
-                Close()
-            End If
-        Catch ex As Exception
-            MessageBox.Show(ex.ToString)
-        End Try
-
-        Return CodeRetour
+        Return minutes
     End Function
+
+    Private Sub RadBtnAbandon_Click(sender As Object, e As EventArgs) Handles RadBtnAbandon.Click
+        Close()
+    End Sub
 
     Private Sub RadBtnValidation_Click(sender As Object, e As EventArgs) Handles RadBtnValidation.Click
         Validation()
-    End Sub
-
-    Private Sub RadChkDRVAnneeSeulement_ToggleStateChanged(sender As Object, args As Telerik.WinControls.UI.StateChangedEventArgs) Handles RadChkDRVAnneeSeulement.ToggleStateChanged
-        If RadChkDRVAnneeSeulement.Checked = True Then
-            NumMois.Hide()
-        Else
-            NumMois.Show()
-        End If
     End Sub
 End Class

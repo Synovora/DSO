@@ -242,7 +242,7 @@ Public Class RadFSynthese
                 If CInt(antecedentDataTable.Rows(i)("oa_antecedent_diagnostic")) = 2 Then
                     diagnostic = "Suspicion de : "
                 Else
-                    If CInt(antecedentDataTable.Rows(i)("oa_antecedent_diagnostic")) = 4 Then
+                    If CInt(antecedentDataTable.Rows(i)("oa_antecedent_diagnostic")) = 3 Then
                         diagnostic = "Notion de : "
                     End If
                 End If
@@ -1513,7 +1513,7 @@ Public Class RadFSynthese
                 If CInt(contexteDataTable.Rows(i)("oa_antecedent_diagnostic")) = 2 Then
                     diagnostic = "Suspicion de "
                 Else
-                    If CInt(contexteDataTable.Rows(i)("oa_antecedent_diagnostic")) = 4 Then
+                    If CInt(contexteDataTable.Rows(i)("oa_antecedent_diagnostic")) = 3 Then
                         diagnostic = "Notion de "
                     End If
                 End If

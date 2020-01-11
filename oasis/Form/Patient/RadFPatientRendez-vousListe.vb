@@ -149,7 +149,7 @@ Public Class RadFPatientRendez_vousListe
                     If tache.Nature = TacheDao.EnumNatureTacheCode.RDV_DEMANDE Then
                         Cursor.Current = Cursors.WaitCursor
                         Me.Enabled = False
-                        Using form As New RadFTacheModificationRendezVous
+                        Using form As New RadFTacheModificationDemandeRendezVous
                             form.SelectedPatient = Me.SelectedPatient
                             form.SelectedTacheId = TacheId
                             form.ShowDialog()
