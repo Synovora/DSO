@@ -73,6 +73,7 @@ Partial Class RadFPPSDetailEdit
         Me.RadBtnConfirmationAnnulation = New Telerik.WinControls.UI.RadButton()
         Me.RadBtnValidation = New Telerik.WinControls.UI.RadButton()
         Me.RadBtnAbandonner = New Telerik.WinControls.UI.RadButton()
+        Me.RadBtnRecupereDrc = New Telerik.WinControls.UI.RadButton()
         CType(Me.RadGroupBoxEtatCivil, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.RadGroupBoxEtatCivil.SuspendLayout()
         CType(Me.RadGroupBox1, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -85,6 +86,7 @@ Partial Class RadFPPSDetailEdit
         CType(Me.RadBtnConfirmationAnnulation, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.RadBtnValidation, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.RadBtnAbandonner, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.RadBtnRecupereDrc, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
@@ -324,6 +326,7 @@ Partial Class RadFPPSDetailEdit
         'RadGroupBox1
         '
         Me.RadGroupBox1.AccessibleRole = System.Windows.Forms.AccessibleRole.Grouping
+        Me.RadGroupBox1.Controls.Add(Me.RadBtnRecupereDrc)
         Me.RadGroupBox1.Controls.Add(Me.CbxTypeStrategie)
         Me.RadGroupBox1.Controls.Add(Me.LblTypeStrategie)
         Me.RadGroupBox1.Controls.Add(Me.RadBtnDrcSelecteur)
@@ -585,6 +588,14 @@ Partial Class RadFPPSDetailEdit
         Me.RadBtnAbandonner.TabIndex = 96
         Me.RadBtnAbandonner.Text = "Abandonner"
         '
+        'RadBtnRecupereDrc
+        '
+        Me.RadBtnRecupereDrc.Location = New System.Drawing.Point(213, 147)
+        Me.RadBtnRecupereDrc.Name = "RadBtnRecupereDrc"
+        Me.RadBtnRecupereDrc.Size = New System.Drawing.Size(141, 24)
+        Me.RadBtnRecupereDrc.TabIndex = 97
+        Me.RadBtnRecupereDrc.Text = "Copier la dénomination"
+        '
         'RadFPPSDetailEdit
         '
         Me.AcceptButton = Me.RadBtnValidation
@@ -631,6 +642,7 @@ Partial Class RadFPPSDetailEdit
         CType(Me.RadBtnConfirmationAnnulation, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.RadBtnValidation, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.RadBtnAbandonner, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.RadBtnRecupereDrc, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
         Me.PerformLayout()
@@ -687,5 +699,6 @@ Partial Class RadFPPSDetailEdit
     Friend WithEvents RadBtnAbandonner As Telerik.WinControls.UI.RadButton
     Friend WithEvents CbxTypeStrategie As ComboBox
     Friend WithEvents LblTypeStrategie As Label
+    Friend WithEvents RadBtnRecupereDrc As Telerik.WinControls.UI.RadButton
 End Class
 

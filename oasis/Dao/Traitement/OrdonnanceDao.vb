@@ -44,7 +44,7 @@ Public Class OrdonnanceDao
         With cmd.Parameters
             .AddWithValue("@patientId", patientId)
             .AddWithValue("@userCreation", userId.ToString)
-            .AddWithValue("@dateCreation", Date.Now.ToString)
+            .AddWithValue("@dateCreation", Date.Now.ToString("yyyy-MM-dd HH:mm:ss"))
             .AddWithValue("@episodeId", 0)
             .AddWithValue("@commentaire", "")
         End With

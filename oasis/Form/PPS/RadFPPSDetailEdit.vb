@@ -636,4 +636,7 @@ Public Class RadFPPSDetailEdit
         Close()
     End Sub
 
+    Private Sub RadBtnRecupereDrc_Click(sender As Object, e As EventArgs) Handles RadBtnRecupereDrc.Click
+        TxtCommentaire.Text = TxtDrcDescription.Text
+    End Sub
 End Class

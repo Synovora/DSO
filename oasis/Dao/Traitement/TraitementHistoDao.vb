@@ -87,7 +87,7 @@ Module TraitementHistoDao
         Dim cmd As New SqlCommand(SQLstring, conxn)
 
         With cmd.Parameters
-            .AddWithValue("@dateHistorisation", DateTime.Now())
+            .AddWithValue("@dateHistorisation", DateTime.Now().ToString("yyyy-MM-dd HH:mm:ss"))
             .AddWithValue("@utilisateurCreation", UtilisateurConnecte.UtilisateurId.ToString)
             .AddWithValue("@etatHistorisation", EtatHistorisation.ToString)
             .AddWithValue("@patientId", TraitementHistoACreer.HistorisationPatientId.ToString)

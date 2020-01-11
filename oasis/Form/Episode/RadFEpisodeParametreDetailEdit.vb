@@ -68,7 +68,11 @@ Public Class RadFEpisodeParametreDetailEdit
         Dim rowCount As Integer = parmDataTable.Rows.Count - 1
         'Parcours du DataTable pour alimenter le DataGridView
         For i = 0 To rowCount Step 1
-            If parmDataTable.Rows(i)("parametre_id") = 3 Or parmDataTable.Rows(i)("parametre_id") = 8 Then
+            Dim parametreId As Long = parmDataTable.Rows(i)("parametre_id")
+            If listeParametreEpisode.Contains(parametreId) = False Then
+                listeParametreEpisode.Add(parametreId)
+            End If
+            If parametreId = 3 Or parametreId = 8 Then
                 Continue For
             End If
             'Ajout d'une ligne au DataGridView
@@ -78,7 +82,7 @@ Public Class RadFEpisodeParametreDetailEdit
             RadGridViewParm.Rows(iGrid).Cells("episode_parametre_id").Value = parmDataTable.Rows(i)("episode_parametre_id")
             RadGridViewParm.Rows(iGrid).Cells("parametre_id").Value = parmDataTable.Rows(i)("parametre_id")
 
-            Dim parametreId As Long = parmDataTable.Rows(i)("parametre_id")
+
             RadGridViewParm.Rows(iGrid).Cells("valeur").Value = parmDataTable.Rows(i)("valeur")
 
             RadGridViewParm.Rows(iGrid).Cells("parametre_ajoute").Value = parmDataTable.Rows(i)("parametre_ajoute")
@@ -152,9 +156,6 @@ Public Class RadFEpisodeParametreDetailEdit
                 RadGridViewParm.Rows(iGrid).Cells("valeurInput").Style.ForeColor = Color.Red
                 RadGridViewParm.Rows(iGrid).Cells("description").Style.ForeColor = Color.Red
                 RadGridViewParm.Rows(iGrid).Cells("unite").Style.ForeColor = Color.Red
-            End If
-            If listeParametreEpisode.Contains(parametreId) = False Then
-                listeParametreEpisode.Add(parametreId)
             End If
         Next
 

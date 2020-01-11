@@ -211,7 +211,7 @@ Public Class ParametreOasisDao
         Dim cmd As New SqlCommand(SQLstring, con)
 
         With cmd.Parameters
-            .AddWithValue("@date", dateValeur.ToString)
+            .AddWithValue("@date", dateValeur.ToString("yyyy-MM-dd HH:mm:ss"))
             .AddWithValue("@Id", Id.ToString)
         End With
         Try

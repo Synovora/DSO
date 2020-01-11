@@ -1904,7 +1904,7 @@ Public Class RadFSynthese
 
         'Positionnement du grid sur la première occurrence
         If RadPPSDataGridView.Rows.Count > 0 Then
-            Me.RadPPSDataGridView.CurrentRow = RadPPSDataGridView.ChildRows(0)
+            Me.RadPPSDataGridView.CurrentRow = RadPPSDataGridView.Rows(0)
         End If
     End Sub
 
