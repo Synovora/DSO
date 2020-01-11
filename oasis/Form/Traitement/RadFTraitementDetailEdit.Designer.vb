@@ -727,7 +727,6 @@ Partial Class RadFTraitementDetailEdit
         '
         'NumNumeroOrdre
         '
-        Me.NumNumeroOrdre.Increment = New Decimal(New Integer() {10, 0, 0, 0})
         Me.NumNumeroOrdre.Location = New System.Drawing.Point(771, 41)
         Me.NumNumeroOrdre.Maximum = New Decimal(New Integer() {1000, 0, 0, 0})
         Me.NumNumeroOrdre.Name = "NumNumeroOrdre"
