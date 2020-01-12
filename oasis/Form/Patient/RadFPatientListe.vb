@@ -438,6 +438,16 @@ Public Class RadFPatientListe
         End If
     End Sub
 
+    Private Sub RadBtnListeAction_Click(sender As Object, e As EventArgs) Handles RadBtnListeAction.Click
+        Cursor.Current = Cursors.WaitCursor
+        Me.Enabled = False
+        Using form As New RadFListeActions
+            form.UserId = userLog.UtilisateurId
+            form.ShowDialog()
+        End Using
+        Me.Enabled = True
+    End Sub
+
     Private Sub RadBtnEpisodeEnCours_Click(sender As Object, e As EventArgs) Handles RadBtnEpisodeEnCours.Click
         Cursor.Current = Cursors.WaitCursor
         Me.Enabled = False

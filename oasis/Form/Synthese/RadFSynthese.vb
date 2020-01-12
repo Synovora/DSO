@@ -114,6 +114,14 @@ Public Class RadFSynthese
         LblPatientSite.Text = Environnement.Table_site.GetSiteDescription(SelectedPatient.PatientSiteId)
         LblPatientDateMaj.Text = FormatageDateAffichage(SelectedPatient.PatientSyntheseDateMaj, True)
 
+        Dim DateMaxValue = New Date(9998, 12, 31, 0, 0, 0)
+        If SelectedPatient.PatientDateEntree = DateMaxValue Then
+            LblNonOasis.Show()
+        Else
+            LblNonOasis.Hide()
+        End If
+
+
         'Vérification de l'existence d'ALD
         LblALD.Hide()
         ChargementToolTipAld()

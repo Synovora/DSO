@@ -401,6 +401,12 @@
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Bean\Tache\ItemUniteSite.vb" />
+    <Compile Include="Form\utilisateur\RadFListeActions.Designer.vb">
+      <DependentUpon>RadFListeActions.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Form\utilisateur\RadFListeActions.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="localization\FrenchRadGridViewLocalizationProvider.vb" />
     <Compile Include="localization\FrenchSchedulerLocalizationProvider.vb" />
     <Compile Include="localization\FrenchSchedulerNavigatorLocalizationProvider.vb" />
@@ -1093,6 +1099,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Form\utilisateur\FrmUtilisateurListe.resx">
       <DependentUpon>FrmUtilisateurListe.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form\utilisateur\RadFListeActions.resx">
+      <DependentUpon>RadFListeActions.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Menu\FrmAbout.resx">
       <DependentUpon>FrmAbout.vb</DependentUpon>

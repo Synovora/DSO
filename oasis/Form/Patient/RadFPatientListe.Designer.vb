@@ -35,6 +35,7 @@ Partial Class RadFPatientListe
         Dim GridViewTextBoxColumn10 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
         Dim TableViewDefinition1 As Telerik.WinControls.UI.TableViewDefinition = New Telerik.WinControls.UI.TableViewDefinition()
         Me.RadPnlSelectedPatient = New Telerik.WinControls.UI.RadGroupBox()
+        Me.TxtSite = New System.Windows.Forms.TextBox()
         Me.RadBtnRendezVous = New Telerik.WinControls.UI.RadButton()
         Me.RadBtnEpisode = New Telerik.WinControls.UI.RadButton()
         Me.RadBtnDetailPatient = New Telerik.WinControls.UI.RadButton()
@@ -54,6 +55,7 @@ Partial Class RadFPatientListe
         Me.ContextMenuStrip1 = New System.Windows.Forms.ContextMenuStrip(Me.components)
         Me.CréerLesIntervenantsOasisParDéfautToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.RadPanel1 = New Telerik.WinControls.UI.RadPanel()
+        Me.LblOccurrenceLue = New System.Windows.Forms.Label()
         Me.RadChkPatientTous = New Telerik.WinControls.UI.RadRadioButton()
         Me.RadChkPatientNonOasis = New Telerik.WinControls.UI.RadRadioButton()
         Me.RadChkPatientOasis = New Telerik.WinControls.UI.RadRadioButton()
@@ -64,8 +66,7 @@ Partial Class RadFPatientListe
         Me.RadPanel4 = New Telerik.WinControls.UI.RadPanel()
         Me.ToolTip = New System.Windows.Forms.ToolTip(Me.components)
         Me.RadDesktopAlert1 = New Telerik.WinControls.UI.RadDesktopAlert(Me.components)
-        Me.TxtSite = New System.Windows.Forms.TextBox()
-        Me.LblOccurrenceLue = New System.Windows.Forms.Label()
+        Me.RadBtnListeAction = New Telerik.WinControls.UI.RadButton()
         CType(Me.RadPnlSelectedPatient, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.RadPnlSelectedPatient.SuspendLayout()
         CType(Me.RadBtnRendezVous, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -90,6 +91,7 @@ Partial Class RadFPatientListe
         Me.RadPanel3.SuspendLayout()
         CType(Me.RadPanel4, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.RadPanel4.SuspendLayout()
+        CType(Me.RadBtnListeAction, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
@@ -119,6 +121,18 @@ Partial Class RadFPatientListe
         Me.RadPnlSelectedPatient.Size = New System.Drawing.Size(386, 472)
         Me.RadPnlSelectedPatient.TabIndex = 1
         Me.RadPnlSelectedPatient.Text = "Patient sélectionné"
+        '
+        'TxtSite
+        '
+        Me.TxtSite.BackColor = System.Drawing.Color.White
+        Me.TxtSite.BorderStyle = System.Windows.Forms.BorderStyle.None
+        Me.TxtSite.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.TxtSite.Location = New System.Drawing.Point(11, 166)
+        Me.TxtSite.Name = "TxtSite"
+        Me.TxtSite.ReadOnly = True
+        Me.TxtSite.Size = New System.Drawing.Size(228, 13)
+        Me.TxtSite.TabIndex = 68
+        Me.TxtSite.Text = "Site"
         '
         'RadBtnRendezVous
         '
@@ -251,7 +265,7 @@ Partial Class RadFPatientListe
         '
         'RadBtnAdmin
         '
-        Me.RadBtnAdmin.Location = New System.Drawing.Point(283, 14)
+        Me.RadBtnAdmin.Location = New System.Drawing.Point(399, 14)
         Me.RadBtnAdmin.Name = "RadBtnAdmin"
         Me.RadBtnAdmin.Size = New System.Drawing.Size(110, 24)
         Me.RadBtnAdmin.TabIndex = 42
@@ -362,6 +376,17 @@ Partial Class RadFPatientListe
         Me.RadPanel1.Size = New System.Drawing.Size(1456, 47)
         Me.RadPanel1.TabIndex = 43
         '
+        'LblOccurrenceLue
+        '
+        Me.LblOccurrenceLue.AutoSize = True
+        Me.LblOccurrenceLue.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Bold)
+        Me.LblOccurrenceLue.ForeColor = System.Drawing.Color.DarkRed
+        Me.LblOccurrenceLue.Location = New System.Drawing.Point(483, 21)
+        Me.LblOccurrenceLue.Name = "LblOccurrenceLue"
+        Me.LblOccurrenceLue.Size = New System.Drawing.Size(102, 13)
+        Me.LblOccurrenceLue.TabIndex = 3
+        Me.LblOccurrenceLue.Text = "n occurrences lues"
+        '
         'RadChkPatientTous
         '
         Me.RadChkPatientTous.Location = New System.Drawing.Point(349, 20)
@@ -388,6 +413,7 @@ Partial Class RadFPatientListe
         '
         'RadPanel2
         '
+        Me.RadPanel2.Controls.Add(Me.RadBtnListeAction)
         Me.RadPanel2.Controls.Add(Me.RadBtnEpisodeEnCours)
         Me.RadPanel2.Controls.Add(Me.RadButtonAbandon)
         Me.RadPanel2.Controls.Add(Me.RadBtnCreatePatient)
@@ -441,28 +467,13 @@ Partial Class RadFPatientListe
         Me.RadDesktopAlert1.ScreenPosition = Telerik.WinControls.UI.AlertScreenPosition.TopCenter
         Me.RadDesktopAlert1.ThemeName = ""
         '
-        'TxtSite
+        'RadBtnListeAction
         '
-        Me.TxtSite.BackColor = System.Drawing.Color.White
-        Me.TxtSite.BorderStyle = System.Windows.Forms.BorderStyle.None
-        Me.TxtSite.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.TxtSite.Location = New System.Drawing.Point(11, 166)
-        Me.TxtSite.Name = "TxtSite"
-        Me.TxtSite.ReadOnly = True
-        Me.TxtSite.Size = New System.Drawing.Size(228, 13)
-        Me.TxtSite.TabIndex = 68
-        Me.TxtSite.Text = "Site"
-        '
-        'LblOccurrenceLue
-        '
-        Me.LblOccurrenceLue.AutoSize = True
-        Me.LblOccurrenceLue.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Bold)
-        Me.LblOccurrenceLue.ForeColor = System.Drawing.Color.DarkRed
-        Me.LblOccurrenceLue.Location = New System.Drawing.Point(483, 21)
-        Me.LblOccurrenceLue.Name = "LblOccurrenceLue"
-        Me.LblOccurrenceLue.Size = New System.Drawing.Size(102, 13)
-        Me.LblOccurrenceLue.TabIndex = 3
-        Me.LblOccurrenceLue.Text = "n occurrences lues"
+        Me.RadBtnListeAction.Location = New System.Drawing.Point(283, 14)
+        Me.RadBtnListeAction.Name = "RadBtnListeAction"
+        Me.RadBtnListeAction.Size = New System.Drawing.Size(110, 24)
+        Me.RadBtnListeAction.TabIndex = 43
+        Me.RadBtnListeAction.Text = "Liste des actions"
         '
         'RadFPatientListe
         '
@@ -509,6 +520,7 @@ Partial Class RadFPatientListe
         Me.RadPanel3.ResumeLayout(False)
         CType(Me.RadPanel4, System.ComponentModel.ISupportInitialize).EndInit()
         Me.RadPanel4.ResumeLayout(False)
+        CType(Me.RadBtnListeAction, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
 
@@ -545,5 +557,6 @@ Partial Class RadFPatientListe
     Friend WithEvents RadBtnEpisodeEnCours As Telerik.WinControls.UI.RadButton
     Friend WithEvents TxtSite As TextBox
     Friend WithEvents LblOccurrenceLue As Label
+    Friend WithEvents RadBtnListeAction As Telerik.WinControls.UI.RadButton
 End Class
 
