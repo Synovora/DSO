@@ -277,6 +277,7 @@ Public Class RadFEpisodeParametreDetailEdit
                     episodeParametre.Entier = form.SelectedParametre.Entier
                     episodeParametre.Decimal = form.SelectedParametre.Decimal
                     episodeParametre.Unite = form.SelectedParametre.Unite
+                    episodeParametre.Ordre = form.SelectedParametre.Ordre
                     episodeParametre.ParametreAjoute = True
                     episodeParametre.Inactif = False
                     episodeParametreDao.CreateEpisodeParametre(episodeParametre)

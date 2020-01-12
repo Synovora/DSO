@@ -78,6 +78,10 @@
         Dim CategorieOasis = DrcDao.EnumCategorieOasisCode.GroupeParametres
         selectDrc(CategorieOasis)
     End Sub
+    Private Sub RadBtnMesurePreventive_Click(sender As Object, e As EventArgs) Handles RadBtnMesurePreventive.Click
+        Dim CategorieOasis = DrcDao.EnumCategorieOasisCode.Prevention
+        selectDrc(CategorieOasis)
+    End Sub
 
     'Sélection DRC à implémenter
     Private Sub selectDrc(CategorieOasis As String)
@@ -214,4 +218,5 @@
             End If
         End If
     End Sub
+
 End Class

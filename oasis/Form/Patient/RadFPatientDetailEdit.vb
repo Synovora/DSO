@@ -823,6 +823,13 @@ Public Class RadFPatientDetailEdit
         If ValidationDonnéesSaisies() = True Then
             Select Case EditMode
                 Case EnumEditMode.Creation
+                    If DteDateEntree.Value = DteDateEntree.MaxDate Then
+                        If MsgBox("Attention, la date d'entrée dans le disposition Oasis n'est pas renseignée." & vbCrLf &
+                                  "Sans date d'entrée, ce nouveau patient ne fera pas partie du dispositif Oasis et sera accessible uniquement avec l'option 'Tous' dans la liste des patients." & vbCrLf &
+                                  "Confirmez-vous la création de ce patient sans date d'entrée dans le dispositif Oasis", MsgBoxStyle.YesNo, "") = MsgBoxResult.No Then
+                            Exit Sub
+                        End If
+                    End If
                     Me.CodeRetour = CreationPatient()
                 Case EnumEditMode.Modification
                     Me.CodeRetour = ModificationPatient()

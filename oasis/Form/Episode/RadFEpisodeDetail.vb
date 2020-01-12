@@ -3156,6 +3156,21 @@ Public Class RadFEpisodeDetail
 
     'Clôture de l'épisode
     Private Sub RadBtnCloture_Click(sender As Object, e As EventArgs) Handles RadBtnCloture.Click
+
+        '>>> Bloc à supprimer pour réhabiliter le contrôle de clôture ========
+        episode.Etat = EpisodeDao.EnumEtatEpisode.CLOTURE.ToString
+        episode.DateModification = Date.Now()
+        episode.UserModification = userLog.UtilisateurId
+        If episodeDao.ModificationEpisode(episode) = True Then
+            Dim form As New RadFNotification()
+            form.Titre = "Notification épisode patient"
+            form.Message = "=== Episode clôturé ==="
+            form.Show()
+            Close()
+        End If
+        Exit Sub
+        '>>> Bloc à supprimer pour réhabiliter le contrôle de clôture ========
+
         If userLog.TypeProfil = episode.TypeProfil Then
             episode.Etat = EpisodeDao.EnumEtatEpisode.CLOTURE.ToString
             episode.DateModification = Date.Now()

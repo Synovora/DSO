@@ -489,20 +489,21 @@ Public Class RadFDrcDetailEdit
     End Sub
     Private Function ValidationDonnees() As Boolean
         Dim Valide As Boolean = True
-        Dim zoneObligatoire As Boolean = True
         Dim messageErreur As String = ""
         Dim messageErreur1 As String = ""
         Dim messageErreur2 As String = ""
         Dim messageErreur3 As String = ""
         Dim messageErreur4 As String = ""
 
-        'Nom, Prenom, date naissance, genre, adresse 1, code postal et ville obligatoire
+        'Description DRC obligatoire
         If TxtLibelle.Text.Trim() = "" Then
-            zoneObligatoire = False
+            messageErreur1 = "- La saisie de la description est obligatoire"
+            Valide = False
         End If
 
-        If zoneObligatoire = False Then
-            messageErreur1 = "- La saisie de la description est obligatoire"
+        'Catégorie Oasis
+        If CbxCategorieOasis.Text = "" Then
+            messageErreur2 = "- La saisie de la catégorie Oasis est obligatoire"
             Valide = False
         End If
 
@@ -512,20 +513,21 @@ Public Class RadFDrcDetailEdit
             AldDescription = Table_ald.GetAldDescription(TxtAld.Text)
             If AldDescription = "" Then
                 LblALDDescription.Text = ""
-                messageErreur2 = "- L'ALD n'est pas valide"
+                messageErreur3 = "- L'ALD saisie n'est pas valide"
                 Valide = False
             Else
                 LblALDDescription.Text = AldDescription
             End If
         End If
 
-        'Catégorie majeur obligatore pour antécédent et contexte
+        'Catégorie majeure obligatore pour antécédent et contexte
         If CbxCategorieOasis.SelectedItem = DrcDao.EnumCategorieOasisItem.Contexte Then
             If CbxCategorieMajeure.SelectedItem = "" Then
-                messageErreur3 = "- La catégorie majeure est obligatoire pour la catégorie Oasis : (" & DrcDao.EnumCategorieOasisItem.Contexte & ")"
+                messageErreur4 = "- La catégorie majeure est obligatoire pour la catégorie Oasis : (" & DrcDao.EnumCategorieOasisItem.Contexte & ")"
                 Valide = False
             End If
         End If
+
 
         'Préparation de l'affichage des erreurs
         If Valide = False Then
@@ -577,7 +579,6 @@ Public Class RadFDrcDetailEdit
         Dim drcId As Integer
         Dim Compteur As Integer
 
-        drcId = 0
         conxn.Open()
         CMDCDateReader = cmd.ExecuteReader()
         If CMDCDateReader.HasRows Then

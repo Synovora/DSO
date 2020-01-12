@@ -6,6 +6,7 @@
     Private _unite As String
     Private _valeurMin As Decimal
     Private _valeurMax As Decimal
+    Private _ordre As Integer
     Private _inactif As Boolean
 
     Public Property Id As Long
@@ -77,6 +78,15 @@
         End Get
         Set(value As Boolean)
             _inactif = value
+        End Set
+    End Property
+
+    Public Property Ordre As Integer
+        Get
+            Return _ordre
+        End Get
+        Set(value As Integer)
+            _ordre = value
         End Set
     End Property
 End Class

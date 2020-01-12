@@ -44,6 +44,7 @@ Public Class EpisodeParametreDao
         episodeParametre.Decimal = Coalesce(reader("decimal"), 0)
         episodeParametre.Unite = Coalesce(reader("unite"), "")
         episodeParametre.ParametreAjoute = Coalesce(reader("parametre_ajoute"), False)
+        episodeParametre.Ordre = Coalesce(reader("ordre"), 0)
         episodeParametre.Inactif = Coalesce(reader("inactif"), False)
         Return episodeParametre
     End Function
@@ -53,7 +54,8 @@ Public Class EpisodeParametreDao
 
         SQLString = "SELECT * FROM oasis.oa_episode_parametre" &
         " WHERE episode_id = " & episodeId.ToString &
-        " AND (inactif = '0' OR inactif is Null)"
+        " AND (inactif = '0' OR inactif is Null)" &
+        " ORDER BY ordre"
 
         Using con As SqlConnection = GetConnection()
             Dim ContexteDataAdapter As SqlDataAdapter = New SqlDataAdapter()
@@ -84,9 +86,9 @@ Public Class EpisodeParametreDao
         "IF NOT EXISTS (SELECT 1 FROM oasis.oa_episode_parametre WHERE episode_id = @episodeId AND parametre_id = @parametreId AND (inactif = Null OR inactif = '0'))" &
         "INSERT INTO oasis.oa_episode_parametre" &
         " (parametre_id, episode_id, patient_id, valeur, description, entier," &
-        " decimal, unite, parametre_ajoute, inactif)" &
+        " decimal, unite, parametre_ajoute, ordre, inactif)" &
         " VALUES (@parametreId, @episodeId, @patientId, @valeur, @description, @entier," &
-        " @decimal, @unite, @parametreAjoute, @inactif)"
+        " @decimal, @unite, @parametreAjoute, @ordre, @inactif)"
 
         Dim cmd As New SqlCommand(SQLstring, con)
         With cmd.Parameters
@@ -99,6 +101,7 @@ Public Class EpisodeParametreDao
             .AddWithValue("@decimal", episodeParametre.Decimal)
             .AddWithValue("@unite", episodeParametre.Unite)
             .AddWithValue("@parametreAjoute", episodeParametre.ParametreAjoute)
+            .AddWithValue("@ordre", episodeParametre.Ordre)
             .AddWithValue("@inactif", episodeParametre.Inactif)
         End With
 
@@ -127,7 +130,7 @@ Public Class EpisodeParametreDao
         " parametre_id = @parametreId, episode_id = @episodeId, patient_id = @patientId," &
         " valeur = @valeur, description = @description," &
         " entier = @entier, decimal = @decimal," &
-        " unite = @unite, inactif = @inactif" &
+        " unite = @unite, ordre = @ordre, inactif = @inactif" &
         " where episode_parametre_id = @Id"
 
         Dim cmd As New SqlCommand(SQLstring, con)
@@ -142,6 +145,7 @@ Public Class EpisodeParametreDao
             .AddWithValue("@entier", episodeParametre.Entier)
             .AddWithValue("@decimal", episodeParametre.Decimal)
             .AddWithValue("@unite", episodeParametre.Unite)
+            .AddWithValue("@ordre", episodeParametre.Ordre)
             .AddWithValue("@inactif", episodeParametre.Inactif)
         End With
 

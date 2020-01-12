@@ -41,6 +41,7 @@ Public Class ParametreDao
         parametre.Unite = Coalesce(reader("unite"), "")
         parametre.ValeurMin = Coalesce(reader("valeur_min"), 0)
         parametre.ValeurMax = Coalesce(reader("valeur_max"), 0)
+        parametre.Ordre = Coalesce(reader("ordre"), 0)
         parametre.Inactif = Coalesce(reader("inactif"), False)
 
         Return parametre

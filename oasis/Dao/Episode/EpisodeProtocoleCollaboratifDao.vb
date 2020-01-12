@@ -23,6 +23,7 @@ Public Class EpisodeProtocoleCollaboratifDao
             episodeParametre.Entier = parametre.Entier
             episodeParametre.Decimal = parametre.Decimal
             episodeParametre.Unite = parametre.Unite
+            episodeParametre.Ordre = parametre.Ordre
             episodeParametre.Description = parametre.Description
             episodeParametre.Valeur = 0
             episodeParametre.Inactif = False

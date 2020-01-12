@@ -39,6 +39,7 @@ Partial Class RadFDrcStandardTypeActiviteListe
         Me.RadBtnSupprimer = New Telerik.WinControls.UI.RadButton()
         Me.RadBtnDRCDetail = New Telerik.WinControls.UI.RadButton()
         Me.RadBtnModifier = New Telerik.WinControls.UI.RadButton()
+        Me.RadBtnMesurePreventive = New Telerik.WinControls.UI.RadButton()
         CType(Me.RadBtnSuiviGrossesse, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.RadBtnSuiviGynecologique, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.RadBtnSuiviEnfantPreScolaire, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -52,6 +53,7 @@ Partial Class RadFDrcStandardTypeActiviteListe
         CType(Me.RadBtnSupprimer, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.RadBtnDRCDetail, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.RadBtnModifier, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.RadBtnMesurePreventive, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
@@ -193,12 +195,21 @@ Partial Class RadFDrcStandardTypeActiviteListe
         Me.RadBtnModifier.TabIndex = 2
         Me.RadBtnModifier.Text = "DRC Standard Détail"
         '
+        'RadBtnMesurePreventive
+        '
+        Me.RadBtnMesurePreventive.Location = New System.Drawing.Point(715, 202)
+        Me.RadBtnMesurePreventive.Name = "RadBtnMesurePreventive"
+        Me.RadBtnMesurePreventive.Size = New System.Drawing.Size(164, 24)
+        Me.RadBtnMesurePreventive.TabIndex = 12
+        Me.RadBtnMesurePreventive.Text = "Sélection mesure préventive"
+        '
         'RadFDrcStandardTypeActiviteListe
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.CancelButton = Me.RadBtnAbandon
         Me.ClientSize = New System.Drawing.Size(925, 477)
+        Me.Controls.Add(Me.RadBtnMesurePreventive)
         Me.Controls.Add(Me.RadBtnModifier)
         Me.Controls.Add(Me.RadBtnDRCDetail)
         Me.Controls.Add(Me.RadBtnSupprimer)
@@ -233,6 +244,7 @@ Partial Class RadFDrcStandardTypeActiviteListe
         CType(Me.RadBtnSupprimer, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.RadBtnDRCDetail, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.RadBtnModifier, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.RadBtnMesurePreventive, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
 
@@ -250,5 +262,6 @@ Partial Class RadFDrcStandardTypeActiviteListe
     Friend WithEvents RadBtnSupprimer As Telerik.WinControls.UI.RadButton
     Friend WithEvents RadBtnDRCDetail As Telerik.WinControls.UI.RadButton
     Friend WithEvents RadBtnModifier As Telerik.WinControls.UI.RadButton
+    Friend WithEvents RadBtnMesurePreventive As Telerik.WinControls.UI.RadButton
 End Class
 
