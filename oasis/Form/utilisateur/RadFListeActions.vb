@@ -11,6 +11,7 @@
     End Property
 
     Dim userdao As New UserDao
+    Dim actiondao As New ActionDao
     Dim User As Utilisateur
     Dim UserActionId As Long
 
@@ -30,8 +31,8 @@
 
     Private Sub ChargementActions()
         Dim actionDataTable As DataTable
-        'actionDataTable = EpisodeActeParamedicalDao.getAllEpisodeActeParamedicalByEpisodeId(SelectedEpisodeId, EpisodeDao.EnumTypeProfil.PARAMEDICAL.ToString)
-
+        actionDataTable = actiondao.getAllActionByUser(UserActionId)
+        Dim DateAction As Date
         RadGridViewAction.Rows.Clear()
 
         Dim iGrid As Integer = -1
@@ -41,8 +42,9 @@
             'Ajout d'une ligne au DataGridView
             RadGridViewAction.Rows.Add(iGrid)
             'Alimentation du DataGridView
-            RadGridViewAction.Rows(iGrid).Cells("date").Value = actionDataTable.Rows(i)("horodatage").ToString("dd.MM.yyyy")
-            RadGridViewAction.Rows(iGrid).Cells("heure").Value = actionDataTable.Rows(i)("horodatage").ToString("HH:mm")
+            DateAction = Coalesce(actionDataTable.Rows(i)("horodatage"), Nothing)
+            RadGridViewAction.Rows(iGrid).Cells("date").Value = DateAction.ToString("dd.MM.yyyy")
+            RadGridViewAction.Rows(iGrid).Cells("heure").Value = DateAction.ToString("HH:mm")
             RadGridViewAction.Rows(iGrid).Cells("patientPrenom").Value = Coalesce(actionDataTable.Rows(i)("oa_patient_prenom"), "")
             RadGridViewAction.Rows(iGrid).Cells("patientNom").Value = Coalesce(actionDataTable.Rows(i)("oa_patient_nom"), "")
             RadGridViewAction.Rows(iGrid).Cells("action").Value = Coalesce(actionDataTable.Rows(i)("action"), "")

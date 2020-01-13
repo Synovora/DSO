@@ -330,7 +330,7 @@ Partial Class RadFDrcDetailEdit
         Me.RadBtnAnnuler.Name = "RadBtnAnnuler"
         Me.RadBtnAnnuler.Size = New System.Drawing.Size(110, 24)
         Me.RadBtnAnnuler.TabIndex = 164
-        Me.RadBtnAnnuler.Text = "Annulation"
+        Me.RadBtnAnnuler.Text = "Annuler la DRC"
         '
         'RadBtnTransformer
         '

@@ -168,6 +168,8 @@
     <Compile Include="Bean\Antecedent\AntecedentClass.vb" />
     <Compile Include="Bean\DRC\DrcActeParamedicalAsso.vb" />
     <Compile Include="Bean\DRC\DrcStandard.vb" />
+    <Compile Include="Bean\Utilisateur\Action.vb" />
+    <Compile Include="Dao\Utilisateur\ActionDao.vb" />
     <Compile Include="Form\DRC\RadFActeParamedicalTest.Designer.vb">
       <DependentUpon>RadFActeParamedicalTest.vb</DependentUpon>
     </Compile>

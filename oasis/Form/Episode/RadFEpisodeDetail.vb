@@ -93,6 +93,13 @@ Public Class RadFEpisodeDetail
     Dim TypeEpisode, typeActiviteEpisode, typeProfilEpisode, DescriptionActiviteEpisode, CommentaireEpisode, UserCreation, DateCreation, UserModification, DateModification As String
 
     Private Sub RadFEpisodeDetail_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        Dim actiondao As New ActionDao
+        Dim action As New Action
+        action.UtilisateurId = userLog.UtilisateurId
+        action.PatientId = SelectedPatient.patientId
+        action.Action = "Accès épisode patient n° " & SelectedEpisodeId
+        actiondao.CreationAction(action)
+
         InitParametre()
         LblTypeEpisode.Text = ""
         LblTypeProfil.Text = ""
@@ -2842,7 +2849,7 @@ Public Class RadFEpisodeDetail
             If categoriePPS = 2 Then
                 'Suivi mesures préventives (Code DRC, libellé DRC, commentaire)
                 NaturePPS = "Mesures préventives : "
-                AffichePPS = NaturePPS & " " & AfficheDateModificationPPS & " " & CommentairePPS
+                AffichePPS = NaturePPS & " " & CommentairePPS
             End If
 
             SpecialiteDescription = ""

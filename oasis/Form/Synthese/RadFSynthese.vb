@@ -53,6 +53,13 @@ Public Class RadFSynthese
     Dim ParcoursListProfilsOasis As New List(Of Integer)
 
     Private Sub RadFSynthese_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        Dim actiondao As New ActionDao
+        Dim action As New Action
+        action.UtilisateurId = userLog.UtilisateurId
+        action.PatientId = SelectedPatient.patientId
+        action.Action = "Accès synthèse patient"
+        actiondao.CreationAction(action)
+
         Me.RadDesktopAlert1.Popup.AlertElement.CaptionElement.TextAndButtonsElement.TextElement.ForeColor = Color.Red
         Me.RadDesktopAlert1.Popup.AlertElement.CaptionElement.CaptionGrip.BackColor = Color.DarkBlue
         Me.RadDesktopAlert1.Popup.AlertElement.CaptionElement.CaptionGrip.GradientStyle = GradientStyles.Solid
@@ -1821,7 +1828,7 @@ Public Class RadFSynthese
                 End If
                 'Suivi mesures préventives (Code DRC, libellé DRC, commentaire)
                 NaturePPS = "Mesures préventives : "
-                AffichePPS = NaturePPS & " " & AfficheDateModificationPPS & " " & CommentairePPS
+                AffichePPS = NaturePPS & " " & CommentairePPS
             End If
 
             SpecialiteDescription = ""
