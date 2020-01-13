@@ -26,9 +26,11 @@ Public MustInherit Class StandardDao
 
     Public Shared Sub fixConnectionString()
         Dim DBCS = ConfigurationManager.ConnectionStrings("Oasis_WF.My.MySettings.oasisConnection")
-        Dim writable = GetType(ConfigurationElement).GetField("_bReadOnly", BindingFlags.Instance Or BindingFlags.NonPublic)
-        writable.SetValue(DBCS, False)
-        DBCS.ConnectionString = "Data Source=ns3119889.ip-51-38-181.eu;Initial Catalog=oasis;persist security info=True;user id=sa;password=Oasis-689;MultipleActiveResultSets=True"
+        If DBCS.ConnectionString = "" Then
+            Dim writable = GetType(ConfigurationElement).GetField("_bReadOnly", BindingFlags.Instance Or BindingFlags.NonPublic)
+            writable.SetValue(DBCS, False)
+            DBCS.ConnectionString = "Data Source=ns3119889.ip-51-38-181.eu;Initial Catalog=oasis;persist security info=True;user id=sa;password=Oasis-689;MultipleActiveResultSets=True"
+        End If
     End Sub
 
 
