@@ -1,5 +1,6 @@
 ﻿Imports Microsoft.VisualBasic
 Imports System.Configuration
+Imports System.Reflection
 Imports System.Data.SqlClient
 
 
@@ -22,6 +23,14 @@ Public MustInherit Class StandardDao
         Return conn
 
     End Function
+
+    Public Shared Sub fixConnectionString()
+        Dim DBCS = ConfigurationManager.ConnectionStrings("Oasis_WF.My.MySettings.oasisConnection")
+        Dim writable = GetType(ConfigurationElement).GetField("_bReadOnly", BindingFlags.Instance Or BindingFlags.NonPublic)
+        writable.SetValue(DBCS, False)
+        DBCS.ConnectionString = "Data Source=ns3119889.ip-51-38-181.eu;Initial Catalog=oasis;persist security info=True;user id=sa;password=Oasis-689;MultipleActiveResultSets=True"
+    End Sub
+
 
 
 End Class

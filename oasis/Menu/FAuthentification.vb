@@ -1,4 +1,5 @@
-﻿Public Class FAuthentificattion
+﻿Imports System.Configuration
+Public Class FAuthentificattion
     Enum EnumUtilisateur
         Informaticien
         Medecin_Francis
@@ -16,6 +17,15 @@
     Dim UtilisateurId As Integer
     Dim Admin As Boolean
     Dim NiveauAcces As Integer
+
+    Public Sub New()
+
+        ' Cet appel est requis par le concepteur.
+        InitializeComponent()
+
+        ' Ajoutez une initialisation quelconque après l'appel InitializeComponent().
+        StandardDao.fixConnectionString()
+    End Sub
 
     Private Sub FAuthentificattion_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         Me.UtilisateurConnecte = New Utilisateur()
