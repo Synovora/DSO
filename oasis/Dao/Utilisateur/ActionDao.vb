@@ -81,7 +81,7 @@ Public Class ActionDao
         With cmd.Parameters
             .AddWithValue("@utilisateurId", action.UtilisateurId)
             .AddWithValue("@patientId", action.PatientId)
-            .AddWithValue("@horodatage", DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss"))
+            .AddWithValue("@horodatage", Date.Now())
             .AddWithValue("@action", action.Action)
         End With
 
