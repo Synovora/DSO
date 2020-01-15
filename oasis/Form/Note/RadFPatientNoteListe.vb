@@ -1,4 +1,6 @@
-﻿Public Class RadFPatientNoteListe
+﻿Imports Telerik.WinControls.UI
+
+Public Class RadFPatientNoteListe
     Private _typeNote As Integer
     Private privateSelectedPatientId As Integer
     Private privateSelectedPatient As Patient
@@ -241,4 +243,9 @@
         Close()
     End Sub
 
+    Private Sub RadNotePatientDataGridView_CellFormatting(sender As Object, e As Telerik.WinControls.UI.CellFormattingEventArgs) Handles RadNotePatientDataGridView.CellFormatting
+        If TypeOf e.Row Is GridViewDataRowInfo Then
+            e.CellElement.ToolTipText = e.CellElement.Text
+        End If
+    End Sub
 End Class

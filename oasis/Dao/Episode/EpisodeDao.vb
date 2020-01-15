@@ -253,7 +253,7 @@ Public Class EpisodeDao
             .AddWithValue("@descriptionActivite", episode.DescriptionActivite)
             .AddWithValue("@commentaire", episode.Commentaire)
             .AddWithValue("@userCreation", userLog.UtilisateurId)
-            .AddWithValue("@dateCreation", Date.Now.ToString("yyyy-MM-dd HH:mm:ss"))
+            .AddWithValue("@dateCreation", Date.Now)
             .AddWithValue("@etat", EpisodeDao.EnumEtatEpisode.EN_COURS.ToString)
         End With
 
@@ -326,7 +326,7 @@ Public Class EpisodeDao
             .AddWithValue("@observationParamedical", episode.ObservationParamedical)
             .AddWithValue("@decision", episode.Decision)
             .AddWithValue("@userModification", userLog.UtilisateurId)
-            .AddWithValue("@dateModification", Date.Now.ToString("yyyy-MM-dd HH:mm:ss"))
+            .AddWithValue("@dateModification", Date.Now())
             .AddWithValue("@etat", episode.Etat)
             .AddWithValue("@inactif", episode.Inactif)
             .AddWithValue("@Id", episode.Id)
