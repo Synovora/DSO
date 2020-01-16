@@ -301,6 +301,7 @@ Public Class FrmTacheMain
     End Sub
     Private Sub refreshGridTacheATraiter(Optional chk As Integer = -1)
         Dim exId As Long, index As Integer = -1, exPosit = 0
+        Dim dateRdv As Date, strToolTip As String
         Me.Cursor = Cursors.WaitCursor
         Try
             Dim data As DataTable = tacheDao.getAllTacheATraiter(lstFonctionChoisie, filterTache)
@@ -326,6 +327,27 @@ Public Class FrmTacheMain
                     .Cells("site_description").Value = row("site_description")
                     .Cells("type").Value = Tache.getLibelleTacheNature(row("type"), row("nature"))
                     .Cells("typetache").Value = row("type") & If(row("nature") <> row("type"), "/" + row("nature"), "")
+                    .Cells("typePicto").Value = getPictoType(.Cells("typetache").Value, row("priorite"))
+
+                    strToolTip = " << " & .Cells("type").Value & " >>" & vbCrLf
+
+                    If row("type") = "RDV" OrElse row("type") = "RDV_MISSION" OrElse row("type") = "REUNION_STAFF" Then
+                        Try
+                            dateRdv = row("date_rendez_vous")
+                            .Cells("heureRdv").Value = dateRdv.ToString("HH:mm")
+                            If dateRdv < Now Then
+                                .Cells("heureRdv").Style.ForeColor = Color.Red
+                            End If
+                            strToolTip += dateRdv.ToString("dd/MM/yyyy à HH:mm") & vbCrLf
+                        Catch ex As Exception
+
+                        End Try
+                    End If
+                    RadTacheToTreatGrid.Rows.Last.Tag = strToolTip &
+                                                        .Cells("patient_nom").Value & vbCrLf &
+                                                        "---- Emetteur ----" & vbCrLf &
+                                                        row("emetteur_fonction") & vbCrLf &
+                                                        If(Coalesce(row("emetteur_commentaire"), "") <> "", " ---- Commentaire ----" & vbCrLf & row("emetteur_commentaire"), "")
                 End With
 
                 numRowGrid += 1
@@ -351,6 +373,10 @@ Public Class FrmTacheMain
 
 
     End Sub
+
+    Private Function getPictoType(typeStr As String, priorite As Integer) As Image
+        Return ImageList1.Images(typeStr + If(typeStr.StartsWith("AVIS"), "/" & priorite, ""))
+    End Function
 
     Private Sub RadTextBox1_ToolTipTextNeeded(sender As Object, e As Telerik.WinControls.ToolTipTextNeededEventArgs) Handles RadTextBox1.ToolTipTextNeeded
         Dim rtbe As RadTextBoxElement = DirectCast(Me.RadTextBox1.RootElement.Children(0), RadTextBoxElement)
@@ -445,8 +471,12 @@ Public Class FrmTacheMain
 
     Private Sub RadTacheToTreatGrid_CellFormatting(sender As Object, e As CellFormattingEventArgs) Handles RadTacheToTreatGrid.CellFormatting
         If TypeOf e.Row Is GridViewDataRowInfo Then
-            e.CellElement.Padding = New Padding(5, 0, 0, 0)
-            e.CellElement.ToolTipText = e.CellElement.Text
+            ' e.CellElement.Padding = New Padding(5, 0, 0, 0)
+            Try
+                If e.Row.Tag <> Nothing Then e.CellElement.ToolTipText = e.Row.Tag '.ToString
+            Catch ex As Exception
+
+            End Try
         End If
     End Sub
 
@@ -468,7 +498,7 @@ Public Class FrmTacheMain
     End Sub
 
     Private Sub traceTriangle(sender As Object, e As GridViewCellPaintEventArgs)
-        If e.Cell IsNot Nothing AndAlso TypeOf e.Cell.RowInfo Is GridViewDataRowInfo AndAlso e.Cell.ColumnInfo.Name = "Type" Then
+        If e.Cell IsNot Nothing AndAlso TypeOf e.Cell.RowInfo Is GridViewDataRowInfo AndAlso e.Cell.ColumnInfo.Name.ToLower.StartsWith("type") Then
             Dim brush As Brush
             brush = Brushes.Transparent.Clone()
             Select Case e.Cell.RowElement.RowInfo.Cells("typetache").Value
@@ -492,19 +522,26 @@ Public Class FrmTacheMain
     End Sub
     Private Sub RadTacheToTreatGrid_MouseDoubleClick(sender As Object, e As MouseEventArgs) Handles RadTacheToTreatGrid.MouseDoubleClick
         If Me.RadTacheToTreatGrid.Rows.Count = 0 OrElse Me.RadTacheToTreatGrid.CurrentRow.IsSelected = False Then Return
-        ' -- menu contextuel
-        Dim p As Point = (TryCast(sender, Control)).PointToScreen(e.Location)
-        CtxMenuGridTacheATraiter.Show(p.X, p.Y)
+        Dim idTache As Long = Me.RadTacheToTreatGrid.CurrentRow.Cells("id").Value
+        prendreTacheATraiter(idTache)
     End Sub
+
     Private Sub RadTacheToTreatGrid_MouseClick(sender As Object, e As MouseEventArgs) Handles RadTacheToTreatGrid.MouseClick
         If e.Button = MouseButtons.Right Then
-            RadTacheToTreatGrid_MouseDoubleClick(sender, e)
+            If Me.RadTacheToTreatGrid.Rows.Count = 0 OrElse Me.RadTacheToTreatGrid.CurrentRow.IsSelected = False Then Return
+            ' -- menu contextuel
+            Dim p As Point = (TryCast(sender, Control)).PointToScreen(e.Location)
+            CtxMenuGridTacheATraiter.Show(p.X, p.Y)
         End If
     End Sub
 
     Private Sub MnuItemPrendreTacheATraiter_Click(sender As Object, e As EventArgs) Handles MnuItemPrendreTacheATraiter.Click
         ' -- on récupère la tache choisie
         Dim idTache As Long = Me.RadTacheToTreatGrid.CurrentRow.Cells("id").Value
+        prendreTacheATraiter(idTache)
+    End Sub
+
+    Private Sub prendreTacheATraiter(idTache As Long)
         If tacheDao.attribueTacheToUserLog(idTache) Then
             refreshGridTacheATraiter()
             refreshGridTacheEnCours()

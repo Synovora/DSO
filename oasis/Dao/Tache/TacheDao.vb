@@ -143,7 +143,7 @@ Public Class TacheDao
         SQLString =
             "SELECT CHECKSUM_AGG(cast(id as int)  ) as CHK " & vbCrLf &
             "FROM [oasis].[oa_tache] T " & vbCrLf &
-            "WHERE etat = @etat " & vbCrLf
+            "WHERE etat = @etat And type<> @typeSpecialiste AND (type NOT IN (@typeRdv, @typeRdvMission) OR (type IN (@typeRdv, @typeRdvMission) AND CONVERT(date, date_rendez_vous) <= CONVERT(date, @dateRdv))) " & vbCrLf
 
         ' --- ajout des filtre
         SQLString += addFiltreAllTacheATraiter(lstFonction, filtreTache)
@@ -156,6 +156,10 @@ Public Class TacheDao
             Using tacheDataAdapter
                 tacheDataAdapter.SelectCommand = New SqlCommand(SQLString, con)
                 tacheDataAdapter.SelectCommand.Parameters.AddWithValue("@etat", EtatTache.EN_ATTENTE.ToString)
+                tacheDataAdapter.SelectCommand.Parameters.AddWithValue("@typeSpecialiste", TypeTache.RDV_SPECIALISTE.ToString)
+                tacheDataAdapter.SelectCommand.Parameters.AddWithValue("@typeRdv", TypeTache.RDV.ToString)
+                tacheDataAdapter.SelectCommand.Parameters.AddWithValue("@typeRdvMission", TypeTache.RDV_MISSION.ToString)
+                tacheDataAdapter.SelectCommand.Parameters.AddWithValue("@dateRdv", DateTime.Now)
                 Dim tacheDataTable As DataTable = New DataTable()
                 Using tacheDataTable
                     Try
@@ -190,19 +194,23 @@ Public Class TacheDao
             "     P.oa_patient_prenom as patient_prenom, " & vbCrLf &
             "     T.type , " & vbCrLf &
             "     T.nature, " & vbCrLf &
+            "     T.emetteur_fonction_id, " & vbCrLf &
             "     T.emetteur_commentaire, " & vbCrLf &
             "     T.horodate_creation, " & vbCrLf &
             "     T.priorite, " & vbCrLf &
-            "	  T.ordre_affichage " & vbCrLf &
+            "	  T.ordre_affichage, " & vbCrLf &
+           "	  coalesce(F.oa_r_fonction_designation,'') as emetteur_fonction, " & vbCrLf &
+             "	  T.date_rendez_vous " & vbCrLf &
             "FROM [oasis].[oa_tache] T " & vbCrLf &
             "LEFT JOIN  oasis.oa_site S ON S.oa_site_id = T.site_id " & vbCrLf &
+            "LEFT JOIN  oasis.oa_r_fonction F ON F.oa_r_fonction_id = T.emetteur_fonction_id " & vbCrLf &
             "LEFT JOIN  oasis.oa_patient P ON P.oa_patient_id = T.patient_id " & vbCrLf &
-            "WHERE etat = @etat " & vbCrLf
+            "WHERE etat = @etat And type<> @typeSpecialiste AND (type NOT IN (@typeRdv,@typeRdvMission) OR (type IN (@typeRdv,@typeRdvMission) AND CONVERT(date,date_rendez_vous) <= CONVERT(date, @daterdv))) " & vbCrLf
 
         ' --- ajout des filtre
         SQLString += addFiltreAllTacheATraiter(lstFonction, filtreTache)
 
-        SQLString += "ORDER BY priorite,ordre_affichage,horodate_creation "
+        SQLString += "ORDER BY priorite,ordre_affichage, COALESCE(date_rendez_vous, horodate_creation) "
         'Console.WriteLine(SQLString)
 
         Using con As SqlConnection = GetConnection()
@@ -211,6 +219,10 @@ Public Class TacheDao
             Using tacheDataAdapter
                 tacheDataAdapter.SelectCommand = New SqlCommand(SQLString, con)
                 tacheDataAdapter.SelectCommand.Parameters.AddWithValue("@etat", EtatTache.EN_ATTENTE.ToString)
+                tacheDataAdapter.SelectCommand.Parameters.AddWithValue("@typeSpecialiste", TypeTache.RDV_SPECIALISTE.ToString)
+                tacheDataAdapter.SelectCommand.Parameters.AddWithValue("@typeRdv", TypeTache.RDV.ToString)
+                tacheDataAdapter.SelectCommand.Parameters.AddWithValue("@typeRdvMission", TypeTache.RDV_MISSION.ToString)
+                tacheDataAdapter.SelectCommand.Parameters.AddWithValue("@daterdv", DateTime.Now)
                 Dim tacheDataTable As DataTable = New DataTable()
                 Using tacheDataTable
                     Try
@@ -265,12 +277,12 @@ Public Class TacheDao
             "     T.emetteur_commentaire, " & vbCrLf &
             "     T.horodate_creation, " & vbCrLf &
             "     T.priorite, " & vbCrLf &
-            "	  T.ordre_affichage, " & vbCrLf &
             "	  T.date_rendez_vous " & vbCrLf &
             "FROM [oasis].[oa_tache] T " & vbCrLf &
             "LEFT JOIN  oasis.oa_site S ON S.oa_site_id = T.site_id " & vbCrLf &
             "LEFT JOIN  oasis.oa_patient P ON P.oa_patient_id = T.patient_id " & vbCrLf &
-            "WHERE etat = @etat" & vbCrLf
+            "WHERE etat = @etat And type<> @type " & vbCrLf
+        ' "	  T.ordre_affichage, " & vbCrLf &
 
         ' --- condition si pour moi ou pour toutes les fonctions de mon profil
         If isMyTache Then
@@ -292,7 +304,7 @@ Public Class TacheDao
             End If
         End If
 
-        SQLString += "ORDER BY priorite,ordre_affichage,horodate_creation "
+        SQLString += "ORDER BY priorite,ordre_affichage, COALESCE(date_rendez_vous, horodate_creation) "
         'Console.WriteLine(SQLString)
 
         Using con As SqlConnection = GetConnection()
@@ -301,6 +313,7 @@ Public Class TacheDao
             Using tacheDataAdapter
                 tacheDataAdapter.SelectCommand = New SqlCommand(SQLString, con)
                 tacheDataAdapter.SelectCommand.Parameters.AddWithValue("@etat", EtatTache.EN_COURS.ToString)
+                tacheDataAdapter.SelectCommand.Parameters.AddWithValue("@type", TypeTache.RDV_SPECIALISTE.ToString)
                 If isMyTache Then tacheDataAdapter.SelectCommand.Parameters.AddWithValue("@traite_user_id", userLog.UtilisateurId)
                 Dim tacheDataTable As DataTable = New DataTable()
                 Using tacheDataTable
@@ -338,7 +351,7 @@ Public Class TacheDao
             "LEFT JOIN  oasis.oa_site S ON S.oa_site_id = T.site_id " & vbCrLf &
             "LEFT JOIN  oasis.oa_patient P ON P.oa_patient_id = T.patient_id " & vbCrLf &
             "WHERE etat = @etat" & vbCrLf &
-            "AND [type] IN (@typeTache1 , @typeTache2, @typeTache3, @typeTache4) " & vbCrLf &
+            "AND [type] IN (@typeTache1 , @typeTache2, @typeTache3) " & vbCrLf &
             "AND date_rendez_vous BETWEEN @datedebut and @datefin " & vbCrLf
 
         ' --- condition si pour moi ou pour toutes les fonctions de mon profil
@@ -377,7 +390,7 @@ Public Class TacheDao
                 tacheDataAdapter.SelectCommand.Parameters.AddWithValue("@typeTache1", TypeTache.RDV.ToString)
                 tacheDataAdapter.SelectCommand.Parameters.AddWithValue("@typeTache2", TypeTache.RDV_MISSION.ToString)
                 tacheDataAdapter.SelectCommand.Parameters.AddWithValue("@typeTache3", TypeTache.REUNION_STAFF.ToString)
-                tacheDataAdapter.SelectCommand.Parameters.AddWithValue("@typeTache4", TypeTache.RDV_SPECIALISTE.ToString)
+                'tacheDataAdapter.SelectCommand.Parameters.AddWithValue("@typeTache4", TypeTache.RDV_SPECIALISTE.ToString)
                 tacheDataAdapter.SelectCommand.Parameters.AddWithValue("@datedebut", dateDebut)
                 tacheDataAdapter.SelectCommand.Parameters.AddWithValue("@datefin", dateFin.AddDays(1))   ' <= jour suivant à minuit
                 Dim tacheDataTable As DataTable = New DataTable()
