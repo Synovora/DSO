@@ -277,9 +277,16 @@ Public Class TacheDao
             "     T.emetteur_commentaire, " & vbCrLf &
             "     T.horodate_creation, " & vbCrLf &
             "     T.priorite, " & vbCrLf &
+           "	  coalesce(U.oa_utilisateur_nom,'') as user_traiteur_nom, " & vbCrLf &
+            "	  coalesce(U.oa_utilisateur_prenom,'') as user_traiteur_prenom, " & vbCrLf &
+           "	  coalesce(F.oa_r_fonction_designation,'') as emetteur_fonction, " & vbCrLf &
+           "	  coalesce(F2.oa_r_fonction_designation,'') as traite_fonction, " & vbCrLf &
             "	  T.date_rendez_vous " & vbCrLf &
             "FROM [oasis].[oa_tache] T " & vbCrLf &
+            "LEFT JOIN  oasis.oa_utilisateur U ON U.oa_utilisateur_id = T.traite_user_id " & vbCrLf &
             "LEFT JOIN  oasis.oa_site S ON S.oa_site_id = T.site_id " & vbCrLf &
+            "LEFT JOIN  oasis.oa_r_fonction F ON F.oa_r_fonction_id = T.emetteur_fonction_id " & vbCrLf &
+            "LEFT JOIN  oasis.oa_r_fonction F2 ON F2.oa_r_fonction_id = T.traite_fonction_id " & vbCrLf &
             "LEFT JOIN  oasis.oa_patient P ON P.oa_patient_id = T.patient_id " & vbCrLf &
             "WHERE etat = @etat And type<> @type " & vbCrLf
         ' "	  T.ordre_affichage, " & vbCrLf &
@@ -418,18 +425,22 @@ Public Class TacheDao
             "SELECT TOP 1000 " & vbCrLf &
             "	  T.id, " & vbCrLf &
             "	  T.etat, " & vbCrLf &
+            "     T.priorite, " & vbCrLf &
             "     S.oa_site_description as site_description, " & vbCrLf &
             "     P.oa_patient_nom as patient_nom, " & vbCrLf &
             "     P.oa_patient_prenom as patient_prenom, " & vbCrLf &
             "     T.type , " & vbCrLf &
             "     T.nature, " & vbCrLf &
+            "     T.emetteur_commentaire, " & vbCrLf &
              "	  T.date_rendez_vous, " & vbCrLf &
+            "	  coalesce(F.oa_r_fonction_designation,'') as emetteur_fonction, " & vbCrLf &
            "	  coalesce(U.oa_utilisateur_nom,'') as user_traiteur_nom, " & vbCrLf &
             "	  coalesce(U.oa_utilisateur_prenom,'') as user_traiteur_prenom, " & vbCrLf &
-            "	  coalesce(F.oa_r_fonction_designation,'') as user_traiteur_fonction " & vbCrLf &
+            "	  coalesce(F2.oa_r_fonction_designation,'') as user_traiteur_fonction " & vbCrLf &
             "FROM [oasis].[oa_tache] T " & vbCrLf &
             "LEFT JOIN  oasis.oa_utilisateur U ON U.oa_utilisateur_id = T.traite_user_id " & vbCrLf &
-            "LEFT JOIN  oasis.oa_r_fonction F ON F.oa_r_fonction_id = T.traite_fonction_id " & vbCrLf &
+            "LEFT JOIN  oasis.oa_r_fonction F ON F.oa_r_fonction_id = T.emetteur_fonction_id " & vbCrLf &
+            "LEFT JOIN  oasis.oa_r_fonction F2 ON F2.oa_r_fonction_id = T.traite_fonction_id " & vbCrLf &
             "LEFT JOIN  oasis.oa_site S ON S.oa_site_id = T.site_id " & vbCrLf &
             "LEFT JOIN  oasis.oa_patient P ON P.oa_patient_id = T.patient_id " & vbCrLf &
             "WHERE [emetteur_user_id] = @emetteur_user_id " & vbCrLf

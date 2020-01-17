@@ -40,6 +40,7 @@ Public Class FrmTacheMain
 
         ' -- load des grid
         refreshGridTacheATraiter()
+        RadioMesTachesEnCours.CheckState = CheckState.Checked
         'refreshGridTacheEnCours() : pas besoin fait par l'evenement du bouton radio qui est checked par defaut (RadioMesTachesEnCours)
         If RadTacheEnCoursGrid.Rows.Count > 0 Then
             Me.RadTacheEnCoursGrid.CurrentRow = RadTacheEnCoursGrid.Rows(0)
@@ -325,11 +326,10 @@ Public Class FrmTacheMain
                     If numRowGrid <= exPosit Then exPosit = numRowGrid     ' position approchée 
                     .Cells("patient_nom").Value = row("patient_nom") + " " + row("patient_prenom")
                     .Cells("site_description").Value = row("site_description")
-                    .Cells("type").Value = Tache.getLibelleTacheNature(row("type"), row("nature"))
                     .Cells("typetache").Value = row("type") & If(row("nature") <> row("type"), "/" + row("nature"), "")
                     .Cells("typePicto").Value = getPictoType(.Cells("typetache").Value, row("priorite"))
 
-                    strToolTip = " << " & .Cells("type").Value & " >>" & vbCrLf
+                    strToolTip = " << " & Tache.getLibelleTacheNature(row("type"), row("nature")) & " >>" & vbCrLf
 
                     If row("type") = "RDV" OrElse row("type") = "RDV_MISSION" OrElse row("type") = "REUNION_STAFF" Then
                         Try
@@ -419,6 +419,7 @@ Public Class FrmTacheMain
     End Sub
 
     Private Sub refreshGridTacheEnCours()
+        Dim dateRdv As Date, strToolTip As String
         Try
             Me.Cursor = Cursors.WaitCursor
 
@@ -433,6 +434,9 @@ Public Class FrmTacheMain
             End If
             RadTacheEnCoursGrid.Rows.Clear()
 
+            'RadTacheEnCoursGrid.Columns("user_traiteur").IsVisible = Not isMyTache
+            'RadTacheEnCoursGrid.Columns("fonction_traiteur").IsVisible = Not isMyTache
+
             For Each row In data.Rows
                 RadTacheEnCoursGrid.Rows.Add(numRowGrid)
                 typeTache = row("type")
@@ -444,11 +448,34 @@ Public Class FrmTacheMain
                     If numRowGrid <= exPosit Then exPosit = numRowGrid     ' position approchée 
                     .Cells("patient_nom").Value = row("patient_nom") + " " + row("patient_prenom")
                     .Cells("site_description").Value = row("site_description")
-                    .Cells("type").Value = Tache.getLibelleTacheNature(row("type"), row("nature")) +
-                        If(typeTache = TacheDao.TypeTache.RDV.ToString OrElse typeTache = TacheDao.TypeTache.RDV_MISSION.ToString OrElse typeTache = TacheDao.TypeTache.REUNION_STAFF.ToString OrElse typeTache = TacheDao.TypeTache.RDV_SPECIALISTE.ToString,
-                        " le " + Strings.Left(row("date_rendez_vous").ToString(), row("date_rendez_vous").ToString().Length() - 3) _
-                        , " ")
+                    '.Cells("type").Value = Tache.getLibelleTacheNature(row("type"), row("nature")) +
+                    '    If(typeTache = TacheDao.TypeTache.RDV.ToString OrElse typeTache = TacheDao.TypeTache.RDV_MISSION.ToString OrElse typeTache = TacheDao.TypeTache.REUNION_STAFF.ToString OrElse typeTache = TacheDao.TypeTache.RDV_SPECIALISTE.ToString,
+                    '    " le " + Strings.Left(row("date_rendez_vous").ToString(), row("date_rendez_vous").ToString().Length() - 3) _
+                    '    , " ")
                     .Cells("typetache").Value = row("type") & If(row("nature") <> row("type"), "/" + row("nature"), "")
+                    .Cells("typePicto").Value = getPictoType(.Cells("typetache").Value, row("priorite"))
+                    .Cells("user_traiteur").Value = row("user_traiteur_nom") + " " + row("user_traiteur_prenom")
+                    .Cells("fonction_traiteur").Value = row("traite_fonction")
+                    strToolTip = " << " & Tache.getLibelleTacheNature(row("type"), row("nature")) & " >>" & vbCrLf
+
+                    If row("type") = "RDV" OrElse row("type") = "RDV_MISSION" OrElse row("type") = "REUNION_STAFF" Then
+                        Try
+                            dateRdv = row("date_rendez_vous")
+                            .Cells("heureRdv").Value = dateRdv.ToString("HH:mm")
+                            If dateRdv < Now Then
+                                .Cells("heureRdv").Style.ForeColor = Color.Red
+                            End If
+                            strToolTip += dateRdv.ToString("dd/MM/yyyy à HH:mm") & vbCrLf
+                        Catch ex As Exception
+
+                        End Try
+                    End If
+                    RadTacheEnCoursGrid.Rows.Last.Tag = strToolTip &
+                                                        .Cells("patient_nom").Value & vbCrLf &
+                                                        "---- Emetteur ----" & vbCrLf &
+                                                        row("emetteur_fonction") & vbCrLf &
+                                                        If(Coalesce(row("emetteur_commentaire"), "") <> "", " ---- Commentaire ----" & vbCrLf & row("emetteur_commentaire"), "")
+
                 End With
                 numRowGrid += 1
 
@@ -482,15 +509,23 @@ Public Class FrmTacheMain
 
     Private Sub RadTacheEnCoursGrid_CellFormatting(sender As Object, e As CellFormattingEventArgs) Handles RadTacheEnCoursGrid.CellFormatting
         If TypeOf e.Row Is GridViewDataRowInfo Then
-            e.CellElement.Padding = New Padding(5, 0, 0, 0)
-            e.CellElement.ToolTipText = e.CellElement.Text
+            ' e.CellElement.Padding = New Padding(5, 0, 0, 0)
+            Try
+                If e.Row.Tag <> Nothing Then e.CellElement.ToolTipText = e.Row.Tag '.ToString
+            Catch ex As Exception
+
+            End Try
         End If
     End Sub
 
     Private Sub RadTacheEmiseGrid_CellFormatting(sender As Object, e As CellFormattingEventArgs) Handles RadTacheEmiseGrid.CellFormatting
         If TypeOf e.Row Is GridViewDataRowInfo Then
-            e.CellElement.Padding = New Padding(5, 0, 0, 0)
-            e.CellElement.ToolTipText = e.CellElement.Text
+            ' e.CellElement.Padding = New Padding(5, 0, 0, 0)
+            Try
+                If e.Row.Tag <> Nothing Then e.CellElement.ToolTipText = e.Row.Tag '.ToString
+            Catch ex As Exception
+
+            End Try
         End If
     End Sub
     Private Sub RadTacheEnCoursGrid_CellPaint(sender As Object, e As GridViewCellPaintEventArgs) Handles RadTacheEnCoursGrid.CellPaint
@@ -505,7 +540,7 @@ Public Class FrmTacheMain
                 Case TacheDao.TypeTache.RDV.ToString()
                     brush.Dispose()
                     brush = Brushes.LightGreen.Clone()
-                Case TacheDao.TypeTache.RDV_DEMANDE.ToString()
+                Case TacheDao.TypeTache.RDV_DEMANDE.ToString(), TacheDao.TypeTache.REUNION_STAFF.ToString
                     brush.Dispose()
                     brush = Brushes.LightGray.Clone()
                 Case TacheDao.TypeTache.RDV_MISSION.ToString()
@@ -607,7 +642,9 @@ Public Class FrmTacheMain
         If RadioTachesFonctionEnCours.IsChecked Then refreshGridDroitOngletActif()
     End Sub
     Private Sub RadioTacheEmiseEnCours_CheckStateChanged(sender As Object, e As EventArgs) Handles RadioTacheEmiseEnCours.CheckStateChanged
-        If RadioTacheEmiseEnCours.IsChecked Then refreshGridDroitOngletActif()
+        If RadioTacheEmiseEnCours.IsChecked AndAlso PageTache.SelectedPage.Name = "PageTachesEmises" Then
+            refreshGridDroitOngletActif()
+        End If
     End Sub
     Private Sub RadioTacheEmiseToute_CheckStateChanged(sender As Object, e As EventArgs) Handles RadioTacheEmiseToute.CheckStateChanged
         If RadioTacheEmiseToute.IsChecked Then refreshGridDroitOngletActif()
@@ -682,6 +719,7 @@ Public Class FrmTacheMain
     End Sub
 
     Private Sub refreshGridTacheEmise()
+        Dim dateRdv As Date, strToolTip As String
         Dim exId As Long, index As Integer = -1, exPosit = 0
         Dim typeTache As String
         Me.Cursor = Cursors.WaitCursor
@@ -708,13 +746,35 @@ Public Class FrmTacheMain
                     .Cells("Etat").Value = row("etat")
                     .Cells("patient_nom").Value = row("patient_nom") + " " + row("patient_prenom")
                     .Cells("site_description").Value = row("site_description")
-                    .Cells("type").Value = Tache.getLibelleTacheNature(row("type"), row("nature")) +
-                        If(typeTache = TacheDao.TypeTache.RDV.ToString OrElse typeTache = TacheDao.TypeTache.RDV_MISSION.ToString OrElse typeTache = TacheDao.TypeTache.REUNION_STAFF.ToString OrElse typeTache = TacheDao.TypeTache.RDV_SPECIALISTE.ToString,
-                        " le " + Strings.Left(row("date_rendez_vous").ToString(), row("date_rendez_vous").ToString().Length() - 3) _
-                        , " ")
+                    '.Cells("type").Value = Tache.getLibelleTacheNature(row("type"), row("nature")) +
+                    '    If(typeTache = TacheDao.TypeTache.RDV.ToString OrElse typeTache = TacheDao.TypeTache.RDV_MISSION.ToString OrElse typeTache = TacheDao.TypeTache.REUNION_STAFF.ToString OrElse typeTache = TacheDao.TypeTache.RDV_SPECIALISTE.ToString,
+                    '    " le " + Strings.Left(row("date_rendez_vous").ToString(), row("date_rendez_vous").ToString().Length() - 3) _
+                    '    , " ")
                     .Cells("typetache").Value = row("type") & If(row("nature") <> row("type"), "/" + row("nature"), "")
+                    .Cells("typePicto").Value = getPictoType(.Cells("typetache").Value, row("priorite"))
                     .Cells("user_traiteur").Value = row("user_traiteur_nom") + " " + row("user_traiteur_prenom")
                     .Cells("fonction_traiteur").Value = row("user_traiteur_fonction")
+                    strToolTip = " << " & Tache.getLibelleTacheNature(row("type"), row("nature")) & " >>" & vbCrLf
+
+                    If row("type") <> "RDV_DEMANDE" AndAlso row("type").ToString.StartsWith("RDV") OrElse row("type") = "REUNION_STAFF" Then
+                        Try
+                            dateRdv = row("date_rendez_vous")
+                            .Cells("heureRdv").Value = dateRdv.ToString("HH:mm")
+                            If dateRdv < Now Then
+                                .Cells("heureRdv").Style.ForeColor = Color.Red
+                            End If
+                            strToolTip += dateRdv.ToString("dd/MM/yyyy à HH:mm") & vbCrLf
+                        Catch ex As Exception
+
+                        End Try
+                    End If
+                    RadTacheEmiseGrid.Rows.Last.Tag = strToolTip &
+                                                        .Cells("patient_nom").Value & vbCrLf &
+                                                        "---- Emetteur ----" & vbCrLf &
+                                                        row("emetteur_fonction") & vbCrLf &
+                                                        If(Coalesce(row("emetteur_commentaire"), "") <> "", " ---- Commentaire ----" & vbCrLf & row("emetteur_commentaire"), "")
+
+
                 End With
 
                 numRowGrid += 1

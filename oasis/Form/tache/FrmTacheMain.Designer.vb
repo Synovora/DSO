@@ -30,17 +30,19 @@ Partial Class FrmTacheMain
         Dim GridViewTextBoxColumn4 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
         Dim GridViewTextBoxColumn5 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
         Dim GridViewTextBoxColumn6 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
-        Dim GridViewTextBoxColumn7 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
         Dim TableViewDefinition1 As Telerik.WinControls.UI.TableViewDefinition = New Telerik.WinControls.UI.TableViewDefinition()
+        Dim GridViewTextBoxColumn7 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
         Dim GridViewTextBoxColumn8 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
+        Dim GridViewImageColumn2 As Telerik.WinControls.UI.GridViewImageColumn = New Telerik.WinControls.UI.GridViewImageColumn()
         Dim GridViewTextBoxColumn9 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
         Dim GridViewTextBoxColumn10 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
         Dim GridViewTextBoxColumn11 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
         Dim GridViewTextBoxColumn12 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
         Dim GridViewTextBoxColumn13 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
-        Dim TableViewDefinition2 As Telerik.WinControls.UI.TableViewDefinition = New Telerik.WinControls.UI.TableViewDefinition()
         Dim GridViewTextBoxColumn14 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
+        Dim TableViewDefinition2 As Telerik.WinControls.UI.TableViewDefinition = New Telerik.WinControls.UI.TableViewDefinition()
         Dim GridViewTextBoxColumn15 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
+        Dim GridViewImageColumn3 As Telerik.WinControls.UI.GridViewImageColumn = New Telerik.WinControls.UI.GridViewImageColumn()
         Dim GridViewTextBoxColumn16 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
         Dim GridViewTextBoxColumn17 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
         Dim GridViewTextBoxColumn18 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
@@ -48,6 +50,7 @@ Partial Class FrmTacheMain
         Dim GridViewTextBoxColumn20 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
         Dim GridViewTextBoxColumn21 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
         Dim GridViewTextBoxColumn22 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
+        Dim GridViewTextBoxColumn23 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
         Dim TableViewDefinition3 As Telerik.WinControls.UI.TableViewDefinition = New Telerik.WinControls.UI.TableViewDefinition()
         Dim SchedulerDailyPrintStyle1 As Telerik.WinControls.UI.SchedulerDailyPrintStyle = New Telerik.WinControls.UI.SchedulerDailyPrintStyle()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(FrmTacheMain))
@@ -151,7 +154,7 @@ Partial Class FrmTacheMain
         Me.RadMenu3.Items.AddRange(New Telerik.WinControls.RadItem() {Me.MnuPatients})
         Me.RadMenu3.Location = New System.Drawing.Point(0, 0)
         Me.RadMenu3.Name = "RadMenu3"
-        Me.RadMenu3.Size = New System.Drawing.Size(1155, 20)
+        Me.RadMenu3.Size = New System.Drawing.Size(1198, 20)
         Me.RadMenu3.TabIndex = 1
         '
         'MnuPatients
@@ -165,7 +168,7 @@ Partial Class FrmTacheMain
         Me.RadPanelMain.Dock = System.Windows.Forms.DockStyle.Fill
         Me.RadPanelMain.Location = New System.Drawing.Point(0, 20)
         Me.RadPanelMain.Name = "RadPanelMain"
-        Me.RadPanelMain.Size = New System.Drawing.Size(1155, 623)
+        Me.RadPanelMain.Size = New System.Drawing.Size(1198, 623)
         Me.RadPanelMain.TabIndex = 2
         '
         'SplitContainerMain
@@ -272,30 +275,29 @@ Partial Class FrmTacheMain
         GridViewTextBoxColumn2.Width = 74
         GridViewImageColumn1.HeaderText = "Type"
         GridViewImageColumn1.ImageLayout = System.Windows.Forms.ImageLayout.Center
+        GridViewImageColumn1.MaxWidth = 35
+        GridViewImageColumn1.MinWidth = 35
         GridViewImageColumn1.Name = "typePicto"
-        GridViewImageColumn1.Width = 30
+        GridViewImageColumn1.Width = 35
         GridViewTextBoxColumn3.HeaderText = "Heure"
+        GridViewTextBoxColumn3.MaxWidth = 37
+        GridViewTextBoxColumn3.MinWidth = 37
         GridViewTextBoxColumn3.Name = "HeureRdv"
         GridViewTextBoxColumn3.TextAlignment = System.Drawing.ContentAlignment.MiddleCenter
-        GridViewTextBoxColumn3.Width = 41
+        GridViewTextBoxColumn3.Width = 37
         GridViewTextBoxColumn4.HeaderText = "TypeTache"
         GridViewTextBoxColumn4.IsVisible = False
         GridViewTextBoxColumn4.Name = "TypeTache"
         GridViewTextBoxColumn4.Width = 38
-        GridViewTextBoxColumn5.FieldName = "type"
-        GridViewTextBoxColumn5.HeaderText = "Type"
-        GridViewTextBoxColumn5.IsVisible = False
-        GridViewTextBoxColumn5.Name = "Type"
-        GridViewTextBoxColumn5.Width = 54
-        GridViewTextBoxColumn6.FieldName = "patient_nom"
-        GridViewTextBoxColumn6.HeaderText = "Nom du patient"
-        GridViewTextBoxColumn6.Name = "patient_nom"
-        GridViewTextBoxColumn6.Width = 88
-        GridViewTextBoxColumn7.FieldName = "site_description"
-        GridViewTextBoxColumn7.HeaderText = "Site"
-        GridViewTextBoxColumn7.Name = "site_description"
-        GridViewTextBoxColumn7.Width = 137
-        Me.RadTacheToTreatGrid.MasterTemplate.Columns.AddRange(New Telerik.WinControls.UI.GridViewDataColumn() {GridViewTextBoxColumn1, GridViewTextBoxColumn2, GridViewImageColumn1, GridViewTextBoxColumn3, GridViewTextBoxColumn4, GridViewTextBoxColumn5, GridViewTextBoxColumn6, GridViewTextBoxColumn7})
+        GridViewTextBoxColumn5.FieldName = "patient_nom"
+        GridViewTextBoxColumn5.HeaderText = "Nom du patient"
+        GridViewTextBoxColumn5.Name = "patient_nom"
+        GridViewTextBoxColumn5.Width = 88
+        GridViewTextBoxColumn6.FieldName = "site_description"
+        GridViewTextBoxColumn6.HeaderText = "Site"
+        GridViewTextBoxColumn6.Name = "site_description"
+        GridViewTextBoxColumn6.Width = 136
+        Me.RadTacheToTreatGrid.MasterTemplate.Columns.AddRange(New Telerik.WinControls.UI.GridViewDataColumn() {GridViewTextBoxColumn1, GridViewTextBoxColumn2, GridViewImageColumn1, GridViewTextBoxColumn3, GridViewTextBoxColumn4, GridViewTextBoxColumn5, GridViewTextBoxColumn6})
         Me.RadTacheToTreatGrid.MasterTemplate.ViewDefinition = TableViewDefinition1
         Me.RadTacheToTreatGrid.Name = "RadTacheToTreatGrid"
         Me.RadTacheToTreatGrid.ReadOnly = True
@@ -466,36 +468,52 @@ Partial Class FrmTacheMain
         Me.RadTacheEnCoursGrid.MasterTemplate.AllowColumnChooser = False
         Me.RadTacheEnCoursGrid.MasterTemplate.AllowEditRow = False
         Me.RadTacheEnCoursGrid.MasterTemplate.AutoSizeColumnsMode = Telerik.WinControls.UI.GridViewAutoSizeColumnsMode.Fill
-        GridViewTextBoxColumn8.DataType = GetType(Long)
-        GridViewTextBoxColumn8.FieldName = "id"
-        GridViewTextBoxColumn8.HeaderText = "Id"
+        GridViewTextBoxColumn7.DataType = GetType(Long)
+        GridViewTextBoxColumn7.FieldName = "id"
+        GridViewTextBoxColumn7.HeaderText = "Id"
+        GridViewTextBoxColumn7.IsVisible = False
+        GridViewTextBoxColumn7.Name = "id"
+        GridViewTextBoxColumn7.TextAlignment = System.Drawing.ContentAlignment.MiddleRight
+        GridViewTextBoxColumn7.Width = 43
+        GridViewTextBoxColumn8.DataType = GetType(Integer)
+        GridViewTextBoxColumn8.FieldName = "priorite"
+        GridViewTextBoxColumn8.HeaderText = "Priorité"
         GridViewTextBoxColumn8.IsVisible = False
-        GridViewTextBoxColumn8.Name = "id"
-        GridViewTextBoxColumn8.TextAlignment = System.Drawing.ContentAlignment.MiddleRight
-        GridViewTextBoxColumn8.Width = 43
-        GridViewTextBoxColumn9.DataType = GetType(Integer)
-        GridViewTextBoxColumn9.FieldName = "priorite"
-        GridViewTextBoxColumn9.HeaderText = "Priorité"
-        GridViewTextBoxColumn9.IsVisible = False
-        GridViewTextBoxColumn9.Name = "priorite"
-        GridViewTextBoxColumn9.Width = 74
+        GridViewTextBoxColumn8.Name = "priorite"
+        GridViewTextBoxColumn8.Width = 74
+        GridViewImageColumn2.HeaderText = "Type"
+        GridViewImageColumn2.ImageLayout = System.Windows.Forms.ImageLayout.Center
+        GridViewImageColumn2.MaxWidth = 35
+        GridViewImageColumn2.MinWidth = 35
+        GridViewImageColumn2.Name = "typePicto"
+        GridViewImageColumn2.Width = 35
+        GridViewTextBoxColumn9.HeaderText = "Heure"
+        GridViewTextBoxColumn9.MaxWidth = 37
+        GridViewTextBoxColumn9.MinWidth = 37
+        GridViewTextBoxColumn9.Name = "HeureRdv"
+        GridViewTextBoxColumn9.TextAlignment = System.Drawing.ContentAlignment.MiddleCenter
+        GridViewTextBoxColumn9.Width = 37
         GridViewTextBoxColumn10.HeaderText = "TypeTache"
         GridViewTextBoxColumn10.IsVisible = False
         GridViewTextBoxColumn10.Name = "TypeTache"
         GridViewTextBoxColumn10.Width = 46
-        GridViewTextBoxColumn11.FieldName = "type"
-        GridViewTextBoxColumn11.HeaderText = "Type"
-        GridViewTextBoxColumn11.Name = "Type"
-        GridViewTextBoxColumn11.Width = 126
-        GridViewTextBoxColumn12.FieldName = "patient_nom"
-        GridViewTextBoxColumn12.HeaderText = "Nom du patient"
-        GridViewTextBoxColumn12.Name = "patient_nom"
-        GridViewTextBoxColumn12.Width = 196
-        GridViewTextBoxColumn13.FieldName = "site_description"
-        GridViewTextBoxColumn13.HeaderText = "Site"
-        GridViewTextBoxColumn13.Name = "site_description"
-        GridViewTextBoxColumn13.Width = 175
-        Me.RadTacheEnCoursGrid.MasterTemplate.Columns.AddRange(New Telerik.WinControls.UI.GridViewDataColumn() {GridViewTextBoxColumn8, GridViewTextBoxColumn9, GridViewTextBoxColumn10, GridViewTextBoxColumn11, GridViewTextBoxColumn12, GridViewTextBoxColumn13})
+        GridViewTextBoxColumn11.FieldName = "patient_nom"
+        GridViewTextBoxColumn11.HeaderText = "Nom du patient"
+        GridViewTextBoxColumn11.Name = "patient_nom"
+        GridViewTextBoxColumn11.Width = 168
+        GridViewTextBoxColumn12.FieldName = "site_description"
+        GridViewTextBoxColumn12.HeaderText = "Site"
+        GridViewTextBoxColumn12.Name = "site_description"
+        GridViewTextBoxColumn12.Width = 110
+        GridViewTextBoxColumn13.HeaderText = "Attribué à"
+        GridViewTextBoxColumn13.MinWidth = 60
+        GridViewTextBoxColumn13.Name = "user_traiteur"
+        GridViewTextBoxColumn13.Width = 75
+        GridViewTextBoxColumn14.HeaderText = "Sur fonction"
+        GridViewTextBoxColumn14.MinWidth = 60
+        GridViewTextBoxColumn14.Name = "fonction_traiteur"
+        GridViewTextBoxColumn14.Width = 75
+        Me.RadTacheEnCoursGrid.MasterTemplate.Columns.AddRange(New Telerik.WinControls.UI.GridViewDataColumn() {GridViewTextBoxColumn7, GridViewTextBoxColumn8, GridViewImageColumn2, GridViewTextBoxColumn9, GridViewTextBoxColumn10, GridViewTextBoxColumn11, GridViewTextBoxColumn12, GridViewTextBoxColumn13, GridViewTextBoxColumn14})
         Me.RadTacheEnCoursGrid.MasterTemplate.ViewDefinition = TableViewDefinition2
         Me.RadTacheEnCoursGrid.Name = "RadTacheEnCoursGrid"
         Me.RadTacheEnCoursGrid.ReadOnly = True
@@ -525,13 +543,12 @@ Partial Class FrmTacheMain
         '
         'RadioMesTachesEnCours
         '
-        Me.RadioMesTachesEnCours.CheckState = System.Windows.Forms.CheckState.Checked
         Me.RadioMesTachesEnCours.Location = New System.Drawing.Point(48, 5)
         Me.RadioMesTachesEnCours.Name = "RadioMesTachesEnCours"
         Me.RadioMesTachesEnCours.Size = New System.Drawing.Size(78, 18)
         Me.RadioMesTachesEnCours.TabIndex = 0
+        Me.RadioMesTachesEnCours.TabStop = False
         Me.RadioMesTachesEnCours.Text = "Mes Tâches"
-        Me.RadioMesTachesEnCours.ToggleState = Telerik.WinControls.Enumerations.ToggleState.[On]
         '
         'PageTachesEmises
         '
@@ -554,45 +571,51 @@ Partial Class FrmTacheMain
         Me.RadTacheEmiseGrid.MasterTemplate.AllowColumnChooser = False
         Me.RadTacheEmiseGrid.MasterTemplate.AllowEditRow = False
         Me.RadTacheEmiseGrid.MasterTemplate.AutoSizeColumnsMode = Telerik.WinControls.UI.GridViewAutoSizeColumnsMode.Fill
-        GridViewTextBoxColumn14.DataType = GetType(Long)
-        GridViewTextBoxColumn14.FieldName = "id"
-        GridViewTextBoxColumn14.HeaderText = "Id"
-        GridViewTextBoxColumn14.IsVisible = False
-        GridViewTextBoxColumn14.Name = "id"
-        GridViewTextBoxColumn14.TextAlignment = System.Drawing.ContentAlignment.MiddleRight
-        GridViewTextBoxColumn14.Width = 43
-        GridViewTextBoxColumn15.DataType = GetType(Integer)
-        GridViewTextBoxColumn15.FieldName = "priorite"
-        GridViewTextBoxColumn15.HeaderText = "Priorité"
+        GridViewTextBoxColumn15.DataType = GetType(Long)
+        GridViewTextBoxColumn15.FieldName = "id"
+        GridViewTextBoxColumn15.HeaderText = "Id"
         GridViewTextBoxColumn15.IsVisible = False
-        GridViewTextBoxColumn15.Name = "priorite"
-        GridViewTextBoxColumn15.Width = 74
-        GridViewTextBoxColumn16.HeaderText = "TypeTache"
+        GridViewTextBoxColumn15.Name = "id"
+        GridViewTextBoxColumn15.TextAlignment = System.Drawing.ContentAlignment.MiddleRight
+        GridViewTextBoxColumn15.Width = 43
+        GridViewImageColumn3.HeaderText = "Type"
+        GridViewImageColumn3.MaxWidth = 37
+        GridViewImageColumn3.MinWidth = 37
+        GridViewImageColumn3.Name = "typePicto"
+        GridViewImageColumn3.Width = 37
+        GridViewTextBoxColumn16.DataType = GetType(Integer)
+        GridViewTextBoxColumn16.FieldName = "priorite"
+        GridViewTextBoxColumn16.HeaderText = "Priorité"
         GridViewTextBoxColumn16.IsVisible = False
-        GridViewTextBoxColumn16.Name = "TypeTache"
-        GridViewTextBoxColumn16.Width = 46
-        GridViewTextBoxColumn17.FieldName = "type"
-        GridViewTextBoxColumn17.HeaderText = "Type"
-        GridViewTextBoxColumn17.Name = "Type"
-        GridViewTextBoxColumn17.Width = 77
-        GridViewTextBoxColumn18.HeaderText = "Etat"
-        GridViewTextBoxColumn18.Name = "Etat"
-        GridViewTextBoxColumn18.Width = 57
-        GridViewTextBoxColumn19.FieldName = "patient_nom"
-        GridViewTextBoxColumn19.HeaderText = "Nom du patient"
-        GridViewTextBoxColumn19.Name = "patient_nom"
-        GridViewTextBoxColumn19.Width = 97
-        GridViewTextBoxColumn20.FieldName = "site_description"
-        GridViewTextBoxColumn20.HeaderText = "Site"
-        GridViewTextBoxColumn20.Name = "site_description"
-        GridViewTextBoxColumn20.Width = 85
-        GridViewTextBoxColumn21.HeaderText = "Attribué à"
-        GridViewTextBoxColumn21.Name = "user_traiteur"
-        GridViewTextBoxColumn21.Width = 82
-        GridViewTextBoxColumn22.HeaderText = "Sur fonction"
-        GridViewTextBoxColumn22.Name = "fonction_traiteur"
-        GridViewTextBoxColumn22.Width = 39
-        Me.RadTacheEmiseGrid.MasterTemplate.Columns.AddRange(New Telerik.WinControls.UI.GridViewDataColumn() {GridViewTextBoxColumn14, GridViewTextBoxColumn15, GridViewTextBoxColumn16, GridViewTextBoxColumn17, GridViewTextBoxColumn18, GridViewTextBoxColumn19, GridViewTextBoxColumn20, GridViewTextBoxColumn21, GridViewTextBoxColumn22})
+        GridViewTextBoxColumn16.Name = "priorite"
+        GridViewTextBoxColumn16.Width = 74
+        GridViewTextBoxColumn17.HeaderText = "Heure"
+        GridViewTextBoxColumn17.MaxWidth = 37
+        GridViewTextBoxColumn17.MinWidth = 37
+        GridViewTextBoxColumn17.Name = "HeureRdv"
+        GridViewTextBoxColumn17.Width = 37
+        GridViewTextBoxColumn18.HeaderText = "TypeTache"
+        GridViewTextBoxColumn18.IsVisible = False
+        GridViewTextBoxColumn18.Name = "TypeTache"
+        GridViewTextBoxColumn18.Width = 46
+        GridViewTextBoxColumn19.HeaderText = "Etat"
+        GridViewTextBoxColumn19.Name = "Etat"
+        GridViewTextBoxColumn19.Width = 53
+        GridViewTextBoxColumn20.FieldName = "patient_nom"
+        GridViewTextBoxColumn20.HeaderText = "Nom du patient"
+        GridViewTextBoxColumn20.Name = "patient_nom"
+        GridViewTextBoxColumn20.Width = 92
+        GridViewTextBoxColumn21.FieldName = "site_description"
+        GridViewTextBoxColumn21.HeaderText = "Site"
+        GridViewTextBoxColumn21.Name = "site_description"
+        GridViewTextBoxColumn21.Width = 80
+        GridViewTextBoxColumn22.HeaderText = "Attribué à"
+        GridViewTextBoxColumn22.Name = "user_traiteur"
+        GridViewTextBoxColumn22.Width = 79
+        GridViewTextBoxColumn23.HeaderText = "Sur fonction"
+        GridViewTextBoxColumn23.Name = "fonction_traiteur"
+        GridViewTextBoxColumn23.Width = 60
+        Me.RadTacheEmiseGrid.MasterTemplate.Columns.AddRange(New Telerik.WinControls.UI.GridViewDataColumn() {GridViewTextBoxColumn15, GridViewImageColumn3, GridViewTextBoxColumn16, GridViewTextBoxColumn17, GridViewTextBoxColumn18, GridViewTextBoxColumn19, GridViewTextBoxColumn20, GridViewTextBoxColumn21, GridViewTextBoxColumn22, GridViewTextBoxColumn23})
         Me.RadTacheEmiseGrid.MasterTemplate.ViewDefinition = TableViewDefinition3
         Me.RadTacheEmiseGrid.Name = "RadTacheEmiseGrid"
         Me.RadTacheEmiseGrid.ReadOnly = True
@@ -759,7 +782,7 @@ Partial Class FrmTacheMain
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.CancelButton = Me.BtnCancel
-        Me.ClientSize = New System.Drawing.Size(1155, 643)
+        Me.ClientSize = New System.Drawing.Size(1198, 643)
         Me.Controls.Add(Me.RadPanelMain)
         Me.Controls.Add(Me.RadMenu3)
         Me.MinimizeBox = False
