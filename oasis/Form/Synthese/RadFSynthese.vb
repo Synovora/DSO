@@ -1900,7 +1900,7 @@ Public Class RadFSynthese
                     Case Environnement.EnumSousCategoriePPS.IDE
                         NaturePPS = "Suivi IDE : "
                     Case Environnement.EnumSousCategoriePPS.medecinReferent
-                        NaturePPS = "Suivi médecin référent : "
+                        NaturePPS = "Suivi médecin télémédecine : "
                     Case Environnement.EnumSousCategoriePPS.sageFemme
                         NaturePPS = "Suivi sage-femme : "
                     Case Environnement.EnumSousCategoriePPS.specialiste

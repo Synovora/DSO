@@ -2976,7 +2976,7 @@ Public Class RadFEpisodeDetail
                     Case 3
                         NaturePPS = "Suivi IDE : "
                     Case 4
-                        NaturePPS = "Suivi médecin référent : "
+                        NaturePPS = "Suivi médecin télémédecine : "
                     Case 5
                         NaturePPS = "Suivi sage-femme : "
                     Case 6
