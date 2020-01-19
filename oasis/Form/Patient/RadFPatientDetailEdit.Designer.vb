@@ -42,6 +42,7 @@ Partial Class RadFPatientDetailEdit
         Me.TxtCommentaireSortie = New System.Windows.Forms.TextBox()
         Me.DteDateSortie = New System.Windows.Forms.DateTimePicker()
         Me.RadPanel4 = New Telerik.WinControls.UI.RadPanel()
+        Me.RadBtnRDV = New Telerik.WinControls.UI.RadButton()
         Me.RadBtnPharmacien = New Telerik.WinControls.UI.RadButton()
         Me.TxtPharmacien = New System.Windows.Forms.TextBox()
         Me.Label18 = New System.Windows.Forms.Label()
@@ -89,7 +90,6 @@ Partial Class RadFPatientDetailEdit
         Me.TxtAdresse1 = New System.Windows.Forms.TextBox()
         Me.TxtNom = New System.Windows.Forms.TextBox()
         Me.TxtPrenom = New System.Windows.Forms.TextBox()
-        Me.RadBtnRDV = New Telerik.WinControls.UI.RadButton()
         CType(Me.RadNotePatientDataGridView, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.RadNotePatientDataGridView.MasterTemplate, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.NoteContextMenuStrip.SuspendLayout()
@@ -103,10 +103,10 @@ Partial Class RadFPatientDetailEdit
         CType(Me.RadBtnValidationSortie, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.RadPanel4, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.RadPanel4.SuspendLayout()
+        CType(Me.RadBtnRDV, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.RadBtnPharmacien, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.RadBtnValidationDateNaissance, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.RadBtnGoogleMaps, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.RadBtnRDV, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
@@ -331,6 +331,14 @@ Partial Class RadFPatientDetailEdit
         Me.RadPanel4.Name = "RadPanel4"
         Me.RadPanel4.Size = New System.Drawing.Size(1342, 785)
         Me.RadPanel4.TabIndex = 3
+        '
+        'RadBtnRDV
+        '
+        Me.RadBtnRDV.Location = New System.Drawing.Point(269, 749)
+        Me.RadBtnRDV.Name = "RadBtnRDV"
+        Me.RadBtnRDV.Size = New System.Drawing.Size(110, 24)
+        Me.RadBtnRDV.TabIndex = 364
+        Me.RadBtnRDV.Text = "Liste rendez-vous"
         '
         'RadBtnPharmacien
         '
@@ -737,6 +745,7 @@ Partial Class RadFPatientDetailEdit
         '
         'TxtNom
         '
+        Me.TxtNom.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper
         Me.TxtNom.Location = New System.Drawing.Point(133, 107)
         Me.TxtNom.MaxLength = 100
         Me.TxtNom.Name = "TxtNom"
@@ -750,14 +759,6 @@ Partial Class RadFPatientDetailEdit
         Me.TxtPrenom.Name = "TxtPrenom"
         Me.TxtPrenom.Size = New System.Drawing.Size(136, 20)
         Me.TxtPrenom.TabIndex = 365
-        '
-        'RadBtnRDV
-        '
-        Me.RadBtnRDV.Location = New System.Drawing.Point(269, 749)
-        Me.RadBtnRDV.Name = "RadBtnRDV"
-        Me.RadBtnRDV.Size = New System.Drawing.Size(110, 24)
-        Me.RadBtnRDV.TabIndex = 364
-        Me.RadBtnRDV.Text = "Liste rendez-vous"
         '
         'RadFPatientDetailEdit
         '
@@ -789,10 +790,10 @@ Partial Class RadFPatientDetailEdit
         CType(Me.RadPanel4, System.ComponentModel.ISupportInitialize).EndInit()
         Me.RadPanel4.ResumeLayout(False)
         Me.RadPanel4.PerformLayout()
+        CType(Me.RadBtnRDV, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.RadBtnPharmacien, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.RadBtnValidationDateNaissance, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.RadBtnGoogleMaps, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.RadBtnRDV, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
 
