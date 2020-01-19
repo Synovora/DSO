@@ -131,6 +131,10 @@ Public Class RadFEpisodeDetail
         Me.RadDesktopAlert1.Popup.AlertElement.GradientStyle = GradientStyles.Solid
         Me.RadDesktopAlert1.Popup.AlertElement.BorderColor = Color.DarkBlue
 
+        If userLog.UtilisateurAdmin = False Then
+            RadBtnGenProtocole.Hide()
+        End If
+
         ClotureRendezVous()
         ChargementParametreApplication()
         initZones()
@@ -3213,8 +3217,28 @@ Public Class RadFEpisodeDetail
 
     'Clôture de l'épisode
     Private Sub RadBtnCloture_Click(sender As Object, e As EventArgs) Handles RadBtnCloture.Click
+        tache = tacheDao.GetDemandeEnCoursByEpisode(SelectedEpisodeId)
+        If tache.Id <> 0 Then
+            MessageBox.Show("Cet épisode ne peut être clôturé tant qu'une demande d'avis est en cours")
+            Exit Sub
+        End If
 
         '>>> Bloc à supprimer pour réhabiliter le contrôle de clôture ========
+        ClotureEpisode()
+        Exit Sub
+        '>>> Bloc à supprimer pour réhabiliter le contrôle de clôture ========
+
+        If userLog.TypeProfil <> episode.TypeProfil Then
+            MessageBox.Show("Vous devez disposer d'un profil '" & episode.TypeProfil &
+                            "', pour pouvoir clôturer cet épisode patient" & vbCrLf &
+                            "(Vous disposez d'un profil de type '" & userLog.TypeProfil & "')")
+            Exit Sub
+        End If
+
+        ClotureEpisode()
+    End Sub
+
+    Private Sub ClotureEpisode()
         episode.Etat = EpisodeDao.EnumEtatEpisode.CLOTURE.ToString
         episode.DateModification = Date.Now()
         episode.UserModification = userLog.UtilisateurId
@@ -3225,28 +3249,7 @@ Public Class RadFEpisodeDetail
             form.Show()
             Close()
         End If
-        Exit Sub
-        '>>> Bloc à supprimer pour réhabiliter le contrôle de clôture ========
-
-        If userLog.TypeProfil = episode.TypeProfil Then
-            episode.Etat = EpisodeDao.EnumEtatEpisode.CLOTURE.ToString
-            episode.DateModification = Date.Now()
-            episode.UserModification = userLog.UtilisateurId
-            If episodeDao.ModificationEpisode(episode) = True Then
-                Dim form As New RadFNotification()
-                form.Titre = "Notification épisode patient"
-                form.Message = "=== Episode clôturé ==="
-                form.Show()
-                Close()
-            End If
-        Else
-            MessageBox.Show("Vous devez disposer d'un profil '" & episode.TypeProfil &
-                            "', pour pouvoir clôturer cet épisode patient" & vbCrLf &
-                            "(Vous disposez d'un profil de type '" & userLog.TypeProfil & "')")
-        End If
-
     End Sub
-
 
 
     '===========================================================
