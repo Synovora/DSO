@@ -178,7 +178,9 @@ Public Class DrcDao
         If selectDrc = "" Then
             clauseDrc = "1 = 1"
         Else
-            clauseDrc = "(oa_drc_libelle LIKE '%" & selectDrc & "%' or oa_drc_synonyme_libelle like '%" & selectDrc & "%')"
+            clauseDrc = "(oa_drc_libelle COLLATE Latin1_general_CI_AI LIKE '%" & selectDrc &
+                "%' COLLATE Latin1_general_CI_AI or oa_drc_synonyme_libelle COLLATE Latin1_general_CI_AI like '%" & selectDrc &
+                "%' COLLATE Latin1_general_CI_AI)"
         End If
 
         If categorieMajeureId = 0 Then
