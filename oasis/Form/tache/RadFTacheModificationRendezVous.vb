@@ -39,6 +39,7 @@
         tache = tacheDao.getTacheById(SelectedTacheId)
         TxtRDVCommentaire.Text = tache.EmetteurCommentaire
         NumDateRV.Value = tache.DateRendezVous.ToString("dd.MM.yyyy")
+        NumheureRV.Value = tache.DateRendezVous.ToString("HH")
         Dim Minute As Integer = tache.DateRendezVous.ToString("mm")
         Select Case Minute
             Case 0
@@ -57,23 +58,31 @@
     Private Function Validation() As Boolean
         Me.CodeRetour = False
         If NumDateRV.Value.Date < Date.Now().Date Then
-            Dim message As String = "Attention, La date de rendez-vous à programmer (" & NumDateRV.Value.ToString("dd.MM.yyyy") & "), est antérieure à la date du jour (" & Date.Now().ToString("dd.MM.yyyy") & "), confirmation de la date du rendez-vous"
+            Dim message As String = "Attention, La date de rendez-vous à programmer (" &
+                NumDateRV.Value.ToString("dd.MM.yyyy") &
+                "), est antérieure à la date du jour (" &
+                Date.Now().ToString("dd.MM.yyyy") &
+                "), après modification, le rendez-vous sera automatiquement clôturé." & vbCrLf &
+                "Confirmation de la date du rendez-vous ?"
             If MsgBox(message, MsgBoxStyle.YesNo, "") = MsgBoxResult.No Then
                 Return False
                 Exit Function
             End If
         End If
         Dim minutesRV As Integer = CalculMinutes()
+        Dim ClotureTache As Boolean
         Dim dateRendezVous As New DateTime(NumDateRV.Value.Year, NumDateRV.Value.Month, NumDateRV.Value.Day, NumheureRV.Value, minutesRV, 0)
         If NumDateRV.Value.Date < Date.Now().Date Then
             'Clôture du rendez-vous
-            If ModificationRendezVous(dateRendezVous, TacheDao.EtatTache.TERMINEE.ToString) = True Then
+            ClotureTache = True
+            If ModificationRendezVous(dateRendezVous, ClotureTache) = True Then
                 MessageBox.Show("Rendez-vous programmé et clôturé pour le " & NumDateRV.Value.ToString("dd.MM.yyyy"))
                 Me.CodeRetour = True
                 Close()
             End If
         Else
-            If ModificationRendezVous(dateRendezVous, TacheDao.EtatTache.EN_ATTENTE.ToString) = True Then
+            ClotureTache = False
+            If ModificationRendezVous(dateRendezVous, ClotureTache) = True Then
                 MessageBox.Show("Rendez-vous programmé pour le " & NumDateRV.Value.ToString("dd.MM.yyyy"))
                 Me.CodeRetour = True
                 Close()
@@ -83,20 +92,20 @@
         Return CodeRetour
     End Function
 
-    Private Function ModificationRendezVous(dateRendezVous As DateTime, etatRendezVous As String) As Boolean
+    Private Function ModificationRendezVous(dateRendezVous As DateTime, clotureTache As Boolean) As Boolean
         Dim CodeRetour As Boolean = False
-        Dim tache As New Tache
-        Dim tacheDao As New TacheDao
 
         tache.EmetteurCommentaire = TxtRDVCommentaire.Text
-        tache.Etat = etatRendezVous
-        If etatRendezVous = TacheDao.EtatTache.TERMINEE.ToString Then
-            tache.Cloture = True
-        End If
         tache.DateRendezVous = dateRendezVous
 
         If tacheDao.ModificationRendezVous(tache) = True Then
-            CodeRetour = True
+            If clotureTache = True Then
+                If tacheDao.ClotureTache(tache.Id, True) = True Then
+                    CodeRetour = True
+                End If
+            Else
+                CodeRetour = True
+            End If
         End If
 
         Return CodeRetour

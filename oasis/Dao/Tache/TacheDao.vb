@@ -611,8 +611,13 @@ Public Class TacheDao
 
             command.CommandText =
                 "SELECT TOP (1) * FROM oasis.oasis.oa_tache" &
-                " WHERE patient_Id = @patientId AND etat = @etat AND parcours_id = @parcoursId AND categorie = @categorie AND [type] = @type AND nature = @nature" &
-                " ORDER BY date_rendez_vous"
+                " WHERE patient_Id = @patientId" &
+                " AND etat = @etat" &
+                " AND parcours_id = @parcoursId" &
+                " AND categorie = @categorie" &
+                " AND ([type] = @type OR [type] = @type2)" &
+                " AND (nature = @nature OR nature = @nature2)" &
+                " ORDER BY date_rendez_vous DESC"
 
             With command.Parameters
                 .AddWithValue("@patientId", patientId)
@@ -620,7 +625,9 @@ Public Class TacheDao
                 .AddWithValue("@etat", EtatTache.TERMINEE.ToString)
                 .AddWithValue("@categorie", CategorieTache.SOIN.ToString)
                 .AddWithValue("@type", TypeTache.RDV.ToString)
+                .AddWithValue("@type2", TypeTache.RDV_SPECIALISTE.ToString)
                 .AddWithValue("@nature", NatureTache.RDV.ToString)
+                .AddWithValue("@nature2", NatureTache.RDV_SPECIALISTE.ToString)
             End With
 
             Using reader As SqlDataReader = command.ExecuteReader()
@@ -665,7 +672,7 @@ Public Class TacheDao
                "where id = @id"
             If isWithAnnule = False Then
                 isWhere = True
-                strRequete += " AND etat <> @etat " + vbCrLf
+                strRequete += " And etat <> @etat " + vbCrLf
             End If
             command.CommandText = strRequete
             command.Parameters.AddWithValue("@id", id)
@@ -700,11 +707,11 @@ Public Class TacheDao
             command.CommandText =
                 "SELECT TOP (1) * FROM oasis.oasis.oa_tache" &
                 " WHERE patient_Id = @patientId" &
-                " AND (etat = @etat1 OR etat = @etat2)" &
-                " AND parcours_id = @parcoursId" &
-                " AND categorie = @categorie" &
-                " AND ([type] = @type1 OR [type] = @type2)" &
-                " AND (nature = @nature1 OR nature = @nature2)" &
+                " And (etat = @etat1 Or etat = @etat2)" &
+                " And parcours_id = @parcoursId" &
+                " And categorie = @categorie" &
+                " And ([type] = @type1 Or [type] = @type2)" &
+                " And (nature = @nature1 Or nature = @nature2)" &
                 " ORDER BY date_rendez_vous DESC"
 
             With command.Parameters
@@ -750,11 +757,11 @@ Public Class TacheDao
             command.CommandText =
                 "SELECT TOP (1) * FROM oasis.oasis.oa_tache" &
                 " WHERE patient_Id = @patientId" &
-                " AND (etat = @etat1 OR etat = @etat2)" &
-                " AND parcours_id = @parcoursId" &
-                " AND categorie = @categorie" &
-                " AND [type] = @type" &
-                " AND nature = @nature" &
+                " And (etat = @etat1 Or etat = @etat2)" &
+                " And parcours_id = @parcoursId" &
+                " And categorie = @categorie" &
+                " And [type] = @type" &
+                " And nature = @nature" &
                 " ORDER BY date_rendez_vous DESC"
 
             With command.Parameters
@@ -1329,7 +1336,7 @@ Public Class TacheDao
                 .AddWithValue("@Id", tache.Id)
                 .AddWithValue("@dateRendezVous", tache.DateRendezVous)
                 .AddWithValue("@commentaire", tache.EmetteurCommentaire)
-                .AddWithValue("@etat", tache.Etat)
+                .AddWithValue("@etat", TacheDao.EtatTache.EN_ATTENTE.ToString())
             End With
 
             da.UpdateCommand = cmd

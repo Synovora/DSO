@@ -88,7 +88,7 @@ Public Class ParcoursDao
             " OUTER APPLY (Select TOP (1) * FROM oasis.oasis.oa_tache" &
                " WHERE oa_tache.patient_Id = oa_parcours_patient_id And etat = 'TERMINEE' AND oa_tache.parcours_id = oa_parcours_id" &
                " AND categorie = 'SOIN' AND ([type] = 'RDV' OR [type] = 'RDV_SPECIALISTE') AND (nature = 'RDV' OR nature = 'RDV_SPECIALISTE')" &
-               " ORDER BY date_rendez_vous) As RDV" &
+               " ORDER BY date_rendez_vous DESC) As RDV" &
             " OUTER APPLY(SELECT TOP (1) * FROM oasis.oasis.oa_tache" &
                " WHERE oa_tache.patient_Id = oa_parcours_patient_id AND (etat = 'EN_ATTENTE' OR etat = 'EN_COURS') AND oa_tache.parcours_id = oa_parcours_id" &
                " AND categorie = 'SOIN' AND ([type] = 'RDV' OR [type] = 'RDV_SPECIALISTE') AND (nature = 'RDV' OR nature = 'RDV_SPECIALISTE')" &

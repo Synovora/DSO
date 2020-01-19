@@ -114,6 +114,9 @@ Public Class RadFParcoursDetailEdit
     Dim TraiteFonctionId As Long
     Dim DestinataireFonctionId As Long
 
+    Dim RendezVousPlanifie As Boolean = False
+    Dim DemandeRendezVous As Boolean = False
+
     Private Sub RadFParcoursDetailEdit_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         Init()
         ChargementEtatCivil()
@@ -368,6 +371,7 @@ Public Class RadFParcoursDetailEdit
     'Chargement de l'historique du dernier rendez-vous et du rendez-vous à venir
     Private Sub ChargementhistoriqueConsultation()
         RadBtnModifRDV.Hide()
+        RadBtnClotureRDV.Hide()
         'Recherche dernier rendez-vous
         Dim dateLast, dateNext As Date
         Dim tache As Tache
@@ -375,7 +379,7 @@ Public Class RadFParcoursDetailEdit
         tache = tacheDao.GetDernierRenezVousByPatientId(SelectedPatient.patientId, SelectedParcoursId)
         dateLast = tache.DateRendezVous
         If dateLast <> Nothing Then
-            LblDateDernierRendezVous.Text = outils.FormatageDateAffichage(dateLast)
+            LblDateDernierRendezVous.Text = outils.FormatageDateAffichage(dateLast, True)
         Else
             LblDateDernierRendezVous.Text = "Pas de rendez-vous existant"
         End If
@@ -388,6 +392,13 @@ Public Class RadFParcoursDetailEdit
             LblDateNextType.Text = "(Rendez-vous planifiée)"
             masquerIntervenant = False
             RadBtnRendezVous.Enabled = False
+            RadBtnModifRDV.Show()
+            If tache.Nature = TacheDao.EnumNatureTacheCode.RDV_SPECIALISTE Then
+                If tache.DateRendezVous.Date <= Date.Now.Date() Then
+                    RadBtnClotureRDV.Show()
+                End If
+            End If
+            RendezVousPlanifie = True
         Else
             'Recherche si existe demande de rendez-vous
             tache = tacheDao.GetProchaineDemandeRendezVousByPatientId(SelectedPatient.patientId, SelectedParcoursId)
@@ -407,6 +418,7 @@ Public Class RadFParcoursDetailEdit
                     Case TacheDao.EtatTache.EN_ATTENTE.ToString
                         LblDateNextType.Text = "(Rendez-vous prévisionnel, demande en attente de traitement)"
                         RadBtnModifRDV.Show()
+                        DemandeRendezVous = True
                     Case Else
                         LblDateNextType.Text = "(Rendez-vous prévisionnel, demande en : " & tache.Etat & ")"
                 End Select
@@ -832,15 +844,21 @@ Public Class RadFParcoursDetailEdit
         Return Valide
     End Function
 
-    Private Function GestionRendezVous() As Boolean
-        Me.CodeRetour = False
+    '========================================================================================================================
+    '============= Gestion rendez-vous
+    '========================================================================================================================
+
+    Private Sub GestionRendezVous()
+        CodeRetour = False
+
         If RbtInterventionProgramme.IsChecked = True Then
             If NumDateRV.Value.Date < Date.Now().Date Then
                 Dim message As String = "Attention, La date de rendez-vous à programmer (" & NumDateRV.Value.ToString("dd.MM.yyyy") & "), est antérieure à la date du jour (" & Date.Now().ToString("dd.MM.yyyy") & "), confirmation de la date du rendez-vous"
                 If MsgBox(message, MsgBoxStyle.YesNo, "") = MsgBoxResult.No Then
-                    Exit Function
+                    Exit Sub
                 End If
             End If
+
             Dim minutesRV As Integer = CalculMinutes()
             Dim dateRendezVous As New DateTime(NumDateRV.Value.Year, NumDateRV.Value.Month, NumDateRV.Value.Day, NumheureRV.Value, minutesRV, 0)
             If NumDateRV.Value.Date < Date.Now().Date Then
@@ -898,8 +916,7 @@ Public Class RadFParcoursDetailEdit
                 End If
             End If
         End If
-        Return CodeRetour
-    End Function
+    End Sub
 
     Private Function CalculMinutes() As Integer
         Dim minutes As Integer = 0
@@ -967,6 +984,7 @@ Public Class RadFParcoursDetailEdit
 
         Return CodeRetour
     End Function
+
     Private Function CreationDemandeRendezVous(dateRendezVous As DateTime, typedemandeRendezVous As String) As Boolean
         Dim CodeRetour As Boolean = False
         Dim tache As New Tache
@@ -1005,84 +1023,90 @@ Public Class RadFParcoursDetailEdit
         Return CodeRetour
     End Function
 
-    Private Sub SetEmetteurId()
-        Select Case userLog.UtilisateurProfilId.Trim()
-            Case "IDE"
-                EmetteurFonctionId = FonctionDao.enumFonction.IDE
-            Case "IDE_REMPLACANT"
-                EmetteurFonctionId = FonctionDao.enumFonction.IDE_REMPLACANT
-            Case "MEDECIN"
-                EmetteurFonctionId = FonctionDao.enumFonction.MEDECIN
-            Case "SAGE_FEMME"
-                EmetteurFonctionId = FonctionDao.enumFonction.SAGE_FEMME
-            Case "CADRE_SANTE"
-                EmetteurFonctionId = FonctionDao.enumFonction.CADRE_SANTE
-            Case "SECRETAIRE_MEDICALE"
-                EmetteurFonctionId = FonctionDao.enumFonction.SECRETAIRE_MEDICALE
-            Case "ADMINISTRATIF"
-                EmetteurFonctionId = FonctionDao.enumFonction.ADMINISTRATIF
-            Case Else
-                EmetteurFonctionId = FonctionDao.enumFonction.INCONNU
-        End Select
 
-        Select Case ParcoursUpdate.SousCategorieId
-            Case EnumSousCategoriePPS.medecinReferent
-                DestinataireFonctionId = FonctionDao.enumFonction.MEDECIN
-                TraiteFonctionId = FonctionDao.enumFonction.MEDECIN
-            Case EnumSousCategoriePPS.IDE
-                DestinataireFonctionId = FonctionDao.enumFonction.IDE
-                TraiteFonctionId = FonctionDao.enumFonction.IDE
-            Case EnumSousCategoriePPS.sageFemme
-                If ParcoursUpdate.SpecialiteId = EnumSpecialiteOasis.sageFemmeOasis Then
-                    DestinataireFonctionId = FonctionDao.enumFonction.SAGE_FEMME
-                    TraiteFonctionId = FonctionDao.enumFonction.SAGE_FEMME
+    'Modifier un RDV ou une Demande de RDV
+    Private Sub RadBtnModifRDV_Click(sender As Object, e As EventArgs) Handles RadBtnModifRDV.Click
+        Dim tache As Tache
+
+        If RendezVousPlanifie = True Then
+            tache = tacheDao.GetProchainRendezVousByPatientId(SelectedPatient.patientId, SelectedParcoursId)
+            If tache.Id <> 0 AndAlso (tache.Nature = TacheDao.EnumNatureTacheCode.RDV Or tache.Nature = TacheDao.EnumNatureTacheCode.RDV_SPECIALISTE) Then
+                If tache.Etat = TacheDao.EtatTache.EN_ATTENTE.ToString Then
+                    Cursor.Current = Cursors.WaitCursor
+                    Me.Enabled = False
+                    Using form As New RadFTacheModificationRendezVous
+                        form.SelectedPatient = Me.SelectedPatient
+                        form.SelectedTacheId = tache.Id
+                        form.ShowDialog()
+                        If form.CodeRetour = True Then
+                            Me.RadDesktopAlert1.CaptionText = "Notification rendez-vous"
+                            Me.RadDesktopAlert1.ContentText = "Rendez-vous modifié"
+                            Me.RadDesktopAlert1.Show()
+                            ChargementhistoriqueConsultation()
+                            Me.CodeRetour = True
+                        End If
+                    End Using
+                    Me.Enabled = True
                 Else
-                    DestinataireFonctionId = FonctionDao.enumFonction.SPECIALISTE_NON_OASIS
-                    TraiteFonctionId = FonctionDao.enumFonction.IDE
+                    MessageBox.Show("Le rendez-vous n'est pas modifiable, il est en cours de traitement par : " & userLog.UtilisateurPrenom & " " & userLog.UtilisateurNom)
                 End If
-            Case EnumSousCategoriePPS.specialiste
-                DestinataireFonctionId = FonctionDao.enumFonction.SPECIALISTE_NON_OASIS
-                TraiteFonctionId = FonctionDao.enumFonction.IDE
-            Case Else
-                DestinataireFonctionId = FonctionDao.enumFonction.INCONNU
-                TraiteFonctionId = FonctionDao.enumFonction.IDE
-        End Select
+            End If
+        End If
+
+        If DemandeRendezVous = True Then
+            tache = tacheDao.GetProchaineDemandeRendezVousByPatientId(SelectedPatient.patientId, SelectedParcoursId)
+            If tache.Id <> 0 AndAlso tache.Nature = TacheDao.EnumNatureTacheCode.RDV_DEMANDE Then
+                If tache.Etat = TacheDao.EtatTache.EN_ATTENTE.ToString Then
+                    Cursor.Current = Cursors.WaitCursor
+                    Me.Enabled = False
+                    Using form As New RadFTacheModificationDemandeRendezVous
+                        form.SelectedPatient = Me.SelectedPatient
+                        form.SelectedTacheId = tache.Id
+                        form.ShowDialog()
+                        If form.CodeRetour = True Then
+                            Me.RadDesktopAlert1.CaptionText = "Notification demande de rendez-vous"
+                            Me.RadDesktopAlert1.ContentText = "Demande de rendez-vous modifiée"
+                            Me.RadDesktopAlert1.Show()
+                            ChargementhistoriqueConsultation()
+                            Me.CodeRetour = True
+                        End If
+                    End Using
+                    Me.Enabled = True
+                Else
+                    MessageBox.Show("Le rendez-vous n'est pas modifiable, il est en cours de traitement par : " & userLog.UtilisateurPrenom & " " & userLog.UtilisateurNom)
+                End If
+            End If
+        End If
+
     End Sub
 
-    Private Sub RadBtnAbandon_Click(sender As Object, e As EventArgs) Handles RadBtnAbandon.Click
-        Close()
-    End Sub
 
-    Private Sub GestionAffichageBoutonValidation()
-        If EditMode = EnumEditMode.Modification Then
-            If ParcoursDao.Compare(ParcoursUpdate, parcoursRead) = False Then
-                RadBtnValidation.Enabled = True
-                RadBtnRendezVous.Enabled = False
-            Else
-                RadBtnValidation.Enabled = False
-                RadBtnRendezVous.Enabled = True
+    'Clôturer un rendez-vous spécialiste
+    Private Sub RadBtnClotureRDV_Click(sender As Object, e As EventArgs) Handles RadBtnClotureRDV.Click
+        If RendezVousPlanifie = True Then
+            Dim tache As Tache
+            tache = tacheDao.GetProchainRendezVousByPatientId(SelectedPatient.patientId, SelectedParcoursId)
+            If tache.DateRendezVous.Date <= Date.Now.Date() Then
+                If tache.Id <> 0 AndAlso tache.Nature = TacheDao.EnumNatureTacheCode.RDV_SPECIALISTE Then
+                    If MsgBox("Confirmation de la clôture du rendez-vous", MsgBoxStyle.YesNo, "") = MsgBoxResult.Yes Then
+                        If tacheDao.ClotureTache(tache.Id, True) = True Then
+                            Me.RadDesktopAlert1.CaptionText = "Notification rendez-vous"
+                            Me.RadDesktopAlert1.ContentText = "Rendez-vous clôturé"
+                            Me.RadDesktopAlert1.Show()
+                            ChargementhistoriqueConsultation()
+                            Me.CodeRetour = True
+                        End If
+                    End If
+                End If
             End If
         End If
     End Sub
 
-    'Visualisation détail intervenant (ROR)
-    Private Sub RadBtnRorDetail_Click(sender As Object, e As EventArgs) Handles RadBtnRorDetail.Click
-        Using vFRorDetailEdit As New RadFRorDetailEdit
-            vFRorDetailEdit.SelectedRorId = ParcoursUpdate.RorId
-            vFRorDetailEdit.ShowDialog() 'Modal
-            If vFRorDetailEdit.CodeRetour = True Then
-                ror = rordao.getRorById(ParcoursUpdate.RorId)
-                TxtNomIntervenant.Text = ror.Nom
-                TxtTypeIntervenant.Text = ror.Type
-                TxtNomStructure.Text = ror.StructureNom
-            End If
-        End Using
-    End Sub
 
-    Private Sub FixeTailleEcranPourIDE()
-        Me.Width = 1560
-        Me.Height = 650
-    End Sub
+
+    '============================================================================================================
+    '============== Consignes IDE
+    '============================================================================================================
 
     'Ajouter un acte paramédical (consigne IDE)
     Private Sub RadBtnConsigne_Click(sender As Object, e As EventArgs) Handles RadBtnActeParamedical.Click
@@ -1172,42 +1196,6 @@ Public Class RadFParcoursDetailEdit
         End If
     End Sub
 
-    Private Sub LblId_MouseHover(sender As Object, e As EventArgs) Handles LblId.MouseHover
-        ToolTip1.SetToolTip(LblId, "Id : " + SelectedParcoursId.ToString)
-    End Sub
-
-    Private Sub RadBtnModifRDV_Click(sender As Object, e As EventArgs) Handles RadBtnModifRDV.Click
-        Dim tache As Tache
-        tache = tacheDao.GetProchaineDemandeRendezVousByPatientId(SelectedPatient.patientId, SelectedParcoursId)
-        If tache.Id <> 0 AndAlso tache.Nature = TacheDao.EnumNatureTacheCode.RDV_DEMANDE Then
-            If tache.Etat = TacheDao.EtatTache.EN_ATTENTE.ToString Then
-                Cursor.Current = Cursors.WaitCursor
-                Me.Enabled = False
-                Using form As New RadFTacheModificationDemandeRendezVous
-                    form.SelectedPatient = Me.SelectedPatient
-                    form.SelectedTacheId = tache.Id
-                    form.ShowDialog()
-                    If form.CodeRetour = True Then
-                        Me.RadDesktopAlert1.CaptionText = "Notification demande de rendez-vous"
-                        Me.RadDesktopAlert1.ContentText = "Demande de rendez-vous modifiée"
-                        Me.RadDesktopAlert1.Show()
-                        ChargementhistoriqueConsultation()
-                    End If
-                End Using
-                Me.Enabled = True
-            Else
-                MessageBox.Show("Le rendez-vous n'est pas modifiable, il est en cours de traitement par : " & userLog.UtilisateurPrenom & " " & userLog.UtilisateurNom)
-            End If
-        End If
-    End Sub
-
-    Private Sub RadParcoursConsigneDataGridView_ToolTipTextNeeded(sender As Object, e As ToolTipTextNeededEventArgs) Handles RadParcoursConsigneDataGridView.ToolTipTextNeeded
-        Dim hoveredCell As GridDataCellElement = TryCast(sender, GridDataCellElement)
-        If hoveredCell IsNot Nothing AndAlso hoveredCell.ColumnInfo.Name = "drcDescription" Then
-            e.ToolTipText = hoveredCell.RowInfo.Cells("activite_type_episode").Value
-        End If
-    End Sub
-
     Private Sub RadBtnTestActePara_Click(sender As Object, e As EventArgs) Handles RadBtnTestActePara.Click
         Cursor.Current = Cursors.WaitCursor
         Me.Enabled = False
@@ -1227,4 +1215,100 @@ Public Class RadFParcoursDetailEdit
         End Using
         Me.Enabled = True
     End Sub
+
+
+    '============================================================================================================
+    '============== Général
+    '============================================================================================================
+    Private Sub SetEmetteurId()
+        Select Case userLog.UtilisateurProfilId.Trim()
+            Case "IDE"
+                EmetteurFonctionId = FonctionDao.enumFonction.IDE
+            Case "IDE_REMPLACANT"
+                EmetteurFonctionId = FonctionDao.enumFonction.IDE_REMPLACANT
+            Case "MEDECIN"
+                EmetteurFonctionId = FonctionDao.enumFonction.MEDECIN
+            Case "SAGE_FEMME"
+                EmetteurFonctionId = FonctionDao.enumFonction.SAGE_FEMME
+            Case "CADRE_SANTE"
+                EmetteurFonctionId = FonctionDao.enumFonction.CADRE_SANTE
+            Case "SECRETAIRE_MEDICALE"
+                EmetteurFonctionId = FonctionDao.enumFonction.SECRETAIRE_MEDICALE
+            Case "ADMINISTRATIF"
+                EmetteurFonctionId = FonctionDao.enumFonction.ADMINISTRATIF
+            Case Else
+                EmetteurFonctionId = FonctionDao.enumFonction.INCONNU
+        End Select
+
+        Select Case ParcoursUpdate.SousCategorieId
+            Case EnumSousCategoriePPS.medecinReferent
+                DestinataireFonctionId = FonctionDao.enumFonction.MEDECIN
+                TraiteFonctionId = FonctionDao.enumFonction.MEDECIN
+            Case EnumSousCategoriePPS.IDE
+                DestinataireFonctionId = FonctionDao.enumFonction.IDE
+                TraiteFonctionId = FonctionDao.enumFonction.IDE
+            Case EnumSousCategoriePPS.sageFemme
+                If ParcoursUpdate.SpecialiteId = EnumSpecialiteOasis.sageFemmeOasis Then
+                    DestinataireFonctionId = FonctionDao.enumFonction.SAGE_FEMME
+                    TraiteFonctionId = FonctionDao.enumFonction.SAGE_FEMME
+                Else
+                    DestinataireFonctionId = FonctionDao.enumFonction.SPECIALISTE_NON_OASIS
+                    TraiteFonctionId = FonctionDao.enumFonction.IDE
+                End If
+            Case EnumSousCategoriePPS.specialiste
+                DestinataireFonctionId = FonctionDao.enumFonction.SPECIALISTE_NON_OASIS
+                TraiteFonctionId = FonctionDao.enumFonction.IDE
+            Case Else
+                DestinataireFonctionId = FonctionDao.enumFonction.INCONNU
+                TraiteFonctionId = FonctionDao.enumFonction.IDE
+        End Select
+    End Sub
+
+    Private Sub RadBtnAbandon_Click(sender As Object, e As EventArgs) Handles RadBtnAbandon.Click
+        Close()
+    End Sub
+
+    Private Sub GestionAffichageBoutonValidation()
+        If EditMode = EnumEditMode.Modification Then
+            If ParcoursDao.Compare(ParcoursUpdate, parcoursRead) = False Then
+                RadBtnValidation.Enabled = True
+                RadBtnRendezVous.Enabled = False
+            Else
+                RadBtnValidation.Enabled = False
+                RadBtnRendezVous.Enabled = True
+            End If
+        End If
+    End Sub
+
+    'Visualisation détail intervenant (ROR)
+    Private Sub RadBtnRorDetail_Click(sender As Object, e As EventArgs) Handles RadBtnRorDetail.Click
+        Using vFRorDetailEdit As New RadFRorDetailEdit
+            vFRorDetailEdit.SelectedRorId = ParcoursUpdate.RorId
+            vFRorDetailEdit.ShowDialog() 'Modal
+            If vFRorDetailEdit.CodeRetour = True Then
+                ror = rordao.getRorById(ParcoursUpdate.RorId)
+                TxtNomIntervenant.Text = ror.Nom
+                TxtTypeIntervenant.Text = ror.Type
+                TxtNomStructure.Text = ror.StructureNom
+            End If
+        End Using
+    End Sub
+
+    Private Sub FixeTailleEcranPourIDE()
+        Me.Width = 1560
+        Me.Height = 650
+    End Sub
+
+
+    Private Sub LblId_MouseHover(sender As Object, e As EventArgs) Handles LblId.MouseHover
+        ToolTip1.SetToolTip(LblId, "Id : " + SelectedParcoursId.ToString)
+    End Sub
+
+    Private Sub RadParcoursConsigneDataGridView_ToolTipTextNeeded(sender As Object, e As ToolTipTextNeededEventArgs) Handles RadParcoursConsigneDataGridView.ToolTipTextNeeded
+        Dim hoveredCell As GridDataCellElement = TryCast(sender, GridDataCellElement)
+        If hoveredCell IsNot Nothing AndAlso hoveredCell.ColumnInfo.Name = "drcDescription" Then
+            e.ToolTipText = hoveredCell.RowInfo.Cells("activite_type_episode").Value
+        End If
+    End Sub
+
 End Class

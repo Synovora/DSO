@@ -1,9 +1,9 @@
-﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
+﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()>
 Partial Class RadFTacheModificationRendezVous
     Inherits Telerik.WinControls.UI.RadForm
 
     'Form overrides dispose to clean up the component list.
-    <System.Diagnostics.DebuggerNonUserCode()> _
+    <System.Diagnostics.DebuggerNonUserCode()>
     Protected Overrides Sub Dispose(ByVal disposing As Boolean)
         Try
             If disposing AndAlso components IsNot Nothing Then
@@ -20,7 +20,7 @@ Partial Class RadFTacheModificationRendezVous
     'NOTE: The following procedure is required by the Windows Form Designer
     'It can be modified using the Windows Form Designer.  
     'Do not modify it using the code editor.
-    <System.Diagnostics.DebuggerStepThrough()> _
+    <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
         Me.components = New System.ComponentModel.Container()
         Me.RadGroupBoxEtatCivil = New Telerik.WinControls.UI.RadGroupBox()
@@ -59,9 +59,6 @@ Partial Class RadFTacheModificationRendezVous
         Me.NumheureRV = New System.Windows.Forms.NumericUpDown()
         Me.LblLabelDateRV = New System.Windows.Forms.Label()
         Me.NumDateRV = New System.Windows.Forms.DateTimePicker()
-        Me.Label12 = New System.Windows.Forms.Label()
-        Me.RbtInterventionPrevisionnel = New Telerik.WinControls.UI.RadRadioButton()
-        Me.RbtInterventionProgramme = New Telerik.WinControls.UI.RadRadioButton()
         CType(Me.RadGroupBoxEtatCivil, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.RadGroupBoxEtatCivil.SuspendLayout()
         CType(Me.RadBtnValidation, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -69,8 +66,6 @@ Partial Class RadFTacheModificationRendezVous
         CType(Me.GbxIntervention, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.GbxIntervention.SuspendLayout()
         CType(Me.NumheureRV, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.RbtInterventionPrevisionnel, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.RbtInterventionProgramme, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
@@ -306,7 +301,7 @@ Partial Class RadFTacheModificationRendezVous
         '
         'RadBtnValidation
         '
-        Me.RadBtnValidation.Location = New System.Drawing.Point(738, 232)
+        Me.RadBtnValidation.Location = New System.Drawing.Point(738, 209)
         Me.RadBtnValidation.Name = "RadBtnValidation"
         Me.RadBtnValidation.Size = New System.Drawing.Size(110, 24)
         Me.RadBtnValidation.TabIndex = 14
@@ -315,7 +310,7 @@ Partial Class RadFTacheModificationRendezVous
         'RadBtnAbandon
         '
         Me.RadBtnAbandon.DialogResult = System.Windows.Forms.DialogResult.Cancel
-        Me.RadBtnAbandon.Location = New System.Drawing.Point(854, 232)
+        Me.RadBtnAbandon.Location = New System.Drawing.Point(854, 209)
         Me.RadBtnAbandon.Name = "RadBtnAbandon"
         Me.RadBtnAbandon.Size = New System.Drawing.Size(110, 24)
         Me.RadBtnAbandon.TabIndex = 15
@@ -334,14 +329,11 @@ Partial Class RadFTacheModificationRendezVous
         Me.GbxIntervention.Controls.Add(Me.NumheureRV)
         Me.GbxIntervention.Controls.Add(Me.LblLabelDateRV)
         Me.GbxIntervention.Controls.Add(Me.NumDateRV)
-        Me.GbxIntervention.Controls.Add(Me.Label12)
-        Me.GbxIntervention.Controls.Add(Me.RbtInterventionPrevisionnel)
-        Me.GbxIntervention.Controls.Add(Me.RbtInterventionProgramme)
         Me.GbxIntervention.GroupBoxStyle = Telerik.WinControls.UI.RadGroupBoxStyle.Office
         Me.GbxIntervention.HeaderText = "Gérer un rendez-vous"
         Me.GbxIntervention.Location = New System.Drawing.Point(12, 89)
         Me.GbxIntervention.Name = "GbxIntervention"
-        Me.GbxIntervention.Size = New System.Drawing.Size(952, 128)
+        Me.GbxIntervention.Size = New System.Drawing.Size(952, 109)
         Me.GbxIntervention.TabIndex = 16
         Me.GbxIntervention.Text = "Gérer un rendez-vous"
         CType(Me.GbxIntervention.GetChildAt(0).GetChildAt(1), Telerik.WinControls.UI.GroupBoxHeader).GroupBoxStyle = Telerik.WinControls.UI.RadGroupBoxStyle.Office
@@ -351,7 +343,7 @@ Partial Class RadFTacheModificationRendezVous
         'RadioBtn45
         '
         Me.RadioBtn45.AutoSize = True
-        Me.RadioBtn45.Location = New System.Drawing.Point(755, 47)
+        Me.RadioBtn45.Location = New System.Drawing.Point(755, 30)
         Me.RadioBtn45.Name = "RadioBtn45"
         Me.RadioBtn45.Size = New System.Drawing.Size(81, 17)
         Me.RadioBtn45.TabIndex = 21
@@ -362,7 +354,7 @@ Partial Class RadFTacheModificationRendezVous
         'RadioBtn30
         '
         Me.RadioBtn30.AutoSize = True
-        Me.RadioBtn30.Location = New System.Drawing.Point(652, 47)
+        Me.RadioBtn30.Location = New System.Drawing.Point(652, 30)
         Me.RadioBtn30.Name = "RadioBtn30"
         Me.RadioBtn30.Size = New System.Drawing.Size(81, 17)
         Me.RadioBtn30.TabIndex = 20
@@ -373,7 +365,7 @@ Partial Class RadFTacheModificationRendezVous
         'RadioBtn15
         '
         Me.RadioBtn15.AutoSize = True
-        Me.RadioBtn15.Location = New System.Drawing.Point(549, 47)
+        Me.RadioBtn15.Location = New System.Drawing.Point(549, 30)
         Me.RadioBtn15.Name = "RadioBtn15"
         Me.RadioBtn15.Size = New System.Drawing.Size(81, 17)
         Me.RadioBtn15.TabIndex = 19
@@ -384,7 +376,7 @@ Partial Class RadFTacheModificationRendezVous
         'RadioBtn0
         '
         Me.RadioBtn0.AutoSize = True
-        Me.RadioBtn0.Location = New System.Drawing.Point(450, 47)
+        Me.RadioBtn0.Location = New System.Drawing.Point(450, 30)
         Me.RadioBtn0.Name = "RadioBtn0"
         Me.RadioBtn0.Size = New System.Drawing.Size(73, 17)
         Me.RadioBtn0.TabIndex = 18
@@ -395,7 +387,7 @@ Partial Class RadFTacheModificationRendezVous
         'Label16
         '
         Me.Label16.AutoSize = True
-        Me.Label16.Location = New System.Drawing.Point(11, 75)
+        Me.Label16.Location = New System.Drawing.Point(11, 58)
         Me.Label16.Name = "Label16"
         Me.Label16.Size = New System.Drawing.Size(75, 13)
         Me.Label16.TabIndex = 16
@@ -403,7 +395,7 @@ Partial Class RadFTacheModificationRendezVous
         '
         'TxtRDVCommentaire
         '
-        Me.TxtRDVCommentaire.Location = New System.Drawing.Point(128, 72)
+        Me.TxtRDVCommentaire.Location = New System.Drawing.Point(128, 55)
         Me.TxtRDVCommentaire.MaxLength = 200
         Me.TxtRDVCommentaire.Multiline = True
         Me.TxtRDVCommentaire.Name = "TxtRDVCommentaire"
@@ -413,7 +405,7 @@ Partial Class RadFTacheModificationRendezVous
         'LblLabelHeureRV
         '
         Me.LblLabelHeureRV.AutoSize = True
-        Me.LblLabelHeureRV.Location = New System.Drawing.Point(351, 46)
+        Me.LblLabelHeureRV.Location = New System.Drawing.Point(351, 29)
         Me.LblLabelHeureRV.Name = "LblLabelHeureRV"
         Me.LblLabelHeureRV.Size = New System.Drawing.Size(38, 13)
         Me.LblLabelHeureRV.TabIndex = 14
@@ -421,7 +413,7 @@ Partial Class RadFTacheModificationRendezVous
         '
         'NumheureRV
         '
-        Me.NumheureRV.Location = New System.Drawing.Point(395, 44)
+        Me.NumheureRV.Location = New System.Drawing.Point(395, 27)
         Me.NumheureRV.Maximum = New Decimal(New Integer() {24, 0, 0, 0})
         Me.NumheureRV.Name = "NumheureRV"
         Me.NumheureRV.Size = New System.Drawing.Size(48, 20)
@@ -430,7 +422,7 @@ Partial Class RadFTacheModificationRendezVous
         'LblLabelDateRV
         '
         Me.LblLabelDateRV.AutoSize = True
-        Me.LblLabelDateRV.Location = New System.Drawing.Point(11, 49)
+        Me.LblLabelDateRV.Location = New System.Drawing.Point(11, 32)
         Me.LblLabelDateRV.Name = "LblLabelDateRV"
         Me.LblLabelDateRV.Size = New System.Drawing.Size(73, 13)
         Me.LblLabelDateRV.TabIndex = 12
@@ -438,42 +430,17 @@ Partial Class RadFTacheModificationRendezVous
         '
         'NumDateRV
         '
-        Me.NumDateRV.Location = New System.Drawing.Point(128, 45)
+        Me.NumDateRV.Location = New System.Drawing.Point(128, 28)
         Me.NumDateRV.Name = "NumDateRV"
         Me.NumDateRV.Size = New System.Drawing.Size(200, 20)
         Me.NumDateRV.TabIndex = 11
-        '
-        'Label12
-        '
-        Me.Label12.AutoSize = True
-        Me.Label12.Location = New System.Drawing.Point(11, 26)
-        Me.Label12.Name = "Label12"
-        Me.Label12.Size = New System.Drawing.Size(74, 13)
-        Me.Label12.TabIndex = 6
-        Me.Label12.Text = "Consultation"
-        '
-        'RbtInterventionPrevisionnel
-        '
-        Me.RbtInterventionPrevisionnel.Location = New System.Drawing.Point(223, 21)
-        Me.RbtInterventionPrevisionnel.Name = "RbtInterventionPrevisionnel"
-        Me.RbtInterventionPrevisionnel.Size = New System.Drawing.Size(89, 18)
-        Me.RbtInterventionPrevisionnel.TabIndex = 1
-        Me.RbtInterventionPrevisionnel.Text = "Prévisionnelle"
-        '
-        'RbtInterventionProgramme
-        '
-        Me.RbtInterventionProgramme.Location = New System.Drawing.Point(126, 21)
-        Me.RbtInterventionProgramme.Name = "RbtInterventionProgramme"
-        Me.RbtInterventionProgramme.Size = New System.Drawing.Size(85, 18)
-        Me.RbtInterventionProgramme.TabIndex = 0
-        Me.RbtInterventionProgramme.Text = "Programmée"
         '
         'RadFTacheModificationRendezVous
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.CancelButton = Me.RadBtnAbandon
-        Me.ClientSize = New System.Drawing.Size(975, 263)
+        Me.ClientSize = New System.Drawing.Size(975, 239)
         Me.Controls.Add(Me.GbxIntervention)
         Me.Controls.Add(Me.RadBtnValidation)
         Me.Controls.Add(Me.RadBtnAbandon)
@@ -497,8 +464,6 @@ Partial Class RadFTacheModificationRendezVous
         Me.GbxIntervention.ResumeLayout(False)
         Me.GbxIntervention.PerformLayout()
         CType(Me.NumheureRV, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.RbtInterventionPrevisionnel, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.RbtInterventionProgramme, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
 
@@ -540,8 +505,5 @@ Partial Class RadFTacheModificationRendezVous
     Friend WithEvents NumheureRV As NumericUpDown
     Friend WithEvents LblLabelDateRV As Label
     Friend WithEvents NumDateRV As DateTimePicker
-    Friend WithEvents Label12 As Label
-    Friend WithEvents RbtInterventionPrevisionnel As Telerik.WinControls.UI.RadRadioButton
-    Friend WithEvents RbtInterventionProgramme As Telerik.WinControls.UI.RadRadioButton
 End Class
 
