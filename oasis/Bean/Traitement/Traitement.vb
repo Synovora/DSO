@@ -16,6 +16,10 @@
     Private _posologieMidi As Integer
     Private _posologieApresMidi As Integer
     Private _posologieSoir As Integer
+    Private _fractionMatin As String
+    Private _fractionMidi As String
+    Private _fractionApresMidi As String
+    Private _fractionSoir As String
     Private _posologieCommentaire As String
     Private _fenetre As Boolean
     Private _fenetreDateDebut As Date
@@ -297,6 +301,42 @@
         End Get
         Set(value As Boolean)
             _declaratifHorsTraitement = value
+        End Set
+    End Property
+
+    Public Property FractionMatin As String
+        Get
+            Return _fractionMatin
+        End Get
+        Set(value As String)
+            _fractionMatin = value
+        End Set
+    End Property
+
+    Public Property FractionMidi As String
+        Get
+            Return _fractionMidi
+        End Get
+        Set(value As String)
+            _fractionMidi = value
+        End Set
+    End Property
+
+    Public Property FractionApresMidi As String
+        Get
+            Return _fractionApresMidi
+        End Get
+        Set(value As String)
+            _fractionApresMidi = value
+        End Set
+    End Property
+
+    Public Property FractionSoir As String
+        Get
+            Return _fractionSoir
+        End Get
+        Set(value As String)
+            _fractionSoir = value
         End Set
     End Property
 

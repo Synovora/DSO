@@ -60,6 +60,9 @@ Public Class RadFMedocSelecteur
     Private Sub RadFMedocSelecteur_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         RadGridLocalizationProvider.CurrentProvider = New FrenchRadGridViewLocalizationProvider()
 
+        TxtFiltreDenomination.Focus()
+        TxtFiltreDenomination.Select()
+
         ChargementEtatCivil()
         InitAffichageLabel()
 

@@ -19,6 +19,13 @@ Public Class TraitementDao
         Const CONDITIONNEL = "Conditionnel"
     End Structure
 
+    Public Structure EnumFraction
+        Const Non = "0"
+        Const Quart = "1/4"
+        Const Demi = "1/2"
+        Const TroisQuart = "3/4"
+    End Structure
+
     Friend Function GetBaseCodeByItem(Item As String) As String
         Dim Code As String
         Select Case Item
@@ -146,11 +153,13 @@ Public Class TraitementDao
     Public Function getTraitementNotCancelledbyPatient(patientId As Integer) As DataTable
         Dim SQLString As String = "SELECT oa_traitement_id, oa_traitement_medicament_cis, oa_traitement_medicament_dci," &
         " oa_traitement_posologie_base, oa_traitement_posologie_rythme, oa_traitement_posologie_matin, oa_traitement_posologie_midi," &
-        " oa_traitement_posologie_apres_midi, oa_traitement_posologie_soir, oa_traitement_posologie_commentaire, oa_traitement_ordre_affichage, oa_traitement_date_creation," &
+        " oa_traitement_posologie_apres_midi, oa_traitement_posologie_soir," &
+        " oa_traitement_fraction_matin, oa_traitement_fraction_midi, oa_traitement_fraction_apres_midi, oa_traitement_fraction_soir," &
+        " oa_traitement_posologie_commentaire, oa_traitement_ordre_affichage, oa_traitement_date_creation," &
         " oa_traitement_commentaire, oa_traitement_date_modification, oa_traitement_date_debut, oa_traitement_date_fin, oa_traitement_fenetre," &
         " oa_traitement_fenetre_date_debut, oa_traitement_fenetre_date_fin, oa_traitement_arret, oa_traitement_allergie," &
         " oa_traitement_contre_indication FROM oasis.oa_traitement" &
-        " WHERE (oa_traitement_annulation Is Null OR oa_traitement_annulation = '')" &
+        " WHERE (oa_traitement_annulation Is Null Or oa_traitement_annulation = '')" &
         " AND (oa_traitement_date_fin >= CONVERT(DATE, GETDATE()) OR (oa_traitement_allergie = 'True') OR (oa_traitement_contre_indication = 'True'))" &
         " AND oa_traitement_patient_id = " & patientId.ToString &
         " ORDER BY oa_traitement_ordre_affichage;"
@@ -248,6 +257,10 @@ Public Class TraitementDao
         traitement.PosologieMidi = Coalesce(reader("oa_traitement_posologie_midi"), 0)
         traitement.PosologieApresMidi = Coalesce(reader("oa_traitement_posologie_apres_midi"), 0)
         traitement.PosologieSoir = Coalesce(reader("oa_traitement_posologie_soir"), 0)
+        traitement.FractionMatin = Coalesce(reader("oa_traitement_fraction_matin"), "")
+        traitement.FractionMidi = Coalesce(reader("oa_traitement_fraction_midi"), "")
+        traitement.FractionApresMidi = Coalesce(reader("oa_traitement_fraction_apres_midi"), "")
+        traitement.FractionSoir = Coalesce(reader("oa_traitement_fraction_soir"), "")
         traitement.PosologieCommentaire = Coalesce(reader("oa_traitement_posologie_commentaire"), "")
         traitement.Fenetre = Coalesce(reader("oa_traitement_fenetre"), False)
         traitement.FenetreDateDebut = Coalesce(reader("oa_traitement_fenetre_date_debut"), Nothing)
@@ -262,6 +275,372 @@ Public Class TraitementDao
         traitement.Annulation = Coalesce(reader("oa_traitement_annulation"), "")
         traitement.AnnulationCommentaire = Coalesce(reader("oa_traitement_annulation_commentaire"), "")
         Return traitement
+    End Function
+
+    Friend Function ModificationTraitement(traitement As Traitement, traitementHistoACreer As TraitementHisto) As Boolean
+        Dim da As SqlDataAdapter = New SqlDataAdapter()
+        Dim codeRetour As Boolean = True
+
+        Dim SQLstring As String = "UPDATE oasis.oa_traitement SET" &
+        " oa_traitement_identifiant_modification = @utilisateurModification," &
+        " oa_traitement_ordre_affichage = @ordreAffichage," &
+        " oa_traitement_posologie_base = @posologieBase," &
+        " oa_traitement_posologie_rythme = @posologieRythme," &
+        " oa_traitement_posologie_matin = @posologieMatin," &
+        " oa_traitement_posologie_midi = @posologieMidi," &
+        " oa_traitement_posologie_apres_midi = @posologieApresMidi," &
+        " oa_traitement_posologie_soir = @posologieSoir," &
+        " oa_traitement_fraction_matin = @fractionMatin," &
+        " oa_traitement_fraction_midi = @fractionMidi," &
+        " oa_traitement_fraction_apres_midi = @fractionApresMidi," &
+        " oa_traitement_fraction_soir = @fractionSoir," &
+        " oa_traitement_date_modification = @dateModification," &
+        " oa_traitement_posologie_commentaire = @posologieCommentaire," &
+        " oa_traitement_commentaire = @traitementCommentaire," &
+        " oa_traitement_date_debut = @dateDebut," &
+        " oa_traitement_date_fin = @dateFin" &
+        " WHERE oa_traitement_id = @traitementId"
+
+        Dim con As SqlConnection = GetConnection()
+        Dim cmd As New SqlCommand(SQLstring, con)
+
+        With cmd.Parameters
+            .AddWithValue("@utilisateurModification", traitement.UserModification.ToString)
+            .AddWithValue("@ordreAffichage", traitement.OrdreAffichage.ToString)
+            .AddWithValue("@posologieBase", traitement.PosologieBase)
+            .AddWithValue("@posologieRythme", traitement.PosologieRythme.ToString)
+            .AddWithValue("@posologieMatin", traitement.PosologieMatin.ToString)
+            .AddWithValue("@posologieMidi", traitement.PosologieMidi.ToString)
+            .AddWithValue("@posologieApresMidi", traitement.PosologieApresMidi.ToString)
+            .AddWithValue("@posologieSoir", traitement.PosologieSoir.ToString)
+            .AddWithValue("@fractionMatin", traitement.FractionMatin)
+            .AddWithValue("@fractionMidi", traitement.FractionMidi)
+            .AddWithValue("@fractionApresMidi", traitement.FractionApresMidi)
+            .AddWithValue("@fractionSoir", traitement.FractionSoir)
+            .AddWithValue("@dateModification", traitement.DateModification.ToString("yyyy-MM-dd HH:mm:ss"))
+            .AddWithValue("@posologieCommentaire", traitement.PosologieCommentaire)
+            .AddWithValue("@traitementCommentaire", traitement.Commentaire)
+            .AddWithValue("@dateDebut", traitement.DateDebut)
+            .AddWithValue("@dateFin", traitement.DateFin)
+            .AddWithValue("@traitementId", traitement.TraitementId.ToString)
+        End With
+
+        Try
+            da.UpdateCommand = cmd
+            da.UpdateCommand.ExecuteNonQuery()
+        Catch ex As Exception
+            MessageBox.Show(ex.Message)
+            codeRetour = False
+        Finally
+            con.Close()
+        End Try
+
+        If codeRetour = True Then
+            'Mise à jour des données modifiées dans l'instance de la classe Historisation traitement
+            traitementHistoACreer.HistorisationDate = Date.Now()
+            traitementHistoACreer.HistorisationUtilisateurId = traitement.UserModification
+            traitementHistoACreer.HistorisationEtat = EnumEtatTraitementHisto.ModificationTraitement
+            traitementHistoACreer.HistorisationOrdreAffichage = traitement.OrdreAffichage
+            traitementHistoACreer.HistorisationPosologieBase = traitement.PosologieBase
+            traitementHistoACreer.HistorisationPosologieRythme = traitement.PosologieRythme
+            traitementHistoACreer.HistorisationPosologieMatin = traitement.PosologieMatin
+            traitementHistoACreer.HistorisationPosologieMidi = traitement.PosologieMidi
+            traitementHistoACreer.HistorisationPosologieApresMidi = traitement.PosologieApresMidi
+            traitementHistoACreer.HistorisationPosologieSoir = traitement.PosologieSoir
+            traitementHistoACreer.HistorisationFractionMatin = traitement.FractionMatin
+            traitementHistoACreer.HistorisationFractionMidi = traitement.FractionMidi
+            traitementHistoACreer.HistorisationFractionApresMidi = traitement.FractionApresMidi
+            traitementHistoACreer.HistorisationFractionSoir = traitement.FractionSoir
+            traitementHistoACreer.HistorisationPosologieCommentaire = traitement.PosologieCommentaire
+            traitementHistoACreer.HistorisationCommentaire = traitement.Commentaire
+            traitementHistoACreer.HistorisationDateDebut = traitement.DateDebut
+            traitementHistoACreer.HistorisationDateFin = traitement.DateFin
+
+            'Création dans l'historique des modifications de traitement
+            CreationTraitementHisto(traitementHistoACreer, userLog, EnumEtatTraitementHisto.ModificationTraitement)
+
+            'Mise à jour de la date de mise à jour de la synthèse (table patient)
+            PatientDao.ModificationDateMajSynthesePatient(traitement.PatientId)
+        End If
+
+        Return codeRetour
+    End Function
+
+    Friend Function CreationTraitement(traitement As Traitement, traitementHistoACreer As TraitementHisto) As Boolean
+        Dim da As SqlDataAdapter = New SqlDataAdapter()
+        Dim codeRetour As Boolean = True
+
+        Dim SQLstring As String = "INSERT INTO oasis.oa_traitement" &
+        " (oa_traitement_patient_id, oa_traitement_medicament_cis, oa_traitement_medicament_dci, oa_traitement_allergie," &
+        " oa_traitement_contre_indication, oa_traitement_identifiant_creation, oa_traitement_identifiant_modification," &
+        " oa_traitement_ordre_affichage, oa_traitement_posologie_base, oa_traitement_posologie_rythme," &
+        " oa_traitement_posologie_matin, oa_traitement_posologie_midi, oa_traitement_posologie_apres_midi, oa_traitement_posologie_soir," &
+        " oa_traitement_fraction_matin,oa_traitement_fraction_midi, oa_traitement_fraction_apres_midi, oa_traitement_fraction_soir," &
+        " oa_traitement_date_creation, oa_traitement_posologie_commentaire, oa_traitement_commentaire," &
+        " oa_traitement_date_debut, oa_traitement_date_fin)" &
+        " VALUES (@patientId, @cis, @dci, @allergie," &
+        " @contreIndication, @utilisateurCreation, @utilisateurModification," &
+        " @ordreAffichage, @posologieBase, @posologierythme," &
+        " @PosologieMatin, @PosologieMidi, @PosologieApresMidi, @PosologieSoir," &
+        " @FractionMatin, @FractionMidi, @FractionApresMidi, @FractionSoir," &
+        " @dateCreation, @posologieCommentaire, @traitementCommentaire, @dateDebut, @dateFin)"
+
+        Dim con As SqlConnection = GetConnection()
+        Dim cmd As New SqlCommand(SQLstring, con)
+
+        With cmd.Parameters
+            .AddWithValue("@patientId", traitement.PatientId.ToString)
+            .AddWithValue("@cis", traitement.MedicamentCis.ToString)
+            .AddWithValue("@dci", traitement.MedicamentDci)
+            .AddWithValue("@allergie", 0)
+            .AddWithValue("@contreIndication", 0)
+            .AddWithValue("@utilisateurCreation", userLog.UtilisateurId.ToString)
+            .AddWithValue("@utilisateurModification", 0)
+            .AddWithValue("@ordreAffichage", traitement.OrdreAffichage.ToString)
+            .AddWithValue("@posologieBase", traitement.PosologieBase)
+            .AddWithValue("@posologieRythme", traitement.PosologieRythme.ToString)
+            .AddWithValue("@posologieMatin", traitement.PosologieMatin.ToString)
+            .AddWithValue("@posologieMidi", traitement.PosologieMidi.ToString)
+            .AddWithValue("@posologieApresMidi", traitement.PosologieApresMidi.ToString)
+            .AddWithValue("@posologieSoir", traitement.PosologieSoir.ToString)
+            .AddWithValue("@fractionMatin", traitement.FractionMatin)
+            .AddWithValue("@fractionMidi", traitement.FractionMidi)
+            .AddWithValue("@fractionApresMidi", traitement.FractionApresMidi)
+            .AddWithValue("@fractionSoir", traitement.FractionSoir)
+            .AddWithValue("@dateCreation", DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss"))
+            .AddWithValue("@posologieCommentaire", traitement.PosologieCommentaire)
+            .AddWithValue("@traitementCommentaire", traitement.Commentaire)
+            .AddWithValue("@dateDebut", traitement.DateDebut)
+            .AddWithValue("@dateFin", traitement.DateFin)
+        End With
+
+        Try
+            Dim n As Integer 'Pour récupérer le nombre d'occurences enregistrées
+            da.InsertCommand = cmd
+            n = da.InsertCommand.ExecuteNonQuery()
+        Catch ex As Exception
+            MessageBox.Show(ex.Message)
+            codeRetour = False
+        Finally
+            con.Close()
+        End Try
+
+        If codeRetour = True Then
+            'Mise à jour des données dans l'instance de la classe Historisation traitement
+            traitementHistoACreer.HistorisationDate = DateTime.Now()
+            traitementHistoACreer.HistorisationUtilisateurId = userLog.UtilisateurId
+            traitementHistoACreer.HistorisationEtat = EnumEtatTraitementHisto.CreationTraitement
+            traitementHistoACreer.HistorisationOrdreAffichage = traitement.OrdreAffichage
+            traitementHistoACreer.HistorisationPosologieBase = traitement.PosologieBase
+            traitementHistoACreer.HistorisationPosologieRythme = traitement.PosologieRythme
+            traitementHistoACreer.HistorisationPosologieMatin = traitement.PosologieMatin
+            traitementHistoACreer.HistorisationPosologieMidi = traitement.PosologieMidi
+            traitementHistoACreer.HistorisationPosologieApresMidi = traitement.PosologieApresMidi
+            traitementHistoACreer.HistorisationPosologieSoir = traitement.PosologieSoir
+            traitementHistoACreer.HistorisationFractionMatin = traitement.FractionMatin
+            traitementHistoACreer.HistorisationFractionMidi = traitement.FractionMidi
+            traitementHistoACreer.HistorisationFractionApresMidi = traitement.FractionApresMidi
+            traitementHistoACreer.HistorisationFractionSoir = traitement.FractionSoir
+            traitementHistoACreer.HistorisationPosologieCommentaire = traitement.PosologieCommentaire
+            traitementHistoACreer.HistorisationCommentaire = traitement.Commentaire
+            traitementHistoACreer.HistorisationDateDebut = traitement.DateDebut
+            traitementHistoACreer.HistorisationDateFin = traitement.DateFin
+            traitementHistoACreer.HistorisationAllergie = False
+            traitementHistoACreer.HistorisationContreIndication = False
+
+            'Récupération de l'identifiant du traitement créé
+            Dim traitementLastDataReader As SqlDataReader
+            SQLstring = "SELECT MAX(oa_traitement_id) FROM oasis.oa_traitement WHERE oa_traitement_patient_id = " & traitement.PatientId & ";"
+            Dim traitementLastCommand As New SqlCommand(SQLstring, con)
+            con.Open()
+            traitementLastDataReader = traitementLastCommand.ExecuteReader()
+            If traitementLastDataReader.HasRows Then
+                traitementLastDataReader.Read()
+                'Récupération de la clé de l'enregistrement créé
+                traitementHistoACreer.HistorisationTraitementId = traitementLastDataReader(0)
+
+                'Libération des ressources d'accès aux données
+                con.Close()
+                traitementLastCommand.Dispose()
+            End If
+
+            Dim traitementDao As TraitementDao = New TraitementDao
+            Dim traitementCree As Traitement
+
+            Try
+                traitementCree = traitementDao.getTraitementById(traitementHistoACreer.HistorisationTraitementId)
+            Catch ex As Exception
+                MessageBox.Show("Traitement : " + ex.Message, "Problème", MessageBoxButtons.OK, MessageBoxIcon.Error)
+                Return False
+            End Try
+            InitClasseTraitementHistorisation(traitementCree, userLog, traitementHistoACreer)
+
+
+            'Création dans l'historique des traitements du traitement créé
+            CreationTraitementHisto(traitementHistoACreer, userLog, EnumEtatTraitementHisto.CreationTraitement)
+
+            'Mise à jour de la date de mise à jour de la synthèse (table patient)
+            PatientDao.ModificationDateMajSynthesePatient(traitement.PatientId)
+        End If
+
+        Return codeRetour
+    End Function
+
+    Friend Function AnnulationTraitement(traitement As Traitement, traitementHistoACreer As TraitementHisto) As Boolean
+        Dim da As SqlDataAdapter = New SqlDataAdapter()
+        Dim codeRetour As Boolean = True
+
+        Dim dateModification As Date = Date.Now.Date
+
+        Dim SQLstring As String = "UPDATE oasis.oa_traitement SET" &
+        " oa_traitement_identifiant_modification = @utilisateurModification," &
+        " oa_traitement_date_modification = @dateModification," &
+        " oa_traitement_date_fin = @dateFin," &
+        " oa_traitement_annulation_commentaire = @commentaireAnnulation," &
+        " oa_traitement_annulation = @annulation" &
+        " WHERE oa_traitement_id = @traitementId"
+
+        Dim con As SqlConnection = GetConnection()
+        Dim cmd As New SqlCommand(SQLstring, con)
+
+        With cmd.Parameters
+            .AddWithValue("@utilisateurModification", userLog.UtilisateurId.ToString)
+            .AddWithValue("@dateModification", DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss"))
+            .AddWithValue("@dateFin", DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss"))
+            .AddWithValue("@commentaireAnnulation", traitement.AnnulationCommentaire)
+            .AddWithValue("@annulation", "A")
+            .AddWithValue("@traitementId", traitement.TraitementId.ToString)
+        End With
+
+        Try
+            da.UpdateCommand = cmd
+            da.UpdateCommand.ExecuteNonQuery()
+        Catch ex As Exception
+            MessageBox.Show(ex.Message)
+            codeRetour = False
+        Finally
+            con.Close()
+        End Try
+
+        If codeRetour = True Then
+            'Mise à jour des données modifiées dans l'instance de la classe Historisation antecedent
+            traitementHistoACreer.HistorisationDate = Date.Now()
+            traitementHistoACreer.HistorisationUtilisateurId = userLog.UtilisateurId
+            traitementHistoACreer.HistorisationEtat = EnumEtatTraitementHisto.AnnulationTraitement
+            traitementHistoACreer.HistorisationAnnulationCommentaire = traitement.AnnulationCommentaire
+            traitementHistoACreer.HistorisationAnnulation = "A"
+
+            'Création dans l'historique des modifications de traitement
+            CreationTraitementHisto(traitementHistoACreer, userLog, EnumEtatTraitementHisto.AnnulationTraitement)
+
+            'Mise à jour de la date de mise à jour de la synthèse (table patient)
+            PatientDao.ModificationDateMajSynthesePatient(traitement.PatientId)
+        End If
+
+        Return codeRetour
+    End Function
+
+    Friend Function ArretTraitement(traitement As Traitement, traitementHistoACreer As TraitementHisto) As Boolean
+        Dim da As SqlDataAdapter = New SqlDataAdapter()
+        Dim codeRetour As Boolean = True
+
+        Dim dateModification As Date = Date.Now.Date
+
+        Dim SQLstring As String = "UPDATE oasis.oa_traitement SET" &
+        " oa_traitement_identifiant_modification = @utilisateurModification," &
+        " oa_traitement_date_modification = @dateModification," &
+        " oa_traitement_date_fin = @dateFin," &
+        " oa_traitement_arret_commentaire = @commentaireArret," &
+        " oa_traitement_allergie = @allergie," &
+        " oa_traitement_contre_indication = @contreIndication," &
+        " oa_traitement_arret = @arret" &
+        " WHERE oa_traitement_id = @traitementId"
+
+        Dim con As SqlConnection = GetConnection()
+        Dim cmd As New SqlCommand(SQLstring, con)
+
+        With cmd.Parameters
+            .AddWithValue("@utilisateurModification", userLog.UtilisateurId.ToString)
+            .AddWithValue("@dateModification", DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss"))
+            .AddWithValue("@datefin", traitement.DateFin)
+            .AddWithValue("@commentaireArret", traitement.ArretCommentaire)
+            .AddWithValue("@allergie", traitement.Allergie)
+            .AddWithValue("@contreIndication", traitement.ContreIndication)
+            .AddWithValue("@arret", "A")
+            .AddWithValue("@traitementId", traitement.TraitementId.ToString)
+        End With
+
+        Try
+            da.UpdateCommand = cmd
+            da.UpdateCommand.ExecuteNonQuery()
+        Catch ex As Exception
+            MessageBox.Show(ex.Message)
+            codeRetour = False
+        Finally
+            con.Close()
+        End Try
+
+        If codeRetour = True Then
+            'Mise à jour des données modifiées dans l'instance de la classe Historisation traitement
+            traitementHistoACreer.HistorisationDate = Date.Now()
+            traitementHistoACreer.HistorisationUtilisateurId = userLog.UtilisateurId
+            traitementHistoACreer.HistorisationEtat = EnumEtatTraitementHisto.ArretTraitement
+            traitementHistoACreer.HistorisationDateFin = traitement.DateFin
+            traitementHistoACreer.HistorisationArretCommentaire = traitement.ArretCommentaire
+            traitementHistoACreer.HistorisationAllergie = traitement.Allergie
+            traitementHistoACreer.HistorisationContreIndication = traitement.ContreIndication
+            traitementHistoACreer.HistorisationArret = "A"
+
+            'Création dans l'historique des modifications de traitement
+            CreationTraitementHisto(traitementHistoACreer, userLog, EnumEtatTraitementHisto.ArretTraitement)
+
+            'Mise à jour de la date de mise à jour de la synthèse (table patient)
+            PatientDao.ModificationDateMajSynthesePatient(traitement.PatientId)
+        End If
+
+        Return codeRetour
+    End Function
+
+    Friend Function SuppressionTraitement(traitement As Traitement, traitementHistoACreer As TraitementHisto) As Boolean
+        Dim da As SqlDataAdapter = New SqlDataAdapter()
+        Dim codeRetour As Boolean = True
+
+        Dim dateModification As Date = Date.Now.Date
+
+        Dim SQLstring As String = "DELETE FROM oasis.oa_traitement WHERE oa_traitement_id = @traitementId"
+
+        Dim con As SqlConnection = GetConnection()
+        Dim cmd As New SqlCommand(SQLstring, con)
+
+        With cmd.Parameters
+            .AddWithValue("@traitementId", traitement.TraitementId.ToString)
+        End With
+
+        Try
+            da.UpdateCommand = cmd
+            da.UpdateCommand.ExecuteNonQuery()
+        Catch ex As Exception
+            MessageBox.Show(ex.Message)
+            codeRetour = False
+        Finally
+            con.Close()
+        End Try
+
+        If codeRetour = True Then
+            'Mise à jour des données modifiées dans l'instance de la classe Historisation traitement 
+            traitementHistoACreer.HistorisationDate = Date.Now()
+            traitementHistoACreer.HistorisationUtilisateurId = userLog.UtilisateurId
+            traitementHistoACreer.HistorisationEtat = EnumEtatTraitementHisto.SuppressionTraitement
+            traitementHistoACreer.HistorisationAnnulation = "A"
+
+            'Création dans l'historique des modifications de traitement
+            CreationTraitementHisto(traitementHistoACreer, userLog, EnumEtatTraitementHisto.SuppressionTraitement)
+
+            'Mise à jour de la date de mise à jour de la synthèse (table patient)
+            PatientDao.ModificationDateMajSynthesePatient(traitement.PatientId)
+        End If
+
+        Return codeRetour
     End Function
 
 End Class

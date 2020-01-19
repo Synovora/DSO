@@ -65,6 +65,7 @@ Partial Class RadFSynthese
         Me.EtatCivilContextMenuStrip = New System.Windows.Forms.ContextMenuStrip(Me.components)
         Me.ToolStripMenuItemMaps = New System.Windows.Forms.ToolStripMenuItem()
         Me.DétailPatientToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.LblNonOasis = New System.Windows.Forms.Label()
         Me.LblALD = New System.Windows.Forms.Label()
         Me.Label13 = New System.Windows.Forms.Label()
         Me.LblPatientDateMaj = New System.Windows.Forms.Label()
@@ -143,7 +144,6 @@ Partial Class RadFSynthese
         Me.RadBtnEpisodeList = New Telerik.WinControls.UI.RadButton()
         Me.RadDesktopAlert1 = New Telerik.WinControls.UI.RadDesktopAlert(Me.components)
         Me.RadBtnRefresh = New Telerik.WinControls.UI.RadButton()
-        Me.LblNonOasis = New System.Windows.Forms.Label()
         CType(Me.RadGroupBoxEtatCivil, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.RadGroupBoxEtatCivil.SuspendLayout()
         Me.EtatCivilContextMenuStrip.SuspendLayout()
@@ -240,6 +240,17 @@ Partial Class RadFSynthese
         Me.DétailPatientToolStripMenuItem.Name = "DétailPatientToolStripMenuItem"
         Me.DétailPatientToolStripMenuItem.Size = New System.Drawing.Size(265, 22)
         Me.DétailPatientToolStripMenuItem.Text = "Détail patient"
+        '
+        'LblNonOasis
+        '
+        Me.LblNonOasis.AutoSize = True
+        Me.LblNonOasis.Font = New System.Drawing.Font("Segoe UI", 10.0!, System.Drawing.FontStyle.Bold)
+        Me.LblNonOasis.ForeColor = System.Drawing.Color.Red
+        Me.LblNonOasis.Location = New System.Drawing.Point(231, 17)
+        Me.LblNonOasis.Name = "LblNonOasis"
+        Me.LblNonOasis.Size = New System.Drawing.Size(432, 19)
+        Me.LblNonOasis.TabIndex = 44
+        Me.LblNonOasis.Text = "++++++++++ !!! Patient hors système Oasis !!! ++++++++++"
         '
         'LblALD
         '
@@ -1214,17 +1225,6 @@ Partial Class RadFSynthese
         Me.RadBtnRefresh.TabIndex = 38
         Me.RadBtnRefresh.Text = "Rafraîchir"
         '
-        'LblNonOasis
-        '
-        Me.LblNonOasis.AutoSize = True
-        Me.LblNonOasis.Font = New System.Drawing.Font("Segoe UI", 10.0!, System.Drawing.FontStyle.Bold)
-        Me.LblNonOasis.ForeColor = System.Drawing.Color.Red
-        Me.LblNonOasis.Location = New System.Drawing.Point(231, 17)
-        Me.LblNonOasis.Name = "LblNonOasis"
-        Me.LblNonOasis.Size = New System.Drawing.Size(432, 19)
-        Me.LblNonOasis.TabIndex = 44
-        Me.LblNonOasis.Text = "++++++++++ !!! Patient hors système Oasis !!! ++++++++++"
-        '
         'RadFSynthese
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -1264,7 +1264,7 @@ Partial Class RadFSynthese
         '
         Me.RootElement.ApplyShapeToControl = True
         Me.ShowInTaskbar = False
-        Me.StartPosition = System.Windows.Forms.FormStartPosition.Manual
+        Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent
         Me.Text = "Synthèse"
         CType(Me.RadGroupBoxEtatCivil, System.ComponentModel.ISupportInitialize).EndInit()
         Me.RadGroupBoxEtatCivil.ResumeLayout(False)

@@ -2,6 +2,7 @@
 Public Class FAuthentificattion
     Enum EnumUtilisateur
         Informaticien
+        Medecin_Test
         Medecin_Francis
         Medecin_Fabrice
         IDE_Jeanne
@@ -112,6 +113,9 @@ Public Class FAuthentificattion
                 Me.UtilisateurConnecte.UtilisateurProfilId = "MEDECIN"
             Case "Medecin_Fabrice"
                 UtilisateurId = 3
+                Me.UtilisateurConnecte.UtilisateurProfilId = "MEDECIN"
+            Case "Medecin_Test"
+                UtilisateurId = 11
                 Me.UtilisateurConnecte.UtilisateurProfilId = "MEDECIN"
             Case "IDE_Jeanne"
                 UtilisateurId = 5

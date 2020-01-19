@@ -34,6 +34,15 @@ Public Class TacheDao
         AVIS_SOUS_EPISODE = 400
     End Enum
 
+    Public Enum PrioriteByTypeTache
+        AVIS_EPISODE_URGENT = 100       'Correspond à priorité Haute
+        AVIS_EPISODE_SYNCHRONE = 200    'correspond à priorité Moyenne
+        RDV = 230
+        RDV_MISSION = 260
+        AVIS_EPISODE_ASYNCHRONE = 300   'Correspond à priorité Basse
+        RDV_DEMANDE = 400
+    End Enum
+
     Public Enum NatureTache
         DEMANDE                 '    nature des TypeTache AVIS (les 2)
         REPONSE                 '    nature des TypeTache AVIS (les 2)

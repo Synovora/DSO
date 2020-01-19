@@ -14,7 +14,7 @@ Module TraitementHistoDao
     End Enum
 
     Public Function getAllHistoTraitementbyId(traitementId As Integer) As DataTable
-        Dim SQLString As String = "select * from oasis.oa_traitement_histo where oa_traitement_id = '" + traitementId.ToString + "' order by oa_traitement_histo_id desc;"
+        Dim SQLString As String = "SELECT * FROM oasis.oa_traitement_histo WHERE oa_traitement_id = '" + traitementId.ToString + "' ORDER BY oa_traitement_histo_id DESC;"
 
         Using con As SqlConnection = getConnection()
             Dim TraitementHistoDataAdapter As SqlDataAdapter = New SqlDataAdapter()
@@ -39,28 +39,8 @@ Module TraitementHistoDao
         Dim da As SqlDataAdapter = New SqlDataAdapter()
         Dim codeRetour As Boolean = True
         Dim dateCreation As DateTime = Date.Now.Date
-        Dim PosologieMatin, PosologieMidi, PosologieApresMidi, PosologieSoir, Fenetre, Declaratif, allergie, contreIndication As Integer
+        Dim Fenetre, Declaratif, allergie, contreIndication As Integer
 
-        If TraitementHistoACreer.HistorisationPosologieMatin = True Then
-            PosologieMatin = 1
-        Else
-            PosologieMatin = 0
-        End If
-        If TraitementHistoACreer.HistorisationPosologieMidi = True Then
-            PosologieMidi = 1
-        Else
-            PosologieMidi = 0
-        End If
-        If TraitementHistoACreer.HistorisationPosologieApresMidi = True Then
-            PosologieApresMidi = 1
-        Else
-            PosologieApresMidi = 0
-        End If
-        If TraitementHistoACreer.HistorisationPosologieSoir = True Then
-            PosologieSoir = 1
-        Else
-            PosologieSoir = 0
-        End If
         If TraitementHistoACreer.HistorisationFenetre = True Then
             Fenetre = 1
         Else
@@ -82,7 +62,25 @@ Module TraitementHistoDao
             contreIndication = 0
         End If
 
-        Dim SQLstring As String = "insert into oasis.oa_traitement_histo (oa_traitement_histo_date_historisation, oa_traitement_histo_utilisateur_historisation, oa_traitement_histo_etat_historisation, oa_traitement_patient_id, oa_traitement_id, oa_traitement_date_debut, oa_traitement_date_fin, oa_traitement_ordre_affichage, oa_traitement_posologie_base, oa_traitement_posologie_rythme, oa_traitement_posologie_matin, oa_traitement_posologie_midi, oa_traitement_posologie_apres_midi, oa_traitement_posologie_soir, oa_traitement_posologie_commentaire, oa_traitement_fenetre, oa_traitement_fenetre_date_debut, oa_traitement_fenetre_date_fin, oa_traitement_fenetre_commentaire, oa_traitement_commentaire, oa_traitement_arret_commentaire, oa_traitement_declaratif_hors_traitement, oa_traitement_allergie, oa_traitement_contre_indication, oa_traitement_annulation_commentaire, oa_traitement_annulation, oa_traitement_arret) VALUES (@dateHistorisation, @utilisateurCreation, @etatHistorisation, @patientId, @traitementId, @dateDebut, @dateFin, @ordreAffichage, @posologieBase, @posologieRythme, @PosologieMatin, @PosologieMidi, @PosologieApresMidi, @PosologieSoir, @posologieCommentaire, @fenetre, @fenetreDateDebut, @fenetreDateFin, @fenetreCommentaire, @commentaire, @arretCommentaire, @declaratif, @allergie, @contreIndication, @annulationCommentaire, @annulation, @arret);"
+        Dim SQLstring As String = "INSERT INTO oasis.oa_traitement_histo" &
+        " (oa_traitement_histo_date_historisation, oa_traitement_histo_utilisateur_historisation, oa_traitement_histo_etat_historisation," &
+        " oa_traitement_patient_id, oa_traitement_id, oa_traitement_date_debut, oa_traitement_date_fin," &
+        " oa_traitement_ordre_affichage, oa_traitement_posologie_base, oa_traitement_posologie_rythme," &
+        " oa_traitement_posologie_matin, oa_traitement_posologie_midi, oa_traitement_posologie_apres_midi, oa_traitement_posologie_soir," &
+        " oa_traitement_fraction_matin, oa_traitement_fraction_midi, oa_traitement_fraction_apres_midi, oa_traitement_fraction_soir," &
+        " oa_traitement_posologie_commentaire, oa_traitement_fenetre, oa_traitement_fenetre_date_debut," &
+        " oa_traitement_fenetre_date_fin, oa_traitement_fenetre_commentaire, oa_traitement_commentaire," &
+        " oa_traitement_arret_commentaire, oa_traitement_declaratif_hors_traitement, oa_traitement_allergie," &
+        " oa_traitement_contre_indication, oa_traitement_annulation_commentaire, oa_traitement_annulation, oa_traitement_arret)" &
+        " VALUES (@dateHistorisation, @utilisateurCreation, @etatHistorisation," &
+        " @patientId, @traitementId, @dateDebut, @dateFin," &
+        " @ordreAffichage, @posologieBase, @posologieRythme," &
+        " @PosologieMatin, @PosologieMidi, @PosologieApresMidi, @PosologieSoir," &
+        " @FractionMatin, @FractionMidi, @FractionApresMidi, @FractionSoir," &
+        " @posologieCommentaire, @fenetre, @fenetreDateDebut," &
+        " @fenetreDateFin, @fenetreCommentaire, @commentaire," &
+        " @arretCommentaire, @declaratif, @allergie," &
+        " @contreIndication, @annulationCommentaire, @annulation, @arret);"
 
         Dim cmd As New SqlCommand(SQLstring, conxn)
 
@@ -97,10 +95,14 @@ Module TraitementHistoDao
             .AddWithValue("@ordreAffichage", TraitementHistoACreer.HistorisationOrdreAffichage.ToString)
             .AddWithValue("@posologieBase", TraitementHistoACreer.HistorisationPosologieBase.ToString)
             .AddWithValue("@posologieRythme", TraitementHistoACreer.HistorisationPosologieRythme.ToString)
-            .AddWithValue("@posologieMatin", PosologieMatin.ToString)
-            .AddWithValue("@posologieMidi", PosologieMidi.ToString)
-            .AddWithValue("@posologieApresMidi", PosologieApresMidi.ToString)
-            .AddWithValue("@posologieSoir", PosologieSoir.ToString)
+            .AddWithValue("@posologieMatin", TraitementHistoACreer.HistorisationPosologieMatin.ToString)
+            .AddWithValue("@posologieMidi", TraitementHistoACreer.HistorisationPosologieMidi.ToString)
+            .AddWithValue("@posologieApresMidi", TraitementHistoACreer.HistorisationPosologieApresMidi.ToString)
+            .AddWithValue("@posologieSoir", TraitementHistoACreer.HistorisationPosologieSoir.ToString)
+            .AddWithValue("@FractionMatin", TraitementHistoACreer.HistorisationFractionMatin)
+            .AddWithValue("@FractionMidi", TraitementHistoACreer.HistorisationFractionMidi)
+            .AddWithValue("@FractionApresMidi", TraitementHistoACreer.HistorisationFractionApresMidi)
+            .AddWithValue("@FractionSoir", TraitementHistoACreer.HistorisationFractionSoir)
             .AddWithValue("@posologieCommentaire", TraitementHistoACreer.HistorisationPosologieCommentaire.ToString)
             .AddWithValue("@fenetre", Fenetre.ToString)
             .AddWithValue("@fenetreDateDebut", TraitementHistoACreer.HistorisationFenetreDateDebut.ToString("yyyy-MM-dd HH:mm:ss"))
@@ -147,6 +149,10 @@ Module TraitementHistoDao
         TraitementHistoACreer.HistorisationPosologieMidi = traitement.PosologieMidi
         TraitementHistoACreer.HistorisationPosologieApresMidi = traitement.PosologieApresMidi
         TraitementHistoACreer.HistorisationPosologieSoir = traitement.PosologieSoir
+        TraitementHistoACreer.HistorisationFractionMatin = traitement.FractionMatin
+        TraitementHistoACreer.HistorisationFractionMidi = traitement.FractionMidi
+        TraitementHistoACreer.HistorisationFractionApresMidi = traitement.FractionApresMidi
+        TraitementHistoACreer.HistorisationFractionSoir = traitement.FractionSoir
         TraitementHistoACreer.HistorisationPosologieCommentaire = traitement.PosologieCommentaire
         TraitementHistoACreer.HistorisationFenetre = traitement.Fenetre
         TraitementHistoACreer.HistorisationFenetreDateDebut = traitement.DateDebut
@@ -170,95 +176,30 @@ Module TraitementHistoDao
         TraitementHistoACreer.HistorisationTraitementId = traitementDataReader("oa_traitement_id")
         TraitementHistoACreer.HistorisationDateDebut = traitementDataReader("oa_traitement_date_debut")
         TraitementHistoACreer.HistorisationDateFin = traitementDataReader("oa_traitement_date_fin")
-        If traitementDataReader("oa_traitement_commentaire") Is DBNull.Value Then
-            TraitementHistoACreer.HistorisationCommentaire = ""
-        Else
-            TraitementHistoACreer.HistorisationCommentaire = traitementDataReader("oa_traitement_commentaire")
-        End If
-        TraitementHistoACreer.HistorisationOrdreAffichage = traitementDataReader("oa_traitement_ordre_affichage")
-        TraitementHistoACreer.HistorisationPosologieBase = traitementDataReader("oa_traitement_posologie_base")
-        TraitementHistoACreer.HistorisationPosologieRythme = traitementDataReader("oa_traitement_posologie_rythme")
-        If traitementDataReader("oa_traitement_posologie_matin") Is DBNull.Value Then
-            TraitementHistoACreer.HistorisationPosologieMatin = False
-        Else
-            TraitementHistoACreer.HistorisationPosologieMatin = traitementDataReader("oa_traitement_posologie_matin")
-        End If
-        If traitementDataReader("oa_traitement_posologie_midi") Is DBNull.Value Then
-            TraitementHistoACreer.HistorisationPosologieMidi = False
-        Else
-            TraitementHistoACreer.HistorisationPosologieMidi = traitementDataReader("oa_traitement_posologie_midi")
-        End If
-        If traitementDataReader("oa_traitement_posologie_apres_midi") Is DBNull.Value Then
-            TraitementHistoACreer.HistorisationPosologieApresMidi = False
-        Else
-            TraitementHistoACreer.HistorisationPosologieApresMidi = traitementDataReader("oa_traitement_posologie_apres_midi")
-        End If
-        If traitementDataReader("oa_traitement_posologie_soir") Is DBNull.Value Then
-            TraitementHistoACreer.HistorisationPosologieSoir = False
-        Else
-            TraitementHistoACreer.HistorisationPosologieSoir = traitementDataReader("oa_traitement_posologie_soir")
-        End If
-        If traitementDataReader("oa_traitement_posologie_commentaire") Is DBNull.Value Then
-            TraitementHistoACreer.HistorisationPosologieCommentaire = ""
-        Else
-            TraitementHistoACreer.HistorisationPosologieCommentaire = traitementDataReader("oa_traitement_posologie_commentaire")
-        End If
-        If traitementDataReader("oa_traitement_fenetre") Is DBNull.Value Then
-            TraitementHistoACreer.HistorisationFenetre = False
-        Else
-            TraitementHistoACreer.HistorisationFenetre = traitementDataReader("oa_traitement_fenetre")
-        End If
-        If traitementDataReader("oa_traitement_fenetre_date_debut") Is DBNull.Value Then
-            TraitementHistoACreer.HistorisationFenetreDateDebut = New Date(1, 1, 1, 0, 0, 0)
-        Else
-            TraitementHistoACreer.HistorisationFenetreDateDebut = traitementDataReader("oa_traitement_fenetre_date_debut")
-        End If
-        If traitementDataReader("oa_traitement_fenetre_date_fin") Is DBNull.Value Then
-            TraitementHistoACreer.HistorisationFenetreDateFin = New Date(1, 1, 1, 0, 0, 0)
-        Else
-            TraitementHistoACreer.HistorisationFenetreDateFin = traitementDataReader("oa_traitement_fenetre_date_fin")
-        End If
-
-        If traitementDataReader("oa_traitement_fenetre_commentaire") Is DBNull.Value Then
-            TraitementHistoACreer.HistorisationFenetreCommentaire = ""
-        Else
-            TraitementHistoACreer.HistorisationFenetreCommentaire = traitementDataReader("oa_traitement_fenetre_commentaire")
-        End If
-        If traitementDataReader("oa_traitement_arret") Is DBNull.Value Then
-            TraitementHistoACreer.HistorisationArret = ""
-        Else
-            TraitementHistoACreer.HistorisationArret = traitementDataReader("oa_traitement_arret")
-        End If
-        If traitementDataReader("oa_traitement_arret_commentaire") Is DBNull.Value Then
-            TraitementHistoACreer.HistorisationArretCommentaire = ""
-        Else
-            TraitementHistoACreer.HistorisationArretCommentaire = traitementDataReader("oa_traitement_arret_commentaire")
-        End If
-        If traitementDataReader("oa_traitement_declaratif_hors_traitement") Is DBNull.Value Then
-            TraitementHistoACreer.HistorisationDeclaratifHorsTraitement = False
-        Else
-            TraitementHistoACreer.HistorisationDeclaratifHorsTraitement = traitementDataReader("oa_traitement_declaratif_hors_traitement")
-        End If
-        If traitementDataReader("oa_traitement_allergie") Is DBNull.Value Then
-            TraitementHistoACreer.HistorisationAllergie = False
-        Else
-            TraitementHistoACreer.HistorisationAllergie = traitementDataReader("oa_traitement_allergie")
-        End If
-        If traitementDataReader("oa_traitement_contre_indication") Is DBNull.Value Then
-            TraitementHistoACreer.HistorisationContreIndication = False
-        Else
-            TraitementHistoACreer.HistorisationContreIndication = traitementDataReader("oa_traitement_contre_indication")
-        End If
-        If traitementDataReader("oa_traitement_annulation") Is DBNull.Value Then
-            TraitementHistoACreer.HistorisationAnnulation = ""
-        Else
-            TraitementHistoACreer.HistorisationAnnulation = traitementDataReader("oa_traitement_annulation")
-        End If
-        If traitementDataReader("oa_traitement_annulation_commentaire") Is DBNull.Value Then
-            TraitementHistoACreer.HistorisationAnnulationCommentaire = ""
-        Else
-            TraitementHistoACreer.HistorisationAnnulationCommentaire = traitementDataReader("oa_traitement_annulation_commentaire")
-        End If
+        TraitementHistoACreer.HistorisationCommentaire = Coalesce(traitementDataReader("oa_traitement_commentaire"), "")
+        TraitementHistoACreer.HistorisationOrdreAffichage = Coalesce(traitementDataReader("oa_traitement_ordre_affichage"), 0)
+        TraitementHistoACreer.HistorisationPosologieBase = Coalesce(traitementDataReader("oa_traitement_posologie_base"), "")
+        TraitementHistoACreer.HistorisationPosologieRythme = Coalesce(traitementDataReader("oa_traitement_posologie_rythme"), 0)
+        TraitementHistoACreer.HistorisationPosologieMatin = Coalesce(traitementDataReader("oa_traitement_posologie_matin"), 0)
+        TraitementHistoACreer.HistorisationPosologieMidi = Coalesce(traitementDataReader("oa_traitement_posologie_midi"), 0)
+        TraitementHistoACreer.HistorisationPosologieApresMidi = Coalesce(traitementDataReader("oa_traitement_posologie_apres_midi"), 0)
+        TraitementHistoACreer.HistorisationPosologieSoir = Coalesce(traitementDataReader("oa_traitement_posologie_soir"), 0)
+        TraitementHistoACreer.HistorisationFractionMatin = Coalesce(traitementDataReader("oa_traitement_fraction_matin"), TraitementDao.EnumFraction.Non)
+        TraitementHistoACreer.HistorisationFractionMidi = Coalesce(traitementDataReader("oa_traitement_fraction_midi"), TraitementDao.EnumFraction.Non)
+        TraitementHistoACreer.HistorisationFractionApresMidi = Coalesce(traitementDataReader("oa_traitement_fraction_apres_midi"), TraitementDao.EnumFraction.Non)
+        TraitementHistoACreer.HistorisationFractionSoir = Coalesce(traitementDataReader("oa_traitement_fraction_soir"), TraitementDao.EnumFraction.Non)
+        TraitementHistoACreer.HistorisationPosologieCommentaire = Coalesce(traitementDataReader("oa_traitement_posologie_commentaire"), "")
+        TraitementHistoACreer.HistorisationFenetre = Coalesce(traitementDataReader("oa_traitement_fenetre"), False)
+        TraitementHistoACreer.HistorisationFenetreDateDebut = Coalesce(traitementDataReader("oa_traitement_fenetre_date_debut"), New Date(1, 1, 1, 0, 0, 0))
+        TraitementHistoACreer.HistorisationFenetreDateFin = Coalesce(traitementDataReader("oa_traitement_fenetre_date_fin"), New Date(1, 1, 1, 0, 0, 0))
+        TraitementHistoACreer.HistorisationFenetreCommentaire = Coalesce(traitementDataReader("oa_traitement_fenetre_commentaire"), "")
+        TraitementHistoACreer.HistorisationArret = Coalesce(traitementDataReader("oa_traitement_arret"), "")
+        TraitementHistoACreer.HistorisationArretCommentaire = Coalesce(traitementDataReader("oa_traitement_arret_commentaire"), "")
+        TraitementHistoACreer.HistorisationDeclaratifHorsTraitement = Coalesce(traitementDataReader("oa_traitement_declaratif_hors_traitement"), False)
+        TraitementHistoACreer.HistorisationAllergie = Coalesce(traitementDataReader("oa_traitement_allergie"), False)
+        TraitementHistoACreer.HistorisationContreIndication = Coalesce(traitementDataReader("oa_traitement_contre_indication"), False)
+        TraitementHistoACreer.HistorisationAnnulation = Coalesce(traitementDataReader("oa_traitement_annulation"), "")
+        TraitementHistoACreer.HistorisationAnnulationCommentaire = Coalesce(traitementDataReader("oa_traitement_annulation_commentaire"), "")
     End Sub
 
     Private Function getConnection()

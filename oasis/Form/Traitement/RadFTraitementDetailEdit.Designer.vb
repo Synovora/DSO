@@ -1,9 +1,9 @@
-﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
+﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()>
 Partial Class RadFTraitementDetailEdit
     Inherits Telerik.WinControls.UI.RadForm
 
     'Form overrides dispose to clean up the component list.
-    <System.Diagnostics.DebuggerNonUserCode()> _
+    <System.Diagnostics.DebuggerNonUserCode()>
     Protected Overrides Sub Dispose(ByVal disposing As Boolean)
         Try
             If disposing AndAlso components IsNot Nothing Then
@@ -20,7 +20,7 @@ Partial Class RadFTraitementDetailEdit
     'NOTE: The following procedure is required by the Windows Form Designer
     'It can be modified using the Windows Form Designer.  
     'Do not modify it using the code editor.
-    <System.Diagnostics.DebuggerStepThrough()> _
+    <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
         Me.components = New System.ComponentModel.Container()
         Me.RadGroupBox1 = New Telerik.WinControls.UI.RadGroupBox()
@@ -60,6 +60,11 @@ Partial Class RadFTraitementDetailEdit
         Me.LblTraitementMedicamentCIS = New System.Windows.Forms.Label()
         Me.ToolTip = New System.Windows.Forms.ToolTip(Me.components)
         Me.RadGroupBox3 = New Telerik.WinControls.UI.RadGroupBox()
+        Me.Label18 = New System.Windows.Forms.Label()
+        Me.CbxFractionMidi = New System.Windows.Forms.ComboBox()
+        Me.CbxFractionApresMidi = New System.Windows.Forms.ComboBox()
+        Me.CbxFractionSoir = New System.Windows.Forms.ComboBox()
+        Me.CbxFractionMatin = New System.Windows.Forms.ComboBox()
         Me.LblRythmeSoir = New System.Windows.Forms.Label()
         Me.LblRythmeApresMidi = New System.Windows.Forms.Label()
         Me.LblRythmeMidi = New System.Windows.Forms.Label()
@@ -76,6 +81,7 @@ Partial Class RadFTraitementDetailEdit
         Me.Label2 = New System.Windows.Forms.Label()
         Me.LblTraitementPosologie = New System.Windows.Forms.Label()
         Me.RadGroupBox4 = New Telerik.WinControls.UI.RadGroupBox()
+        Me.RadBtnInhiberDateFin = New Telerik.WinControls.UI.RadButton()
         Me.Label8 = New System.Windows.Forms.Label()
         Me.NumNumeroOrdre = New System.Windows.Forms.NumericUpDown()
         Me.LblTraitementDuree = New System.Windows.Forms.Label()
@@ -129,6 +135,7 @@ Partial Class RadFTraitementDetailEdit
         CType(Me.NumRythmeMatin, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.RadGroupBox4, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.RadGroupBox4.SuspendLayout()
+        CType(Me.RadBtnInhiberDateFin, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.NumNumeroOrdre, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.GbxArretTraitement, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.GbxArretTraitement.SuspendLayout()
@@ -527,6 +534,11 @@ Partial Class RadFTraitementDetailEdit
         'RadGroupBox3
         '
         Me.RadGroupBox3.AccessibleRole = System.Windows.Forms.AccessibleRole.Grouping
+        Me.RadGroupBox3.Controls.Add(Me.Label18)
+        Me.RadGroupBox3.Controls.Add(Me.CbxFractionMidi)
+        Me.RadGroupBox3.Controls.Add(Me.CbxFractionApresMidi)
+        Me.RadGroupBox3.Controls.Add(Me.CbxFractionSoir)
+        Me.RadGroupBox3.Controls.Add(Me.CbxFractionMatin)
         Me.RadGroupBox3.Controls.Add(Me.LblRythmeSoir)
         Me.RadGroupBox3.Controls.Add(Me.LblRythmeApresMidi)
         Me.RadGroupBox3.Controls.Add(Me.LblRythmeMidi)
@@ -546,12 +558,54 @@ Partial Class RadFTraitementDetailEdit
         Me.RadGroupBox3.HeaderText = "Posologie"
         Me.RadGroupBox3.Location = New System.Drawing.Point(12, 235)
         Me.RadGroupBox3.Name = "RadGroupBox3"
-        Me.RadGroupBox3.Size = New System.Drawing.Size(1154, 168)
+        Me.RadGroupBox3.Size = New System.Drawing.Size(1154, 202)
         Me.RadGroupBox3.TabIndex = 2
         Me.RadGroupBox3.Text = "Posologie"
         CType(Me.RadGroupBox3.GetChildAt(0).GetChildAt(1), Telerik.WinControls.UI.GroupBoxHeader).GroupBoxStyle = Telerik.WinControls.UI.RadGroupBoxStyle.Office
         CType(Me.RadGroupBox3.GetChildAt(0).GetChildAt(1).GetChildAt(0), Telerik.WinControls.Primitives.FillPrimitive).BackColor = System.Drawing.SystemColors.ActiveCaption
         CType(Me.RadGroupBox3.GetChildAt(0).GetChildAt(1).GetChildAt(0), Telerik.WinControls.Primitives.FillPrimitive).SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.None
+        '
+        'Label18
+        '
+        Me.Label18.AutoSize = True
+        Me.Label18.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label18.Location = New System.Drawing.Point(13, 77)
+        Me.Label18.Name = "Label18"
+        Me.Label18.Size = New System.Drawing.Size(61, 13)
+        Me.Label18.TabIndex = 75
+        Me.Label18.Text = "Fraction :"
+        '
+        'CbxFractionMidi
+        '
+        Me.CbxFractionMidi.FormattingEnabled = True
+        Me.CbxFractionMidi.Location = New System.Drawing.Point(302, 74)
+        Me.CbxFractionMidi.Name = "CbxFractionMidi"
+        Me.CbxFractionMidi.Size = New System.Drawing.Size(46, 21)
+        Me.CbxFractionMidi.TabIndex = 74
+        '
+        'CbxFractionApresMidi
+        '
+        Me.CbxFractionApresMidi.FormattingEnabled = True
+        Me.CbxFractionApresMidi.Location = New System.Drawing.Point(443, 74)
+        Me.CbxFractionApresMidi.Name = "CbxFractionApresMidi"
+        Me.CbxFractionApresMidi.Size = New System.Drawing.Size(46, 21)
+        Me.CbxFractionApresMidi.TabIndex = 73
+        '
+        'CbxFractionSoir
+        '
+        Me.CbxFractionSoir.FormattingEnabled = True
+        Me.CbxFractionSoir.Location = New System.Drawing.Point(584, 74)
+        Me.CbxFractionSoir.Name = "CbxFractionSoir"
+        Me.CbxFractionSoir.Size = New System.Drawing.Size(46, 21)
+        Me.CbxFractionSoir.TabIndex = 72
+        '
+        'CbxFractionMatin
+        '
+        Me.CbxFractionMatin.FormattingEnabled = True
+        Me.CbxFractionMatin.Location = New System.Drawing.Point(161, 74)
+        Me.CbxFractionMatin.Name = "CbxFractionMatin"
+        Me.CbxFractionMatin.Size = New System.Drawing.Size(46, 21)
+        Me.CbxFractionMatin.TabIndex = 71
         '
         'LblRythmeSoir
         '
@@ -626,7 +680,7 @@ Partial Class RadFTraitementDetailEdit
         '
         Me.Label14.AutoSize = True
         Me.Label14.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label14.Location = New System.Drawing.Point(13, 102)
+        Me.Label14.Location = New System.Drawing.Point(13, 127)
         Me.Label14.Name = "Label14"
         Me.Label14.Size = New System.Drawing.Size(87, 13)
         Me.Label14.TabIndex = 62
@@ -635,11 +689,11 @@ Partial Class RadFTraitementDetailEdit
         'TxtTraitementPosologieCommentaire
         '
         Me.TxtTraitementPosologieCommentaire.AcceptsReturn = True
-        Me.TxtTraitementPosologieCommentaire.Location = New System.Drawing.Point(118, 99)
+        Me.TxtTraitementPosologieCommentaire.Location = New System.Drawing.Point(118, 124)
         Me.TxtTraitementPosologieCommentaire.MaxLength = 1000
         Me.TxtTraitementPosologieCommentaire.Multiline = True
         Me.TxtTraitementPosologieCommentaire.Name = "TxtTraitementPosologieCommentaire"
-        Me.TxtTraitementPosologieCommentaire.Size = New System.Drawing.Size(1028, 64)
+        Me.TxtTraitementPosologieCommentaire.Size = New System.Drawing.Size(1028, 73)
         Me.TxtTraitementPosologieCommentaire.TabIndex = 30
         '
         'LblTraitementRythme
@@ -675,7 +729,7 @@ Partial Class RadFTraitementDetailEdit
         '
         Me.Label2.AutoSize = True
         Me.Label2.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label2.Location = New System.Drawing.Point(13, 77)
+        Me.Label2.Location = New System.Drawing.Point(13, 102)
         Me.Label2.Name = "Label2"
         Me.Label2.Size = New System.Drawing.Size(70, 13)
         Me.Label2.TabIndex = 56
@@ -685,7 +739,7 @@ Partial Class RadFTraitementDetailEdit
         '
         Me.LblTraitementPosologie.AutoSize = True
         Me.LblTraitementPosologie.ForeColor = System.Drawing.Color.DarkBlue
-        Me.LblTraitementPosologie.Location = New System.Drawing.Point(118, 79)
+        Me.LblTraitementPosologie.Location = New System.Drawing.Point(118, 104)
         Me.LblTraitementPosologie.Name = "LblTraitementPosologie"
         Me.LblTraitementPosologie.Size = New System.Drawing.Size(31, 13)
         Me.LblTraitementPosologie.TabIndex = 57
@@ -694,6 +748,7 @@ Partial Class RadFTraitementDetailEdit
         'RadGroupBox4
         '
         Me.RadGroupBox4.AccessibleRole = System.Windows.Forms.AccessibleRole.Grouping
+        Me.RadGroupBox4.Controls.Add(Me.RadBtnInhiberDateFin)
         Me.RadGroupBox4.Controls.Add(Me.Label8)
         Me.RadGroupBox4.Controls.Add(Me.NumNumeroOrdre)
         Me.RadGroupBox4.Controls.Add(Me.LblTraitementDuree)
@@ -706,7 +761,7 @@ Partial Class RadFTraitementDetailEdit
         Me.RadGroupBox4.Controls.Add(Me.Label11)
         Me.RadGroupBox4.GroupBoxStyle = Telerik.WinControls.UI.RadGroupBoxStyle.Office
         Me.RadGroupBox4.HeaderText = "Traitement"
-        Me.RadGroupBox4.Location = New System.Drawing.Point(12, 418)
+        Me.RadGroupBox4.Location = New System.Drawing.Point(12, 443)
         Me.RadGroupBox4.Name = "RadGroupBox4"
         Me.RadGroupBox4.Size = New System.Drawing.Size(1154, 148)
         Me.RadGroupBox4.TabIndex = 3
@@ -715,11 +770,19 @@ Partial Class RadFTraitementDetailEdit
         CType(Me.RadGroupBox4.GetChildAt(0).GetChildAt(1).GetChildAt(0), Telerik.WinControls.Primitives.FillPrimitive).BackColor = System.Drawing.SystemColors.ActiveCaption
         CType(Me.RadGroupBox4.GetChildAt(0).GetChildAt(1).GetChildAt(0), Telerik.WinControls.Primitives.FillPrimitive).SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.None
         '
+        'RadBtnInhiberDateFin
+        '
+        Me.RadBtnInhiberDateFin.Location = New System.Drawing.Point(327, 48)
+        Me.RadBtnInhiberDateFin.Name = "RadBtnInhiberDateFin"
+        Me.RadBtnInhiberDateFin.Size = New System.Drawing.Size(110, 24)
+        Me.RadBtnInhiberDateFin.TabIndex = 74
+        Me.RadBtnInhiberDateFin.Text = "Inhiber date fin"
+        '
         'Label8
         '
         Me.Label8.AutoSize = True
         Me.Label8.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label8.Location = New System.Drawing.Point(657, 43)
+        Me.Label8.Location = New System.Drawing.Point(771, 43)
         Me.Label8.Name = "Label8"
         Me.Label8.Size = New System.Drawing.Size(113, 13)
         Me.Label8.TabIndex = 73
@@ -727,7 +790,7 @@ Partial Class RadFTraitementDetailEdit
         '
         'NumNumeroOrdre
         '
-        Me.NumNumeroOrdre.Location = New System.Drawing.Point(771, 41)
+        Me.NumNumeroOrdre.Location = New System.Drawing.Point(885, 41)
         Me.NumNumeroOrdre.Maximum = New Decimal(New Integer() {1000, 0, 0, 0})
         Me.NumNumeroOrdre.Name = "NumNumeroOrdre"
         Me.NumNumeroOrdre.Size = New System.Drawing.Size(59, 20)
@@ -736,7 +799,7 @@ Partial Class RadFTraitementDetailEdit
         'LblTraitementDuree
         '
         Me.LblTraitementDuree.AutoSize = True
-        Me.LblTraitementDuree.Location = New System.Drawing.Point(457, 43)
+        Me.LblTraitementDuree.Location = New System.Drawing.Point(571, 43)
         Me.LblTraitementDuree.Name = "LblTraitementDuree"
         Me.LblTraitementDuree.Size = New System.Drawing.Size(48, 13)
         Me.LblTraitementDuree.TabIndex = 71
@@ -746,7 +809,7 @@ Partial Class RadFTraitementDetailEdit
         '
         Me.LblLabelTraitementDuree.AutoSize = True
         Me.LblLabelTraitementDuree.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.LblLabelTraitementDuree.Location = New System.Drawing.Point(350, 43)
+        Me.LblLabelTraitementDuree.Location = New System.Drawing.Point(464, 43)
         Me.LblLabelTraitementDuree.Name = "LblLabelTraitementDuree"
         Me.LblLabelTraitementDuree.Size = New System.Drawing.Size(109, 13)
         Me.LblLabelTraitementDuree.TabIndex = 70
@@ -763,7 +826,7 @@ Partial Class RadFTraitementDetailEdit
         'DteTraitementDateDebut
         '
         Me.DteTraitementDateDebut.Location = New System.Drawing.Point(118, 24)
-        Me.DteTraitementDateDebut.MinDate = New Date(2000, 1, 1, 0, 0, 0, 0)
+        Me.DteTraitementDateDebut.MinDate = New Date(1900, 1, 1, 0, 0, 0, 0)
         Me.DteTraitementDateDebut.Name = "DteTraitementDateDebut"
         Me.DteTraitementDateDebut.Size = New System.Drawing.Size(200, 20)
         Me.DteTraitementDateDebut.TabIndex = 35
@@ -817,7 +880,7 @@ Partial Class RadFTraitementDetailEdit
         Me.GbxArretTraitement.Controls.Add(Me.ChkAllergie)
         Me.GbxArretTraitement.GroupBoxStyle = Telerik.WinControls.UI.RadGroupBoxStyle.Office
         Me.GbxArretTraitement.HeaderText = "Arrêt traitement"
-        Me.GbxArretTraitement.Location = New System.Drawing.Point(12, 572)
+        Me.GbxArretTraitement.Location = New System.Drawing.Point(12, 597)
         Me.GbxArretTraitement.Name = "GbxArretTraitement"
         Me.GbxArretTraitement.Size = New System.Drawing.Size(1154, 100)
         Me.GbxArretTraitement.TabIndex = 4
@@ -839,6 +902,7 @@ Partial Class RadFTraitementDetailEdit
         'TxtCommentaireArret
         '
         Me.TxtCommentaireArret.Location = New System.Drawing.Point(118, 24)
+        Me.TxtCommentaireArret.MaxLength = 1000
         Me.TxtCommentaireArret.Multiline = True
         Me.TxtCommentaireArret.Name = "TxtCommentaireArret"
         Me.TxtCommentaireArret.Size = New System.Drawing.Size(1028, 47)
@@ -871,7 +935,7 @@ Partial Class RadFTraitementDetailEdit
         Me.GbxAnnulationTraitement.Controls.Add(Me.TxtCommentaireAnnulation)
         Me.GbxAnnulationTraitement.GroupBoxStyle = Telerik.WinControls.UI.RadGroupBoxStyle.Office
         Me.GbxAnnulationTraitement.HeaderText = "Annulation"
-        Me.GbxAnnulationTraitement.Location = New System.Drawing.Point(12, 678)
+        Me.GbxAnnulationTraitement.Location = New System.Drawing.Point(12, 703)
         Me.GbxAnnulationTraitement.Name = "GbxAnnulationTraitement"
         Me.GbxAnnulationTraitement.Size = New System.Drawing.Size(1154, 64)
         Me.GbxAnnulationTraitement.TabIndex = 5
@@ -924,7 +988,7 @@ Partial Class RadFTraitementDetailEdit
         '
         Me.LblLabelTraitementParModification.AutoSize = True
         Me.LblLabelTraitementParModification.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.LblLabelTraitementParModification.Location = New System.Drawing.Point(540, 756)
+        Me.LblLabelTraitementParModification.Location = New System.Drawing.Point(540, 781)
         Me.LblLabelTraitementParModification.Name = "LblLabelTraitementParModification"
         Me.LblLabelTraitementParModification.Size = New System.Drawing.Size(25, 13)
         Me.LblLabelTraitementParModification.TabIndex = 74
@@ -934,7 +998,7 @@ Partial Class RadFTraitementDetailEdit
         '
         Me.LblLabelTraitementParCreation.AutoSize = True
         Me.LblLabelTraitementParCreation.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.LblLabelTraitementParCreation.Location = New System.Drawing.Point(153, 756)
+        Me.LblLabelTraitementParCreation.Location = New System.Drawing.Point(153, 781)
         Me.LblLabelTraitementParCreation.Name = "LblLabelTraitementParCreation"
         Me.LblLabelTraitementParCreation.Size = New System.Drawing.Size(25, 13)
         Me.LblLabelTraitementParCreation.TabIndex = 73
@@ -943,7 +1007,7 @@ Partial Class RadFTraitementDetailEdit
         'LblUtilisateurModification
         '
         Me.LblUtilisateurModification.AutoSize = True
-        Me.LblUtilisateurModification.Location = New System.Drawing.Point(571, 756)
+        Me.LblUtilisateurModification.Location = New System.Drawing.Point(571, 781)
         Me.LblUtilisateurModification.Name = "LblUtilisateurModification"
         Me.LblUtilisateurModification.Size = New System.Drawing.Size(144, 13)
         Me.LblUtilisateurModification.TabIndex = 72
@@ -952,7 +1016,7 @@ Partial Class RadFTraitementDetailEdit
         'LblUtilisateurCreation
         '
         Me.LblUtilisateurCreation.AutoSize = True
-        Me.LblUtilisateurCreation.Location = New System.Drawing.Point(184, 756)
+        Me.LblUtilisateurCreation.Location = New System.Drawing.Point(184, 781)
         Me.LblUtilisateurCreation.Name = "LblUtilisateurCreation"
         Me.LblUtilisateurCreation.Size = New System.Drawing.Size(121, 13)
         Me.LblUtilisateurCreation.TabIndex = 71
@@ -962,7 +1026,7 @@ Partial Class RadFTraitementDetailEdit
         '
         Me.LblLabelTraitementDateCreation.AutoSize = True
         Me.LblLabelTraitementDateCreation.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.LblLabelTraitementDateCreation.Location = New System.Drawing.Point(25, 756)
+        Me.LblLabelTraitementDateCreation.Location = New System.Drawing.Point(25, 781)
         Me.LblLabelTraitementDateCreation.Name = "LblLabelTraitementDateCreation"
         Me.LblLabelTraitementDateCreation.Size = New System.Drawing.Size(55, 13)
         Me.LblLabelTraitementDateCreation.TabIndex = 67
@@ -971,7 +1035,7 @@ Partial Class RadFTraitementDetailEdit
         'LblTraitementDateCreation
         '
         Me.LblTraitementDateCreation.AutoSize = True
-        Me.LblTraitementDateCreation.Location = New System.Drawing.Point(86, 756)
+        Me.LblTraitementDateCreation.Location = New System.Drawing.Point(86, 781)
         Me.LblTraitementDateCreation.Name = "LblTraitementDateCreation"
         Me.LblTraitementDateCreation.Size = New System.Drawing.Size(61, 13)
         Me.LblTraitementDateCreation.TabIndex = 68
@@ -981,7 +1045,7 @@ Partial Class RadFTraitementDetailEdit
         '
         Me.LblLabelTraitementDateModification.AutoSize = True
         Me.LblLabelTraitementDateModification.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.LblLabelTraitementDateModification.Location = New System.Drawing.Point(397, 756)
+        Me.LblLabelTraitementDateModification.Location = New System.Drawing.Point(397, 781)
         Me.LblLabelTraitementDateModification.Name = "LblLabelTraitementDateModification"
         Me.LblLabelTraitementDateModification.Size = New System.Drawing.Size(70, 13)
         Me.LblLabelTraitementDateModification.TabIndex = 69
@@ -990,7 +1054,7 @@ Partial Class RadFTraitementDetailEdit
         'LblTraitementDateModification
         '
         Me.LblTraitementDateModification.AutoSize = True
-        Me.LblTraitementDateModification.Location = New System.Drawing.Point(473, 756)
+        Me.LblTraitementDateModification.Location = New System.Drawing.Point(473, 781)
         Me.LblTraitementDateModification.Name = "LblTraitementDateModification"
         Me.LblTraitementDateModification.Size = New System.Drawing.Size(61, 13)
         Me.LblTraitementDateModification.TabIndex = 70
@@ -1053,7 +1117,7 @@ Partial Class RadFTraitementDetailEdit
         '
         'RadBtnValidation
         '
-        Me.RadBtnValidation.Location = New System.Drawing.Point(940, 887)
+        Me.RadBtnValidation.Location = New System.Drawing.Point(940, 912)
         Me.RadBtnValidation.Name = "RadBtnValidation"
         Me.RadBtnValidation.Size = New System.Drawing.Size(110, 24)
         Me.RadBtnValidation.TabIndex = 80
@@ -1062,7 +1126,7 @@ Partial Class RadFTraitementDetailEdit
         'RadBtnRetour
         '
         Me.RadBtnRetour.DialogResult = System.Windows.Forms.DialogResult.Cancel
-        Me.RadBtnRetour.Location = New System.Drawing.Point(1056, 887)
+        Me.RadBtnRetour.Location = New System.Drawing.Point(1056, 912)
         Me.RadBtnRetour.Name = "RadBtnRetour"
         Me.RadBtnRetour.Size = New System.Drawing.Size(110, 24)
         Me.RadBtnRetour.TabIndex = 85
@@ -1070,7 +1134,7 @@ Partial Class RadFTraitementDetailEdit
         '
         'RadBtnMedoc
         '
-        Me.RadBtnMedoc.Location = New System.Drawing.Point(3, 887)
+        Me.RadBtnMedoc.Location = New System.Drawing.Point(3, 912)
         Me.RadBtnMedoc.Name = "RadBtnMedoc"
         Me.RadBtnMedoc.Size = New System.Drawing.Size(110, 24)
         Me.RadBtnMedoc.TabIndex = 90
@@ -1078,7 +1142,7 @@ Partial Class RadFTraitementDetailEdit
         '
         'RadBtnArretTraitement
         '
-        Me.RadBtnArretTraitement.Location = New System.Drawing.Point(119, 887)
+        Me.RadBtnArretTraitement.Location = New System.Drawing.Point(119, 912)
         Me.RadBtnArretTraitement.Name = "RadBtnArretTraitement"
         Me.RadBtnArretTraitement.Size = New System.Drawing.Size(132, 24)
         Me.RadBtnArretTraitement.TabIndex = 95
@@ -1086,7 +1150,7 @@ Partial Class RadFTraitementDetailEdit
         '
         'RadBtnSupprimerTraitement
         '
-        Me.RadBtnSupprimerTraitement.Location = New System.Drawing.Point(386, 887)
+        Me.RadBtnSupprimerTraitement.Location = New System.Drawing.Point(386, 912)
         Me.RadBtnSupprimerTraitement.Name = "RadBtnSupprimerTraitement"
         Me.RadBtnSupprimerTraitement.Size = New System.Drawing.Size(130, 24)
         Me.RadBtnSupprimerTraitement.TabIndex = 110
@@ -1094,7 +1158,7 @@ Partial Class RadFTraitementDetailEdit
         '
         'RadBtnAnnulerTraitement
         '
-        Me.RadBtnAnnulerTraitement.Location = New System.Drawing.Point(257, 887)
+        Me.RadBtnAnnulerTraitement.Location = New System.Drawing.Point(257, 912)
         Me.RadBtnAnnulerTraitement.Name = "RadBtnAnnulerTraitement"
         Me.RadBtnAnnulerTraitement.Size = New System.Drawing.Size(123, 24)
         Me.RadBtnAnnulerTraitement.TabIndex = 100
@@ -1111,7 +1175,7 @@ Partial Class RadFTraitementDetailEdit
         Me.RadGbxFenetreTherapeutique.Controls.Add(Me.LblFenetreTherapeutiqueAu)
         Me.RadGbxFenetreTherapeutique.GroupBoxStyle = Telerik.WinControls.UI.RadGroupBoxStyle.Office
         Me.RadGbxFenetreTherapeutique.HeaderText = "Fenêtre thérapeutique"
-        Me.RadGbxFenetreTherapeutique.Location = New System.Drawing.Point(256, 783)
+        Me.RadGbxFenetreTherapeutique.Location = New System.Drawing.Point(256, 808)
         Me.RadGbxFenetreTherapeutique.Name = "RadGbxFenetreTherapeutique"
         Me.RadGbxFenetreTherapeutique.Size = New System.Drawing.Size(678, 60)
         Me.RadGbxFenetreTherapeutique.TabIndex = 111
@@ -1124,7 +1188,7 @@ Partial Class RadFTraitementDetailEdit
         Me.RadPnlStatutTraitement.Controls.Add(Me.LblstatutTraitement)
         Me.RadPnlStatutTraitement.GroupBoxStyle = Telerik.WinControls.UI.RadGroupBoxStyle.Office
         Me.RadPnlStatutTraitement.HeaderText = "Statut traitement"
-        Me.RadPnlStatutTraitement.Location = New System.Drawing.Point(257, 849)
+        Me.RadPnlStatutTraitement.Location = New System.Drawing.Point(257, 874)
         Me.RadPnlStatutTraitement.Name = "RadPnlStatutTraitement"
         Me.RadPnlStatutTraitement.Size = New System.Drawing.Size(677, 32)
         Me.RadPnlStatutTraitement.TabIndex = 112
@@ -1136,7 +1200,7 @@ Partial Class RadFTraitementDetailEdit
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.CancelButton = Me.RadBtnRetour
-        Me.ClientSize = New System.Drawing.Size(1174, 923)
+        Me.ClientSize = New System.Drawing.Size(1174, 943)
         Me.Controls.Add(Me.RadPnlStatutTraitement)
         Me.Controls.Add(Me.RadGbxFenetreTherapeutique)
         Me.Controls.Add(Me.RadBtnAnnulerTraitement)
@@ -1188,6 +1252,7 @@ Partial Class RadFTraitementDetailEdit
         CType(Me.RadGroupBox4, System.ComponentModel.ISupportInitialize).EndInit()
         Me.RadGroupBox4.ResumeLayout(False)
         Me.RadGroupBox4.PerformLayout()
+        CType(Me.RadBtnInhiberDateFin, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.NumNumeroOrdre, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.GbxArretTraitement, System.ComponentModel.ISupportInitialize).EndInit()
         Me.GbxArretTraitement.ResumeLayout(False)
@@ -1307,5 +1372,11 @@ Partial Class RadFTraitementDetailEdit
     Friend WithEvents RadBtnAnnulerTraitement As Telerik.WinControls.UI.RadButton
     Friend WithEvents RadGbxFenetreTherapeutique As Telerik.WinControls.UI.RadGroupBox
     Friend WithEvents RadPnlStatutTraitement As Telerik.WinControls.UI.RadGroupBox
+    Friend WithEvents RadBtnInhiberDateFin As Telerik.WinControls.UI.RadButton
+    Friend WithEvents Label18 As Label
+    Friend WithEvents CbxFractionMidi As ComboBox
+    Friend WithEvents CbxFractionApresMidi As ComboBox
+    Friend WithEvents CbxFractionSoir As ComboBox
+    Friend WithEvents CbxFractionMatin As ComboBox
 End Class
 

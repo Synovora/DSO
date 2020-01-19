@@ -10,10 +10,14 @@
     Private PrivateHistorisationOrdreAffichage As Integer
     Private PrivateHistorisationPosologieBase As String
     Private PrivateHistorisationPosologieRythme As Integer
-    Private PrivateHistorisationPosologieMatin As Boolean
-    Private PrivateHistorisationPosologieMidi As Boolean
-    Private PrivateHistorisationPosologieApresMidi As Boolean
-    Private PrivateHistorisationPosologieSoir As Boolean
+    Private _HistorisationPosologieMatin As Integer
+    Private _HistorisationPosologieMidi As Integer
+    Private _HistorisationPosologieApresMidi As Integer
+    Private _HistorisationPosologieSoir As Integer
+    Private _historisationFractionMatin As String
+    Private _historisationFractionMidi As String
+    Private _historisationFractionApresMidi As String
+    Private _historisationFractionSoir As String
     Private PrivateHistorisationPosologieCommentaire As String
     Private PrivateHistorisationFenetre As Boolean
     Private PrivateHistorisationFenetreDateDebut As Date
@@ -44,10 +48,14 @@
         Me.HistorisationOrdreAffichage = 0
         Me.HistorisationPosologieBase = ""
         Me.HistorisationPosologieRythme = 0
-        Me.HistorisationPosologieMatin = False
-        Me.HistorisationPosologieMidi = False
-        Me.HistorisationPosologieApresMidi = False
-        Me.HistorisationPosologieSoir = False
+        Me.HistorisationPosologieMatin = 0
+        Me.HistorisationPosologieMidi = 0
+        Me.HistorisationPosologieApresMidi = 0
+        Me.HistorisationPosologieSoir = 0
+        Me.HistorisationFractionMatin = ""
+        Me.HistorisationFractionMidi = ""
+        Me.HistorisationFractionApresMidi = False
+        Me.HistorisationFractionSoir = False
         Me.HistorisationPosologieCommentaire = ""
         Me.HistorisationFenetre = False
         Me.HistorisationFenetreDateDebut = Nothing
@@ -149,42 +157,6 @@
         End Get
         Set(value As Integer)
             PrivateHistorisationPosologieRythme = value
-        End Set
-    End Property
-
-    Public Property HistorisationPosologieMatin As Boolean
-        Get
-            Return PrivateHistorisationPosologieMatin
-        End Get
-        Set(value As Boolean)
-            PrivateHistorisationPosologieMatin = value
-        End Set
-    End Property
-
-    Public Property HistorisationPosologieMidi As Boolean
-        Get
-            Return PrivateHistorisationPosologieMidi
-        End Get
-        Set(value As Boolean)
-            PrivateHistorisationPosologieMidi = value
-        End Set
-    End Property
-
-    Public Property HistorisationPosologieApresMidi As Boolean
-        Get
-            Return PrivateHistorisationPosologieApresMidi
-        End Get
-        Set(value As Boolean)
-            PrivateHistorisationPosologieApresMidi = value
-        End Set
-    End Property
-
-    Public Property HistorisationPosologieSoir As Boolean
-        Get
-            Return PrivateHistorisationPosologieSoir
-        End Get
-        Set(value As Boolean)
-            PrivateHistorisationPosologieSoir = value
         End Set
     End Property
 
@@ -302,6 +274,78 @@
         End Get
         Set(value As Integer)
             privateHistorisationPatientId = value
+        End Set
+    End Property
+
+    Public Property HistorisationFractionMatin As String
+        Get
+            Return _historisationFractionMatin
+        End Get
+        Set(value As String)
+            _historisationFractionMatin = value
+        End Set
+    End Property
+
+    Public Property HistorisationFractionMidi As String
+        Get
+            Return _historisationFractionMidi
+        End Get
+        Set(value As String)
+            _historisationFractionMidi = value
+        End Set
+    End Property
+
+    Public Property HistorisationFractionApresMidi As String
+        Get
+            Return _historisationFractionApresMidi
+        End Get
+        Set(value As String)
+            _historisationFractionApresMidi = value
+        End Set
+    End Property
+
+    Public Property HistorisationFractionSoir As String
+        Get
+            Return _historisationFractionSoir
+        End Get
+        Set(value As String)
+            _historisationFractionSoir = value
+        End Set
+    End Property
+
+    Public Property HistorisationPosologieMatin As Integer
+        Get
+            Return _HistorisationPosologieMatin
+        End Get
+        Set(value As Integer)
+            _HistorisationPosologieMatin = value
+        End Set
+    End Property
+
+    Public Property HistorisationPosologieMidi As Integer
+        Get
+            Return _HistorisationPosologieMidi
+        End Get
+        Set(value As Integer)
+            _HistorisationPosologieMidi = value
+        End Set
+    End Property
+
+    Public Property HistorisationPosologieApresMidi As Integer
+        Get
+            Return _HistorisationPosologieApresMidi
+        End Get
+        Set(value As Integer)
+            _HistorisationPosologieApresMidi = value
+        End Set
+    End Property
+
+    Public Property HistorisationPosologieSoir As Integer
+        Get
+            Return _HistorisationPosologieSoir
+        End Get
+        Set(value As Integer)
+            _HistorisationPosologieSoir = value
         End Set
     End Property
 End Class
