@@ -99,8 +99,6 @@ Partial Class RadFSynthese
         Me.TraitementsObsoletesToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.ListeDesMédicamentsDéclarésAllergiquesToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.ListeDesMédicamentsDéclarésContreindiquésToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-        Me.ToolStripSeparator6 = New System.Windows.Forms.ToolStripSeparator()
-        Me.OrdonnanceToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.LblTraitementArret = New System.Windows.Forms.Label()
         Me.LblSubstance = New System.Windows.Forms.Label()
         Me.RadTraitementDataGridView = New Telerik.WinControls.UI.RadGridView()
@@ -552,9 +550,9 @@ Partial Class RadFSynthese
         '
         'TraitementContextMenuStrip
         '
-        Me.TraitementContextMenuStrip.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.CréerUnTraitementToolStripMenuItem1, Me.GérerUneFenêtreThérapeutiqueToolStripMenuItem, Me.HistoriqueToolStripMenuItem, Me.ToolStripSeparator1, Me.TraitementsObsoletesToolStripMenuItem, Me.ListeDesMédicamentsDéclarésAllergiquesToolStripMenuItem, Me.ListeDesMédicamentsDéclarésContreindiquésToolStripMenuItem, Me.ToolStripSeparator6, Me.OrdonnanceToolStripMenuItem})
+        Me.TraitementContextMenuStrip.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.CréerUnTraitementToolStripMenuItem1, Me.GérerUneFenêtreThérapeutiqueToolStripMenuItem, Me.HistoriqueToolStripMenuItem, Me.ToolStripSeparator1, Me.TraitementsObsoletesToolStripMenuItem, Me.ListeDesMédicamentsDéclarésAllergiquesToolStripMenuItem, Me.ListeDesMédicamentsDéclarésContreindiquésToolStripMenuItem})
         Me.TraitementContextMenuStrip.Name = "TraitementContextMenuStrip"
-        Me.TraitementContextMenuStrip.Size = New System.Drawing.Size(346, 170)
+        Me.TraitementContextMenuStrip.Size = New System.Drawing.Size(346, 164)
         '
         'CréerUnTraitementToolStripMenuItem1
         '
@@ -596,17 +594,6 @@ Partial Class RadFSynthese
         Me.ListeDesMédicamentsDéclarésContreindiquésToolStripMenuItem.Name = "ListeDesMédicamentsDéclarésContreindiquésToolStripMenuItem"
         Me.ListeDesMédicamentsDéclarésContreindiquésToolStripMenuItem.Size = New System.Drawing.Size(345, 22)
         Me.ListeDesMédicamentsDéclarésContreindiquésToolStripMenuItem.Text = "Liste des substances contre-indiquées"
-        '
-        'ToolStripSeparator6
-        '
-        Me.ToolStripSeparator6.Name = "ToolStripSeparator6"
-        Me.ToolStripSeparator6.Size = New System.Drawing.Size(342, 6)
-        '
-        'OrdonnanceToolStripMenuItem
-        '
-        Me.OrdonnanceToolStripMenuItem.Name = "OrdonnanceToolStripMenuItem"
-        Me.OrdonnanceToolStripMenuItem.Size = New System.Drawing.Size(345, 22)
-        Me.OrdonnanceToolStripMenuItem.Text = "Ordonnances"
         '
         'LblTraitementArret
         '
@@ -1353,7 +1340,6 @@ Partial Class RadFSynthese
     Friend WithEvents ListeDesMédicamentsDéclarésAllergiquesToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents HistoriqueToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents GérerUneFenêtreThérapeutiqueToolStripMenuItem As ToolStripMenuItem
-    Friend WithEvents OrdonnanceToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents AntecedentContextMenuStrip As ContextMenuStrip
     Friend WithEvents CréerAntecedentToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents HistoriqueDesModificationsToolStripMenuItem As ToolStripMenuItem
@@ -1406,7 +1392,6 @@ Partial Class RadFSynthese
     Friend WithEvents LblTraitementArret As Label
     Friend WithEvents RadDesktopAlert1 As Telerik.WinControls.UI.RadDesktopAlert
     Friend WithEvents RadBtnRefresh As Telerik.WinControls.UI.RadButton
-    Friend WithEvents ToolStripSeparator6 As ToolStripSeparator
     Friend WithEvents LblNonOasis As Label
 End Class
 

@@ -232,6 +232,7 @@ Partial Class RadFEpisodeDetail
         Me.TraitementsObsoletesToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.ListeDesMédicamentsDéclarésAllergiquesToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.ListeDesMédicamentsDéclarésContreindiquésToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.ToolStripSeparator11 = New System.Windows.Forms.ToolStripSeparator()
         Me.OrdonnanceToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.ToolStripSeparator6 = New System.Windows.Forms.ToolStripSeparator()
         Me.RafraichirLécranToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
@@ -1836,7 +1837,7 @@ Partial Class RadFEpisodeDetail
         Me.RadPageView1.Dock = System.Windows.Forms.DockStyle.Fill
         Me.RadPageView1.Location = New System.Drawing.Point(0, 0)
         Me.RadPageView1.Name = "RadPageView1"
-        Me.RadPageView1.SelectedPage = Me.PgvAntecedent
+        Me.RadPageView1.SelectedPage = Me.PgvParcours
         Me.RadPageView1.Size = New System.Drawing.Size(544, 485)
         Me.RadPageView1.TabIndex = 0
         Me.RadPageView1.TabStop = False
@@ -2065,7 +2066,7 @@ Partial Class RadFEpisodeDetail
         Me.PgvTraitement.ItemSize = New System.Drawing.SizeF(70.0!, 28.0!)
         Me.PgvTraitement.Location = New System.Drawing.Point(10, 37)
         Me.PgvTraitement.Name = "PgvTraitement"
-        Me.PgvTraitement.Size = New System.Drawing.Size(523, 460)
+        Me.PgvTraitement.Size = New System.Drawing.Size(523, 437)
         Me.PgvTraitement.Text = "Traitement"
         '
         'RadPanel7
@@ -2074,7 +2075,7 @@ Partial Class RadFEpisodeDetail
         Me.RadPanel7.Dock = System.Windows.Forms.DockStyle.Fill
         Me.RadPanel7.Location = New System.Drawing.Point(0, 34)
         Me.RadPanel7.Name = "RadPanel7"
-        Me.RadPanel7.Size = New System.Drawing.Size(523, 426)
+        Me.RadPanel7.Size = New System.Drawing.Size(523, 403)
         Me.RadPanel7.TabIndex = 1
         '
         'RadTraitementDataGridView
@@ -2153,14 +2154,14 @@ Partial Class RadFEpisodeDetail
         Me.RadTraitementDataGridView.ShowGroupPanel = False
         Me.RadTraitementDataGridView.ShowGroupPanelScrollbars = False
         Me.RadTraitementDataGridView.ShowHeaderCellButtons = True
-        Me.RadTraitementDataGridView.Size = New System.Drawing.Size(523, 426)
+        Me.RadTraitementDataGridView.Size = New System.Drawing.Size(523, 403)
         Me.RadTraitementDataGridView.TabIndex = 0
         '
         'TraitementContextMenuStrip
         '
-        Me.TraitementContextMenuStrip.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.CréerUnTraitementToolStripMenuItem1, Me.ToolStripSeparator2, Me.GérerUneFenêtreThérapeutiqueToolStripMenuItem, Me.HistoriqueToolStripMenuItem, Me.ToolStripSeparator1, Me.TraitementsObsoletesToolStripMenuItem, Me.ListeDesMédicamentsDéclarésAllergiquesToolStripMenuItem, Me.ListeDesMédicamentsDéclarésContreindiquésToolStripMenuItem, Me.OrdonnanceToolStripMenuItem, Me.ToolStripSeparator6, Me.RafraichirLécranToolStripMenuItem})
+        Me.TraitementContextMenuStrip.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.CréerUnTraitementToolStripMenuItem1, Me.ToolStripSeparator2, Me.GérerUneFenêtreThérapeutiqueToolStripMenuItem, Me.HistoriqueToolStripMenuItem, Me.ToolStripSeparator1, Me.TraitementsObsoletesToolStripMenuItem, Me.ListeDesMédicamentsDéclarésAllergiquesToolStripMenuItem, Me.ListeDesMédicamentsDéclarésContreindiquésToolStripMenuItem, Me.ToolStripSeparator11, Me.OrdonnanceToolStripMenuItem, Me.ToolStripSeparator6, Me.RafraichirLécranToolStripMenuItem})
         Me.TraitementContextMenuStrip.Name = "TraitementContextMenuStrip"
-        Me.TraitementContextMenuStrip.Size = New System.Drawing.Size(346, 198)
+        Me.TraitementContextMenuStrip.Size = New System.Drawing.Size(346, 204)
         '
         'CréerUnTraitementToolStripMenuItem1
         '
@@ -2208,11 +2209,16 @@ Partial Class RadFEpisodeDetail
         Me.ListeDesMédicamentsDéclarésContreindiquésToolStripMenuItem.Size = New System.Drawing.Size(345, 22)
         Me.ListeDesMédicamentsDéclarésContreindiquésToolStripMenuItem.Text = "Liste des substances contre-indiquées"
         '
+        'ToolStripSeparator11
+        '
+        Me.ToolStripSeparator11.Name = "ToolStripSeparator11"
+        Me.ToolStripSeparator11.Size = New System.Drawing.Size(342, 6)
+        '
         'OrdonnanceToolStripMenuItem
         '
         Me.OrdonnanceToolStripMenuItem.Name = "OrdonnanceToolStripMenuItem"
         Me.OrdonnanceToolStripMenuItem.Size = New System.Drawing.Size(345, 22)
-        Me.OrdonnanceToolStripMenuItem.Text = "Ordonnances"
+        Me.OrdonnanceToolStripMenuItem.Text = "Ordonnance"
         '
         'ToolStripSeparator6
         '
@@ -2289,7 +2295,7 @@ Partial Class RadFEpisodeDetail
         Me.PgvParcours.ItemSize = New System.Drawing.SizeF(99.0!, 28.0!)
         Me.PgvParcours.Location = New System.Drawing.Point(10, 37)
         Me.PgvParcours.Name = "PgvParcours"
-        Me.PgvParcours.Size = New System.Drawing.Size(523, 460)
+        Me.PgvParcours.Size = New System.Drawing.Size(523, 437)
         Me.PgvParcours.Text = "Parcours de soin"
         '
         'RadParcoursDataGridView
@@ -2355,7 +2361,7 @@ Partial Class RadFEpisodeDetail
         Me.RadParcoursDataGridView.Name = "RadParcoursDataGridView"
         Me.RadParcoursDataGridView.RightToLeft = System.Windows.Forms.RightToLeft.No
         Me.RadParcoursDataGridView.ShowGroupPanel = False
-        Me.RadParcoursDataGridView.Size = New System.Drawing.Size(523, 433)
+        Me.RadParcoursDataGridView.Size = New System.Drawing.Size(523, 410)
         Me.RadParcoursDataGridView.TabIndex = 1
         '
         'ParcoursContextMenuStrip
@@ -3066,5 +3072,6 @@ Partial Class RadFEpisodeDetail
     Friend WithEvents ObsSpeMedMenuStrip As ContextMenuStrip
     Friend WithEvents SaisieObservationSpecifiqueMedicaleItem As ToolStripMenuItem
     Friend WithEvents AttributionDesObservationsSpécifiquesToolStripMenuItem As ToolStripMenuItem
+    Friend WithEvents ToolStripSeparator11 As ToolStripSeparator
 End Class
 

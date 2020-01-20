@@ -12,6 +12,8 @@ Public Class RadFPatientListe
         End Set
     End Property
 
+    Dim aldDao As New AldDao
+
     'Instanciation du patient pour le fournir aux Forms qui seront appelées depuis cette Form
     Dim SelectedPatient As New Patient
     Dim IndexGrid As Integer
@@ -185,6 +187,12 @@ Public Class RadFPatientListe
                 LblPatientSorti.Show()
             End If
 
+            If aldDao.IsPatientALD(TxtIdSelected.Text) Then
+                LblPatientALD.Show()
+            Else
+                LblPatientALD.Hide()
+            End If
+
             TxtIdSelected.Show()
             TxtNirSelected.Show()
             TxtPrenomSelected.Show()
@@ -196,34 +204,36 @@ Public Class RadFPatientListe
             RadBtnEpisode.Show()
 
             TxtSite.Text = RadPatientGridView.Rows(aRow).Cells("site").Value
+            TxtSite.Show()
+
             If TxtSite.Text = "" Then
-                RadBtnSynthese.Hide()
-                RadBtnRendezVous.Hide()
-                RadBtnEpisode.Hide()
-                'InitZonesSelectionPatient()
-                MessageBox.Show("Options limitées, ce patient n'a pas de site d'affecté !")
-            Else
-                Dim episodeDao As New EpisodeDao
-                Dim episode As Episode
-                Dim patientId As Integer = CInt(TxtIdSelected.Text)
-                episode = episodeDao.GetEpisodeEnCoursByPatientId(patientId)
-                Dim BtnColor As New Color
-                BtnColor = RadBtnEpisode.BackColor
-                If episode.Id <> 0 Then
-                    RadBtnEpisode.ForeColor = Color.Red
-                    RadBtnEpisode.Font = New Font(RadBtnEpisode.Font, FontStyle.Bold)
-                    Dim TypeActiviteEpisode As String
-                    TypeActiviteEpisode = episodeDao.GetItemTypeActiviteByCode(episode.TypeActivite)
-                    ToolTip.SetToolTip(RadBtnEpisode, "Un épisode de type : " & episode.Type & " " & TypeActiviteEpisode & " est en cours pour ce patient")
+                    RadBtnSynthese.Hide()
+                    RadBtnRendezVous.Hide()
+                    RadBtnEpisode.Hide()
+                    'InitZonesSelectionPatient()
+                    MessageBox.Show("Options limitées, ce patient n'a pas de site d'affecté !")
                 Else
-                    RadBtnEpisode.ForeColor = Color.Black
-                    RadBtnEpisode.Font = New Font(RadBtnEpisode.Font, FontStyle.Regular)
-                    ToolTip.SetToolTip(RadBtnEpisode, "Ce patient n'a pas d'épisode en cours")
+                    Dim episodeDao As New EpisodeDao
+                    Dim episode As Episode
+                    Dim patientId As Integer = CInt(TxtIdSelected.Text)
+                    episode = episodeDao.GetEpisodeEnCoursByPatientId(patientId)
+                    Dim BtnColor As New Color
+                    BtnColor = RadBtnEpisode.BackColor
+                    If episode.Id <> 0 Then
+                        RadBtnEpisode.ForeColor = Color.Red
+                        RadBtnEpisode.Font = New Font(RadBtnEpisode.Font, FontStyle.Bold)
+                        Dim TypeActiviteEpisode As String
+                        TypeActiviteEpisode = episodeDao.GetItemTypeActiviteByCode(episode.TypeActivite)
+                        ToolTip.SetToolTip(RadBtnEpisode, "Un épisode de type : " & episode.Type & " " & TypeActiviteEpisode & " est en cours pour ce patient")
+                    Else
+                        RadBtnEpisode.ForeColor = Color.Black
+                        RadBtnEpisode.Font = New Font(RadBtnEpisode.Font, FontStyle.Regular)
+                        ToolTip.SetToolTip(RadBtnEpisode, "Ce patient n'a pas d'épisode en cours")
+                    End If
                 End If
-            End If
-            IndexGrid = aRow
-        Else
-            InitZonesSelectionPatient()
+                IndexGrid = aRow
+            Else
+                InitZonesSelectionPatient()
         End If
     End Sub
 
@@ -242,6 +252,7 @@ Public Class RadFPatientListe
         TxtPrenomSelected.Hide()
         TxtNomSelected.Hide()
         TxtSite.Hide()
+        LblPatientALD.Hide()
         LblDateNaissanceSelected.Hide()
         LblAgeSelected.Hide()
         RadPnlSelectedPatient.Hide()

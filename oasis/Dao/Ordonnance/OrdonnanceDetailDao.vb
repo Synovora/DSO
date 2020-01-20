@@ -3,10 +3,15 @@
 Public Class OrdonnanceDetailDao
     Inherits StandardDao
 
+    Public Structure EnumDelivrance
+        Const A_DELIVRER = "A délivrer"
+        Const NE_PAS_DELIVRER = "Ne pas délivrer"
+    End Structure
+
     Friend Function getAllOrdonnanceLigneByOrdonnanceId(ordonnanceId As Integer) As DataTable
         Dim SQLString As String
-        SQLString = "select * from oasis.oa_patient_ordonnance_detail where oa_ordonnance_id = " & ordonnanceId.ToString &
-                    " order by oa_traitement_ordre_affichage"
+        SQLString = "SELECT * FROM oasis.oa_patient_ordonnance_detail WHERE oa_ordonnance_id = " & ordonnanceId.ToString &
+                    " ORDER BY oa_traitement_ordre_affichage"
 
         Using con As SqlConnection = GetConnection()
             Dim OrdonnanceDataAdapter As SqlDataAdapter = New SqlDataAdapter()
@@ -38,10 +43,12 @@ Public Class OrdonnanceDetailDao
         " (oa_ordonnance_id, oa_ordonnance_traitement, oa_traitement_id, oa_traitement_ordre_affichage, oa_traitement_ald, oa_traitement_medicament_cis, oa_traitement_medicament_dci," &
         " oa_traitement_date_debut, oa_traitement_date_fin, oa_traitement_posologie_base, oa_traitement_posologie_rythme, oa_traitement_posologie_matin," &
         " oa_traitement_posologie_midi, oa_traitement_posologie_apres_midi, oa_traitement_posologie_soir, oa_traitement_posologie_commentaire, oa_traitement_commentaire," &
+        " oa_traitement_fraction_matin,oa_traitement_fraction_midi, oa_traitement_fraction_apres_midi, oa_traitement_fraction_soir," &
         " oa_traitement_fenetre, oa_traitement_fenetre_date_debut, oa_traitement_fenetre_date_fin, oa_traitement_inactif)" &
         " VALUES (@ordonnanceId, @traitement, @traitementId, @ordreAffichage, @ald, @medicamentCis, @medicamentDci," &
         " @dateDebut, @dateFin, @posologieBase, @posologieRythme, @posologieMatin," &
         " @posologieMidi, @posologieApresMidi, @posologieSoir, @posologieCommentaire, @commentaire," &
+        " @FractionMatin, @FractionMidi, @FractionApresMidi, @FractionSoir," &
         " @fenetre, @fenetreDateDebut, @fenetreDateFin, @inactif)"
 
         Dim cmd As New SqlCommand(SQLstring, con)
@@ -61,6 +68,10 @@ Public Class OrdonnanceDetailDao
             .AddWithValue("@posologieMidi", ordonnanceDetail.PosologieMidi.ToString)
             .AddWithValue("@posologieApresMidi", ordonnanceDetail.PosologieApresMidi.ToString)
             .AddWithValue("@posologieSoir", ordonnanceDetail.PosologieSoir.ToString)
+            .AddWithValue("@fractionMatin", ordonnanceDetail.FractionMatin)
+            .AddWithValue("@fractionMidi", ordonnanceDetail.FractionMidi)
+            .AddWithValue("@fractionApresMidi", ordonnanceDetail.FractionApresMidi)
+            .AddWithValue("@fractionSoir", ordonnanceDetail.FractionSoir)
             .AddWithValue("@posologieCommentaire", ordonnanceDetail.PosologieCommentaire)
             .AddWithValue("@commentaire", ordonnanceDetail.Commentaire)
             .AddWithValue("@fenetre", ordonnanceDetail.Fenetre)

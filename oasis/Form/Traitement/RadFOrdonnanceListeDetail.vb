@@ -1,8 +1,10 @@
 ﻿Imports System.Collections.Specialized
 Imports Oasis_WF
+Imports Telerik.WinControls.UI
 
 Public Class RadFOrdonnanceListeDetail
     Private _SelectedPatient As Patient
+    Private _SelectedEpisode As Episode
     Private _UtilisateurConnecte As Utilisateur
     Private _SelectedOrdonnanceId As Integer
     Private _commentaireOrdonnance As String
@@ -73,41 +75,73 @@ Public Class RadFOrdonnanceListeDetail
         End Set
     End Property
 
+    Public Property SelectedEpisode As Episode
+        Get
+            Return _SelectedEpisode
+        End Get
+        Set(value As Episode)
+            _SelectedEpisode = value
+        End Set
+    End Property
+
+    Dim aldDao As New AldDao
+    Dim ordonnanceDao As New OrdonnanceDao
+
+    Dim ordonnance As Ordonnance
+
     Dim CommentaireModified As Boolean = False
+    Dim RenouvellementModified As Boolean = False
+    Dim iGridALD As Integer
+    Dim iGridNonALD As Integer
+    Dim PatientALD As Boolean = False
+    Dim TraitementALD As Boolean
 
     Private Sub RadFOrdonnanceDetailEdit_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-        ChargementEtatCivil()
-        ChargementTraitement()
+        'Si patient Non ALD, on cache la partie concernant les traitements ALD
+        If aldDao.IsPatientALD(Me.SelectedPatient.patientId) = False Then
+            SplitPanel3.Hide()
+            Me.RadSplitContainer1.MoveSplitter(Me.RadSplitContainer1.Splitters(2), RadDirection.Up)
+            RadGbxTraitement.Text = "Prescription"
+            BasculerEnALDToolStripMenuItem.Visible = False
+        Else
+            PatientALD = True
+        End If
 
+        ChargementEtatCivil()
+        ChargementOrdonnance()
+        ChargementOrdonnanceDetail()
     End Sub
 
-    Private Sub ChargementTraitement()
+    Private Sub ChargementOrdonnance()
+        ordonnance = ordonnanceDao.getOrdonnaceById(SelectedOrdonnanceId)
+        TxtCommentaire.Text = ordonnance.Commentaire
+        NumRenouvellement.Value = ordonnance.Renouvellement
+    End Sub
+
+    Private Sub ChargementOrdonnanceDetail()
+        RadAldGridView.Rows.Clear()
+        RadNonAldGridView.Rows.Clear()
+        iGridALD = -1
+        iGridNonALD = -1
+
         Dim ordonnanceDataTable As DataTable
         Dim ordonnanceDaoDetail As OrdonnanceDetailDao = New OrdonnanceDetailDao
         ordonnanceDataTable = ordonnanceDaoDetail.getAllOrdonnanceLigneByOrdonnanceId(Me.SelectedOrdonnanceId)
-
-        TxtCommentaire.Text = CommentaireOrdonnance
-
         If ordonnanceDataTable.Rows.Count > 0 Then
-            RadBtnCreationLignes.Hide()
+            'RadBtnCreationLignes.Hide()
             RadBtnValidation.Show()
             RadBtnImprimer.Show()
         Else
-            RadBtnCreationLignes.Show()
+            'RadBtnCreationLignes.Show()
             RadBtnValidation.Hide()
             RadBtnImprimer.Hide()
         End If
 
-        'Ajout d'une colonne 'oa_traitement_posologie' dans le DataTable de traitement
-        ordonnanceDataTable.Columns.Add("oa_traitement_posologie", Type.GetType("System.String"))
-
         Dim i As Integer
-        Dim iGrid As Integer = -1 'Indice pour alimenter la Grid qui peut comporter moins d'occurrences que le DataTable
         Dim rowCount As Integer = ordonnanceDataTable.Rows.Count - 1
         Dim Base As String
         Dim Posologie As String
-        Dim dateFin, dateDebut, dateModification As Date
-        Dim jours As Integer
+        Dim dateFin, dateDebut As Date
         Dim posologieMatin, posologieMidi, posologieApresMidi, posologieSoir As Integer
         Dim Rythme As Integer
         Dim FenetreTherapeutiqueEnCours As Boolean
@@ -129,11 +163,18 @@ Public Class RadFOrdonnanceListeDetail
 
         'Parcours du DataTable pour alimenter les colonnes du DataGridView
         For i = 0 To rowCount Step 1
+            Dim ordonnanceDetailGrid As New OrdonnanceDetailGrid
             'Date de fin
             If ordonnanceDataTable.Rows(i)("oa_traitement_date_fin") IsNot DBNull.Value Then
                 dateFin = ordonnanceDataTable.Rows(i)("oa_traitement_date_fin")
             Else
                 dateFin = "31/12/2999"
+            End If
+            Dim DateFinCalcul As Date
+            If dateFin > Date.Now.AddDays(29) Then
+                DateFinCalcul = Date.Now.AddDays(29)
+            Else
+                DateFinCalcul = dateFin
             End If
 
             'Date début
@@ -142,6 +183,14 @@ Public Class RadFOrdonnanceListeDetail
             Else
                 dateDebut = "01/01/1900"
             End If
+            Dim DateDebutCalcul As Date
+            If dateDebut.Date < Date.Now.Date Then
+                DateDebutCalcul = Date.Now
+            Else
+                DateDebutCalcul = dateDebut
+            End If
+
+            Dim duree As String = outils.CalculDureeTraitement(DateDebutCalcul, DateFinCalcul)
 
             'Exclusion de l'affichage des traitements dont la date de fin est <à la date du jour
             'Cette condition est traitée en exclusion (et non dans la requête SQL) pour stocker les allergies et les contre-indications dans la StringCollection quel que soit leur date de fin
@@ -191,109 +240,241 @@ Public Class RadFOrdonnanceListeDetail
 
             'Formatage de la posologie
             If FenetreTherapeutiqueEnCours = False Then
+                Dim PosologieMatinString, PosologieMidiString, PosologieApresMidiString, PosologieSoirString As String
+                Dim FractionMatin, FractionMidi, FractionApresMidi, FractionSoir As String
+                Dim PosologieBase As String
+
+                FractionMatin = Coalesce(ordonnanceDataTable.Rows(i)("oa_traitement_fraction_matin"), TraitementDao.EnumFraction.Non)
+                FractionMidi = Coalesce(ordonnanceDataTable.Rows(i)("oa_traitement_fraction_midi"), TraitementDao.EnumFraction.Non)
+                FractionApresMidi = Coalesce(ordonnanceDataTable.Rows(i)("oa_traitement_fraction_apres_midi"), TraitementDao.EnumFraction.Non)
+                FractionSoir = Coalesce(ordonnanceDataTable.Rows(i)("oa_traitement_fraction_soir"), TraitementDao.EnumFraction.Non)
+
+                posologieMatin = Coalesce(ordonnanceDataTable.Rows(i)("oa_traitement_Posologie_matin"), 0)
+                posologieMidi = Coalesce(ordonnanceDataTable.Rows(i)("oa_traitement_Posologie_midi"), 0)
+                posologieApresMidi = Coalesce(ordonnanceDataTable.Rows(i)("oa_traitement_Posologie_apres_midi"), 0)
+                posologieSoir = Coalesce(ordonnanceDataTable.Rows(i)("oa_traitement_Posologie_soir"), 0)
+
+                PosologieBase = Coalesce(ordonnanceDataTable.Rows(i)("oa_traitement_Posologie_base"), "")
+
+                If FractionMatin <> "" AndAlso FractionMatin <> TraitementDao.EnumFraction.Non Then
+                    If posologieMatin <> 0 Then
+                        PosologieMatinString = posologieMatin.ToString & "+" & FractionMatin
+                    Else
+                        PosologieMatinString = FractionMatin
+                    End If
+                Else
+                    If posologieMatin <> 0 Then
+                        PosologieMatinString = posologieMatin.ToString
+                    Else
+                        PosologieMatinString = "0"
+                    End If
+                End If
+
+                If FractionMidi <> "" AndAlso FractionMidi <> TraitementDao.EnumFraction.Non Then
+                    If posologieMidi <> 0 Then
+                        PosologieMidiString = posologieMidi.ToString & "+" & FractionMidi
+                    Else
+                        PosologieMidiString = FractionMidi
+                    End If
+                Else
+                    If posologieMidi <> 0 Then
+                        PosologieMidiString = posologieMidi.ToString
+                    Else
+                        PosologieMidiString = "0"
+                    End If
+                End If
+
+                PosologieApresMidiString = ""
+                If FractionApresMidi <> "" AndAlso FractionApresMidi <> TraitementDao.EnumFraction.Non Then
+                    If posologieApresMidi <> 0 Then
+                        PosologieApresMidiString = posologieApresMidi.ToString & "+" & FractionApresMidi
+                    Else
+                        PosologieApresMidiString = FractionApresMidi
+                    End If
+                Else
+                    If posologieApresMidi <> 0 Then
+                        PosologieApresMidiString = posologieApresMidi.ToString
+                    End If
+                End If
+
+                If FractionSoir <> "" AndAlso FractionSoir <> TraitementDao.EnumFraction.Non Then
+                    If posologieSoir <> 0 Then
+                        PosologieSoirString = posologieSoir.ToString & "+" & FractionSoir
+                    Else
+                        PosologieSoirString = FractionSoir
+                    End If
+                Else
+                    If posologieSoir <> 0 Then
+                        PosologieSoirString = posologieSoir.ToString
+                    Else
+                        PosologieSoirString = "0"
+                    End If
+                End If
                 If ordonnanceDataTable.Rows(i)("oa_traitement_posologie_base") IsNot DBNull.Value Then
                     Rythme = ordonnanceDataTable.Rows(i)("oa_traitement_posologie_rythme")
-                    Select Case ordonnanceDataTable.Rows(i)("oa_traitement_posologie_base")
-                        Case "J"
-                            Base = "Journalier : "
-                            If ordonnanceDataTable.Rows(i)("oa_traitement_posologie_matin") <> 0 Then
-                                posologieMatin = ordonnanceDataTable.Rows(i)("oa_traitement_posologie_matin")
+                    Select Case PosologieBase
+                        Case TraitementDao.EnumBaseCode.JOURNALIER
+                            Base = ""
+                            If posologieApresMidi <> 0 OrElse FractionApresMidi <> TraitementDao.EnumFraction.Non Then
+                                Posologie = Base + PosologieMatinString + ". " + PosologieMidiString + ". " + PosologieApresMidiString + ". " + PosologieSoirString
                             Else
-                                posologieMatin = 0
+                                Posologie = Base + " " + PosologieMatinString + ". " + PosologieMidiString + ". " + PosologieSoirString
                             End If
-                            If ordonnanceDataTable.Rows(i)("oa_traitement_posologie_midi") <> 0 Then
-                                posologieMidi = ordonnanceDataTable.Rows(i)("oa_traitement_posologie_midi")
-                            Else
-                                posologieMidi = 0
-                            End If
-                            If ordonnanceDataTable.Rows(i)("oa_traitement_posologie_soir") <> 0 Then
-                                posologieSoir = ordonnanceDataTable.Rows(i)("oa_traitement_posologie_soir")
-                            Else
-                                posologieSoir = 0
-                            End If
-                            If ordonnanceDataTable.Rows(i)("oa_traitement_posologie_apres_midi") <> 0 Then
-                                posologieApresMidi = ordonnanceDataTable.Rows(i)("oa_traitement_posologie_apres_midi")
-                                Posologie = Base + posologieMatin.ToString + "." + posologieMidi.ToString + "." + posologieApresMidi.ToString + "." + posologieSoir.ToString
-                            Else
-                                Posologie = Base + " " + posologieMatin.ToString + "." + posologieMidi.ToString + "." + posologieSoir.ToString
-                            End If
-                        Case "H"
-                            Base = "Hebdo : "
-                            Posologie = Base + Rythme.ToString
-                        Case "M"
-                            Base = "Mensuel : "
-                            Posologie = Base + Rythme.ToString
-                        Case "A"
-                            Base = "Annuel : "
-                            Posologie = Base + Rythme.ToString
                         Case Else
-                            Base = "Base inconnue ! "
-                            Posologie = Base + Rythme.ToString
+                            Dim RythmeString As String = ""
+                            If FractionMatin <> "" AndAlso FractionMatin <> TraitementDao.EnumFraction.Non Then
+                                If Rythme <> 0 Then
+                                    RythmeString = Rythme.ToString & "+" & FractionMatin
+                                Else
+                                    RythmeString = FractionMatin
+                                End If
+                            Else
+                                If Rythme <> 0 Then
+                                    RythmeString = Rythme.ToString
+                                End If
+                            End If
+                            Select Case ordonnanceDataTable.Rows(i)("oa_traitement_posologie_base")
+                                Case TraitementDao.EnumBaseCode.CONDITIONNEL
+                                    Base = "Conditionnel : "
+                                Case TraitementDao.EnumBaseCode.HEBDOMADAIRE
+                                    Base = "Hebdo : "
+                                Case TraitementDao.EnumBaseCode.MENSUEL
+                                    Base = "Mensuel : "
+                                Case TraitementDao.EnumBaseCode.ANNUEL
+                                    Base = "Annuel : "
+                                Case Else
+                                    Base = "Base inconnue ! "
+                            End Select
+                            Posologie = Base + RythmeString
                     End Select
                 End If
             End If
 
-            iGrid += 1
-            'Ajout d'une ligne au DataGridView
-            RadTraitementDataGridView.Rows.Add(iGrid)
-            'Alimentation du DataGridView
-            'DCI
-            RadTraitementDataGridView.Rows(iGrid).Cells("medicamentDci").Value = ordonnanceDataTable.Rows(i)("oa_traitement_medicament_dci")
-            'Posologie
-            RadTraitementDataGridView.Rows(iGrid).Cells("posologie").Value = Posologie
+            ordonnanceDetailGrid.TraitementId = ordonnanceDataTable.Rows(i)("oa_traitement_id")
+            ordonnanceDetailGrid.OrdonnanceLigneId = ordonnanceDataTable.Rows(i)("oa_ordonnance_ligne_id")
+            ordonnanceDetailGrid.MedicamentDci = ordonnanceDataTable.Rows(i)("oa_traitement_medicament_dci")
+            ordonnanceDetailGrid.MedicamentCis = ordonnanceDataTable.Rows(i)("oa_traitement_medicament_cis")
+            ordonnanceDetailGrid.Posologie = Posologie
+            ordonnanceDetailGrid.CommentairePosologie = ordonnanceDataTable.Rows(i)("oa_traitement_posologie_commentaire")
+            ordonnanceDetailGrid.Duree = duree
 
-            If Posologie = "Fenêtre Th." Then
-                RadTraitementDataGridView.Rows(iGrid).Cells("posologie").Style.ForeColor = Color.Red
+            'Gestion de la délivrance des traitements prescrits
+            ordonnanceDetailGrid.ADelivrer = True
+            Select Case SelectedEpisode.TypeActivite
+                Case EpisodeDao.EnumTypeActiviteEpisodeCode.PATHOLOGIE_AIGUE
+                    If dateDebut.Date < Date.Now.Date Then
+                        ordonnanceDetailGrid.ADelivrer = False
+                    End If
+                Case EpisodeDao.EnumTypeActiviteEpisodeCode.SUIVI_CHRONIQUE,
+                         EpisodeDao.EnumTypeActiviteEpisodeCode.PREVENTION_SUIVI_GROSSESSE,
+                         EpisodeDao.EnumTypeActiviteEpisodeCode.PREVENTION_SUIVI_GYNECOLOGIQUE,
+                         EpisodeDao.EnumTypeActiviteEpisodeCode.PREVENTION_ENFANT_SCOLAIRE,
+                         EpisodeDao.EnumTypeActiviteEpisodeCode.PREVENTION_ENFANT_PRE_SCOLAIRE,
+                         EpisodeDao.EnumTypeActiviteEpisodeCode.PREVENTION_AUTRE
+                    If dateDebut >= Date.Now.AddDays(-15) Then
+                        ordonnanceDetailGrid.ADelivrer = False
+                    End If
+                Case EpisodeDao.EnumTypeActiviteEpisodeCode.SOCIAL
+                Case Else
+            End Select
+
+            If ordonnanceDataTable.Rows(i)("oa_traitement_posologie_base") = TraitementDao.EnumBaseCode.CONDITIONNEL Then
+                ordonnanceDetailGrid.ADelivrer = False
             End If
 
-            'Fenêtre thérapeutique existe (en cours ou à venir ou obsolète)
-            If FenetreTherapeutiqueExiste = True Then
-                RadTraitementDataGridView.Rows(iGrid).Cells("fenetreTherapeutique").Value = "O"
-            Else
-                RadTraitementDataGridView.Rows(iGrid).Cells("fenetreTherapeutique").Value = ""
-            End If
-
-            'Traitement du format d'affichage de la fin du traitement
-            If dateDebut = "31/12/2999" Then
-                RadTraitementDataGridView.Rows(iGrid).Cells("dateDebut").Value = "Date non définie"
-            Else
-                jours = (Date.Now - dateDebut).TotalDays
-                If jours > 30 Then
-                    RadTraitementDataGridView.Rows(iGrid).Cells("dateDebut").Value = dateDebut.ToString("MM.yyyy")
+            'Aiguillage ALD / Non ALD
+            If PatientALD = True Then
+                If dateDebut >= Date.Now.AddDays(-15) Then
+                    TraitementALD = False
                 Else
-                    RadTraitementDataGridView.Rows(iGrid).Cells("dateDebut").Value = dateDebut.ToString("dd.MM.yyyy")
+                    TraitementALD = True
+                    If ordonnanceDataTable.Rows(i)("oa_traitement_posologie_base") = TraitementDao.EnumBaseCode.CONDITIONNEL Then
+                        TraitementALD = False
+                    End If
                 End If
             End If
-
-            'Traitement du format d'affichage de modification du traitement
-            If dateModification = "01/01/1900" Then
-                RadTraitementDataGridView.Rows(iGrid).Cells("dateModification").Value = "Date non définie"
+            If TraitementALD = True Then
+                ChargementGridALD(ordonnanceDetailGrid)
             Else
-                jours = (Date.Now - dateModification).TotalDays
-                If jours > 30 Then
-                    RadTraitementDataGridView.Rows(iGrid).Cells("dateModification").Value = dateModification.ToString("MM.yyyy")
-                Else
-                    RadTraitementDataGridView.Rows(iGrid).Cells("dateModification").Value = dateModification.ToString("dd.MM.yyyy")
-                End If
-            End If
-
-            'Identifiant du traitement
-            RadTraitementDataGridView.Rows(iGrid).Cells("traitementId").Value = ordonnanceDataTable.Rows(i)("oa_traitement_id")
-
-            RadTraitementDataGridView.Rows(iGrid).Cells("ordonnanceLigneId").Value = ordonnanceDataTable.Rows(i)("oa_ordonnance_ligne_id")
-
-            'CIS du médicament
-            RadTraitementDataGridView.Rows(iGrid).Cells("medicamentCis").Value = ordonnanceDataTable.Rows(i)("oa_traitement_medicament_cis")
-
-            'Bouton gérer fenêtre thérapeutique
-            If FenetreTherapeutiqueAVenir = True Or FenetreTherapeutiqueEnCours = True Then
-                RadTraitementDataGridView.Rows(iGrid).Cells("posologie").Style.ForeColor = Color.Red
+                ChargementGridNonALD(ordonnanceDetailGrid)
             End If
         Next
 
         'Positionnement du grid sur la première occurrence
-        If RadTraitementDataGridView.Rows.Count > 0 Then
-            Me.RadTraitementDataGridView.CurrentRow = RadTraitementDataGridView.ChildRows(0)
+        If RadAldGridView.Rows.Count > 0 Then
+            Me.RadAldGridView.CurrentRow = RadAldGridView.ChildRows(0)
+        End If
+
+        If RadNonAldGridView.Rows.Count > 0 Then
+            Me.RadNonAldGridView.CurrentRow = RadNonAldGridView.ChildRows(0)
+        End If
+    End Sub
+
+    Private Sub ChargementGridALD(ordonnanceDetailGrid As OrdonnanceDetailGrid)
+        iGridALD += 1
+        'Ajout d'une ligne au DataGridView
+        RadAldGridView.Rows.Add(iGridALD)
+        'Alimentation du DataGridView
+        'DCI
+        RadAldGridView.Rows(iGridALD).Cells("medicamentDci").Value = ordonnanceDetailGrid.MedicamentDci
+        'Posologie
+        RadAldGridView.Rows(iGridALD).Cells("posologie").Value = ordonnanceDetailGrid.Posologie
+
+        'Fenêtre thérapeutique existe (en cours ou à venir ou obsolète)
+        If ordonnanceDetailGrid.FenetreTherapeutique = True Then
+            RadAldGridView.Rows(iGridALD).Cells("fenetreTherapeutique").Value = "O"
+        Else
+            RadAldGridView.Rows(iGridALD).Cells("fenetreTherapeutique").Value = ""
+        End If
+
+        'Identifiant du traitement
+        RadAldGridView.Rows(iGridALD).Cells("traitementId").Value = ordonnanceDetailGrid.TraitementId
+        RadAldGridView.Rows(iGridALD).Cells("ordonnanceLigneId").Value = ordonnanceDetailGrid.OrdonnanceLigneId
+
+        'CIS du médicament
+        RadAldGridView.Rows(iGridALD).Cells("medicamentCis").Value = ordonnanceDetailGrid.MedicamentCis
+
+        RadAldGridView.Rows(iGridALD).Cells("duree").Value = ordonnanceDetailGrid.Duree
+        RadAldGridView.Rows(iGridALD).Cells("commentairePosologie").Value = ordonnanceDetailGrid.CommentairePosologie
+
+        If ordonnanceDetailGrid.ADelivrer = True Then
+            RadAldGridView.Rows(iGridALD).Cells("delivrance").Value = OrdonnanceDetailDao.EnumDelivrance.A_DELIVRER
+        Else
+            RadAldGridView.Rows(iGridALD).Cells("delivrance").Value = OrdonnanceDetailDao.EnumDelivrance.NE_PAS_DELIVRER
+        End If
+    End Sub
+
+    Private Sub ChargementGridNonALD(ordonnanceDetailGrid As OrdonnanceDetailGrid)
+        iGridNonALD += 1
+        'Ajout d'une ligne au DataGridView
+        RadNonAldGridView.Rows.Add(iGridNonALD)
+        'Alimentation du DataGridView
+        'DCI
+        RadNonAldGridView.Rows(iGridNonALD).Cells("medicamentDci").Value = ordonnanceDetailGrid.MedicamentDci
+        'Posologie
+        RadNonAldGridView.Rows(iGridNonALD).Cells("posologie").Value = ordonnanceDetailGrid.Posologie
+
+        'Fenêtre thérapeutique existe (en cours ou à venir ou obsolète)
+        If ordonnanceDetailGrid.FenetreTherapeutique = True Then
+            RadNonAldGridView.Rows(iGridNonALD).Cells("fenetreTherapeutique").Value = "O"
+        Else
+            RadNonAldGridView.Rows(iGridNonALD).Cells("fenetreTherapeutique").Value = ""
+        End If
+
+        'Identifiant du traitement
+        RadNonAldGridView.Rows(iGridNonALD).Cells("traitementId").Value = ordonnanceDetailGrid.TraitementId
+        RadNonAldGridView.Rows(iGridNonALD).Cells("ordonnanceLigneId").Value = ordonnanceDetailGrid.OrdonnanceLigneId
+
+        'CIS du médicament
+        RadNonAldGridView.Rows(iGridNonALD).Cells("medicamentCis").Value = ordonnanceDetailGrid.MedicamentCis
+
+        RadNonAldGridView.Rows(iGridNonALD).Cells("duree").Value = ordonnanceDetailGrid.Duree
+        RadNonAldGridView.Rows(iGridNonALD).Cells("commentairePosologie").Value = ordonnanceDetailGrid.CommentairePosologie
+
+        If ordonnanceDetailGrid.ADelivrer = True Then
+            RadNonAldGridView.Rows(iGridNonALD).Cells("delivrance").Value = OrdonnanceDetailDao.EnumDelivrance.A_DELIVRER
+        Else
+            RadNonAldGridView.Rows(iGridNonALD).Cells("delivrance").Value = OrdonnanceDetailDao.EnumDelivrance.NE_PAS_DELIVRER
         End If
     End Sub
 
@@ -447,41 +628,23 @@ Public Class RadFOrdonnanceListeDetail
         End Using
     End Sub
 
-    Private Sub RadBtnCreationLignes_Click(sender As Object, e As EventArgs) Handles RadBtnCreationLignes.Click
+    Private Sub RadBtnCreationLignes_Click(sender As Object, e As EventArgs)
         Dim ordonnanceDao As New OrdonnanceDao
         ordonnanceDao.CreateNewOrdonnanceDetail(SelectedPatient.patientId, SelectedOrdonnanceId)
-        RadTraitementDataGridView.Rows.Clear()
-        ChargementTraitement()
+        RadAldGridView.Rows.Clear()
+        ChargementOrdonnanceDetail()
         RadBtnValidation.Show()
         RadBtnImprimer.Show()
-        RadBtnCreationLignes.Hide()
+        'RadBtnCreationLignes.Hide()
     End Sub
 
-    'Création d'une ligne de commentaire
-    Private Sub CréerUneLigneDeCommentaireToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles CréerUneLigneDeCommentaireToolStripMenuItem.Click
-
-    End Sub
-
-    'Suppression (traitement inhibé) d'une ligne d'ordonnance
-    Private Sub SupprimerUneLigneToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles SupprimerUneLigneToolStripMenuItem.Click
-        If RadTraitementDataGridView.CurrentRow IsNot Nothing Then
-            Dim aRow As Integer = Me.RadTraitementDataGridView.Rows.IndexOf(Me.RadTraitementDataGridView.CurrentRow)
-            If aRow >= 0 Then
-                Dim OrdonnanceId As Integer = RadTraitementDataGridView.Rows(aRow).Cells("ordonnanceId").Value
-                'Tester si l'ordonnance sélectionnée est à valider
-
-            End If
-        Else
-            MessageBox.Show("Veuillez sélectionner une ligne d'ordonnance")
-        End If
-    End Sub
 
     'Modification d'une ligne d'ordonnance
-    Private Sub MasterTemplate_CellDoubleClick(sender As Object, e As Telerik.WinControls.UI.GridViewCellEventArgs) Handles RadTraitementDataGridView.CellDoubleClick
-        If RadTraitementDataGridView.CurrentRow IsNot Nothing Then
-            Dim aRow As Integer = Me.RadTraitementDataGridView.Rows.IndexOf(Me.RadTraitementDataGridView.CurrentRow)
+    Private Sub MasterTemplate_CellDoubleClick(sender As Object, e As Telerik.WinControls.UI.GridViewCellEventArgs) Handles RadAldGridView.CellDoubleClick
+        If RadAldGridView.CurrentRow IsNot Nothing Then
+            Dim aRow As Integer = Me.RadAldGridView.Rows.IndexOf(Me.RadAldGridView.CurrentRow)
             If aRow >= 0 Then
-                Dim OrdonnanceId As Integer = RadTraitementDataGridView.Rows(aRow).Cells("ordonnanceLigneId").Value
+                Dim OrdonnanceId As Integer = RadAldGridView.Rows(aRow).Cells("ordonnanceLigneId").Value
                 'Tester si l'ordonnance sélectionnée est à valider
 
             End If
@@ -494,12 +657,80 @@ Public Class RadFOrdonnanceListeDetail
         CommentaireModified = True
     End Sub
 
-    Private Sub TxtCommentaire_MouseLeave(sender As Object, e As EventArgs) Handles TxtCommentaire.MouseLeave
+    Private Sub TxtCommentaire_Leave(sender As Object, e As EventArgs) Handles TxtCommentaire.Leave
+        ModificationCommentaire()
+    End Sub
+
+    Private Sub NumericUpDown1_ValueChanged(sender As Object, e As EventArgs) Handles NumRenouvellement.ValueChanged
+        RenouvellementModified = True
+    End Sub
+
+    Private Sub NumericUpDown1_Leave(sender As Object, e As EventArgs) Handles NumRenouvellement.Leave
+        ModificationRenouvellement()
+    End Sub
+
+    Private Sub RadFOrdonnanceListeDetail_FormClosed(sender As Object, e As FormClosedEventArgs) Handles MyBase.FormClosed
+        ModificationCommentaire()
+        ModificationRenouvellement()
+    End Sub
+
+    Private Sub ModificationCommentaire()
         If CommentaireModified = True Then
             'Appel mise à jour de l'ordonnance
-            Dim ordonnanceDao As New OrdonnanceDao
             ordonnanceDao.ModificationOrdonnanceCommentaire(SelectedOrdonnanceId, TxtCommentaire.Text)
             CommentaireModified = False
         End If
     End Sub
+
+    Private Sub ModificationRenouvellement()
+        If RenouvellementModified = True Then
+            'Appel mise à jour de l'ordonnance
+            ordonnanceDao.ModificationOrdonnanceRenouvellement(SelectedOrdonnanceId, NumRenouvellement.Value)
+            RenouvellementModified = False
+        End If
+    End Sub
+
+    Private Sub RadBtnAnnulerOrdonnance_Click(sender As Object, e As EventArgs) Handles RadBtnAnnulerOrdonnance.Click
+        If ordonnanceDao.AnnulerOrdonnance(SelectedOrdonnanceId) = True Then
+            Dim form As New RadFNotification()
+            form.Message = "L'ordonnance a été annulée"
+            form.Show()
+            Close()
+        End If
+    End Sub
+
+    '==========================================================================
+    '====== Option Grid ALD
+    '==========================================================================
+
+    'Basculer en Non ALD
+    Private Sub BasculerEnNonALDToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles BasculerEnNonALDToolStripMenuItem.Click
+
+    End Sub
+
+    'Création d'une ligne de commentaire en ALD
+    Private Sub CréerUneLigneDeCommentaireToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles CréerUneLigneDeCommentaireToolStripMenuItem.Click
+
+    End Sub
+
+    'Suppression d'une ligne de commentaire en ALD
+    Private Sub SupprimerUneLigneToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles SupprimerUneLigneToolStripMenuItem.Click
+        If RadAldGridView.CurrentRow IsNot Nothing Then
+            Dim aRow As Integer = Me.RadAldGridView.Rows.IndexOf(Me.RadAldGridView.CurrentRow)
+            If aRow >= 0 Then
+                Dim OrdonnanceId As Integer = RadAldGridView.Rows(aRow).Cells("ordonnanceId").Value
+                'Tester si l'ordonnance sélectionnée est à valider
+
+            End If
+        Else
+            MessageBox.Show("Veuillez sélectionner une ligne d'ordonnance")
+        End If
+    End Sub
+
+    'Bascule Délivrer / Ne pas délivrer
+    Private Sub BasculerADélivrerANePasDélivrerToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles BasculerADélivrerANePasDélivrerToolStripMenuItem.Click
+
+    End Sub
+
+
 End Class

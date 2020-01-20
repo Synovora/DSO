@@ -31,8 +31,21 @@ Partial Class RadFOrdonnanceListeDetail
         Dim GridViewTextBoxColumn6 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
         Dim GridViewTextBoxColumn7 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
         Dim GridViewTextBoxColumn8 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
+        Dim GridViewTextBoxColumn9 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
         Dim TableViewDefinition1 As Telerik.WinControls.UI.TableViewDefinition = New Telerik.WinControls.UI.TableViewDefinition()
+        Dim GridViewTextBoxColumn10 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
+        Dim GridViewTextBoxColumn11 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
+        Dim GridViewTextBoxColumn12 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
+        Dim GridViewTextBoxColumn13 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
+        Dim GridViewTextBoxColumn14 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
+        Dim GridViewTextBoxColumn15 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
+        Dim GridViewTextBoxColumn16 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
+        Dim GridViewTextBoxColumn17 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
+        Dim GridViewTextBoxColumn18 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
+        Dim TableViewDefinition2 As Telerik.WinControls.UI.TableViewDefinition = New Telerik.WinControls.UI.TableViewDefinition()
         Me.RadGroupBoxEtatCivil = New Telerik.WinControls.UI.RadGroupBox()
+        Me.LblPharmacienNom = New System.Windows.Forms.Label()
+        Me.LblLabelPharmacien = New System.Windows.Forms.Label()
         Me.lblContreIndication = New System.Windows.Forms.Label()
         Me.LblAllergie = New System.Windows.Forms.Label()
         Me.LblALD = New System.Windows.Forms.Label()
@@ -58,29 +71,72 @@ Partial Class RadFOrdonnanceListeDetail
         Me.LblPatientAdresse1 = New System.Windows.Forms.Label()
         Me.RadGroupBox1 = New Telerik.WinControls.UI.RadGroupBox()
         Me.TxtCommentaire = New System.Windows.Forms.TextBox()
-        Me.RadTraitementDataGridView = New Telerik.WinControls.UI.RadGridView()
-        Me.OrdonnanceContextMenuStrip = New System.Windows.Forms.ContextMenuStrip(Me.components)
+        Me.RadAldGridView = New Telerik.WinControls.UI.RadGridView()
+        Me.ALDContextMenuStrip = New System.Windows.Forms.ContextMenuStrip(Me.components)
         Me.CréerUneLigneDeCommentaireToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.SupprimerUneLigneToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.BasculerEnNonALDToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.BasculerADélivrerANePasDélivrerToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.RadBtnAbandon = New Telerik.WinControls.UI.RadButton()
-        Me.RadBtnCreationLignes = New Telerik.WinControls.UI.RadButton()
-        Me.RadGroupBox2 = New Telerik.WinControls.UI.RadGroupBox()
         Me.ToolTip = New System.Windows.Forms.ToolTip(Me.components)
         Me.RadBtnValidation = New Telerik.WinControls.UI.RadButton()
         Me.RadBtnImprimer = New Telerik.WinControls.UI.RadButton()
+        Me.RadSplitContainer1 = New Telerik.WinControls.UI.RadSplitContainer()
+        Me.SplitPanel1 = New Telerik.WinControls.UI.SplitPanel()
+        Me.SplitPanel2 = New Telerik.WinControls.UI.SplitPanel()
+        Me.RadGroupBox2 = New Telerik.WinControls.UI.RadGroupBox()
+        Me.NumRenouvellement = New System.Windows.Forms.NumericUpDown()
+        Me.Label1 = New System.Windows.Forms.Label()
+        Me.SplitPanel3 = New Telerik.WinControls.UI.SplitPanel()
+        Me.RadGbxTraitementALD = New Telerik.WinControls.UI.RadGroupBox()
+        Me.SplitPanel4 = New Telerik.WinControls.UI.SplitPanel()
+        Me.RadGbxTraitement = New Telerik.WinControls.UI.RadGroupBox()
+        Me.RadNonAldGridView = New Telerik.WinControls.UI.RadGridView()
+        Me.SplitPanel5 = New Telerik.WinControls.UI.SplitPanel()
+        Me.SplitPanel6 = New Telerik.WinControls.UI.SplitPanel()
+        Me.RadBtnAnnulerOrdonnance = New Telerik.WinControls.UI.RadButton()
+        Me.RadButton1 = New Telerik.WinControls.UI.RadButton()
+        Me.NonALDContextMenuStrip = New System.Windows.Forms.ContextMenuStrip(Me.components)
+        Me.CréerUneLigneDeCommentaireToolStripMenuItem1 = New System.Windows.Forms.ToolStripMenuItem()
+        Me.SupprimerUneLigneDeCommentaireToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.BasculerEnALDToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.BasculerADélivrerANePasDélivrerToolStripMenuItem1 = New System.Windows.Forms.ToolStripMenuItem()
         CType(Me.RadGroupBoxEtatCivil, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.RadGroupBoxEtatCivil.SuspendLayout()
         CType(Me.RadGroupBox1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.RadGroupBox1.SuspendLayout()
-        CType(Me.RadTraitementDataGridView, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.RadTraitementDataGridView.MasterTemplate, System.ComponentModel.ISupportInitialize).BeginInit()
-        Me.OrdonnanceContextMenuStrip.SuspendLayout()
+        CType(Me.RadAldGridView, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.RadAldGridView.MasterTemplate, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.ALDContextMenuStrip.SuspendLayout()
         CType(Me.RadBtnAbandon, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.RadBtnCreationLignes, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.RadGroupBox2, System.ComponentModel.ISupportInitialize).BeginInit()
-        Me.RadGroupBox2.SuspendLayout()
         CType(Me.RadBtnValidation, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.RadBtnImprimer, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.RadSplitContainer1, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.RadSplitContainer1.SuspendLayout()
+        CType(Me.SplitPanel1, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.SplitPanel1.SuspendLayout()
+        CType(Me.SplitPanel2, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.SplitPanel2.SuspendLayout()
+        CType(Me.RadGroupBox2, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.RadGroupBox2.SuspendLayout()
+        CType(Me.NumRenouvellement, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.SplitPanel3, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.SplitPanel3.SuspendLayout()
+        CType(Me.RadGbxTraitementALD, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.RadGbxTraitementALD.SuspendLayout()
+        CType(Me.SplitPanel4, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.SplitPanel4.SuspendLayout()
+        CType(Me.RadGbxTraitement, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.RadGbxTraitement.SuspendLayout()
+        CType(Me.RadNonAldGridView, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.RadNonAldGridView.MasterTemplate, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.SplitPanel5, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.SplitPanel5.SuspendLayout()
+        CType(Me.SplitPanel6, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.SplitPanel6.SuspendLayout()
+        CType(Me.RadBtnAnnulerOrdonnance, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.RadButton1, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.NonALDContextMenuStrip.SuspendLayout()
         CType(Me, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
@@ -88,6 +144,8 @@ Partial Class RadFOrdonnanceListeDetail
         '
         Me.RadGroupBoxEtatCivil.AccessibleRole = System.Windows.Forms.AccessibleRole.Grouping
         Me.RadGroupBoxEtatCivil.BackColor = System.Drawing.SystemColors.GradientInactiveCaption
+        Me.RadGroupBoxEtatCivil.Controls.Add(Me.LblPharmacienNom)
+        Me.RadGroupBoxEtatCivil.Controls.Add(Me.LblLabelPharmacien)
         Me.RadGroupBoxEtatCivil.Controls.Add(Me.lblContreIndication)
         Me.RadGroupBoxEtatCivil.Controls.Add(Me.LblAllergie)
         Me.RadGroupBoxEtatCivil.Controls.Add(Me.LblALD)
@@ -111,16 +169,36 @@ Partial Class RadFOrdonnanceListeDetail
         Me.RadGroupBoxEtatCivil.Controls.Add(Me.LblPatientAdresse2)
         Me.RadGroupBoxEtatCivil.Controls.Add(Me.Label2)
         Me.RadGroupBoxEtatCivil.Controls.Add(Me.LblPatientAdresse1)
+        Me.RadGroupBoxEtatCivil.Dock = System.Windows.Forms.DockStyle.Fill
         Me.RadGroupBoxEtatCivil.GroupBoxStyle = Telerik.WinControls.UI.RadGroupBoxStyle.Office
         Me.RadGroupBoxEtatCivil.HeaderText = "Etat civil"
-        Me.RadGroupBoxEtatCivil.Location = New System.Drawing.Point(12, 12)
+        Me.RadGroupBoxEtatCivil.Location = New System.Drawing.Point(0, 0)
         Me.RadGroupBoxEtatCivil.Name = "RadGroupBoxEtatCivil"
-        Me.RadGroupBoxEtatCivil.Size = New System.Drawing.Size(1377, 87)
+        Me.RadGroupBoxEtatCivil.Size = New System.Drawing.Size(1401, 55)
         Me.RadGroupBoxEtatCivil.TabIndex = 1
         Me.RadGroupBoxEtatCivil.Text = "Etat civil"
         CType(Me.RadGroupBoxEtatCivil.GetChildAt(0).GetChildAt(0), Telerik.WinControls.UI.GroupBoxContent).Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Bold)
         CType(Me.RadGroupBoxEtatCivil.GetChildAt(0).GetChildAt(1), Telerik.WinControls.UI.GroupBoxHeader).GroupBoxStyle = Telerik.WinControls.UI.RadGroupBoxStyle.Office
         CType(Me.RadGroupBoxEtatCivil.GetChildAt(0).GetChildAt(1), Telerik.WinControls.UI.GroupBoxHeader).Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Bold)
+        '
+        'LblPharmacienNom
+        '
+        Me.LblPharmacienNom.AutoSize = True
+        Me.LblPharmacienNom.Location = New System.Drawing.Point(1103, 20)
+        Me.LblPharmacienNom.Name = "LblPharmacienNom"
+        Me.LblPharmacienNom.Size = New System.Drawing.Size(111, 13)
+        Me.LblPharmacienNom.TabIndex = 70
+        Me.LblPharmacienNom.Text = "Nom du pharmacien"
+        '
+        'LblLabelPharmacien
+        '
+        Me.LblLabelPharmacien.AutoSize = True
+        Me.LblLabelPharmacien.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Bold)
+        Me.LblLabelPharmacien.Location = New System.Drawing.Point(1027, 20)
+        Me.LblLabelPharmacien.Name = "LblLabelPharmacien"
+        Me.LblLabelPharmacien.Size = New System.Drawing.Size(74, 13)
+        Me.LblLabelPharmacien.TabIndex = 69
+        Me.LblLabelPharmacien.Text = "Pharmacien :"
         '
         'lblContreIndication
         '
@@ -345,13 +423,15 @@ Partial Class RadFOrdonnanceListeDetail
         '
         Me.RadGroupBox1.AccessibleRole = System.Windows.Forms.AccessibleRole.Grouping
         Me.RadGroupBox1.Controls.Add(Me.TxtCommentaire)
+        Me.RadGroupBox1.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.RadGroupBox1.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Bold)
         Me.RadGroupBox1.GroupBoxStyle = Telerik.WinControls.UI.RadGroupBoxStyle.Office
-        Me.RadGroupBox1.HeaderText = "Commentaire général (ordonnance)"
-        Me.RadGroupBox1.Location = New System.Drawing.Point(12, 105)
+        Me.RadGroupBox1.HeaderText = "Commentaire général (ne paraîtra pas sur l'ordonnance)"
+        Me.RadGroupBox1.Location = New System.Drawing.Point(0, 0)
         Me.RadGroupBox1.Name = "RadGroupBox1"
-        Me.RadGroupBox1.Size = New System.Drawing.Size(1377, 77)
+        Me.RadGroupBox1.Size = New System.Drawing.Size(1401, 59)
         Me.RadGroupBox1.TabIndex = 2
-        Me.RadGroupBox1.Text = "Commentaire général (ordonnance)"
+        Me.RadGroupBox1.Text = "Commentaire général (ne paraîtra pas sur l'ordonnance)"
         '
         'TxtCommentaire
         '
@@ -359,29 +439,29 @@ Partial Class RadFOrdonnanceListeDetail
         Me.TxtCommentaire.Location = New System.Drawing.Point(2, 18)
         Me.TxtCommentaire.Multiline = True
         Me.TxtCommentaire.Name = "TxtCommentaire"
-        Me.TxtCommentaire.Size = New System.Drawing.Size(1373, 57)
+        Me.TxtCommentaire.Size = New System.Drawing.Size(1397, 39)
         Me.TxtCommentaire.TabIndex = 0
         '
-        'RadTraitementDataGridView
+        'RadAldGridView
         '
-        Me.RadTraitementDataGridView.BackColor = System.Drawing.Color.FromArgb(CType(CType(191, Byte), Integer), CType(CType(219, Byte), Integer), CType(CType(255, Byte), Integer))
-        Me.RadTraitementDataGridView.ContextMenuStrip = Me.OrdonnanceContextMenuStrip
-        Me.RadTraitementDataGridView.Cursor = System.Windows.Forms.Cursors.Default
-        Me.RadTraitementDataGridView.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.RadTraitementDataGridView.Font = New System.Drawing.Font("Segoe UI", 8.25!)
-        Me.RadTraitementDataGridView.ForeColor = System.Drawing.Color.Black
-        Me.RadTraitementDataGridView.ImeMode = System.Windows.Forms.ImeMode.NoControl
-        Me.RadTraitementDataGridView.Location = New System.Drawing.Point(2, 18)
+        Me.RadAldGridView.BackColor = System.Drawing.Color.FromArgb(CType(CType(191, Byte), Integer), CType(CType(219, Byte), Integer), CType(CType(255, Byte), Integer))
+        Me.RadAldGridView.ContextMenuStrip = Me.ALDContextMenuStrip
+        Me.RadAldGridView.Cursor = System.Windows.Forms.Cursors.Default
+        Me.RadAldGridView.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.RadAldGridView.Font = New System.Drawing.Font("Segoe UI", 8.25!)
+        Me.RadAldGridView.ForeColor = System.Drawing.Color.Black
+        Me.RadAldGridView.ImeMode = System.Windows.Forms.ImeMode.NoControl
+        Me.RadAldGridView.Location = New System.Drawing.Point(2, 18)
         '
         '
         '
-        Me.RadTraitementDataGridView.MasterTemplate.AllowAddNewRow = False
-        Me.RadTraitementDataGridView.MasterTemplate.AllowCellContextMenu = False
-        Me.RadTraitementDataGridView.MasterTemplate.AllowDeleteRow = False
-        Me.RadTraitementDataGridView.MasterTemplate.AllowEditRow = False
+        Me.RadAldGridView.MasterTemplate.AllowAddNewRow = False
+        Me.RadAldGridView.MasterTemplate.AllowCellContextMenu = False
+        Me.RadAldGridView.MasterTemplate.AllowDeleteRow = False
+        Me.RadAldGridView.MasterTemplate.AllowEditRow = False
         GridViewTextBoxColumn1.EnableExpressionEditor = False
         GridViewTextBoxColumn1.FieldName = "MedicamentDci"
-        GridViewTextBoxColumn1.HeaderText = "Médicament"
+        GridViewTextBoxColumn1.HeaderText = "Dénomination"
         GridViewTextBoxColumn1.HeaderTextAlignment = System.Drawing.ContentAlignment.MiddleLeft
         GridViewTextBoxColumn1.Name = "MedicamentDci"
         GridViewTextBoxColumn1.ReadOnly = True
@@ -392,26 +472,23 @@ Partial Class RadFOrdonnanceListeDetail
         GridViewTextBoxColumn2.Name = "posologie"
         GridViewTextBoxColumn2.ReadOnly = True
         GridViewTextBoxColumn2.TextAlignment = System.Drawing.ContentAlignment.MiddleCenter
-        GridViewTextBoxColumn2.Width = 100
+        GridViewTextBoxColumn2.Width = 150
         GridViewTextBoxColumn3.EnableExpressionEditor = False
-        GridViewTextBoxColumn3.FieldName = "dateDebut"
-        GridViewTextBoxColumn3.HeaderText = "Début"
-        GridViewTextBoxColumn3.Name = "dateDebut"
-        GridViewTextBoxColumn3.ReadOnly = True
+        GridViewTextBoxColumn3.FieldName = "duree"
+        GridViewTextBoxColumn3.HeaderText = "Durée"
+        GridViewTextBoxColumn3.Name = "duree"
         GridViewTextBoxColumn3.TextAlignment = System.Drawing.ContentAlignment.MiddleCenter
         GridViewTextBoxColumn3.Width = 100
         GridViewTextBoxColumn4.EnableExpressionEditor = False
-        GridViewTextBoxColumn4.FieldName = "dateModification"
-        GridViewTextBoxColumn4.HeaderText = "Modification"
-        GridViewTextBoxColumn4.Name = "dateModification"
-        GridViewTextBoxColumn4.ReadOnly = True
-        GridViewTextBoxColumn4.TextAlignment = System.Drawing.ContentAlignment.MiddleCenter
-        GridViewTextBoxColumn4.Width = 100
+        GridViewTextBoxColumn4.HeaderText = "Commentaire"
+        GridViewTextBoxColumn4.HeaderTextAlignment = System.Drawing.ContentAlignment.MiddleLeft
+        GridViewTextBoxColumn4.Name = "commentairePosologie"
+        GridViewTextBoxColumn4.Width = 400
         GridViewTextBoxColumn5.EnableExpressionEditor = False
-        GridViewTextBoxColumn5.FieldName = "traitementId"
-        GridViewTextBoxColumn5.HeaderText = "traitementId"
-        GridViewTextBoxColumn5.IsVisible = False
-        GridViewTextBoxColumn5.Name = "traitementId"
+        GridViewTextBoxColumn5.HeaderText = "Délivrance"
+        GridViewTextBoxColumn5.HeaderTextAlignment = System.Drawing.ContentAlignment.MiddleLeft
+        GridViewTextBoxColumn5.Name = "delivrance"
+        GridViewTextBoxColumn5.Width = 125
         GridViewTextBoxColumn6.EnableExpressionEditor = False
         GridViewTextBoxColumn6.FieldName = "fenetreTherapeutique"
         GridViewTextBoxColumn6.HeaderText = "fenetreTherapeutique"
@@ -423,80 +500,381 @@ Partial Class RadFOrdonnanceListeDetail
         GridViewTextBoxColumn7.IsVisible = False
         GridViewTextBoxColumn7.Name = "medicamentCis"
         GridViewTextBoxColumn8.EnableExpressionEditor = False
-        GridViewTextBoxColumn8.FieldName = "ordonnanceLigneId"
-        GridViewTextBoxColumn8.HeaderText = "ordonnanceLigneId"
+        GridViewTextBoxColumn8.FieldName = "traitementId"
+        GridViewTextBoxColumn8.HeaderText = "traitementId"
         GridViewTextBoxColumn8.IsVisible = False
-        GridViewTextBoxColumn8.Name = "ordonnanceLigneId"
-        Me.RadTraitementDataGridView.MasterTemplate.Columns.AddRange(New Telerik.WinControls.UI.GridViewDataColumn() {GridViewTextBoxColumn1, GridViewTextBoxColumn2, GridViewTextBoxColumn3, GridViewTextBoxColumn4, GridViewTextBoxColumn5, GridViewTextBoxColumn6, GridViewTextBoxColumn7, GridViewTextBoxColumn8})
-        Me.RadTraitementDataGridView.MasterTemplate.ViewDefinition = TableViewDefinition1
-        Me.RadTraitementDataGridView.Name = "RadTraitementDataGridView"
-        Me.RadTraitementDataGridView.RightToLeft = System.Windows.Forms.RightToLeft.No
-        Me.RadTraitementDataGridView.ShowGroupPanel = False
-        Me.RadTraitementDataGridView.Size = New System.Drawing.Size(1370, 393)
-        Me.RadTraitementDataGridView.TabIndex = 3
+        GridViewTextBoxColumn8.Name = "traitementId"
+        GridViewTextBoxColumn9.EnableExpressionEditor = False
+        GridViewTextBoxColumn9.FieldName = "ordonnanceLigneId"
+        GridViewTextBoxColumn9.HeaderText = "ordonnanceLigneId"
+        GridViewTextBoxColumn9.IsVisible = False
+        GridViewTextBoxColumn9.Name = "ordonnanceLigneId"
+        Me.RadAldGridView.MasterTemplate.Columns.AddRange(New Telerik.WinControls.UI.GridViewDataColumn() {GridViewTextBoxColumn1, GridViewTextBoxColumn2, GridViewTextBoxColumn3, GridViewTextBoxColumn4, GridViewTextBoxColumn5, GridViewTextBoxColumn6, GridViewTextBoxColumn7, GridViewTextBoxColumn8, GridViewTextBoxColumn9})
+        Me.RadAldGridView.MasterTemplate.ViewDefinition = TableViewDefinition1
+        Me.RadAldGridView.Name = "RadAldGridView"
+        Me.RadAldGridView.RightToLeft = System.Windows.Forms.RightToLeft.No
+        Me.RadAldGridView.ShowGroupPanel = False
+        Me.RadAldGridView.Size = New System.Drawing.Size(1397, 192)
+        Me.RadAldGridView.TabIndex = 3
         '
-        'OrdonnanceContextMenuStrip
+        'ALDContextMenuStrip
         '
-        Me.OrdonnanceContextMenuStrip.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.CréerUneLigneDeCommentaireToolStripMenuItem, Me.SupprimerUneLigneToolStripMenuItem})
-        Me.OrdonnanceContextMenuStrip.Name = "OrdonnanceContextMenuStrip"
-        Me.OrdonnanceContextMenuStrip.Size = New System.Drawing.Size(245, 48)
+        Me.ALDContextMenuStrip.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.CréerUneLigneDeCommentaireToolStripMenuItem, Me.SupprimerUneLigneToolStripMenuItem, Me.BasculerADélivrerANePasDélivrerToolStripMenuItem, Me.BasculerEnNonALDToolStripMenuItem})
+        Me.ALDContextMenuStrip.Name = "OrdonnanceContextMenuStrip"
+        Me.ALDContextMenuStrip.Size = New System.Drawing.Size(290, 92)
         '
         'CréerUneLigneDeCommentaireToolStripMenuItem
         '
         Me.CréerUneLigneDeCommentaireToolStripMenuItem.Name = "CréerUneLigneDeCommentaireToolStripMenuItem"
-        Me.CréerUneLigneDeCommentaireToolStripMenuItem.Size = New System.Drawing.Size(244, 22)
+        Me.CréerUneLigneDeCommentaireToolStripMenuItem.Size = New System.Drawing.Size(289, 22)
         Me.CréerUneLigneDeCommentaireToolStripMenuItem.Text = "Créer une ligne de commentaire"
         '
         'SupprimerUneLigneToolStripMenuItem
         '
         Me.SupprimerUneLigneToolStripMenuItem.Name = "SupprimerUneLigneToolStripMenuItem"
-        Me.SupprimerUneLigneToolStripMenuItem.Size = New System.Drawing.Size(244, 22)
-        Me.SupprimerUneLigneToolStripMenuItem.Text = "Supprimer une ligne"
+        Me.SupprimerUneLigneToolStripMenuItem.Size = New System.Drawing.Size(289, 22)
+        Me.SupprimerUneLigneToolStripMenuItem.Text = "Supprimer une ligne de commentaire"
+        '
+        'BasculerEnNonALDToolStripMenuItem
+        '
+        Me.BasculerEnNonALDToolStripMenuItem.Name = "BasculerEnNonALDToolStripMenuItem"
+        Me.BasculerEnNonALDToolStripMenuItem.Size = New System.Drawing.Size(289, 22)
+        Me.BasculerEnNonALDToolStripMenuItem.Text = "Basculer en ""non ALD"""
+        '
+        'BasculerADélivrerANePasDélivrerToolStripMenuItem
+        '
+        Me.BasculerADélivrerANePasDélivrerToolStripMenuItem.Name = "BasculerADélivrerANePasDélivrerToolStripMenuItem"
+        Me.BasculerADélivrerANePasDélivrerToolStripMenuItem.Size = New System.Drawing.Size(289, 22)
+        Me.BasculerADélivrerANePasDélivrerToolStripMenuItem.Text = "Basculer ""A délivrer"" / ""A ne pas délivrer"""
         '
         'RadBtnAbandon
         '
         Me.RadBtnAbandon.DialogResult = System.Windows.Forms.DialogResult.Cancel
-        Me.RadBtnAbandon.Location = New System.Drawing.Point(1279, 607)
+        Me.RadBtnAbandon.Location = New System.Drawing.Point(1288, 3)
         Me.RadBtnAbandon.Name = "RadBtnAbandon"
         Me.RadBtnAbandon.Size = New System.Drawing.Size(110, 24)
         Me.RadBtnAbandon.TabIndex = 4
         Me.RadBtnAbandon.Text = "Abandonner"
         '
-        'RadBtnCreationLignes
+        'RadBtnValidation
         '
-        Me.RadBtnCreationLignes.Location = New System.Drawing.Point(17, 607)
-        Me.RadBtnCreationLignes.Name = "RadBtnCreationLignes"
-        Me.RadBtnCreationLignes.Size = New System.Drawing.Size(147, 24)
-        Me.RadBtnCreationLignes.TabIndex = 5
-        Me.RadBtnCreationLignes.Text = "Génération ordonnance"
+        Me.RadBtnValidation.Location = New System.Drawing.Point(1146, 3)
+        Me.RadBtnValidation.Name = "RadBtnValidation"
+        Me.RadBtnValidation.Size = New System.Drawing.Size(136, 24)
+        Me.RadBtnValidation.TabIndex = 0
+        Me.RadBtnValidation.Text = "Validation ordonnance"
+        '
+        'RadBtnImprimer
+        '
+        Me.RadBtnImprimer.Location = New System.Drawing.Point(890, 3)
+        Me.RadBtnImprimer.Name = "RadBtnImprimer"
+        Me.RadBtnImprimer.Size = New System.Drawing.Size(122, 24)
+        Me.RadBtnImprimer.TabIndex = 0
+        Me.RadBtnImprimer.Text = "Imprimer"
+        '
+        'RadSplitContainer1
+        '
+        Me.RadSplitContainer1.Controls.Add(Me.SplitPanel1)
+        Me.RadSplitContainer1.Controls.Add(Me.SplitPanel2)
+        Me.RadSplitContainer1.Controls.Add(Me.SplitPanel3)
+        Me.RadSplitContainer1.Controls.Add(Me.SplitPanel4)
+        Me.RadSplitContainer1.Controls.Add(Me.SplitPanel5)
+        Me.RadSplitContainer1.Controls.Add(Me.SplitPanel6)
+        Me.RadSplitContainer1.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.RadSplitContainer1.Location = New System.Drawing.Point(0, 0)
+        Me.RadSplitContainer1.Name = "RadSplitContainer1"
+        Me.RadSplitContainer1.Orientation = System.Windows.Forms.Orientation.Horizontal
+        '
+        '
+        '
+        Me.RadSplitContainer1.RootElement.MinSize = New System.Drawing.Size(25, 25)
+        Me.RadSplitContainer1.Size = New System.Drawing.Size(1401, 643)
+        Me.RadSplitContainer1.TabIndex = 7
+        Me.RadSplitContainer1.TabStop = False
+        '
+        'SplitPanel1
+        '
+        Me.SplitPanel1.Controls.Add(Me.RadGroupBoxEtatCivil)
+        Me.SplitPanel1.Location = New System.Drawing.Point(0, 0)
+        Me.SplitPanel1.Name = "SplitPanel1"
+        '
+        '
+        '
+        Me.SplitPanel1.RootElement.MinSize = New System.Drawing.Size(25, 25)
+        Me.SplitPanel1.Size = New System.Drawing.Size(1401, 55)
+        Me.SplitPanel1.SizeInfo.AutoSizeScale = New System.Drawing.SizeF(0!, -0.07838417!)
+        Me.SplitPanel1.SizeInfo.SplitterCorrection = New System.Drawing.Size(0, -49)
+        Me.SplitPanel1.TabIndex = 0
+        Me.SplitPanel1.TabStop = False
+        Me.SplitPanel1.Text = "SplitPanel1"
+        '
+        'SplitPanel2
+        '
+        Me.SplitPanel2.Controls.Add(Me.RadGroupBox2)
+        Me.SplitPanel2.Location = New System.Drawing.Point(0, 59)
+        Me.SplitPanel2.Name = "SplitPanel2"
+        '
+        '
+        '
+        Me.SplitPanel2.RootElement.MinSize = New System.Drawing.Size(25, 25)
+        Me.SplitPanel2.Size = New System.Drawing.Size(1401, 49)
+        Me.SplitPanel2.SizeInfo.AutoSizeScale = New System.Drawing.SizeF(0!, -0.08801498!)
+        Me.SplitPanel2.SizeInfo.SplitterCorrection = New System.Drawing.Size(0, -55)
+        Me.SplitPanel2.TabIndex = 1
+        Me.SplitPanel2.TabStop = False
+        Me.SplitPanel2.Text = "SplitPanel2"
         '
         'RadGroupBox2
         '
         Me.RadGroupBox2.AccessibleRole = System.Windows.Forms.AccessibleRole.Grouping
-        Me.RadGroupBox2.Controls.Add(Me.RadTraitementDataGridView)
+        Me.RadGroupBox2.Controls.Add(Me.NumRenouvellement)
+        Me.RadGroupBox2.Controls.Add(Me.Label1)
+        Me.RadGroupBox2.Dock = System.Windows.Forms.DockStyle.Fill
         Me.RadGroupBox2.GroupBoxStyle = Telerik.WinControls.UI.RadGroupBoxStyle.Office
-        Me.RadGroupBox2.HeaderText = "Composition de l'ordonnance"
-        Me.RadGroupBox2.Location = New System.Drawing.Point(15, 188)
+        Me.RadGroupBox2.HeaderText = "Général"
+        Me.RadGroupBox2.Location = New System.Drawing.Point(0, 0)
         Me.RadGroupBox2.Name = "RadGroupBox2"
-        Me.RadGroupBox2.Size = New System.Drawing.Size(1374, 413)
-        Me.RadGroupBox2.TabIndex = 6
-        Me.RadGroupBox2.Text = "Composition de l'ordonnance"
+        Me.RadGroupBox2.Size = New System.Drawing.Size(1401, 49)
+        Me.RadGroupBox2.TabIndex = 0
+        Me.RadGroupBox2.Text = "Général"
         '
-        'RadBtnValidation
+        'NumRenouvellement
         '
-        Me.RadBtnValidation.Location = New System.Drawing.Point(1163, 607)
-        Me.RadBtnValidation.Name = "RadBtnValidation"
-        Me.RadBtnValidation.Size = New System.Drawing.Size(110, 24)
-        Me.RadBtnValidation.TabIndex = 0
-        Me.RadBtnValidation.Text = "Validation"
+        Me.NumRenouvellement.Location = New System.Drawing.Point(111, 24)
+        Me.NumRenouvellement.Maximum = New Decimal(New Integer() {9, 0, 0, 0})
+        Me.NumRenouvellement.Name = "NumRenouvellement"
+        Me.NumRenouvellement.Size = New System.Drawing.Size(47, 20)
+        Me.NumRenouvellement.TabIndex = 2
         '
-        'RadBtnImprimer
+        'Label1
         '
-        Me.RadBtnImprimer.Location = New System.Drawing.Point(1047, 607)
-        Me.RadBtnImprimer.Name = "RadBtnImprimer"
-        Me.RadBtnImprimer.Size = New System.Drawing.Size(110, 24)
-        Me.RadBtnImprimer.TabIndex = 0
-        Me.RadBtnImprimer.Text = "Imprimer"
+        Me.Label1.AutoSize = True
+        Me.Label1.Location = New System.Drawing.Point(12, 27)
+        Me.Label1.Name = "Label1"
+        Me.Label1.Size = New System.Drawing.Size(93, 13)
+        Me.Label1.TabIndex = 1
+        Me.Label1.Text = "Renouvellement "
+        '
+        'SplitPanel3
+        '
+        Me.SplitPanel3.Controls.Add(Me.RadGbxTraitementALD)
+        Me.SplitPanel3.Location = New System.Drawing.Point(0, 112)
+        Me.SplitPanel3.Name = "SplitPanel3"
+        '
+        '
+        '
+        Me.SplitPanel3.RootElement.MinSize = New System.Drawing.Size(25, 25)
+        Me.SplitPanel3.Size = New System.Drawing.Size(1401, 212)
+        Me.SplitPanel3.SizeInfo.AutoSizeScale = New System.Drawing.SizeF(0!, 0.1736223!)
+        Me.SplitPanel3.SizeInfo.SplitterCorrection = New System.Drawing.Size(0, 109)
+        Me.SplitPanel3.TabIndex = 2
+        Me.SplitPanel3.TabStop = False
+        Me.SplitPanel3.Text = "SplitPanel3"
+        '
+        'RadGbxTraitementALD
+        '
+        Me.RadGbxTraitementALD.AccessibleRole = System.Windows.Forms.AccessibleRole.Grouping
+        Me.RadGbxTraitementALD.Controls.Add(Me.RadAldGridView)
+        Me.RadGbxTraitementALD.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.RadGbxTraitementALD.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Bold)
+        Me.RadGbxTraitementALD.ForeColor = System.Drawing.Color.Red
+        Me.RadGbxTraitementALD.GroupBoxStyle = Telerik.WinControls.UI.RadGroupBoxStyle.Office
+        Me.RadGbxTraitementALD.HeaderText = "Prescriptions relatives aux traitements de l'Affectation Longue Durée reconnue (A" &
+    "LD)"
+        Me.RadGbxTraitementALD.Location = New System.Drawing.Point(0, 0)
+        Me.RadGbxTraitementALD.Name = "RadGbxTraitementALD"
+        Me.RadGbxTraitementALD.Size = New System.Drawing.Size(1401, 212)
+        Me.RadGbxTraitementALD.TabIndex = 4
+        Me.RadGbxTraitementALD.Text = "Prescriptions relatives aux traitements de l'Affectation Longue Durée reconnue (A" &
+    "LD)"
+        '
+        'SplitPanel4
+        '
+        Me.SplitPanel4.Controls.Add(Me.RadGbxTraitement)
+        Me.SplitPanel4.Location = New System.Drawing.Point(0, 328)
+        Me.SplitPanel4.Name = "SplitPanel4"
+        '
+        '
+        '
+        Me.SplitPanel4.RootElement.MinSize = New System.Drawing.Size(25, 25)
+        Me.SplitPanel4.Size = New System.Drawing.Size(1401, 212)
+        Me.SplitPanel4.SizeInfo.AutoSizeScale = New System.Drawing.SizeF(0!, 0.1736223!)
+        Me.SplitPanel4.SizeInfo.SplitterCorrection = New System.Drawing.Size(0, 109)
+        Me.SplitPanel4.TabIndex = 3
+        Me.SplitPanel4.TabStop = False
+        Me.SplitPanel4.Text = "SplitPanel4"
+        '
+        'RadGbxTraitement
+        '
+        Me.RadGbxTraitement.AccessibleRole = System.Windows.Forms.AccessibleRole.Grouping
+        Me.RadGbxTraitement.Controls.Add(Me.RadNonAldGridView)
+        Me.RadGbxTraitement.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.RadGbxTraitement.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Bold)
+        Me.RadGbxTraitement.ForeColor = System.Drawing.Color.Red
+        Me.RadGbxTraitement.GroupBoxStyle = Telerik.WinControls.UI.RadGroupBoxStyle.Office
+        Me.RadGbxTraitement.HeaderText = "Prescription sans rapport avec l'Affection de Longue Durée"
+        Me.RadGbxTraitement.Location = New System.Drawing.Point(0, 0)
+        Me.RadGbxTraitement.Name = "RadGbxTraitement"
+        Me.RadGbxTraitement.Size = New System.Drawing.Size(1401, 212)
+        Me.RadGbxTraitement.TabIndex = 5
+        Me.RadGbxTraitement.Text = "Prescription sans rapport avec l'Affection de Longue Durée"
+        '
+        'RadNonAldGridView
+        '
+        Me.RadNonAldGridView.BackColor = System.Drawing.Color.FromArgb(CType(CType(191, Byte), Integer), CType(CType(219, Byte), Integer), CType(CType(255, Byte), Integer))
+        Me.RadNonAldGridView.ContextMenuStrip = Me.NonALDContextMenuStrip
+        Me.RadNonAldGridView.Cursor = System.Windows.Forms.Cursors.Default
+        Me.RadNonAldGridView.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.RadNonAldGridView.Font = New System.Drawing.Font("Segoe UI", 8.25!)
+        Me.RadNonAldGridView.ForeColor = System.Drawing.Color.Black
+        Me.RadNonAldGridView.ImeMode = System.Windows.Forms.ImeMode.NoControl
+        Me.RadNonAldGridView.Location = New System.Drawing.Point(2, 18)
+        '
+        '
+        '
+        Me.RadNonAldGridView.MasterTemplate.AllowAddNewRow = False
+        Me.RadNonAldGridView.MasterTemplate.AllowCellContextMenu = False
+        Me.RadNonAldGridView.MasterTemplate.AllowDeleteRow = False
+        Me.RadNonAldGridView.MasterTemplate.AllowEditRow = False
+        GridViewTextBoxColumn10.EnableExpressionEditor = False
+        GridViewTextBoxColumn10.FieldName = "MedicamentDci"
+        GridViewTextBoxColumn10.HeaderText = "Dénomination"
+        GridViewTextBoxColumn10.HeaderTextAlignment = System.Drawing.ContentAlignment.MiddleLeft
+        GridViewTextBoxColumn10.Name = "MedicamentDci"
+        GridViewTextBoxColumn10.ReadOnly = True
+        GridViewTextBoxColumn10.Width = 350
+        GridViewTextBoxColumn11.EnableExpressionEditor = False
+        GridViewTextBoxColumn11.FieldName = "posologie"
+        GridViewTextBoxColumn11.HeaderText = "Posologie"
+        GridViewTextBoxColumn11.Name = "posologie"
+        GridViewTextBoxColumn11.ReadOnly = True
+        GridViewTextBoxColumn11.TextAlignment = System.Drawing.ContentAlignment.MiddleCenter
+        GridViewTextBoxColumn11.Width = 150
+        GridViewTextBoxColumn12.EnableExpressionEditor = False
+        GridViewTextBoxColumn12.FieldName = "duree"
+        GridViewTextBoxColumn12.HeaderText = "Durée"
+        GridViewTextBoxColumn12.Name = "duree"
+        GridViewTextBoxColumn12.TextAlignment = System.Drawing.ContentAlignment.MiddleCenter
+        GridViewTextBoxColumn12.Width = 100
+        GridViewTextBoxColumn13.EnableExpressionEditor = False
+        GridViewTextBoxColumn13.HeaderText = "Commentaire"
+        GridViewTextBoxColumn13.HeaderTextAlignment = System.Drawing.ContentAlignment.MiddleLeft
+        GridViewTextBoxColumn13.Name = "commentairePosologie"
+        GridViewTextBoxColumn13.Width = 400
+        GridViewTextBoxColumn14.EnableExpressionEditor = False
+        GridViewTextBoxColumn14.HeaderText = "Délivrance"
+        GridViewTextBoxColumn14.HeaderTextAlignment = System.Drawing.ContentAlignment.MiddleLeft
+        GridViewTextBoxColumn14.Name = "delivrance"
+        GridViewTextBoxColumn14.Width = 125
+        GridViewTextBoxColumn15.EnableExpressionEditor = False
+        GridViewTextBoxColumn15.FieldName = "fenetreTherapeutique"
+        GridViewTextBoxColumn15.HeaderText = "fenetreTherapeutique"
+        GridViewTextBoxColumn15.IsVisible = False
+        GridViewTextBoxColumn15.Name = "fenetreTherapeutique"
+        GridViewTextBoxColumn16.EnableExpressionEditor = False
+        GridViewTextBoxColumn16.FieldName = "medicamentCis"
+        GridViewTextBoxColumn16.HeaderText = "medicamentCis"
+        GridViewTextBoxColumn16.IsVisible = False
+        GridViewTextBoxColumn16.Name = "medicamentCis"
+        GridViewTextBoxColumn17.EnableExpressionEditor = False
+        GridViewTextBoxColumn17.FieldName = "traitementId"
+        GridViewTextBoxColumn17.HeaderText = "traitementId"
+        GridViewTextBoxColumn17.IsVisible = False
+        GridViewTextBoxColumn17.Name = "traitementId"
+        GridViewTextBoxColumn18.EnableExpressionEditor = False
+        GridViewTextBoxColumn18.FieldName = "ordonnanceLigneId"
+        GridViewTextBoxColumn18.HeaderText = "ordonnanceLigneId"
+        GridViewTextBoxColumn18.IsVisible = False
+        GridViewTextBoxColumn18.Name = "ordonnanceLigneId"
+        Me.RadNonAldGridView.MasterTemplate.Columns.AddRange(New Telerik.WinControls.UI.GridViewDataColumn() {GridViewTextBoxColumn10, GridViewTextBoxColumn11, GridViewTextBoxColumn12, GridViewTextBoxColumn13, GridViewTextBoxColumn14, GridViewTextBoxColumn15, GridViewTextBoxColumn16, GridViewTextBoxColumn17, GridViewTextBoxColumn18})
+        Me.RadNonAldGridView.MasterTemplate.ViewDefinition = TableViewDefinition2
+        Me.RadNonAldGridView.Name = "RadNonAldGridView"
+        Me.RadNonAldGridView.RightToLeft = System.Windows.Forms.RightToLeft.No
+        Me.RadNonAldGridView.ShowGroupPanel = False
+        Me.RadNonAldGridView.Size = New System.Drawing.Size(1397, 192)
+        Me.RadNonAldGridView.TabIndex = 4
+        '
+        'SplitPanel5
+        '
+        Me.SplitPanel5.Controls.Add(Me.RadGroupBox1)
+        Me.SplitPanel5.Location = New System.Drawing.Point(0, 544)
+        Me.SplitPanel5.Name = "SplitPanel5"
+        '
+        '
+        '
+        Me.SplitPanel5.RootElement.MinSize = New System.Drawing.Size(25, 25)
+        Me.SplitPanel5.Size = New System.Drawing.Size(1401, 59)
+        Me.SplitPanel5.SizeInfo.AutoSizeScale = New System.Drawing.SizeF(0!, -0.07196362!)
+        Me.SplitPanel5.SizeInfo.SplitterCorrection = New System.Drawing.Size(0, -47)
+        Me.SplitPanel5.TabIndex = 4
+        Me.SplitPanel5.TabStop = False
+        Me.SplitPanel5.Text = "SplitPanel5"
+        '
+        'SplitPanel6
+        '
+        Me.SplitPanel6.Controls.Add(Me.RadBtnAnnulerOrdonnance)
+        Me.SplitPanel6.Controls.Add(Me.RadButton1)
+        Me.SplitPanel6.Controls.Add(Me.RadBtnImprimer)
+        Me.SplitPanel6.Controls.Add(Me.RadBtnAbandon)
+        Me.SplitPanel6.Controls.Add(Me.RadBtnValidation)
+        Me.SplitPanel6.Location = New System.Drawing.Point(0, 607)
+        Me.SplitPanel6.Name = "SplitPanel6"
+        '
+        '
+        '
+        Me.SplitPanel6.RootElement.MinSize = New System.Drawing.Size(25, 25)
+        Me.SplitPanel6.Size = New System.Drawing.Size(1401, 36)
+        Me.SplitPanel6.SizeInfo.AutoSizeScale = New System.Drawing.SizeF(0!, -0.1088818!)
+        Me.SplitPanel6.SizeInfo.SplitterCorrection = New System.Drawing.Size(0, -67)
+        Me.SplitPanel6.TabIndex = 5
+        Me.SplitPanel6.TabStop = False
+        Me.SplitPanel6.Text = "SplitPanel6"
+        '
+        'RadBtnAnnulerOrdonnance
+        '
+        Me.RadBtnAnnulerOrdonnance.Location = New System.Drawing.Point(1018, 3)
+        Me.RadBtnAnnulerOrdonnance.Name = "RadBtnAnnulerOrdonnance"
+        Me.RadBtnAnnulerOrdonnance.Size = New System.Drawing.Size(122, 24)
+        Me.RadBtnAnnulerOrdonnance.TabIndex = 1
+        Me.RadBtnAnnulerOrdonnance.Text = "Annuler l'ordonnance"
+        '
+        'RadButton1
+        '
+        Me.RadButton1.Location = New System.Drawing.Point(608, 3)
+        Me.RadButton1.Name = "RadButton1"
+        Me.RadButton1.Size = New System.Drawing.Size(151, 24)
+        Me.RadButton1.TabIndex = 1
+        Me.RadButton1.Text = "Ajout ligne commentaire"
+        '
+        'NonALDContextMenuStrip
+        '
+        Me.NonALDContextMenuStrip.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.CréerUneLigneDeCommentaireToolStripMenuItem1, Me.SupprimerUneLigneDeCommentaireToolStripMenuItem, Me.BasculerADélivrerANePasDélivrerToolStripMenuItem1, Me.BasculerEnALDToolStripMenuItem})
+        Me.NonALDContextMenuStrip.Name = "NonALDContextMenuStrip"
+        Me.NonALDContextMenuStrip.Size = New System.Drawing.Size(290, 114)
+        '
+        'CréerUneLigneDeCommentaireToolStripMenuItem1
+        '
+        Me.CréerUneLigneDeCommentaireToolStripMenuItem1.Name = "CréerUneLigneDeCommentaireToolStripMenuItem1"
+        Me.CréerUneLigneDeCommentaireToolStripMenuItem1.Size = New System.Drawing.Size(289, 22)
+        Me.CréerUneLigneDeCommentaireToolStripMenuItem1.Text = "Créer une ligne de commentaire"
+        '
+        'SupprimerUneLigneDeCommentaireToolStripMenuItem
+        '
+        Me.SupprimerUneLigneDeCommentaireToolStripMenuItem.Name = "SupprimerUneLigneDeCommentaireToolStripMenuItem"
+        Me.SupprimerUneLigneDeCommentaireToolStripMenuItem.Size = New System.Drawing.Size(289, 22)
+        Me.SupprimerUneLigneDeCommentaireToolStripMenuItem.Text = "Supprimer une ligne de commentaire"
+        '
+        'BasculerEnALDToolStripMenuItem
+        '
+        Me.BasculerEnALDToolStripMenuItem.Name = "BasculerEnALDToolStripMenuItem"
+        Me.BasculerEnALDToolStripMenuItem.Size = New System.Drawing.Size(289, 22)
+        Me.BasculerEnALDToolStripMenuItem.Text = "Basculer en ""ALD"""
+        '
+        'BasculerADélivrerANePasDélivrerToolStripMenuItem1
+        '
+        Me.BasculerADélivrerANePasDélivrerToolStripMenuItem1.Name = "BasculerADélivrerANePasDélivrerToolStripMenuItem1"
+        Me.BasculerADélivrerANePasDélivrerToolStripMenuItem1.Size = New System.Drawing.Size(289, 22)
+        Me.BasculerADélivrerANePasDélivrerToolStripMenuItem1.Text = "Basculer ""A délivrer"" / ""A ne pas délivrer"""
         '
         'RadFOrdonnanceListeDetail
         '
@@ -504,13 +882,7 @@ Partial Class RadFOrdonnanceListeDetail
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.CancelButton = Me.RadBtnAbandon
         Me.ClientSize = New System.Drawing.Size(1401, 643)
-        Me.Controls.Add(Me.RadBtnImprimer)
-        Me.Controls.Add(Me.RadBtnValidation)
-        Me.Controls.Add(Me.RadGroupBox2)
-        Me.Controls.Add(Me.RadBtnCreationLignes)
-        Me.Controls.Add(Me.RadBtnAbandon)
-        Me.Controls.Add(Me.RadGroupBox1)
-        Me.Controls.Add(Me.RadGroupBoxEtatCivil)
+        Me.Controls.Add(Me.RadSplitContainer1)
         Me.Name = "RadFOrdonnanceListeDetail"
         '
         '
@@ -525,15 +897,39 @@ Partial Class RadFOrdonnanceListeDetail
         CType(Me.RadGroupBox1, System.ComponentModel.ISupportInitialize).EndInit()
         Me.RadGroupBox1.ResumeLayout(False)
         Me.RadGroupBox1.PerformLayout()
-        CType(Me.RadTraitementDataGridView.MasterTemplate, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.RadTraitementDataGridView, System.ComponentModel.ISupportInitialize).EndInit()
-        Me.OrdonnanceContextMenuStrip.ResumeLayout(False)
+        CType(Me.RadAldGridView.MasterTemplate, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.RadAldGridView, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.ALDContextMenuStrip.ResumeLayout(False)
         CType(Me.RadBtnAbandon, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.RadBtnCreationLignes, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.RadGroupBox2, System.ComponentModel.ISupportInitialize).EndInit()
-        Me.RadGroupBox2.ResumeLayout(False)
         CType(Me.RadBtnValidation, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.RadBtnImprimer, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.RadSplitContainer1, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.RadSplitContainer1.ResumeLayout(False)
+        CType(Me.SplitPanel1, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.SplitPanel1.ResumeLayout(False)
+        CType(Me.SplitPanel2, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.SplitPanel2.ResumeLayout(False)
+        CType(Me.RadGroupBox2, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.RadGroupBox2.ResumeLayout(False)
+        Me.RadGroupBox2.PerformLayout()
+        CType(Me.NumRenouvellement, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.SplitPanel3, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.SplitPanel3.ResumeLayout(False)
+        CType(Me.RadGbxTraitementALD, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.RadGbxTraitementALD.ResumeLayout(False)
+        CType(Me.SplitPanel4, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.SplitPanel4.ResumeLayout(False)
+        CType(Me.RadGbxTraitement, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.RadGbxTraitement.ResumeLayout(False)
+        CType(Me.RadNonAldGridView.MasterTemplate, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.RadNonAldGridView, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.SplitPanel5, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.SplitPanel5.ResumeLayout(False)
+        CType(Me.SplitPanel6, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.SplitPanel6.ResumeLayout(False)
+        CType(Me.RadBtnAnnulerOrdonnance, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.RadButton1, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.NonALDContextMenuStrip.ResumeLayout(False)
         CType(Me, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
 
@@ -562,18 +958,40 @@ Partial Class RadFOrdonnanceListeDetail
     Friend WithEvents Label2 As Label
     Friend WithEvents LblPatientAdresse1 As Label
     Friend WithEvents RadGroupBox1 As Telerik.WinControls.UI.RadGroupBox
-    Friend WithEvents RadTraitementDataGridView As Telerik.WinControls.UI.RadGridView
+    Friend WithEvents RadAldGridView As Telerik.WinControls.UI.RadGridView
     Friend WithEvents RadBtnAbandon As Telerik.WinControls.UI.RadButton
-    Friend WithEvents RadBtnCreationLignes As Telerik.WinControls.UI.RadButton
     Friend WithEvents TxtCommentaire As TextBox
-    Friend WithEvents RadGroupBox2 As Telerik.WinControls.UI.RadGroupBox
     Friend WithEvents ToolTip As ToolTip
     Friend WithEvents lblContreIndication As Label
     Friend WithEvents LblAllergie As Label
-    Friend WithEvents OrdonnanceContextMenuStrip As ContextMenuStrip
+    Friend WithEvents ALDContextMenuStrip As ContextMenuStrip
     Friend WithEvents CréerUneLigneDeCommentaireToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents SupprimerUneLigneToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents RadBtnValidation As Telerik.WinControls.UI.RadButton
     Friend WithEvents RadBtnImprimer As Telerik.WinControls.UI.RadButton
+    Friend WithEvents RadSplitContainer1 As Telerik.WinControls.UI.RadSplitContainer
+    Friend WithEvents SplitPanel1 As Telerik.WinControls.UI.SplitPanel
+    Friend WithEvents SplitPanel2 As Telerik.WinControls.UI.SplitPanel
+    Friend WithEvents SplitPanel3 As Telerik.WinControls.UI.SplitPanel
+    Friend WithEvents SplitPanel4 As Telerik.WinControls.UI.SplitPanel
+    Friend WithEvents SplitPanel5 As Telerik.WinControls.UI.SplitPanel
+    Friend WithEvents RadNonAldGridView As Telerik.WinControls.UI.RadGridView
+    Friend WithEvents RadGbxTraitementALD As Telerik.WinControls.UI.RadGroupBox
+    Friend WithEvents RadGbxTraitement As Telerik.WinControls.UI.RadGroupBox
+    Friend WithEvents LblPharmacienNom As Label
+    Friend WithEvents LblLabelPharmacien As Label
+    Friend WithEvents RadButton1 As Telerik.WinControls.UI.RadButton
+    Friend WithEvents SplitPanel6 As Telerik.WinControls.UI.SplitPanel
+    Friend WithEvents RadGroupBox2 As Telerik.WinControls.UI.RadGroupBox
+    Friend WithEvents NumRenouvellement As NumericUpDown
+    Friend WithEvents Label1 As Label
+    Friend WithEvents RadBtnAnnulerOrdonnance As Telerik.WinControls.UI.RadButton
+    Friend WithEvents BasculerEnNonALDToolStripMenuItem As ToolStripMenuItem
+    Friend WithEvents BasculerADélivrerANePasDélivrerToolStripMenuItem As ToolStripMenuItem
+    Friend WithEvents NonALDContextMenuStrip As ContextMenuStrip
+    Friend WithEvents CréerUneLigneDeCommentaireToolStripMenuItem1 As ToolStripMenuItem
+    Friend WithEvents SupprimerUneLigneDeCommentaireToolStripMenuItem As ToolStripMenuItem
+    Friend WithEvents BasculerADélivrerANePasDélivrerToolStripMenuItem1 As ToolStripMenuItem
+    Friend WithEvents BasculerEnALDToolStripMenuItem As ToolStripMenuItem
 End Class
 

@@ -72,9 +72,12 @@ Public Class AldDao
 
         Dim PremierPassage As Boolean = True
 
-        Dim SQLString As String = "select * from oasis.oa_antecedent where oa_antecedent_type = 'A' And oa_antecedent_statut_affichage = 'P'" &
-        " And (oa_antecedent_inactif = '0' Or oa_antecedent_inactif is Null) And oa_antecedent_ald_valide = 1" &
-        " And oa_antecedent_patient_id = " + patientId.ToString + ";"
+        Dim SQLString As String = "SELECT * FROM oasis.oa_antecedent" &
+            " WHERE oa_antecedent_type = 'A'" &
+            " AND oa_antecedent_statut_affichage = 'P'" &
+            " AND (oa_antecedent_inactif = '0' OR oa_antecedent_inactif is Null)" &
+            " AND oa_antecedent_ald_valide = 1" &
+            " AND oa_antecedent_patient_id = " + patientId.ToString + ";"
 
         'Lecture des données en base
         AldPatientDataAdapter.SelectCommand = New SqlCommand(SQLString, conxn)
@@ -87,7 +90,8 @@ Public Class AldDao
         For i = 0 To rowCount Step 1
             Dim DateFin As Date = AldPatientDataTable.Rows(i)("oa_antecedent_ald_date_fin")
             Dim DateControle As Date = DateFin.AddMonths(1)
-            If DateControle > Date.Now Then
+            Dim DateMax As New Date(2999, 12, 31, 0, 0, 0)
+            If DateControle.Date > Date.Now.Date OrElse DateFin.Date = DateMax.Date Then
                 If PremierPassage = True Then
                     PremierPassage = False
                     StringRetour = "Expiration ALD : " + vbCrLf + "   " + DateFin.ToString("dd-MM-yyyy")
@@ -98,6 +102,40 @@ Public Class AldDao
         Next
 
         Return StringRetour
+    End Function
+
+    Public Function IsPatientALD(patientId As Integer) As Boolean
+        'Déclaration des données de connexion
+        Dim CodeRetour As Boolean = False
+
+        Dim conxn As New SqlConnection(getConnectionString())
+        Dim da As SqlDataAdapter = New SqlDataAdapter()
+        Dim dt As DataTable = New DataTable()
+
+        Dim DateMax As New Date(2999, 12, 31, 0, 0, 0)
+        Dim DateValide As Date = Date.Now().AddDays(30)
+
+        Dim PremierPassage As Boolean = True
+
+        Dim SQLString As String = "SELECT oa_antecedent_id, oa_antecedent_ald_date_fin" &
+            " FROM oasis.oa_antecedent" &
+            " WHERE oa_antecedent_type = 'A'" &
+            " AND oa_antecedent_statut_affichage = 'P'" &
+            " AND (oa_antecedent_inactif = '0' OR oa_antecedent_inactif is Null)" &
+            " AND oa_antecedent_ald_valide = 1" &
+            " AND (oa_antecedent_ald_date_fin = '" & DateMax.ToString("yyyy-MM-dd") & "' OR oa_antecedent_ald_date_fin >= '" & DateValide.ToString("yyyy-MM-dd") & "')" &
+            " AND oa_antecedent_patient_id = " + patientId.ToString + ";"
+
+        'Lecture des données en base
+        da.SelectCommand = New SqlCommand(SQLString, conxn)
+        da.Fill(dt)
+        conxn.Open()
+
+        If dt.Rows.Count > 0 Then
+            CodeRetour = True
+        End If
+
+        Return CodeRetour
     End Function
 
 End Class

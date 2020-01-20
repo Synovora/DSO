@@ -1300,6 +1300,10 @@ Public Class RadFTraitementDetailEdit
         NumRythmeMidi.Enabled = False
         NumRythmeApresMidi.Enabled = False
         NumRythmeSoir.Enabled = False
+        CbxFractionMatin.Enabled = False
+        CbxFractionMidi.Enabled = False
+        CbxFractionApresMidi.Enabled = False
+        CbxFractionSoir.Enabled = False
         DteTraitementDateDebut.Enabled = False
         DteTraitementDateFin.Enabled = False
         TxtTraitementCommentaire.ReadOnly = True

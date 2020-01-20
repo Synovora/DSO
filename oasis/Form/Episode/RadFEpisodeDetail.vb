@@ -144,18 +144,15 @@ Public Class RadFEpisodeDetail
         ChargementAffichageBlocWorkflow()
         ChargementCaracteristiquesEpisode()
         If episode.TypeActivite = EpisodeDao.EnumTypeActiviteEpisodeCode.SOCIAL Or episode.Type = EpisodeDao.EnumTypeEpisode.VIRTUEL.ToString Then
-            'Me.RadSplitContainer4.EnableCollapsing = True
-            'Me.RadSplitContainer4.UseSplitterButtons = True
-            'Me.RadSplitContainer4.MoveSplitter(Me.RadSplitContainer4.Splitters(0), RadDirection.Up)
-            'SplitPanelConsigneParamedicale.Hide()
             SplitPanel7.Hide()
-            Me.RadSplitContainer2.EnableCollapsing = True
-            Me.RadSplitContainer2.UseSplitterButtons = True
-            Me.RadSplitContainer2.MoveSplitter(Me.RadSplitContainer2.Splitters(0), RadDirection.Up)
-            SplitPanel4.Hide()
-            Me.RadSplitContainer3.EnableCollapsing = True
-            Me.RadSplitContainer3.UseSplitterButtons = True
+            'Me.RadSplitContainer3.EnableCollapsing = True
+            'Me.RadSplitContainer3.UseSplitterButtons = True
             Me.RadSplitContainer3.MoveSplitter(Me.RadSplitContainer3.Splitters(0), RadDirection.Up)
+
+            SplitPanel4.Hide()
+            'Me.RadSplitContainer2.EnableCollapsing = True
+            'Me.RadSplitContainer2.UseSplitterButtons = True
+            Me.RadSplitContainer2.MoveSplitter(Me.RadSplitContainer2.Splitters(0), RadDirection.Up)
 
             RadObsSpeParDataGridView.Hide()
             RadBtnParametre.Hide()
@@ -2291,14 +2288,43 @@ Public Class RadFEpisodeDetail
     Private Sub OrdonnanceToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles OrdonnanceToolStripMenuItem.Click
         Me.Enabled = False
         Cursor.Current = Cursors.WaitCursor
-        Using vFOrdonnanceListe As New RadFOrdonnanceListe
-            vFOrdonnanceListe.SelectedPatient = Me.SelectedPatient
-            vFOrdonnanceListe.UtilisateurConnecte = Me.UtilisateurConnecte
-            vFOrdonnanceListe.Allergie = Me.Allergie
-            vFOrdonnanceListe.ContreIndication = Me.ContreIndication
-            vFOrdonnanceListe.ShowDialog() 'Modal
-        End Using
+
+        Dim ordonnaceDao As New OrdonnanceDao
+        Dim OrdonnanceId As Long
+        Dim dt As DataTable
+        dt = ordonnaceDao.getOrdonnanceValidebyPatient(SelectedPatient.patientId, SelectedEpisodeId)
+        If dt.Rows.Count > 0 Then
+            'Ordonnance existante
+            OrdonnanceId = dt.Rows(0)("oa_ordonnance_id")
+            AfficheOrdonnance(OrdonnanceId)
+        Else
+            OrdonnanceId = ordonnaceDao.CreateOrdonnance(SelectedPatient.patientId, SelectedEpisodeId)
+            If OrdonnanceId <> 0 Then
+                If ordonnaceDao.CreateNewOrdonnanceDetail(SelectedPatient.patientId, OrdonnanceId) = True Then
+                    AfficheOrdonnance(OrdonnanceId)
+                Else
+                    'Erreur, l'ordonnance détail n'a pa été créée
+                End If
+            Else
+                'Erreur, l'ordonnance n'a pa été créée
+            End If
+        End If
+
+        Cursor.Current = Cursors.Default
         Me.Enabled = True
+    End Sub
+
+    Private Sub AfficheOrdonnance(OrdonnanceId As Long)
+        Using vFOrdonnanceListeDetail As New RadFOrdonnanceListeDetail
+            vFOrdonnanceListeDetail.SelectedOrdonnanceId = OrdonnanceId
+            vFOrdonnanceListeDetail.SelectedPatient = Me.SelectedPatient
+            vFOrdonnanceListeDetail.SelectedEpisode = episode
+            vFOrdonnanceListeDetail.UtilisateurConnecte = Me.UtilisateurConnecte
+            vFOrdonnanceListeDetail.Allergie = Me.Allergie
+            vFOrdonnanceListeDetail.ContreIndication = Me.ContreIndication
+            vFOrdonnanceListeDetail.CommentaireOrdonnance = ""
+            vFOrdonnanceListeDetail.ShowDialog()
+        End Using
     End Sub
 
 

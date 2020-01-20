@@ -572,7 +572,8 @@ Public Class RadFSynthese
     Private Sub ChargementToolTipAld()
         Dim StringTooltip As String
         Dim aldDao As New AldDao
-        StringTooltip = aldDao.DateFinALD(Me.SelectedPatient.patientId)
+
+        StringTooltip = AldDao.DateFinALD(Me.SelectedPatient.patientId)
         If StringTooltip <> "" Then
             LblALD.Show()
             ToolTip.SetToolTip(LblALD, StringTooltip)
@@ -1196,19 +1197,6 @@ Public Class RadFSynthese
                 Me.Enabled = True
             End If
         End If
-    End Sub
-
-    Private Sub OrdonnanceToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles OrdonnanceToolStripMenuItem.Click
-        Me.Enabled = False
-        Cursor.Current = Cursors.WaitCursor
-        Using vFOrdonnanceListe As New RadFOrdonnanceListe
-            vFOrdonnanceListe.SelectedPatient = Me.SelectedPatient
-            vFOrdonnanceListe.UtilisateurConnecte = Me.UtilisateurConnecte
-            vFOrdonnanceListe.Allergie = Me.Allergie
-            vFOrdonnanceListe.ContreIndication = Me.ContreIndication
-            vFOrdonnanceListe.ShowDialog() 'Modal
-        End Using
-        Me.Enabled = True
     End Sub
 
 

@@ -168,6 +168,8 @@
     <Compile Include="Bean\Antecedent\AntecedentClass.vb" />
     <Compile Include="Bean\DRC\DrcActeParamedicalAsso.vb" />
     <Compile Include="Bean\DRC\DrcStandard.vb" />
+    <Compile Include="Bean\Ordonnance\Ordonnance.vb" />
+    <Compile Include="Bean\Ordonnance\OrdonnanceDetailGrid.vb" />
     <Compile Include="Bean\Utilisateur\Action.vb" />
     <Compile Include="Dao\Utilisateur\ActionDao.vb" />
     <Compile Include="Form\DRC\RadFActeParamedicalTest.Designer.vb">
@@ -198,7 +200,7 @@
     <Compile Include="Bean\Parametre\Parametre.vb" />
     <Compile Include="Bean\Parametre\ParametreDrc.vb" />
     <Compile Include="Bean\Parametre\ParametreTypeEpisodeDrc.vb" />
-    <Compile Include="Bean\Traitement\OrdonnanceDetailClass.vb" />
+    <Compile Include="Bean\Ordonnance\OrdonnanceDetailClass.vb" />
     <Compile Include="Bean\Parcours\ParcoursClass.vb" />
     <Compile Include="Bean\Parcours\ParcoursConsigneClass.vb" />
     <Compile Include="Bean\Parcours\ParcoursHistoClass.vb" />
@@ -209,9 +211,9 @@
     <Compile Include="Bean\Tache\TacheClass.vb" />
     <Compile Include="Bean\Traitement\Traitement.vb" />
     <Compile Include="Bean\Utilisateur\Profil.vb" />
-    <Compile Include="Dao\Antecedent\AldCim10Dao.vb" />
+    <Compile Include="Dao\ALD\AldCim10Dao.vb" />
     <Compile Include="Bean\Antecedent\AntecedentHistoClass.vb" />
-    <Compile Include="Dao\Antecedent\AldDao.vb" />
+    <Compile Include="Dao\ALD\AldDao.vb" />
     <Compile Include="Dao\Antecedent\AntecedentHistoCreationDao.vb" />
     <Compile Include="ApplicationEvents.vb" />
     <Compile Include="Dao\Antecedent\AntecedentHistoDao.vb" />
@@ -265,8 +267,8 @@
     <Compile Include="Form\Episode\RadFEpisodeDetailCreation.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Dao\Traitement\OrdonnanceDao.vb" />
-    <Compile Include="Dao\Traitement\OrdonnanceDetailDao.vb" />
+    <Compile Include="Dao\Ordonnance\OrdonnanceDao.vb" />
+    <Compile Include="Dao\Ordonnance\OrdonnanceDetailDao.vb" />
     <Compile Include="Dao\General\ParametreOasisDao.vb" />
     <Compile Include="Dao\Parcours\ParcoursConsigneDao.vb" />
     <Compile Include="Dao\Parcours\ParcoursDao.vb" />
