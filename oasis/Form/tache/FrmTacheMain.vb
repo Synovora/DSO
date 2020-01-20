@@ -40,8 +40,9 @@ Public Class FrmTacheMain
 
         ' -- load des grid
         refreshGridTacheATraiter()
-        RadioMesTachesEnCours.CheckState = CheckState.Checked
-        'refreshGridTacheEnCours() : pas besoin fait par l'evenement du bouton radio qui est checked par defaut (RadioMesTachesEnCours)
+        'RadioMesTachesEnCours.CheckState = CheckState.Checked
+        RadioTachesFonctionEnCours.CheckState = CheckState.Checked
+        'refreshGridTacheEnCours() : pas besoin fait par l'evenement du bouton radio qui est checked par defaut (RadioTachesFonctionEnCours)
         If RadTacheEnCoursGrid.Rows.Count > 0 Then
             Me.RadTacheEnCoursGrid.CurrentRow = RadTacheEnCoursGrid.Rows(0)
         End If
@@ -225,7 +226,8 @@ Public Class FrmTacheMain
             Application.DoEvents()
 
             Dim isMyTache As Boolean = RadioMesTachesEnCours.IsChecked
-            Dim data As DataTable = tacheDao.getAgendaMyRDV(dateDebut, dateFin, isMyTache, lstFonctionChoisie, filterTache)
+            Dim isWithNonAttribue = RadChkNonAttribuee.Checked
+            Dim data As DataTable = tacheDao.getAgendaMyRDV(dateDebut, dateFin, isMyTache, lstFonctionChoisie, filterTache, isWithNonAttribue)
 
             lstAppointments.Clear()
 
@@ -424,7 +426,7 @@ Public Class FrmTacheMain
             Me.Cursor = Cursors.WaitCursor
 
             Dim isMyTache As Boolean = RadioMesTachesEnCours.IsChecked
-            Dim data As DataTable = tacheDao.getAllTacheEnCours(isMyTache, lstFonctionChoisie, filterTache)
+            Dim data As DataTable = tacheDao.getAllTacheEnCours(isMyTache, lstFonctionChoisie, filterTache, RadChkNonAttribuee.IsChecked)
             Dim numRowGrid As Integer = 0
             Dim exId As Long, index As Integer = -1, exPosit = 0
             Dim typeTache As String
@@ -715,6 +717,12 @@ Public Class FrmTacheMain
             Finally
                 TimerRefreshTaches.Start()
             End Try
+        End If
+    End Sub
+
+    Private Sub RadChkNonAttribuee_CheckStateChanged(sender As Object, e As EventArgs) Handles RadChkNonAttribuee.CheckStateChanged
+        If RadioTachesFonctionEnCours.IsChecked Then
+            refreshGridDroitOngletActif()
         End If
     End Sub
 

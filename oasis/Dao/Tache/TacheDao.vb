@@ -271,7 +271,7 @@ Public Class TacheDao
     ''' </summary>
     ''' <param name="isMyTache"></param>
     ''' <returns></returns>
-    Friend Function getAllTacheEnCours(isMyTache As Boolean, lstFonctionChoisie As List(Of Fonction), filtre As FiltreTache) As DataTable
+    Friend Function getAllTacheEnCours(isMyTache As Boolean, lstFonctionChoisie As List(Of Fonction), filtre As FiltreTache, isWithNonAttribue As Boolean) As DataTable
         Dim SQLString As String
         'Console.WriteLine("----------> getAllTacheEnCours")
         SQLString =
@@ -297,7 +297,10 @@ Public Class TacheDao
             "LEFT JOIN  oasis.oa_r_fonction F ON F.oa_r_fonction_id = T.emetteur_fonction_id " & vbCrLf &
             "LEFT JOIN  oasis.oa_r_fonction F2 ON F2.oa_r_fonction_id = T.traite_fonction_id " & vbCrLf &
             "LEFT JOIN  oasis.oa_patient P ON P.oa_patient_id = T.patient_id " & vbCrLf &
-            "WHERE etat = @etat And type<> @type " & vbCrLf
+            "WHERE type<> @type " & vbCrLf
+
+        SQLString += "AND " & If(isMyTache = False AndAlso isWithNonAttribue, " etat IN (@etat , @etat1) " & vbCrLf, " etat = @etat") & vbCrLf
+
         ' "	  T.ordre_affichage, " & vbCrLf &
 
         ' --- condition si pour moi ou pour toutes les fonctions de mon profil
@@ -329,6 +332,7 @@ Public Class TacheDao
             Using tacheDataAdapter
                 tacheDataAdapter.SelectCommand = New SqlCommand(SQLString, con)
                 tacheDataAdapter.SelectCommand.Parameters.AddWithValue("@etat", EtatTache.EN_COURS.ToString)
+                If (isMyTache = False AndAlso isWithNonAttribue) Then tacheDataAdapter.SelectCommand.Parameters.AddWithValue("@etat1", EtatTache.EN_ATTENTE.ToString)
                 tacheDataAdapter.SelectCommand.Parameters.AddWithValue("@type", TypeTache.RDV_SPECIALISTE.ToString)
                 If isMyTache Then tacheDataAdapter.SelectCommand.Parameters.AddWithValue("@traite_user_id", userLog.UtilisateurId)
                 Dim tacheDataTable As DataTable = New DataTable()
@@ -345,7 +349,7 @@ Public Class TacheDao
     End Function
 
 
-    Friend Function getAgendaMyRDV(dateDebut As Date, dateFin As Date, isMyTache As Boolean, lstFonctionChoisie As List(Of Fonction), filtre As FiltreTache) As DataTable
+    Friend Function getAgendaMyRDV(dateDebut As Date, dateFin As Date, isMyTache As Boolean, lstFonctionChoisie As List(Of Fonction), filtre As FiltreTache, isWithNonAttribue As Boolean) As DataTable
         Dim SQLString As String
 
         SQLString =
@@ -366,9 +370,10 @@ Public Class TacheDao
             "FROM [oasis].[oa_tache] T " & vbCrLf &
             "LEFT JOIN  oasis.oa_site S ON S.oa_site_id = T.site_id " & vbCrLf &
             "LEFT JOIN  oasis.oa_patient P ON P.oa_patient_id = T.patient_id " & vbCrLf &
-            "WHERE etat = @etat" & vbCrLf &
-            "AND [type] IN (@typeTache1 , @typeTache2, @typeTache3) " & vbCrLf &
-            "AND date_rendez_vous BETWEEN @datedebut and @datefin " & vbCrLf
+            "WHERE [type] IN (@typeTache1 , @typeTache2, @typeTache3) " & vbCrLf &
+            "AND date_rendez_vous BETWEEN @datedebut AND @datefin " & vbCrLf
+
+        SQLString += "AND " & If(isMyTache = False AndAlso isWithNonAttribue, " etat IN (@etat , @etat1) " & vbCrLf, " etat = @etat") & vbCrLf
 
         ' --- condition si pour moi ou pour toutes les fonctions de mon profil
         If isMyTache Then
@@ -403,6 +408,7 @@ Public Class TacheDao
                 tacheDataAdapter.SelectCommand = New SqlCommand(SQLString, con)
                 tacheDataAdapter.SelectCommand.Parameters.AddWithValue("@traite_user_id", userLog.UtilisateurId)
                 tacheDataAdapter.SelectCommand.Parameters.AddWithValue("@etat", EtatTache.EN_COURS.ToString)
+                If (isMyTache = False AndAlso isWithNonAttribue) Then tacheDataAdapter.SelectCommand.Parameters.AddWithValue("@etat1", EtatTache.EN_ATTENTE.ToString)
                 tacheDataAdapter.SelectCommand.Parameters.AddWithValue("@typeTache1", TypeTache.RDV.ToString)
                 tacheDataAdapter.SelectCommand.Parameters.AddWithValue("@typeTache2", TypeTache.RDV_MISSION.ToString)
                 tacheDataAdapter.SelectCommand.Parameters.AddWithValue("@typeTache3", TypeTache.REUNION_STAFF.ToString)
