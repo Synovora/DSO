@@ -1031,7 +1031,8 @@ Public Class RadFParcoursDetailEdit
         If RendezVousPlanifie = True Then
             tache = tacheDao.GetProchainRendezVousByPatientId(SelectedPatient.patientId, SelectedParcoursId)
             If tache.Id <> 0 AndAlso (tache.Nature = TacheDao.EnumNatureTacheCode.RDV Or tache.Nature = TacheDao.EnumNatureTacheCode.RDV_SPECIALISTE) Then
-                If tache.Etat = TacheDao.EtatTache.EN_ATTENTE.ToString Then
+                If tache.Etat = TacheDao.EtatTache.EN_ATTENTE.ToString OrElse
+                    (tache.Etat = TacheDao.EtatTache.EN_COURS.ToString And userLog.UtilisateurId <> tache.TraiteUserId) Then
                     Cursor.Current = Cursors.WaitCursor
                     Me.Enabled = False
                     Using form As New RadFTacheModificationRendezVous

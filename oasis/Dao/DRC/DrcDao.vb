@@ -211,7 +211,7 @@ Public Class DrcDao
                     " WHERE " & clauseCategorieMajeure & " And " & clauseDrc & " And " & clauseCategorieOasis & " And " & clauseALD &
                     " And (oa_drc_oasis_invalide Is Null Or oa_drc_oasis_invalide = 'False')" &
                     " AND (oa_drc_sexe = 1 or oa_drc_sexe = 3)" &
-                    " ORDER BY oasis.oasis.oa_drc.oa_drc_id"
+                    " ORDER BY oa_drc_oasis DESC, oasis.oasis.oa_drc.oa_drc_id"
             Case "F"
                 SQLString = "SELECT oasis.oa_drc.oa_drc_id, oa_drc_libelle, oa_drc_categorie_majeure_id, oa_drc_oasis, oa_drc_sexe, oa_drc_age_min,oa_drc_age_max, " &
                     " oa_drc_ald_id, oa_drc_ald_code, oa_drc_oasis_categorie, oa_r_categorie_majeure_description, oa_ald_description FROM oasis.oa_drc" &
@@ -221,7 +221,7 @@ Public Class DrcDao
                     " WHERE " & clauseCategorieMajeure & " And " & clauseDrc & " And " & clauseCategorieOasis & " AND " & clauseALD &
                     " AND (oa_drc_oasis_invalide is Null or oa_drc_oasis_invalide = 'False')" &
                     " AND (oa_drc_sexe = 2 Or oa_drc_sexe = 3)" &
-                    " ORDER BY oasis.oasis.oa_drc.oa_drc_id"
+                    " ORDER BY oa_drc_oasis DESC, oasis.oasis.oa_drc.oa_drc_id"
             Case Else
                 SQLString = "SELECT oasis.oa_drc.oa_drc_id, oa_drc_libelle, oa_drc_categorie_majeure_id, oa_drc_oasis, oa_drc_sexe, oa_drc_age_min,oa_drc_age_max, " &
                     " oa_drc_ald_id, oa_drc_ald_code, oa_drc_oasis_categorie, oa_r_categorie_majeure_description, oa_ald_description FROM oasis.oa_drc" &
@@ -230,7 +230,7 @@ Public Class DrcDao
                     " LEFT JOIN oasis.oa_r_categorie_majeure ON oasis.oasis.oa_drc.oa_drc_categorie_majeure_id = oasis.oa_r_categorie_majeure.oa_r_categorie_majeure_id" &
                     " WHERE " & clauseCategorieMajeure & " AND " & clauseDrc & " AND " & clauseCategorieOasis & " AND " & clauseALD &
                     " AND (oa_drc_oasis_invalide is Null or oa_drc_oasis_invalide = 'False')" &
-                    " ORDER BY oasis.oasis.oa_drc.oa_drc_id;"
+                    " ORDER BY oa_drc_oasis DESC, oasis.oasis.oa_drc.oa_drc_id;"
         End Select
 
         Using con As SqlConnection = GetConnection()
