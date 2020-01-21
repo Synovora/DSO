@@ -8,6 +8,8 @@
     Private _fenetreTherapeutique As Boolean
     Private _commentairePosologie As String
     Private _aDelivrer As Boolean
+    Private _ald As Boolean
+
 
     Public Property Posologie As String
         Get
@@ -87,6 +89,15 @@
         End Get
         Set(value As Boolean)
             _aDelivrer = value
+        End Set
+    End Property
+
+    Public Property Ald As Boolean
+        Get
+            Return _ald
+        End Get
+        Set(value As Boolean)
+            _ald = value
         End Set
     End Property
 End Class

@@ -1316,13 +1316,13 @@ Public Class RadFSynthese
                         If dateLast <> Nothing Then
                             'Rendez-vous prévisionnel, calculé selon le rythme saisi et le dernier rendez-vous passé
                             dateNext = CalculProchainRendezVous(dateLast, Rythme, Base)
-                            RadParcoursDataGridView.Rows(iGrid).Cells("consultationNext").Value = outils.FormatageDateAffichage(dateNext, True)
+                            RadParcoursDataGridView.Rows(iGrid).Cells("consultationNext").Value = outils.FormatageDateAffichage(dateNext, False)
                         Else
                             Dim DateCreation As Date = Coalesce(ParcoursDataTable.Rows(i)("oa_parcours_date_creation"), Nothing)
                             If DateCreation <> Nothing Then
                                 'Rendez-vous prévisionnel, calculé selon le rythme saisi et la date de création de l'intervenant dans le parcours de soin du patient
                                 dateNext = CalculProchainRendezVous(DateCreation, Rythme, Base)
-                                RadParcoursDataGridView.Rows(iGrid).Cells("consultationNext").Value = outils.FormatageDateAffichage(dateNext, True)
+                                RadParcoursDataGridView.Rows(iGrid).Cells("consultationNext").Value = outils.FormatageDateAffichage(dateNext, False)
                             Else
                                 'Rendez-vous à venir non calculable
                             End If

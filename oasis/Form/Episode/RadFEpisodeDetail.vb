@@ -2300,7 +2300,7 @@ Public Class RadFEpisodeDetail
         Else
             OrdonnanceId = ordonnaceDao.CreateOrdonnance(SelectedPatient.patientId, SelectedEpisodeId)
             If OrdonnanceId <> 0 Then
-                If ordonnaceDao.CreateNewOrdonnanceDetail(SelectedPatient.patientId, OrdonnanceId) = True Then
+                If ordonnaceDao.CreateNewOrdonnanceDetail(SelectedPatient.patientId, OrdonnanceId, episode) = True Then
                     AfficheOrdonnance(OrdonnanceId)
                 Else
                     'Erreur, l'ordonnance détail n'a pa été créée
@@ -2439,13 +2439,13 @@ Public Class RadFEpisodeDetail
                         If dateLast <> Nothing Then
                             'Rendez-vous prévisionnel, calculé selon le rythme saisi et le dernier rendez-vous passé
                             dateNext = CalculProchainRendezVous(dateLast, Rythme, Base)
-                            RadParcoursDataGridView.Rows(iGrid).Cells("consultationNext").Value = outils.FormatageDateAffichage(dateNext, True)
+                            RadParcoursDataGridView.Rows(iGrid).Cells("consultationNext").Value = outils.FormatageDateAffichage(dateNext, False)
                         Else
                             Dim DateCreation As Date = Coalesce(ParcoursDataTable.Rows(i)("oa_parcours_date_creation"), Nothing)
                             If DateCreation <> Nothing Then
                                 'Rendez-vous prévisionnel, calculé selon le rythme saisi et la date de création de l'intervenant dans le parcours de soin du patient
                                 dateNext = CalculProchainRendezVous(DateCreation, Rythme, Base)
-                                RadParcoursDataGridView.Rows(iGrid).Cells("consultationNext").Value = outils.FormatageDateAffichage(dateNext, True)
+                                RadParcoursDataGridView.Rows(iGrid).Cells("consultationNext").Value = outils.FormatageDateAffichage(dateNext, False)
                             Else
                                 'Rendez-vous à venir non calculable
                             End If

@@ -4,6 +4,7 @@
     Private _traitement As Boolean
     Private _TraitementId As Integer
     Private _ald As Boolean
+    Private _aDelivrer As Boolean
     Private _OrdreAffichage As Integer
     Private _medicamentCis As Integer
     Private _medicamentDci As String
@@ -267,6 +268,15 @@
         End Get
         Set(value As String)
             _fractionSoir = value
+        End Set
+    End Property
+
+    Public Property ADelivrer As Boolean
+        Get
+            Return _aDelivrer
+        End Get
+        Set(value As Boolean)
+            _aDelivrer = value
         End Set
     End Property
 

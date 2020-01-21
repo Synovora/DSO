@@ -1324,7 +1324,7 @@ Public Class TacheDao
         Return isOK
     End Function
 
-    Friend Function ModificationRendezVous(tache As Tache) As Boolean
+    Friend Function ModificationRendezVous(tache As Tache, etatActuel As String) As Boolean
         Dim da As SqlDataAdapter = New SqlDataAdapter()
         Dim isOK As Boolean = True
         Dim con As SqlConnection = Nothing
@@ -1335,7 +1335,7 @@ Public Class TacheDao
 
             Dim SQLstring As String = "UPDATE oasis.oa_tache SET" &
             " date_rendez_vous = @dateRendezVous, emetteur_commentaire = @commentaire" &
-            " WHERE id = @Id AND etat = @etat"
+            " WHERE id = @Id AND etat = @etatActuel"
 
             Dim cmd As New SqlCommand(SQLstring, con)
             With cmd.Parameters
@@ -1343,6 +1343,7 @@ Public Class TacheDao
                 .AddWithValue("@dateRendezVous", tache.DateRendezVous)
                 .AddWithValue("@commentaire", tache.EmetteurCommentaire)
                 .AddWithValue("@etat", TacheDao.EtatTache.EN_ATTENTE.ToString())
+                .AddWithValue("@etatActuel", etatActuel)
             End With
 
             da.UpdateCommand = cmd

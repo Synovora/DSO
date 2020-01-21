@@ -210,6 +210,7 @@ Public Class RadFOrdonnanceListeDetail
                 FenetreDateDebut = "31/12/2999"
             End If
 
+
             If ordonnanceDataTable.Rows(i)("oa_traitement_fenetre_date_fin") IsNot DBNull.Value Then
                 FenetreDateFin = ordonnanceDataTable.Rows(i)("oa_traitement_fenetre_date_fin")
             Else
@@ -350,51 +351,23 @@ Public Class RadFOrdonnanceListeDetail
                 End If
             End If
 
-            ordonnanceDetailGrid.TraitementId = ordonnanceDataTable.Rows(i)("oa_traitement_id")
+            ordonnanceDetailGrid.TraitementId = Coalesce(ordonnanceDataTable.Rows(i)("oa_traitement_id"), 0)
             ordonnanceDetailGrid.OrdonnanceLigneId = ordonnanceDataTable.Rows(i)("oa_ordonnance_ligne_id")
-            ordonnanceDetailGrid.MedicamentDci = ordonnanceDataTable.Rows(i)("oa_traitement_medicament_dci")
-            ordonnanceDetailGrid.MedicamentCis = ordonnanceDataTable.Rows(i)("oa_traitement_medicament_cis")
+            ordonnanceDetailGrid.MedicamentDci = Coalesce(ordonnanceDataTable.Rows(i)("oa_traitement_medicament_dci"), "")
+            ordonnanceDetailGrid.MedicamentCis = Coalesce(ordonnanceDataTable.Rows(i)("oa_traitement_medicament_cis"), 0)
             ordonnanceDetailGrid.Posologie = Posologie
-            ordonnanceDetailGrid.CommentairePosologie = ordonnanceDataTable.Rows(i)("oa_traitement_posologie_commentaire")
+            ordonnanceDetailGrid.CommentairePosologie = Coalesce(ordonnanceDataTable.Rows(i)("oa_traitement_posologie_commentaire"), "")
             ordonnanceDetailGrid.Duree = duree
-
-            'Gestion de la délivrance des traitements prescrits
-            ordonnanceDetailGrid.ADelivrer = True
-            Select Case SelectedEpisode.TypeActivite
-                Case EpisodeDao.EnumTypeActiviteEpisodeCode.PATHOLOGIE_AIGUE
-                    If dateDebut.Date < Date.Now.Date Then
-                        ordonnanceDetailGrid.ADelivrer = False
-                    End If
-                Case EpisodeDao.EnumTypeActiviteEpisodeCode.SUIVI_CHRONIQUE,
-                         EpisodeDao.EnumTypeActiviteEpisodeCode.PREVENTION_SUIVI_GROSSESSE,
-                         EpisodeDao.EnumTypeActiviteEpisodeCode.PREVENTION_SUIVI_GYNECOLOGIQUE,
-                         EpisodeDao.EnumTypeActiviteEpisodeCode.PREVENTION_ENFANT_SCOLAIRE,
-                         EpisodeDao.EnumTypeActiviteEpisodeCode.PREVENTION_ENFANT_PRE_SCOLAIRE,
-                         EpisodeDao.EnumTypeActiviteEpisodeCode.PREVENTION_AUTRE
-                    If dateDebut >= Date.Now.AddDays(-15) Then
-                        ordonnanceDetailGrid.ADelivrer = False
-                    End If
-                Case EpisodeDao.EnumTypeActiviteEpisodeCode.SOCIAL
-                Case Else
-            End Select
-
-            If ordonnanceDataTable.Rows(i)("oa_traitement_posologie_base") = TraitementDao.EnumBaseCode.CONDITIONNEL Then
-                ordonnanceDetailGrid.ADelivrer = False
-            End If
+            ordonnanceDetailGrid.ADelivrer = Coalesce(ordonnanceDataTable.Rows(i)("oa_traitement_a_delivrer"), False)
+            ordonnanceDetailGrid.Ald = Coalesce(ordonnanceDataTable.Rows(i)("oa_traitement_ald"), False)
 
             'Aiguillage ALD / Non ALD
             If PatientALD = True Then
-                If dateDebut >= Date.Now.AddDays(-15) Then
-                    TraitementALD = False
+                If ordonnanceDetailGrid.Ald = True Then
+                    ChargementGridALD(ordonnanceDetailGrid)
                 Else
-                    TraitementALD = True
-                    If ordonnanceDataTable.Rows(i)("oa_traitement_posologie_base") = TraitementDao.EnumBaseCode.CONDITIONNEL Then
-                        TraitementALD = False
-                    End If
+                    ChargementGridNonALD(ordonnanceDetailGrid)
                 End If
-            End If
-            If TraitementALD = True Then
-                ChargementGridALD(ordonnanceDetailGrid)
             Else
                 ChargementGridNonALD(ordonnanceDetailGrid)
             End If
@@ -493,6 +466,14 @@ Public Class RadFOrdonnanceListeDetail
         LblPatientSite.Text = Environnement.Table_site.GetSiteDescription(SelectedPatient.PatientSiteId)
         LblPatientUniteSanitaire.Text = Environnement.Table_unite_sanitaire.GetUniteSanitaireDescription(SelectedPatient.PatientUniteSanitaireId)
         LblPatientDateMaj.Text = SelectedPatient.PatientSyntheseDateMaj.ToString("dd/MM/yyyy")
+        If SelectedPatient.PharmacienId <> 0 Then
+            Dim rordao As New RorDao
+            Dim ror As Ror
+            ror = rordao.getRorById(SelectedPatient.PharmacienId)
+            LblPharmacienNom.Text = ror.Nom & " " & ror.Ville
+        Else
+            LblPharmacienNom.Text = "Pas de pharmacie référencée pour ce patient"
+        End If
 
         'Vérification de l'existence d'ALD
         LblALD.Hide()
@@ -630,7 +611,7 @@ Public Class RadFOrdonnanceListeDetail
 
     Private Sub RadBtnCreationLignes_Click(sender As Object, e As EventArgs)
         Dim ordonnanceDao As New OrdonnanceDao
-        ordonnanceDao.CreateNewOrdonnanceDetail(SelectedPatient.patientId, SelectedOrdonnanceId)
+        ordonnanceDao.CreateNewOrdonnanceDetail(SelectedPatient.patientId, SelectedOrdonnanceId, SelectedEpisode)
         RadAldGridView.Rows.Clear()
         ChargementOrdonnanceDetail()
         RadBtnValidation.Show()

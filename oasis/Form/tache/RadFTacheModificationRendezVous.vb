@@ -98,7 +98,7 @@
         tache.EmetteurCommentaire = TxtRDVCommentaire.Text
         tache.DateRendezVous = dateRendezVous
 
-        If tacheDao.ModificationRendezVous(tache) = True Then
+        If tacheDao.ModificationRendezVous(tache, tache.Etat) = True Then
             If clotureTache = True Then
                 If tacheDao.ClotureTache(tache.Id, True) = True Then
                     CodeRetour = True

@@ -250,11 +250,17 @@ Public Class OrdonnanceDao
         Return codeRetour
     End Function
 
-    Friend Function CreateNewOrdonnanceDetail(patientId As Integer, ordonnanceId As Integer) As Boolean
+    Friend Function CreateNewOrdonnanceDetail(patientId As Integer, ordonnanceId As Integer, episode As Episode) As Boolean
         Dim Coderetour As Boolean = True
+        Dim alddao As New AldDao
         Dim TraitementDao As New TraitementDao
         Dim OrdonnanceDetailDao As New OrdonnanceDetailDao
+
         Dim TraitementDataTable As DataTable
+        Dim PatientAld As Boolean = False
+
+        PatientAld = alddao.IsPatientALD(patientId)
+
         TraitementDataTable = TraitementDao.getTraitementNotCancelledbyPatient(patientId)
 
         Dim i As Integer
@@ -337,6 +343,45 @@ Public Class OrdonnanceDao
                     '       If FenetreDateDebut > dateJouraComparer Then
                     '  FenetreTherapeutiqueAVenir = True
                 End If
+            End If
+
+            'Détermination de la délivrance des traitements prescrits
+            ordonnanceDetail.ADelivrer = True
+            Select Case episode.TypeActivite
+                Case EpisodeDao.EnumTypeActiviteEpisodeCode.PATHOLOGIE_AIGUE,
+                     EpisodeDao.EnumTypeActiviteEpisodeCode.SOCIAL
+                    If DateDebut.Date < Date.Now.Date Then
+                        ordonnanceDetail.ADelivrer = False
+                    End If
+                Case EpisodeDao.EnumTypeActiviteEpisodeCode.SUIVI_CHRONIQUE,
+                         EpisodeDao.EnumTypeActiviteEpisodeCode.PREVENTION_SUIVI_GROSSESSE,
+                         EpisodeDao.EnumTypeActiviteEpisodeCode.PREVENTION_SUIVI_GYNECOLOGIQUE,
+                         EpisodeDao.EnumTypeActiviteEpisodeCode.PREVENTION_ENFANT_SCOLAIRE,
+                         EpisodeDao.EnumTypeActiviteEpisodeCode.PREVENTION_ENFANT_PRE_SCOLAIRE,
+                         EpisodeDao.EnumTypeActiviteEpisodeCode.PREVENTION_AUTRE
+                    If DateDebut >= Date.Now.AddDays(-15) Then
+                        ordonnanceDetail.ADelivrer = False
+                    End If
+                Case Else
+                    ordonnanceDetail.ADelivrer = False
+            End Select
+            'Quel que soit le type d'épisode
+            If TraitementDataTable.Rows(i)("oa_traitement_posologie_base") = TraitementDao.EnumBaseCode.CONDITIONNEL Then
+                ordonnanceDetail.ADelivrer = False
+            End If
+
+            'Détermination si traitement ALD / Non ALD
+            If PatientAld = True Then
+                If DateDebut >= Date.Now.AddDays(-15) Then
+                    ordonnanceDetail.Ald = False
+                Else
+                    ordonnanceDetail.Ald = True
+                    If TraitementDataTable.Rows(i)("oa_traitement_posologie_base") = TraitementDao.EnumBaseCode.CONDITIONNEL Then
+                        ordonnanceDetail.Ald = False
+                    End If
+                End If
+            Else
+                ordonnanceDetail.Ald = False
             End If
 
             OrdonnanceDetailDao.CreationOrdonnanceDetail(ordonnanceDetail)

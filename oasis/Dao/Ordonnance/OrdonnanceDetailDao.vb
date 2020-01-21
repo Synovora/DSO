@@ -40,12 +40,14 @@ Public Class OrdonnanceDetailDao
         Dim dateCreation As Date = Date.Now.Date
 
         Dim SQLstring As String = "insert into oasis.oa_patient_ordonnance_detail" &
-        " (oa_ordonnance_id, oa_ordonnance_traitement, oa_traitement_id, oa_traitement_ordre_affichage, oa_traitement_ald, oa_traitement_medicament_cis, oa_traitement_medicament_dci," &
+        " (oa_ordonnance_id, oa_ordonnance_traitement, oa_traitement_id, oa_traitement_ordre_affichage, oa_traitement_ald," &
+        " oa_traitement_a_delivrer, oa_traitement_medicament_cis, oa_traitement_medicament_dci," &
         " oa_traitement_date_debut, oa_traitement_date_fin, oa_traitement_posologie_base, oa_traitement_posologie_rythme, oa_traitement_posologie_matin," &
         " oa_traitement_posologie_midi, oa_traitement_posologie_apres_midi, oa_traitement_posologie_soir, oa_traitement_posologie_commentaire, oa_traitement_commentaire," &
         " oa_traitement_fraction_matin,oa_traitement_fraction_midi, oa_traitement_fraction_apres_midi, oa_traitement_fraction_soir," &
         " oa_traitement_fenetre, oa_traitement_fenetre_date_debut, oa_traitement_fenetre_date_fin, oa_traitement_inactif)" &
-        " VALUES (@ordonnanceId, @traitement, @traitementId, @ordreAffichage, @ald, @medicamentCis, @medicamentDci," &
+        " VALUES (@ordonnanceId, @traitement, @traitementId, @ordreAffichage, @ald," &
+        " @aDelivrer, @medicamentCis, @medicamentDci," &
         " @dateDebut, @dateFin, @posologieBase, @posologieRythme, @posologieMatin," &
         " @posologieMidi, @posologieApresMidi, @posologieSoir, @posologieCommentaire, @commentaire," &
         " @FractionMatin, @FractionMidi, @FractionApresMidi, @FractionSoir," &
@@ -58,6 +60,7 @@ Public Class OrdonnanceDetailDao
             .AddWithValue("@traitementId", ordonnanceDetail.TraitementId.ToString)
             .AddWithValue("@ordreAffichage", ordonnanceDetail.OrdreAffichage.ToString)
             .AddWithValue("@ald", ordonnanceDetail.Ald)
+            .AddWithValue("@aDelivrer", ordonnanceDetail.ADelivrer)
             .AddWithValue("@medicamentCis", ordonnanceDetail.MedicamentCis.ToString)
             .AddWithValue("@medicamentDci", ordonnanceDetail.MedicamentDci)
             .AddWithValue("@dateDebut", ordonnanceDetail.DateDebut)
