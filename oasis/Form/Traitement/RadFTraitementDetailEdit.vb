@@ -569,7 +569,7 @@ Public Class RadFTraitementDetailEdit
                 If DteTraitementDateFin.Value <> DateSansLimite Then
                     DteTraitementDateFin.Format = DateTimePickerFormat.Long
                     'Calcul durée
-                    LblTraitementDuree.Text = CalculDureeTraitement(dateDebut, dateFin)
+                    LblTraitementDuree.Text = CalculDureeTraitementString(dateDebut, dateFin)
                 Else
                     'TxtTraitementDateDebut.Text = ""
                     DteTraitementDateFin.Format = DateTimePickerFormat.Custom
@@ -1152,7 +1152,7 @@ Public Class RadFTraitementDetailEdit
                 LblTraitementDuree.Hide()
             Else
                 'Calcul durée
-                LblTraitementDuree.Text = CalculDureeTraitement(DateDebut, DateFin)
+                LblTraitementDuree.Text = CalculDureeTraitementString(DateDebut, DateFin)
                 LblLabelTraitementDuree.Show()
                 LblTraitementDuree.Show()
             End If

@@ -483,7 +483,7 @@ Partial Class RadFOrdonnanceListeDetail
         GridViewTextBoxColumn4.HeaderText = "Commentaire"
         GridViewTextBoxColumn4.HeaderTextAlignment = System.Drawing.ContentAlignment.MiddleLeft
         GridViewTextBoxColumn4.Name = "commentairePosologie"
-        GridViewTextBoxColumn4.Width = 400
+        GridViewTextBoxColumn4.Width = 630
         GridViewTextBoxColumn5.EnableExpressionEditor = False
         GridViewTextBoxColumn5.HeaderText = "Délivrance"
         GridViewTextBoxColumn5.HeaderTextAlignment = System.Drawing.ContentAlignment.MiddleLeft
@@ -760,7 +760,7 @@ Partial Class RadFOrdonnanceListeDetail
         GridViewTextBoxColumn13.HeaderText = "Commentaire"
         GridViewTextBoxColumn13.HeaderTextAlignment = System.Drawing.ContentAlignment.MiddleLeft
         GridViewTextBoxColumn13.Name = "commentairePosologie"
-        GridViewTextBoxColumn13.Width = 400
+        GridViewTextBoxColumn13.Width = 630
         GridViewTextBoxColumn14.EnableExpressionEditor = False
         GridViewTextBoxColumn14.HeaderText = "Délivrance"
         GridViewTextBoxColumn14.HeaderTextAlignment = System.Drawing.ContentAlignment.MiddleLeft
@@ -850,7 +850,7 @@ Partial Class RadFOrdonnanceListeDetail
         '
         Me.NonALDContextMenuStrip.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.CréerUneLigneDeCommentaireToolStripMenuItem1, Me.SupprimerUneLigneDeCommentaireToolStripMenuItem, Me.BasculerADélivrerANePasDélivrerToolStripMenuItem1, Me.BasculerEnALDToolStripMenuItem})
         Me.NonALDContextMenuStrip.Name = "NonALDContextMenuStrip"
-        Me.NonALDContextMenuStrip.Size = New System.Drawing.Size(290, 114)
+        Me.NonALDContextMenuStrip.Size = New System.Drawing.Size(290, 92)
         '
         'CréerUneLigneDeCommentaireToolStripMenuItem1
         '

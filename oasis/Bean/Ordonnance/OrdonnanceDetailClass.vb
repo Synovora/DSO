@@ -10,6 +10,7 @@
     Private _medicamentDci As String
     Private _dateDebut As Date
     Private _dateFin As Date
+    Private _duree As Integer
     Private _posologieBase As String
     Private _posologieRythme As Integer
     Private _posologieMatin As Integer
@@ -277,6 +278,15 @@
         End Get
         Set(value As Boolean)
             _aDelivrer = value
+        End Set
+    End Property
+
+    Public Property Duree As Integer
+        Get
+            Return _duree
+        End Get
+        Set(value As Integer)
+            _duree = value
         End Set
     End Property
 

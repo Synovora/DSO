@@ -257,7 +257,8 @@ Public Class OrdonnanceDao
         Dim OrdonnanceDetailDao As New OrdonnanceDetailDao
 
         Dim TraitementDataTable As DataTable
-        Dim PatientAld As Boolean = False
+        Dim PatientAld As Boolean
+        Dim FenetreTherapeutiqueEnCours As Boolean
 
         PatientAld = alddao.IsPatientALD(patientId)
 
@@ -269,7 +270,6 @@ Public Class OrdonnanceDao
         Dim DateFin, DateDebut As Date
 
         For i = 0 To rowCount Step 1
-
             'Exclusion des médicaments déclarés 'allergique'
             If TraitementDataTable.Rows(i)("oa_traitement_allergie") IsNot DBNull.Value Then
                 If TraitementDataTable.Rows(i)("oa_traitement_allergie") = "1" Then
@@ -297,11 +297,25 @@ Public Class OrdonnanceDao
 
             'Exclusion des traitements dont la date de fin est < à la date du jour
             DateFin = Coalesce(TraitementDataTable.Rows(i)("oa_traitement_date_fin"), "31/12/2999")
-            Dim dateJouraComparer As New Date(Date.Now.Year, Date.Now.Month, Date.Now.Day, 0, 0, 0)
-            Dim dateFinaComparer As New Date(DateFin.Year, DateFin.Month, DateFin.Day, 0, 0, 0)
-            If (dateFinaComparer < dateJouraComparer) Then
+            If DateFin.Date < Date.Now.Date Then
                 Continue For
             End If
+
+            Dim DateFinCalcul As Date
+            If DateFin > Date.Now.AddDays(29) Then
+                DateFinCalcul = Date.Now.AddDays(29)
+            Else
+                DateFinCalcul = DateFin
+            End If
+
+            Dim DateDebutCalcul As Date
+            If DateDebut.Date < Date.Now.Date Then
+                DateDebutCalcul = Date.Now
+            Else
+                DateDebutCalcul = DateDebut
+            End If
+
+            Dim duree As Integer = outils.CalculDureeTraitement(DateDebutCalcul, DateFinCalcul)
 
             Dim ordonnanceDetail As New OrdonnanceDetail
             ordonnanceDetail.OrdonnanceId = ordonnanceId
@@ -312,6 +326,7 @@ Public Class OrdonnanceDao
             ordonnanceDetail.MedicamentDci = Coalesce(TraitementDataTable.Rows(i)("oa_traitement_medicament_dci"), "")
             ordonnanceDetail.DateDebut = DateDebut
             ordonnanceDetail.DateFin = DateFin
+            ordonnanceDetail.Duree = Duree
             ordonnanceDetail.PosologieBase = Coalesce(TraitementDataTable.Rows(i)("oa_traitement_posologie_base"), "")
             ordonnanceDetail.PosologieRythme = Coalesce(TraitementDataTable.Rows(i)("oa_traitement_posologie_rythme"), 0)
             ordonnanceDetail.PosologieMatin = Coalesce(TraitementDataTable.Rows(i)("oa_traitement_posologie_matin"), 0)
@@ -329,19 +344,13 @@ Public Class OrdonnanceDao
             ordonnanceDetail.FenetreDateFin = Coalesce(TraitementDataTable.Rows(i)("oa_traitement_fenetre_date_fin"), "31/12/2999")
 
             'Existence d'une fenêtre thérapeutique
-            Dim FenetreTherapeutiqueExiste As Boolean = False
-            'Dim dateDebutFenetreaComparer As New Date(FenetreDateDebut.Year, FenetreDateDebut.Month, FenetreDateDebut.Day, 0, 0, 0)
-            'Dim dateFinFenetreaComparer As New Date(FenetreDateFin.Year, FenetreDateFin.Month, FenetreDateFin.Day, 0, 0, 0)
-            If TraitementDataTable.Rows(i)("oa_traitement_fenetre") IsNot DBNull.Value Then
-                If TraitementDataTable.Rows(i)("oa_traitement_fenetre") = "1" Then
-                    'Fenêtre thérapeutique en cours, à venir ou obsolète
-                    FenetreTherapeutiqueExiste = True
-                    'If FenetreDateDebut <= dateJouraComparer And FenetreDateFin >= dateJouraComparer Then
+            Dim FenetreTherapeutiqueExiste As Boolean = Coalesce(TraitementDataTable.Rows(i)("oa_traitement_fenetre"), False)
+            FenetreTherapeutiqueEnCours = False
+            If FenetreTherapeutiqueExiste = True Then
+                'Fenêtre thérapeutique en cours, à venir ou obsolète
+                If ordonnanceDetail.FenetreDateDebut.Date <= Date.Now.Date And ordonnanceDetail.FenetreDateFin.Date >= Date.Now.Date Then
                     'Fenêtre thérapeutique en cours
-                    'FenetreTherapeutiqueEnCours = True
-                Else
-                    '       If FenetreDateDebut > dateJouraComparer Then
-                    '  FenetreTherapeutiqueAVenir = True
+                    FenetreTherapeutiqueEnCours = True
                 End If
             End If
 
@@ -365,8 +374,12 @@ Public Class OrdonnanceDao
                 Case Else
                     ordonnanceDetail.ADelivrer = False
             End Select
-            'Quel que soit le type d'épisode
+            'A ne pas délivrer si traitement conditionnel quel que soit le type d'épisode
             If TraitementDataTable.Rows(i)("oa_traitement_posologie_base") = TraitementDao.EnumBaseCode.CONDITIONNEL Then
+                ordonnanceDetail.ADelivrer = False
+            End If
+            'A ne pas délivrer si fenêtre thérapeutique en cours quel que soit le type d'épisode
+            If FenetreTherapeutiqueEnCours = True Then
                 ordonnanceDetail.ADelivrer = False
             End If
 

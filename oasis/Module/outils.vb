@@ -46,7 +46,7 @@ Friend Module outils
         End Get
     End Property
 
-    Public Function CalculDuree(dateDebut As Date, dateFin As Date) As String
+    Public Function CalculDureeString(dateDebut As Date, dateFin As Date) As String
         Dim DureeString As String = ""
         Dim Duree As Integer
 
@@ -98,7 +98,17 @@ Friend Module outils
     End Function
 
     'Calcul de la durée du traitement
-    Public Function CalculDureeTraitement(dateDebut As Date, dateFin As Date) As String
+    Public Function CalculDureeTraitement(dateDebut As Date, dateFin As Date) As Integer
+        Dim duree As Integer
+        Dim dateDebutaComparer As New Date(dateDebut.Year, dateDebut.Month, dateDebut.Day, 0, 0, 0)
+        Dim dateFinaComparer As New Date(dateFin.Year, dateFin.Month, dateFin.Day, 0, 0, 0)
+        duree = DateDiff(DateInterval.Day, dateDebutaComparer, dateFinaComparer)
+        duree += 1
+        Return duree
+    End Function
+
+    'Calcul de la durée du traitement
+    Public Function CalculDureeTraitementString(dateDebut As Date, dateFin As Date) As String
         Dim duree As String
         Dim jour As Integer
         Dim dateDebutaComparer As New Date(dateDebut.Year, dateDebut.Month, dateDebut.Day, 0, 0, 0)

@@ -582,16 +582,16 @@
     <Compile Include="Form\Specialite\RadFSpecialiteSelecteur.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Form\Traitement\RadFOrdonnanceListeDetail.Designer.vb">
+    <Compile Include="Form\Ordonnance\RadFOrdonnanceListeDetail.Designer.vb">
       <DependentUpon>RadFOrdonnanceListeDetail.vb</DependentUpon>
     </Compile>
-    <Compile Include="Form\Traitement\RadFOrdonnanceListeDetail.vb">
+    <Compile Include="Form\Ordonnance\RadFOrdonnanceListeDetail.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Form\Traitement\RadFOrdonnanceListe.Designer.vb">
+    <Compile Include="Form\Ordonnance\RadFOrdonnanceListe.Designer.vb">
       <DependentUpon>RadFOrdonnanceListe.vb</DependentUpon>
     </Compile>
-    <Compile Include="Form\Traitement\RadFOrdonnanceListe.vb">
+    <Compile Include="Form\Ordonnance\RadFOrdonnanceListe.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Form\Traitement\RadFTraitementAllergieEtCI.Designer.vb">
@@ -1191,10 +1191,10 @@
     <EmbeddedResource Include="Form\Specialite\RadFSpecialiteSelecteur.resx">
       <DependentUpon>RadFSpecialiteSelecteur.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Form\Traitement\RadFOrdonnanceListeDetail.resx">
+    <EmbeddedResource Include="Form\Ordonnance\RadFOrdonnanceListeDetail.resx">
       <DependentUpon>RadFOrdonnanceListeDetail.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Form\Traitement\RadFOrdonnanceListe.resx">
+    <EmbeddedResource Include="Form\Ordonnance\RadFOrdonnanceListe.resx">
       <DependentUpon>RadFOrdonnanceListe.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Form\Traitement\RadFTraitementAllergieEtCI.resx">

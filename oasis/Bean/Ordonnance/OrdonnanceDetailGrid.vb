@@ -4,7 +4,7 @@
     Private _medicamentCis As Long
     Private _traitementId As Long
     Private _OrdonnanceLigneId As Long
-    Private _duree As String
+    Private _duree As Integer
     Private _fenetreTherapeutique As Boolean
     Private _commentairePosologie As String
     Private _aDelivrer As Boolean
@@ -56,15 +56,6 @@
         End Set
     End Property
 
-    Public Property Duree As String
-        Get
-            Return _duree
-        End Get
-        Set(value As String)
-            _duree = value
-        End Set
-    End Property
-
     Public Property FenetreTherapeutique As Boolean
         Get
             Return _fenetreTherapeutique
@@ -98,6 +89,15 @@
         End Get
         Set(value As Boolean)
             _ald = value
+        End Set
+    End Property
+
+    Public Property Duree As Integer
+        Get
+            Return _duree
+        End Get
+        Set(value As Integer)
+            _duree = value
         End Set
     End Property
 End Class
