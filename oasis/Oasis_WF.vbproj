@@ -344,6 +344,12 @@
     <Compile Include="Form\General\RadFNotification.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="Form\Ordonnance\RadFOrdonnanceDetail.Designer.vb">
+      <DependentUpon>RadFOrdonnanceDetail.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Form\Ordonnance\RadFOrdonnanceDetail.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Form\Parametre\RadFParametreSelecteur.Designer.vb">
       <DependentUpon>RadFParametreSelecteur.vb</DependentUpon>
     </Compile>
@@ -1079,6 +1085,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Form\General\RadFNotification.resx">
       <DependentUpon>RadFNotification.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form\Ordonnance\RadFOrdonnanceDetail.resx">
+      <DependentUpon>RadFOrdonnanceDetail.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Form\Parametre\RadFParametreSelecteur.resx">
       <DependentUpon>RadFParametreSelecteur.vb</DependentUpon>

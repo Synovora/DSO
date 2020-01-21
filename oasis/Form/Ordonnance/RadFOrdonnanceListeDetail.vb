@@ -106,6 +106,7 @@ Public Class RadFOrdonnanceListeDetail
             BasculerEnALDToolStripMenuItem.Visible = False
         Else
             PatientALD = True
+            RadBtnAjoutLigne.Hide()
         End If
 
         ChargementEtatCivil()
@@ -379,8 +380,24 @@ Public Class RadFOrdonnanceListeDetail
         'Alimentation du DataGridView
         'DCI
         RadAldGridView.Rows(iGridALD).Cells("medicamentDci").Value = ordonnanceDetailGrid.MedicamentDci
-        'Posologie
-        RadAldGridView.Rows(iGridALD).Cells("posologie").Value = ordonnanceDetailGrid.Posologie
+
+        If ordonnanceDetailGrid.TraitementId <> 0 Then
+            RadAldGridView.Rows(iGridALD).Cells("posologie").Value = ordonnanceDetailGrid.Posologie
+            RadAldGridView.Rows(iGridALD).Cells("duree").Value = ordonnanceDetailGrid.Duree.ToString
+            If ordonnanceDetailGrid.FenetreTherapeutique = True Then
+                RadAldGridView.Rows(iGridALD).Cells("posologie").Style.ForeColor = Color.Red
+            End If
+            If ordonnanceDetailGrid.ADelivrer = True Then
+                RadAldGridView.Rows(iGridALD).Cells("delivrance").Value = OrdonnanceDetailDao.EnumDelivrance.A_DELIVRER
+            Else
+                RadAldGridView.Rows(iGridALD).Cells("delivrance").Value = OrdonnanceDetailDao.EnumDelivrance.NE_PAS_DELIVRER
+            End If
+        Else
+            RadAldGridView.Rows(iGridALD).Cells("posologie").Value = ""
+            RadAldGridView.Rows(iGridALD).Cells("duree").Value = ""
+            RadAldGridView.Rows(iGridALD).Cells("delivrance").Value = ""
+        End If
+
 
         'Fenêtre thérapeutique existe (en cours ou à venir ou obsolète)
         If ordonnanceDetailGrid.FenetreTherapeutique = True Then
@@ -396,14 +413,7 @@ Public Class RadFOrdonnanceListeDetail
         'CIS du médicament
         RadAldGridView.Rows(iGridALD).Cells("medicamentCis").Value = ordonnanceDetailGrid.MedicamentCis
 
-        RadAldGridView.Rows(iGridALD).Cells("duree").Value = ordonnanceDetailGrid.Duree.ToString
         RadAldGridView.Rows(iGridALD).Cells("commentairePosologie").Value = ordonnanceDetailGrid.CommentairePosologie
-
-        If ordonnanceDetailGrid.ADelivrer = True Then
-            RadAldGridView.Rows(iGridALD).Cells("delivrance").Value = OrdonnanceDetailDao.EnumDelivrance.A_DELIVRER
-        Else
-            RadAldGridView.Rows(iGridALD).Cells("delivrance").Value = OrdonnanceDetailDao.EnumDelivrance.NE_PAS_DELIVRER
-        End If
     End Sub
 
     Private Sub ChargementGridNonALD(ordonnanceDetailGrid As OrdonnanceDetailGrid)
@@ -413,8 +423,23 @@ Public Class RadFOrdonnanceListeDetail
         'Alimentation du DataGridView
         'DCI
         RadNonAldGridView.Rows(iGridNonALD).Cells("medicamentDci").Value = ordonnanceDetailGrid.MedicamentDci
-        'Posologie
-        RadNonAldGridView.Rows(iGridNonALD).Cells("posologie").Value = ordonnanceDetailGrid.Posologie
+
+        If ordonnanceDetailGrid.TraitementId <> 0 Then
+            RadNonAldGridView.Rows(iGridNonALD).Cells("posologie").Value = ordonnanceDetailGrid.Posologie
+            RadNonAldGridView.Rows(iGridNonALD).Cells("duree").Value = ordonnanceDetailGrid.Duree.ToString
+            If ordonnanceDetailGrid.FenetreTherapeutique = True Then
+                RadNonAldGridView.Rows(iGridNonALD).Cells("posologie").Style.ForeColor = Color.Red
+            End If
+            If ordonnanceDetailGrid.ADelivrer = True Then
+                RadNonAldGridView.Rows(iGridNonALD).Cells("delivrance").Value = OrdonnanceDetailDao.EnumDelivrance.A_DELIVRER
+            Else
+                RadNonAldGridView.Rows(iGridNonALD).Cells("delivrance").Value = OrdonnanceDetailDao.EnumDelivrance.NE_PAS_DELIVRER
+            End If
+        Else
+            RadNonAldGridView.Rows(iGridNonALD).Cells("posologie").Value = ""
+            RadNonAldGridView.Rows(iGridNonALD).Cells("duree").Value = ""
+            RadNonAldGridView.Rows(iGridNonALD).Cells("delivrance").Value = ""
+        End If
 
         'Fenêtre thérapeutique existe (en cours ou à venir ou obsolète)
         If ordonnanceDetailGrid.FenetreTherapeutique = True Then
@@ -430,14 +455,7 @@ Public Class RadFOrdonnanceListeDetail
         'CIS du médicament
         RadNonAldGridView.Rows(iGridNonALD).Cells("medicamentCis").Value = ordonnanceDetailGrid.MedicamentCis
 
-        RadNonAldGridView.Rows(iGridNonALD).Cells("duree").Value = ordonnanceDetailGrid.Duree.ToString
         RadNonAldGridView.Rows(iGridNonALD).Cells("commentairePosologie").Value = ordonnanceDetailGrid.CommentairePosologie
-
-        If ordonnanceDetailGrid.ADelivrer = True Then
-            RadNonAldGridView.Rows(iGridNonALD).Cells("delivrance").Value = OrdonnanceDetailDao.EnumDelivrance.A_DELIVRER
-        Else
-            RadNonAldGridView.Rows(iGridNonALD).Cells("delivrance").Value = OrdonnanceDetailDao.EnumDelivrance.NE_PAS_DELIVRER
-        End If
     End Sub
 
     Private Sub ChargementEtatCivil()
@@ -598,6 +616,7 @@ Public Class RadFOrdonnanceListeDetail
         End Using
     End Sub
 
+    'A supprimer!!!!!!!!!!!!!!!!!!!!
     Private Sub RadBtnCreationLignes_Click(sender As Object, e As EventArgs)
         Dim ordonnanceDao As New OrdonnanceDao
         ordonnanceDao.CreateNewOrdonnanceDetail(SelectedPatient.patientId, SelectedOrdonnanceId, SelectedEpisode)
@@ -606,21 +625,6 @@ Public Class RadFOrdonnanceListeDetail
         RadBtnValidation.Show()
         RadBtnImprimer.Show()
         'RadBtnCreationLignes.Hide()
-    End Sub
-
-
-    'Modification d'une ligne d'ordonnance
-    Private Sub MasterTemplate_CellDoubleClick(sender As Object, e As Telerik.WinControls.UI.GridViewCellEventArgs) Handles RadAldGridView.CellDoubleClick
-        If RadAldGridView.CurrentRow IsNot Nothing Then
-            Dim aRow As Integer = Me.RadAldGridView.Rows.IndexOf(Me.RadAldGridView.CurrentRow)
-            If aRow >= 0 Then
-                Dim OrdonnanceId As Integer = RadAldGridView.Rows(aRow).Cells("ordonnanceLigneId").Value
-                'Tester si l'ordonnance sélectionnée est à valider
-
-            End If
-        Else
-            MessageBox.Show("Veuillez sélectionner une ligne d'ordonnance")
-        End If
     End Sub
 
     Private Sub TxtCommentaire_TextChanged(sender As Object, e As EventArgs) Handles TxtCommentaire.TextChanged
@@ -673,6 +677,30 @@ Public Class RadFOrdonnanceListeDetail
     '====== Option Grid ALD
     '==========================================================================
 
+    'Modification d'une ligne d'ordonnance
+    Private Sub MasterTemplate_CellDoubleClick(sender As Object, e As Telerik.WinControls.UI.GridViewCellEventArgs) Handles RadAldGridView.CellDoubleClick
+        If RadAldGridView.CurrentRow IsNot Nothing Then
+            Dim aRow As Integer = Me.RadAldGridView.Rows.IndexOf(Me.RadAldGridView.CurrentRow)
+            If aRow >= 0 Then
+                Dim OrdonnanceLigneId As Integer = RadAldGridView.Rows(aRow).Cells("ordonnanceLigneId").Value
+                'Tester si l'ordonnance sélectionnée est à valider
+                Using form As New RadFOrdonnanceDetail
+                    form.SelectedOrdonnanceId = SelectedOrdonnanceId
+                    form.SelectedOrdonnanceLigneId = OrdonnanceLigneId
+                    form.SelectedPatient = Me.SelectedPatient
+                    form.SelectedEpisode = SelectedEpisode
+                    form.Ald = True
+                    form.Allergie = Me.Allergie
+                    form.ContreIndication = Me.ContreIndication
+                    form.ShowDialog()
+                End Using
+                ChargementOrdonnanceDetail()
+            End If
+        Else
+            MessageBox.Show("Veuillez sélectionner une ligne d'ordonnance")
+        End If
+    End Sub
+
     'Basculer en Non ALD
     Private Sub BasculerEnNonALDToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles BasculerEnNonALDToolStripMenuItem.Click
         If RadAldGridView.CurrentRow IsNot Nothing Then
@@ -692,7 +720,17 @@ Public Class RadFOrdonnanceListeDetail
 
     'Création d'une ligne de commentaire en ALD
     Private Sub CréerUneLigneDeCommentaireToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles CréerUneLigneDeCommentaireToolStripMenuItem.Click
-
+        Using form As New RadFOrdonnanceDetail
+            form.SelectedOrdonnanceId = SelectedOrdonnanceId
+            form.SelectedOrdonnanceLigneId = 0
+            form.SelectedPatient = Me.SelectedPatient
+            form.SelectedEpisode = SelectedEpisode
+            form.Ald = True
+            form.Allergie = Me.Allergie
+            form.ContreIndication = Me.ContreIndication
+            form.ShowDialog()
+        End Using
+        ChargementOrdonnanceDetail()
     End Sub
 
     'Suppression d'une ligne de commentaire en ALD
@@ -700,9 +738,14 @@ Public Class RadFOrdonnanceListeDetail
         If RadAldGridView.CurrentRow IsNot Nothing Then
             Dim aRow As Integer = Me.RadAldGridView.Rows.IndexOf(Me.RadAldGridView.CurrentRow)
             If aRow >= 0 Then
-                Dim OrdonnanceId As Integer = RadAldGridView.Rows(aRow).Cells("ordonnanceId").Value
+                Dim OrdonnanceLigneId As Integer = RadAldGridView.Rows(aRow).Cells("ordonnanceLigneId").Value
+                Dim TraitementId As Integer = RadAldGridView.Rows(aRow).Cells("traitementId").Value
                 'Tester si l'ordonnance sélectionnée est à valider
-
+                If TraitementId = 0 Then
+                    If ordonnanceDetailDao.SuppressionOrdonnanceDetailByDrcId(OrdonnanceLigneId) = True Then
+                        ChargementOrdonnanceDetail()
+                    End If
+                End If
             End If
         Else
             MessageBox.Show("Veuillez sélectionner une ligne d'ordonnance")
@@ -737,12 +780,61 @@ Public Class RadFOrdonnanceListeDetail
     '==========================================================================
     '====== Option Grid Non ALD
     '==========================================================================
-    Private Sub CréerUneLigneDeCommentaireToolStripMenuItem1_Click(sender As Object, e As EventArgs) Handles CréerUneLigneDeCommentaireToolStripMenuItem1.Click
 
+    'Détail
+    Private Sub RadNonAldGridView_CellDoubleClick(sender As Object, e As GridViewCellEventArgs) Handles RadNonAldGridView.CellDoubleClick
+        If RadNonAldGridView.CurrentRow IsNot Nothing Then
+            Dim aRow As Integer = Me.RadNonAldGridView.Rows.IndexOf(Me.RadNonAldGridView.CurrentRow)
+            If aRow >= 0 Then
+                Dim OrdonnanceLigneId As Integer = RadNonAldGridView.Rows(aRow).Cells("ordonnanceLigneId").Value
+                'Tester si l'ordonnance sélectionnée est à valider
+                Using form As New RadFOrdonnanceDetail
+                    form.SelectedOrdonnanceId = SelectedOrdonnanceId
+                    form.SelectedOrdonnanceLigneId = OrdonnanceLigneId
+                    form.SelectedPatient = Me.SelectedPatient
+                    form.SelectedEpisode = SelectedEpisode
+                    form.Ald = False
+                    form.Allergie = Me.Allergie
+                    form.ContreIndication = Me.ContreIndication
+                    form.ShowDialog()
+                End Using
+                ChargementOrdonnanceDetail()
+            End If
+        Else
+            MessageBox.Show("Veuillez sélectionner une ligne d'ordonnance")
+        End If
+    End Sub
+
+    Private Sub CréerUneLigneDeCommentaireToolStripMenuItem1_Click(sender As Object, e As EventArgs) Handles CréerUneLigneDeCommentaireToolStripMenuItem1.Click
+        Using form As New RadFOrdonnanceDetail
+            form.SelectedOrdonnanceId = SelectedOrdonnanceId
+            form.SelectedOrdonnanceLigneId = 0
+            form.SelectedPatient = Me.SelectedPatient
+            form.SelectedEpisode = SelectedEpisode
+            form.Ald = False
+            form.Allergie = Me.Allergie
+            form.ContreIndication = Me.ContreIndication
+            form.ShowDialog()
+        End Using
+        ChargementOrdonnanceDetail()
     End Sub
 
     Private Sub SupprimerUneLigneDeCommentaireToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles SupprimerUneLigneDeCommentaireToolStripMenuItem.Click
-
+        If RadNonAldGridView.CurrentRow IsNot Nothing Then
+            Dim aRow As Integer = Me.RadNonAldGridView.Rows.IndexOf(Me.RadNonAldGridView.CurrentRow)
+            If aRow >= 0 Then
+                Dim OrdonnanceLigneId As Integer = RadNonAldGridView.Rows(aRow).Cells("ordonnanceLigneId").Value
+                Dim TraitementId As Integer = RadNonAldGridView.Rows(aRow).Cells("traitementId").Value
+                'Tester si l'ordonnance sélectionnée est à valider
+                If TraitementId = 0 Then
+                    If ordonnanceDetailDao.SuppressionOrdonnanceDetailByDrcId(OrdonnanceLigneId) = True Then
+                        ChargementOrdonnanceDetail()
+                    End If
+                End If
+            End If
+        Else
+            MessageBox.Show("Veuillez sélectionner une ligne d'ordonnance")
+        End If
     End Sub
 
     Private Sub BasculerADélivrerANePasDélivrerToolStripMenuItem1_Click(sender As Object, e As EventArgs) Handles BasculerADélivrerANePasDélivrerToolStripMenuItem1.Click
@@ -782,5 +874,19 @@ Public Class RadFOrdonnanceListeDetail
                 Me.Enabled = True
             End If
         End If
+    End Sub
+
+    Private Sub RadBtnAjoutLigne_Click(sender As Object, e As EventArgs) Handles RadBtnAjoutLigne.Click
+        Using form As New RadFOrdonnanceDetail
+            form.SelectedOrdonnanceId = SelectedOrdonnanceId
+            form.SelectedOrdonnanceLigneId = 0
+            form.SelectedPatient = Me.SelectedPatient
+            form.SelectedEpisode = SelectedEpisode
+            form.Ald = False
+            form.Allergie = Me.Allergie
+            form.ContreIndication = Me.ContreIndication
+            form.ShowDialog()
+        End Using
+        ChargementOrdonnanceDetail()
     End Sub
 End Class
