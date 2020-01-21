@@ -86,6 +86,7 @@ Public Class RadFOrdonnanceListeDetail
 
     Dim aldDao As New AldDao
     Dim ordonnanceDao As New OrdonnanceDao
+    Dim ordonnanceDetailDao As New OrdonnanceDetailDao
 
     Dim ordonnance As Ordonnance
 
@@ -116,6 +117,14 @@ Public Class RadFOrdonnanceListeDetail
         ordonnance = ordonnanceDao.getOrdonnaceById(SelectedOrdonnanceId)
         TxtCommentaire.Text = ordonnance.Commentaire
         NumRenouvellement.Value = ordonnance.Renouvellement
+        If ordonnance.DateValidation = Nothing Then
+            If userLog.TypeProfil <> FonctionDao.enumTypeFonction.MEDICAL.ToString Then
+                RadBtnValidation.Enabled = False
+            End If
+            RadBtnImprimer.Enabled = False
+        Else
+            RadBtnValidation.Hide()
+        End If
     End Sub
 
     Private Sub ChargementOrdonnanceDetail()
@@ -686,7 +695,19 @@ Public Class RadFOrdonnanceListeDetail
 
     'Basculer en Non ALD
     Private Sub BasculerEnNonALDToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles BasculerEnNonALDToolStripMenuItem.Click
-
+        If RadAldGridView.CurrentRow IsNot Nothing Then
+            Dim aRow As Integer = Me.RadAldGridView.Rows.IndexOf(Me.RadAldGridView.CurrentRow)
+            If aRow >= 0 Then
+                Dim ordonnanceLigneId As Integer = RadAldGridView.Rows(aRow).Cells("ordonnanceLigneId").Value
+                Me.Enabled = False
+                Cursor.Current = Cursors.WaitCursor
+                If ordonnanceDetailDao.ModificationOrdonnanceDetailALD(ordonnanceLigneId, False) = True Then
+                    ChargementOrdonnanceDetail()
+                End If
+                Cursor.Current = Cursors.Default
+                Me.Enabled = True
+            End If
+        End If
     End Sub
 
     'Création d'une ligne de commentaire en ALD
@@ -710,8 +731,76 @@ Public Class RadFOrdonnanceListeDetail
 
     'Bascule Délivrer / Ne pas délivrer
     Private Sub BasculerADélivrerANePasDélivrerToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles BasculerADélivrerANePasDélivrerToolStripMenuItem.Click
-
+        If RadAldGridView.CurrentRow IsNot Nothing Then
+            Dim aRow As Integer = Me.RadAldGridView.Rows.IndexOf(Me.RadAldGridView.CurrentRow)
+            If aRow >= 0 Then
+                Dim ordonnanceLigneId As Integer = RadAldGridView.Rows(aRow).Cells("ordonnanceLigneId").Value
+                Dim delivrance As String = RadAldGridView.Rows(aRow).Cells("delivrance").Value
+                Me.Enabled = False
+                Cursor.Current = Cursors.WaitCursor
+                Dim aDelivrer As Boolean
+                If delivrance = OrdonnanceDetailDao.EnumDelivrance.A_DELIVRER Then
+                    aDelivrer = False
+                Else
+                    aDelivrer = True
+                End If
+                If ordonnanceDetailDao.ModificationOrdonnanceDetailDelivrance(ordonnanceLigneId, aDelivrer) = True Then
+                    ChargementOrdonnanceDetail()
+                End If
+                Cursor.Current = Cursors.Default
+                Me.Enabled = True
+            End If
+        End If
     End Sub
 
 
+    '==========================================================================
+    '====== Option Grid Non ALD
+    '==========================================================================
+    Private Sub CréerUneLigneDeCommentaireToolStripMenuItem1_Click(sender As Object, e As EventArgs) Handles CréerUneLigneDeCommentaireToolStripMenuItem1.Click
+
+    End Sub
+
+    Private Sub SupprimerUneLigneDeCommentaireToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles SupprimerUneLigneDeCommentaireToolStripMenuItem.Click
+
+    End Sub
+
+    Private Sub BasculerADélivrerANePasDélivrerToolStripMenuItem1_Click(sender As Object, e As EventArgs) Handles BasculerADélivrerANePasDélivrerToolStripMenuItem1.Click
+        If RadNonAldGridView.CurrentRow IsNot Nothing Then
+            Dim aRow As Integer = Me.RadNonAldGridView.Rows.IndexOf(Me.RadNonAldGridView.CurrentRow)
+            If aRow >= 0 Then
+                Dim ordonnanceLigneId As Integer = RadNonAldGridView.Rows(aRow).Cells("ordonnanceLigneId").Value
+                Dim delivrance As String = RadNonAldGridView.Rows(aRow).Cells("delivrance").Value
+                Me.Enabled = False
+                Cursor.Current = Cursors.WaitCursor
+                Dim aDelivrer As Boolean
+                If delivrance = OrdonnanceDetailDao.EnumDelivrance.A_DELIVRER Then
+                    aDelivrer = False
+                Else
+                    aDelivrer = True
+                End If
+                If ordonnanceDetailDao.ModificationOrdonnanceDetailDelivrance(ordonnanceLigneId, aDelivrer) = True Then
+                    ChargementOrdonnanceDetail()
+                End If
+                Cursor.Current = Cursors.Default
+                Me.Enabled = True
+            End If
+        End If
+    End Sub
+
+    Private Sub BasculerEnALDToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles BasculerEnALDToolStripMenuItem.Click
+        If RadNonAldGridView.CurrentRow IsNot Nothing Then
+            Dim aRow As Integer = Me.RadNonAldGridView.Rows.IndexOf(Me.RadNonAldGridView.CurrentRow)
+            If aRow >= 0 Then
+                Dim ordonnanceLigneId As Integer = RadNonAldGridView.Rows(aRow).Cells("ordonnanceLigneId").Value
+                Me.Enabled = False
+                Cursor.Current = Cursors.WaitCursor
+                If ordonnanceDetailDao.ModificationOrdonnanceDetailALD(ordonnanceLigneId, True) = True Then
+                    ChargementOrdonnanceDetail()
+                End If
+                Cursor.Current = Cursors.Default
+                Me.Enabled = True
+            End If
+        End If
+    End Sub
 End Class

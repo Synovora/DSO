@@ -95,4 +95,65 @@ Public Class OrdonnanceDetailDao
 
         Return codeRetour
     End Function
+
+    Friend Function ModificationOrdonnanceDetailALD(OrdonnanceLigneId As Integer, ald As Boolean) As Boolean
+        Dim da As SqlDataAdapter = New SqlDataAdapter()
+        Dim codeRetour As Boolean = True
+        Dim con As SqlConnection
+        con = GetConnection()
+
+        Dim SQLstring As String = "UPDATE oasis.oa_patient_ordonnance_detail SET" &
+        " oa_traitement_ald = @ald" &
+        " WHERE oa_ordonnance_ligne_id = @ordonnanceId"
+
+        Dim cmd As New SqlCommand(SQLstring, con)
+
+        With cmd.Parameters
+            .AddWithValue("@ordonnanceId", OrdonnanceLigneId)
+            .AddWithValue("@ald", ald)
+        End With
+
+        Try
+            da.UpdateCommand = cmd
+            da.UpdateCommand.ExecuteNonQuery()
+        Catch ex As Exception
+            MessageBox.Show(ex.Message)
+            codeRetour = False
+        Finally
+            con.Close()
+        End Try
+
+        Return codeRetour
+    End Function
+
+    Friend Function ModificationOrdonnanceDetailDelivrance(OrdonnanceLigneId As Integer, delivrance As Boolean) As Boolean
+        Dim da As SqlDataAdapter = New SqlDataAdapter()
+        Dim codeRetour As Boolean = True
+        Dim con As SqlConnection
+        con = GetConnection()
+
+        Dim SQLstring As String = "UPDATE oasis.oa_patient_ordonnance_detail SET" &
+        " oa_traitement_a_delivrer = @delivrance" &
+        " WHERE oa_ordonnance_ligne_id = @ordonnanceId"
+
+        Dim cmd As New SqlCommand(SQLstring, con)
+
+        With cmd.Parameters
+            .AddWithValue("@ordonnanceId", OrdonnanceLigneId)
+            .AddWithValue("@delivrance", delivrance)
+        End With
+
+        Try
+            da.UpdateCommand = cmd
+            da.UpdateCommand.ExecuteNonQuery()
+        Catch ex As Exception
+            MessageBox.Show(ex.Message)
+            codeRetour = False
+        Finally
+            con.Close()
+        End Try
+
+        Return codeRetour
+    End Function
+
 End Class
