@@ -332,10 +332,10 @@
     <Compile Include="Form\Episode\RadFEpisodeParametreDetailEdit.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Form\Episode\RadFWkfDemandeAvisHisto.Designer.vb">
+    <Compile Include="Form\Workflow\RadFWkfDemandeAvisHisto.Designer.vb">
       <DependentUpon>RadFWkfDemandeAvisHisto.vb</DependentUpon>
     </Compile>
-    <Compile Include="Form\Episode\RadFWkfDemandeAvisHisto.vb">
+    <Compile Include="Form\Workflow\RadFWkfDemandeAvisHisto.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Form\General\RadFNotification.Designer.vb">
@@ -392,10 +392,10 @@
     <Compile Include="Form\tache\FrmFiltreTacheATraiter.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Form\Episode\RadFWkfDemandeAvis.Designer.vb">
+    <Compile Include="Form\Workflow\RadFWkfDemandeAvis.Designer.vb">
       <DependentUpon>RadFWkfDemandeAvis.vb</DependentUpon>
     </Compile>
-    <Compile Include="Form\Episode\RadFWkfDemandeAvis.vb">
+    <Compile Include="Form\Workflow\RadFWkfDemandeAvis.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Form\tache\RadFTacheModificationDemandeRendezVous.Designer.vb">
@@ -1080,7 +1080,7 @@
     <EmbeddedResource Include="Form\Episode\RadFEpisodeParametreDetailEdit.resx">
       <DependentUpon>RadFEpisodeParametreDetailEdit.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Form\Episode\RadFWkfDemandeAvisHisto.resx">
+    <EmbeddedResource Include="Form\Workflow\RadFWkfDemandeAvisHisto.resx">
       <DependentUpon>RadFWkfDemandeAvisHisto.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Form\General\RadFNotification.resx">
@@ -1110,7 +1110,7 @@
     <EmbeddedResource Include="Form\tache\FrmFiltreTacheATraiter.resx">
       <DependentUpon>FrmFiltreTacheATraiter.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Form\Episode\RadFWkfDemandeAvis.resx">
+    <EmbeddedResource Include="Form\Workflow\RadFWkfDemandeAvis.resx">
       <DependentUpon>RadFWkfDemandeAvis.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Form\tache\RadFTacheModificationDemandeRendezVous.resx">
