@@ -345,7 +345,7 @@ Public Class FTraitementHistoListe
             If dateFin = "31/12/2999" Then
                 TraitementDataGridView("PosologieDuree", iGrid).Value = ""
             Else
-                TraitementDataGridView("PosologieDuree", iGrid).Value = CalculDureeTraitement(dateDebut, dateFin)
+                TraitementDataGridView("PosologieDuree", iGrid).Value = CalculDureeTraitementString(dateDebut, dateFin)
             End If
             If TraitementDataGridView("PosologieDuree", iGrid).Value <> PosologieDureeComp Or premierPassage = True Then
                 TraitementDataGridView("posologieDuree", iGrid).Style.ForeColor = Color.Red

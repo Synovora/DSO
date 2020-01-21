@@ -235,7 +235,7 @@ Public Class FTraitementObsoletes
             If dateFin = "31/12/2999" Then
                 TraitementDataGridView("dureePosologie", iGrid).Value = ""
             Else
-                TraitementDataGridView("dureePosologie", iGrid).Value = CalculDureeTraitement(DateDebut, dateFin)
+                TraitementDataGridView("dureePosologie", iGrid).Value = CalculDureeTraitementString(DateDebut, dateFin)
             End If
 
             'Date arrêt
