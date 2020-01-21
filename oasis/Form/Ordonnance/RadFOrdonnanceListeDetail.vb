@@ -480,6 +480,7 @@ Public Class RadFOrdonnanceListeDetail
             LblPharmacienNom.Text = ror.Nom & " " & ror.Ville
         Else
             LblPharmacienNom.Text = "Pas de pharmacie référencée pour ce patient"
+            LblPharmacienNom.ForeColor = Color.Red
         End If
 
         'Vérification de l'existence d'ALD
