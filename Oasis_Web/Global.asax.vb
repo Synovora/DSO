@@ -10,5 +10,7 @@ Public Class WebApiApplication
         FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters)
         RouteConfig.RegisterRoutes(RouteTable.Routes)
         BundleConfig.RegisterBundles(BundleTable.Bundles)
+        ' inhibe le serializer xml (on sera toujours en json)
+        GlobalConfiguration.Configuration.Formatters.XmlFormatter.SupportedMediaTypes.Clear()
     End Sub
 End Class
