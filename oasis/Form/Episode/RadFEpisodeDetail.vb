@@ -668,6 +668,10 @@ Public Class RadFEpisodeDetail
             RadObsSpeParDataGridView.Rows(iGrid).Cells("observation").Value = Coalesce(acteParamedicalDataTable.Rows(i)("observation"), "")
             RadObsSpeParDataGridView.Rows(iGrid).Cells("observationInput").Value = Coalesce(acteParamedicalDataTable.Rows(i)("observation"), "")
             RadObsSpeParDataGridView.Rows(iGrid).Cells("drcCommentaire").Value = Coalesce(acteParamedicalDataTable.Rows(i)("oa_drc_dur_prob_epis"), "")
+            RadObsSpeParDataGridView.Rows(iGrid).Cells("categorieOasis").Value = Coalesce(acteParamedicalDataTable.Rows(i)("oa_drc_oasis_categorie"), 0)
+            If RadObsSpeParDataGridView.Rows(iGrid).Cells("categorieOasis").Value = DrcDao.EnumCategorieOasisCode.ProtocoleAigu Then
+                RadObsSpeParDataGridView.Rows(iGrid).Cells("drcDescription").Style.ForeColor = Color.Red
+            End If
         Next
 
         'Positionnement du grid sur la première occurrence
@@ -742,15 +746,23 @@ Public Class RadFEpisodeDetail
             Dim aRow As Integer = Me.RadObsSpeParDataGridView.Rows.IndexOf(Me.RadObsSpeParDataGridView.CurrentRow)
             If aRow >= 0 Then
                 Dim episodeActeParamedicalId As Integer = RadObsSpeParDataGridView.Rows(aRow).Cells("episodeActeParamedicalId").Value
+                Dim categorieOasis As Integer = RadObsSpeParDataGridView.Rows(aRow).Cells("categorieOasis").Value
                 Me.Enabled = False
                 Cursor.Current = Cursors.WaitCursor
-                Using form As New RadFEpisodeActeParamedicalDetailEdit
-                    form.EpisodeActeParamedicalId = episodeActeParamedicalId
-                    form.ShowDialog()
-                    If form.CodeRetour = True Then
-                        ChargementEpisodeActesParamedicauxParamedical()
-                    End If
-                End Using
+                Select Case categorieOasis
+                    Case DrcDao.EnumCategorieOasisCode.ProtocoleAigu
+                        'TODO Appel saisie protocole aigue
+
+                    Case DrcDao.EnumCategorieOasisCode.ActeParamedical,
+                         DrcDao.EnumCategorieOasisCode.Prevention
+                        Using form As New RadFEpisodeActeParamedicalDetailEdit
+                            form.EpisodeActeParamedicalId = episodeActeParamedicalId
+                            form.ShowDialog()
+                            If form.CodeRetour = True Then
+                                ChargementEpisodeActesParamedicauxParamedical()
+                            End If
+                        End Using
+                End Select
                 Me.Enabled = True
             End If
         End If
@@ -772,7 +784,32 @@ Public Class RadFEpisodeDetail
     'Ajout protocole aigue (pour les épisodes de type "Pathologie aiguë")
     Private Sub AjoutProtocoleAiguToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles AjoutProtocoleAiguToolStripMenuItem.Click
         'TODO
-
+        Dim SelectedDrcId As Integer
+        Cursor.Current = Cursors.WaitCursor
+        Using vFDrcSelecteur As New RadFDRCSelecteur
+            vFDrcSelecteur.SelectedPatient = Me.SelectedPatient
+            vFDrcSelecteur.CategorieOasis = DrcDao.EnumCategorieOasisCode.ProtocoleAigu
+            vFDrcSelecteur.ShowDialog()
+            SelectedDrcId = vFDrcSelecteur.SelectedDrcId
+            'Si une DORC a été sélectionnée, on appelle le Formulaire de création
+            If SelectedDrcId <> 0 Then
+                Cursor.Current = Cursors.WaitCursor
+                'Création observation spécifique
+                Dim episodeActeParamedical As New EpisodeActeParamedical
+                episodeActeParamedical.DrcId = SelectedDrcId
+                episodeActeParamedical.EpisodeId = SelectedEpisodeId
+                episodeActeParamedical.PatientId = SelectedPatient.patientId
+                episodeActeParamedical.TypeObservation = FonctionDao.enumTypeFonction.PARAMEDICAL.ToString
+                episodeActeParamedical.Observation = ""
+                episodeActeParamedical.UserId = userLog.UtilisateurId
+                episodeActeParamedical.Inactif = False
+                If episodeActeParamedicalDao.CreateEpisodeActeParamedical(episodeActeParamedical) = True Then
+                    ChargementEpisodeActesParamedicauxParamedical()
+                Else
+                    MessageBox.Show("Le protocole aigu sélectionné existe déjà pour cet épisode !")
+                End If
+            End If
+        End Using
     End Sub
 
     '=========================================================
@@ -800,6 +837,10 @@ Public Class RadFEpisodeDetail
             RadObsSpeMedDataGridView.Rows(iGrid).Cells("observation").Value = Coalesce(acteParamedicalDataTable.Rows(i)("observation"), "")
             RadObsSpeMedDataGridView.Rows(iGrid).Cells("observationInput").Value = Coalesce(acteParamedicalDataTable.Rows(i)("observation"), "")
             RadObsSpeMedDataGridView.Rows(iGrid).Cells("drcCommentaire").Value = Coalesce(acteParamedicalDataTable.Rows(i)("oa_drc_dur_prob_epis"), "")
+            RadObsSpeMedDataGridView.Rows(iGrid).Cells("categorieOasis").Value = Coalesce(acteParamedicalDataTable.Rows(i)("oa_drc_oasis_categorie"), 0)
+            If RadObsSpeMedDataGridView.Rows(iGrid).Cells("categorieOasis").Value = DrcDao.EnumCategorieOasisCode.ProtocoleAigu Then
+                RadObsSpeMedDataGridView.Rows(iGrid).Cells("drcDescription").Style.ForeColor = Color.Red
+            End If
         Next
 
         'Positionnement du grid sur la première occurrence
