@@ -59,6 +59,10 @@ Partial Class RadFDrcDetailEdit
         Me.RadGroupBox1 = New Telerik.WinControls.UI.RadGroupBox()
         Me.RadGroupBox2 = New Telerik.WinControls.UI.RadGroupBox()
         Me.RadBtnProtocole = New Telerik.WinControls.UI.RadButton()
+        Me.TxtCommentaire = New System.Windows.Forms.TextBox()
+        Me.TxtReponseCommentee = New System.Windows.Forms.TextBox()
+        Me.RadGbxReponse = New Telerik.WinControls.UI.RadGroupBox()
+        Me.Label1 = New System.Windows.Forms.Label()
         CType(Me.NumAgeMax, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.NumAgeMin, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.RadBtnAnnuler, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -71,6 +75,8 @@ Partial Class RadFDrcDetailEdit
         CType(Me.RadGroupBox2, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.RadGroupBox2.SuspendLayout()
         CType(Me.RadBtnProtocole, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.RadGbxReponse, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.RadGbxReponse.SuspendLayout()
         CType(Me, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
@@ -240,7 +246,7 @@ Partial Class RadFDrcDetailEdit
         Me.TxtLibelle.Location = New System.Drawing.Point(144, 50)
         Me.TxtLibelle.MaxLength = 150
         Me.TxtLibelle.Name = "TxtLibelle"
-        Me.TxtLibelle.Size = New System.Drawing.Size(573, 20)
+        Me.TxtLibelle.Size = New System.Drawing.Size(675, 20)
         Me.TxtLibelle.TabIndex = 132
         '
         'LblDRCId
@@ -255,7 +261,7 @@ Partial Class RadFDrcDetailEdit
         'LblUtilisateurModification
         '
         Me.LblUtilisateurModification.AutoSize = True
-        Me.LblUtilisateurModification.Location = New System.Drawing.Point(605, 358)
+        Me.LblUtilisateurModification.Location = New System.Drawing.Point(605, 451)
         Me.LblUtilisateurModification.Name = "LblUtilisateurModification"
         Me.LblUtilisateurModification.Size = New System.Drawing.Size(101, 13)
         Me.LblUtilisateurModification.TabIndex = 146
@@ -264,7 +270,7 @@ Partial Class RadFDrcDetailEdit
         'LblLabelUtilisateurModification
         '
         Me.LblLabelUtilisateurModification.AutoSize = True
-        Me.LblLabelUtilisateurModification.Location = New System.Drawing.Point(577, 358)
+        Me.LblLabelUtilisateurModification.Location = New System.Drawing.Point(577, 451)
         Me.LblLabelUtilisateurModification.Name = "LblLabelUtilisateurModification"
         Me.LblLabelUtilisateurModification.Size = New System.Drawing.Size(24, 13)
         Me.LblLabelUtilisateurModification.TabIndex = 145
@@ -273,7 +279,7 @@ Partial Class RadFDrcDetailEdit
         'LblDateModification
         '
         Me.LblDateModification.AutoSize = True
-        Me.LblDateModification.Location = New System.Drawing.Point(495, 358)
+        Me.LblDateModification.Location = New System.Drawing.Point(495, 451)
         Me.LblDateModification.Name = "LblDateModification"
         Me.LblDateModification.Size = New System.Drawing.Size(63, 13)
         Me.LblDateModification.TabIndex = 144
@@ -282,7 +288,7 @@ Partial Class RadFDrcDetailEdit
         'LblLabelDateModification
         '
         Me.LblLabelDateModification.AutoSize = True
-        Me.LblLabelDateModification.Location = New System.Drawing.Point(431, 358)
+        Me.LblLabelDateModification.Location = New System.Drawing.Point(431, 451)
         Me.LblLabelDateModification.Name = "LblLabelDateModification"
         Me.LblLabelDateModification.Size = New System.Drawing.Size(65, 13)
         Me.LblLabelDateModification.TabIndex = 142
@@ -291,7 +297,7 @@ Partial Class RadFDrcDetailEdit
         'LblUtilisateurCreation
         '
         Me.LblUtilisateurCreation.AutoSize = True
-        Me.LblUtilisateurCreation.Location = New System.Drawing.Point(167, 358)
+        Me.LblUtilisateurCreation.Location = New System.Drawing.Point(167, 451)
         Me.LblUtilisateurCreation.Name = "LblUtilisateurCreation"
         Me.LblUtilisateurCreation.Size = New System.Drawing.Size(98, 13)
         Me.LblUtilisateurCreation.TabIndex = 141
@@ -300,7 +306,7 @@ Partial Class RadFDrcDetailEdit
         'LblLabelUtilisateurCreation
         '
         Me.LblLabelUtilisateurCreation.AutoSize = True
-        Me.LblLabelUtilisateurCreation.Location = New System.Drawing.Point(138, 358)
+        Me.LblLabelUtilisateurCreation.Location = New System.Drawing.Point(138, 451)
         Me.LblLabelUtilisateurCreation.Name = "LblLabelUtilisateurCreation"
         Me.LblLabelUtilisateurCreation.Size = New System.Drawing.Size(24, 13)
         Me.LblLabelUtilisateurCreation.TabIndex = 140
@@ -309,7 +315,7 @@ Partial Class RadFDrcDetailEdit
         'LblDateCreation
         '
         Me.LblDateCreation.AutoSize = True
-        Me.LblDateCreation.Location = New System.Drawing.Point(64, 358)
+        Me.LblDateCreation.Location = New System.Drawing.Point(64, 451)
         Me.LblDateCreation.Name = "LblDateCreation"
         Me.LblDateCreation.Size = New System.Drawing.Size(63, 13)
         Me.LblDateCreation.TabIndex = 139
@@ -318,7 +324,7 @@ Partial Class RadFDrcDetailEdit
         'LblLabelDateCreation
         '
         Me.LblLabelDateCreation.AutoSize = True
-        Me.LblLabelDateCreation.Location = New System.Drawing.Point(12, 358)
+        Me.LblLabelDateCreation.Location = New System.Drawing.Point(12, 451)
         Me.LblLabelDateCreation.Name = "LblLabelDateCreation"
         Me.LblLabelDateCreation.Size = New System.Drawing.Size(48, 13)
         Me.LblLabelDateCreation.TabIndex = 138
@@ -326,7 +332,7 @@ Partial Class RadFDrcDetailEdit
         '
         'RadBtnAnnuler
         '
-        Me.RadBtnAnnuler.Location = New System.Drawing.Point(10, 391)
+        Me.RadBtnAnnuler.Location = New System.Drawing.Point(10, 484)
         Me.RadBtnAnnuler.Name = "RadBtnAnnuler"
         Me.RadBtnAnnuler.Size = New System.Drawing.Size(110, 24)
         Me.RadBtnAnnuler.TabIndex = 164
@@ -334,7 +340,7 @@ Partial Class RadFDrcDetailEdit
         '
         'RadBtnTransformer
         '
-        Me.RadBtnTransformer.Location = New System.Drawing.Point(126, 391)
+        Me.RadBtnTransformer.Location = New System.Drawing.Point(126, 484)
         Me.RadBtnTransformer.Name = "RadBtnTransformer"
         Me.RadBtnTransformer.Size = New System.Drawing.Size(149, 24)
         Me.RadBtnTransformer.TabIndex = 165
@@ -342,7 +348,7 @@ Partial Class RadFDrcDetailEdit
         '
         'RadBtnValidation
         '
-        Me.RadBtnValidation.Location = New System.Drawing.Point(608, 391)
+        Me.RadBtnValidation.Location = New System.Drawing.Point(608, 484)
         Me.RadBtnValidation.Name = "RadBtnValidation"
         Me.RadBtnValidation.Size = New System.Drawing.Size(110, 24)
         Me.RadBtnValidation.TabIndex = 166
@@ -351,7 +357,7 @@ Partial Class RadFDrcDetailEdit
         'RadBtnAbandonner
         '
         Me.RadBtnAbandonner.DialogResult = System.Windows.Forms.DialogResult.Cancel
-        Me.RadBtnAbandonner.Location = New System.Drawing.Point(724, 391)
+        Me.RadBtnAbandonner.Location = New System.Drawing.Point(724, 484)
         Me.RadBtnAbandonner.Name = "RadBtnAbandonner"
         Me.RadBtnAbandonner.Size = New System.Drawing.Size(110, 24)
         Me.RadBtnAbandonner.TabIndex = 167
@@ -359,7 +365,7 @@ Partial Class RadFDrcDetailEdit
         '
         'RadBtnParametre
         '
-        Me.RadBtnParametre.Location = New System.Drawing.Point(281, 391)
+        Me.RadBtnParametre.Location = New System.Drawing.Point(281, 484)
         Me.RadBtnParametre.Name = "RadBtnParametre"
         Me.RadBtnParametre.Size = New System.Drawing.Size(110, 24)
         Me.RadBtnParametre.TabIndex = 168
@@ -369,6 +375,8 @@ Partial Class RadFDrcDetailEdit
         '
         Me.RadGroupBox1.AccessibleRole = System.Windows.Forms.AccessibleRole.Grouping
         Me.RadGroupBox1.BackColor = System.Drawing.SystemColors.GradientInactiveCaption
+        Me.RadGroupBox1.Controls.Add(Me.Label1)
+        Me.RadGroupBox1.Controls.Add(Me.TxtCommentaire)
         Me.RadGroupBox1.Controls.Add(Me.LblDRCId)
         Me.RadGroupBox1.Controls.Add(Me.TxtLibelle)
         Me.RadGroupBox1.Controls.Add(Me.Label2)
@@ -379,7 +387,7 @@ Partial Class RadFDrcDetailEdit
         Me.RadGroupBox1.HeaderText = "DORC"
         Me.RadGroupBox1.Location = New System.Drawing.Point(10, 12)
         Me.RadGroupBox1.Name = "RadGroupBox1"
-        Me.RadGroupBox1.Size = New System.Drawing.Size(824, 110)
+        Me.RadGroupBox1.Size = New System.Drawing.Size(824, 213)
         Me.RadGroupBox1.TabIndex = 169
         Me.RadGroupBox1.Text = "DORC"
         '
@@ -404,7 +412,7 @@ Partial Class RadFDrcDetailEdit
         Me.RadGroupBox2.Controls.Add(Me.Label8)
         Me.RadGroupBox2.GroupBoxStyle = Telerik.WinControls.UI.RadGroupBoxStyle.Office
         Me.RadGroupBox2.HeaderText = "Caractéristiques"
-        Me.RadGroupBox2.Location = New System.Drawing.Point(10, 128)
+        Me.RadGroupBox2.Location = New System.Drawing.Point(10, 231)
         Me.RadGroupBox2.Name = "RadGroupBox2"
         Me.RadGroupBox2.Size = New System.Drawing.Size(824, 209)
         Me.RadGroupBox2.TabIndex = 170
@@ -412,18 +420,57 @@ Partial Class RadFDrcDetailEdit
         '
         'RadBtnProtocole
         '
-        Me.RadBtnProtocole.Location = New System.Drawing.Point(397, 391)
+        Me.RadBtnProtocole.Location = New System.Drawing.Point(397, 484)
         Me.RadBtnProtocole.Name = "RadBtnProtocole"
         Me.RadBtnProtocole.Size = New System.Drawing.Size(146, 24)
         Me.RadBtnProtocole.TabIndex = 171
         Me.RadBtnProtocole.Text = "Associer Acte Paramedical"
+        '
+        'TxtCommentaire
+        '
+        Me.TxtCommentaire.Location = New System.Drawing.Point(144, 102)
+        Me.TxtCommentaire.MaxLength = 5000
+        Me.TxtCommentaire.Multiline = True
+        Me.TxtCommentaire.Name = "TxtCommentaire"
+        Me.TxtCommentaire.Size = New System.Drawing.Size(675, 106)
+        Me.TxtCommentaire.TabIndex = 151
+        '
+        'TxtReponseCommentee
+        '
+        Me.TxtReponseCommentee.Location = New System.Drawing.Point(5, 21)
+        Me.TxtReponseCommentee.Multiline = True
+        Me.TxtReponseCommentee.Name = "TxtReponseCommentee"
+        Me.TxtReponseCommentee.Size = New System.Drawing.Size(512, 402)
+        Me.TxtReponseCommentee.TabIndex = 172
+        '
+        'RadGbxReponse
+        '
+        Me.RadGbxReponse.AccessibleRole = System.Windows.Forms.AccessibleRole.Grouping
+        Me.RadGbxReponse.Controls.Add(Me.TxtReponseCommentee)
+        Me.RadGbxReponse.GroupBoxStyle = Telerik.WinControls.UI.RadGroupBoxStyle.Office
+        Me.RadGbxReponse.HeaderText = "Réponse commentée"
+        Me.RadGbxReponse.Location = New System.Drawing.Point(880, 12)
+        Me.RadGbxReponse.Name = "RadGbxReponse"
+        Me.RadGbxReponse.Size = New System.Drawing.Size(522, 428)
+        Me.RadGbxReponse.TabIndex = 173
+        Me.RadGbxReponse.Text = "Réponse commentée"
+        '
+        'Label1
+        '
+        Me.Label1.AutoSize = True
+        Me.Label1.Location = New System.Drawing.Point(9, 114)
+        Me.Label1.Name = "Label1"
+        Me.Label1.Size = New System.Drawing.Size(115, 13)
+        Me.Label1.TabIndex = 152
+        Me.Label1.Text = "Commentaire associé"
         '
         'RadFDrcDetailEdit
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.CancelButton = Me.RadBtnAbandonner
-        Me.ClientSize = New System.Drawing.Size(846, 430)
+        Me.ClientSize = New System.Drawing.Size(1409, 516)
+        Me.Controls.Add(Me.RadGbxReponse)
         Me.Controls.Add(Me.RadBtnProtocole)
         Me.Controls.Add(Me.RadGroupBox2)
         Me.Controls.Add(Me.RadGroupBox1)
@@ -463,6 +510,9 @@ Partial Class RadFDrcDetailEdit
         Me.RadGroupBox2.ResumeLayout(False)
         Me.RadGroupBox2.PerformLayout()
         CType(Me.RadBtnProtocole, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.RadGbxReponse, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.RadGbxReponse.ResumeLayout(False)
+        Me.RadGbxReponse.PerformLayout()
         CType(Me, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
         Me.PerformLayout()
@@ -506,5 +556,9 @@ Partial Class RadFDrcDetailEdit
     Friend WithEvents RadGroupBox1 As Telerik.WinControls.UI.RadGroupBox
     Friend WithEvents RadGroupBox2 As Telerik.WinControls.UI.RadGroupBox
     Friend WithEvents RadBtnProtocole As Telerik.WinControls.UI.RadButton
+    Friend WithEvents TxtCommentaire As TextBox
+    Friend WithEvents TxtReponseCommentee As TextBox
+    Friend WithEvents RadGbxReponse As Telerik.WinControls.UI.RadGroupBox
+    Friend WithEvents Label1 As Label
 End Class
 

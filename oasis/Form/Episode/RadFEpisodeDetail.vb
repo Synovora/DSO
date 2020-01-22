@@ -163,6 +163,10 @@ Public Class RadFEpisodeDetail
             ChargementParametres()
         End If
 
+        If episode.TypeActivite <> EpisodeDao.EnumTypeActiviteEpisodeCode.PATHOLOGIE_AIGUE Then
+            AjoutProtocoleAiguToolStripMenuItem.Visible = False
+        End If
+
         ChargementObservationLibre()
 
 
@@ -663,6 +667,7 @@ Public Class RadFEpisodeDetail
             RadObsSpeParDataGridView.Rows(iGrid).Cells("drcDescription").Value = Coalesce(acteParamedicalDataTable.Rows(i)("oa_drc_libelle"), "")
             RadObsSpeParDataGridView.Rows(iGrid).Cells("observation").Value = Coalesce(acteParamedicalDataTable.Rows(i)("observation"), "")
             RadObsSpeParDataGridView.Rows(iGrid).Cells("observationInput").Value = Coalesce(acteParamedicalDataTable.Rows(i)("observation"), "")
+            RadObsSpeParDataGridView.Rows(iGrid).Cells("drcCommentaire").Value = Coalesce(acteParamedicalDataTable.Rows(i)("oa_drc_dur_prob_epis"), "")
         Next
 
         'Positionnement du grid sur la première occurrence
@@ -757,6 +762,19 @@ Public Class RadFEpisodeDetail
         End If
     End Sub
 
+    Private Sub MasterTemplate_ToolTipTextNeeded(sender As Object, e As ToolTipTextNeededEventArgs) Handles RadObsSpeParDataGridView.ToolTipTextNeeded
+        Dim hoveredCell As GridDataCellElement = TryCast(sender, GridDataCellElement)
+        If hoveredCell IsNot Nothing AndAlso hoveredCell.ColumnInfo.Name = "drcDescription" Then
+            e.ToolTipText = hoveredCell.RowInfo.Cells("drcCommentaire").Value
+        End If
+    End Sub
+
+    'Ajout protocole aigue (pour les épisodes de type "Pathologie aiguë")
+    Private Sub AjoutProtocoleAiguToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles AjoutProtocoleAiguToolStripMenuItem.Click
+        'TODO
+
+    End Sub
+
     '=========================================================
     '=== Observations spécifiques (médical)
     '=========================================================
@@ -781,6 +799,7 @@ Public Class RadFEpisodeDetail
             RadObsSpeMedDataGridView.Rows(iGrid).Cells("drcDescription").Value = Coalesce(acteParamedicalDataTable.Rows(i)("oa_drc_libelle"), "")
             RadObsSpeMedDataGridView.Rows(iGrid).Cells("observation").Value = Coalesce(acteParamedicalDataTable.Rows(i)("observation"), "")
             RadObsSpeMedDataGridView.Rows(iGrid).Cells("observationInput").Value = Coalesce(acteParamedicalDataTable.Rows(i)("observation"), "")
+            RadObsSpeMedDataGridView.Rows(iGrid).Cells("drcCommentaire").Value = Coalesce(acteParamedicalDataTable.Rows(i)("oa_drc_dur_prob_epis"), "")
         Next
 
         'Positionnement du grid sur la première occurrence
@@ -826,6 +845,13 @@ Public Class RadFEpisodeDetail
                 End Using
                 Me.Enabled = True
             End If
+        End If
+    End Sub
+
+    Private Sub MasterTemplate_ToolTipTextNeeded_1(sender As Object, e As ToolTipTextNeededEventArgs) Handles RadObsSpeMedDataGridView.ToolTipTextNeeded
+        Dim hoveredCell As GridDataCellElement = TryCast(sender, GridDataCellElement)
+        If hoveredCell IsNot Nothing AndAlso hoveredCell.ColumnInfo.Name = "drcDescription" Then
+            e.ToolTipText = hoveredCell.RowInfo.Cells("drcCommentaire").Value
         End If
     End Sub
 

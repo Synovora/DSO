@@ -39,6 +39,8 @@ Public Class RadFDrcDetailEdit
 
     Dim drcDao As New DrcDao
 
+    Dim drc As Drc
+
     Dim EditMode As Integer
     Dim utilisateurHisto As Utilisateur = New Utilisateur()
     Dim categorieMajeureListe As Dictionary(Of Integer, String) = Table_categorie_majeure.GetCategorieMajeureListe()
@@ -50,7 +52,10 @@ Public Class RadFDrcDetailEdit
     Dim conxn As New SqlConnection(getConnectionString())
 
     Private Sub RadFDrcDetailEdit_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        afficheTitleForm(Me, "Gestion des DRC")
         CodeRetour = False
+
+        Me.Width = 854
 
         CbxCategorieOasis.Items.Add(DrcDao.EnumCategorieOasisItem.Contexte)
         CbxCategorieOasis.Items.Add(DrcDao.EnumCategorieOasisItem.Strategie)
@@ -59,6 +64,7 @@ Public Class RadFDrcDetailEdit
         CbxCategorieOasis.Items.Add(DrcDao.EnumCategorieOasisItem.ActeParamedical)
         CbxCategorieOasis.Items.Add(DrcDao.EnumCategorieOasisItem.GroupeParametres)
         CbxCategorieOasis.Items.Add(DrcDao.EnumCategorieOasisItem.ProtocoleCollaboratif)
+        CbxCategorieOasis.Items.Add(DrcDao.EnumCategorieOasisItem.ProtocoleAigu)
 
         CbxSexe.Items.Add(DrcDao.EnumGenre.Homme)
         CbxSexe.Items.Add(DrcDao.EnumGenre.Femme)
@@ -80,8 +86,10 @@ Public Class RadFDrcDetailEdit
         If SelectedDRCId <> 0 Then
             'Modification
             EditMode = EnumEditMode.Modification
+
             ChargementDRCxistante()
-            'En modification d'une ORC (uniquement), on ne peut pas modifier la catégorie majeure et la catégorie DRC car elles sont significatives pour la clé
+
+            'En modification d'une DORC (uniquement), on ne peut pas modifier la catégorie majeure et la catégorie DRC car elles sont significatives pour la clé
             If SelectedDRCId > 9999 Then
                 CbxCategorieMajeure.Enabled = False
                 CbxCategorieOasis.Enabled = False
@@ -89,9 +97,26 @@ Public Class RadFDrcDetailEdit
         Else
             'Création
             EditMode = EnumEditMode.Creation
+
+            drc = New Drc
+            drc.DrcId = 0
+            drc.DrcLibelle = ""
+            drc.CategorieMajeure = 0
+            drc.CategorieOasisId = 0
+            drc.CodeCim = ""
+            drc.CodeCisp = ""
+            drc.Commentaire = ""
+            drc.ReponseCommentee = ""
+            drc.DrcSexe = 0
+            drc.DrcAgeMax = 0
+            drc.DrcAgeMin = 0
+            drc.DateCreation = Date.Now
+            drc.UserCreation = userLog.UtilisateurId
+
             TxtId.Hide()
             LblDRCId.Hide()
             TxtLibelle.Text = ""
+            TxtCommentaire.Text = ""
             'Inhiber boutons d'action de mise à jour
             LblDateCreation.Hide()
             LblLabelDateCreation.Hide()
@@ -101,139 +126,100 @@ Public Class RadFDrcDetailEdit
             LblLabelDateModification.Hide()
             LblUtilisateurModification.Hide()
             LblLabelUtilisateurModification.Hide()
+
             RadBtnAnnuler.Hide()
             RadBtnTransformer.Hide()
         End If
     End Sub
 
     Private Sub ChargementDRCxistante()
-        Dim DRCDateReader As SqlDataReader
-        Dim conxn As New SqlConnection(getConnectionString())
-        Dim SQLString As String = "select * from oasis.oa_drc where oa_drc_id = " & SelectedDRCId & ";"
-        Dim myCommand As New SqlCommand(SQLString, conxn)
-
         Dim dateCreation, dateModification As Date
+        drc = drcDao.getDrcById(SelectedDRCId)
+        TxtId.Text = drc.DrcId
+        'Description
+        TxtLibelle.Text = drc.DrcLibelle
 
-        conxn.Open()
-        DRCDateReader = myCommand.ExecuteReader()
-        If DRCDateReader.Read() Then
-            TxtId.Text = DRCDateReader("oa_drc_id")
-            'Description
-            If DRCDateReader("oa_drc_libelle") Is DBNull.Value Then
-                TxtLibelle.Text = ""
-            Else
-                TxtLibelle.Text = DRCDateReader("oa_drc_libelle")
-            End If
+        'Le bouton Transformer ne doit être accessible que pour les DRC non Oasis
+        If drc.DrcId > 9999 Then
+            RadBtnTransformer.Hide()
+        End If
+        TxtCommentaire.Text = drc.Commentaire
+        TxtReponseCommentee.Text = drc.ReponseCommentee
 
-            'Le bouton Transformer ne doit être accessible que pour les DRC
-            If CInt(DRCDateReader("oa_drc_id")) > 9999 Then
-                RadBtnTransformer.Hide()
-            End If
-
-            'Date et utilisateur création
-            LblDateCreation.Text = ""
-            If DRCDateReader("oa_drc_date_creation") IsNot DBNull.Value Then
-                dateCreation = DRCDateReader("oa_drc_date_creation")
-                LblDateCreation.Text = dateCreation.ToString("dd.MM.yyyy")
-            Else
-                LblDateCreation.Hide()
-                LblLabelDateCreation.Hide()
-            End If
-
-            LblUtilisateurCreation.Text = ""
-            If DRCDateReader("oa_drc_utilisateur_creation") IsNot DBNull.Value Then
-                If DRCDateReader("oa_drc_utilisateur_creation") <> 0 Then
-                    SetUtilisateur(utilisateurHisto, DRCDateReader("oa_drc_utilisateur_creation"))
-                    LblUtilisateurCreation.Text = Me.utilisateurHisto.UtilisateurPrenom & " " & Me.utilisateurHisto.UtilisateurNom
-                End If
-            Else
-                LblUtilisateurCreation.Hide()
-                LblLabelUtilisateurCreation.Hide()
-            End If
-
-            'Date et utilisateur modification
-            LblDateModification.Text = ""
-            If DRCDateReader("oa_drc_date_modification") IsNot DBNull.Value Then
-                dateModification = DRCDateReader("oa_drc_date_modification")
-                LblDateModification.Text = dateModification.ToString("dd.MM.yyyy")
-            Else
-                LblDateModification.Hide()
-                LblLabelDateModification.Hide()
-            End If
-
-            LblUtilisateurModification.Text = ""
-            If DRCDateReader("oa_drc_utilisateur_Modification") IsNot DBNull.Value Then
-                If DRCDateReader("oa_drc_utilisateur_Modification") <> 0 Then
-                    SetUtilisateur(utilisateurHisto, DRCDateReader("oa_drc_utilisateur_Modification"))
-                    LblUtilisateurModification.Text = Me.utilisateurHisto.UtilisateurPrenom & " " & Me.utilisateurHisto.UtilisateurNom
-                End If
-            Else
-                LblUtilisateurModification.Hide()
-                LblLabelUtilisateurModification.Hide()
-            End If
-
-            'Catégorie Oasis
-            If DRCDateReader("oa_drc_oasis_categorie") IsNot DBNull.Value Then
-                Dim categorieOasis As Integer = DRCDateReader("oa_drc_oasis_categorie")
-                CbxCategorieOasis.SelectedItem = drcDao.GetItemCategorieOasisByCode(categorieOasis)
-            End If
-
-            'Catégorie majeure
-            If DRCDateReader("oa_drc_categorie_majeure_id") IsNot DBNull.Value Then
-                Dim categorieMajeureId As Integer = DRCDateReader("oa_drc_categorie_majeure_id")
-                Dim categorieMajeuerDescription As String = Table_categorie_majeure.GetCategorieMajeureDescription(categorieMajeureId)
-                CbxCategorieMajeure.SelectedItem = categorieMajeuerDescription
-            Else
-                CbxCategorieMajeure.SelectedItem = ""
-            End If
-
-
-            'Age min et max
-            NumAgeMin.Value = 0
-            If DRCDateReader("oa_drc_age_min") IsNot DBNull.Value Then
-                NumAgeMin.Value = DRCDateReader("oa_drc_age_min")
-            End If
-
-            NumAgeMax.Value = 0
-            If DRCDateReader("oa_drc_age_max") IsNot DBNull.Value Then
-                NumAgeMax.Value = DRCDateReader("oa_drc_age_max")
-            End If
-
-            'Sexe
-            If DRCDateReader("oa_drc_sexe") IsNot DBNull.Value Then
-                Dim sexe As Integer = DRCDateReader("oa_drc_sexe")
-                CbxSexe.SelectedItem = drcDao.GetItemGenreByCode(sexe)
-            End If
-
-            'Code CIM10
-            If DRCDateReader("oa_drc_code_cim_defaut") IsNot DBNull.Value Then
-                TxtCIM10.Text = DRCDateReader("oa_drc_code_cim_defaut")
-            End If
-
-            'Code CISP
-            If DRCDateReader("oa_drc_code_cisp_defaut") IsNot DBNull.Value Then
-                TxtCISP.Text = DRCDateReader("oa_drc_code_cisp_defaut")
-            End If
-
-            'Code ALD
-            If DRCDateReader("oa_drc_ald_code") IsNot DBNull.Value Then
-                TxtAld.Text = DRCDateReader("oa_drc_ald_code")
-                If TxtAld.Text <> "" Then
-                    Dim AldDescription As String
-                    AldDescription = Table_ald.GetAldDescription(TxtAld.Text)
-                    If AldDescription <> "" Then
-                        LblALDDescription.Text = AldDescription
-                    Else
-                        LblALDDescription.Text = ""
-                    End If
-                End If
-            End If
-            SelectedAldId = Coalesce(DRCDateReader("oa_drc_ald_id"), 0)
+        'Date et utilisateur création
+        LblDateCreation.Text = ""
+        If drc.DateCreation <> Nothing Then
+            dateCreation = drc.DateCreation
+            LblDateCreation.Text = dateCreation.ToString("dd.MM.yyyy")
+        Else
+            LblDateCreation.Hide()
+            LblLabelDateCreation.Hide()
+        End If
+        LblUtilisateurCreation.Text = ""
+        If drc.UserCreation <> 0 Then
+            SetUtilisateur(utilisateurHisto, drc.UserCreation)
+            LblUtilisateurCreation.Text = Me.utilisateurHisto.UtilisateurPrenom & " " & Me.utilisateurHisto.UtilisateurNom
+        Else
+            LblUtilisateurCreation.Hide()
+            LblLabelUtilisateurCreation.Hide()
         End If
 
-        'Libération des ressources d'accès aux données
-        conxn.Close()
-        myCommand.Dispose()
+        'Date et utilisateur modification
+        LblDateModification.Text = ""
+        If drc.DateModification <> Nothing Then
+            dateModification = drc.DateModification
+            LblDateModification.Text = dateModification.ToString("dd.MM.yyyy")
+        Else
+            LblDateModification.Hide()
+            LblLabelDateModification.Hide()
+        End If
+        LblUtilisateurModification.Text = ""
+        If drc.UserModification <> 0 Then
+            SetUtilisateur(utilisateurHisto, drc.UserModification)
+            LblUtilisateurModification.Text = Me.utilisateurHisto.UtilisateurPrenom & " " & Me.utilisateurHisto.UtilisateurNom
+        Else
+            LblUtilisateurModification.Hide()
+            LblLabelUtilisateurModification.Hide()
+        End If
+
+        'Catégorie Oasis
+        Dim categorieOasis As Integer = drc.CategorieOasisId
+        CbxCategorieOasis.SelectedItem = drcDao.GetItemCategorieOasisByCode(categorieOasis)
+
+        'Catégorie majeure
+        If drc.CategorieMajeure <> 0 Then
+            Dim categorieMajeureId As Integer = drc.CategorieMajeure
+            Dim categorieMajeuerDescription As String = Table_categorie_majeure.GetCategorieMajeureDescription(categorieMajeureId)
+            CbxCategorieMajeure.SelectedItem = categorieMajeuerDescription
+        Else
+            CbxCategorieMajeure.SelectedItem = ""
+        End If
+
+        'Age min et max
+        NumAgeMin.Value = drc.DrcAgeMin
+        NumAgeMax.Value = drc.DrcAgeMax
+        'Sexe
+        Dim sexe As Integer = drc.DrcSexe
+        CbxSexe.SelectedItem = drcDao.GetItemGenreByCode(sexe)
+
+        'Code CIM10
+        TxtCIM10.Text = drc.CodeCim
+        'Code CISP
+        TxtCISP.Text = drc.CodeCisp
+
+        'ALD
+        TxtAld.Text = drc.AldCode
+        If TxtAld.Text <> "" Then
+            Dim AldDescription As String
+            AldDescription = Table_ald.GetAldDescription(TxtAld.Text)
+            If AldDescription <> "" Then
+                LblALDDescription.Text = AldDescription
+            Else
+                LblALDDescription.Text = ""
+            End If
+        End If
+        SelectedAldId = drc.AldId
+
     End Sub
 
     'Modification d'une DRC/ORC en base de données
@@ -244,10 +230,22 @@ Public Class RadFDrcDetailEdit
         Dim dateModification As Date = Date.Now.Date
         Dim categorieOasis, categorieMajeureId, sexe As Integer
 
-        Dim SQLstring As String = "update oasis.oa_drc set oa_drc_date_modification = @dateModification, oa_drc_utilisateur_modification = @utilisateurModification," &
-        " oa_drc_libelle = @description, oa_drc_oasis_categorie = @categorieOasis, oa_drc_categorie_majeure_id = @categorieMajeureId, oa_drc_sexe = @sexe," &
-        " oa_drc_age_min = @ageMin, oa_drc_age_max = @ageMax, oa_drc_code_cim_defaut = @cim10Code, oa_drc_code_cisp_defaut = @cispCode," &
-        " oa_drc_ald_id = @aldId, oa_drc_ald_code = @aldCode WHERE oa_drc_id = @drcId"
+        Dim SQLstring As String = "UPDATE oasis.oa_drc SET" &
+        " oa_drc_date_modification = @dateModification," &
+        " oa_drc_utilisateur_modification = @utilisateurModification," &
+        " oa_drc_libelle = @description," &
+        " oa_drc_dur_prob_epis = @commentaire," &
+        " oa_drc_typ_epi = @reponseCommentee," &
+        " oa_drc_oasis_categorie = @categorieOasis," &
+        " oa_drc_categorie_majeure_id = @categorieMajeureId," &
+        " oa_drc_sexe = @sexe," &
+        " oa_drc_age_min = @ageMin," &
+        " oa_drc_age_max = @ageMax," &
+        " oa_drc_code_cim_defaut = @cim10Code," &
+        " oa_drc_code_cisp_defaut = @cispCode," &
+        " oa_drc_ald_id = @aldId," &
+        " oa_drc_ald_code = @aldCode" &
+        " WHERE oa_drc_id = @drcId"
 
         Dim cmd As New SqlCommand(SQLstring, conxn)
 
@@ -274,6 +272,8 @@ Public Class RadFDrcDetailEdit
             .AddWithValue("@utilisateurModification", userLog.UtilisateurId.ToString)
             .AddWithValue("@dateModification", DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss"))
             .AddWithValue("@description", TxtLibelle.Text)
+            .AddWithValue("@commentaire", TxtCommentaire.Text)
+            .AddWithValue("@reponseCommentee", TxtReponseCommentee.Text)
             .AddWithValue("@categorieOasis", categorieOasis)
             .AddWithValue("@categorieMajeureId", categorieMajeureId)
             .AddWithValue("@sexe", sexe)
@@ -336,7 +336,7 @@ Public Class RadFDrcDetailEdit
         Return codeRetour
     End Function
 
-    'Création d'une ORC en base de données
+    'Création d'une DORC en base de données
     Private Function CreationDRC() As Boolean
         Dim da As SqlDataAdapter = New SqlDataAdapter()
         Dim codeRetour As Boolean = True
@@ -345,10 +345,14 @@ Public Class RadFDrcDetailEdit
         Dim drcId, categorieOasis, categorieMajeureId, sexe As Integer
 
         Dim SQLstring As String = "insert into oasis.oa_drc" &
-        " (oa_drc_id, oa_drc_libelle, oa_drc_utilisateur_creation, oa_drc_date_creation, oa_drc_oasis_categorie, oa_drc_categorie_majeure_id," &
-        " oa_drc_sexe, oa_drc_age_min, oa_drc_age_max, oa_drc_oasis, oa_drc_code_cim_defaut, oa_drc_code_cisp_defaut, oa_drc_ald_id, oa_drc_ald_code)" &
-        " VALUES (@drcId, @description, @utilisateurCreation, @dateCreation, @categorieOasis, @categorieMajeureId," &
-        " @sexe, @ageMin, @ageMax, @drcOasis, @cim10Code, @cispCode, @aldId, @aldCode)"
+        " (oa_drc_id, oa_drc_libelle, oa_drc_dur_prob_epis, oa_drc_typ_epi, oa_drc_utilisateur_creation," &
+        " oa_drc_date_creation, oa_drc_oasis_categorie, oa_drc_categorie_majeure_id," &
+        " oa_drc_sexe, oa_drc_age_min, oa_drc_age_max, oa_drc_oasis," &
+        " oa_drc_code_cim_defaut, oa_drc_code_cisp_defaut, oa_drc_ald_id, oa_drc_ald_code)" &
+        " VALUES (@drcId, @description, @commentaire, @reponseCommentee, @utilisateurCreation," &
+        " @dateCreation, @categorieOasis, @categorieMajeureId," &
+        " @sexe, @ageMin, @ageMax, @drcOasis," &
+        " @cim10Code, @cispCode, @aldId, @aldCode)"
 
         Dim cmd As New SqlCommand(SQLstring, conxn)
 
@@ -376,6 +380,8 @@ Public Class RadFDrcDetailEdit
             .AddWithValue("@dateCreation", DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss"))
             .AddWithValue("@utilisateurCreation", userLog.UtilisateurId.ToString)
             .AddWithValue("@description", TxtLibelle.Text)
+            .AddWithValue("@commentaire", TxtCommentaire.Text)
+            .AddWithValue("@reponseCommentee", TxtReponseCommentee.Text)
             .AddWithValue("@categorieOasis", categorieOasis)
             .AddWithValue("@categorieMajeureId", categorieMajeureId)
             .AddWithValue("@sexe", sexe)
@@ -411,7 +417,9 @@ Public Class RadFDrcDetailEdit
         Dim SynonymeDRCDataTable As DataTable = New DataTable()
         Dim conxn As New SqlConnection(outils.getConnectionString())
         Dim SQLString As String
-        SQLString = "SELECT oa_drc_synonyme_id, oa_drc_synonyme_libelle FROM oasis.oa_drc_synonyme WHERE oa_drc_id = " + SelectedDRCId.ToString + " order by oa_drc_synonyme_id;"
+        SQLString = "SELECT oa_drc_synonyme_id, oa_drc_synonyme_libelle" &
+                    " FROM oasis.oa_drc_synonyme WHERE oa_drc_id = " & SelectedDRCId.ToString &
+                    " ORDER BY oa_drc_synonyme_id;"
 
         SynonymeDRCDataAdapter.SelectCommand = New SqlCommand(SQLString, conxn)
         SynonymeDRCDataAdapter.Fill(SynonymeDRCDataTable)
@@ -442,12 +450,14 @@ Public Class RadFDrcDetailEdit
 
         Dim dateCreation As Date = Date.Now.Date
 
-        Dim SQLstring As String = "insert into oasis.oa_drc_synonyme (oa_drc_id, oa_drc_synonyme_libelle) VALUES (@drcId, @synonyme)"
+        Dim SQLstring As String = "INSERT INTO oasis.oa_drc_synonyme" &
+        " (oa_drc_id, oa_drc_synonyme_libelle)" &
+        " VALUES" &
+        " (@drcId, @synonyme)"
 
         Dim cmd As New SqlCommand(SQLstring, conxn)
 
         With cmd.Parameters
-            '.AddWithValue("@drcSynonymeId", SelectedDrcSynonymeId.ToString)
             .AddWithValue("@drcId", TransformedDrcId.ToString)
             .AddWithValue("@synonyme", Synonyme)
         End With
@@ -612,6 +622,10 @@ Public Class RadFDrcDetailEdit
                     If CMDCDateReader("oa_r_categorie_majeure_compteur_cat7") IsNot DBNull.Value Then
                         Compteur = CMDCDateReader("oa_r_categorie_majeure_compteur_cat7")
                     End If
+                Case DrcDao.EnumCategorieOasisCode.ProtocoleAigu
+                    If CMDCDateReader("oa_r_categorie_majeure_compteur_cat8") IsNot DBNull.Value Then
+                        Compteur = CMDCDateReader("oa_r_categorie_majeure_compteur_cat8")
+                    End If
             End Select
             Compteur += 1
         Else
@@ -638,6 +652,8 @@ Public Class RadFDrcDetailEdit
                 SQLString = "update oasis.oa_r_categorie_majeure set oa_r_categorie_majeure_compteur_cat6 = " & Compteur & " where oa_r_categorie_majeure_id = " & CategorieMajeureId & ";"
             Case DrcDao.EnumCategorieOasisCode.ProtocoleCollaboratif
                 SQLString = "update oasis.oa_r_categorie_majeure set oa_r_categorie_majeure_compteur_cat7 = " & Compteur & " where oa_r_categorie_majeure_id = " & CategorieMajeureId & ";"
+            Case DrcDao.EnumCategorieOasisCode.ProtocoleAigu
+                SQLString = "update oasis.oa_r_categorie_majeure set oa_r_categorie_majeure_compteur_cat8 = " & Compteur & " where oa_r_categorie_majeure_id = " & CategorieMajeureId & ";"
         End Select
 
         Dim da As SqlDataAdapter = New SqlDataAdapter()
@@ -673,7 +689,7 @@ Public Class RadFDrcDetailEdit
 
     End Sub
 
-    'Transformer une DRC en ORC
+    'Transformer une DRC en DORC
     Private Sub BtnTransformer_Click(sender As Object, e As EventArgs) Handles RadBtnTransformer.Click
         'Catégorie Majeure
         Dim CategorieMajeureId As Integer
@@ -743,6 +759,7 @@ Public Class RadFDrcDetailEdit
     Private Sub CbxCategorieOasis_SelectedIndexChanged(sender As Object, e As EventArgs) Handles CbxCategorieOasis.SelectedIndexChanged
         If CbxCategorieOasis.Text = DrcDao.EnumCategorieOasisItem.ActeParamedical Or
             CbxCategorieOasis.Text = DrcDao.EnumCategorieOasisItem.GroupeParametres Or
+            CbxCategorieOasis.Text = DrcDao.EnumCategorieOasisItem.ProtocoleAigu Or
             CbxCategorieOasis.Text = DrcDao.EnumCategorieOasisItem.ProtocoleCollaboratif Then
             RadGroupBox2.Hide()
             CbxCategorieMajeure.SelectedItem = ""
@@ -753,6 +770,14 @@ Public Class RadFDrcDetailEdit
         If CbxCategorieOasis.Text <> DrcDao.EnumCategorieOasisItem.ProtocoleCollaboratif Then
             RadBtnProtocole.Hide()
         End If
+        If CbxCategorieOasis.Text <> DrcDao.EnumCategorieOasisItem.ProtocoleAigu Then
+            RadGbxReponse.Hide()
+            Me.Width = 854
+        Else
+            Me.Width = 1420
+            RadGbxReponse.Show()
+        End If
+
     End Sub
 
     Private Sub RadBtnParametre_Click(sender As Object, e As EventArgs) Handles RadBtnParametre.Click

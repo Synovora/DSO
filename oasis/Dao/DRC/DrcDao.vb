@@ -23,6 +23,7 @@ Public Class DrcDao
         ActeParamedical = 5
         GroupeParametres = 6
         ProtocoleCollaboratif = 7
+        ProtocoleAigu = 8
     End Enum
 
     Public Structure EnumCategorieOasisItem
@@ -33,12 +34,13 @@ Public Class DrcDao
         Const ActeParamedical = "Acte paramédical"
         Const GroupeParametres = "Groupe de paramètres"
         Const ProtocoleCollaboratif = "Protocole collaboratif"
+        Const ProtocoleAigu = "Protocole pathologie aigüe"
     End Structure
 
     Public Function GetDrc(instanceDrc As Drc, DrcId As Integer) As Boolean
         Dim CodeRetour As Boolean = True
         Dim con As SqlConnection = GetConnection()
-        Dim SQLString As String = "select * from oasis.oa_drc where oa_drc_id = @drcId"
+        Dim SQLString As String = "SELECT * FROM oasis.oa_drc WHERE oa_drc_id = @drcId"
         Dim drcDataReader As SqlDataReader
         Dim cmd As New SqlCommand(SQLString, con)
 
@@ -46,7 +48,7 @@ Public Class DrcDao
 
         Try
             drcDataReader = cmd.ExecuteReader()
-            BuildBean(instanceDrc, drcDataReader)
+            BuildInstance(instanceDrc, drcDataReader)
         Catch ex As Exception
             MessageBox.Show(ex.Message)
             Return CodeRetour = False
@@ -56,10 +58,9 @@ Public Class DrcDao
         End Try
 
         Return CodeRetour
-
     End Function
 
-    Private Sub BuildBean(instanceDrc As Drc, drcDataReader As SqlDataReader)
+    Private Sub BuildInstance(instanceDrc As Drc, drcDataReader As SqlDataReader)
         If drcDataReader.Read() Then
             instanceDrc.DrcId = Convert.ToInt64(drcDataReader("oa_drc_id"))
             instanceDrc.DrcLibelle = Coalesce(drcDataReader("oa_drc_libelle"), "")
@@ -69,10 +70,70 @@ Public Class DrcDao
             instanceDrc.DrcAgeMax = Coalesce(drcDataReader("oa_drc_age_max"), 0)
             instanceDrc.CategorieMajeure = Coalesce(drcDataReader("oa_drc_categorie_majeure_id"), 0)
             instanceDrc.CategorieOasisId = Coalesce(drcDataReader("oa_drc_oasis_categorie"), 0)
+            instanceDrc.CodeCim = Coalesce(drcDataReader("oa_drc_code_cim_defaut"), "")
+            instanceDrc.CodeCisp = Coalesce(drcDataReader("oa_drc_code_cisp_defaut"), "")
             instanceDrc.AldId = Coalesce(drcDataReader("oa_drc_ald_id"), 0)
             instanceDrc.AldCode = Coalesce(drcDataReader("oa_drc_ald_code"), "")
+            instanceDrc.Commentaire = Coalesce(drcDataReader("oa_drc_dur_prob_epis"), "")
+            instanceDrc.ReponseCommentee = Coalesce(drcDataReader("oa_drc_typ_epi"), "")
+            instanceDrc.DateCreation = Coalesce(drcDataReader("oa_drc_date_creation"), Nothing)
+            instanceDrc.UserCreation = Coalesce(drcDataReader("oa_drc_utilisateur_creation"), 0)
+            instanceDrc.DateModification = Coalesce(drcDataReader("oa_drc_date_modification"), Nothing)
+            instanceDrc.UserModification = Coalesce(drcDataReader("oa_drc_utilisateur_modification"), 0)
         End If
     End Sub
+
+    Friend Function getDrcById(DrcId As Long) As Drc
+        Dim drc As Drc
+        Dim con As SqlConnection
+        con = GetConnection()
+
+        Try
+            Dim command As SqlCommand = con.CreateCommand()
+
+            command.CommandText =
+                "SELECT * FROM oasis.oa_drc WHERE oa_drc_id = @id"
+            command.Parameters.AddWithValue("@id", DrcId)
+            Using reader As SqlDataReader = command.ExecuteReader()
+                If reader.Read() Then
+                    drc = BuildBean(reader)
+                Else
+                    Throw New ArgumentException("DRC inexistante !")
+                End If
+            End Using
+
+        Catch ex As Exception
+            Throw ex
+        Finally
+            con.Close()
+        End Try
+
+        Return drc
+    End Function
+
+    Private Function BuildBean(reader As SqlDataReader) As Drc
+        Dim drc As New Drc
+        drc.DrcId = Convert.ToInt64(reader("oa_drc_id"))
+        drc.DrcLibelle = Coalesce(reader("oa_drc_libelle"), "")
+        drc.DrcSexe = Coalesce(reader("oa_drc_sexe"), 0)
+        drc.DrcTypeEpisode = Coalesce(reader("oa_drc_typ_epi"), "")
+        drc.DrcAgeMin = Coalesce(reader("oa_drc_age_min"), 0)
+        drc.DrcAgeMax = Coalesce(reader("oa_drc_age_max"), 0)
+        drc.CategorieMajeure = Coalesce(reader("oa_drc_categorie_majeure_id"), 0)
+        drc.CategorieOasisId = Coalesce(reader("oa_drc_oasis_categorie"), 0)
+        drc.CodeCim = Coalesce(reader("oa_drc_code_cim_defaut"), "")
+        drc.CodeCisp = Coalesce(reader("oa_drc_code_cisp_defaut"), "")
+        drc.AldId = Coalesce(reader("oa_drc_ald_id"), 0)
+        drc.AldCode = Coalesce(reader("oa_drc_ald_code"), "")
+        drc.Commentaire = Coalesce(reader("oa_drc_dur_prob_epis"), "")
+        drc.ReponseCommentee = Coalesce(reader("oa_drc_typ_epi"), "")
+        drc.DateCreation = Coalesce(reader("oa_drc_date_creation"), Nothing)
+        drc.UserCreation = Coalesce(reader("oa_drc_utilisateur_creation"), 0)
+        drc.DateModification = Coalesce(reader("oa_drc_date_modification"), Nothing)
+        drc.UserModification = Coalesce(reader("oa_drc_utilisateur_modification"), 0)
+        Return drc
+    End Function
+
 
     Friend Function GetItemGenreByCode(Code As Integer) As String
         Dim Item As String
@@ -123,6 +184,8 @@ Public Class DrcDao
                 Item = DrcDao.EnumCategorieOasisItem.GroupeParametres
             Case DrcDao.EnumCategorieOasisCode.ProtocoleCollaboratif
                 Item = DrcDao.EnumCategorieOasisItem.ProtocoleCollaboratif
+            Case DrcDao.EnumCategorieOasisCode.ProtocoleAigu
+                Item = DrcDao.EnumCategorieOasisItem.ProtocoleAigu
             Case Else
                 Item = "Inconnue"
         End Select
@@ -147,6 +210,8 @@ Public Class DrcDao
                 Code = DrcDao.EnumCategorieOasisCode.GroupeParametres
             Case DrcDao.EnumCategorieOasisItem.ProtocoleCollaboratif
                 Code = DrcDao.EnumCategorieOasisCode.ProtocoleCollaboratif
+            Case DrcDao.EnumCategorieOasisItem.ProtocoleAigu
+                Code = DrcDao.EnumCategorieOasisCode.ProtocoleAigu
             Case Else
                 Code = 0
         End Select
@@ -204,7 +269,7 @@ Public Class DrcDao
         Select Case genre
             Case "M"
                 SQLString = "SELECT oasis.oa_drc.oa_drc_id, oa_drc_libelle, oa_drc_categorie_majeure_id, oa_drc_oasis, oa_drc_sexe, oa_drc_age_min,oa_drc_age_max, " &
-                    " oa_drc_ald_id, oa_drc_ald_code, oa_drc_oasis_categorie, oa_r_categorie_majeure_description, oa_ald_description FROM oasis.oa_drc" &
+                    " oa_drc_ald_id, oa_drc_ald_code, oa_drc_oasis_categorie, oa_r_categorie_majeure_description, oa_ald_description, oa_drc_dur_prob_epis, oa_drc_typ_epi FROM oasis.oa_drc" &
                     " LEFT JOIN oasis.oa_ald ON oasis.oasis.oa_drc.oa_drc_ald_id = oasis.oa_ald.oa_ald_id" &
                     " LEFT JOIN oasis.oa_drc_synonyme ON oasis.oasis.oa_drc.oa_drc_id = oasis.oa_drc_synonyme.oa_drc_id" &
                     " LEFT JOIN oasis.oa_r_categorie_majeure ON oasis.oasis.oa_drc.oa_drc_categorie_majeure_id = oasis.oa_r_categorie_majeure.oa_r_categorie_majeure_id" &
@@ -214,7 +279,7 @@ Public Class DrcDao
                     " ORDER BY oa_drc_oasis DESC, oasis.oasis.oa_drc.oa_drc_id"
             Case "F"
                 SQLString = "SELECT oasis.oa_drc.oa_drc_id, oa_drc_libelle, oa_drc_categorie_majeure_id, oa_drc_oasis, oa_drc_sexe, oa_drc_age_min,oa_drc_age_max, " &
-                    " oa_drc_ald_id, oa_drc_ald_code, oa_drc_oasis_categorie, oa_r_categorie_majeure_description, oa_ald_description FROM oasis.oa_drc" &
+                    " oa_drc_ald_id, oa_drc_ald_code, oa_drc_oasis_categorie, oa_r_categorie_majeure_description, oa_ald_description, oa_drc_dur_prob_epis, oa_drc_typ_epi FROM oasis.oa_drc" &
                     " LEFT JOIN oasis.oa_ald ON oasis.oasis.oa_drc.oa_drc_ald_id = oasis.oa_ald.oa_ald_id" &
                     " LEFT JOIN oasis.oa_drc_synonyme ON oasis.oasis.oa_drc.oa_drc_id = oasis.oa_drc_synonyme.oa_drc_id" &
                     " LEFT JOIN oasis.oa_r_categorie_majeure ON oasis.oasis.oa_drc.oa_drc_categorie_majeure_id = oasis.oa_r_categorie_majeure.oa_r_categorie_majeure_id" &
@@ -224,7 +289,7 @@ Public Class DrcDao
                     " ORDER BY oa_drc_oasis DESC, oasis.oasis.oa_drc.oa_drc_id"
             Case Else
                 SQLString = "SELECT oasis.oa_drc.oa_drc_id, oa_drc_libelle, oa_drc_categorie_majeure_id, oa_drc_oasis, oa_drc_sexe, oa_drc_age_min,oa_drc_age_max, " &
-                    " oa_drc_ald_id, oa_drc_ald_code, oa_drc_oasis_categorie, oa_r_categorie_majeure_description, oa_ald_description FROM oasis.oa_drc" &
+                    " oa_drc_ald_id, oa_drc_ald_code, oa_drc_oasis_categorie, oa_r_categorie_majeure_description, oa_ald_description, oa_drc_dur_prob_epis, oa_drc_typ_epi FROM oasis.oa_drc" &
                     " LEFT JOIN oasis.oa_ald ON oasis.oasis.oa_drc.oa_drc_ald_id = oasis.oa_ald.oa_ald_id" &
                     " LEFT JOIN oasis.oa_drc_synonyme ON oasis.oasis.oa_drc.oa_drc_id = oasis.oa_drc_synonyme.oa_drc_id" &
                     " LEFT JOIN oasis.oa_r_categorie_majeure ON oasis.oasis.oa_drc.oa_drc_categorie_majeure_id = oasis.oa_r_categorie_majeure.oa_r_categorie_majeure_id" &

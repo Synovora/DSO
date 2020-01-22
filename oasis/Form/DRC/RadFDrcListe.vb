@@ -33,6 +33,7 @@ Public Class RadFDrcListe
         CbxCategorieOasis.Items.Add(DrcDao.EnumCategorieOasisItem.ActeParamedical)
         CbxCategorieOasis.Items.Add(DrcDao.EnumCategorieOasisItem.GroupeParametres)
         CbxCategorieOasis.Items.Add(DrcDao.EnumCategorieOasisItem.ProtocoleCollaboratif)
+        CbxCategorieOasis.Items.Add(DrcDao.EnumCategorieOasisItem.ProtocoleAigu)
         CbxCategorieOasis.Text = "Toutes"
 
         RadGridLocalizationProvider.CurrentProvider = New FrenchRadGridViewLocalizationProvider()
