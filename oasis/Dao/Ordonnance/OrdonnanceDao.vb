@@ -39,10 +39,11 @@ Public Class OrdonnanceDao
         ordonnance.UtilisateurCreation = Coalesce(reader("oa_ordonnance_utilisateur_creation"), 0)
         ordonnance.DateCreation = Coalesce(reader("oa_ordonnance_date_creation"), Nothing)
         ordonnance.DateValidation = Coalesce(reader("oa_ordonnance_date_validation"), Nothing)
+        ordonnance.UserValidation = Coalesce(reader("oa_ordonnance_user_validation"), 0)
         ordonnance.DateEdition = Coalesce(reader("oa_ordonnance_date_edition"), Nothing)
         ordonnance.Commentaire = Coalesce(reader("oa_ordonnance_commentaire"), "")
         ordonnance.Renouvellement = Coalesce(reader("oa_ordonnance_renouvellement"), 0)
-
+        ordonnance.Inactif = Coalesce(reader("oa_ordonnance_inactif"), False)
         Return ordonnance
     End Function
 
@@ -235,6 +236,38 @@ Public Class OrdonnanceDao
         With cmd.Parameters
             .AddWithValue("@ordonnanceId", OrdonnanceId)
             .AddWithValue("@inactif", True)
+        End With
+
+        Try
+            da.UpdateCommand = cmd
+            da.UpdateCommand.ExecuteNonQuery()
+        Catch ex As Exception
+            MessageBox.Show(ex.Message)
+            codeRetour = False
+        Finally
+            con.Close()
+        End Try
+
+        Return codeRetour
+    End Function
+
+    Friend Function ValidationOrdonnance(OrdonnanceId As Integer) As Boolean
+        Dim da As SqlDataAdapter = New SqlDataAdapter()
+        Dim codeRetour As Boolean = True
+        Dim con As SqlConnection
+        con = GetConnection()
+
+        Dim SQLstring As String = "UPDATE oasis.oa_patient_ordonnance SET" &
+        " oa_ordonnance_date_validation = @dateValidation," &
+        " oa_ordonnance_user_validation = @userValidation" &
+        " WHERE oa_ordonnance_id = @ordonnanceId"
+
+        Dim cmd As New SqlCommand(SQLstring, con)
+
+        With cmd.Parameters
+            .AddWithValue("@ordonnanceId", OrdonnanceId)
+            .AddWithValue("@dateValidation", Date.Now)
+            .AddWithValue("@userValidation", userLog.UtilisateurId)
         End With
 
         Try

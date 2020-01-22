@@ -118,14 +118,7 @@ Public Class RadFOrdonnanceListeDetail
         ordonnance = ordonnanceDao.getOrdonnaceById(SelectedOrdonnanceId)
         TxtCommentaire.Text = ordonnance.Commentaire
         NumRenouvellement.Value = ordonnance.Renouvellement
-        If ordonnance.DateValidation = Nothing Then
-            If userLog.TypeProfil <> FonctionDao.enumTypeFonction.MEDICAL.ToString Then
-                RadBtnValidation.Enabled = False
-            End If
-            RadBtnImprimer.Enabled = False
-        Else
-            RadBtnValidation.Hide()
-        End If
+        GestionAccesBoutonAction()
     End Sub
 
     Private Sub ChargementOrdonnanceDetail()
@@ -137,15 +130,6 @@ Public Class RadFOrdonnanceListeDetail
         Dim ordonnanceDataTable As DataTable
         Dim ordonnanceDaoDetail As OrdonnanceDetailDao = New OrdonnanceDetailDao
         ordonnanceDataTable = ordonnanceDaoDetail.getAllOrdonnanceLigneByOrdonnanceId(Me.SelectedOrdonnanceId)
-        If ordonnanceDataTable.Rows.Count > 0 Then
-            'RadBtnCreationLignes.Hide()
-            RadBtnValidation.Show()
-            RadBtnImprimer.Show()
-        Else
-            'RadBtnCreationLignes.Show()
-            RadBtnValidation.Hide()
-            RadBtnImprimer.Hide()
-        End If
 
         Dim i As Integer
         Dim rowCount As Integer = ordonnanceDataTable.Rows.Count - 1
@@ -590,10 +574,6 @@ Public Class RadFOrdonnanceListeDetail
         End If
     End Sub
 
-    Private Sub RadBtnAbandon_Click(sender As Object, e As EventArgs) Handles RadBtnAbandon.Click
-        Close()
-    End Sub
-
     Private Sub LblAllergie_Click(sender As Object, e As EventArgs) Handles LblAllergie.Click
         'Traitement : afficher les allergies dans un popup
         If Allergie = True Then
@@ -615,17 +595,6 @@ Public Class RadFOrdonnanceListeDetail
             vFPatientContreIndicationListe.UtilisateurConnecte = Me.UtilisateurConnecte
             vFPatientContreIndicationListe.ShowDialog() 'Modal
         End Using
-    End Sub
-
-    'A supprimer!!!!!!!!!!!!!!!!!!!!
-    Private Sub RadBtnCreationLignes_Click(sender As Object, e As EventArgs)
-        Dim ordonnanceDao As New OrdonnanceDao
-        ordonnanceDao.CreateNewOrdonnanceDetail(SelectedPatient.patientId, SelectedOrdonnanceId, SelectedEpisode)
-        RadAldGridView.Rows.Clear()
-        ChargementOrdonnanceDetail()
-        RadBtnValidation.Show()
-        RadBtnImprimer.Show()
-        'RadBtnCreationLignes.Hide()
     End Sub
 
     Private Sub TxtCommentaire_TextChanged(sender As Object, e As EventArgs) Handles TxtCommentaire.TextChanged
@@ -665,14 +634,6 @@ Public Class RadFOrdonnanceListeDetail
         End If
     End Sub
 
-    Private Sub RadBtnAnnulerOrdonnance_Click(sender As Object, e As EventArgs) Handles RadBtnAnnulerOrdonnance.Click
-        If ordonnanceDao.AnnulerOrdonnance(SelectedOrdonnanceId) = True Then
-            Dim form As New RadFNotification()
-            form.Message = "L'ordonnance a été annulée"
-            form.Show()
-            Close()
-        End If
-    End Sub
 
     '==========================================================================
     '====== Option Grid ALD
@@ -877,6 +838,21 @@ Public Class RadFOrdonnanceListeDetail
         End If
     End Sub
 
+    '=============================================================================================
+    '======= Général
+    '=============================================================================================
+
+    'Annuler l'ordonnance
+    Private Sub RadBtnAnnulerOrdonnance_Click(sender As Object, e As EventArgs) Handles RadBtnAnnulerOrdonnance.Click
+        If ordonnanceDao.AnnulerOrdonnance(SelectedOrdonnanceId) = True Then
+            Dim form As New RadFNotification()
+            form.Message = "L'ordonnance a été annulée"
+            form.Show()
+            Close()
+        End If
+    End Sub
+
+    'Ajouter une ligne de commentaire (Hors ALD)
     Private Sub RadBtnAjoutLigne_Click(sender As Object, e As EventArgs) Handles RadBtnAjoutLigne.Click
         Using form As New RadFOrdonnanceDetail
             form.SelectedOrdonnanceId = SelectedOrdonnanceId
@@ -890,4 +866,59 @@ Public Class RadFOrdonnanceListeDetail
         End Using
         ChargementOrdonnanceDetail()
     End Sub
+
+    Private Sub RadBtnValidation_Click(sender As Object, e As EventArgs) Handles RadBtnValidation.Click
+        If userLog.TypeProfil = FonctionDao.enumTypeFonction.MEDICAL.ToString Then
+            If ordonnanceDao.ValidationOrdonnance(SelectedOrdonnanceId) = True Then
+                ordonnance = ordonnanceDao.getOrdonnaceById(SelectedOrdonnanceId)
+                GestionAccesBoutonAction()
+                Dim form As New RadFNotification()
+                form.Message = "L'ordonnance a été signée numériquement par : " & userLog.UtilisateurPrenom & " " & userLog.UtilisateurNom & vbCrLf &
+                    ". L'ordonnance est à présent disponible pour être imprimée"
+                form.Show()
+            Else
+                MessageBox.Show("Erreur rencontrée pendant la validation de l'ordonnance")
+            End If
+        Else
+            MessageBox.Show("Vous ne disposez pas d'un profil de type 'Médical', pour valider une ordonnance." &
+                            " Votre prodil est de type : " & userLog.TypeProfil)
+        End If
+    End Sub
+
+    Private Sub GestionAccesBoutonAction()
+        If ordonnance.Inactif = True Then
+            LblOrdonnanceValide.Hide()
+            RadBtnImprimer.Hide()
+            ALDContextMenuStrip.Enabled = False
+            NonALDContextMenuStrip.Enabled = False
+            RadBtnValidation.Hide()
+            RadBtnImprimer.Hide()
+            RadBtnAjoutLigne.Hide()
+            NumRenouvellement.Enabled = False
+            TxtCommentaire.Enabled = False
+        Else
+            If ordonnance.DateValidation <> Nothing Then
+                LblOrdonnanceValide.Text = "Ordonnance signée numériquement, disponible pour être imprimée"
+                LblOrdonnanceValide.Show()
+                RadBtnImprimer.Enabled = True
+                ALDContextMenuStrip.Enabled = False
+                NonALDContextMenuStrip.Enabled = False
+                NumRenouvellement.Enabled = False
+                RadBtnAjoutLigne.Enabled = False
+                RadBtnValidation.Hide()
+            Else
+                LblOrdonnanceValide.Hide()
+                RadBtnImprimer.Enabled = False
+                If userLog.TypeProfil <> FonctionDao.enumTypeFonction.MEDICAL.ToString Then
+                    RadBtnValidation.Enabled = False
+                End If
+            End If
+        End If
+    End Sub
+
+    'Abandon
+    Private Sub RadBtnAbandon_Click(sender As Object, e As EventArgs) Handles RadBtnAbandon.Click
+        Close()
+    End Sub
+
 End Class

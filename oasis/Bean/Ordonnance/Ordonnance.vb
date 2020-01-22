@@ -5,9 +5,11 @@
     Private _utilisateurCreation As Long
     Private _dateCreation As Date
     Private _dateValidation As Date
+    Private _userValidation As Long
     Private _dateEdition As Date
     Private _commentaire As String
     Private _renouvellement As Integer
+    Private _inactif As Boolean
 
     Public Property Id As Long
         Get
@@ -87,6 +89,24 @@
         End Get
         Set(value As Integer)
             _renouvellement = value
+        End Set
+    End Property
+
+    Public Property UserValidation As Long
+        Get
+            Return _userValidation
+        End Get
+        Set(value As Long)
+            _userValidation = value
+        End Set
+    End Property
+
+    Public Property Inactif As Boolean
+        Get
+            Return _inactif
+        End Get
+        Set(value As Boolean)
+            _inactif = value
         End Set
     End Property
 End Class
