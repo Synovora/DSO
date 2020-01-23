@@ -1,4 +1,5 @@
-﻿Imports Oasis_WF
+﻿Imports Oasis_Common
+Imports Oasis_WF
 
 Public Class RadFPPSHistoListe
     Private _SelectedPatient As Patient

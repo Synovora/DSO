@@ -1,5 +1,5 @@
 ﻿Imports Telerik.WinControls.UI
-
+Imports Oasis_Common
 Public Class RadFPatientNoteListe
     Private _typeNote As Integer
     Private privateSelectedPatientId As Integer

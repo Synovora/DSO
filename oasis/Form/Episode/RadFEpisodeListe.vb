@@ -1,4 +1,6 @@
-﻿Public Class RadFEpisodeListe
+﻿Imports Oasis_Common
+
+Public Class RadFEpisodeListe
     Private privateSelectedPatient As Patient
     Private privateUtilisateurConnecte As Utilisateur
 

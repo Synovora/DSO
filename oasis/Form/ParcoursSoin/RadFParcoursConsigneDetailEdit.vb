@@ -1,6 +1,6 @@
 ﻿Imports System.Configuration
 Imports Oasis_WF
-
+Imports Oasis_Common
 Public Class RadFParcoursConsigneDetailEdit
     Private _SelectedPatient As Patient
     Private _UtilisateurConnecte As Utilisateur

@@ -1,5 +1,5 @@
 ﻿Imports Oasis_WF
-
+Imports Oasis_Common
 Public Class RadFParcoursHistoListe
     Private _SelectedPatient As Patient
     Private _UtilisateurConnecte As Utilisateur

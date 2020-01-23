@@ -1,5 +1,5 @@
 ﻿Imports Telerik.WinControls.UI
-
+Imports Oasis_Common
 Public Class RadFAntecedentHistoListe
     Private privateSelectedPatient As Patient
     Private privateUtilisateurConnecte As Utilisateur

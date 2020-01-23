@@ -2,6 +2,8 @@
 
 Imports System.Collections.Specialized
 Imports System.Data.SqlClient
+Imports Oasis_Common
+
 Public Class FSynthese
     Private privateSelectedPatient As Patient
     Private privateUtilisateurConnecte As Utilisateur

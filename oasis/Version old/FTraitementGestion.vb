@@ -1,6 +1,8 @@
 ﻿'Gestion des traitements d'un patient
 
 Imports System.Data.SqlClient
+Imports Oasis_Common
+
 Public Class FTraitementGestion
     Private privateSelectedPatient As Patient
     Private privateUtilisateurConnecte As Utilisateur

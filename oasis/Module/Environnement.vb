@@ -1,5 +1,7 @@
 ﻿Imports System.Collections.Specialized
 Imports System.Data.SqlClient
+Imports Oasis_Common
+
 Module Environnement
 
     Public Enum EnumResultat
@@ -60,20 +62,6 @@ Module Environnement
         Droite = 0
         Gauche = 1
     End Enum
-
-    ''' <summary>
-    ''' 
-    ''' </summary>
-    ''' <param name="Parameters"></param>
-    ''' <returns></returns>
-    Public Function Coalesce(ByVal ParamArray Parameters As Object()) As Object
-        For Each Parameter As Object In Parameters
-            If Not Parameter Is Nothing And Not IsDBNull(Parameter) Then
-                Return Parameter
-            End If
-        Next
-        Return Nothing
-    End Function
 
     '=========================================================================
     '================== Données persistante de session =======================

@@ -1,4 +1,5 @@
 ﻿Imports System.Data.SqlClient
+Imports Oasis_Common
 Public Class FPPSMesurePreventive
     Private _SelectedPatient As Patient
     Private _UtilisateurConnecte As Utilisateur

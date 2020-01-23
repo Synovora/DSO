@@ -3,6 +3,8 @@ Imports System.Configuration
 Imports Telerik.WinControls
 Imports Telerik.WinControls.UI
 Imports Telerik.WinControls.UI.Localization
+Imports Oasis_Common
+
 
 Public Class RadFSynthese
     Private privateSelectedPatient As Patient

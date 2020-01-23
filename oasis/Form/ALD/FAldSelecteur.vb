@@ -1,6 +1,6 @@
 ﻿Imports System.Data.SqlClient
 Imports Oasis_WF
-
+Imports Oasis_Common
 Public Class FAldSelecteur
     Private _UtilisateurConnecte As Utilisateur
     Private _SelectedAldCode As String

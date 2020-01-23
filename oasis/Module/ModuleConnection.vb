@@ -1,13 +1,15 @@
 ﻿Imports System.Data.SqlClient
+Imports Oasis_Common
 
 Module ModuleConnection
     Dim oaConnection As New SqlConnection
     Private Function getConnectionString() As String
-        Dim csb As SqlConnectionStringBuilder = New SqlConnectionStringBuilder()
-        csb.DataSource = "BEL64A0078"   'In production this would more likely come from App.config
-        csb.InitialCatalog = "oasis"
-        csb.IntegratedSecurity = True
-        Return csb.ConnectionString
+        Return getConnectionStringOasis()
+        'Dim csb As SqlConnectionStringBuilder = New SqlConnectionStringBuilder()
+        'csb.DataSource = "BEL64A0078"   'In production this would more likely come from App.config
+        'csb.InitialCatalog = "oasis"
+        'csb.IntegratedSecurity = True
+        'Return csb.ConnectionString
 
     End Function
 

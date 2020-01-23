@@ -1,5 +1,6 @@
 ﻿Imports System.Configuration
 Imports System.Data.SqlClient
+Imports Oasis_Common
 
 Public Class EpisodeTypeActiviteDao
     Inherits StandardDao
@@ -116,7 +117,7 @@ Public Class EpisodeTypeActiviteDao
                 Continue For
             End If
 
-            TypeActiviteEpisode = EpisodeDao.GetItemTypeActiviteByCode(episodeActiviteDT.Rows(i)("oa_activite_type"))
+            TypeActiviteEpisode = episodeDao.GetItemTypeActiviteByCode(episodeActiviteDT.Rows(i)("oa_activite_type"))
 
             If TypeActiviteEpisode <> "" Then
                 listActivite.Add(TypeActiviteEpisode)

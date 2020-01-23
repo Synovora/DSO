@@ -1,4 +1,5 @@
-﻿Public Class FMenuAdmin
+﻿Imports Oasis_Common
+Public Class FMenuAdmin
     'Properties alimentées par l'écran d'authentification
     Private privateUtilisateurConnecte As Utilisateur
     Public Property UtilisateurConnecte As Utilisateur

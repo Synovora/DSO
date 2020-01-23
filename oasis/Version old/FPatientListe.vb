@@ -3,6 +3,7 @@
 'Imports MySql.Data.MySqlClient
 Imports Oasis_WF
 Imports System.Data.SqlClient
+Imports Oasis_Common
 
 Public Class FPatientListe
     'Properties alimentées par l'écran d'authentification

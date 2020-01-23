@@ -1,5 +1,5 @@
 ﻿Imports System.Data.SqlClient
-
+Imports Oasis_Common
 Public Class RadFAldCim10Selecteur
     Private _UtilisateurConnecte As Utilisateur
     Private _SelectedAldId As Integer

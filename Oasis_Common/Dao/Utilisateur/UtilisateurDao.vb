@@ -1,10 +1,11 @@
 ﻿Imports System.Data.SqlClient
+Imports System.Windows.Forms
 
-Module UtilisateurDao
+Public Module UtilisateurDao
     'Initialisation des propriétés d'une instance de utilisateur depuis la BDD
     Public Function SetUtilisateur(instanceUtilisateur As Utilisateur, utilisateurId As Integer) As Boolean
         Dim CodeRetour As Boolean = True
-        Dim conxn As New SqlConnection(getConnectionString())
+        Dim conxn As New SqlConnection(GetConnectionStringOasis())
         Dim SQLString As String = "select * from oasis.oa_utilisateur where oa_utilisateur_id = @utilisateurId"
         Dim utilisateurDataReader As SqlDataReader
         Dim cmd As New SqlCommand(SQLString, conxn)

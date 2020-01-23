@@ -170,8 +170,6 @@
     <Compile Include="Bean\DRC\DrcStandard.vb" />
     <Compile Include="Bean\Ordonnance\Ordonnance.vb" />
     <Compile Include="Bean\Ordonnance\OrdonnanceDetailGrid.vb" />
-    <Compile Include="Bean\Utilisateur\Action.vb" />
-    <Compile Include="Dao\Utilisateur\ActionDao.vb" />
     <Compile Include="Form\DRC\RadFActeParamedicalTest.Designer.vb">
       <DependentUpon>RadFActeParamedicalTest.vb</DependentUpon>
     </Compile>
@@ -210,7 +208,6 @@
     <Compile Include="Bean\Parcours\SpecialiteClass.vb" />
     <Compile Include="Bean\Tache\TacheClass.vb" />
     <Compile Include="Bean\Traitement\Traitement.vb" />
-    <Compile Include="Bean\Utilisateur\Profil.vb" />
     <Compile Include="Dao\ALD\AldCim10Dao.vb" />
     <Compile Include="Bean\Antecedent\AntecedentHistoClass.vb" />
     <Compile Include="Dao\ALD\AldDao.vb" />
@@ -281,7 +278,6 @@
     <Compile Include="Dao\PPS\PpsDao.vb" />
     <Compile Include="Dao\PPS\PPSHistoDao.vb" />
     <Compile Include="Dao\ROR\RorDao.vb" />
-    <Compile Include="Dao\Utilisateur\ProfilDao.vb" />
     <Compile Include="DataSetDRC.Designer.vb">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -310,16 +306,12 @@
     <Compile Include="Bean\DRC\Drc.vb" />
     <Compile Include="Bean\Tache\AppointmentOasis.vb" />
     <Compile Include="Bean\Tache\FiltreTache.vb" />
-    <Compile Include="Bean\Utilisateur\Fonction.vb" />
     <Compile Include="Bean\structurebase\Site.vb" />
     <Compile Include="Bean\Tache\TacheBeanAssocie.vb" />
     <Compile Include="Bean\structurebase\UniteSanitaire.vb" />
-    <Compile Include="Dao\General\StandardDao.vb" />
-    <Compile Include="Dao\Utilisateur\FonctionDao.vb" />
     <Compile Include="Dao\structurebase\SiteDao.vb" />
     <Compile Include="Dao\Tache\TacheDao.vb" />
     <Compile Include="Dao\structurebase\UniteSanitaireDao.vb" />
-    <Compile Include="Dao\Utilisateur\UserDao.vb" />
     <Compile Include="Form\Episode\RadFEpisodeObservationDetailEdit.Designer.vb">
       <DependentUpon>RadFEpisodeObservationDetailEdit.vb</DependentUpon>
     </Compile>
@@ -957,7 +949,6 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>UniteSanitaireDataSet.xsd</DependentUpon>
     </Compile>
-    <Compile Include="Bean\Utilisateur\UtilisateurClass.vb" />
     <Compile Include="Bean\Patient\PatientClass.vb" />
     <Compile Include="Version old\FMedocSelecteur.Designer.vb">
       <DependentUpon>FMedocSelecteur.vb</DependentUpon>
@@ -1044,7 +1035,6 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
     <Compile Include="Settings.vb" />
-    <Compile Include="Dao\Utilisateur\UtilisateurDao.vb" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Form\DRC\RadFActeParamedicalTest.resx">
@@ -1573,7 +1563,15 @@
     <None Include="Resources\Keys-icon.png" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Bean\Utilisateur\" />
+    <Folder Include="Dao\Utilisateur\" />
     <Folder Include="Form\Obsolete\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Oasis_Common\Oasis_Common.vbproj">
+      <Project>{2dac58a3-f441-4561-93ea-b093cf6f982a}</Project>
+      <Name>Oasis_Common</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
 </Project>

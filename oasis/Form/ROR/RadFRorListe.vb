@@ -1,4 +1,5 @@
 ﻿Imports Telerik.WinControls.UI
+Imports Oasis_Common
 
 Public Class RadFRorListe
     Private _selecteur As Boolean

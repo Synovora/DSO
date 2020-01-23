@@ -1,6 +1,7 @@
 ﻿'Gestion fenêtre thérapeutique d'un traitement
 
 Imports System.Data.SqlClient
+Imports Oasis_Common
 
 Public Class FTraitementFenetreTh
 

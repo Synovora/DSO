@@ -189,12 +189,6 @@
     <Compile Include="Global.asax.vb">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="metier\FonctionWeb.vb" />
-    <Compile Include="metier\FonctionWebDao.vb" />
-    <Compile Include="metier\StandardWebDao.vb" />
-    <Compile Include="metier\UserWebDao.vb" />
-    <Compile Include="metier\UtilisateurWeb.vb" />
-    <Compile Include="Models\LoginRequest.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
       <AutoGen>True</AutoGen>
@@ -297,7 +291,15 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="metier\" />
+    <Folder Include="Models\" />
     <Folder Include="Properties\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Oasis_Common\Oasis_Common.vbproj">
+      <Project>{2dac58a3-f441-4561-93ea-b093cf6f982a}</Project>
+      <Name>Oasis_Common</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

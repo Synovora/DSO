@@ -3,7 +3,7 @@ Imports System.ComponentModel
 Imports Telerik.WinControls
 Imports Telerik.WinControls.UI
 Imports Telerik.WinControls.UI.Localization
-
+Imports Oasis_Common
 Public Class FrmTacheMain
 
     ' -- liste des RDV bindée

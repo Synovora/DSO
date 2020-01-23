@@ -1,7 +1,7 @@
 ﻿Imports System.Collections.Specialized
 Imports Oasis_WF
 Imports Telerik.WinControls.UI
-
+Imports Oasis_Common
 Public Class RadFOrdonnanceListeDetail
     Private _SelectedPatient As Patient
     Private _SelectedEpisode As Episode

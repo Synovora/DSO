@@ -1,7 +1,7 @@
 ﻿Imports System.Collections.Specialized
 Imports Telerik.WinControls.UI
 Imports Telerik.WinControls.UI.Localization
-
+Imports Oasis_Common
 Public Class RadFMedocSelecteur
 
     Private privateSelectedPatient As Patient

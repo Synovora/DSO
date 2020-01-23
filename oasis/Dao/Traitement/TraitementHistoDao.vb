@@ -1,6 +1,6 @@
 ﻿Imports System.Configuration
 Imports System.Data.SqlClient
-
+Imports Oasis_Common
 Module TraitementHistoDao
     Public Enum EnumEtatTraitementHisto
         CreationTraitement = 1

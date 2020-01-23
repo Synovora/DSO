@@ -1,8 +1,7 @@
 ﻿Imports System.Data.SqlClient
-Imports Oasis_Web
 
 Public Class FonctionDao
-    Inherits StandardWebDao
+    Inherits StandardDao
 
     Public Enum enumTypeFonction
         MEDICAL

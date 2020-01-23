@@ -1,4 +1,5 @@
 ﻿Imports System.ComponentModel
+Imports Oasis_Common
 
 Public Class AppointmentOasis
     Implements INotifyPropertyChanged

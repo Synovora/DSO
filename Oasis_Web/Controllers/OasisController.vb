@@ -1,6 +1,7 @@
 ﻿Imports System.Net
 Imports System.Net.Http
 Imports System.Web.Http
+Imports Oasis_Common
 
 Public Class OasisController
     Inherits ApiController
@@ -31,6 +32,8 @@ Public Class OasisController
         Try
             userLog = userDao.getUserByLoginPassword(loginRequest.login,
                                                      loginRequest.password)
+            Return Request.CreateResponse(HttpStatusCode.Accepted, EncryptString(ConfigurationManager.ConnectionStrings("Oasis_WF.My.MySettings.oasisConnection").ConnectionString))
+
         Catch e As ArgumentException
             Dim resp = New HttpResponseMessage(HttpStatusCode.Unauthorized) With {
                 .Content = New StringContent(e.Message),
@@ -46,7 +49,6 @@ Public Class OasisController
 
             Return resp
         End Try
-        Return Request.CreateResponse(HttpStatusCode.Accepted, ConfigurationManager.ConnectionStrings("Oasis_Web.My.MySettings.oasisConnection").ConnectionString)
     End Function
 
     ' PUT api/<controller>/5

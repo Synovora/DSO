@@ -1,5 +1,7 @@
 ﻿
 Imports System.Data.SqlClient
+Imports Oasis_Common
+
 Module PatientDao
 
     'Initialisation des propriétés d'une instance de Patient depuis la BDD

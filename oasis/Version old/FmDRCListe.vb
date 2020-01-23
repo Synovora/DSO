@@ -1,4 +1,6 @@
 ﻿Imports System.Data.SqlClient
+Imports Oasis_Common
+
 Public Class FmDRCListe
     Private privateUtilisateurConnecte As Utilisateur
 

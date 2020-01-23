@@ -1,6 +1,6 @@
 ﻿Imports Telerik.WinControls
 Imports Telerik.WinControls.UI.Localization
-
+Imports Oasis_Common
 Public Class RadFPatientListe
     Private privateUtilisateurConnecte As Utilisateur
     Public Property UtilisateurConnecte As Utilisateur

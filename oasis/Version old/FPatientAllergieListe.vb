@@ -1,6 +1,6 @@
 ﻿
 Imports System.Collections.Specialized
-
+Imports Oasis_Common
 Public Class FPatientAllergieListe
     Private privateSelectedPatientId As Integer
     Private privateSelectedPatient As Patient

@@ -1,7 +1,7 @@
 ﻿Imports Telerik.WinControls.UI
 Imports Telerik.WinControls.UI.Localization
 Imports Telerik.WinForms.Documents.Model
-
+Imports Oasis_Common
 Public Class RadFPatientNoteDetailEdit
     Private _typeNote As Integer
     Private privateSelectedPatient As Patient

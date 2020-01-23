@@ -1,5 +1,6 @@
 ﻿
 Imports System.Data.SqlClient
+Imports Oasis_Common
 
 Public Class FTraitementHistoListe
     Private privateSelectedPatient As Patient

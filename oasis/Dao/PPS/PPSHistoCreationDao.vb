@@ -1,4 +1,6 @@
 ﻿Imports System.Data.SqlClient
+Imports Oasis_Common
+
 Module PPSHistoCreationDao
 
     Public Enum EnumEtatPPSHisto

@@ -1,4 +1,5 @@
-﻿Public Class RadFDrcActePMAssocieEdit
+﻿Imports Oasis_Common
+Public Class RadFDrcActePMAssocieEdit
     Private _drcId As Long
 
     Public Property ProtocoleCollaboratifDrcId As Long

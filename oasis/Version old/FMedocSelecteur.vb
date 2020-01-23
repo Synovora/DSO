@@ -2,7 +2,7 @@
 
 Imports System.Collections.Specialized
 Imports System.Data.SqlClient
-
+Imports Oasis_Common
 Public Class FMedocSelecteur
     Private privateSelectedPatient As Patient
     Private privateUtilisateurConnecte As Utilisateur

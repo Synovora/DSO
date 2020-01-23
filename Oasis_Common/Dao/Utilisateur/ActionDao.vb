@@ -1,9 +1,10 @@
 ﻿Imports System.Data.SqlClient
+Imports System.Windows.Forms
 
 Public Class ActionDao
     Inherits StandardDao
 
-    Friend Function getAllActionByUser(userId As Long) As DataTable
+    Public Function getAllActionByUser(userId As Long) As DataTable
         Dim SQLString As String = "SELECT horodatage, action, oa_patient_prenom, oa_patient_nom FROM oasis.oa_action" &
             " LEFT JOIN oasis.oa_patient ON oa_patient_id = patient_id" &
             " WHERE utilisateur_id = " + userId.ToString &
@@ -53,7 +54,7 @@ Public Class ActionDao
             con.Close()
         End Try
 
-        Return Action
+        Return action
     End Function
 
     Private Function buildBean(reader As SqlDataReader) As Action
@@ -67,7 +68,7 @@ Public Class ActionDao
         Return action
     End Function
 
-    Friend Function CreationAction(action As Action) As Boolean
+    Public Function CreationAction(action As Action) As Boolean
         Dim da As SqlDataAdapter = New SqlDataAdapter()
         Dim codeRetour As Boolean = True
         Dim con As SqlConnection

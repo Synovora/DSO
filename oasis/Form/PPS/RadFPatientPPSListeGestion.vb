@@ -1,7 +1,7 @@
 ﻿Imports System.Configuration
 Imports System.Data.SqlClient
 Imports Telerik.WinControls.UI
-
+Imports Oasis_Common
 Public Class RadFPatientPPSListeGestion
     Private _SelectedPatient As Patient
     Private _UtilisateurConnecte As Utilisateur

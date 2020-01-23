@@ -1,6 +1,7 @@
 ﻿'Détail d'un traitement pour un patient donné
 
 Imports System.Data.SqlClient
+Imports Oasis_Common
 
 Public Class FTraitementDetailEdit
 

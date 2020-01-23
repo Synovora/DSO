@@ -1,6 +1,7 @@
 ﻿Imports System.Data.SqlClient
 Imports Oasis_WF
 Imports Telerik.WinControls.UI.Localization
+Imports Oasis_Common
 
 Public Class RadFAntecedentDetailEdit
     Private privateSelectedPatient As Patient

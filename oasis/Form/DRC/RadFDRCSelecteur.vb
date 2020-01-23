@@ -2,6 +2,7 @@
 Imports Oasis_WF
 Imports Telerik.WinControls.UI
 Imports Telerik.WinControls.UI.Localization
+Imports Oasis_Common
 
 Public Class RadFDRCSelecteur
     Private privateSelectedPatient As Patient

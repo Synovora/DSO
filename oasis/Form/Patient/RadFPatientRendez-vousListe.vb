@@ -1,4 +1,5 @@
 ﻿Imports Telerik.WinControls
+Imports Oasis_Common
 
 Public Class RadFPatientRendez_vousListe
     Private _selectedPatient As Patient

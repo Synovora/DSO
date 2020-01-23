@@ -1,4 +1,6 @@
-﻿Public Class FrmLogin
+﻿Imports Oasis_Common
+
+Public Class FrmLogin
 
     ''' <summary>
     ''' 

@@ -1,4 +1,6 @@
-﻿Public Class RadFRorDetailEdit
+﻿
+Imports Oasis_Common
+Public Class RadFRorDetailEdit
     Private _selectedRorId As Integer
     Private _selectedSpecialiteId As Integer
     Private _selectedTypeSpecialite As String

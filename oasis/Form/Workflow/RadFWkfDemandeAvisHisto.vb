@@ -1,4 +1,6 @@
-﻿Public Class RadFWkfDemandeAvisHisto
+﻿Imports Oasis_Common
+
+Public Class RadFWkfDemandeAvisHisto
     Private _selectedEpisodeId As Long
     Private _selectedPatient As Patient
 

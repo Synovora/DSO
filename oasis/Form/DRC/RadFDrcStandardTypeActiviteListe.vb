@@ -1,4 +1,6 @@
-﻿Public Class RadFDrcStandardTypeActiviteListe
+﻿Imports Oasis_Common
+
+Public Class RadFDrcStandardTypeActiviteListe
 
     Dim drc As New Drc
     Dim drcdao As New DrcDao

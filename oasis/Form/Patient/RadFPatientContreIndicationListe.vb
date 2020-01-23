@@ -1,4 +1,5 @@
 ﻿Imports System.Collections.Specialized
+Imports Oasis_Common
 
 Public Class RadFPatientContreIndicationListe
     Private privateSelectedPatientId As Integer

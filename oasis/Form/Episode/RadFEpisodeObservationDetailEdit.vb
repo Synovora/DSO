@@ -1,4 +1,5 @@
-﻿Public Class RadFEpisodeObservationDetailEdit
+﻿Imports Oasis_Common
+Public Class RadFEpisodeObservationDetailEdit
     Private _SelectedEpisodeId As Long
     Private _SelectedPatient As Patient
     Private _selectedObservationId As Long

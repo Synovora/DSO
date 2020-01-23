@@ -1,5 +1,5 @@
 ﻿Imports System.Data.SqlClient
-
+Imports Oasis_Common
 Module AntecedentHistoCreationDao
 
     Friend Enum EnumEtatAntecedentHisto

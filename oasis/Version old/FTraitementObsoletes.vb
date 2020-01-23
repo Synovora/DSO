@@ -2,6 +2,8 @@
 
 Imports System.Data.SqlClient
 Imports System.Collections.Specialized
+Imports Oasis_Common
+
 Public Class FTraitementObsoletes
 
     Private privateSelectedPatient As Patient
@@ -144,7 +146,7 @@ Public Class FTraitementObsoletes
             'Identification si le traitement a été arrêté
             If traitementDataTable.Rows(i)("oa_traitement_arret") IsNot DBNull.Value Then
                 If traitementDataTable.Rows(i)("oa_traitement_arret") = "A" Then
-                    traitementArret = True
+                    TraitementArret = True
                 End If
             End If
 
@@ -163,7 +165,7 @@ Public Class FTraitementObsoletes
             End If
 
             'Ne pas afficher les traitements qui n'ont pas fait l'objet d'un arrêt et d'une annulation et dont la date de fin est supérieure ou égale à aujourd'hui
-            If traitementArret = False And TraitementAnnule = False Then
+            If TraitementArret = False And TraitementAnnule = False Then
                 Dim dateJouraComparer As New Date(Date.Now.Year, Date.Now.Month, Date.Now.Day, 0, 0, 0)
                 Dim dateFinaComparer As New Date(dateFin.Year, dateFin.Month, dateFin.Day, 0, 0, 0)
                 If (dateFinaComparer >= dateJouraComparer) Then
@@ -258,7 +260,7 @@ Public Class FTraitementObsoletes
             TraitementDataGridView("traitementId", iGrid).Value = traitementDataTable.Rows(i)("oa_traitement_id")
 
             'Remarque
-            remarque = ""
+            Remarque = ""
 
             If TraitementArret = True Then
                 Remarque = "Arrêt du traitement"

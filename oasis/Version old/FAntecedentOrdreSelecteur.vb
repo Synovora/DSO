@@ -1,4 +1,5 @@
 ﻿Imports System.Data.SqlClient
+Imports Oasis_Common
 Public Class FAntecedentOrdreSelecteur
     Private privateSelectedPatient As Patient
     Private privateUtilisateurConnecte As Utilisateur

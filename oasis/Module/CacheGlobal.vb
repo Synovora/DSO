@@ -1,4 +1,5 @@
-﻿Module CacheGlobal
+﻿Imports Oasis_Common
+Module CacheGlobal
 
     Public userLog As Utilisateur      ' Objet user disponible everyhere apres le login
 

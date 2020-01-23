@@ -1,4 +1,5 @@
-﻿Public Class RadFWkfDemandeAvis
+﻿Imports Oasis_Common
+Public Class RadFWkfDemandeAvis
     Private _selectedEpisodeId As Long
     Private _SelectedTacheId As Long
     Private _selectedPatient As Patient
@@ -339,24 +340,24 @@
     End Sub
 
     Private Sub ChargementCaracteristiquesEpisode()
-        Episode = EpisodeDao.GetEpisodeById(Me.SelectedEpisodeId)
-        If Episode.DescriptionActivite = "" Then
-            LblTypeEpisode.Text = Episode.Type.Trim & " / " & Episode.TypeActivite
+        episode = episodeDao.GetEpisodeById(Me.SelectedEpisodeId)
+        If episode.DescriptionActivite = "" Then
+            LblTypeEpisode.Text = episode.Type.Trim & " / " & episode.TypeActivite
         Else
-            LblTypeEpisode.Text = Episode.Type.Trim & " / " & Episode.TypeActivite & " / " & Episode.DescriptionActivite
+            LblTypeEpisode.Text = episode.Type.Trim & " / " & episode.TypeActivite & " / " & episode.DescriptionActivite
         End If
-        TypeEpisode = Episode.Type
-        typeActiviteEpisode = Episode.TypeActivite
-        DescriptionActiviteEpisode = Episode.DescriptionActivite
+        TypeEpisode = episode.Type
+        typeActiviteEpisode = episode.TypeActivite
+        DescriptionActiviteEpisode = episode.DescriptionActivite
         TxtCommentaireEpisode.Text = episode.Commentaire
 
-        UtilisateurDao.SetUtilisateur(user, Episode.UserCreation)
+        UtilisateurDao.SetUtilisateur(user, episode.UserCreation)
         LblUserCreation.Text = user.UtilisateurPrenom.Trim & " " & user.UtilisateurNom.Trim
         UserCreation = user.UtilisateurPrenom.Trim & " " & user.UtilisateurNom.Trim & " - " & user.UtilisateurProfilId & " / " & user.TypeProfil
-        DateCreation = Episode.DateCreation.ToString("dd/MM/yyyy HH:mm")
+        DateCreation = episode.DateCreation.ToString("dd/MM/yyyy HH:mm")
 
-        If Episode.UserModification <> 0 Then
-            UtilisateurDao.SetUtilisateur(user, Episode.UserModification)
+        If episode.UserModification <> 0 Then
+            UtilisateurDao.SetUtilisateur(user, episode.UserModification)
             LBlUserModification.Text = user.UtilisateurPrenom.Trim & " " & user.UtilisateurNom.Trim
             UserModification = user.UtilisateurPrenom.Trim & " " & user.UtilisateurNom.Trim
         Else
@@ -364,8 +365,8 @@
             LBlUserModification.Text = ""
         End If
 
-        If Episode.DateModification <> Nothing Then
-            LblDateModification.Text = Episode.DateModification.ToString("dd/MM/yyyy HH:mm")
+        If episode.DateModification <> Nothing Then
+            LblDateModification.Text = episode.DateModification.ToString("dd/MM/yyyy HH:mm")
             DateModification = LblDateModification.Text
         Else
             LblLabelDateModification.Text = ""

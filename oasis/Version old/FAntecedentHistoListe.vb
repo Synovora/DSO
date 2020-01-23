@@ -1,6 +1,6 @@
 ﻿Imports System.Data.SqlClient
 Imports Oasis_WF
-
+Imports Oasis_Common
 Public Class FAntecedentHistoListe
     Private privateSelectedPatient As Patient
     Private privateUtilisateurConnecte As Utilisateur

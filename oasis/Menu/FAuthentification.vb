@@ -1,4 +1,5 @@
 ﻿Imports System.Configuration
+Imports Oasis_Common
 Public Class FAuthentificattion
     Enum EnumUtilisateur
         Informaticien

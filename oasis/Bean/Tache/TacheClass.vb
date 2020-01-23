@@ -1,4 +1,6 @@
-﻿Public Class Tache
+﻿Imports Oasis_Common
+
+Public Class Tache
     Private _id As Long
     Private _parentId As Long
     Private _emetteurUserId As Long

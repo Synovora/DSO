@@ -1,4 +1,6 @@
-﻿Public Class FrmTacheDetail_vb
+﻿Imports Oasis_Common
+
+Public Class FrmTacheDetail_vb
     Private tache As Tache
     Private tacheDao As TacheDao = New TacheDao
     Private tacheBeanAssocie As TacheBeanAssocie
@@ -215,7 +217,7 @@
         If MsgBox("Etes-vous sur de vouloir annuler cette tâche ?", MsgBoxStyle.YesNo Or MsgBoxStyle.DefaultButton2 Or MsgBoxStyle.Critical, "Annulation Tâche") = MsgBoxResult.Yes Then
             Try
                 tacheDao.AnnulationTache(tache.Id)
-                _IsActionEffectuee1 = True
+                _isActionEffectuee1 = True
                 Me.Close()
             Catch err As Exception
                 MsgBox(err.Message)

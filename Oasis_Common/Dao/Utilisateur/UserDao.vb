@@ -1,5 +1,4 @@
 ﻿Imports System.Data.SqlClient
-Imports Oasis_WF
 
 Public Class UserDao
     Inherits StandardDao
@@ -19,7 +18,7 @@ Public Class UserDao
                 command.CommandText =
                    "select U.*, p.* " &
                    "from oasis.oa_utilisateur u " &
-                   "inner join oasis.oa_r_profil p on p.oa_r_profil_id = oa_utilisateur_profil_id AND oa_r_profil_etat='A' " &
+                   "inner join oasis.oa_r_profil p on p.oa_r_profil_id = oa_utilisateur_profil_id AND COALESCE(oa_r_profil_inactif,'false')='false' " &
                    "where oa_utilisateur_login = @login AND oa_utilisateur_etat='A'"
                 command.Parameters.AddWithValue("@login", login)
                 Using reader As SqlDataReader = command.ExecuteReader()

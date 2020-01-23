@@ -1,6 +1,7 @@
 ﻿'Gestion des DRC/ORC
 
 Imports System.Data.SqlClient
+Imports Oasis_Common
 Public Class FDRCListe
     Private privateUtilisateurConnecte As Utilisateur
 

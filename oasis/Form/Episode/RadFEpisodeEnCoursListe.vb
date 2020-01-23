@@ -1,4 +1,6 @@
-﻿Public Class RadFEpisodeEnCoursListe
+﻿Imports Oasis_Common
+
+Public Class RadFEpisodeEnCoursListe
 
     Dim episodeDao As New EpisodeDao
 

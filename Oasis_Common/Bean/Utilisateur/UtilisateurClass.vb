@@ -1,5 +1,4 @@
 ﻿Imports System.Security.Cryptography
-Imports Oasis_Web
 
 Public Class Utilisateur
     Private privateUtilisateurId As Integer

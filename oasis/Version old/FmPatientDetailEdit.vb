@@ -1,4 +1,5 @@
 ﻿Imports System.Data.SqlClient
+Imports Oasis_Common
 Public Class FmPatientDetailEdit
     Private privateSelectedPatientId As Integer
     Private privateSelectedPatient As Patient

@@ -1,4 +1,5 @@
 ﻿Imports System.Data.SqlClient
+Imports Oasis_Common
 
 Public Class FPatientNoteVaccinDetailEdit
     Private privateSelectedPatient As Patient

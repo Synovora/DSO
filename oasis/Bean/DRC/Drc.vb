@@ -1,5 +1,6 @@
 ﻿Imports System.Data.SqlClient
 Imports System.Collections.Specialized
+Imports Oasis_Common
 Public Class Drc
     Private privateDrcId As Integer
     Private privateDrcLibelle As String

@@ -1,5 +1,5 @@
 ﻿Imports System.Data.SqlClient
-
+Imports Oasis_Common
 Public Class RadFPPSDetailEdit
     Private _SelectedPatient As Patient
     Private _UtilisateurConnecte As Utilisateur

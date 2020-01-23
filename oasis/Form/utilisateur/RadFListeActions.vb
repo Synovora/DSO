@@ -1,4 +1,6 @@
-﻿Public Class RadFListeActions
+﻿Imports Oasis_Common
+
+Public Class RadFListeActions
     Private _userId As Long
 
     Public Property UserId As Long

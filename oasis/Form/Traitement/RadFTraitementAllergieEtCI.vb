@@ -1,4 +1,6 @@
-﻿Public Class RadFTraitementAllergieEtCI
+﻿Imports Oasis_Common
+
+Public Class RadFTraitementAllergieEtCI
     Private privateSelectedPatient As Patient
     Private privateUtilisateurConnecte As Utilisateur
     Private privateAllergieOuContreIndication As EnumAllergieOuContreIndication
@@ -65,7 +67,6 @@
 
         'Dim conxn As New SqlConnection(outils.getConnectionString())
 
-        Dim SQLString As String
         Select Case Me.AllergieOuContreIndication
             Case 1 'Allergie
                 traitementDataTable = traitementDao.getAllTraitementAllergiebyPatient(SelectedPatient.patientId)
@@ -75,6 +76,7 @@
                 Me.Text = "Liste des contre-indications"
             Case Else
                 Close()
+                Return
         End Select
 
         'Ajout d'une colonne 'oa_traitement_posologie' dans le DataTable de traitement

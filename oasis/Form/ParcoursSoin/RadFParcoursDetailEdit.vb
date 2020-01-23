@@ -2,7 +2,7 @@
 Imports Oasis_WF
 Imports Telerik.WinControls
 Imports Telerik.WinControls.UI
-
+Imports Oasis_Common
 Public Class RadFParcoursDetailEdit
     Private _SelectedPatient As Patient
     Private _UtilisateurConnecte As Utilisateur

@@ -1,5 +1,6 @@
 ﻿Imports Telerik.WinControls
 Imports Telerik.WinControls.UI
+Imports Oasis_Common
 
 Public Class RadFEpisodeParametreDetailEdit
     Private _SelectedEpisodeId As Long

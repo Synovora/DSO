@@ -1,5 +1,5 @@
 ﻿Imports Telerik.WinControls.UI.Localization
-
+Imports Oasis_Common
 Public Class RadFDrcListe
     Private privateUtilisateurConnecte As Utilisateur
 

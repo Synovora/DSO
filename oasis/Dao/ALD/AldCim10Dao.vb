@@ -1,4 +1,6 @@
 ﻿Imports System.Data.SqlClient
+Imports Oasis_Common
+
 Module AldCim10Dao
 
     Public Function GetAldCim10ById(AldCim10Id As Integer) As AldCim10

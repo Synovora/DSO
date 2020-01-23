@@ -1,5 +1,6 @@
 ﻿Imports System.Data.SqlClient
 Imports Telerik.WinControls.UI.Localization
+Imports Oasis_Common
 
 Public Class FmPatientListe
     'Properties alimentées par l'écran d'authentification

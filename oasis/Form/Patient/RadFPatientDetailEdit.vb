@@ -1,5 +1,6 @@
 ﻿Imports System.Data.SqlClient
 Imports Telerik.WinControls.UI.Localization
+Imports Oasis_Common
 
 Public Class RadFPatientDetailEdit
     Private privateSelectedPatientId As Integer

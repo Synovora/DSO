@@ -1,7 +1,7 @@
 ﻿'Liste des patients
 
 Imports System.Data.SqlClient
-
+Imports Oasis_Common
 Public Class FPatientListeDoublons
     'Properties alimentées par l'écran d'authentification
     Private privateUtilisateurConnecte As Utilisateur

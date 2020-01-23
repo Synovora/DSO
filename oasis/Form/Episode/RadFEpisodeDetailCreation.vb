@@ -1,4 +1,5 @@
 ﻿Imports System.Configuration
+Imports Oasis_Common
 
 Public Class RadFEpisodeDetailCreation
     Private _SelectedPatient As Patient
