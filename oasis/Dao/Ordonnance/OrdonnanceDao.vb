@@ -375,6 +375,7 @@ Public Class OrdonnanceDao
             ordonnanceDetail.Fenetre = Coalesce(TraitementDataTable.Rows(i)("oa_traitement_fenetre"), False)
             ordonnanceDetail.FenetreDateDebut = Coalesce(TraitementDataTable.Rows(i)("oa_traitement_fenetre_date_debut"), "31/12/2999")
             ordonnanceDetail.FenetreDateFin = Coalesce(TraitementDataTable.Rows(i)("oa_traitement_fenetre_date_fin"), "31/12/2999")
+            ordonnanceDetail.Fenetre = Coalesce(TraitementDataTable.Rows(i)("oa_traitement_fenetre"), False)
 
             'Existence d'une fenêtre thérapeutique
             Dim FenetreTherapeutiqueExiste As Boolean = Coalesce(TraitementDataTable.Rows(i)("oa_traitement_fenetre"), False)

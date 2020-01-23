@@ -85,6 +85,7 @@ Partial Class RadFOrdonnanceListeDetail
         Me.SplitPanel1 = New Telerik.WinControls.UI.SplitPanel()
         Me.SplitPanel2 = New Telerik.WinControls.UI.SplitPanel()
         Me.RadGroupBox2 = New Telerik.WinControls.UI.RadGroupBox()
+        Me.LblOrdonnanceValide = New System.Windows.Forms.Label()
         Me.NumRenouvellement = New System.Windows.Forms.NumericUpDown()
         Me.Label1 = New System.Windows.Forms.Label()
         Me.SplitPanel3 = New Telerik.WinControls.UI.SplitPanel()
@@ -101,7 +102,6 @@ Partial Class RadFOrdonnanceListeDetail
         Me.SplitPanel6 = New Telerik.WinControls.UI.SplitPanel()
         Me.RadBtnAnnulerOrdonnance = New Telerik.WinControls.UI.RadButton()
         Me.RadBtnAjoutLigne = New Telerik.WinControls.UI.RadButton()
-        Me.LblOrdonnanceValide = New System.Windows.Forms.Label()
         CType(Me.RadGroupBoxEtatCivil, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.RadGroupBoxEtatCivil.SuspendLayout()
         CType(Me.RadGroupBox1, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -640,6 +640,15 @@ Partial Class RadFOrdonnanceListeDetail
         Me.RadGroupBox2.TabIndex = 0
         Me.RadGroupBox2.Text = "Général"
         '
+        'LblOrdonnanceValide
+        '
+        Me.LblOrdonnanceValide.AutoSize = True
+        Me.LblOrdonnanceValide.Location = New System.Drawing.Point(413, 27)
+        Me.LblOrdonnanceValide.Name = "LblOrdonnanceValide"
+        Me.LblOrdonnanceValide.Size = New System.Drawing.Size(194, 13)
+        Me.LblOrdonnanceValide.TabIndex = 3
+        Me.LblOrdonnanceValide.Text = "Ordonnance signée numériquement"
+        '
         'NumRenouvellement
         '
         Me.NumRenouvellement.Location = New System.Drawing.Point(111, 24)
@@ -877,15 +886,6 @@ Partial Class RadFOrdonnanceListeDetail
         Me.RadBtnAjoutLigne.Size = New System.Drawing.Size(151, 24)
         Me.RadBtnAjoutLigne.TabIndex = 1
         Me.RadBtnAjoutLigne.Text = "Ajout ligne commentaire"
-        '
-        'LblOrdonnanceValide
-        '
-        Me.LblOrdonnanceValide.AutoSize = True
-        Me.LblOrdonnanceValide.Location = New System.Drawing.Point(413, 27)
-        Me.LblOrdonnanceValide.Name = "LblOrdonnanceValide"
-        Me.LblOrdonnanceValide.Size = New System.Drawing.Size(194, 13)
-        Me.LblOrdonnanceValide.TabIndex = 3
-        Me.LblOrdonnanceValide.Text = "Ordonnance signée numériquement"
         '
         'RadFOrdonnanceListeDetail
         '

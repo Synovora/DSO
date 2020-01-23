@@ -324,6 +324,12 @@
     <Compile Include="Form\Episode\RadFEpisodeParametreDetailEdit.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="Form\Episode\RadFEpisodeProtocoleAiguDetail.Designer.vb">
+      <DependentUpon>RadFEpisodeProtocoleAiguDetail.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Form\Episode\RadFEpisodeProtocoleAiguDetail.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Form\Workflow\RadFWkfDemandeAvisHisto.Designer.vb">
       <DependentUpon>RadFWkfDemandeAvisHisto.vb</DependentUpon>
     </Compile>
@@ -1069,6 +1075,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Form\Episode\RadFEpisodeParametreDetailEdit.resx">
       <DependentUpon>RadFEpisodeParametreDetailEdit.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form\Episode\RadFEpisodeProtocoleAiguDetail.resx">
+      <DependentUpon>RadFEpisodeProtocoleAiguDetail.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Form\Workflow\RadFWkfDemandeAvisHisto.resx">
       <DependentUpon>RadFWkfDemandeAvisHisto.vb</DependentUpon>

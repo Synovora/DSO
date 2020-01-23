@@ -385,7 +385,7 @@ Public Class RadFOrdonnanceListeDetail
 
         'Fenêtre thérapeutique existe (en cours ou à venir ou obsolète)
         If ordonnanceDetailGrid.FenetreTherapeutique = True Then
-            RadAldGridView.Rows(iGridALD).Cells("fenetreTherapeutique").Value = "O"
+            RadAldGridView.Rows(iGridALD).Cells("fenetreTherapeutique").Value = "Fenêtre thérapeutique"
         Else
             RadAldGridView.Rows(iGridALD).Cells("fenetreTherapeutique").Value = ""
         End If
@@ -398,6 +398,14 @@ Public Class RadFOrdonnanceListeDetail
         RadAldGridView.Rows(iGridALD).Cells("medicamentCis").Value = ordonnanceDetailGrid.MedicamentCis
 
         RadAldGridView.Rows(iGridALD).Cells("commentairePosologie").Value = ordonnanceDetailGrid.CommentairePosologie
+    End Sub
+
+
+    Private Sub RadAldGridView_ToolTipTextNeeded(sender As Object, e As Telerik.WinControls.ToolTipTextNeededEventArgs) Handles RadAldGridView.ToolTipTextNeeded
+        Dim hoveredCell As GridDataCellElement = TryCast(sender, GridDataCellElement)
+        If hoveredCell IsNot Nothing AndAlso hoveredCell.ColumnInfo.Name = "posologie" Then
+            e.ToolTipText = hoveredCell.RowInfo.Cells("fenetreTherapeutique").Value
+        End If
     End Sub
 
     Private Sub ChargementGridNonALD(ordonnanceDetailGrid As OrdonnanceDetailGrid)
@@ -427,7 +435,7 @@ Public Class RadFOrdonnanceListeDetail
 
         'Fenêtre thérapeutique existe (en cours ou à venir ou obsolète)
         If ordonnanceDetailGrid.FenetreTherapeutique = True Then
-            RadNonAldGridView.Rows(iGridNonALD).Cells("fenetreTherapeutique").Value = "O"
+            RadNonAldGridView.Rows(iGridNonALD).Cells("fenetreTherapeutique").Value = "Fenêtre thérapeutique"
         Else
             RadNonAldGridView.Rows(iGridNonALD).Cells("fenetreTherapeutique").Value = ""
         End If
@@ -440,6 +448,14 @@ Public Class RadFOrdonnanceListeDetail
         RadNonAldGridView.Rows(iGridNonALD).Cells("medicamentCis").Value = ordonnanceDetailGrid.MedicamentCis
 
         RadNonAldGridView.Rows(iGridNonALD).Cells("commentairePosologie").Value = ordonnanceDetailGrid.CommentairePosologie
+    End Sub
+
+
+    Private Sub RadNonAldGridView_ToolTipTextNeeded(sender As Object, e As Telerik.WinControls.ToolTipTextNeededEventArgs) Handles RadNonAldGridView.ToolTipTextNeeded
+        Dim hoveredCell As GridDataCellElement = TryCast(sender, GridDataCellElement)
+        If hoveredCell IsNot Nothing AndAlso hoveredCell.ColumnInfo.Name = "posologie" Then
+            e.ToolTipText = hoveredCell.RowInfo.Cells("fenetreTherapeutique").Value
+        End If
     End Sub
 
     Private Sub ChargementEtatCivil()
