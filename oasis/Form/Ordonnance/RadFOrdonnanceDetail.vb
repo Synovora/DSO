@@ -139,6 +139,8 @@ Public Class RadFOrdonnanceDetail
         If ordonnanceDetail.TraitementId = 0 Then
             LblLabelDuree.Hide()
             NumDuree.Hide()
+            LblLabelPosologie.Hide()
+            TxtPosologie.Hide()
         End If
     End Sub
 

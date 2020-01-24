@@ -119,6 +119,7 @@ Public Class RadFOrdonnanceListeDetail
         TxtCommentaire.Text = ordonnance.Commentaire
         NumRenouvellement.Value = ordonnance.Renouvellement
         LblDateCreation.Text = ordonnance.DateCreation.ToString("dd/MM/yyyy")
+        LblOrdonnanceId.Text = ordonnance.Id.ToString
         GestionAccesBoutonAction()
     End Sub
 
@@ -290,6 +291,9 @@ Public Class RadFOrdonnanceListeDetail
 
     Private Sub RadAldGridView_ToolTipTextNeeded(sender As Object, e As Telerik.WinControls.ToolTipTextNeededEventArgs) Handles RadAldGridView.ToolTipTextNeeded
         Dim hoveredCell As GridDataCellElement = TryCast(sender, GridDataCellElement)
+        If hoveredCell IsNot Nothing Then
+            e.ToolTipText = hoveredCell.Value.ToString()
+        End If
         If hoveredCell IsNot Nothing AndAlso hoveredCell.ColumnInfo.Name = "posologie" Then
             e.ToolTipText = hoveredCell.RowInfo.Cells("fenetreTherapeutique").Value
         End If
@@ -340,6 +344,9 @@ Public Class RadFOrdonnanceListeDetail
 
     Private Sub RadNonAldGridView_ToolTipTextNeeded(sender As Object, e As Telerik.WinControls.ToolTipTextNeededEventArgs) Handles RadNonAldGridView.ToolTipTextNeeded
         Dim hoveredCell As GridDataCellElement = TryCast(sender, GridDataCellElement)
+        If hoveredCell IsNot Nothing Then
+            e.ToolTipText = hoveredCell.Value.ToString()
+        End If
         If hoveredCell IsNot Nothing AndAlso hoveredCell.ColumnInfo.Name = "posologie" Then
             e.ToolTipText = hoveredCell.RowInfo.Cells("fenetreTherapeutique").Value
         End If
@@ -543,25 +550,35 @@ Public Class RadFOrdonnanceListeDetail
 
     'Modification d'une ligne d'ordonnance
     Private Sub MasterTemplate_CellDoubleClick(sender As Object, e As Telerik.WinControls.UI.GridViewCellEventArgs) Handles RadAldGridView.CellDoubleClick
-        If RadAldGridView.CurrentRow IsNot Nothing Then
-            Dim aRow As Integer = Me.RadAldGridView.Rows.IndexOf(Me.RadAldGridView.CurrentRow)
-            If aRow >= 0 Then
-                Dim OrdonnanceLigneId As Integer = RadAldGridView.Rows(aRow).Cells("ordonnanceLigneId").Value
-                'Tester si l'ordonnance sélectionnée est à valider
-                Using form As New RadFOrdonnanceDetail
-                    form.SelectedOrdonnanceId = SelectedOrdonnanceId
-                    form.SelectedOrdonnanceLigneId = OrdonnanceLigneId
-                    form.SelectedPatient = Me.SelectedPatient
-                    form.SelectedEpisode = SelectedEpisode
-                    form.Ald = True
-                    form.Allergie = Me.Allergie
-                    form.ContreIndication = Me.ContreIndication
-                    form.ShowDialog()
-                End Using
-                ChargementOrdonnanceDetail()
-            End If
+        If ordonnance.Inactif = True Then
+            Exit Sub
+        End If
+        If ordonnance.DateValidation <> Nothing Then
+            MessageBox.Show("Une ordonnance signée médicalement, n'est plus modifiable")
         Else
-            MessageBox.Show("Veuillez sélectionner une ligne d'ordonnance")
+            If RadAldGridView.CurrentRow IsNot Nothing Then
+                Dim aRow As Integer = Me.RadAldGridView.Rows.IndexOf(Me.RadAldGridView.CurrentRow)
+                If aRow >= 0 Then
+                    Dim OrdonnanceLigneId As Integer = RadAldGridView.Rows(aRow).Cells("ordonnanceLigneId").Value
+                    Me.Enabled = False
+                    Cursor.Current = Cursors.WaitCursor
+                    Using form As New RadFOrdonnanceDetail
+                        form.SelectedOrdonnanceId = SelectedOrdonnanceId
+                        form.SelectedOrdonnanceLigneId = OrdonnanceLigneId
+                        form.SelectedPatient = Me.SelectedPatient
+                        form.SelectedEpisode = SelectedEpisode
+                        form.Ald = True
+                        form.Allergie = Me.Allergie
+                        form.ContreIndication = Me.ContreIndication
+                        form.ShowDialog()
+                    End Using
+                    ChargementOrdonnanceDetail()
+                    Me.Enabled = True
+                    Cursor.Current = Cursors.Default
+                End If
+            Else
+                MessageBox.Show("Veuillez sélectionner une ligne d'ordonnance")
+            End If
         End If
     End Sub
 
@@ -647,25 +664,35 @@ Public Class RadFOrdonnanceListeDetail
 
     'Détail
     Private Sub RadNonAldGridView_CellDoubleClick(sender As Object, e As GridViewCellEventArgs) Handles RadNonAldGridView.CellDoubleClick
-        If RadNonAldGridView.CurrentRow IsNot Nothing Then
-            Dim aRow As Integer = Me.RadNonAldGridView.Rows.IndexOf(Me.RadNonAldGridView.CurrentRow)
-            If aRow >= 0 Then
-                Dim OrdonnanceLigneId As Integer = RadNonAldGridView.Rows(aRow).Cells("ordonnanceLigneId").Value
-                'Tester si l'ordonnance sélectionnée est à valider
-                Using form As New RadFOrdonnanceDetail
-                    form.SelectedOrdonnanceId = SelectedOrdonnanceId
-                    form.SelectedOrdonnanceLigneId = OrdonnanceLigneId
-                    form.SelectedPatient = Me.SelectedPatient
-                    form.SelectedEpisode = SelectedEpisode
-                    form.Ald = False
-                    form.Allergie = Me.Allergie
-                    form.ContreIndication = Me.ContreIndication
-                    form.ShowDialog()
-                End Using
-                ChargementOrdonnanceDetail()
-            End If
+        If ordonnance.Inactif = True Then
+            Exit Sub
+        End If
+        If ordonnance.DateValidation <> Nothing Then
+            MessageBox.Show("Une ordonnance signée médicalement, n'est plus modifiable")
         Else
-            MessageBox.Show("Veuillez sélectionner une ligne d'ordonnance")
+            If RadNonAldGridView.CurrentRow IsNot Nothing Then
+                Dim aRow As Integer = Me.RadNonAldGridView.Rows.IndexOf(Me.RadNonAldGridView.CurrentRow)
+                If aRow >= 0 Then
+                    Dim OrdonnanceLigneId As Integer = RadNonAldGridView.Rows(aRow).Cells("ordonnanceLigneId").Value
+                    Me.Enabled = False
+                    Cursor.Current = Cursors.WaitCursor
+                    Using form As New RadFOrdonnanceDetail
+                        form.SelectedOrdonnanceId = SelectedOrdonnanceId
+                        form.SelectedOrdonnanceLigneId = OrdonnanceLigneId
+                        form.SelectedPatient = Me.SelectedPatient
+                        form.SelectedEpisode = SelectedEpisode
+                        form.Ald = False
+                        form.Allergie = Me.Allergie
+                        form.ContreIndication = Me.ContreIndication
+                        form.ShowDialog()
+                    End Using
+                    ChargementOrdonnanceDetail()
+                    Me.Enabled = True
+                    Cursor.Current = Cursors.Default
+                End If
+            Else
+                MessageBox.Show("Veuillez sélectionner une ligne d'ordonnance")
+            End If
         End If
     End Sub
 
@@ -790,6 +817,8 @@ Public Class RadFOrdonnanceListeDetail
     Private Sub GestionAccesBoutonAction()
         If ordonnance.Inactif = True Then
             LblOrdonnanceValide.Hide()
+            LblOrdonnanceValide2.Hide()
+            LblDateSignature.Hide()
             RadBtnImprimer.Hide()
             ALDContextMenuStrip.Enabled = False
             NonALDContextMenuStrip.Enabled = False
@@ -800,9 +829,9 @@ Public Class RadFOrdonnanceListeDetail
             TxtCommentaire.Enabled = False
         Else
             If ordonnance.DateValidation <> Nothing Then
-                LblOrdonnanceValide.Text = "Ordonnance signée numériquement, disponible pour être imprimée"
                 LblDateSignature.Text = ordonnance.DateValidation.ToString("dd/MM/yyyy")
                 LblOrdonnanceValide.Show()
+                LblOrdonnanceValide2.Show()
                 RadBtnImprimer.Enabled = True
                 ALDContextMenuStrip.Enabled = False
                 NonALDContextMenuStrip.Enabled = False
@@ -811,6 +840,7 @@ Public Class RadFOrdonnanceListeDetail
                 RadBtnValidation.Hide()
             Else
                 LblOrdonnanceValide.Hide()
+                LblOrdonnanceValide2.Hide()
                 LblDateSignature.Hide()
                 RadBtnImprimer.Enabled = False
                 If userLog.TypeProfil <> FonctionDao.enumTypeFonction.MEDICAL.ToString Then

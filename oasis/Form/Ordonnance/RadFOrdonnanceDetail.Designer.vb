@@ -51,14 +51,14 @@ Partial Class RadFOrdonnanceDetail
         Me.LblPatientAdresse1 = New System.Windows.Forms.Label()
         Me.ToolTip = New System.Windows.Forms.ToolTip(Me.components)
         Me.RadGroupBox1 = New Telerik.WinControls.UI.RadGroupBox()
+        Me.TxtPosologie = New System.Windows.Forms.TextBox()
+        Me.LblLabelPosologie = New System.Windows.Forms.Label()
         Me.Label7 = New System.Windows.Forms.Label()
         Me.LblLabelDuree = New System.Windows.Forms.Label()
         Me.TxtCommentaire = New System.Windows.Forms.TextBox()
         Me.NumDuree = New System.Windows.Forms.NumericUpDown()
         Me.RadBtnAbandon = New Telerik.WinControls.UI.RadButton()
         Me.RadBtnValidation = New Telerik.WinControls.UI.RadButton()
-        Me.Label1 = New System.Windows.Forms.Label()
-        Me.TxtPosologie = New System.Windows.Forms.TextBox()
         CType(Me.RadGroupBoxEtatCivil, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.RadGroupBoxEtatCivil.SuspendLayout()
         CType(Me.RadGroupBox1, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -351,7 +351,7 @@ Partial Class RadFOrdonnanceDetail
         '
         Me.RadGroupBox1.AccessibleRole = System.Windows.Forms.AccessibleRole.Grouping
         Me.RadGroupBox1.Controls.Add(Me.TxtPosologie)
-        Me.RadGroupBox1.Controls.Add(Me.Label1)
+        Me.RadGroupBox1.Controls.Add(Me.LblLabelPosologie)
         Me.RadGroupBox1.Controls.Add(Me.Label7)
         Me.RadGroupBox1.Controls.Add(Me.LblLabelDuree)
         Me.RadGroupBox1.Controls.Add(Me.TxtCommentaire)
@@ -363,6 +363,23 @@ Partial Class RadFOrdonnanceDetail
         Me.RadGroupBox1.Size = New System.Drawing.Size(1296, 152)
         Me.RadGroupBox1.TabIndex = 3
         Me.RadGroupBox1.Text = "Détail"
+        '
+        'TxtPosologie
+        '
+        Me.TxtPosologie.Location = New System.Drawing.Point(136, 35)
+        Me.TxtPosologie.MaxLength = 250
+        Me.TxtPosologie.Name = "TxtPosologie"
+        Me.TxtPosologie.Size = New System.Drawing.Size(1155, 20)
+        Me.TxtPosologie.TabIndex = 5
+        '
+        'LblLabelPosologie
+        '
+        Me.LblLabelPosologie.AutoSize = True
+        Me.LblLabelPosologie.Location = New System.Drawing.Point(11, 37)
+        Me.LblLabelPosologie.Name = "LblLabelPosologie"
+        Me.LblLabelPosologie.Size = New System.Drawing.Size(58, 13)
+        Me.LblLabelPosologie.TabIndex = 4
+        Me.LblLabelPosologie.Text = "Posologie"
         '
         'Label7
         '
@@ -415,23 +432,6 @@ Partial Class RadFOrdonnanceDetail
         Me.RadBtnValidation.Size = New System.Drawing.Size(110, 24)
         Me.RadBtnValidation.TabIndex = 6
         Me.RadBtnValidation.Text = "Validation"
-        '
-        'Label1
-        '
-        Me.Label1.AutoSize = True
-        Me.Label1.Location = New System.Drawing.Point(11, 37)
-        Me.Label1.Name = "Label1"
-        Me.Label1.Size = New System.Drawing.Size(58, 13)
-        Me.Label1.TabIndex = 4
-        Me.Label1.Text = "Posologie"
-        '
-        'TxtPosologie
-        '
-        Me.TxtPosologie.Location = New System.Drawing.Point(136, 35)
-        Me.TxtPosologie.MaxLength = 250
-        Me.TxtPosologie.Name = "TxtPosologie"
-        Me.TxtPosologie.Size = New System.Drawing.Size(1155, 20)
-        Me.TxtPosologie.TabIndex = 5
         '
         'RadFOrdonnanceDetail
         '
@@ -502,6 +502,6 @@ Partial Class RadFOrdonnanceDetail
     Friend WithEvents TxtCommentaire As TextBox
     Friend WithEvents NumDuree As NumericUpDown
     Friend WithEvents TxtPosologie As TextBox
-    Friend WithEvents Label1 As Label
+    Friend WithEvents LblLabelPosologie As Label
 End Class
 
