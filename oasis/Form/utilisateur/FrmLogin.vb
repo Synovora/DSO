@@ -1,4 +1,5 @@
-﻿Imports Oasis_Common
+﻿Imports System.Configuration
+Imports Oasis_Common
 
 Public Class FrmLogin
 
@@ -17,26 +18,40 @@ Public Class FrmLogin
     ''' <param name="sender"></param>
     ''' <param name="e"></param>
     Private Sub BtnValidate_Click(sender As Object, e As EventArgs) Handles BtnValidate.Click
-        Dim apiOasis As New ApiOasis("localhost:44355")
-        Dim loginRequest = New LoginRequest() With {
-            .login = Me.TxtLogin.Text,
-            .password = Me.TxtPassword.Text
-        }
 
-        Dim str = apiOasis.loginRest(loginRequest)
+        ' --- recherche chaine de connextion / api rest
+        If StandardDao.isConnectionStringFixed() = False Then
+            Me.Cursor = Cursors.WaitCursor
+            Dim loginRequest = New LoginRequest() With {
+                .login = Me.TxtLogin.Text,
+                .password = Me.TxtPassword.Text
+            }
+            Try
+                Using apiOasisLogin As New ApiOasis()
+                    StandardDao.fixConnectionString(apiOasisLogin.loginRest(loginRequest))
+                End Using
+            Catch ex As Exception
+                If MsgBox("" & ex.Message & vbCrLf & "Réessayer ?", MsgBoxStyle.YesNo Or MessageBoxIcon.Error, "Authentification Api") = MsgBoxResult.Yes Then
+                    Return
+                Else
+                    End
+                End If
+            Finally
+                Me.Cursor = Cursors.Default
+            End Try
+        End If
 
         Dim userDao As UserDao = New UserDao
-
         Try
-
             userLog = userDao.getUserByLoginPassword(Me.TxtLogin.Text, Me.TxtPassword.Text)
         Catch ex As Exception
-            Dim unused = MessageBox.Show("Authentification : " & ex.Message, "Problème", MessageBoxButtons.OK, MessageBoxIcon.Error)
+            Dim unused = MessageBox.Show("" & ex.Message, "Authentification", MessageBoxButtons.OK, MessageBoxIcon.Error)
             Return
         End Try
         Me.Cursor = Cursors.WaitCursor
-        Using vFPatientListe As New RadFPatientListe
-            vFPatientListe.UtilisateurConnecte = userLog
+        Using vFPatientListe As New FrmTacheMain
+            'Using vFPatientListe As New RadFPatientListe
+            'vFPatientListe.UtilisateurConnecte = userLog
             Me.Hide()
             vFPatientListe.ShowDialog()
         End Using
@@ -49,7 +64,7 @@ Public Class FrmLogin
 
     End Sub
 
-    Private Sub BtnValidateOld_Click(sender As Object, e As EventArgs) Handles BtnValidate.Click
+    Private Sub BtnValidateOld_Click(sender As Object, e As EventArgs) ' Handles BtnValidate.Click
         Dim userDao As UserDao = New UserDao
 
         Try

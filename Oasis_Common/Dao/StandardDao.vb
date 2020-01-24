@@ -17,21 +17,25 @@ Public MustInherit Class StandardDao
                 conn.Open()
                 Exit Do
             Catch e As Exception
-                MsgBox("Problème de connexion à la base de données (" & e.Message & ") - Validez pour réssayer")
+                MsgBox("Problème de connexion à la base de données (" & e.Message & ") - Validez pour rééssayer")
             End Try
         Loop
         Return conn
 
     End Function
 
-    Public Shared Sub fixConnectionString()
+    Public Shared Sub fixConnectionString(newConnectionStringIfEmpty As String)
         Dim DBCS = ConfigurationManager.ConnectionStrings("Oasis_WF.My.MySettings.oasisConnection")
         If DBCS.ConnectionString = "" Then
             Dim writable = GetType(ConfigurationElement).GetField("_bReadOnly", BindingFlags.Instance Or BindingFlags.NonPublic)
             writable.SetValue(DBCS, False)
-            DBCS.ConnectionString = "Data Source=ns3119889.ip-51-38-181.eu;Initial Catalog=oasis;persist security info=True;user id=sa;password=Oasis-689;MultipleActiveResultSets=True"
+            DBCS.ConnectionString = newConnectionStringIfEmpty
         End If
     End Sub
 
+    Public Shared Function isConnectionStringFixed() As Boolean
+        Dim DBCS = ConfigurationManager.ConnectionStrings("Oasis_WF.My.MySettings.oasisConnection")
+        Return DBCS.ConnectionString.Length <> 0
+    End Function
 
 End Class

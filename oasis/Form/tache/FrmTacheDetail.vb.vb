@@ -1,4 +1,5 @@
-﻿Imports Oasis_Common
+﻿Imports System.Configuration
+Imports Oasis_Common
 
 Public Class FrmTacheDetail_vb
     Private tache As Tache
@@ -267,8 +268,12 @@ Public Class FrmTacheDetail_vb
             Using frmChoixDateHeure As New FrmChoixDateHeureDuree(tache.EmetteurCommentaire)
                 frmChoixDateHeure.ShowDialog()
                 If frmChoixDateHeure.DateChoisie <> Nothing Then
+                    Dim dureeRendezVous As Integer
+                    If IsNumeric(ConfigurationManager.AppSettings("dureeRendezVous")) Then
+                        dureeRendezVous = ConfigurationManager.AppSettings("dureeRendezVous")
+                    End If
                     '     Public Sub createRendezVous(patient As Patient, parcours As Parcours, typeTache As TypeTache, dateRDV As Date, duree As Integer, commentaire As String, Optional tacheParent As Tache = Nothing)
-                    tacheDao.createRendezVous(tacheBeanAssocie.Patient, tacheBeanAssocie.Parcours, tache.getTypeRdvFromDemande(), frmChoixDateHeure.DateChoisie, 15, frmChoixDateHeure.Commentaire, tache)
+                    tacheDao.createRendezVous(tacheBeanAssocie.Patient, tacheBeanAssocie.Parcours, tache.getTypeRdvFromDemande(), frmChoixDateHeure.DateChoisie, dureeRendezVous, frmChoixDateHeure.Commentaire, tache)
                     IsActionEffectuee = True
                     Close()
                 End If
