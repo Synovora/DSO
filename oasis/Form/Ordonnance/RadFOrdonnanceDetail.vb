@@ -103,6 +103,7 @@ Public Class RadFOrdonnanceDetail
             ordonnanceDetail = ordonnanceDetailDao.getOrdonnanceLigneById(SelectedOrdonnanceLigneId)
             NumDuree.Value = ordonnanceDetail.Duree
             TxtCommentaire.Text = ordonnanceDetail.PosologieCommentaire
+            TxtPosologie.Text = ordonnanceDetail.Posologie
         Else
             EditMode = EnumEditMode.Creation
             ordonnanceDetail = New OrdonnanceDetail
@@ -117,6 +118,7 @@ Public Class RadFOrdonnanceDetail
             ordonnanceDetail.DateDebut = Date.MaxValue
             ordonnanceDetail.DateFin = Date.MaxValue
             ordonnanceDetail.Duree = 0
+            ordonnanceDetail.Posologie = 0
             ordonnanceDetail.PosologieBase = ""
             ordonnanceDetail.PosologieRythme = 0
             ordonnanceDetail.PosologieMatin = 0
@@ -287,11 +289,15 @@ Public Class RadFOrdonnanceDetail
                 CodeRetour = False
                 MessageBox.Show("Saisie durée obligatoire")
             End If
+            If TxtPosologie.Text = "" Then
+                CodeRetour = False
+                MessageBox.Show("Saisie posologie obligatoire")
+            End If
         End If
         If CodeRetour = True Then
             Select Case EditMode
                 Case EnumEditMode.Modification
-                    ordonnanceDetailDao.ModificationOrdonnanceDetail(SelectedOrdonnanceLigneId, TxtCommentaire.Text, NumDuree.Value)
+                    ordonnanceDetailDao.ModificationOrdonnanceDetail(SelectedOrdonnanceLigneId, TxtCommentaire.Text, NumDuree.Value, TxtPosologie.Text)
                 Case EnumEditMode.Creation
                     ordonnanceDetail.PosologieCommentaire = TxtCommentaire.Text
                     ordonnanceDetailDao.CreationOrdonnanceDetail(ordonnanceDetail)

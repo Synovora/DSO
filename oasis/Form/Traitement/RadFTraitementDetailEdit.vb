@@ -766,7 +766,7 @@ Public Class RadFTraitementDetailEdit
     Private Sub RadBtnMedoc_Click(sender As Object, e As EventArgs) Handles RadBtnMedoc.Click
         Using vFMedocDetail As New RadFMedocDetail
             vFMedocDetail.MedicamentCis = LblTraitementMedicamentCIS.Text
-            vFMedocDetail.ShowDialog() 'Modal
+            vFMedocDetail.ShowDialog()
         End Using
     End Sub
 

@@ -11,6 +11,7 @@
     Private _dateDebut As Date
     Private _dateFin As Date
     Private _duree As Integer
+    Private _posologie As String
     Private _posologieBase As String
     Private _posologieRythme As Integer
     Private _posologieMatin As Integer
@@ -287,6 +288,15 @@
         End Get
         Set(value As Integer)
             _duree = value
+        End Set
+    End Property
+
+    Public Property Posologie As String
+        Get
+            Return _posologie
+        End Get
+        Set(value As String)
+            _posologie = value
         End Set
     End Property
 

@@ -293,6 +293,9 @@ Public Class OrdonnanceDao
         Dim PatientAld As Boolean
         Dim FenetreTherapeutiqueEnCours As Boolean
 
+        Dim posologieMatin, posologieMidi, posologieApresMidi, posologieSoir As Integer
+        Dim Rythme As Integer
+
         PatientAld = alddao.IsPatientALD(patientId)
 
         TraitementDataTable = TraitementDao.getTraitementNotCancelledbyPatient(patientId)
@@ -350,6 +353,118 @@ Public Class OrdonnanceDao
 
             Dim duree As Integer = outils.CalculDureeTraitement(DateDebutCalcul, DateFinCalcul)
 
+            'Formatage de la posologie
+            Dim PosologieMatinString, PosologieMidiString, PosologieApresMidiString, PosologieSoirString As String
+            Dim FractionMatin, FractionMidi, FractionApresMidi, FractionSoir As String
+            Dim PosologieBase As String
+            Dim Base As String
+            Dim Posologie As String = ""
+
+            FractionMatin = Coalesce(TraitementDataTable.Rows(i)("oa_traitement_fraction_matin"), TraitementDao.EnumFraction.Non)
+            FractionMidi = Coalesce(TraitementDataTable.Rows(i)("oa_traitement_fraction_midi"), TraitementDao.EnumFraction.Non)
+            FractionApresMidi = Coalesce(TraitementDataTable.Rows(i)("oa_traitement_fraction_apres_midi"), TraitementDao.EnumFraction.Non)
+            FractionSoir = Coalesce(TraitementDataTable.Rows(i)("oa_traitement_fraction_soir"), TraitementDao.EnumFraction.Non)
+
+            posologieMatin = Coalesce(TraitementDataTable.Rows(i)("oa_traitement_Posologie_matin"), 0)
+            posologieMidi = Coalesce(TraitementDataTable.Rows(i)("oa_traitement_Posologie_midi"), 0)
+            posologieApresMidi = Coalesce(TraitementDataTable.Rows(i)("oa_traitement_Posologie_apres_midi"), 0)
+            posologieSoir = Coalesce(TraitementDataTable.Rows(i)("oa_traitement_Posologie_soir"), 0)
+
+            PosologieBase = Coalesce(TraitementDataTable.Rows(i)("oa_traitement_Posologie_base"), "")
+
+            If FractionMatin <> "" AndAlso FractionMatin <> TraitementDao.EnumFraction.Non Then
+                If posologieMatin <> 0 Then
+                    PosologieMatinString = posologieMatin.ToString & "+" & FractionMatin
+                Else
+                    PosologieMatinString = FractionMatin
+                End If
+            Else
+                If posologieMatin <> 0 Then
+                    PosologieMatinString = posologieMatin.ToString
+                Else
+                    PosologieMatinString = "0"
+                End If
+            End If
+
+            If FractionMidi <> "" AndAlso FractionMidi <> TraitementDao.EnumFraction.Non Then
+                If posologieMidi <> 0 Then
+                    PosologieMidiString = posologieMidi.ToString & "+" & FractionMidi
+                Else
+                    PosologieMidiString = FractionMidi
+                End If
+            Else
+                If posologieMidi <> 0 Then
+                    PosologieMidiString = posologieMidi.ToString
+                Else
+                    PosologieMidiString = "0"
+                End If
+            End If
+
+            PosologieApresMidiString = ""
+            If FractionApresMidi <> "" AndAlso FractionApresMidi <> TraitementDao.EnumFraction.Non Then
+                If posologieApresMidi <> 0 Then
+                    PosologieApresMidiString = posologieApresMidi.ToString & "+" & FractionApresMidi
+                Else
+                    PosologieApresMidiString = FractionApresMidi
+                End If
+            Else
+                If posologieApresMidi <> 0 Then
+                    PosologieApresMidiString = posologieApresMidi.ToString
+                End If
+            End If
+
+            If FractionSoir <> "" AndAlso FractionSoir <> TraitementDao.EnumFraction.Non Then
+                If posologieSoir <> 0 Then
+                    PosologieSoirString = posologieSoir.ToString & "+" & FractionSoir
+                Else
+                    PosologieSoirString = FractionSoir
+                End If
+            Else
+                If posologieSoir <> 0 Then
+                    PosologieSoirString = posologieSoir.ToString
+                Else
+                    PosologieSoirString = "0"
+                End If
+            End If
+            If TraitementDataTable.Rows(i)("oa_traitement_posologie_base") IsNot DBNull.Value Then
+                Rythme = TraitementDataTable.Rows(i)("oa_traitement_posologie_rythme")
+                Select Case PosologieBase
+                    Case TraitementDao.EnumBaseCode.JOURNALIER
+                        Base = ""
+                        If posologieApresMidi <> 0 OrElse FractionApresMidi <> TraitementDao.EnumFraction.Non Then
+                            Posologie = Base + PosologieMatinString + ". " + PosologieMidiString + ". " + PosologieApresMidiString + ". " + PosologieSoirString
+                        Else
+                            Posologie = Base + " " + PosologieMatinString + ". " + PosologieMidiString + ". " + PosologieSoirString
+                        End If
+                    Case Else
+                        Dim RythmeString As String = ""
+                        If FractionMatin <> "" AndAlso FractionMatin <> TraitementDao.EnumFraction.Non Then
+                            If Rythme <> 0 Then
+                                RythmeString = Rythme.ToString & "+" & FractionMatin
+                            Else
+                                RythmeString = FractionMatin
+                            End If
+                        Else
+                            If Rythme <> 0 Then
+                                RythmeString = Rythme.ToString
+                            End If
+                        End If
+                        Select Case TraitementDataTable.Rows(i)("oa_traitement_posologie_base")
+                            Case TraitementDao.EnumBaseCode.CONDITIONNEL
+                                Base = ""
+                            Case TraitementDao.EnumBaseCode.HEBDOMADAIRE
+                                Base = "Hebdo : "
+                            Case TraitementDao.EnumBaseCode.MENSUEL
+                                Base = "Mensuel : "
+                            Case TraitementDao.EnumBaseCode.ANNUEL
+                                Base = "Annuel : "
+                            Case Else
+                                Base = "Base inconnue ! "
+                        End Select
+                        Posologie = Base + RythmeString
+                End Select
+            End If
+
             Dim ordonnanceDetail As New OrdonnanceDetail
             ordonnanceDetail.OrdonnanceId = ordonnanceId
             ordonnanceDetail.Traitement = True
@@ -359,7 +474,8 @@ Public Class OrdonnanceDao
             ordonnanceDetail.MedicamentDci = Coalesce(TraitementDataTable.Rows(i)("oa_traitement_medicament_dci"), "")
             ordonnanceDetail.DateDebut = DateDebut
             ordonnanceDetail.DateFin = DateFin
-            ordonnanceDetail.Duree = Duree
+            ordonnanceDetail.Duree = duree
+            ordonnanceDetail.Posologie = Posologie
             ordonnanceDetail.PosologieBase = Coalesce(TraitementDataTable.Rows(i)("oa_traitement_posologie_base"), "")
             ordonnanceDetail.PosologieRythme = Coalesce(TraitementDataTable.Rows(i)("oa_traitement_posologie_rythme"), 0)
             ordonnanceDetail.PosologieMatin = Coalesce(TraitementDataTable.Rows(i)("oa_traitement_posologie_matin"), 0)

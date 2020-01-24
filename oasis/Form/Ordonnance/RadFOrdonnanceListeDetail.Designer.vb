@@ -50,8 +50,6 @@ Partial Class RadFOrdonnanceListeDetail
         Me.LblAllergie = New System.Windows.Forms.Label()
         Me.LblALD = New System.Windows.Forms.Label()
         Me.Label13 = New System.Windows.Forms.Label()
-        Me.LblPatientDateMaj = New System.Windows.Forms.Label()
-        Me.Label5 = New System.Windows.Forms.Label()
         Me.LblPatientUniteSanitaire = New System.Windows.Forms.Label()
         Me.Label6 = New System.Windows.Forms.Label()
         Me.LblPatientSite = New System.Windows.Forms.Label()
@@ -102,6 +100,9 @@ Partial Class RadFOrdonnanceListeDetail
         Me.SplitPanel6 = New Telerik.WinControls.UI.SplitPanel()
         Me.RadBtnAnnulerOrdonnance = New Telerik.WinControls.UI.RadButton()
         Me.RadBtnAjoutLigne = New Telerik.WinControls.UI.RadButton()
+        Me.Label5 = New System.Windows.Forms.Label()
+        Me.LblDateCreation = New System.Windows.Forms.Label()
+        Me.LblDateSignature = New System.Windows.Forms.Label()
         CType(Me.RadGroupBoxEtatCivil, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.RadGroupBoxEtatCivil.SuspendLayout()
         CType(Me.RadGroupBox1, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -151,8 +152,6 @@ Partial Class RadFOrdonnanceListeDetail
         Me.RadGroupBoxEtatCivil.Controls.Add(Me.LblAllergie)
         Me.RadGroupBoxEtatCivil.Controls.Add(Me.LblALD)
         Me.RadGroupBoxEtatCivil.Controls.Add(Me.Label13)
-        Me.RadGroupBoxEtatCivil.Controls.Add(Me.LblPatientDateMaj)
-        Me.RadGroupBoxEtatCivil.Controls.Add(Me.Label5)
         Me.RadGroupBoxEtatCivil.Controls.Add(Me.LblPatientUniteSanitaire)
         Me.RadGroupBoxEtatCivil.Controls.Add(Me.Label6)
         Me.RadGroupBoxEtatCivil.Controls.Add(Me.LblPatientSite)
@@ -185,7 +184,7 @@ Partial Class RadFOrdonnanceListeDetail
         'LblPharmacienNom
         '
         Me.LblPharmacienNom.AutoSize = True
-        Me.LblPharmacienNom.Location = New System.Drawing.Point(1103, 20)
+        Me.LblPharmacienNom.Location = New System.Drawing.Point(1051, 20)
         Me.LblPharmacienNom.Name = "LblPharmacienNom"
         Me.LblPharmacienNom.Size = New System.Drawing.Size(111, 13)
         Me.LblPharmacienNom.TabIndex = 70
@@ -195,7 +194,7 @@ Partial Class RadFOrdonnanceListeDetail
         '
         Me.LblLabelPharmacien.AutoSize = True
         Me.LblLabelPharmacien.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Bold)
-        Me.LblLabelPharmacien.Location = New System.Drawing.Point(1027, 20)
+        Me.LblLabelPharmacien.Location = New System.Drawing.Point(975, 20)
         Me.LblLabelPharmacien.Name = "LblLabelPharmacien"
         Me.LblLabelPharmacien.Size = New System.Drawing.Size(74, 13)
         Me.LblLabelPharmacien.TabIndex = 69
@@ -228,7 +227,7 @@ Partial Class RadFOrdonnanceListeDetail
         Me.LblALD.AutoSize = True
         Me.LblALD.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.LblALD.ForeColor = System.Drawing.Color.OrangeRed
-        Me.LblALD.Location = New System.Drawing.Point(947, 20)
+        Me.LblALD.Location = New System.Drawing.Point(895, 20)
         Me.LblALD.Name = "LblALD"
         Me.LblALD.Size = New System.Drawing.Size(31, 13)
         Me.LblALD.TabIndex = 43
@@ -243,25 +242,6 @@ Partial Class RadFOrdonnanceListeDetail
         Me.Label13.Size = New System.Drawing.Size(37, 13)
         Me.Label13.TabIndex = 42
         Me.Label13.Text = "NIR :"
-        '
-        'LblPatientDateMaj
-        '
-        Me.LblPatientDateMaj.AutoSize = True
-        Me.LblPatientDateMaj.Location = New System.Drawing.Point(801, 20)
-        Me.LblPatientDateMaj.Name = "LblPatientDateMaj"
-        Me.LblPatientDateMaj.Size = New System.Drawing.Size(63, 13)
-        Me.LblPatientDateMaj.TabIndex = 41
-        Me.LblPatientDateMaj.Text = "23-05-2019"
-        '
-        'Label5
-        '
-        Me.Label5.AutoSize = True
-        Me.Label5.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label5.Location = New System.Drawing.Point(667, 20)
-        Me.Label5.Name = "Label5"
-        Me.Label5.Size = New System.Drawing.Size(128, 13)
-        Me.Label5.TabIndex = 40
-        Me.Label5.Text = "Dernière mise à jour :"
         '
         'LblPatientUniteSanitaire
         '
@@ -628,6 +608,9 @@ Partial Class RadFOrdonnanceListeDetail
         'RadGroupBox2
         '
         Me.RadGroupBox2.AccessibleRole = System.Windows.Forms.AccessibleRole.Grouping
+        Me.RadGroupBox2.Controls.Add(Me.LblDateSignature)
+        Me.RadGroupBox2.Controls.Add(Me.LblDateCreation)
+        Me.RadGroupBox2.Controls.Add(Me.Label5)
         Me.RadGroupBox2.Controls.Add(Me.LblOrdonnanceValide)
         Me.RadGroupBox2.Controls.Add(Me.NumRenouvellement)
         Me.RadGroupBox2.Controls.Add(Me.Label1)
@@ -643,11 +626,11 @@ Partial Class RadFOrdonnanceListeDetail
         'LblOrdonnanceValide
         '
         Me.LblOrdonnanceValide.AutoSize = True
-        Me.LblOrdonnanceValide.Location = New System.Drawing.Point(413, 27)
+        Me.LblOrdonnanceValide.Location = New System.Drawing.Point(718, 27)
         Me.LblOrdonnanceValide.Name = "LblOrdonnanceValide"
-        Me.LblOrdonnanceValide.Size = New System.Drawing.Size(194, 13)
+        Me.LblOrdonnanceValide.Size = New System.Drawing.Size(209, 13)
         Me.LblOrdonnanceValide.TabIndex = 3
-        Me.LblOrdonnanceValide.Text = "Ordonnance signée numériquement"
+        Me.LblOrdonnanceValide.Text = "Ordonnance signée numériquement le "
         '
         'NumRenouvellement
         '
@@ -887,6 +870,33 @@ Partial Class RadFOrdonnanceListeDetail
         Me.RadBtnAjoutLigne.TabIndex = 1
         Me.RadBtnAjoutLigne.Text = "Ajout ligne commentaire"
         '
+        'Label5
+        '
+        Me.Label5.AutoSize = True
+        Me.Label5.Location = New System.Drawing.Point(438, 26)
+        Me.Label5.Name = "Label5"
+        Me.Label5.Size = New System.Drawing.Size(117, 13)
+        Me.Label5.TabIndex = 4
+        Me.Label5.Text = "Ordonnance créée le "
+        '
+        'LblDateCreation
+        '
+        Me.LblDateCreation.AutoSize = True
+        Me.LblDateCreation.Location = New System.Drawing.Point(561, 27)
+        Me.LblDateCreation.Name = "LblDateCreation"
+        Me.LblDateCreation.Size = New System.Drawing.Size(61, 13)
+        Me.LblDateCreation.TabIndex = 5
+        Me.LblDateCreation.Text = "01.01.0101"
+        '
+        'LblDateSignature
+        '
+        Me.LblDateSignature.AutoSize = True
+        Me.LblDateSignature.Location = New System.Drawing.Point(933, 27)
+        Me.LblDateSignature.Name = "LblDateSignature"
+        Me.LblDateSignature.Size = New System.Drawing.Size(61, 13)
+        Me.LblDateSignature.TabIndex = 6
+        Me.LblDateSignature.Text = "01.01.0111"
+        '
         'RadFOrdonnanceListeDetail
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -949,8 +959,6 @@ Partial Class RadFOrdonnanceListeDetail
     Friend WithEvents RadGroupBoxEtatCivil As Telerik.WinControls.UI.RadGroupBox
     Friend WithEvents LblALD As Label
     Friend WithEvents Label13 As Label
-    Friend WithEvents LblPatientDateMaj As Label
-    Friend WithEvents Label5 As Label
     Friend WithEvents LblPatientUniteSanitaire As Label
     Friend WithEvents Label6 As Label
     Friend WithEvents LblPatientSite As Label
@@ -1005,5 +1013,8 @@ Partial Class RadFOrdonnanceListeDetail
     Friend WithEvents BasculerADélivrerANePasDélivrerToolStripMenuItem1 As ToolStripMenuItem
     Friend WithEvents BasculerEnALDToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents LblOrdonnanceValide As Label
+    Friend WithEvents LblDateSignature As Label
+    Friend WithEvents LblDateCreation As Label
+    Friend WithEvents Label5 As Label
 End Class
 

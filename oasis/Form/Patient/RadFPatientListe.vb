@@ -224,8 +224,9 @@ Public Class RadFPatientListe
                         RadBtnEpisode.Font = New Font(RadBtnEpisode.Font, FontStyle.Bold)
                         Dim TypeActiviteEpisode As String
                         TypeActiviteEpisode = episodeDao.GetItemTypeActiviteByCode(episode.TypeActivite)
-                        ToolTip.SetToolTip(RadBtnEpisode, "Un épisode de type : " & episode.Type & " " & TypeActiviteEpisode & " est en cours pour ce patient")
-                    Else
+                    ToolTip.SetToolTip(RadBtnEpisode, "Un épisode de type : " & episode.Type & " " & TypeActiviteEpisode & " est en cours pour ce patient" &
+                                           vbCrLf & "Episode créé par un profil : " & episode.TypeProfil)
+                Else
                         RadBtnEpisode.ForeColor = Color.Black
                         RadBtnEpisode.Font = New Font(RadBtnEpisode.Font, FontStyle.Regular)
                         ToolTip.SetToolTip(RadBtnEpisode, "Ce patient n'a pas d'épisode en cours")
@@ -424,7 +425,8 @@ Public Class RadFPatientListe
                 RadBtnEpisode.Font = New Font(RadBtnEpisode.Font, FontStyle.Bold)
                 Dim TypeActiviteEpisode As String
                 TypeActiviteEpisode = episodeDao.GetItemTypeActiviteByCode(episode.TypeActivite)
-                ToolTip.SetToolTip(RadBtnEpisode, "Un épisode de type : " & episode.Type & " " & TypeActiviteEpisode & " est en cours pour ce patient")
+                ToolTip.SetToolTip(RadBtnEpisode, "Un épisode de type : " & episode.Type & " " & TypeActiviteEpisode &
+                                   vbCrLf & "Créé par un profil : " & episode.TypeProfil & " est en cours pour ce patient")
             Else
                 RadBtnEpisode.ForeColor = Color.FromArgb(21, 66, 139)
                 RadBtnEpisode.Font = New Font(RadBtnEpisode.Font, FontStyle.Regular)
