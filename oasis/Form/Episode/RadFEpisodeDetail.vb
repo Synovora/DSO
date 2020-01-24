@@ -706,6 +706,7 @@ Public Class RadFEpisodeDetail
         If userLog.TypeProfil <> ProfilDao.EnumProfilType.PARAMEDICAL.ToString Then
             RadObsSpeParDataGridView.AllowEditRow = False
             SaisieObservationToolStripMenuItem.Enabled = False
+            AjoutProtocoleAiguToolStripMenuItem.Enabled = False
         End If
 
         FinChargementActesParamedicauxParamedical = True

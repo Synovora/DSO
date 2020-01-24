@@ -217,6 +217,9 @@ Partial Class RadFEpisodeDetail
         Me.RadPanel19 = New Telerik.WinControls.UI.RadPanel()
         Me.RadGridView1 = New Telerik.WinControls.UI.RadGridView()
         Me.RadPanel14 = New Telerik.WinControls.UI.RadPanel()
+        Me.RadBtnAssocierContexte = New Telerik.WinControls.UI.RadButton()
+        Me.RadBtnCréerContexte = New Telerik.WinControls.UI.RadButton()
+        Me.RadBtnConclusionCreerConsigne = New Telerik.WinControls.UI.RadButton()
         Me.RadPanel18 = New Telerik.WinControls.UI.RadPanel()
         Me.SplitPanel3 = New Telerik.WinControls.UI.SplitPanel()
         Me.RadPageView1 = New Telerik.WinControls.UI.RadPageView()
@@ -303,9 +306,6 @@ Partial Class RadFEpisodeDetail
         Me.ToolStripMenuItemMaps = New System.Windows.Forms.ToolStripMenuItem()
         Me.DétailPatientToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.RadDesktopAlert1 = New Telerik.WinControls.UI.RadDesktopAlert(Me.components)
-        Me.RadBtnConclusionCreerConsigne = New Telerik.WinControls.UI.RadButton()
-        Me.RadBtnCréerContexte = New Telerik.WinControls.UI.RadButton()
-        Me.RadBtnAssocierContexte = New Telerik.WinControls.UI.RadButton()
         CType(Me.RadPanel1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.RadPanel1.SuspendLayout()
         CType(Me.RadGroupBox3, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -399,6 +399,9 @@ Partial Class RadFEpisodeDetail
         CType(Me.RadGridView1.MasterTemplate, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.RadPanel14, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.RadPanel14.SuspendLayout()
+        CType(Me.RadBtnAssocierContexte, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.RadBtnCréerContexte, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.RadBtnConclusionCreerConsigne, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.RadPanel18, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.SplitPanel3, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SplitPanel3.SuspendLayout()
@@ -453,9 +456,6 @@ Partial Class RadFEpisodeDetail
         CType(Me.RadPanel10, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.TLMContextMenuStrip.SuspendLayout()
         Me.EtatCivilContextMenuStrip.SuspendLayout()
-        CType(Me.RadBtnConclusionCreerConsigne, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.RadBtnCréerContexte, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.RadBtnAssocierContexte, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
@@ -1458,7 +1458,7 @@ Partial Class RadFEpisodeDetail
         '
         Me.ActeParamedicalMenuStrip.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.SaisieObservationToolStripMenuItem, Me.AjoutProtocoleAiguToolStripMenuItem})
         Me.ActeParamedicalMenuStrip.Name = "ActeParamedicalMenuStrip"
-        Me.ActeParamedicalMenuStrip.Size = New System.Drawing.Size(184, 48)
+        Me.ActeParamedicalMenuStrip.Size = New System.Drawing.Size(184, 70)
         '
         'SaisieObservationToolStripMenuItem
         '
@@ -2045,6 +2045,30 @@ Partial Class RadFEpisodeDetail
         Me.RadPanel14.Name = "RadPanel14"
         Me.RadPanel14.Size = New System.Drawing.Size(449, 33)
         Me.RadPanel14.TabIndex = 2
+        '
+        'RadBtnAssocierContexte
+        '
+        Me.RadBtnAssocierContexte.Location = New System.Drawing.Point(121, 5)
+        Me.RadBtnAssocierContexte.Name = "RadBtnAssocierContexte"
+        Me.RadBtnAssocierContexte.Size = New System.Drawing.Size(156, 24)
+        Me.RadBtnAssocierContexte.TabIndex = 39
+        Me.RadBtnAssocierContexte.Text = "Associer contexte existant"
+        '
+        'RadBtnCréerContexte
+        '
+        Me.RadBtnCréerContexte.Location = New System.Drawing.Point(3, 5)
+        Me.RadBtnCréerContexte.Name = "RadBtnCréerContexte"
+        Me.RadBtnCréerContexte.Size = New System.Drawing.Size(112, 24)
+        Me.RadBtnCréerContexte.TabIndex = 38
+        Me.RadBtnCréerContexte.Text = "Créer contexte"
+        '
+        'RadBtnConclusionCreerConsigne
+        '
+        Me.RadBtnConclusionCreerConsigne.Location = New System.Drawing.Point(334, 5)
+        Me.RadBtnConclusionCreerConsigne.Name = "RadBtnConclusionCreerConsigne"
+        Me.RadBtnConclusionCreerConsigne.Size = New System.Drawing.Size(112, 24)
+        Me.RadBtnConclusionCreerConsigne.TabIndex = 37
+        Me.RadBtnConclusionCreerConsigne.Text = "Créer une consigne"
         '
         'RadPanel18
         '
@@ -2960,30 +2984,6 @@ Partial Class RadFEpisodeDetail
         Me.RadDesktopAlert1.ScreenPosition = Telerik.WinControls.UI.AlertScreenPosition.TopCenter
         Me.RadDesktopAlert1.ThemeName = ""
         '
-        'RadBtnConclusionCreerConsigne
-        '
-        Me.RadBtnConclusionCreerConsigne.Location = New System.Drawing.Point(334, 5)
-        Me.RadBtnConclusionCreerConsigne.Name = "RadBtnConclusionCreerConsigne"
-        Me.RadBtnConclusionCreerConsigne.Size = New System.Drawing.Size(112, 24)
-        Me.RadBtnConclusionCreerConsigne.TabIndex = 37
-        Me.RadBtnConclusionCreerConsigne.Text = "Créer une consigne"
-        '
-        'RadBtnCréerContexte
-        '
-        Me.RadBtnCréerContexte.Location = New System.Drawing.Point(3, 5)
-        Me.RadBtnCréerContexte.Name = "RadBtnCréerContexte"
-        Me.RadBtnCréerContexte.Size = New System.Drawing.Size(112, 24)
-        Me.RadBtnCréerContexte.TabIndex = 38
-        Me.RadBtnCréerContexte.Text = "Créer contexte"
-        '
-        'RadBtnAssocierContexte
-        '
-        Me.RadBtnAssocierContexte.Location = New System.Drawing.Point(121, 5)
-        Me.RadBtnAssocierContexte.Name = "RadBtnAssocierContexte"
-        Me.RadBtnAssocierContexte.Size = New System.Drawing.Size(156, 24)
-        Me.RadBtnAssocierContexte.TabIndex = 39
-        Me.RadBtnAssocierContexte.Text = "Associer contexte existant"
-        '
         'RadFEpisodeDetail
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -3103,6 +3103,9 @@ Partial Class RadFEpisodeDetail
         CType(Me.RadGridView1, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.RadPanel14, System.ComponentModel.ISupportInitialize).EndInit()
         Me.RadPanel14.ResumeLayout(False)
+        CType(Me.RadBtnAssocierContexte, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.RadBtnCréerContexte, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.RadBtnConclusionCreerConsigne, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.RadPanel18, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.SplitPanel3, System.ComponentModel.ISupportInitialize).EndInit()
         Me.SplitPanel3.ResumeLayout(False)
@@ -3161,9 +3164,6 @@ Partial Class RadFEpisodeDetail
         CType(Me.RadPanel10, System.ComponentModel.ISupportInitialize).EndInit()
         Me.TLMContextMenuStrip.ResumeLayout(False)
         Me.EtatCivilContextMenuStrip.ResumeLayout(False)
-        CType(Me.RadBtnConclusionCreerConsigne, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.RadBtnCréerContexte, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.RadBtnAssocierContexte, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
 
