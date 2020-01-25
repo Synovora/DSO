@@ -13,22 +13,26 @@ Public Class DocFileController
         Return "API Oasis - Document file controleur "
     End Function
 
-
+    ''' <summary>
+    ''' 
+    ''' </summary>
+    ''' <returns></returns>
     Public Async Function Upload() As Task(Of Boolean)
         'Try
         Dim fileuploadPath = ConfigurationManager.AppSettings("FileUploadLocation")
-            Dim provider = New MultipartFormDataStreamProvider(fileuploadPath)
-            Dim content = New StreamContent(HttpContext.Current.Request.GetBufferlessInputStream(True))
+        Dim provider = New MultipartFormDataStreamProvider(fileuploadPath)
+        Dim content = New StreamContent(HttpContext.Current.Request.GetBufferlessInputStream(True))
 
-            For Each header In Request.Content.Headers
-                content.Headers.TryAddWithoutValidation(header.Key, header.Value)
-            Next
+        For Each header In Request.Content.Headers
+            content.Headers.TryAddWithoutValidation(header.Key, header.Value)
+        Next
 
-            Await content.ReadAsMultipartAsync(provider)
+        Await content.ReadAsMultipartAsync(provider)
 
-            ' -- on verifie que le login / pwassword est ok 
-            Dim login As String = provider.FormData.Item("login")
+        ' -- on verifie que le login / pwassword est ok 
+        Dim login As String = provider.FormData.Item("login")
         Dim password As String = provider.FormData.Item("password")
+        verifPassword(login, password)
 
         For Each fileData As MultipartFileData In provider.FileData
             Dim originalFileName = fileuploadPath + "\" + fileData.Headers.ContentDisposition.FileName.Replace(Chr(34), "")
@@ -43,5 +47,13 @@ Public Class DocFileController
         'Return False
         'End Try
     End Function
+
+    Private Sub verifPassword(login As String, password As String)
+        Dim userDao As UserDao = New UserDao
+        Dim userLog = Nothing
+        userLog = userDao.getUserByLoginPassword(login, password)
+        Return
+
+    End Sub
 
 End Class
