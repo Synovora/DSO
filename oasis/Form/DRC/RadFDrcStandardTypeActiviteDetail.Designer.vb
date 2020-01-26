@@ -23,6 +23,7 @@ Partial Class RadFDrcStandardTypeActiviteDetail
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
         Me.RadGroupBox1 = New Telerik.WinControls.UI.RadGroupBox()
+        Me.TxtActiviteEpisode = New System.Windows.Forms.TextBox()
         Me.LblAgeUnite = New System.Windows.Forms.Label()
         Me.LblAgeMax = New System.Windows.Forms.Label()
         Me.NumAgeMax = New System.Windows.Forms.NumericUpDown()
@@ -36,7 +37,7 @@ Partial Class RadFDrcStandardTypeActiviteDetail
         Me.RadBtnAbandon = New Telerik.WinControls.UI.RadButton()
         Me.RadBtnValidation = New Telerik.WinControls.UI.RadButton()
         Me.RadBtnAnnulation = New Telerik.WinControls.UI.RadButton()
-        Me.TxtActiviteEpisode = New System.Windows.Forms.TextBox()
+        Me.RadBtnDrcDetail = New Telerik.WinControls.UI.RadButton()
         CType(Me.RadGroupBox1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.RadGroupBox1.SuspendLayout()
         CType(Me.NumAgeMax, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -44,6 +45,7 @@ Partial Class RadFDrcStandardTypeActiviteDetail
         CType(Me.RadBtnAbandon, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.RadBtnValidation, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.RadBtnAnnulation, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.RadBtnDrcDetail, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
@@ -67,6 +69,15 @@ Partial Class RadFDrcStandardTypeActiviteDetail
         Me.RadGroupBox1.Name = "RadGroupBox1"
         Me.RadGroupBox1.Size = New System.Drawing.Size(779, 143)
         Me.RadGroupBox1.TabIndex = 7
+        '
+        'TxtActiviteEpisode
+        '
+        Me.TxtActiviteEpisode.Enabled = False
+        Me.TxtActiviteEpisode.Location = New System.Drawing.Point(110, 73)
+        Me.TxtActiviteEpisode.Name = "TxtActiviteEpisode"
+        Me.TxtActiviteEpisode.ReadOnly = True
+        Me.TxtActiviteEpisode.Size = New System.Drawing.Size(272, 20)
+        Me.TxtActiviteEpisode.TabIndex = 24
         '
         'LblAgeUnite
         '
@@ -182,14 +193,13 @@ Partial Class RadFDrcStandardTypeActiviteDetail
         Me.RadBtnAnnulation.TabIndex = 10
         Me.RadBtnAnnulation.Text = "Supprimer"
         '
-        'TxtActiviteEpisode
+        'RadBtnDrcDetail
         '
-        Me.TxtActiviteEpisode.Enabled = False
-        Me.TxtActiviteEpisode.Location = New System.Drawing.Point(110, 73)
-        Me.TxtActiviteEpisode.Name = "TxtActiviteEpisode"
-        Me.TxtActiviteEpisode.ReadOnly = True
-        Me.TxtActiviteEpisode.Size = New System.Drawing.Size(272, 20)
-        Me.TxtActiviteEpisode.TabIndex = 24
+        Me.RadBtnDrcDetail.Location = New System.Drawing.Point(197, 159)
+        Me.RadBtnDrcDetail.Name = "RadBtnDrcDetail"
+        Me.RadBtnDrcDetail.Size = New System.Drawing.Size(110, 24)
+        Me.RadBtnDrcDetail.TabIndex = 11
+        Me.RadBtnDrcDetail.Text = "DRC Détail"
         '
         'RadFDrcStandardTypeActiviteDetail
         '
@@ -197,6 +207,7 @@ Partial Class RadFDrcStandardTypeActiviteDetail
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.CancelButton = Me.RadBtnAbandon
         Me.ClientSize = New System.Drawing.Size(790, 192)
+        Me.Controls.Add(Me.RadBtnDrcDetail)
         Me.Controls.Add(Me.RadBtnAnnulation)
         Me.Controls.Add(Me.RadBtnValidation)
         Me.Controls.Add(Me.RadBtnAbandon)
@@ -218,6 +229,7 @@ Partial Class RadFDrcStandardTypeActiviteDetail
         CType(Me.RadBtnAbandon, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.RadBtnValidation, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.RadBtnAnnulation, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.RadBtnDrcDetail, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
 
@@ -238,5 +250,6 @@ Partial Class RadFDrcStandardTypeActiviteDetail
     Friend WithEvents RadBtnValidation As Telerik.WinControls.UI.RadButton
     Friend WithEvents RadBtnAnnulation As Telerik.WinControls.UI.RadButton
     Friend WithEvents TxtActiviteEpisode As TextBox
+    Friend WithEvents RadBtnDrcDetail As Telerik.WinControls.UI.RadButton
 End Class
 

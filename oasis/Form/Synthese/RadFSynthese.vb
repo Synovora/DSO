@@ -4,7 +4,8 @@ Imports Telerik.WinControls
 Imports Telerik.WinControls.UI
 Imports Telerik.WinControls.UI.Localization
 Imports Oasis_Common
-
+Imports System.IO
+Imports Telerik.WinForms.Documents.FormatProviders.Pdf
 
 Public Class RadFSynthese
     Private privateSelectedPatient As Patient
@@ -61,15 +62,6 @@ Public Class RadFSynthese
         action.PatientId = SelectedPatient.patientId
         action.Action = "Accès synthèse patient"
         actiondao.CreationAction(action)
-
-        Me.RadDesktopAlert1.Popup.AlertElement.CaptionElement.TextAndButtonsElement.TextElement.ForeColor = Color.Red
-        Me.RadDesktopAlert1.Popup.AlertElement.CaptionElement.CaptionGrip.BackColor = Color.DarkBlue
-        Me.RadDesktopAlert1.Popup.AlertElement.CaptionElement.CaptionGrip.GradientStyle = GradientStyles.Solid
-        Me.RadDesktopAlert1.Popup.AlertElement.ContentElement.Font = New Font("Arial", 8.0F, FontStyle.Italic)
-        Me.RadDesktopAlert1.Popup.AlertElement.ContentElement.TextImageRelation = TextImageRelation.TextBeforeImage
-        Me.RadDesktopAlert1.Popup.AlertElement.BackColor = Color.MistyRose
-        Me.RadDesktopAlert1.Popup.AlertElement.GradientStyle = GradientStyles.Solid
-        Me.RadDesktopAlert1.Popup.AlertElement.BorderColor = Color.DarkBlue
 
         afficheTitleForm(Me, "Synthèse patient")
         CreateLog("Test depuis synthese, utilisateur : " & userLog.UtilisateurId.ToString, Me.Name, LogDao.EnumTypeLog.INFO.ToString)
@@ -575,7 +567,7 @@ Public Class RadFSynthese
         Dim StringTooltip As String
         Dim aldDao As New AldDao
 
-        StringTooltip = AldDao.DateFinALD(Me.SelectedPatient.patientId)
+        StringTooltip = aldDao.DateFinALD(Me.SelectedPatient.patientId)
         If StringTooltip <> "" Then
             LblALD.Show()
             ToolTip.SetToolTip(LblALD, StringTooltip)
@@ -1627,13 +1619,15 @@ Public Class RadFSynthese
                     If vFContexteDetailEdit.CodeRetour = True Then
                         Select Case vFContexteDetailEdit.CodeResultat
                             Case EnumResultat.AnnulationOK
-                                Me.RadDesktopAlert1.CaptionText = "Notification contexte patient"
-                                Me.RadDesktopAlert1.ContentText = "Contexte patient annulé"
-                                Me.RadDesktopAlert1.Show()
+                                Dim form As New RadFNotification()
+                                form.Titre = "Notification contexte patient"
+                                form.Message = "Contexte patient annulé"
+                                form.Show()
                             Case EnumResultat.ModificationOK
-                                Me.RadDesktopAlert1.CaptionText = "Notification contexte patient"
-                                Me.RadDesktopAlert1.ContentText = "Contexte patient modifié"
-                                Me.RadDesktopAlert1.Show()
+                                Dim form As New RadFNotification()
+                                form.Titre = "Notification contexte patient"
+                                form.Message = "Contexte patient modifié"
+                                form.Show()
                         End Select
                         ChargementContexte()
                         If vFContexteDetailEdit.ContexteTransformeEnAntecedent = True Then
@@ -1667,9 +1661,10 @@ Public Class RadFSynthese
                     vFContexteDetailEdit.ShowDialog() 'Modal
                     'Si le traitement a été créé, on recharge la grid
                     If vFContexteDetailEdit.CodeRetour = True Then
-                        Me.RadDesktopAlert1.CaptionText = "Notification contexte patient"
-                        Me.RadDesktopAlert1.ContentText = "Contexte patient créé"
-                        Me.RadDesktopAlert1.Show()
+                        Dim form As New RadFNotification()
+                        form.Titre = "Notification contexte patient"
+                        form.Message = "Contexte patient créé"
+                        form.Show()
                         ChargementContexte()
                     End If
                 End Using
@@ -2282,7 +2277,15 @@ Public Class RadFSynthese
 
     'Imprimer la synthèse du patient
     Private Sub RadBtnImprimer_Click(sender As Object, e As EventArgs) Handles RadBtnImprimer.Click
-
+        Cursor.Current = Cursors.WaitCursor
+        Dim pdfSynthese As New PdfSynthese
+        pdfSynthese.SelectedPatient = SelectedPatient
+        pdfSynthese.ImprimeSynthese()
+        Dim form As New RadFNotification()
+        form.Titre = "Notification - Imprimer synthèse"
+        form.Message = "La génération du PDF de la synthèse est terminée"
+        form.Show()
+        Cursor.Current = Cursors.Default
     End Sub
 
     'Liste des épisodes

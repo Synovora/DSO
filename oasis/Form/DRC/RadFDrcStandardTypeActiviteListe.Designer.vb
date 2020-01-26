@@ -40,6 +40,7 @@ Partial Class RadFDrcStandardTypeActiviteListe
         Me.RadBtnDRCDetail = New Telerik.WinControls.UI.RadButton()
         Me.RadBtnModifier = New Telerik.WinControls.UI.RadButton()
         Me.RadBtnMesurePreventive = New Telerik.WinControls.UI.RadButton()
+        Me.RadBtnPathologieAigue = New Telerik.WinControls.UI.RadButton()
         CType(Me.RadBtnSuiviGrossesse, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.RadBtnSuiviGynecologique, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.RadBtnSuiviEnfantPreScolaire, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -54,6 +55,7 @@ Partial Class RadFDrcStandardTypeActiviteListe
         CType(Me.RadBtnDRCDetail, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.RadBtnModifier, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.RadBtnMesurePreventive, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.RadBtnPathologieAigue, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
@@ -67,7 +69,7 @@ Partial Class RadFDrcStandardTypeActiviteListe
         '
         'RadBtnSuiviGynecologique
         '
-        Me.RadBtnSuiviGynecologique.Location = New System.Drawing.Point(181, 12)
+        Me.RadBtnSuiviGynecologique.Location = New System.Drawing.Point(149, 12)
         Me.RadBtnSuiviGynecologique.Name = "RadBtnSuiviGynecologique"
         Me.RadBtnSuiviGynecologique.Size = New System.Drawing.Size(110, 24)
         Me.RadBtnSuiviGynecologique.TabIndex = 1
@@ -75,7 +77,7 @@ Partial Class RadFDrcStandardTypeActiviteListe
         '
         'RadBtnSuiviEnfantPreScolaire
         '
-        Me.RadBtnSuiviEnfantPreScolaire.Location = New System.Drawing.Point(364, 12)
+        Me.RadBtnSuiviEnfantPreScolaire.Location = New System.Drawing.Point(278, 12)
         Me.RadBtnSuiviEnfantPreScolaire.Name = "RadBtnSuiviEnfantPreScolaire"
         Me.RadBtnSuiviEnfantPreScolaire.Size = New System.Drawing.Size(137, 24)
         Me.RadBtnSuiviEnfantPreScolaire.TabIndex = 2
@@ -83,7 +85,7 @@ Partial Class RadFDrcStandardTypeActiviteListe
         '
         'RadBtnSuiviEnfantScolaire
         '
-        Me.RadBtnSuiviEnfantScolaire.Location = New System.Drawing.Point(579, 12)
+        Me.RadBtnSuiviEnfantScolaire.Location = New System.Drawing.Point(436, 12)
         Me.RadBtnSuiviEnfantScolaire.Name = "RadBtnSuiviEnfantScolaire"
         Me.RadBtnSuiviEnfantScolaire.Size = New System.Drawing.Size(119, 24)
         Me.RadBtnSuiviEnfantScolaire.TabIndex = 3
@@ -203,12 +205,21 @@ Partial Class RadFDrcStandardTypeActiviteListe
         Me.RadBtnMesurePreventive.TabIndex = 12
         Me.RadBtnMesurePreventive.Text = "Sélection mesure préventive"
         '
+        'RadBtnPathologieAigue
+        '
+        Me.RadBtnPathologieAigue.Location = New System.Drawing.Point(579, 12)
+        Me.RadBtnPathologieAigue.Name = "RadBtnPathologieAigue"
+        Me.RadBtnPathologieAigue.Size = New System.Drawing.Size(119, 24)
+        Me.RadBtnPathologieAigue.TabIndex = 4
+        Me.RadBtnPathologieAigue.Text = "Pathologie aiguë"
+        '
         'RadFDrcStandardTypeActiviteListe
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.CancelButton = Me.RadBtnAbandon
         Me.ClientSize = New System.Drawing.Size(925, 477)
+        Me.Controls.Add(Me.RadBtnPathologieAigue)
         Me.Controls.Add(Me.RadBtnMesurePreventive)
         Me.Controls.Add(Me.RadBtnModifier)
         Me.Controls.Add(Me.RadBtnDRCDetail)
@@ -245,6 +256,7 @@ Partial Class RadFDrcStandardTypeActiviteListe
         CType(Me.RadBtnDRCDetail, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.RadBtnModifier, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.RadBtnMesurePreventive, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.RadBtnPathologieAigue, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
 
@@ -263,5 +275,6 @@ Partial Class RadFDrcStandardTypeActiviteListe
     Friend WithEvents RadBtnDRCDetail As Telerik.WinControls.UI.RadButton
     Friend WithEvents RadBtnModifier As Telerik.WinControls.UI.RadButton
     Friend WithEvents RadBtnMesurePreventive As Telerik.WinControls.UI.RadButton
+    Friend WithEvents RadBtnPathologieAigue As Telerik.WinControls.UI.RadButton
 End Class
 

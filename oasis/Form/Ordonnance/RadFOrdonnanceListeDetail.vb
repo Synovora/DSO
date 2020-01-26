@@ -119,6 +119,7 @@ Public Class RadFOrdonnanceListeDetail
         TxtCommentaire.Text = ordonnance.Commentaire
         NumRenouvellement.Value = ordonnance.Renouvellement
         LblDateCreation.Text = ordonnance.DateCreation.ToString("dd/MM/yyyy")
+        LblHeureCreation.Text = ordonnance.DateCreation.ToString("HH:mm")
         LblOrdonnanceId.Text = ordonnance.Id.ToString
         GestionAccesBoutonAction()
     End Sub

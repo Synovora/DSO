@@ -23,14 +23,14 @@ Partial Class RadFParcoursDetailEdit
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
         Me.components = New System.ComponentModel.Container()
-        Dim GridViewTextBoxColumn8 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
-        Dim GridViewTextBoxColumn9 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
-        Dim GridViewTextBoxColumn10 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
-        Dim GridViewTextBoxColumn11 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
-        Dim GridViewTextBoxColumn12 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
-        Dim GridViewTextBoxColumn13 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
-        Dim GridViewTextBoxColumn14 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
-        Dim TableViewDefinition2 As Telerik.WinControls.UI.TableViewDefinition = New Telerik.WinControls.UI.TableViewDefinition()
+        Dim GridViewTextBoxColumn1 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
+        Dim GridViewTextBoxColumn2 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
+        Dim GridViewTextBoxColumn3 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
+        Dim GridViewTextBoxColumn4 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
+        Dim GridViewTextBoxColumn5 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
+        Dim GridViewTextBoxColumn6 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
+        Dim GridViewTextBoxColumn7 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
+        Dim TableViewDefinition1 As Telerik.WinControls.UI.TableViewDefinition = New Telerik.WinControls.UI.TableViewDefinition()
         Me.RadGroupBoxEtatCivil = New Telerik.WinControls.UI.RadGroupBox()
         Me.LblALD = New System.Windows.Forms.Label()
         Me.Label13 = New System.Windows.Forms.Label()
@@ -105,6 +105,7 @@ Partial Class RadFParcoursDetailEdit
         Me.RadBtnRendezVous = New Telerik.WinControls.UI.RadButton()
         Me.RadBtnRorDetail = New Telerik.WinControls.UI.RadButton()
         Me.RadGbxConsultationEnCours = New Telerik.WinControls.UI.RadGroupBox()
+        Me.RadBtnClotureRDV = New Telerik.WinControls.UI.RadButton()
         Me.RadBtnModifRDV = New Telerik.WinControls.UI.RadButton()
         Me.LblDateDernierRendezVous = New System.Windows.Forms.Label()
         Me.LblDateNextType = New System.Windows.Forms.Label()
@@ -124,7 +125,6 @@ Partial Class RadFParcoursDetailEdit
         Me.RadBtnMesurePreventive = New Telerik.WinControls.UI.RadButton()
         Me.RadBtnTestActePara = New Telerik.WinControls.UI.RadButton()
         Me.RadBtnTestParametre = New Telerik.WinControls.UI.RadButton()
-        Me.RadBtnClotureRDV = New Telerik.WinControls.UI.RadButton()
         CType(Me.RadGroupBoxEtatCivil, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.RadGroupBoxEtatCivil.SuspendLayout()
         CType(Me.RadBtnAbandon, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -146,6 +146,7 @@ Partial Class RadFParcoursDetailEdit
         CType(Me.RadBtnRorDetail, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.RadGbxConsultationEnCours, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.RadGbxConsultationEnCours.SuspendLayout()
+        CType(Me.RadBtnClotureRDV, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.RadBtnModifRDV, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.RadBtnActeParamedical, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.RadParcoursConsigneDataGridView, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -156,7 +157,6 @@ Partial Class RadFParcoursDetailEdit
         CType(Me.RadBtnMesurePreventive, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.RadBtnTestActePara, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.RadBtnTestParametre, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.RadBtnClotureRDV, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
@@ -906,6 +906,14 @@ Partial Class RadFParcoursDetailEdit
         CType(Me.RadGbxConsultationEnCours.GetChildAt(0).GetChildAt(1).GetChildAt(0), Telerik.WinControls.Primitives.FillPrimitive).BackColor = System.Drawing.SystemColors.ActiveCaption
         CType(Me.RadGbxConsultationEnCours.GetChildAt(0).GetChildAt(1).GetChildAt(0), Telerik.WinControls.Primitives.FillPrimitive).SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.None
         '
+        'RadBtnClotureRDV
+        '
+        Me.RadBtnClotureRDV.Location = New System.Drawing.Point(714, 49)
+        Me.RadBtnClotureRDV.Name = "RadBtnClotureRDV"
+        Me.RadBtnClotureRDV.Size = New System.Drawing.Size(131, 24)
+        Me.RadBtnClotureRDV.TabIndex = 8
+        Me.RadBtnClotureRDV.Text = "Rendez-vous honoré"
+        '
         'RadBtnModifRDV
         '
         Me.RadBtnModifRDV.Location = New System.Drawing.Point(851, 49)
@@ -987,48 +995,48 @@ Partial Class RadFParcoursDetailEdit
         Me.RadParcoursConsigneDataGridView.MasterTemplate.AllowDragToGroup = False
         Me.RadParcoursConsigneDataGridView.MasterTemplate.AllowEditRow = False
         Me.RadParcoursConsigneDataGridView.MasterTemplate.AllowRowHeaderContextMenu = False
-        GridViewTextBoxColumn8.EnableExpressionEditor = False
-        GridViewTextBoxColumn8.FieldName = "consigneId"
-        GridViewTextBoxColumn8.HeaderText = "id"
-        GridViewTextBoxColumn8.IsVisible = False
-        GridViewTextBoxColumn8.Name = "consigneId"
-        GridViewTextBoxColumn9.EnableExpressionEditor = False
-        GridViewTextBoxColumn9.FieldName = "drcId"
-        GridViewTextBoxColumn9.HeaderText = "drcId"
-        GridViewTextBoxColumn9.IsVisible = False
-        GridViewTextBoxColumn9.Name = "drcId"
-        GridViewTextBoxColumn10.EnableExpressionEditor = False
-        GridViewTextBoxColumn10.FieldName = "drcDescription"
-        GridViewTextBoxColumn10.HeaderText = "Acte paramédical"
-        GridViewTextBoxColumn10.HeaderTextAlignment = System.Drawing.ContentAlignment.MiddleLeft
-        GridViewTextBoxColumn10.Name = "drcDescription"
-        GridViewTextBoxColumn10.Width = 200
-        GridViewTextBoxColumn11.EnableExpressionEditor = False
-        GridViewTextBoxColumn11.FieldName = "commentaire"
-        GridViewTextBoxColumn11.HeaderText = "commentaire"
-        GridViewTextBoxColumn11.HeaderTextAlignment = System.Drawing.ContentAlignment.MiddleLeft
-        GridViewTextBoxColumn11.Name = "commentaire"
-        GridViewTextBoxColumn11.Width = 200
-        GridViewTextBoxColumn12.EnableExpressionEditor = False
-        GridViewTextBoxColumn12.FieldName = "dateDebut"
-        GridViewTextBoxColumn12.HeaderText = "Début"
-        GridViewTextBoxColumn12.Name = "dateDebut"
-        GridViewTextBoxColumn12.TextAlignment = System.Drawing.ContentAlignment.MiddleCenter
-        GridViewTextBoxColumn12.Width = 70
-        GridViewTextBoxColumn13.EnableExpressionEditor = False
-        GridViewTextBoxColumn13.FieldName = "dateFin"
-        GridViewTextBoxColumn13.HeaderText = "Fin"
-        GridViewTextBoxColumn13.Name = "dateFin"
-        GridViewTextBoxColumn13.TextAlignment = System.Drawing.ContentAlignment.MiddleCenter
-        GridViewTextBoxColumn13.Width = 70
-        GridViewTextBoxColumn14.EnableExpressionEditor = False
-        GridViewTextBoxColumn14.FieldName = "activite_type_episode"
-        GridViewTextBoxColumn14.HeaderText = "activite_type_episode"
-        GridViewTextBoxColumn14.IsVisible = False
-        GridViewTextBoxColumn14.Name = "activite_type_episode"
-        Me.RadParcoursConsigneDataGridView.MasterTemplate.Columns.AddRange(New Telerik.WinControls.UI.GridViewDataColumn() {GridViewTextBoxColumn8, GridViewTextBoxColumn9, GridViewTextBoxColumn10, GridViewTextBoxColumn11, GridViewTextBoxColumn12, GridViewTextBoxColumn13, GridViewTextBoxColumn14})
+        GridViewTextBoxColumn1.EnableExpressionEditor = False
+        GridViewTextBoxColumn1.FieldName = "consigneId"
+        GridViewTextBoxColumn1.HeaderText = "id"
+        GridViewTextBoxColumn1.IsVisible = False
+        GridViewTextBoxColumn1.Name = "consigneId"
+        GridViewTextBoxColumn2.EnableExpressionEditor = False
+        GridViewTextBoxColumn2.FieldName = "drcId"
+        GridViewTextBoxColumn2.HeaderText = "drcId"
+        GridViewTextBoxColumn2.IsVisible = False
+        GridViewTextBoxColumn2.Name = "drcId"
+        GridViewTextBoxColumn3.EnableExpressionEditor = False
+        GridViewTextBoxColumn3.FieldName = "drcDescription"
+        GridViewTextBoxColumn3.HeaderText = "Acte paramédical"
+        GridViewTextBoxColumn3.HeaderTextAlignment = System.Drawing.ContentAlignment.MiddleLeft
+        GridViewTextBoxColumn3.Name = "drcDescription"
+        GridViewTextBoxColumn3.Width = 200
+        GridViewTextBoxColumn4.EnableExpressionEditor = False
+        GridViewTextBoxColumn4.FieldName = "commentaire"
+        GridViewTextBoxColumn4.HeaderText = "commentaire"
+        GridViewTextBoxColumn4.HeaderTextAlignment = System.Drawing.ContentAlignment.MiddleLeft
+        GridViewTextBoxColumn4.Name = "commentaire"
+        GridViewTextBoxColumn4.Width = 200
+        GridViewTextBoxColumn5.EnableExpressionEditor = False
+        GridViewTextBoxColumn5.FieldName = "dateDebut"
+        GridViewTextBoxColumn5.HeaderText = "Début"
+        GridViewTextBoxColumn5.Name = "dateDebut"
+        GridViewTextBoxColumn5.TextAlignment = System.Drawing.ContentAlignment.MiddleCenter
+        GridViewTextBoxColumn5.Width = 70
+        GridViewTextBoxColumn6.EnableExpressionEditor = False
+        GridViewTextBoxColumn6.FieldName = "dateFin"
+        GridViewTextBoxColumn6.HeaderText = "Fin"
+        GridViewTextBoxColumn6.Name = "dateFin"
+        GridViewTextBoxColumn6.TextAlignment = System.Drawing.ContentAlignment.MiddleCenter
+        GridViewTextBoxColumn6.Width = 70
+        GridViewTextBoxColumn7.EnableExpressionEditor = False
+        GridViewTextBoxColumn7.FieldName = "activite_type_episode"
+        GridViewTextBoxColumn7.HeaderText = "activite_type_episode"
+        GridViewTextBoxColumn7.IsVisible = False
+        GridViewTextBoxColumn7.Name = "activite_type_episode"
+        Me.RadParcoursConsigneDataGridView.MasterTemplate.Columns.AddRange(New Telerik.WinControls.UI.GridViewDataColumn() {GridViewTextBoxColumn1, GridViewTextBoxColumn2, GridViewTextBoxColumn3, GridViewTextBoxColumn4, GridViewTextBoxColumn5, GridViewTextBoxColumn6, GridViewTextBoxColumn7})
         Me.RadParcoursConsigneDataGridView.MasterTemplate.ShowRowHeaderColumn = False
-        Me.RadParcoursConsigneDataGridView.MasterTemplate.ViewDefinition = TableViewDefinition2
+        Me.RadParcoursConsigneDataGridView.MasterTemplate.ViewDefinition = TableViewDefinition1
         Me.RadParcoursConsigneDataGridView.Name = "RadParcoursConsigneDataGridView"
         Me.RadParcoursConsigneDataGridView.RightToLeft = System.Windows.Forms.RightToLeft.No
         Me.RadParcoursConsigneDataGridView.ShowGroupPanel = False
@@ -1113,14 +1121,6 @@ Partial Class RadFParcoursDetailEdit
         Me.RadBtnTestParametre.TabIndex = 110
         Me.RadBtnTestParametre.Text = "Test génération paramètres"
         '
-        'RadBtnClotureRDV
-        '
-        Me.RadBtnClotureRDV.Location = New System.Drawing.Point(714, 49)
-        Me.RadBtnClotureRDV.Name = "RadBtnClotureRDV"
-        Me.RadBtnClotureRDV.Size = New System.Drawing.Size(131, 24)
-        Me.RadBtnClotureRDV.TabIndex = 8
-        Me.RadBtnClotureRDV.Text = "Rendez-vous honoré"
-        '
         'RadFParcoursDetailEdit
         '
         Me.AcceptButton = Me.RadBtnValidation
@@ -1191,6 +1191,7 @@ Partial Class RadFParcoursDetailEdit
         CType(Me.RadGbxConsultationEnCours, System.ComponentModel.ISupportInitialize).EndInit()
         Me.RadGbxConsultationEnCours.ResumeLayout(False)
         Me.RadGbxConsultationEnCours.PerformLayout()
+        CType(Me.RadBtnClotureRDV, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.RadBtnModifRDV, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.RadBtnActeParamedical, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.RadParcoursConsigneDataGridView.MasterTemplate, System.ComponentModel.ISupportInitialize).EndInit()
@@ -1201,7 +1202,6 @@ Partial Class RadFParcoursDetailEdit
         CType(Me.RadBtnMesurePreventive, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.RadBtnTestActePara, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.RadBtnTestParametre, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.RadBtnClotureRDV, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
         Me.PerformLayout()

@@ -8,6 +8,14 @@
     Private _commentaire As String
     Private _observationMedical As String
     Private _observationParamedical As String
+    Private _conclusionIdeType As String
+    Private _conclusionMedConsigneDrcId As Long
+    Private _conclusionMedContexte1DrcId As Long
+    Private _conclusionMedContexte1AntecedentId As Long
+    Private _conclusionMedContexte2DrcId As Long
+    Private _conclusionMedContexte2AntecedentId As Long
+    Private _conclusionMedContexte3DrcId As Long
+    Private _conclusionMedContexte3AntecedentId As Long
     Private _decision As String
     Private _userCreation As Long
     Private _dateCreation As Date
@@ -157,6 +165,78 @@
         End Get
         Set(value As Boolean)
             _inactif = value
+        End Set
+    End Property
+
+    Public Property ConclusionIdeType As String
+        Get
+            Return _conclusionIdeType
+        End Get
+        Set(value As String)
+            _conclusionIdeType = value
+        End Set
+    End Property
+
+    Public Property ConclusionMedConsigneDrcId As Long
+        Get
+            Return _conclusionMedConsigneDrcId
+        End Get
+        Set(value As Long)
+            _conclusionMedConsigneDrcId = value
+        End Set
+    End Property
+
+    Public Property ConclusionMedContexte1DrcId As Long
+        Get
+            Return _conclusionMedContexte1DrcId
+        End Get
+        Set(value As Long)
+            _conclusionMedContexte1DrcId = value
+        End Set
+    End Property
+
+    Public Property ConclusionMedContexte1AntecedentId As Long
+        Get
+            Return _conclusionMedContexte1AntecedentId
+        End Get
+        Set(value As Long)
+            _conclusionMedContexte1AntecedentId = value
+        End Set
+    End Property
+
+    Public Property ConclusionMedContexte2DrcId As Long
+        Get
+            Return _conclusionMedContexte2DrcId
+        End Get
+        Set(value As Long)
+            _conclusionMedContexte2DrcId = value
+        End Set
+    End Property
+
+    Public Property ConclusionMedContexte2AntecedentId As Long
+        Get
+            Return _conclusionMedContexte2AntecedentId
+        End Get
+        Set(value As Long)
+            _conclusionMedContexte2AntecedentId = value
+        End Set
+    End Property
+
+    Public Property ConclusionMedContexte3DrcId As Long
+        Get
+            Return _conclusionMedContexte3DrcId
+        End Get
+        Set(value As Long)
+            _conclusionMedContexte3DrcId = value
+        End Set
+    End Property
+
+    Public Property ConclusionMedContexte3AntecedentId As Long
+        Get
+            Return _conclusionMedContexte3AntecedentId
+        End Get
+        Set(value As Long)
+            _conclusionMedContexte3AntecedentId = value
         End Set
     End Property
 End Class

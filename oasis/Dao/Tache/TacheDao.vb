@@ -1232,6 +1232,48 @@ Public Class TacheDao
         Return tache
     End Function
 
+
+    Public Function ExisteDemandeAvisMedicalByEpisode(episodeId As Long) As Boolean
+        Dim con As SqlConnection
+        Dim CodeRetour As Boolean = False
+        con = GetConnection()
+
+        Try
+            Dim command As SqlCommand = con.CreateCommand()
+
+            command.CommandText =
+                "SELECT TOP (1) * FROM oasis.oasis.oa_tache T" &
+                " LEFT JOIN  oasis.oa_r_fonction E ON E.oa_r_fonction_id = T.emetteur_fonction_id " & vbCrLf &
+                " LEFT JOIN  oasis.oa_r_fonction D ON D.oa_r_fonction_id = T.destinataire_fonction_id " & vbCrLf &
+                " WHERE episode_id = @episodeId" &
+                " AND categorie = @categorie" &
+                " AND [type] = @type" &
+                " AND (parent_id is Null or parent_id = 0)" &
+                " AND E.oa_r_fonction_type = @typeEmetteur" &
+                " AND D.oa_r_fonction_type = @typeDestinataire"
+
+            With command.Parameters
+                .AddWithValue("@episodeId", episodeId)
+                .AddWithValue("@typeEmetteur", EpisodeDao.EnumTypeProfil.PARAMEDICAL.ToString)
+                .AddWithValue("@typeDestinataire", EpisodeDao.EnumTypeProfil.MEDICAL.ToString)
+                .AddWithValue("@categorie", CategorieTache.SOIN.ToString)
+                .AddWithValue("@type", TypeTache.AVIS_EPISODE.ToString)
+            End With
+
+            Using reader As SqlDataReader = command.ExecuteReader()
+                If reader.Read() Then
+                    CodeRetour = True
+                End If
+            End Using
+        Catch ex As Exception
+            Throw ex
+        Finally
+            con.Close()
+        End Try
+
+        Return CodeRetour
+    End Function
+
     ''' <summary>
     ''' Creation de rendez : insert simple ou on termine la demande (update) et insert du rdv
     ''' </summary>
@@ -1254,7 +1296,7 @@ Public Class TacheDao
                 Throw New Exception("Pas de rendez-vous possible sur ce type de tache parent !")
             End If
         Else
-                tache.ParentId = 0
+            tache.ParentId = 0
         End If
 
         ' --- on set emetteurFonctionId, traiteFonctionId et destinataireFonctionid
@@ -1294,7 +1336,7 @@ Public Class TacheDao
 
             Dim SQLstring As String = "UPDATE oasis.oa_tache SET" &
             " type_demande_rendez_vous = @typeDemandeRendezVous, date_rendez_vous = @dateRendezVous, emetteur_commentaire = @commentaire" &
-            " WHERE id = @Id AND etat = @etat"
+            " WHERE id = @Id And etat = @etat"
 
             Dim cmd As New SqlCommand(SQLstring, con)
             With cmd.Parameters

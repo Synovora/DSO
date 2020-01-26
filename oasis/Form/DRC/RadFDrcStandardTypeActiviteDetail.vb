@@ -83,4 +83,15 @@
     Private Sub NumAgeMax_ValueChanged(sender As Object, e As EventArgs) Handles NumAgeMax.ValueChanged
         drcStandard.AgeMax = NumAgeMax.Value
     End Sub
+
+    Private Sub RadBtnDrcDetail_Click(sender As Object, e As EventArgs) Handles RadBtnDrcDetail.Click
+        'Suppression de l'association de la DRC
+        Cursor.Current = Cursors.WaitCursor
+        Using vRadFDrcDetailEdit As New RadFDrcDetailEdit
+            vRadFDrcDetailEdit.SelectedDRCId = drcStandard.DrcId
+            vRadFDrcDetailEdit.UtilisateurConnecte = userLog
+            vRadFDrcDetailEdit.ShowDialog()
+        End Using
+        Cursor.Current = Cursors.Default
+    End Sub
 End Class

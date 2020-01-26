@@ -146,7 +146,4 @@ Un clic de souris sur cette mention permet d'accéder à l'écran listant les m�
     <value>Cette mention apparaît quand le patient a au moins un médicament déclaré en "Allergie"
 Un clic de souris sur cette mention permet d'accéder à l'écran listant les médicaments déclarés en "Allergie" pour ce patient.</value>
   </data>
-  <metadata name="RadDesktopAlert1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>17, 64</value>
-  </metadata>
 </root>

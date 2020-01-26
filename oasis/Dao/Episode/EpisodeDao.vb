@@ -3,6 +3,12 @@ Imports Oasis_Common
 Public Class EpisodeDao
     Inherits StandardDao
 
+    Public Enum EnumTypeConclusionParamedicale
+        ROLE_PROPRE
+        SUR_PROTOCOLE
+        DEMANDE_AVIS
+    End Enum
+
     Public Structure EnumTypeActiviteEpisodeItem
         Const PATHOLOGIE_AIGUE = "Pathologie Aiguë"
         Const PREVENTION_AUTRE = "Autre prévention"
@@ -134,6 +140,14 @@ Public Class EpisodeDao
         episode.ObservationMedical = Coalesce(reader("observation_medical"), "")
         episode.ObservationParamedical = Coalesce(reader("observation_paramedical"), "")
         episode.Decision = Coalesce(reader("decision"), "")
+        episode.ConclusionIdeType = Coalesce(reader("conclusion_ide_type"), "")
+        episode.ConclusionMedConsigneDrcId = Coalesce(reader("conclusion_med_consigne_drc_id"), 0)
+        episode.ConclusionMedContexte1DrcId = Coalesce(reader("conclusion_med_contexte1_drc_id"), 0)
+        episode.ConclusionMedContexte1AntecedentId = Coalesce(reader("conclusion_med_contexte1_antecedent_id"), 0)
+        episode.ConclusionMedContexte2DrcId = Coalesce(reader("conclusion_med_contexte2_drc_id"), 0)
+        episode.ConclusionMedContexte2AntecedentId = Coalesce(reader("conclusion_med_contexte2_antecedent_id"), 0)
+        episode.ConclusionMedContexte3DrcId = Coalesce(reader("conclusion_med_contexte3_drc_id"), 0)
+        episode.ConclusionMedContexte3AntecedentId = Coalesce(reader("conclusion_med_contexte3_antecedent_id"), 0)
         episode.UserCreation = Coalesce(reader("user_creation"), 0)
         episode.DateCreation = Coalesce(reader("date_creation"), Nothing)
         episode.UserModification = Coalesce(reader("user_modification"), 0)
@@ -177,6 +191,14 @@ Public Class EpisodeDao
                     episode.ObservationMedical = ""
                     episode.ObservationParamedical = ""
                     episode.Decision = ""
+                    episode.ConclusionIdeType = ""
+                    episode.ConclusionMedConsigneDrcId = 0
+                    episode.ConclusionMedContexte1DrcId = 0
+                    episode.ConclusionMedContexte1AntecedentId = 0
+                    episode.ConclusionMedContexte2DrcId = 0
+                    episode.ConclusionMedContexte2AntecedentId = 0
+                    episode.ConclusionMedContexte3DrcId = 0
+                    episode.ConclusionMedContexte3AntecedentId = 0
                     episode.UserCreation = 0
                     episode.DateCreation = Nothing
                     episode.UserModification = 0
@@ -307,6 +329,14 @@ Public Class EpisodeDao
         " observation_medical = @observationMedical," &
         " observation_paramedical = @observationParamedical," &
         " decision = @decision," &
+        " conclusion_ide_type = @conclusionIdeType," &
+        " conclusion_med_consigne_drc_id = @conclusionMedConsigneDrcId," &
+        " conclusion_med_contexte1_drc_id = @conclusionMedContexte1DrcId," &
+        " conclusion_med_contexte1_antecedent_id = @conclusionMedContexte1AntecedentId," &
+        " conclusion_med_contexte2_drc_id = @conclusionMedContexte2DrcId," &
+        " conclusion_med_contexte2_antecedent_id = @conclusionMedContexte2AntecedentId," &
+        " conclusion_med_contexte3_drc_id = @conclusionMedContexte3DrcId," &
+        " conclusion_med_contexte3_antecedent_id = @conclusionMedContexte3AntecedentId," &
         " user_modification = @userModification," &
         " date_modification = @dateModification," &
         " etat = @etat," &
@@ -325,6 +355,14 @@ Public Class EpisodeDao
             .AddWithValue("@observationMedical", episode.ObservationMedical)
             .AddWithValue("@observationParamedical", episode.ObservationParamedical)
             .AddWithValue("@decision", episode.Decision)
+            .AddWithValue("@conclusionIdeType", episode.ConclusionIdeType)
+            .AddWithValue("@conclusionMedConsigneDrcId", episode.ConclusionMedConsigneDrcId)
+            .AddWithValue("@conclusionMedContexte1DrcId", episode.ConclusionMedContexte1DrcId)
+            .AddWithValue("@conclusionMedContexte1AntecedentId", episode.ConclusionMedContexte1AntecedentId)
+            .AddWithValue("@conclusionMedContexte2DrcId", episode.ConclusionMedContexte2DrcId)
+            .AddWithValue("@conclusionMedContexte2AntecedentId", episode.ConclusionMedContexte2AntecedentId)
+            .AddWithValue("@conclusionMedContexte3DrcId", episode.ConclusionMedContexte3DrcId)
+            .AddWithValue("@conclusionMedContexte3AntecedentId", episode.ConclusionMedContexte3AntecedentId)
             .AddWithValue("@userModification", userLog.UtilisateurId)
             .AddWithValue("@dateModification", Date.Now())
             .AddWithValue("@etat", episode.Etat)

@@ -1458,7 +1458,7 @@ Partial Class RadFEpisodeDetail
         '
         Me.ActeParamedicalMenuStrip.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.SaisieObservationToolStripMenuItem, Me.AjoutProtocoleAiguToolStripMenuItem})
         Me.ActeParamedicalMenuStrip.Name = "ActeParamedicalMenuStrip"
-        Me.ActeParamedicalMenuStrip.Size = New System.Drawing.Size(184, 70)
+        Me.ActeParamedicalMenuStrip.Size = New System.Drawing.Size(184, 48)
         '
         'SaisieObservationToolStripMenuItem
         '
@@ -2105,7 +2105,7 @@ Partial Class RadFEpisodeDetail
         Me.RadPageView1.Dock = System.Windows.Forms.DockStyle.Fill
         Me.RadPageView1.Location = New System.Drawing.Point(0, 0)
         Me.RadPageView1.Name = "RadPageView1"
-        Me.RadPageView1.SelectedPage = Me.PgvAntecedent
+        Me.RadPageView1.SelectedPage = Me.PgvParcours
         Me.RadPageView1.Size = New System.Drawing.Size(544, 485)
         Me.RadPageView1.TabIndex = 0
         Me.RadPageView1.TabStop = False
@@ -2594,24 +2594,24 @@ Partial Class RadFEpisodeDetail
         GridViewTextBoxColumn43.HeaderText = "Nom"
         GridViewTextBoxColumn43.HeaderTextAlignment = System.Drawing.ContentAlignment.MiddleLeft
         GridViewTextBoxColumn43.Name = "nomIntervenant"
-        GridViewTextBoxColumn43.Width = 200
+        GridViewTextBoxColumn43.Width = 130
         GridViewTextBoxColumn44.EnableExpressionEditor = False
         GridViewTextBoxColumn44.FieldName = "nomStructure"
         GridViewTextBoxColumn44.HeaderText = "Structure"
         GridViewTextBoxColumn44.Name = "nomStructure"
-        GridViewTextBoxColumn44.Width = 200
+        GridViewTextBoxColumn44.Width = 130
         GridViewTextBoxColumn45.EnableExpressionEditor = False
         GridViewTextBoxColumn45.FieldName = "consultationLast"
         GridViewTextBoxColumn45.HeaderText = "Dern. consult."
         GridViewTextBoxColumn45.Name = "consultationLast"
         GridViewTextBoxColumn45.TextAlignment = System.Drawing.ContentAlignment.MiddleCenter
-        GridViewTextBoxColumn45.Width = 100
+        GridViewTextBoxColumn45.Width = 70
         GridViewTextBoxColumn46.EnableExpressionEditor = False
         GridViewTextBoxColumn46.FieldName = "consultationNext"
         GridViewTextBoxColumn46.HeaderText = "Proch. consult."
         GridViewTextBoxColumn46.Name = "consultationNext"
         GridViewTextBoxColumn46.TextAlignment = System.Drawing.ContentAlignment.MiddleCenter
-        GridViewTextBoxColumn46.Width = 100
+        GridViewTextBoxColumn46.Width = 80
         GridViewTextBoxColumn47.EnableExpressionEditor = False
         GridViewTextBoxColumn47.FieldName = "commentaire"
         GridViewTextBoxColumn47.HeaderText = "Commentaire"

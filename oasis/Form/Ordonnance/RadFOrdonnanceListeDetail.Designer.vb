@@ -83,6 +83,8 @@ Partial Class RadFOrdonnanceListeDetail
         Me.SplitPanel1 = New Telerik.WinControls.UI.SplitPanel()
         Me.SplitPanel2 = New Telerik.WinControls.UI.SplitPanel()
         Me.RadGroupBox2 = New Telerik.WinControls.UI.RadGroupBox()
+        Me.LblHeureCreation = New System.Windows.Forms.Label()
+        Me.Label7 = New System.Windows.Forms.Label()
         Me.Label8 = New System.Windows.Forms.Label()
         Me.LblOrdonnanceId = New System.Windows.Forms.Label()
         Me.LblOrdonnanceValide2 = New System.Windows.Forms.Label()
@@ -611,6 +613,8 @@ Partial Class RadFOrdonnanceListeDetail
         'RadGroupBox2
         '
         Me.RadGroupBox2.AccessibleRole = System.Windows.Forms.AccessibleRole.Grouping
+        Me.RadGroupBox2.Controls.Add(Me.LblHeureCreation)
+        Me.RadGroupBox2.Controls.Add(Me.Label7)
         Me.RadGroupBox2.Controls.Add(Me.Label8)
         Me.RadGroupBox2.Controls.Add(Me.LblOrdonnanceId)
         Me.RadGroupBox2.Controls.Add(Me.LblOrdonnanceValide2)
@@ -628,6 +632,24 @@ Partial Class RadFOrdonnanceListeDetail
         Me.RadGroupBox2.Size = New System.Drawing.Size(1401, 49)
         Me.RadGroupBox2.TabIndex = 0
         Me.RadGroupBox2.Text = "Général"
+        '
+        'LblHeureCreation
+        '
+        Me.LblHeureCreation.AutoSize = True
+        Me.LblHeureCreation.Location = New System.Drawing.Point(562, 26)
+        Me.LblHeureCreation.Name = "LblHeureCreation"
+        Me.LblHeureCreation.Size = New System.Drawing.Size(34, 13)
+        Me.LblHeureCreation.TabIndex = 11
+        Me.LblHeureCreation.Text = "11:11"
+        '
+        'Label7
+        '
+        Me.Label7.AutoSize = True
+        Me.Label7.Location = New System.Drawing.Point(543, 26)
+        Me.Label7.Name = "Label7"
+        Me.Label7.Size = New System.Drawing.Size(13, 13)
+        Me.Label7.TabIndex = 10
+        Me.Label7.Text = "à"
         '
         'Label8
         '
@@ -1055,5 +1077,7 @@ Partial Class RadFOrdonnanceListeDetail
     Friend WithEvents LblOrdonnanceValide2 As Label
     Friend WithEvents Label8 As Label
     Friend WithEvents LblOrdonnanceId As Label
+    Friend WithEvents LblHeureCreation As Label
+    Friend WithEvents Label7 As Label
 End Class
 

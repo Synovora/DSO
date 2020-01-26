@@ -117,6 +117,9 @@ Public Class RadFParcoursDetailEdit
     Dim RendezVousPlanifie As Boolean = False
     Dim DemandeRendezVous As Boolean = False
 
+    Dim DateRendezVous As Date
+    Dim RendezVousPlanifieExiste As Boolean = False
+
     Private Sub RadFParcoursDetailEdit_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         Init()
         ChargementEtatCivil()
@@ -390,10 +393,13 @@ Public Class RadFParcoursDetailEdit
         If dateNext <> Nothing Then
             LblDateProchainRendezVous.Text = dateNext.ToString("dd.MM.yyyy")
             LblDateNextType.Text = "(Rendez-vous planifiée)"
+            RendezVousPlanifieExiste = True
+            DateRendezVous = dateNext
             masquerIntervenant = False
             RadBtnRendezVous.Enabled = False
             RadBtnModifRDV.Show()
-            If tache.Nature = TacheDao.EnumNatureTacheCode.RDV_SPECIALISTE Then
+            If tache.Nature = TacheDao.EnumNatureTacheCode.RDV_SPECIALISTE OrElse
+                tache.Nature = TacheDao.EnumNatureTacheCode.RDV Then
                 If tache.DateRendezVous.Date <= Date.Now.Date() Then
                     RadBtnClotureRDV.Show()
                 End If
@@ -1088,7 +1094,7 @@ Public Class RadFParcoursDetailEdit
             Dim tache As Tache
             tache = tacheDao.GetProchainRendezVousByPatientId(SelectedPatient.patientId, SelectedParcoursId)
             If tache.DateRendezVous.Date <= Date.Now.Date() Then
-                If tache.Id <> 0 AndAlso tache.Nature = TacheDao.EnumNatureTacheCode.RDV_SPECIALISTE Then
+                If tache.Id <> 0 AndAlso (tache.Nature = TacheDao.EnumNatureTacheCode.RDV_SPECIALISTE Or tache.Nature = TacheDao.EnumNatureTacheCode.RDV) Then
                     If MsgBox("Confirmation de la clôture du rendez-vous", MsgBoxStyle.YesNo, "") = MsgBoxResult.Yes Then
                         If tacheDao.ClotureTache(tache.Id, True) = True Then
                             Me.RadDesktopAlert1.CaptionText = "Notification rendez-vous"
@@ -1312,4 +1318,9 @@ Public Class RadFParcoursDetailEdit
         End If
     End Sub
 
+    Private Sub LblDateProchainRendezVous_MouseHover(sender As Object, e As EventArgs) Handles LblDateProchainRendezVous.MouseHover
+        If RendezVousPlanifieExiste = True Then
+            ToolTip1.SetToolTip(LblDateProchainRendezVous, "Heure rendez-vous : " & DateRendezVous.ToString("HH:mm"))
+        End If
+    End Sub
 End Class

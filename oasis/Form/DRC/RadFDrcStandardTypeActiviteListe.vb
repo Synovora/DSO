@@ -133,6 +133,7 @@ Public Class RadFDrcStandardTypeActiviteListe
         GestionBtnSelection()
         RadBtnSuiviGrossesse.ForeColor = Color.Red
         RadBtnSuiviGrossesse.Font = New Font(RadBtnSuiviGrossesse.Font, FontStyle.Bold)
+        ShowBtnSelectDrc()
     End Sub
 
     Private Sub RadBtnSuiviGynecologique_Click(sender As Object, e As EventArgs) Handles RadBtnSuiviGynecologique.Click
@@ -142,6 +143,7 @@ Public Class RadFDrcStandardTypeActiviteListe
         GestionBtnSelection()
         RadBtnSuiviGynecologique.ForeColor = Color.Red
         RadBtnSuiviGynecologique.Font = New Font(RadBtnSuiviGynecologique.Font, FontStyle.Bold)
+        ShowBtnSelectDrc()
     End Sub
 
     Private Sub RadBtnSuiviEnfantPreScolaire_Click(sender As Object, e As EventArgs) Handles RadBtnSuiviEnfantPreScolaire.Click
@@ -151,6 +153,7 @@ Public Class RadFDrcStandardTypeActiviteListe
         GestionBtnSelection()
         RadBtnSuiviEnfantPreScolaire.ForeColor = Color.Red
         RadBtnSuiviEnfantPreScolaire.Font = New Font(RadBtnSuiviEnfantPreScolaire.Font, FontStyle.Bold)
+        ShowBtnSelectDrc()
     End Sub
 
     Private Sub RadBtnSuiviEnfantScolaire_Click(sender As Object, e As EventArgs) Handles RadBtnSuiviEnfantScolaire.Click
@@ -160,6 +163,19 @@ Public Class RadFDrcStandardTypeActiviteListe
         GestionBtnSelection()
         RadBtnSuiviEnfantScolaire.ForeColor = Color.Red
         RadBtnSuiviEnfantScolaire.Font = New Font(RadBtnSuiviEnfantScolaire.Font, FontStyle.Bold)
+        ShowBtnSelectDrc()
+    End Sub
+
+    Private Sub RadBtnPathologieAigue_Click(sender As Object, e As EventArgs) Handles RadBtnPathologieAigue.Click
+        RadGridViewDrcAsso.Rows.Clear()
+        TypeActivite = EpisodeDao.EnumTypeActiviteEpisodeCode.PATHOLOGIE_AIGUE
+        ChargementDrc()
+        GestionBtnSelection()
+        RadBtnPathologieAigue.ForeColor = Color.Red
+        RadBtnPathologieAigue.Font = New Font(RadBtnPathologieAigue.Font, FontStyle.Bold)
+        RadBtnActePM.Hide()
+        RadBtnSlectProtocole.Hide()
+        RadBtnMesurePreventive.Hide()
     End Sub
 
     Private Sub GestionBtnSelection()
@@ -171,6 +187,8 @@ Public Class RadFDrcStandardTypeActiviteListe
         RadBtnSuiviEnfantPreScolaire.Font = New Font(RadBtnSuiviEnfantPreScolaire.Font, FontStyle.Regular)
         RadBtnSuiviEnfantScolaire.ForeColor = Color.FromArgb(21, 66, 139)
         RadBtnSuiviEnfantScolaire.Font = New Font(RadBtnSuiviEnfantScolaire.Font, FontStyle.Regular)
+        RadBtnPathologieAigue.ForeColor = Color.FromArgb(21, 66, 139)
+        RadBtnPathologieAigue.Font = New Font(RadBtnPathologieAigue.Font, FontStyle.Regular)
     End Sub
 
     'Appel gestion DRC Standard
@@ -219,6 +237,13 @@ Public Class RadFDrcStandardTypeActiviteListe
                 End Using
             End If
         End If
+    End Sub
+
+    Private Sub ShowBtnSelectDrc()
+        RadBtnActePM.Show()
+        RadBtnSlectProtocole.Show()
+        RadBtnSelectParm.Show()
+        RadBtnMesurePreventive.Show()
     End Sub
 
 End Class
