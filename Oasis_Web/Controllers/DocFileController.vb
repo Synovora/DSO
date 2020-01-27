@@ -17,35 +17,52 @@ Public Class DocFileController
     ''' 
     ''' </summary>
     ''' <returns></returns>
-    Public Async Function Upload() As Task(Of Boolean)
-        'Try
-        Dim fileuploadPath = ConfigurationManager.AppSettings("FileUploadLocation")
-        Dim provider = New MultipartFormDataStreamProvider(fileuploadPath)
-        Dim content = New StreamContent(HttpContext.Current.Request.GetBufferlessInputStream(True))
+    Public Async Function Upload() As Task(Of HttpResponseMessage)
+        Try
+            Dim isOneFile As Boolean = False
+            Dim fileuploadPath = ConfigurationManager.AppSettings("FileUploadLocation")
+            Dim provider = New MultipartFormDataStreamProvider(fileuploadPath)
+            Dim content = New StreamContent(HttpContext.Current.Request.GetBufferlessInputStream(True))
 
-        For Each header In Request.Content.Headers
-            content.Headers.TryAddWithoutValidation(header.Key, header.Value)
-        Next
+            For Each header In Request.Content.Headers
+                content.Headers.TryAddWithoutValidation(header.Key, header.Value)
+            Next
 
-        Await content.ReadAsMultipartAsync(provider)
-
-        ' -- on verifie que le login / pwassword est ok 
-        Dim login As String = provider.FormData.Item("login")
-        Dim password As String = provider.FormData.Item("password")
-        verifPassword(login, password)
-
-        For Each fileData As MultipartFileData In provider.FileData
-            Dim originalFileName = fileuploadPath + "\" + fileData.Headers.ContentDisposition.FileName.Replace(Chr(34), "")
-            If File.Exists(originalFileName) Then
-                Throw New Exception
+            Await content.ReadAsMultipartAsync(provider)
+            If provider.FileData Is Nothing OrElse provider.FileData.Count <> 1 Then
+                Throw New Exception("Un seul fichier doit être posté !")
             End If
-            File.Move(fileData.LocalFileName, originalFileName)
-        Next
 
-        Return True
-        ' Catch __unusedException1__ As Exception
-        'Return False
-        'End Try
+            ' -- on verifie que le login / pwassword est ok 
+            Dim login As String = provider.FormData.Item("login")
+            Dim password As String = provider.FormData.Item("password")
+            verifPassword(login, password)
+
+            For Each fileData As MultipartFileData In provider.FileData
+                Dim originalFileName = fileuploadPath + "\" + fileData.Headers.ContentDisposition.FileName.Replace(Chr(34), "")
+                If File.Exists(originalFileName) Then
+                    File.Delete(originalFileName)
+                End If
+                File.Move(fileData.LocalFileName, originalFileName)
+            Next
+            Return Request.CreateResponse(HttpStatusCode.Accepted, "true")
+
+        Catch e As ArgumentException
+            Dim resp = New HttpResponseMessage(HttpStatusCode.Unauthorized) With {
+                .Content = New StringContent(e.Message),
+                .ReasonPhrase = "Utilisateur introuvable"
+            }
+            Return resp
+
+        Catch e As Exception
+            Dim resp = New HttpResponseMessage(HttpStatusCode.InternalServerError) With {
+                .Content = New StringContent(e.Message),
+                .ReasonPhrase = "Erreur interne au server"
+            }
+
+            Return resp
+        End Try
+
     End Function
 
     Private Sub verifPassword(login As String, password As String)

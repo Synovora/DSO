@@ -1,4 +1,5 @@
 ﻿Imports System.Configuration
+Imports System.IO
 Imports System.Net
 Imports System.Net.Http
 Imports System.Net.Http.Headers
@@ -40,17 +41,44 @@ Public Class ApiOasis
 
     End Function
 
+    Public Sub uploadFileRest(login As String, password As String, srcFileName As String, contenu As Byte())
+        Dim str = uploadFile(login, password, srcFileName, contenu).GetAwaiter.GetResult()
+    End Sub
+
     Private Function login(loginRequest As LoginRequest) As Task(Of String)
         initHttp(serveurDomain)
 
         Dim response As HttpResponseMessage = client.PostAsJsonAsync("/api/login", loginRequest).Result
-        If response.IsSuccessStatusCode = False Then
+        If response.StatusCode <> HttpStatusCode.Accepted Then
             If response.StatusCode = HttpStatusCode.Unauthorized Then
                 Throw New Exception("Identifiant et/ou mot de passe erroné !")
             End If
+            Throw New Exception(response.ReasonPhrase)
         End If
         Return response.Content.ReadAsAsync(Of String)()
     End Function
+
+    Private Function uploadFile(login As String, password As String, srcFileName As String, contenu As Byte()) As Task(Of String)
+        initHttp(serveurDomain)
+
+        Dim formContent = New MultipartFormDataContent From {
+            {New StringContent(login), "login"},
+            {New StringContent(password), "password"},
+            {New StreamContent(New MemoryStream(contenu)), "filekey", srcFileName}
+        }
+
+        Dim response As HttpResponseMessage = client.PostAsync("/api/docfile", formContent).Result
+        If response.StatusCode <> HttpStatusCode.Accepted Then
+            If response.StatusCode = HttpStatusCode.Unauthorized Then
+                Throw New Exception("Identifiant et/ou mot de passe erroné !")
+            End If
+            Throw New Exception(response.ReasonPhrase)
+        End If
+        Return response.Content.ReadAsAsync(Of String)()
+    End Function
+
+
+
 
     Private Sub initHttp(serveurDomain As String)
         client.BaseAddress = New Uri("https://" + serveurDomain)

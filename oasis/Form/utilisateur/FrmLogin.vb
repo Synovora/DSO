@@ -1,4 +1,5 @@
 ﻿Imports System.Configuration
+Imports System.IO
 Imports Oasis_Common
 
 Public Class FrmLogin
@@ -30,10 +31,16 @@ Public Class FrmLogin
                 Using apiOasisLogin As New ApiOasis()
                     StandardDao.fixConnectionString(apiOasisLogin.loginRest(loginRequest))
                 End Using
+
+                ' -- @@test : test upload
+                'Using apiOasisUpload As New ApiOasis()
+                ' apiOasisUpload.uploadFileRest(loginRequest.login, loginRequest.password, "1_1.PDF", File.ReadAllBytes("\db\brice\Directeur technique H_F - Offre d'emploi Directeur technique H_F - Apec, recrutement et offres d'emploi cadres.pdf"))
+                'End Using
             Catch ex As Exception
                 If MsgBox("" & ex.Message & vbCrLf & "Réessayer ?", MsgBoxStyle.YesNo Or MessageBoxIcon.Error, "Authentification Api") = MsgBoxResult.Yes Then
                     Return
                 Else
+                    Close()
                     End
                 End If
             Finally
