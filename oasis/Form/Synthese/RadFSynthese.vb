@@ -64,7 +64,7 @@ Public Class RadFSynthese
         actiondao.CreationAction(action)
 
         afficheTitleForm(Me, "Synthèse patient")
-        CreateLog("Test depuis synthese, utilisateur : " & userLog.UtilisateurId.ToString, Me.Name, LogDao.EnumTypeLog.INFO.ToString)
+        'CreateLog("Test depuis synthese, utilisateur : " & userLog.UtilisateurId.ToString, Me.Name, LogDao.EnumTypeLog.INFO.ToString)
         RadGridLocalizationProvider.CurrentProvider = New FrenchRadGridViewLocalizationProvider()
         ChargementParametreApplication()
         initZones()
@@ -1272,25 +1272,19 @@ Public Class RadFSynthese
             'Dim tache As Tache
 
             RadParcoursDataGridView.Rows(iGrid).Cells("consultationLast").Value = "-"
-            'tache = tacheDao.GetDernierRenezVousByPatientId(SelectedPatient.patientId, ParcoursDataTable.Rows(i)("oa_parcours_id"))
-            'dateLast = tache.DateRendezVous
             dateLast = Coalesce(ParcoursDataTable.Rows(i)("LastRendezVous"), Nothing)
-            'If tache.DateRendezVous <> Nothing Then
             If dateLast <> Nothing Then
                 RadParcoursDataGridView.Rows(iGrid).Cells("consultationLast").Value = outils.FormatageDateAffichage(dateLast, True)
             End If
 
             RadParcoursDataGridView.Rows(iGrid).Cells("consultationNext").Value = "-"
-            'tache = tacheDao.GetProchainRendezVousByPatientId(SelectedPatient.patientId, ParcoursDataTable.Rows(i)("oa_parcours_id"))
-            'dateNext = tache.DateRendezVous
             dateNext = Coalesce(ParcoursDataTable.Rows(i)("NextRendezVous"), Nothing)
             If dateNext <> Nothing Then
                 'Rendez-vous planifiée
                 RadParcoursDataGridView.Rows(iGrid).Cells("consultationNext").Value = dateNext.ToString("dd.MM.yyyy")
+                RadParcoursDataGridView.Rows(iGrid).Cells("consultationNextHeure").Value = dateNext.ToString("HH:mm")
             Else
                 'Recherche si existe demande de rendez-vous
-                'tache = tacheDao.GetProchaineDemandeRendezVousByPatientId(SelectedPatient.patientId, ParcoursDataTable.Rows(i)("oa_parcours_id"))
-                'dateNext = tache.DateRendezVous
                 dateNext = Coalesce(ParcoursDataTable.Rows(i)("DateDemandeRdv"), Nothing)
                 If dateNext <> Nothing Then
                     'Rendez-vous prévisionnel, demande en cours
@@ -1351,6 +1345,13 @@ Public Class RadFSynthese
         'Positionnement du grid sur la première occurrence
         If RadParcoursDataGridView.Rows.Count > 0 Then
             Me.RadParcoursDataGridView.CurrentRow = RadParcoursDataGridView.Rows(0)
+        End If
+    End Sub
+
+    Private Sub RadParcoursDataGridView_ToolTipTextNeeded(sender As Object, e As ToolTipTextNeededEventArgs) Handles RadParcoursDataGridView.ToolTipTextNeeded
+        Dim hoveredCell As GridDataCellElement = TryCast(sender, GridDataCellElement)
+        If hoveredCell IsNot Nothing AndAlso hoveredCell.ColumnInfo.Name = "consultationNext" Then
+            e.ToolTipText = hoveredCell.RowInfo.Cells("consultationNextHeure").Value
         End If
     End Sub
 

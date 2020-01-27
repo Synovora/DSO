@@ -221,7 +221,7 @@ Public Class RadFEpisodeDetail
                 If tacheRendezVous.isMyTacheATraiter = False Then
                     If tacheRendezVous.isAttribuable Then
                         'Tâche non encore attribuée et l'utilisateur n'est pas encore propriétaire du rendez-vous, proposition d'attribution de la tâche à l'utilisateur
-                        If MsgBox("Vous allez vous attribuer le traitement du rendez-vous qui sera clôturé à la sortie de l'épisode. Confirmez-vous son attribution", MsgBoxStyle.YesNo, "") = MsgBoxResult.Yes Then
+                        If MsgBox("Vous allez vous attribuer le traitement du rendez-vous qui sera honoré à la sortie de l'épisode. Confirmez-vous son attribution", MsgBoxStyle.YesNo, "") = MsgBoxResult.Yes Then
                             Try
                                 tacheDao.attribueTacheToUserLog(tacheRendezVous.Id)
                             Catch ex As Exception
@@ -241,16 +241,62 @@ Public Class RadFEpisodeDetail
                     End If
                 Catch ex As Exception
                     If ex.ToString.StartsWith("Collision") Then
-                        Dim Description As String = "Traitement de clôture annulé, le rendez-vous (tâche n° " & Me.RendezVousId.ToString & ") était déjà clôturé"
+                        Dim Description As String = "Traitement annulé, le rendez-vous (tâche n° " & Me.RendezVousId.ToString & ") était déjà honoré"
                         CreateLog(Description, Me.Name, LogDao.EnumTypeLog.ERREUR.ToString)
                     Else
                         MessageBox.Show(ex.ToString)
-                        Dim Description As String = "La clôture du rendez-vous (tâche n° " & Me.RendezVousId.ToString & ") a échouée"
+                        Dim Description As String = "Le traitement pour honorer le rendez-vous (tâche n° " & Me.RendezVousId.ToString & ") a échouée"
                         CreateLog(Description, Me.Name, LogDao.EnumTypeLog.ERREUR.ToString)
                     End If
                 End Try
             End If
+        Else
+            'Vérifier si un rendez-vous existe pour la fonction de l'utilisateur avec une date <= date du jour
+            Dim tacheRendezVous As Tache
+            tacheRendezVous = tacheDao.GetProchainRendezVousByPatientIdEtEpisode(SelectedPatient.patientId, userLog.TypeProfil)
+            'Si existe
+            If tacheRendezVous.Id <> 0 AndAlso tacheRendezVous.DateRendezVous.Date <= Date.Now.Date Then
+                If tacheRendezVous.isAttribuable Then
+                    'Tâche non encore attribuée et l'utilisateur n'est pas encore propriétaire du rendez-vous, proposition d'attribution de la tâche à l'utilisateur
+                    Dim message As String = "Un rendez-vous de type '" & userLog.TypeProfil & "', a été programmé pour le " & tacheRendezVous.DateRendezVous.ToString("dd.MM.yyyy") &
+                        "." & vbCrLf &
+                        " Vous allez vous attribuer le traitement du rendez-vous qui sera honoré à la sortie de l'épisode. Confirmez-vous son attribution"
+                    If MsgBox(message, MsgBoxStyle.YesNo, "") = MsgBoxResult.Yes Then
+                        Try
+                            tacheDao.attribueTacheToUserLog(tacheRendezVous.Id)
+                        Catch ex As Exception
+                            MessageBox.Show(ex.ToString)
+                            Exit Sub
+                        End Try
+                    Else
+                        Exit Sub
+                    End If
+                Else
+                    Exit Sub
+                End If
+                ClotureRendezVous(tacheRendezVous)
+            End If
         End If
+    End Sub
+
+    Private Sub ClotureRendezVous(tacheRendezVous As Tache)
+        Try
+            If tacheDao.ClotureTache(tacheRendezVous.Id, True) = True Then
+                Dim form As New RadFNotification()
+                form.Titre = "Rendez-vous patient honoré"
+                form.Message = "Le rendez-vous de type '" & userLog.TypeProfil & "', programmé le " & tacheRendezVous.DateRendezVous.ToString("dd.MM.yyyy") & " est honoré"
+                form.Show()
+            End If
+        Catch ex As Exception
+            If ex.ToString.StartsWith("Collision") Then
+                Dim Description As String = "Traitement annulé, le rendez-vous (tâche n° " & Me.RendezVousId.ToString & ") a déjà été traité"
+                CreateLog(Description, Me.Name, LogDao.EnumTypeLog.ERREUR.ToString)
+            Else
+                MessageBox.Show(ex.ToString)
+                Dim Description As String = "Le traitement pour déclarer 'honoré' le rendez-vous (tâche n° " & Me.RendezVousId.ToString & ") a échouée"
+                CreateLog(Description, Me.Name, LogDao.EnumTypeLog.ERREUR.ToString)
+            End If
+        End Try
     End Sub
 
     'Refresh épisode
@@ -2618,6 +2664,7 @@ Public Class RadFEpisodeDetail
             If dateNext <> Nothing Then
                 'Rendez-vous planifiée
                 RadParcoursDataGridView.Rows(iGrid).Cells("consultationNext").Value = dateNext.ToString("dd.MM.yyyy")
+                RadParcoursDataGridView.Rows(iGrid).Cells("consultationNextHeure").Value = dateNext.ToString("HH:mm")
             Else
                 'Recherche si existe demande de rendez-vous
                 dateNext = Coalesce(ParcoursDataTable.Rows(i)("DateDemandeRdv"), Nothing)
@@ -2684,6 +2731,13 @@ Public Class RadFEpisodeDetail
         Cursor.Current = Cursors.Default
     End Sub
 
+
+    Private Sub MasterTemplate_ToolTipTextNeeded_2(sender As Object, e As ToolTipTextNeededEventArgs) Handles RadParcoursDataGridView.ToolTipTextNeeded
+        Dim hoveredCell As GridDataCellElement = TryCast(sender, GridDataCellElement)
+        If hoveredCell IsNot Nothing AndAlso hoveredCell.ColumnInfo.Name = "consultationNext" Then
+            e.ToolTipText = hoveredCell.RowInfo.Cells("consultationNextHeure").Value
+        End If
+    End Sub
 
     Private Sub RafraichirLaffichageToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles RafraichirLaffichageToolStripMenuItem.Click
         ChargementParcoursDeSoin()
@@ -3418,6 +3472,7 @@ Public Class RadFEpisodeDetail
         End Using
         Me.Enabled = True
     End Sub
+
 
     Private Sub CréerUnSuiviToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles CréerUnSuiviToolStripMenuItem.Click
         Cursor.Current = Cursors.WaitCursor

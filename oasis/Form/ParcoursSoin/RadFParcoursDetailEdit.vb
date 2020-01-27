@@ -388,7 +388,7 @@ Public Class RadFParcoursDetailEdit
         End If
 
         'Recherche prochain rendez-vous
-        tache = tacheDao.GetProchainRendezVousByPatientId(SelectedPatient.patientId, SelectedParcoursId)
+        tache = tacheDao.GetProchainRendezVousByPatientIdEtParcours(SelectedPatient.patientId, SelectedParcoursId)
         dateNext = tache.DateRendezVous
         If dateNext <> Nothing Then
             LblDateProchainRendezVous.Text = dateNext.ToString("dd.MM.yyyy")
@@ -711,7 +711,7 @@ Public Class RadFParcoursDetailEdit
                     'Contrôler l'existence d'un rendez-vous en cours
                     Dim RendezVousPossible As Boolean = True
                     Dim tache As Tache
-                    tache = tacheDao.GetProchainRendezVousByPatientId(SelectedPatient.patientId, SelectedParcoursId)
+                    tache = tacheDao.GetProchainRendezVousByPatientIdEtParcours(SelectedPatient.patientId, SelectedParcoursId)
                     If tache.DateRendezVous <> Nothing Then
                         RendezVousPossible = False
                         MessageBox.Show("Un rendez-vous est déjà planifié pour cet intervenant, opération impossible")
@@ -735,7 +735,7 @@ Public Class RadFParcoursDetailEdit
         Dim AnnulationIntervevant As Boolean = True
         If MsgBox("Confirmation de l'annulation de l'intervenant du parcours de soin de ce patient", MsgBoxStyle.YesNo, "") = MsgBoxResult.Yes Then
             'Contrôler l'existence d'un rendez-vous en cours
-            tache = tacheDao.GetProchainRendezVousByPatientId(SelectedPatient.patientId, SelectedParcoursId)
+            tache = tacheDao.GetProchainRendezVousByPatientIdEtParcours(SelectedPatient.patientId, SelectedParcoursId)
             If tache.DateRendezVous <> Nothing Then
                 'Si un rendez-vous existe et que la tache est déjà attribuée > annulation impossible
                 If tache.Etat = TacheDao.EtatTache.EN_COURS.ToString Then
@@ -870,7 +870,7 @@ Public Class RadFParcoursDetailEdit
             If NumDateRV.Value.Date < Date.Now().Date Then
                 'Clôture du rendez-vous
                 If CreationRendezVous(dateRendezVous, TacheDao.EtatTache.TERMINEE.ToString) = True Then
-                    Dim tache As Tache = tacheDao.GetProchainRendezVousByPatientId(SelectedPatient.patientId, SelectedParcoursId)
+                    Dim tache As Tache = tacheDao.GetProchainRendezVousByPatientIdEtParcours(SelectedPatient.patientId, SelectedParcoursId)
                     MessageBox.Show("Rendez-vous programmé et clôturé pour le " & NumDateRV.Value.ToString("dd.MM.yyyy"))
                     'Si l'intervenant est masqué, il faut l'afficher par défaut
                     If ParcoursUpdate.Cacher = True Then
@@ -882,7 +882,7 @@ Public Class RadFParcoursDetailEdit
                 End If
             Else
                 If CreationRendezVous(dateRendezVous, TacheDao.EtatTache.EN_ATTENTE.ToString) = True Then
-                    Dim tache As Tache = tacheDao.GetProchainRendezVousByPatientId(SelectedPatient.patientId, SelectedParcoursId)
+                    Dim tache As Tache = tacheDao.GetProchainRendezVousByPatientIdEtParcours(SelectedPatient.patientId, SelectedParcoursId)
                     MessageBox.Show("Rendez-vous programmé pour le " & NumDateRV.Value.ToString("dd.MM.yyyy"))
                     'Si l'intervenant est masqué, il faut l'afficher par défaut
                     If ParcoursUpdate.Cacher = True Then
@@ -1035,7 +1035,7 @@ Public Class RadFParcoursDetailEdit
         Dim tache As Tache
 
         If RendezVousPlanifie = True Then
-            tache = tacheDao.GetProchainRendezVousByPatientId(SelectedPatient.patientId, SelectedParcoursId)
+            tache = tacheDao.GetProchainRendezVousByPatientIdEtParcours(SelectedPatient.patientId, SelectedParcoursId)
             If tache.Id <> 0 AndAlso (tache.Nature = TacheDao.EnumNatureTacheCode.RDV Or tache.Nature = TacheDao.EnumNatureTacheCode.RDV_SPECIALISTE) Then
                 If tache.Etat = TacheDao.EtatTache.EN_ATTENTE.ToString OrElse
                     (tache.Etat = TacheDao.EtatTache.EN_COURS.ToString And userLog.UtilisateurId <> tache.TraiteUserId) Then
@@ -1092,7 +1092,7 @@ Public Class RadFParcoursDetailEdit
     Private Sub RadBtnClotureRDV_Click(sender As Object, e As EventArgs) Handles RadBtnClotureRDV.Click
         If RendezVousPlanifie = True Then
             Dim tache As Tache
-            tache = tacheDao.GetProchainRendezVousByPatientId(SelectedPatient.patientId, SelectedParcoursId)
+            tache = tacheDao.GetProchainRendezVousByPatientIdEtParcours(SelectedPatient.patientId, SelectedParcoursId)
             If tache.DateRendezVous.Date <= Date.Now.Date() Then
                 If tache.Id <> 0 AndAlso (tache.Nature = TacheDao.EnumNatureTacheCode.RDV_SPECIALISTE Or tache.Nature = TacheDao.EnumNatureTacheCode.RDV) Then
                     If MsgBox("Confirmation de la clôture du rendez-vous", MsgBoxStyle.YesNo, "") = MsgBoxResult.Yes Then
