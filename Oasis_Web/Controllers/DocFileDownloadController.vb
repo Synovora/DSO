@@ -22,7 +22,7 @@ Namespace Controllers
                 If Not File.Exists(filePath) Then
                     response.StatusCode = HttpStatusCode.NotFound
                     response.ReasonPhrase = String.Format("File not found: {0} .", downloadRequest.FileName)
-                    Dim resp = New HttpResponseMessage(HttpStatusCode.Unauthorized) With {
+                    Dim resp = New HttpResponseMessage(HttpStatusCode.NotFound) With {
                         .Content = New StringContent("Fichier demandé inexistant"),
                         .ReasonPhrase = String.Format("Fichier demandé inexistant: {0} .", downloadRequest.FileName)
                     }

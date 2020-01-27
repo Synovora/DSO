@@ -34,6 +34,10 @@ Public Class ApiOasis
         Dim str = uploadFile(login, password, srcFileName, contenu).GetAwaiter.GetResult()
     End Sub
 
+    Public Function downloadFileRest(downloadRequest As DownloadRequest) As Byte()
+        Dim tblByte As Byte() = downloadFile(downloadRequest).GetAwaiter.GetResult()
+        Return tblByte
+    End Function
 
 
     Private Sub init(_serveurDomain As String)
@@ -69,7 +73,7 @@ Public Class ApiOasis
             {New StreamContent(New MemoryStream(contenu)), "filekey", srcFileName}
         }
 
-        Dim response As HttpResponseMessage = client.PostAsync("/api/docfile", formContent).Result
+        Dim response As HttpResponseMessage = client.PostAsync("/api/docfileupload", formContent).Result
         If response.StatusCode <> HttpStatusCode.Accepted Then
             If response.StatusCode = HttpStatusCode.Unauthorized Then
                 Throw New Exception("Identifiant et/ou mot de passe erroné !")
@@ -80,6 +84,18 @@ Public Class ApiOasis
     End Function
 
 
+    Private Function downloadFile(downloadRequest As DownloadRequest) As Task(Of Byte())
+        initHttp(serveurDomain)
+
+        Dim response As HttpResponseMessage = client.PostAsJsonAsync("/api/docfiledownload", downloadRequest).Result
+        If response.StatusCode <> HttpStatusCode.Accepted Then
+            If response.StatusCode = HttpStatusCode.Unauthorized Then
+                Throw New Exception("Identifiant et/ou mot de passe erroné !")
+            End If
+            Throw New Exception(response.ReasonPhrase)
+        End If
+        Return response.Content.ReadAsByteArrayAsync()
+    End Function
 
 
     Private Sub initHttp(serveurDomain As String)

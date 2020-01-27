@@ -32,7 +32,7 @@ Namespace My
         
         <Global.System.Diagnostics.DebuggerStepThroughAttribute()>  _
         Protected Overrides Sub OnCreateMainForm()
-            Me.MainForm = Global.Oasis_WF.FrmLogin
+            Me.MainForm = Global.Oasis_WF.FAuthentificattion
         End Sub
     End Class
 End Namespace

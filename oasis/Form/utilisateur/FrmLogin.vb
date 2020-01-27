@@ -28,14 +28,26 @@ Public Class FrmLogin
                 .password = Me.TxtPassword.Text
             }
             Try
-                Using apiOasisLogin As New ApiOasis()
-                    StandardDao.fixConnectionString(apiOasisLogin.loginRest(loginRequest))
+                Using apiOasis As New ApiOasis()
+                    StandardDao.fixConnectionString(apiOasis.loginRest(loginRequest))
                 End Using
+                loginRequestLog = loginRequest '   pour acces api upload et download ultérieure
 
                 ' -- @@test : test upload
-                'Using apiOasisUpload As New ApiOasis()
-                ' apiOasisUpload.uploadFileRest(loginRequest.login, loginRequest.password, "1_1.PDF", File.ReadAllBytes("\db\brice\Directeur technique H_F - Offre d'emploi Directeur technique H_F - Apec, recrutement et offres d'emploi cadres.pdf"))
+                'Using apiOasis As New ApiOasis()
+                'ApiOasis.uploadFileRest(loginRequest.login, loginRequest.password, "webdette.csv", File.ReadAllBytes("C:\db\lore\conciliation\\webdette.csv"))
                 'End Using
+
+                ' -- @@test : test download
+                'Using apiOasis As New ApiOasis()
+                '    Dim downloadRequest As New DownloadRequest With {
+                '       .LoginRequest = loginRequest,
+                '       .FileName = "webdette.csv"
+                '       }
+                'File.WriteAllBytes("c:\db\oasis\download\" & downloadRequest.FileName, apiOasis.downloadFileRest(downloadRequest))
+                'End Using
+
+
             Catch ex As Exception
                 If MsgBox("" & ex.Message & vbCrLf & "Réessayer ?", MsgBoxStyle.YesNo Or MessageBoxIcon.Error, "Authentification Api") = MsgBoxResult.Yes Then
                     Return
