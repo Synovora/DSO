@@ -185,7 +185,8 @@
     <Compile Include="Areas\HelpPage\SampleGeneration\SampleDirection.vb" />
     <Compile Include="Areas\HelpPage\SampleGeneration\TextSample.vb" />
     <Compile Include="Areas\HelpPage\XmlDocumentationProvider.vb" />
-    <Compile Include="Controllers\DocFileController.vb" />
+    <Compile Include="Controllers\DocFileUploadController.vb" />
+    <Compile Include="Controllers\DocFileDownloadController.vb" />
     <Compile Include="Controllers\LoginController.vb" />
     <Compile Include="Global.asax.vb">
       <DependentUpon>Global.asax</DependentUpon>

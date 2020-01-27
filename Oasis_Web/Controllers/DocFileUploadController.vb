@@ -5,7 +5,7 @@ Imports System.Threading.Tasks
 Imports System.Web.Http
 Imports Oasis_Common
 
-Public Class DocFileController
+Public Class DocFileUploadController
     Inherits ApiController
 
     ' GET api/<controller>
@@ -39,7 +39,7 @@ Public Class DocFileController
             verifPassword(login, password)
 
             For Each fileData As MultipartFileData In provider.FileData
-                Dim originalFileName = fileuploadPath + "\" + fileData.Headers.ContentDisposition.FileName.Replace(Chr(34), "")
+                Dim originalFileName = fileuploadPath & "\" & fileData.Headers.ContentDisposition.FileName.Replace(Chr(34), "")
                 If File.Exists(originalFileName) Then
                     File.Delete(originalFileName)
                 End If
@@ -65,12 +65,5 @@ Public Class DocFileController
 
     End Function
 
-    Private Sub verifPassword(login As String, password As String)
-        Dim userDao As UserDao = New UserDao
-        Dim userLog = Nothing
-        userLog = userDao.getUserByLoginPassword(login, password)
-        Return
-
-    End Sub
 
 End Class

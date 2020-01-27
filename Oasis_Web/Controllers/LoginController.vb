@@ -17,9 +17,7 @@ Public Class LoginController
         Dim userDao As UserDao = New UserDao
         Dim userLog = Nothing
         Try
-            userLog = userDao.getUserByLoginPassword(loginRequest.login,
-                                                     loginRequest.password)
-
+            verifPassword(loginRequest.login, loginRequest.password)
             Dim enc = EncryptString(ConfigurationManager.ConnectionStrings("Oasis_WF.My.MySettings.oasisConnection").ConnectionString)
             Return Request.CreateResponse(HttpStatusCode.Accepted, enc)
 

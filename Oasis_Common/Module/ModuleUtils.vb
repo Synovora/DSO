@@ -73,6 +73,13 @@ Public Module ModuleUtils
         Return memoryStream.ToArray()
     End Function
 
+    Public Sub verifPassword(login As String, password As String)
+        Dim userDao As UserDao = New UserDao
+        Dim userLog = Nothing
+        userLog = userDao.getUserByLoginPassword(login, password)
+        Return
+
+    End Sub
 
 
 End Module

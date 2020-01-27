@@ -23,17 +23,6 @@ Public Class ApiOasis
         init(serveurDomain)
     End Sub
 
-    Private Sub init(_serveurDomain As String)
-        ServicePointManager.ServerCertificateValidationCallback = AddressOf AcceptAllCertifications
-        serveurDomain = _serveurDomain
-        'isProxyManuel = _isProxyManuel
-        'proxyUrl = _proxyUrl
-        'proxyPort = _proxyPort
-        'proxyLogin = _proxyLogin
-        'proxyPassword = _proxyPassword
-        client = New HttpClient()
-    End Sub
-
 
     Public Function loginRest(loginRequest As LoginRequest) As String
         Dim str = login(loginRequest).GetAwaiter.GetResult()
@@ -43,6 +32,19 @@ Public Class ApiOasis
 
     Public Sub uploadFileRest(login As String, password As String, srcFileName As String, contenu As Byte())
         Dim str = uploadFile(login, password, srcFileName, contenu).GetAwaiter.GetResult()
+    End Sub
+
+
+
+    Private Sub init(_serveurDomain As String)
+        ServicePointManager.ServerCertificateValidationCallback = AddressOf AcceptAllCertifications
+        serveurDomain = _serveurDomain
+        'isProxyManuel = _isProxyManuel
+        'proxyUrl = _proxyUrl
+        'proxyPort = _proxyPort
+        'proxyLogin = _proxyLogin
+        'proxyPassword = _proxyPassword
+        client = New HttpClient()
     End Sub
 
     Private Function login(loginRequest As LoginRequest) As Task(Of String)
