@@ -23,17 +23,33 @@ Public Class ApiOasis
         init(serveurDomain)
     End Sub
 
-
+    ''' <summary>
+    ''' Login via api rest oasis
+    ''' </summary>
+    ''' <param name="loginRequest"></param>
+    ''' <returns></returns>
     Public Function loginRest(loginRequest As LoginRequest) As String
         Dim str = login(loginRequest).GetAwaiter.GetResult()
         Return DecryptString(str)
 
     End Function
 
+    ''' <summary>
+    ''' upload de fichier via api rest oasis
+    ''' </summary>
+    ''' <param name="login"></param>
+    ''' <param name="password"></param>
+    ''' <param name="srcFileName"></param>
+    ''' <param name="contenu"></param>
     Public Sub uploadFileRest(login As String, password As String, srcFileName As String, contenu As Byte())
         Dim str = uploadFile(login, password, srcFileName, contenu).GetAwaiter.GetResult()
     End Sub
 
+    ''' <summary>
+    ''' download de fichier via api rest oasis
+    ''' </summary>
+    ''' <param name="downloadRequest"></param>
+    ''' <returns></returns>
     Public Function downloadFileRest(downloadRequest As DownloadRequest) As Byte()
         Dim tblByte As Byte() = downloadFile(downloadRequest).GetAwaiter.GetResult()
         Return tblByte
