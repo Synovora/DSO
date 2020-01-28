@@ -48,35 +48,12 @@ Public Class RadFAldCim10Selecteur
     End Sub
 
     Private Sub ChargementAld()
-        Dim AldDataAdapter As SqlDataAdapter = New SqlDataAdapter()
-        Dim AldDataTable As DataTable = New DataTable()
-
-        Dim conxn As New SqlConnection(outils.getConnectionString())
-
-        Dim SQLString As String
-        SQLString = getSQLStringDRC()
-
-        AldDataTable.Clear()
-
-        AldDataAdapter.SelectCommand = New SqlCommand(SQLString, conxn)
-        AldDataAdapter.Fill(AldDataTable)
-
+        Dim AldDataTable As DataTable
+        AldDataTable = AldCim10Dao.getAllAldCIM10ByAldId(SelectedAldId)
         RadAldDataGridView.DataSource = AldDataTable
-
-        conxn.Close()
-        AldDataAdapter.Dispose()
-
         'Enlève le focus sur la première ligne de la Grid
         RadAldDataGridView.ClearSelection()
     End Sub
-
-    Private Function getSQLStringDRC() As String
-        Dim SQLString As String
-
-        SQLString = "SELECT oa_ald_cim10_id, oa_ald_cim10_ald_code, oa_ald_cim10_code, oa_ald_cim10_description FROM oasis.oa_ald_cim10 WHERE oa_ald_cim10_ald_id = " & SelectedAldId.ToString & ";"
-
-        getSQLStringDRC = SQLString
-    End Function
 
     Private Sub InitAffichageLabel()
         LblCim10Code.Text = ""

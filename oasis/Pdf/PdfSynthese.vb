@@ -22,9 +22,14 @@ Public Class PdfSynthese
 
     Dim aldDao As New AldDao
 
-    Public Const DEST As String = "c:\Temp\Oasis\testpdf.pdf"
+    Dim DEST As String
+    Dim NomPdf As String
+    Dim Comptage, PageNumero As Integer
+    Dim DateGeneration As Date = Date.Now()
 
     Friend Sub ImprimeSynthese()
+        NomPdf = "Synthese_" & SelectedPatient.patientId & "_" & DateGeneration.ToString("yyyy-MM-dd_HH-mm-ss") & ".pdf"
+        DEST = "c:\Temp\Oasis\" & NomPdf
         Dim file As FileInfo = New FileInfo(DEST)
         If Not file.Directory.Exists Then file.Directory.Create()
         CreatePdf()
@@ -34,6 +39,7 @@ Public Class PdfSynthese
         Try
             Dim writer As PdfWriter = New PdfWriter(DEST)
             GenerationPdf(writer)
+            Process.Start(DEST)
         Catch ex As Exception
             MessageBox.Show(ex.ToString)
             Dim form As New RadFNotification()
@@ -49,7 +55,7 @@ Public Class PdfSynthese
         Dim document As Document = New Document(pdf, PageSize.A4)
         Dim font As PdfFont = PdfFontFactory.CreateFont(StandardFonts.TIMES_ROMAN)
 
-        document.Add(New Paragraph("Synthèse patient - (Document généré le " & Date.Now.ToString("dd.MM.yyyy") & ")").SetFontSize(12))
+        PrintEntete(document)
         PrintEtatCivil(document)
         PrintAntecedent(document)
         PrintTraitement(document)
@@ -60,14 +66,23 @@ Public Class PdfSynthese
         document.Close()
     End Sub
 
-    Private Sub PrintEtatCivil(document As Document)
-        Dim table As New Table(UnitValue.CreatePercentArray(1))
+    Private Sub PrintEntete(document As Document)
+        Dim TextPage As New Text("")
+        PageNumero += 1
+        TextPage.SetText("         -          Document généré le " & DateGeneration.ToString("dd.MM.yyyy") &
+                         " à " & DateGeneration.ToString("HH:mm:ss") & "          -          Page " & PageNumero)
+        TextPage.SetFontSize(10)
 
-        document.Add(New Paragraph("Etat civil").SetFontSize(10))
+        document.Add(New Paragraph("         Synthèse patient").SetFontSize(14).Add(TextPage))
+
+    End Sub
+
+    Private Sub PrintEtatCivil(document As Document)
+        document.Add(New Paragraph("--- Etat civil").SetFontSize(11))
         Dim ligne1 As String
-        Dim texte1 As New Text("")
-        'Dim texte2 As New Text("")
+        Dim TextEtatCivil As New Text("")
         Dim p As New Paragraph
+        Dim table As New Table(1)
 
         Dim ALD As String = aldDao.DateFinALD(Me.SelectedPatient.patientId)
         ALD = ALD.Replace(vbCrLf, " ")
@@ -75,26 +90,27 @@ Public Class PdfSynthese
         ligne1 = "Prénom / Nom : " &
             SelectedPatient.PatientPrenom & " " &
             SelectedPatient.PatientNom.ToUpper() &
-            "   âge : " & outils.CalculAgeString(SelectedPatient.PatientDateNaissance) &
-            "   NIR : " & SelectedPatient.PatientNir.ToString &
-            "   Dernière mise à jour de la synthèse : " & FormatageDateAffichage(SelectedPatient.PatientSyntheseDateMaj, True) &
-            "   Site : " & Environnement.Table_site.GetSiteDescription(SelectedPatient.PatientSiteId)
+            "       NIR : " & SelectedPatient.PatientNir.ToString &
+            "          " & SelectedPatient.PatientGenre & vbCrLf &
+            "   Date de naissance : " & SelectedPatient.PatientDateNaissance.ToString("dd.MM.yyyy") & "   -   âge : " & outils.CalculAgeString(SelectedPatient.PatientDateNaissance) & vbCrLf &
+            "   Rattachement au site Oasis de " & Environnement.Table_site.GetSiteDescription(SelectedPatient.PatientSiteId) &
+            "   -  Dernière mise à jour de la synthèse : " & FormatageDateAffichage(SelectedPatient.PatientSyntheseDateMaj, True)
 
-        texte1.SetText("  " & vbCrLf & ALD)
-        texte1.SetFontColor(iText.Kernel.Colors.ColorConstants.RED).SetFontSize(8)
 
-        'texte2.SetText("  " & vbCrLf & " test ============= test ")
-        'texte2.SetFontColor(iText.Kernel.Colors.ColorConstants.BLUE).SetFontSize(12)
+        TextEtatCivil.SetText("  " & vbCrLf & ALD)
+        TextEtatCivil.SetFontColor(iText.Kernel.Colors.ColorConstants.RED).SetFontSize(8)
 
-        'document.Add(New Paragraph(ligne1).SetFontSize(8).Add(texte1))
-        document.Add(p.Add(ligne1).SetFontSize(8).Add(texte1))
+        table.AddCell(New Cell().Add(p.Add(ligne1).SetFontSize(8).Add(TextEtatCivil)))
+        document.Add(table)
+        Comptage = 0
     End Sub
 
     Private Sub PrintAntecedent(document As Document)
-        document.Add(New Paragraph("Antécédent").SetFontSize(10))
         Dim p As New Paragraph
         Dim table As New Table(1)
 
+        Dim PrintLegendeALDValide As Boolean = False
+        Dim PrintLegendeALDDemande As Boolean = False
 
         Dim antecedentDataTable As DataTable
         Dim antecedentDao As AntecedentDao = New AntecedentDao
@@ -103,7 +119,11 @@ Public Class PdfSynthese
         'Déclaration des variables pour réaliser le parcours du DataTable pour alimenter le DataGridView
         Dim i As Integer
         Dim rowCount As Integer = antecedentDataTable.Rows.Count - 1
-        Dim iGrid As Integer = -1 'Indice pour alimenter la Grid qui peut comporter moins d'occurrences que le DataTable
+
+        Comptage += antecedentDataTable.Rows.Count
+        GestionSautDePage(document)
+        document.Add(New Paragraph(vbCrLf & "--- Antécédent").SetFontSize(11))
+
         Dim indentation As String
         Dim dateDateModification, AldDateFin As Date
         Dim AfficheDateModification As String
@@ -197,19 +217,31 @@ Public Class PdfSynthese
             Else
                 If AldValideOK = True Then
                     TextAntecedent.SetFontColor(iText.Kernel.Colors.ColorConstants.RED)
+                    PrintLegendeALDValide = True
                 Else
                     If AldDemandeEnCours = True Then
                         TextAntecedent.SetFontColor(iText.Kernel.Colors.ColorConstants.ORANGE)
+                        PrintLegendeALDDemande = True
                     End If
                 End If
             End If
             table.AddCell(New Cell().Add(New Paragraph(TextAntecedent).SetFixedLeading(10)))
         Next
         document.Add(table)
+
+        If PrintLegendeALDValide = True Then
+            Dim TextLegendeALDValide As New Text("Antécédent rouge -> ALD Valide")
+            TextLegendeALDValide.SetFontColor(iText.Kernel.Colors.ColorConstants.RED).SetFontSize(8)
+            document.Add(New Paragraph().Add(TextLegendeALDValide).SetFixedLeading(10))
+        End If
+        If PrintLegendeALDDemande = True Then
+            Dim TextLegendeALDDemande As New Text("Antécédent orange -> Demande ALD en cours")
+            TextLegendeALDDemande.SetFontColor(iText.Kernel.Colors.ColorConstants.ORANGE).SetFontSize(8)
+            document.Add(New Paragraph().Add(TextLegendeALDDemande).SetFixedLeading(10))
+        End If
     End Sub
 
     Private Sub PrintTraitement(document As Document)
-        document.Add(New Paragraph(vbCrLf & "Traitement").SetFontSize(10))
         Dim p As New Paragraph
         Dim table As New Table(3)
         Dim traitementDataTable As DataTable
@@ -220,8 +252,12 @@ Public Class PdfSynthese
         traitementDataTable.Columns.Add("oa_traitement_posologie", Type.GetType("System.String"))
 
         Dim i As Integer
-        Dim iGrid As Integer = -1 'Indice pour alimenter la Grid qui peut comporter moins d'occurrences que le DataTable
         Dim rowCount As Integer = traitementDataTable.Rows.Count - 1
+
+        Comptage += traitementDataTable.Rows.Count
+        GestionSautDePage(document)
+        document.Add(New Paragraph(vbCrLf & "--- Traitement").SetFontSize(11))
+
         Dim Base As String
         Dim Posologie As String
         Dim dateFin, dateDebut, dateModification, dateCreation As Date
@@ -229,6 +265,8 @@ Public Class PdfSynthese
         Dim Rythme As Integer
         Dim FenetreTherapeutiqueEnCours As Boolean
         Dim FenetreTherapeutiqueAVenir As Boolean
+
+        Dim PremierPassage As Boolean = True
 
         'Dim Allergie As Boolean = False
         Dim FenetreDateDebut, FenetreDateFin As Date
@@ -449,19 +487,12 @@ Public Class PdfSynthese
             'Stockage des médicaments prescrits (pour contrôle lors de la selection d'un médicament dans le cadre d'un nouveau traitement
             SelectedPatient.PatientMedicamentsPrescritsCis.Add(traitementDataTable.Rows(i)("oa_traitement_medicament_cis"))
 
-
-            'Alimentation du DataGridView
-            'DCI
-            'Dim medicamentDci As String = traitementDataTable.Rows(i)("oa_traitement_medicament_dci")
             Dim TextMedicamentDci As New Text(traitementDataTable.Rows(i)("oa_traitement_medicament_dci"))
-            'medicamentDci.SetText(medicamentDci)
             TextMedicamentDci.SetFontSize(8)
             'Posologie
             Dim TextPosologie As New Text(Posologie)
             'posologieTraitement.SetText(Posologie)
             TextPosologie.SetFontSize(8)
-            'RadTraitementDataGridView.Rows(iGrid).Cells("commentaire").Value = commentaire
-            'RadTraitementDataGridView.Rows(iGrid).Cells("commentairePosologie").Value = commentairePosologie
 
             If Posologie = "Fenêtre Th." Then
                 'RadTraitementDataGridView.Rows(iGrid).Cells("posologie").Style.ForeColor = Color.Red
@@ -478,9 +509,18 @@ Public Class PdfSynthese
             'dateModificationTraitement.SetText(DateModificationString)
             TextDateModification.SetFontSize(8)
             'Bouton gérer fenêtre thérapeutique
+
             If FenetreTherapeutiqueAVenir = True Or FenetreTherapeutiqueEnCours = True Then
                 'RadTraitementDataGridView.Rows(iGrid).Cells("posologie").Style.ForeColor = Color.Red
             End If
+
+            If PremierPassage = True Then
+                table.AddCell(New Cell().Add(New Paragraph("Traitement").SetFontSize(8).SetBold))
+                table.AddCell(New Cell().Add(New Paragraph("Posologie").SetFontSize(8).SetBold))
+                table.AddCell(New Cell().Add(New Paragraph("Date maj").SetFontSize(8).SetBold))
+                PremierPassage = False
+            End If
+
             table.AddCell(New Cell().Add(New Paragraph(TextMedicamentDci)))
             table.AddCell(New Cell().Add(New Paragraph(TextPosologie)))
             table.AddCell(New Cell().Add(New Paragraph(TextDateModification)))
@@ -489,7 +529,6 @@ Public Class PdfSynthese
     End Sub
 
     Private Sub PrintParcours(document As Document)
-        document.Add(New Paragraph(vbCrLf & "Parcours de soin").SetFontSize(10))
         Dim p As New Paragraph
         Dim table As New Table(6)
 
@@ -501,10 +540,15 @@ Public Class PdfSynthese
 
         ParcoursDataTable = parcoursDao.getAllParcoursbyPatient(SelectedPatient.patientId)
 
-        Dim iGrid As Integer = -1 'Indice pour alimenter la Grid qui peut comporter moins d'occurrences que le DataTable
         Dim rowCount As Integer = ParcoursDataTable.Rows.Count - 1
+
+        Comptage += ParcoursDataTable.Rows.Count
+        GestionSautDePage(document)
+        document.Add(New Paragraph(vbCrLf & "--- Parcours de soin").SetFontSize(11))
+
         Dim SpecialiteDescription As String
         Dim ParcoursCacher, ParcoursConsigneEnRouge As Boolean
+        Dim PremierPassage As Boolean = True
 
         'Parcours du DataTable pour alimenter les colonnes du DataGridView
         For i = 0 To rowCount Step 1
@@ -520,7 +564,6 @@ Public Class PdfSynthese
             Dim TextSpecialite As New Text("")
             TextSpecialite.SetText(SpecialiteDescription)
             TextSpecialite.SetFontSize(8)
-
 
             'Nom intervenant et Structure
             IntervenantOasis = False
@@ -562,9 +605,7 @@ Public Class PdfSynthese
             Dim TextConsultationLast As New Text("")
             TextConsultationLast.SetFontSize(8).SetHorizontalAlignment(HorizontalAlignment.CENTER)
             TextConsultationLast.SetText("-")
-            'dateLast = tache.DateRendezVous
             dateLast = Coalesce(ParcoursDataTable.Rows(i)("LastRendezVous"), Nothing)
-            'If tache.DateRendezVous <> Nothing Then
             If dateLast <> Nothing Then
                 TextConsultationLast.SetText(outils.FormatageDateAffichage(dateLast, True))
             End If
@@ -572,16 +613,12 @@ Public Class PdfSynthese
             Dim TextConsultationNext As New Text("")
             TextConsultationNext.SetFontSize(8).SetHorizontalAlignment(HorizontalAlignment.CENTER)
             TextConsultationNext.SetText("-")
-            'tache = tacheDao.GetProchainRendezVousByPatientId(SelectedPatient.patientId, ParcoursDataTable.Rows(i)("oa_parcours_id"))
-            'dateNext = tache.DateRendezVous
             dateNext = Coalesce(ParcoursDataTable.Rows(i)("NextRendezVous"), Nothing)
             If dateNext <> Nothing Then
                 'Rendez-vous planifiée
                 TextConsultationNext.SetText(dateNext.ToString("dd.MM.yyyy"))
             Else
                 'Recherche si existe demande de rendez-vous
-                'tache = tacheDao.GetProchaineDemandeRendezVousByPatientId(SelectedPatient.patientId, ParcoursDataTable.Rows(i)("oa_parcours_id"))
-                'dateNext = tache.DateRendezVous
                 dateNext = Coalesce(ParcoursDataTable.Rows(i)("DateDemandeRdv"), Nothing)
                 If dateNext <> Nothing Then
                     'Rendez-vous prévisionnel, demande en cours
@@ -622,11 +659,21 @@ Public Class PdfSynthese
             TextCommentaire.SetFontSize(8)
             TextCommentaire.SetText(Coalesce(ParcoursDataTable.Rows(i)("oa_parcours_commentaire"), ""))
 
+            If PremierPassage = True Then
+                table.AddCell(New Cell().Add(New Paragraph("Intervenant").SetFontSize(8).SetBold))
+                table.AddCell(New Cell().Add(New Paragraph("Nom").SetFontSize(8).SetBold))
+                table.AddCell(New Cell().Add(New Paragraph("Structure").SetFontSize(8).SetBold))
+                table.AddCell(New Cell().Add(New Paragraph("Dern. Consult.").SetFontSize(8).SetBold))
+                table.AddCell(New Cell().Add(New Paragraph("Proch. Consult.").SetFontSize(8).SetBold))
+                table.AddCell(New Cell().Add(New Paragraph("Remarque").SetFontSize(8).SetBold))
+                PremierPassage = False
+            End If
+
             table.AddCell(New Cell().Add(New Paragraph(TextSpecialite)))
             table.AddCell(New Cell().Add(New Paragraph(TextNomIntervenant)))
             table.AddCell(New Cell().Add(New Paragraph(TextNomStructure)))
-            table.AddCell(New Cell().Add(New Paragraph(TextConsultationLast).SetHorizontalAlignment(HorizontalAlignment.CENTER)))
-            table.AddCell(New Cell().Add(New Paragraph(TextConsultationNext).SetHorizontalAlignment(HorizontalAlignment.CENTER)))
+            table.AddCell(New Cell().Add(New Paragraph(TextConsultationLast)))
+            table.AddCell(New Cell().Add(New Paragraph(TextConsultationNext)))
             table.AddCell(New Cell().Add(New Paragraph(TextCommentaire)))
         Next
 
@@ -634,7 +681,6 @@ Public Class PdfSynthese
     End Sub
 
     Private Sub PrintContexte(document As Document)
-        document.Add(New Paragraph(vbCrLf & "Contexte").SetFontSize(10))
         Dim p As New Paragraph
         Dim table As New Table(1)
 
@@ -644,7 +690,11 @@ Public Class PdfSynthese
 
         'Déclaration des variables pour réaliser le parcours du DataTable pour alimenter le DataGridView
         Dim i As Integer
-        Dim iGrid As Integer = -1 'Indice pour alimenter la Grid qui peut comporter moins d'occurrences que le DataTable
+
+        Comptage += contexteDataTable.Rows.Count
+        GestionSautDePage(document)
+        document.Add(New Paragraph(vbCrLf & "--- Contexte").SetFontSize(11))
+
         Dim dateFin, dateModification As Date
         Dim AfficheDateModification, diagnostic As String
         Dim ordreAffichage As Integer
@@ -695,8 +745,6 @@ Public Class PdfSynthese
                 ordreAffichage = 0
             End If
 
-            'prefixeContexte = "(Ordre : " + ordreAffichage.ToString + ") - "
-
             'Contexte caché
             contexteCache = False
             If contexteDataTable.Rows(i)("oa_antecedent_statut_affichage") IsNot DBNull.Value Then
@@ -740,7 +788,6 @@ Public Class PdfSynthese
     End Sub
 
     Private Sub PrintPPS(document As Document)
-        document.Add(New Paragraph(vbCrLf & "Plan personnalisé de soin").SetFontSize(10))
         Dim p As New Paragraph
         Dim table As New Table(1)
 
@@ -750,12 +797,15 @@ Public Class PdfSynthese
 
         'Déclaration des variables pour réaliser le parcours du DataTable pour alimenter le DataGridView
         Dim i As Integer
-        Dim iGrid As Integer = -1 'Indice pour alimenter la Grid qui peut comporter moins d'occurrences que le DataTable
+
+        Comptage += PPSDataTable.Rows.Count
+        GestionSautDePage(document)
+        document.Add(New Paragraph(vbCrLf & "--- Plan personnalisé de soin").SetFontSize(11))
+
         Dim dateDebut, dateModification As Date
         Dim rowCount As Integer = PPSDataTable.Rows.Count - 1
         Dim categoriePPS, sousCategoriePPS, Rythme, SpecialiteId As Integer
         Dim ppsArret As Boolean
-        Dim mesureMax As Boolean = False
         Dim NaturePPS, CommentairePPS, commentaireParcours, AffichePPS, AfficheDateModificationPPS, AfficheDateModificationParcours, Base, BaseItem, SpecialiteDescription As String
 
         'Parcours du DataTable pour alimenter le DataGridView
@@ -926,6 +976,15 @@ Public Class PdfSynthese
             table.AddCell(New Cell().Add(New Paragraph(TextPps).SetFixedLeading(10)))
         Next
         document.Add(table)
+    End Sub
+
+    Private Sub GestionSautDePage(document As Document)
+        If Comptage > 40 Then
+            document.Add(New Paragraph(vbCrLf & "Voir page suivante").SetFontSize(10))
+            document.Add(New AreaBreak())
+            PrintEntete(document)
+            PrintEtatCivil(document)
+        End If
     End Sub
 
 End Class

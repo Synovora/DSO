@@ -22,7 +22,16 @@ Partial Class RadFEpisodeListe
     'Do not modify it using the code editor.
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
-        Dim TableViewDefinition2 As Telerik.WinControls.UI.TableViewDefinition = New Telerik.WinControls.UI.TableViewDefinition()
+        Me.components = New System.ComponentModel.Container()
+        Dim GridViewTextBoxColumn1 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
+        Dim GridViewTextBoxColumn2 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
+        Dim GridViewTextBoxColumn3 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
+        Dim GridViewTextBoxColumn4 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
+        Dim GridViewTextBoxColumn5 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
+        Dim GridViewTextBoxColumn6 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
+        Dim GridViewTextBoxColumn7 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
+        Dim GridViewTextBoxColumn8 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
+        Dim TableViewDefinition1 As Telerik.WinControls.UI.TableViewDefinition = New Telerik.WinControls.UI.TableViewDefinition()
         Me.RadBtnAbandon = New Telerik.WinControls.UI.RadButton()
         Me.RadBtnEpisode = New Telerik.WinControls.UI.RadButton()
         Me.RadGroupBoxEtatCivil = New Telerik.WinControls.UI.RadGroupBox()
@@ -37,13 +46,14 @@ Partial Class RadFEpisodeListe
         Me.LblPatientAge = New System.Windows.Forms.Label()
         Me.LblPatientGenre = New System.Windows.Forms.Label()
         Me.LblPatientNIR = New System.Windows.Forms.Label()
-        Me.RadGridView1 = New Telerik.WinControls.UI.RadGridView()
+        Me.RadGridViewEpisode = New Telerik.WinControls.UI.RadGridView()
+        Me.ToolTip1 = New System.Windows.Forms.ToolTip(Me.components)
         CType(Me.RadBtnAbandon, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.RadBtnEpisode, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.RadGroupBoxEtatCivil, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.RadGroupBoxEtatCivil.SuspendLayout()
-        CType(Me.RadGridView1, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.RadGridView1.MasterTemplate, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.RadGridViewEpisode, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.RadGridViewEpisode.MasterTemplate, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
@@ -193,16 +203,67 @@ Partial Class RadFEpisodeListe
         Me.LblPatientNIR.TabIndex = 27
         Me.LblPatientNIR.Text = "1840675370367"
         '
-        'RadGridView1
+        'RadGridViewEpisode
         '
-        Me.RadGridView1.Location = New System.Drawing.Point(12, 79)
+        Me.RadGridViewEpisode.BackColor = System.Drawing.Color.FromArgb(CType(CType(191, Byte), Integer), CType(CType(219, Byte), Integer), CType(CType(255, Byte), Integer))
+        Me.RadGridViewEpisode.Cursor = System.Windows.Forms.Cursors.Default
+        Me.RadGridViewEpisode.Font = New System.Drawing.Font("Segoe UI", 8.25!)
+        Me.RadGridViewEpisode.ForeColor = System.Drawing.Color.Black
+        Me.RadGridViewEpisode.ImeMode = System.Windows.Forms.ImeMode.NoControl
+        Me.RadGridViewEpisode.Location = New System.Drawing.Point(12, 79)
         '
         '
         '
-        Me.RadGridView1.MasterTemplate.ViewDefinition = TableViewDefinition2
-        Me.RadGridView1.Name = "RadGridView1"
-        Me.RadGridView1.Size = New System.Drawing.Size(1000, 439)
-        Me.RadGridView1.TabIndex = 3
+        Me.RadGridViewEpisode.MasterTemplate.AllowAddNewRow = False
+        Me.RadGridViewEpisode.MasterTemplate.AllowDeleteRow = False
+        Me.RadGridViewEpisode.MasterTemplate.AllowEditRow = False
+        GridViewTextBoxColumn1.EnableExpressionEditor = False
+        GridViewTextBoxColumn1.HeaderText = "Type"
+        GridViewTextBoxColumn1.HeaderTextAlignment = System.Drawing.ContentAlignment.MiddleLeft
+        GridViewTextBoxColumn1.Name = "type"
+        GridViewTextBoxColumn1.Width = 80
+        GridViewTextBoxColumn2.EnableExpressionEditor = False
+        GridViewTextBoxColumn2.HeaderText = "Activité"
+        GridViewTextBoxColumn2.HeaderTextAlignment = System.Drawing.ContentAlignment.MiddleLeft
+        GridViewTextBoxColumn2.Name = "type_activite"
+        GridViewTextBoxColumn2.ReadOnly = True
+        GridViewTextBoxColumn2.Width = 170
+        GridViewTextBoxColumn3.EnableExpressionEditor = False
+        GridViewTextBoxColumn3.HeaderText = "Nature"
+        GridViewTextBoxColumn3.Name = "type_profil"
+        GridViewTextBoxColumn3.ReadOnly = True
+        GridViewTextBoxColumn3.Width = 80
+        GridViewTextBoxColumn4.EnableExpressionEditor = False
+        GridViewTextBoxColumn4.HeaderText = "Description activité"
+        GridViewTextBoxColumn4.HeaderTextAlignment = System.Drawing.ContentAlignment.MiddleLeft
+        GridViewTextBoxColumn4.Name = "description_activite"
+        GridViewTextBoxColumn4.Width = 240
+        GridViewTextBoxColumn5.EnableExpressionEditor = False
+        GridViewTextBoxColumn5.HeaderText = "commentaire"
+        GridViewTextBoxColumn5.HeaderTextAlignment = System.Drawing.ContentAlignment.MiddleLeft
+        GridViewTextBoxColumn5.Name = "commentaire"
+        GridViewTextBoxColumn5.Width = 250
+        GridViewTextBoxColumn6.EnableExpressionEditor = False
+        GridViewTextBoxColumn6.HeaderText = "Date création"
+        GridViewTextBoxColumn6.Name = "date_creation"
+        GridViewTextBoxColumn6.TextAlignment = System.Drawing.ContentAlignment.MiddleCenter
+        GridViewTextBoxColumn6.Width = 75
+        GridViewTextBoxColumn7.EnableExpressionEditor = False
+        GridViewTextBoxColumn7.HeaderText = "Etat"
+        GridViewTextBoxColumn7.Name = "etat"
+        GridViewTextBoxColumn7.TextAlignment = System.Drawing.ContentAlignment.MiddleCenter
+        GridViewTextBoxColumn7.Width = 60
+        GridViewTextBoxColumn8.EnableExpressionEditor = False
+        GridViewTextBoxColumn8.HeaderText = "episode_id"
+        GridViewTextBoxColumn8.IsVisible = False
+        GridViewTextBoxColumn8.Name = "episode_id"
+        Me.RadGridViewEpisode.MasterTemplate.Columns.AddRange(New Telerik.WinControls.UI.GridViewDataColumn() {GridViewTextBoxColumn1, GridViewTextBoxColumn2, GridViewTextBoxColumn3, GridViewTextBoxColumn4, GridViewTextBoxColumn5, GridViewTextBoxColumn6, GridViewTextBoxColumn7, GridViewTextBoxColumn8})
+        Me.RadGridViewEpisode.MasterTemplate.ViewDefinition = TableViewDefinition1
+        Me.RadGridViewEpisode.Name = "RadGridViewEpisode"
+        Me.RadGridViewEpisode.RightToLeft = System.Windows.Forms.RightToLeft.No
+        Me.RadGridViewEpisode.ShowGroupPanel = False
+        Me.RadGridViewEpisode.Size = New System.Drawing.Size(1000, 439)
+        Me.RadGridViewEpisode.TabIndex = 3
         '
         'RadFEpisodeListe
         '
@@ -210,7 +271,7 @@ Partial Class RadFEpisodeListe
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.CancelButton = Me.RadBtnAbandon
         Me.ClientSize = New System.Drawing.Size(1020, 560)
-        Me.Controls.Add(Me.RadGridView1)
+        Me.Controls.Add(Me.RadGridViewEpisode)
         Me.Controls.Add(Me.RadGroupBoxEtatCivil)
         Me.Controls.Add(Me.RadBtnEpisode)
         Me.Controls.Add(Me.RadBtnAbandon)
@@ -227,8 +288,8 @@ Partial Class RadFEpisodeListe
         CType(Me.RadGroupBoxEtatCivil, System.ComponentModel.ISupportInitialize).EndInit()
         Me.RadGroupBoxEtatCivil.ResumeLayout(False)
         Me.RadGroupBoxEtatCivil.PerformLayout()
-        CType(Me.RadGridView1.MasterTemplate, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.RadGridView1, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.RadGridViewEpisode.MasterTemplate, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.RadGridViewEpisode, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
 
@@ -248,6 +309,7 @@ Partial Class RadFEpisodeListe
     Friend WithEvents LblPatientAge As Label
     Friend WithEvents LblPatientGenre As Label
     Friend WithEvents LblPatientNIR As Label
-    Friend WithEvents RadGridView1 As Telerik.WinControls.UI.RadGridView
+    Friend WithEvents RadGridViewEpisode As Telerik.WinControls.UI.RadGridView
+    Friend WithEvents ToolTip1 As ToolTip
 End Class
 

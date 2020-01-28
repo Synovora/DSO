@@ -751,7 +751,7 @@ Public Class TacheDao
         Return tache
     End Function
 
-    Friend Function GetProchainRendezVousByPatientIdEtEpisode(patientId As Long, typeProfil As String) As Tache
+    Friend Function GetProchainRendezVousOasisByPatientIdEtEpisode(patientId As Long, typeProfil As String) As Tache
         Dim dateRendezVous As Date = Nothing
         Dim tache As New Tache
         Dim con As SqlConnection
@@ -863,8 +863,8 @@ Public Class TacheDao
             Dim SQLstring As String = "UPDATE oasis.oa_tache SET" &
             " etat = @etat, traite_user_id = @traiteUserId, horodate_attrib = @dateAttrib" &
             " WHERE id = @Id" &
-            " And etat = @etatWhere" &
-            " And traite_user_id Is null"
+            " AND etat = @etatWhere" &
+            " AND traite_user_id Is null"
 
             Dim cmd As New SqlCommand(SQLstring, con)
             With cmd.Parameters

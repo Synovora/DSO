@@ -93,6 +93,8 @@ Public Class RadFEpisodeDetail
     Dim IsPPSLoaded As Boolean = False
     Dim FinChargementActesParamedicauxParamedical As Boolean = False
     Dim FinChargementActesParamedicauxMedical As Boolean = False
+    Dim commentaireConclusionIdeModified As Boolean = False
+    Dim RadioTypeConclusionIdeModified As Boolean = False
 
     Dim LongueurStringAllergie As Integer
 
@@ -162,12 +164,57 @@ Public Class RadFEpisodeDetail
         ChargementObservationLibre()
         ChargementConclusion()
 
+        'Vérification si l'épisode est clôturé et donc non modifiable
+        ControleEpisodeCloture()
+
         'Synthèse, chargement de la page par défaut
         ChargementAntecedent()
 
         DroitAcces()
 
         Cursor.Current = Cursors.Default
+    End Sub
+
+    'Contrôle si l'épisode est clôturé et non modifiable (si la date de clôture est < date du jour)
+    Private Sub ControleEpisodeCloture()
+        If episode.Etat = EpisodeDao.EnumEtatEpisode.CLOTURE.ToString Then
+            If episode.DateModification.Date < Date.Now.Date Then
+                'Clôture épisode
+                RadBtnCloture.Enabled = False
+
+                'Workflow
+                RadBtnWorkflowIde.Enabled = False
+                RadBtnWorkflowMed.Enabled = False
+
+                'Conclusion médicale
+                RadBtnCreerContexte.Enabled = False
+                RadBtnAssocierContexte.Enabled = False
+                RadBtnConclusionCreerConsigne.Enabled = False
+
+                'Saisie paramètre
+                RadBtnParametre.Enabled = False
+
+                'Regénération paramètres et actes paramédicaux
+                RadBtnGenProtocole.Hide()
+
+                'Observations libres
+                CréerUneObservationToolStripMenuItem.Enabled = False
+                CréerUneObservationToolStripMenuItem1.Enabled = False
+                SaisieObservationToolStripMenuItem.Enabled = False
+                AjoutProtocoleAiguToolStripMenuItem.Enabled = False
+                ObsContextMenuStrip.Visible = False
+                SaisieObservationSpecifiqueMedicaleItem.Enabled = False
+                AttributionDesObservationsSpécifiquesToolStripMenuItem.Enabled = False
+
+                'Saisie commentaire paramédiacle
+                TxtConclusionIDE.Enabled = False
+
+                'Choix conclusion paramédicale
+                RadioBtnDemandeAvis.Enabled = False
+                RadioBtnRolePropre.Enabled = False
+                RadioBtnSurProtocole.Enabled = False
+            End If
+        End If
     End Sub
 
     'Chargement des pages de la synthèse en fonction de leur demande (sauf antécédent qui est la page par défaut)
@@ -251,20 +298,35 @@ Public Class RadFEpisodeDetail
                 End Try
             End If
         Else
-            'Vérifier si un rendez-vous existe pour la fonction de l'utilisateur avec une date <= date du jour
+            'Si le rendez-vous n'a pas été communiqué à l'épisode, on recherche si un rendez-vous en attente existe pour la fonction de l'utilisateur avec une date <= date du jour
             Dim tacheRendezVous As Tache
-            tacheRendezVous = tacheDao.GetProchainRendezVousByPatientIdEtEpisode(SelectedPatient.patientId, userLog.TypeProfil)
-            'Si existe
+            tacheRendezVous = tacheDao.GetProchainRendezVousOasisByPatientIdEtEpisode(SelectedPatient.patientId, userLog.TypeProfil)
+            'Si RDV Oasis existe et que la date du DRV est <= date du jour
             If tacheRendezVous.Id <> 0 AndAlso tacheRendezVous.DateRendezVous.Date <= Date.Now.Date Then
                 If tacheRendezVous.isAttribuable Then
+                    Dim fonctiondao As New FonctionDao
+                    Dim fonction As Fonction
+                    fonction = fonctiondao.getFonctionById(tacheRendezVous.DestinataireFonctionId)
                     'Tâche non encore attribuée et l'utilisateur n'est pas encore propriétaire du rendez-vous, proposition d'attribution de la tâche à l'utilisateur
-                    Dim message As String = "Un rendez-vous de type '" & userLog.TypeProfil & "', a été programmé pour le " & tacheRendezVous.DateRendezVous.ToString("dd.MM.yyyy") &
-                        "." & vbCrLf &
-                        " Vous allez vous attribuer le traitement du rendez-vous qui sera honoré à la sortie de l'épisode. Confirmez-vous son attribution"
+                    Dim message As String = "Un rendez-vous de type '" & userLog.TypeProfil & ", destiné à la fonction " & fonction.Designation &
+                        "', a été programmé pour le " & tacheRendezVous.DateRendezVous.ToString("dd.MM.yyyy") &
+                        " pour ce patient." & vbCrLf & vbCrLf &
+                        "Le rendez-vous sera automatiquement déclaré honoré après confirmation de cette notification." & vbCrLf & vbCrLf &
+                        "Si vous ne confirmez pas cette notification, le rendez-vous restera en attente" & vbCrLf & vbCrLf &
+                        "Confirmation de déclarer le rendez-vous honoré ?"
                     If MsgBox(message, MsgBoxStyle.YesNo, "") = MsgBoxResult.Yes Then
                         Try
                             tacheDao.attribueTacheToUserLog(tacheRendezVous.Id)
                         Catch ex As Exception
+                            If ex.ToString.StartsWith("Collision") Then
+                                Dim Description As String = "Attribution annulé, le rendez-vous (tâche n° " & Me.RendezVousId.ToString & ") était déjà honoré"
+                                CreateLog(Description, Me.Name, LogDao.EnumTypeLog.ERREUR.ToString)
+                                MessageBox.Show(Description)
+                            Else
+                                Dim Description As String = "L'attribution du rendez-vous (tâche n° " & Me.RendezVousId.ToString & ") a échouée" & ex.ToString
+                                CreateLog(Description, Me.Name, LogDao.EnumTypeLog.ERREUR.ToString)
+                                MessageBox.Show(Description)
+                            End If
                             MessageBox.Show(ex.ToString)
                             Exit Sub
                         End Try
@@ -288,14 +350,9 @@ Public Class RadFEpisodeDetail
                 form.Show()
             End If
         Catch ex As Exception
-            If ex.ToString.StartsWith("Collision") Then
-                Dim Description As String = "Traitement annulé, le rendez-vous (tâche n° " & Me.RendezVousId.ToString & ") a déjà été traité"
-                CreateLog(Description, Me.Name, LogDao.EnumTypeLog.ERREUR.ToString)
-            Else
-                MessageBox.Show(ex.ToString)
-                Dim Description As String = "Le traitement pour déclarer 'honoré' le rendez-vous (tâche n° " & Me.RendezVousId.ToString & ") a échouée"
-                CreateLog(Description, Me.Name, LogDao.EnumTypeLog.ERREUR.ToString)
-            End If
+            MessageBox.Show(ex.ToString)
+            Dim Description As String = "La cloture du rendez-vous n° " & Me.RendezVousId.ToString & ") a échouée, information système : " & ex.ToString
+            CreateLog(Description, Me.Name, LogDao.EnumTypeLog.ERREUR.ToString)
         End Try
     End Sub
 
@@ -313,6 +370,7 @@ Public Class RadFEpisodeDetail
         ChargementObservationSpecifique()
         ChargementObservationLibre()
         ChargementConclusion()
+        ControleEpisodeCloture()
         Cursor.Current = Cursors.Default
     End Sub
 
@@ -1309,12 +1367,20 @@ Public Class RadFEpisodeDetail
             form.Message = "La sortie de l'épisode sans traiter la demande d'avis a automatiquement annulé l'attribution de la tâche"
             form.Show()
         End If
+
+        'Mise à jour base de données si commentaire IDE modifié
+        ModificationCommentaireConclusionIde()
+
+        'Mise à jour base de données si bouton radio type conclusion médicale modifiée
+        ModificationRadioTypeConclusionIDE()
     End Sub
 
 
     '===========================================================================================================================================
-    '=== Conclusion 
+    '=== Conclusion épisode 
     '===========================================================================================================================================
+
+    'Chargement conclusion médicale et paramédicale 
     Private Sub ChargementConclusion()
         Select Case episode.TypeProfil
             Case EpisodeDao.EnumTypeProfil.MEDICAL.ToString
@@ -1346,18 +1412,30 @@ Public Class RadFEpisodeDetail
                 End Select
         End Select
 
+        'Chargement commentaire de conclusion Paramédicale
+        TxtConclusionIDE.Text = Coalesce(episode.ObservationParamedical, "")
+
+        'Chargement conclusion Médicale
         If episode.ConclusionMedConsigneDrcId <> 0 Then
             drc = drcDao.getDrcById(episode.ConclusionMedConsigneDrcId)
             TxtConsigneMedicale.Text = drc.DrcLibelle
         Else
             TxtConsigneMedicale.Text = ""
         End If
+
+        'Chargement contexte(s) de conclusion
+        'TODO: Chargement contexte(s) de conclusion
+
+        ConclusionMedicaleExiste = False
+        'TODO: Si contexte de conclusion existe alors ConclusionMedicaleExiste = True
+
     End Sub
 
     '======================================================
-    '===== Conclusion médicale
+    '===== Conclusion Médicale
     '======================================================
 
+    'Créer une consigne IDE 
     Private Sub RadBtnConclusionCreerConsigne_Click(sender As Object, e As EventArgs) Handles RadBtnConclusionCreerConsigne.Click
         Dim SelectedDrcId As Integer
         Cursor.Current = Cursors.WaitCursor
@@ -1379,6 +1457,60 @@ Public Class RadFEpisodeDetail
     End Sub
 
 
+    '======================================================
+    '===== Conclusion Paramédicale
+    '======================================================
+
+    'Modification commentaire IDE
+    Private Sub TxtConclusionIDE_TextChanged(sender As Object, e As EventArgs) Handles TxtConclusionIDE.TextChanged
+        commentaireConclusionIdeModified = True
+    End Sub
+
+    Private Sub TxtConclusionIDE_Leave(sender As Object, e As EventArgs) Handles TxtConclusionIDE.Leave
+        If commentaireConclusionIdeModified = True Then
+            ModificationCommentaireConclusionIde()
+        End If
+    End Sub
+
+    Private Sub ModificationCommentaireConclusionIde()
+        If commentaireConclusionIdeModified = True Then
+            episode.ObservationParamedical = TxtConclusionIDE.Text
+            episodeDao.ModificationEpisode(episode)
+            commentaireConclusionIdeModified = False
+        End If
+    End Sub
+
+    'Modification type conclusion paramédicale
+    Private Sub RadioBtnRolePropre_CheckedChanged(sender As Object, e As EventArgs) Handles RadioBtnRolePropre.CheckedChanged
+        RadioTypeConclusionIdeModified = True
+    End Sub
+
+    Private Sub RadioBtnSurProtocole_CheckedChanged(sender As Object, e As EventArgs) Handles RadioBtnSurProtocole.CheckedChanged
+        RadioTypeConclusionIdeModified = True
+    End Sub
+
+    Private Sub RadioBtnDemandeAvis_CheckedChanged(sender As Object, e As EventArgs) Handles RadioBtnDemandeAvis.CheckedChanged
+        RadioTypeConclusionIdeModified = True
+    End Sub
+
+    Private Sub ModificationRadioTypeConclusionIDE()
+        If RadioTypeConclusionIdeModified = True Then
+            Dim TypeConclusionIde As String
+            If RadioBtnDemandeAvis.Checked = True Then
+                TypeConclusionIde = EpisodeDao.EnumTypeConclusionParamedicale.DEMANDE_AVIS.ToString
+            Else
+                If RadioBtnRolePropre.Checked = True Then
+                    TypeConclusionIde = EpisodeDao.EnumTypeConclusionParamedicale.ROLE_PROPRE.ToString
+                Else
+                    TypeConclusionIde = EpisodeDao.EnumTypeConclusionParamedicale.SUR_PROTOCOLE.ToString
+                End If
+            End If
+
+            episode.ConclusionIdeType = TypeConclusionIde
+            episodeDao.ModificationEpisode(episode)
+            RadioTypeConclusionIdeModified = False
+        End If
+    End Sub
 
     '===========================================================================================================================================
     '=== Clôture de l'épisode
@@ -1386,8 +1518,10 @@ Public Class RadFEpisodeDetail
 
     'Clôture de l'épisode
     Private Sub RadBtnCloture_Click(sender As Object, e As EventArgs) Handles RadBtnCloture.Click
+        'Si une demande d'avis est en cours (médicale ou paramédicale), on ne peut pas clôturer l'épisode
         tache = tacheDao.GetDemandeEnCoursByEpisode(SelectedEpisodeId)
         If tache.Id <> 0 Then
+            WorkflowEnCoursExistant = True
             MessageBox.Show("Cet épisode ne peut être clôturé tant qu'une demande d'avis est en cours")
             Exit Sub
         End If
@@ -1397,6 +1531,7 @@ Public Class RadFEpisodeDetail
         Exit Sub
         '>>> SHUNT : Bloc à supprimer pour réhabiliter le contrôle de clôture ========
 
+        'L'utilisateur doit posséder le même profil que celui qui a créé l'épisode
         If userLog.TypeProfil <> episode.TypeProfil Then
             MessageBox.Show("Vous devez disposer d'un profil '" & episode.TypeProfil &
                             "', pour pouvoir clôturer cet épisode patient" & vbCrLf &
@@ -1404,23 +1539,30 @@ Public Class RadFEpisodeDetail
             Exit Sub
         End If
 
-        If ConclusionMedicaleExiste = False Then
-            If WorkflowEnCoursExistant = True Then
-                MessageBox.Show("Une demande d'avis a été créée pour cet épisode, clôture de l'épisode impossible tant que la conclusion médicale n'est pas réalisée" & vbCrLf &
-                                "(Une conclusion médicale implique d'associer au moins un contexte à l'épisode")
-                Exit Sub
-            End If
-            If episode.TypeProfil = EpisodeDao.EnumTypeProfil.MEDICAL.ToString Then
-                MessageBox.Show("Episode créé par un profil 'Médical', clôture de l'épisode impossible tant que la conclusion médicale n'est pas réalisée" & vbCrLf &
+        'Si l'épisode a été créé par un profil Médical, la conclusion médicale est requise pour clôturer l'épisode
+        If episode.TypeProfil = EpisodeDao.EnumTypeProfil.MEDICAL.ToString Then
+            If ConclusionMedicaleExiste = False Then
+                MessageBox.Show("Episode créé par un profil 'Médical', la clôture de l'épisode est impossible tant que la conclusion médicale n'est pas réalisée" & vbCrLf &
                                 "(Une conclusion médicale implique d'associer au moins un contexte à l'épisode")
                 Exit Sub
             End If
         End If
 
+        'Si une demande d'avis médical existe (en cours ou terminée), une conclusion médicale est requise pour réaliser la clôture
+        If DemandeAvisMedicalExiste = True Then
+            If ConclusionMedicaleExiste = False Then
+                MessageBox.Show("Suite à une demande d'avis médical, la clôture de l'épisode est impossible tant que la conclusion médicale n'est pas réalisée" & vbCrLf &
+                                "(Une conclusion médicale implique d'associer au moins un contexte à l'épisode")
+                Exit Sub
+            End If
+        End If
+
+        'Si l'épisode a été créé par un profil Paramédical, en cas de Rôle propre ou sur protocole, le commentaire de conclusion paramédicale est requis pour clôturer l'épisode
         If episode.TypeProfil = EpisodeDao.EnumTypeProfil.PARAMEDICAL.ToString Then
-            If RadioBtnRolePropre.Checked = True Or RadioBtnDemandeAvis.Checked = True Then
+            If RadioBtnRolePropre.Checked = True Or RadioBtnSurProtocole.Checked = True Then
                 If TxtConclusionIDE.Text = "" Then
-                    MessageBox.Show("Episode créé par un profil 'Paramédical', clôture de l'épisode impossible tant que le commentaire IDE n'est pas saisi")
+                    MessageBox.Show("Pour un épisode de type 'Paramédical', en cas de conclusion paramédicale de type 'Rôle propre' ou 'Sur Protocole'," & vbCrLf &
+                                    " le commentaire de conclusion paramédical est requis pour assurer la clôture de l'épisode.")
                 End If
             End If
             Exit Sub
@@ -2544,6 +2686,14 @@ Public Class RadFEpisodeDetail
             OrdonnanceId = dt.Rows(0)("oa_ordonnance_id")
             AfficheOrdonnance(OrdonnanceId)
         Else
+            If episode.Etat = EpisodeDao.EnumEtatEpisode.CLOTURE.ToString Then
+                If episode.DateModification.Date < Date.Now.Date Then
+                    MessageBox.Show("Pas d'ordonnance existante pour cet épisode !")
+                    Cursor.Current = Cursors.Default
+                    Me.Enabled = True
+                    Exit Sub
+                End If
+            End If
             OrdonnanceId = ordonnaceDao.CreateOrdonnance(SelectedPatient.patientId, SelectedEpisodeId)
             If OrdonnanceId <> 0 Then
                 If ordonnaceDao.CreateNewOrdonnanceDetail(SelectedPatient.patientId, OrdonnanceId, episode) = True Then
@@ -3473,7 +3623,6 @@ Public Class RadFEpisodeDetail
         Me.Enabled = True
     End Sub
 
-
     Private Sub CréerUnSuiviToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles CréerUnSuiviToolStripMenuItem.Click
         Cursor.Current = Cursors.WaitCursor
         Me.Enabled = False
@@ -3598,6 +3747,7 @@ Public Class RadFEpisodeDetail
     End Sub
 
 
+
     '===========================================================
     '======================= Droits d'accès ====================
     '===========================================================
@@ -3605,41 +3755,67 @@ Public Class RadFEpisodeDetail
         InhibeAccesIDE()
         InhibeAccesMed()
 
-        If userLog.TypeProfil = ProfilDao.EnumProfilType.MEDICAL.ToString Or userLog.UtilisateurAdmin = True Then
-            LibereAccesMed()
-        End If
-
-        If userLog.TypeProfil = ProfilDao.EnumProfilType.PARAMEDICAL.ToString Or userLog.UtilisateurAdmin = True Then
-            LibereAccesIde()
-        End If
-
-        If userLog.UtilisateurAdmin = False Then
-            RadBtnGenProtocole.Hide()
-        End If
-
         If episode.TypeActivite <> EpisodeDao.EnumTypeActiviteEpisodeCode.PATHOLOGIE_AIGUE Then
             AjoutProtocoleAiguToolStripMenuItem.Visible = False
+        End If
+
+        Select Case episode.TypeProfil
+            Case EpisodeDao.EnumTypeProfil.MEDICAL.ToString
+                RadioBtnDemandeAvis.Hide()
+                RadioBtnRolePropre.Hide()
+                RadioBtnSurProtocole.Hide()
+                TxtConclusionIDE.Hide()
+            Case EpisodeDao.EnumTypeProfil.PARAMEDICAL.ToString
+
+        End Select
+
+        If episode.Etat <> EpisodeDao.EnumEtatEpisode.CLOTURE.ToString Then
+            If userLog.TypeProfil = ProfilDao.EnumProfilType.MEDICAL.ToString Or userLog.UtilisateurAdmin = True Then
+                LibereAccesMed()
+            End If
+
+            If userLog.TypeProfil = ProfilDao.EnumProfilType.PARAMEDICAL.ToString Or userLog.UtilisateurAdmin = True Then
+                LibereAccesIde()
+            End If
+
+            If userLog.UtilisateurAdmin = False Then
+                RadBtnGenProtocole.Hide()
+            End If
         End If
     End Sub
 
     Private Sub InhibeAccesIDE()
         RadBtnWorkflowIde.Enabled = False
         RadPnlWorkflowIDE.Enabled = False
+        TxtConclusionIDE.Enabled = False
+        RadioBtnDemandeAvis.Enabled = False
+        RadioBtnRolePropre.Enabled = False
+        RadioBtnSurProtocole.Enabled = False
     End Sub
 
     Private Sub InhibeAccesMed()
         RadBtnWorkflowMed.Enabled = False
         RadPnlWorkflowMed.Enabled = False
+        RadBtnConclusionCreerConsigne.Enabled = False
+        RadBtnCreerContexte.Enabled = False
+        RadBtnAssocierContexte.Enabled = False
     End Sub
 
     Private Sub LibereAccesIde()
         RadBtnWorkflowIde.Enabled = True
         RadPnlWorkflowIDE.Enabled = True
+        TxtConclusionIDE.Enabled = True
+        RadioBtnDemandeAvis.Enabled = True
+        RadioBtnRolePropre.Enabled = True
+        RadioBtnSurProtocole.Enabled = True
     End Sub
 
     Private Sub LibereAccesMed()
         RadBtnWorkflowMed.Enabled = True
         RadPnlWorkflowMed.Enabled = True
+        RadBtnConclusionCreerConsigne.Enabled = True
+        RadBtnCreerContexte.Enabled = True
+        RadBtnAssocierContexte.Enabled = True
     End Sub
 
 

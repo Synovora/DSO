@@ -2282,10 +2282,6 @@ Public Class RadFSynthese
         Dim pdfSynthese As New PdfSynthese
         pdfSynthese.SelectedPatient = SelectedPatient
         pdfSynthese.ImprimeSynthese()
-        Dim form As New RadFNotification()
-        form.Titre = "Notification - Imprimer synthèse"
-        form.Message = "La génération du PDF de la synthèse est terminée"
-        form.Show()
         Cursor.Current = Cursors.Default
     End Sub
 

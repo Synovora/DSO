@@ -216,6 +216,34 @@ Public Class EpisodeDao
         Return episode
     End Function
 
+    Friend Function GetAllEpisodeByPatient(patientId As Long) As DataTable
+        Dim SQLString As String
+        SQLString = "SELECT episode_id, patient_id, type, type_activite, description_activite, type_profil, commentaire, date_creation, etat" &
+                    " FROM oasis.oa_episode" &
+                    " WHERE patient_id = " & patientId.ToString &
+                    " AND (inactif = 'False' OR inactif is Null)" &
+                    " ORDER BY date_creation DESC"
+
+        Dim ParcoursDataTable As DataTable = New DataTable()
+
+        Using con As SqlConnection = GetConnection()
+            Dim ParcoursDataAdapter As SqlDataAdapter = New SqlDataAdapter()
+            Using ParcoursDataAdapter
+                ParcoursDataAdapter.SelectCommand = New SqlCommand(SQLString, con)
+                Try
+                    ParcoursDataAdapter.Fill(ParcoursDataTable)
+                    Dim command As SqlCommand = con.CreateCommand()
+                Catch ex As Exception
+                    Throw ex
+                Finally
+                    con.Close()
+                End Try
+            End Using
+        End Using
+
+        Return ParcoursDataTable
+    End Function
+
     Friend Function GetAllEpisodeEnCours() As DataTable
         Dim SQLString As String
         SQLString = "SELECT episode_id, patient_id, type, type_activite, type_profil, commentaire, user_creation, date_creation," &

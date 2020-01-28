@@ -83,4 +83,30 @@ Module AldCim10Dao
             instanceAldCim10.AldCim10Description = ""
         End If
     End Sub
+
+    Public Function getAllAldCIM10ByAldId(AldId As Long) As DataTable
+        Dim SQLString As String
+
+        SQLString = "SELECT oa_ald_cim10_id, oa_ald_cim10_ald_code, oa_ald_cim10_code, oa_ald_cim10_description" &
+                    " FROM oasis.oa_ald_cim10 WHERE oa_ald_cim10_ald_id = " & AldId.ToString & ";"
+
+
+        Dim conxn As New SqlConnection(GetConnectionStringOasis())
+        Using conxn
+            Dim AldDataAdapter As SqlDataAdapter = New SqlDataAdapter()
+            Using AldDataAdapter
+                AldDataAdapter.SelectCommand = New SqlCommand(SQLString, conxn)
+                Dim AldDataTable As DataTable = New DataTable()
+                Using AldDataTable
+                    Try
+                        AldDataAdapter.Fill(AldDataTable)
+                        Dim command As SqlCommand = conxn.CreateCommand()
+                    Catch ex As Exception
+                        Throw ex
+                    End Try
+                    Return AldDataTable
+                End Using
+            End Using
+        End Using
+    End Function
 End Module
