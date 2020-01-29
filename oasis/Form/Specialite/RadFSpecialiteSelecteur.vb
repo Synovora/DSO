@@ -35,8 +35,6 @@ Public Class RadFSpecialiteSelecteur
     Dim IdSelected As Integer
 
     Private Sub RadFSpecialiteSelecteur_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-        'TODO: cette ligne de code charge les données dans la table 'DS_Specialite.oa_r_specialite'. Vous pouvez la déplacer ou la supprimer selon les besoins.
-
         Dim FiltreOasis As String = ""
         If ListProfilOasis IsNot Nothing Then
             FiltreOasis = String.Join(",", ListProfilOasis)
