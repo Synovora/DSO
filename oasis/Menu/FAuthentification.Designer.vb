@@ -1,9 +1,9 @@
-﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
+﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()>
 Partial Class FAuthentificattion
     Inherits System.Windows.Forms.Form
 
     'Form remplace la méthode Dispose pour nettoyer la liste des composants.
-    <System.Diagnostics.DebuggerNonUserCode()> _
+    <System.Diagnostics.DebuggerNonUserCode()>
     Protected Overrides Sub Dispose(ByVal disposing As Boolean)
         Try
             If disposing AndAlso components IsNot Nothing Then
@@ -20,7 +20,7 @@ Partial Class FAuthentificattion
     'REMARQUE : la procédure suivante est requise par le Concepteur Windows Form
     'Elle peut être modifiée à l'aide du Concepteur Windows Form.  
     'Ne la modifiez pas à l'aide de l'éditeur de code.
-    <System.Diagnostics.DebuggerStepThrough()> _
+    <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
         Me.components = New System.ComponentModel.Container()
         Me.RbtAdminOui = New System.Windows.Forms.RadioButton()
@@ -29,13 +29,10 @@ Partial Class FAuthentificattion
         Me.CbxUtilisateur = New System.Windows.Forms.ComboBox()
         Me.BtnValidation = New System.Windows.Forms.Button()
         Me.GroupBox1 = New System.Windows.Forms.GroupBox()
-        Me.BtnAncien = New System.Windows.Forms.Button()
         Me.BtnAbandon = New System.Windows.Forms.Button()
         Me.BtnListePatient = New System.Windows.Forms.Button()
         Me.BtnAdmin = New System.Windows.Forms.Button()
         Me.RadDesktopAlert1 = New Telerik.WinControls.UI.RadDesktopAlert(Me.components)
-        Me.BtnTest = New System.Windows.Forms.Button()
-        Me.BtnTest2 = New System.Windows.Forms.Button()
         Me.GroupBox1.SuspendLayout()
         Me.SuspendLayout()
         '
@@ -99,16 +96,6 @@ Partial Class FAuthentificattion
         Me.GroupBox1.TabStop = False
         Me.GroupBox1.Text = "Admin"
         '
-        'BtnAncien
-        '
-        Me.BtnAncien.Location = New System.Drawing.Point(261, 223)
-        Me.BtnAncien.Name = "BtnAncien"
-        Me.BtnAncien.Size = New System.Drawing.Size(75, 23)
-        Me.BtnAncien.TabIndex = 12
-        Me.BtnAncien.Text = "Ancien"
-        Me.BtnAncien.UseVisualStyleBackColor = True
-        Me.BtnAncien.Visible = False
-        '
         'BtnAbandon
         '
         Me.BtnAbandon.DialogResult = System.Windows.Forms.DialogResult.Cancel
@@ -141,36 +128,15 @@ Partial Class FAuthentificattion
         '
         Me.RadDesktopAlert1.AutoCloseDelay = 5
         '
-        'BtnTest
-        '
-        Me.BtnTest.Location = New System.Drawing.Point(20, 252)
-        Me.BtnTest.Name = "BtnTest"
-        Me.BtnTest.Size = New System.Drawing.Size(117, 23)
-        Me.BtnTest.TabIndex = 16
-        Me.BtnTest.Text = "Test"
-        Me.BtnTest.UseVisualStyleBackColor = True
-        '
-        'BtnTest2
-        '
-        Me.BtnTest2.Location = New System.Drawing.Point(20, 281)
-        Me.BtnTest2.Name = "BtnTest2"
-        Me.BtnTest2.Size = New System.Drawing.Size(117, 23)
-        Me.BtnTest2.TabIndex = 17
-        Me.BtnTest2.Text = "Test2"
-        Me.BtnTest2.UseVisualStyleBackColor = True
-        '
         'FAuthentificattion
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.CancelButton = Me.BtnAbandon
         Me.ClientSize = New System.Drawing.Size(372, 310)
-        Me.Controls.Add(Me.BtnTest2)
-        Me.Controls.Add(Me.BtnTest)
         Me.Controls.Add(Me.BtnAdmin)
         Me.Controls.Add(Me.BtnListePatient)
         Me.Controls.Add(Me.BtnAbandon)
-        Me.Controls.Add(Me.BtnAncien)
         Me.Controls.Add(Me.GroupBox1)
         Me.Controls.Add(Me.BtnValidation)
         Me.Controls.Add(Me.CbxUtilisateur)
@@ -191,11 +157,8 @@ Partial Class FAuthentificattion
     Friend WithEvents CbxUtilisateur As ComboBox
     Friend WithEvents BtnValidation As Button
     Friend WithEvents GroupBox1 As GroupBox
-    Friend WithEvents BtnAncien As Button
     Friend WithEvents BtnAbandon As Button
     Friend WithEvents BtnListePatient As Button
     Friend WithEvents BtnAdmin As Button
     Friend WithEvents RadDesktopAlert1 As Telerik.WinControls.UI.RadDesktopAlert
-    Friend WithEvents BtnTest As Button
-    Friend WithEvents BtnTest2 As Button
 End Class

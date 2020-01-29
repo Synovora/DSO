@@ -70,19 +70,6 @@ Public Class FAuthentificattion
 
     End Sub
 
-    Private Sub BtnAncien_Click(sender As Object, e As EventArgs) Handles BtnAncien.Click
-        InitAppelForm()
-        Dim vFPatientListe As New FPatientListe
-        Dim UtilisateurConnecte As New Utilisateur()
-        UtilisateurConnecte.UtilisateurAdmin = Admin
-        UtilisateurConnecte.UtilisateurId = UtilisateurId
-        UtilisateurConnecte.UtilisateurNiveauAcces = NiveauAcces
-        vFPatientListe.UtilisateurConnecte = UtilisateurConnecte
-
-        vFPatientListe.ShowDialog() 'Modal
-        vFPatientListe.Dispose()
-    End Sub
-
     Private Sub BtnListePatient_Click(sender As Object, e As EventArgs) Handles BtnListePatient.Click
         Cursor.Current = Cursors.WaitCursor
         InitAppelForm()
@@ -153,14 +140,14 @@ Public Class FAuthentificattion
         Close()
     End Sub
 
-    Private Sub BtnTest_Click(sender As Object, e As EventArgs) Handles BtnTest.Click
+    Private Sub BtnTest_Click(sender As Object, e As EventArgs)
         'Me.RadDesktopAlert1.ContentImage = envelopeImage
         Me.RadDesktopAlert1.CaptionText = "New E-mail Notification"
         Me.RadDesktopAlert1.ContentText = "Hello Jack, I am writing to inform you "
         Me.RadDesktopAlert1.Show()
     End Sub
 
-    Private Sub BtnTest2_Click(sender As Object, e As EventArgs) Handles BtnTest2.Click
+    Private Sub BtnTest2_Click(sender As Object, e As EventArgs)
         Dim form As New RadFNotification()
         form.Message = "Test message"
         form.Show()
