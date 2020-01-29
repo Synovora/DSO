@@ -903,14 +903,13 @@ Public Class RadFTraitementDetailEdit
         End If
 
         'Contrôler qu'une données a au moins été modifiée
-        'TODO: contrôle qu'une données a au moins été modifiée
+        'TODO: Traitement détail - contrôle qu'une données a au moins été modifiée
 
         Return Valide
     End Function
 
     'Traitement de l'arrêt du traitement
     Private Sub TraitementArret()
-        'TODO: Contrôle date de fin
         Dim Valide As Boolean = True
         Dim messageErreur As String = ""
 
