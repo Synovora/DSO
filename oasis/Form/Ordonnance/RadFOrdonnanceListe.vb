@@ -144,7 +144,7 @@ Public Class RadFOrdonnanceListe
     End Sub
 
     Private Sub CreationOrdonnance()
-        'TODO: Appel création ordonnance
+        'Appel création ordonnance
         Using vFOrdonnanceListeDetail As New RadFOrdonnanceListeDetail
             Dim OrdonnanceDao As New OrdonnanceDao
             Dim OrdonnanceId As Integer = OrdonnanceDao.CreateOrdonnance(SelectedPatient.patientId, UtilisateurConnecte.UtilisateurId)
@@ -209,7 +209,7 @@ Public Class RadFOrdonnanceListe
             If aRow >= 0 Then
                 If RadOrdonnanceDataGridView.Rows(aRow).Cells("dateValidation").Value = "En attente" Then
                     Dim OrdonnanceId As Integer = RadOrdonnanceDataGridView.Rows(aRow).Cells("ordonnanceId").Value
-                    'TODO: Appel suppression ordonnance
+                    'Appel suppression ordonnance
 
 
                     RadOrdonnanceDataGridView.Rows.Clear()

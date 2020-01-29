@@ -80,11 +80,6 @@ Public Class RadFMedocSelecteur
         End If
 
         LblAffichage.Text = "Veuillez saisir au moins 3 caractères dans le filte d'affichage (" & LblLabelFiltreAffichage.Text & ")"
-        'LblAffichage.Text = ""
-
-        'TODO: cette ligne de code charge les données dans la table 'OasisDataSet2.v_medoc'. Vous pouvez la déplacer ou la supprimer selon les besoins.
-        'Me.V_medocTableAdapter.Fill(Me.OasisDataSet2.v_medoc)
-
     End Sub
 
     'Chargement des données dans les labels dédiés
