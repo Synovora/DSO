@@ -68,7 +68,7 @@ Public Class RadFRorListe
     Dim FiltreSpecialite As String
 
     Sub RadFRorListe_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-        'TODO: cette ligne de code charge les données dans la table 'RORDS.v_ror'. Vous pouvez la déplacer ou la supprimer selon les besoins.
+        'cette ligne de code charge les données dans la table 'RORDS.v_ror'. Vous pouvez la déplacer ou la supprimer selon les besoins.
         Me.V_rorTableAdapter.Fill(Me.RORDS.v_ror)
 
         If SpecialiteId <> 0 Then
