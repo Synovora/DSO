@@ -475,7 +475,7 @@ Public Class RadFSynthese
 
     'Transformer En majeur (pour un antécédent non majeur)
     Private Sub TransformerEnMajeurToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles TransformerEnMajeurToolStripMenuItem.Click
-        'TODO: à réaliser
+        'TODO: Synthèse - Transformer un contexte en antécédent depuis la synthèse
     End Sub
 
     'Gestion des options d'affichage des antécédents sur évènement
@@ -1895,7 +1895,6 @@ Public Class RadFSynthese
                             SpecialiteId = PPSDataTable.Rows(i)("oa_parcours_specialite")
                             SpecialiteDescription = Table_specialite.GetSpecialiteDescription(SpecialiteId)
                         End If
-                        'TODO: récupération spécialité
                         NaturePPS = "Suivi " + SpecialiteDescription + " : "
                     Case Else
                         NaturePPS = "Inconnue "
@@ -2285,8 +2284,8 @@ Public Class RadFSynthese
         Cursor.Current = Cursors.Default
     End Sub
 
-    'Liste des épisodes
-    Private Sub RadBtnEpisodeList_Click(sender As Object, e As EventArgs) Handles RadBtnEpisodeList.Click
+    'Ligne de vie
+    Private Sub RadBtnLigneDeVie_Click(sender As Object, e As EventArgs) Handles RadBtnLigneDeVie.Click
         Me.Enabled = False
         Cursor.Current = Cursors.WaitCursor
         Using vadFEpisodeListe As New RadFEpisodeListe

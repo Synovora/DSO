@@ -140,7 +140,6 @@ Partial Class RadFSynthese
         Me.RadChkParcoursNonCache = New Telerik.WinControls.UI.RadCheckBox()
         Me.RadChkParcoursTous = New Telerik.WinControls.UI.RadCheckBox()
         Me.RadChkMesureMax = New Telerik.WinControls.UI.RadCheckBox()
-        Me.RadBtnEpisodeList = New Telerik.WinControls.UI.RadButton()
         Me.RadBtnRefresh = New Telerik.WinControls.UI.RadButton()
         CType(Me.RadGroupBoxEtatCivil, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.RadGroupBoxEtatCivil.SuspendLayout()
@@ -189,7 +188,6 @@ Partial Class RadFSynthese
         CType(Me.RadChkParcoursNonCache, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.RadChkParcoursTous, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.RadChkMesureMax, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.RadBtnEpisodeList, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.RadBtnRefresh, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
@@ -1192,14 +1190,6 @@ Partial Class RadFSynthese
         Me.RadChkMesureMax.TabIndex = 1
         Me.RadChkMesureMax.Text = "Afficher toutes les mesures préventives"
         '
-        'RadBtnEpisodeList
-        '
-        Me.RadBtnEpisodeList.Location = New System.Drawing.Point(130, 911)
-        Me.RadBtnEpisodeList.Name = "RadBtnEpisodeList"
-        Me.RadBtnEpisodeList.Size = New System.Drawing.Size(110, 24)
-        Me.RadBtnEpisodeList.TabIndex = 37
-        Me.RadBtnEpisodeList.Text = "Liste des épisodes"
-        '
         'RadBtnRefresh
         '
         Me.RadBtnRefresh.Location = New System.Drawing.Point(817, 911)
@@ -1215,7 +1205,6 @@ Partial Class RadFSynthese
         Me.CancelButton = Me.RadButtonAbandon
         Me.ClientSize = New System.Drawing.Size(1024, 947)
         Me.Controls.Add(Me.RadBtnRefresh)
-        Me.Controls.Add(Me.RadBtnEpisodeList)
         Me.Controls.Add(Me.RadChkMesureMax)
         Me.Controls.Add(Me.RadChkParcoursTous)
         Me.Controls.Add(Me.RadChkParcoursNonCache)
@@ -1299,7 +1288,6 @@ Partial Class RadFSynthese
         CType(Me.RadChkParcoursNonCache, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.RadChkParcoursTous, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.RadChkMesureMax, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.RadBtnEpisodeList, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.RadBtnRefresh, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
@@ -1382,7 +1370,6 @@ Partial Class RadFSynthese
     Friend WithEvents CréerUneStratégieContextuelleToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents HistoriqueDesModificationsToolStripMenuItem3 As ToolStripMenuItem
     Friend WithEvents RadChkMesureMax As Telerik.WinControls.UI.RadCheckBox
-    Friend WithEvents RadBtnEpisodeList As Telerik.WinControls.UI.RadButton
     Friend WithEvents CréerUnTraitementToolStripMenuItem1 As ToolStripMenuItem
     Friend WithEvents CréerUnSuiviToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents LblTraitementArret As Label
