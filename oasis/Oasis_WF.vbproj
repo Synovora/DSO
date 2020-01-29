@@ -207,6 +207,7 @@
     <Compile Include="Bean\DRC\DrcStandard.vb" />
     <Compile Include="Bean\Ordonnance\Ordonnance.vb" />
     <Compile Include="Bean\Ordonnance\OrdonnanceDetailGrid.vb" />
+    <Compile Include="Dao\Antecedent\AntecedentOrdreDao.vb" />
     <Compile Include="Form\DRC\RadFActeParamedicalTest.Designer.vb">
       <DependentUpon>RadFActeParamedicalTest.vb</DependentUpon>
     </Compile>
@@ -672,64 +673,10 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>RORDS.xsd</DependentUpon>
     </Compile>
-    <Compile Include="Version old\FAldCim10Selecteur.Designer.vb">
-      <DependentUpon>FAldCim10Selecteur.vb</DependentUpon>
-    </Compile>
-    <Compile Include="Version old\FAldCim10Selecteur.vb">
-      <SubType>Form</SubType>
-    </Compile>
     <Compile Include="Form\ALD\FAldSelecteur.Designer.vb">
       <DependentUpon>FAldSelecteur.vb</DependentUpon>
     </Compile>
     <Compile Include="Form\ALD\FAldSelecteur.vb">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Version old\FAntecedentAffectationSelecteur.Designer.vb">
-      <DependentUpon>FAntecedentAffectationSelecteur.vb</DependentUpon>
-    </Compile>
-    <Compile Include="Version old\FAntecedentAffectationSelecteur.vb">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Version old\FAntecedentDetailEdit.Designer.vb">
-      <DependentUpon>FAntecedentDetailEdit.vb</DependentUpon>
-    </Compile>
-    <Compile Include="Version old\FAntecedentDetailEdit.vb">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Version old\FAntecedentHistoListe.Designer.vb">
-      <DependentUpon>FAntecedentHistoListe.vb</DependentUpon>
-    </Compile>
-    <Compile Include="Version old\FAntecedentHistoListe.vb">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Version old\FAntecedentOccultesListe.Designer.vb">
-      <DependentUpon>FAntecedentOccultesListe.vb</DependentUpon>
-    </Compile>
-    <Compile Include="Version old\FAntecedentOccultesListe.vb">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Version old\FAntecedentOrdreSelecteur.Designer.vb">
-      <DependentUpon>FAntecedentOrdreSelecteur.vb</DependentUpon>
-    </Compile>
-    <Compile Include="Version old\FAntecedentOrdreSelecteur.vb">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Version old\FContexteDetailEdit.Designer.vb">
-      <DependentUpon>FContexteDetailEdit.vb</DependentUpon>
-    </Compile>
-    <Compile Include="Version old\FContexteDetailEdit.vb">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Version old\FDRCDetailEdit.Designer.vb">
-      <DependentUpon>FDRCDetailEdit.vb</DependentUpon>
-    </Compile>
-    <Compile Include="Version old\FDRCDetailEdit.vb">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Version old\FDRCListe.Designer.vb">
-      <DependentUpon>FDRCListe.vb</DependentUpon>
-    </Compile>
-    <Compile Include="Version old\FDRCListe.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Form\Antecedent\RadFAntecedentDetailEdit.Designer.vb">
@@ -738,166 +685,10 @@
     <Compile Include="Form\Antecedent\RadFAntecedentDetailEdit.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Version old\FDrcSelecteur.Designer.vb">
-      <DependentUpon>FDrcSelecteur.vb</DependentUpon>
-    </Compile>
-    <Compile Include="Version old\FDrcSelecteur.vb">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Version old\FDRCSynonymeDetailEdit.Designer.vb">
-      <DependentUpon>FDRCSynonymeDetailEdit.vb</DependentUpon>
-    </Compile>
-    <Compile Include="Version old\FDRCSynonymeDetailEdit.vb">
-      <SubType>Form</SubType>
-    </Compile>
     <Compile Include="Form\Medicament\RadFMedocSelecteur.Designer.vb">
       <DependentUpon>RadFMedocSelecteur.vb</DependentUpon>
     </Compile>
     <Compile Include="Form\Medicament\RadFMedocSelecteur.vb">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Version old\FmDRCListe.Designer.vb">
-      <DependentUpon>FmDRCListe.vb</DependentUpon>
-    </Compile>
-    <Compile Include="Version old\FmDRCListe.vb">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Menu\FMenuAdmin.Designer.vb">
-      <DependentUpon>FMenuAdmin.vb</DependentUpon>
-    </Compile>
-    <Compile Include="Menu\FMenuAdmin.vb">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Version old\FmPatientDetailEdit.Designer.vb">
-      <DependentUpon>FmPatientDetailEdit.vb</DependentUpon>
-    </Compile>
-    <Compile Include="Version old\FmPatientDetailEdit.vb">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Version old\FmPatientListe.Designer.vb">
-      <DependentUpon>FmPatientListe.vb</DependentUpon>
-    </Compile>
-    <Compile Include="Version old\FmPatientListe.vb">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Version old\FmPatientNoteDetailEdit.Designer.vb">
-      <DependentUpon>FmPatientNoteDetailEdit.vb</DependentUpon>
-    </Compile>
-    <Compile Include="Version old\FmPatientNoteDetailEdit.vb">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Version old\FmUniteSanitaire.Designer.vb">
-      <DependentUpon>FmUniteSanitaire.vb</DependentUpon>
-    </Compile>
-    <Compile Include="Version old\FmUniteSanitaire.vb">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Version old\FPatientAldDetailEdit.Designer.vb">
-      <DependentUpon>FPatientAldDetailEdit.vb</DependentUpon>
-    </Compile>
-    <Compile Include="Version old\FPatientAldDetailEdit.vb">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Version old\FPatientAldListe.Designer.vb">
-      <DependentUpon>FPatientAldListe.vb</DependentUpon>
-    </Compile>
-    <Compile Include="Version old\FPatientAldListe.vb">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Version old\FPatientAllergieListe.Designer.vb">
-      <DependentUpon>FPatientAllergieListe.vb</DependentUpon>
-    </Compile>
-    <Compile Include="Version old\FPatientAllergieListe.vb">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Version old\FPatientContreIndication.Designer.vb">
-      <DependentUpon>FPatientContreIndication.vb</DependentUpon>
-    </Compile>
-    <Compile Include="Version old\FPatientContreIndication.vb">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Version old\FPatientListeDoublons.Designer.vb">
-      <DependentUpon>FPatientListeDoublons.vb</DependentUpon>
-    </Compile>
-    <Compile Include="Version old\FPatientListeDoublons.vb">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Version old\FPatientNoteDetailEdit.Designer.vb">
-      <DependentUpon>FPatientNoteDetailEdit.vb</DependentUpon>
-    </Compile>
-    <Compile Include="Version old\FPatientNoteDetailEdit.vb">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Version old\FPatientDetailEdit.Designer.vb">
-      <DependentUpon>FPatientDetailEdit.vb</DependentUpon>
-    </Compile>
-    <Compile Include="Version old\FPatientDetailEdit.vb">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Version old\FPatientNoteMedicalDetailEdit.Designer.vb">
-      <DependentUpon>FPatientNoteMedicalDetailEdit.vb</DependentUpon>
-    </Compile>
-    <Compile Include="Version old\FPatientNoteMedicalDetailEdit.vb">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Version old\FPatientNoteMedicalListe.Designer.vb">
-      <DependentUpon>FPatientNoteMedicalListe.vb</DependentUpon>
-    </Compile>
-    <Compile Include="Version old\FPatientNoteMedicalListe.vb">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Version old\FPatientNoteSocialDetailEdit.Designer.vb">
-      <DependentUpon>FPatientNoteSocialDetailEdit.vb</DependentUpon>
-    </Compile>
-    <Compile Include="Version old\FPatientNoteSocialDetailEdit.vb">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Version old\FPatientNoteSocialListe.Designer.vb">
-      <DependentUpon>FPatientNoteSocialListe.vb</DependentUpon>
-    </Compile>
-    <Compile Include="Version old\FPatientNoteSocialListe.vb">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Version old\FPatientNoteVaccinDetailEdit.Designer.vb">
-      <DependentUpon>FPatientNoteVaccinDetailEdit.vb</DependentUpon>
-    </Compile>
-    <Compile Include="Version old\FPatientNoteVaccinDetailEdit.vb">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Version old\FPatientNoteVaccinListe.Designer.vb">
-      <DependentUpon>FPatientNoteVaccinListe.vb</DependentUpon>
-    </Compile>
-    <Compile Include="Version old\FPatientNoteVaccinListe.vb">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Version old\FPatientPPSListeGestion.Designer.vb">
-      <DependentUpon>FPatientPPSListeGestion.vb</DependentUpon>
-    </Compile>
-    <Compile Include="Version old\FPatientPPSListeGestion.vb">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Version old\FPPSInitCreation.Designer.vb">
-      <DependentUpon>FPPSInitCreation.vb</DependentUpon>
-    </Compile>
-    <Compile Include="Version old\FPPSInitCreation.vb">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Version old\FPPSMesurePreventive.Designer.vb">
-      <DependentUpon>FPPSMesurePreventive.vb</DependentUpon>
-    </Compile>
-    <Compile Include="Version old\FPPSMesurePreventive.vb">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Version old\FPPSStrategie.Designer.vb">
-      <DependentUpon>FPPSStrategie.vb</DependentUpon>
-    </Compile>
-    <Compile Include="Version old\FPPSStrategie.vb">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Version old\FTraitementHistoListe.Designer.vb">
-      <DependentUpon>FTraitementHistoListe.vb</DependentUpon>
-    </Compile>
-    <Compile Include="Version old\FTraitementHistoListe.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Dao\Traitement\MedocDao.vb" />
@@ -923,12 +714,6 @@
     </Compile>
     <Compile Include="ProjectInstaller.vb">
       <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="Version old\FrmDRCListe.Designer.vb">
-      <DependentUpon>FrmDRCListe.vb</DependentUpon>
-    </Compile>
-    <Compile Include="Version old\FrmDRCListe.vb">
-      <SubType>Form</SubType>
     </Compile>
     <Compile Include="Form\DRC\RadFDRCSelecteur.Designer.vb">
       <DependentUpon>RadFDRCSelecteur.vb</DependentUpon>
@@ -960,10 +745,28 @@
     <Compile Include="Form\Note\RadFPatientNoteDetailEdit.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Form\PPS\RadFPatientPPSListeGestion.Designer.vb">
-      <DependentUpon>RadFPatientPPSListeGestion.vb</DependentUpon>
+    <Compile Include="Form\Patient\FPatientListeDoublons.Designer.vb">
+      <DependentUpon>FPatientListeDoublons.vb</DependentUpon>
     </Compile>
-    <Compile Include="Form\PPS\RadFPatientPPSListeGestion.vb">
+    <Compile Include="Form\Patient\FPatientListeDoublons.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form\Antecedent\FAntecedentOccultesListe.Designer.vb">
+      <DependentUpon>FAntecedentOccultesListe.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Form\Antecedent\FAntecedentOccultesListe.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form\Medicament\FMedocListe.Designer.vb">
+      <DependentUpon>FMedocListe.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Form\Medicament\FMedocListe.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form\General\FmUniteSanitaire.Designer.vb">
+      <DependentUpon>FmUniteSanitaire.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Form\General\FmUniteSanitaire.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Version old\SChkContexteValide.Designer.vb">
@@ -973,18 +776,6 @@
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Bean\Traitement\TraitementHistoClass.vb" />
-    <Compile Include="Version old\FTraitementAllergieEtCI.Designer.vb">
-      <DependentUpon>FTraitementAllergieEtCI.vb</DependentUpon>
-    </Compile>
-    <Compile Include="Version old\FTraitementAllergieEtCI.vb">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Version old\FTraitementFenetreTh.Designer.vb">
-      <DependentUpon>FTraitementFenetreTh.vb</DependentUpon>
-    </Compile>
-    <Compile Include="Version old\FTraitementFenetreTh.vb">
-      <SubType>Form</SubType>
-    </Compile>
     <Compile Include="Dao\Traitement\MedicamentDao.vb" />
     <Compile Include="Dao\Patient\PatientDao.vb" />
     <Compile Include="Dao\Traitement\TraitementHistoDao.vb" />
@@ -994,70 +785,10 @@
       <DependentUpon>UniteSanitaireDataSet.xsd</DependentUpon>
     </Compile>
     <Compile Include="Bean\Patient\PatientClass.vb" />
-    <Compile Include="Version old\FMedocSelecteur.Designer.vb">
-      <DependentUpon>FMedocSelecteur.vb</DependentUpon>
-    </Compile>
-    <Compile Include="Version old\FMedocSelecteur.vb">
-      <SubType>Form</SubType>
-    </Compile>
     <Compile Include="Menu\FAuthentification.Designer.vb">
       <DependentUpon>FAuthentification.vb</DependentUpon>
     </Compile>
     <Compile Include="Menu\FAuthentification.vb">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Version old\FparametresOasis.Designer.vb">
-      <DependentUpon>FparametresOasis.vb</DependentUpon>
-    </Compile>
-    <Compile Include="Version old\FparametresOasis.vb">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Version old\FTraitementDetailEdit.Designer.vb">
-      <DependentUpon>FTraitementDetailEdit.vb</DependentUpon>
-    </Compile>
-    <Compile Include="Version old\FTraitementDetailEdit.vb">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Version old\FTraitementGestion.Designer.vb">
-      <DependentUpon>FTraitementGestion.vb</DependentUpon>
-    </Compile>
-    <Compile Include="Version old\FTraitementGestion.vb">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Version old\FPatientListe.Designer.vb">
-      <DependentUpon>FPatientListe.vb</DependentUpon>
-    </Compile>
-    <Compile Include="Version old\FPatientListe.vb">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Version old\FPatientDetail.Designer.vb">
-      <DependentUpon>FPatientDetail.vb</DependentUpon>
-    </Compile>
-    <Compile Include="Version old\FPatientDetail.vb">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Version old\FMedocListe.Designer.vb">
-      <DependentUpon>FMedocListe.vb</DependentUpon>
-    </Compile>
-    <Compile Include="Version old\FMedocListe.vb">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Version old\FMedocDetail.Designer.vb">
-      <DependentUpon>FMedocDetail.vb</DependentUpon>
-    </Compile>
-    <Compile Include="Version old\FMedocDetail.vb">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Version old\FSynthese.Designer.vb">
-      <DependentUpon>FSynthese.vb</DependentUpon>
-    </Compile>
-    <Compile Include="Version old\FSynthese.vb">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Version old\FTraitementObsoletes.Designer.vb">
-      <DependentUpon>FTraitementObsoletes.vb</DependentUpon>
-    </Compile>
-    <Compile Include="Version old\FTraitementObsoletes.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Module\Environnement.vb" />
@@ -1259,158 +990,17 @@
       <DependentUpon>RadFTraitementObsoletes.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="My Project\licenses.licx" />
-    <EmbeddedResource Include="Version old\FAldCim10Selecteur.resx">
-      <DependentUpon>FAldCim10Selecteur.vb</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="Form\ALD\FAldSelecteur.resx">
       <DependentUpon>FAldSelecteur.vb</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Version old\FAntecedentAffectationSelecteur.resx">
-      <DependentUpon>FAntecedentAffectationSelecteur.vb</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Version old\FAntecedentDetailEdit.resx">
-      <DependentUpon>FAntecedentDetailEdit.vb</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Version old\FAntecedentHistoListe.resx">
-      <DependentUpon>FAntecedentHistoListe.vb</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Version old\FAntecedentOccultesListe.resx">
-      <DependentUpon>FAntecedentOccultesListe.vb</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Version old\FAntecedentOrdreSelecteur.resx">
-      <DependentUpon>FAntecedentOrdreSelecteur.vb</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Version old\FContexteDetailEdit.resx">
-      <DependentUpon>FContexteDetailEdit.vb</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Version old\FDRCDetailEdit.resx">
-      <DependentUpon>FDRCDetailEdit.vb</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Version old\FDRCListe.resx">
-      <DependentUpon>FDRCListe.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Form\Antecedent\RadFAntecedentDetailEdit.resx">
       <DependentUpon>RadFAntecedentDetailEdit.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Version old\FDrcSelecteur.resx">
-      <DependentUpon>FDrcSelecteur.vb</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Version old\FDRCSynonymeDetailEdit.resx">
-      <DependentUpon>FDRCSynonymeDetailEdit.vb</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="Form\Medicament\RadFMedocSelecteur.resx">
       <DependentUpon>RadFMedocSelecteur.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Version old\FmDRCListe.resx">
-      <DependentUpon>FmDRCListe.vb</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Version old\FMedocDetail.resx">
-      <DependentUpon>FMedocDetail.vb</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Version old\FMedocSelecteur.resx">
-      <DependentUpon>FMedocSelecteur.vb</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Menu\FMenuAdmin.resx">
-      <DependentUpon>FMenuAdmin.vb</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Version old\FmPatientDetailEdit.resx">
-      <DependentUpon>FmPatientDetailEdit.vb</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Version old\FmPatientListe.resx">
-      <DependentUpon>FmPatientListe.vb</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Version old\FmPatientNoteDetailEdit.resx">
-      <DependentUpon>FmPatientNoteDetailEdit.vb</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Version old\FmUniteSanitaire.resx">
-      <DependentUpon>FmUniteSanitaire.vb</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Version old\FPatientAldDetailEdit.resx">
-      <DependentUpon>FPatientAldDetailEdit.vb</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Version old\FPatientAldListe.resx">
-      <DependentUpon>FPatientAldListe.vb</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Version old\FPatientAllergieListe.resx">
-      <DependentUpon>FPatientAllergieListe.vb</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Version old\FPatientContreIndication.resx">
-      <DependentUpon>FPatientContreIndication.vb</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Version old\FPatientListeDoublons.resx">
-      <DependentUpon>FPatientListeDoublons.vb</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Version old\FPatientNoteDetailEdit.resx">
-      <DependentUpon>FPatientNoteDetailEdit.vb</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="Menu\FAuthentification.resx">
       <DependentUpon>FAuthentification.vb</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Version old\FparametresOasis.resx">
-      <DependentUpon>FparametresOasis.vb</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Version old\FPatientDetailEdit.resx">
-      <DependentUpon>FPatientDetailEdit.vb</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Version old\FPatientListe.resx">
-      <DependentUpon>FPatientListe.vb</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Version old\FPatientDetail.resx">
-      <DependentUpon>FPatientDetail.vb</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Version old\FMedocListe.resx">
-      <DependentUpon>FMedocListe.vb</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Version old\FPatientNoteMedicalDetailEdit.resx">
-      <DependentUpon>FPatientNoteMedicalDetailEdit.vb</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Version old\FPatientNoteMedicalListe.resx">
-      <DependentUpon>FPatientNoteMedicalListe.vb</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Version old\FPatientNoteSocialDetailEdit.resx">
-      <DependentUpon>FPatientNoteSocialDetailEdit.vb</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Version old\FPatientNoteSocialListe.resx">
-      <DependentUpon>FPatientNoteSocialListe.vb</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Version old\FPatientNoteVaccinDetailEdit.resx">
-      <DependentUpon>FPatientNoteVaccinDetailEdit.vb</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Version old\FPatientNoteVaccinListe.resx">
-      <DependentUpon>FPatientNoteVaccinListe.vb</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Version old\FPatientPPSListeGestion.resx">
-      <DependentUpon>FPatientPPSListeGestion.vb</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Version old\FPPSInitCreation.resx">
-      <DependentUpon>FPPSInitCreation.vb</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Version old\FPPSMesurePreventive.resx">
-      <DependentUpon>FPPSMesurePreventive.vb</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Version old\FPPSStrategie.resx">
-      <DependentUpon>FPPSStrategie.vb</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Version old\FSynthese.resx">
-      <DependentUpon>FSynthese.vb</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Version old\FTraitementAllergieEtCI.resx">
-      <DependentUpon>FTraitementAllergieEtCI.vb</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Version old\FTraitementDetailEdit.resx">
-      <DependentUpon>FTraitementDetailEdit.vb</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Version old\FTraitementFenetreTh.resx">
-      <DependentUpon>FTraitementFenetreTh.vb</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Version old\FTraitementGestion.resx">
-      <DependentUpon>FTraitementGestion.vb</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Version old\FTraitementHistoListe.resx">
-      <DependentUpon>FTraitementHistoListe.vb</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Version old\FTraitementObsoletes.resx">
-      <DependentUpon>FTraitementObsoletes.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="My Project\Resources.resx">
       <Generator>VbMyResourcesResXFileCodeGenerator</Generator>
@@ -1420,9 +1010,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="ProjectInstaller.resx">
       <DependentUpon>ProjectInstaller.vb</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Version old\FrmDRCListe.resx">
-      <DependentUpon>FrmDRCListe.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Form\DRC\RadFDRCSelecteur.resx">
       <DependentUpon>RadFDRCSelecteur.vb</DependentUpon>
@@ -1439,8 +1026,17 @@
     <EmbeddedResource Include="Form\Note\RadFPatientNoteDetailEdit.resx">
       <DependentUpon>RadFPatientNoteDetailEdit.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Form\PPS\RadFPatientPPSListeGestion.resx">
-      <DependentUpon>RadFPatientPPSListeGestion.vb</DependentUpon>
+    <EmbeddedResource Include="Form\Patient\FPatientListeDoublons.resx">
+      <DependentUpon>FPatientListeDoublons.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form\Antecedent\FAntecedentOccultesListe.resx">
+      <DependentUpon>FAntecedentOccultesListe.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form\Medicament\FMedocListe.resx">
+      <DependentUpon>FMedocListe.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form\General\FmUniteSanitaire.resx">
+      <DependentUpon>FmUniteSanitaire.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Version old\SChkContexteValide.resx">
       <DependentUpon>SChkContexteValide.vb</DependentUpon>
