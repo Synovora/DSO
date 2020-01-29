@@ -248,10 +248,6 @@ Public Class FAntecedentDetailEdit
 
             'Contrôle si on peut traiter la suppression, la suppression est permise si la date de création = date de suppression
             Dim dateCreationaComparer As New Date(dateCreation.Year, dateCreation.Month, dateCreation.Day, 0, 0, 0)
-            If dateCreationaComparer <> dateJouraComparer Then
-                'TODO: BtnSupprimer.Hide()        'A confirmer
-            End If
-
             If antecedentDataReader("oa_antecedent_date_modification") IsNot DBNull.Value Then
                 dateModification = antecedentDataReader("oa_antecedent_date_modification")
                 LblAntecedentDateModification.Text = dateModification.ToString("dd.MM.yyyy")
