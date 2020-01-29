@@ -153,7 +153,7 @@ Public Class FPatientListeDoublons
             Dim patientId As Integer = CInt(TxtIdSelected.Text)
             PatientDao.SetPatient(Me.SelectedPatient, patientId)
 
-            Dim vFFPatientDetailEdit As New FPatientDetailEdit
+            Dim vFFPatientDetailEdit As New RadFPatientDetailEdit
             vFFPatientDetailEdit.SelectedPatientId = patientId
             vFFPatientDetailEdit.SelectedPatient = Me.SelectedPatient
             vFFPatientDetailEdit.UtilisateurConnecte = Me.UtilisateurConnecte
@@ -177,7 +177,7 @@ Public Class FPatientListeDoublons
         If TxtIdSelected.Text <> "" Then
             'Création instance patient
             Dim patientId As Integer = CInt(TxtIdSelected.Text)
-            Dim vFSynthese As New FSynthese
+            Dim vFSynthese As New RadFSynthese
 
             PatientDao.SetPatient(Me.SelectedPatient, patientId)
             vFSynthese.SelectedPatient = Me.SelectedPatient
