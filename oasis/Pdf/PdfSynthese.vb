@@ -927,7 +927,6 @@ Public Class PdfSynthese
                             SpecialiteId = PPSDataTable.Rows(i)("oa_parcours_specialite")
                             SpecialiteDescription = Table_specialite.GetSpecialiteDescription(SpecialiteId)
                         End If
-                        'TODO: récupération spécialité
                         NaturePPS = "Suivi " + SpecialiteDescription + " : "
                     Case Else
                         NaturePPS = "Inconnue "
