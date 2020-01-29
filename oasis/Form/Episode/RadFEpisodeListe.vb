@@ -41,6 +41,8 @@ Public Class RadFEpisodeListe
         Dim dateCreation As Date
         Dim rowCount As Integer = dt.Rows.Count - 1
 
+        Dim etatCode As String
+
         'Parcours du DataTable pour alimenter le DataGridView
         For i = 0 To rowCount Step 1
             'Ajout d'une ligne au DataGridView
@@ -49,7 +51,7 @@ Public Class RadFEpisodeListe
             'Alimentation du DataGridView
             RadGridViewEpisode.Rows(iGrid).Cells("episode_id").Value = dt.Rows(i)("episode_id")
             RadGridViewEpisode.Rows(iGrid).Cells("type").Value = Coalesce(dt.Rows(i)("type"), "")
-            RadGridViewEpisode.Rows(iGrid).Cells("type_activite").Value = Coalesce(dt.Rows(i)("type_activite"), "")
+            RadGridViewEpisode.Rows(iGrid).Cells("type_activite").Value = episodeDao.GetItemTypeActiviteByCode(Coalesce(dt.Rows(i)("type_activite"), ""))
             RadGridViewEpisode.Rows(iGrid).Cells("type_profil").Value = Coalesce(dt.Rows(i)("type_profil"), "")
             RadGridViewEpisode.Rows(iGrid).Cells("description_activite").Value = Coalesce(dt.Rows(i)("description_activite"), "")
             RadGridViewEpisode.Rows(iGrid).Cells("commentaire").Value = Coalesce(dt.Rows(i)("commentaire"), "")
@@ -59,10 +61,17 @@ Public Class RadFEpisodeListe
             Else
                 RadGridViewEpisode.Rows(iGrid).Cells("date_creation").Value = ""
             End If
-            RadGridViewEpisode.Rows(iGrid).Cells("etat").Value = Coalesce(dt.Rows(i)("etat"), "")
-            If Coalesce(dt.Rows(i)("etat"), "") = EpisodeDao.EnumEtatEpisode.EN_COURS.ToString Then
-                RadGridViewEpisode.Rows(iGrid).Cells("etat").Style.ForeColor = Color.Red
-            End If
+
+            etatCode = Coalesce(dt.Rows(i)("etat"), "")
+            Select Case etatCode
+                Case EpisodeDao.EnumEtatEpisode.EN_COURS.ToString
+                    RadGridViewEpisode.Rows(iGrid).Cells("etat").Value = "En cours"
+                    RadGridViewEpisode.Rows(iGrid).Cells("etat").Style.ForeColor = Color.Red
+                Case EpisodeDao.EnumEtatEpisode.CLOTURE.ToString
+                    RadGridViewEpisode.Rows(iGrid).Cells("etat").Value = "Clôturé"
+                Case Else
+                    RadGridViewEpisode.Rows(iGrid).Cells("etat").Value = "Inconnu !"
+            End Select
         Next
 
         'Positionnement du grid sur la première occurrence

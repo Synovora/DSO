@@ -2688,7 +2688,7 @@ Public Class RadFEpisodeDetail
         Else
             If episode.Etat = EpisodeDao.EnumEtatEpisode.CLOTURE.ToString Then
                 If episode.DateModification.Date < Date.Now.Date Then
-                    MessageBox.Show("Pas d'ordonnance existante pour cet épisode !")
+                    MessageBox.Show("Il n'y a pas d'ordonnance de créée pour cet épisode clôturé !")
                     Cursor.Current = Cursors.Default
                     Me.Enabled = True
                     Exit Sub

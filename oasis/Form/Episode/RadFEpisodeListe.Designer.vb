@@ -60,7 +60,7 @@ Partial Class RadFEpisodeListe
         'RadBtnAbandon
         '
         Me.RadBtnAbandon.DialogResult = System.Windows.Forms.DialogResult.Cancel
-        Me.RadBtnAbandon.Location = New System.Drawing.Point(907, 524)
+        Me.RadBtnAbandon.Location = New System.Drawing.Point(951, 524)
         Me.RadBtnAbandon.Name = "RadBtnAbandon"
         Me.RadBtnAbandon.Size = New System.Drawing.Size(110, 24)
         Me.RadBtnAbandon.TabIndex = 0
@@ -68,7 +68,7 @@ Partial Class RadFEpisodeListe
         '
         'RadBtnEpisode
         '
-        Me.RadBtnEpisode.Location = New System.Drawing.Point(791, 524)
+        Me.RadBtnEpisode.Location = New System.Drawing.Point(835, 524)
         Me.RadBtnEpisode.Name = "RadBtnEpisode"
         Me.RadBtnEpisode.Size = New System.Drawing.Size(110, 24)
         Me.RadBtnEpisode.TabIndex = 1
@@ -93,7 +93,7 @@ Partial Class RadFEpisodeListe
         Me.RadGroupBoxEtatCivil.HeaderText = ""
         Me.RadGroupBoxEtatCivil.Location = New System.Drawing.Point(12, 12)
         Me.RadGroupBoxEtatCivil.Name = "RadGroupBoxEtatCivil"
-        Me.RadGroupBoxEtatCivil.Size = New System.Drawing.Size(1000, 38)
+        Me.RadGroupBoxEtatCivil.Size = New System.Drawing.Size(1049, 38)
         Me.RadGroupBoxEtatCivil.TabIndex = 2
         CType(Me.RadGroupBoxEtatCivil.GetChildAt(0).GetChildAt(0), Telerik.WinControls.UI.GroupBoxContent).Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Bold)
         CType(Me.RadGroupBoxEtatCivil.GetChildAt(0).GetChildAt(1), Telerik.WinControls.UI.GroupBoxHeader).GroupBoxStyle = Telerik.WinControls.UI.RadGroupBoxStyle.Office
@@ -221,7 +221,7 @@ Partial Class RadFEpisodeListe
         GridViewTextBoxColumn1.HeaderText = "Type"
         GridViewTextBoxColumn1.HeaderTextAlignment = System.Drawing.ContentAlignment.MiddleLeft
         GridViewTextBoxColumn1.Name = "type"
-        GridViewTextBoxColumn1.Width = 80
+        GridViewTextBoxColumn1.Width = 100
         GridViewTextBoxColumn2.EnableExpressionEditor = False
         GridViewTextBoxColumn2.HeaderText = "Activité"
         GridViewTextBoxColumn2.HeaderTextAlignment = System.Drawing.ContentAlignment.MiddleLeft
@@ -232,7 +232,7 @@ Partial Class RadFEpisodeListe
         GridViewTextBoxColumn3.HeaderText = "Nature"
         GridViewTextBoxColumn3.Name = "type_profil"
         GridViewTextBoxColumn3.ReadOnly = True
-        GridViewTextBoxColumn3.Width = 80
+        GridViewTextBoxColumn3.Width = 95
         GridViewTextBoxColumn4.EnableExpressionEditor = False
         GridViewTextBoxColumn4.HeaderText = "Description activité"
         GridViewTextBoxColumn4.HeaderTextAlignment = System.Drawing.ContentAlignment.MiddleLeft
@@ -247,12 +247,12 @@ Partial Class RadFEpisodeListe
         GridViewTextBoxColumn6.HeaderText = "Date création"
         GridViewTextBoxColumn6.Name = "date_creation"
         GridViewTextBoxColumn6.TextAlignment = System.Drawing.ContentAlignment.MiddleCenter
-        GridViewTextBoxColumn6.Width = 75
+        GridViewTextBoxColumn6.Width = 80
         GridViewTextBoxColumn7.EnableExpressionEditor = False
         GridViewTextBoxColumn7.HeaderText = "Etat"
         GridViewTextBoxColumn7.Name = "etat"
         GridViewTextBoxColumn7.TextAlignment = System.Drawing.ContentAlignment.MiddleCenter
-        GridViewTextBoxColumn7.Width = 60
+        GridViewTextBoxColumn7.Width = 70
         GridViewTextBoxColumn8.EnableExpressionEditor = False
         GridViewTextBoxColumn8.HeaderText = "episode_id"
         GridViewTextBoxColumn8.IsVisible = False
@@ -262,7 +262,7 @@ Partial Class RadFEpisodeListe
         Me.RadGridViewEpisode.Name = "RadGridViewEpisode"
         Me.RadGridViewEpisode.RightToLeft = System.Windows.Forms.RightToLeft.No
         Me.RadGridViewEpisode.ShowGroupPanel = False
-        Me.RadGridViewEpisode.Size = New System.Drawing.Size(1000, 439)
+        Me.RadGridViewEpisode.Size = New System.Drawing.Size(1049, 439)
         Me.RadGridViewEpisode.TabIndex = 3
         '
         'RadFEpisodeListe
@@ -270,7 +270,7 @@ Partial Class RadFEpisodeListe
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.CancelButton = Me.RadBtnAbandon
-        Me.ClientSize = New System.Drawing.Size(1020, 560)
+        Me.ClientSize = New System.Drawing.Size(1067, 560)
         Me.Controls.Add(Me.RadGridViewEpisode)
         Me.Controls.Add(Me.RadGroupBoxEtatCivil)
         Me.Controls.Add(Me.RadBtnEpisode)
