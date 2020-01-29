@@ -95,6 +95,7 @@ Public Class RadFEpisodeDetail
     Dim FinChargementActesParamedicauxMedical As Boolean = False
     Dim commentaireConclusionIdeModified As Boolean = False
     Dim RadioTypeConclusionIdeModified As Boolean = False
+    Dim ChargementConclusionEnCours As Boolean
 
     Dim LongueurStringAllergie As Integer
 
@@ -885,7 +886,6 @@ Public Class RadFEpisodeDetail
 
     'Ajout protocole aigue (pour les épisodes de type "Pathologie aiguë")
     Private Sub AjoutProtocoleAiguToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles AjoutProtocoleAiguToolStripMenuItem.Click
-        'TODO
         Dim SelectedDrcId As Integer
         Cursor.Current = Cursors.WaitCursor
         Using vFDrcSelecteur As New RadFDRCSelecteur
@@ -1276,6 +1276,7 @@ Public Class RadFEpisodeDetail
             'Controle si Workflow de demande d'avis médical (en cours ou terminé) existe
             If tacheDao.ExisteDemandeAvisMedicalByEpisode(SelectedEpisodeId) = True Then
                 DemandeAvisMedicalExiste = True
+                ControleTypeConclusionParamedicaleSurDemandeAvis()
             End If
         End If
     End Sub
@@ -1283,10 +1284,12 @@ Public Class RadFEpisodeDetail
     'Traiter une tâche de la demande d'avis (Workflow)
     Private Sub RadBtnWorkflowIde_Click(sender As Object, e As EventArgs) Handles RadBtnWorkflowIde.Click
         ControleGestionWorkflow()
+        GestionClotureAutomatique()
     End Sub
 
     Private Sub RadBtnWorkflowMed_Click(sender As Object, e As EventArgs) Handles RadBtnWorkflowMed.Click
         ControleGestionWorkflow()
+        GestionClotureAutomatique()
     End Sub
 
     Private Sub ControleGestionWorkflow()
@@ -1382,6 +1385,9 @@ Public Class RadFEpisodeDetail
 
     'Chargement conclusion médicale et paramédicale 
     Private Sub ChargementConclusion()
+        ChargementConclusionEnCours = True
+        ControleTypeConclusionParamedicaleSurDemandeAvis()
+
         Select Case episode.TypeProfil
             Case EpisodeDao.EnumTypeProfil.MEDICAL.ToString
                 RadPanelConclusionIdeType.Hide()
@@ -1390,24 +1396,24 @@ Public Class RadFEpisodeDetail
                 Select Case episode.ConclusionIdeType
                     Case EpisodeDao.EnumTypeConclusionParamedicale.ROLE_PROPRE.ToString
                         RadioBtnRolePropre.Checked = True
-                        episode.ConclusionIdeType = EpisodeDao.EnumTypeConclusionParamedicale.ROLE_PROPRE.ToString
+                        RadioTypeConclusionIdeModified = False
                     Case EpisodeDao.EnumTypeConclusionParamedicale.SUR_PROTOCOLE.ToString
                         RadioBtnSurProtocole.Checked = True
-                        episode.ConclusionIdeType = EpisodeDao.EnumTypeConclusionParamedicale.SUR_PROTOCOLE.ToString
+                        RadioTypeConclusionIdeModified = False
                     Case EpisodeDao.EnumTypeConclusionParamedicale.DEMANDE_AVIS.ToString
                         RadioBtnDemandeAvis.Checked = True
-                        episode.ConclusionIdeType = EpisodeDao.EnumTypeConclusionParamedicale.DEMANDE_AVIS.ToString
+                        RadioTypeConclusionIdeModified = False
                     Case Else
-                        RadioBtnRolePropre.Checked = True
-                        episode.ConclusionIdeType = EpisodeDao.EnumTypeConclusionParamedicale.ROLE_PROPRE.ToString
-                        If DemandeAvisMedicalExiste = True Then
-                            RadioBtnDemandeAvis.Checked = True
-                            episode.ConclusionIdeType = EpisodeDao.EnumTypeConclusionParamedicale.DEMANDE_AVIS.ToString
+                        If ProtocoleAiguExiste = True Then
+                            RadioBtnSurProtocole.Checked = True
+                            episode.ConclusionIdeType = EpisodeDao.EnumTypeConclusionParamedicale.SUR_PROTOCOLE.ToString
+                            episodeDao.ModificationEpisode(episode)
+                            RadioTypeConclusionIdeModified = False
                         Else
-                            If ProtocoleAiguExiste = True Then
-                                RadioBtnSurProtocole.Checked = True
-                                episode.ConclusionIdeType = EpisodeDao.EnumTypeConclusionParamedicale.SUR_PROTOCOLE.ToString
-                            End If
+                            RadioBtnRolePropre.Checked = True
+                            episode.ConclusionIdeType = EpisodeDao.EnumTypeConclusionParamedicale.ROLE_PROPRE.ToString
+                            episodeDao.ModificationEpisode(episode)
+                            RadioTypeConclusionIdeModified = False
                         End If
                 End Select
         End Select
@@ -1424,11 +1430,28 @@ Public Class RadFEpisodeDetail
         End If
 
         'Chargement contexte(s) de conclusion
-        'TODO: Chargement contexte(s) de conclusion
+        'TODO: Episode détail - Chargement contexte(s) de conclusion
 
         ConclusionMedicaleExiste = False
-        'TODO: Si contexte de conclusion existe alors ConclusionMedicaleExiste = True
+        'TODO: Episode détail _ Si contexte de conclusion existe alors ConclusionMedicaleExiste = True
 
+        ChargementConclusionEnCours = False
+    End Sub
+
+    Private Sub ControleTypeConclusionParamedicaleSurDemandeAvis()
+        If episode.TypeProfil = EpisodeDao.EnumTypeProfil.PARAMEDICAL.ToString Then
+            If DemandeAvisMedicalExiste = True Then
+                RadioBtnDemandeAvis.Checked = True
+                RadioBtnDemandeAvis.Enabled = False
+                RadioBtnRolePropre.Enabled = False
+                RadioBtnSurProtocole.Enabled = False
+                If episode.ConclusionIdeType <> EpisodeDao.EnumTypeConclusionParamedicale.DEMANDE_AVIS.ToString Then
+                    episode.ConclusionIdeType = EpisodeDao.EnumTypeConclusionParamedicale.DEMANDE_AVIS.ToString
+                    episodeDao.ModificationEpisode(episode)
+                    RadioTypeConclusionIdeModified = False
+                End If
+            End If
+        End If
     End Sub
 
     '======================================================
@@ -1482,15 +1505,21 @@ Public Class RadFEpisodeDetail
 
     'Modification type conclusion paramédicale
     Private Sub RadioBtnRolePropre_CheckedChanged(sender As Object, e As EventArgs) Handles RadioBtnRolePropre.CheckedChanged
-        RadioTypeConclusionIdeModified = True
+        If ChargementConclusionEnCours = False Then
+            RadioTypeConclusionIdeModified = True
+        End If
     End Sub
 
     Private Sub RadioBtnSurProtocole_CheckedChanged(sender As Object, e As EventArgs) Handles RadioBtnSurProtocole.CheckedChanged
-        RadioTypeConclusionIdeModified = True
+        If ChargementConclusionEnCours = False Then
+            RadioTypeConclusionIdeModified = True
+        End If
     End Sub
 
     Private Sub RadioBtnDemandeAvis_CheckedChanged(sender As Object, e As EventArgs) Handles RadioBtnDemandeAvis.CheckedChanged
-        RadioTypeConclusionIdeModified = True
+        If ChargementConclusionEnCours = False Then
+            RadioTypeConclusionIdeModified = True
+        End If
     End Sub
 
     Private Sub ModificationRadioTypeConclusionIDE()
@@ -1569,6 +1598,21 @@ Public Class RadFEpisodeDetail
         End If
 
         ClotureEpisode()
+    End Sub
+
+    'Vérification si l'épisode peut être clôturé automatiquement
+    Private Sub GestionClotureAutomatique()
+        If episode.TypeProfil = EpisodeDao.EnumTypeProfil.PARAMEDICAL.ToString Then
+            If ConclusionMedicaleExiste = True Then
+                If WorkflowEnCoursExistant = False Then
+                    If DemandeAvisMedicalExiste = True Then
+                        'episode.ConclusionIdeType = EpisodeDao.EnumTypeConclusionParamedicale.DEMANDE_AVIS.ToString
+                        'TODO: Episode détail - Alerte si ordonnance existe et n'est pas signée!!!!!!!!!!!!
+                        ClotureEpisode()
+                    End If
+                End If
+            End If
+        End If
     End Sub
 
     Private Sub ClotureEpisode()
@@ -1944,7 +1988,7 @@ Public Class RadFEpisodeDetail
 
     'Transformer En majeur (pour un antécédent non majeur)
     Private Sub TransformerEnMajeurToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles TransformerEnMajeurToolStripMenuItem.Click
-        'TODO: à réaliser
+        'TODO: Episode détail - Transformation contexte en antécédent depuis l'épisode détail
     End Sub
 
     'Gestion des options d'affichage des antécédents sur évènement
@@ -3415,7 +3459,6 @@ Public Class RadFEpisodeDetail
                             SpecialiteId = PPSDataTable.Rows(i)("oa_parcours_specialite")
                             SpecialiteDescription = Table_specialite.GetSpecialiteDescription(SpecialiteId)
                         End If
-                        'TODO: récupération spécialité
                         NaturePPS = "Suivi " + SpecialiteDescription + " : "
                     Case Else
                         NaturePPS = "Inconnue "
@@ -3805,6 +3848,11 @@ Public Class RadFEpisodeDetail
         RadBtnWorkflowIde.Enabled = True
         RadPnlWorkflowIDE.Enabled = True
         TxtConclusionIDE.Enabled = True
+        If episode.ConclusionIdeType = EpisodeDao.EnumTypeConclusionParamedicale.DEMANDE_AVIS.ToString Then
+            If DemandeAvisMedicalExiste = True Then
+                Exit Sub
+            End If
+        End If
         RadioBtnDemandeAvis.Enabled = True
         RadioBtnRolePropre.Enabled = True
         RadioBtnSurProtocole.Enabled = True
@@ -3874,6 +3922,19 @@ Public Class RadFEpisodeDetail
         End Using
         Me.Enabled = True
     End Sub
+
+    'Ligne de vie
+    Private Sub RadBtnLigneDeVie_Click(sender As Object, e As EventArgs) Handles RadBtnLigneDeVie.Click
+        Me.Enabled = False
+        Cursor.Current = Cursors.WaitCursor
+        Using vadFEpisodeListe As New RadFEpisodeListe
+            vadFEpisodeListe.SelectedPatient = Me.SelectedPatient
+            vadFEpisodeListe.UtilisateurConnecte = Me.UtilisateurConnecte
+            vadFEpisodeListe.ShowDialog() 'Modal
+        End Using
+        Me.Enabled = True
+    End Sub
+
 
     'Abandon
     Private Sub RadBtnAbandon_Click(sender As Object, e As EventArgs) Handles RadBtnAbandon.Click
