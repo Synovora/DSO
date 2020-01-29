@@ -207,7 +207,6 @@ Public Class FTraitementDetailEdit
 
     'Confirmation de l'arrêt du traitement
     Private Sub BtnValidationArret_Click(sender As Object, e As EventArgs) Handles BtnValidationArret.Click
-        'TODO: Contrôle date de fin
         Dim Valide As Boolean = True
         Dim messageErreur As String = ""
 
@@ -334,7 +333,7 @@ Public Class FTraitementDetailEdit
         End If
 
         'Contrôler qu'une données a au moins été modifiée
-        'TODO: contrôle qu'une données a au moins été modifiée
+        'contrôle qu'une données a au moins été modifiée
 
         Return Valide
     End Function

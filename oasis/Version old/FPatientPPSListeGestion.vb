@@ -322,7 +322,7 @@ Public Class FPatientPPSListeGestion
 
     'Historique des modifications
     Private Sub HistoriqueDesModificationsObjectifToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles JHistoriqueDesModificationsToolStripMenuItem.Click
-        'TODO: Appel de l'historique des modifications de l'objectif santé
+        'Appel de l'historique des modifications de l'objectif santé
 
     End Sub
 
@@ -429,7 +429,7 @@ Public Class FPatientPPSListeGestion
 
     'Historique des modifications des mesures préventives
     Private Sub HistoriqueDesModificationsPreventionToolStripMenuItem_Click_1(sender As Object, e As EventArgs) Handles HistoriqueDesModificationsToolStripMenuItem.Click
-        'TODO: Appel de l'historique des modifications des mesures préventives
+        'Appel de l'historique des modifications des mesures préventives
 
     End Sub
 
@@ -539,10 +539,6 @@ Public Class FPatientPPSListeGestion
             Else
                 AffichageSyntheseString = "Non"
             End If
-
-            'TODO: Récupérer la date du dernier rendez-vous
-
-            'TODO: Récupérer la date du prochain rendez-vous
 
             'Ajout d'une ligne au DataGridView
             iGrid += 1

@@ -194,7 +194,7 @@ Public Class FPatientAldDetailEdit
             If AldDataReader("oa_patient_ald_cim10_id") IsNot DBNull.Value Then
                 If AldDataReader("oa_patient_ald_cim10_id") <> 0 Then
                     TxtAldCim10Id.Text = AldDataReader("oa_patient_ald_cim10_id")
-                    'TODO: Lecture ALD Cim10 pour récupérer la description Cim10 et le code ALD
+                    'Lecture ALD Cim10 pour récupérer la description Cim10 et le code ALD
                     Dim aldCim10 As AldCim10 = New AldCim10(CInt(TxtAldCim10Id.Text))
                     Lblcim10Description.Text = aldCim10.AldCim10Description
                     LblCodeALD.Text = aldCim10.AldCim10AldCode
@@ -441,7 +441,7 @@ Public Class FPatientAldDetailEdit
         End If
 
         'Contrôler qu'une données a au moins été modifiée
-        'TODO: contrôle qu'une données a au moins été modifiée
+        'contrôle qu'une données a au moins été modifiée
 
         Return CodeRetour
     End Function

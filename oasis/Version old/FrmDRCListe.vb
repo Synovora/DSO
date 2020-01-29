@@ -12,7 +12,7 @@ Public Class FrmDRCListe
         End Set
     End Property
     Private Sub RadForm1_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-        'TODO: cette ligne de code charge les données dans la table 'DatSetDRC.oa_drc'. Vous pouvez la déplacer ou la supprimer selon les besoins.
+        'cette ligne de code charge les données dans la table 'DatSetDRC.oa_drc'. Vous pouvez la déplacer ou la supprimer selon les besoins.
 
         Me.Oa_drcTableAdapter.Fill(Me.DatSetDRC.oa_drc)
 

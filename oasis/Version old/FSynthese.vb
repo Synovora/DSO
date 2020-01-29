@@ -697,10 +697,6 @@ Public Class FSynthese
             'Bouton gérer fenêtre thérapeutique
             If FenetreTherapeutiqueAVenir = True Or FenetreTherapeutiqueEnCours = True Then
                 TraitementDataGridView("posologie", iGrid).Style.ForeColor = Color.Red
-                'TODO: Bouton caché à présent code à supprimer si validation
-                Dim bouton As DataGridViewButtonCell = TraitementDataGridView("BtnFenetreTherapeutique", iGrid)
-                bouton.FlatStyle = FlatStyle.Flat
-                bouton.Style.ForeColor = Color.DarkOrange
             End If
         Next
 
@@ -813,7 +809,7 @@ Public Class FSynthese
 
     'Appel du form pour déclarer une allergie
     Private Sub DéclarerUneAllergieToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles DéclarerUneAllergieToolStripMenuItem.Click
-        'TODO: Appel de la déclaration d'une allergie
+        'Appel de la déclaration d'une allergie
     End Sub
 
     'Liste de l'historique des modifications d'un traitement donné
@@ -963,12 +959,6 @@ Public Class FSynthese
         vFTraitementAllergieEtCI.AllergieOuContreIndication = EnumAllergieOuContreIndication.Allergie
         vFTraitementAllergieEtCI.ShowDialog() 'Modal
         vFTraitementAllergieEtCI.Dispose()
-    End Sub
-
-    'Génération ordonnance à partir des traitements en cours
-    Private Sub OrdonnanceToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles OrdonnanceToolStripMenuItem.Click
-        'TODO: gestion ordonnance
-
     End Sub
 
     '================================================================
@@ -1348,7 +1338,6 @@ Public Class FSynthese
                                 SpecialiteId = ppsDataTable.Rows(i)("oa_pps_specialite")
                                 SpecialiteDescription = Table_specialite.GetSpecialiteDescription(SpecialiteId)
                             End If
-                            'TODO: récupération spécialité
                             NaturePPS = "Suivi " + SpecialiteDescription + " : "
                         Case Else
                             NaturePPS = "Inconnue "
@@ -1494,11 +1483,6 @@ Public Class FSynthese
 
         vFPatientNoteMedicalListe.ShowDialog() 'Modal
         vFPatientNoteMedicalListe.Dispose()
-    End Sub
-
-    'Gestion épisode de soin
-    Private Sub BtnEpisode_Click(sender As Object, e As EventArgs) Handles BtnEpisode.Click
-        'TODO: Appel liste des épisodes de soin
     End Sub
 
 End Class
