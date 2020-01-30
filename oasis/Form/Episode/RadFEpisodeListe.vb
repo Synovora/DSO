@@ -205,43 +205,41 @@ Public Class RadFEpisodeListe
         Dim etatCode As String
         Dim DatePrecedente As Date = Date.Now()
 
+        If Lblparametre1.Text <> "" Then
+            RadGridViewEpisode.Columns.Item("parametre1").HeaderText = Lblparametre1.Text
+            RadGridViewEpisode.Columns.Item("parametre1").IsVisible = True
+        Else
+            RadGridViewEpisode.Columns.Item("parametre1").IsVisible = False
+        End If
+        If LblParametre2.Text <> "" Then
+            RadGridViewEpisode.Columns.Item("parametre2").HeaderText = LblParametre2.Text
+            RadGridViewEpisode.Columns.Item("parametre2").IsVisible = True
+        Else
+            RadGridViewEpisode.Columns.Item("parametre2").IsVisible = False
+        End If
+        If LblParametre3.Text <> "" Then
+            RadGridViewEpisode.Columns.Item("parametre3").HeaderText = LblParametre3.Text
+            RadGridViewEpisode.Columns.Item("parametre3").IsVisible = True
+        Else
+            RadGridViewEpisode.Columns.Item("parametre3").IsVisible = False
+        End If
+        If LblParametre4.Text <> "" Then
+            RadGridViewEpisode.Columns.Item("parametre4").HeaderText = LblParametre4.Text
+            RadGridViewEpisode.Columns.Item("parametre4").IsVisible = True
+        Else
+            RadGridViewEpisode.Columns.Item("parametre4").IsVisible = False
+        End If
+        If LblParametre5.Text <> "" Then
+            RadGridViewEpisode.Columns.Item("parametre5").HeaderText = LblParametre5.Text
+            RadGridViewEpisode.Columns.Item("parametre5").IsVisible = True
+        Else
+            RadGridViewEpisode.Columns.Item("parametre5").IsVisible = False
+        End If
+
         'Parcours du DataTable pour alimenter le DataGridView
         For i = 0 To rowCount Step 1
             'Ajout d'une ligne au DataGridView
             iGrid += 1
-            If iGrid = 0 Then
-                If Lblparametre1.Text <> "" Then
-                    RadGridViewEpisode.Columns.Item("parametre1").HeaderText = Lblparametre1.Text
-                    RadGridViewEpisode.Columns.Item("parametre1").IsVisible = True
-                Else
-                    RadGridViewEpisode.Columns.Item("parametre1").IsVisible = False
-                End If
-                If LblParametre2.Text <> "" Then
-                    RadGridViewEpisode.Columns.Item("parametre2").HeaderText = LblParametre2.Text
-                    RadGridViewEpisode.Columns.Item("parametre2").IsVisible = True
-                Else
-                    RadGridViewEpisode.Columns.Item("parametre2").IsVisible = False
-                End If
-                If LblParametre3.Text <> "" Then
-                    RadGridViewEpisode.Columns.Item("parametre3").HeaderText = LblParametre3.Text
-                    RadGridViewEpisode.Columns.Item("parametre3").IsVisible = True
-                Else
-                    RadGridViewEpisode.Columns.Item("parametre3").IsVisible = False
-                End If
-                If LblParametre4.Text <> "" Then
-                    RadGridViewEpisode.Columns.Item("parametre4").HeaderText = LblParametre4.Text
-                    RadGridViewEpisode.Columns.Item("parametre4").IsVisible = True
-                Else
-                    RadGridViewEpisode.Columns.Item("parametre4").IsVisible = False
-                End If
-                If LblParametre5.Text <> "" Then
-                    RadGridViewEpisode.Columns.Item("parametre5").HeaderText = LblParametre5.Text
-                    RadGridViewEpisode.Columns.Item("parametre5").IsVisible = True
-                Else
-                    RadGridViewEpisode.Columns.Item("parametre5").IsVisible = False
-                End If
-            End If
-
             RadGridViewEpisode.Rows.Add(iGrid)
             'Alimentation du DataGridView
             Dim episodeId As Long = dt.Rows(i)("episode_id")
