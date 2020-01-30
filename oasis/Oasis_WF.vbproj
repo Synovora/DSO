@@ -203,6 +203,7 @@
     <Compile Include="Bean\Ordonnance\Ordonnance.vb" />
     <Compile Include="Bean\Ordonnance\OrdonnanceDetailGrid.vb" />
     <Compile Include="Dao\Antecedent\AntecedentOrdreDao.vb" />
+    <Compile Include="Bean\LigneDeVie\LigneDeVie.vb" />
     <Compile Include="Form\DRC\RadFActeParamedicalTest.Designer.vb">
       <DependentUpon>RadFActeParamedicalTest.vb</DependentUpon>
     </Compile>

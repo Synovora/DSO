@@ -216,13 +216,125 @@ Public Class EpisodeDao
         Return episode
     End Function
 
-    Friend Function GetAllEpisodeByPatient(patientId As Long) As DataTable
-        Dim SQLString As String
+    Friend Function GetAllEpisodeByPatient(patientId As Long, dateDebut As Date, dateFin As Date, ligneDeVie As LigneDeVie) As DataTable
+        Dim SQLString, TypeEpisodeString, ActiviteEpisodeString, ProfilEpisodeString, OrderByString As String
+        Dim RechercherTypeEpisode, RechercherActiviteEpisode, RechercherprofilEpisode As Boolean
         SQLString = "SELECT episode_id, patient_id, type, type_activite, description_activite, type_profil, commentaire, date_creation, etat" &
                     " FROM oasis.oa_episode" &
                     " WHERE patient_id = " & patientId.ToString &
                     " AND (inactif = 'False' OR inactif is Null)" &
-                    " ORDER BY date_creation DESC"
+                    " AND date_creation <= '" & dateDebut.ToString("yyyy-MM-dd") & "'" &
+                    " AND date_creation >= '" & dateFin.ToString("yyyy-MM-dd") & "'" & vbCrLf
+
+        'Type
+        TypeEpisodeString = " AND [type] IN ('"
+        If ligneDeVie.TypeConsultation = True Then
+            RechercherTypeEpisode = True
+            TypeEpisodeString += EpisodeDao.EnumTypeEpisode.CONSULTATION.ToString & "'"
+        End If
+        If ligneDeVie.TypeVirtuel = True Then
+            If RechercherTypeEpisode = True Then
+                TypeEpisodeString += ", '"
+            End If
+            RechercherTypeEpisode = True
+            TypeEpisodeString += EpisodeDao.EnumTypeEpisode.VIRTUEL.ToString & "'"
+        End If
+        If RechercherTypeEpisode = True Then
+            TypeEpisodeString += ")" & vbCrLf
+        End If
+
+        'Profil
+        ProfilEpisodeString = " AND type_profil IN ('"
+        If ligneDeVie.ProfilMedical = True Then
+            RechercherprofilEpisode = True
+            ProfilEpisodeString += EpisodeDao.EnumTypeProfil.MEDICAL.ToString & "'"
+        End If
+        If ligneDeVie.ProfilParamedical = True Then
+            If RechercherprofilEpisode = True Then
+                ProfilEpisodeString += ", '"
+            End If
+            RechercherprofilEpisode = True
+            ProfilEpisodeString += EpisodeDao.EnumTypeProfil.PARAMEDICAL.ToString & "'"
+        End If
+        If RechercherprofilEpisode = True Then
+            ProfilEpisodeString += ")" & vbCrLf
+        End If
+
+        'Activité
+        ActiviteEpisodeString = " AND type_activite IN ('"
+        If ligneDeVie.ActivitePathologieAigue = True Then
+            RechercherActiviteEpisode = True
+            ActiviteEpisodeString += EpisodeDao.EnumTypeActiviteEpisodeCode.PATHOLOGIE_AIGUE & "'"
+        End If
+        If ligneDeVie.ActivitePreventionAutre = True Then
+            If RechercherActiviteEpisode = True Then
+                ActiviteEpisodeString += ", '"
+            End If
+            RechercherActiviteEpisode = True
+            ActiviteEpisodeString += EpisodeDao.EnumTypeActiviteEpisodeCode.PREVENTION_AUTRE & "'"
+        End If
+        If ligneDeVie.ActivitePreventionEnfantPreScolaire = True Then
+            If RechercherActiviteEpisode = True Then
+                ActiviteEpisodeString += ", '"
+            End If
+            RechercherActiviteEpisode = True
+            ActiviteEpisodeString += EpisodeDao.EnumTypeActiviteEpisodeCode.PREVENTION_ENFANT_PRE_SCOLAIRE & "'"
+        End If
+        If ligneDeVie.ActivitePreventionEnfantScolaire = True Then
+            If RechercherActiviteEpisode = True Then
+                ActiviteEpisodeString += ", '"
+            End If
+            RechercherActiviteEpisode = True
+            ActiviteEpisodeString += EpisodeDao.EnumTypeActiviteEpisodeCode.PREVENTION_ENFANT_SCOLAIRE & "'"
+        End If
+        If ligneDeVie.ActiviteSocial = True Then
+            If RechercherActiviteEpisode = True Then
+                ActiviteEpisodeString += ", '"
+            End If
+            RechercherActiviteEpisode = True
+            ActiviteEpisodeString += EpisodeDao.EnumTypeActiviteEpisodeCode.SOCIAL & "'"
+        End If
+        If ligneDeVie.ActiviteSuiviChronique = True Then
+            If RechercherActiviteEpisode = True Then
+                ActiviteEpisodeString += ", '"
+            End If
+            RechercherActiviteEpisode = True
+            ActiviteEpisodeString += EpisodeDao.EnumTypeActiviteEpisodeCode.SUIVI_CHRONIQUE & "'"
+        End If
+        If ligneDeVie.ActiviteSuiviGrossesse = True Then
+            If RechercherActiviteEpisode = True Then
+                ActiviteEpisodeString += ", '"
+            End If
+            RechercherActiviteEpisode = True
+            ActiviteEpisodeString += EpisodeDao.EnumTypeActiviteEpisodeCode.PREVENTION_SUIVI_GROSSESSE & "'"
+        End If
+        If ligneDeVie.ActiviteSuiviGyncologique = True Then
+            If RechercherActiviteEpisode = True Then
+                ActiviteEpisodeString += ", '"
+            End If
+            RechercherActiviteEpisode = True
+            ActiviteEpisodeString += EpisodeDao.EnumTypeActiviteEpisodeCode.PREVENTION_SUIVI_GYNECOLOGIQUE & "'"
+        End If
+        If RechercherActiviteEpisode = True Then
+            ActiviteEpisodeString += ")" & vbCrLf
+        End If
+
+        'Order by
+        OrderByString = " ORDER BY date_creation DESC"
+
+        If RechercherTypeEpisode = True Then
+            SQLString += TypeEpisodeString
+        End If
+
+        If RechercherprofilEpisode = True Then
+            SQLString += ProfilEpisodeString
+        End If
+
+        If RechercherActiviteEpisode = True Then
+            SQLString += ActiviteEpisodeString
+        End If
+
+        SQLString += OrderByString
 
         Dim ParcoursDataTable As DataTable = New DataTable()
 

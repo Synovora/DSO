@@ -23,15 +23,21 @@ Partial Class RadFEpisodeListe
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
         Me.components = New System.ComponentModel.Container()
-        Dim GridViewTextBoxColumn1 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
-        Dim GridViewTextBoxColumn2 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
-        Dim GridViewTextBoxColumn3 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
-        Dim GridViewTextBoxColumn4 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
-        Dim GridViewTextBoxColumn5 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
-        Dim GridViewTextBoxColumn6 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
-        Dim GridViewTextBoxColumn7 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
-        Dim GridViewTextBoxColumn8 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
-        Dim TableViewDefinition1 As Telerik.WinControls.UI.TableViewDefinition = New Telerik.WinControls.UI.TableViewDefinition()
+        Dim GridViewTextBoxColumn29 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
+        Dim GridViewTextBoxColumn30 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
+        Dim GridViewTextBoxColumn31 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
+        Dim GridViewTextBoxColumn32 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
+        Dim GridViewTextBoxColumn33 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
+        Dim GridViewTextBoxColumn34 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
+        Dim GridViewTextBoxColumn35 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
+        Dim GridViewTextBoxColumn36 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
+        Dim GridViewTextBoxColumn37 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
+        Dim GridViewTextBoxColumn38 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
+        Dim GridViewTextBoxColumn39 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
+        Dim GridViewTextBoxColumn40 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
+        Dim GridViewTextBoxColumn41 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
+        Dim GridViewTextBoxColumn42 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
+        Dim TableViewDefinition3 As Telerik.WinControls.UI.TableViewDefinition = New Telerik.WinControls.UI.TableViewDefinition()
         Me.RadBtnAbandon = New Telerik.WinControls.UI.RadButton()
         Me.RadBtnEpisode = New Telerik.WinControls.UI.RadButton()
         Me.RadGroupBoxEtatCivil = New Telerik.WinControls.UI.RadGroupBox()
@@ -47,20 +53,59 @@ Partial Class RadFEpisodeListe
         Me.LblPatientGenre = New System.Windows.Forms.Label()
         Me.LblPatientNIR = New System.Windows.Forms.Label()
         Me.RadGridViewEpisode = New Telerik.WinControls.UI.RadGridView()
+        Me.ContextMenuStrip1 = New System.Windows.Forms.ContextMenuStrip(Me.components)
+        Me.OrdonnanceMédicaleToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.AutresOrdonnancesToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.BiologieToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.RadiologieToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.SousépisodesToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.ToolTip1 = New System.Windows.Forms.ToolTip(Me.components)
+        Me.ChkTypeConsultation = New System.Windows.Forms.CheckBox()
+        Me.ChkTypeVirtuel = New System.Windows.Forms.CheckBox()
+        Me.ChkPathologieAigue = New System.Windows.Forms.CheckBox()
+        Me.ChkSuiviChronique = New System.Windows.Forms.CheckBox()
+        Me.ChkSocial = New System.Windows.Forms.CheckBox()
+        Me.ChkPreventionAutre = New System.Windows.Forms.CheckBox()
+        Me.ChkEnfantPreScolaire = New System.Windows.Forms.CheckBox()
+        Me.ChkEnfantScolaire = New System.Windows.Forms.CheckBox()
+        Me.ChkSuiviGrossesse = New System.Windows.Forms.CheckBox()
+        Me.ChkSuiviGynecologique = New System.Windows.Forms.CheckBox()
+        Me.ChkProfilMedical = New System.Windows.Forms.CheckBox()
+        Me.ChkProfilParamedical = New System.Windows.Forms.CheckBox()
+        Me.Lblparametre1 = New System.Windows.Forms.Label()
+        Me.LblParametre2 = New System.Windows.Forms.Label()
+        Me.LblParametre3 = New System.Windows.Forms.Label()
+        Me.LblParametre4 = New System.Windows.Forms.Label()
+        Me.LblParametre5 = New System.Windows.Forms.Label()
+        Me.RadBtnParametre = New Telerik.WinControls.UI.RadButton()
+        Me.RadGbxFiltre = New Telerik.WinControls.UI.RadGroupBox()
+        Me.RadGbxParametre = New Telerik.WinControls.UI.RadGroupBox()
+        Me.RadBtnParametreValidation = New Telerik.WinControls.UI.RadButton()
+        Me.DteDepuis = New System.Windows.Forms.DateTimePicker()
+        Me.DteJusqua = New System.Windows.Forms.DateTimePicker()
+        Me.Label1 = New System.Windows.Forms.Label()
+        Me.Label2 = New System.Windows.Forms.Label()
+        Me.LblLabelParametre = New System.Windows.Forms.Label()
         CType(Me.RadBtnAbandon, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.RadBtnEpisode, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.RadGroupBoxEtatCivil, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.RadGroupBoxEtatCivil.SuspendLayout()
         CType(Me.RadGridViewEpisode, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.RadGridViewEpisode.MasterTemplate, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.ContextMenuStrip1.SuspendLayout()
+        CType(Me.RadBtnParametre, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.RadGbxFiltre, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.RadGbxFiltre.SuspendLayout()
+        CType(Me.RadGbxParametre, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.RadGbxParametre.SuspendLayout()
+        CType(Me.RadBtnParametreValidation, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'RadBtnAbandon
         '
         Me.RadBtnAbandon.DialogResult = System.Windows.Forms.DialogResult.Cancel
-        Me.RadBtnAbandon.Location = New System.Drawing.Point(951, 524)
+        Me.RadBtnAbandon.Location = New System.Drawing.Point(1424, 696)
         Me.RadBtnAbandon.Name = "RadBtnAbandon"
         Me.RadBtnAbandon.Size = New System.Drawing.Size(110, 24)
         Me.RadBtnAbandon.TabIndex = 0
@@ -68,7 +113,7 @@ Partial Class RadFEpisodeListe
         '
         'RadBtnEpisode
         '
-        Me.RadBtnEpisode.Location = New System.Drawing.Point(835, 524)
+        Me.RadBtnEpisode.Location = New System.Drawing.Point(1308, 696)
         Me.RadBtnEpisode.Name = "RadBtnEpisode"
         Me.RadBtnEpisode.Size = New System.Drawing.Size(110, 24)
         Me.RadBtnEpisode.TabIndex = 1
@@ -93,7 +138,7 @@ Partial Class RadFEpisodeListe
         Me.RadGroupBoxEtatCivil.HeaderText = ""
         Me.RadGroupBoxEtatCivil.Location = New System.Drawing.Point(12, 12)
         Me.RadGroupBoxEtatCivil.Name = "RadGroupBoxEtatCivil"
-        Me.RadGroupBoxEtatCivil.Size = New System.Drawing.Size(1049, 38)
+        Me.RadGroupBoxEtatCivil.Size = New System.Drawing.Size(1522, 38)
         Me.RadGroupBoxEtatCivil.TabIndex = 2
         CType(Me.RadGroupBoxEtatCivil.GetChildAt(0).GetChildAt(0), Telerik.WinControls.UI.GroupBoxContent).Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Bold)
         CType(Me.RadGroupBoxEtatCivil.GetChildAt(0).GetChildAt(1), Telerik.WinControls.UI.GroupBoxHeader).GroupBoxStyle = Telerik.WinControls.UI.RadGroupBoxStyle.Office
@@ -206,71 +251,412 @@ Partial Class RadFEpisodeListe
         'RadGridViewEpisode
         '
         Me.RadGridViewEpisode.BackColor = System.Drawing.Color.FromArgb(CType(CType(191, Byte), Integer), CType(CType(219, Byte), Integer), CType(CType(255, Byte), Integer))
+        Me.RadGridViewEpisode.ContextMenuStrip = Me.ContextMenuStrip1
         Me.RadGridViewEpisode.Cursor = System.Windows.Forms.Cursors.Default
         Me.RadGridViewEpisode.Font = New System.Drawing.Font("Segoe UI", 8.25!)
         Me.RadGridViewEpisode.ForeColor = System.Drawing.Color.Black
         Me.RadGridViewEpisode.ImeMode = System.Windows.Forms.ImeMode.NoControl
-        Me.RadGridViewEpisode.Location = New System.Drawing.Point(12, 79)
+        Me.RadGridViewEpisode.Location = New System.Drawing.Point(12, 268)
         '
         '
         '
         Me.RadGridViewEpisode.MasterTemplate.AllowAddNewRow = False
+        Me.RadGridViewEpisode.MasterTemplate.AllowCellContextMenu = False
         Me.RadGridViewEpisode.MasterTemplate.AllowDeleteRow = False
         Me.RadGridViewEpisode.MasterTemplate.AllowEditRow = False
-        GridViewTextBoxColumn1.EnableExpressionEditor = False
-        GridViewTextBoxColumn1.HeaderText = "Type"
-        GridViewTextBoxColumn1.HeaderTextAlignment = System.Drawing.ContentAlignment.MiddleLeft
-        GridViewTextBoxColumn1.Name = "type"
-        GridViewTextBoxColumn1.Width = 100
-        GridViewTextBoxColumn2.EnableExpressionEditor = False
-        GridViewTextBoxColumn2.HeaderText = "Activité"
-        GridViewTextBoxColumn2.HeaderTextAlignment = System.Drawing.ContentAlignment.MiddleLeft
-        GridViewTextBoxColumn2.Name = "type_activite"
-        GridViewTextBoxColumn2.ReadOnly = True
-        GridViewTextBoxColumn2.Width = 170
-        GridViewTextBoxColumn3.EnableExpressionEditor = False
-        GridViewTextBoxColumn3.HeaderText = "Nature"
-        GridViewTextBoxColumn3.Name = "type_profil"
-        GridViewTextBoxColumn3.ReadOnly = True
-        GridViewTextBoxColumn3.Width = 95
-        GridViewTextBoxColumn4.EnableExpressionEditor = False
-        GridViewTextBoxColumn4.HeaderText = "Description activité"
-        GridViewTextBoxColumn4.HeaderTextAlignment = System.Drawing.ContentAlignment.MiddleLeft
-        GridViewTextBoxColumn4.Name = "description_activite"
-        GridViewTextBoxColumn4.Width = 240
-        GridViewTextBoxColumn5.EnableExpressionEditor = False
-        GridViewTextBoxColumn5.HeaderText = "commentaire"
-        GridViewTextBoxColumn5.HeaderTextAlignment = System.Drawing.ContentAlignment.MiddleLeft
-        GridViewTextBoxColumn5.Name = "commentaire"
-        GridViewTextBoxColumn5.Width = 250
-        GridViewTextBoxColumn6.EnableExpressionEditor = False
-        GridViewTextBoxColumn6.HeaderText = "Date création"
-        GridViewTextBoxColumn6.Name = "date_creation"
-        GridViewTextBoxColumn6.TextAlignment = System.Drawing.ContentAlignment.MiddleCenter
-        GridViewTextBoxColumn6.Width = 80
-        GridViewTextBoxColumn7.EnableExpressionEditor = False
-        GridViewTextBoxColumn7.HeaderText = "Etat"
-        GridViewTextBoxColumn7.Name = "etat"
-        GridViewTextBoxColumn7.TextAlignment = System.Drawing.ContentAlignment.MiddleCenter
-        GridViewTextBoxColumn7.Width = 70
-        GridViewTextBoxColumn8.EnableExpressionEditor = False
-        GridViewTextBoxColumn8.HeaderText = "episode_id"
-        GridViewTextBoxColumn8.IsVisible = False
-        GridViewTextBoxColumn8.Name = "episode_id"
-        Me.RadGridViewEpisode.MasterTemplate.Columns.AddRange(New Telerik.WinControls.UI.GridViewDataColumn() {GridViewTextBoxColumn1, GridViewTextBoxColumn2, GridViewTextBoxColumn3, GridViewTextBoxColumn4, GridViewTextBoxColumn5, GridViewTextBoxColumn6, GridViewTextBoxColumn7, GridViewTextBoxColumn8})
-        Me.RadGridViewEpisode.MasterTemplate.ViewDefinition = TableViewDefinition1
+        GridViewTextBoxColumn29.EnableExpressionEditor = False
+        GridViewTextBoxColumn29.HeaderText = "Date"
+        GridViewTextBoxColumn29.Name = "date_creation"
+        GridViewTextBoxColumn29.TextAlignment = System.Drawing.ContentAlignment.MiddleCenter
+        GridViewTextBoxColumn29.Width = 80
+        GridViewTextBoxColumn30.EnableExpressionEditor = False
+        GridViewTextBoxColumn30.HeaderText = "Type"
+        GridViewTextBoxColumn30.HeaderTextAlignment = System.Drawing.ContentAlignment.MiddleLeft
+        GridViewTextBoxColumn30.Name = "type"
+        GridViewTextBoxColumn30.Width = 100
+        GridViewTextBoxColumn31.EnableExpressionEditor = False
+        GridViewTextBoxColumn31.HeaderText = "Activité"
+        GridViewTextBoxColumn31.HeaderTextAlignment = System.Drawing.ContentAlignment.MiddleLeft
+        GridViewTextBoxColumn31.Name = "type_activite"
+        GridViewTextBoxColumn31.ReadOnly = True
+        GridViewTextBoxColumn31.Width = 170
+        GridViewTextBoxColumn32.EnableExpressionEditor = False
+        GridViewTextBoxColumn32.HeaderText = "Nature"
+        GridViewTextBoxColumn32.Name = "type_profil"
+        GridViewTextBoxColumn32.ReadOnly = True
+        GridViewTextBoxColumn32.Width = 95
+        GridViewTextBoxColumn33.EnableExpressionEditor = False
+        GridViewTextBoxColumn33.HeaderText = "Description activité"
+        GridViewTextBoxColumn33.HeaderTextAlignment = System.Drawing.ContentAlignment.MiddleLeft
+        GridViewTextBoxColumn33.IsVisible = False
+        GridViewTextBoxColumn33.Name = "description_activite"
+        GridViewTextBoxColumn33.Width = 240
+        GridViewTextBoxColumn34.EnableExpressionEditor = False
+        GridViewTextBoxColumn34.HeaderText = "Conclusion"
+        GridViewTextBoxColumn34.HeaderTextAlignment = System.Drawing.ContentAlignment.MiddleLeft
+        GridViewTextBoxColumn34.Name = "conclusion"
+        GridViewTextBoxColumn34.Width = 300
+        GridViewTextBoxColumn35.EnableExpressionEditor = False
+        GridViewTextBoxColumn35.HeaderText = "parametre 1"
+        GridViewTextBoxColumn35.Name = "parametre1"
+        GridViewTextBoxColumn35.TextAlignment = System.Drawing.ContentAlignment.MiddleCenter
+        GridViewTextBoxColumn35.Width = 110
+        GridViewTextBoxColumn36.EnableExpressionEditor = False
+        GridViewTextBoxColumn36.HeaderText = "parametre 2"
+        GridViewTextBoxColumn36.Name = "parametre2"
+        GridViewTextBoxColumn36.TextAlignment = System.Drawing.ContentAlignment.MiddleCenter
+        GridViewTextBoxColumn36.Width = 110
+        GridViewTextBoxColumn37.EnableExpressionEditor = False
+        GridViewTextBoxColumn37.HeaderText = "parametre 3"
+        GridViewTextBoxColumn37.Name = "parametre3"
+        GridViewTextBoxColumn37.TextAlignment = System.Drawing.ContentAlignment.MiddleCenter
+        GridViewTextBoxColumn37.Width = 110
+        GridViewTextBoxColumn38.EnableExpressionEditor = False
+        GridViewTextBoxColumn38.HeaderText = "parametre 4"
+        GridViewTextBoxColumn38.Name = "parametre4"
+        GridViewTextBoxColumn38.TextAlignment = System.Drawing.ContentAlignment.MiddleCenter
+        GridViewTextBoxColumn38.Width = 110
+        GridViewTextBoxColumn39.EnableExpressionEditor = False
+        GridViewTextBoxColumn39.HeaderText = "parametre 5"
+        GridViewTextBoxColumn39.Name = "parametre5"
+        GridViewTextBoxColumn39.TextAlignment = System.Drawing.ContentAlignment.MiddleCenter
+        GridViewTextBoxColumn39.Width = 110
+        GridViewTextBoxColumn40.EnableExpressionEditor = False
+        GridViewTextBoxColumn40.HeaderText = "Etat"
+        GridViewTextBoxColumn40.Name = "etat"
+        GridViewTextBoxColumn40.TextAlignment = System.Drawing.ContentAlignment.MiddleCenter
+        GridViewTextBoxColumn40.Width = 70
+        GridViewTextBoxColumn41.EnableExpressionEditor = False
+        GridViewTextBoxColumn41.HeaderText = "episode_id"
+        GridViewTextBoxColumn41.IsVisible = False
+        GridViewTextBoxColumn41.Name = "episode_id"
+        GridViewTextBoxColumn42.EnableExpressionEditor = False
+        GridViewTextBoxColumn42.HeaderText = "Période"
+        GridViewTextBoxColumn42.Name = "periode"
+        GridViewTextBoxColumn42.TextAlignment = System.Drawing.ContentAlignment.MiddleCenter
+        GridViewTextBoxColumn42.Width = 120
+        Me.RadGridViewEpisode.MasterTemplate.Columns.AddRange(New Telerik.WinControls.UI.GridViewDataColumn() {GridViewTextBoxColumn29, GridViewTextBoxColumn30, GridViewTextBoxColumn31, GridViewTextBoxColumn32, GridViewTextBoxColumn33, GridViewTextBoxColumn34, GridViewTextBoxColumn35, GridViewTextBoxColumn36, GridViewTextBoxColumn37, GridViewTextBoxColumn38, GridViewTextBoxColumn39, GridViewTextBoxColumn40, GridViewTextBoxColumn41, GridViewTextBoxColumn42})
+        Me.RadGridViewEpisode.MasterTemplate.ViewDefinition = TableViewDefinition3
         Me.RadGridViewEpisode.Name = "RadGridViewEpisode"
         Me.RadGridViewEpisode.RightToLeft = System.Windows.Forms.RightToLeft.No
         Me.RadGridViewEpisode.ShowGroupPanel = False
-        Me.RadGridViewEpisode.Size = New System.Drawing.Size(1049, 439)
+        Me.RadGridViewEpisode.Size = New System.Drawing.Size(1522, 422)
         Me.RadGridViewEpisode.TabIndex = 3
+        '
+        'ContextMenuStrip1
+        '
+        Me.ContextMenuStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.OrdonnanceMédicaleToolStripMenuItem, Me.AutresOrdonnancesToolStripMenuItem, Me.BiologieToolStripMenuItem, Me.RadiologieToolStripMenuItem, Me.SousépisodesToolStripMenuItem})
+        Me.ContextMenuStrip1.Name = "ContextMenuStrip1"
+        Me.ContextMenuStrip1.Size = New System.Drawing.Size(192, 114)
+        '
+        'OrdonnanceMédicaleToolStripMenuItem
+        '
+        Me.OrdonnanceMédicaleToolStripMenuItem.Name = "OrdonnanceMédicaleToolStripMenuItem"
+        Me.OrdonnanceMédicaleToolStripMenuItem.Size = New System.Drawing.Size(191, 22)
+        Me.OrdonnanceMédicaleToolStripMenuItem.Text = "Ordonnance médicale"
+        '
+        'AutresOrdonnancesToolStripMenuItem
+        '
+        Me.AutresOrdonnancesToolStripMenuItem.Name = "AutresOrdonnancesToolStripMenuItem"
+        Me.AutresOrdonnancesToolStripMenuItem.Size = New System.Drawing.Size(191, 22)
+        Me.AutresOrdonnancesToolStripMenuItem.Text = "Autres ordonnances"
+        '
+        'BiologieToolStripMenuItem
+        '
+        Me.BiologieToolStripMenuItem.Name = "BiologieToolStripMenuItem"
+        Me.BiologieToolStripMenuItem.Size = New System.Drawing.Size(191, 22)
+        Me.BiologieToolStripMenuItem.Text = "Biologie"
+        '
+        'RadiologieToolStripMenuItem
+        '
+        Me.RadiologieToolStripMenuItem.Name = "RadiologieToolStripMenuItem"
+        Me.RadiologieToolStripMenuItem.Size = New System.Drawing.Size(191, 22)
+        Me.RadiologieToolStripMenuItem.Text = "Radiologie"
+        '
+        'SousépisodesToolStripMenuItem
+        '
+        Me.SousépisodesToolStripMenuItem.Name = "SousépisodesToolStripMenuItem"
+        Me.SousépisodesToolStripMenuItem.Size = New System.Drawing.Size(191, 22)
+        Me.SousépisodesToolStripMenuItem.Text = "Sous-épisodes"
+        '
+        'ChkTypeConsultation
+        '
+        Me.ChkTypeConsultation.AutoSize = True
+        Me.ChkTypeConsultation.Location = New System.Drawing.Point(14, 21)
+        Me.ChkTypeConsultation.Name = "ChkTypeConsultation"
+        Me.ChkTypeConsultation.Size = New System.Drawing.Size(93, 17)
+        Me.ChkTypeConsultation.TabIndex = 4
+        Me.ChkTypeConsultation.Text = "Consultation"
+        Me.ChkTypeConsultation.UseVisualStyleBackColor = True
+        '
+        'ChkTypeVirtuel
+        '
+        Me.ChkTypeVirtuel.AutoSize = True
+        Me.ChkTypeVirtuel.Location = New System.Drawing.Point(111, 21)
+        Me.ChkTypeVirtuel.Name = "ChkTypeVirtuel"
+        Me.ChkTypeVirtuel.Size = New System.Drawing.Size(60, 17)
+        Me.ChkTypeVirtuel.TabIndex = 5
+        Me.ChkTypeVirtuel.Text = "Virtuel"
+        Me.ChkTypeVirtuel.UseVisualStyleBackColor = True
+        '
+        'ChkPathologieAigue
+        '
+        Me.ChkPathologieAigue.AutoSize = True
+        Me.ChkPathologieAigue.Location = New System.Drawing.Point(14, 44)
+        Me.ChkPathologieAigue.Name = "ChkPathologieAigue"
+        Me.ChkPathologieAigue.Size = New System.Drawing.Size(114, 17)
+        Me.ChkPathologieAigue.TabIndex = 6
+        Me.ChkPathologieAigue.Text = "Pathologie aiguë"
+        Me.ChkPathologieAigue.UseVisualStyleBackColor = True
+        '
+        'ChkSuiviChronique
+        '
+        Me.ChkSuiviChronique.AutoSize = True
+        Me.ChkSuiviChronique.Location = New System.Drawing.Point(134, 44)
+        Me.ChkSuiviChronique.Name = "ChkSuiviChronique"
+        Me.ChkSuiviChronique.Size = New System.Drawing.Size(106, 17)
+        Me.ChkSuiviChronique.TabIndex = 7
+        Me.ChkSuiviChronique.Text = "Suivi chronique"
+        Me.ChkSuiviChronique.UseVisualStyleBackColor = True
+        '
+        'ChkSocial
+        '
+        Me.ChkSocial.AutoSize = True
+        Me.ChkSocial.Location = New System.Drawing.Point(246, 44)
+        Me.ChkSocial.Name = "ChkSocial"
+        Me.ChkSocial.Size = New System.Drawing.Size(56, 17)
+        Me.ChkSocial.TabIndex = 8
+        Me.ChkSocial.Text = "Social"
+        Me.ChkSocial.UseVisualStyleBackColor = True
+        '
+        'ChkPreventionAutre
+        '
+        Me.ChkPreventionAutre.AutoSize = True
+        Me.ChkPreventionAutre.Location = New System.Drawing.Point(308, 44)
+        Me.ChkPreventionAutre.Name = "ChkPreventionAutre"
+        Me.ChkPreventionAutre.Size = New System.Drawing.Size(113, 17)
+        Me.ChkPreventionAutre.TabIndex = 9
+        Me.ChkPreventionAutre.Text = "Autre prévention"
+        Me.ChkPreventionAutre.UseVisualStyleBackColor = True
+        '
+        'ChkEnfantPreScolaire
+        '
+        Me.ChkEnfantPreScolaire.AutoSize = True
+        Me.ChkEnfantPreScolaire.Location = New System.Drawing.Point(427, 44)
+        Me.ChkEnfantPreScolaire.Name = "ChkEnfantPreScolaire"
+        Me.ChkEnfantPreScolaire.Size = New System.Drawing.Size(181, 17)
+        Me.ChkEnfantPreScolaire.TabIndex = 10
+        Me.ChkEnfantPreScolaire.Text = "Prévention enfant pré-scolaire"
+        Me.ChkEnfantPreScolaire.UseVisualStyleBackColor = True
+        '
+        'ChkEnfantScolaire
+        '
+        Me.ChkEnfantScolaire.AutoSize = True
+        Me.ChkEnfantScolaire.Location = New System.Drawing.Point(614, 44)
+        Me.ChkEnfantScolaire.Name = "ChkEnfantScolaire"
+        Me.ChkEnfantScolaire.Size = New System.Drawing.Size(160, 17)
+        Me.ChkEnfantScolaire.TabIndex = 11
+        Me.ChkEnfantScolaire.Text = "Prévention enfant scolaire"
+        Me.ChkEnfantScolaire.UseVisualStyleBackColor = True
+        '
+        'ChkSuiviGrossesse
+        '
+        Me.ChkSuiviGrossesse.AutoSize = True
+        Me.ChkSuiviGrossesse.Location = New System.Drawing.Point(780, 44)
+        Me.ChkSuiviGrossesse.Name = "ChkSuiviGrossesse"
+        Me.ChkSuiviGrossesse.Size = New System.Drawing.Size(160, 17)
+        Me.ChkSuiviGrossesse.TabIndex = 12
+        Me.ChkSuiviGrossesse.Text = "Prévention suivi grossesse"
+        Me.ChkSuiviGrossesse.UseVisualStyleBackColor = True
+        '
+        'ChkSuiviGynecologique
+        '
+        Me.ChkSuiviGynecologique.AutoSize = True
+        Me.ChkSuiviGynecologique.Location = New System.Drawing.Point(946, 44)
+        Me.ChkSuiviGynecologique.Name = "ChkSuiviGynecologique"
+        Me.ChkSuiviGynecologique.Size = New System.Drawing.Size(187, 17)
+        Me.ChkSuiviGynecologique.TabIndex = 13
+        Me.ChkSuiviGynecologique.Text = "Prévention suivi gynécologique"
+        Me.ChkSuiviGynecologique.UseVisualStyleBackColor = True
+        '
+        'ChkProfilMedical
+        '
+        Me.ChkProfilMedical.AutoSize = True
+        Me.ChkProfilMedical.Location = New System.Drawing.Point(14, 67)
+        Me.ChkProfilMedical.Name = "ChkProfilMedical"
+        Me.ChkProfilMedical.Size = New System.Drawing.Size(66, 17)
+        Me.ChkProfilMedical.TabIndex = 14
+        Me.ChkProfilMedical.Text = "Médical"
+        Me.ChkProfilMedical.UseVisualStyleBackColor = True
+        '
+        'ChkProfilParamedical
+        '
+        Me.ChkProfilParamedical.AutoSize = True
+        Me.ChkProfilParamedical.Location = New System.Drawing.Point(111, 67)
+        Me.ChkProfilParamedical.Name = "ChkProfilParamedical"
+        Me.ChkProfilParamedical.Size = New System.Drawing.Size(87, 17)
+        Me.ChkProfilParamedical.TabIndex = 15
+        Me.ChkProfilParamedical.Text = "Paramédical"
+        Me.ChkProfilParamedical.UseVisualStyleBackColor = True
+        '
+        'Lblparametre1
+        '
+        Me.Lblparametre1.AutoSize = True
+        Me.Lblparametre1.Location = New System.Drawing.Point(174, 21)
+        Me.Lblparametre1.Name = "Lblparametre1"
+        Me.Lblparametre1.Size = New System.Drawing.Size(20, 13)
+        Me.Lblparametre1.TabIndex = 16
+        Me.Lblparametre1.Text = "FC"
+        '
+        'LblParametre2
+        '
+        Me.LblParametre2.AutoSize = True
+        Me.LblParametre2.Location = New System.Drawing.Point(274, 21)
+        Me.LblParametre2.Name = "LblParametre2"
+        Me.LblParametre2.Size = New System.Drawing.Size(19, 13)
+        Me.LblParametre2.TabIndex = 17
+        Me.LblParametre2.Text = "PA"
+        '
+        'LblParametre3
+        '
+        Me.LblParametre3.AutoSize = True
+        Me.LblParametre3.Location = New System.Drawing.Point(374, 21)
+        Me.LblParametre3.Name = "LblParametre3"
+        Me.LblParametre3.Size = New System.Drawing.Size(61, 13)
+        Me.LblParametre3.TabIndex = 18
+        Me.LblParametre3.Text = "Saturation"
+        '
+        'LblParametre4
+        '
+        Me.LblParametre4.AutoSize = True
+        Me.LblParametre4.Location = New System.Drawing.Point(474, 21)
+        Me.LblParametre4.Name = "LblParametre4"
+        Me.LblParametre4.Size = New System.Drawing.Size(27, 13)
+        Me.LblParametre4.TabIndex = 19
+        Me.LblParametre4.Text = "DEP"
+        '
+        'LblParametre5
+        '
+        Me.LblParametre5.AutoSize = True
+        Me.LblParametre5.Location = New System.Drawing.Point(574, 21)
+        Me.LblParametre5.Name = "LblParametre5"
+        Me.LblParametre5.Size = New System.Drawing.Size(35, 13)
+        Me.LblParametre5.TabIndex = 20
+        Me.LblParametre5.Text = "Poids"
+        '
+        'RadBtnParametre
+        '
+        Me.RadBtnParametre.Location = New System.Drawing.Point(5, 21)
+        Me.RadBtnParametre.Name = "RadBtnParametre"
+        Me.RadBtnParametre.Size = New System.Drawing.Size(123, 24)
+        Me.RadBtnParametre.TabIndex = 21
+        Me.RadBtnParametre.Text = "Sélection paramètres"
+        '
+        'RadGbxFiltre
+        '
+        Me.RadGbxFiltre.AccessibleRole = System.Windows.Forms.AccessibleRole.Grouping
+        Me.RadGbxFiltre.BackColor = System.Drawing.SystemColors.GradientInactiveCaption
+        Me.RadGbxFiltre.Controls.Add(Me.ChkTypeConsultation)
+        Me.RadGbxFiltre.Controls.Add(Me.ChkTypeVirtuel)
+        Me.RadGbxFiltre.Controls.Add(Me.ChkPathologieAigue)
+        Me.RadGbxFiltre.Controls.Add(Me.ChkSuiviChronique)
+        Me.RadGbxFiltre.Controls.Add(Me.ChkSocial)
+        Me.RadGbxFiltre.Controls.Add(Me.ChkPreventionAutre)
+        Me.RadGbxFiltre.Controls.Add(Me.ChkEnfantPreScolaire)
+        Me.RadGbxFiltre.Controls.Add(Me.ChkEnfantScolaire)
+        Me.RadGbxFiltre.Controls.Add(Me.ChkProfilParamedical)
+        Me.RadGbxFiltre.Controls.Add(Me.ChkSuiviGrossesse)
+        Me.RadGbxFiltre.Controls.Add(Me.ChkProfilMedical)
+        Me.RadGbxFiltre.Controls.Add(Me.ChkSuiviGynecologique)
+        Me.RadGbxFiltre.GroupBoxStyle = Telerik.WinControls.UI.RadGroupBoxStyle.Office
+        Me.RadGbxFiltre.HeaderText = "Filtres d'affichage"
+        Me.RadGbxFiltre.Location = New System.Drawing.Point(12, 56)
+        Me.RadGbxFiltre.Name = "RadGbxFiltre"
+        Me.RadGbxFiltre.Size = New System.Drawing.Size(1522, 91)
+        Me.RadGbxFiltre.TabIndex = 23
+        Me.RadGbxFiltre.Text = "Filtres d'affichage"
+        '
+        'RadGbxParametre
+        '
+        Me.RadGbxParametre.AccessibleRole = System.Windows.Forms.AccessibleRole.Grouping
+        Me.RadGbxParametre.Controls.Add(Me.LblLabelParametre)
+        Me.RadGbxParametre.Controls.Add(Me.Label2)
+        Me.RadGbxParametre.Controls.Add(Me.Label1)
+        Me.RadGbxParametre.Controls.Add(Me.DteJusqua)
+        Me.RadGbxParametre.Controls.Add(Me.DteDepuis)
+        Me.RadGbxParametre.Controls.Add(Me.RadBtnParametreValidation)
+        Me.RadGbxParametre.Controls.Add(Me.RadBtnParametre)
+        Me.RadGbxParametre.Controls.Add(Me.Lblparametre1)
+        Me.RadGbxParametre.Controls.Add(Me.LblParametre2)
+        Me.RadGbxParametre.Controls.Add(Me.LblParametre3)
+        Me.RadGbxParametre.Controls.Add(Me.LblParametre5)
+        Me.RadGbxParametre.Controls.Add(Me.LblParametre4)
+        Me.RadGbxParametre.GroupBoxStyle = Telerik.WinControls.UI.RadGroupBoxStyle.Office
+        Me.RadGbxParametre.HeaderText = "Paramètres (5 max) et période à afficher"
+        Me.RadGbxParametre.Location = New System.Drawing.Point(12, 156)
+        Me.RadGbxParametre.Name = "RadGbxParametre"
+        Me.RadGbxParametre.Size = New System.Drawing.Size(873, 97)
+        Me.RadGbxParametre.TabIndex = 24
+        Me.RadGbxParametre.Text = "Paramètres (5 max) et période à afficher"
+        '
+        'RadBtnParametreValidation
+        '
+        Me.RadBtnParametreValidation.Location = New System.Drawing.Point(747, 46)
+        Me.RadBtnParametreValidation.Name = "RadBtnParametreValidation"
+        Me.RadBtnParametreValidation.Size = New System.Drawing.Size(117, 24)
+        Me.RadBtnParametreValidation.TabIndex = 22
+        Me.RadBtnParametreValidation.Text = "Validation sélection"
+        '
+        'DteDepuis
+        '
+        Me.DteDepuis.Location = New System.Drawing.Point(53, 62)
+        Me.DteDepuis.Name = "DteDepuis"
+        Me.DteDepuis.Size = New System.Drawing.Size(200, 20)
+        Me.DteDepuis.TabIndex = 23
+        '
+        'DteJusqua
+        '
+        Me.DteJusqua.Location = New System.Drawing.Point(318, 62)
+        Me.DteJusqua.Name = "DteJusqua"
+        Me.DteJusqua.Size = New System.Drawing.Size(200, 20)
+        Me.DteJusqua.TabIndex = 24
+        '
+        'Label1
+        '
+        Me.Label1.AutoSize = True
+        Me.Label1.Location = New System.Drawing.Point(2, 66)
+        Me.Label1.Name = "Label1"
+        Me.Label1.Size = New System.Drawing.Size(43, 13)
+        Me.Label1.TabIndex = 25
+        Me.Label1.Text = "Depuis"
+        '
+        'Label2
+        '
+        Me.Label2.AutoSize = True
+        Me.Label2.Location = New System.Drawing.Point(266, 66)
+        Me.Label2.Name = "Label2"
+        Me.Label2.Size = New System.Drawing.Size(45, 13)
+        Me.Label2.TabIndex = 26
+        Me.Label2.Text = "jusqu'à"
+        '
+        'LblLabelParametre
+        '
+        Me.LblLabelParametre.AutoSize = True
+        Me.LblLabelParametre.ForeColor = System.Drawing.Color.DarkRed
+        Me.LblLabelParametre.Location = New System.Drawing.Point(249, 0)
+        Me.LblLabelParametre.Name = "LblLabelParametre"
+        Me.LblLabelParametre.Size = New System.Drawing.Size(287, 13)
+        Me.LblLabelParametre.TabIndex = 25
+        Me.LblLabelParametre.Text = "Cliquez sur un paramètre pour l'enlever de la sélection"
         '
         'RadFEpisodeListe
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.CancelButton = Me.RadBtnAbandon
-        Me.ClientSize = New System.Drawing.Size(1067, 560)
+        Me.ClientSize = New System.Drawing.Size(1546, 730)
+        Me.Controls.Add(Me.RadGbxParametre)
+        Me.Controls.Add(Me.RadGbxFiltre)
         Me.Controls.Add(Me.RadGridViewEpisode)
         Me.Controls.Add(Me.RadGroupBoxEtatCivil)
         Me.Controls.Add(Me.RadBtnEpisode)
@@ -290,6 +676,15 @@ Partial Class RadFEpisodeListe
         Me.RadGroupBoxEtatCivil.PerformLayout()
         CType(Me.RadGridViewEpisode.MasterTemplate, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.RadGridViewEpisode, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.ContextMenuStrip1.ResumeLayout(False)
+        CType(Me.RadBtnParametre, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.RadGbxFiltre, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.RadGbxFiltre.ResumeLayout(False)
+        Me.RadGbxFiltre.PerformLayout()
+        CType(Me.RadGbxParametre, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.RadGbxParametre.ResumeLayout(False)
+        Me.RadGbxParametre.PerformLayout()
+        CType(Me.RadBtnParametreValidation, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
 
@@ -311,5 +706,37 @@ Partial Class RadFEpisodeListe
     Friend WithEvents LblPatientNIR As Label
     Friend WithEvents RadGridViewEpisode As Telerik.WinControls.UI.RadGridView
     Friend WithEvents ToolTip1 As ToolTip
+    Friend WithEvents ChkTypeConsultation As CheckBox
+    Friend WithEvents ChkTypeVirtuel As CheckBox
+    Friend WithEvents ChkPathologieAigue As CheckBox
+    Friend WithEvents ChkSuiviChronique As CheckBox
+    Friend WithEvents ChkSocial As CheckBox
+    Friend WithEvents ChkPreventionAutre As CheckBox
+    Friend WithEvents ChkEnfantPreScolaire As CheckBox
+    Friend WithEvents ChkEnfantScolaire As CheckBox
+    Friend WithEvents ChkSuiviGrossesse As CheckBox
+    Friend WithEvents ChkSuiviGynecologique As CheckBox
+    Friend WithEvents ChkProfilMedical As CheckBox
+    Friend WithEvents ChkProfilParamedical As CheckBox
+    Friend WithEvents Lblparametre1 As Label
+    Friend WithEvents LblParametre2 As Label
+    Friend WithEvents LblParametre3 As Label
+    Friend WithEvents LblParametre4 As Label
+    Friend WithEvents LblParametre5 As Label
+    Friend WithEvents RadBtnParametre As Telerik.WinControls.UI.RadButton
+    Friend WithEvents ContextMenuStrip1 As ContextMenuStrip
+    Friend WithEvents OrdonnanceMédicaleToolStripMenuItem As ToolStripMenuItem
+    Friend WithEvents AutresOrdonnancesToolStripMenuItem As ToolStripMenuItem
+    Friend WithEvents BiologieToolStripMenuItem As ToolStripMenuItem
+    Friend WithEvents RadiologieToolStripMenuItem As ToolStripMenuItem
+    Friend WithEvents SousépisodesToolStripMenuItem As ToolStripMenuItem
+    Friend WithEvents RadGbxFiltre As Telerik.WinControls.UI.RadGroupBox
+    Friend WithEvents RadGbxParametre As Telerik.WinControls.UI.RadGroupBox
+    Friend WithEvents RadBtnParametreValidation As Telerik.WinControls.UI.RadButton
+    Friend WithEvents Label2 As Label
+    Friend WithEvents Label1 As Label
+    Friend WithEvents DteJusqua As DateTimePicker
+    Friend WithEvents DteDepuis As DateTimePicker
+    Friend WithEvents LblLabelParametre As Label
 End Class
 

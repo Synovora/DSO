@@ -46,7 +46,7 @@ Friend Module outils
         End Get
     End Property
 
-    Public Function CalculDureeString(dateDebut As Date, dateFin As Date) As String
+    Public Function CalculDureeHeureString(dateDebut As Date, dateFin As Date) As String
         Dim DureeString As String = ""
         Dim Duree As Integer
 
@@ -61,6 +61,29 @@ Friend Module outils
             End If
         Else
             DureeString = Duree.ToString & " heure(s)"
+        End If
+
+        Return DureeString
+    End Function
+
+    Public Function CalculDureeJourString(dateDebut As Date, dateFin As Date) As String
+        Dim DureeString As String = ""
+        Dim Duree As Integer
+
+        Duree = DateDiff(DateInterval.Day, dateDebut, dateFin)
+        If Duree <= 31 Then
+            If Duree <> 0 Then
+                If Duree = 1 Then
+                    DureeString = " 1 jour"
+                Else
+                    DureeString = Duree.ToString & " Jours"
+                End If
+            Else
+                DureeString = " 0 jour"
+            End If
+        Else
+            Duree = DateDiff(DateInterval.Month, dateDebut, dateFin)
+            DureeString = Duree.ToString & " mois"
         End If
 
         Return DureeString

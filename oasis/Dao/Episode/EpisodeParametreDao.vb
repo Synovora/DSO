@@ -31,10 +31,44 @@ Public Class EpisodeParametreDao
         Return episodeParametre
     End Function
 
+    Friend Function GetEpisodeParametreByParametreIdAndEpisodeId(parametreId As Integer, episodeId As Long) As EpisodeParametre
+        Dim episodeParametre As EpisodeParametre
+        Dim con As SqlConnection
+
+        con = GetConnection()
+
+        Try
+            Dim command As SqlCommand = con.CreateCommand()
+
+            command.CommandText =
+                "SELECT * FROM oasis.oa_episode_parametre WHERE parametre_id = @parametreId AND episode_id = @episodeId"
+            command.Parameters.AddWithValue("@parametreId", parametreId)
+            command.Parameters.AddWithValue("@episodeId", episodeId)
+            Using reader As SqlDataReader = command.ExecuteReader()
+                If reader.Read() Then
+                    episodeParametre = BuildBean(reader)
+                Else
+                    episodeParametre = New EpisodeParametre
+                    episodeParametre.Id = 0
+                    episodeParametre.EpisodeId = 0
+                    episodeParametre.ParametreId = 0
+                    episodeParametre.PatientId = 0
+                    episodeParametre.Valeur = 0
+                End If
+            End Using
+        Catch ex As Exception
+            Throw ex
+        Finally
+            con.Close()
+        End Try
+
+        Return episodeParametre
+    End Function
+
     Private Function BuildBean(reader As SqlDataReader) As EpisodeParametre
         Dim episodeParametre As New EpisodeParametre
 
-        episodeParametre.Id = reader("episode_observation_id")
+        episodeParametre.Id = reader("episode_parametre_id")
         episodeParametre.ParametreId = Coalesce(reader("parametre_id"), 0)
         episodeParametre.EpisodeId = Coalesce(reader("episode_id"), 0)
         episodeParametre.PatientId = Coalesce(reader("patient_id"), 0)

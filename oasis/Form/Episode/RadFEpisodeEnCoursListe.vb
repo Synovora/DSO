@@ -46,7 +46,7 @@ Public Class RadFEpisodeEnCoursListe
                 RadGridViewEpisode.Rows(iGrid).Cells("heureCreation").Value = ""
             End If
 
-            Dim DureeString As String = outils.CalculDureeString(dateCreation, Date.Now)
+            Dim DureeString As String = outils.CalculDureeHeureString(dateCreation, Date.Now)
             RadGridViewEpisode.Rows(iGrid).Cells("duree").Value = DureeString
             Dim Duree As Integer = DateDiff(DateInterval.Hour, dateCreation, Date.Now)
             If Duree > 24 Then
