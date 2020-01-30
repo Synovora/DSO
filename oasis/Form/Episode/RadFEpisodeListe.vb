@@ -1,4 +1,5 @@
-﻿Imports Oasis_Common
+﻿Imports System.Configuration
+Imports Oasis_Common
 Imports Telerik.WinControls.UI
 
 Public Class RadFEpisodeListe
@@ -46,6 +47,22 @@ Public Class RadFEpisodeListe
     End Sub
 
     Private Sub InitFiltre()
+        Dim limiteAgeEnfant As Integer
+        Dim limiteAgeEnfantString As Integer = ConfigurationManager.AppSettings("limiteAgeEnfant")
+        If IsNumeric(limiteAgeEnfantString) Then
+            limiteAgeEnfant = CInt(limiteAgeEnfantString)
+        Else
+            limiteAgeEnfant = 16
+        End If
+
+        Dim AgeMinPreventionFemme As Integer
+        Dim AgeMinPreventionFemmeString As Integer = ConfigurationManager.AppSettings("AgeMinPreventionFemme")
+        If IsNumeric(AgeMinPreventionFemmeString) Then
+            AgeMinPreventionFemme = CInt(AgeMinPreventionFemmeString)
+        Else
+            AgeMinPreventionFemme = 12
+        End If
+
         ChkEnfantPreScolaire.Checked = True
         ChkEnfantScolaire.Checked = True
         ChkPathologieAigue.Checked = True
@@ -73,6 +90,25 @@ Public Class RadFEpisodeListe
 
         ligneDeVie.ProfilMedical = True
         ligneDeVie.ProfilParamedical = True
+
+        Dim Age As Integer = outils.CalculAge(SelectedPatient.PatientDateNaissance)
+        If Age > limiteAgeEnfant Then
+            ligneDeVie.ActivitePreventionEnfantPreScolaire = False
+            ligneDeVie.ActivitePreventionEnfantScolaire = False
+            ChkEnfantPreScolaire.Hide()
+            ChkEnfantScolaire.Hide()
+            If SelectedPatient.PatientGenreId = PatientDao.EnumGenreCode.Feminin OrElse Age >= AgeMinPreventionFemme Then
+                ChkSuiviGrossesse.Location = New Point(427, 44)
+                ChkSuiviGynecologique.Location = New Point(589, 44)
+            End If
+        End If
+
+        If SelectedPatient.PatientGenreId = PatientDao.EnumGenreCode.Masculin OrElse Age < AgeMinPreventionFemme Then
+            ligneDeVie.ActiviteSuiviGrossesse = False
+            ligneDeVie.ActiviteSuiviGyncologique = False
+            ChkSuiviGrossesse.Hide()
+            ChkSuiviGynecologique.Hide()
+        End If
 
         Lblparametre1.Text = ""
         LblParametre2.Text = ""

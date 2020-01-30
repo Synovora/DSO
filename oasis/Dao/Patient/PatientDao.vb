@@ -3,6 +3,10 @@ Imports System.Data.SqlClient
 Imports Oasis_Common
 
 Module PatientDao
+    Public Structure EnumGenreCode
+        Const Feminin = "F"
+        Const Masculin = "M"
+    End Structure
 
     'Initialisation des propriétés d'une instance de Patient depuis la BDD
     Public Function SetPatient(instancePatient As Patient, patientId As Integer) As Boolean
