@@ -3,7 +3,7 @@ Imports System.Data.SqlClient
 Imports Oasis_Common
 
 Module PatientDao
-    Public Structure EnumGenreCode
+    Public Structure EnumGenreId
         Const Feminin = "F"
         Const Masculin = "M"
     End Structure

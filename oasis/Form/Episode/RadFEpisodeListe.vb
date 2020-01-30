@@ -63,18 +63,20 @@ Public Class RadFEpisodeListe
             AgeMinPreventionFemme = 12
         End If
 
+        ChkTypeConsultation.Checked = True
+        ChkTypeVirtuel.Checked = True
+
         ChkEnfantPreScolaire.Checked = True
         ChkEnfantScolaire.Checked = True
         ChkPathologieAigue.Checked = True
         ChkPreventionAutre.Checked = True
-        ChkProfilMedical.Checked = True
-        ChkProfilParamedical.Checked = True
         ChkSocial.Checked = True
         ChkSuiviChronique.Checked = True
         ChkSuiviGrossesse.Checked = True
         ChkSuiviGynecologique.Checked = True
-        ChkTypeConsultation.Checked = True
-        ChkTypeVirtuel.Checked = True
+
+        ChkProfilMedical.Checked = True
+        ChkProfilParamedical.Checked = True
 
         ligneDeVie.TypeConsultation = True
         ligneDeVie.TypeVirtuel = True
@@ -97,13 +99,13 @@ Public Class RadFEpisodeListe
             ligneDeVie.ActivitePreventionEnfantScolaire = False
             ChkEnfantPreScolaire.Hide()
             ChkEnfantScolaire.Hide()
-            If SelectedPatient.PatientGenreId = PatientDao.EnumGenreCode.Feminin OrElse Age >= AgeMinPreventionFemme Then
+            If SelectedPatient.PatientGenreId = PatientDao.EnumGenreId.Feminin OrElse Age >= AgeMinPreventionFemme Then
                 ChkSuiviGrossesse.Location = New Point(427, 44)
                 ChkSuiviGynecologique.Location = New Point(589, 44)
             End If
         End If
 
-        If SelectedPatient.PatientGenreId = PatientDao.EnumGenreCode.Masculin OrElse Age < AgeMinPreventionFemme Then
+        If SelectedPatient.PatientGenreId = PatientDao.EnumGenreId.Masculin OrElse Age < AgeMinPreventionFemme Then
             ligneDeVie.ActiviteSuiviGrossesse = False
             ligneDeVie.ActiviteSuiviGyncologique = False
             ChkSuiviGrossesse.Hide()
