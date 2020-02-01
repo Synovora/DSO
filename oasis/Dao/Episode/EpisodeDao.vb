@@ -219,13 +219,16 @@ Public Class EpisodeDao
     Friend Function GetAllEpisodeByPatient(patientId As Long, dateDebut As Date, dateFin As Date, ligneDeVie As LigneDeVie) As DataTable
         Dim SQLString, TypeEpisodeString, ActiviteEpisodeString, ProfilEpisodeString, OrderByString As String
         Dim RechercherTypeEpisode, RechercherActiviteEpisode, RechercherprofilEpisode As Boolean
+        Dim dateDebutRecherche As Date = dateDebut.AddDays(1)
+
+
         SQLString = "SELECT episode_id, patient_id, type, type_activite, description_activite, type_profil," &
                     " commentaire, date_creation, observation_paramedical, observation_medical, etat" &
                     " FROM oasis.oa_episode" &
                     " WHERE patient_id = " & patientId.ToString &
                     " And (inactif = 'False' OR inactif is Null)" &
-                    " AND date_creation <= '" & dateDebut.ToString("yyyy-MM-dd") & "'" &
-                    " AND date_creation >= '" & dateFin.ToString("yyyy-MM-dd") & "'" & vbCrLf
+                    " AND date_creation <= '" & dateDebutRecherche.ToString("yyyy-MM-dd") & "'" &
+                    " AND date_creation >= '" & dateFin.Date.ToString("yyyy-MM-dd") & "'" & vbCrLf
 
         'Type
         TypeEpisodeString = " AND [type] IN ('"

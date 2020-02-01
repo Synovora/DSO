@@ -82,10 +82,6 @@ Public Class RadFEpisodeDetail
     Dim InitPublie, InitParPriorite, InitMajeur, InitContextePublie, InitParcoursNonCache As Boolean
     Dim PPSSuiviIdeExiste, PPSSuiviSageFemmeExiste, PPSSuiviMedecinExiste As Boolean
     Dim Allergie, ContreIndication As Boolean
-    Dim WorkflowEnCoursExistant As Boolean
-    Dim DemandeAvisMedicalExiste As Boolean
-    Dim ProtocoleAiguExiste As Boolean
-    Dim ConclusionMedicaleExiste As Boolean
     Dim ObservationMedicaleModifie As Boolean = False
     Dim ObservationParamedicaleModifie As Boolean = False
     Dim IsTraitementLoaded As Boolean = False
@@ -97,6 +93,13 @@ Public Class RadFEpisodeDetail
     Dim commentaireConclusionIdeModified As Boolean = False
     Dim RadioTypeConclusionIdeModified As Boolean = False
     Dim ChargementConclusionEnCours As Boolean
+
+    Dim ProtocoleAiguExiste As Boolean
+    Dim WorkflowEnCoursExistant As Boolean
+    Dim DemandeAvisMedicalExiste As Boolean
+    Dim ConclusionMedicaleExiste As Boolean
+    Dim OrdonnanceValide As Boolean = False
+    Dim OrdonnanceExiste As Boolean = False
 
     Dim LongueurStringAllergie As Integer
 
@@ -125,6 +128,7 @@ Public Class RadFEpisodeDetail
         LblPatientGenre.Text = ""
         LblPatientSite.Text = ""
         LblPatientDateMaj.Text = ""
+        LblLabelEtatEpisode.Text = ""
 
         afficheTitleForm(Me, "Détail épisode")
         Me.WindowState = FormWindowState.Maximized
@@ -148,7 +152,6 @@ Public Class RadFEpisodeDetail
 
         'Episode
         ChargementCaracteristiquesEpisode()
-        ControleExistenceOrdonnance()
         ChargementAffichageBlocWorkflow()
         If episode.TypeActivite = EpisodeDao.EnumTypeActiviteEpisodeCode.SOCIAL Or episode.Type = EpisodeDao.EnumTypeEpisode.VIRTUEL.ToString Then
             SplitPanel7.Hide()
@@ -177,89 +180,11 @@ Public Class RadFEpisodeDetail
         Cursor.Current = Cursors.Default
     End Sub
 
-    'Contrôle si l'épisode est clôturé et non modifiable (si la date de clôture est < date du jour)
-    Private Sub ControleEpisodeCloture()
-        If episode.Etat = EpisodeDao.EnumEtatEpisode.CLOTURE.ToString Then
-            If episode.DateModification.Date < Date.Now.Date Then
-                'Clôture épisode
-                RadBtnCloture.Enabled = False
 
-                'Workflow
-                RadBtnWorkflowIde.Enabled = False
-                RadBtnWorkflowMed.Enabled = False
 
-                'Saisie paramètre
-                RadBtnParametre.Enabled = False
-
-                'Regénération paramètres et actes paramédicaux
-                RadBtnGenProtocole.Hide()
-
-                'Observations libres
-                CréerUneObservationToolStripMenuItem.Enabled = False
-                CréerUneObservationToolStripMenuItem1.Enabled = False
-                SaisieObservationToolStripMenuItem.Enabled = False
-                AjoutProtocoleAiguToolStripMenuItem.Enabled = False
-                ObsContextMenuStrip.Visible = False
-                SaisieObservationSpecifiqueMedicaleItem.Enabled = False
-                AttributionDesObservationsSpécifiquesToolStripMenuItem.Enabled = False
-
-                'Saisie commentaire paramédiacle
-                TxtConclusionIDE.Enabled = False
-
-                'Conclusion médicale
-                RadBtnCreerContexteConclusion.Enabled = False
-                RadBtnConclusionCreerConsigne.Enabled = False
-                AjouterUnContexteaLepisodeToolStripMenuItem.Enabled = False
-                EnleverUnContexteDeConclusionToolStripMenuItem.Enabled = False
-
-                'Choix conclusion paramédicale
-                RadioBtnDemandeAvis.Enabled = False
-                RadioBtnRolePropre.Enabled = False
-                RadioBtnSurProtocole.Enabled = False
-            End If
-        End If
-    End Sub
-
-    'Chargement des pages de la synthèse en fonction de leur demande (sauf antécédent qui est la page par défaut)
-    Private Sub RadPageView1_SelectedPageChanged(sender As Object, e As EventArgs) Handles RadPageView1.SelectedPageChanged
-        'Console.WriteLine("Page sélectionnée : " & RadPageView1.SelectedPage.Name)
-        Select Case RadPageView1.SelectedPage.Name
-            Case "PgvTraitement"
-                If IsTraitementLoaded = False Then
-                    ChargementTraitement()
-                    IsTraitementLoaded = True
-                    'Console.WriteLine("Chargement page : " & RadPageView1.SelectedPage.Name)
-                End If
-            Case "PgvParcours"
-                If IsParcoursLoaded = False Then
-                    ChargementParcoursDeSoin()
-                    IsParcoursLoaded = True
-                    'Console.WriteLine("Chargement page : " & RadPageView1.SelectedPage.Name)
-                End If
-            Case "PgvContexte"
-                If IsContexteLoaded = False Then
-                    ChargementContexte()
-                    IsContexteLoaded = True
-                    'Console.WriteLine("Chargement page : " & RadPageView1.SelectedPage.Name)
-                End If
-            Case "PgvPPS"
-                If IsPPSLoaded = False Then
-                    ChargementPPS()
-                    IsPPSLoaded = True
-                    'Console.WriteLine("Chargement page : " & RadPageView1.SelectedPage.Name)
-                End If
-        End Select
-    End Sub
-
-    Private Sub ControleExistenceOrdonnance()
-        Dim dt As DataTable
-        dt = ordonnaceDao.getOrdonnanceValidebyPatient(SelectedPatient.patientId, SelectedEpisodeId)
-        If dt.Rows.Count > 0 Then
-            OrdonnanceToolStripMenuItem.ForeColor = Color.Red
-        Else
-            OrdonnanceToolStripMenuItem.ForeColor = Color.Black
-        End If
-    End Sub
+    '=========================================================
+    '=== Traitement des rendez-vous
+    '=========================================================
 
     Private Sub ClotureAutomatiqueRendezVous()
         Me.IsRendezVousCloture = False
@@ -359,23 +284,10 @@ Public Class RadFEpisodeDetail
         End Try
     End Sub
 
-    'Refresh épisode
-    Private Sub RadBtnRefresh_Click(sender As Object, e As EventArgs) Handles RadBtnRefresh.Click
-        Refresh()
-    End Sub
 
-    Private Sub Refresh()
-        Cursor.Current = Cursors.WaitCursor
-        ChargementCaracteristiquesEpisode()
-        ChargementAffichageBlocWorkflow()
-        InitParametre()
-        ChargementParametres()
-        ChargementObservationSpecifique()
-        ChargementObservationLibre()
-        ChargementConclusion()
-        ControleEpisodeCloture()
-        Cursor.Current = Cursors.Default
-    End Sub
+    '=========================================================
+    '=== Etat civil patient
+    '=========================================================
 
     Private Sub ChargementEtatCivil()
         LblPatientNIR.Text = Me.SelectedPatient.PatientNir
@@ -390,6 +302,7 @@ Public Class RadFEpisodeDetail
         LblALD.Hide()
         ChargementToolTipAld()
     End Sub
+
 
     '=========================================================
     '=== Caractéristiques épisode
@@ -434,6 +347,51 @@ Public Class RadFEpisodeDetail
             LblLabelDateModification.Text = ""
             LblDateModification.Text = ""
         End If
+
+        ChargementEtatEpisode()
+    End Sub
+
+    Private Sub ChargementEtatEpisode()
+        Dim dt As DataTable
+        dt = ordonnaceDao.getOrdonnanceValidebyPatient(SelectedPatient.patientId, SelectedEpisodeId)
+        If dt.Rows.Count > 0 Then
+            OrdonnanceToolStripMenuItem.ForeColor = Color.Red
+            If dt.Rows.Count > 0 Then
+                OrdonnanceExiste = True
+                Dim DateValidation As Date
+                DateValidation = Coalesce(dt.Rows(0)("oa_ordonnance_date_validation"), Nothing)
+                If DateValidation <> Nothing Then
+                    OrdonnanceValide = True
+                Else
+                    OrdonnanceValide = False
+                End If
+            End If
+        Else
+            OrdonnanceToolStripMenuItem.ForeColor = Color.Black
+            OrdonnanceExiste = False
+            OrdonnanceValide = False
+        End If
+
+        Select Case episode.Etat
+            Case EpisodeDao.EnumEtatEpisode.EN_COURS.ToString
+                If OrdonnanceExiste = True Then
+                    If OrdonnanceValide = True Then
+                        LblLabelEtatEpisode.Text = "Episode en cours (ordonnance validée)"
+                    Else
+                        LblLabelEtatEpisode.Text = "Episode en cours (ordonnance en attente de validation !)"
+                    End If
+                Else
+                    LblLabelEtatEpisode.Text = "Episode en cours"
+                End If
+            Case EpisodeDao.EnumEtatEpisode.CLOTURE.ToString
+                If episode.DateModification.Date < Date.Now.Date Then
+                    LblLabelEtatEpisode.Text = "Episode clôturé le " & episode.DateModification.ToString("dd.MM.yyyy") & ", non modifiable (hormis l'ajout de pièces dans les sous-épisodes)"
+                Else
+                    LblLabelEtatEpisode.Text = "Episode clôturé aujourd'hui, modification possible pour la journée en cours"
+                End If
+            Case Else
+                LblLabelEtatEpisode.Text = "Etat inconnu !"
+        End Select
     End Sub
 
     Private Sub RadGroupBox3_MouseHover(sender As Object, e As EventArgs) Handles RadGroupBox3.MouseHover
@@ -1453,6 +1411,7 @@ Public Class RadFEpisodeDetail
         End If
     End Sub
 
+
     '======================================================
     '===== Conclusion Médicale
     '======================================================
@@ -1713,6 +1672,7 @@ Public Class RadFEpisodeDetail
         End If
     End Sub
 
+
     '===========================================================================================================================================
     '=== Clôture de l'épisode
     '===========================================================================================================================================
@@ -1769,20 +1729,68 @@ Public Class RadFEpisodeDetail
             Exit Sub
         End If
 
+        'Si une orrdonnance existe et que celle-ci n'est pas signée la clôture n'est pas possoble
+        'TODO: Episode détail - Vérifier si une ordonnance valide existe et n'est signée, interdire dans ce cas la clôture
+
         ClotureEpisode()
     End Sub
 
     'Vérification si l'épisode peut être clôturé automatiquement
     Private Sub GestionClotureAutomatique()
-        If episode.TypeProfil = EpisodeDao.EnumTypeProfil.PARAMEDICAL.ToString Then
-            If ConclusionMedicaleExiste = True Then
-                If WorkflowEnCoursExistant = False Then
-                    If DemandeAvisMedicalExiste = True Then
-                        'episode.ConclusionIdeType = EpisodeDao.EnumTypeConclusionParamedicale.DEMANDE_AVIS.ToString
-                        'TODO: Episode détail - Alerte si ordonnance existe et n'est pas signée!!!!!!!!!!!!
-                        ClotureEpisode()
+        If userLog.TypeProfil = ProfilDao.EnumProfilType.PARAMEDICAL.ToString Then
+            If episode.TypeProfil = EpisodeDao.EnumTypeProfil.PARAMEDICAL.ToString Then
+                If DemandeAvisMedicalExiste = True Then
+                    If WorkflowEnCoursExistant = False Then
+                        If ConclusionMedicaleExiste = True Then
+                            'episode.ConclusionIdeType = EpisodeDao.EnumTypeConclusionParamedicale.DEMANDE_AVIS.ToString
+                            'TODO: Episode détail - Alerte si ordonnance existe et n'est pas signée!!!!!!!!!!!!
+                            ClotureEpisode()
+                        End If
                     End If
                 End If
+            End If
+        End If
+    End Sub
+
+    'Contrôle si l'épisode est clôturé et non modifiable (si la date de clôture est < date du jour)
+    Private Sub ControleEpisodeCloture()
+        If episode.Etat = EpisodeDao.EnumEtatEpisode.CLOTURE.ToString Then
+            If episode.DateModification.Date < Date.Now.Date Then
+                'Clôture épisode
+                RadBtnCloture.Enabled = False
+
+                'Workflow
+                RadBtnWorkflowIde.Enabled = False
+                RadBtnWorkflowMed.Enabled = False
+
+                'Saisie paramètre
+                RadBtnParametre.Enabled = False
+
+                'Regénération paramètres et actes paramédicaux
+                RadBtnGenProtocole.Hide()
+
+                'Observations libres
+                CréerUneObservationToolStripMenuItem.Enabled = False
+                CréerUneObservationToolStripMenuItem1.Enabled = False
+                SaisieObservationToolStripMenuItem.Enabled = False
+                AjoutProtocoleAiguToolStripMenuItem.Enabled = False
+                ObsContextMenuStrip.Visible = False
+                SaisieObservationSpecifiqueMedicaleItem.Enabled = False
+                AttributionDesObservationsSpécifiquesToolStripMenuItem.Enabled = False
+
+                'Saisie commentaire paramédiacle
+                TxtConclusionIDE.Enabled = False
+
+                'Conclusion médicale
+                RadBtnCreerContexteConclusion.Enabled = False
+                RadBtnConclusionCreerConsigne.Enabled = False
+                AjouterUnContexteaLepisodeToolStripMenuItem.Enabled = False
+                EnleverUnContexteDeConclusionToolStripMenuItem.Enabled = False
+
+                'Choix conclusion paramédicale
+                RadioBtnDemandeAvis.Enabled = False
+                RadioBtnRolePropre.Enabled = False
+                RadioBtnSurProtocole.Enabled = False
             End If
         End If
     End Sub
@@ -1827,11 +1835,64 @@ Public Class RadFEpisodeDetail
     End Sub
 
 
+    '=========================================================
+    '=== Refresh épisode
+    '=========================================================
+
+    'Refresh épisode
+    Private Sub RadBtnRefresh_Click(sender As Object, e As EventArgs) Handles RadBtnRefresh.Click
+        Refresh()
+    End Sub
+
+    Private Sub Refresh()
+        Cursor.Current = Cursors.WaitCursor
+        ChargementCaracteristiquesEpisode()
+        ChargementAffichageBlocWorkflow()
+        InitParametre()
+        ChargementParametres()
+        ChargementObservationSpecifique()
+        ChargementObservationLibre()
+        ChargementConclusion()
+        ControleEpisodeCloture()
+        Cursor.Current = Cursors.Default
+    End Sub
 
 
     '===========================================================================================================================================
     '======================= Synthèse ==============================================================================================
     '===========================================================================================================================================
+
+    'Chargement des pages de la synthèse en fonction de leur demande (sauf antécédent qui est la page par défaut)
+    Private Sub RadPageView1_SelectedPageChanged(sender As Object, e As EventArgs) Handles RadPageView1.SelectedPageChanged
+        'Console.WriteLine("Page sélectionnée : " & RadPageView1.SelectedPage.Name)
+        Select Case RadPageView1.SelectedPage.Name
+            Case "PgvTraitement"
+                If IsTraitementLoaded = False Then
+                    ChargementTraitement()
+                    IsTraitementLoaded = True
+                    'Console.WriteLine("Chargement page : " & RadPageView1.SelectedPage.Name)
+                End If
+            Case "PgvParcours"
+                If IsParcoursLoaded = False Then
+                    ChargementParcoursDeSoin()
+                    IsParcoursLoaded = True
+                    'Console.WriteLine("Chargement page : " & RadPageView1.SelectedPage.Name)
+                End If
+            Case "PgvContexte"
+                If IsContexteLoaded = False Then
+                    ChargementContexte()
+                    IsContexteLoaded = True
+                    'Console.WriteLine("Chargement page : " & RadPageView1.SelectedPage.Name)
+                End If
+            Case "PgvPPS"
+                If IsPPSLoaded = False Then
+                    ChargementPPS()
+                    IsPPSLoaded = True
+                    'Console.WriteLine("Chargement page : " & RadPageView1.SelectedPage.Name)
+                End If
+        End Select
+    End Sub
+
 
     '==========================================================
     '======================= Antécédent =======================
@@ -2921,7 +2982,7 @@ Public Class RadFEpisodeDetail
                 'Erreur, l'ordonnance n'a pa été créée
             End If
         End If
-        ControleExistenceOrdonnance()
+        ChargementEtatEpisode()
         Cursor.Current = Cursors.Default
         Me.Enabled = True
     End Sub

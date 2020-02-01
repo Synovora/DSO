@@ -311,6 +311,7 @@ Partial Class RadFEpisodeDetail
         Me.AjouterUnContexteaLepisodeToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.ConclusionContexteMenuStrip = New System.Windows.Forms.ContextMenuStrip(Me.components)
         Me.EnleverUnContexteDeConclusionToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.LblLabelEtatEpisode = New System.Windows.Forms.Label()
         CType(Me.RadPanel1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.RadPanel1.SuspendLayout()
         CType(Me.RadGroupBox3, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -477,6 +478,7 @@ Partial Class RadFEpisodeDetail
         'RadGroupBox3
         '
         Me.RadGroupBox3.AccessibleRole = System.Windows.Forms.AccessibleRole.Grouping
+        Me.RadGroupBox3.Controls.Add(Me.LblLabelEtatEpisode)
         Me.RadGroupBox3.Controls.Add(Me.LblDuree)
         Me.RadGroupBox3.Controls.Add(Me.LblTypeProfil)
         Me.RadGroupBox3.Controls.Add(Me.LblEpisodeCommentaire)
@@ -3007,6 +3009,17 @@ Partial Class RadFEpisodeDetail
         Me.EnleverUnContexteDeConclusionToolStripMenuItem.Size = New System.Drawing.Size(254, 22)
         Me.EnleverUnContexteDeConclusionToolStripMenuItem.Text = "Enlever un contexte de conclusion"
         '
+        'LblLabelEtatEpisode
+        '
+        Me.LblLabelEtatEpisode.AutoSize = True
+        Me.LblLabelEtatEpisode.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Bold)
+        Me.LblLabelEtatEpisode.ForeColor = System.Drawing.Color.OrangeRed
+        Me.LblLabelEtatEpisode.Location = New System.Drawing.Point(6, 77)
+        Me.LblLabelEtatEpisode.Name = "LblLabelEtatEpisode"
+        Me.LblLabelEtatEpisode.Size = New System.Drawing.Size(10, 13)
+        Me.LblLabelEtatEpisode.TabIndex = 11
+        Me.LblLabelEtatEpisode.Text = "."
+        '
         'RadFEpisodeDetail
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -3408,5 +3421,6 @@ Partial Class RadFEpisodeDetail
     Friend WithEvents AjouterUnContexteaLepisodeToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents ConclusionContexteMenuStrip As ContextMenuStrip
     Friend WithEvents EnleverUnContexteDeConclusionToolStripMenuItem As ToolStripMenuItem
+    Friend WithEvents LblLabelEtatEpisode As Label
 End Class
 
