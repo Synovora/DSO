@@ -1569,6 +1569,7 @@ Public Class RadFEpisodeDetail
                         form.Show()
                         ChargementEpisodeContexte()
                         ChargementContexte()
+                        ChargementCaracteristiquesEpisode()
                     End If
                 End Using
             End If
@@ -1595,8 +1596,10 @@ Public Class RadFEpisodeDetail
                         vFContexteDetailEdit.PositionGaucheDroite = EnumPosition.Gauche
                         vFContexteDetailEdit.ShowDialog()
                         If vFContexteDetailEdit.CodeRetour = True Then
+                            episodeDao.MajEpisodeConclusionMedicale(SelectedEpisodeId)
                             ChargementEpisodeContexte()
                             ChargementContexte()
+                            ChargementCaracteristiquesEpisode()
                         End If
                     End Using
                     Me.Enabled = True
@@ -1614,12 +1617,15 @@ Public Class RadFEpisodeDetail
                 Cursor.Current = Cursors.WaitCursor
                 episodeContexteId = RadGridViewContexteEpisode.Rows(aRow).Cells("episode_contexte_id").Value
                 episodeContexteDao.SuppressionEpisodeContexteById(episodeContexteId)
+                episodeDao.MajEpisodeConclusionMedicale(SelectedEpisodeId)
+
                 Dim form As New RadFNotification()
                 form.Titre = "Notification conclusion médicale - contexte épisode patient"
                 form.Message = "Contexte patient enlevé de la conclusion médicale de l'épisode"
                 form.Show()
                 ChargementEpisodeContexte()
                 ChargementContexte()
+                ChargementCaracteristiquesEpisode()
             End If
         End If
     End Sub
@@ -3441,11 +3447,13 @@ Public Class RadFEpisodeDetail
                 episodeContexte.UserCreation = userLog.UtilisateurId
                 episodeContexte.DateCreation = Date.Now()
                 episodeContexteDao.CreateEpisodeContexte(episodeContexte)
+                episodeDao.MajEpisodeConclusionMedicale(SelectedEpisodeId)
                 Dim form As New RadFNotification()
                 form.Titre = "Notification conclusion médicale - contexte épisode patient"
                 form.Message = "Contexte patient ajouté dans la conclusion médicale de l'épisode"
                 form.Show()
                 ChargementEpisodeContexte()
+                ChargementCaracteristiquesEpisode()
                 Me.Enabled = True
             End If
         End If

@@ -412,6 +412,10 @@ Public Class RadFContextedetailEdit
             Case EnumTraitement.Creation
                 If ValidationContexte() = True Then
                     If contexteDao.CreationContexte(contexteUpdate, ContexteHistoACreer, ConclusionEpisode, Episode) = True Then
+                        If ConclusionEpisode = True Then
+                            Dim episodeDao As New EpisodeDao
+                            episodeDao.MajEpisodeConclusionMedicale(Episode.Id)
+                        End If
                         CodeResultat = EnumResultat.CreationOK
                         Dim form As New RadFNotification()
                         form.Titre = "Notification contexte patient"

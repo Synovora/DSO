@@ -80,12 +80,12 @@ Partial Class RadFEpisodeListe
         Me.RadBtnParametre = New Telerik.WinControls.UI.RadButton()
         Me.RadGbxFiltre = New Telerik.WinControls.UI.RadGroupBox()
         Me.RadGbxParametre = New Telerik.WinControls.UI.RadGroupBox()
-        Me.RadBtnParametreValidation = New Telerik.WinControls.UI.RadButton()
-        Me.DteDepuis = New System.Windows.Forms.DateTimePicker()
-        Me.DteJusqua = New System.Windows.Forms.DateTimePicker()
-        Me.Label1 = New System.Windows.Forms.Label()
-        Me.Label2 = New System.Windows.Forms.Label()
         Me.LblLabelParametre = New System.Windows.Forms.Label()
+        Me.Label2 = New System.Windows.Forms.Label()
+        Me.Label1 = New System.Windows.Forms.Label()
+        Me.DteJusqua = New System.Windows.Forms.DateTimePicker()
+        Me.DteDepuis = New System.Windows.Forms.DateTimePicker()
+        Me.RadBtnParametreValidation = New Telerik.WinControls.UI.RadButton()
         CType(Me.RadBtnAbandon, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.RadBtnEpisode, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.RadGroupBoxEtatCivil, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -572,7 +572,7 @@ Partial Class RadFEpisodeListe
         Me.RadGbxFiltre.HeaderText = "Filtres d'affichage"
         Me.RadGbxFiltre.Location = New System.Drawing.Point(12, 56)
         Me.RadGbxFiltre.Name = "RadGbxFiltre"
-        Me.RadGbxFiltre.Size = New System.Drawing.Size(1522, 91)
+        Me.RadGbxFiltre.Size = New System.Drawing.Size(1147, 91)
         Me.RadGbxFiltre.TabIndex = 23
         Me.RadGbxFiltre.Text = "Filtres d'affichage"
         '
@@ -584,7 +584,6 @@ Partial Class RadFEpisodeListe
         Me.RadGbxParametre.Controls.Add(Me.Label1)
         Me.RadGbxParametre.Controls.Add(Me.DteJusqua)
         Me.RadGbxParametre.Controls.Add(Me.DteDepuis)
-        Me.RadGbxParametre.Controls.Add(Me.RadBtnParametreValidation)
         Me.RadGbxParametre.Controls.Add(Me.RadBtnParametre)
         Me.RadGbxParametre.Controls.Add(Me.Lblparametre1)
         Me.RadGbxParametre.Controls.Add(Me.LblParametre2)
@@ -592,43 +591,22 @@ Partial Class RadFEpisodeListe
         Me.RadGbxParametre.Controls.Add(Me.LblParametre5)
         Me.RadGbxParametre.Controls.Add(Me.LblParametre4)
         Me.RadGbxParametre.GroupBoxStyle = Telerik.WinControls.UI.RadGroupBoxStyle.Office
-        Me.RadGbxParametre.HeaderText = "Paramètres (5 max) et période à afficher"
+        Me.RadGbxParametre.HeaderText = "Sélection paramètres (5 max) et période à afficher"
         Me.RadGbxParametre.Location = New System.Drawing.Point(12, 156)
         Me.RadGbxParametre.Name = "RadGbxParametre"
-        Me.RadGbxParametre.Size = New System.Drawing.Size(873, 97)
+        Me.RadGbxParametre.Size = New System.Drawing.Size(1147, 97)
         Me.RadGbxParametre.TabIndex = 24
-        Me.RadGbxParametre.Text = "Paramètres (5 max) et période à afficher"
+        Me.RadGbxParametre.Text = "Sélection paramètres (5 max) et période à afficher"
         '
-        'RadBtnParametreValidation
+        'LblLabelParametre
         '
-        Me.RadBtnParametreValidation.Location = New System.Drawing.Point(747, 46)
-        Me.RadBtnParametreValidation.Name = "RadBtnParametreValidation"
-        Me.RadBtnParametreValidation.Size = New System.Drawing.Size(117, 24)
-        Me.RadBtnParametreValidation.TabIndex = 22
-        Me.RadBtnParametreValidation.Text = "Validation sélection"
-        '
-        'DteDepuis
-        '
-        Me.DteDepuis.Location = New System.Drawing.Point(53, 62)
-        Me.DteDepuis.Name = "DteDepuis"
-        Me.DteDepuis.Size = New System.Drawing.Size(200, 20)
-        Me.DteDepuis.TabIndex = 23
-        '
-        'DteJusqua
-        '
-        Me.DteJusqua.Location = New System.Drawing.Point(318, 62)
-        Me.DteJusqua.Name = "DteJusqua"
-        Me.DteJusqua.Size = New System.Drawing.Size(200, 20)
-        Me.DteJusqua.TabIndex = 24
-        '
-        'Label1
-        '
-        Me.Label1.AutoSize = True
-        Me.Label1.Location = New System.Drawing.Point(2, 66)
-        Me.Label1.Name = "Label1"
-        Me.Label1.Size = New System.Drawing.Size(43, 13)
-        Me.Label1.TabIndex = 25
-        Me.Label1.Text = "Depuis"
+        Me.LblLabelParametre.AutoSize = True
+        Me.LblLabelParametre.ForeColor = System.Drawing.Color.DarkRed
+        Me.LblLabelParametre.Location = New System.Drawing.Point(285, 0)
+        Me.LblLabelParametre.Name = "LblLabelParametre"
+        Me.LblLabelParametre.Size = New System.Drawing.Size(309, 13)
+        Me.LblLabelParametre.TabIndex = 25
+        Me.LblLabelParametre.Text = "-- Cliquez sur un paramètre pour l'enlever de la sélection --"
         '
         'Label2
         '
@@ -639,15 +617,36 @@ Partial Class RadFEpisodeListe
         Me.Label2.TabIndex = 26
         Me.Label2.Text = "jusqu'à"
         '
-        'LblLabelParametre
+        'Label1
         '
-        Me.LblLabelParametre.AutoSize = True
-        Me.LblLabelParametre.ForeColor = System.Drawing.Color.DarkRed
-        Me.LblLabelParametre.Location = New System.Drawing.Point(249, 0)
-        Me.LblLabelParametre.Name = "LblLabelParametre"
-        Me.LblLabelParametre.Size = New System.Drawing.Size(287, 13)
-        Me.LblLabelParametre.TabIndex = 25
-        Me.LblLabelParametre.Text = "Cliquez sur un paramètre pour l'enlever de la sélection"
+        Me.Label1.AutoSize = True
+        Me.Label1.Location = New System.Drawing.Point(2, 66)
+        Me.Label1.Name = "Label1"
+        Me.Label1.Size = New System.Drawing.Size(43, 13)
+        Me.Label1.TabIndex = 25
+        Me.Label1.Text = "Depuis"
+        '
+        'DteJusqua
+        '
+        Me.DteJusqua.Location = New System.Drawing.Point(318, 62)
+        Me.DteJusqua.Name = "DteJusqua"
+        Me.DteJusqua.Size = New System.Drawing.Size(200, 20)
+        Me.DteJusqua.TabIndex = 24
+        '
+        'DteDepuis
+        '
+        Me.DteDepuis.Location = New System.Drawing.Point(53, 62)
+        Me.DteDepuis.Name = "DteDepuis"
+        Me.DteDepuis.Size = New System.Drawing.Size(200, 20)
+        Me.DteDepuis.TabIndex = 23
+        '
+        'RadBtnParametreValidation
+        '
+        Me.RadBtnParametreValidation.Location = New System.Drawing.Point(1181, 147)
+        Me.RadBtnParametreValidation.Name = "RadBtnParametreValidation"
+        Me.RadBtnParametreValidation.Size = New System.Drawing.Size(213, 34)
+        Me.RadBtnParametreValidation.TabIndex = 22
+        Me.RadBtnParametreValidation.Text = "Validation sélection et filtres d'affichage"
         '
         'RadFEpisodeListe
         '
@@ -659,6 +658,7 @@ Partial Class RadFEpisodeListe
         Me.Controls.Add(Me.RadGbxFiltre)
         Me.Controls.Add(Me.RadGridViewEpisode)
         Me.Controls.Add(Me.RadGroupBoxEtatCivil)
+        Me.Controls.Add(Me.RadBtnParametreValidation)
         Me.Controls.Add(Me.RadBtnEpisode)
         Me.Controls.Add(Me.RadBtnAbandon)
         Me.Name = "RadFEpisodeListe"

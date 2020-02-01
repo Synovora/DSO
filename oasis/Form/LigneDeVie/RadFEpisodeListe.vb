@@ -200,6 +200,7 @@ Public Class RadFEpisodeListe
         Dim i As Integer
         Dim iGrid As Integer = -1 'Indice pour alimenter la Grid qui peut comporter moins d'occurrences que le DataTable
         Dim dateCreation As Date
+        Dim conclusionMedicale As String
         Dim rowCount As Integer = dt.Rows.Count - 1
 
         Dim etatCode As String
@@ -250,8 +251,13 @@ Public Class RadFEpisodeListe
             RadGridViewEpisode.Rows(iGrid).Cells("type_profil").Value = Coalesce(dt.Rows(i)("type_profil"), "")
             RadGridViewEpisode.Rows(iGrid).Cells("description_activite").Value = Coalesce(dt.Rows(i)("description_activite"), "")
 
-            'TODO: Ligne de vie : Alimenter la colonne conclusion selon le type de l'épisode
-            RadGridViewEpisode.Rows(iGrid).Cells("conclusion").Value = Coalesce(dt.Rows(i)("observation_paramedical"), "")
+            'Conclusion selon le type de l'épisode
+            conclusionMedicale = Coalesce(dt.Rows(i)("observation_medical"), "")
+            If conclusionMedicale <> "" Then
+                RadGridViewEpisode.Rows(iGrid).Cells("conclusion").Value = conclusionMedicale
+            Else
+                RadGridViewEpisode.Rows(iGrid).Cells("conclusion").Value = Coalesce(dt.Rows(i)("observation_paramedical"), "")
+            End If
 
             If RadGridViewEpisode.Columns.Item("parametre1").IsVisible = True Then
                 RadGridViewEpisode.Rows(iGrid).Cells("parametre1").Value = ""
@@ -317,6 +323,8 @@ Public Class RadFEpisodeListe
                     End If
                 End If
             End If
+
+            'TODO: Episode détail (ligne de vie) - Traiter le calcul de l'IMC et du PAS qui dépendent de deux autres paramètres
 
             dateCreation = Coalesce(dt.Rows(i)("date_creation"), Nothing)
             If dateCreation <> Nothing Then
@@ -601,10 +609,12 @@ Public Class RadFEpisodeListe
 
     Private Sub MasterTemplate_ToolTipTextNeeded(sender As Object, e As Telerik.WinControls.ToolTipTextNeededEventArgs) Handles RadGridViewEpisode.ToolTipTextNeeded
         Dim hoveredCell As GridDataCellElement = TryCast(sender, GridDataCellElement)
-        If hoveredCell IsNot Nothing AndAlso hoveredCell.ColumnInfo.Name = "type_activite" Then
-            e.ToolTipText = hoveredCell.RowInfo.Cells("description_activite").Value
-        Else
-            e.ToolTipText = hoveredCell.Value.ToString()
+        If hoveredCell IsNot Nothing Then
+            If hoveredCell.ColumnInfo.Name = "type_activite" Then
+                e.ToolTipText = hoveredCell.RowInfo.Cells("type_activite").Value & " " & hoveredCell.RowInfo.Cells("description_activite").Value
+            Else
+                e.ToolTipText = hoveredCell.Value.ToString()
+            End If
         End If
     End Sub
 End Class

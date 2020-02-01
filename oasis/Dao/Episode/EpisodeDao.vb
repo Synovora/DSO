@@ -219,10 +219,11 @@ Public Class EpisodeDao
     Friend Function GetAllEpisodeByPatient(patientId As Long, dateDebut As Date, dateFin As Date, ligneDeVie As LigneDeVie) As DataTable
         Dim SQLString, TypeEpisodeString, ActiviteEpisodeString, ProfilEpisodeString, OrderByString As String
         Dim RechercherTypeEpisode, RechercherActiviteEpisode, RechercherprofilEpisode As Boolean
-        SQLString = "SELECT episode_id, patient_id, type, type_activite, description_activite, type_profil, commentaire, date_creation, observation_paramedical, etat" &
+        SQLString = "SELECT episode_id, patient_id, type, type_activite, description_activite, type_profil," &
+                    " commentaire, date_creation, observation_paramedical, observation_medical, etat" &
                     " FROM oasis.oa_episode" &
                     " WHERE patient_id = " & patientId.ToString &
-                    " AND (inactif = 'False' OR inactif is Null)" &
+                    " And (inactif = 'False' OR inactif is Null)" &
                     " AND date_creation <= '" & dateDebut.ToString("yyyy-MM-dd") & "'" &
                     " AND date_creation >= '" & dateFin.ToString("yyyy-MM-dd") & "'" & vbCrLf
 
@@ -566,4 +567,57 @@ Public Class EpisodeDao
 
         Return IsRendezVousCloture
     End Function
+
+    Friend Function MajEpisodeConclusionMedicale(episodeId As Long) As Boolean
+        Dim conclusionMedicale As String = ""
+        Dim PremierPassage As Boolean = True
+
+        Dim episodeContexteDao As New EpisodeContexteDao
+        Dim dt As DataTable
+        dt = episodeContexteDao.GetAllEpisodeContexteByEpisodeId(episodeId)
+        If dt.Rows.Count > 0 Then
+            Dim rowCount As Integer = dt.Rows.Count - 1
+            For i = 0 To rowCount Step 1
+                Dim contexteDescription As String
+                contexteDescription = Coalesce(dt.Rows(i)("oa_antecedent_description"), "")
+                If PremierPassage = True Then
+                    PremierPassage = False
+                    conclusionMedicale += contexteDescription
+                Else
+                    conclusionMedicale += vbCrLf & contexteDescription
+                End If
+            Next
+        End If
+
+        Dim codeRetour As Boolean = True
+
+        If conclusionMedicale <> "" Then
+            Dim da As SqlDataAdapter = New SqlDataAdapter()
+            Dim con As SqlConnection = GetConnection()
+
+            Dim SQLstring As String = "UPDATE oasis.oa_episode SET" &
+            " observation_medical = @observationMedical" &
+            " WHERE episode_id = @Id"
+
+            Dim cmd As New SqlCommand(SQLstring, con)
+
+            With cmd.Parameters
+                .AddWithValue("@observationMedical", conclusionMedicale)
+                .AddWithValue("@Id", episodeId)
+            End With
+
+            Try
+                da.UpdateCommand = cmd
+                da.UpdateCommand.ExecuteNonQuery()
+            Catch ex As Exception
+                MessageBox.Show(ex.Message)
+                codeRetour = False
+            Finally
+                con.Close()
+            End Try
+        End If
+
+        Return codeRetour
+    End Function
+
 End Class
