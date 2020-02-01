@@ -2,7 +2,7 @@
 Imports Oasis_Common
 Imports Telerik.WinControls.UI
 
-Public Class RadFEpisodeListe
+Public Class RadFEpisodeLigneDeVie
     Private privateSelectedPatient As Patient
     Private privateUtilisateurConnecte As Utilisateur
 

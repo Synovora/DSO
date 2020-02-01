@@ -29,9 +29,9 @@ Partial Class RadFParametreSelecteur
         Me.RadGridViewParm = New Telerik.WinControls.UI.RadGridView()
         Me.RadBtnAbandon = New Telerik.WinControls.UI.RadButton()
         Me.RadGbxSelection = New Telerik.WinControls.UI.RadGroupBox()
-        Me.TbxDescription = New System.Windows.Forms.TextBox()
-        Me.TbxUnite = New System.Windows.Forms.TextBox()
         Me.RadBtnSelection = New Telerik.WinControls.UI.RadButton()
+        Me.TbxUnite = New System.Windows.Forms.TextBox()
+        Me.TbxDescription = New System.Windows.Forms.TextBox()
         CType(Me.RadGridViewParm, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.RadGridViewParm.MasterTemplate, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.RadBtnAbandon, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -104,14 +104,13 @@ Partial Class RadFParametreSelecteur
         Me.RadGbxSelection.TabIndex = 2
         Me.RadGbxSelection.Text = "Paramètre sélectionné"
         '
-        'TbxDescription
+        'RadBtnSelection
         '
-        Me.TbxDescription.Enabled = False
-        Me.TbxDescription.Location = New System.Drawing.Point(5, 32)
-        Me.TbxDescription.Name = "TbxDescription"
-        Me.TbxDescription.ReadOnly = True
-        Me.TbxDescription.Size = New System.Drawing.Size(348, 20)
-        Me.TbxDescription.TabIndex = 0
+        Me.RadBtnSelection.Location = New System.Drawing.Point(111, 99)
+        Me.RadBtnSelection.Name = "RadBtnSelection"
+        Me.RadBtnSelection.Size = New System.Drawing.Size(110, 24)
+        Me.RadBtnSelection.TabIndex = 2
+        Me.RadBtnSelection.Text = "Sélection"
         '
         'TbxUnite
         '
@@ -122,13 +121,14 @@ Partial Class RadFParametreSelecteur
         Me.TbxUnite.Size = New System.Drawing.Size(141, 20)
         Me.TbxUnite.TabIndex = 1
         '
-        'RadBtnSelection
+        'TbxDescription
         '
-        Me.RadBtnSelection.Location = New System.Drawing.Point(111, 99)
-        Me.RadBtnSelection.Name = "RadBtnSelection"
-        Me.RadBtnSelection.Size = New System.Drawing.Size(110, 24)
-        Me.RadBtnSelection.TabIndex = 2
-        Me.RadBtnSelection.Text = "Sélection"
+        Me.TbxDescription.Enabled = False
+        Me.TbxDescription.Location = New System.Drawing.Point(5, 32)
+        Me.TbxDescription.Name = "TbxDescription"
+        Me.TbxDescription.ReadOnly = True
+        Me.TbxDescription.Size = New System.Drawing.Size(348, 20)
+        Me.TbxDescription.TabIndex = 0
         '
         'RadFParametreSelecteur
         '
@@ -147,6 +147,7 @@ Partial Class RadFParametreSelecteur
         '
         Me.RootElement.ApplyShapeToControl = True
         Me.ShowInTaskbar = False
+        Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent
         Me.Text = "Sélection paramètre"
         CType(Me.RadGridViewParm.MasterTemplate, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.RadGridViewParm, System.ComponentModel.ISupportInitialize).EndInit()

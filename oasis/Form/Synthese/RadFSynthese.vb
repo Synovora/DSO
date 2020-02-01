@@ -2267,7 +2267,7 @@ Public Class RadFSynthese
     Private Sub RadBtnLigneDeVie_Click(sender As Object, e As EventArgs) Handles RadBtnLigneDeVie.Click
         Me.Enabled = False
         Cursor.Current = Cursors.WaitCursor
-        Using vadFEpisodeListe As New RadFEpisodeListe
+        Using vadFEpisodeListe As New RadFEpisodeLigneDeVie
             vadFEpisodeListe.SelectedPatient = Me.SelectedPatient
             vadFEpisodeListe.UtilisateurConnecte = Me.UtilisateurConnecte
             vadFEpisodeListe.ShowDialog() 'Modal

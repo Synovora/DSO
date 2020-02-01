@@ -550,10 +550,10 @@
     <Compile Include="Form\Episode\RadFEpisodeDetail.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Form\LigneDeVie\RadFEpisodeListe.Designer.vb">
-      <DependentUpon>RadFEpisodeListe.vb</DependentUpon>
+    <Compile Include="Form\LigneDeVie\RadFEpisodeLigneDeVie.Designer.vb">
+      <DependentUpon>RadFEpisodeLigneDeVie.vb</DependentUpon>
     </Compile>
-    <Compile Include="Form\LigneDeVie\RadFEpisodeListe.vb">
+    <Compile Include="Form\LigneDeVie\RadFEpisodeLigneDeVie.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Form\Medicament\RadFMedocDetail.Designer.vb">
@@ -936,8 +936,8 @@
     <EmbeddedResource Include="Form\Episode\RadFEpisodeDetail.resx">
       <DependentUpon>RadFEpisodeDetail.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Form\LigneDeVie\RadFEpisodeListe.resx">
-      <DependentUpon>RadFEpisodeListe.vb</DependentUpon>
+    <EmbeddedResource Include="Form\LigneDeVie\RadFEpisodeLigneDeVie.resx">
+      <DependentUpon>RadFEpisodeLigneDeVie.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Form\Medicament\RadFMedocDetail.resx">
       <DependentUpon>RadFMedocDetail.vb</DependentUpon>
