@@ -274,7 +274,7 @@ Public Class DrcDao
                     " LEFT JOIN oasis.oa_drc_synonyme ON oasis.oasis.oa_drc.oa_drc_id = oasis.oa_drc_synonyme.oa_drc_id" &
                     " LEFT JOIN oasis.oa_r_categorie_majeure ON oasis.oasis.oa_drc.oa_drc_categorie_majeure_id = oasis.oa_r_categorie_majeure.oa_r_categorie_majeure_id" &
                     " WHERE " & clauseCategorieMajeure & " And " & clauseDrc & " And " & clauseCategorieOasis & " And " & clauseALD &
-                    " And (oa_drc_oasis_invalide Is Null Or oa_drc_oasis_invalide = 'False')" &
+                    " AND (oa_drc_oasis_invalide Is Null Or oa_drc_oasis_invalide = 'False')" &
                     " AND (oa_drc_sexe = 1 or oa_drc_sexe = 3)" &
                     " ORDER BY oa_drc_oasis DESC, oasis.oasis.oa_drc.oa_drc_id"
             Case "F"
