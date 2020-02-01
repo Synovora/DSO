@@ -68,6 +68,7 @@ Public Class RadFEpisodeDetail
     Dim episodeProtocoleCollaboratifDao As New EpisodeProtocoleCollaboratifDao
     Dim episodeParametreDao As New EpisodeParametreDao
     Dim episodeActeParamedicalDao As New EpisodeActeParamedicalDao
+    Dim episodeContexteDao As New EpisodeContexteDao
 
     Dim log As Log
     Dim episode As Episode
@@ -187,11 +188,6 @@ Public Class RadFEpisodeDetail
                 RadBtnWorkflowIde.Enabled = False
                 RadBtnWorkflowMed.Enabled = False
 
-                'Conclusion médicale
-                RadBtnCreerContexte.Enabled = False
-                RadBtnAssocierContexte.Enabled = False
-                RadBtnConclusionCreerConsigne.Enabled = False
-
                 'Saisie paramètre
                 RadBtnParametre.Enabled = False
 
@@ -209,6 +205,12 @@ Public Class RadFEpisodeDetail
 
                 'Saisie commentaire paramédiacle
                 TxtConclusionIDE.Enabled = False
+
+                'Conclusion médicale
+                RadBtnCreerContexteConclusion.Enabled = False
+                RadBtnConclusionCreerConsigne.Enabled = False
+                AjouterUnContexteaLepisodeToolStripMenuItem.Enabled = False
+                EnleverUnContexteDeConclusionToolStripMenuItem.Enabled = False
 
                 'Choix conclusion paramédicale
                 RadioBtnDemandeAvis.Enabled = False
@@ -1430,10 +1432,7 @@ Public Class RadFEpisodeDetail
         End If
 
         'Chargement contexte(s) de conclusion
-        'TODO: Episode détail - Chargement contexte(s) de conclusion
-
-        ConclusionMedicaleExiste = False
-        'TODO: Episode détail _ Si contexte de conclusion existe alors ConclusionMedicaleExiste = True
+        ChargementEpisodeContexte()
 
         ChargementConclusionEnCours = False
     End Sub
@@ -1457,6 +1456,173 @@ Public Class RadFEpisodeDetail
     '======================================================
     '===== Conclusion Médicale
     '======================================================
+    'Chargement Contexte conclusion médicale
+    Private Sub ChargementEpisodeContexte()
+        Dim AfficheDateModification, diagnostic, categorieContexte As String
+
+        Dim episodeContexteDt As DataTable
+        episodeContexteDt = episodeContexteDao.GetAllEpisodeContexteByEpisodeId(SelectedEpisodeId)
+
+        'Booléen pour déterminer si la conclusion médicale existe (au - un contexte)
+        If episodeContexteDt.Rows.Count > 0 Then
+            ConclusionMedicaleExiste = True
+        End If
+
+        RadGridViewContexteEpisode.Rows.Clear()
+
+        Dim iGrid As Integer = -1
+        Dim rowCount As Integer = episodeContexteDt.Rows.Count - 1
+        For i = 0 To rowCount Step 1
+            categorieContexte = ""
+            If episodeContexteDt.Rows(i)("oa_antecedent_categorie_contexte") IsNot DBNull.Value Then
+                categorieContexte = episodeContexteDt.Rows(i)("oa_antecedent_categorie_contexte")
+            End If
+            'Recherche si le contexte a été modifié (médical uniquement)
+            AfficheDateModification = ""
+            If categorieContexte = "M" Then
+                If episodeContexteDt.Rows(i)("oa_antecedent_date_modification") IsNot DBNull.Value Then
+                    DateModification = episodeContexteDt.Rows(i)("oa_antecedent_date_modification")
+                    AfficheDateModification = FormatageDateAffichage(DateModification) + " : "
+                Else
+                    If episodeContexteDt.Rows(i)("oa_antecedent_date_creation") IsNot DBNull.Value Then
+                        DateModification = episodeContexteDt.Rows(i)("oa_antecedent_date_creation")
+                        AfficheDateModification = FormatageDateAffichage(DateModification) + " : "
+                    End If
+                End If
+            End If
+
+            iGrid += 1
+            'Ajout d'une ligne au DataGridView
+            RadGridViewContexteEpisode.Rows.Add(iGrid)
+            'Alimentation du DataGridView
+            diagnostic = ""
+            If episodeContexteDt.Rows(i)("oa_antecedent_diagnostic") IsNot DBNull.Value Then
+                If CInt(episodeContexteDt.Rows(i)("oa_antecedent_diagnostic")) = 2 Then
+                    diagnostic = "Suspicion de "
+                Else
+                    If CInt(episodeContexteDt.Rows(i)("oa_antecedent_diagnostic")) = 3 Then
+                        diagnostic = "Notion de "
+                    End If
+                End If
+            End If
+
+            Dim longueurString As Integer
+            Dim longueurMax As Integer = 150
+            Dim contexteDescription As String
+            contexteDescription = Coalesce(episodeContexteDt.Rows(i)("oa_antecedent_description"), "")
+            If contexteDescription <> "" Then
+                contexteDescription = Replace(contexteDescription, vbCrLf, " ")
+                longueurString = contexteDescription.Length
+                If longueurString > longueurMax Then
+                    longueurString = longueurMax
+                End If
+                contexteDescription.Substring(0, longueurString)
+            End If
+
+            RadGridViewContexteEpisode.Rows(iGrid).Cells("contexte_id").Value = Coalesce(episodeContexteDt.Rows(i)("contexte_id"), 0)
+            RadGridViewContexteEpisode.Rows(iGrid).Cells("episode_contexte_id").Value = episodeContexteDt.Rows(i)("episode_contexte_id")
+            RadGridViewContexteEpisode.Rows(iGrid).Cells("contexte").Value = AfficheDateModification & diagnostic & " " & contexteDescription
+        Next
+
+        'Positionnement du grid sur la première occurrence
+        If RadGridViewContexteEpisode.Rows.Count > 0 Then
+            RadGridViewContexteEpisode.CurrentRow = RadGridViewContexteEpisode.ChildRows(0)
+            RadGridViewContexteEpisode.TableElement.VScrollBar.Value = 0
+        End If
+
+        If episodeContexteDt.Rows.Count >= 3 Then
+            AjouterUnContexteaLepisodeToolStripMenuItem.Enabled = False
+            RadBtnCreerContexteConclusion.Enabled = False
+        Else
+            AjouterUnContexteaLepisodeToolStripMenuItem.Enabled = True
+            RadBtnCreerContexteConclusion.Enabled = True
+            ControleEpisodeCloture()
+        End If
+    End Sub
+
+    'Créer un contexte de conclusion
+    Private Sub RadBtnCreerContexte_Click(sender As Object, e As EventArgs) Handles RadBtnCreerContexteConclusion.Click
+        Dim SelectedDrcId As Integer
+        Me.Enabled = False
+        Cursor.Current = Cursors.WaitCursor
+        Using vFDrcSelecteur As New RadFDRCSelecteur
+            vFDrcSelecteur.SelectedPatient = Me.SelectedPatient
+            vFDrcSelecteur.CategorieOasis = DrcDao.EnumCategorieOasisCode.Contexte
+            vFDrcSelecteur.ShowDialog()
+            SelectedDrcId = vFDrcSelecteur.SelectedDrcId
+            'Si un médicament a été sélectionné, on appelle le Formulaire de création
+            If SelectedDrcId <> 0 Then
+                Using vFContexteDetailEdit As New RadFContextedetailEdit
+                    vFContexteDetailEdit.SelectedPatient = Me.SelectedPatient
+                    vFContexteDetailEdit.UtilisateurConnecte = Me.UtilisateurConnecte
+                    vFContexteDetailEdit.SelectedDrcId = SelectedDrcId
+                    vFContexteDetailEdit.SelectedContexteId = 0
+                    vFContexteDetailEdit.PositionGaucheDroite = EnumPosition.Droite
+                    vFContexteDetailEdit.ConclusionEpisode = True
+                    vFContexteDetailEdit.Episode = episode
+                    vFContexteDetailEdit.ShowDialog()
+                    'Si le traitement a été créé, on recharge la grid
+                    If vFContexteDetailEdit.CodeRetour = True Then
+                        Dim form As New RadFNotification()
+                        form.Titre = "Notification conclusion médicale - contexte épisode patient"
+                        form.Message = "Contexte patient créé et ajouté dans la conclusion médicale de l'épisode"
+                        form.Show()
+                        ChargementEpisodeContexte()
+                        ChargementContexte()
+                    End If
+                End Using
+            End If
+        End Using
+        'Récupérer l'id du contexte pour l'associer au contexte épsiode et l'occulté si suivi ou virtuel ou social
+
+        Me.Enabled = True
+    End Sub
+
+    'Modifier un contexte de conclusion médicale
+    Private Sub RadGridViewContexteEpisode_CellDoubleClick(sender As Object, e As GridViewCellEventArgs) Handles RadGridViewContexteEpisode.CellDoubleClick
+        If RadGridViewContexteEpisode.CurrentRow IsNot Nothing Then
+            Dim aRow As Integer = Me.RadGridViewContexteEpisode.Rows.IndexOf(Me.RadGridViewContexteEpisode.CurrentRow)
+            If aRow >= 0 Then
+                Dim ContexteId As Integer = RadGridViewContexteEpisode.Rows(aRow).Cells("contexte_id").Value
+                If ContexteId <> 0 Then
+                    Cursor.Current = Cursors.WaitCursor
+                    Me.Enabled = False
+                    Using vFContexteDetailEdit As New RadFContextedetailEdit
+                        vFContexteDetailEdit.SelectedContexteId = ContexteId
+                        vFContexteDetailEdit.SelectedPatient = Me.SelectedPatient
+                        vFContexteDetailEdit.UtilisateurConnecte = Me.UtilisateurConnecte
+                        vFContexteDetailEdit.SelectedDrcId = 0
+                        vFContexteDetailEdit.PositionGaucheDroite = EnumPosition.Gauche
+                        vFContexteDetailEdit.ShowDialog()
+                        If vFContexteDetailEdit.CodeRetour = True Then
+                            ChargementEpisodeContexte()
+                            ChargementContexte()
+                        End If
+                    End Using
+                    Me.Enabled = True
+                End If
+            End If
+        End If
+    End Sub
+
+    'Enlever un contexte de conclusion médicale
+    Private Sub EnleverUnContexteDeConclusionToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles EnleverUnContexteDeConclusionToolStripMenuItem.Click
+        If RadGridViewContexteEpisode.CurrentRow IsNot Nothing Then
+            Dim aRow, episodeContexteId As Integer
+            aRow = Me.RadGridViewContexteEpisode.Rows.IndexOf(Me.RadGridViewContexteEpisode.CurrentRow)
+            If aRow >= 0 Then
+                Cursor.Current = Cursors.WaitCursor
+                episodeContexteId = RadGridViewContexteEpisode.Rows(aRow).Cells("episode_contexte_id").Value
+                episodeContexteDao.SuppressionEpisodeContexteById(episodeContexteId)
+                Dim form As New RadFNotification()
+                form.Titre = "Notification conclusion médicale - contexte épisode patient"
+                form.Message = "Contexte patient enlevé de la conclusion médicale de l'épisode"
+                form.Show()
+                ChargementEpisodeContexte()
+                ChargementContexte()
+            End If
+        End If
+    End Sub
 
     'Créer une consigne IDE 
     Private Sub RadBtnConclusionCreerConsigne_Click(sender As Object, e As EventArgs) Handles RadBtnConclusionCreerConsigne.Click
@@ -3117,14 +3283,12 @@ Public Class RadFEpisodeDetail
                 End If
             End If
 
-            'Affichage de l'ordre d'affichage
+            'Ordre d'affichage
             If contexteDataTable.Rows(i)("oa_antecedent_ordre_affichage1") IsNot DBNull.Value Then
                 ordreAffichage = contexteDataTable.Rows(i)("oa_antecedent_ordre_affichage1")
             Else
                 ordreAffichage = 0
             End If
-
-            'prefixeContexte = "(Ordre : " + ordreAffichage.ToString + ") - "
 
             'Contexte caché
             contexteCache = False
@@ -3151,7 +3315,7 @@ Public Class RadFEpisodeDetail
                 End If
             End If
 
-            'Affichage contexte ==========================
+            'Préparation de l'affichage du contexte
             Dim longueurString As Integer
             Dim longueurMax As Integer = 150
             Dim contexteDescription As String
@@ -3166,7 +3330,6 @@ Public Class RadFEpisodeDetail
             End If
 
             RadContexteDataGridView.Rows(iGrid).Cells("contexte").Value = AfficheDateModification & diagnostic & " " & contexteDescription
-            '============================================
 
             If contexteCache = True Then
                 RadContexteDataGridView.Rows(iGrid).Cells("contexte").Style.ForeColor = Color.CornflowerBlue
@@ -3202,9 +3365,10 @@ Public Class RadFEpisodeDetail
                     vFContexteDetailEdit.UtilisateurConnecte = Me.UtilisateurConnecte
                     vFContexteDetailEdit.SelectedDrcId = 0
                     vFContexteDetailEdit.PositionGaucheDroite = EnumPosition.Gauche
-                    vFContexteDetailEdit.ShowDialog() 'Modal
+                    vFContexteDetailEdit.ShowDialog()
                     If vFContexteDetailEdit.CodeRetour = True Then
                         ChargementContexte()
+                        ChargementEpisodeContexte()
                         If vFContexteDetailEdit.ContexteTransformeEnAntecedent = True Then
                             'Rechargement des contextes si réactivation
                             ChargementAntecedent()
@@ -3222,8 +3386,8 @@ Public Class RadFEpisodeDetail
         Me.Enabled = False
         Using vFDrcSelecteur As New RadFDRCSelecteur
             vFDrcSelecteur.SelectedPatient = Me.SelectedPatient
-            vFDrcSelecteur.CategorieOasis = 1       'Catégorie Oasis : "Antécédent et Contexte"
-            vFDrcSelecteur.ShowDialog()             'Modal
+            vFDrcSelecteur.CategorieOasis = DrcDao.EnumCategorieOasisCode.Contexte
+            vFDrcSelecteur.ShowDialog()
             SelectedDrcId = vFDrcSelecteur.SelectedDrcId
             'Si un médicament a été sélectionné, on appelle le Formulaire de création
             If SelectedDrcId <> 0 Then
@@ -3233,7 +3397,7 @@ Public Class RadFEpisodeDetail
                     vFContexteDetailEdit.SelectedDrcId = SelectedDrcId
                     vFContexteDetailEdit.SelectedContexteId = 0
                     vFContexteDetailEdit.PositionGaucheDroite = EnumPosition.Gauche
-                    vFContexteDetailEdit.ShowDialog() 'Modal
+                    vFContexteDetailEdit.ShowDialog()
                     'Si le traitement a été créé, on recharge la grid
                     If vFContexteDetailEdit.CodeRetour = True Then
                         ChargementContexte()
@@ -3255,8 +3419,33 @@ Public Class RadFEpisodeDetail
                     vFAntecedenttHistoListe.SelectedAntecedentId = ContexteId
                     vFAntecedenttHistoListe.SelectedPatient = Me.SelectedPatient
                     vFAntecedenttHistoListe.UtilisateurConnecte = Me.UtilisateurConnecte
-                    vFAntecedenttHistoListe.ShowDialog() 'Modal
+                    vFAntecedenttHistoListe.ShowDialog()
                 End Using
+                Me.Enabled = True
+            End If
+        End If
+    End Sub
+
+    'Ajouter un contexte à l'épisode (conclusion médicale)
+    Private Sub AjouterUnContexteÀLépisodeToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles AjouterUnContexteaLepisodeToolStripMenuItem.Click
+        If RadContexteDataGridView.CurrentRow IsNot Nothing Then
+            Dim aRow As Integer = Me.RadContexteDataGridView.Rows.IndexOf(Me.RadContexteDataGridView.CurrentRow)
+            If aRow >= 0 Then
+                Dim ContexteId As Integer = RadContexteDataGridView.Rows(aRow).Cells("ContexteId").Value
+                Me.Enabled = False
+                Cursor.Current = Cursors.WaitCursor
+                Dim episodeContexte As New EpisodeContexte
+                episodeContexte.ContexteId = ContexteId
+                episodeContexte.EpisodeId = SelectedEpisodeId
+                episodeContexte.PatientId = episode.PatientId
+                episodeContexte.UserCreation = userLog.UtilisateurId
+                episodeContexte.DateCreation = Date.Now()
+                episodeContexteDao.CreateEpisodeContexte(episodeContexte)
+                Dim form As New RadFNotification()
+                form.Titre = "Notification conclusion médicale - contexte épisode patient"
+                form.Message = "Contexte patient ajouté dans la conclusion médicale de l'épisode"
+                form.Show()
+                ChargementEpisodeContexte()
                 Me.Enabled = True
             End If
         End If
@@ -3840,8 +4029,9 @@ Public Class RadFEpisodeDetail
         RadBtnWorkflowMed.Enabled = False
         RadPnlWorkflowMed.Enabled = False
         RadBtnConclusionCreerConsigne.Enabled = False
-        RadBtnCreerContexte.Enabled = False
-        RadBtnAssocierContexte.Enabled = False
+        RadBtnCreerContexteConclusion.Enabled = False
+
+        AjouterUnContexteaLepisodeToolStripMenuItem.Enabled = False
     End Sub
 
     Private Sub LibereAccesIde()
@@ -3862,8 +4052,9 @@ Public Class RadFEpisodeDetail
         RadBtnWorkflowMed.Enabled = True
         RadPnlWorkflowMed.Enabled = True
         RadBtnConclusionCreerConsigne.Enabled = True
-        RadBtnCreerContexte.Enabled = True
-        RadBtnAssocierContexte.Enabled = True
+        RadBtnCreerContexteConclusion.Enabled = True
+
+        AjouterUnContexteaLepisodeToolStripMenuItem.Enabled = True
     End Sub
 
 

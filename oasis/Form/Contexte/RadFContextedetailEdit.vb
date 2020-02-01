@@ -9,6 +9,8 @@ Public Class RadFContextedetailEdit
     Private _CodeResultat As Integer
     Private privateContexteTransformeEnAntecedent As Boolean
     Private _positionGaucheDroite As Integer
+    Private _conclusionEpisode As Boolean
+    Private _episode As Episode
 
 
     Public Property SelectedPatient As Patient
@@ -83,6 +85,24 @@ Public Class RadFContextedetailEdit
         End Set
     End Property
 
+    Public Property ConclusionEpisode As Boolean
+        Get
+            Return _conclusionEpisode
+        End Get
+        Set(value As Boolean)
+            _conclusionEpisode = value
+        End Set
+    End Property
+
+    Public Property Episode As Episode
+        Get
+            Return _episode
+        End Get
+        Set(value As Episode)
+            _episode = value
+        End Set
+    End Property
+
     Enum EnumTraitement
         Creation = 5
         Modification = 6
@@ -114,6 +134,12 @@ Public Class RadFContextedetailEdit
             Me.Location = New Point(10, Screen.PrimaryScreen.WorkingArea.Height - Me.Height - 10)
         End If
         CodeResultat = EnumResultat.AttenteAction
+
+        If ConclusionEpisode = True Then
+            afficheTitleForm(Me, "Détail contexte de conclusion d'épisode")
+        Else
+            afficheTitleForm(Me, "Détail contexte")
+        End If
 
         InitZone()
         ChargementEtatCivil()
@@ -161,6 +187,14 @@ Public Class RadFContextedetailEdit
             ChkPublie.ForeColor = Color.Red
             LblPublication.Hide()
             contexteUpdate.StatutAffichage = "P"
+            If ConclusionEpisode = True Then
+                If Episode.TypeActivite <> EpisodeDao.EnumTypeActiviteEpisodeCode.PATHOLOGIE_AIGUE Then
+                    ChkCache.Checked = True
+                    ChkCache.ForeColor = Color.Red
+                    LblPublication.Text = "Contexte masqué"
+                End If
+            End If
+
             'Diagnostic
             ChkDiagnosticConfirme.Checked = True
             ChkDiagnosticConfirme.ForeColor = Color.Red
@@ -343,7 +377,10 @@ Public Class RadFContextedetailEdit
             'Annulation contexte
             If contexteDao.AnnulationContexte(contexteUpdate, ContexteHistoACreer) = True Then
                 CodeResultat = EnumResultat.AnnulationOK
-                'MessageBox.Show("Le contexte patient a été annulé")
+                Dim form As New RadFNotification()
+                form.Titre = "Notification contexte patient"
+                form.Message = "Contexte patient annulé"
+                form.Show()
                 Me.CodeRetour = True
                 Close()
             Else
@@ -356,7 +393,10 @@ Public Class RadFContextedetailEdit
     Private Sub RadBtnTransformer_Click(sender As Object, e As EventArgs) Handles RadBtnTransformer.Click
         If MsgBox("confirmation de la transformation en antécédent", MsgBoxStyle.YesNo, "") = MsgBoxResult.Yes Then
             If contexteDao.TransformationEnAntecedent(SelectedContexteId, ContexteHistoACreer) = True Then
-                MessageBox.Show("Le contexte patient a été transformé en antécédent")
+                Dim form As New RadFNotification()
+                form.Titre = "Notification contexte patient"
+                form.Message = "Le contexte patient a été transformé en antécédent"
+                form.Show()
                 Me.ContexteTransformeEnAntecedent = True
                 Me.CodeRetour = True
                 Close()
@@ -371,9 +411,12 @@ Public Class RadFContextedetailEdit
         Select Case Traitement
             Case EnumTraitement.Creation
                 If ValidationContexte() = True Then
-                    If contexteDao.CreationContexte(contexteUpdate, ContexteHistoACreer) = True Then
+                    If contexteDao.CreationContexte(contexteUpdate, ContexteHistoACreer, ConclusionEpisode, Episode) = True Then
                         CodeResultat = EnumResultat.CreationOK
-                        'MessageBox.Show("Le contexte patient a été créé")
+                        Dim form As New RadFNotification()
+                        form.Titre = "Notification contexte patient"
+                        form.Message = "Contexte patient créé"
+                        form.Show()
                         Me.CodeRetour = True
                         Close()
                     Else
@@ -384,7 +427,10 @@ Public Class RadFContextedetailEdit
                 If ValidationContexte() = True Then
                     If contexteDao.ModificationContexte(contexteUpdate, ContexteHistoACreer) = True Then
                         CodeResultat = EnumResultat.ModificationOK
-                        'MessageBox.Show("Le contexte patient a été modifié")
+                        Dim form As New RadFNotification()
+                        form.Titre = "Notification contexte patient"
+                        form.Message = "Contexte patient modifié"
+                        form.Show()
                         Me.CodeRetour = True
                         Close()
                     Else

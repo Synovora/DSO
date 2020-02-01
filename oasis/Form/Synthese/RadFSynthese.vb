@@ -1534,14 +1534,12 @@ Public Class RadFSynthese
                 End If
             End If
 
-            'Affichage de l'ordre d'affichage
+            'Ordre d'affichage
             If contexteDataTable.Rows(i)("oa_antecedent_ordre_affichage1") IsNot DBNull.Value Then
                 ordreAffichage = contexteDataTable.Rows(i)("oa_antecedent_ordre_affichage1")
             Else
                 ordreAffichage = 0
             End If
-
-            'prefixeContexte = "(Ordre : " + ordreAffichage.ToString + ") - "
 
             'Contexte caché
             contexteCache = False
@@ -1568,7 +1566,7 @@ Public Class RadFSynthese
                 End If
             End If
 
-            'Affichage contexte ==========================
+            'Préparation de l'affichage du contexte
             Dim longueurString As Integer
             Dim longueurMax As Integer = 150
             Dim contexteDescription As String
@@ -1583,13 +1581,10 @@ Public Class RadFSynthese
             End If
 
             RadContexteDataGridView.Rows(iGrid).Cells("contexte").Value = AfficheDateModification & diagnostic & " " & contexteDescription
-            '============================================
 
             If contexteCache = True Then
                 RadContexteDataGridView.Rows(iGrid).Cells("contexte").Style.ForeColor = Color.CornflowerBlue
             End If
-
-            'RadContexteDataGridView.Rows(iGrid).Cells("contexte").
 
             'Identifiant contexte
             RadContexteDataGridView.Rows(iGrid).Cells("contexteId").Value = contexteDataTable.Rows(i)("oa_antecedent_id")
@@ -1610,28 +1605,16 @@ Public Class RadFSynthese
                 Dim ContexteId As Integer = RadContexteDataGridView.Rows(aRow).Cells("ContexteId").Value
                 Cursor.Current = Cursors.WaitCursor
                 Me.Enabled = False
-                Using vFContexteDetailEdit As New RadFContextedetailEdit
-                    vFContexteDetailEdit.SelectedContexteId = ContexteId
-                    vFContexteDetailEdit.SelectedPatient = Me.SelectedPatient
-                    vFContexteDetailEdit.UtilisateurConnecte = Me.UtilisateurConnecte
-                    vFContexteDetailEdit.SelectedDrcId = 0
-                    vFContexteDetailEdit.PositionGaucheDroite = EnumPosition.Droite
-                    vFContexteDetailEdit.ShowDialog() 'Modal
-                    If vFContexteDetailEdit.CodeRetour = True Then
-                        Select Case vFContexteDetailEdit.CodeResultat
-                            Case EnumResultat.AnnulationOK
-                                Dim form As New RadFNotification()
-                                form.Titre = "Notification contexte patient"
-                                form.Message = "Contexte patient annulé"
-                                form.Show()
-                            Case EnumResultat.ModificationOK
-                                Dim form As New RadFNotification()
-                                form.Titre = "Notification contexte patient"
-                                form.Message = "Contexte patient modifié"
-                                form.Show()
-                        End Select
+                Using Form As New RadFContextedetailEdit
+                    Form.SelectedContexteId = ContexteId
+                    Form.SelectedPatient = Me.SelectedPatient
+                    Form.UtilisateurConnecte = Me.UtilisateurConnecte
+                    Form.SelectedDrcId = 0
+                    Form.PositionGaucheDroite = EnumPosition.Droite
+                    Form.ShowDialog()
+                    If Form.CodeRetour = True Then
                         ChargementContexte()
-                        If vFContexteDetailEdit.ContexteTransformeEnAntecedent = True Then
+                        If Form.ContexteTransformeEnAntecedent = True Then
                             'Rechargement des contextes si réactivation
                             ChargementAntecedent()
                         End If
@@ -1648,24 +1631,20 @@ Public Class RadFSynthese
         Cursor.Current = Cursors.WaitCursor
         Using vFDrcSelecteur As New RadFDRCSelecteur
             vFDrcSelecteur.SelectedPatient = Me.SelectedPatient
-            vFDrcSelecteur.CategorieOasis = 1       'Catégorie Oasis : "Antécédent et Contexte"
-            vFDrcSelecteur.ShowDialog()             'Modal
+            vFDrcSelecteur.CategorieOasis = DrcDao.EnumCategorieOasisCode.Contexte
+            vFDrcSelecteur.ShowDialog()
             SelectedDrcId = vFDrcSelecteur.SelectedDrcId
             'Si un médicament a été sélectionné, on appelle le Formulaire de création
             If SelectedDrcId <> 0 Then
-                Using vFContexteDetailEdit As New RadFContextedetailEdit
-                    vFContexteDetailEdit.SelectedPatient = Me.SelectedPatient
-                    vFContexteDetailEdit.UtilisateurConnecte = Me.UtilisateurConnecte
-                    vFContexteDetailEdit.SelectedDrcId = SelectedDrcId
-                    vFContexteDetailEdit.SelectedContexteId = 0
-                    vFContexteDetailEdit.PositionGaucheDroite = EnumPosition.Droite
-                    vFContexteDetailEdit.ShowDialog() 'Modal
+                Using Fom As New RadFContextedetailEdit
+                    Fom.SelectedPatient = Me.SelectedPatient
+                    Fom.UtilisateurConnecte = Me.UtilisateurConnecte
+                    Fom.SelectedDrcId = SelectedDrcId
+                    Fom.SelectedContexteId = 0
+                    Fom.PositionGaucheDroite = EnumPosition.Droite
+                    Fom.ShowDialog()
                     'Si le traitement a été créé, on recharge la grid
-                    If vFContexteDetailEdit.CodeRetour = True Then
-                        Dim form As New RadFNotification()
-                        form.Titre = "Notification contexte patient"
-                        form.Message = "Contexte patient créé"
-                        form.Show()
+                    If Fom.CodeRetour = True Then
                         ChargementContexte()
                     End If
                 End Using
@@ -1681,11 +1660,11 @@ Public Class RadFSynthese
                 Dim ContexteId As Integer = RadContexteDataGridView.Rows(aRow).Cells("ContexteId").Value
                 Me.Enabled = False
                 Cursor.Current = Cursors.WaitCursor
-                Using vFAntecedenttHistoListe As New RadFAntecedentHistoListe
-                    vFAntecedenttHistoListe.SelectedAntecedentId = ContexteId
-                    vFAntecedenttHistoListe.SelectedPatient = Me.SelectedPatient
-                    vFAntecedenttHistoListe.UtilisateurConnecte = Me.UtilisateurConnecte
-                    vFAntecedenttHistoListe.ShowDialog() 'Modal
+                Using Form As New RadFAntecedentHistoListe
+                    Form.SelectedAntecedentId = ContexteId
+                    Form.SelectedPatient = Me.SelectedPatient
+                    Form.UtilisateurConnecte = Me.UtilisateurConnecte
+                    Form.ShowDialog()
                 End Using
                 Me.Enabled = True
             End If

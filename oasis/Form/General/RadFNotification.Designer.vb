@@ -78,7 +78,7 @@ Partial Class RadFNotification
         '
         Me.RootElement.ApplyShapeToControl = True
         Me.ShowInTaskbar = False
-        Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
+        Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent
         Me.Text = "RadFNotification"
         Me.TopMost = True
         CType(Me, System.ComponentModel.ISupportInitialize).EndInit()

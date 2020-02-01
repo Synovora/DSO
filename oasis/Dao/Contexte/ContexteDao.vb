@@ -141,7 +141,7 @@ Public Class ContexteDao
         Return codeRetour
     End Function
 
-    Friend Function CreationContexte(contexte As Antecedent, contexteHistoACreer As AntecedentHisto) As Boolean
+    Friend Function CreationContexte(contexte As Antecedent, contexteHistoACreer As AntecedentHisto, Optional conclusionEpisode As Boolean = False, Optional episode As Episode = Nothing) As Boolean
         Dim da As SqlDataAdapter = New SqlDataAdapter()
         Dim codeRetour As Boolean = True
 
@@ -150,11 +150,11 @@ Public Class ContexteDao
         " oa_antecedent_date_modification, oa_antecedent_utilisateur_creation, oa_antecedent_utilisateur_modification," &
         " oa_antecedent_date_debut, oa_antecedent_niveau, oa_antecedent_nature, oa_antecedent_statut_affichage, oa_antecedent_inactif," &
         " oa_antecedent_ordre_affichage1, oa_antecedent_ordre_affichage2, oa_antecedent_ordre_affichage3, oa_antecedent_categorie_contexte," &
-        " oa_antecedent_date_fin, oa_antecedent_diagnostic)" &
+        " oa_antecedent_date_fin, oa_antecedent_diagnostic, oa_episode_id)" &
         " VALUES (@patientId, @type, @drcId, @description, @dateCreation," &
         " @dateModification, @utilisateurCreation, @utilisateurModification," &
         " @dateDebut, @niveau, @nature, @publication, @inactif," &
-        " @ordreAffichage1, @ordreAffichage2, @ordreAffichage3, @categorieContexte, @dateFin, @diagnostic)"
+        " @ordreAffichage1, @ordreAffichage2, @ordreAffichage3, @categorieContexte, @dateFin, @diagnostic, @episodeId)"
 
         Dim con As SqlConnection = GetConnection()
         Dim cmd As New SqlCommand(SQLstring, con)
@@ -179,6 +179,7 @@ Public Class ContexteDao
             .AddWithValue("@categorieContexte", contexte.CategorieContexte)
             .AddWithValue("@dateFin", contexte.DateFin)
             .AddWithValue("@diagnostic", contexte.Diagnostic)
+            .AddWithValue("@episodeId", contexte.EpisodeId)
         End With
 
         Try
@@ -191,6 +192,8 @@ Public Class ContexteDao
         Finally
             con.Close()
         End Try
+
+        Dim ContexteConclusionEpisodeId As Long
 
         If codeRetour = True Then
             'Mise à jour des données dans l'instance de la classe Historisation antecedent
@@ -222,10 +225,25 @@ Public Class ContexteDao
                 contexteLastDataReader.Read()
                 'Récupération de la clé de l'enregistrement créé
                 contexteHistoACreer.AntecedentId = contexteLastDataReader(0)
+                ContexteConclusionEpisodeId = contexteLastDataReader(0)
 
                 'Libération des ressources d'accès aux données
                 con.Close()
                 contexteLastCommand.Dispose()
+            End If
+
+            'Ajout contexte créé si conclusion médicale de l'épisode
+            If conclusionEpisode = True Then
+                If episode IsNot Nothing Then
+                    Dim episodeContexteDao As New EpisodeContexteDao
+                    Dim episodeContexte As New EpisodeContexte
+                    episodeContexte.ContexteId = ContexteConclusionEpisodeId
+                    episodeContexte.EpisodeId = episode.Id
+                    episodeContexte.PatientId = episode.PatientId
+                    episodeContexte.DateCreation = Date.Now()
+                    episodeContexte.UserCreation = userLog.UtilisateurId
+                    episodeContexteDao.CreateEpisodeContexte(episodeContexte)
+                End If
             End If
 
             'Lecture du contexte créé avec toutes ses données pour communiquer le DataReader à la fonction dédiée

@@ -204,6 +204,8 @@
     <Compile Include="Bean\Ordonnance\OrdonnanceDetailGrid.vb" />
     <Compile Include="Dao\Antecedent\AntecedentOrdreDao.vb" />
     <Compile Include="Bean\LigneDeVie\LigneDeVie.vb" />
+    <Compile Include="Bean\Episode\EpisodeContexte.vb" />
+    <Compile Include="Dao\Episode\EpisodeContexteDao.vb" />
     <Compile Include="Form\DRC\RadFActeParamedicalTest.Designer.vb">
       <DependentUpon>RadFActeParamedicalTest.vb</DependentUpon>
     </Compile>
@@ -362,6 +364,12 @@
       <DependentUpon>RadFEpisodeProtocoleAiguDetail.vb</DependentUpon>
     </Compile>
     <Compile Include="Form\Episode\RadFEpisodeProtocoleAiguDetail.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form\Episode\RadFEpisodeSelecteurContextePatient.Designer.vb">
+      <DependentUpon>RadFEpisodeSelecteurContextePatient.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Form\Episode\RadFEpisodeSelecteurContextePatient.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Form\Workflow\RadFWkfDemandeAvisHisto.Designer.vb">
@@ -542,10 +550,10 @@
     <Compile Include="Form\Episode\RadFEpisodeDetail.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Form\Episode\RadFEpisodeListe.Designer.vb">
+    <Compile Include="Form\LigneDeVie\RadFEpisodeListe.Designer.vb">
       <DependentUpon>RadFEpisodeListe.vb</DependentUpon>
     </Compile>
-    <Compile Include="Form\Episode\RadFEpisodeListe.vb">
+    <Compile Include="Form\LigneDeVie\RadFEpisodeListe.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Form\Medicament\RadFMedocDetail.Designer.vb">
@@ -844,6 +852,9 @@
     <EmbeddedResource Include="Form\Episode\RadFEpisodeProtocoleAiguDetail.resx">
       <DependentUpon>RadFEpisodeProtocoleAiguDetail.vb</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Form\Episode\RadFEpisodeSelecteurContextePatient.resx">
+      <DependentUpon>RadFEpisodeSelecteurContextePatient.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Form\Workflow\RadFWkfDemandeAvisHisto.resx">
       <DependentUpon>RadFWkfDemandeAvisHisto.vb</DependentUpon>
     </EmbeddedResource>
@@ -925,7 +936,7 @@
     <EmbeddedResource Include="Form\Episode\RadFEpisodeDetail.resx">
       <DependentUpon>RadFEpisodeDetail.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Form\Episode\RadFEpisodeListe.resx">
+    <EmbeddedResource Include="Form\LigneDeVie\RadFEpisodeListe.resx">
       <DependentUpon>RadFEpisodeListe.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Form\Medicament\RadFMedocDetail.resx">

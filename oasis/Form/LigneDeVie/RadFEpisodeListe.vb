@@ -250,8 +250,8 @@ Public Class RadFEpisodeListe
             RadGridViewEpisode.Rows(iGrid).Cells("type_profil").Value = Coalesce(dt.Rows(i)("type_profil"), "")
             RadGridViewEpisode.Rows(iGrid).Cells("description_activite").Value = Coalesce(dt.Rows(i)("description_activite"), "")
 
-            RadGridViewEpisode.Rows(iGrid).Cells("conclusion").Value = Coalesce(dt.Rows(i)("commentaire"), "")
-
+            'TODO: Ligne de vie : Alimenter la colonne conclusion selon le type de l'épisode
+            RadGridViewEpisode.Rows(iGrid).Cells("conclusion").Value = Coalesce(dt.Rows(i)("observation_paramedical"), "")
 
             If RadGridViewEpisode.Columns.Item("parametre1").IsVisible = True Then
                 RadGridViewEpisode.Rows(iGrid).Cells("parametre1").Value = ""
@@ -603,6 +603,8 @@ Public Class RadFEpisodeListe
         Dim hoveredCell As GridDataCellElement = TryCast(sender, GridDataCellElement)
         If hoveredCell IsNot Nothing AndAlso hoveredCell.ColumnInfo.Name = "type_activite" Then
             e.ToolTipText = hoveredCell.RowInfo.Cells("description_activite").Value
+        Else
+            e.ToolTipText = hoveredCell.Value.ToString()
         End If
     End Sub
 End Class

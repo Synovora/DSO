@@ -65,6 +65,7 @@ Public Class AntecedentDao
         antecedent.Ordre3 = Coalesce(reader("oa_antecedent_ordre_affichage3"), 0)
         antecedent.StatutAffichage = Coalesce(reader("oa_antecedent_statut_affichage"), "")
         antecedent.CategorieContexte = Coalesce(reader("oa_antecedent_categorie_contexte"), "")
+        antecedent.EpisodeId = Coalesce(reader("oa_episode_id"), 0)
         antecedent.Inactif = Coalesce(reader("oa_antecedent_inactif"), False)
         Return antecedent
     End Function
@@ -102,6 +103,7 @@ Public Class AntecedentDao
         Cible.Ordre3 = Source.Ordre3
         Cible.StatutAffichage = Source.StatutAffichage
         Cible.CategorieContexte = Source.CategorieContexte
+        Cible.EpisodeId = Source.EpisodeId
         Cible.Inactif = Source.Inactif
         Return Cible
     End Function
@@ -198,6 +200,9 @@ Public Class AntecedentDao
             Return False
         End If
         If source1.CategorieContexte <> source2.CategorieContexte Then
+            Return False
+        End If
+        If source1.EpisodeId <> source2.EpisodeId Then
             Return False
         End If
         If source1.Inactif <> source2.Inactif Then

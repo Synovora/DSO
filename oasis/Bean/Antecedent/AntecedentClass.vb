@@ -30,6 +30,7 @@
     Private _ordre3 As Integer
     Private _statutAffichage As String
     Private _categorieContexte As String
+    Private _episodeId As Long
     Private _inactif As Boolean
 
     Public Property Id As Integer
@@ -317,6 +318,15 @@
         End Get
         Set(value As Boolean)
             _inactif = value
+        End Set
+    End Property
+
+    Public Property EpisodeId As Long
+        Get
+            Return _episodeId
+        End Get
+        Set(value As Long)
+            _episodeId = value
         End Set
     End Property
 
