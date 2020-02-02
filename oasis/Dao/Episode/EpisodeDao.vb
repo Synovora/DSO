@@ -587,7 +587,7 @@ Public Class EpisodeDao
                     PremierPassage = False
                     conclusionMedicale += contexteDescription
                 Else
-                    conclusionMedicale += vbCrLf & contexteDescription
+                    conclusionMedicale += "; " & contexteDescription
                 End If
             Next
         End If

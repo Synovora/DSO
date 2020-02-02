@@ -1480,7 +1480,7 @@ Public Class RadFEpisodeDetail
 
             RadGridViewContexteEpisode.Rows(iGrid).Cells("contexte_id").Value = Coalesce(episodeContexteDt.Rows(i)("contexte_id"), 0)
             RadGridViewContexteEpisode.Rows(iGrid).Cells("episode_contexte_id").Value = episodeContexteDt.Rows(i)("episode_contexte_id")
-            RadGridViewContexteEpisode.Rows(iGrid).Cells("contexte").Value = AfficheDateModification & diagnostic & " " & contexteDescription
+            RadGridViewContexteEpisode.Rows(iGrid).Cells("contexte").Value = diagnostic & " " & contexteDescription
         Next
 
         'Positionnement du grid sur la première occurrence
