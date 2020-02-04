@@ -1597,4 +1597,7 @@ Public Class RadFTraitementDetailEdit
         Return Posologie
     End Function
 
+    Private Sub RadBtnRetour_Click(sender As Object, e As EventArgs) Handles RadBtnRetour.Click
+        Close()
+    End Sub
 End Class

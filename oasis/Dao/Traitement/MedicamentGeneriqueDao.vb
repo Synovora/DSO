@@ -1,6 +1,6 @@
 ﻿Imports System.Collections.Specialized
 Imports System.Data.SqlClient
-Module MedicamentDao
+Module MedicamentGeneriqueDao
 
     Friend Function GetCountMedicament(Filtre As String) As Integer
         Dim SqlString As String = "SELECT COUNT(*) FROM oasis.v_medoc WHERE "

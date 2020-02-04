@@ -141,6 +141,7 @@ Partial Class RadFSynthese
         Me.RadChkParcoursTous = New Telerik.WinControls.UI.RadCheckBox()
         Me.RadChkMesureMax = New Telerik.WinControls.UI.RadCheckBox()
         Me.RadBtnRefresh = New Telerik.WinControls.UI.RadButton()
+        Me.DéclarationAllergieOuContreindicationToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         CType(Me.RadGroupBoxEtatCivil, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.RadGroupBoxEtatCivil.SuspendLayout()
         Me.EtatCivilContextMenuStrip.SuspendLayout()
@@ -548,9 +549,9 @@ Partial Class RadFSynthese
         '
         'TraitementContextMenuStrip
         '
-        Me.TraitementContextMenuStrip.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.CréerUnTraitementToolStripMenuItem1, Me.GérerUneFenêtreThérapeutiqueToolStripMenuItem, Me.HistoriqueToolStripMenuItem, Me.ToolStripSeparator1, Me.TraitementsObsoletesToolStripMenuItem, Me.ListeDesMédicamentsDéclarésAllergiquesToolStripMenuItem, Me.ListeDesMédicamentsDéclarésContreindiquésToolStripMenuItem})
+        Me.TraitementContextMenuStrip.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.CréerUnTraitementToolStripMenuItem1, Me.GérerUneFenêtreThérapeutiqueToolStripMenuItem, Me.HistoriqueToolStripMenuItem, Me.ToolStripSeparator1, Me.TraitementsObsoletesToolStripMenuItem, Me.ListeDesMédicamentsDéclarésAllergiquesToolStripMenuItem, Me.ListeDesMédicamentsDéclarésContreindiquésToolStripMenuItem, Me.DéclarationAllergieOuContreindicationToolStripMenuItem})
         Me.TraitementContextMenuStrip.Name = "TraitementContextMenuStrip"
-        Me.TraitementContextMenuStrip.Size = New System.Drawing.Size(346, 142)
+        Me.TraitementContextMenuStrip.Size = New System.Drawing.Size(346, 186)
         '
         'CréerUnTraitementToolStripMenuItem1
         '
@@ -1198,6 +1199,12 @@ Partial Class RadFSynthese
         Me.RadBtnRefresh.TabIndex = 38
         Me.RadBtnRefresh.Text = "Rafraîchir"
         '
+        'DéclarationAllergieOuContreindicationToolStripMenuItem
+        '
+        Me.DéclarationAllergieOuContreindicationToolStripMenuItem.Name = "DéclarationAllergieOuContreindicationToolStripMenuItem"
+        Me.DéclarationAllergieOuContreindicationToolStripMenuItem.Size = New System.Drawing.Size(345, 22)
+        Me.DéclarationAllergieOuContreindicationToolStripMenuItem.Text = "Déclaration allergie ou contre-indication"
+        '
         'RadFSynthese
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -1375,5 +1382,6 @@ Partial Class RadFSynthese
     Friend WithEvents LblTraitementArret As Label
     Friend WithEvents RadBtnRefresh As Telerik.WinControls.UI.RadButton
     Friend WithEvents LblNonOasis As Label
+    Friend WithEvents DéclarationAllergieOuContreindicationToolStripMenuItem As ToolStripMenuItem
 End Class
 

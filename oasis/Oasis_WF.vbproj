@@ -204,12 +204,14 @@
     <Compile Include="Bean\LigneDeVie\PatientParametreLdv.vb" />
     <Compile Include="Bean\Ordonnance\Ordonnance.vb" />
     <Compile Include="Bean\Ordonnance\OrdonnanceDetailGrid.vb" />
+    <Compile Include="Bean\Medicament\Medicament.vb" />
     <Compile Include="Dao\Antecedent\AntecedentAffectationDao.vb" />
     <Compile Include="Bean\LigneDeVie\LigneDeVie.vb" />
     <Compile Include="Bean\Episode\EpisodeContexte.vb" />
     <Compile Include="Dao\Antecedent\AntecedentChangementOrdreDao.vb" />
     <Compile Include="Dao\Episode\EpisodeContexteDao.vb" />
     <Compile Include="Dao\LigneDeVie\PatientParametreLdvDao.vb" />
+    <Compile Include="Dao\Medicament\MedicamentDao.vb" />
     <Compile Include="Form\DRC\RadFActeParamedicalTest.Designer.vb">
       <DependentUpon>RadFActeParamedicalTest.vb</DependentUpon>
     </Compile>
@@ -374,6 +376,12 @@
       <DependentUpon>RadFLigneDeVieGraphe.vb</DependentUpon>
     </Compile>
     <Compile Include="Form\LigneDeVie\RadFLigneDeVieGraphe.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form\Traitement\RadFDeclarationAllergieEtCIDetail.Designer.vb">
+      <DependentUpon>RadFDeclarationAllergieEtCIDetail.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Form\Traitement\RadFDeclarationAllergieEtCIDetail.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Form\Workflow\RadFWkfDemandeAvisHisto.Designer.vb">
@@ -784,7 +792,7 @@
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Bean\Traitement\TraitementHistoClass.vb" />
-    <Compile Include="Dao\Traitement\MedicamentDao.vb" />
+    <Compile Include="Dao\Traitement\MedicamentGeneriqueDao.vb" />
     <Compile Include="Dao\Patient\PatientDao.vb" />
     <Compile Include="Dao\Traitement\TraitementHistoDao.vb" />
     <Compile Include="UniteSanitaireDataSet.Designer.vb">
@@ -858,6 +866,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Form\LigneDeVie\RadFLigneDeVieGraphe.resx">
       <DependentUpon>RadFLigneDeVieGraphe.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form\Traitement\RadFDeclarationAllergieEtCIDetail.resx">
+      <DependentUpon>RadFDeclarationAllergieEtCIDetail.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Form\Workflow\RadFWkfDemandeAvisHisto.resx">
       <DependentUpon>RadFWkfDemandeAvisHisto.vb</DependentUpon>

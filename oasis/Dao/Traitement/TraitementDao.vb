@@ -601,6 +601,7 @@ Public Class TraitementDao
         Return codeRetour
     End Function
 
+
     Friend Function SuppressionTraitement(traitement As Traitement, traitementHistoACreer As TraitementHisto) As Boolean
         Dim da As SqlDataAdapter = New SqlDataAdapter()
         Dim codeRetour As Boolean = True
@@ -639,6 +640,50 @@ Public Class TraitementDao
             'Mise à jour de la date de mise à jour de la synthèse (table patient)
             PatientDao.ModificationDateMajSynthesePatient(traitement.PatientId)
         End If
+
+        Return codeRetour
+    End Function
+
+    Friend Function DeclarationTraitementAllergieOuCI(traitement As Traitement) As Boolean
+        Dim da As SqlDataAdapter = New SqlDataAdapter()
+        Dim codeRetour As Boolean = True
+
+        Dim SQLstring As String = "INSERT INTO oasis.oa_traitement" &
+        " (oa_traitement_patient_id, oa_traitement_medicament_cis, oa_traitement_medicament_dci, oa_traitement_allergie," &
+        " oa_traitement_contre_indication, oa_traitement_arret_commentaire, oa_traitement_identifiant_creation," &
+        " oa_traitement_date_creation, oa_traitement_declaratif_hors_traitement)" &
+        " VALUES (@patientId, @cis, @dci, @allergie," &
+        " @contreIndication, @arretCommentaire, @utilisateurCreation," &
+        " @dateCreation, @DeclaratifHorsTraitement)"
+
+        Dim con As SqlConnection = GetConnection()
+        Dim cmd As New SqlCommand(SQLstring, con)
+
+        With cmd.Parameters
+            .AddWithValue("@patientId", traitement.PatientId.ToString)
+            .AddWithValue("@cis", traitement.MedicamentCis.ToString)
+            .AddWithValue("@dci", traitement.MedicamentDci)
+            .AddWithValue("@allergie", traitement.Allergie)
+            .AddWithValue("@contreIndication", traitement.ContreIndication)
+            .AddWithValue("@arretCommentaire", traitement.ArretCommentaire)
+            .AddWithValue("@utilisateurCreation", userLog.UtilisateurId.ToString)
+            .AddWithValue("@dateCreation", DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss"))
+            .AddWithValue("@DeclaratifHorsTraitement", True)
+        End With
+
+        Try
+            Dim n As Integer 'Pour récupérer le nombre d'occurences enregistrées
+            da.InsertCommand = cmd
+            n = da.InsertCommand.ExecuteNonQuery()
+        Catch ex As Exception
+            MessageBox.Show(ex.Message)
+            codeRetour = False
+        Finally
+            con.Close()
+        End Try
+
+        'Mise à jour de la date de mise à jour de la synthèse (table patient)
+        PatientDao.ModificationDateMajSynthesePatient(traitement.PatientId)
 
         Return codeRetour
     End Function

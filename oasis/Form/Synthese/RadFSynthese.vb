@@ -1144,6 +1144,33 @@ Public Class RadFSynthese
         End If
     End Sub
 
+    'Déclaration d'une allergie ou d'une contre-indication
+    Private Sub DéclarationAllergieOuContreindicationToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles DéclarationAllergieOuContreindicationToolStripMenuItem.Click
+        Me.Enabled = False
+        Cursor.Current = Cursors.WaitCursor
+        Dim SelectedMedicamentCis As Integer
+        Using vFMedocSelecteur As New RadFMedocSelecteur
+            vFMedocSelecteur.SelectedPatient = Me.SelectedPatient
+            vFMedocSelecteur.Allergie = Me.Allergie
+            vFMedocSelecteur.ContreIndication = Me.ContreIndication
+            vFMedocSelecteur.ShowDialog() 'Modal
+            SelectedMedicamentCis = vFMedocSelecteur.SelectedMedicamentCis
+            'Si un médicament a été sélectionné
+            If SelectedMedicamentCis <> 0 Then
+                Using form As New RadFDeclarationAllergieEtCIDetail
+                    form.SelectedPatient = Me.SelectedPatient
+                    form.SelectedMedicamentCis = SelectedMedicamentCis
+                    form.SelectedTraitementId = 0
+                    form.ShowDialog()
+                    If form.CodeRetour = True Then
+                        ChargementTraitement()
+                    End If
+                End Using
+            End If
+        End Using
+        Me.Enabled = True
+    End Sub
+
     'Visualisation de l'historique des actions réalisées sur un traitement
     Private Sub HistoriqueToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles HistoriqueToolStripMenuItem.Click
         If RadTraitementDataGridView.CurrentRow IsNot Nothing Then

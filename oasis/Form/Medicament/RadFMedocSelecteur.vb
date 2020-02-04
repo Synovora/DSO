@@ -237,7 +237,7 @@ Public Class RadFMedocSelecteur
                 Dim FiltreString As String = "oa_medicament_dci LIKE '%" & TxtFiltreDenomination.Text & "%'"
                 Dim Rowcount As Integer
                 VmedocBindingSource.Filter = FiltreString
-                Rowcount = MedicamentDao.GetCountMedicament(FiltreString)
+                Rowcount = GetCountMedicament(FiltreString)
                 LblAffichage.Text = Rowcount.ToString & " occurrence(s) lue(s)"
                 Me.V_medocTableAdapter.Fill(Me.OasisDataSet2.v_medoc)
             End If
