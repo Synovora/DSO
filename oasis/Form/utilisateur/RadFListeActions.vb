@@ -20,6 +20,9 @@ Public Class RadFListeActions
     Private Sub RadFListeActions_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         afficheTitleForm(Me, "Liste des actions réalisées")
 
+        DteSelection.Value = Date.Now()
+        RadBtnApres.Enabled = False
+
         If UserId = 0 Then
             UserActionId = userLog.UtilisateurId
         Else
@@ -33,7 +36,7 @@ Public Class RadFListeActions
 
     Private Sub ChargementActions()
         Dim actionDataTable As DataTable
-        actionDataTable = actiondao.getAllActionByUser(UserActionId)
+        actionDataTable = actiondao.getAllActionByUserAndDate(UserActionId, DteSelection.Value.Date)
         Dim DateAction As Date
         RadGridViewAction.Rows.Clear()
 
@@ -62,5 +65,25 @@ Public Class RadFListeActions
 
     Private Sub RadBtnAbandon_Click(sender As Object, e As EventArgs) Handles RadBtnAbandon.Click
         Close()
+    End Sub
+
+    Private Sub RadBtnAvant_Click(sender As Object, e As EventArgs) Handles RadBtnAvant.Click
+        DteSelection.Value = DteSelection.Value.AddDays(-1)
+        RadBtnApres.Enabled = True
+        ChargementActions()
+    End Sub
+
+    Private Sub RadBtnApres_Click(sender As Object, e As EventArgs) Handles RadBtnApres.Click
+        DteSelection.Value = DteSelection.Value.AddDays(1)
+        If DteSelection.Value.Date >= Date.Now().Date Then
+            RadBtnApres.Enabled = False
+        Else
+            RadBtnApres.Enabled = True
+        End If
+        ChargementActions()
+    End Sub
+
+    Private Sub DteSelection_ValueChanged(sender As Object, e As EventArgs) Handles DteSelection.ValueChanged
+
     End Sub
 End Class

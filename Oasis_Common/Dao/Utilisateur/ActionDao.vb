@@ -28,6 +28,38 @@ Public Class ActionDao
         End Using
     End Function
 
+    Public Function getAllActionByUserAndDate(userId As Long, dateSelection As Date) As DataTable
+        Dim jour As Integer = dateSelection.Day
+        Dim mois As Integer = dateSelection.Month
+        Dim An As Integer = dateSelection.Year
+        Dim dateSelectionDebut As Date = New Date(An, mois, jour, 0, 0, 0)
+        Dim dateSelectionFin As Date = New Date(An, mois, jour, 23, 59, 59)
+
+        Dim SQLString As String = "SELECT horodatage, action, oa_patient_prenom, oa_patient_nom FROM oasis.oa_action" &
+            " LEFT JOIN oasis.oa_patient ON oa_patient_id = patient_id" &
+            " WHERE utilisateur_id = " + userId.ToString &
+            " AND horodatage >= '" & dateSelectionDebut.ToString("yyyy-MM-dd HH:mm:ss") & "'" &
+            " AND horodatage <= '" & dateSelectionFin.ToString("yyyy-MM-dd HH:mm:ss") & "'" &
+            " ORDER BY horodatage DESC"
+
+        Using con As SqlConnection = GetConnection()
+            Dim da As SqlDataAdapter = New SqlDataAdapter()
+            Using da
+                da.SelectCommand = New SqlCommand(SQLString, con)
+                Dim dt As DataTable = New DataTable()
+                Using dt
+                    Try
+                        da.Fill(dt)
+                        Dim command As SqlCommand = con.CreateCommand()
+                    Catch ex As Exception
+                        Throw ex
+                    End Try
+                    Return dt
+                End Using
+            End Using
+        End Using
+    End Function
+
     Friend Function getTraitementById(actionId As Long) As Action
         Dim action As Action
         Dim con As SqlConnection
