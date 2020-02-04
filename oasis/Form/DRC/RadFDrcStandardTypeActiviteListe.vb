@@ -50,7 +50,7 @@ Public Class RadFDrcStandardTypeActiviteListe
 
             Dim ageMin, ageMax As Integer
             ageMin = Coalesce(DrcDataTable.Rows(i)("age_min"), 0)
-            ageMax = Coalesce(DrcDataTable.Rows(i)("age_min"), 0)
+            ageMax = Coalesce(DrcDataTable.Rows(i)("age_max"), 0)
             Select Case TypeActivite
                 Case EpisodeDao.EnumTypeActiviteEpisodeCode.PREVENTION_ENFANT_PRE_SCOLAIRE
                     If ageMin = 0 Then
