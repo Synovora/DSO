@@ -89,7 +89,7 @@ Public Class EpisodeTypeActiviteDao
         End If
 
         Dim genre, enfant As String
-        Dim agePatient As Integer = outils.CalculAge(patient.PatientDateNaissance)
+        Dim agePatient As Integer = outils.CalculAgeEnAnnee(patient.PatientDateNaissance)
 
         Dim listActivite As New List(Of String)
         episodeActiviteDT = episodeActiviteDao.GetAllEpisodeActivite

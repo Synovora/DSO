@@ -94,7 +94,7 @@ Public Class RadFPatientListe
             Dim DateNaissance As Date = Coalesce(patientDataTable.Rows(i)("oa_patient_date_naissance"), Nothing)
             If DateNaissance <> Nothing Then
                 RadPatientGridView.Rows(iGrid).Cells("oa_patient_date_naissance").Value = DateNaissance.ToString("dd/MM/yyyy")
-                RadPatientGridView.Rows(iGrid).Cells("age").Value = outils.CalculAgeString(DateNaissance)
+                RadPatientGridView.Rows(iGrid).Cells("age").Value = outils.CalculAgeEnAnneeEtMoisString(DateNaissance)
             Else
                 RadPatientGridView.Rows(iGrid).Cells("oa_patient_date_naissance").Value = ""
                 RadPatientGridView.Rows(iGrid).Cells("age").Value = ""
@@ -153,7 +153,7 @@ Public Class RadFPatientListe
                 dateNaissance = Coalesce(RadPatientGridView.Rows(aRow).Cells("oa_patient_date_naissance").Value, Nothing)
                 LblDateNaissanceSelected.Text = dateNaissance.ToString("dd.MM.yyyy")
                 LblDateNaissanceSelected.Show()
-                LblAgeSelected.Text = outils.CalculAgeString(dateNaissance)
+                LblAgeSelected.Text = outils.CalculAgeEnAnneeEtMoisString(dateNaissance)
                 LblAgeSelected.Show()
             Else
                 LblDateNaissanceSelected.Hide()

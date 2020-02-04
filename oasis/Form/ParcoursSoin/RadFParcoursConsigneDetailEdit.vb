@@ -82,6 +82,7 @@ Public Class RadFParcoursConsigneDetailEdit
 
 
     Private Sub RadFParcoursConsigneDetailEdit_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        ChargementParametreApplication()
         SetCbxActiviteEpisode()
         ChargementEtatCivil()
 
@@ -164,6 +165,18 @@ Public Class RadFParcoursConsigneDetailEdit
         End If
 
         Cursor.Current = Cursors.Default
+    End Sub
+
+    Private Sub ChargementParametreApplication()
+        'Récupération du nom de l'organisation dans les paramètres de l'application
+        Dim LimiteAgeEnfantString As String = ConfigurationManager.AppSettings("limiteAgeEnfant")
+        If IsNumeric(LimiteAgeEnfantString) Then
+            LimiteAgeEnfantParm = CInt(LimiteAgeEnfantString)
+        Else
+            LimiteAgeEnfantParm = 16
+            Dim Description As String = "Paramètre 'LimiteAgeEnfant' non défini dans le fichier App.config"
+            CreateLog(Description, Me.Name, LogDao.EnumTypeLog.ERREUR.ToString)
+        End If
     End Sub
 
     Private Sub CacheAge()

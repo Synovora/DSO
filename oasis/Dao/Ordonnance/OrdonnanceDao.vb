@@ -351,7 +351,7 @@ Public Class OrdonnanceDao
                 DateDebutCalcul = DateDebut
             End If
 
-            Dim duree As Integer = outils.CalculDureeTraitement(DateDebutCalcul, DateFinCalcul)
+            Dim duree As Integer = outils.CalculDureeTraitementEnJour(DateDebutCalcul, DateFinCalcul)
 
             'Formatage de la posologie
             Dim PosologieMatinString, PosologieMidiString, PosologieApresMidiString, PosologieSoirString As String

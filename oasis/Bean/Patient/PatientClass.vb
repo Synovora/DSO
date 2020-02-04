@@ -192,7 +192,7 @@ Public Class Patient
                 Else
                     Dim lMois As Integer
                     Dim PatientMoisRestant, PatientAn As Integer
-                    lMois = Calculmois(Me.PatientDateNaissance)
+                    lMois = CalculAgeEnmois(Me.PatientDateNaissance)
                     Me.PatientAgeEnAnnee = lMois
                     If lMois > 36 Then
                         PatientMoisRestant = lMois Mod 12

@@ -26,11 +26,6 @@ Partial Class RadFLigneDeVieGraphe
         Dim CategoricalAxis1 As Telerik.WinControls.UI.CategoricalAxis = New Telerik.WinControls.UI.CategoricalAxis()
         Dim LinearAxis1 As Telerik.WinControls.UI.LinearAxis = New Telerik.WinControls.UI.LinearAxis()
         Dim LineSeries1 As Telerik.WinControls.UI.LineSeries = New Telerik.WinControls.UI.LineSeries()
-        Dim CategoricalDataPoint1 As Telerik.Charting.CategoricalDataPoint = New Telerik.Charting.CategoricalDataPoint()
-        Dim CategoricalDataPoint2 As Telerik.Charting.CategoricalDataPoint = New Telerik.Charting.CategoricalDataPoint()
-        Dim CategoricalDataPoint3 As Telerik.Charting.CategoricalDataPoint = New Telerik.Charting.CategoricalDataPoint()
-        Dim CategoricalDataPoint4 As Telerik.Charting.CategoricalDataPoint = New Telerik.Charting.CategoricalDataPoint()
-        Dim CategoricalDataPoint5 As Telerik.Charting.CategoricalDataPoint = New Telerik.Charting.CategoricalDataPoint()
         Me.RadChartView1 = New Telerik.WinControls.UI.RadChartView()
         CType(Me.RadChartView1, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -45,28 +40,11 @@ Partial Class RadFLigneDeVieGraphe
         LinearAxis1.AxisType = Telerik.Charting.AxisType.Second
         LinearAxis1.IsPrimary = True
         LinearAxis1.LabelRotationAngle = 300.0R
-        LinearAxis1.MajorStep = 10.0R
         LinearAxis1.TickOrigin = Nothing
         LinearAxis1.Title = ""
         Me.RadChartView1.Axes.AddRange(New Telerik.WinControls.UI.Axis() {CategoricalAxis1, LinearAxis1})
         Me.RadChartView1.Location = New System.Drawing.Point(12, 70)
         Me.RadChartView1.Name = "RadChartView1"
-        CategoricalDataPoint1.Category = "A"
-        CategoricalDataPoint1.Label = 79.0R
-        CategoricalDataPoint1.Value = 79.0R
-        CategoricalDataPoint2.Category = "B"
-        CategoricalDataPoint2.Label = 69.0R
-        CategoricalDataPoint2.Value = 69.0R
-        CategoricalDataPoint3.Category = "C"
-        CategoricalDataPoint3.Label = 64.0R
-        CategoricalDataPoint3.Value = 64.0R
-        CategoricalDataPoint4.Category = "D"
-        CategoricalDataPoint4.Label = 19.0R
-        CategoricalDataPoint4.Value = 19.0R
-        CategoricalDataPoint5.Category = "E"
-        CategoricalDataPoint5.Label = 81.0R
-        CategoricalDataPoint5.Value = 81.0R
-        LineSeries1.DataPoints.AddRange(New Telerik.Charting.DataPoint() {CategoricalDataPoint1, CategoricalDataPoint2, CategoricalDataPoint3, CategoricalDataPoint4, CategoricalDataPoint5})
         LineSeries1.HorizontalAxis = CategoricalAxis1
         LineSeries1.LabelAngle = 90.0R
         LineSeries1.LabelDistanceToPoint = 15.0R

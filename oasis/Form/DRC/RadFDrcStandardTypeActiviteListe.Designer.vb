@@ -26,6 +26,8 @@ Partial Class RadFDrcStandardTypeActiviteListe
         Dim GridViewTextBoxColumn2 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
         Dim GridViewTextBoxColumn3 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
         Dim GridViewTextBoxColumn4 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
+        Dim GridViewTextBoxColumn5 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
+        Dim GridViewTextBoxColumn6 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
         Dim TableViewDefinition1 As Telerik.WinControls.UI.TableViewDefinition = New Telerik.WinControls.UI.TableViewDefinition()
         Me.RadBtnSuiviGrossesse = New Telerik.WinControls.UI.RadButton()
         Me.RadBtnSuiviGynecologique = New Telerik.WinControls.UI.RadButton()
@@ -102,7 +104,7 @@ Partial Class RadFDrcStandardTypeActiviteListe
         '
         'RadBtnSelectParm
         '
-        Me.RadBtnSelectParm.Location = New System.Drawing.Point(715, 172)
+        Me.RadBtnSelectParm.Location = New System.Drawing.Point(871, 172)
         Me.RadBtnSelectParm.Name = "RadBtnSelectParm"
         Me.RadBtnSelectParm.Size = New System.Drawing.Size(164, 24)
         Me.RadBtnSelectParm.TabIndex = 5
@@ -110,7 +112,7 @@ Partial Class RadFDrcStandardTypeActiviteListe
         '
         'RadBtnActePM
         '
-        Me.RadBtnActePM.Location = New System.Drawing.Point(715, 112)
+        Me.RadBtnActePM.Location = New System.Drawing.Point(871, 112)
         Me.RadBtnActePM.Name = "RadBtnActePM"
         Me.RadBtnActePM.Size = New System.Drawing.Size(164, 24)
         Me.RadBtnActePM.TabIndex = 6
@@ -132,11 +134,13 @@ Partial Class RadFDrcStandardTypeActiviteListe
         Me.RadGridViewDrcAsso.MasterTemplate.AllowDeleteRow = False
         Me.RadGridViewDrcAsso.MasterTemplate.AllowDragToGroup = False
         Me.RadGridViewDrcAsso.MasterTemplate.AllowEditRow = False
+        GridViewTextBoxColumn1.AllowGroup = False
         GridViewTextBoxColumn1.EnableExpressionEditor = False
         GridViewTextBoxColumn1.FieldName = "id"
         GridViewTextBoxColumn1.HeaderText = "id"
         GridViewTextBoxColumn1.IsVisible = False
         GridViewTextBoxColumn1.Name = "id"
+        GridViewTextBoxColumn2.AllowGroup = False
         GridViewTextBoxColumn2.EnableExpressionEditor = False
         GridViewTextBoxColumn2.FieldName = "categorieOasis"
         GridViewTextBoxColumn2.HeaderText = "Catégorie"
@@ -144,7 +148,6 @@ Partial Class RadFDrcStandardTypeActiviteListe
         GridViewTextBoxColumn2.Name = "categorieOasis"
         GridViewTextBoxColumn2.Width = 180
         GridViewTextBoxColumn3.AllowGroup = False
-        GridViewTextBoxColumn3.AllowSort = False
         GridViewTextBoxColumn3.EnableExpressionEditor = False
         GridViewTextBoxColumn3.FieldName = "denomination"
         GridViewTextBoxColumn3.HeaderText = "Denomination DRC Acte Paramédical"
@@ -156,18 +159,30 @@ Partial Class RadFDrcStandardTypeActiviteListe
         GridViewTextBoxColumn4.HeaderText = "drcId"
         GridViewTextBoxColumn4.IsVisible = False
         GridViewTextBoxColumn4.Name = "drcId"
-        Me.RadGridViewDrcAsso.MasterTemplate.Columns.AddRange(New Telerik.WinControls.UI.GridViewDataColumn() {GridViewTextBoxColumn1, GridViewTextBoxColumn2, GridViewTextBoxColumn3, GridViewTextBoxColumn4})
+        GridViewTextBoxColumn5.EnableExpressionEditor = False
+        GridViewTextBoxColumn5.HeaderText = "de"
+        GridViewTextBoxColumn5.Name = "applicationDe"
+        GridViewTextBoxColumn5.TextAlignment = System.Drawing.ContentAlignment.MiddleCenter
+        GridViewTextBoxColumn5.Width = 80
+        GridViewTextBoxColumn6.EnableExpressionEditor = False
+        GridViewTextBoxColumn6.HeaderText = "à"
+        GridViewTextBoxColumn6.Name = "applicationA"
+        GridViewTextBoxColumn6.TextAlignment = System.Drawing.ContentAlignment.MiddleCenter
+        GridViewTextBoxColumn6.Width = 80
+        Me.RadGridViewDrcAsso.MasterTemplate.Columns.AddRange(New Telerik.WinControls.UI.GridViewDataColumn() {GridViewTextBoxColumn1, GridViewTextBoxColumn2, GridViewTextBoxColumn3, GridViewTextBoxColumn4, GridViewTextBoxColumn5, GridViewTextBoxColumn6})
+        Me.RadGridViewDrcAsso.MasterTemplate.EnableGrouping = False
         Me.RadGridViewDrcAsso.MasterTemplate.ShowFilteringRow = False
         Me.RadGridViewDrcAsso.MasterTemplate.ViewDefinition = TableViewDefinition1
         Me.RadGridViewDrcAsso.Name = "RadGridViewDrcAsso"
+        Me.RadGridViewDrcAsso.ReadOnly = True
         Me.RadGridViewDrcAsso.RightToLeft = System.Windows.Forms.RightToLeft.No
         Me.RadGridViewDrcAsso.ShowGroupPanel = False
-        Me.RadGridViewDrcAsso.Size = New System.Drawing.Size(686, 367)
+        Me.RadGridViewDrcAsso.Size = New System.Drawing.Size(836, 367)
         Me.RadGridViewDrcAsso.TabIndex = 8
         '
         'RadBtnSlectProtocole
         '
-        Me.RadBtnSlectProtocole.Location = New System.Drawing.Point(715, 142)
+        Me.RadBtnSlectProtocole.Location = New System.Drawing.Point(871, 142)
         Me.RadBtnSlectProtocole.Name = "RadBtnSlectProtocole"
         Me.RadBtnSlectProtocole.Size = New System.Drawing.Size(164, 24)
         Me.RadBtnSlectProtocole.TabIndex = 7
@@ -199,7 +214,7 @@ Partial Class RadFDrcStandardTypeActiviteListe
         '
         'RadBtnMesurePreventive
         '
-        Me.RadBtnMesurePreventive.Location = New System.Drawing.Point(715, 202)
+        Me.RadBtnMesurePreventive.Location = New System.Drawing.Point(871, 202)
         Me.RadBtnMesurePreventive.Name = "RadBtnMesurePreventive"
         Me.RadBtnMesurePreventive.Size = New System.Drawing.Size(164, 24)
         Me.RadBtnMesurePreventive.TabIndex = 12
@@ -218,7 +233,7 @@ Partial Class RadFDrcStandardTypeActiviteListe
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.CancelButton = Me.RadBtnAbandon
-        Me.ClientSize = New System.Drawing.Size(925, 477)
+        Me.ClientSize = New System.Drawing.Size(1051, 477)
         Me.Controls.Add(Me.RadBtnPathologieAigue)
         Me.Controls.Add(Me.RadBtnMesurePreventive)
         Me.Controls.Add(Me.RadBtnModifier)

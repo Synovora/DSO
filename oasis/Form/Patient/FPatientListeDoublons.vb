@@ -59,7 +59,7 @@ Public Class FPatientListeDoublons
             If ListeDataTable.Rows(i)("oa_patient_date_naissance") Is DBNull.Value Then
                 ListeDataTable.Rows(i)("oa_patient_age") = 0
             Else
-                ListeDataTable.Rows(i)("oa_patient_age") = outils.CalculAge(ListeDataTable.Rows(i)("oa_patient_date_naissance"))
+                ListeDataTable.Rows(i)("oa_patient_age") = outils.CalculAgeEnAnnee(ListeDataTable.Rows(i)("oa_patient_date_naissance"))
             End If
 
             If ListeDataTable.Rows(i)("oa_patient_date_sortie_oasis") IsNot DBNull.Value Then

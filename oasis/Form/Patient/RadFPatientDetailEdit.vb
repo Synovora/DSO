@@ -1047,7 +1047,7 @@ Public Class RadFPatientDetailEdit
             If DteDateNaissance.Value <> DteDateNaissance.MinDate Then
                 Dim DateNaissance As Date
                 DateNaissance = DteDateNaissance.Value
-                LblAge.Text = CalculAgeString(DateNaissance)
+                LblAge.Text = CalculAgeEnAnneeEtMoisString(DateNaissance)
 
                 'Vérifie s'il existe des patients ayant la même date de naissance
                 Dim ListeDataTable As DataTable = ListePatientDateNaissance(DteDateNaissance.Value)

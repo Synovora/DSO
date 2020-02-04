@@ -20,6 +20,16 @@ Public Class RadFDrcStandardTypeActiviteListe
         Dim DrcId As Long
         DrcDataTable = drcStandardDao.getAllDrcByTypeActivite(TypeActivite)
 
+        If TypeActivite = EpisodeDao.EnumTypeActiviteEpisodeCode.PREVENTION_ENFANT_PRE_SCOLAIRE OrElse
+            TypeActivite = EpisodeDao.EnumTypeActiviteEpisodeCode.PREVENTION_ENFANT_SCOLAIRE Then
+            RadGridViewDrcAsso.Columns.Item("applicationDe").IsVisible = True
+            RadGridViewDrcAsso.Columns.Item("applicationA").IsVisible = True
+        Else
+            RadGridViewDrcAsso.Columns.Item("applicationDe").IsVisible = False
+            RadGridViewDrcAsso.Columns.Item("applicationA").IsVisible = False
+        End If
+
+
         Dim iGrid As Integer = -1 'Indice pour alimenter la Grid qui peut comporter moins d'occurrences que le DataTable
         Dim rowCount As Integer = DrcDataTable.Rows.Count - 1
         'Parcours du DataTable pour alimenter les colonnes du DataGridView
@@ -37,6 +47,37 @@ Public Class RadFDrcStandardTypeActiviteListe
             RadGridViewDrcAsso.Rows(iGrid).Cells("drcId").Value = DrcDataTable.Rows(i)("drc_id")
             RadGridViewDrcAsso.Rows(iGrid).Cells("denomination").Value = drc.DrcLibelle
             RadGridViewDrcAsso.Rows(iGrid).Cells("categorieOasis").Value = drcdao.GetItemCategorieOasisByCode(DrcDataTable.Rows(i)("categorie_oasis"))
+
+            Dim ageMin, ageMax As Integer
+            ageMin = Coalesce(DrcDataTable.Rows(i)("age_min"), 0)
+            ageMax = Coalesce(DrcDataTable.Rows(i)("age_min"), 0)
+            Select Case TypeActivite
+                Case EpisodeDao.EnumTypeActiviteEpisodeCode.PREVENTION_ENFANT_PRE_SCOLAIRE
+                    If ageMin = 0 Then
+                        RadGridViewDrcAsso.Rows(iGrid).Cells("applicationDe").Value = ""
+                    Else
+                        RadGridViewDrcAsso.Rows(iGrid).Cells("applicationDe").Value = ageMin.ToString & " mois"
+                    End If
+                    If ageMax = 0 Then
+                        RadGridViewDrcAsso.Rows(iGrid).Cells("applicationA").Value = ""
+                    Else
+                        RadGridViewDrcAsso.Rows(iGrid).Cells("applicationA").Value = ageMax.ToString & " mois"
+                    End If
+                Case EpisodeDao.EnumTypeActiviteEpisodeCode.PREVENTION_ENFANT_SCOLAIRE
+                    If ageMin = 0 Then
+                        RadGridViewDrcAsso.Rows(iGrid).Cells("applicationDe").Value = ""
+                    Else
+                        RadGridViewDrcAsso.Rows(iGrid).Cells("applicationDe").Value = ageMin.ToString & " ans"
+                    End If
+                    If ageMax = 0 Then
+                        RadGridViewDrcAsso.Rows(iGrid).Cells("applicationA").Value = ""
+                    Else
+                        RadGridViewDrcAsso.Rows(iGrid).Cells("applicationA").Value = ageMax.ToString & " ans"
+                    End If
+                Case Else
+                    RadGridViewDrcAsso.Rows(iGrid).Cells("applicationDe").Value = ""
+                    RadGridViewDrcAsso.Rows(iGrid).Cells("applicationA").Value = ""
+            End Select
         Next
 
         'Positionnement du grid sur la première occurrence
@@ -127,6 +168,7 @@ Public Class RadFDrcStandardTypeActiviteListe
     End Sub
 
     Private Sub RadBtnSuiviGrossesse_Click(sender As Object, e As EventArgs) Handles RadBtnSuiviGrossesse.Click
+        Cursor.Current = Cursors.WaitCursor
         RadGridViewDrcAsso.Rows.Clear()
         TypeActivite = EpisodeDao.EnumTypeActiviteEpisodeCode.PREVENTION_SUIVI_GROSSESSE
         ChargementDrc()
@@ -134,9 +176,11 @@ Public Class RadFDrcStandardTypeActiviteListe
         RadBtnSuiviGrossesse.ForeColor = Color.Red
         RadBtnSuiviGrossesse.Font = New Font(RadBtnSuiviGrossesse.Font, FontStyle.Bold)
         ShowBtnSelectDrc()
+        Cursor.Current = Cursors.Default
     End Sub
 
     Private Sub RadBtnSuiviGynecologique_Click(sender As Object, e As EventArgs) Handles RadBtnSuiviGynecologique.Click
+        Cursor.Current = Cursors.WaitCursor
         RadGridViewDrcAsso.Rows.Clear()
         TypeActivite = EpisodeDao.EnumTypeActiviteEpisodeCode.PREVENTION_SUIVI_GYNECOLOGIQUE
         ChargementDrc()
@@ -144,9 +188,11 @@ Public Class RadFDrcStandardTypeActiviteListe
         RadBtnSuiviGynecologique.ForeColor = Color.Red
         RadBtnSuiviGynecologique.Font = New Font(RadBtnSuiviGynecologique.Font, FontStyle.Bold)
         ShowBtnSelectDrc()
+        Cursor.Current = Cursors.Default
     End Sub
 
     Private Sub RadBtnSuiviEnfantPreScolaire_Click(sender As Object, e As EventArgs) Handles RadBtnSuiviEnfantPreScolaire.Click
+        Cursor.Current = Cursors.WaitCursor
         RadGridViewDrcAsso.Rows.Clear()
         TypeActivite = EpisodeDao.EnumTypeActiviteEpisodeCode.PREVENTION_ENFANT_PRE_SCOLAIRE
         ChargementDrc()
@@ -154,9 +200,11 @@ Public Class RadFDrcStandardTypeActiviteListe
         RadBtnSuiviEnfantPreScolaire.ForeColor = Color.Red
         RadBtnSuiviEnfantPreScolaire.Font = New Font(RadBtnSuiviEnfantPreScolaire.Font, FontStyle.Bold)
         ShowBtnSelectDrc()
+        Cursor.Current = Cursors.Default
     End Sub
 
     Private Sub RadBtnSuiviEnfantScolaire_Click(sender As Object, e As EventArgs) Handles RadBtnSuiviEnfantScolaire.Click
+        Cursor.Current = Cursors.WaitCursor
         RadGridViewDrcAsso.Rows.Clear()
         TypeActivite = EpisodeDao.EnumTypeActiviteEpisodeCode.PREVENTION_ENFANT_SCOLAIRE
         ChargementDrc()
@@ -164,9 +212,11 @@ Public Class RadFDrcStandardTypeActiviteListe
         RadBtnSuiviEnfantScolaire.ForeColor = Color.Red
         RadBtnSuiviEnfantScolaire.Font = New Font(RadBtnSuiviEnfantScolaire.Font, FontStyle.Bold)
         ShowBtnSelectDrc()
+        Cursor.Current = Cursors.Default
     End Sub
 
     Private Sub RadBtnPathologieAigue_Click(sender As Object, e As EventArgs) Handles RadBtnPathologieAigue.Click
+        Cursor.Current = Cursors.WaitCursor
         RadGridViewDrcAsso.Rows.Clear()
         TypeActivite = EpisodeDao.EnumTypeActiviteEpisodeCode.PATHOLOGIE_AIGUE
         ChargementDrc()
@@ -176,6 +226,7 @@ Public Class RadFDrcStandardTypeActiviteListe
         RadBtnActePM.Hide()
         RadBtnSlectProtocole.Hide()
         RadBtnMesurePreventive.Hide()
+        Cursor.Current = Cursors.Default
     End Sub
 
     Private Sub GestionBtnSelection()

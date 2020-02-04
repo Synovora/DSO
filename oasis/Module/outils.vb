@@ -46,7 +46,7 @@ Friend Module outils
         End Get
     End Property
 
-    Public Function CalculDureeHeureString(dateDebut As Date, dateFin As Date) As String
+    Public Function CalculDureeEnJourEtHeureString(dateDebut As Date, dateFin As Date) As String
         Dim DureeString As String = ""
         Dim Duree As Integer
 
@@ -66,7 +66,7 @@ Friend Module outils
         Return DureeString
     End Function
 
-    Public Function CalculDureeJourString(dateDebut As Date, dateFin As Date) As String
+    Public Function CalculDureeEnJourString(dateDebut As Date, dateFin As Date) As String
         Dim DureeString As String = ""
         Dim Duree As Integer
 
@@ -89,30 +89,29 @@ Friend Module outils
         Return DureeString
     End Function
 
-    Public Function CalculAge(dateNaissance As Date) As Integer
-        Dim datetimenow = DateTime.Now
-        Dim age As Integer
+    Public Function ConvertirEnJourDureeEnMois(Mois As Integer) As Integer
+        Dim Duree As Integer
+        Duree = Mois * 30.4375
 
-        age = CInt(Now.Year - dateNaissance.Year)
-
-        If dateNaissance.Month > Now.Month Then
-            age = age - 1
-        End If
-
-        If ((dateNaissance.Month = Now.Month) And (dateNaissance.Day > Now.Day)) Then
-            age = age - 1
-        End If
-
-        Return age
+        Return Duree
     End Function
 
-    Public Function Calculmois(dateNaissance As Date) As Integer
+    Public Function CalculAgeEnmois(dateNaissance As Date) As Integer
         Dim datetimenow = DateTime.Now
         Dim mois As Integer
 
         mois = DateDiff("m", dateNaissance, datetimenow)
 
         Return mois
+    End Function
+
+    Public Function CalculAgeEnJour(dateNaissance As Date) As Integer
+        Dim datetimenow = DateTime.Now
+        Dim Jour As Integer
+
+        Jour = DateDiff("d", dateNaissance, datetimenow)
+
+        Return Jour
     End Function
     Public Function getConnectionString() As String
         Dim SqlConnection As String
@@ -121,7 +120,7 @@ Friend Module outils
     End Function
 
     'Calcul de la durée du traitement
-    Public Function CalculDureeTraitement(dateDebut As Date, dateFin As Date) As Integer
+    Public Function CalculDureeTraitementEnJour(dateDebut As Date, dateFin As Date) As Integer
         Dim duree As Integer
         Dim dateDebutaComparer As New Date(dateDebut.Year, dateDebut.Month, dateDebut.Day, 0, 0, 0)
         Dim dateFinaComparer As New Date(dateFin.Year, dateFin.Month, dateFin.Day, 0, 0, 0)
@@ -131,7 +130,7 @@ Friend Module outils
     End Function
 
     'Calcul de la durée du traitement
-    Public Function CalculDureeTraitementString(dateDebut As Date, dateFin As Date) As String
+    Public Function CalculDureeTraitementEnJourString(dateDebut As Date, dateFin As Date) As String
         Dim duree As String
         Dim jour As Integer
         Dim dateDebutaComparer As New Date(dateDebut.Year, dateDebut.Month, dateDebut.Day, 0, 0, 0)
@@ -169,11 +168,11 @@ Friend Module outils
         Return dateCreationNote
     End Function
 
-    Public Function CalculAgeString(DateNaissance As Date) As String
+    Public Function CalculAgeEnAnneeEtMoisString(DateNaissance As Date) As String
         Dim lMois As Integer
         Dim Age As String
         Dim PatientMoisRestant, PatientAn As Integer
-        lMois = Calculmois(DateNaissance)
+        lMois = CalculAgeEnmois(DateNaissance)
         If lMois > 36 Then
             PatientMoisRestant = lMois Mod 12
             lMois = lMois - PatientMoisRestant
@@ -189,6 +188,23 @@ Friend Module outils
         End Select
 
         Return Age
+    End Function
+
+    Public Function CalculAgeEnAnnee(dateNaissance As Date) As Integer
+        Dim datetimenow = DateTime.Now
+        Dim age As Integer
+
+        age = CInt(Now.Year - dateNaissance.Year)
+
+        If dateNaissance.Month > Now.Month Then
+            age = age - 1
+        End If
+
+        If ((dateNaissance.Month = Now.Month) And (dateNaissance.Day > Now.Day)) Then
+            age = age - 1
+        End If
+
+        Return age
     End Function
 
     Public Function CalculProchainRendezVous(dateReference As Date, rythme As Integer, Base As String) As Date

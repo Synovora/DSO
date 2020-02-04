@@ -55,46 +55,61 @@ Public Class EpisodeProtocoleCollaboratifDao
         Dim ListProtocol = New List(Of Long)
 
         Dim patient As Patient
-        Dim agePatient As Integer = 0
+        Dim agePatientEnJour As Integer = 0
+        Dim agePatientEnAnnee As Integer = 0
+        patient = PatientDao.getPatientById(patientId)
         Select Case TypeActiviteEpisode
             Case EpisodeDao.EnumTypeActiviteEpisodeCode.PREVENTION_ENFANT_PRE_SCOLAIRE
-                'Calcul âge enfant en mois
-                patient = PatientDao.getPatientById(patientId)
-                agePatient = outils.Calculmois(patient.PatientDateNaissance)
+                'Calcul âge enfant en jour
+                agePatientEnJour = outils.CalculAgeEnJour(patient.PatientDateNaissance)
             Case EpisodeDao.EnumTypeActiviteEpisodeCode.PREVENTION_ENFANT_SCOLAIRE
                 'Calcul âge enfant en année
-                patient = PatientDao.getPatientById(patientId)
-                agePatient = outils.CalculAge(patient.PatientDateNaissance)
+                agePatientEnAnnee = outils.CalculAgeEnAnnee(patient.PatientDateNaissance)
             Case Else
         End Select
 
-        'Protocole standard
+        'Protocole standard par activité
         Dim DrcStandardDatatable As DataTable
         Dim drcStandardDao As New DrcStandardDao
         DrcStandardDatatable = drcStandardDao.getAllDrcByTypeActivite(TypeActiviteEpisode)
         Dim i As Integer
         Dim drcId As Long
-        Dim ageMin, AgeMax As Integer
+        Dim ageMinDrc, AgeMaxDrc As Integer
         Dim categorieOasis As Integer
         Dim rowCount As Integer = DrcStandardDatatable.Rows.Count - 1
         For i = 0 To rowCount Step 1
             drcId = DrcStandardDatatable.Rows(i)("drc_id")
             categorieOasis = DrcStandardDatatable.Rows(i)("categorie_oasis")
-            ageMin = Coalesce(DrcStandardDatatable.Rows(i)("age_min"), 0)
-            AgeMax = Coalesce(DrcStandardDatatable.Rows(i)("age_max"), 0)
-            If TypeActiviteEpisode = EpisodeDao.EnumTypeActiviteEpisodeCode.PREVENTION_ENFANT_PRE_SCOLAIRE OrElse
-                TypeActiviteEpisode = EpisodeDao.EnumTypeActiviteEpisodeCode.PREVENTION_ENFANT_PRE_SCOLAIRE Then
-                If ageMin <> 0 Then
-                    If agePatient < ageMin Then
-                        Continue For
+            ageMinDrc = Coalesce(DrcStandardDatatable.Rows(i)("age_min"), 0)
+            AgeMaxDrc = Coalesce(DrcStandardDatatable.Rows(i)("age_max"), 0)
+
+            Select Case TypeActiviteEpisode
+                Case EpisodeDao.EnumTypeActiviteEpisodeCode.PREVENTION_ENFANT_SCOLAIRE
+                    If ageMinDrc <> 0 Then
+                        If agePatientEnAnnee < ageMinDrc Then
+                            Continue For
+                        End If
                     End If
-                End If
-                If AgeMax <> 0 Then
-                    If agePatient > AgeMax Then
-                        Continue For
+                    If AgeMaxDrc <> 0 Then
+                        If agePatientEnAnnee > AgeMaxDrc Then
+                            Continue For
+                        End If
                     End If
-                End If
-            End If
+                Case EpisodeDao.EnumTypeActiviteEpisodeCode.PREVENTION_ENFANT_PRE_SCOLAIRE
+                    Dim ageMinDrcEnJour As Integer = outils.ConvertirEnJourDureeEnMois(ageMinDrc) - 5
+                    Dim ageMaxDrcEnJour As Integer = outils.ConvertirEnJourDureeEnMois(AgeMaxDrc) - 5
+                    If ageMinDrcEnJour <> 0 Then
+                        If agePatientEnJour < ageMinDrcEnJour Then
+                            Continue For
+                        End If
+                    End If
+                    If ageMaxDrcEnJour <> 0 Then
+                        If agePatientEnJour > ageMaxDrcEnJour Then
+                            Continue For
+                        End If
+                    End If
+            End Select
+
             Select Case categorieOasis
                 Case DrcDao.EnumCategorieOasisCode.ActeParamedical
                     If Not ListActePara.Contains(drcId) Then
@@ -116,21 +131,35 @@ Public Class EpisodeProtocoleCollaboratifDao
         For i = 0 To rowCount Step 1
             drcId = DrcConsignedDatatable.Rows(i)("oa_parcours_consigne_drc_id")
             categorieOasis = DrcConsignedDatatable.Rows(i)("oa_drc_oasis_categorie")
-            ageMin = Coalesce(DrcConsignedDatatable.Rows(i)("oa_parcours_age_min"), 0)
-            AgeMax = Coalesce(DrcConsignedDatatable.Rows(i)("oa_parcours_age_max"), 0)
-            If TypeActiviteEpisode = EpisodeDao.EnumTypeActiviteEpisodeCode.PREVENTION_ENFANT_PRE_SCOLAIRE OrElse
-                TypeActiviteEpisode = EpisodeDao.EnumTypeActiviteEpisodeCode.PREVENTION_ENFANT_PRE_SCOLAIRE Then
-                If ageMin <> 0 Then
-                    If agePatient < ageMin Then
-                        Continue For
+            ageMinDrc = Coalesce(DrcConsignedDatatable.Rows(i)("oa_parcours_age_min"), 0)
+            AgeMaxDrc = Coalesce(DrcConsignedDatatable.Rows(i)("oa_parcours_age_max"), 0)
+
+            Select Case TypeActiviteEpisode
+                Case EpisodeDao.EnumTypeActiviteEpisodeCode.PREVENTION_ENFANT_SCOLAIRE
+                    If ageMinDrc <> 0 Then
+                        If agePatientEnAnnee < ageMinDrc Then
+                            Continue For
+                        End If
                     End If
-                End If
-                If AgeMax <> 0 Then
-                    If agePatient > AgeMax Then
-                        Continue For
+                    If AgeMaxDrc <> 0 Then
+                        If agePatientEnAnnee > AgeMaxDrc Then
+                            Continue For
+                        End If
                     End If
-                End If
-            End If
+                Case EpisodeDao.EnumTypeActiviteEpisodeCode.PREVENTION_ENFANT_PRE_SCOLAIRE
+                    Dim ageMinEnJour As Integer = outils.ConvertirEnJourDureeEnMois(ageMinDrc) - 5
+                    Dim ageMaxEnJour As Integer = outils.ConvertirEnJourDureeEnMois(AgeMaxDrc) - 5
+                    If ageMinEnJour <> 0 Then
+                        If agePatientEnJour < ageMinEnJour Then
+                            Continue For
+                        End If
+                    End If
+                    If ageMaxEnJour <> 0 Then
+                        If agePatientEnJour > ageMaxEnJour Then
+                            Continue For
+                        End If
+                    End If
+            End Select
 
             'Contrôle dates d'application
             Dim dateDebut As Date = Coalesce(DrcConsignedDatatable.Rows(i)("oa_parcours_consigne_date_debut"), Nothing)
@@ -181,16 +210,17 @@ Public Class EpisodeProtocoleCollaboratifDao
         Dim ListParam = New List(Of Long)
 
         Dim patient As Patient
-        Dim agePatient As Integer = 0
+        Dim agePatientEnJour As Integer = 0
+        Dim agePatientEnAnnee As Integer = 0
+
+        patient = PatientDao.getPatientById(patientId)
         Select Case TypeActiviteEpisode
             Case EpisodeDao.EnumTypeActiviteEpisodeCode.PREVENTION_ENFANT_PRE_SCOLAIRE
-                'Calcul âge enfant en mois
-                patient = PatientDao.getPatientById(patientId)
-                agePatient = outils.Calculmois(patient.PatientDateNaissance)
+                'Calcul âge enfant en jour
+                agePatientEnJour = outils.CalculAgeEnJour(patient.PatientDateNaissance)
             Case EpisodeDao.EnumTypeActiviteEpisodeCode.PREVENTION_ENFANT_SCOLAIRE
                 'Calcul âge enfant en année
-                patient = PatientDao.getPatientById(patientId)
-                agePatient = outils.CalculAge(patient.PatientDateNaissance)
+                agePatientEnAnnee = outils.CalculAgeEnAnnee(patient.PatientDateNaissance)
             Case Else
         End Select
 
@@ -200,27 +230,42 @@ Public Class EpisodeProtocoleCollaboratifDao
         DrcStandardDatatable = drcStandardDao.getAllDrcByTypeActivite(TypeActiviteEpisode)
         Dim i As Integer
         Dim drcId As Long
-        Dim ageMin, AgeMax As Integer
+        Dim ageMinDrc, AgeMaxDrc As Integer
         Dim categorieOasis As Integer
         Dim rowCount As Integer = DrcStandardDatatable.Rows.Count - 1
         For i = 0 To rowCount Step 1
             drcId = DrcStandardDatatable.Rows(i)("drc_id")
             categorieOasis = DrcStandardDatatable.Rows(i)("categorie_oasis")
-            ageMin = Coalesce(DrcStandardDatatable.Rows(i)("age_min"), 0)
-            AgeMax = Coalesce(DrcStandardDatatable.Rows(i)("age_max"), 0)
-            If TypeActiviteEpisode = EpisodeDao.EnumTypeActiviteEpisodeCode.PREVENTION_ENFANT_PRE_SCOLAIRE OrElse
-                TypeActiviteEpisode = EpisodeDao.EnumTypeActiviteEpisodeCode.PREVENTION_ENFANT_PRE_SCOLAIRE Then
-                If ageMin <> 0 Then
-                    If agePatient < ageMin Then
-                        Continue For
+            ageMinDrc = Coalesce(DrcStandardDatatable.Rows(i)("age_min"), 0)
+            AgeMaxDrc = Coalesce(DrcStandardDatatable.Rows(i)("age_max"), 0)
+
+            Select Case TypeActiviteEpisode
+                Case EpisodeDao.EnumTypeActiviteEpisodeCode.PREVENTION_ENFANT_SCOLAIRE
+                    If ageMinDrc <> 0 Then
+                        If agePatientEnAnnee < ageMinDrc Then
+                            Continue For
+                        End If
                     End If
-                End If
-                If AgeMax <> 0 Then
-                    If agePatient > AgeMax Then
-                        Continue For
+                    If AgeMaxDrc <> 0 Then
+                        If agePatientEnAnnee > AgeMaxDrc Then
+                            Continue For
+                        End If
                     End If
-                End If
-            End If
+                Case EpisodeDao.EnumTypeActiviteEpisodeCode.PREVENTION_ENFANT_PRE_SCOLAIRE
+                    Dim ageMinDrcEnJour As Integer = outils.ConvertirEnJourDureeEnMois(ageMinDrc) - 5
+                    Dim ageMaxDrcEnJour As Integer = outils.ConvertirEnJourDureeEnMois(AgeMaxDrc) - 5
+                    If ageMinDrcEnJour <> 0 Then
+                        If agePatientEnJour < ageMinDrcEnJour Then
+                            Continue For
+                        End If
+                    End If
+                    If ageMaxDrcEnJour <> 0 Then
+                        If agePatientEnJour > ageMaxDrcEnJour Then
+                            Continue For
+                        End If
+                    End If
+            End Select
+
             Select Case categorieOasis
                 Case DrcDao.EnumCategorieOasisCode.GroupeParametres
                     If Not ListGroupeParam.Contains(drcId) Then
@@ -238,21 +283,35 @@ Public Class EpisodeProtocoleCollaboratifDao
         For i = 0 To rowCount Step 1
             drcId = DrcConsignedDatatable.Rows(i)("oa_parcours_consigne_drc_id")
             categorieOasis = DrcConsignedDatatable.Rows(i)("oa_drc_oasis_categorie")
-            ageMin = Coalesce(DrcConsignedDatatable.Rows(i)("oa_parcours_age_min"), 0)
-            AgeMax = Coalesce(DrcConsignedDatatable.Rows(i)("oa_parcours_age_max"), 0)
-            If TypeActiviteEpisode = EpisodeDao.EnumTypeActiviteEpisodeCode.PREVENTION_ENFANT_PRE_SCOLAIRE OrElse
-                TypeActiviteEpisode = EpisodeDao.EnumTypeActiviteEpisodeCode.PREVENTION_ENFANT_PRE_SCOLAIRE Then
-                If ageMin <> 0 Then
-                    If agePatient < ageMin Then
-                        Continue For
+            ageMinDrc = Coalesce(DrcConsignedDatatable.Rows(i)("oa_parcours_age_min"), 0)
+            AgeMaxDrc = Coalesce(DrcConsignedDatatable.Rows(i)("oa_parcours_age_max"), 0)
+
+            Select Case TypeActiviteEpisode
+                Case EpisodeDao.EnumTypeActiviteEpisodeCode.PREVENTION_ENFANT_SCOLAIRE
+                    If ageMinDrc <> 0 Then
+                        If agePatientEnAnnee < ageMinDrc Then
+                            Continue For
+                        End If
                     End If
-                End If
-                If AgeMax <> 0 Then
-                    If agePatient > AgeMax Then
-                        Continue For
+                    If AgeMaxDrc <> 0 Then
+                        If agePatientEnAnnee > AgeMaxDrc Then
+                            Continue For
+                        End If
                     End If
-                End If
-            End If
+                Case EpisodeDao.EnumTypeActiviteEpisodeCode.PREVENTION_ENFANT_PRE_SCOLAIRE
+                    Dim ageMinEnJour As Integer = outils.ConvertirEnJourDureeEnMois(ageMinDrc) - 5
+                    Dim ageMaxEnJour As Integer = outils.ConvertirEnJourDureeEnMois(AgeMaxDrc) - 5
+                    If ageMinEnJour <> 0 Then
+                        If agePatientEnJour < ageMinEnJour Then
+                            Continue For
+                        End If
+                    End If
+                    If ageMaxEnJour <> 0 Then
+                        If agePatientEnJour > ageMaxEnJour Then
+                            Continue For
+                        End If
+                    End If
+            End Select
 
             'Contrôle dates d'application
             Dim dateDebut As Date = Coalesce(DrcConsignedDatatable.Rows(i)("oa_parcours_consigne_date_debut"), Nothing)

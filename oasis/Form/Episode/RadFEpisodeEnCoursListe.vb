@@ -46,7 +46,7 @@ Public Class RadFEpisodeEnCoursListe
                 RadGridViewEpisode.Rows(iGrid).Cells("heureCreation").Value = ""
             End If
 
-            Dim DureeString As String = outils.CalculDureeHeureString(dateCreation, Date.Now)
+            Dim DureeString As String = outils.CalculDureeEnJourEtHeureString(dateCreation, Date.Now)
             RadGridViewEpisode.Rows(iGrid).Cells("duree").Value = DureeString
             Dim Duree As Integer = DateDiff(DateInterval.Hour, dateCreation, Date.Now)
             If Duree > 24 Then
@@ -61,7 +61,7 @@ Public Class RadFEpisodeEnCoursListe
                 patientNom = Coalesce(episodeDataTable.Rows(i)("oa_patient_nom"), "")
                 patientPrenom = Coalesce(episodeDataTable.Rows(i)("oa_patient_prenom"), "")
                 If patientDateNaissance <> Nothing Then
-                    patientAge = outils.CalculAgeString(patientDateNaissance)
+                    patientAge = outils.CalculAgeEnAnneeEtMoisString(patientDateNaissance)
                 Else
                     patientAge = ""
                 End If

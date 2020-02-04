@@ -1,7 +1,7 @@
 ﻿Imports System.Data.SqlClient
 Imports Oasis_Common
 
-Public Class AntecedentOrdreDao
+Public Class AntecedentAffectationDao
     Inherits StandardDao
 
 

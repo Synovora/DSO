@@ -92,7 +92,7 @@ Public Class PdfSynthese
             SelectedPatient.PatientNom.ToUpper() &
             "       NIR : " & SelectedPatient.PatientNir.ToString &
             "          " & SelectedPatient.PatientGenre & vbCrLf &
-            "   Date de naissance : " & SelectedPatient.PatientDateNaissance.ToString("dd.MM.yyyy") & "   -   âge : " & outils.CalculAgeString(SelectedPatient.PatientDateNaissance) & vbCrLf &
+            "   Date de naissance : " & SelectedPatient.PatientDateNaissance.ToString("dd.MM.yyyy") & "   -   âge : " & outils.CalculAgeEnAnneeEtMoisString(SelectedPatient.PatientDateNaissance) & vbCrLf &
             "   Rattachement au site Oasis de " & Environnement.Table_site.GetSiteDescription(SelectedPatient.PatientSiteId) &
             "   -  Dernière mise à jour de la synthèse : " & FormatageDateAffichage(SelectedPatient.PatientSyntheseDateMaj, True)
 

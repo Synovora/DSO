@@ -242,7 +242,7 @@ Public Class RadFTraitementObsoletes
             If dateFin = "31/12/2999" Then
                 RadTraitementDataGridView.Rows(iGrid).Cells("dureePosologie").Value = ""
             Else
-                RadTraitementDataGridView.Rows(iGrid).Cells("dureePosologie").Value = CalculDureeTraitementString(DateDebut, dateFin)
+                RadTraitementDataGridView.Rows(iGrid).Cells("dureePosologie").Value = CalculDureeTraitementEnJourString(DateDebut, dateFin)
             End If
 
             'Date arrêt

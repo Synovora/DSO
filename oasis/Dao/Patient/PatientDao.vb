@@ -179,7 +179,7 @@ Module PatientDao
             Else
                 Dim lMois As Integer
                 Dim PatientMoisRestant, PatientAn As Integer
-                lMois = Calculmois(instancePatient.PatientDateNaissance)
+                lMois = CalculAgeEnmois(instancePatient.PatientDateNaissance)
                 If lMois > 36 Then
                     PatientMoisRestant = lMois Mod 12
                     lMois = lMois - PatientMoisRestant

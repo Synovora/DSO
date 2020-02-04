@@ -53,7 +53,7 @@ Public Class RadFEpisodeDetailCreation
         End If
 
         Dim genre, enfant As String
-        Dim agePatient As Integer = outils.CalculAge(SelectedPatient.PatientDateNaissance)
+        Dim agePatient As Integer = outils.CalculAgeEnAnnee(SelectedPatient.PatientDateNaissance)
 
         Dim listActivite As New List(Of String)
         episodeActiviteDT = episodeActiviteDao.GetAllEpisodeActivite

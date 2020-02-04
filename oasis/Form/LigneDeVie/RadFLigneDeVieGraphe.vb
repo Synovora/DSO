@@ -37,10 +37,30 @@ Public Class RadFLigneDeVieGraphe
     Dim parametre As Parametre
 
     Private Sub RadFLigneDeVieGraphe_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-        parametre = parametreDao.GetParametreById(ParametreId)
+        If ParametreId <> 0 Then
+            parametre = parametreDao.GetParametreById(ParametreId)
+        End If
 
+        Dim series As New LineSeries()
+        series.DataPoints.Add(New CategoricalDataPoint(37, DateTime.Now))
+        series.DataPoints.Add(New CategoricalDataPoint(38.2, DateTime.Now.AddMonths(1).ToString("dd.MM.yyyy")))
+        series.DataPoints.Add(New CategoricalDataPoint(38.8, DateTime.Now.AddDays(38).ToString("dd.MM.yyyy")))
+        series.DataPoints.Add(New CategoricalDataPoint(37.5, DateTime.Now.AddDays(72).ToString("dd.MM.yyyy")))
 
+        Dim verticalAxis As LinearAxis = RadChartView1.Axes.[Get](Of LinearAxis)(1)
+        verticalAxis.Maximum = 40
+        verticalAxis.Minimum = 36
 
+        Dim categoricalAxis As New DateTimeCategoricalAxis()
+        categoricalAxis.DateTimeComponent = DateTimeComponent.Week
+        categoricalAxis.PlotMode = AxisPlotMode.BetweenTicks
+        'categoricalAxis.LabelFormat = "{0:m}"
+
+        'First assign the axis to the VerticalAxis property and then add the series to the chart
+        series.HorizontalAxis = categoricalAxis
+        'series.VerticalAxis = verticalAxis
+
+        RadChartView1.Series.Add(series)
 
     End Sub
 End Class

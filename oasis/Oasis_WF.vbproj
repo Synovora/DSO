@@ -201,12 +201,15 @@
     <Compile Include="Bean\Antecedent\AntecedentClass.vb" />
     <Compile Include="Bean\DRC\DrcActeParamedicalAsso.vb" />
     <Compile Include="Bean\DRC\DrcStandard.vb" />
+    <Compile Include="Bean\LigneDeVie\PatientParametreLdv.vb" />
     <Compile Include="Bean\Ordonnance\Ordonnance.vb" />
     <Compile Include="Bean\Ordonnance\OrdonnanceDetailGrid.vb" />
-    <Compile Include="Dao\Antecedent\AntecedentOrdreDao.vb" />
+    <Compile Include="Dao\Antecedent\AntecedentAffectationDao.vb" />
     <Compile Include="Bean\LigneDeVie\LigneDeVie.vb" />
     <Compile Include="Bean\Episode\EpisodeContexte.vb" />
+    <Compile Include="Dao\Antecedent\AntecedentChangementOrdreDao.vb" />
     <Compile Include="Dao\Episode\EpisodeContexteDao.vb" />
+    <Compile Include="Dao\LigneDeVie\PatientParametreLdvDao.vb" />
     <Compile Include="Form\DRC\RadFActeParamedicalTest.Designer.vb">
       <DependentUpon>RadFActeParamedicalTest.vb</DependentUpon>
     </Compile>

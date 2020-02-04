@@ -49,6 +49,15 @@
             NumAgeMax.Value = 0
             RadBtnValidation.Hide()
         End If
+
+        Select Case drcStandard.TypeActivite
+            Case EpisodeDao.EnumTypeActiviteEpisodeCode.PREVENTION_ENFANT_SCOLAIRE
+                LblAgeUnite.Text = "(Age exprimé en année)"
+            Case EpisodeDao.EnumTypeActiviteEpisodeCode.PREVENTION_ENFANT_PRE_SCOLAIRE
+                LblAgeUnite.Text = "(Age exprimé en mois)"
+            Case Else
+                LblAgeUnite.Text = ""
+        End Select
     End Sub
 
     Private Sub RadBtnAbandon_Click(sender As Object, e As EventArgs) Handles RadBtnAbandon.Click

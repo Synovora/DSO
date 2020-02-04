@@ -329,7 +329,7 @@ Public Class RadFEpisodeDetail
         UserCreation = user.UtilisateurPrenom.Trim & " " & user.UtilisateurNom.Trim
         DateCreation = episode.DateCreation.ToString("dd/MM/yyyy HH:mm")
 
-        LblDuree.Text = "Durée (" & outils.CalculDureeHeureString(DateCreation, Date.Now) & ")"
+        LblDuree.Text = "Durée (" & outils.CalculDureeEnJourEtHeureString(DateCreation, Date.Now) & ")"
 
         If episode.UserModification <> 0 Then
             UtilisateurDao.SetUtilisateur(user, episode.UserModification)

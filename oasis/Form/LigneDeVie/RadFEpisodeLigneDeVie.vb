@@ -28,7 +28,9 @@ Public Class RadFEpisodeLigneDeVie
     Dim episodeDao As New EpisodeDao
     Dim parametreDao As New ParametreDao
     Dim episodeParametreDao As New EpisodeParametreDao
+    Dim patientParametreLdvDao As New PatientParametreLdvDao
 
+    Dim patientParametreLdv As PatientParametreLdv
     Dim ligneDeVie As New LigneDeVie
 
     Dim listeParametreaAfficher As New List(Of Long)
@@ -39,11 +41,28 @@ Public Class RadFEpisodeLigneDeVie
     Dim Parametre4Id As Long
     Dim Parametre5Id As Long
 
+    Dim ConfigurationParametreExiste As Boolean
+
     Private Sub RadFEpisodeListe_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        afficheTitleForm(Me, "Ligne de vie du patient")
+        GetParametresEtFiltres()
         InitFiltre()
         ChargementEtatCivil()
         ChargementEpisode(ligneDeVie)
+    End Sub
 
+    Private Sub GetParametresEtFiltres()
+        ConfigurationParametreExiste = True
+        Try
+            patientParametreLdv = patientParametreLdvDao.GetEpisodeByPatientId(SelectedPatient.patientId)
+        Catch ex As Exception
+            Dim messageErreur As String = ex.Message
+            If messageErreur.StartsWith("RNF") Then
+                ConfigurationParametreExiste = False
+                patientParametreLdv = New PatientParametreLdv()
+                patientParametreLdv.PatientId = SelectedPatient.patientId
+            End If
+        End Try
     End Sub
 
     Private Sub InitFiltre()
@@ -93,7 +112,7 @@ Public Class RadFEpisodeLigneDeVie
         ligneDeVie.ProfilMedical = True
         ligneDeVie.ProfilParamedical = True
 
-        Dim Age As Integer = outils.CalculAge(SelectedPatient.PatientDateNaissance)
+        Dim Age As Integer = outils.CalculAgeEnAnnee(SelectedPatient.PatientDateNaissance)
         If Age > limiteAgeEnfant Then
             ligneDeVie.ActivitePreventionEnfantPreScolaire = False
             ligneDeVie.ActivitePreventionEnfantScolaire = False
@@ -129,6 +148,57 @@ Public Class RadFEpisodeLigneDeVie
         DteJusqua.Value = Date.Now().AddYears(-2)
 
         LblLabelParametre.Hide()
+
+        If ConfigurationParametreExiste = True Then
+            ChkTypeConsultation.Checked = patientParametreLdv.TypeConsultation
+            ChkTypeVirtuel.Checked = patientParametreLdv.TypeVirtuel
+
+            ChkEnfantPreScolaire.Checked = patientParametreLdv.ActivitePreventionEnfantPreScolaire
+            ChkEnfantScolaire.Checked = patientParametreLdv.ActivitePreventionEnfantScolaire
+            ChkPathologieAigue.Checked = patientParametreLdv.ActivitePathologieAigue
+            ChkPreventionAutre.Checked = patientParametreLdv.ActivitePreventionAutre
+            ChkSocial.Checked = patientParametreLdv.ActiviteSocial
+            ChkSuiviChronique.Checked = patientParametreLdv.ActiviteSuiviChronique
+            ChkSuiviGrossesse.Checked = patientParametreLdv.ActiviteSuiviGrossesse
+            ChkSuiviGynecologique.Checked = patientParametreLdv.ActiviteSuiviGynecologique
+
+            ChkProfilMedical.Checked = patientParametreLdv.ProfilMedical
+            ChkProfilParamedical.Checked = patientParametreLdv.ProfilParamedical
+
+            ligneDeVie.TypeConsultation = patientParametreLdv.TypeConsultation
+            ligneDeVie.TypeVirtuel = patientParametreLdv.TypeVirtuel
+
+            ligneDeVie.ActivitePathologieAigue = patientParametreLdv.ActivitePathologieAigue
+            ligneDeVie.ActivitePreventionAutre = patientParametreLdv.ActivitePreventionAutre
+            ligneDeVie.ActivitePreventionEnfantPreScolaire = patientParametreLdv.ActivitePreventionEnfantPreScolaire
+            ligneDeVie.ActivitePreventionEnfantScolaire = patientParametreLdv.ActivitePreventionEnfantScolaire
+            ligneDeVie.ActiviteSocial = patientParametreLdv.ActiviteSocial
+            ligneDeVie.ActiviteSuiviChronique = patientParametreLdv.ActiviteSuiviChronique
+            ligneDeVie.ActiviteSuiviGrossesse = patientParametreLdv.ActiviteSuiviGrossesse
+            ligneDeVie.ActiviteSuiviGyncologique = patientParametreLdv.ActiviteSuiviGynecologique
+
+            ligneDeVie.ProfilMedical = patientParametreLdv.ProfilMedical
+            ligneDeVie.ProfilParamedical = patientParametreLdv.ProfilParamedical
+
+            If patientParametreLdv.Parametre1 <> 0 Then
+                listeParametreaAfficher.Add(patientParametreLdv.Parametre1)
+            End If
+            If patientParametreLdv.Parametre2 <> 0 Then
+                listeParametreaAfficher.Add(patientParametreLdv.Parametre2)
+            End If
+            If patientParametreLdv.Parametre3 <> 0 Then
+                listeParametreaAfficher.Add(patientParametreLdv.Parametre3)
+            End If
+            If patientParametreLdv.Parametre4 <> 0 Then
+                listeParametreaAfficher.Add(patientParametreLdv.Parametre4)
+            End If
+            If patientParametreLdv.Parametre5 <> 0 Then
+                listeParametreaAfficher.Add(patientParametreLdv.Parametre5)
+            End If
+
+            AfficheParametres()
+        End If
+
     End Sub
 
     Private Sub AfficheParametres()
@@ -333,7 +403,7 @@ Public Class RadFEpisodeLigneDeVie
                 RadGridViewEpisode.Rows(iGrid).Cells("date_creation").Value = ""
             End If
 
-            Dim periode As String = CalculDureeJourString(dateCreation, DatePrecedente)
+            Dim periode As String = CalculDureeEnJourString(dateCreation, DatePrecedente)
             RadGridViewEpisode.Rows(iGrid).Cells("periode").Value = periode
             DatePrecedente = dateCreation
 
@@ -616,5 +686,110 @@ Public Class RadFEpisodeLigneDeVie
                 e.ToolTipText = hoveredCell.Value.ToString()
             End If
         End If
+    End Sub
+
+    Private Sub RadBtnChart_Click(sender As Object, e As EventArgs) Handles RadBtnChart.Click
+        Using Form As New RadFLigneDeVieGraphe
+            Form.ShowDialog()
+        End Using
+    End Sub
+
+    'Sauvegarder la configuration des filtres et des paramètres
+    Private Sub RadBtnConfiguration_Click(sender As Object, e As EventArgs) Handles RadBtnConfiguration.Click
+        If ChkEnfantPreScolaire.Checked = True Then
+            patientParametreLdv.ActivitePreventionEnfantPreScolaire = True
+        Else
+            patientParametreLdv.ActivitePreventionEnfantPreScolaire = False
+        End If
+
+        If ChkEnfantScolaire.Checked = True Then
+            patientParametreLdv.ActivitePreventionEnfantScolaire = True
+        Else
+            patientParametreLdv.ActivitePreventionEnfantScolaire = False
+        End If
+
+        If ChkPathologieAigue.Checked = True Then
+            patientParametreLdv.ActivitePathologieAigue = True
+        Else
+            patientParametreLdv.ActivitePathologieAigue = False
+        End If
+
+        If ChkPreventionAutre.Checked = True Then
+            patientParametreLdv.ActivitePreventionAutre = True
+        Else
+            patientParametreLdv.ActivitePreventionAutre = False
+        End If
+
+        If ChkSocial.Checked = True Then
+            patientParametreLdv.ActiviteSocial = True
+        Else
+            patientParametreLdv.ActiviteSocial = False
+        End If
+
+        If ChkSuiviChronique.Checked = True Then
+            patientParametreLdv.ActiviteSuiviChronique = True
+        Else
+            patientParametreLdv.ActiviteSuiviChronique = False
+        End If
+
+        If ChkSuiviGrossesse.Checked = True Then
+            patientParametreLdv.ActiviteSuiviGrossesse = True
+        Else
+            patientParametreLdv.ActiviteSuiviGrossesse = False
+        End If
+
+        If ChkSuiviGynecologique.Checked = True Then
+            patientParametreLdv.ActiviteSuiviGynecologique = True
+        Else
+            patientParametreLdv.ActiviteSuiviGynecologique = False
+        End If
+
+        'Type
+        If ChkTypeConsultation.Checked = True Then
+            patientParametreLdv.TypeConsultation = True
+        Else
+            patientParametreLdv.TypeConsultation = False
+        End If
+
+        If ChkTypeVirtuel.Checked = True Then
+            patientParametreLdv.TypeVirtuel = True
+        Else
+            patientParametreLdv.TypeVirtuel = False
+        End If
+
+        'Profil
+        If ChkProfilMedical.Checked = True Then
+            patientParametreLdv.ProfilMedical = True
+        Else
+            patientParametreLdv.ProfilMedical = False
+        End If
+
+        If ChkProfilParamedical.Checked = True Then
+            patientParametreLdv.ProfilParamedical = True
+        Else
+            patientParametreLdv.ProfilParamedical = False
+        End If
+
+        patientParametreLdv.Parametre1 = Coalesce(Parametre1Id, 0)
+        patientParametreLdv.Parametre2 = Coalesce(Parametre2Id, 0)
+        patientParametreLdv.Parametre3 = Coalesce(Parametre3Id, 0)
+        patientParametreLdv.Parametre4 = Coalesce(Parametre4Id, 0)
+        patientParametreLdv.Parametre5 = Coalesce(Parametre5Id, 0)
+
+        If ConfigurationParametreExiste = True Then
+            patientParametreLdvDao.UpdateConfigurationParametre(patientParametreLdv)
+            Dim form As New RadFNotification()
+            form.Titre = "Notification configuration filtre et paramètre de la ligne de vie"
+            form.Message = "Configuration filtre et paramètre modifiée"
+            form.Show()
+        Else
+            ConfigurationParametreExiste = True
+            patientParametreLdvDao.CreateConfigurationParametre(patientParametreLdv)
+            Dim form As New RadFNotification()
+            form.Titre = "Notification configuration filtre et paramètre de la ligne de vie"
+            form.Message = "Configuration filtre et paramètre créée"
+            form.Show()
+        End If
+
     End Sub
 End Class
