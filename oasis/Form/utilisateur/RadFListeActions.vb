@@ -70,7 +70,6 @@ Public Class RadFListeActions
     Private Sub RadBtnAvant_Click(sender As Object, e As EventArgs) Handles RadBtnAvant.Click
         DteSelection.Value = DteSelection.Value.AddDays(-1)
         RadBtnApres.Enabled = True
-        ChargementActions()
     End Sub
 
     Private Sub RadBtnApres_Click(sender As Object, e As EventArgs) Handles RadBtnApres.Click
@@ -80,10 +79,9 @@ Public Class RadFListeActions
         Else
             RadBtnApres.Enabled = True
         End If
-        ChargementActions()
     End Sub
 
     Private Sub DteSelection_ValueChanged(sender As Object, e As EventArgs) Handles DteSelection.ValueChanged
-
+        ChargementActions()
     End Sub
 End Class
