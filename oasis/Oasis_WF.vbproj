@@ -808,7 +808,6 @@
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Module\Environnement.vb" />
-    <Compile Include="Module\ModuleConnection.vb" />
     <Compile Include="Module\outils.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">

@@ -1510,5 +1510,37 @@ Public Class TacheDao
 
     End Sub
 
+    Public Function testMultipleSelect() As List(Of DataTable)
+
+        Dim requete = "SELECT TOP 100 oa_patient_nir " &
+                      "FROM oasis.oa_patient; " &
+                      "SELECT TOP 100 oa_utilisateur_nom, oa_utilisateur_prenom " &
+                      "FROM oasis.oa_utilisateur "
+        Dim indexRequete As Integer = 0
+        Dim listTablesLues As New List(Of DataTable)
+
+        Using con As SqlConnection = GetConnection()
+
+            Dim dataAdapter As SqlDataAdapter = New SqlDataAdapter()
+            Using dataAdapter
+                dataAdapter.SelectCommand = New SqlCommand(requete, con)
+                Using dataSet As DataSet = New DataSet()
+                    dataAdapter.Fill(dataSet)
+                    For Each dataTable As DataTable In dataSet.Tables
+                        Using dataTable
+                            Try
+                                dataAdapter.Fill(dataTable)   ' on garnit la réponse de ce dataTable
+                                listTablesLues.Add(dataTable) ' ajout de la dataTable lue à notre resultset
+                            Catch ex As Exception
+                                Throw ex
+                            End Try
+                        End Using
+                    Next
+                End Using
+            End Using
+        End Using
+
+        Return listTablesLues
+    End Function
 
 End Class
