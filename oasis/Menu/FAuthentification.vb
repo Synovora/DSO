@@ -26,7 +26,7 @@ Public Class FAuthentificattion
         InitializeComponent()
 
         ' Ajoutez une initialisation quelconque après l'appel InitializeComponent().
-        StandardDao.fixConnectionString("Data Source=ns3119889.ip-51-38-181.eu;Initial Catalog=oasis;persist security info=True;user id=sa;password=Oasis-689;MultipleActiveResultSets=True")
+        StandardDao.fixConnectionString("Data Source=ns3119889.ip-51-38-181.eu;Initial Catalog=oasis;persist security info=True;user id=sa;password=Oasis-689;encrypt=true;trustServerCertificate=true;MultipleActiveResultSets=True")
     End Sub
 
     Private Sub FAuthentificattion_Load(sender As Object, e As EventArgs) Handles MyBase.Load
