@@ -52,8 +52,8 @@ Partial Class FrmTacheMain
         Dim GridViewTextBoxColumn22 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
         Dim GridViewTextBoxColumn23 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
         Dim TableViewDefinition3 As Telerik.WinControls.UI.TableViewDefinition = New Telerik.WinControls.UI.TableViewDefinition()
-        Dim SchedulerDailyPrintStyle1 As Telerik.WinControls.UI.SchedulerDailyPrintStyle = New Telerik.WinControls.UI.SchedulerDailyPrintStyle()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(FrmTacheMain))
+        Dim SchedulerDailyPrintStyle1 As Telerik.WinControls.UI.SchedulerDailyPrintStyle = New Telerik.WinControls.UI.SchedulerDailyPrintStyle()
         Me.RadMenu3 = New Telerik.WinControls.UI.RadMenu()
         Me.MnuPatients = New Telerik.WinControls.UI.RadMenuItem()
         Me.RadPanelMain = New Telerik.WinControls.UI.RadPanel()
@@ -88,7 +88,6 @@ Partial Class FrmTacheMain
         Me.RadioTacheEmiseToute = New Telerik.WinControls.UI.RadRadioButton()
         Me.RadioTacheEmiseEnCours = New Telerik.WinControls.UI.RadRadioButton()
         Me.SplitPanelAgenda = New Telerik.WinControls.UI.SplitPanel()
-        Me.RadScheduler1 = New Telerik.WinControls.UI.RadScheduler()
         Me.RadSchedulerNavigator1 = New Telerik.WinControls.UI.RadSchedulerNavigator()
         Me.ToolTipFiltre = New System.Windows.Forms.ToolTip(Me.components)
         Me.CtxMenuGridTacheATraiter = New Telerik.WinControls.UI.RadContextMenu(Me.components)
@@ -96,6 +95,7 @@ Partial Class FrmTacheMain
         Me.MnuItemDetailTacheATraiter = New Telerik.WinControls.UI.RadMenuItem()
         Me.TimerRefreshTaches = New System.Windows.Forms.Timer(Me.components)
         Me.ImageList1 = New System.Windows.Forms.ImageList(Me.components)
+        Me.RadScheduler1 = New Telerik.WinControls.UI.RadScheduler()
         CType(Me.RadMenu3, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.RadPanelMain, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.RadPanelMain.SuspendLayout()
@@ -148,8 +148,8 @@ Partial Class FrmTacheMain
         CType(Me.RadioTacheEmiseEnCours, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.SplitPanelAgenda, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SplitPanelAgenda.SuspendLayout()
-        CType(Me.RadScheduler1, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.RadSchedulerNavigator1, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.RadScheduler1, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
@@ -296,11 +296,11 @@ Partial Class FrmTacheMain
         GridViewTextBoxColumn5.FieldName = "patient_nom"
         GridViewTextBoxColumn5.HeaderText = "Nom du patient"
         GridViewTextBoxColumn5.Name = "patient_nom"
-        GridViewTextBoxColumn5.Width = 88
+        GridViewTextBoxColumn5.Width = 87
         GridViewTextBoxColumn6.FieldName = "site_description"
         GridViewTextBoxColumn6.HeaderText = "Site"
         GridViewTextBoxColumn6.Name = "site_description"
-        GridViewTextBoxColumn6.Width = 136
+        GridViewTextBoxColumn6.Width = 133
         Me.RadTacheToTreatGrid.MasterTemplate.Columns.AddRange(New Telerik.WinControls.UI.GridViewDataColumn() {GridViewTextBoxColumn1, GridViewTextBoxColumn2, GridViewImageColumn1, GridViewTextBoxColumn3, GridViewTextBoxColumn4, GridViewTextBoxColumn5, GridViewTextBoxColumn6})
         Me.RadTacheToTreatGrid.MasterTemplate.ViewDefinition = TableViewDefinition1
         Me.RadTacheToTreatGrid.Name = "RadTacheToTreatGrid"
@@ -454,10 +454,10 @@ Partial Class FrmTacheMain
         Me.PageTachesEnCours.Controls.Add(Me.RadTacheEnCoursGrid)
         Me.PageTachesEnCours.Controls.Add(Me.RadGroupBox2)
         Me.PageTachesEnCours.Font = New System.Drawing.Font("Segoe UI", 10.0!)
-        Me.PageTachesEnCours.ItemSize = New System.Drawing.SizeF(119.0!, 31.0!)
-        Me.PageTachesEnCours.Location = New System.Drawing.Point(10, 40)
+        Me.PageTachesEnCours.ItemSize = New System.Drawing.SizeF(115.0!, 27.0!)
+        Me.PageTachesEnCours.Location = New System.Drawing.Point(10, 36)
         Me.PageTachesEnCours.Name = "PageTachesEnCours"
-        Me.PageTachesEnCours.Size = New System.Drawing.Size(516, 213)
+        Me.PageTachesEnCours.Size = New System.Drawing.Size(516, 217)
         Me.PageTachesEnCours.Text = "Tâches en cours"
         '
         'RadTacheEnCoursGrid
@@ -504,24 +504,24 @@ Partial Class FrmTacheMain
         GridViewTextBoxColumn11.FieldName = "patient_nom"
         GridViewTextBoxColumn11.HeaderText = "Nom du patient"
         GridViewTextBoxColumn11.Name = "patient_nom"
-        GridViewTextBoxColumn11.Width = 168
+        GridViewTextBoxColumn11.Width = 166
         GridViewTextBoxColumn12.FieldName = "site_description"
         GridViewTextBoxColumn12.HeaderText = "Site"
         GridViewTextBoxColumn12.Name = "site_description"
-        GridViewTextBoxColumn12.Width = 110
+        GridViewTextBoxColumn12.Width = 109
         GridViewTextBoxColumn13.HeaderText = "Attribué à"
         GridViewTextBoxColumn13.MinWidth = 60
         GridViewTextBoxColumn13.Name = "user_traiteur"
-        GridViewTextBoxColumn13.Width = 75
+        GridViewTextBoxColumn13.Width = 74
         GridViewTextBoxColumn14.HeaderText = "Sur fonction"
         GridViewTextBoxColumn14.MinWidth = 60
         GridViewTextBoxColumn14.Name = "fonction_traiteur"
-        GridViewTextBoxColumn14.Width = 75
+        GridViewTextBoxColumn14.Width = 73
         Me.RadTacheEnCoursGrid.MasterTemplate.Columns.AddRange(New Telerik.WinControls.UI.GridViewDataColumn() {GridViewTextBoxColumn7, GridViewTextBoxColumn8, GridViewImageColumn2, GridViewTextBoxColumn9, GridViewTextBoxColumn10, GridViewTextBoxColumn11, GridViewTextBoxColumn12, GridViewTextBoxColumn13, GridViewTextBoxColumn14})
         Me.RadTacheEnCoursGrid.MasterTemplate.ViewDefinition = TableViewDefinition2
         Me.RadTacheEnCoursGrid.Name = "RadTacheEnCoursGrid"
         Me.RadTacheEnCoursGrid.ReadOnly = True
-        Me.RadTacheEnCoursGrid.Size = New System.Drawing.Size(516, 183)
+        Me.RadTacheEnCoursGrid.Size = New System.Drawing.Size(516, 187)
         Me.RadTacheEnCoursGrid.TabIndex = 2
         '
         'RadGroupBox2
@@ -579,7 +579,7 @@ Partial Class FrmTacheMain
         '
         Me.PageTachesEmises.Controls.Add(Me.RadTacheEmiseGrid)
         Me.PageTachesEmises.Controls.Add(Me.RadGroupBox1)
-        Me.PageTachesEmises.ItemSize = New System.Drawing.SizeF(136.0!, 31.0!)
+        Me.PageTachesEmises.ItemSize = New System.Drawing.SizeF(132.0!, 27.0!)
         Me.PageTachesEmises.Location = New System.Drawing.Point(10, 40)
         Me.PageTachesEmises.Name = "PageTachesEmises"
         Me.PageTachesEmises.Size = New System.Drawing.Size(516, 213)
@@ -693,27 +693,6 @@ Partial Class FrmTacheMain
         Me.SplitPanelAgenda.TabStop = False
         Me.SplitPanelAgenda.Text = "SplitPanel2"
         '
-        'RadScheduler1
-        '
-        Me.RadScheduler1.AllowAppointmentCreateInline = False
-        Me.RadScheduler1.AllowAppointmentMove = False
-        Me.RadScheduler1.AllowAppointmentResize = False
-        Me.RadScheduler1.Culture = New System.Globalization.CultureInfo("fr-FR")
-        Me.RadScheduler1.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.RadScheduler1.Location = New System.Drawing.Point(0, 87)
-        Me.RadScheduler1.Name = "RadScheduler1"
-        SchedulerDailyPrintStyle1.AppointmentFont = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        SchedulerDailyPrintStyle1.DateEndRange = New Date(2019, 11, 11, 0, 0, 0, 0)
-        SchedulerDailyPrintStyle1.DateHeadingFont = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold)
-        SchedulerDailyPrintStyle1.DateStartRange = New Date(2019, 11, 6, 0, 0, 0, 0)
-        SchedulerDailyPrintStyle1.PageHeadingFont = New System.Drawing.Font("Microsoft Sans Serif", 22.0!, System.Drawing.FontStyle.Bold)
-        Me.RadScheduler1.PrintStyle = SchedulerDailyPrintStyle1
-        Me.RadScheduler1.ReadOnly = True
-        Me.RadScheduler1.Size = New System.Drawing.Size(537, 177)
-        Me.RadScheduler1.TabIndex = 7
-        CType(Me.RadScheduler1.GetChildAt(0).GetChildAt(0).GetChildAt(0), Telerik.WinControls.UI.DayViewHeader).Text = ""
-        CType(Me.RadScheduler1.GetChildAt(0).GetChildAt(0).GetChildAt(0).GetChildAt(0), Telerik.WinControls.UI.SchedulerHeaderCellElement).Visibility = Telerik.WinControls.ElementVisibility.Visible
-        '
         'RadSchedulerNavigator1
         '
         Me.RadSchedulerNavigator1.AssociatedScheduler = Me.RadScheduler1
@@ -802,6 +781,27 @@ Partial Class FrmTacheMain
         Me.ImageList1.Images.SetKeyName(18, "AVIS_SOUS_EPISODE/REPONSE/200")
         Me.ImageList1.Images.SetKeyName(19, "AVIS_SOUS_EPISODE/REPONSE/300")
         '
+        'RadScheduler1
+        '
+        Me.RadScheduler1.AllowAppointmentCreateInline = False
+        Me.RadScheduler1.AllowAppointmentMove = False
+        Me.RadScheduler1.AllowAppointmentResize = False
+        Me.RadScheduler1.Culture = New System.Globalization.CultureInfo("fr-FR")
+        Me.RadScheduler1.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.RadScheduler1.Location = New System.Drawing.Point(0, 87)
+        Me.RadScheduler1.Name = "RadScheduler1"
+        SchedulerDailyPrintStyle1.AppointmentFont = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        SchedulerDailyPrintStyle1.DateEndRange = New Date(2019, 11, 11, 0, 0, 0, 0)
+        SchedulerDailyPrintStyle1.DateHeadingFont = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold)
+        SchedulerDailyPrintStyle1.DateStartRange = New Date(2019, 11, 6, 0, 0, 0, 0)
+        SchedulerDailyPrintStyle1.PageHeadingFont = New System.Drawing.Font("Microsoft Sans Serif", 22.0!, System.Drawing.FontStyle.Bold)
+        Me.RadScheduler1.PrintStyle = SchedulerDailyPrintStyle1
+        Me.RadScheduler1.ReadOnly = True
+        Me.RadScheduler1.Size = New System.Drawing.Size(537, 177)
+        Me.RadScheduler1.TabIndex = 7
+        CType(Me.RadScheduler1.GetChildAt(0).GetChildAt(0).GetChildAt(0), Telerik.WinControls.UI.DayViewHeader).Text = ""
+        CType(Me.RadScheduler1.GetChildAt(0).GetChildAt(0).GetChildAt(0).GetChildAt(0), Telerik.WinControls.UI.SchedulerHeaderCellElement).Visibility = Telerik.WinControls.ElementVisibility.Visible
+        '
         'FrmTacheMain
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -874,8 +874,8 @@ Partial Class FrmTacheMain
         CType(Me.SplitPanelAgenda, System.ComponentModel.ISupportInitialize).EndInit()
         Me.SplitPanelAgenda.ResumeLayout(False)
         Me.SplitPanelAgenda.PerformLayout()
-        CType(Me.RadScheduler1, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.RadSchedulerNavigator1, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.RadScheduler1, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
         Me.PerformLayout()

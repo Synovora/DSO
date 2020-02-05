@@ -496,6 +496,12 @@
     <Compile Include="Menu\FrmMain.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="Menu\FrmTestRichText.Designer.vb">
+      <DependentUpon>FrmTestRichText.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Menu\FrmTestRichText.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Module\CacheGlobal.vb" />
     <Compile Include="Dao\Antecedent\AntecedentDao.vb" />
     <Compile Include="DS_Ordonnance.Designer.vb">
@@ -684,6 +690,11 @@
     </Compile>
     <Compile Include="Dao\Traitement\TraitementDao.vb" />
     <Compile Include="Pdf\PdfSynthese.vb" />
+    <Compile Include="Resources\FrenchRichTextBoxStrings.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>FrenchRichTextBoxStrings.resx</DependentUpon>
+    </Compile>
     <Compile Include="RORDS.Designer.vb">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -1010,6 +1021,9 @@
     <EmbeddedResource Include="Form\Traitement\RadFTraitementObsoletes.resx">
       <DependentUpon>RadFTraitementObsoletes.vb</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Menu\FrmTestRichText.resx">
+      <DependentUpon>FrmTestRichText.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="My Project\licenses.licx" />
     <EmbeddedResource Include="Form\ALD\FAldSelecteur.resx">
       <DependentUpon>FAldSelecteur.vb</DependentUpon>
@@ -1058,6 +1072,11 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Form\General\FmUniteSanitaire.resx">
       <DependentUpon>FmUniteSanitaire.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\FrenchRichTextBoxStrings.resx">
+      <CustomToolNamespace>My.Resources</CustomToolNamespace>
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>FrenchRichTextBoxStrings.Designer.vb</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="Version old\SChkContexteValide.resx">
       <DependentUpon>SChkContexteValide.vb</DependentUpon>
@@ -1225,6 +1244,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Resources\Aha-Soft-People-User-group.ico" />
+    <Resource Include="Resources\RichTextBoxStrings.xml" />
     <None Include="Resources\Keys-icon.png" />
   </ItemGroup>
   <ItemGroup>
