@@ -54,12 +54,28 @@ Public Class RadFEpisodeParametresCreation
     End Sub
 
     Private Sub RadBtnValidation_Click(sender As Object, e As EventArgs) Handles RadBtnValidation.Click
+        Dim Minutes As Integer
         If NumDateRV.Value.Date > Date.Now.Date Then
             MessageBox.Show("La date de saisie des paramètres doit être inférieure ou égale à la date du jour !")
         Else
+            If RadioBtn0.Checked = True Then
+                Minutes = 0
+            Else
+                If RadioBtn15.Checked = True Then
+                    Minutes = 15
+                Else
+                    If RadioBtn30.Checked = True Then
+                        Minutes = 30
+                    Else
+                        Minutes = 45
+                    End If
+                End If
+            End If
+
+
             Dim episode As New Episode
             episode.Commentaire = TxtCommentaire.Text
-            episode.DateCreation = Date.Now()
+            episode.DateCreation = Date.Now().Date.AddHours(NumheureRV.Value).AddMinutes(Minutes)
             episode.UserCreation = userLog.UtilisateurId
             episode.PatientId = SelectedPatient.patientId
             episode.Type = EpisodeDao.EnumTypeEpisode.PARAMETRE.ToString

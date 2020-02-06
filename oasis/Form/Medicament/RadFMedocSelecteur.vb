@@ -234,7 +234,7 @@ Public Class RadFMedocSelecteur
             Dim FiltreLongueur As Integer
             FiltreLongueur = TxtFiltreDenomination.Text.Length
             If FiltreLongueur >= 3 Then
-                Dim FiltreString As String = "oa_medicament_dci LIKE '%" & TxtFiltreDenomination.Text & "%'"
+                Dim FiltreString As String = "oa_medicament_dci LIKE '" & TxtFiltreDenomination.Text & "%'"
                 Dim Rowcount As Integer
                 VmedocBindingSource.Filter = FiltreString
                 Rowcount = GetCountMedicament(FiltreString)
