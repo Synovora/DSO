@@ -40,6 +40,7 @@ Public Class EpisodeDao
     Public Enum EnumTypeEpisode
         CONSULTATION
         VIRTUEL
+        PARAMETRE
     End Enum
 
     Public Enum EnumTypeProfil
@@ -170,6 +171,7 @@ Public Class EpisodeDao
                 " WHERE patient_Id = @patientId" &
                 " AND etat = @etat" &
                 " AND (inactif = 'False' OR inactif is Null)" &
+                " AND ([type] = '" & EnumTypeEpisode.CONSULTATION.ToString & "' OR [type] = '" & EnumTypeEpisode.VIRTUEL.ToString & "')" &
                 " ORDER BY date_creation DESC"
 
             With command.Parameters
@@ -226,7 +228,7 @@ Public Class EpisodeDao
                     " commentaire, date_creation, observation_paramedical, observation_medical, etat" &
                     " FROM oasis.oa_episode" &
                     " WHERE patient_id = " & patientId.ToString &
-                    " And (inactif = 'False' OR inactif is Null)" &
+                    " AND (inactif = 'False' OR inactif is Null)" &
                     " AND date_creation <= '" & dateDebutRecherche.ToString("yyyy-MM-dd") & "'" &
                     " AND date_creation >= '" & dateFin.Date.ToString("yyyy-MM-dd") & "'" & vbCrLf
 
@@ -369,6 +371,7 @@ Public Class EpisodeDao
                     " LEFT JOIN oasis.oa_patient P ON P.oa_patient_id = patient_id" &
                     " LEFT JOIN oasis.oa_utilisateur U ON U.oa_utilisateur_id = user_creation" &
                     " WHERE etat = 'EN_COURS'" &
+                    " AND ([type] = '" & EnumTypeEpisode.CONSULTATION.ToString & "' OR [type] = '" & EnumTypeEpisode.VIRTUEL.ToString & "')" &
                     " AND (inactif = 'False' OR inactif is Null)" &
                     " ORDER BY date_creation"
 

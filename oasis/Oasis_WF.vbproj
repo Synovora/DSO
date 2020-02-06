@@ -372,10 +372,28 @@
     <Compile Include="Form\Episode\RadFEpisodeProtocoleAiguDetail.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="Form\LigneDeVie\RadFEpisodeParametresCreation.Designer.vb">
+      <DependentUpon>RadFEpisodeParametresCreation.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Form\LigneDeVie\RadFEpisodeParametresCreation.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form\LigneDeVie\RadFEpisodeParametresSaisie.Designer.vb">
+      <DependentUpon>RadFEpisodeParametresSaisie.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Form\LigneDeVie\RadFEpisodeParametresSaisie.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Form\LigneDeVie\RadFLigneDeVieGraphe.Designer.vb">
       <DependentUpon>RadFLigneDeVieGraphe.vb</DependentUpon>
     </Compile>
     <Compile Include="Form\LigneDeVie\RadFLigneDeVieGraphe.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form\Patient\RadFPatientRendez-vousListe.Designer.vb">
+      <DependentUpon>RadFPatientRendez-vousListe.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Form\Patient\RadFPatientRendez-vousListe.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Form\Traitement\RadFDeclarationAllergieEtCIDetail.Designer.vb">
@@ -406,12 +424,6 @@
       <DependentUpon>RadFParametreSelecteur.vb</DependentUpon>
     </Compile>
     <Compile Include="Form\Parametre\RadFParametreSelecteur.vb">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Form\Patient\RadFPatientRendez-vousListe.Designer.vb">
-      <DependentUpon>RadFPatientRendez-vousListe.vb</DependentUpon>
-    </Compile>
-    <Compile Include="Form\Patient\RadFPatientRendez-vousListe.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Form\tache\FrmAgendaMedecin.Designer.vb">
@@ -874,8 +886,17 @@
     <EmbeddedResource Include="Form\Episode\RadFEpisodeProtocoleAiguDetail.resx">
       <DependentUpon>RadFEpisodeProtocoleAiguDetail.vb</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Form\LigneDeVie\RadFEpisodeParametresCreation.resx">
+      <DependentUpon>RadFEpisodeParametresCreation.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form\LigneDeVie\RadFEpisodeParametresSaisie.resx">
+      <DependentUpon>RadFEpisodeParametresSaisie.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Form\LigneDeVie\RadFLigneDeVieGraphe.resx">
       <DependentUpon>RadFLigneDeVieGraphe.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form\Patient\RadFPatientRendez-vousListe.resx">
+      <DependentUpon>RadFPatientRendez-vousListe.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Form\Traitement\RadFDeclarationAllergieEtCIDetail.resx">
       <DependentUpon>RadFDeclarationAllergieEtCIDetail.vb</DependentUpon>
@@ -891,9 +912,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Form\Parametre\RadFParametreSelecteur.resx">
       <DependentUpon>RadFParametreSelecteur.vb</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Form\Patient\RadFPatientRendez-vousListe.resx">
-      <DependentUpon>RadFPatientRendez-vousListe.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Form\tache\FrmAgendaMedecin.resx">
       <DependentUpon>FrmAgendaMedecin.vb</DependentUpon>

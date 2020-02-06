@@ -7,6 +7,7 @@ Public Class RadFEpisodeEnCoursListe
     Dim patient As New Patient
 
     Private Sub RadFEpisodeEnCoursListe_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        afficheTitleForm(Me, "Liste des épisodes patient en cours")
         ChargementEpisode()
     End Sub
 

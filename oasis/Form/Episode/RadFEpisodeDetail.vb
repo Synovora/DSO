@@ -94,12 +94,12 @@ Public Class RadFEpisodeDetail
     Dim RadioTypeConclusionIdeModified As Boolean = False
     Dim ChargementConclusionEnCours As Boolean
 
-    Dim ProtocoleAiguExiste As Boolean
-    Dim WorkflowEnCoursExistant As Boolean
-    Dim DemandeAvisMedicalExiste As Boolean
-    Dim ConclusionMedicaleExiste As Boolean
-    Dim OrdonnanceValide As Boolean = False
-    Dim OrdonnanceExiste As Boolean = False
+    Dim ControleProtocoleAiguExiste As Boolean
+    Dim ControleWorkflowEnCoursExistant As Boolean
+    Dim ControleDemandeAvisMedicalExiste As Boolean
+    Dim ControleConclusionMedicaleExiste As Boolean
+    Dim ControleOrdonnanceValide As Boolean = False
+    Dim ControleOrdonnanceExiste As Boolean = False
 
     Dim LongueurStringAllergie As Integer
 
@@ -357,25 +357,25 @@ Public Class RadFEpisodeDetail
         If dt.Rows.Count > 0 Then
             OrdonnanceToolStripMenuItem.ForeColor = Color.Red
             If dt.Rows.Count > 0 Then
-                OrdonnanceExiste = True
+                ControleOrdonnanceExiste = True
                 Dim DateValidation As Date
                 DateValidation = Coalesce(dt.Rows(0)("oa_ordonnance_date_validation"), Nothing)
                 If DateValidation <> Nothing Then
-                    OrdonnanceValide = True
+                    ControleOrdonnanceValide = True
                 Else
-                    OrdonnanceValide = False
+                    ControleOrdonnanceValide = False
                 End If
             End If
         Else
             OrdonnanceToolStripMenuItem.ForeColor = Color.Black
-            OrdonnanceExiste = False
-            OrdonnanceValide = False
+            ControleOrdonnanceExiste = False
+            ControleOrdonnanceValide = False
         End If
 
         Select Case episode.Etat
             Case EpisodeDao.EnumEtatEpisode.EN_COURS.ToString
-                If OrdonnanceExiste = True Then
-                    If OrdonnanceValide = True Then
+                If ControleOrdonnanceExiste = True Then
+                    If ControleOrdonnanceValide = True Then
                         LblLabelEtatEpisode.Text = "Episode en cours (ordonnance validée)"
                     Else
                         LblLabelEtatEpisode.Text = "Episode en cours (ordonnance en attente de validation !)"
@@ -692,7 +692,7 @@ Public Class RadFEpisodeDetail
     '=== Observations spécifiques
     '====================================================================================================================================
     Private Sub ChargementObservationSpecifique()
-        ProtocoleAiguExiste = False
+        ControleProtocoleAiguExiste = False
         ChargementEpisodeActesParamedicauxParamedical()
         ChargementEpisodeActesParamedicauxMedical()
     End Sub
@@ -724,7 +724,7 @@ Public Class RadFEpisodeDetail
             RadObsSpeParDataGridView.Rows(iGrid).Cells("categorieOasis").Value = Coalesce(acteParamedicalDataTable.Rows(i)("oa_drc_oasis_categorie"), 0)
             If RadObsSpeParDataGridView.Rows(iGrid).Cells("categorieOasis").Value = DrcDao.EnumCategorieOasisCode.ProtocoleAigu Then
                 RadObsSpeParDataGridView.Rows(iGrid).Cells("drcDescription").Style.ForeColor = Color.Red
-                ProtocoleAiguExiste = True
+                ControleProtocoleAiguExiste = True
             End If
         Next
 
@@ -902,7 +902,7 @@ Public Class RadFEpisodeDetail
             RadObsSpeMedDataGridView.Rows(iGrid).Cells("categorieOasis").Value = Coalesce(acteParamedicalDataTable.Rows(i)("oa_drc_oasis_categorie"), 0)
             If RadObsSpeMedDataGridView.Rows(iGrid).Cells("categorieOasis").Value = DrcDao.EnumCategorieOasisCode.ProtocoleAigu Then
                 RadObsSpeMedDataGridView.Rows(iGrid).Cells("drcDescription").Style.ForeColor = Color.Red
-                ProtocoleAiguExiste = True
+                ControleProtocoleAiguExiste = True
             End If
         Next
 
@@ -1173,7 +1173,7 @@ Public Class RadFEpisodeDetail
         'Identifier si Workflow en cours
         tache = tacheDao.GetDemandeEnCoursByEpisode(SelectedEpisodeId)
         If tache.Id <> 0 Then
-            WorkflowEnCoursExistant = True
+            ControleWorkflowEnCoursExistant = True
             Dim fonctionDestinataire As Fonction
             fonctionDestinataire = fonctionDao.getFonctionById(tache.DestinataireFonctionId)
             Select Case fonctionDestinataire.Type
@@ -1213,7 +1213,7 @@ Public Class RadFEpisodeDetail
                     LblWorkflowMed.Show()
             End Select
         Else
-            WorkflowEnCoursExistant = False
+            ControleWorkflowEnCoursExistant = False
             Select Case userLog.TypeProfil
                 Case ProfilDao.EnumProfilType.PARAMEDICAL.ToString
                     RadBtnWorkflowIde.Text = "Créer"
@@ -1235,7 +1235,7 @@ Public Class RadFEpisodeDetail
         If episode.TypeProfil = EpisodeDao.EnumTypeProfil.PARAMEDICAL.ToString Then
             'Controle si Workflow de demande d'avis médical (en cours ou terminé) existe
             If tacheDao.ExisteDemandeAvisMedicalByEpisode(SelectedEpisodeId) = True Then
-                DemandeAvisMedicalExiste = True
+                ControleDemandeAvisMedicalExiste = True
                 ControleTypeConclusionParamedicaleSurDemandeAvis()
             End If
         End If
@@ -1249,13 +1249,13 @@ Public Class RadFEpisodeDetail
 
     Private Sub RadBtnWorkflowMed_Click(sender As Object, e As EventArgs) Handles RadBtnWorkflowMed.Click
         ControleGestionWorkflow()
-        GestionClotureAutomatique()
+        'GestionClotureAutomatique()
     End Sub
 
     Private Sub ControleGestionWorkflow()
         tache = tacheDao.GetDemandeEnCoursByEpisode(SelectedEpisodeId)
         If tache.Id <> 0 Then
-            If WorkflowEnCoursExistant = False Then
+            If ControleWorkflowEnCoursExistant = False Then
                 ChargementAffichageBlocWorkflow()
                 MessageBox.Show("Opération annulée, une demande d'avis vient d'être créée pour cet épisode par un autre utilisateur")
                 Exit Sub
@@ -1364,7 +1364,7 @@ Public Class RadFEpisodeDetail
                         RadioBtnDemandeAvis.Checked = True
                         RadioTypeConclusionIdeModified = False
                     Case Else
-                        If ProtocoleAiguExiste = True Then
+                        If ControleProtocoleAiguExiste = True Then
                             RadioBtnSurProtocole.Checked = True
                             episode.ConclusionIdeType = EpisodeDao.EnumTypeConclusionParamedicale.SUR_PROTOCOLE.ToString
                             episodeDao.ModificationEpisode(episode)
@@ -1397,7 +1397,7 @@ Public Class RadFEpisodeDetail
 
     Private Sub ControleTypeConclusionParamedicaleSurDemandeAvis()
         If episode.TypeProfil = EpisodeDao.EnumTypeProfil.PARAMEDICAL.ToString Then
-            If DemandeAvisMedicalExiste = True Then
+            If ControleDemandeAvisMedicalExiste = True Then
                 RadioBtnDemandeAvis.Checked = True
                 RadioBtnDemandeAvis.Enabled = False
                 RadioBtnRolePropre.Enabled = False
@@ -1424,7 +1424,7 @@ Public Class RadFEpisodeDetail
 
         'Booléen pour déterminer si la conclusion médicale existe (au - un contexte)
         If episodeContexteDt.Rows.Count > 0 Then
-            ConclusionMedicaleExiste = True
+            ControleConclusionMedicaleExiste = True
         End If
 
         RadGridViewContexteEpisode.Rows.Clear()
@@ -1682,7 +1682,7 @@ Public Class RadFEpisodeDetail
         'Si une demande d'avis est en cours (médicale ou paramédicale), on ne peut pas clôturer l'épisode
         tache = tacheDao.GetDemandeEnCoursByEpisode(SelectedEpisodeId)
         If tache.Id <> 0 Then
-            WorkflowEnCoursExistant = True
+            ControleWorkflowEnCoursExistant = True
             MessageBox.Show("Cet épisode ne peut être clôturé tant qu'une demande d'avis est en cours")
             Exit Sub
         End If
@@ -1702,7 +1702,7 @@ Public Class RadFEpisodeDetail
 
         'Si l'épisode a été créé par un profil Médical, la conclusion médicale est requise pour clôturer l'épisode
         If episode.TypeProfil = EpisodeDao.EnumTypeProfil.MEDICAL.ToString Then
-            If ConclusionMedicaleExiste = False Then
+            If ControleConclusionMedicaleExiste = False Then
                 MessageBox.Show("Episode créé par un profil 'Médical', la clôture de l'épisode est impossible tant que la conclusion médicale n'est pas réalisée" & vbCrLf &
                                 "(Une conclusion médicale implique d'associer au moins un contexte à l'épisode")
                 Exit Sub
@@ -1710,8 +1710,8 @@ Public Class RadFEpisodeDetail
         End If
 
         'Si une demande d'avis médical existe (en cours ou terminée), une conclusion médicale est requise pour réaliser la clôture
-        If DemandeAvisMedicalExiste = True Then
-            If ConclusionMedicaleExiste = False Then
+        If ControleDemandeAvisMedicalExiste = True Then
+            If ControleConclusionMedicaleExiste = False Then
                 MessageBox.Show("Suite à une demande d'avis médical, la clôture de l'épisode est impossible tant que la conclusion médicale n'est pas réalisée" & vbCrLf &
                                 "(Une conclusion médicale implique d'associer au moins un contexte à l'épisode")
                 Exit Sub
@@ -1730,7 +1730,11 @@ Public Class RadFEpisodeDetail
         End If
 
         'Si une orrdonnance existe et que celle-ci n'est pas signée la clôture n'est pas possoble
-        'TODO: Episode détail - Vérifier si une ordonnance valide existe et n'est signée, interdire dans ce cas la clôture
+        If ControleOrdonnanceExiste = True Then
+            If ControleOrdonnanceValide = False Then
+                MessageBox.Show("Une ordonnance existe et n'est pas encore validée, la signature médicale de l'ordonnance est requise pour assurer la clôture de l'épisode.")
+            End If
+        End If
 
         ClotureEpisode()
     End Sub
@@ -1739,11 +1743,14 @@ Public Class RadFEpisodeDetail
     Private Sub GestionClotureAutomatique()
         If userLog.TypeProfil = ProfilDao.EnumProfilType.PARAMEDICAL.ToString Then
             If episode.TypeProfil = EpisodeDao.EnumTypeProfil.PARAMEDICAL.ToString Then
-                If DemandeAvisMedicalExiste = True Then
-                    If WorkflowEnCoursExistant = False Then
-                        If ConclusionMedicaleExiste = True Then
-                            'episode.ConclusionIdeType = EpisodeDao.EnumTypeConclusionParamedicale.DEMANDE_AVIS.ToString
-                            'TODO: Episode détail - Alerte si ordonnance existe et n'est pas signée!!!!!!!!!!!!
+                If ControleDemandeAvisMedicalExiste = True Then
+                    If ControleWorkflowEnCoursExistant = False Then
+                        If ControleConclusionMedicaleExiste = True Then
+                            If ControleOrdonnanceExiste = True AndAlso ControleOrdonnanceValide = False Then
+                                'Alerte : si ordonnance existe et n'est pas signée, clôture annulée
+                                MessageBox.Show("L'épiosde ne peut pas être clôturé tant que l'ordonnance médicale en cours n'est pas signée")
+                                Exit Sub
+                            End If
                             ClotureEpisode()
                         End If
                     End If
@@ -1803,6 +1810,49 @@ Public Class RadFEpisodeDetail
             Dim form As New RadFNotification()
             form.Titre = "Notification épisode patient"
             form.Message = "=== Episode clôturé ==="
+            form.Show()
+            Close()
+        End If
+    End Sub
+
+    'Annulation de l'épisode
+    Private Sub RadBtnAnnulerEpisode_Click(sender As Object, e As EventArgs) Handles RadBtnAnnulerEpisode.Click
+        'Annulation interdite si demande d'avis médical existe
+        If ControleDemandeAvisMedicalExiste = True Then
+            MessageBox.Show("Une demande d'avis médicale existe pour cet épisode, l'annulation de l'épisode n'est pas permise.")
+            Exit Sub
+        End If
+
+        'Annulation interdite si workflow en cours existant
+        If ControleWorkflowEnCoursExistant = True Then
+            MessageBox.Show("Une demande d'avis est en cours pour cet épisode, l'annulation de l'épisode n'est pas permise.")
+            Exit Sub
+        End If
+
+        'Annulation interdite si conclusion médicale existe
+        If ControleConclusionMedicaleExiste = True Then
+            MessageBox.Show("La conclusion médicale a été réalisée pour cet épisode, l'annulation de l'épisode n'est pas permise.")
+            Exit Sub
+        End If
+
+        'Annulation impossible si ordonnance en cours (signée ou non) existe
+        If ControleOrdonnanceExiste = True Then
+            MessageBox.Show("Une ordonnance existe pour cet épisode, l'annulation de l'épisode n'est pas permise.")
+            Exit Sub
+        End If
+
+        AnnulationEpisode()
+    End Sub
+
+    Private Sub AnnulationEpisode()
+        episode.Etat = EpisodeDao.EnumEtatEpisode.ANNULE.ToString
+        episode.Inactif = True
+        episode.DateModification = Date.Now()
+        episode.UserModification = userLog.UtilisateurId
+        If episodeDao.ModificationEpisode(episode) = True Then
+            Dim form As New RadFNotification()
+            form.Titre = "Notification épisode patient"
+            form.Message = "=== Episode annulé ==="
             form.Show()
             Close()
         End If
@@ -2901,6 +2951,33 @@ Public Class RadFEpisodeDetail
             End Using
             Me.Enabled = True
         End If
+    End Sub
+
+    'Déclaration d'une allergie ou d'une contre-indication
+    Private Sub DéclarationAllergieOuContreindicationToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles DéclarationAllergieOuContreindicationToolStripMenuItem.Click
+        Me.Enabled = False
+        Cursor.Current = Cursors.WaitCursor
+        Dim SelectedMedicamentCis As Integer
+        Using vFMedocSelecteur As New RadFMedocSelecteur
+            vFMedocSelecteur.SelectedPatient = Me.SelectedPatient
+            vFMedocSelecteur.Allergie = Me.Allergie
+            vFMedocSelecteur.ContreIndication = Me.ContreIndication
+            vFMedocSelecteur.ShowDialog() 'Modal
+            SelectedMedicamentCis = vFMedocSelecteur.SelectedMedicamentCis
+            'Si un médicament a été sélectionné
+            If SelectedMedicamentCis <> 0 Then
+                Using form As New RadFDeclarationAllergieEtCIDetail
+                    form.SelectedPatient = Me.SelectedPatient
+                    form.SelectedMedicamentCis = SelectedMedicamentCis
+                    form.SelectedTraitementId = 0
+                    form.ShowDialog()
+                    If form.CodeRetour = True Then
+                        ChargementTraitement()
+                    End If
+                End Using
+            End If
+        End Using
+        Me.Enabled = True
     End Sub
 
     'Visualisation de l'historique des actions réalisées sur un traitement
@@ -4108,7 +4185,7 @@ Public Class RadFEpisodeDetail
         RadPnlWorkflowIDE.Enabled = True
         TxtConclusionIDE.Enabled = True
         If episode.ConclusionIdeType = EpisodeDao.EnumTypeConclusionParamedicale.DEMANDE_AVIS.ToString Then
-            If DemandeAvisMedicalExiste = True Then
+            If ControleDemandeAvisMedicalExiste = True Then
                 Exit Sub
             End If
         End If

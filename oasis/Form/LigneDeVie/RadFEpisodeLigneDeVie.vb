@@ -792,4 +792,13 @@ Public Class RadFEpisodeLigneDeVie
         End If
 
     End Sub
+
+    'Création épiosde de saisie de paramètres
+    Private Sub RadBtnCreationEpisodeParametre_Click(sender As Object, e As EventArgs) Handles RadBtnCreationEpisodeParametre.Click
+        Using form As New RadFEpisodeParametresCreation
+            form.SelectedPatient = SelectedPatient
+            form.ShowDialog()
+            ChargementEpisode(ligneDeVie)
+        End Using
+    End Sub
 End Class

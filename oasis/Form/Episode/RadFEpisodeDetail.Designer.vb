@@ -160,6 +160,7 @@ Partial Class RadFEpisodeDetail
         Me.LblPatientGenre = New System.Windows.Forms.Label()
         Me.LblPatientNIR = New System.Windows.Forms.Label()
         Me.RadPanel2 = New Telerik.WinControls.UI.RadPanel()
+        Me.RadBtnAnnulerEpisode = New Telerik.WinControls.UI.RadButton()
         Me.RadPanel12 = New Telerik.WinControls.UI.RadPanel()
         Me.RadBtnSocial = New Telerik.WinControls.UI.RadButton()
         Me.RadBtnLigneDeVie = New Telerik.WinControls.UI.RadButton()
@@ -260,6 +261,7 @@ Partial Class RadFEpisodeDetail
         Me.TraitementsObsoletesToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.ListeDesMédicamentsDéclarésAllergiquesToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.ListeDesMédicamentsDéclarésContreindiquésToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.DéclarationAllergieOuContreindicationToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.ToolStripSeparator11 = New System.Windows.Forms.ToolStripSeparator()
         Me.OrdonnanceToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.ToolStripSeparator6 = New System.Windows.Forms.ToolStripSeparator()
@@ -323,6 +325,7 @@ Partial Class RadFEpisodeDetail
         Me.RadGroupBoxEtatCivil.SuspendLayout()
         CType(Me.RadPanel2, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.RadPanel2.SuspendLayout()
+        CType(Me.RadBtnAnnulerEpisode, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.RadPanel12, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.RadPanel12.SuspendLayout()
         CType(Me.RadBtnSocial, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -1153,6 +1156,7 @@ Partial Class RadFEpisodeDetail
         '
         'RadPanel2
         '
+        Me.RadPanel2.Controls.Add(Me.RadBtnAnnulerEpisode)
         Me.RadPanel2.Controls.Add(Me.RadPanel12)
         Me.RadPanel2.Controls.Add(Me.RadBtnGenProtocole)
         Me.RadPanel2.Controls.Add(Me.RadBtnSousEpisode)
@@ -1165,6 +1169,14 @@ Partial Class RadFEpisodeDetail
         Me.RadPanel2.Name = "RadPanel2"
         Me.RadPanel2.Size = New System.Drawing.Size(1448, 38)
         Me.RadPanel2.TabIndex = 1
+        '
+        'RadBtnAnnulerEpisode
+        '
+        Me.RadBtnAnnulerEpisode.Location = New System.Drawing.Point(370, 11)
+        Me.RadBtnAnnulerEpisode.Name = "RadBtnAnnulerEpisode"
+        Me.RadBtnAnnulerEpisode.Size = New System.Drawing.Size(110, 24)
+        Me.RadBtnAnnulerEpisode.TabIndex = 45
+        Me.RadBtnAnnulerEpisode.Text = "Annuler l'épisode"
         '
         'RadPanel12
         '
@@ -2448,9 +2460,9 @@ Partial Class RadFEpisodeDetail
         '
         'TraitementContextMenuStrip
         '
-        Me.TraitementContextMenuStrip.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.CréerUnTraitementToolStripMenuItem1, Me.ToolStripSeparator2, Me.GérerUneFenêtreThérapeutiqueToolStripMenuItem, Me.HistoriqueToolStripMenuItem, Me.ToolStripSeparator1, Me.TraitementsObsoletesToolStripMenuItem, Me.ListeDesMédicamentsDéclarésAllergiquesToolStripMenuItem, Me.ListeDesMédicamentsDéclarésContreindiquésToolStripMenuItem, Me.ToolStripSeparator11, Me.OrdonnanceToolStripMenuItem, Me.ToolStripSeparator6, Me.RafraichirLécranToolStripMenuItem})
+        Me.TraitementContextMenuStrip.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.CréerUnTraitementToolStripMenuItem1, Me.ToolStripSeparator2, Me.GérerUneFenêtreThérapeutiqueToolStripMenuItem, Me.HistoriqueToolStripMenuItem, Me.ToolStripSeparator1, Me.TraitementsObsoletesToolStripMenuItem, Me.ListeDesMédicamentsDéclarésAllergiquesToolStripMenuItem, Me.ListeDesMédicamentsDéclarésContreindiquésToolStripMenuItem, Me.DéclarationAllergieOuContreindicationToolStripMenuItem, Me.ToolStripSeparator11, Me.OrdonnanceToolStripMenuItem, Me.ToolStripSeparator6, Me.RafraichirLécranToolStripMenuItem})
         Me.TraitementContextMenuStrip.Name = "TraitementContextMenuStrip"
-        Me.TraitementContextMenuStrip.Size = New System.Drawing.Size(346, 204)
+        Me.TraitementContextMenuStrip.Size = New System.Drawing.Size(346, 226)
         '
         'CréerUnTraitementToolStripMenuItem1
         '
@@ -2497,6 +2509,12 @@ Partial Class RadFEpisodeDetail
         Me.ListeDesMédicamentsDéclarésContreindiquésToolStripMenuItem.Name = "ListeDesMédicamentsDéclarésContreindiquésToolStripMenuItem"
         Me.ListeDesMédicamentsDéclarésContreindiquésToolStripMenuItem.Size = New System.Drawing.Size(345, 22)
         Me.ListeDesMédicamentsDéclarésContreindiquésToolStripMenuItem.Text = "Liste des substances contre-indiquées"
+        '
+        'DéclarationAllergieOuContreindicationToolStripMenuItem
+        '
+        Me.DéclarationAllergieOuContreindicationToolStripMenuItem.Name = "DéclarationAllergieOuContreindicationToolStripMenuItem"
+        Me.DéclarationAllergieOuContreindicationToolStripMenuItem.Size = New System.Drawing.Size(345, 22)
+        Me.DéclarationAllergieOuContreindicationToolStripMenuItem.Text = "Déclaration allergie ou contre-indication"
         '
         'ToolStripSeparator11
         '
@@ -3052,6 +3070,7 @@ Partial Class RadFEpisodeDetail
         Me.RadGroupBoxEtatCivil.PerformLayout()
         CType(Me.RadPanel2, System.ComponentModel.ISupportInitialize).EndInit()
         Me.RadPanel2.ResumeLayout(False)
+        CType(Me.RadBtnAnnulerEpisode, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.RadPanel12, System.ComponentModel.ISupportInitialize).EndInit()
         Me.RadPanel12.ResumeLayout(False)
         CType(Me.RadBtnSocial, System.ComponentModel.ISupportInitialize).EndInit()
@@ -3422,5 +3441,7 @@ Partial Class RadFEpisodeDetail
     Friend WithEvents ConclusionContexteMenuStrip As ContextMenuStrip
     Friend WithEvents EnleverUnContexteDeConclusionToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents LblLabelEtatEpisode As Label
+    Friend WithEvents RadBtnAnnulerEpisode As Telerik.WinControls.UI.RadButton
+    Friend WithEvents DéclarationAllergieOuContreindicationToolStripMenuItem As ToolStripMenuItem
 End Class
 
