@@ -84,6 +84,7 @@ Public Class RadFEpisodeLigneDeVie
 
         ChkTypeConsultation.Checked = True
         ChkTypeVirtuel.Checked = True
+        ChkTypeParametre.Checked = True
 
         ChkEnfantPreScolaire.Checked = True
         ChkEnfantScolaire.Checked = True
@@ -99,6 +100,7 @@ Public Class RadFEpisodeLigneDeVie
 
         ligneDeVie.TypeConsultation = True
         ligneDeVie.TypeVirtuel = True
+        ligneDeVie.TypeParametre = True
 
         ligneDeVie.ActivitePathologieAigue = True
         ligneDeVie.ActivitePreventionAutre = True
@@ -152,6 +154,7 @@ Public Class RadFEpisodeLigneDeVie
         If ConfigurationParametreExiste = True Then
             ChkTypeConsultation.Checked = patientParametreLdv.TypeConsultation
             ChkTypeVirtuel.Checked = patientParametreLdv.TypeVirtuel
+            ChkTypeParametre.Checked = patientParametreLdv.TypeParametre
 
             ChkEnfantPreScolaire.Checked = patientParametreLdv.ActivitePreventionEnfantPreScolaire
             ChkEnfantScolaire.Checked = patientParametreLdv.ActivitePreventionEnfantScolaire
@@ -167,6 +170,7 @@ Public Class RadFEpisodeLigneDeVie
 
             ligneDeVie.TypeConsultation = patientParametreLdv.TypeConsultation
             ligneDeVie.TypeVirtuel = patientParametreLdv.TypeVirtuel
+            ligneDeVie.TypeParametre = patientParametreLdv.TypeParametre
 
             ligneDeVie.ActivitePathologieAigue = patientParametreLdv.ActivitePathologieAigue
             ligneDeVie.ActivitePreventionAutre = patientParametreLdv.ActivitePreventionAutre
@@ -317,7 +321,13 @@ Public Class RadFEpisodeLigneDeVie
 
             RadGridViewEpisode.Rows(iGrid).Cells("episode_id").Value = dt.Rows(i)("episode_id")
             RadGridViewEpisode.Rows(iGrid).Cells("type").Value = Coalesce(dt.Rows(i)("type"), "")
-            RadGridViewEpisode.Rows(iGrid).Cells("type_activite").Value = episodeDao.GetItemTypeActiviteByCode(Coalesce(dt.Rows(i)("type_activite"), ""))
+
+            If dt.Rows(i)("type_activite") = EpisodeDao.EnumTypeEpisode.PARAMETRE.ToString Then
+                RadGridViewEpisode.Rows(iGrid).Cells("type_activite").Value = "Prise de paramètres"
+            Else
+                RadGridViewEpisode.Rows(iGrid).Cells("type_activite").Value = episodeDao.GetItemTypeActiviteByCode(Coalesce(dt.Rows(i)("type_activite"), ""))
+            End If
+
             RadGridViewEpisode.Rows(iGrid).Cells("type_profil").Value = Coalesce(dt.Rows(i)("type_profil"), "")
             RadGridViewEpisode.Rows(iGrid).Cells("description_activite").Value = Coalesce(dt.Rows(i)("description_activite"), "")
 
@@ -466,15 +476,29 @@ Public Class RadFEpisodeLigneDeVie
             Dim aRow As Integer = Me.RadGridViewEpisode.Rows.IndexOf(Me.RadGridViewEpisode.CurrentRow)
             If aRow >= 0 Then
                 Dim EpisodeId As Integer = RadGridViewEpisode.Rows(aRow).Cells("episode_Id").Value
-                Me.Enabled = False
-                Cursor.Current = Cursors.WaitCursor
-                Using form As New RadFEpisodeDetail
-                    form.SelectedEpisodeId = EpisodeId
-                    form.SelectedPatient = Me.SelectedPatient
-                    form.UtilisateurConnecte = Me.UtilisateurConnecte
-                    form.ShowDialog() 'Modal
-                End Using
-                Me.Enabled = True
+                If RadGridViewEpisode.Rows(aRow).Cells("type").Value = EpisodeDao.EnumTypeEpisode.PARAMETRE.ToString Then
+                    Me.Enabled = False
+                    Cursor.Current = Cursors.WaitCursor
+                    Using form As New RadFEpisodeParametresSaisie
+                        form.SelectedPatient = SelectedPatient
+                        form.SelectedEpisodeId = EpisodeId
+                        form.ShowDialog()
+                        If form.CodeRetour = True Then
+                            ChargementEpisode(ligneDeVie)
+                        End If
+                    End Using
+                    Me.Enabled = True
+                Else
+                    Me.Enabled = False
+                    Cursor.Current = Cursors.WaitCursor
+                    Using form As New RadFEpisodeDetail
+                        form.SelectedEpisodeId = EpisodeId
+                        form.SelectedPatient = Me.SelectedPatient
+                        form.UtilisateurConnecte = Me.UtilisateurConnecte
+                        form.ShowDialog() 'Modal
+                    End Using
+                    Me.Enabled = True
+                End If
             End If
         End If
     End Sub
@@ -661,6 +685,12 @@ Public Class RadFEpisodeLigneDeVie
             ligneDeVie.TypeVirtuel = False
         End If
 
+        If ChkTypeParametre.Checked = True Then
+            ligneDeVie.TypeParametre = True
+        Else
+            ligneDeVie.TypeParametre = False
+        End If
+
         'Profil
         If ChkProfilMedical.Checked = True Then
             ligneDeVie.ProfilMedical = True
@@ -757,6 +787,12 @@ Public Class RadFEpisodeLigneDeVie
             patientParametreLdv.TypeVirtuel = False
         End If
 
+        If ChkTypeParametre.Checked = True Then
+            patientParametreLdv.TypeParametre = True
+        Else
+            patientParametreLdv.TypeParametre = False
+        End If
+
         'Profil
         If ChkProfilMedical.Checked = True Then
             patientParametreLdv.ProfilMedical = True
@@ -793,7 +829,7 @@ Public Class RadFEpisodeLigneDeVie
 
     End Sub
 
-    'Création épiosde de saisie de paramètres
+    'Création épisode de saisie de paramètres
     Private Sub RadBtnCreationEpisodeParametre_Click(sender As Object, e As EventArgs) Handles RadBtnCreationEpisodeParametre.Click
         Using form As New RadFEpisodeParametresCreation
             form.SelectedPatient = SelectedPatient

@@ -2,6 +2,7 @@
     Private _patientId As Long
     Private _typeConsultation As Boolean
     Private _typeVirtuel As Boolean
+    Private _typeParametre As Boolean
     Private _activitePathologieAigue As Boolean
     Private _activiteSuiviChronique As Boolean
     Private _activitePreventionAutre As Boolean
@@ -197,6 +198,15 @@
         End Get
         Set(value As Date)
             _dateModification = value
+        End Set
+    End Property
+
+    Public Property TypeParametre As Boolean
+        Get
+            Return _typeParametre
+        End Get
+        Set(value As Boolean)
+            _typeParametre = value
         End Set
     End Property
 End Class

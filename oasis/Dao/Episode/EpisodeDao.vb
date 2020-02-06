@@ -245,6 +245,13 @@ Public Class EpisodeDao
             RechercherTypeEpisode = True
             TypeEpisodeString += EpisodeDao.EnumTypeEpisode.VIRTUEL.ToString & "'"
         End If
+        If ligneDeVie.TypeParametre = True Then
+            If RechercherTypeEpisode = True Then
+                TypeEpisodeString += ", '"
+            End If
+            RechercherTypeEpisode = True
+            TypeEpisodeString += EpisodeDao.EnumTypeEpisode.PARAMETRE.ToString & "'"
+        End If
         If RechercherTypeEpisode = True Then
             TypeEpisodeString += ")" & vbCrLf
         End If
@@ -320,6 +327,13 @@ Public Class EpisodeDao
             End If
             RechercherActiviteEpisode = True
             ActiviteEpisodeString += EpisodeDao.EnumTypeActiviteEpisodeCode.PREVENTION_SUIVI_GYNECOLOGIQUE & "'"
+        End If
+        If ligneDeVie.TypeParametre = True Then
+            If RechercherActiviteEpisode = True Then
+                ActiviteEpisodeString += ", '"
+            End If
+            RechercherActiviteEpisode = True
+            ActiviteEpisodeString += EpisodeDao.EnumTypeEpisode.PARAMETRE.ToString & "'"
         End If
         If RechercherActiviteEpisode = True Then
             ActiviteEpisodeString += ")" & vbCrLf
@@ -405,13 +419,21 @@ Public Class EpisodeDao
 
         Dim dateCreation As Date = Date.Now.Date
 
-        Dim SQLstring As String =
-        "IF Not EXISTS (SELECT 1 FROM oasis.oa_episode WHERE patient_id = @patientId And etat = @etat)" &
-        " INSERT INTO oasis.oa_episode" &
-        " (patient_id, type, type_activite, type_profil, description_activite, commentaire," &
-        " user_creation, date_creation, etat)" &
-        " VALUES (@patientId, @type, @typeActivite, @typeProfil, @descriptionActivite, @commentaire," &
-        " @userCreation, @dateCreation, @etat)"
+        Dim SQLstring As String
+        If episode.Type = EpisodeDao.EnumTypeEpisode.PARAMETRE.ToString Then
+            SQLstring = " INSERT INTO oasis.oa_episode" &
+            " (patient_id, type, type_activite, type_profil, description_activite, commentaire," &
+            " user_creation, date_creation, etat)" &
+            " VALUES (@patientId, @type, @typeActivite, @typeProfil, @descriptionActivite, @commentaire," &
+            " @userCreation, @dateCreation, '" & EpisodeDao.EnumEtatEpisode.CLOTURE.ToString & "')"
+        Else
+            SQLstring = "IF Not EXISTS (SELECT 1 FROM oasis.oa_episode WHERE patient_id = @patientId And etat = @etat)" &
+            " INSERT INTO oasis.oa_episode" &
+            " (patient_id, type, type_activite, type_profil, description_activite, commentaire," &
+            " user_creation, date_creation, etat)" &
+            " VALUES (@patientId, @type, @typeActivite, @typeProfil, @descriptionActivite, @commentaire," &
+            " @userCreation, @dateCreation, @etat)"
+        End If
 
         Dim cmd As New SqlCommand(SQLstring, con)
         With cmd.Parameters

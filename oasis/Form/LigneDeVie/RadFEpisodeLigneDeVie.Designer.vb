@@ -89,6 +89,7 @@ Partial Class RadFEpisodeLigneDeVie
         Me.RadBtnChart = New Telerik.WinControls.UI.RadButton()
         Me.RadBtnConfiguration = New Telerik.WinControls.UI.RadButton()
         Me.RadBtnCreationEpisodeParametre = New Telerik.WinControls.UI.RadButton()
+        Me.ChkTypeParametre = New System.Windows.Forms.CheckBox()
         CType(Me.RadBtnAbandon, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.RadBtnEpisode, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.RadGroupBoxEtatCivil, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -562,6 +563,7 @@ Partial Class RadFEpisodeLigneDeVie
         '
         Me.RadGbxFiltre.AccessibleRole = System.Windows.Forms.AccessibleRole.Grouping
         Me.RadGbxFiltre.BackColor = System.Drawing.SystemColors.GradientInactiveCaption
+        Me.RadGbxFiltre.Controls.Add(Me.ChkTypeParametre)
         Me.RadGbxFiltre.Controls.Add(Me.ChkTypeConsultation)
         Me.RadGbxFiltre.Controls.Add(Me.ChkTypeVirtuel)
         Me.RadGbxFiltre.Controls.Add(Me.ChkPathologieAigue)
@@ -674,11 +676,21 @@ Partial Class RadFEpisodeLigneDeVie
         '
         'RadBtnCreationEpisodeParametre
         '
-        Me.RadBtnCreationEpisodeParametre.Location = New System.Drawing.Point(1192, 696)
+        Me.RadBtnCreationEpisodeParametre.Location = New System.Drawing.Point(1131, 696)
         Me.RadBtnCreationEpisodeParametre.Name = "RadBtnCreationEpisodeParametre"
-        Me.RadBtnCreationEpisodeParametre.Size = New System.Drawing.Size(110, 24)
+        Me.RadBtnCreationEpisodeParametre.Size = New System.Drawing.Size(171, 24)
         Me.RadBtnCreationEpisodeParametre.TabIndex = 27
-        Me.RadBtnCreationEpisodeParametre.Text = "Saisie paramètres"
+        Me.RadBtnCreationEpisodeParametre.Text = "Création épisode de paramètres"
+        '
+        'ChkTypeParametre
+        '
+        Me.ChkTypeParametre.AutoSize = True
+        Me.ChkTypeParametre.Location = New System.Drawing.Point(177, 21)
+        Me.ChkTypeParametre.Name = "ChkTypeParametre"
+        Me.ChkTypeParametre.Size = New System.Drawing.Size(77, 17)
+        Me.ChkTypeParametre.TabIndex = 16
+        Me.ChkTypeParametre.Text = "Parametre"
+        Me.ChkTypeParametre.UseVisualStyleBackColor = True
         '
         'RadFEpisodeLigneDeVie
         '
@@ -779,5 +791,6 @@ Partial Class RadFEpisodeLigneDeVie
     Friend WithEvents RadBtnChart As Telerik.WinControls.UI.RadButton
     Friend WithEvents RadBtnConfiguration As Telerik.WinControls.UI.RadButton
     Friend WithEvents RadBtnCreationEpisodeParametre As Telerik.WinControls.UI.RadButton
+    Friend WithEvents ChkTypeParametre As CheckBox
 End Class
 

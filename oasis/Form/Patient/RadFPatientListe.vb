@@ -461,6 +461,19 @@ Public Class RadFPatientListe
         Me.Enabled = True
     End Sub
 
+    Private Sub RadBtnLigneDeVie_Click(sender As Object, e As EventArgs) Handles RadBtnLigneDeVie.Click
+        Me.Enabled = False
+        Cursor.Current = Cursors.WaitCursor
+        Dim patientId As Integer = CInt(TxtIdSelected.Text)
+        Using vadFEpisodeListe As New RadFEpisodeLigneDeVie
+            PatientDao.SetPatient(Me.SelectedPatient, patientId)
+            vadFEpisodeListe.SelectedPatient = Me.SelectedPatient
+            vadFEpisodeListe.UtilisateurConnecte = Me.UtilisateurConnecte
+            vadFEpisodeListe.ShowDialog()
+        End Using
+        Me.Enabled = True
+    End Sub
+
     Private Sub RadBtnEpisodeEnCours_Click(sender As Object, e As EventArgs) Handles RadBtnEpisodeEnCours.Click
         Cursor.Current = Cursors.WaitCursor
         Me.Enabled = False

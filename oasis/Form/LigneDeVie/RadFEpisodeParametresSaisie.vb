@@ -4,6 +4,7 @@ Imports Telerik.WinControls.UI
 Public Class RadFEpisodeParametresSaisie
     Private _SelectedPatient As Patient
     Private _SelectedEpisodeId As Long
+    Private _CodeRetour As Boolean
 
     Public Property SelectedPatient As Patient
         Get
@@ -23,10 +24,21 @@ Public Class RadFEpisodeParametresSaisie
         End Set
     End Property
 
+    Public Property CodeRetour As Boolean
+        Get
+            Return _CodeRetour
+        End Get
+        Set(value As Boolean)
+            _CodeRetour = value
+        End Set
+    End Property
+
     Dim episodeParametreDao As New EpisodeParametreDao
 
     Private Sub RadFEpisodeParametresSaisie_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        Me.CodeRetour = False
         ChargementEtatCivil()
+        InitParametre()
         ChargementParametres()
     End Sub
 
@@ -299,6 +311,7 @@ Public Class RadFEpisodeParametresSaisie
             If vRadFParametreDetailEdit.CodeRetour = True Then
                 InitParametre()
                 ChargementParametres()
+                Me.CodeRetour = True
             End If
         End Using
         Me.Enabled = True

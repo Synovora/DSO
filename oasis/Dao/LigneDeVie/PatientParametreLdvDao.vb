@@ -45,6 +45,7 @@ Public Class PatientParametreLdvDao
         patientParametreLdv.ActiviteSuiviChronique = Coalesce(reader("activite_suivi_chronique"), False)
         patientParametreLdv.TypeConsultation = Coalesce(reader("type_consultation"), False)
         patientParametreLdv.TypeVirtuel = Coalesce(reader("type_virtuel"), False)
+        patientParametreLdv.TypeParametre = Coalesce(reader("type_parametre"), False)
         patientParametreLdv.ProfilMedical = Coalesce(reader("profil_medical"), False)
         patientParametreLdv.ProfilParamedical = Coalesce(reader("profil_paramedical"), False)
         patientParametreLdv.Parametre1 = Coalesce(reader("parametre1"), 0)
@@ -72,10 +73,10 @@ Public Class PatientParametreLdvDao
         "IF Not EXISTS (SELECT 1 FROM oasis.oa_patient_parametre_ldv WHERE patient_id = @patientId)" &
         " INSERT INTO oasis.oa_patient_parametre_ldv" &
         " (patient_id, activite_pathologie_aigue, activite_prevention_autre, activite_prevention_enfant_pre_scolaire, activite_prevention_enfant_scolaire," &
-        " activite_suivi_grossesse, activite_suivi_gynecologique, activite_social, activite_suivi_chronique, type_consultation, type_virtuel," &
+        " activite_suivi_grossesse, activite_suivi_gynecologique, activite_social, activite_suivi_chronique, type_consultation, type_virtuel, type_parametre," &
         " profil_medical, profil_paramedical, parametre1, parametre2, parametre3, parametre4, parametre5, user_modification, date_modification)" &
         " VALUES (@patientId, @activitePathologieAigue, @activitePreventionAutre, @activitePreventionEnfantPreScolaire, @activitePreventionEnfantScolaire," &
-        " @activiteSuiviGrossesse, @activiteSuiviGynecologique, @activiteSocial, @activiteSuiviChronique, @typeConsultation, @typeVirtuel," &
+        " @activiteSuiviGrossesse, @activiteSuiviGynecologique, @activiteSocial, @activiteSuiviChronique, @typeConsultation, @typeVirtuel, @typeParametre," &
         " @profilMedical, @profilParamedical, @Parametre1, @Parametre2, @Parametre3, @Parametre4, @Parametre5, @UserCreation, @dateCreation)"
 
         Dim cmd As New SqlCommand(SQLstring, con)
@@ -91,6 +92,7 @@ Public Class PatientParametreLdvDao
             .AddWithValue("@activiteSuiviChronique", patientparametreldv.ActiviteSuiviChronique)
             .AddWithValue("@typeConsultation", patientparametreldv.TypeConsultation)
             .AddWithValue("@typeVirtuel", patientparametreldv.TypeVirtuel)
+            .AddWithValue("@typeParametre", patientparametreldv.TypeParametre)
             .AddWithValue("@profilMedical", patientparametreldv.ProfilMedical)
             .AddWithValue("@profilParamedical", patientparametreldv.ProfilParamedical)
             .AddWithValue("@Parametre1", patientparametreldv.Parametre1)
@@ -137,6 +139,7 @@ Public Class PatientParametreLdvDao
         " activite_suivi_chronique = @activiteSuiviChronique," &
         " type_consultation = @typeConsultation," &
         " type_virtuel = @typeVirtuel," &
+        " type_parametre = @typeParametre," &
         " profil_medical = @profilMedical," &
         " profil_paramedical = @profilParamedical," &
         " parametre1 = @Parametre1," &
@@ -162,6 +165,7 @@ Public Class PatientParametreLdvDao
             .AddWithValue("@activiteSuiviChronique", patientParametreLdv.ActiviteSuiviChronique)
             .AddWithValue("@typeConsultation", patientParametreLdv.TypeConsultation)
             .AddWithValue("@typeVirtuel", patientParametreLdv.TypeVirtuel)
+            .AddWithValue("@typeParametre", patientParametreLdv.TypeParametre)
             .AddWithValue("@profilMedical", patientParametreLdv.ProfilMedical)
             .AddWithValue("@profilParamedical", patientParametreLdv.ProfilParamedical)
             .AddWithValue("@Parametre1", patientParametreLdv.Parametre1)
