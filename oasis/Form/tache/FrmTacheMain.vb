@@ -9,7 +9,6 @@ Public Class FrmTacheMain
     ' -- liste des RDV bindée
     Private lstAppointments As New BindingList(Of AppointmentOasis)()
     Private dateRefDeb As Date, dateRefFin As Date
-    Private lstSiteReference As List(Of Site) = New List(Of Site)
     Private filterTache As FiltreTache = New FiltreTache()
     Private lstFonctionChoisie As List(Of Fonction) = New List(Of Fonction)
 
@@ -166,7 +165,7 @@ Public Class FrmTacheMain
                 If userLog.UtilisateurSiteId <> 0 Then
                     uniteSanitaire.addSite(siteDao.getSiteById(userLog.UtilisateurSiteId))
                 Else
-                    uniteSanitaire.LstSite = New List(Of Site)
+                    uniteSanitaire.LstSite = siteDao.getList(False, userLog.UtilisateurUniteSanitaireId)
                 End If
                 filterTache.addUniteSanitaire(uniteSanitaire)
             End If
