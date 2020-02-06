@@ -143,20 +143,62 @@ Public Class RadFPatientRendez_vousListe
         aRow = Me.RadGridViewRDV.Rows.IndexOf(Me.RadGridViewRDV.CurrentRow)
         maxRow = RadGridViewRDV.Rows.Count - 1
         If aRow <= maxRow And aRow > -1 Then
-            Dim TacheId As Long = RadGridViewRDV.Rows(aRow).Cells("id").Value
-            If TacheId <> 0 Then
+            If RadGridViewRDV.Rows(aRow).Cells("nature").Value = TacheDao.EnumNatureTacheItem.RDV_DEMANDE Then
+                Dim TacheId As Long = RadGridViewRDV.Rows(aRow).Cells("id").Value
+                If TacheId <> 0 Then
+                    tache = tacheDao.getTacheById(TacheId)
+                    If tache.Etat = TacheDao.EtatTache.EN_ATTENTE.ToString Then
+                        If tache.Nature = TacheDao.EnumNatureTacheCode.RDV_DEMANDE Then
+                            Cursor.Current = Cursors.WaitCursor
+                            Me.Enabled = False
+                            Using form As New RadFTacheModificationDemandeRendezVous
+                                form.SelectedPatient = Me.SelectedPatient
+                                form.SelectedTacheId = TacheId
+                                form.ShowDialog()
+                                If form.CodeRetour = True Then
+                                    Me.RadDesktopAlert1.CaptionText = "Notification demande de rendez-vous"
+                                    Me.RadDesktopAlert1.ContentText = "Demande de rendez-vous modifiée"
+                                    Me.RadDesktopAlert1.Show()
+
+                                    RadGridViewRDV.Rows.Clear()
+                                    ChargementListeRendezvous()
+                                End If
+                            End Using
+                            Me.Enabled = True
+                        End If
+                    Else
+                        Dim userDao As New UserDao
+                        Dim user As Utilisateur = userDao.getUserById(tache.TraiteUserId)
+                        MessageBox.Show("Le rendez-vous n'est pas modifiable, il est en cours de traitement par : " & user.UtilisateurPrenom & " " & user.UtilisateurNom)
+                    End If
+                End If
+            Else
+                MessageBox.Show("Option opérationnelle uniquement pour les demandes de rendez-vous")
+            End If
+        End If
+    End Sub
+
+    Private Sub RadBtnModifierRDV_Click(sender As Object, e As EventArgs) Handles RadBtnModifierRDV.Click
+        Dim aRow, maxRow As Integer
+        aRow = Me.RadGridViewRDV.Rows.IndexOf(Me.RadGridViewRDV.CurrentRow)
+        maxRow = RadGridViewRDV.Rows.Count - 1
+        If aRow <= maxRow And aRow > -1 Then
+            If RadGridViewRDV.Rows(aRow).Cells("nature").Value = TacheDao.EnumNatureTacheItem.RDV OrElse
+                RadGridViewRDV.Rows(aRow).Cells("nature").Value = TacheDao.EnumNatureTacheItem.RDV_SPECIALISTE Then
+                Dim TacheId As Long = RadGridViewRDV.Rows(aRow).Cells("id").Value
                 tache = tacheDao.getTacheById(TacheId)
-                If tache.Etat = TacheDao.EtatTache.EN_ATTENTE.ToString Then
-                    If tache.Nature = TacheDao.EnumNatureTacheCode.RDV_DEMANDE Then
+                If tache.Id <> 0 AndAlso (tache.Nature = TacheDao.EnumNatureTacheCode.RDV Or tache.Nature = TacheDao.EnumNatureTacheCode.RDV_SPECIALISTE) Then
+                    If tache.Etat = TacheDao.EtatTache.EN_ATTENTE.ToString OrElse
+                    (tache.Etat = TacheDao.EtatTache.EN_COURS.ToString And userLog.UtilisateurId <> tache.TraiteUserId) Then
                         Cursor.Current = Cursors.WaitCursor
                         Me.Enabled = False
-                        Using form As New RadFTacheModificationDemandeRendezVous
+                        Using form As New RadFTacheModificationRendezVous
                             form.SelectedPatient = Me.SelectedPatient
-                            form.SelectedTacheId = TacheId
+                            form.SelectedTacheId = tache.Id
                             form.ShowDialog()
                             If form.CodeRetour = True Then
-                                Me.RadDesktopAlert1.CaptionText = "Notification demande de rendez-vous"
-                                Me.RadDesktopAlert1.ContentText = "Demande de rendez-vous modifiée"
+                                Me.RadDesktopAlert1.CaptionText = "Notification rendez-vous"
+                                Me.RadDesktopAlert1.ContentText = "Rendez-vous modifié"
                                 Me.RadDesktopAlert1.Show()
 
                                 RadGridViewRDV.Rows.Clear()
@@ -164,12 +206,47 @@ Public Class RadFPatientRendez_vousListe
                             End If
                         End Using
                         Me.Enabled = True
+                    Else
+                        MessageBox.Show("Le rendez-vous n'est pas modifiable, il est en cours de traitement par : " & userLog.UtilisateurPrenom & " " & userLog.UtilisateurNom)
                     End If
-                Else
-                    Dim userDao As New UserDao
-                    Dim user As Utilisateur = userDao.getUserById(tache.TraiteUserId)
-                    MessageBox.Show("Le rendez-vous n'est pas modifiable, il est en cours de traitement par : " & user.UtilisateurPrenom & " " & user.UtilisateurNom)
                 End If
+            Else
+                MessageBox.Show("Option opérationnelle uniquement pour les rendez-vous")
+            End If
+        End If
+
+    End Sub
+
+    Private Sub RadBtnClotureRDV_Click(sender As Object, e As EventArgs) Handles RadBtnClotureRDV.Click
+        Dim aRow, maxRow As Integer
+        aRow = Me.RadGridViewRDV.Rows.IndexOf(Me.RadGridViewRDV.CurrentRow)
+        maxRow = RadGridViewRDV.Rows.Count - 1
+        If aRow <= maxRow And aRow > -1 Then
+            If RadGridViewRDV.Rows(aRow).Cells("nature").Value = TacheDao.EnumNatureTacheItem.RDV OrElse
+                RadGridViewRDV.Rows(aRow).Cells("nature").Value = TacheDao.EnumNatureTacheItem.RDV_SPECIALISTE Then
+                Dim TacheId As Long = RadGridViewRDV.Rows(aRow).Cells("id").Value
+                tache = tacheDao.getTacheById(TacheId)
+                Dim dateNext As Date = tache.DateRendezVous
+                If dateNext <> Nothing Then
+                    If tache.DateRendezVous.Date <= Date.Now.Date() Then
+                        If tache.DateRendezVous.Date <= Date.Now.Date() Then
+                            If tache.Id <> 0 AndAlso (tache.Nature = TacheDao.EnumNatureTacheCode.RDV_SPECIALISTE Or tache.Nature = TacheDao.EnumNatureTacheCode.RDV) Then
+                                If MsgBox("Confirmation de la clôture du rendez-vous", MsgBoxStyle.YesNo, "") = MsgBoxResult.Yes Then
+                                    If tacheDao.ClotureTache(tache.Id, True) = True Then
+                                        Me.RadDesktopAlert1.CaptionText = "Notification rendez-vous"
+                                        Me.RadDesktopAlert1.ContentText = "Rendez-vous clôturé"
+                                        Me.RadDesktopAlert1.Show()
+
+                                        RadGridViewRDV.Rows.Clear()
+                                        ChargementListeRendezvous()
+                                    End If
+                                End If
+                            End If
+                        End If
+                    End If
+                End If
+            Else
+                MessageBox.Show("Option opérationnelle uniquement pour les rendez-vous")
             End If
         End If
     End Sub
