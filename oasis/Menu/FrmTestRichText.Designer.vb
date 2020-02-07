@@ -25,8 +25,10 @@ Partial Class FrmTestRichText
         Me.RadRichTextEditor1 = New Telerik.WinControls.UI.RadRichTextEditor()
         Me.RichTextEditorRibbonBar1 = New Telerik.WinControls.UI.RichTextEditorRibbonBar()
         Me.RadRibbonFormBehavior1 = New Telerik.WinControls.UI.RadRibbonFormBehavior()
+        Me.RadRichTextEditorRuler1 = New Telerik.WinControls.UI.RadRichTextEditorRuler()
         CType(Me.RadRichTextEditor1, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.RichTextEditorRibbonBar1, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.RadRichTextEditorRuler1, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
@@ -34,11 +36,11 @@ Partial Class FrmTestRichText
         '
         Me.RadRichTextEditor1.BorderColor = System.Drawing.Color.FromArgb(CType(CType(156, Byte), Integer), CType(CType(189, Byte), Integer), CType(CType(232, Byte), Integer))
         Me.RadRichTextEditor1.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.RadRichTextEditor1.Location = New System.Drawing.Point(0, 174)
+        Me.RadRichTextEditor1.Location = New System.Drawing.Point(0, 205)
         Me.RadRichTextEditor1.Name = "RadRichTextEditor1"
         Me.RadRichTextEditor1.SelectionFill = System.Drawing.Color.FromArgb(CType(CType(128, Byte), Integer), CType(CType(78, Byte), Integer), CType(CType(158, Byte), Integer), CType(CType(255, Byte), Integer))
-        Me.RadRichTextEditor1.Size = New System.Drawing.Size(819, 273)
-        Me.RadRichTextEditor1.TabIndex = 0
+        Me.RadRichTextEditor1.Size = New System.Drawing.Size(819, 217)
+        Me.RadRichTextEditor1.TabIndex = 3
         '
         'RichTextEditorRibbonBar1
         '
@@ -59,20 +61,30 @@ Partial Class FrmTestRichText
         Me.RichTextEditorRibbonBar1.OptionsButton.Text = "Options"
         Me.RichTextEditorRibbonBar1.ShowLayoutModeButton = True
         Me.RichTextEditorRibbonBar1.Size = New System.Drawing.Size(819, 174)
-        Me.RichTextEditorRibbonBar1.TabIndex = 1
+        Me.RichTextEditorRibbonBar1.TabIndex = 4
         Me.RichTextEditorRibbonBar1.TabStop = False
-        Me.RichTextEditorRibbonBar1.Text = "RichTextEditorRibbonBar1"
+        Me.RichTextEditorRibbonBar1.Text = "RichTextEditorRibbonBar2"
         '
         'RadRibbonFormBehavior1
         '
         Me.RadRibbonFormBehavior1.Form = Me
         '
+        'RadRichTextEditorRuler1
+        '
+        Me.RadRichTextEditorRuler1.AssociatedRichTextBox = Me.RadRichTextEditor1
+        Me.RadRichTextEditorRuler1.Dock = System.Windows.Forms.DockStyle.Top
+        Me.RadRichTextEditorRuler1.Location = New System.Drawing.Point(0, 174)
+        Me.RadRichTextEditorRuler1.Name = "RadRichTextEditorRuler1"
+        Me.RadRichTextEditorRuler1.Size = New System.Drawing.Size(819, 31)
+        Me.RadRichTextEditorRuler1.TabIndex = 5
+        '
         'FrmTestRichText
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(819, 447)
+        Me.ClientSize = New System.Drawing.Size(819, 422)
         Me.Controls.Add(Me.RadRichTextEditor1)
+        Me.Controls.Add(Me.RadRichTextEditorRuler1)
         Me.Controls.Add(Me.RichTextEditorRibbonBar1)
         Me.FormBehavior = Me.RadRibbonFormBehavior1
         Me.IconScaling = Telerik.WinControls.Enumerations.ImageScaling.None
@@ -81,9 +93,10 @@ Partial Class FrmTestRichText
         '
         '
         Me.RootElement.ApplyShapeToControl = True
-        Me.Text = "RichTextEditorRibbonBar1"
+        Me.Text = "RichTextEditorRibbonBar2"
         CType(Me.RadRichTextEditor1, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.RichTextEditorRibbonBar1, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.RadRichTextEditorRuler1, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
         Me.PerformLayout()
@@ -93,5 +106,6 @@ Partial Class FrmTestRichText
     Friend WithEvents RadRichTextEditor1 As Telerik.WinControls.UI.RadRichTextEditor
     Friend WithEvents RichTextEditorRibbonBar1 As Telerik.WinControls.UI.RichTextEditorRibbonBar
     Friend WithEvents RadRibbonFormBehavior1 As Telerik.WinControls.UI.RadRibbonFormBehavior
+    Friend WithEvents RadRichTextEditorRuler1 As Telerik.WinControls.UI.RadRichTextEditorRuler
 End Class
 

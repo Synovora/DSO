@@ -1,5 +1,9 @@
 ﻿Imports System.Configuration
+Imports System.IO
 Imports Oasis_Common
+Imports Oasis_WF.My.Resources
+Imports Telerik.WinForms.RichTextEditor
+
 Public Class FAuthentificattion
     Enum EnumUtilisateur
         Informaticien
@@ -134,6 +138,10 @@ Public Class FAuthentificattion
         UtilisateurConnecte = userdao.getUserById(UtilisateurId)
         UtilisateurConnecte.UtilisateurAdmin = Admin
         userLog = UtilisateurConnecte
+
+        '  --- init internationnalisation du richTextBoxEditor
+        RichTextBoxLocalizationProvider.CurrentProvider = RichTextBoxLocalizationProvider.FromStream(New MemoryStream(New System.Text.UTF8Encoding().GetBytes(FrenchRichTextBoxStrings.RichTextBoxStrings)))
+
     End Sub
 
     Private Sub BtnAbandon_Click(sender As Object, e As EventArgs) Handles BtnAbandon.Click

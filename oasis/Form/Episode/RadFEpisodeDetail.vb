@@ -4061,6 +4061,22 @@ Public Class RadFEpisodeDetail
         Me.Enabled = True
     End Sub
 
+    Private Sub RadBtnSousEpisode_Click(sender As Object, e As EventArgs) Handles RadBtnSousEpisode.Click
+        Return
+        Try
+            Me.Cursor = Cursors.WaitCursor
+            Me.Enabled = False
+            Using frm = New FrmSousEpisode()
+                frm.ShowDialog()
+            End Using
+        Catch err As Exception
+            MsgBox(err.Message())
+        Finally
+            Me.Enabled = True
+            Me.Cursor = Cursors.Default
+        End Try
+    End Sub
+
     Private Sub HistoriqueDesModificationsToolStripMenuItem3_Click(sender As Object, e As EventArgs) Handles HistoriqueDesModificationsToolStripMenuItem3.Click
         If RadPPSDataGridView.CurrentRow IsNot Nothing Then
             Dim aRow As Integer = Me.RadPPSDataGridView.Rows.IndexOf(Me.RadPPSDataGridView.CurrentRow)

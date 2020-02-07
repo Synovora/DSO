@@ -22,7 +22,11 @@ Public Class FrmTestRichText
             End If
         Next
 
-        ' Me.RichTextEditorRibbonBar1.BackstageControl.ImageList.Images
+        radItemSaveAs.Page.Controls(0).Controls("buttonSaveHTML").Visible = False
+        radItemSaveAs.Page.Controls(0).Controls("buttonSavePlain").Visible = False
+        radItemSaveAs.Page.Controls(0).Controls("buttonSaveRich").Visible = False
+        radItemSaveAs.Page.Controls(0).Controls("buttonXAML").Visible = False
+
 
         'create your own button
         Dim backstageButtonSaveAs As New BackstageButtonItem()

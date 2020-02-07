@@ -1,6 +1,8 @@
 ﻿Imports System.Configuration
 Imports System.IO
 Imports Oasis_Common
+Imports Oasis_WF.My.Resources
+Imports Telerik.WinForms.RichTextEditor
 
 Public Class FrmLogin
 
@@ -67,6 +69,7 @@ Public Class FrmLogin
             Dim unused = MessageBox.Show("" & ex.Message, "Authentification", MessageBoxButtons.OK, MessageBoxIcon.Error)
             Return
         End Try
+
         Me.Cursor = Cursors.WaitCursor
         Using vFPatientListe As New FrmTacheMain
             'Using vFPatientListe As New RadFPatientListe
@@ -105,5 +108,10 @@ Public Class FrmLogin
         Me.Show()
         TxtLogin.Focus()
 
+    End Sub
+
+    Private Sub FrmLogin_Load(sender As Object, e As EventArgs) Handles Me.Load
+        '  --- init internationnalisation du richTextBoxEditor ( 1 shot)
+        RichTextBoxLocalizationProvider.CurrentProvider = RichTextBoxLocalizationProvider.FromStream(New MemoryStream(New System.Text.UTF8Encoding().GetBytes(FrenchRichTextBoxStrings.RichTextBoxStrings)))
     End Sub
 End Class

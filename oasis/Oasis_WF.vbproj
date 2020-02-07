@@ -396,6 +396,12 @@
     <Compile Include="Form\Patient\RadFPatientRendez-vousListe.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="Form\SousEpisode\FrmSousEpisode.Designer.vb">
+      <DependentUpon>FrmSousEpisode.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Form\SousEpisode\FrmSousEpisode.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Form\Traitement\RadFDeclarationAllergieEtCIDetail.Designer.vb">
       <DependentUpon>RadFDeclarationAllergieEtCIDetail.vb</DependentUpon>
     </Compile>
@@ -897,6 +903,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Form\Patient\RadFPatientRendez-vousListe.resx">
       <DependentUpon>RadFPatientRendez-vousListe.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form\SousEpisode\FrmSousEpisode.resx">
+      <DependentUpon>FrmSousEpisode.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Form\Traitement\RadFDeclarationAllergieEtCIDetail.resx">
       <DependentUpon>RadFDeclarationAllergieEtCIDetail.vb</DependentUpon>

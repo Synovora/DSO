@@ -916,7 +916,7 @@ Partial Class RadFEpisodeDetail
         Me.LblLabelTemperature.AutoSize = True
         Me.LblLabelTemperature.Location = New System.Drawing.Point(114, 39)
         Me.LblLabelTemperature.Name = "LblLabelTemperature"
-        Me.LblLabelTemperature.Size = New System.Drawing.Size(70, 13)
+        Me.LblLabelTemperature.Size = New System.Drawing.Size(71, 13)
         Me.LblLabelTemperature.TabIndex = 11
         Me.LblLabelTemperature.Text = "Température"
         '
@@ -952,7 +952,7 @@ Partial Class RadFEpisodeDetail
         Me.LblLabelTaille.AutoSize = True
         Me.LblLabelTaille.Location = New System.Drawing.Point(266, 20)
         Me.LblLabelTaille.Name = "LblLabelTaille"
-        Me.LblLabelTaille.Size = New System.Drawing.Size(32, 13)
+        Me.LblLabelTaille.Size = New System.Drawing.Size(33, 13)
         Me.LblLabelTaille.TabIndex = 7
         Me.LblLabelTaille.Text = "Taille"
         '
@@ -2077,12 +2077,12 @@ Partial Class RadFEpisodeDetail
         '
         Me.ConclusionContexteMenuStrip.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.EnleverUnContexteDeConclusionToolStripMenuItem})
         Me.ConclusionContexteMenuStrip.Name = "ConclusionContexteMenuStrip"
-        Me.ConclusionContexteMenuStrip.Size = New System.Drawing.Size(255, 26)
+        Me.ConclusionContexteMenuStrip.Size = New System.Drawing.Size(256, 26)
         '
         'EnleverUnContexteDeConclusionToolStripMenuItem
         '
         Me.EnleverUnContexteDeConclusionToolStripMenuItem.Name = "EnleverUnContexteDeConclusionToolStripMenuItem"
-        Me.EnleverUnContexteDeConclusionToolStripMenuItem.Size = New System.Drawing.Size(254, 22)
+        Me.EnleverUnContexteDeConclusionToolStripMenuItem.Size = New System.Drawing.Size(255, 22)
         Me.EnleverUnContexteDeConclusionToolStripMenuItem.Text = "Enlever un contexte de conclusion"
         '
         'RadPanel18
@@ -2801,45 +2801,45 @@ Partial Class RadFEpisodeDetail
         '
         Me.ContexteMedicalContextMenuStrip.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ToolStripMenuItem1, Me.ToolStripSeparator4, Me.HistoriqueDesModificationsToolStripMenuItem1, Me.ToolStripSeparator9, Me.RafraichirLaffichageToolStripMenuItem1, Me.ToolStripSeparator12, Me.AjouterUnContexteaLepisodeToolStripMenuItem})
         Me.ContexteMedicalContextMenuStrip.Name = "ContexteContextMenuStrip"
-        Me.ContexteMedicalContextMenuStrip.Size = New System.Drawing.Size(315, 110)
+        Me.ContexteMedicalContextMenuStrip.Size = New System.Drawing.Size(316, 110)
         '
         'ToolStripMenuItem1
         '
         Me.ToolStripMenuItem1.Name = "ToolStripMenuItem1"
-        Me.ToolStripMenuItem1.Size = New System.Drawing.Size(314, 22)
+        Me.ToolStripMenuItem1.Size = New System.Drawing.Size(315, 22)
         Me.ToolStripMenuItem1.Text = "Créer un contexte"
         '
         'ToolStripSeparator4
         '
         Me.ToolStripSeparator4.Name = "ToolStripSeparator4"
-        Me.ToolStripSeparator4.Size = New System.Drawing.Size(311, 6)
+        Me.ToolStripSeparator4.Size = New System.Drawing.Size(312, 6)
         '
         'HistoriqueDesModificationsToolStripMenuItem1
         '
         Me.HistoriqueDesModificationsToolStripMenuItem1.Name = "HistoriqueDesModificationsToolStripMenuItem1"
-        Me.HistoriqueDesModificationsToolStripMenuItem1.Size = New System.Drawing.Size(314, 22)
+        Me.HistoriqueDesModificationsToolStripMenuItem1.Size = New System.Drawing.Size(315, 22)
         Me.HistoriqueDesModificationsToolStripMenuItem1.Text = "Historique des modifications d'un contexte"
         '
         'ToolStripSeparator9
         '
         Me.ToolStripSeparator9.Name = "ToolStripSeparator9"
-        Me.ToolStripSeparator9.Size = New System.Drawing.Size(311, 6)
+        Me.ToolStripSeparator9.Size = New System.Drawing.Size(312, 6)
         '
         'RafraichirLaffichageToolStripMenuItem1
         '
         Me.RafraichirLaffichageToolStripMenuItem1.Name = "RafraichirLaffichageToolStripMenuItem1"
-        Me.RafraichirLaffichageToolStripMenuItem1.Size = New System.Drawing.Size(314, 22)
+        Me.RafraichirLaffichageToolStripMenuItem1.Size = New System.Drawing.Size(315, 22)
         Me.RafraichirLaffichageToolStripMenuItem1.Text = "Rafraichir l'affichage"
         '
         'ToolStripSeparator12
         '
         Me.ToolStripSeparator12.Name = "ToolStripSeparator12"
-        Me.ToolStripSeparator12.Size = New System.Drawing.Size(311, 6)
+        Me.ToolStripSeparator12.Size = New System.Drawing.Size(312, 6)
         '
         'AjouterUnContexteaLepisodeToolStripMenuItem
         '
         Me.AjouterUnContexteaLepisodeToolStripMenuItem.Name = "AjouterUnContexteaLepisodeToolStripMenuItem"
-        Me.AjouterUnContexteaLepisodeToolStripMenuItem.Size = New System.Drawing.Size(314, 22)
+        Me.AjouterUnContexteaLepisodeToolStripMenuItem.Size = New System.Drawing.Size(315, 22)
         Me.AjouterUnContexteaLepisodeToolStripMenuItem.Text = "Ajouter un contexte de conclusion à l'épisode"
         '
         'RadPanel8
@@ -2949,47 +2949,47 @@ Partial Class RadFEpisodeDetail
         '
         Me.PPSContextMenuStrip.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.CréerUnObjectifDeSantéToolStripMenuItem, Me.CréerUneMesurePréventiveToolStripMenuItem, Me.CréerUneStratégieContextuelleToolStripMenuItem, Me.CréerUnSuiviToolStripMenuItem, Me.HistoriqueDesModificationsToolStripMenuItem3, Me.ToolStripSeparator10, Me.RafraichirLaffichageToolStripMenuItem2})
         Me.PPSContextMenuStrip.Name = "PPSContextMenuStrip1"
-        Me.PPSContextMenuStrip.Size = New System.Drawing.Size(241, 142)
+        Me.PPSContextMenuStrip.Size = New System.Drawing.Size(242, 142)
         '
         'CréerUnObjectifDeSantéToolStripMenuItem
         '
         Me.CréerUnObjectifDeSantéToolStripMenuItem.Name = "CréerUnObjectifDeSantéToolStripMenuItem"
-        Me.CréerUnObjectifDeSantéToolStripMenuItem.Size = New System.Drawing.Size(240, 22)
+        Me.CréerUnObjectifDeSantéToolStripMenuItem.Size = New System.Drawing.Size(241, 22)
         Me.CréerUnObjectifDeSantéToolStripMenuItem.Text = "Créer un objectif de santé"
         '
         'CréerUneMesurePréventiveToolStripMenuItem
         '
         Me.CréerUneMesurePréventiveToolStripMenuItem.Name = "CréerUneMesurePréventiveToolStripMenuItem"
-        Me.CréerUneMesurePréventiveToolStripMenuItem.Size = New System.Drawing.Size(240, 22)
+        Me.CréerUneMesurePréventiveToolStripMenuItem.Size = New System.Drawing.Size(241, 22)
         Me.CréerUneMesurePréventiveToolStripMenuItem.Text = "Créer une mesure préventive"
         '
         'CréerUneStratégieContextuelleToolStripMenuItem
         '
         Me.CréerUneStratégieContextuelleToolStripMenuItem.Name = "CréerUneStratégieContextuelleToolStripMenuItem"
-        Me.CréerUneStratégieContextuelleToolStripMenuItem.Size = New System.Drawing.Size(240, 22)
+        Me.CréerUneStratégieContextuelleToolStripMenuItem.Size = New System.Drawing.Size(241, 22)
         Me.CréerUneStratégieContextuelleToolStripMenuItem.Text = "Créer une stratégie contextuelle"
         '
         'CréerUnSuiviToolStripMenuItem
         '
         Me.CréerUnSuiviToolStripMenuItem.Name = "CréerUnSuiviToolStripMenuItem"
-        Me.CréerUnSuiviToolStripMenuItem.Size = New System.Drawing.Size(240, 22)
+        Me.CréerUnSuiviToolStripMenuItem.Size = New System.Drawing.Size(241, 22)
         Me.CréerUnSuiviToolStripMenuItem.Text = "Créer un suivi"
         '
         'HistoriqueDesModificationsToolStripMenuItem3
         '
         Me.HistoriqueDesModificationsToolStripMenuItem3.Name = "HistoriqueDesModificationsToolStripMenuItem3"
-        Me.HistoriqueDesModificationsToolStripMenuItem3.Size = New System.Drawing.Size(240, 22)
+        Me.HistoriqueDesModificationsToolStripMenuItem3.Size = New System.Drawing.Size(241, 22)
         Me.HistoriqueDesModificationsToolStripMenuItem3.Text = "Historique des modifications"
         '
         'ToolStripSeparator10
         '
         Me.ToolStripSeparator10.Name = "ToolStripSeparator10"
-        Me.ToolStripSeparator10.Size = New System.Drawing.Size(237, 6)
+        Me.ToolStripSeparator10.Size = New System.Drawing.Size(238, 6)
         '
         'RafraichirLaffichageToolStripMenuItem2
         '
         Me.RafraichirLaffichageToolStripMenuItem2.Name = "RafraichirLaffichageToolStripMenuItem2"
-        Me.RafraichirLaffichageToolStripMenuItem2.Size = New System.Drawing.Size(240, 22)
+        Me.RafraichirLaffichageToolStripMenuItem2.Size = New System.Drawing.Size(241, 22)
         Me.RafraichirLaffichageToolStripMenuItem2.Text = "Rafraichir l'affichage"
         '
         'RadPanel10
@@ -3056,6 +3056,7 @@ Partial Class RadFEpisodeDetail
         Me.ShowInTaskbar = False
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
         Me.Text = "Détail épisode"
+        Me.WindowState = System.Windows.Forms.FormWindowState.Maximized
         CType(Me.RadPanel1, System.ComponentModel.ISupportInitialize).EndInit()
         Me.RadPanel1.ResumeLayout(False)
         CType(Me.RadGroupBox3, System.ComponentModel.ISupportInitialize).EndInit()
