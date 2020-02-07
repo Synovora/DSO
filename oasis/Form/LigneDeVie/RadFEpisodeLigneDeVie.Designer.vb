@@ -79,6 +79,7 @@ Partial Class RadFEpisodeLigneDeVie
         Me.LblParametre5 = New System.Windows.Forms.Label()
         Me.RadBtnParametre = New Telerik.WinControls.UI.RadButton()
         Me.RadGbxFiltre = New Telerik.WinControls.UI.RadGroupBox()
+        Me.ChkTypeParametre = New System.Windows.Forms.CheckBox()
         Me.RadGbxParametre = New Telerik.WinControls.UI.RadGroupBox()
         Me.LblLabelParametre = New System.Windows.Forms.Label()
         Me.Label2 = New System.Windows.Forms.Label()
@@ -89,7 +90,6 @@ Partial Class RadFEpisodeLigneDeVie
         Me.RadBtnChart = New Telerik.WinControls.UI.RadButton()
         Me.RadBtnConfiguration = New Telerik.WinControls.UI.RadButton()
         Me.RadBtnCreationEpisodeParametre = New Telerik.WinControls.UI.RadButton()
-        Me.ChkTypeParametre = New System.Windows.Forms.CheckBox()
         CType(Me.RadBtnAbandon, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.RadBtnEpisode, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.RadGroupBoxEtatCivil, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -584,6 +584,16 @@ Partial Class RadFEpisodeLigneDeVie
         Me.RadGbxFiltre.TabIndex = 23
         Me.RadGbxFiltre.Text = "Filtres d'affichage"
         '
+        'ChkTypeParametre
+        '
+        Me.ChkTypeParametre.AutoSize = True
+        Me.ChkTypeParametre.Location = New System.Drawing.Point(177, 21)
+        Me.ChkTypeParametre.Name = "ChkTypeParametre"
+        Me.ChkTypeParametre.Size = New System.Drawing.Size(77, 17)
+        Me.ChkTypeParametre.TabIndex = 16
+        Me.ChkTypeParametre.Text = "Parametre"
+        Me.ChkTypeParametre.UseVisualStyleBackColor = True
+        '
         'RadGbxParametre
         '
         Me.RadGbxParametre.AccessibleRole = System.Windows.Forms.AccessibleRole.Grouping
@@ -637,14 +647,14 @@ Partial Class RadFEpisodeLigneDeVie
         '
         'DteJusqua
         '
-        Me.DteJusqua.Location = New System.Drawing.Point(318, 62)
+        Me.DteJusqua.Location = New System.Drawing.Point(51, 60)
         Me.DteJusqua.Name = "DteJusqua"
         Me.DteJusqua.Size = New System.Drawing.Size(200, 20)
         Me.DteJusqua.TabIndex = 24
         '
         'DteDepuis
         '
-        Me.DteDepuis.Location = New System.Drawing.Point(53, 62)
+        Me.DteDepuis.Location = New System.Drawing.Point(317, 60)
         Me.DteDepuis.Name = "DteDepuis"
         Me.DteDepuis.Size = New System.Drawing.Size(200, 20)
         Me.DteDepuis.TabIndex = 23
@@ -681,16 +691,6 @@ Partial Class RadFEpisodeLigneDeVie
         Me.RadBtnCreationEpisodeParametre.Size = New System.Drawing.Size(171, 24)
         Me.RadBtnCreationEpisodeParametre.TabIndex = 27
         Me.RadBtnCreationEpisodeParametre.Text = "Création épisode de paramètres"
-        '
-        'ChkTypeParametre
-        '
-        Me.ChkTypeParametre.AutoSize = True
-        Me.ChkTypeParametre.Location = New System.Drawing.Point(177, 21)
-        Me.ChkTypeParametre.Name = "ChkTypeParametre"
-        Me.ChkTypeParametre.Size = New System.Drawing.Size(77, 17)
-        Me.ChkTypeParametre.TabIndex = 16
-        Me.ChkTypeParametre.Text = "Parametre"
-        Me.ChkTypeParametre.UseVisualStyleBackColor = True
         '
         'RadFEpisodeLigneDeVie
         '

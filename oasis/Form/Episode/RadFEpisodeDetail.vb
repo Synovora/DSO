@@ -102,6 +102,7 @@ Public Class RadFEpisodeDetail
     Dim ControleOrdonnanceExiste As Boolean = False
 
     Dim LongueurStringAllergie As Integer
+    Dim drcIdConclusionIde As Integer
 
     Dim TypeEpisode, typeActiviteEpisode, typeProfilEpisode, DescriptionActiviteEpisode, CommentaireEpisode, UserCreation, DateCreation, UserModification, DateModification As String
 
@@ -110,6 +111,8 @@ Public Class RadFEpisodeDetail
         Dim action As New Action
         action.UtilisateurId = userLog.UtilisateurId
         action.PatientId = SelectedPatient.patientId
+        action.Fonction = ActionDao.EnumFonctionCode.EPISODE
+        action.FonctionId = Me.SelectedEpisodeId
         action.Action = "Accès épisode patient n° " & SelectedEpisodeId
         actiondao.CreationAction(action)
 
@@ -1638,18 +1641,21 @@ Public Class RadFEpisodeDetail
     Private Sub RadioBtnRolePropre_CheckedChanged(sender As Object, e As EventArgs) Handles RadioBtnRolePropre.CheckedChanged
         If ChargementConclusionEnCours = False Then
             RadioTypeConclusionIdeModified = True
+            episode.ConclusionIdeType = EpisodeDao.EnumTypeConclusionParamedicale.ROLE_PROPRE.ToString
         End If
     End Sub
 
     Private Sub RadioBtnSurProtocole_CheckedChanged(sender As Object, e As EventArgs) Handles RadioBtnSurProtocole.CheckedChanged
         If ChargementConclusionEnCours = False Then
             RadioTypeConclusionIdeModified = True
+            episode.ConclusionIdeType = EpisodeDao.EnumTypeConclusionParamedicale.SUR_PROTOCOLE.ToString
         End If
     End Sub
 
     Private Sub RadioBtnDemandeAvis_CheckedChanged(sender As Object, e As EventArgs) Handles RadioBtnDemandeAvis.CheckedChanged
         If ChargementConclusionEnCours = False Then
             RadioTypeConclusionIdeModified = True
+            episode.ConclusionIdeType = EpisodeDao.EnumTypeConclusionParamedicale.DEMANDE_AVIS.ToString
         End If
     End Sub
 
@@ -1807,6 +1813,25 @@ Public Class RadFEpisodeDetail
         episode.DateModification = Date.Now()
         episode.UserModification = userLog.UtilisateurId
         If episodeDao.ModificationEpisode(episode) = True Then
+            If episode.ConclusionIdeType = EpisodeDao.EnumTypeConclusionParamedicale.SUR_PROTOCOLE.ToString Then
+                Dim contexte As New Antecedent
+                Dim contexteHisto As New AntecedentHisto
+                Dim contexteDao As New ContexteDao
+                contexte.PatientId = episode.PatientId
+                contexte.EpisodeId = episode.Id
+                contexte.Nature = "Patient"
+                contexte.Type = "C"
+                contexte.CategorieContexte = "M"
+                contexte.StatutAffichage = "P"
+                contexte.DrcId = drcIdConclusionIde
+                contexte.DateDebut = Date.Now()
+                contexte.DateFin = New Date(2999, 12, 31, 0, 0, 0)
+                contexte.DateCreation = Date.Now()
+                contexte.UserCreation = userLog.UtilisateurId
+                contexte.Diagnostic = 1
+                contexte.Description = "Contexte IDE : " & episode.ObservationParamedical
+                contexteDao.CreationContexte(contexte, contexteHisto)
+            End If
             Dim form As New RadFNotification()
             form.Titre = "Notification épisode patient"
             form.Message = "=== Episode clôturé ==="
@@ -4121,6 +4146,13 @@ Public Class RadFEpisodeDetail
             LongueurStringAllergie = CInt(LongueurStringAllergieString)
         Else
             LongueurStringAllergie = 12
+        End If
+
+        Dim drcIdConclusionIdeString As String = ConfigurationManager.AppSettings("drcIdConclusionIde")
+        If IsNumeric(drcIdConclusionIdeString) Then
+            drcIdConclusionIde = CInt(drcIdConclusionIdeString)
+        Else
+            drcIdConclusionIde = 128001
         End If
     End Sub
 

@@ -40,15 +40,6 @@ Public Class RadFEpisodeParametresSaisie
 
     Private Sub RadFEpisodeParametresSaisie_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         Me.CodeRetour = False
-        If SelectedEpisodeId <> 0 Then
-            episode = episodeDao.GetEpisodeById(SelectedEpisodeId)
-            If userLog.UtilisateurAdmin = False Then
-                If episode.DateModification.Date <> Date.Now.Date Then
-                    RadBtnParametre.Enabled = False
-                End If
-            End If
-        End If
-
         ChargementEtatCivil()
         InitParametre()
         ChargementParametres()
@@ -300,14 +291,26 @@ Public Class RadFEpisodeParametresSaisie
             LblParmPAM.Text = valeurString & " " & unitePAM
         End If
 
-        If ValeurParametreNonSaisie = True Then
-            RadBtnParametre.ForeColor = Color.Red
-            RadBtnParametre.Font = New Font(RadBtnParametre.Font, FontStyle.Bold)
-            ToolTip1.SetToolTip(RadBtnParametre, "Des paramètres requis ne sont pas saisis")
-        Else
-            RadBtnParametre.ForeColor = Color.FromArgb(21, 66, 139)
-            RadBtnParametre.Font = New Font(RadBtnParametre.Font, FontStyle.Regular)
-            ToolTip1.SetToolTip(RadBtnParametre, "")
+        Dim SaisieParametreOK As Boolean = True
+        If SelectedEpisodeId <> 0 Then
+            episode = episodeDao.GetEpisodeById(SelectedEpisodeId)
+            If userLog.UtilisateurAdmin = False Then
+                If episode.DateModification.Date <> Date.Now.Date Then
+                    RadBtnParametre.Enabled = False
+                    SaisieParametreOK = False
+                End If
+            End If
+        End If
+        If SaisieParametreOK = True Then
+            If ValeurParametreNonSaisie = True Then
+                RadBtnParametre.ForeColor = Color.Red
+                RadBtnParametre.Font = New Font(RadBtnParametre.Font, FontStyle.Bold)
+                ToolTip1.SetToolTip(RadBtnParametre, "Des paramètres requis ne sont pas saisis")
+            Else
+                RadBtnParametre.ForeColor = Color.FromArgb(21, 66, 139)
+                RadBtnParametre.Font = New Font(RadBtnParametre.Font, FontStyle.Regular)
+                ToolTip1.SetToolTip(RadBtnParametre, "")
+            End If
         End If
 
     End Sub

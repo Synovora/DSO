@@ -335,6 +335,13 @@ Public Class EpisodeDao
             RechercherActiviteEpisode = True
             ActiviteEpisodeString += EpisodeDao.EnumTypeEpisode.PARAMETRE.ToString & "'"
         End If
+        If ligneDeVie.TypeVirtuel = True Then
+            If RechercherTypeEpisode = True Then
+                ActiviteEpisodeString += ", '"
+            End If
+            RechercherActiviteEpisode = True
+            ActiviteEpisodeString += "'"
+        End If
         If RechercherActiviteEpisode = True Then
             ActiviteEpisodeString += ")" & vbCrLf
         End If

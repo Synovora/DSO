@@ -4,6 +4,8 @@
     Private _patientId As Long
     Private _horodatage As DateTime
     Private _action As String
+    Private _fonction As String
+    Private _fonctionId As Long
 
     Public Property ActionId As Long
         Get
@@ -47,6 +49,24 @@
         End Get
         Set(value As String)
             _action = value
+        End Set
+    End Property
+
+    Public Property Fonction As String
+        Get
+            Return _fonction
+        End Get
+        Set(value As String)
+            _fonction = value
+        End Set
+    End Property
+
+    Public Property FonctionId As Long
+        Get
+            Return _fonctionId
+        End Get
+        Set(value As Long)
+            _fonctionId = value
         End Set
     End Property
 End Class

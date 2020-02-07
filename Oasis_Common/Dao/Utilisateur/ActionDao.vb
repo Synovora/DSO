@@ -4,6 +4,11 @@ Imports System.Windows.Forms
 Public Class ActionDao
     Inherits StandardDao
 
+    Public Structure EnumFonctionCode
+        Const SYNTHESE = "SYNTHESE"
+        Const EPISODE = "EPISODE"
+    End Structure
+
     Public Function getAllActionByUser(userId As Long) As DataTable
         Dim SQLString As String = "SELECT horodatage, action, oa_patient_prenom, oa_patient_nom FROM oasis.oa_action" &
             " LEFT JOIN oasis.oa_patient ON oa_patient_id = patient_id" &
@@ -35,7 +40,7 @@ Public Class ActionDao
         Dim dateSelectionDebut As Date = New Date(An, mois, jour, 0, 0, 0)
         Dim dateSelectionFin As Date = New Date(An, mois, jour, 23, 59, 59)
 
-        Dim SQLString As String = "SELECT horodatage, action, oa_patient_prenom, oa_patient_nom FROM oasis.oa_action" &
+        Dim SQLString As String = "SELECT horodatage, action, oa_patient_prenom, oa_patient_nom, patient_id, fonction, fonction_id FROM oasis.oa_action" &
             " LEFT JOIN oasis.oa_patient ON oa_patient_id = patient_id" &
             " WHERE utilisateur_id = " + userId.ToString &
             " AND horodatage >= '" & dateSelectionDebut.ToString("yyyy-MM-dd HH:mm:ss") & "'" &
@@ -97,6 +102,8 @@ Public Class ActionDao
         action.UtilisateurId = Coalesce(reader("utilisateur_id"), 0)
         action.Horodatage = Coalesce(reader("horodatage"), Nothing)
         action.Action = Coalesce(reader("action"), "")
+        action.Fonction = Coalesce(reader("fonction"), "")
+        action.FonctionId = Coalesce(reader("fonction_id"), 0)
         Return action
     End Function
 
@@ -107,8 +114,8 @@ Public Class ActionDao
         con = GetConnection()
 
         Dim SQLstring As String = "INSERT into oasis.oa_action" &
-        " (utilisateur_id, patient_id, horodatage, action)" &
-        " VALUES (@utilisateurId, @patientId, @horodatage, @action)"
+        " (utilisateur_id, patient_id, horodatage, action, fonction, fonction_id)" &
+        " VALUES (@utilisateurId, @patientId, @horodatage, @action, @fonction, @fonctionId)"
 
         Dim cmd As New SqlCommand(SQLstring, con)
         With cmd.Parameters
@@ -116,6 +123,8 @@ Public Class ActionDao
             .AddWithValue("@patientId", action.PatientId)
             .AddWithValue("@horodatage", Date.Now())
             .AddWithValue("@action", action.Action)
+            .AddWithValue("@fonction", action.Fonction)
+            .AddWithValue("@fonctionId", action.FonctionId)
         End With
 
         Try

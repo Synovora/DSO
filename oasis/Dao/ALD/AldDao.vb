@@ -123,7 +123,7 @@ Public Class AldDao
             " AND oa_antecedent_statut_affichage = 'P'" &
             " AND (oa_antecedent_inactif = '0' OR oa_antecedent_inactif is Null)" &
             " AND oa_antecedent_ald_valide = 1" &
-            " AND (oa_antecedent_ald_date_fin = '" & DateMax.ToString("yyyy-MM-dd") & "' OR oa_antecedent_ald_date_fin >= '" & DateValide.ToString("yyyy-MM-dd") & "')" &
+            " AND (oa_antecedent_ald_date_fin = '" & DateMax.ToString("yyyy-MM-dd") & "' OR oa_antecedent_ald_date_fin <= '" & DateValide.ToString("yyyy-MM-dd") & "')" &
             " AND oa_antecedent_patient_id = " + patientId.ToString + ";"
 
         'Lecture des données en base

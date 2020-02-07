@@ -61,6 +61,8 @@ Public Class RadFSynthese
         action.UtilisateurId = userLog.UtilisateurId
         action.PatientId = SelectedPatient.patientId
         action.Action = "Accès synthèse patient"
+        action.Fonction = ActionDao.EnumFonctionCode.SYNTHESE
+        action.FonctionId = 0
         actiondao.CreationAction(action)
 
         afficheTitleForm(Me, "Synthèse patient")

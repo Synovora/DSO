@@ -45,6 +45,10 @@ Public Class RadFEpisodeLigneDeVie
 
     Private Sub RadFEpisodeListe_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         afficheTitleForm(Me, "Ligne de vie du patient")
+        If userLog.TypeProfil = EpisodeDao.EnumTypeProfil.MEDICAL.ToString OrElse userLog.TypeProfil = EpisodeDao.EnumTypeProfil.PARAMEDICAL.ToString Then
+        Else
+            RadBtnCreationEpisodeParametre.Enabled = False
+        End If
         GetParametresEtFiltres()
         InitFiltre()
         ChargementEtatCivil()
@@ -147,7 +151,7 @@ Public Class RadFEpisodeLigneDeVie
 
         DteDepuis.Value = Date.Now()
 
-        DteJusqua.Value = Date.Now().AddYears(-2)
+        DteJusqua.Value = Date.Now().AddYears(-1)
 
         LblLabelParametre.Hide()
 
