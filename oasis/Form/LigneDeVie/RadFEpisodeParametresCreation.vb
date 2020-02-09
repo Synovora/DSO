@@ -75,7 +75,7 @@ Public Class RadFEpisodeParametresCreation
 
             Dim episode As New Episode
             episode.Commentaire = TxtCommentaire.Text
-            episode.DateCreation = Date.Now().Date.AddHours(NumheureRV.Value).AddMinutes(Minutes)
+            episode.DateCreation = NumDateRV.Value.Date.AddHours(NumheureRV.Value).AddMinutes(Minutes)
             episode.UserCreation = userLog.UtilisateurId
             episode.PatientId = SelectedPatient.patientId
             episode.Type = EpisodeDao.EnumTypeEpisode.PARAMETRE.ToString

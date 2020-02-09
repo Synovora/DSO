@@ -1410,6 +1410,17 @@ Public Class RadFEpisodeDetail
                     episodeDao.ModificationEpisode(episode)
                     RadioTypeConclusionIdeModified = False
                 End If
+            Else
+                'TODO: vérification si sur protocole
+                If episode.TypeActivite = EpisodeDao.EnumTypeActiviteEpisodeCode.PATHOLOGIE_AIGUE OrElse
+                    episode.TypeActivite = EpisodeDao.EnumTypeActiviteEpisodeCode.SUIVI_CHRONIQUE Then
+                    If ControleProtocoleAiguExiste = True Then
+                        RadioBtnSurProtocole.Checked = True
+                        RadioBtnDemandeAvis.Enabled = False
+                        RadioBtnRolePropre.Enabled = False
+                        RadioBtnSurProtocole.Enabled = False
+                    End If
+                End If
             End If
         End If
     End Sub
@@ -1693,11 +1704,6 @@ Public Class RadFEpisodeDetail
             Exit Sub
         End If
 
-        '>>> SHUNT : Bloc à supprimer pour réhabiliter le contrôle de clôture ========
-        ClotureEpisode()
-        Exit Sub
-        '>>> SHUNT : Bloc à supprimer pour réhabiliter le contrôle de clôture ========
-
         'L'utilisateur doit posséder le même profil que celui qui a créé l'épisode
         If userLog.TypeProfil <> episode.TypeProfil Then
             MessageBox.Show("Vous devez disposer d'un profil '" & episode.TypeProfil &
@@ -1768,10 +1774,10 @@ Public Class RadFEpisodeDetail
     'Contrôle si l'épisode est clôturé et non modifiable (si la date de clôture est < date du jour)
     Private Sub ControleEpisodeCloture()
         If episode.Etat = EpisodeDao.EnumEtatEpisode.CLOTURE.ToString Then
-            If episode.DateModification.Date < Date.Now.Date Then
-                'Clôture épisode
-                RadBtnCloture.Enabled = False
+            'Clôture épisode
+            RadBtnCloture.Enabled = False
 
+            If episode.DateModification.Date < Date.Now.Date Then
                 'Workflow
                 RadBtnWorkflowIde.Enabled = False
                 RadBtnWorkflowMed.Enabled = False

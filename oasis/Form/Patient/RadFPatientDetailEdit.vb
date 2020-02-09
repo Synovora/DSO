@@ -460,6 +460,11 @@ Public Class RadFPatientDetailEdit
         End If
 
 
+        If DteDateNaissance.Value.Date > Date.Now.Date Then
+            messageErreur4 = "- La date de naissance ne doit pas être supérieure à la date du jour"
+            Valide = False
+        End If
+
         'Préparation de l'affichage des erreurs
         If Valide = False Then
             If messageErreur1 <> "" Then
@@ -1044,6 +1049,11 @@ Public Class RadFPatientDetailEdit
 
     Private Sub RadBtnValidationDateNaissance_Click(sender As Object, e As EventArgs) Handles RadBtnValidationDateNaissance.Click
         If EditMode = EnumEditMode.Creation Then
+            If DteDateNaissance.Value.Date > Date.Now.Date Then
+                MessageBox.Show("La date de naissance ne doit pas être supérieure à la date du jour")
+                Exit Sub
+            End If
+
             If DteDateNaissance.Value <> DteDateNaissance.MinDate Then
                 Dim DateNaissance As Date
                 DateNaissance = DteDateNaissance.Value
