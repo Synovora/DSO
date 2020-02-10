@@ -392,7 +392,8 @@ Public Class RadFContextedetailEdit
     'Transformation du contexte en antécédent
     Private Sub RadBtnTransformer_Click(sender As Object, e As EventArgs) Handles RadBtnTransformer.Click
         If MsgBox("confirmation de la transformation en antécédent", MsgBoxStyle.YesNo, "") = MsgBoxResult.Yes Then
-            If contexteDao.TransformationEnAntecedent(SelectedContexteId, ContexteHistoACreer) = True Then
+            Dim Description As String = contexteUpdate.Description & " (" & contexteUpdate.DateDebut.ToString("MM.yyyy") & ")"
+            If contexteDao.TransformationEnAntecedent(SelectedContexteId, ContexteHistoACreer, Description) = True Then
                 Dim form As New RadFNotification()
                 form.Titre = "Notification contexte patient"
                 form.Message = "Le contexte patient a été transformé en antécédent"

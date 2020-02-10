@@ -113,6 +113,7 @@ Public Class RadFSynthese
         LblPatientPrenom.Text = SelectedPatient.PatientPrenom
         LblPatientNom.Text = SelectedPatient.PatientNom
         LblPatientAge.Text = SelectedPatient.PatientAge
+        LblDateNaissance.Text = SelectedPatient.PatientDateNaissance.ToString("dd.MM.yyyy")
         LblPatientGenre.Text = SelectedPatient.PatientGenre
         LblPatientSite.Text = Environnement.Table_site.GetSiteDescription(SelectedPatient.PatientSiteId)
         LblPatientDateMaj.Text = FormatageDateAffichage(SelectedPatient.PatientSyntheseDateMaj, True)
@@ -366,7 +367,16 @@ Public Class RadFSynthese
     End Sub
 
     'Créer un antécédent
+
+    Private Sub RadBtnCreationAntecedent_Click(sender As Object, e As EventArgs) Handles RadBtnCreationAntecedent.Click
+        CreationAntecedent()
+    End Sub
+
     Private Sub CreerAntecedentToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles CréerAntecedentToolStripMenuItem.Click
+        CreationAntecedent()
+    End Sub
+
+    Private Sub CreationAntecedent()
         Dim SelectedDrcId As Integer
         Me.Enabled = False
         Cursor.Current = Cursors.WaitCursor
@@ -1015,7 +1025,16 @@ Public Class RadFSynthese
 
 
     'Création d'un traitement
+
+    Private Sub RadBtnCreationTraitement_Click(sender As Object, e As EventArgs) Handles RadBtnCreationTraitement.Click
+        CreationTraitement()
+    End Sub
+
     Private Sub CréerUnTraitementToolStripMenuItem1_Click(sender As Object, e As EventArgs) Handles CréerUnTraitementToolStripMenuItem1.Click
+        CreationTraitement()
+    End Sub
+
+    Private Sub CreationTraitement()
         Dim SelectedMedicamentCis As Integer
         Me.Enabled = False
         Cursor.Current = Cursors.WaitCursor
@@ -1385,7 +1404,16 @@ Public Class RadFSynthese
     End Sub
 
     'Créer un inetervenant
+
+    Private Sub RadBtnCreationParcours_Click(sender As Object, e As EventArgs) Handles RadBtnCreationParcours.Click
+        CreationIntervenant()
+    End Sub
+
     Private Sub CréerUnIntervenantToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles CréerUnIntervenantToolStripMenuItem.Click
+        CreationIntervenant()
+    End Sub
+
+    Private Sub CreationIntervenant()
         Me.Enabled = False
         Cursor.Current = Cursors.WaitCursor
         Using vFSpecialiteSelecteur As New RadFSpecialiteSelecteur
@@ -1654,7 +1682,16 @@ Public Class RadFSynthese
         End If
     End Sub
 
+    'Création contexte
+    Private Sub RadBtnCreationContexte_Click(sender As Object, e As EventArgs) Handles RadBtnCreationContexte.Click
+        CreationContexte()
+    End Sub
+
     Private Sub CreerUnContexteMenuItem1_Click(sender As Object, e As EventArgs) Handles ToolStripMenuItem1.Click
+        CreationContexte()
+    End Sub
+
+    Private Sub CreationContexte()
         Dim SelectedDrcId As Integer
         Me.Enabled = False
         Cursor.Current = Cursors.WaitCursor
@@ -2051,8 +2088,17 @@ Public Class RadFSynthese
         End If
     End Sub
 
+    'Creation objectif de santé
+    Private Sub RadBtnCreationPPSObjectif_Click(sender As Object, e As EventArgs) Handles RadBtnCreationPPSObjectif.Click
+        CreationObjectifSante()
+    End Sub
+
 
     Private Sub CréerUnObjectifDeSantéToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles CréerUnObjectifDeSantéToolStripMenuItem.Click
+        CreationObjectifSante()
+    End Sub
+
+    Private Sub CreationObjectifSante()
         'Contrôler si un objectif de santé valide existe
         Dim ppsdao As New PpsDao
         If ppsdao.ExistPPSObjectifByPatientId(SelectedPatient.patientId) = False Then
@@ -2075,7 +2121,17 @@ Public Class RadFSynthese
         End If
     End Sub
 
+    'Création mesure préventive
+
+    Private Sub RadBtnCreationPPSMesure_Click(sender As Object, e As EventArgs) Handles RadBtnCreationPPSMesure.Click
+        CreationMesurePreventive()
+    End Sub
+
     Private Sub CréerUneMesurePréventiveToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles CréerUneMesurePréventiveToolStripMenuItem.Click
+        CreationMesurePreventive()
+    End Sub
+
+    Private Sub CreationMesurePreventive()
         Me.Enabled = False
         Cursor.Current = Cursors.WaitCursor
         Using vFFPPSMesurePreventive As New RadFPPSDetailEdit
@@ -2092,7 +2148,17 @@ Public Class RadFSynthese
         Me.Enabled = True
     End Sub
 
+    'Création stratégie contextuelle
+
+    Private Sub RadBtnCreationPPSStrategie_Click(sender As Object, e As EventArgs) Handles RadBtnCreationPPSStrategie.Click
+        CreationStrategieContextuelle()
+    End Sub
+
     Private Sub CréerUneStratégieContextuelleToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles CréerUneStratégieContextuelleToolStripMenuItem.Click
+        CreationStrategieContextuelle()
+    End Sub
+
+    Private Sub CreationStrategieContextuelle()
         Me.Enabled = False
         Cursor.Current = Cursors.WaitCursor
         Using vFPPSStrategie As New RadFPPSDetailEdit
@@ -2109,7 +2175,16 @@ Public Class RadFSynthese
         Me.Enabled = True
     End Sub
 
+    'Création Suivi intervenant
+    Private Sub RadBtnCreationPPSSuivi_Click(sender As Object, e As EventArgs) Handles RadBtnCreationPPSSuivi.Click
+        CreationSuiviIntervenant()
+    End Sub
+
     Private Sub CréerUnSuiviToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles CréerUnSuiviToolStripMenuItem.Click
+        CreationSuiviIntervenant()
+    End Sub
+
+    Private Sub CreationSuiviIntervenant()
         Me.Enabled = False
         Cursor.Current = Cursors.WaitCursor
         Using vFSpecialiteSelecteur As New RadFSpecialiteSelecteur

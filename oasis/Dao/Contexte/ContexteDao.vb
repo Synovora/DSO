@@ -76,7 +76,7 @@ Public Class ContexteDao
         Return IsExist
     End Function
 
-    Friend Function TransformationEnAntecedent(contexteId As Integer, ContexteHistoACreer As AntecedentHisto) As Boolean
+    Friend Function TransformationEnAntecedent(contexteId As Integer, ContexteHistoACreer As AntecedentHisto, Description As String) As Boolean
         Dim user As New Utilisateur
         user.UtilisateurId = 1
 
@@ -85,18 +85,28 @@ Public Class ContexteDao
 
         Dim dateModification As Date = Date.Now.Date
 
-        Dim SQLstring As String = "update oasis.oa_antecedent set oa_antecedent_type = 'A', oa_antecedent_date_modification = @dateModification," &
-        " oa_antecedent_utilisateur_modification = @utilisateurModification, oa_antecedent_date_fin = @dateFin," &
-        " oa_antecedent_nature = @nature, oa_antecedent_priorite = @priorite, oa_antecedent_niveau = @niveau," &
-        " oa_antecedent_id_niveau1 = @idNiveau1, oa_antecedent_id_niveau2 = @idNiveau2," &
-        " oa_antecedent_ordre_affichage1 = @ordreAffichage1, oa_antecedent_ordre_affichage2 = @ordreAffichage2," &
-        " oa_antecedent_ordre_affichage3 = @ordreAffichage3 where oa_antecedent_id = @antecedentId"
+        Dim SQLString As String = "UPDATE oasis.oa_antecedent SET" &
+            " oa_antecedent_type = 'A'," &
+            " oa_antecedent_description = @description," &
+            " oa_antecedent_date_modification = @dateModification," &
+            " oa_antecedent_utilisateur_modification = @utilisateurModification," &
+            " oa_antecedent_date_fin = @dateFin," &
+            " oa_antecedent_nature = @nature," &
+            " oa_antecedent_priorite = @priorite," &
+            " oa_antecedent_niveau = @niveau," &
+            " oa_antecedent_id_niveau1 = @idNiveau1," &
+            " oa_antecedent_id_niveau2 = @idNiveau2," &
+            " oa_antecedent_ordre_affichage1 = @ordreAffichage1," &
+            " oa_antecedent_ordre_affichage2 = @ordreAffichage2," &
+            " oa_antecedent_ordre_affichage3 = @ordreAffichage3" &
+            " WHERE oa_antecedent_id = @antecedentId"
 
         Dim con As SqlConnection = GetConnection()
-        Dim cmd As New SqlCommand(SQLstring, con)
+        Dim cmd As New SqlCommand(SQLString, con)
 
         With cmd.Parameters
             .AddWithValue("@utilisateurModification", 1)
+            .AddWithValue("@description", Description)
             .AddWithValue("@dateModification", DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss"))
             .AddWithValue("@dateFin", New Date(2999, 12, 31, 0, 0, 0).ToString("yyyy-MM-dd HH:mm:ss"))
             .AddWithValue("@nature", "")
@@ -276,11 +286,17 @@ Public Class ContexteDao
         Dim codeRetour As Boolean = True
 
         Dim SQLstring As String = "UPDATE oasis.oa_antecedent SET" &
-        " oa_antecedent_date_modification = @dateModification, oa_antecedent_utilisateur_modification = @utilisateurModification," &
-        " oa_antecedent_drc_id = @drcId, oa_antecedent_categorie_contexte = @categorieContexte, oa_antecedent_description = @description," &
-        " oa_antecedent_date_debut = @dateDebut, oa_antecedent_date_fin = @dateFin, oa_antecedent_ordre_affichage1 = @ordreAffichage," &
-        " oa_antecedent_diagnostic = @diagnostic, oa_antecedent_statut_affichage = @publication" &
-        " WHERE oa_antecedent_id = @antecedentId"
+            " oa_antecedent_date_modification = @dateModification," &
+            " oa_antecedent_utilisateur_modification = @utilisateurModification," &
+            " oa_antecedent_drc_id = @drcId," &
+            " oa_antecedent_categorie_contexte = @categorieContexte," &
+            " oa_antecedent_description = @description," &
+            " oa_antecedent_date_debut = @dateDebut," &
+            " oa_antecedent_date_fin = @dateFin," &
+            " oa_antecedent_ordre_affichage1 = @ordreAffichage," &
+            " oa_antecedent_diagnostic = @diagnostic," &
+            " oa_antecedent_statut_affichage = @publication" &
+            " WHERE oa_antecedent_id = @antecedentId"
 
         Dim con As SqlConnection = GetConnection()
         Dim cmd As New SqlCommand(SQLstring, con)
@@ -339,8 +355,10 @@ Public Class ContexteDao
 
         Dim dateModification As Date = Date.Now.Date
 
-        Dim SQLstring As String = "UPDATE oasis.oa_antecedent set oa_antecedent_date_modification = @dateModification," &
-        " oa_antecedent_utilisateur_modification = @utilisateurModification, oa_antecedent_inactif = @inactif" &
+        Dim SQLstring As String = "UPDATE oasis.oa_antecedent SET" &
+        " oa_antecedent_date_modification = @dateModification," &
+        " oa_antecedent_utilisateur_modification = @utilisateurModification," &
+        " oa_antecedent_inactif = @inactif" &
         " WHERE oa_antecedent_id = @antecedentId"
 
         Dim con As SqlConnection = GetConnection()
