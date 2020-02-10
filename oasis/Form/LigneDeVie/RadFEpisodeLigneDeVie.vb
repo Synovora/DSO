@@ -445,9 +445,10 @@ Public Class RadFEpisodeLigneDeVie
         LblPatientPrenom.Text = SelectedPatient.PatientPrenom
         LblPatientNom.Text = SelectedPatient.PatientNom
         LblPatientAge.Text = SelectedPatient.PatientAge
+        LblDateNaissance.Text = SelectedPatient.PatientDateNaissance.ToString("dd.MM.yyyy")
         LblPatientGenre.Text = SelectedPatient.PatientGenre
         LblPatientSite.Text = Environnement.Table_site.GetSiteDescription(SelectedPatient.PatientSiteId)
-        LblPatientDateMaj.Text = SelectedPatient.PatientSyntheseDateMaj.ToString("dd/MM/yyyy")
+        LblPatientDateMaj.Text = SelectedPatient.PatientSyntheseDateMaj.ToString("dd.MM.yyyy")
 
         'Vérification de l'existence d'ALD
         LblALD.Hide()

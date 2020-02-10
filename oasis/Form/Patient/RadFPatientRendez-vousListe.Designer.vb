@@ -23,18 +23,18 @@ Partial Class RadFPatientRendez_vousListe
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
         Me.components = New System.ComponentModel.Container()
-        Dim GridViewTextBoxColumn23 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
-        Dim GridViewTextBoxColumn24 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
-        Dim GridViewTextBoxColumn25 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
-        Dim GridViewTextBoxColumn26 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
-        Dim GridViewTextBoxColumn27 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
-        Dim GridViewTextBoxColumn28 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
-        Dim GridViewTextBoxColumn29 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
-        Dim GridViewTextBoxColumn30 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
-        Dim GridViewTextBoxColumn31 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
-        Dim GridViewTextBoxColumn32 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
-        Dim GridViewTextBoxColumn33 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
-        Dim TableViewDefinition3 As Telerik.WinControls.UI.TableViewDefinition = New Telerik.WinControls.UI.TableViewDefinition()
+        Dim GridViewTextBoxColumn1 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
+        Dim GridViewTextBoxColumn2 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
+        Dim GridViewTextBoxColumn3 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
+        Dim GridViewTextBoxColumn4 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
+        Dim GridViewTextBoxColumn5 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
+        Dim GridViewTextBoxColumn6 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
+        Dim GridViewTextBoxColumn7 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
+        Dim GridViewTextBoxColumn8 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
+        Dim GridViewTextBoxColumn9 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
+        Dim GridViewTextBoxColumn10 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
+        Dim GridViewTextBoxColumn11 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
+        Dim TableViewDefinition1 As Telerik.WinControls.UI.TableViewDefinition = New Telerik.WinControls.UI.TableViewDefinition()
         Me.RadGridViewRDV = New Telerik.WinControls.UI.RadGridView()
         Me.RadGroupBoxEtatCivil = New Telerik.WinControls.UI.RadGroupBox()
         Me.LblALD = New System.Windows.Forms.Label()
@@ -64,6 +64,7 @@ Partial Class RadFPatientRendez_vousListe
         Me.RadDesktopAlert1 = New Telerik.WinControls.UI.RadDesktopAlert(Me.components)
         Me.RadBtnClotureRDV = New Telerik.WinControls.UI.RadButton()
         Me.RadBtnModifierRDV = New Telerik.WinControls.UI.RadButton()
+        Me.LblDateNaissance = New System.Windows.Forms.Label()
         CType(Me.RadGridViewRDV, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.RadGridViewRDV.MasterTemplate, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.RadGroupBoxEtatCivil, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -82,7 +83,7 @@ Partial Class RadFPatientRendez_vousListe
         Me.RadGridViewRDV.Font = New System.Drawing.Font("Segoe UI", 8.25!)
         Me.RadGridViewRDV.ForeColor = System.Drawing.Color.Black
         Me.RadGridViewRDV.ImeMode = System.Windows.Forms.ImeMode.NoControl
-        Me.RadGridViewRDV.Location = New System.Drawing.Point(12, 147)
+        Me.RadGridViewRDV.Location = New System.Drawing.Point(12, 97)
         '
         '
         '
@@ -90,82 +91,83 @@ Partial Class RadFPatientRendez_vousListe
         Me.RadGridViewRDV.MasterTemplate.AllowDeleteRow = False
         Me.RadGridViewRDV.MasterTemplate.AllowDragToGroup = False
         Me.RadGridViewRDV.MasterTemplate.AllowEditRow = False
-        GridViewTextBoxColumn23.EnableExpressionEditor = False
-        GridViewTextBoxColumn23.FieldName = "id"
-        GridViewTextBoxColumn23.HeaderText = "id"
-        GridViewTextBoxColumn23.IsVisible = False
-        GridViewTextBoxColumn23.Name = "id"
-        GridViewTextBoxColumn24.EnableExpressionEditor = False
-        GridViewTextBoxColumn24.FieldName = "parcours_id"
-        GridViewTextBoxColumn24.HeaderText = "parcours_id"
-        GridViewTextBoxColumn24.IsVisible = False
-        GridViewTextBoxColumn24.Name = "parcours_id"
-        GridViewTextBoxColumn25.EnableExpressionEditor = False
-        GridViewTextBoxColumn25.FieldName = "ror_id"
-        GridViewTextBoxColumn25.HeaderText = "ror_id"
-        GridViewTextBoxColumn25.IsVisible = False
-        GridViewTextBoxColumn25.Name = "ror_id"
-        GridViewTextBoxColumn26.EnableExpressionEditor = False
-        GridViewTextBoxColumn26.FieldName = "oa_ror_nom"
-        GridViewTextBoxColumn26.HeaderText = "Nom intervenant"
-        GridViewTextBoxColumn26.HeaderTextAlignment = System.Drawing.ContentAlignment.MiddleLeft
-        GridViewTextBoxColumn26.Name = "oa_ror_nom"
-        GridViewTextBoxColumn26.Width = 250
-        GridViewTextBoxColumn27.EnableExpressionEditor = False
-        GridViewTextBoxColumn27.FieldName = "specialite"
-        GridViewTextBoxColumn27.HeaderText = "Spécialité"
-        GridViewTextBoxColumn27.HeaderTextAlignment = System.Drawing.ContentAlignment.MiddleLeft
-        GridViewTextBoxColumn27.Name = "specialite"
-        GridViewTextBoxColumn27.Width = 170
-        GridViewTextBoxColumn28.EnableExpressionEditor = False
-        GridViewTextBoxColumn28.FieldName = "oa_ror_structure_nom"
-        GridViewTextBoxColumn28.HeaderText = "Nom structure"
-        GridViewTextBoxColumn28.HeaderTextAlignment = System.Drawing.ContentAlignment.MiddleLeft
-        GridViewTextBoxColumn28.Name = "oa_ror_structure_nom"
-        GridViewTextBoxColumn28.Width = 250
-        GridViewTextBoxColumn29.EnableExpressionEditor = False
-        GridViewTextBoxColumn29.FieldName = "nature"
-        GridViewTextBoxColumn29.HeaderText = "Nature"
-        GridViewTextBoxColumn29.HeaderTextAlignment = System.Drawing.ContentAlignment.MiddleLeft
-        GridViewTextBoxColumn29.Name = "nature"
-        GridViewTextBoxColumn29.Width = 150
-        GridViewTextBoxColumn30.EnableExpressionEditor = False
-        GridViewTextBoxColumn30.FieldName = "dernierRendezVous"
-        GridViewTextBoxColumn30.HeaderText = "Précédent"
-        GridViewTextBoxColumn30.Name = "dernierRendezVous"
-        GridViewTextBoxColumn30.TextAlignment = System.Drawing.ContentAlignment.MiddleCenter
-        GridViewTextBoxColumn30.Width = 75
-        GridViewTextBoxColumn31.EnableExpressionEditor = False
-        GridViewTextBoxColumn31.FieldName = "dateRendezVous"
-        GridViewTextBoxColumn31.HeaderText = "Rendez-vous"
-        GridViewTextBoxColumn31.Name = "dateRendezVous"
-        GridViewTextBoxColumn31.TextAlignment = System.Drawing.ContentAlignment.MiddleCenter
-        GridViewTextBoxColumn31.Width = 75
-        GridViewTextBoxColumn32.EnableExpressionEditor = False
-        GridViewTextBoxColumn32.FieldName = "heureRendezVous"
-        GridViewTextBoxColumn32.HeaderText = "Heure"
-        GridViewTextBoxColumn32.Name = "heureRendezVous"
-        GridViewTextBoxColumn32.TextAlignment = System.Drawing.ContentAlignment.MiddleCenter
-        GridViewTextBoxColumn32.Width = 65
-        GridViewTextBoxColumn33.EnableExpressionEditor = False
-        GridViewTextBoxColumn33.FieldName = "etat"
-        GridViewTextBoxColumn33.HeaderText = "Etat"
-        GridViewTextBoxColumn33.Name = "etat"
-        GridViewTextBoxColumn33.TextAlignment = System.Drawing.ContentAlignment.MiddleCenter
-        GridViewTextBoxColumn33.Width = 75
-        Me.RadGridViewRDV.MasterTemplate.Columns.AddRange(New Telerik.WinControls.UI.GridViewDataColumn() {GridViewTextBoxColumn23, GridViewTextBoxColumn24, GridViewTextBoxColumn25, GridViewTextBoxColumn26, GridViewTextBoxColumn27, GridViewTextBoxColumn28, GridViewTextBoxColumn29, GridViewTextBoxColumn30, GridViewTextBoxColumn31, GridViewTextBoxColumn32, GridViewTextBoxColumn33})
-        Me.RadGridViewRDV.MasterTemplate.ViewDefinition = TableViewDefinition3
+        GridViewTextBoxColumn1.EnableExpressionEditor = False
+        GridViewTextBoxColumn1.FieldName = "id"
+        GridViewTextBoxColumn1.HeaderText = "id"
+        GridViewTextBoxColumn1.IsVisible = False
+        GridViewTextBoxColumn1.Name = "id"
+        GridViewTextBoxColumn2.EnableExpressionEditor = False
+        GridViewTextBoxColumn2.FieldName = "parcours_id"
+        GridViewTextBoxColumn2.HeaderText = "parcours_id"
+        GridViewTextBoxColumn2.IsVisible = False
+        GridViewTextBoxColumn2.Name = "parcours_id"
+        GridViewTextBoxColumn3.EnableExpressionEditor = False
+        GridViewTextBoxColumn3.FieldName = "ror_id"
+        GridViewTextBoxColumn3.HeaderText = "ror_id"
+        GridViewTextBoxColumn3.IsVisible = False
+        GridViewTextBoxColumn3.Name = "ror_id"
+        GridViewTextBoxColumn4.EnableExpressionEditor = False
+        GridViewTextBoxColumn4.FieldName = "oa_ror_nom"
+        GridViewTextBoxColumn4.HeaderText = "Nom intervenant"
+        GridViewTextBoxColumn4.HeaderTextAlignment = System.Drawing.ContentAlignment.MiddleLeft
+        GridViewTextBoxColumn4.Name = "oa_ror_nom"
+        GridViewTextBoxColumn4.Width = 250
+        GridViewTextBoxColumn5.EnableExpressionEditor = False
+        GridViewTextBoxColumn5.FieldName = "specialite"
+        GridViewTextBoxColumn5.HeaderText = "Spécialité"
+        GridViewTextBoxColumn5.HeaderTextAlignment = System.Drawing.ContentAlignment.MiddleLeft
+        GridViewTextBoxColumn5.Name = "specialite"
+        GridViewTextBoxColumn5.Width = 170
+        GridViewTextBoxColumn6.EnableExpressionEditor = False
+        GridViewTextBoxColumn6.FieldName = "oa_ror_structure_nom"
+        GridViewTextBoxColumn6.HeaderText = "Nom structure"
+        GridViewTextBoxColumn6.HeaderTextAlignment = System.Drawing.ContentAlignment.MiddleLeft
+        GridViewTextBoxColumn6.Name = "oa_ror_structure_nom"
+        GridViewTextBoxColumn6.Width = 250
+        GridViewTextBoxColumn7.EnableExpressionEditor = False
+        GridViewTextBoxColumn7.FieldName = "nature"
+        GridViewTextBoxColumn7.HeaderText = "Nature"
+        GridViewTextBoxColumn7.HeaderTextAlignment = System.Drawing.ContentAlignment.MiddleLeft
+        GridViewTextBoxColumn7.Name = "nature"
+        GridViewTextBoxColumn7.Width = 150
+        GridViewTextBoxColumn8.EnableExpressionEditor = False
+        GridViewTextBoxColumn8.FieldName = "dernierRendezVous"
+        GridViewTextBoxColumn8.HeaderText = "Précédent"
+        GridViewTextBoxColumn8.Name = "dernierRendezVous"
+        GridViewTextBoxColumn8.TextAlignment = System.Drawing.ContentAlignment.MiddleCenter
+        GridViewTextBoxColumn8.Width = 75
+        GridViewTextBoxColumn9.EnableExpressionEditor = False
+        GridViewTextBoxColumn9.FieldName = "dateRendezVous"
+        GridViewTextBoxColumn9.HeaderText = "Rendez-vous"
+        GridViewTextBoxColumn9.Name = "dateRendezVous"
+        GridViewTextBoxColumn9.TextAlignment = System.Drawing.ContentAlignment.MiddleCenter
+        GridViewTextBoxColumn9.Width = 75
+        GridViewTextBoxColumn10.EnableExpressionEditor = False
+        GridViewTextBoxColumn10.FieldName = "heureRendezVous"
+        GridViewTextBoxColumn10.HeaderText = "Heure"
+        GridViewTextBoxColumn10.Name = "heureRendezVous"
+        GridViewTextBoxColumn10.TextAlignment = System.Drawing.ContentAlignment.MiddleCenter
+        GridViewTextBoxColumn10.Width = 65
+        GridViewTextBoxColumn11.EnableExpressionEditor = False
+        GridViewTextBoxColumn11.FieldName = "etat"
+        GridViewTextBoxColumn11.HeaderText = "Etat"
+        GridViewTextBoxColumn11.Name = "etat"
+        GridViewTextBoxColumn11.TextAlignment = System.Drawing.ContentAlignment.MiddleCenter
+        GridViewTextBoxColumn11.Width = 75
+        Me.RadGridViewRDV.MasterTemplate.Columns.AddRange(New Telerik.WinControls.UI.GridViewDataColumn() {GridViewTextBoxColumn1, GridViewTextBoxColumn2, GridViewTextBoxColumn3, GridViewTextBoxColumn4, GridViewTextBoxColumn5, GridViewTextBoxColumn6, GridViewTextBoxColumn7, GridViewTextBoxColumn8, GridViewTextBoxColumn9, GridViewTextBoxColumn10, GridViewTextBoxColumn11})
+        Me.RadGridViewRDV.MasterTemplate.ViewDefinition = TableViewDefinition1
         Me.RadGridViewRDV.Name = "RadGridViewRDV"
         Me.RadGridViewRDV.ReadOnly = True
         Me.RadGridViewRDV.RightToLeft = System.Windows.Forms.RightToLeft.No
         Me.RadGridViewRDV.ShowGroupPanel = False
-        Me.RadGridViewRDV.Size = New System.Drawing.Size(1152, 314)
+        Me.RadGridViewRDV.Size = New System.Drawing.Size(1152, 301)
         Me.RadGridViewRDV.TabIndex = 0
         '
         'RadGroupBoxEtatCivil
         '
         Me.RadGroupBoxEtatCivil.AccessibleRole = System.Windows.Forms.AccessibleRole.Grouping
         Me.RadGroupBoxEtatCivil.BackColor = System.Drawing.SystemColors.GradientInactiveCaption
+        Me.RadGroupBoxEtatCivil.Controls.Add(Me.LblDateNaissance)
         Me.RadGroupBoxEtatCivil.Controls.Add(Me.LblALD)
         Me.RadGroupBoxEtatCivil.Controls.Add(Me.Label13)
         Me.RadGroupBoxEtatCivil.Controls.Add(Me.LblPatientDateMaj)
@@ -191,7 +193,7 @@ Partial Class RadFPatientRendez_vousListe
         Me.RadGroupBoxEtatCivil.HeaderText = "Etat civil"
         Me.RadGroupBoxEtatCivil.Location = New System.Drawing.Point(12, 4)
         Me.RadGroupBoxEtatCivil.Name = "RadGroupBoxEtatCivil"
-        Me.RadGroupBoxEtatCivil.Size = New System.Drawing.Size(950, 87)
+        Me.RadGroupBoxEtatCivil.Size = New System.Drawing.Size(1152, 87)
         Me.RadGroupBoxEtatCivil.TabIndex = 3
         Me.RadGroupBoxEtatCivil.Text = "Etat civil"
         '
@@ -200,7 +202,7 @@ Partial Class RadFPatientRendez_vousListe
         Me.LblALD.AutoSize = True
         Me.LblALD.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.LblALD.ForeColor = System.Drawing.Color.OrangeRed
-        Me.LblALD.Location = New System.Drawing.Point(902, 20)
+        Me.LblALD.Location = New System.Drawing.Point(1099, 20)
         Me.LblALD.Name = "LblALD"
         Me.LblALD.Size = New System.Drawing.Size(31, 13)
         Me.LblALD.TabIndex = 43
@@ -210,7 +212,7 @@ Partial Class RadFPatientRendez_vousListe
         '
         Me.Label13.AutoSize = True
         Me.Label13.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label13.Location = New System.Drawing.Point(510, 20)
+        Me.Label13.Location = New System.Drawing.Point(707, 20)
         Me.Label13.Name = "Label13"
         Me.Label13.Size = New System.Drawing.Size(37, 13)
         Me.Label13.TabIndex = 42
@@ -219,7 +221,7 @@ Partial Class RadFPatientRendez_vousListe
         'LblPatientDateMaj
         '
         Me.LblPatientDateMaj.AutoSize = True
-        Me.LblPatientDateMaj.Location = New System.Drawing.Point(801, 20)
+        Me.LblPatientDateMaj.Location = New System.Drawing.Point(998, 20)
         Me.LblPatientDateMaj.Name = "LblPatientDateMaj"
         Me.LblPatientDateMaj.Size = New System.Drawing.Size(63, 13)
         Me.LblPatientDateMaj.TabIndex = 41
@@ -229,7 +231,7 @@ Partial Class RadFPatientRendez_vousListe
         '
         Me.Label5.AutoSize = True
         Me.Label5.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label5.Location = New System.Drawing.Point(667, 20)
+        Me.Label5.Location = New System.Drawing.Point(864, 20)
         Me.Label5.Name = "Label5"
         Me.Label5.Size = New System.Drawing.Size(128, 13)
         Me.Label5.TabIndex = 40
@@ -322,7 +324,7 @@ Partial Class RadFPatientRendez_vousListe
         'LblPatientAge
         '
         Me.LblPatientAge.AutoSize = True
-        Me.LblPatientAge.Location = New System.Drawing.Point(314, 20)
+        Me.LblPatientAge.Location = New System.Drawing.Point(511, 20)
         Me.LblPatientAge.Name = "LblPatientAge"
         Me.LblPatientAge.Size = New System.Drawing.Size(40, 13)
         Me.LblPatientAge.TabIndex = 25
@@ -340,7 +342,7 @@ Partial Class RadFPatientRendez_vousListe
         'LblPatientGenre
         '
         Me.LblPatientGenre.AutoSize = True
-        Me.LblPatientGenre.Location = New System.Drawing.Point(424, 20)
+        Me.LblPatientGenre.Location = New System.Drawing.Point(621, 20)
         Me.LblPatientGenre.Name = "LblPatientGenre"
         Me.LblPatientGenre.Size = New System.Drawing.Size(53, 13)
         Me.LblPatientGenre.TabIndex = 26
@@ -358,7 +360,7 @@ Partial Class RadFPatientRendez_vousListe
         'LblPatientNIR
         '
         Me.LblPatientNIR.AutoSize = True
-        Me.LblPatientNIR.Location = New System.Drawing.Point(561, 20)
+        Me.LblPatientNIR.Location = New System.Drawing.Point(758, 20)
         Me.LblPatientNIR.Name = "LblPatientNIR"
         Me.LblPatientNIR.Size = New System.Drawing.Size(85, 13)
         Me.LblPatientNIR.TabIndex = 27
@@ -395,7 +397,7 @@ Partial Class RadFPatientRendez_vousListe
         'RadBtnAbandonner
         '
         Me.RadBtnAbandonner.DialogResult = System.Windows.Forms.DialogResult.Cancel
-        Me.RadBtnAbandonner.Location = New System.Drawing.Point(1054, 467)
+        Me.RadBtnAbandonner.Location = New System.Drawing.Point(1054, 405)
         Me.RadBtnAbandonner.Name = "RadBtnAbandonner"
         Me.RadBtnAbandonner.Size = New System.Drawing.Size(110, 24)
         Me.RadBtnAbandonner.TabIndex = 5
@@ -403,7 +405,7 @@ Partial Class RadFPatientRendez_vousListe
         '
         'RadBtnModifRDV
         '
-        Me.RadBtnModifRDV.Location = New System.Drawing.Point(851, 467)
+        Me.RadBtnModifRDV.Location = New System.Drawing.Point(851, 405)
         Me.RadBtnModifRDV.Name = "RadBtnModifRDV"
         Me.RadBtnModifRDV.Size = New System.Drawing.Size(197, 24)
         Me.RadBtnModifRDV.TabIndex = 6
@@ -419,7 +421,7 @@ Partial Class RadFPatientRendez_vousListe
         '
         'RadBtnClotureRDV
         '
-        Me.RadBtnClotureRDV.Location = New System.Drawing.Point(588, 467)
+        Me.RadBtnClotureRDV.Location = New System.Drawing.Point(588, 405)
         Me.RadBtnClotureRDV.Name = "RadBtnClotureRDV"
         Me.RadBtnClotureRDV.Size = New System.Drawing.Size(131, 24)
         Me.RadBtnClotureRDV.TabIndex = 9
@@ -427,18 +429,27 @@ Partial Class RadFPatientRendez_vousListe
         '
         'RadBtnModifierRDV
         '
-        Me.RadBtnModifierRDV.Location = New System.Drawing.Point(725, 467)
+        Me.RadBtnModifierRDV.Location = New System.Drawing.Point(725, 405)
         Me.RadBtnModifierRDV.Name = "RadBtnModifierRDV"
         Me.RadBtnModifierRDV.Size = New System.Drawing.Size(120, 24)
         Me.RadBtnModifierRDV.TabIndex = 7
         Me.RadBtnModifierRDV.Text = "Modifier rendez-vous"
+        '
+        'LblDateNaissance
+        '
+        Me.LblDateNaissance.AutoSize = True
+        Me.LblDateNaissance.Location = New System.Drawing.Point(429, 20)
+        Me.LblDateNaissance.Name = "LblDateNaissance"
+        Me.LblDateNaissance.Size = New System.Drawing.Size(63, 13)
+        Me.LblDateNaissance.TabIndex = 46
+        Me.LblDateNaissance.Text = "25-04-2018"
         '
         'RadFPatientRendez_vousListe
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.CancelButton = Me.RadBtnAbandonner
-        Me.ClientSize = New System.Drawing.Size(1175, 497)
+        Me.ClientSize = New System.Drawing.Size(1175, 439)
         Me.Controls.Add(Me.RadBtnModifierRDV)
         Me.Controls.Add(Me.RadBtnClotureRDV)
         Me.Controls.Add(Me.RadBtnModifRDV)
@@ -497,5 +508,6 @@ Partial Class RadFPatientRendez_vousListe
     Friend WithEvents RadDesktopAlert1 As Telerik.WinControls.UI.RadDesktopAlert
     Friend WithEvents RadBtnClotureRDV As Telerik.WinControls.UI.RadButton
     Friend WithEvents RadBtnModifierRDV As Telerik.WinControls.UI.RadButton
+    Friend WithEvents LblDateNaissance As Label
 End Class
 

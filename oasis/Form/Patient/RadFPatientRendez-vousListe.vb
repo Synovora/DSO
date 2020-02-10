@@ -108,6 +108,7 @@ Public Class RadFPatientRendez_vousListe
         LblPatientPrenom.Text = SelectedPatient.PatientPrenom
         LblPatientNom.Text = SelectedPatient.PatientNom
         LblPatientAge.Text = SelectedPatient.PatientAge
+        LblDateNaissance.Text = SelectedPatient.PatientDateNaissance.ToString("dd.MM.yyyy")
         LblPatientGenre.Text = SelectedPatient.PatientGenre
         LblPatientAdresse1.Text = SelectedPatient.PatientAdresse1
         LblPatientAdresse2.Text = SelectedPatient.PatientAdresse2
@@ -117,7 +118,7 @@ Public Class RadFPatientRendez_vousListe
         LblPatientTel2.Text = SelectedPatient.PatientTel2
         LblPatientSite.Text = Environnement.Table_site.GetSiteDescription(SelectedPatient.PatientSiteId)
         LblPatientUniteSanitaire.Text = Environnement.Table_unite_sanitaire.GetUniteSanitaireDescription(SelectedPatient.PatientUniteSanitaireId)
-        LblPatientDateMaj.Text = SelectedPatient.PatientSyntheseDateMaj.ToString("dd/MM/yyyy")
+        LblPatientDateMaj.Text = SelectedPatient.PatientSyntheseDateMaj.ToString("dd.MM.yyyy")
 
         'Vérification de l'existence d'ALD
         LblALD.Hide()

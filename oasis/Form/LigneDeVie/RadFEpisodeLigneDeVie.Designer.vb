@@ -23,21 +23,21 @@ Partial Class RadFEpisodeLigneDeVie
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
         Me.components = New System.ComponentModel.Container()
-        Dim GridViewTextBoxColumn1 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
-        Dim GridViewTextBoxColumn2 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
-        Dim GridViewTextBoxColumn3 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
-        Dim GridViewTextBoxColumn4 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
-        Dim GridViewTextBoxColumn5 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
-        Dim GridViewTextBoxColumn6 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
-        Dim GridViewTextBoxColumn7 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
-        Dim GridViewTextBoxColumn8 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
-        Dim GridViewTextBoxColumn9 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
-        Dim GridViewTextBoxColumn10 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
-        Dim GridViewTextBoxColumn11 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
-        Dim GridViewTextBoxColumn12 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
-        Dim GridViewTextBoxColumn13 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
-        Dim GridViewTextBoxColumn14 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
-        Dim TableViewDefinition1 As Telerik.WinControls.UI.TableViewDefinition = New Telerik.WinControls.UI.TableViewDefinition()
+        Dim GridViewTextBoxColumn15 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
+        Dim GridViewTextBoxColumn16 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
+        Dim GridViewTextBoxColumn17 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
+        Dim GridViewTextBoxColumn18 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
+        Dim GridViewTextBoxColumn19 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
+        Dim GridViewTextBoxColumn20 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
+        Dim GridViewTextBoxColumn21 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
+        Dim GridViewTextBoxColumn22 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
+        Dim GridViewTextBoxColumn23 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
+        Dim GridViewTextBoxColumn24 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
+        Dim GridViewTextBoxColumn25 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
+        Dim GridViewTextBoxColumn26 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
+        Dim GridViewTextBoxColumn27 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
+        Dim GridViewTextBoxColumn28 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
+        Dim TableViewDefinition2 As Telerik.WinControls.UI.TableViewDefinition = New Telerik.WinControls.UI.TableViewDefinition()
         Me.RadBtnAbandon = New Telerik.WinControls.UI.RadButton()
         Me.RadBtnEpisode = New Telerik.WinControls.UI.RadButton()
         Me.RadGroupBoxEtatCivil = New Telerik.WinControls.UI.RadGroupBox()
@@ -90,6 +90,7 @@ Partial Class RadFEpisodeLigneDeVie
         Me.RadBtnChart = New Telerik.WinControls.UI.RadButton()
         Me.RadBtnConfiguration = New Telerik.WinControls.UI.RadButton()
         Me.RadBtnCreationEpisodeParametre = New Telerik.WinControls.UI.RadButton()
+        Me.LblDateNaissance = New System.Windows.Forms.Label()
         CType(Me.RadBtnAbandon, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.RadBtnEpisode, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.RadGroupBoxEtatCivil, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -130,6 +131,7 @@ Partial Class RadFEpisodeLigneDeVie
         '
         Me.RadGroupBoxEtatCivil.AccessibleRole = System.Windows.Forms.AccessibleRole.Grouping
         Me.RadGroupBoxEtatCivil.BackColor = System.Drawing.SystemColors.GradientInactiveCaption
+        Me.RadGroupBoxEtatCivil.Controls.Add(Me.LblDateNaissance)
         Me.RadGroupBoxEtatCivil.Controls.Add(Me.LblALD)
         Me.RadGroupBoxEtatCivil.Controls.Add(Me.Label13)
         Me.RadGroupBoxEtatCivil.Controls.Add(Me.LblPatientDateMaj)
@@ -156,7 +158,7 @@ Partial Class RadFEpisodeLigneDeVie
         Me.LblALD.AutoSize = True
         Me.LblALD.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.LblALD.ForeColor = System.Drawing.Color.OrangeRed
-        Me.LblALD.Location = New System.Drawing.Point(947, 4)
+        Me.LblALD.Location = New System.Drawing.Point(1119, 4)
         Me.LblALD.Name = "LblALD"
         Me.LblALD.Size = New System.Drawing.Size(31, 13)
         Me.LblALD.TabIndex = 43
@@ -166,7 +168,7 @@ Partial Class RadFEpisodeLigneDeVie
         '
         Me.Label13.AutoSize = True
         Me.Label13.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label13.Location = New System.Drawing.Point(510, 4)
+        Me.Label13.Location = New System.Drawing.Point(682, 4)
         Me.Label13.Name = "Label13"
         Me.Label13.Size = New System.Drawing.Size(37, 13)
         Me.Label13.TabIndex = 42
@@ -175,7 +177,7 @@ Partial Class RadFEpisodeLigneDeVie
         'LblPatientDateMaj
         '
         Me.LblPatientDateMaj.AutoSize = True
-        Me.LblPatientDateMaj.Location = New System.Drawing.Point(801, 4)
+        Me.LblPatientDateMaj.Location = New System.Drawing.Point(973, 4)
         Me.LblPatientDateMaj.Name = "LblPatientDateMaj"
         Me.LblPatientDateMaj.Size = New System.Drawing.Size(63, 13)
         Me.LblPatientDateMaj.TabIndex = 41
@@ -185,7 +187,7 @@ Partial Class RadFEpisodeLigneDeVie
         '
         Me.Label5.AutoSize = True
         Me.Label5.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label5.Location = New System.Drawing.Point(667, 4)
+        Me.Label5.Location = New System.Drawing.Point(839, 4)
         Me.Label5.Name = "Label5"
         Me.Label5.Size = New System.Drawing.Size(128, 13)
         Me.Label5.TabIndex = 40
@@ -194,7 +196,7 @@ Partial Class RadFEpisodeLigneDeVie
         'LblPatientSite
         '
         Me.LblPatientSite.AutoSize = True
-        Me.LblPatientSite.Location = New System.Drawing.Point(710, 21)
+        Me.LblPatientSite.Location = New System.Drawing.Point(882, 21)
         Me.LblPatientSite.Name = "LblPatientSite"
         Me.LblPatientSite.Size = New System.Drawing.Size(36, 13)
         Me.LblPatientSite.TabIndex = 37
@@ -204,7 +206,7 @@ Partial Class RadFEpisodeLigneDeVie
         '
         Me.Label4.AutoSize = True
         Me.Label4.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label4.Location = New System.Drawing.Point(667, 21)
+        Me.Label4.Location = New System.Drawing.Point(839, 21)
         Me.Label4.Name = "Label4"
         Me.Label4.Size = New System.Drawing.Size(37, 13)
         Me.Label4.TabIndex = 36
@@ -231,7 +233,7 @@ Partial Class RadFEpisodeLigneDeVie
         'LblPatientAge
         '
         Me.LblPatientAge.AutoSize = True
-        Me.LblPatientAge.Location = New System.Drawing.Point(367, 4)
+        Me.LblPatientAge.Location = New System.Drawing.Point(539, 4)
         Me.LblPatientAge.Name = "LblPatientAge"
         Me.LblPatientAge.Size = New System.Drawing.Size(40, 13)
         Me.LblPatientAge.TabIndex = 25
@@ -240,7 +242,7 @@ Partial Class RadFEpisodeLigneDeVie
         'LblPatientGenre
         '
         Me.LblPatientGenre.AutoSize = True
-        Me.LblPatientGenre.Location = New System.Drawing.Point(427, 4)
+        Me.LblPatientGenre.Location = New System.Drawing.Point(599, 4)
         Me.LblPatientGenre.Name = "LblPatientGenre"
         Me.LblPatientGenre.Size = New System.Drawing.Size(53, 13)
         Me.LblPatientGenre.TabIndex = 26
@@ -249,7 +251,7 @@ Partial Class RadFEpisodeLigneDeVie
         'LblPatientNIR
         '
         Me.LblPatientNIR.AutoSize = True
-        Me.LblPatientNIR.Location = New System.Drawing.Point(561, 4)
+        Me.LblPatientNIR.Location = New System.Drawing.Point(733, 4)
         Me.LblPatientNIR.Name = "LblPatientNIR"
         Me.LblPatientNIR.Size = New System.Drawing.Size(85, 13)
         Me.LblPatientNIR.TabIndex = 27
@@ -271,79 +273,79 @@ Partial Class RadFEpisodeLigneDeVie
         Me.RadGridViewEpisode.MasterTemplate.AllowCellContextMenu = False
         Me.RadGridViewEpisode.MasterTemplate.AllowDeleteRow = False
         Me.RadGridViewEpisode.MasterTemplate.AllowEditRow = False
-        GridViewTextBoxColumn1.EnableExpressionEditor = False
-        GridViewTextBoxColumn1.HeaderText = "Date"
-        GridViewTextBoxColumn1.Name = "date_creation"
-        GridViewTextBoxColumn1.TextAlignment = System.Drawing.ContentAlignment.MiddleCenter
-        GridViewTextBoxColumn1.Width = 80
-        GridViewTextBoxColumn2.EnableExpressionEditor = False
-        GridViewTextBoxColumn2.HeaderText = "Type"
-        GridViewTextBoxColumn2.HeaderTextAlignment = System.Drawing.ContentAlignment.MiddleLeft
-        GridViewTextBoxColumn2.Name = "type"
-        GridViewTextBoxColumn2.Width = 100
-        GridViewTextBoxColumn3.EnableExpressionEditor = False
-        GridViewTextBoxColumn3.HeaderText = "Activité"
-        GridViewTextBoxColumn3.HeaderTextAlignment = System.Drawing.ContentAlignment.MiddleLeft
-        GridViewTextBoxColumn3.Name = "type_activite"
-        GridViewTextBoxColumn3.ReadOnly = True
-        GridViewTextBoxColumn3.Width = 170
-        GridViewTextBoxColumn4.EnableExpressionEditor = False
-        GridViewTextBoxColumn4.HeaderText = "Nature"
-        GridViewTextBoxColumn4.Name = "type_profil"
-        GridViewTextBoxColumn4.ReadOnly = True
-        GridViewTextBoxColumn4.Width = 95
-        GridViewTextBoxColumn5.EnableExpressionEditor = False
-        GridViewTextBoxColumn5.HeaderText = "Description activité"
-        GridViewTextBoxColumn5.HeaderTextAlignment = System.Drawing.ContentAlignment.MiddleLeft
-        GridViewTextBoxColumn5.IsVisible = False
-        GridViewTextBoxColumn5.Name = "description_activite"
-        GridViewTextBoxColumn5.Width = 240
-        GridViewTextBoxColumn6.EnableExpressionEditor = False
-        GridViewTextBoxColumn6.HeaderText = "Conclusion"
-        GridViewTextBoxColumn6.HeaderTextAlignment = System.Drawing.ContentAlignment.MiddleLeft
-        GridViewTextBoxColumn6.Name = "conclusion"
-        GridViewTextBoxColumn6.Width = 300
-        GridViewTextBoxColumn7.EnableExpressionEditor = False
-        GridViewTextBoxColumn7.HeaderText = "parametre 1"
-        GridViewTextBoxColumn7.Name = "parametre1"
-        GridViewTextBoxColumn7.TextAlignment = System.Drawing.ContentAlignment.MiddleCenter
-        GridViewTextBoxColumn7.Width = 110
-        GridViewTextBoxColumn8.EnableExpressionEditor = False
-        GridViewTextBoxColumn8.HeaderText = "parametre 2"
-        GridViewTextBoxColumn8.Name = "parametre2"
-        GridViewTextBoxColumn8.TextAlignment = System.Drawing.ContentAlignment.MiddleCenter
-        GridViewTextBoxColumn8.Width = 110
-        GridViewTextBoxColumn9.EnableExpressionEditor = False
-        GridViewTextBoxColumn9.HeaderText = "parametre 3"
-        GridViewTextBoxColumn9.Name = "parametre3"
-        GridViewTextBoxColumn9.TextAlignment = System.Drawing.ContentAlignment.MiddleCenter
-        GridViewTextBoxColumn9.Width = 110
-        GridViewTextBoxColumn10.EnableExpressionEditor = False
-        GridViewTextBoxColumn10.HeaderText = "parametre 4"
-        GridViewTextBoxColumn10.Name = "parametre4"
-        GridViewTextBoxColumn10.TextAlignment = System.Drawing.ContentAlignment.MiddleCenter
-        GridViewTextBoxColumn10.Width = 110
-        GridViewTextBoxColumn11.EnableExpressionEditor = False
-        GridViewTextBoxColumn11.HeaderText = "parametre 5"
-        GridViewTextBoxColumn11.Name = "parametre5"
-        GridViewTextBoxColumn11.TextAlignment = System.Drawing.ContentAlignment.MiddleCenter
-        GridViewTextBoxColumn11.Width = 110
-        GridViewTextBoxColumn12.EnableExpressionEditor = False
-        GridViewTextBoxColumn12.HeaderText = "Etat"
-        GridViewTextBoxColumn12.Name = "etat"
-        GridViewTextBoxColumn12.TextAlignment = System.Drawing.ContentAlignment.MiddleCenter
-        GridViewTextBoxColumn12.Width = 70
-        GridViewTextBoxColumn13.EnableExpressionEditor = False
-        GridViewTextBoxColumn13.HeaderText = "episode_id"
-        GridViewTextBoxColumn13.IsVisible = False
-        GridViewTextBoxColumn13.Name = "episode_id"
-        GridViewTextBoxColumn14.EnableExpressionEditor = False
-        GridViewTextBoxColumn14.HeaderText = "Période"
-        GridViewTextBoxColumn14.Name = "periode"
-        GridViewTextBoxColumn14.TextAlignment = System.Drawing.ContentAlignment.MiddleCenter
-        GridViewTextBoxColumn14.Width = 120
-        Me.RadGridViewEpisode.MasterTemplate.Columns.AddRange(New Telerik.WinControls.UI.GridViewDataColumn() {GridViewTextBoxColumn1, GridViewTextBoxColumn2, GridViewTextBoxColumn3, GridViewTextBoxColumn4, GridViewTextBoxColumn5, GridViewTextBoxColumn6, GridViewTextBoxColumn7, GridViewTextBoxColumn8, GridViewTextBoxColumn9, GridViewTextBoxColumn10, GridViewTextBoxColumn11, GridViewTextBoxColumn12, GridViewTextBoxColumn13, GridViewTextBoxColumn14})
-        Me.RadGridViewEpisode.MasterTemplate.ViewDefinition = TableViewDefinition1
+        GridViewTextBoxColumn15.EnableExpressionEditor = False
+        GridViewTextBoxColumn15.HeaderText = "Date"
+        GridViewTextBoxColumn15.Name = "date_creation"
+        GridViewTextBoxColumn15.TextAlignment = System.Drawing.ContentAlignment.MiddleCenter
+        GridViewTextBoxColumn15.Width = 80
+        GridViewTextBoxColumn16.EnableExpressionEditor = False
+        GridViewTextBoxColumn16.HeaderText = "Type"
+        GridViewTextBoxColumn16.HeaderTextAlignment = System.Drawing.ContentAlignment.MiddleLeft
+        GridViewTextBoxColumn16.Name = "type"
+        GridViewTextBoxColumn16.Width = 100
+        GridViewTextBoxColumn17.EnableExpressionEditor = False
+        GridViewTextBoxColumn17.HeaderText = "Activité"
+        GridViewTextBoxColumn17.HeaderTextAlignment = System.Drawing.ContentAlignment.MiddleLeft
+        GridViewTextBoxColumn17.Name = "type_activite"
+        GridViewTextBoxColumn17.ReadOnly = True
+        GridViewTextBoxColumn17.Width = 170
+        GridViewTextBoxColumn18.EnableExpressionEditor = False
+        GridViewTextBoxColumn18.HeaderText = "Nature"
+        GridViewTextBoxColumn18.Name = "type_profil"
+        GridViewTextBoxColumn18.ReadOnly = True
+        GridViewTextBoxColumn18.Width = 95
+        GridViewTextBoxColumn19.EnableExpressionEditor = False
+        GridViewTextBoxColumn19.HeaderText = "Description activité"
+        GridViewTextBoxColumn19.HeaderTextAlignment = System.Drawing.ContentAlignment.MiddleLeft
+        GridViewTextBoxColumn19.IsVisible = False
+        GridViewTextBoxColumn19.Name = "description_activite"
+        GridViewTextBoxColumn19.Width = 240
+        GridViewTextBoxColumn20.EnableExpressionEditor = False
+        GridViewTextBoxColumn20.HeaderText = "Conclusion"
+        GridViewTextBoxColumn20.HeaderTextAlignment = System.Drawing.ContentAlignment.MiddleLeft
+        GridViewTextBoxColumn20.Name = "conclusion"
+        GridViewTextBoxColumn20.Width = 300
+        GridViewTextBoxColumn21.EnableExpressionEditor = False
+        GridViewTextBoxColumn21.HeaderText = "parametre 1"
+        GridViewTextBoxColumn21.Name = "parametre1"
+        GridViewTextBoxColumn21.TextAlignment = System.Drawing.ContentAlignment.MiddleCenter
+        GridViewTextBoxColumn21.Width = 110
+        GridViewTextBoxColumn22.EnableExpressionEditor = False
+        GridViewTextBoxColumn22.HeaderText = "parametre 2"
+        GridViewTextBoxColumn22.Name = "parametre2"
+        GridViewTextBoxColumn22.TextAlignment = System.Drawing.ContentAlignment.MiddleCenter
+        GridViewTextBoxColumn22.Width = 110
+        GridViewTextBoxColumn23.EnableExpressionEditor = False
+        GridViewTextBoxColumn23.HeaderText = "parametre 3"
+        GridViewTextBoxColumn23.Name = "parametre3"
+        GridViewTextBoxColumn23.TextAlignment = System.Drawing.ContentAlignment.MiddleCenter
+        GridViewTextBoxColumn23.Width = 110
+        GridViewTextBoxColumn24.EnableExpressionEditor = False
+        GridViewTextBoxColumn24.HeaderText = "parametre 4"
+        GridViewTextBoxColumn24.Name = "parametre4"
+        GridViewTextBoxColumn24.TextAlignment = System.Drawing.ContentAlignment.MiddleCenter
+        GridViewTextBoxColumn24.Width = 110
+        GridViewTextBoxColumn25.EnableExpressionEditor = False
+        GridViewTextBoxColumn25.HeaderText = "parametre 5"
+        GridViewTextBoxColumn25.Name = "parametre5"
+        GridViewTextBoxColumn25.TextAlignment = System.Drawing.ContentAlignment.MiddleCenter
+        GridViewTextBoxColumn25.Width = 110
+        GridViewTextBoxColumn26.EnableExpressionEditor = False
+        GridViewTextBoxColumn26.HeaderText = "Etat"
+        GridViewTextBoxColumn26.Name = "etat"
+        GridViewTextBoxColumn26.TextAlignment = System.Drawing.ContentAlignment.MiddleCenter
+        GridViewTextBoxColumn26.Width = 70
+        GridViewTextBoxColumn27.EnableExpressionEditor = False
+        GridViewTextBoxColumn27.HeaderText = "episode_id"
+        GridViewTextBoxColumn27.IsVisible = False
+        GridViewTextBoxColumn27.Name = "episode_id"
+        GridViewTextBoxColumn28.EnableExpressionEditor = False
+        GridViewTextBoxColumn28.HeaderText = "Période"
+        GridViewTextBoxColumn28.Name = "periode"
+        GridViewTextBoxColumn28.TextAlignment = System.Drawing.ContentAlignment.MiddleCenter
+        GridViewTextBoxColumn28.Width = 120
+        Me.RadGridViewEpisode.MasterTemplate.Columns.AddRange(New Telerik.WinControls.UI.GridViewDataColumn() {GridViewTextBoxColumn15, GridViewTextBoxColumn16, GridViewTextBoxColumn17, GridViewTextBoxColumn18, GridViewTextBoxColumn19, GridViewTextBoxColumn20, GridViewTextBoxColumn21, GridViewTextBoxColumn22, GridViewTextBoxColumn23, GridViewTextBoxColumn24, GridViewTextBoxColumn25, GridViewTextBoxColumn26, GridViewTextBoxColumn27, GridViewTextBoxColumn28})
+        Me.RadGridViewEpisode.MasterTemplate.ViewDefinition = TableViewDefinition2
         Me.RadGridViewEpisode.Name = "RadGridViewEpisode"
         Me.RadGridViewEpisode.RightToLeft = System.Windows.Forms.RightToLeft.No
         Me.RadGridViewEpisode.ShowGroupPanel = False
@@ -692,6 +694,15 @@ Partial Class RadFEpisodeLigneDeVie
         Me.RadBtnCreationEpisodeParametre.TabIndex = 27
         Me.RadBtnCreationEpisodeParametre.Text = "Création épisode de paramètres"
         '
+        'LblDateNaissance
+        '
+        Me.LblDateNaissance.AutoSize = True
+        Me.LblDateNaissance.Location = New System.Drawing.Point(470, 4)
+        Me.LblDateNaissance.Name = "LblDateNaissance"
+        Me.LblDateNaissance.Size = New System.Drawing.Size(63, 13)
+        Me.LblDateNaissance.TabIndex = 46
+        Me.LblDateNaissance.Text = "25-04-2018"
+        '
         'RadFEpisodeLigneDeVie
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -792,5 +803,6 @@ Partial Class RadFEpisodeLigneDeVie
     Friend WithEvents RadBtnConfiguration As Telerik.WinControls.UI.RadButton
     Friend WithEvents RadBtnCreationEpisodeParametre As Telerik.WinControls.UI.RadButton
     Friend WithEvents ChkTypeParametre As CheckBox
+    Friend WithEvents LblDateNaissance As Label
 End Class
 

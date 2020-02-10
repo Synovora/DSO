@@ -95,6 +95,7 @@ Public Class RadFEpisodeDetail
     Dim ChargementConclusionEnCours As Boolean
 
     Dim ControleProtocoleAiguExiste As Boolean
+    Dim ControleActeParamedicalExiste As Boolean
     Dim ControleWorkflowEnCoursExistant As Boolean
     Dim ControleDemandeAvisMedicalExiste As Boolean
     Dim ControleConclusionMedicaleExiste As Boolean
@@ -134,7 +135,6 @@ Public Class RadFEpisodeDetail
         LblLabelEtatEpisode.Text = ""
 
         afficheTitleForm(Me, "Détail épisode")
-        Me.WindowState = FormWindowState.Maximized
 
         RadGridViewObsIde.TableElement.RowHeight = 35
         RadGridViewObsMed.TableElement.RowHeight = 35
@@ -297,9 +297,10 @@ Public Class RadFEpisodeDetail
         LblPatientPrenom.Text = Me.SelectedPatient.PatientPrenom
         LblPatientNom.Text = Me.SelectedPatient.PatientNom
         LblPatientAge.Text = Me.SelectedPatient.PatientAge
+        LblDateNaissance.Text = Me.SelectedPatient.PatientDateNaissance.ToString("dd.MM.yyyy")
         LblPatientGenre.Text = Me.SelectedPatient.PatientGenre
         LblPatientSite.Text = Environnement.Table_site.GetSiteDescription(Me.SelectedPatient.PatientSiteId)
-        LblPatientDateMaj.Text = Me.SelectedPatient.PatientSyntheseDateMaj.ToString("dd/MM/yyyy")
+        LblPatientDateMaj.Text = Me.SelectedPatient.PatientSyntheseDateMaj.ToString("dd.MM.yyyy")
 
         'Vérification de l'existence d'ALD
         LblALD.Hide()
@@ -696,6 +697,7 @@ Public Class RadFEpisodeDetail
     '====================================================================================================================================
     Private Sub ChargementObservationSpecifique()
         ControleProtocoleAiguExiste = False
+        ControleActeParamedicalExiste = False
         ChargementEpisodeActesParamedicauxParamedical()
         ChargementEpisodeActesParamedicauxMedical()
     End Sub
@@ -713,6 +715,9 @@ Public Class RadFEpisodeDetail
 
         Dim iGrid As Integer = -1
         Dim rowCount As Integer = acteParamedicalDataTable.Rows.Count - 1
+        If acteParamedicalDataTable.Rows.Count > 0 Then
+            ControleActeParamedicalExiste = True
+        End If
         For i = 0 To rowCount Step 1
             iGrid += 1
             'Ajout d'une ligne au DataGridView
@@ -891,6 +896,9 @@ Public Class RadFEpisodeDetail
 
         Dim iGrid As Integer = -1
         Dim rowCount As Integer = acteParamedicalDataTable.Rows.Count - 1
+        If acteParamedicalDataTable.Rows.Count > 0 Then
+            ControleActeParamedicalExiste = True
+        End If
         For i = 0 To rowCount Step 1
             iGrid += 1
             'Ajout d'une ligne au DataGridView
@@ -1384,12 +1392,14 @@ Public Class RadFEpisodeDetail
         'Chargement commentaire de conclusion Paramédicale
         TxtConclusionIDE.Text = Coalesce(episode.ObservationParamedical, "")
 
-        'Chargement conclusion Médicale
+        'Chargement conclusion consigne IDE
         If episode.ConclusionMedConsigneDrcId <> 0 Then
             drc = drcDao.getDrcById(episode.ConclusionMedConsigneDrcId)
             TxtConsigneMedicale.Text = drc.DrcLibelle
+            RadGrpConsigneIDE.Show()
         Else
             TxtConsigneMedicale.Text = ""
+            RadGrpConsigneIDE.Hide()
         End If
 
         'Chargement contexte(s) de conclusion
@@ -1410,17 +1420,21 @@ Public Class RadFEpisodeDetail
                     episodeDao.ModificationEpisode(episode)
                     RadioTypeConclusionIdeModified = False
                 End If
+                RadGrpConclusionIDE.Hide()
+                TxtConclusionIDE.Text = ""
             Else
-                'TODO: vérification si sur protocole
                 If episode.TypeActivite = EpisodeDao.EnumTypeActiviteEpisodeCode.PATHOLOGIE_AIGUE OrElse
                     episode.TypeActivite = EpisodeDao.EnumTypeActiviteEpisodeCode.SUIVI_CHRONIQUE Then
-                    If ControleProtocoleAiguExiste = True Then
-                        RadioBtnSurProtocole.Checked = True
-                        RadioBtnDemandeAvis.Enabled = False
+                    If ControleProtocoleAiguExiste = True OrElse ControleActeParamedicalExiste = True Then
+                        If Not (RadioBtnSurProtocole.Checked = True OrElse RadioBtnDemandeAvis.Checked = True) Then
+                            RadioBtnSurProtocole.Checked = True
+                        End If
+                        RadioBtnDemandeAvis.Enabled = True
+                        RadioBtnSurProtocole.Enabled = True
                         RadioBtnRolePropre.Enabled = False
-                        RadioBtnSurProtocole.Enabled = False
                     End If
                 End If
+                RadGrpConclusionIDE.Show()
             End If
         End If
     End Sub
@@ -1653,6 +1667,7 @@ Public Class RadFEpisodeDetail
         If ChargementConclusionEnCours = False Then
             RadioTypeConclusionIdeModified = True
             episode.ConclusionIdeType = EpisodeDao.EnumTypeConclusionParamedicale.ROLE_PROPRE.ToString
+            ControleTypeConclusionParamedicaleSurDemandeAvis()
         End If
     End Sub
 
@@ -1660,6 +1675,7 @@ Public Class RadFEpisodeDetail
         If ChargementConclusionEnCours = False Then
             RadioTypeConclusionIdeModified = True
             episode.ConclusionIdeType = EpisodeDao.EnumTypeConclusionParamedicale.SUR_PROTOCOLE.ToString
+            ControleTypeConclusionParamedicaleSurDemandeAvis()
         End If
     End Sub
 
@@ -1667,6 +1683,7 @@ Public Class RadFEpisodeDetail
         If ChargementConclusionEnCours = False Then
             RadioTypeConclusionIdeModified = True
             episode.ConclusionIdeType = EpisodeDao.EnumTypeConclusionParamedicale.DEMANDE_AVIS.ToString
+            ControleTypeConclusionParamedicaleSurDemandeAvis()
         End If
     End Sub
 
@@ -2191,7 +2208,16 @@ Public Class RadFEpisodeDetail
     End Sub
 
     'Créer un antécédent
+
+    Private Sub RadBtnCreationAntecedent_Click(sender As Object, e As EventArgs) Handles RadBtnCreationAntecedent.Click
+        CreationAntecedent()
+    End Sub
+
     Private Sub CreerAntecedentToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles CréerAntecedentToolStripMenuItem.Click
+        CreationAntecedent()
+    End Sub
+
+    Private Sub CreationAntecedent()
         Dim SelectedDrcId As Integer
         Me.Enabled = False
         Cursor.Current = Cursors.WaitCursor
@@ -2853,7 +2879,15 @@ Public Class RadFEpisodeDetail
     End Sub
 
     'Création d'un traitement
+    Private Sub RadBtnCreationTraitement_Click(sender As Object, e As EventArgs) Handles RadBtnCreationTraitement.Click
+        CreationTraitement()
+    End Sub
+
     Private Sub CréerUnTraitementToolStripMenuItem1_Click(sender As Object, e As EventArgs) Handles CréerUnTraitementToolStripMenuItem1.Click
+        CreationTraitement()
+    End Sub
+
+    Private Sub CreationTraitement()
         Dim SelectedMedicamentCis As Integer
         Cursor.Current = Cursors.WaitCursor
         Me.Enabled = False
@@ -2883,6 +2917,7 @@ Public Class RadFEpisodeDetail
         End Using
         Me.Enabled = True
     End Sub
+
 
     'Affichage du détail d'un traitement dans un popup
     Private Sub RadTraitementDataGridView_CellDoubleClick(sender As Object, e As Telerik.WinControls.UI.GridViewCellEventArgs) Handles RadTraitementDataGridView.CellDoubleClick
@@ -3279,7 +3314,15 @@ Public Class RadFEpisodeDetail
     End Sub
 
     'Créer un inetervenant
+    Private Sub RadBtnCreationParcours_Click(sender As Object, e As EventArgs) Handles RadBtnCreationParcours.Click
+        CreationIntervenant()
+    End Sub
+
     Private Sub CréerUnIntervenantToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles CréerUnIntervenantToolStripMenuItem.Click
+        CreationIntervenant()
+    End Sub
+
+    Private Sub CreationIntervenant()
         Cursor.Current = Cursors.WaitCursor
         Me.Enabled = False
         Using vFSpecialiteSelecteur As New RadFSpecialiteSelecteur
@@ -3555,7 +3598,16 @@ Public Class RadFEpisodeDetail
         End If
     End Sub
 
+    'Créer un contexte
+    Private Sub RadBtnCreationContexte_Click(sender As Object, e As EventArgs) Handles RadBtnCreationContexte.Click
+        CreationContexte()
+    End Sub
+
     Private Sub CreerUnContexteMenuItem1_Click(sender As Object, e As EventArgs) Handles ToolStripMenuItem1.Click
+        CreationContexte()
+    End Sub
+
+    Private Sub CreationContexte()
         Dim SelectedDrcId As Integer
         Cursor.Current = Cursors.WaitCursor
         Me.Enabled = False
@@ -3974,8 +4026,16 @@ Public Class RadFEpisodeDetail
         End If
     End Sub
 
+    'Création Objectif
+    Private Sub RadBtnCreationPPSObjectif_Click(sender As Object, e As EventArgs) Handles RadBtnCreationPPSObjectif.Click
+        CreationPPSObjectif()
+    End Sub
 
     Private Sub CréerUnObjectifDeSantéToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles CréerUnObjectifDeSantéToolStripMenuItem.Click
+        CreationPPSObjectif()
+    End Sub
+
+    Private Sub CreationPPSObjectif()
         'Contrôler si un objectif de santé valide existe
         Dim ppsdao As New PpsDao
         If ppsdao.ExistPPSObjectifByPatientId(SelectedPatient.patientId) = False Then
@@ -3998,7 +4058,16 @@ Public Class RadFEpisodeDetail
         End If
     End Sub
 
+    'Création mesure préventive
+    Private Sub RadBtnCreationPPSMesure_Click(sender As Object, e As EventArgs) Handles RadBtnCreationPPSMesure.Click
+        CreationMesurePreventive()
+    End Sub
+
     Private Sub CréerUneMesurePréventiveToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles CréerUneMesurePréventiveToolStripMenuItem.Click
+        CreationMesurePreventive()
+    End Sub
+
+    Private Sub CreationMesurePreventive()
         Me.Enabled = False
         Cursor.Current = Cursors.WaitCursor
         Using vFFPPSMesurePreventive As New RadFPPSDetailEdit
@@ -4015,7 +4084,16 @@ Public Class RadFEpisodeDetail
         Me.Enabled = True
     End Sub
 
+    'Création stratégie contextuelle
+    Private Sub RadBtnCreationPPSStrategie_Click(sender As Object, e As EventArgs) Handles RadBtnCreationPPSStrategie.Click
+        CreationStrategieContextuelle()
+    End Sub
+
     Private Sub CréerUneStratégieContextuelleToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles CréerUneStratégieContextuelleToolStripMenuItem.Click
+        CreationStrategieContextuelle()
+    End Sub
+
+    Private Sub CreationStrategieContextuelle()
         Me.Enabled = False
         Cursor.Current = Cursors.WaitCursor
         Using vFPPSStrategie As New RadFPPSDetailEdit
@@ -4032,7 +4110,16 @@ Public Class RadFEpisodeDetail
         Me.Enabled = True
     End Sub
 
+    'Création Suivi intervenant
+    Private Sub RadBtnCreationPPSSuivi_Click(sender As Object, e As EventArgs) Handles RadBtnCreationPPSSuivi.Click
+        CreationSuiviIntervenant()
+    End Sub
+
     Private Sub CréerUnSuiviToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles CréerUnSuiviToolStripMenuItem.Click
+        CreationSuiviIntervenant()
+    End Sub
+
+    Private Sub CreationSuiviIntervenant()
         Cursor.Current = Cursors.WaitCursor
         Me.Enabled = False
         Using vFSpecialiteSelecteur As New RadFSpecialiteSelecteur
@@ -4065,22 +4152,6 @@ Public Class RadFEpisodeDetail
             End If
         End Using
         Me.Enabled = True
-    End Sub
-
-    Private Sub RadBtnSousEpisode_Click(sender As Object, e As EventArgs) Handles RadBtnSousEpisode.Click
-        Return
-        Try
-            Me.Cursor = Cursors.WaitCursor
-            Me.Enabled = False
-            Using frm = New FrmSousEpisode()
-                frm.ShowDialog()
-            End Using
-        Catch err As Exception
-            MsgBox(err.Message())
-        Finally
-            Me.Enabled = True
-            Me.Cursor = Cursors.Default
-        End Try
     End Sub
 
     Private Sub HistoriqueDesModificationsToolStripMenuItem3_Click(sender As Object, e As EventArgs) Handles HistoriqueDesModificationsToolStripMenuItem3.Click
@@ -4325,7 +4396,21 @@ Public Class RadFEpisodeDetail
         End Using
         Me.Enabled = True
     End Sub
-
+    Private Sub RadBtnSousEpisode_Click(sender As Object, e As EventArgs) Handles RadBtnSousEpisode.Click
+        Return
+        Try
+            Me.Cursor = Cursors.WaitCursor
+            Me.Enabled = False
+            Using frm = New FrmSousEpisode()
+                frm.ShowDialog()
+            End Using
+        Catch err As Exception
+            MsgBox(err.Message())
+        Finally
+            Me.Enabled = True
+            Me.Cursor = Cursors.Default
+        End Try
+    End Sub
 
     'Abandon
     Private Sub RadBtnAbandon_Click(sender As Object, e As EventArgs) Handles RadBtnAbandon.Click
