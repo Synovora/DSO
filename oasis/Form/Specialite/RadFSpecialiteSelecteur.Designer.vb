@@ -35,22 +35,22 @@ Partial Class RadFSpecialiteSelecteur
         Dim GridViewCheckBoxColumn3 As Telerik.WinControls.UI.GridViewCheckBoxColumn = New Telerik.WinControls.UI.GridViewCheckBoxColumn()
         Dim TableViewDefinition1 As Telerik.WinControls.UI.TableViewDefinition = New Telerik.WinControls.UI.TableViewDefinition()
         Me.RadSpecialiteDataGridView = New Telerik.WinControls.UI.RadGridView()
+        Me.OarspecialiteBindingSource = New System.Windows.Forms.BindingSource(Me.components)
+        Me.DS_Specialite = New Oasis_WF.DS_Specialite()
         Me.RadBtnAbandon = New Telerik.WinControls.UI.RadButton()
         Me.RadBtnSelection = New Telerik.WinControls.UI.RadButton()
         Me.RadGbxSelect = New Telerik.WinControls.UI.RadGroupBox()
         Me.LblNature = New System.Windows.Forms.Label()
         Me.LblSpecialite = New System.Windows.Forms.Label()
-        Me.OarspecialiteBindingSource = New System.Windows.Forms.BindingSource(Me.components)
-        Me.DS_Specialite = New Oasis_WF.DS_Specialite()
         Me.Oa_r_specialiteTableAdapter = New Oasis_WF.DS_SpecialiteTableAdapters.oa_r_specialiteTableAdapter()
         CType(Me.RadSpecialiteDataGridView, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.RadSpecialiteDataGridView.MasterTemplate, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.OarspecialiteBindingSource, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.DS_Specialite, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.RadBtnAbandon, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.RadBtnSelection, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.RadGbxSelect, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.RadGbxSelect.SuspendLayout()
-        CType(Me.OarspecialiteBindingSource, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.DS_Specialite, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
@@ -155,6 +155,16 @@ Partial Class RadFSpecialiteSelecteur
         Me.RadSpecialiteDataGridView.Size = New System.Drawing.Size(568, 324)
         Me.RadSpecialiteDataGridView.TabIndex = 0
         '
+        'OarspecialiteBindingSource
+        '
+        Me.OarspecialiteBindingSource.DataMember = "oa_r_specialite"
+        Me.OarspecialiteBindingSource.DataSource = Me.DS_Specialite
+        '
+        'DS_Specialite
+        '
+        Me.DS_Specialite.DataSetName = "DS_Specialite"
+        Me.DS_Specialite.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema
+        '
         'RadBtnAbandon
         '
         Me.RadBtnAbandon.DialogResult = System.Windows.Forms.DialogResult.Cancel
@@ -205,16 +215,6 @@ Partial Class RadFSpecialiteSelecteur
         Me.LblSpecialite.TabIndex = 3
         Me.LblSpecialite.Text = "Spécialité"
         '
-        'OarspecialiteBindingSource
-        '
-        Me.OarspecialiteBindingSource.DataMember = "oa_r_specialite"
-        Me.OarspecialiteBindingSource.DataSource = Me.DS_Specialite
-        '
-        'DS_Specialite
-        '
-        Me.DS_Specialite.DataSetName = "DS_Specialite"
-        Me.DS_Specialite.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema
-        '
         'Oa_r_specialiteTableAdapter
         '
         Me.Oa_r_specialiteTableAdapter.ClearBeforeFill = True
@@ -240,13 +240,13 @@ Partial Class RadFSpecialiteSelecteur
         Me.Text = "Sélection d'une spécialité"
         CType(Me.RadSpecialiteDataGridView.MasterTemplate, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.RadSpecialiteDataGridView, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.OarspecialiteBindingSource, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.DS_Specialite, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.RadBtnAbandon, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.RadBtnSelection, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.RadGbxSelect, System.ComponentModel.ISupportInitialize).EndInit()
         Me.RadGbxSelect.ResumeLayout(False)
         Me.RadGbxSelect.PerformLayout()
-        CType(Me.OarspecialiteBindingSource, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.DS_Specialite, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
 

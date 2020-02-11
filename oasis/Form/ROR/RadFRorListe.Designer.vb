@@ -40,34 +40,37 @@ Partial Class RadFRorListe
         Me.LblLabelSpecialite = New System.Windows.Forms.Label()
         Me.RadPanel2 = New Telerik.WinControls.UI.RadPanel()
         Me.RadGridView1 = New Telerik.WinControls.UI.RadGridView()
+        Me.ContextMenuStrip1 = New System.Windows.Forms.ContextMenuStrip(Me.components)
+        Me.CréationNouvelIntervenantToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.VrorBindingSource = New System.Windows.Forms.BindingSource(Me.components)
         Me.RORDS = New Oasis_WF.RORDS()
+        Me.RadBtnCreation = New Telerik.WinControls.UI.RadButton()
         Me.RadPanel3 = New Telerik.WinControls.UI.RadPanel()
+        Me.RadBtnModification = New Telerik.WinControls.UI.RadButton()
         Me.GbxSelection = New Telerik.WinControls.UI.RadGroupBox()
         Me.LblSpecialite = New System.Windows.Forms.Label()
         Me.LblNom = New System.Windows.Forms.Label()
         Me.RadBtnSelection = New Telerik.WinControls.UI.RadButton()
-        Me.RadBtnCreation = New Telerik.WinControls.UI.RadButton()
         Me.RadBtnAbandon = New Telerik.WinControls.UI.RadButton()
         Me.V_rorTableAdapter = New Oasis_WF.RORDSTableAdapters.v_rorTableAdapter()
-        Me.ContextMenuStrip1 = New System.Windows.Forms.ContextMenuStrip(Me.components)
-        Me.CréationNouvelIntervenantToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.ModificationIntervenantToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         CType(Me.RadPanel1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.RadPanel1.SuspendLayout()
         CType(Me.RadPanel2, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.RadPanel2.SuspendLayout()
         CType(Me.RadGridView1, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.RadGridView1.MasterTemplate, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.ContextMenuStrip1.SuspendLayout()
         CType(Me.VrorBindingSource, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.RORDS, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.RadBtnCreation, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.RadPanel3, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.RadPanel3.SuspendLayout()
+        CType(Me.RadBtnModification, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.GbxSelection, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.GbxSelection.SuspendLayout()
         CType(Me.RadBtnSelection, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.RadBtnCreation, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.RadBtnAbandon, System.ComponentModel.ISupportInitialize).BeginInit()
-        Me.ContextMenuStrip1.SuspendLayout()
         CType(Me, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
@@ -126,6 +129,7 @@ Partial Class RadFRorListe
         'RadPanel2
         '
         Me.RadPanel2.Controls.Add(Me.RadGridView1)
+        Me.RadPanel2.Controls.Add(Me.RadBtnCreation)
         Me.RadPanel2.Dock = System.Windows.Forms.DockStyle.Fill
         Me.RadPanel2.Location = New System.Drawing.Point(0, 48)
         Me.RadPanel2.Name = "RadPanel2"
@@ -137,11 +141,10 @@ Partial Class RadFRorListe
         Me.RadGridView1.BackColor = System.Drawing.Color.FromArgb(CType(CType(191, Byte), Integer), CType(CType(219, Byte), Integer), CType(CType(255, Byte), Integer))
         Me.RadGridView1.ContextMenuStrip = Me.ContextMenuStrip1
         Me.RadGridView1.Cursor = System.Windows.Forms.Cursors.Default
-        Me.RadGridView1.Dock = System.Windows.Forms.DockStyle.Fill
         Me.RadGridView1.Font = New System.Drawing.Font("Segoe UI", 8.25!)
         Me.RadGridView1.ForeColor = System.Drawing.Color.Black
         Me.RadGridView1.ImeMode = System.Windows.Forms.ImeMode.NoControl
-        Me.RadGridView1.Location = New System.Drawing.Point(0, 0)
+        Me.RadGridView1.Location = New System.Drawing.Point(0, 47)
         '
         '
         '
@@ -226,8 +229,20 @@ Partial Class RadFRorListe
         Me.RadGridView1.ReadOnly = True
         Me.RadGridView1.RightToLeft = System.Windows.Forms.RightToLeft.No
         Me.RadGridView1.ShowGroupPanel = False
-        Me.RadGridView1.Size = New System.Drawing.Size(1097, 503)
+        Me.RadGridView1.Size = New System.Drawing.Size(1097, 456)
         Me.RadGridView1.TabIndex = 0
+        '
+        'ContextMenuStrip1
+        '
+        Me.ContextMenuStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.CréationNouvelIntervenantToolStripMenuItem, Me.ModificationIntervenantToolStripMenuItem})
+        Me.ContextMenuStrip1.Name = "ContextMenuStrip1"
+        Me.ContextMenuStrip1.Size = New System.Drawing.Size(222, 70)
+        '
+        'CréationNouvelIntervenantToolStripMenuItem
+        '
+        Me.CréationNouvelIntervenantToolStripMenuItem.Name = "CréationNouvelIntervenantToolStripMenuItem"
+        Me.CréationNouvelIntervenantToolStripMenuItem.Size = New System.Drawing.Size(221, 22)
+        Me.CréationNouvelIntervenantToolStripMenuItem.Text = "Création nouvel intervenant"
         '
         'VrorBindingSource
         '
@@ -239,16 +254,32 @@ Partial Class RadFRorListe
         Me.RORDS.DataSetName = "RORDS"
         Me.RORDS.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema
         '
+        'RadBtnCreation
+        '
+        Me.RadBtnCreation.Location = New System.Drawing.Point(3, 17)
+        Me.RadBtnCreation.Name = "RadBtnCreation"
+        Me.RadBtnCreation.Size = New System.Drawing.Size(169, 24)
+        Me.RadBtnCreation.TabIndex = 1
+        Me.RadBtnCreation.Text = "+ Création nouvel intervenant"
+        '
         'RadPanel3
         '
+        Me.RadPanel3.Controls.Add(Me.RadBtnModification)
         Me.RadPanel3.Controls.Add(Me.GbxSelection)
-        Me.RadPanel3.Controls.Add(Me.RadBtnCreation)
         Me.RadPanel3.Controls.Add(Me.RadBtnAbandon)
         Me.RadPanel3.Dock = System.Windows.Forms.DockStyle.Bottom
         Me.RadPanel3.Location = New System.Drawing.Point(0, 464)
         Me.RadPanel3.Name = "RadPanel3"
         Me.RadPanel3.Size = New System.Drawing.Size(1097, 87)
         Me.RadPanel3.TabIndex = 2
+        '
+        'RadBtnModification
+        '
+        Me.RadBtnModification.Location = New System.Drawing.Point(857, 51)
+        Me.RadBtnModification.Name = "RadBtnModification"
+        Me.RadBtnModification.Size = New System.Drawing.Size(110, 24)
+        Me.RadBtnModification.TabIndex = 3
+        Me.RadBtnModification.Text = "Modifier"
         '
         'GbxSelection
         '
@@ -293,14 +324,6 @@ Partial Class RadFRorListe
         Me.RadBtnSelection.TabIndex = 0
         Me.RadBtnSelection.Text = "Sélection"
         '
-        'RadBtnCreation
-        '
-        Me.RadBtnCreation.Location = New System.Drawing.Point(816, 51)
-        Me.RadBtnCreation.Name = "RadBtnCreation"
-        Me.RadBtnCreation.Size = New System.Drawing.Size(151, 24)
-        Me.RadBtnCreation.TabIndex = 1
-        Me.RadBtnCreation.Text = "Création nouvel intervenant"
-        '
         'RadBtnAbandon
         '
         Me.RadBtnAbandon.DialogResult = System.Windows.Forms.DialogResult.Cancel
@@ -314,17 +337,11 @@ Partial Class RadFRorListe
         '
         Me.V_rorTableAdapter.ClearBeforeFill = True
         '
-        'ContextMenuStrip1
+        'ModificationIntervenantToolStripMenuItem
         '
-        Me.ContextMenuStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.CréationNouvelIntervenantToolStripMenuItem})
-        Me.ContextMenuStrip1.Name = "ContextMenuStrip1"
-        Me.ContextMenuStrip1.Size = New System.Drawing.Size(222, 26)
-        '
-        'CréationNouvelIntervenantToolStripMenuItem
-        '
-        Me.CréationNouvelIntervenantToolStripMenuItem.Name = "CréationNouvelIntervenantToolStripMenuItem"
-        Me.CréationNouvelIntervenantToolStripMenuItem.Size = New System.Drawing.Size(221, 22)
-        Me.CréationNouvelIntervenantToolStripMenuItem.Text = "Création nouvel intervenant"
+        Me.ModificationIntervenantToolStripMenuItem.Name = "ModificationIntervenantToolStripMenuItem"
+        Me.ModificationIntervenantToolStripMenuItem.Size = New System.Drawing.Size(221, 22)
+        Me.ModificationIntervenantToolStripMenuItem.Text = "Modification intervenant"
         '
         'RadFRorListe
         '
@@ -349,17 +366,18 @@ Partial Class RadFRorListe
         Me.RadPanel2.ResumeLayout(False)
         CType(Me.RadGridView1.MasterTemplate, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.RadGridView1, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.ContextMenuStrip1.ResumeLayout(False)
         CType(Me.VrorBindingSource, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.RORDS, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.RadBtnCreation, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.RadPanel3, System.ComponentModel.ISupportInitialize).EndInit()
         Me.RadPanel3.ResumeLayout(False)
+        CType(Me.RadBtnModification, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.GbxSelection, System.ComponentModel.ISupportInitialize).EndInit()
         Me.GbxSelection.ResumeLayout(False)
         Me.GbxSelection.PerformLayout()
         CType(Me.RadBtnSelection, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.RadBtnCreation, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.RadBtnAbandon, System.ComponentModel.ISupportInitialize).EndInit()
-        Me.ContextMenuStrip1.ResumeLayout(False)
         CType(Me, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
 
@@ -384,5 +402,7 @@ Partial Class RadFRorListe
     Friend WithEvents lblLabelType As Label
     Friend WithEvents ContextMenuStrip1 As ContextMenuStrip
     Friend WithEvents CréationNouvelIntervenantToolStripMenuItem As ToolStripMenuItem
+    Friend WithEvents RadBtnModification As Telerik.WinControls.UI.RadButton
+    Friend WithEvents ModificationIntervenantToolStripMenuItem As ToolStripMenuItem
 End Class
 

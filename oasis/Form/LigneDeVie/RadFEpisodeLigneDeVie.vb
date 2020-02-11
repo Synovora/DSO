@@ -5,6 +5,7 @@ Imports Telerik.WinControls.UI
 Public Class RadFEpisodeLigneDeVie
     Private privateSelectedPatient As Patient
     Private privateUtilisateurConnecte As Utilisateur
+    Private _EpisodeIdDejaOuvert As Long
 
     Public Property SelectedPatient As Patient
         Get
@@ -21,6 +22,15 @@ Public Class RadFEpisodeLigneDeVie
         End Get
         Set(value As Utilisateur)
             privateUtilisateurConnecte = value
+        End Set
+    End Property
+
+    Public Property EpisodeIdDejaOuvert As Long
+        Get
+            Return _EpisodeIdDejaOuvert
+        End Get
+        Set(value As Long)
+            _EpisodeIdDejaOuvert = value
         End Set
     End Property
 
@@ -481,6 +491,10 @@ Public Class RadFEpisodeLigneDeVie
             Dim aRow As Integer = Me.RadGridViewEpisode.Rows.IndexOf(Me.RadGridViewEpisode.CurrentRow)
             If aRow >= 0 Then
                 Dim EpisodeId As Integer = RadGridViewEpisode.Rows(aRow).Cells("episode_Id").Value
+                If EpisodeId = EpisodeIdDejaOuvert Then
+                    MessageBox.Show("Cet épisode est déjà ouvert dans l'écran qui a conduit à la consultation de la ligne de vie du patient")
+                    Exit Sub
+                End If
                 If RadGridViewEpisode.Rows(aRow).Cells("type").Value = EpisodeDao.EnumTypeEpisode.PARAMETRE.ToString Then
                     Me.Enabled = False
                     Cursor.Current = Cursors.WaitCursor

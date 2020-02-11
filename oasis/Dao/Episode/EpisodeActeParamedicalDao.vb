@@ -113,8 +113,9 @@ Public Class EpisodeActeParamedicalDao
     End Function
 
 
-    Friend Function CreateEpisodeActeParamedical(episodeActeParamedical As EpisodeActeParamedical) As Boolean
+    Friend Function CreateEpisodeActeParamedical(episodeActeParamedical As EpisodeActeParamedical) As Long
         Dim nbcreate As Integer
+        Dim episodeActeParamedicalIdCree As Integer = 0
         Dim da As SqlDataAdapter = New SqlDataAdapter()
         Dim codeRetour As Boolean = True
         Dim con As SqlConnection
@@ -150,7 +151,24 @@ Public Class EpisodeActeParamedicalDao
             con.Close()
         End Try
 
-        Return codeRetour
+        If codeRetour = True Then
+            'Récupération de l'identifiant de l'épisode créé
+            Dim dt As SqlDataReader
+            SQLstring = "SELECT MAX(oa_episode_acte_paramedical_id) FROM oasis.oasis.oa_episode_acte_paramedical WHERE patient_id = " & episodeActeParamedical.PatientId & ";"
+            Dim EpisodeLastCommand As New SqlCommand(SQLstring, con)
+            con.Open()
+            dt = EpisodeLastCommand.ExecuteReader()
+            If dt.HasRows Then
+                dt.Read()
+                'Récupération de la clé de l'enregistrement créé
+                episodeActeParamedicalIdCree = dt(0)
+                'Libération des ressources d'accès aux données
+                con.Close()
+                EpisodeLastCommand.Dispose()
+            End If
+        End If
+
+        Return episodeActeParamedicalIdCree
     End Function
 
     Friend Function ModificationEpisodeActeParamedical(episodeActeParamedical As EpisodeActeParamedical) As Boolean

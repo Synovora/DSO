@@ -102,6 +102,8 @@ Public Class RadFEpisodeDetail
     Dim ControleOrdonnanceValide As Boolean = False
     Dim ControleOrdonnanceExiste As Boolean = False
 
+    Dim ControleAjoutConclusion As Boolean = True
+
     Dim LongueurStringAllergie As Integer
     Dim drcIdConclusionIde As Integer
 
@@ -155,13 +157,15 @@ Public Class RadFEpisodeDetail
 
         'Episode
         ChargementCaracteristiquesEpisode()
+        DroitAcces()
+
         ChargementAffichageBlocWorkflow()
         If episode.TypeActivite = EpisodeDao.EnumTypeActiviteEpisodeCode.SOCIAL Or episode.Type = EpisodeDao.EnumTypeEpisode.VIRTUEL.ToString Then
             SplitPanel7.Hide()
             Me.RadSplitContainer3.MoveSplitter(Me.RadSplitContainer3.Splitters(0), RadDirection.Up)
             SplitPanel4.Hide()
             Me.RadSplitContainer2.MoveSplitter(Me.RadSplitContainer2.Splitters(0), RadDirection.Up)
-            RadObsSpeParDataGridView.Hide()
+            RadObsSpeIdeDataGridView.Hide()
             RadBtnParametre.Hide()
             RadGbxParametre.Text = ""
         Else
@@ -177,8 +181,6 @@ Public Class RadFEpisodeDetail
 
         'Synthèse, chargement de la page par défaut
         ChargementAntecedent()
-
-        DroitAcces()
 
         Cursor.Current = Cursors.Default
     End Sub
@@ -356,15 +358,17 @@ Public Class RadFEpisodeDetail
     End Sub
 
     Private Sub ChargementEtatEpisode()
+        Dim DateValidationOrdonnance As Date = Nothing
+        Dim DateCreationOrdonnance As Date = Nothing
         Dim dt As DataTable
         dt = ordonnaceDao.getOrdonnanceValidebyPatient(SelectedPatient.patientId, SelectedEpisodeId)
         If dt.Rows.Count > 0 Then
             OrdonnanceToolStripMenuItem.ForeColor = Color.Red
             If dt.Rows.Count > 0 Then
                 ControleOrdonnanceExiste = True
-                Dim DateValidation As Date
-                DateValidation = Coalesce(dt.Rows(0)("oa_ordonnance_date_validation"), Nothing)
-                If DateValidation <> Nothing Then
+                DateValidationOrdonnance = Coalesce(dt.Rows(0)("oa_ordonnance_date_validation"), Nothing)
+                DateCreationOrdonnance = Coalesce(dt.Rows(0)("oa_ordonnance_date_creation"), Nothing)
+                If DateValidationOrdonnance <> Nothing Then
                     ControleOrdonnanceValide = True
                 Else
                     ControleOrdonnanceValide = False
@@ -380,18 +384,18 @@ Public Class RadFEpisodeDetail
             Case EpisodeDao.EnumEtatEpisode.EN_COURS.ToString
                 If ControleOrdonnanceExiste = True Then
                     If ControleOrdonnanceValide = True Then
-                        LblLabelEtatEpisode.Text = "Episode en cours (ordonnance validée)"
+                        LblLabelEtatEpisode.Text = "EPISODE EN COURS - ORDONNANCE VALIDEE LE " & DateValidationOrdonnance.ToString("dd.MM.yyyy hh:mm")
                     Else
-                        LblLabelEtatEpisode.Text = "Episode en cours (ordonnance en attente de validation !)"
+                        LblLabelEtatEpisode.Text = "EPISODE EN COURS - ORDONNANCE CREEE LE " & DateCreationOrdonnance.ToString("dd.MM.yyyy hh:mm") & ", EN ATTENTE DE VALIDATION !"
                     End If
                 Else
                     LblLabelEtatEpisode.Text = "Episode en cours"
                 End If
             Case EpisodeDao.EnumEtatEpisode.CLOTURE.ToString
                 If episode.DateModification.Date < Date.Now.Date Then
-                    LblLabelEtatEpisode.Text = "Episode clôturé le " & episode.DateModification.ToString("dd.MM.yyyy") & ", non modifiable (hormis l'ajout de pièces dans les sous-épisodes)"
+                    LblLabelEtatEpisode.Text = "EPISODE CLOTURE LE " & episode.DateModification.ToString("dd.MM.yyyy") & " (non modifiable, hormis l'ajout de pièces dans les sous-épisodes)"
                 Else
-                    LblLabelEtatEpisode.Text = "Episode clôturé aujourd'hui, modification possible pour la journée en cours"
+                    LblLabelEtatEpisode.Text = "EPISODE CLOTURE AUJOURD'HUI (Modification possible pour la journée en cours)"
                 End If
             Case Else
                 LblLabelEtatEpisode.Text = "Etat inconnu !"
@@ -711,7 +715,7 @@ Public Class RadFEpisodeDetail
         Dim acteParamedicalDataTable As DataTable
         acteParamedicalDataTable = episodeActeParamedicalDao.getAllEpisodeActeParamedicalByEpisodeId(SelectedEpisodeId, EpisodeDao.EnumTypeProfil.PARAMEDICAL.ToString)
 
-        RadObsSpeParDataGridView.Rows.Clear()
+        RadObsSpeIdeDataGridView.Rows.Clear()
 
         Dim iGrid As Integer = -1
         Dim rowCount As Integer = acteParamedicalDataTable.Rows.Count - 1
@@ -721,37 +725,35 @@ Public Class RadFEpisodeDetail
         For i = 0 To rowCount Step 1
             iGrid += 1
             'Ajout d'une ligne au DataGridView
-            RadObsSpeParDataGridView.Rows.Add(iGrid)
+            RadObsSpeIdeDataGridView.Rows.Add(iGrid)
             'Alimentation du DataGridView
-            RadObsSpeParDataGridView.Rows(iGrid).Cells("episodeActeParamedicalId").Value = acteParamedicalDataTable.Rows(i)("oa_episode_acte_paramedical_id")
-            RadObsSpeParDataGridView.Rows(iGrid).Cells("drcId").Value = acteParamedicalDataTable.Rows(i)("drc_id")
-            RadObsSpeParDataGridView.Rows(iGrid).Cells("drcDescription").Value = Coalesce(acteParamedicalDataTable.Rows(i)("oa_drc_libelle"), "")
-            RadObsSpeParDataGridView.Rows(iGrid).Cells("observation").Value = Coalesce(acteParamedicalDataTable.Rows(i)("observation"), "")
-            RadObsSpeParDataGridView.Rows(iGrid).Cells("observationInput").Value = Coalesce(acteParamedicalDataTable.Rows(i)("observation"), "")
-            RadObsSpeParDataGridView.Rows(iGrid).Cells("drcCommentaire").Value = Coalesce(acteParamedicalDataTable.Rows(i)("oa_drc_dur_prob_epis"), "")
-            RadObsSpeParDataGridView.Rows(iGrid).Cells("categorieOasis").Value = Coalesce(acteParamedicalDataTable.Rows(i)("oa_drc_oasis_categorie"), 0)
-            If RadObsSpeParDataGridView.Rows(iGrid).Cells("categorieOasis").Value = DrcDao.EnumCategorieOasisCode.ProtocoleAigu Then
-                RadObsSpeParDataGridView.Rows(iGrid).Cells("drcDescription").Style.ForeColor = Color.Red
+            RadObsSpeIdeDataGridView.Rows(iGrid).Cells("episodeActeParamedicalId").Value = acteParamedicalDataTable.Rows(i)("oa_episode_acte_paramedical_id")
+            RadObsSpeIdeDataGridView.Rows(iGrid).Cells("drcId").Value = acteParamedicalDataTable.Rows(i)("drc_id")
+            RadObsSpeIdeDataGridView.Rows(iGrid).Cells("drcDescription").Value = Coalesce(acteParamedicalDataTable.Rows(i)("oa_drc_libelle"), "")
+            RadObsSpeIdeDataGridView.Rows(iGrid).Cells("observation").Value = Coalesce(acteParamedicalDataTable.Rows(i)("observation"), "")
+            RadObsSpeIdeDataGridView.Rows(iGrid).Cells("observationInput").Value = Coalesce(acteParamedicalDataTable.Rows(i)("observation"), "")
+            RadObsSpeIdeDataGridView.Rows(iGrid).Cells("drcCommentaire").Value = Coalesce(acteParamedicalDataTable.Rows(i)("oa_drc_dur_prob_epis"), "")
+            RadObsSpeIdeDataGridView.Rows(iGrid).Cells("categorieOasis").Value = Coalesce(acteParamedicalDataTable.Rows(i)("oa_drc_oasis_categorie"), 0)
+            If RadObsSpeIdeDataGridView.Rows(iGrid).Cells("categorieOasis").Value = DrcDao.EnumCategorieOasisCode.ProtocoleAigu Then
+                RadObsSpeIdeDataGridView.Rows(iGrid).Cells("drcDescription").Style.ForeColor = Color.Red
                 ControleProtocoleAiguExiste = True
             End If
         Next
 
         'Positionnement du grid sur la première occurrence
-        If RadObsSpeParDataGridView.Rows.Count > 0 Then
-            RadObsSpeParDataGridView.CurrentRow = RadObsSpeParDataGridView.ChildRows(0)
-            RadObsSpeParDataGridView.TableElement.VScrollBar.Value = 0
+        If RadObsSpeIdeDataGridView.Rows.Count > 0 Then
+            RadObsSpeIdeDataGridView.CurrentRow = RadObsSpeIdeDataGridView.ChildRows(0)
+            RadObsSpeIdeDataGridView.TableElement.VScrollBar.Value = 0
         End If
 
         If userLog.TypeProfil <> ProfilDao.EnumProfilType.PARAMEDICAL.ToString Then
-            RadObsSpeParDataGridView.AllowEditRow = False
-            SaisieObservationToolStripMenuItem.Enabled = False
-            AjoutProtocoleAiguToolStripMenuItem.Enabled = False
+            RadObsSpeIdeDataGridView.AllowEditRow = False
         End If
 
         FinChargementActesParamedicauxParamedical = True
     End Sub
 
-    Private Sub MasterTemplate_CellValueChanged(sender As Object, e As GridViewCellEventArgs) Handles RadObsSpeParDataGridView.CellValueChanged
+    Private Sub MasterTemplate_CellValueChanged(sender As Object, e As GridViewCellEventArgs) Handles RadObsSpeIdeDataGridView.CellValueChanged
         If FinChargementActesParamedicauxParamedical = True Then
             ValidationSaisieObservationParamedicale()
         End If
@@ -760,7 +762,7 @@ Public Class RadFEpisodeDetail
     Private Sub ValidationSaisieObservationParamedicale()
         Dim MiseAJour As Boolean = False
 
-        For Each rowInfo As GridViewRowInfo In RadObsSpeParDataGridView.Rows
+        For Each rowInfo As GridViewRowInfo In RadObsSpeIdeDataGridView.Rows
             Dim observationInput As String = ""
             Dim observation As String = ""
             Dim id As Long
@@ -806,11 +808,15 @@ Public Class RadFEpisodeDetail
 
     'Saisie observation spécifique via l'écran dédié selon le type de la DORC
     Private Sub SaisieObservationToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles SaisieObservationToolStripMenuItem.Click
-        If RadObsSpeParDataGridView.CurrentRow IsNot Nothing Then
-            Dim aRow As Integer = Me.RadObsSpeParDataGridView.Rows.IndexOf(Me.RadObsSpeParDataGridView.CurrentRow)
+        SaisieObservation()
+    End Sub
+
+    Private Sub SaisieObservation()
+        If RadObsSpeIdeDataGridView.CurrentRow IsNot Nothing Then
+            Dim aRow As Integer = Me.RadObsSpeIdeDataGridView.Rows.IndexOf(Me.RadObsSpeIdeDataGridView.CurrentRow)
             If aRow >= 0 Then
-                Dim episodeActeParamedicalId As Integer = RadObsSpeParDataGridView.Rows(aRow).Cells("episodeActeParamedicalId").Value
-                Dim categorieOasis As Integer = RadObsSpeParDataGridView.Rows(aRow).Cells("categorieOasis").Value
+                Dim episodeActeParamedicalId As Integer = RadObsSpeIdeDataGridView.Rows(aRow).Cells("episodeActeParamedicalId").Value
+                Dim categorieOasis As Integer = RadObsSpeIdeDataGridView.Rows(aRow).Cells("categorieOasis").Value
                 Me.Enabled = False
                 Cursor.Current = Cursors.WaitCursor
                 Select Case categorieOasis
@@ -839,13 +845,13 @@ Public Class RadFEpisodeDetail
     End Sub
 
     'Tooltip
-    Private Sub MasterTemplate_CellFormatting(sender As Object, e As CellFormattingEventArgs) Handles RadObsSpeParDataGridView.CellFormatting
+    Private Sub MasterTemplate_CellFormatting(sender As Object, e As CellFormattingEventArgs) Handles RadObsSpeIdeDataGridView.CellFormatting
         If TypeOf e.Row Is GridViewDataRowInfo Then
             e.CellElement.ToolTipText = e.CellElement.Text
         End If
     End Sub
 
-    Private Sub MasterTemplate_ToolTipTextNeeded(sender As Object, e As ToolTipTextNeededEventArgs) Handles RadObsSpeParDataGridView.ToolTipTextNeeded
+    Private Sub MasterTemplate_ToolTipTextNeeded(sender As Object, e As ToolTipTextNeededEventArgs) Handles RadObsSpeIdeDataGridView.ToolTipTextNeeded
         Dim hoveredCell As GridDataCellElement = TryCast(sender, GridDataCellElement)
         If hoveredCell IsNot Nothing AndAlso hoveredCell.ColumnInfo.Name = "drcDescription" Then
             e.ToolTipText = hoveredCell.RowInfo.Cells("drcCommentaire").Value
@@ -873,13 +879,28 @@ Public Class RadFEpisodeDetail
                 episodeActeParamedical.Observation = ""
                 episodeActeParamedical.UserId = userLog.UtilisateurId
                 episodeActeParamedical.Inactif = False
-                If episodeActeParamedicalDao.CreateEpisodeActeParamedical(episodeActeParamedical) = True Then
-                    ChargementObservationSpecifique()
+                Dim episodeActeParamedicalId As Long
+                episodeActeParamedicalId = episodeActeParamedicalDao.CreateEpisodeActeParamedical(episodeActeParamedical)
+                If episodeActeParamedicalId <> 0 Then
+                    Using form As New RadFEpisodeProtocoleAiguDetail
+                        form.EpisodeActeParamedicalId = episodeActeParamedicalId
+                        form.ShowDialog()
+                        If form.CodeRetour = True Then
+                            ChargementObservationSpecifique()
+                        End If
+                    End Using
                 Else
                     MessageBox.Show("Le protocole aigu sélectionné existe déjà pour cet épisode !")
                 End If
             End If
         End Using
+    End Sub
+
+    Private Sub RadObsSpeParDataGridView_CellDoubleClick(sender As Object, e As GridViewCellEventArgs) Handles RadObsSpeIdeDataGridView.CellDoubleClick
+        Dim SelectedCell As GridDataCellElement = TryCast(sender, GridDataCellElement)
+        If SelectedCell IsNot Nothing AndAlso SelectedCell.ColumnInfo.Name = "drcDescription" Then
+            SaisieObservation()
+        End If
     End Sub
 
 
@@ -1374,18 +1395,6 @@ Public Class RadFEpisodeDetail
                     Case EpisodeDao.EnumTypeConclusionParamedicale.DEMANDE_AVIS.ToString
                         RadioBtnDemandeAvis.Checked = True
                         RadioTypeConclusionIdeModified = False
-                    Case Else
-                        If ControleProtocoleAiguExiste = True Then
-                            RadioBtnSurProtocole.Checked = True
-                            episode.ConclusionIdeType = EpisodeDao.EnumTypeConclusionParamedicale.SUR_PROTOCOLE.ToString
-                            episodeDao.ModificationEpisode(episode)
-                            RadioTypeConclusionIdeModified = False
-                        Else
-                            RadioBtnRolePropre.Checked = True
-                            episode.ConclusionIdeType = EpisodeDao.EnumTypeConclusionParamedicale.ROLE_PROPRE.ToString
-                            episodeDao.ModificationEpisode(episode)
-                            RadioTypeConclusionIdeModified = False
-                        End If
                 End Select
         End Select
 
@@ -1426,8 +1435,12 @@ Public Class RadFEpisodeDetail
                 If episode.TypeActivite = EpisodeDao.EnumTypeActiviteEpisodeCode.PATHOLOGIE_AIGUE OrElse
                     episode.TypeActivite = EpisodeDao.EnumTypeActiviteEpisodeCode.SUIVI_CHRONIQUE Then
                     If ControleProtocoleAiguExiste = True OrElse ControleActeParamedicalExiste = True Then
-                        If Not (RadioBtnSurProtocole.Checked = True OrElse RadioBtnDemandeAvis.Checked = True) Then
+                        If Not (episode.ConclusionIdeType = EpisodeDao.EnumTypeConclusionParamedicale.SUR_PROTOCOLE.ToString OrElse
+                            episode.ConclusionIdeType = EpisodeDao.EnumTypeConclusionParamedicale.DEMANDE_AVIS.ToString) Then
                             RadioBtnSurProtocole.Checked = True
+                            episode.ConclusionIdeType = EpisodeDao.EnumTypeConclusionParamedicale.SUR_PROTOCOLE.ToString
+                            episodeDao.ModificationEpisode(episode)
+                            RadioTypeConclusionIdeModified = False
                         End If
                         RadioBtnDemandeAvis.Enabled = True
                         RadioBtnSurProtocole.Enabled = True
@@ -1521,9 +1534,11 @@ Public Class RadFEpisodeDetail
             AjouterUnContexteaLepisodeToolStripMenuItem.Enabled = False
             RadBtnCreerContexteConclusion.Enabled = False
         Else
-            AjouterUnContexteaLepisodeToolStripMenuItem.Enabled = True
-            RadBtnCreerContexteConclusion.Enabled = True
             ControleEpisodeCloture()
+            If ControleAjoutConclusion = True Then
+                AjouterUnContexteaLepisodeToolStripMenuItem.Enabled = True
+                RadBtnCreerContexteConclusion.Enabled = True
+            End If
         End If
     End Sub
 
@@ -1784,49 +1799,6 @@ Public Class RadFEpisodeDetail
                         End If
                     End If
                 End If
-            End If
-        End If
-    End Sub
-
-    'Contrôle si l'épisode est clôturé et non modifiable (si la date de clôture est < date du jour)
-    Private Sub ControleEpisodeCloture()
-        If episode.Etat = EpisodeDao.EnumEtatEpisode.CLOTURE.ToString Then
-            'Clôture épisode
-            RadBtnCloture.Enabled = False
-
-            If episode.DateModification.Date < Date.Now.Date Then
-                'Workflow
-                RadBtnWorkflowIde.Enabled = False
-                RadBtnWorkflowMed.Enabled = False
-
-                'Saisie paramètre
-                RadBtnParametre.Enabled = False
-
-                'Regénération paramètres et actes paramédicaux
-                RadBtnGenProtocole.Hide()
-
-                'Observations libres
-                CréerUneObservationToolStripMenuItem.Enabled = False
-                CréerUneObservationToolStripMenuItem1.Enabled = False
-                SaisieObservationToolStripMenuItem.Enabled = False
-                AjoutProtocoleAiguToolStripMenuItem.Enabled = False
-                ObsContextMenuStrip.Visible = False
-                SaisieObservationSpecifiqueMedicaleItem.Enabled = False
-                AttributionDesObservationsSpécifiquesToolStripMenuItem.Enabled = False
-
-                'Saisie commentaire paramédiacle
-                TxtConclusionIDE.Enabled = False
-
-                'Conclusion médicale
-                RadBtnCreerContexteConclusion.Enabled = False
-                RadBtnConclusionCreerConsigne.Enabled = False
-                AjouterUnContexteaLepisodeToolStripMenuItem.Enabled = False
-                EnleverUnContexteDeConclusionToolStripMenuItem.Enabled = False
-
-                'Choix conclusion paramédicale
-                RadioBtnDemandeAvis.Enabled = False
-                RadioBtnRolePropre.Enabled = False
-                RadioBtnSurProtocole.Enabled = False
             End If
         End If
     End Sub
@@ -4255,30 +4227,39 @@ Public Class RadFEpisodeDetail
     '======================= Droits d'accès ====================
     '===========================================================
     Private Sub DroitAcces()
-        InhibeAccesIDE()
-        InhibeAccesMed()
-
-        If episode.TypeActivite <> EpisodeDao.EnumTypeActiviteEpisodeCode.PATHOLOGIE_AIGUE Then
-            AjoutProtocoleAiguToolStripMenuItem.Visible = False
+        If episode.Etat = EpisodeDao.EnumEtatEpisode.CLOTURE.ToString Then
+            RadBtnCloture.Enabled = False
         End If
 
-        Select Case episode.TypeProfil
-            Case EpisodeDao.EnumTypeProfil.MEDICAL.ToString
-                RadioBtnDemandeAvis.Hide()
-                RadioBtnRolePropre.Hide()
-                RadioBtnSurProtocole.Hide()
-                TxtConclusionIDE.Hide()
-            Case EpisodeDao.EnumTypeProfil.PARAMEDICAL.ToString
+        If episode.Etat = EpisodeDao.EnumEtatEpisode.CLOTURE.ToString AndAlso episode.DateModification.Date < Date.Now.Date Then
+            InhibeAccesIDE()
+            InhibeAccesMed()
+        Else
+            Select Case userLog.TypeProfil
+                Case EpisodeDao.EnumTypeProfil.MEDICAL.ToString
+                    InhibeAccesIDE()
+                Case EpisodeDao.EnumTypeProfil.PARAMEDICAL.ToString
+                    InhibeAccesMed()
+                    If episode.TypeActivite <> EpisodeDao.EnumTypeActiviteEpisodeCode.PATHOLOGIE_AIGUE Then
+                        AjoutProtocoleAiguToolStripMenuItem.Visible = False
+                    End If
+            End Select
 
-        End Select
+            If userLog.UtilisateurAdmin = False Then
+                RadBtnGenProtocole.Hide()
+            End If
+        End If
+
+
+
 
         If episode.Etat <> EpisodeDao.EnumEtatEpisode.CLOTURE.ToString Then
             If userLog.TypeProfil = ProfilDao.EnumProfilType.MEDICAL.ToString Or userLog.UtilisateurAdmin = True Then
-                LibereAccesMed()
+                'LibereAccesMed()
             End If
 
             If userLog.TypeProfil = ProfilDao.EnumProfilType.PARAMEDICAL.ToString Or userLog.UtilisateurAdmin = True Then
-                LibereAccesIde()
+                'LibereAccesIde()
             End If
 
             If userLog.UtilisateurAdmin = False Then
@@ -4287,13 +4268,69 @@ Public Class RadFEpisodeDetail
         End If
     End Sub
 
+    'Contrôle si l'épisode est clôturé et non modifiable (si la date de clôture est < date du jour)
+    Private Sub ControleEpisodeCloture()
+        If episode.Etat = EpisodeDao.EnumEtatEpisode.CLOTURE.ToString Then
+            'Clôture épisode
+            RadBtnCloture.Enabled = False
+
+            If episode.DateModification.Date < Date.Now.Date Then
+                'Workflow
+                RadBtnWorkflowIde.Enabled = False
+                RadBtnWorkflowMed.Enabled = False
+
+                'Saisie paramètre
+                RadBtnParametre.Enabled = False
+
+                'Regénération paramètres et actes paramédicaux
+                RadBtnGenProtocole.Hide()
+
+                'Observations libres
+                CréerUneObservationToolStripMenuItem.Enabled = False
+                CréerUneObservationToolStripMenuItem1.Enabled = False
+                SaisieObservationToolStripMenuItem.Enabled = False
+                AjoutProtocoleAiguToolStripMenuItem.Enabled = False
+                ObsContextMenuStrip.Visible = False
+                SaisieObservationSpecifiqueMedicaleItem.Enabled = False
+                AttributionDesObservationsSpécifiquesToolStripMenuItem.Enabled = False
+
+                'Saisie commentaire paramédiacle
+                TxtConclusionIDE.Enabled = False
+
+                'Conclusion médicale
+                RadBtnCreerContexteConclusion.Enabled = False
+                RadBtnConclusionCreerConsigne.Enabled = False
+                AjouterUnContexteaLepisodeToolStripMenuItem.Enabled = False
+                EnleverUnContexteDeConclusionToolStripMenuItem.Enabled = False
+
+                'Choix conclusion paramédicale
+                RadioBtnDemandeAvis.Enabled = False
+                RadioBtnRolePropre.Enabled = False
+                RadioBtnSurProtocole.Enabled = False
+            End If
+        End If
+    End Sub
+
     Private Sub InhibeAccesIDE()
         RadBtnWorkflowIde.Enabled = False
         RadPnlWorkflowIDE.Enabled = False
+
         TxtConclusionIDE.Enabled = False
         RadioBtnDemandeAvis.Enabled = False
         RadioBtnRolePropre.Enabled = False
         RadioBtnSurProtocole.Enabled = False
+
+        RadObsSpeIdeDataGridView.Enabled = False
+        RadGridViewObsIde.Enabled = False
+        RadPanelConclusionIdeType.Enabled = False
+
+        RadioBtnDemandeAvis.Hide()
+        RadioBtnRolePropre.Hide()
+        RadioBtnSurProtocole.Hide()
+        TxtConclusionIDE.Hide()
+
+        SaisieObservationToolStripMenuItem.Enabled = False
+        AjoutProtocoleAiguToolStripMenuItem.Enabled = False
     End Sub
 
     Private Sub InhibeAccesMed()
@@ -4301,6 +4338,11 @@ Public Class RadFEpisodeDetail
         RadPnlWorkflowMed.Enabled = False
         RadBtnConclusionCreerConsigne.Enabled = False
         RadBtnCreerContexteConclusion.Enabled = False
+        ControleAjoutConclusion = False
+
+        RadObsSpeMedDataGridView.Enabled = False
+        RadGridViewObsMed.Enabled = False
+        RadGridViewContexteEpisode.Enabled = False
 
         AjouterUnContexteaLepisodeToolStripMenuItem.Enabled = False
     End Sub
@@ -4317,6 +4359,11 @@ Public Class RadFEpisodeDetail
         RadioBtnDemandeAvis.Enabled = True
         RadioBtnRolePropre.Enabled = True
         RadioBtnSurProtocole.Enabled = True
+
+        RadObsSpeIdeDataGridView.Enabled = True
+        RadGridViewObsIde.Enabled = True
+        TxtConclusionIDE.Enabled = True
+        RadPanelConclusionIdeType.Enabled = True
     End Sub
 
     Private Sub LibereAccesMed()
@@ -4324,6 +4371,10 @@ Public Class RadFEpisodeDetail
         RadPnlWorkflowMed.Enabled = True
         RadBtnConclusionCreerConsigne.Enabled = True
         RadBtnCreerContexteConclusion.Enabled = True
+
+        RadObsSpeMedDataGridView.Enabled = True
+        RadGridViewObsMed.Enabled = True
+        RadGridViewContexteEpisode.Enabled = True
 
         AjouterUnContexteaLepisodeToolStripMenuItem.Enabled = True
     End Sub
@@ -4389,10 +4440,11 @@ Public Class RadFEpisodeDetail
     Private Sub RadBtnLigneDeVie_Click(sender As Object, e As EventArgs) Handles RadBtnLigneDeVie.Click
         Me.Enabled = False
         Cursor.Current = Cursors.WaitCursor
-        Using vadFEpisodeListe As New RadFEpisodeLigneDeVie
-            vadFEpisodeListe.SelectedPatient = Me.SelectedPatient
-            vadFEpisodeListe.UtilisateurConnecte = Me.UtilisateurConnecte
-            vadFEpisodeListe.ShowDialog() 'Modal
+        Using form As New RadFEpisodeLigneDeVie
+            form.SelectedPatient = Me.SelectedPatient
+            form.UtilisateurConnecte = Me.UtilisateurConnecte
+            form.EpisodeIdDejaOuvert = Me.SelectedEpisodeId
+            form.ShowDialog() 'Modal
         End Using
         Me.Enabled = True
     End Sub

@@ -212,6 +212,10 @@ Public Class RadFDRCSelecteur
         'End If
     End Sub
     Private Sub RadDrcDataGridView_CellClick(sender As Object, e As Telerik.WinControls.UI.GridViewCellEventArgs) Handles DrcDataGridView.CellClick
+        Selection()
+    End Sub
+
+    Private Sub Selection()
         Dim Sexe As Integer
         Dim AgeMin, AgeMax As Integer
         Dim aRow, maxRow As Integer
@@ -267,6 +271,11 @@ Public Class RadFDRCSelecteur
     End Sub
 
     Private Sub RadBtnSelection_Click(sender As Object, e As EventArgs) Handles RadBtnSelection.Click
+        SelectionRetour()
+    End Sub
+
+
+    Private Sub SelectionRetour()
         Dim drcId As Integer
         If RadPnlSelection.Visible = True Then
             If LblDrcId.Text <> "" Then
@@ -279,6 +288,11 @@ Public Class RadFDRCSelecteur
                 End If
             End If
         End If
+    End Sub
+
+    Private Sub DrcDataGridView_DoubleClick(sender As Object, e As EventArgs) Handles DrcDataGridView.DoubleClick
+        Selection()
+        SelectionRetour()
     End Sub
 
 

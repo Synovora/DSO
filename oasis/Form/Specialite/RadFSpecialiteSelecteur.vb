@@ -55,6 +55,10 @@ Public Class RadFSpecialiteSelecteur
     End Sub
 
     Private Sub RadGridView1_CellClick(sender As Object, e As Telerik.WinControls.UI.GridViewCellEventArgs) Handles RadSpecialiteDataGridView.CellClick
+        Selection()
+    End Sub
+
+    Private Sub Selection()
         Dim aRow, maxRow As Integer
         aRow = Me.RadSpecialiteDataGridView.Rows.IndexOf(Me.RadSpecialiteDataGridView.CurrentRow)
         maxRow = RadSpecialiteDataGridView.Rows.Count - 1
@@ -68,9 +72,18 @@ Public Class RadFSpecialiteSelecteur
     End Sub
 
     Private Sub RadBtnSelection_Click(sender As Object, e As EventArgs) Handles RadBtnSelection.Click
+        SelectionRetour()
+    End Sub
+
+    Private Sub SelectionRetour()
         SelectedSpecialiteId = IdSelected
         SelectedTypeSpecialite = LblNature.Text
         Close()
+    End Sub
+
+    Private Sub RadSpecialiteDataGridView_DoubleClick(sender As Object, e As EventArgs) Handles RadSpecialiteDataGridView.DoubleClick
+        Selection()
+        SelectionRetour()
     End Sub
 
     Private Sub RadSpecialiteDataGridView_FilterChanged(sender As Object, e As Telerik.WinControls.UI.GridViewCollectionChangedEventArgs) Handles RadSpecialiteDataGridView.FilterChanged
@@ -89,4 +102,5 @@ Public Class RadFSpecialiteSelecteur
         SelectedTypeSpecialite = ""
         Close()
     End Sub
+
 End Class

@@ -137,7 +137,15 @@ Public Class RadFRorListe
     End Sub
 
     'Modification occurrence
-    Private Sub MasterTemplate_CellDoubleClick(sender As Object, e As GridViewCellEventArgs) Handles RadGridView1.CellDoubleClick
+    Private Sub ModificationIntervenantToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ModificationIntervenantToolStripMenuItem.Click
+        ModificationIntervenant()
+    End Sub
+
+    Private Sub RadBtnModification_Click(sender As Object, e As EventArgs) Handles RadBtnModification.Click
+        ModificationIntervenant()
+    End Sub
+
+    Private Sub ModificationIntervenant()
         If RadGridView1.CurrentRow IsNot Nothing Then
             Dim aRow As Integer = Me.RadGridView1.Rows.IndexOf(Me.RadGridView1.CurrentRow)
             If aRow >= 0 Then
@@ -153,7 +161,13 @@ Public Class RadFRorListe
         End If
     End Sub
 
+
+    'Sélection
     Private Sub MasterTemplate_CellClick(sender As Object, e As GridViewCellEventArgs) Handles RadGridView1.CellClick
+        Selection()
+    End Sub
+
+    Private Sub Selection()
         If Selecteur = True Then
             If RadGridView1.CurrentRow IsNot Nothing Then
                 Dim aRow As Integer = Me.RadGridView1.Rows.IndexOf(Me.RadGridView1.CurrentRow)
@@ -208,18 +222,27 @@ Public Class RadFRorListe
                             MessageBox.Show(messageSpecialite)
                         End If
                         LblNom.Text = RadGridView1.Rows(aRow).Cells("oa_ror_nom").Value
-                            LblSpecialite.Text = RadGridView1.Rows(aRow).Cells("oa_r_specialite_description").Value
-                            GbxSelection.Show()
-                        End If
+                        LblSpecialite.Text = RadGridView1.Rows(aRow).Cells("oa_r_specialite_description").Value
+                        GbxSelection.Show()
                     End If
+                End If
             End If
         End If
     End Sub
 
     Private Sub RadBtnSelection_Click(sender As Object, e As EventArgs) Handles RadBtnSelection.Click
+        SelectionRetour()
+    End Sub
+
+    Private Sub SelectionRetour()
         SelectedRorId = RorIdDisplayed
         CodeRetour = True
         Close()
+    End Sub
+
+    Private Sub RadGridView1_DoubleClick(sender As Object, e As EventArgs) Handles RadGridView1.DoubleClick
+        Selection()
+        SelectionRetour()
     End Sub
 
     Private Sub RadFRorListe_BindingContextChanged(sender As Object, e As EventArgs) Handles MyBase.BindingContextChanged

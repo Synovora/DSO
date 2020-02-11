@@ -131,6 +131,10 @@ Public Class RadFPatientListe
 
 
     Private Sub RadGridView1_CellClick(sender As Object, e As Telerik.WinControls.UI.GridViewCellEventArgs) Handles RadPatientGridView.CellClick
+        SelectionPatient()
+    End Sub
+
+    Private Sub SelectionPatient()
         Dim aRow As Integer
         Dim maxRow As Integer
         Dim DateSortie, DateEntree, dateNaissance As Date
@@ -207,35 +211,41 @@ Public Class RadFPatientListe
             TxtSite.Show()
 
             If TxtSite.Text = "" Then
-                    RadBtnSynthese.Hide()
-                    RadBtnRendezVous.Hide()
-                    RadBtnEpisode.Hide()
-                    'InitZonesSelectionPatient()
-                    MessageBox.Show("Options limitées, ce patient n'a pas de site d'affecté !")
-                Else
-                    Dim episodeDao As New EpisodeDao
-                    Dim episode As Episode
-                    Dim patientId As Integer = CInt(TxtIdSelected.Text)
-                    episode = episodeDao.GetEpisodeEnCoursByPatientId(patientId)
-                    Dim BtnColor As New Color
-                    BtnColor = RadBtnEpisode.BackColor
-                    If episode.Id <> 0 Then
-                        RadBtnEpisode.ForeColor = Color.Red
-                        RadBtnEpisode.Font = New Font(RadBtnEpisode.Font, FontStyle.Bold)
-                        Dim TypeActiviteEpisode As String
-                        TypeActiviteEpisode = episodeDao.GetItemTypeActiviteByCode(episode.TypeActivite)
+                RadBtnSynthese.Hide()
+                RadBtnRendezVous.Hide()
+                RadBtnEpisode.Hide()
+                'InitZonesSelectionPatient()
+                MessageBox.Show("Options limitées, ce patient n'a pas de site d'affecté !")
+            Else
+                Dim episodeDao As New EpisodeDao
+                Dim episode As Episode
+                Dim patientId As Integer = CInt(TxtIdSelected.Text)
+                episode = episodeDao.GetEpisodeEnCoursByPatientId(patientId)
+                Dim BtnColor As New Color
+                BtnColor = RadBtnEpisode.BackColor
+                If episode.Id <> 0 Then
+                    RadBtnEpisode.ForeColor = Color.Red
+                    RadBtnEpisode.Font = New Font(RadBtnEpisode.Font, FontStyle.Bold)
+                    Dim TypeActiviteEpisode As String
+                    TypeActiviteEpisode = episodeDao.GetItemTypeActiviteByCode(episode.TypeActivite)
                     ToolTip.SetToolTip(RadBtnEpisode, "Un épisode de type : " & episode.Type & " " & TypeActiviteEpisode & " est en cours pour ce patient" &
                                            vbCrLf & "Episode créé par un profil : " & episode.TypeProfil)
                 Else
-                        RadBtnEpisode.ForeColor = Color.Black
-                        RadBtnEpisode.Font = New Font(RadBtnEpisode.Font, FontStyle.Regular)
-                        ToolTip.SetToolTip(RadBtnEpisode, "Ce patient n'a pas d'épisode en cours")
-                    End If
+                    RadBtnEpisode.ForeColor = Color.Black
+                    RadBtnEpisode.Font = New Font(RadBtnEpisode.Font, FontStyle.Regular)
+                    ToolTip.SetToolTip(RadBtnEpisode, "Ce patient n'a pas d'épisode en cours")
                 End If
-                IndexGrid = aRow
-            Else
-                InitZonesSelectionPatient()
+            End If
+            IndexGrid = aRow
+        Else
+            InitZonesSelectionPatient()
         End If
+    End Sub
+
+
+    Private Sub RadPatientGridView_DoubleClick(sender As Object, e As EventArgs) Handles RadPatientGridView.DoubleClick
+        SelectionPatient()
+        Synthese()
     End Sub
 
     'Gestion de l'affichage des zones d'écran
@@ -336,6 +346,10 @@ Public Class RadFPatientListe
     End Sub
 
     Private Sub RadBtnSynthese_Click(sender As Object, e As EventArgs) Handles RadBtnSynthese.Click
+        Synthese()
+    End Sub
+
+    Private Sub Synthese()
         If TxtIdSelected.Text <> "" Then
             'Création instance patient
             Dim patientId As Integer = CInt(TxtIdSelected.Text)
