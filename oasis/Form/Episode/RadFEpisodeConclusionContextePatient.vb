@@ -161,26 +161,33 @@ Public Class RadFEpisodeConclusionContextePatient
     Private Sub ChargementConclusion()
         Dim diagnostic As String
 
-        Dim episodeContexteDt As DataTable
-        episodeContexteDt = episodeContexteDao.GetAllEpisodeContexteByEpisodeId(SelectedEpisode.Id)
+        Dim dt As DataTable
+        dt = episodeContexteDao.GetAllEpisodeContexteByEpisodeId(SelectedEpisode.Id)
 
         RadConclusionGridView.Rows.Clear()
         ListConclusion.Clear()
 
-        Dim iGrid As Integer = -1
-        Dim rowCount As Integer = episodeContexteDt.Rows.Count - 1
-        For i = 0 To rowCount Step 1
+        If SelectedEpisode.Etat = EpisodeDao.EnumEtatEpisode.CLOTURE.ToString Then
+            If dt.Rows.Count <= 1 Then
+                RadBtnSuppprimer.Enabled = False
+            Else
+                RadBtnSuppprimer.Enabled = True
+            End If
+        End If
 
+        Dim iGrid As Integer = -1
+        Dim rowCount As Integer = dt.Rows.Count - 1
+        For i = 0 To rowCount Step 1
             iGrid += 1
             'Ajout d'une ligne au DataGridView
             RadConclusionGridView.Rows.Add(iGrid)
             'Alimentation du DataGridView
             diagnostic = ""
-            If episodeContexteDt.Rows(i)("oa_antecedent_diagnostic") IsNot DBNull.Value Then
-                If CInt(episodeContexteDt.Rows(i)("oa_antecedent_diagnostic")) = 2 Then
+            If dt.Rows(i)("oa_antecedent_diagnostic") IsNot DBNull.Value Then
+                If CInt(dt.Rows(i)("oa_antecedent_diagnostic")) = 2 Then
                     diagnostic = "Suspicion de "
                 Else
-                    If CInt(episodeContexteDt.Rows(i)("oa_antecedent_diagnostic")) = 3 Then
+                    If CInt(dt.Rows(i)("oa_antecedent_diagnostic")) = 3 Then
                         diagnostic = "Notion de "
                     End If
                 End If
@@ -189,7 +196,7 @@ Public Class RadFEpisodeConclusionContextePatient
             Dim longueurString As Integer
             Dim longueurMax As Integer = 150
             Dim contexteDescription As String
-            contexteDescription = Coalesce(episodeContexteDt.Rows(i)("oa_antecedent_description"), "")
+            contexteDescription = Coalesce(dt.Rows(i)("oa_antecedent_description"), "")
             If contexteDescription <> "" Then
                 contexteDescription = Replace(contexteDescription, vbCrLf, " ")
                 longueurString = contexteDescription.Length
@@ -199,12 +206,12 @@ Public Class RadFEpisodeConclusionContextePatient
                 contexteDescription.Substring(0, longueurString)
             End If
 
-            RadConclusionGridView.Rows(iGrid).Cells("contexte_id").Value = Coalesce(episodeContexteDt.Rows(i)("contexte_id"), 0)
-            RadConclusionGridView.Rows(iGrid).Cells("episode_contexte_id").Value = episodeContexteDt.Rows(i)("episode_contexte_id")
+            RadConclusionGridView.Rows(iGrid).Cells("contexte_id").Value = Coalesce(dt.Rows(i)("contexte_id"), 0)
+            RadConclusionGridView.Rows(iGrid).Cells("episode_contexte_id").Value = dt.Rows(i)("episode_contexte_id")
             RadConclusionGridView.Rows(iGrid).Cells("contexte").Value = diagnostic & " " & contexteDescription
-            If Coalesce(episodeContexteDt.Rows(i)("contexte_id"), 0) <> 0 Then
-                If ListConclusion.Contains(Coalesce(episodeContexteDt.Rows(i)("contexte_id"), 0)) = False Then
-                    ListConclusion.Add(Coalesce(episodeContexteDt.Rows(i)("contexte_id"), 0))
+            If Coalesce(dt.Rows(i)("contexte_id"), 0) <> 0 Then
+                If ListConclusion.Contains(Coalesce(dt.Rows(i)("contexte_id"), 0)) = False Then
+                    ListConclusion.Add(Coalesce(dt.Rows(i)("contexte_id"), 0))
                 End If
             End If
         Next

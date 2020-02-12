@@ -1412,9 +1412,10 @@ Public Class RadFEpisodeDetail
 
         'Chargement conclusion consigne IDE
         If episode.ConclusionMedConsigneDrcId <> 0 Then
-            drc = drcDao.getDrcById(episode.ConclusionMedConsigneDrcId)
-            TxtConsigneMedicale.Text = drc.DrcLibelle
+            'drc = drcDao.getDrcById(episode.ConclusionMedConsigneDrcId)
+            TxtConsigneMedicale.Text = episode.ConclusionMedConsigneDenomination
             RadGrpConsigneIDE.Show()
+            ToolTip.SetToolTip(TxtConsigneMedicale, episode.ConclusionMedConsigneDenomination)
         Else
             TxtConsigneMedicale.Text = ""
             RadGrpConsigneIDE.Hide()
@@ -1602,10 +1603,17 @@ Public Class RadFEpisodeDetail
             'Si une DORC a été sélectionnée, on créé la consigne médicale
             If SelectedDrcId <> 0 Then
                 'Création consigne médicale
-                episode.ConclusionMedConsigneDrcId = SelectedDrcId
-                If episodeDao.ModificationEpisode(episode) = True Then
-                    ChargementConclusion()
-                End If
+                Using form As New RadFEpisodeConsigneIdeDetail
+                    form.DrcId = SelectedDrcId
+                    form.ShowDialog()
+                    If form.CodeRetour = True Then
+                        episode.ConclusionMedConsigneDrcId = SelectedDrcId
+                        episode.ConclusionMedConsigneDenomination = form.TxtDenominationConsigneIde.Text
+                        If episodeDao.ModificationEpisode(episode) = True Then
+                            ChargementConclusion()
+                        End If
+                    End If
+                End Using
             End If
         End Using
         Cursor.Current = Cursors.Default

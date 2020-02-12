@@ -224,6 +224,12 @@
     <Compile Include="Form\DRC\RadFParametreTest.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="Form\Episode\RadFEpisodeConsigneIdeDetail.Designer.vb">
+      <DependentUpon>RadFEpisodeConsigneIdeDetail.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Form\Episode\RadFEpisodeConsigneIdeDetail.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Form\Episode\RadFEpisodeEnCoursListe.Designer.vb">
       <DependentUpon>RadFEpisodeEnCoursListe.vb</DependentUpon>
     </Compile>
@@ -867,6 +873,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Form\DRC\RadFParametreTest.resx">
       <DependentUpon>RadFParametreTest.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form\Episode\RadFEpisodeConsigneIdeDetail.resx">
+      <DependentUpon>RadFEpisodeConsigneIdeDetail.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Form\Episode\RadFEpisodeEnCoursListe.resx">
       <DependentUpon>RadFEpisodeEnCoursListe.vb</DependentUpon>
