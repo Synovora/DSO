@@ -121,6 +121,7 @@ Public Class RadFContextedetailEdit
     Dim drcdao As New DrcDao
     Dim ContexteHistoACreer As New AntecedentHisto
     Dim conxn As New SqlConnection(getConnectionString())
+    Dim ControleAutorisationModification As Boolean = True
 
     Dim contexteReadDao As New AntecedentDao
     Dim contexteDao As New ContexteDao
@@ -141,12 +142,29 @@ Public Class RadFContextedetailEdit
             afficheTitleForm(Me, "Détail contexte")
         End If
 
+        If contexteUpdate.Inactif = True OrElse
+            contexteUpdate.Type = "A" OrElse
+            userLog.TypeProfil <> EpisodeDao.EnumTypeProfil.MEDICAL.ToString() Then
+            ControleAutorisationModification = False
+            RadValidation.Enabled = False
+            RadBtnTransformer.Enabled = False
+            RadBtnSupprimer.Enabled = False
+        End If
+
         InitZone()
         ChargementEtatCivil()
-
+        LblEtatContexte.Text = ""
         If SelectedContexteId <> 0 Then
             Traitement = EnumTraitement.Modification
             ChargementContexteExistant()
+            If contexteUpdate.Inactif = True Then
+                RadValidation.Enabled = False
+                LblEtatContexte.Text = "*** Contexte annulé (non modifiable) ***"
+            End If
+            If contexteUpdate.Type = "A" Then
+                RadValidation.Enabled = False
+                LblEtatContexte.Text = "*** Contexte transformé en antécédent (non modifiable) ***"
+            End If
             'InhiberZonesDeSaisie()
             GestionAffichageBoutonValidation()
         Else
@@ -696,10 +714,12 @@ Public Class RadFContextedetailEdit
 
     Private Sub GestionAffichageBoutonValidation()
         If Traitement = EnumTraitement.Modification Then
-            If contexteReadDao.Compare(contexteUpdate, contexteRead) = False Then
-                RadValidation.Enabled = True
-            Else
-                RadValidation.Enabled = False
+            If ControleAutorisationModification = True Then
+                If contexteReadDao.Compare(contexteUpdate, contexteRead) = False Then
+                    RadValidation.Enabled = True
+                Else
+                    RadValidation.Enabled = False
+                End If
             End If
         End If
     End Sub

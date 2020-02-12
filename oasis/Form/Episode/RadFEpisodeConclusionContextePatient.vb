@@ -1,7 +1,8 @@
 ﻿Imports Oasis_Common
-Public Class RadFEpisodeSelecteurContextePatient
+Imports Telerik.WinControls.UI
+
+Public Class RadFEpisodeConclusionContextePatient
     Private _selectedEpisode As Episode
-    Private _contexteId As Long
     Private _codeRetour As Boolean
 
     Public Property SelectedEpisode As Episode
@@ -10,15 +11,6 @@ Public Class RadFEpisodeSelecteurContextePatient
         End Get
         Set(value As Episode)
             _selectedEpisode = value
-        End Set
-    End Property
-
-    Public Property ContexteId As Long
-        Get
-            Return _contexteId
-        End Get
-        Set(value As Long)
-            _contexteId = value
         End Set
     End Property
 
@@ -39,17 +31,29 @@ Public Class RadFEpisodeSelecteurContextePatient
     Private Sub RadFEpisodeSelecteurContextePatient_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         ChargementEtatCivil()
         RadChkContextePublie.Checked = True
-
+        ChargementConclusion()
         ChargementContexte()
+    End Sub
 
+    Dim episodeContexteDao As New EpisodeContexteDao
+    Dim episodeDao As New EpisodeDao
+
+    Dim ListConclusion As List(Of Long) = New List(Of Long)
+
+    Private Sub ChargementEtatCivil()
+        SelectedPatient = PatientDao.getPatientById(SelectedEpisode.PatientId)
+        LblPatientNIR.Text = SelectedPatient.PatientNir.ToString
+        LblPatientPrenom.Text = SelectedPatient.PatientPrenom
+        LblPatientNom.Text = SelectedPatient.PatientNom
+        LblPatientAge.Text = SelectedPatient.PatientAge
+        LblPatientGenre.Text = SelectedPatient.PatientGenre
+        LblPatientSite.Text = Environnement.Table_site.GetSiteDescription(SelectedPatient.PatientSiteId)
+        LblDateNaissance.Text = SelectedPatient.PatientDateNaissance.ToString("dd.MM.yyyy")
     End Sub
 
     Private Sub ChargementContexte()
         RadContexteDataGridView.Rows.Clear()
-
         SelectedContexteId = 0
-        TxtContexte.Text = ""
-        RadGbxContexteSelection.Hide()
 
         Dim contexteDataTable As DataTable
         Dim antecedentDao As AntecedentDao = New AntecedentDao
@@ -62,58 +66,12 @@ Public Class RadFEpisodeSelecteurContextePatient
         'Déclaration des variables pour réaliser le parcours du DataTable pour alimenter le DataGridView
         Dim i As Integer
         Dim iGrid As Integer = -1 'Indice pour alimenter la Grid qui peut comporter moins d'occurrences que le DataTable
-        Dim dateFin, dateModification As Date
-        Dim AfficheDateModification, diagnostic As String
-        Dim ordreAffichage As Integer
+        Dim diagnostic As String
         Dim rowCount As Integer = contexteDataTable.Rows.Count - 1
-        Dim categorieContexte, categorieContexteString As String
         Dim contexteCache As Boolean
 
         'Parcours du DataTable pour alimenter le DataGridView
         For i = 0 To rowCount Step 1
-            categorieContexte = ""
-            If contexteDataTable.Rows(i)("oa_antecedent_categorie_contexte") IsNot DBNull.Value Then
-                categorieContexte = contexteDataTable.Rows(i)("oa_antecedent_categorie_contexte")
-            End If
-            Select Case categorieContexte
-                Case ContexteDao.EnumParcoursBaseCode.Medical
-                    categorieContexteString = ContexteDao.EnumParcoursBaseItem.Medical
-                Case ContexteDao.EnumParcoursBaseCode.BioEnvironnemental
-                    categorieContexteString = ContexteDao.EnumParcoursBaseItem.BioEnvironnemental
-                Case Else
-                    categorieContexteString = ""
-            End Select
-
-            'DateFin
-            If contexteDataTable.Rows(i)("oa_antecedent_date_fin") IsNot DBNull.Value Then
-                dateFin = contexteDataTable.Rows(i)("oa_antecedent_date_fin")
-            Else
-                dateFin = "31/12/9999"
-            End If
-
-            'Recherche si le contexte a été modifié (médical uniquement)
-            AfficheDateModification = ""
-            If categorieContexte = "M" Then
-                If contexteDataTable.Rows(i)("oa_antecedent_date_modification") IsNot DBNull.Value Then
-                    dateModification = contexteDataTable.Rows(i)("oa_antecedent_date_modification")
-                    AfficheDateModification = FormatageDateAffichage(dateModification) + " : "
-                Else
-                    If contexteDataTable.Rows(i)("oa_antecedent_date_creation") IsNot DBNull.Value Then
-                        dateModification = contexteDataTable.Rows(i)("oa_antecedent_date_creation")
-                        AfficheDateModification = FormatageDateAffichage(dateModification) + " : "
-                    End If
-                End If
-            End If
-
-            'Affichage de l'ordre d'affichage
-            If contexteDataTable.Rows(i)("oa_antecedent_ordre_affichage1") IsNot DBNull.Value Then
-                ordreAffichage = contexteDataTable.Rows(i)("oa_antecedent_ordre_affichage1")
-            Else
-                ordreAffichage = 0
-            End If
-
-            'prefixeContexte = "(Ordre : " + ordreAffichage.ToString + ") - "
-
             'Contexte caché
             contexteCache = False
             If contexteDataTable.Rows(i)("oa_antecedent_statut_affichage") IsNot DBNull.Value Then
@@ -122,12 +80,13 @@ Public Class RadFEpisodeSelecteurContextePatient
                 End If
             End If
 
+            If ListConclusion.Contains(contexteDataTable.Rows(i)("oa_antecedent_id")) = True Then
+                Continue For
+            End If
+
             'Ajout d'une ligne au DataGridView
             iGrid += 1
             RadContexteDataGridView.Rows.Add(iGrid)
-            'Alimentation du DataGridView
-            RadContexteDataGridView.Rows(iGrid).Cells("categorieContexte").Value = categorieContexteString
-
             diagnostic = ""
             If contexteDataTable.Rows(i)("oa_antecedent_diagnostic") IsNot DBNull.Value Then
                 If CInt(contexteDataTable.Rows(i)("oa_antecedent_diagnostic")) = 2 Then
@@ -153,14 +112,12 @@ Public Class RadFEpisodeSelecteurContextePatient
                 contexteDescription.Substring(0, longueurString)
             End If
 
-            RadContexteDataGridView.Rows(iGrid).Cells("contexte").Value = AfficheDateModification & diagnostic & " " & contexteDescription
+            RadContexteDataGridView.Rows(iGrid).Cells("contexte").Value = diagnostic & " " & contexteDescription
             '============================================
 
             If contexteCache = True Then
                 RadContexteDataGridView.Rows(iGrid).Cells("contexte").Style.ForeColor = Color.CornflowerBlue
             End If
-
-            'RadContexteDataGridView.Rows(iGrid).Cells("contexte").
 
             'Identifiant contexte
             RadContexteDataGridView.Rows(iGrid).Cells("contexteId").Value = contexteDataTable.Rows(i)("oa_antecedent_id")
@@ -172,16 +129,6 @@ Public Class RadFEpisodeSelecteurContextePatient
         End If
     End Sub
 
-    Private Sub ChargementEtatCivil()
-        SelectedPatient = PatientDao.getPatientById(SelectedEpisode.PatientId)
-        LblPatientNIR.Text = SelectedPatient.PatientNir.ToString
-        LblPatientPrenom.Text = SelectedPatient.PatientPrenom
-        LblPatientNom.Text = SelectedPatient.PatientNom
-        LblPatientAge.Text = SelectedPatient.PatientAge
-        LblPatientGenre.Text = SelectedPatient.PatientGenre
-        LblPatientSite.Text = Environnement.Table_site.GetSiteDescription(SelectedPatient.PatientSiteId)
-        LblPatientUniteSanitaire.Text = Environnement.Table_unite_sanitaire.GetUniteSanitaireDescription(SelectedPatient.PatientUniteSanitaireId)
-    End Sub
 
     Private Sub RadChkContextePublie_ToggleStateChanged(sender As Object, args As Telerik.WinControls.UI.StateChangedEventArgs) Handles RadChkContextePublie.ToggleStateChanged
         If RadChkContextePublie.Checked = True Then
@@ -211,18 +158,74 @@ Public Class RadFEpisodeSelecteurContextePatient
         End If
     End Sub
 
-    Private Sub RadContexteDataGridView_CellClick(sender As Object, e As Telerik.WinControls.UI.GridViewCellEventArgs) Handles RadContexteDataGridView.CellClick
-        If RadContexteDataGridView.CurrentRow IsNot Nothing Then
-            Dim aRow As Integer = Me.RadContexteDataGridView.Rows.IndexOf(Me.RadContexteDataGridView.CurrentRow)
-            If aRow >= 0 Then
-                SelectedContexteId = RadContexteDataGridView.Rows(aRow).Cells("ContexteId").Value
-                TxtContexte.Text = RadContexteDataGridView.Rows(aRow).Cells("contexte").Value
-                RadGbxContexteSelection.Show()
+    Private Sub ChargementConclusion()
+        Dim diagnostic As String
+
+        Dim episodeContexteDt As DataTable
+        episodeContexteDt = episodeContexteDao.GetAllEpisodeContexteByEpisodeId(SelectedEpisode.Id)
+
+        RadConclusionGridView.Rows.Clear()
+        ListConclusion.Clear()
+
+        Dim iGrid As Integer = -1
+        Dim rowCount As Integer = episodeContexteDt.Rows.Count - 1
+        For i = 0 To rowCount Step 1
+
+            iGrid += 1
+            'Ajout d'une ligne au DataGridView
+            RadConclusionGridView.Rows.Add(iGrid)
+            'Alimentation du DataGridView
+            diagnostic = ""
+            If episodeContexteDt.Rows(i)("oa_antecedent_diagnostic") IsNot DBNull.Value Then
+                If CInt(episodeContexteDt.Rows(i)("oa_antecedent_diagnostic")) = 2 Then
+                    diagnostic = "Suspicion de "
+                Else
+                    If CInt(episodeContexteDt.Rows(i)("oa_antecedent_diagnostic")) = 3 Then
+                        diagnostic = "Notion de "
+                    End If
+                End If
             End If
+
+            Dim longueurString As Integer
+            Dim longueurMax As Integer = 150
+            Dim contexteDescription As String
+            contexteDescription = Coalesce(episodeContexteDt.Rows(i)("oa_antecedent_description"), "")
+            If contexteDescription <> "" Then
+                contexteDescription = Replace(contexteDescription, vbCrLf, " ")
+                longueurString = contexteDescription.Length
+                If longueurString > longueurMax Then
+                    longueurString = longueurMax
+                End If
+                contexteDescription.Substring(0, longueurString)
+            End If
+
+            RadConclusionGridView.Rows(iGrid).Cells("contexte_id").Value = Coalesce(episodeContexteDt.Rows(i)("contexte_id"), 0)
+            RadConclusionGridView.Rows(iGrid).Cells("episode_contexte_id").Value = episodeContexteDt.Rows(i)("episode_contexte_id")
+            RadConclusionGridView.Rows(iGrid).Cells("contexte").Value = diagnostic & " " & contexteDescription
+            If Coalesce(episodeContexteDt.Rows(i)("contexte_id"), 0) <> 0 Then
+                If ListConclusion.Contains(Coalesce(episodeContexteDt.Rows(i)("contexte_id"), 0)) = False Then
+                    ListConclusion.Add(Coalesce(episodeContexteDt.Rows(i)("contexte_id"), 0))
+                End If
+            End If
+        Next
+
+        'Positionnement du grid sur la première occurrence
+        If RadConclusionGridView.Rows.Count > 0 Then
+            RadConclusionGridView.CurrentRow = RadConclusionGridView.ChildRows(0)
+            RadConclusionGridView.TableElement.VScrollBar.Value = 0
         End If
     End Sub
 
     Private Sub RadContexteDataGridView_CellDoubleClick(sender As Object, e As Telerik.WinControls.UI.GridViewCellEventArgs) Handles RadContexteDataGridView.CellDoubleClick
+        ModificationContexte()
+    End Sub
+
+
+    Private Sub MasterTemplate_CellDoubleClick(sender As Object, e As GridViewCellEventArgs) Handles RadConclusionGridView.CellDoubleClick
+        ModificationContexte()
+    End Sub
+
+    Private Sub ModificationContexte()
         If RadContexteDataGridView.CurrentRow IsNot Nothing Then
             Dim aRow As Integer = Me.RadContexteDataGridView.Rows.IndexOf(Me.RadContexteDataGridView.CurrentRow)
             If aRow >= 0 Then
@@ -249,6 +252,7 @@ Public Class RadFEpisodeSelecteurContextePatient
                                 form.Message = "Contexte patient modifié"
                                 form.Show()
                         End Select
+                        ChargementConclusion()
                         ChargementContexte()
                     End If
                 End Using
@@ -290,6 +294,7 @@ Public Class RadFEpisodeSelecteurContextePatient
                         form.Titre = "Notification contexte patient"
                         form.Message = "Contexte patient créé"
                         form.Show()
+                        ChargementConclusion()
                         ChargementContexte()
                     End If
                 End Using
@@ -298,13 +303,46 @@ Public Class RadFEpisodeSelecteurContextePatient
         Me.Enabled = True
     End Sub
 
-    Private Sub RadBtnSelection_Click(sender As Object, e As EventArgs) Handles RadBtnSelection.Click
-        If SelectedContexteId <> 0 Then
-            ContexteId = SelectedContexteId
-
-
-            Close()
+    Private Sub RadBtnSelect_Click(sender As Object, e As EventArgs) Handles RadBtnSelect.Click
+        If RadContexteDataGridView.CurrentRow IsNot Nothing Then
+            Dim aRow As Integer = Me.RadContexteDataGridView.Rows.IndexOf(Me.RadContexteDataGridView.CurrentRow)
+            If aRow >= 0 Then
+                Dim ContexteId As Integer = RadContexteDataGridView.Rows(aRow).Cells("ContexteId").Value
+                Me.Enabled = False
+                Cursor.Current = Cursors.WaitCursor
+                Dim episodeContexte As New EpisodeContexte
+                episodeContexte.ContexteId = ContexteId
+                episodeContexte.EpisodeId = SelectedEpisode.Id
+                episodeContexte.PatientId = SelectedEpisode.PatientId
+                episodeContexte.UserCreation = userLog.UtilisateurId
+                episodeContexte.DateCreation = Date.Now()
+                episodeContexteDao.CreateEpisodeContexte(episodeContexte)
+                episodeDao.MajEpisodeConclusionMedicale(SelectedEpisode.Id)
+                ChargementConclusion()
+                ChargementContexte()
+                CodeRetour = True
+                Me.Enabled = True
+            End If
         End If
     End Sub
 
+    Private Sub RadBtnSuppprimer_Click(sender As Object, e As EventArgs) Handles RadBtnSuppprimer.Click
+        If RadConclusionGridView.CurrentRow IsNot Nothing Then
+            Dim aRow, episodeContexteId As Integer
+            aRow = Me.RadConclusionGridView.Rows.IndexOf(Me.RadConclusionGridView.CurrentRow)
+            If aRow >= 0 Then
+                Cursor.Current = Cursors.WaitCursor
+                episodeContexteId = RadConclusionGridView.Rows(aRow).Cells("episode_contexte_id").Value
+                EpisodeContexteDao.SuppressionEpisodeContexteById(episodeContexteId)
+                episodeDao.MajEpisodeConclusionMedicale(SelectedEpisode.Id)
+                ChargementConclusion()
+                ChargementContexte()
+                CodeRetour = True
+            End If
+        End If
+    End Sub
+
+    Private Sub RadBtnAbandon_Click(sender As Object, e As EventArgs) Handles RadBtnAbandon.Click
+        Close()
+    End Sub
 End Class

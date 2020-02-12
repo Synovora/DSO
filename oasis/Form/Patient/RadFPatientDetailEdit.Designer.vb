@@ -118,7 +118,7 @@ Partial Class RadFPatientDetailEdit
         Me.RadNotePatientDataGridView.Font = New System.Drawing.Font("Segoe UI", 8.25!)
         Me.RadNotePatientDataGridView.ForeColor = System.Drawing.SystemColors.ControlText
         Me.RadNotePatientDataGridView.ImeMode = System.Windows.Forms.ImeMode.NoControl
-        Me.RadNotePatientDataGridView.Location = New System.Drawing.Point(635, 25)
+        Me.RadNotePatientDataGridView.Location = New System.Drawing.Point(635, 40)
         '
         '
         '
@@ -150,7 +150,7 @@ Partial Class RadFPatientDetailEdit
         Me.RadNotePatientDataGridView.Name = "RadNotePatientDataGridView"
         Me.RadNotePatientDataGridView.ReadOnly = True
         Me.RadNotePatientDataGridView.RightToLeft = System.Windows.Forms.RightToLeft.No
-        Me.RadNotePatientDataGridView.Size = New System.Drawing.Size(695, 718)
+        Me.RadNotePatientDataGridView.Size = New System.Drawing.Size(695, 703)
         Me.RadNotePatientDataGridView.TabIndex = 353
         '
         'NoteContextMenuStrip
@@ -167,9 +167,9 @@ Partial Class RadFPatientDetailEdit
         '
         'BtnCreerNote
         '
-        Me.BtnCreerNote.Location = New System.Drawing.Point(1220, 749)
+        Me.BtnCreerNote.Location = New System.Drawing.Point(635, 9)
         Me.BtnCreerNote.Name = "BtnCreerNote"
-        Me.BtnCreerNote.Size = New System.Drawing.Size(110, 24)
+        Me.BtnCreerNote.Size = New System.Drawing.Size(104, 24)
         Me.BtnCreerNote.TabIndex = 355
         Me.BtnCreerNote.Text = "+ Créer une note"
         '

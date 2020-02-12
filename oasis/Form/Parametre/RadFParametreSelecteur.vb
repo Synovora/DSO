@@ -72,6 +72,10 @@
     End Sub
 
     Private Sub RadBtnSelection_Click(sender As Object, e As EventArgs) Handles RadBtnSelection.Click
+        SelectionConfirmation()
+    End Sub
+
+    Private Sub SelectionConfirmation()
         Dim parametre As Parametre = New Parametre
         parametre = parametreDao.GetParametreById(SelectedParametreId)
         SelectedParametre = parametre
@@ -80,6 +84,10 @@
     End Sub
 
     Private Sub RadGridViewParm_CellClick(sender As Object, e As Telerik.WinControls.UI.GridViewCellEventArgs) Handles RadGridViewParm.CellClick
+        Selection()
+    End Sub
+
+    Private Sub Selection()
         Dim aRow, maxRow As Integer
 
         aRow = Me.RadGridViewParm.Rows.IndexOf(Me.RadGridViewParm.CurrentRow)
@@ -96,5 +104,10 @@
                 RadGbxSelection.Show()
             End If
         End If
+    End Sub
+
+    Private Sub RadGridViewParm_DoubleClick(sender As Object, e As EventArgs) Handles RadGridViewParm.DoubleClick
+        Selection()
+        SelectionConfirmation()
     End Sub
 End Class

@@ -324,7 +324,7 @@ Partial Class RadFPatientNoteListe
         Me.RadNotePatientDataGridView.Font = New System.Drawing.Font("Segoe UI", 8.25!)
         Me.RadNotePatientDataGridView.ForeColor = System.Drawing.Color.Black
         Me.RadNotePatientDataGridView.ImeMode = System.Windows.Forms.ImeMode.NoControl
-        Me.RadNotePatientDataGridView.Location = New System.Drawing.Point(12, 105)
+        Me.RadNotePatientDataGridView.Location = New System.Drawing.Point(12, 139)
         '
         '
         '
@@ -359,16 +359,16 @@ Partial Class RadFPatientNoteListe
         Me.RadNotePatientDataGridView.ReadOnly = True
         Me.RadNotePatientDataGridView.RightToLeft = System.Windows.Forms.RightToLeft.No
         Me.RadNotePatientDataGridView.ShowGroupPanel = False
-        Me.RadNotePatientDataGridView.Size = New System.Drawing.Size(989, 491)
+        Me.RadNotePatientDataGridView.Size = New System.Drawing.Size(989, 457)
         Me.RadNotePatientDataGridView.TabIndex = 5
         '
         'RadBtnCreation
         '
-        Me.RadBtnCreation.Location = New System.Drawing.Point(775, 602)
+        Me.RadBtnCreation.Location = New System.Drawing.Point(12, 109)
         Me.RadBtnCreation.Name = "RadBtnCreation"
-        Me.RadBtnCreation.Size = New System.Drawing.Size(110, 24)
+        Me.RadBtnCreation.Size = New System.Drawing.Size(74, 24)
         Me.RadBtnCreation.TabIndex = 6
-        Me.RadBtnCreation.Text = "Création"
+        Me.RadBtnCreation.Text = "+ Création"
         '
         'RadFPatientNoteListe
         '

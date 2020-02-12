@@ -63,6 +63,10 @@ Public Class RadFAldCim10Selecteur
     End Sub
 
     Private Sub BtnSelection_Click(sender As Object, e As EventArgs) Handles RadBtnSelection.Click
+        SelectionConfirmation()
+    End Sub
+
+    Private Sub SelectionConfirmation()
         Me.SelectedAldCim10Id = aldCim10Id
         Me.Close()
     End Sub
@@ -75,6 +79,10 @@ Public Class RadFAldCim10Selecteur
     End Sub
 
     Private Sub RadAldDataGridView_CellClick(sender As Object, e As Telerik.WinControls.UI.GridViewCellEventArgs) Handles RadAldDataGridView.CellClick
+        Selection()
+    End Sub
+
+    Private Sub Selection()
         If RadAldDataGridView.CurrentRow IsNot Nothing Then
             Dim aRow As Integer = Me.RadAldDataGridView.Rows.IndexOf(Me.RadAldDataGridView.CurrentRow)
             If aRow >= 0 Then
@@ -93,5 +101,10 @@ Public Class RadFAldCim10Selecteur
     Private Sub RadBtnAbandonner_Click(sender As Object, e As EventArgs) Handles RadBtnAbandonner.Click
         Me.SelectedAldCim10Id = 0
         Close()
+    End Sub
+
+    Private Sub RadAldDataGridView_DoubleClick(sender As Object, e As EventArgs) Handles RadAldDataGridView.DoubleClick
+        Selection()
+        SelectionConfirmation()
     End Sub
 End Class

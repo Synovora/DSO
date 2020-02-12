@@ -10,6 +10,7 @@
     Private _observationParamedical As String
     Private _conclusionIdeType As String
     Private _conclusionMedConsigneDrcId As Long
+    Private _conclusionMedConsigneDenomination As String
     Private _conclusionMedContexte1DrcId As Long
     Private _conclusionMedContexte1AntecedentId As Long
     Private _conclusionMedContexte2DrcId As Long
@@ -237,6 +238,15 @@
         End Get
         Set(value As Long)
             _conclusionMedContexte3AntecedentId = value
+        End Set
+    End Property
+
+    Public Property ConclusionMedConsigneDenomination As String
+        Get
+            Return _conclusionMedConsigneDenomination
+        End Get
+        Set(value As String)
+            _conclusionMedConsigneDenomination = value
         End Set
     End Property
 End Class

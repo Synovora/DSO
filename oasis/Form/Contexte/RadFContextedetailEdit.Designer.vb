@@ -84,6 +84,7 @@ Partial Class RadFContextedetailEdit
         Me.RadValidation = New Telerik.WinControls.UI.RadButton()
         Me.RadBtnSupprimer = New Telerik.WinControls.UI.RadButton()
         Me.RadBtnTransformer = New Telerik.WinControls.UI.RadButton()
+        Me.LblEtatContexte = New System.Windows.Forms.Label()
         CType(Me.RadGroupBoxEtatCivil, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.RadGroupBoxEtatCivil.SuspendLayout()
         CType(Me.GbxPrincipal, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -336,6 +337,7 @@ Partial Class RadFContextedetailEdit
         'GbxPrincipal
         '
         Me.GbxPrincipal.AccessibleRole = System.Windows.Forms.AccessibleRole.Grouping
+        Me.GbxPrincipal.Controls.Add(Me.LblEtatContexte)
         Me.GbxPrincipal.Controls.Add(Me.RadBtnDrcSelect)
         Me.GbxPrincipal.Controls.Add(Me.RadBtnRecupereDrc)
         Me.GbxPrincipal.Controls.Add(Me.Label12)
@@ -720,6 +722,17 @@ Partial Class RadFContextedetailEdit
         Me.RadBtnTransformer.TabIndex = 100
         Me.RadBtnTransformer.Text = "Transformer en antécédent"
         '
+        'LblEtatContexte
+        '
+        Me.LblEtatContexte.AutoSize = True
+        Me.LblEtatContexte.Font = New System.Drawing.Font("Segoe UI", 10.0!, System.Drawing.FontStyle.Bold)
+        Me.LblEtatContexte.ForeColor = System.Drawing.Color.Red
+        Me.LblEtatContexte.Location = New System.Drawing.Point(298, 28)
+        Me.LblEtatContexte.Name = "LblEtatContexte"
+        Me.LblEtatContexte.Size = New System.Drawing.Size(96, 19)
+        Me.LblEtatContexte.TabIndex = 101
+        Me.LblEtatContexte.Text = "Etat contexte"
+        '
         'RadFContextedetailEdit
         '
         Me.AcceptButton = Me.RadValidation
@@ -834,5 +847,6 @@ Partial Class RadFContextedetailEdit
     Friend WithEvents RadBtnTransformer As Telerik.WinControls.UI.RadButton
     Friend WithEvents RadBtnRecupereDrc As Telerik.WinControls.UI.RadButton
     Friend WithEvents RadBtnDrcSelect As Telerik.WinControls.UI.RadButton
+    Friend WithEvents LblEtatContexte As Label
 End Class
 

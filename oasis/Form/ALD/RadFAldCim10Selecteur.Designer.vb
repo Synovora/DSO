@@ -22,11 +22,11 @@ Partial Class RadFAldCim10Selecteur
     'Do not modify it using the code editor.
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
-        Dim GridViewTextBoxColumn5 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
-        Dim GridViewTextBoxColumn6 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
-        Dim GridViewTextBoxColumn7 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
-        Dim GridViewTextBoxColumn8 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
-        Dim TableViewDefinition2 As Telerik.WinControls.UI.TableViewDefinition = New Telerik.WinControls.UI.TableViewDefinition()
+        Dim GridViewTextBoxColumn1 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
+        Dim GridViewTextBoxColumn2 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
+        Dim GridViewTextBoxColumn3 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
+        Dim GridViewTextBoxColumn4 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
+        Dim TableViewDefinition1 As Telerik.WinControls.UI.TableViewDefinition = New Telerik.WinControls.UI.TableViewDefinition()
         Me.PnlSelection = New Telerik.WinControls.UI.RadGroupBox()
         Me.RadBtnSelection = New Telerik.WinControls.UI.RadButton()
         Me.LblCim10Code = New System.Windows.Forms.Label()
@@ -95,32 +95,32 @@ Partial Class RadFAldCim10Selecteur
         Me.RadAldDataGridView.MasterTemplate.AllowAddNewRow = False
         Me.RadAldDataGridView.MasterTemplate.AllowDeleteRow = False
         Me.RadAldDataGridView.MasterTemplate.AllowEditRow = False
-        GridViewTextBoxColumn5.EnableExpressionEditor = False
-        GridViewTextBoxColumn5.FieldName = "oa_ald_cim10_id"
-        GridViewTextBoxColumn5.HeaderText = "Identifiant"
-        GridViewTextBoxColumn5.IsVisible = False
-        GridViewTextBoxColumn5.Name = "oa_ald_cim10_id"
-        GridViewTextBoxColumn6.EnableExpressionEditor = False
-        GridViewTextBoxColumn6.FieldName = "oa_ald_cim10_ald_code"
-        GridViewTextBoxColumn6.HeaderText = "Cpde ALD"
-        GridViewTextBoxColumn6.Name = "oa_ald_cim10_ald_code"
-        GridViewTextBoxColumn6.TextAlignment = System.Drawing.ContentAlignment.MiddleCenter
-        GridViewTextBoxColumn6.Width = 100
-        GridViewTextBoxColumn7.EnableExpressionEditor = False
-        GridViewTextBoxColumn7.FieldName = "oa_ald_cim10_code"
-        GridViewTextBoxColumn7.HeaderText = "Code CIM10"
-        GridViewTextBoxColumn7.Name = "oa_ald_cim10_code"
-        GridViewTextBoxColumn7.TextAlignment = System.Drawing.ContentAlignment.MiddleCenter
-        GridViewTextBoxColumn7.Width = 100
-        GridViewTextBoxColumn8.EnableExpressionEditor = False
-        GridViewTextBoxColumn8.FieldName = "oa_ald_cim10_description"
-        GridViewTextBoxColumn8.HeaderText = "Dénomination"
-        GridViewTextBoxColumn8.HeaderTextAlignment = System.Drawing.ContentAlignment.MiddleLeft
-        GridViewTextBoxColumn8.Name = "oa_ald_cim10_description"
-        GridViewTextBoxColumn8.Width = 465
-        Me.RadAldDataGridView.MasterTemplate.Columns.AddRange(New Telerik.WinControls.UI.GridViewDataColumn() {GridViewTextBoxColumn5, GridViewTextBoxColumn6, GridViewTextBoxColumn7, GridViewTextBoxColumn8})
+        GridViewTextBoxColumn1.EnableExpressionEditor = False
+        GridViewTextBoxColumn1.FieldName = "oa_ald_cim10_id"
+        GridViewTextBoxColumn1.HeaderText = "Identifiant"
+        GridViewTextBoxColumn1.IsVisible = False
+        GridViewTextBoxColumn1.Name = "oa_ald_cim10_id"
+        GridViewTextBoxColumn2.EnableExpressionEditor = False
+        GridViewTextBoxColumn2.FieldName = "oa_ald_cim10_ald_code"
+        GridViewTextBoxColumn2.HeaderText = "Cpde ALD"
+        GridViewTextBoxColumn2.Name = "oa_ald_cim10_ald_code"
+        GridViewTextBoxColumn2.TextAlignment = System.Drawing.ContentAlignment.MiddleCenter
+        GridViewTextBoxColumn2.Width = 100
+        GridViewTextBoxColumn3.EnableExpressionEditor = False
+        GridViewTextBoxColumn3.FieldName = "oa_ald_cim10_code"
+        GridViewTextBoxColumn3.HeaderText = "Code CIM10"
+        GridViewTextBoxColumn3.Name = "oa_ald_cim10_code"
+        GridViewTextBoxColumn3.TextAlignment = System.Drawing.ContentAlignment.MiddleCenter
+        GridViewTextBoxColumn3.Width = 100
+        GridViewTextBoxColumn4.EnableExpressionEditor = False
+        GridViewTextBoxColumn4.FieldName = "oa_ald_cim10_description"
+        GridViewTextBoxColumn4.HeaderText = "Dénomination"
+        GridViewTextBoxColumn4.HeaderTextAlignment = System.Drawing.ContentAlignment.MiddleLeft
+        GridViewTextBoxColumn4.Name = "oa_ald_cim10_description"
+        GridViewTextBoxColumn4.Width = 465
+        Me.RadAldDataGridView.MasterTemplate.Columns.AddRange(New Telerik.WinControls.UI.GridViewDataColumn() {GridViewTextBoxColumn1, GridViewTextBoxColumn2, GridViewTextBoxColumn3, GridViewTextBoxColumn4})
         Me.RadAldDataGridView.MasterTemplate.EnableGrouping = False
-        Me.RadAldDataGridView.MasterTemplate.ViewDefinition = TableViewDefinition2
+        Me.RadAldDataGridView.MasterTemplate.ViewDefinition = TableViewDefinition1
         Me.RadAldDataGridView.Name = "RadAldDataGridView"
         Me.RadAldDataGridView.RightToLeft = System.Windows.Forms.RightToLeft.No
         Me.RadAldDataGridView.Size = New System.Drawing.Size(693, 340)

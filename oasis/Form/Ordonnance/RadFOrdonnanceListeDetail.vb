@@ -261,7 +261,7 @@ Public Class RadFOrdonnanceListeDetail
                 RadAldGridView.Rows(iGridALD).Cells("posologie").Style.ForeColor = Color.Red
             End If
             If ordonnanceDetailGrid.ADelivrer = True Then
-                RadAldGridView.Rows(iGridALD).Cells("delivrance").Value = OrdonnanceDetailDao.EnumDelivrance.A_DELIVRER
+                RadAldGridView.Rows(iGridALD).Cells("delivrance").Value = "" 'OrdonnanceDetailDao.EnumDelivrance.A_DELIVRER
             Else
                 RadAldGridView.Rows(iGridALD).Cells("delivrance").Value = OrdonnanceDetailDao.EnumDelivrance.NE_PAS_DELIVRER
             End If
@@ -315,7 +315,7 @@ Public Class RadFOrdonnanceListeDetail
                 RadNonAldGridView.Rows(iGridNonALD).Cells("posologie").Style.ForeColor = Color.Red
             End If
             If ordonnanceDetailGrid.ADelivrer = True Then
-                RadNonAldGridView.Rows(iGridNonALD).Cells("delivrance").Value = OrdonnanceDetailDao.EnumDelivrance.A_DELIVRER
+                RadNonAldGridView.Rows(iGridNonALD).Cells("delivrance").Value = "" 'OrdonnanceDetailDao.EnumDelivrance.A_DELIVRER
             Else
                 RadNonAldGridView.Rows(iGridNonALD).Cells("delivrance").Value = OrdonnanceDetailDao.EnumDelivrance.NE_PAS_DELIVRER
             End If
@@ -644,7 +644,7 @@ Public Class RadFOrdonnanceListeDetail
                 Me.Enabled = False
                 Cursor.Current = Cursors.WaitCursor
                 Dim aDelivrer As Boolean
-                If delivrance = OrdonnanceDetailDao.EnumDelivrance.A_DELIVRER Then
+                If delivrance = "" Then                'OrdonnanceDetailDao.EnumDelivrance.A_DELIVRER Then
                     aDelivrer = False
                 Else
                     aDelivrer = True
@@ -738,7 +738,7 @@ Public Class RadFOrdonnanceListeDetail
                 Me.Enabled = False
                 Cursor.Current = Cursors.WaitCursor
                 Dim aDelivrer As Boolean
-                If delivrance = OrdonnanceDetailDao.EnumDelivrance.A_DELIVRER Then
+                If delivrance = "" Then 'OrdonnanceDetailDao.EnumDelivrance.A_DELIVRER Then
                     aDelivrer = False
                 Else
                     aDelivrer = True

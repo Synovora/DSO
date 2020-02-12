@@ -706,6 +706,7 @@ Public Class RadFEpisodeDetail
         ChargementEpisodeActesParamedicauxMedical()
     End Sub
 
+
     '=========================================================
     '=== Observations spécifiques (paramédical)
     '=========================================================
@@ -812,6 +813,10 @@ Public Class RadFEpisodeDetail
     End Sub
 
     Private Sub SaisieObservation()
+        If userLog.TypeProfil <> EpisodeDao.EnumTypeProfil.PARAMEDICAL.ToString Then
+            Exit Sub
+        End If
+
         If RadObsSpeIdeDataGridView.CurrentRow IsNot Nothing Then
             Dim aRow As Integer = Me.RadObsSpeIdeDataGridView.Rows.IndexOf(Me.RadObsSpeIdeDataGridView.CurrentRow)
             If aRow >= 0 Then
@@ -966,6 +971,10 @@ Public Class RadFEpisodeDetail
     End Sub
 
     Private Sub ToolStripMenuItem2_Click(sender As Object, e As EventArgs) Handles SaisieObservationSpecifiqueMedicaleItem.Click
+        If userLog.TypeProfil <> EpisodeDao.EnumTypeProfil.MEDICAL.ToString Then
+            Exit Sub
+        End If
+
         If RadObsSpeMedDataGridView.CurrentRow IsNot Nothing Then
             Dim aRow As Integer = Me.RadObsSpeMedDataGridView.Rows.IndexOf(Me.RadObsSpeMedDataGridView.CurrentRow)
             If aRow >= 0 Then
@@ -1530,55 +1539,21 @@ Public Class RadFEpisodeDetail
             RadGridViewContexteEpisode.TableElement.VScrollBar.Value = 0
         End If
 
-        If episodeContexteDt.Rows.Count >= 3 Then
-            AjouterUnContexteaLepisodeToolStripMenuItem.Enabled = False
-            RadBtnCreerContexteConclusion.Enabled = False
-        Else
-            ControleEpisodeCloture()
-            If ControleAjoutConclusion = True Then
-                AjouterUnContexteaLepisodeToolStripMenuItem.Enabled = True
-                RadBtnCreerContexteConclusion.Enabled = True
-            End If
+        ControleEpisodeCloture()
+        If ControleAjoutConclusion = True Then
+            RadBtnConclusion.Enabled = True
         End If
     End Sub
 
-    'Créer un contexte de conclusion
-    Private Sub RadBtnCreerContexte_Click(sender As Object, e As EventArgs) Handles RadBtnCreerContexteConclusion.Click
-        Dim SelectedDrcId As Integer
-        Me.Enabled = False
-        Cursor.Current = Cursors.WaitCursor
-        Using vFDrcSelecteur As New RadFDRCSelecteur
-            vFDrcSelecteur.SelectedPatient = Me.SelectedPatient
-            vFDrcSelecteur.CategorieOasis = DrcDao.EnumCategorieOasisCode.Contexte
-            vFDrcSelecteur.ShowDialog()
-            SelectedDrcId = vFDrcSelecteur.SelectedDrcId
-            'Si un médicament a été sélectionné, on appelle le Formulaire de création
-            If SelectedDrcId <> 0 Then
-                Using vFContexteDetailEdit As New RadFContextedetailEdit
-                    vFContexteDetailEdit.SelectedPatient = Me.SelectedPatient
-                    vFContexteDetailEdit.UtilisateurConnecte = Me.UtilisateurConnecte
-                    vFContexteDetailEdit.SelectedDrcId = SelectedDrcId
-                    vFContexteDetailEdit.SelectedContexteId = 0
-                    vFContexteDetailEdit.PositionGaucheDroite = EnumPosition.Droite
-                    vFContexteDetailEdit.ConclusionEpisode = True
-                    vFContexteDetailEdit.Episode = episode
-                    vFContexteDetailEdit.ShowDialog()
-                    'Si le traitement a été créé, on recharge la grid
-                    If vFContexteDetailEdit.CodeRetour = True Then
-                        Dim form As New RadFNotification()
-                        form.Titre = "Notification conclusion médicale - contexte épisode patient"
-                        form.Message = "Contexte patient créé et ajouté dans la conclusion médicale de l'épisode"
-                        form.Show()
-                        ChargementEpisodeContexte()
-                        ChargementContexte()
-                        ChargementCaracteristiquesEpisode()
-                    End If
-                End Using
+    'Gérer les contextes de conclusion
+    Private Sub RadBtnConclusion_Click(sender As Object, e As EventArgs) Handles RadBtnConclusion.Click
+        Using form As New RadFEpisodeConclusionContextePatient
+            form.SelectedEpisode = episode
+            form.ShowDialog()
+            If form.CodeRetour = True Then
+                ChargementEpisodeContexte()
             End If
         End Using
-        'Récupérer l'id du contexte pour l'associer au contexte épsiode et l'occulté si suivi ou virtuel ou social
-
-        Me.Enabled = True
     End Sub
 
     'Modifier un contexte de conclusion médicale
@@ -1610,27 +1585,10 @@ Public Class RadFEpisodeDetail
         End If
     End Sub
 
-    'Enlever un contexte de conclusion médicale
-    Private Sub EnleverUnContexteDeConclusionToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles EnleverUnContexteDeConclusionToolStripMenuItem.Click
-        If RadGridViewContexteEpisode.CurrentRow IsNot Nothing Then
-            Dim aRow, episodeContexteId As Integer
-            aRow = Me.RadGridViewContexteEpisode.Rows.IndexOf(Me.RadGridViewContexteEpisode.CurrentRow)
-            If aRow >= 0 Then
-                Cursor.Current = Cursors.WaitCursor
-                episodeContexteId = RadGridViewContexteEpisode.Rows(aRow).Cells("episode_contexte_id").Value
-                episodeContexteDao.SuppressionEpisodeContexteById(episodeContexteId)
-                episodeDao.MajEpisodeConclusionMedicale(SelectedEpisodeId)
 
-                Dim form As New RadFNotification()
-                form.Titre = "Notification conclusion médicale - contexte épisode patient"
-                form.Message = "Contexte patient enlevé de la conclusion médicale de l'épisode"
-                form.Show()
-                ChargementEpisodeContexte()
-                ChargementContexte()
-                ChargementCaracteristiquesEpisode()
-            End If
-        End If
-    End Sub
+    '=======================================================================================
+    ' Consigne IDE
+    '=======================================================================================
 
     'Créer une consigne IDE 
     Private Sub RadBtnConclusionCreerConsigne_Click(sender As Object, e As EventArgs) Handles RadBtnConclusionCreerConsigne.Click
@@ -1768,15 +1726,16 @@ Public Class RadFEpisodeDetail
                 If TxtConclusionIDE.Text = "" Then
                     MessageBox.Show("Pour un épisode de type 'Paramédical', en cas de conclusion paramédicale de type 'Rôle propre' ou 'Sur Protocole'," & vbCrLf &
                                     " le commentaire de conclusion paramédical est requis pour assurer la clôture de l'épisode.")
+                    Exit Sub
                 End If
             End If
-            Exit Sub
         End If
 
-        'Si une orrdonnance existe et que celle-ci n'est pas signée la clôture n'est pas possoble
+        'Si une ordonnance existe et que celle-ci n'est pas signée la clôture n'est pas possible
         If ControleOrdonnanceExiste = True Then
             If ControleOrdonnanceValide = False Then
                 MessageBox.Show("Une ordonnance existe et n'est pas encore validée, la signature médicale de l'ordonnance est requise pour assurer la clôture de l'épisode.")
+                Exit Sub
             End If
         End If
 
@@ -3625,33 +3584,6 @@ Public Class RadFEpisodeDetail
         End If
     End Sub
 
-    'Ajouter un contexte à l'épisode (conclusion médicale)
-    Private Sub AjouterUnContexteÀLépisodeToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles AjouterUnContexteaLepisodeToolStripMenuItem.Click
-        If RadContexteDataGridView.CurrentRow IsNot Nothing Then
-            Dim aRow As Integer = Me.RadContexteDataGridView.Rows.IndexOf(Me.RadContexteDataGridView.CurrentRow)
-            If aRow >= 0 Then
-                Dim ContexteId As Integer = RadContexteDataGridView.Rows(aRow).Cells("ContexteId").Value
-                Me.Enabled = False
-                Cursor.Current = Cursors.WaitCursor
-                Dim episodeContexte As New EpisodeContexte
-                episodeContexte.ContexteId = ContexteId
-                episodeContexte.EpisodeId = SelectedEpisodeId
-                episodeContexte.PatientId = episode.PatientId
-                episodeContexte.UserCreation = userLog.UtilisateurId
-                episodeContexte.DateCreation = Date.Now()
-                episodeContexteDao.CreateEpisodeContexte(episodeContexte)
-                episodeDao.MajEpisodeConclusionMedicale(SelectedEpisodeId)
-                Dim form As New RadFNotification()
-                form.Titre = "Notification conclusion médicale - contexte épisode patient"
-                form.Message = "Contexte patient ajouté dans la conclusion médicale de l'épisode"
-                form.Show()
-                ChargementEpisodeContexte()
-                ChargementCaracteristiquesEpisode()
-                Me.Enabled = True
-            End If
-        End If
-    End Sub
-
     Private Sub RadChkContextePublie_ToggleStateChanged(sender As Object, args As Telerik.WinControls.UI.StateChangedEventArgs) Handles RadChkContextePublie.ToggleStateChanged
         If RadChkContextePublie.Checked = True Then
             RadChkContexteTous.Checked = False
@@ -4298,10 +4230,8 @@ Public Class RadFEpisodeDetail
                 TxtConclusionIDE.Enabled = False
 
                 'Conclusion médicale
-                RadBtnCreerContexteConclusion.Enabled = False
+                RadBtnConclusion.Enabled = False
                 RadBtnConclusionCreerConsigne.Enabled = False
-                AjouterUnContexteaLepisodeToolStripMenuItem.Enabled = False
-                EnleverUnContexteDeConclusionToolStripMenuItem.Enabled = False
 
                 'Choix conclusion paramédicale
                 RadioBtnDemandeAvis.Enabled = False
@@ -4320,9 +4250,11 @@ Public Class RadFEpisodeDetail
         RadioBtnRolePropre.Enabled = False
         RadioBtnSurProtocole.Enabled = False
 
-        RadObsSpeIdeDataGridView.Enabled = False
-        RadGridViewObsIde.Enabled = False
-        RadPanelConclusionIdeType.Enabled = False
+        'RadObsSpeIdeDataGridView.Enabled = False
+        RadObsSpeIdeDataGridView.TableElement.BackColor = Color.WhiteSmoke
+        'RadGridViewObsIde.Enabled = False
+        RadGridViewObsIde.TableElement.BackColor = Color.WhiteSmoke
+        'RadPanelConclusionIdeType.Enabled = False
 
         RadioBtnDemandeAvis.Hide()
         RadioBtnRolePropre.Hide()
@@ -4337,14 +4269,15 @@ Public Class RadFEpisodeDetail
         RadBtnWorkflowMed.Enabled = False
         RadPnlWorkflowMed.Enabled = False
         RadBtnConclusionCreerConsigne.Enabled = False
-        RadBtnCreerContexteConclusion.Enabled = False
+        RadBtnConclusion.Enabled = False
         ControleAjoutConclusion = False
 
-        RadObsSpeMedDataGridView.Enabled = False
-        RadGridViewObsMed.Enabled = False
-        RadGridViewContexteEpisode.Enabled = False
-
-        AjouterUnContexteaLepisodeToolStripMenuItem.Enabled = False
+        'RadObsSpeMedDataGridView.Enabled = False
+        RadObsSpeMedDataGridView.TableElement.BackColor = Color.WhiteSmoke
+        'RadGridViewObsMed.Enabled = False
+        RadGridViewObsMed.TableElement.BackColor = Color.WhiteSmoke
+        'RadGridViewContexteEpisode.Enabled = False
+        RadGridViewContexteEpisode.TableElement.BackColor = Color.WhiteSmoke
     End Sub
 
     Private Sub LibereAccesIde()
@@ -4370,13 +4303,11 @@ Public Class RadFEpisodeDetail
         RadBtnWorkflowMed.Enabled = True
         RadPnlWorkflowMed.Enabled = True
         RadBtnConclusionCreerConsigne.Enabled = True
-        RadBtnCreerContexteConclusion.Enabled = True
+        RadBtnConclusion.Enabled = True
 
         RadObsSpeMedDataGridView.Enabled = True
         RadGridViewObsMed.Enabled = True
         RadGridViewContexteEpisode.Enabled = True
-
-        AjouterUnContexteaLepisodeToolStripMenuItem.Enabled = True
     End Sub
 
 

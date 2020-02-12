@@ -143,6 +143,7 @@ Public Class EpisodeDao
         episode.Decision = Coalesce(reader("decision"), "")
         episode.ConclusionIdeType = Coalesce(reader("conclusion_ide_type"), "")
         episode.ConclusionMedConsigneDrcId = Coalesce(reader("conclusion_med_consigne_drc_id"), 0)
+        episode.ConclusionMedConsigneDenomination = Coalesce(reader("conclusion_med_consigne_denomination"), "")
         episode.ConclusionMedContexte1DrcId = Coalesce(reader("conclusion_med_contexte1_drc_id"), 0)
         episode.ConclusionMedContexte1AntecedentId = Coalesce(reader("conclusion_med_contexte1_antecedent_id"), 0)
         episode.ConclusionMedContexte2DrcId = Coalesce(reader("conclusion_med_contexte2_drc_id"), 0)
@@ -195,6 +196,7 @@ Public Class EpisodeDao
                     episode.Decision = ""
                     episode.ConclusionIdeType = ""
                     episode.ConclusionMedConsigneDrcId = 0
+                    episode.ConclusionMedConsigneDenomination = ""
                     episode.ConclusionMedContexte1DrcId = 0
                     episode.ConclusionMedContexte1AntecedentId = 0
                     episode.ConclusionMedContexte2DrcId = 0
@@ -508,6 +510,7 @@ Public Class EpisodeDao
         " decision = @decision," &
         " conclusion_ide_type = @conclusionIdeType," &
         " conclusion_med_consigne_drc_id = @conclusionMedConsigneDrcId," &
+        " conclusion_med_consigne_denomination = @conclusionMedConsigneDenomination," &
         " conclusion_med_contexte1_drc_id = @conclusionMedContexte1DrcId," &
         " conclusion_med_contexte1_antecedent_id = @conclusionMedContexte1AntecedentId," &
         " conclusion_med_contexte2_drc_id = @conclusionMedContexte2DrcId," &
@@ -534,6 +537,7 @@ Public Class EpisodeDao
             .AddWithValue("@decision", episode.Decision)
             .AddWithValue("@conclusionIdeType", episode.ConclusionIdeType)
             .AddWithValue("@conclusionMedConsigneDrcId", episode.ConclusionMedConsigneDrcId)
+            .AddWithValue("@conclusionMedConsigneDenomination", episode.ConclusionMedConsigneDenomination)
             .AddWithValue("@conclusionMedContexte1DrcId", episode.ConclusionMedContexte1DrcId)
             .AddWithValue("@conclusionMedContexte1AntecedentId", episode.ConclusionMedContexte1AntecedentId)
             .AddWithValue("@conclusionMedContexte2DrcId", episode.ConclusionMedContexte2DrcId)

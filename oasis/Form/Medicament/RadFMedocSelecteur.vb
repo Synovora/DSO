@@ -121,6 +121,10 @@ Public Class RadFMedocSelecteur
     End Sub
 
     Private Sub RadGridView1_CellClick(sender As Object, e As Telerik.WinControls.UI.GridViewCellEventArgs) Handles RadMedicamentGridView.CellClick
+        Selection()
+    End Sub
+
+    Private Sub Selection()
         Dim aRow, maxRow As Integer
 
         aRow = Me.RadMedicamentGridView.Rows.IndexOf(Me.RadMedicamentGridView.CurrentRow)
@@ -155,7 +159,22 @@ Public Class RadFMedocSelecteur
                 RadPnlSelectedMedicament.Show()
             End If
         End If
+    End Sub
 
+    Private Sub RadBtnSelect_Click(sender As Object, e As EventArgs) Handles RadBtnSelect.Click
+        SelectionRetour()
+    End Sub
+
+    Private Sub SelectionRetour()
+        Dim medicamentCIS As Integer
+        medicamentCIS = CInt(LblMedicamentCis.Text)
+        Me.SelectedMedicamentCis = medicamentCIS
+        Me.Close()
+    End Sub
+
+    Private Sub RadMedicamentGridView_DoubleClick(sender As Object, e As EventArgs) Handles RadMedicamentGridView.DoubleClick
+        Selection()
+        SelectionRetour()
     End Sub
 
     Private Sub DétailMédicamentToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles DétailMédicamentToolStripMenuItem.Click
@@ -178,13 +197,6 @@ Public Class RadFMedocSelecteur
                 End Using
             End If
         End If
-    End Sub
-
-    Private Sub RadBtnSelect_Click(sender As Object, e As EventArgs) Handles RadBtnSelect.Click
-        Dim medicamentCIS As Integer
-        medicamentCIS = CInt(LblMedicamentCis.Text)
-        Me.SelectedMedicamentCis = medicamentCIS
-        Me.Close()
     End Sub
 
     Private Sub LblAllergie_Click(sender As Object, e As EventArgs) Handles LblAllergie.Click
@@ -244,4 +256,5 @@ Public Class RadFMedocSelecteur
         End If
         Cursor.Current = Cursors.Default
     End Sub
+
 End Class

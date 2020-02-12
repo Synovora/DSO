@@ -222,10 +222,8 @@ Partial Class RadFEpisodeDetail
         Me.SplitPanel9 = New Telerik.WinControls.UI.SplitPanel()
         Me.RadPanel19 = New Telerik.WinControls.UI.RadPanel()
         Me.RadGridViewContexteEpisode = New Telerik.WinControls.UI.RadGridView()
-        Me.ConclusionContexteMenuStrip = New System.Windows.Forms.ContextMenuStrip(Me.components)
-        Me.EnleverUnContexteDeConclusionToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.RadPanel18 = New Telerik.WinControls.UI.RadPanel()
-        Me.RadBtnCreerContexteConclusion = New Telerik.WinControls.UI.RadButton()
+        Me.RadBtnConclusion = New Telerik.WinControls.UI.RadButton()
         Me.RadBtnConclusionCreerConsigne = New Telerik.WinControls.UI.RadButton()
         Me.SplitPanel3 = New Telerik.WinControls.UI.SplitPanel()
         Me.RadPageView1 = New Telerik.WinControls.UI.RadPageView()
@@ -295,7 +293,6 @@ Partial Class RadFEpisodeDetail
         Me.ToolStripSeparator9 = New System.Windows.Forms.ToolStripSeparator()
         Me.RafraichirLaffichageToolStripMenuItem1 = New System.Windows.Forms.ToolStripMenuItem()
         Me.ToolStripSeparator12 = New System.Windows.Forms.ToolStripSeparator()
-        Me.AjouterUnContexteaLepisodeToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.RadPanel8 = New Telerik.WinControls.UI.RadPanel()
         Me.RadBtnCreationContexte = New Telerik.WinControls.UI.RadButton()
         Me.RadChkContexteTous = New Telerik.WinControls.UI.RadCheckBox()
@@ -415,10 +412,9 @@ Partial Class RadFEpisodeDetail
         Me.RadPanel19.SuspendLayout()
         CType(Me.RadGridViewContexteEpisode, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.RadGridViewContexteEpisode.MasterTemplate, System.ComponentModel.ISupportInitialize).BeginInit()
-        Me.ConclusionContexteMenuStrip.SuspendLayout()
         CType(Me.RadPanel18, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.RadPanel18.SuspendLayout()
-        CType(Me.RadBtnCreerContexteConclusion, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.RadBtnConclusion, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.RadBtnConclusionCreerConsigne, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.SplitPanel3, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SplitPanel3.SuspendLayout()
@@ -2072,7 +2068,6 @@ Partial Class RadFEpisodeDetail
         'RadGridViewContexteEpisode
         '
         Me.RadGridViewContexteEpisode.BackColor = System.Drawing.Color.FromArgb(CType(CType(191, Byte), Integer), CType(CType(219, Byte), Integer), CType(CType(255, Byte), Integer))
-        Me.RadGridViewContexteEpisode.ContextMenuStrip = Me.ConclusionContexteMenuStrip
         Me.RadGridViewContexteEpisode.Cursor = System.Windows.Forms.Cursors.Default
         Me.RadGridViewContexteEpisode.Dock = System.Windows.Forms.DockStyle.Fill
         Me.RadGridViewContexteEpisode.Font = New System.Drawing.Font("Segoe UI", 8.25!)
@@ -2111,21 +2106,9 @@ Partial Class RadFEpisodeDetail
         Me.RadGridViewContexteEpisode.Size = New System.Drawing.Size(449, 119)
         Me.RadGridViewContexteEpisode.TabIndex = 0
         '
-        'ConclusionContexteMenuStrip
-        '
-        Me.ConclusionContexteMenuStrip.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.EnleverUnContexteDeConclusionToolStripMenuItem})
-        Me.ConclusionContexteMenuStrip.Name = "ConclusionContexteMenuStrip"
-        Me.ConclusionContexteMenuStrip.Size = New System.Drawing.Size(255, 26)
-        '
-        'EnleverUnContexteDeConclusionToolStripMenuItem
-        '
-        Me.EnleverUnContexteDeConclusionToolStripMenuItem.Name = "EnleverUnContexteDeConclusionToolStripMenuItem"
-        Me.EnleverUnContexteDeConclusionToolStripMenuItem.Size = New System.Drawing.Size(254, 22)
-        Me.EnleverUnContexteDeConclusionToolStripMenuItem.Text = "Enlever un contexte de conclusion"
-        '
         'RadPanel18
         '
-        Me.RadPanel18.Controls.Add(Me.RadBtnCreerContexteConclusion)
+        Me.RadPanel18.Controls.Add(Me.RadBtnConclusion)
         Me.RadPanel18.Controls.Add(Me.RadBtnConclusionCreerConsigne)
         Me.RadPanel18.Dock = System.Windows.Forms.DockStyle.Bottom
         Me.RadPanel18.Location = New System.Drawing.Point(0, 119)
@@ -2133,13 +2116,13 @@ Partial Class RadFEpisodeDetail
         Me.RadPanel18.Size = New System.Drawing.Size(449, 35)
         Me.RadPanel18.TabIndex = 1
         '
-        'RadBtnCreerContexteConclusion
+        'RadBtnConclusion
         '
-        Me.RadBtnCreerContexteConclusion.Location = New System.Drawing.Point(317, 3)
-        Me.RadBtnCreerContexteConclusion.Name = "RadBtnCreerContexteConclusion"
-        Me.RadBtnCreerContexteConclusion.Size = New System.Drawing.Size(129, 24)
-        Me.RadBtnCreerContexteConclusion.TabIndex = 38
-        Me.RadBtnCreerContexteConclusion.Text = "Créer une conclusion"
+        Me.RadBtnConclusion.Location = New System.Drawing.Point(336, 3)
+        Me.RadBtnConclusion.Name = "RadBtnConclusion"
+        Me.RadBtnConclusion.Size = New System.Drawing.Size(110, 24)
+        Me.RadBtnConclusion.TabIndex = 39
+        Me.RadBtnConclusion.Text = "Conclusion"
         '
         'RadBtnConclusionCreerConsigne
         '
@@ -2867,48 +2850,42 @@ Partial Class RadFEpisodeDetail
         '
         'ContexteMedicalContextMenuStrip
         '
-        Me.ContexteMedicalContextMenuStrip.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ToolStripMenuItem1, Me.ToolStripSeparator4, Me.HistoriqueDesModificationsToolStripMenuItem1, Me.ToolStripSeparator9, Me.RafraichirLaffichageToolStripMenuItem1, Me.ToolStripSeparator12, Me.AjouterUnContexteaLepisodeToolStripMenuItem})
+        Me.ContexteMedicalContextMenuStrip.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ToolStripMenuItem1, Me.ToolStripSeparator4, Me.HistoriqueDesModificationsToolStripMenuItem1, Me.ToolStripSeparator9, Me.RafraichirLaffichageToolStripMenuItem1, Me.ToolStripSeparator12})
         Me.ContexteMedicalContextMenuStrip.Name = "ContexteContextMenuStrip"
-        Me.ContexteMedicalContextMenuStrip.Size = New System.Drawing.Size(315, 110)
+        Me.ContexteMedicalContextMenuStrip.Size = New System.Drawing.Size(302, 88)
         '
         'ToolStripMenuItem1
         '
         Me.ToolStripMenuItem1.Name = "ToolStripMenuItem1"
-        Me.ToolStripMenuItem1.Size = New System.Drawing.Size(314, 22)
+        Me.ToolStripMenuItem1.Size = New System.Drawing.Size(301, 22)
         Me.ToolStripMenuItem1.Text = "Créer un contexte"
         '
         'ToolStripSeparator4
         '
         Me.ToolStripSeparator4.Name = "ToolStripSeparator4"
-        Me.ToolStripSeparator4.Size = New System.Drawing.Size(311, 6)
+        Me.ToolStripSeparator4.Size = New System.Drawing.Size(298, 6)
         '
         'HistoriqueDesModificationsToolStripMenuItem1
         '
         Me.HistoriqueDesModificationsToolStripMenuItem1.Name = "HistoriqueDesModificationsToolStripMenuItem1"
-        Me.HistoriqueDesModificationsToolStripMenuItem1.Size = New System.Drawing.Size(314, 22)
+        Me.HistoriqueDesModificationsToolStripMenuItem1.Size = New System.Drawing.Size(301, 22)
         Me.HistoriqueDesModificationsToolStripMenuItem1.Text = "Historique des modifications d'un contexte"
         '
         'ToolStripSeparator9
         '
         Me.ToolStripSeparator9.Name = "ToolStripSeparator9"
-        Me.ToolStripSeparator9.Size = New System.Drawing.Size(311, 6)
+        Me.ToolStripSeparator9.Size = New System.Drawing.Size(298, 6)
         '
         'RafraichirLaffichageToolStripMenuItem1
         '
         Me.RafraichirLaffichageToolStripMenuItem1.Name = "RafraichirLaffichageToolStripMenuItem1"
-        Me.RafraichirLaffichageToolStripMenuItem1.Size = New System.Drawing.Size(314, 22)
+        Me.RafraichirLaffichageToolStripMenuItem1.Size = New System.Drawing.Size(301, 22)
         Me.RafraichirLaffichageToolStripMenuItem1.Text = "Rafraichir l'affichage"
         '
         'ToolStripSeparator12
         '
         Me.ToolStripSeparator12.Name = "ToolStripSeparator12"
-        Me.ToolStripSeparator12.Size = New System.Drawing.Size(311, 6)
-        '
-        'AjouterUnContexteaLepisodeToolStripMenuItem
-        '
-        Me.AjouterUnContexteaLepisodeToolStripMenuItem.Name = "AjouterUnContexteaLepisodeToolStripMenuItem"
-        Me.AjouterUnContexteaLepisodeToolStripMenuItem.Size = New System.Drawing.Size(314, 22)
-        Me.AjouterUnContexteaLepisodeToolStripMenuItem.Text = "Ajouter un contexte de conclusion à l'épisode"
+        Me.ToolStripSeparator12.Size = New System.Drawing.Size(298, 6)
         '
         'RadPanel8
         '
@@ -3275,10 +3252,9 @@ Partial Class RadFEpisodeDetail
         Me.RadPanel19.ResumeLayout(False)
         CType(Me.RadGridViewContexteEpisode.MasterTemplate, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.RadGridViewContexteEpisode, System.ComponentModel.ISupportInitialize).EndInit()
-        Me.ConclusionContexteMenuStrip.ResumeLayout(False)
         CType(Me.RadPanel18, System.ComponentModel.ISupportInitialize).EndInit()
         Me.RadPanel18.ResumeLayout(False)
-        CType(Me.RadBtnCreerContexteConclusion, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.RadBtnConclusion, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.RadBtnConclusionCreerConsigne, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.SplitPanel3, System.ComponentModel.ISupportInitialize).EndInit()
         Me.SplitPanel3.ResumeLayout(False)
@@ -3562,12 +3538,8 @@ Partial Class RadFEpisodeDetail
     Friend WithEvents RadPanel19 As Telerik.WinControls.UI.RadPanel
     Friend WithEvents RadGridViewContexteEpisode As Telerik.WinControls.UI.RadGridView
     Friend WithEvents RadPanel18 As Telerik.WinControls.UI.RadPanel
-    Friend WithEvents RadBtnCreerContexteConclusion As Telerik.WinControls.UI.RadButton
     Friend WithEvents RadBtnConclusionCreerConsigne As Telerik.WinControls.UI.RadButton
     Friend WithEvents ToolStripSeparator12 As ToolStripSeparator
-    Friend WithEvents AjouterUnContexteaLepisodeToolStripMenuItem As ToolStripMenuItem
-    Friend WithEvents ConclusionContexteMenuStrip As ContextMenuStrip
-    Friend WithEvents EnleverUnContexteDeConclusionToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents LblLabelEtatEpisode As Label
     Friend WithEvents RadBtnAnnulerEpisode As Telerik.WinControls.UI.RadButton
     Friend WithEvents DéclarationAllergieOuContreindicationToolStripMenuItem As ToolStripMenuItem
@@ -3580,5 +3552,6 @@ Partial Class RadFEpisodeDetail
     Friend WithEvents RadBtnCreationPPSMesure As Telerik.WinControls.UI.RadButton
     Friend WithEvents RadBtnCreationPPSStrategie As Telerik.WinControls.UI.RadButton
     Friend WithEvents RadBtnCreationPPSSuivi As Telerik.WinControls.UI.RadButton
+    Friend WithEvents RadBtnConclusion As Telerik.WinControls.UI.RadButton
 End Class
 
