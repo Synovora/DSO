@@ -76,7 +76,7 @@ Public Class ContexteDao
         Return IsExist
     End Function
 
-    Friend Function TransformationEnAntecedent(contexteId As Integer, ContexteHistoACreer As AntecedentHisto, Description As String) As Boolean
+    Friend Function TransformationEnAntecedent(contexteId As Integer, ContexteHistoACreer As AntecedentHisto, Description As String, Publication As String) As Boolean
         Dim user As New Utilisateur
         user.UtilisateurId = 1
 
@@ -93,6 +93,7 @@ Public Class ContexteDao
             " oa_antecedent_date_fin = @dateFin," &
             " oa_antecedent_nature = @nature," &
             " oa_antecedent_priorite = @priorite," &
+            " oa_antecedent_statut_affichage = @publication," &
             " oa_antecedent_niveau = @niveau," &
             " oa_antecedent_id_niveau1 = @idNiveau1," &
             " oa_antecedent_id_niveau2 = @idNiveau2," &
@@ -111,6 +112,7 @@ Public Class ContexteDao
             .AddWithValue("@dateFin", New Date(2999, 12, 31, 0, 0, 0).ToString("yyyy-MM-dd HH:mm:ss"))
             .AddWithValue("@nature", "")
             .AddWithValue("@priorite", 0)
+            .AddWithValue("@publication", publication)
             .AddWithValue("@niveau", 1)
             .AddWithValue("@idNiveau1", 0)
             .AddWithValue("@idNiveau2", 0)
@@ -158,12 +160,12 @@ Public Class ContexteDao
         Dim SQLstring As String = "INSERT INTO oasis.oa_antecedent" &
         " (oa_antecedent_patient_id, oa_antecedent_type, oa_antecedent_drc_id, oa_antecedent_description, oa_antecedent_date_creation," &
         " oa_antecedent_date_modification, oa_antecedent_utilisateur_creation, oa_antecedent_utilisateur_modification," &
-        " oa_antecedent_date_debut, oa_antecedent_niveau, oa_antecedent_nature, oa_antecedent_statut_affichage, oa_antecedent_inactif," &
+        " oa_antecedent_date_debut, oa_antecedent_niveau, oa_antecedent_nature, oa_antecedent_statut_affichage, oa_antecedent_statut_affichage_transformation, oa_antecedent_inactif," &
         " oa_antecedent_ordre_affichage1, oa_antecedent_ordre_affichage2, oa_antecedent_ordre_affichage3, oa_antecedent_categorie_contexte," &
         " oa_antecedent_date_fin, oa_antecedent_diagnostic, oa_episode_id)" &
         " VALUES (@patientId, @type, @drcId, @description, @dateCreation," &
         " @dateModification, @utilisateurCreation, @utilisateurModification," &
-        " @dateDebut, @niveau, @nature, @publication, @inactif," &
+        " @dateDebut, @niveau, @nature, @publication, @publicationTransformation, @inactif," &
         " @ordreAffichage1, @ordreAffichage2, @ordreAffichage3, @categorieContexte, @dateFin, @diagnostic, @episodeId)"
 
         Dim con As SqlConnection = GetConnection()
@@ -182,6 +184,7 @@ Public Class ContexteDao
             .AddWithValue("@niveau", 1)
             .AddWithValue("@nature", "Patient")
             .AddWithValue("@publication", contexte.StatutAffichage)
+            .AddWithValue("@publicationTransformation", contexte.StatutAffichageTransformation)
             .AddWithValue("@inactif", False)
             .AddWithValue("@ordreAffichage1", contexte.Ordre1)
             .AddWithValue("@ordreAffichage2", 0)
@@ -295,7 +298,8 @@ Public Class ContexteDao
             " oa_antecedent_date_fin = @dateFin," &
             " oa_antecedent_ordre_affichage1 = @ordreAffichage," &
             " oa_antecedent_diagnostic = @diagnostic," &
-            " oa_antecedent_statut_affichage = @publication" &
+            " oa_antecedent_statut_affichage = @publication," &
+            " oa_antecedent_statut_affichage_transformation = @publicationTransformation" &
             " WHERE oa_antecedent_id = @antecedentId"
 
         Dim con As SqlConnection = GetConnection()
@@ -310,6 +314,7 @@ Public Class ContexteDao
             .AddWithValue("@dateDebut", contexte.DateDebut)
             .AddWithValue("@dateFin", contexte.DateFin)
             .AddWithValue("@publication", contexte.StatutAffichage)
+            .AddWithValue("@publicationTransformation", contexte.StatutAffichageTransformation)
             .AddWithValue("@ordreAffichage", contexte.Ordre1)
             .AddWithValue("@antecedentId", contexte.Id)
             .AddWithValue("@diagnostic", contexte.Diagnostic)

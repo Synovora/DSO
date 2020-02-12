@@ -29,6 +29,7 @@
     Private _ordre2 As Integer
     Private _ordre3 As Integer
     Private _statutAffichage As String
+    Private _statutAffichageTransformation As String
     Private _categorieContexte As String
     Private _episodeId As Long
     Private _inactif As Boolean
@@ -327,6 +328,15 @@
         End Get
         Set(value As Long)
             _episodeId = value
+        End Set
+    End Property
+
+    Public Property StatutAffichageTransformation As String
+        Get
+            Return _statutAffichageTransformation
+        End Get
+        Set(value As String)
+            _statutAffichageTransformation = value
         End Set
     End Property
 

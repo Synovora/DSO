@@ -203,6 +203,8 @@ Public Class RadFContextedetailEdit
             'Publication
             ChkPublie.Checked = True
             ChkPublie.ForeColor = Color.Red
+            ChkPublieTransformation.Checked = True
+            ChkPublieTransformation.ForeColor = Color.Red
             LblPublication.Hide()
             contexteUpdate.StatutAffichage = "P"
             If ConclusionEpisode = True Then
@@ -210,6 +212,8 @@ Public Class RadFContextedetailEdit
                     ChkCache.Checked = True
                     ChkCache.ForeColor = Color.Red
                     LblPublication.Text = "Contexte masqué"
+                    ChkCacheTransformation.Checked = True
+                    ChkCacheTransformation.ForeColor = Color.Red
                 End If
             End If
 
@@ -333,6 +337,25 @@ Public Class RadFContextedetailEdit
             End Select
         End If
 
+        'Statut affichage de transformation du contexte
+        ChkCacheTransformation.Checked = False
+        ChkPublieTransformation.Checked = False
+        ChkOcculteTransformation.Checked = False
+        If contexteRead.StatutAffichageTransformation <> "" Then
+            Dim StatutAffichageTransformation As String = contexteRead.StatutAffichageTransformation
+            Select Case StatutAffichageTransformation
+                Case "P"
+                    ChkPublieTransformation.Checked = True
+                    ChkPublieTransformation.ForeColor = Color.Red
+                Case "C"
+                    ChkCacheTransformation.Checked = True
+                    ChkCacheTransformation.ForeColor = Color.Red
+                Case "O"
+                    ChkOcculteTransformation.Checked = True
+                    ChkOcculteTransformation.ForeColor = Color.Red
+            End Select
+        End If
+
         'Diagnostic
         If contexteRead.Diagnostic <> 0 Then
             Dim Diagnostic As Integer = contexteRead.Diagnostic
@@ -411,7 +434,7 @@ Public Class RadFContextedetailEdit
     Private Sub RadBtnTransformer_Click(sender As Object, e As EventArgs) Handles RadBtnTransformer.Click
         If MsgBox("confirmation de la transformation en antécédent", MsgBoxStyle.YesNo, "") = MsgBoxResult.Yes Then
             Dim Description As String = contexteUpdate.Description & " (" & contexteUpdate.DateDebut.ToString("MM.yyyy") & ")"
-            If contexteDao.TransformationEnAntecedent(SelectedContexteId, ContexteHistoACreer, Description) = True Then
+            If contexteDao.TransformationEnAntecedent(SelectedContexteId, ContexteHistoACreer, Description, contexteRead.StatutAffichageTransformation) = True Then
                 Dim form As New RadFNotification()
                 form.Titre = "Notification contexte patient"
                 form.Message = "Le contexte patient a été transformé en antécédent"
@@ -708,6 +731,44 @@ Public Class RadFContextedetailEdit
             ChkCache.ForeColor = Color.Red
             ChkPublie.ForeColor = Color.Black
             contexteUpdate.StatutAffichage = "C"
+            GestionAffichageBoutonValidation()
+        End If
+    End Sub
+
+
+    'Statut affichage de transformation
+    Private Sub ChkPublieTransformation_CheckedChanged(sender As Object, e As EventArgs) Handles ChkPublieTransformation.CheckedChanged
+        If ChkPublieTransformation.Checked = True Then
+            ChkCacheTransformation.Checked = False
+            ChkOcculteTransformation.Checked = False
+            ChkPublieTransformation.ForeColor = Color.Red
+            ChkCacheTransformation.ForeColor = Color.Black
+            ChkOcculteTransformation.ForeColor = Color.Black
+            contexteUpdate.StatutAffichageTransformation = "P"
+            GestionAffichageBoutonValidation()
+        End If
+    End Sub
+
+    Private Sub ChkCacheTransformation_CheckedChanged(sender As Object, e As EventArgs) Handles ChkCacheTransformation.CheckedChanged
+        If ChkCacheTransformation.Checked = True Then
+            ChkOcculteTransformation.Checked = False
+            ChkPublieTransformation.Checked = False
+            ChkCacheTransformation.ForeColor = Color.Red
+            ChkOcculteTransformation.ForeColor = Color.Black
+            ChkPublieTransformation.ForeColor = Color.Black
+            contexteUpdate.StatutAffichageTransformation = "C"
+            GestionAffichageBoutonValidation()
+        End If
+    End Sub
+
+    Private Sub ChkOcculteTransformation_CheckedChanged(sender As Object, e As EventArgs) Handles ChkOcculteTransformation.CheckedChanged
+        If ChkOcculteTransformation.Checked = True Then
+            ChkCacheTransformation.Checked = False
+            ChkPublieTransformation.Checked = False
+            ChkOcculteTransformation.ForeColor = Color.Red
+            ChkCacheTransformation.ForeColor = Color.Black
+            ChkPublieTransformation.ForeColor = Color.Black
+            contexteUpdate.StatutAffichageTransformation = "O"
             GestionAffichageBoutonValidation()
         End If
     End Sub

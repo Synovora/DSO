@@ -161,7 +161,7 @@ Public Class ParametreOasisDao
                 AntecedentHistoaCreer.AldDateDemande = Coalesce(ContexteObsoleteDataTable.Rows(i)("oa_antecedent_ald_demande_date"), Date.MaxValue)
                 Dim contexteId As Integer = ContexteObsoleteDataTable.Rows(i)("oa_antecedent_id")
                 Dim Description As String = AntecedentHistoaCreer.Description & " (" & AntecedentHistoaCreer.DateDebut.ToString("MM.yyyy") & ")"
-                ContexteDao.TransformationEnAntecedent(contexteId, AntecedentHistoaCreer, Description)
+                ContexteDao.TransformationEnAntecedent(contexteId, AntecedentHistoaCreer, Description, Coalesce(ContexteObsoleteDataTable.Rows(i)("oa_antecedent_statut_affichage_transformation"), ""))
             Next
         End If
 

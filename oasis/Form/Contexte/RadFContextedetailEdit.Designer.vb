@@ -46,6 +46,7 @@ Partial Class RadFContextedetailEdit
         Me.Label2 = New System.Windows.Forms.Label()
         Me.LblPatientAdresse1 = New System.Windows.Forms.Label()
         Me.GbxPrincipal = New Telerik.WinControls.UI.RadGroupBox()
+        Me.LblEtatContexte = New System.Windows.Forms.Label()
         Me.RadBtnDrcSelect = New Telerik.WinControls.UI.RadButton()
         Me.RadBtnRecupereDrc = New Telerik.WinControls.UI.RadButton()
         Me.Label12 = New System.Windows.Forms.Label()
@@ -84,7 +85,11 @@ Partial Class RadFContextedetailEdit
         Me.RadValidation = New Telerik.WinControls.UI.RadButton()
         Me.RadBtnSupprimer = New Telerik.WinControls.UI.RadButton()
         Me.RadBtnTransformer = New Telerik.WinControls.UI.RadButton()
-        Me.LblEtatContexte = New System.Windows.Forms.Label()
+        Me.RadGroupBox1 = New Telerik.WinControls.UI.RadGroupBox()
+        Me.ChkCacheTransformation = New System.Windows.Forms.CheckBox()
+        Me.ChkPublieTransformation = New System.Windows.Forms.CheckBox()
+        Me.Label16 = New System.Windows.Forms.Label()
+        Me.ChkOcculteTransformation = New System.Windows.Forms.CheckBox()
         CType(Me.RadGroupBoxEtatCivil, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.RadGroupBoxEtatCivil.SuspendLayout()
         CType(Me.GbxPrincipal, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -98,6 +103,8 @@ Partial Class RadFContextedetailEdit
         CType(Me.RadValidation, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.RadBtnSupprimer, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.RadBtnTransformer, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.RadGroupBox1, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.RadGroupBox1.SuspendLayout()
         CType(Me, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
@@ -368,6 +375,17 @@ Partial Class RadFContextedetailEdit
         CType(Me.GbxPrincipal.GetChildAt(0).GetChildAt(1).GetChildAt(0), Telerik.WinControls.Primitives.FillPrimitive).BackColor = System.Drawing.SystemColors.ActiveCaption
         CType(Me.GbxPrincipal.GetChildAt(0).GetChildAt(1).GetChildAt(0), Telerik.WinControls.Primitives.FillPrimitive).SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.None
         '
+        'LblEtatContexte
+        '
+        Me.LblEtatContexte.AutoSize = True
+        Me.LblEtatContexte.Font = New System.Drawing.Font("Segoe UI", 10.0!, System.Drawing.FontStyle.Bold)
+        Me.LblEtatContexte.ForeColor = System.Drawing.Color.Red
+        Me.LblEtatContexte.Location = New System.Drawing.Point(298, 28)
+        Me.LblEtatContexte.Name = "LblEtatContexte"
+        Me.LblEtatContexte.Size = New System.Drawing.Size(96, 19)
+        Me.LblEtatContexte.TabIndex = 101
+        Me.LblEtatContexte.Text = "Etat contexte"
+        '
         'RadBtnDrcSelect
         '
         Me.RadBtnDrcSelect.Location = New System.Drawing.Point(139, 54)
@@ -553,12 +571,12 @@ Partial Class RadFContextedetailEdit
         Me.GbxStatutAffichage.Controls.Add(Me.ChkPublie)
         Me.GbxStatutAffichage.Controls.Add(Me.Label14)
         Me.GbxStatutAffichage.GroupBoxStyle = Telerik.WinControls.UI.RadGroupBoxStyle.Office
-        Me.GbxStatutAffichage.HeaderText = "Publication"
+        Me.GbxStatutAffichage.HeaderText = "Publication du contexte"
         Me.GbxStatutAffichage.Location = New System.Drawing.Point(8, 331)
         Me.GbxStatutAffichage.Name = "GbxStatutAffichage"
         Me.GbxStatutAffichage.Size = New System.Drawing.Size(952, 69)
         Me.GbxStatutAffichage.TabIndex = 4
-        Me.GbxStatutAffichage.Text = "Publication"
+        Me.GbxStatutAffichage.Text = "Publication du contexte"
         CType(Me.GbxStatutAffichage.GetChildAt(0).GetChildAt(1), Telerik.WinControls.UI.GroupBoxHeader).GroupBoxStyle = Telerik.WinControls.UI.RadGroupBoxStyle.Office
         CType(Me.GbxStatutAffichage.GetChildAt(0).GetChildAt(1).GetChildAt(0), Telerik.WinControls.Primitives.FillPrimitive).BackColor = System.Drawing.SystemColors.ActiveCaption
         CType(Me.GbxStatutAffichage.GetChildAt(0).GetChildAt(1).GetChildAt(0), Telerik.WinControls.Primitives.FillPrimitive).SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.None
@@ -607,7 +625,7 @@ Partial Class RadFContextedetailEdit
         'LblId
         '
         Me.LblId.AutoSize = True
-        Me.LblId.Location = New System.Drawing.Point(948, 413)
+        Me.LblId.Location = New System.Drawing.Point(948, 491)
         Me.LblId.Name = "LblId"
         Me.LblId.Size = New System.Drawing.Size(12, 13)
         Me.LblId.TabIndex = 93
@@ -617,7 +635,7 @@ Partial Class RadFContextedetailEdit
         '
         Me.LblModificationContexte1.AutoSize = True
         Me.LblModificationContexte1.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.LblModificationContexte1.Location = New System.Drawing.Point(332, 413)
+        Me.LblModificationContexte1.Location = New System.Drawing.Point(332, 491)
         Me.LblModificationContexte1.Name = "LblModificationContexte1"
         Me.LblModificationContexte1.Size = New System.Drawing.Size(70, 13)
         Me.LblModificationContexte1.TabIndex = 91
@@ -627,7 +645,7 @@ Partial Class RadFContextedetailEdit
         '
         Me.LblModificationContexte2.AutoSize = True
         Me.LblModificationContexte2.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.LblModificationContexte2.Location = New System.Drawing.Point(468, 413)
+        Me.LblModificationContexte2.Location = New System.Drawing.Point(468, 491)
         Me.LblModificationContexte2.Name = "LblModificationContexte2"
         Me.LblModificationContexte2.Size = New System.Drawing.Size(25, 13)
         Me.LblModificationContexte2.TabIndex = 85
@@ -637,7 +655,7 @@ Partial Class RadFContextedetailEdit
         '
         Me.LblCreationContexte2.AutoSize = True
         Me.LblCreationContexte2.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.LblCreationContexte2.Location = New System.Drawing.Point(148, 413)
+        Me.LblCreationContexte2.Location = New System.Drawing.Point(148, 491)
         Me.LblCreationContexte2.Name = "LblCreationContexte2"
         Me.LblCreationContexte2.Size = New System.Drawing.Size(25, 13)
         Me.LblCreationContexte2.TabIndex = 84
@@ -646,7 +664,7 @@ Partial Class RadFContextedetailEdit
         'LblUtilisateurModification
         '
         Me.LblUtilisateurModification.AutoSize = True
-        Me.LblUtilisateurModification.Location = New System.Drawing.Point(499, 413)
+        Me.LblUtilisateurModification.Location = New System.Drawing.Point(499, 491)
         Me.LblUtilisateurModification.Name = "LblUtilisateurModification"
         Me.LblUtilisateurModification.Size = New System.Drawing.Size(144, 13)
         Me.LblUtilisateurModification.TabIndex = 83
@@ -655,7 +673,7 @@ Partial Class RadFContextedetailEdit
         'LblUtilisateurCreation
         '
         Me.LblUtilisateurCreation.AutoSize = True
-        Me.LblUtilisateurCreation.Location = New System.Drawing.Point(179, 413)
+        Me.LblUtilisateurCreation.Location = New System.Drawing.Point(179, 491)
         Me.LblUtilisateurCreation.Name = "LblUtilisateurCreation"
         Me.LblUtilisateurCreation.Size = New System.Drawing.Size(121, 13)
         Me.LblUtilisateurCreation.TabIndex = 82
@@ -665,7 +683,7 @@ Partial Class RadFContextedetailEdit
         '
         Me.LblCreationContexte1.AutoSize = True
         Me.LblCreationContexte1.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.LblCreationContexte1.Location = New System.Drawing.Point(19, 413)
+        Me.LblCreationContexte1.Location = New System.Drawing.Point(19, 491)
         Me.LblCreationContexte1.Name = "LblCreationContexte1"
         Me.LblCreationContexte1.Size = New System.Drawing.Size(55, 13)
         Me.LblCreationContexte1.TabIndex = 79
@@ -674,7 +692,7 @@ Partial Class RadFContextedetailEdit
         'LblContexteDateCreation
         '
         Me.LblContexteDateCreation.AutoSize = True
-        Me.LblContexteDateCreation.Location = New System.Drawing.Point(81, 413)
+        Me.LblContexteDateCreation.Location = New System.Drawing.Point(81, 491)
         Me.LblContexteDateCreation.Name = "LblContexteDateCreation"
         Me.LblContexteDateCreation.Size = New System.Drawing.Size(61, 13)
         Me.LblContexteDateCreation.TabIndex = 80
@@ -683,7 +701,7 @@ Partial Class RadFContextedetailEdit
         'LblContexteDateModification
         '
         Me.LblContexteDateModification.AutoSize = True
-        Me.LblContexteDateModification.Location = New System.Drawing.Point(401, 413)
+        Me.LblContexteDateModification.Location = New System.Drawing.Point(401, 491)
         Me.LblContexteDateModification.Name = "LblContexteDateModification"
         Me.LblContexteDateModification.Size = New System.Drawing.Size(61, 13)
         Me.LblContexteDateModification.TabIndex = 81
@@ -692,7 +710,7 @@ Partial Class RadFContextedetailEdit
         'RadDtnAbandon
         '
         Me.RadDtnAbandon.DialogResult = System.Windows.Forms.DialogResult.Cancel
-        Me.RadDtnAbandon.Location = New System.Drawing.Point(850, 448)
+        Me.RadDtnAbandon.Location = New System.Drawing.Point(850, 526)
         Me.RadDtnAbandon.Name = "RadDtnAbandon"
         Me.RadDtnAbandon.Size = New System.Drawing.Size(110, 24)
         Me.RadDtnAbandon.TabIndex = 94
@@ -700,7 +718,7 @@ Partial Class RadFContextedetailEdit
         '
         'RadValidation
         '
-        Me.RadValidation.Location = New System.Drawing.Point(734, 448)
+        Me.RadValidation.Location = New System.Drawing.Point(734, 526)
         Me.RadValidation.Name = "RadValidation"
         Me.RadValidation.Size = New System.Drawing.Size(110, 24)
         Me.RadValidation.TabIndex = 95
@@ -708,7 +726,7 @@ Partial Class RadFContextedetailEdit
         '
         'RadBtnSupprimer
         '
-        Me.RadBtnSupprimer.Location = New System.Drawing.Point(8, 448)
+        Me.RadBtnSupprimer.Location = New System.Drawing.Point(8, 526)
         Me.RadBtnSupprimer.Name = "RadBtnSupprimer"
         Me.RadBtnSupprimer.Size = New System.Drawing.Size(134, 24)
         Me.RadBtnSupprimer.TabIndex = 99
@@ -716,22 +734,69 @@ Partial Class RadFContextedetailEdit
         '
         'RadBtnTransformer
         '
-        Me.RadBtnTransformer.Location = New System.Drawing.Point(148, 448)
+        Me.RadBtnTransformer.Location = New System.Drawing.Point(148, 526)
         Me.RadBtnTransformer.Name = "RadBtnTransformer"
         Me.RadBtnTransformer.Size = New System.Drawing.Size(151, 24)
         Me.RadBtnTransformer.TabIndex = 100
         Me.RadBtnTransformer.Text = "Transformer en antécédent"
         '
-        'LblEtatContexte
+        'RadGroupBox1
         '
-        Me.LblEtatContexte.AutoSize = True
-        Me.LblEtatContexte.Font = New System.Drawing.Font("Segoe UI", 10.0!, System.Drawing.FontStyle.Bold)
-        Me.LblEtatContexte.ForeColor = System.Drawing.Color.Red
-        Me.LblEtatContexte.Location = New System.Drawing.Point(298, 28)
-        Me.LblEtatContexte.Name = "LblEtatContexte"
-        Me.LblEtatContexte.Size = New System.Drawing.Size(96, 19)
-        Me.LblEtatContexte.TabIndex = 101
-        Me.LblEtatContexte.Text = "Etat contexte"
+        Me.RadGroupBox1.AccessibleRole = System.Windows.Forms.AccessibleRole.Grouping
+        Me.RadGroupBox1.Controls.Add(Me.ChkOcculteTransformation)
+        Me.RadGroupBox1.Controls.Add(Me.ChkCacheTransformation)
+        Me.RadGroupBox1.Controls.Add(Me.ChkPublieTransformation)
+        Me.RadGroupBox1.Controls.Add(Me.Label16)
+        Me.RadGroupBox1.GroupBoxStyle = Telerik.WinControls.UI.RadGroupBoxStyle.Office
+        Me.RadGroupBox1.HeaderText = "Publication de l'antécédent résultant de la transformation du contexte"
+        Me.RadGroupBox1.Location = New System.Drawing.Point(8, 406)
+        Me.RadGroupBox1.Name = "RadGroupBox1"
+        Me.RadGroupBox1.Size = New System.Drawing.Size(952, 69)
+        Me.RadGroupBox1.TabIndex = 75
+        Me.RadGroupBox1.Text = "Publication de l'antécédent résultant de la transformation du contexte"
+        CType(Me.RadGroupBox1.GetChildAt(0).GetChildAt(1), Telerik.WinControls.UI.GroupBoxHeader).GroupBoxStyle = Telerik.WinControls.UI.RadGroupBoxStyle.Office
+        CType(Me.RadGroupBox1.GetChildAt(0).GetChildAt(1).GetChildAt(0), Telerik.WinControls.Primitives.FillPrimitive).BackColor = System.Drawing.SystemColors.ActiveCaption
+        CType(Me.RadGroupBox1.GetChildAt(0).GetChildAt(1).GetChildAt(0), Telerik.WinControls.Primitives.FillPrimitive).SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.None
+        '
+        'ChkCacheTransformation
+        '
+        Me.ChkCacheTransformation.AutoSize = True
+        Me.ChkCacheTransformation.Location = New System.Drawing.Point(258, 31)
+        Me.ChkCacheTransformation.Name = "ChkCacheTransformation"
+        Me.ChkCacheTransformation.Size = New System.Drawing.Size(67, 17)
+        Me.ChkCacheTransformation.TabIndex = 72
+        Me.ChkCacheTransformation.Text = "Masqué"
+        Me.ChkCacheTransformation.UseVisualStyleBackColor = True
+        '
+        'ChkPublieTransformation
+        '
+        Me.ChkPublieTransformation.AutoSize = True
+        Me.ChkPublieTransformation.Location = New System.Drawing.Point(139, 31)
+        Me.ChkPublieTransformation.Name = "ChkPublieTransformation"
+        Me.ChkPublieTransformation.Size = New System.Drawing.Size(62, 17)
+        Me.ChkPublieTransformation.TabIndex = 71
+        Me.ChkPublieTransformation.Text = "Affiché"
+        Me.ChkPublieTransformation.UseVisualStyleBackColor = True
+        '
+        'Label16
+        '
+        Me.Label16.AutoSize = True
+        Me.Label16.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label16.Location = New System.Drawing.Point(13, 31)
+        Me.Label16.Name = "Label16"
+        Me.Label16.Size = New System.Drawing.Size(98, 13)
+        Me.Label16.TabIndex = 70
+        Me.Label16.Text = "Statut affichage"
+        '
+        'ChkOcculteTransformation
+        '
+        Me.ChkOcculteTransformation.AutoSize = True
+        Me.ChkOcculteTransformation.Location = New System.Drawing.Point(377, 30)
+        Me.ChkOcculteTransformation.Name = "ChkOcculteTransformation"
+        Me.ChkOcculteTransformation.Size = New System.Drawing.Size(65, 17)
+        Me.ChkOcculteTransformation.TabIndex = 75
+        Me.ChkOcculteTransformation.Text = "Occulté"
+        Me.ChkOcculteTransformation.UseVisualStyleBackColor = True
         '
         'RadFContextedetailEdit
         '
@@ -739,7 +804,8 @@ Partial Class RadFContextedetailEdit
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.CancelButton = Me.RadDtnAbandon
-        Me.ClientSize = New System.Drawing.Size(972, 487)
+        Me.ClientSize = New System.Drawing.Size(972, 576)
+        Me.Controls.Add(Me.RadGroupBox1)
         Me.Controls.Add(Me.RadBtnTransformer)
         Me.Controls.Add(Me.RadBtnSupprimer)
         Me.Controls.Add(Me.RadValidation)
@@ -780,6 +846,9 @@ Partial Class RadFContextedetailEdit
         CType(Me.RadValidation, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.RadBtnSupprimer, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.RadBtnTransformer, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.RadGroupBox1, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.RadGroupBox1.ResumeLayout(False)
+        Me.RadGroupBox1.PerformLayout()
         CType(Me, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
         Me.PerformLayout()
@@ -848,5 +917,10 @@ Partial Class RadFContextedetailEdit
     Friend WithEvents RadBtnRecupereDrc As Telerik.WinControls.UI.RadButton
     Friend WithEvents RadBtnDrcSelect As Telerik.WinControls.UI.RadButton
     Friend WithEvents LblEtatContexte As Label
+    Friend WithEvents RadGroupBox1 As Telerik.WinControls.UI.RadGroupBox
+    Friend WithEvents ChkCacheTransformation As CheckBox
+    Friend WithEvents ChkPublieTransformation As CheckBox
+    Friend WithEvents Label16 As Label
+    Friend WithEvents ChkOcculteTransformation As CheckBox
 End Class
 

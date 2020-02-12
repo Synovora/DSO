@@ -3,6 +3,17 @@ Imports Oasis_Common
 Public Class AntecedentDao
     Inherits StandardDao
 
+    Public Structure EnumTypeAntecedentContexte
+        Const ANTECEDENT = "A"
+        Const CONTEXTE = "C"
+    End Structure
+
+    Public Structure EnumStatutAffichage
+        Const PUBLIE = "P"
+        Const CACHE = "C"
+        Const OCCULTE = "O"
+    End Structure
+
     Friend Function GetAntecedentById(antecedentId As Integer) As Antecedent
         Dim antecedent As Antecedent
         Dim con As SqlConnection
@@ -64,6 +75,7 @@ Public Class AntecedentDao
         antecedent.Ordre2 = Coalesce(reader("oa_antecedent_ordre_affichage2"), 0)
         antecedent.Ordre3 = Coalesce(reader("oa_antecedent_ordre_affichage3"), 0)
         antecedent.StatutAffichage = Coalesce(reader("oa_antecedent_statut_affichage"), "")
+        antecedent.StatutAffichageTransformation = Coalesce(reader("oa_antecedent_statut_affichage_transformation"), "")
         antecedent.CategorieContexte = Coalesce(reader("oa_antecedent_categorie_contexte"), "")
         antecedent.EpisodeId = Coalesce(reader("oa_episode_id"), 0)
         antecedent.Inactif = Coalesce(reader("oa_antecedent_inactif"), False)
@@ -102,6 +114,7 @@ Public Class AntecedentDao
         Cible.Ordre2 = Source.Ordre2
         Cible.Ordre3 = Source.Ordre3
         Cible.StatutAffichage = Source.StatutAffichage
+        Cible.StatutAffichageTransformation = Source.StatutAffichageTransformation
         Cible.CategorieContexte = Source.CategorieContexte
         Cible.EpisodeId = Source.EpisodeId
         Cible.Inactif = Source.Inactif
@@ -197,6 +210,9 @@ Public Class AntecedentDao
             Return False
         End If
         If source1.StatutAffichage <> source2.StatutAffichage Then
+            Return False
+        End If
+        If source1.StatutAffichageTransformation <> source2.StatutAffichageTransformation Then
             Return False
         End If
         If source1.CategorieContexte <> source2.CategorieContexte Then
