@@ -222,6 +222,7 @@
     <Compile Include="Bean\Ordonnance\OrdonnanceDetailGrid.vb" />
     <Compile Include="Bean\Medicament\Medicament.vb" />
     <Compile Include="Bean\SousEpisode\SousEpisodeSousType.vb" />
+    <Compile Include="Bean\SousEpisode\SousEpisode.vb" />
     <Compile Include="Bean\SousEpisode\SousEpisodeType.vb" />
     <Compile Include="Dao\Antecedent\AntecedentAffectationDao.vb" />
     <Compile Include="Bean\LigneDeVie\LigneDeVie.vb" />
