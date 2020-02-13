@@ -1,5 +1,5 @@
 ﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
-Partial Class RadFTraitementAllergieEtCI
+Partial Class RadFAllergieEtCISuppressionDetail
     Inherits Telerik.WinControls.UI.RadForm
 
     'Form overrides dispose to clean up the component list.
@@ -22,13 +22,6 @@ Partial Class RadFTraitementAllergieEtCI
     'Do not modify it using the code editor.
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
-        Dim GridViewTextBoxColumn6 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
-        Dim GridViewTextBoxColumn7 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
-        Dim GridViewTextBoxColumn8 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
-        Dim GridViewTextBoxColumn9 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
-        Dim GridViewTextBoxColumn10 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
-        Dim TableViewDefinition2 As Telerik.WinControls.UI.TableViewDefinition = New Telerik.WinControls.UI.TableViewDefinition()
-        Me.RadPanel1 = New Telerik.WinControls.UI.RadPanel()
         Me.RadGroupBox1 = New Telerik.WinControls.UI.RadGroupBox()
         Me.Label13 = New System.Windows.Forms.Label()
         Me.LblPatientDateMaj = New System.Windows.Forms.Label()
@@ -50,38 +43,39 @@ Partial Class RadFTraitementAllergieEtCI
         Me.LblPatientAdresse2 = New System.Windows.Forms.Label()
         Me.Label2 = New System.Windows.Forms.Label()
         Me.LblPatientAdresse1 = New System.Windows.Forms.Label()
-        Me.RadPanel2 = New Telerik.WinControls.UI.RadPanel()
-        Me.RadTraitementDataGridView = New Telerik.WinControls.UI.RadGridView()
-        Me.RadPanel3 = New Telerik.WinControls.UI.RadPanel()
+        Me.GbxArretTraitement = New Telerik.WinControls.UI.RadGroupBox()
+        Me.Label9 = New System.Windows.Forms.Label()
+        Me.TxtCommentaireArret = New System.Windows.Forms.TextBox()
+        Me.ChkContreIndication = New System.Windows.Forms.CheckBox()
+        Me.ChkAllergie = New System.Windows.Forms.CheckBox()
+        Me.RadGroupBox2 = New Telerik.WinControls.UI.RadGroupBox()
+        Me.LblMedicamentTitulaire = New System.Windows.Forms.Label()
+        Me.LblMedicamentAdministration = New System.Windows.Forms.Label()
+        Me.LblMedicamentForme = New System.Windows.Forms.Label()
+        Me.Label15 = New System.Windows.Forms.Label()
+        Me.Label16 = New System.Windows.Forms.Label()
+        Me.Label17 = New System.Windows.Forms.Label()
+        Me.Label10 = New System.Windows.Forms.Label()
+        Me.Label1 = New System.Windows.Forms.Label()
+        Me.LblMedicamentDCI = New System.Windows.Forms.Label()
+        Me.LblTraitementMedicamentCIS = New System.Windows.Forms.Label()
+        Me.RadBtnAbandon = New Telerik.WinControls.UI.RadButton()
         Me.RadBtnAnnuler = New Telerik.WinControls.UI.RadButton()
-        Me.RadBtnAbandonner = New Telerik.WinControls.UI.RadButton()
-        CType(Me.RadPanel1, System.ComponentModel.ISupportInitialize).BeginInit()
-        Me.RadPanel1.SuspendLayout()
         CType(Me.RadGroupBox1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.RadGroupBox1.SuspendLayout()
-        CType(Me.RadPanel2, System.ComponentModel.ISupportInitialize).BeginInit()
-        Me.RadPanel2.SuspendLayout()
-        CType(Me.RadTraitementDataGridView, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.RadTraitementDataGridView.MasterTemplate, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.RadPanel3, System.ComponentModel.ISupportInitialize).BeginInit()
-        Me.RadPanel3.SuspendLayout()
+        CType(Me.GbxArretTraitement, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.GbxArretTraitement.SuspendLayout()
+        CType(Me.RadGroupBox2, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.RadGroupBox2.SuspendLayout()
+        CType(Me.RadBtnAbandon, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.RadBtnAnnuler, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.RadBtnAbandonner, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
-        '
-        'RadPanel1
-        '
-        Me.RadPanel1.Controls.Add(Me.RadGroupBox1)
-        Me.RadPanel1.Dock = System.Windows.Forms.DockStyle.Top
-        Me.RadPanel1.Location = New System.Drawing.Point(0, 0)
-        Me.RadPanel1.Name = "RadPanel1"
-        Me.RadPanel1.Size = New System.Drawing.Size(1167, 86)
-        Me.RadPanel1.TabIndex = 0
         '
         'RadGroupBox1
         '
         Me.RadGroupBox1.AccessibleRole = System.Windows.Forms.AccessibleRole.Grouping
+        Me.RadGroupBox1.BackColor = System.Drawing.SystemColors.GradientInactiveCaption
         Me.RadGroupBox1.Controls.Add(Me.Label13)
         Me.RadGroupBox1.Controls.Add(Me.LblPatientDateMaj)
         Me.RadGroupBox1.Controls.Add(Me.Label5)
@@ -102,14 +96,15 @@ Partial Class RadFTraitementAllergieEtCI
         Me.RadGroupBox1.Controls.Add(Me.LblPatientAdresse2)
         Me.RadGroupBox1.Controls.Add(Me.Label2)
         Me.RadGroupBox1.Controls.Add(Me.LblPatientAdresse1)
-        Me.RadGroupBox1.Dock = System.Windows.Forms.DockStyle.Fill
         Me.RadGroupBox1.GroupBoxStyle = Telerik.WinControls.UI.RadGroupBoxStyle.Office
         Me.RadGroupBox1.HeaderText = "Etat civil"
-        Me.RadGroupBox1.Location = New System.Drawing.Point(0, 0)
+        Me.RadGroupBox1.Location = New System.Drawing.Point(2, 3)
         Me.RadGroupBox1.Name = "RadGroupBox1"
-        Me.RadGroupBox1.Size = New System.Drawing.Size(1167, 86)
-        Me.RadGroupBox1.TabIndex = 3
+        Me.RadGroupBox1.Size = New System.Drawing.Size(947, 86)
+        Me.RadGroupBox1.TabIndex = 4
         Me.RadGroupBox1.Text = "Etat civil"
+        CType(Me.RadGroupBox1.GetChildAt(0).GetChildAt(1).GetChildAt(0), Telerik.WinControls.Primitives.FillPrimitive).BackColor = System.Drawing.SystemColors.ActiveCaption
+        CType(Me.RadGroupBox1.GetChildAt(0).GetChildAt(1).GetChildAt(0), Telerik.WinControls.Primitives.FillPrimitive).SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.None
         '
         'Label13
         '
@@ -297,137 +292,235 @@ Partial Class RadFTraitementAllergieEtCI
         Me.LblPatientAdresse1.TabIndex = 49
         Me.LblPatientAdresse1.Text = "3 rue de la république"
         '
-        'RadPanel2
+        'GbxArretTraitement
         '
-        Me.RadPanel2.Controls.Add(Me.RadTraitementDataGridView)
-        Me.RadPanel2.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.RadPanel2.Location = New System.Drawing.Point(0, 86)
-        Me.RadPanel2.Name = "RadPanel2"
-        Me.RadPanel2.Size = New System.Drawing.Size(1167, 322)
-        Me.RadPanel2.TabIndex = 1
+        Me.GbxArretTraitement.AccessibleRole = System.Windows.Forms.AccessibleRole.Grouping
+        Me.GbxArretTraitement.BackColor = System.Drawing.SystemColors.GradientInactiveCaption
+        Me.GbxArretTraitement.Controls.Add(Me.Label9)
+        Me.GbxArretTraitement.Controls.Add(Me.TxtCommentaireArret)
+        Me.GbxArretTraitement.Controls.Add(Me.ChkContreIndication)
+        Me.GbxArretTraitement.Controls.Add(Me.ChkAllergie)
+        Me.GbxArretTraitement.GroupBoxStyle = Telerik.WinControls.UI.RadGroupBoxStyle.Office
+        Me.GbxArretTraitement.HeaderText = "Arrêt traitement"
+        Me.GbxArretTraitement.Location = New System.Drawing.Point(2, 212)
+        Me.GbxArretTraitement.Name = "GbxArretTraitement"
+        Me.GbxArretTraitement.Size = New System.Drawing.Size(947, 100)
+        Me.GbxArretTraitement.TabIndex = 7
+        Me.GbxArretTraitement.Text = "Arrêt traitement"
+        CType(Me.GbxArretTraitement.GetChildAt(0).GetChildAt(1), Telerik.WinControls.UI.GroupBoxHeader).GroupBoxStyle = Telerik.WinControls.UI.RadGroupBoxStyle.Office
+        CType(Me.GbxArretTraitement.GetChildAt(0).GetChildAt(1).GetChildAt(0), Telerik.WinControls.Primitives.FillPrimitive).BackColor = System.Drawing.SystemColors.ActiveCaption
+        CType(Me.GbxArretTraitement.GetChildAt(0).GetChildAt(1).GetChildAt(0), Telerik.WinControls.Primitives.FillPrimitive).SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.None
         '
-        'RadTraitementDataGridView
+        'Label9
         '
-        Me.RadTraitementDataGridView.BackColor = System.Drawing.Color.FromArgb(CType(CType(191, Byte), Integer), CType(CType(219, Byte), Integer), CType(CType(255, Byte), Integer))
-        Me.RadTraitementDataGridView.Cursor = System.Windows.Forms.Cursors.Default
-        Me.RadTraitementDataGridView.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.RadTraitementDataGridView.Font = New System.Drawing.Font("Segoe UI", 8.25!)
-        Me.RadTraitementDataGridView.ForeColor = System.Drawing.Color.Black
-        Me.RadTraitementDataGridView.ImeMode = System.Windows.Forms.ImeMode.NoControl
-        Me.RadTraitementDataGridView.Location = New System.Drawing.Point(0, 0)
+        Me.Label9.AutoSize = True
+        Me.Label9.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label9.Location = New System.Drawing.Point(13, 27)
+        Me.Label9.Name = "Label9"
+        Me.Label9.Size = New System.Drawing.Size(79, 13)
+        Me.Label9.TabIndex = 7
+        Me.Label9.Text = "Commentaire"
         '
+        'TxtCommentaireArret
         '
+        Me.TxtCommentaireArret.Location = New System.Drawing.Point(118, 24)
+        Me.TxtCommentaireArret.MaxLength = 1000
+        Me.TxtCommentaireArret.Multiline = True
+        Me.TxtCommentaireArret.Name = "TxtCommentaireArret"
+        Me.TxtCommentaireArret.ReadOnly = True
+        Me.TxtCommentaireArret.Size = New System.Drawing.Size(809, 47)
+        Me.TxtCommentaireArret.TabIndex = 55
         '
-        Me.RadTraitementDataGridView.MasterTemplate.AllowAddNewRow = False
-        Me.RadTraitementDataGridView.MasterTemplate.AllowDeleteRow = False
-        Me.RadTraitementDataGridView.MasterTemplate.AllowEditRow = False
-        GridViewTextBoxColumn6.EnableExpressionEditor = False
-        GridViewTextBoxColumn6.FieldName = "traitementId"
-        GridViewTextBoxColumn6.HeaderText = "column1"
-        GridViewTextBoxColumn6.IsVisible = False
-        GridViewTextBoxColumn6.Name = "traitementId"
-        GridViewTextBoxColumn6.ReadOnly = True
-        GridViewTextBoxColumn7.EnableExpressionEditor = False
-        GridViewTextBoxColumn7.FieldName = "dci"
-        GridViewTextBoxColumn7.HeaderText = "Dénomination"
-        GridViewTextBoxColumn7.HeaderTextAlignment = System.Drawing.ContentAlignment.MiddleLeft
-        GridViewTextBoxColumn7.Name = "dci"
-        GridViewTextBoxColumn7.ReadOnly = True
-        GridViewTextBoxColumn7.Width = 380
-        GridViewTextBoxColumn8.EnableExpressionEditor = False
-        GridViewTextBoxColumn8.FieldName = "dateArret"
-        GridViewTextBoxColumn8.HeaderText = "Date d'arrêt"
-        GridViewTextBoxColumn8.Name = "dateArret"
-        GridViewTextBoxColumn8.TextAlignment = System.Drawing.ContentAlignment.MiddleCenter
-        GridViewTextBoxColumn8.Width = 140
-        GridViewTextBoxColumn9.EnableExpressionEditor = False
-        GridViewTextBoxColumn9.FieldName = "commentaireArret"
-        GridViewTextBoxColumn9.HeaderText = "Commentaire d'arrêt"
-        GridViewTextBoxColumn9.HeaderTextAlignment = System.Drawing.ContentAlignment.MiddleLeft
-        GridViewTextBoxColumn9.Name = "commentaireArret"
-        GridViewTextBoxColumn9.ReadOnly = True
-        GridViewTextBoxColumn9.Width = 400
-        GridViewTextBoxColumn10.EnableExpressionEditor = False
-        GridViewTextBoxColumn10.FieldName = "remarque"
-        GridViewTextBoxColumn10.HeaderText = "Remarque"
-        GridViewTextBoxColumn10.HeaderTextAlignment = System.Drawing.ContentAlignment.MiddleLeft
-        GridViewTextBoxColumn10.Name = "remarque"
-        GridViewTextBoxColumn10.ReadOnly = True
-        GridViewTextBoxColumn10.Width = 250
-        Me.RadTraitementDataGridView.MasterTemplate.Columns.AddRange(New Telerik.WinControls.UI.GridViewDataColumn() {GridViewTextBoxColumn6, GridViewTextBoxColumn7, GridViewTextBoxColumn8, GridViewTextBoxColumn9, GridViewTextBoxColumn10})
-        Me.RadTraitementDataGridView.MasterTemplate.EnableGrouping = False
-        Me.RadTraitementDataGridView.MasterTemplate.ViewDefinition = TableViewDefinition2
-        Me.RadTraitementDataGridView.Name = "RadTraitementDataGridView"
-        Me.RadTraitementDataGridView.RightToLeft = System.Windows.Forms.RightToLeft.No
-        Me.RadTraitementDataGridView.ShowGroupPanel = False
-        Me.RadTraitementDataGridView.Size = New System.Drawing.Size(1167, 322)
-        Me.RadTraitementDataGridView.TabIndex = 0
+        'ChkContreIndication
         '
-        'RadPanel3
+        Me.ChkContreIndication.AutoSize = True
+        Me.ChkContreIndication.Enabled = False
+        Me.ChkContreIndication.Location = New System.Drawing.Point(282, 77)
+        Me.ChkContreIndication.Name = "ChkContreIndication"
+        Me.ChkContreIndication.Size = New System.Drawing.Size(117, 17)
+        Me.ChkContreIndication.TabIndex = 65
+        Me.ChkContreIndication.Text = "Contre-indication"
+        Me.ChkContreIndication.UseVisualStyleBackColor = True
         '
-        Me.RadPanel3.Controls.Add(Me.RadBtnAnnuler)
-        Me.RadPanel3.Controls.Add(Me.RadBtnAbandonner)
-        Me.RadPanel3.Dock = System.Windows.Forms.DockStyle.Bottom
-        Me.RadPanel3.Location = New System.Drawing.Point(0, 371)
-        Me.RadPanel3.Name = "RadPanel3"
-        Me.RadPanel3.Size = New System.Drawing.Size(1167, 37)
-        Me.RadPanel3.TabIndex = 2
+        'ChkAllergie
+        '
+        Me.ChkAllergie.AutoSize = True
+        Me.ChkAllergie.Enabled = False
+        Me.ChkAllergie.Location = New System.Drawing.Point(118, 77)
+        Me.ChkAllergie.Name = "ChkAllergie"
+        Me.ChkAllergie.Size = New System.Drawing.Size(65, 17)
+        Me.ChkAllergie.TabIndex = 60
+        Me.ChkAllergie.Text = "Allergie"
+        Me.ChkAllergie.UseVisualStyleBackColor = True
+        '
+        'RadGroupBox2
+        '
+        Me.RadGroupBox2.AccessibleRole = System.Windows.Forms.AccessibleRole.Grouping
+        Me.RadGroupBox2.BackColor = System.Drawing.SystemColors.GradientInactiveCaption
+        Me.RadGroupBox2.Controls.Add(Me.LblMedicamentTitulaire)
+        Me.RadGroupBox2.Controls.Add(Me.LblMedicamentAdministration)
+        Me.RadGroupBox2.Controls.Add(Me.LblMedicamentForme)
+        Me.RadGroupBox2.Controls.Add(Me.Label15)
+        Me.RadGroupBox2.Controls.Add(Me.Label16)
+        Me.RadGroupBox2.Controls.Add(Me.Label17)
+        Me.RadGroupBox2.Controls.Add(Me.Label10)
+        Me.RadGroupBox2.Controls.Add(Me.Label1)
+        Me.RadGroupBox2.Controls.Add(Me.LblMedicamentDCI)
+        Me.RadGroupBox2.Controls.Add(Me.LblTraitementMedicamentCIS)
+        Me.RadGroupBox2.GroupBoxStyle = Telerik.WinControls.UI.RadGroupBoxStyle.Office
+        Me.RadGroupBox2.HeaderText = "Médicament"
+        Me.RadGroupBox2.Location = New System.Drawing.Point(2, 95)
+        Me.RadGroupBox2.Name = "RadGroupBox2"
+        Me.RadGroupBox2.Size = New System.Drawing.Size(947, 111)
+        Me.RadGroupBox2.TabIndex = 6
+        Me.RadGroupBox2.Text = "Médicament"
+        CType(Me.RadGroupBox2.GetChildAt(0).GetChildAt(1), Telerik.WinControls.UI.GroupBoxHeader).GroupBoxStyle = Telerik.WinControls.UI.RadGroupBoxStyle.Office
+        CType(Me.RadGroupBox2.GetChildAt(0).GetChildAt(1).GetChildAt(0), Telerik.WinControls.Primitives.FillPrimitive).BackColor = System.Drawing.SystemColors.ActiveCaption
+        CType(Me.RadGroupBox2.GetChildAt(0).GetChildAt(1).GetChildAt(0), Telerik.WinControls.Primitives.FillPrimitive).SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.None
+        '
+        'LblMedicamentTitulaire
+        '
+        Me.LblMedicamentTitulaire.AutoSize = True
+        Me.LblMedicamentTitulaire.Location = New System.Drawing.Point(109, 81)
+        Me.LblMedicamentTitulaire.Name = "LblMedicamentTitulaire"
+        Me.LblMedicamentTitulaire.Size = New System.Drawing.Size(164, 13)
+        Me.LblMedicamentTitulaire.TabIndex = 67
+        Me.LblMedicamentTitulaire.Text = "ACCORD HEALTHCARE FRANCE"
+        '
+        'LblMedicamentAdministration
+        '
+        Me.LblMedicamentAdministration.AutoSize = True
+        Me.LblMedicamentAdministration.Location = New System.Drawing.Point(532, 60)
+        Me.LblMedicamentAdministration.Name = "LblMedicamentAdministration"
+        Me.LblMedicamentAdministration.Size = New System.Drawing.Size(33, 13)
+        Me.LblMedicamentAdministration.TabIndex = 66
+        Me.LblMedicamentAdministration.Text = "orale"
+        '
+        'LblMedicamentForme
+        '
+        Me.LblMedicamentForme.AutoSize = True
+        Me.LblMedicamentForme.Location = New System.Drawing.Point(109, 60)
+        Me.LblMedicamentForme.Name = "LblMedicamentForme"
+        Me.LblMedicamentForme.Size = New System.Drawing.Size(103, 13)
+        Me.LblMedicamentForme.TabIndex = 65
+        Me.LblMedicamentForme.Text = "comprime pellicule"
+        '
+        'Label15
+        '
+        Me.Label15.AutoSize = True
+        Me.Label15.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label15.Location = New System.Drawing.Point(13, 81)
+        Me.Label15.Name = "Label15"
+        Me.Label15.Size = New System.Drawing.Size(61, 13)
+        Me.Label15.TabIndex = 64
+        Me.Label15.Text = "Titulaire :"
+        '
+        'Label16
+        '
+        Me.Label16.AutoSize = True
+        Me.Label16.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label16.Location = New System.Drawing.Point(432, 61)
+        Me.Label16.Name = "Label16"
+        Me.Label16.Size = New System.Drawing.Size(94, 13)
+        Me.Label16.TabIndex = 63
+        Me.Label16.Text = "Administration :"
+        '
+        'Label17
+        '
+        Me.Label17.AutoSize = True
+        Me.Label17.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label17.Location = New System.Drawing.Point(13, 60)
+        Me.Label17.Name = "Label17"
+        Me.Label17.Size = New System.Drawing.Size(49, 13)
+        Me.Label17.TabIndex = 62
+        Me.Label17.Text = "Forme :"
+        '
+        'Label10
+        '
+        Me.Label10.AutoSize = True
+        Me.Label10.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label10.Location = New System.Drawing.Point(13, 18)
+        Me.Label10.Name = "Label10"
+        Me.Label10.Size = New System.Drawing.Size(35, 13)
+        Me.Label10.TabIndex = 60
+        Me.Label10.Text = "CIS :"
+        '
+        'Label1
+        '
+        Me.Label1.AutoSize = True
+        Me.Label1.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label1.Location = New System.Drawing.Point(13, 39)
+        Me.Label1.Name = "Label1"
+        Me.Label1.Size = New System.Drawing.Size(92, 13)
+        Me.Label1.TabIndex = 58
+        Me.Label1.Text = "Dénomination :"
+        '
+        'LblMedicamentDCI
+        '
+        Me.LblMedicamentDCI.AutoSize = True
+        Me.LblMedicamentDCI.Location = New System.Drawing.Point(109, 39)
+        Me.LblMedicamentDCI.Name = "LblMedicamentDCI"
+        Me.LblMedicamentDCI.Size = New System.Drawing.Size(317, 13)
+        Me.LblMedicamentDCI.TabIndex = 59
+        Me.LblMedicamentDCI.Text = "TRAMADOL EG L.P. 200 mg, comprime a liberation prolongee"
+        '
+        'LblTraitementMedicamentCIS
+        '
+        Me.LblTraitementMedicamentCIS.AutoSize = True
+        Me.LblTraitementMedicamentCIS.Location = New System.Drawing.Point(109, 18)
+        Me.LblTraitementMedicamentCIS.Name = "LblTraitementMedicamentCIS"
+        Me.LblTraitementMedicamentCIS.Size = New System.Drawing.Size(55, 13)
+        Me.LblTraitementMedicamentCIS.TabIndex = 61
+        Me.LblTraitementMedicamentCIS.Text = "12345678"
+        '
+        'RadBtnAbandon
+        '
+        Me.RadBtnAbandon.Location = New System.Drawing.Point(839, 318)
+        Me.RadBtnAbandon.Name = "RadBtnAbandon"
+        Me.RadBtnAbandon.Size = New System.Drawing.Size(110, 24)
+        Me.RadBtnAbandon.TabIndex = 8
+        Me.RadBtnAbandon.Text = "Abandon"
         '
         'RadBtnAnnuler
         '
-        Me.RadBtnAnnuler.Location = New System.Drawing.Point(886, 7)
+        Me.RadBtnAnnuler.Location = New System.Drawing.Point(696, 318)
         Me.RadBtnAnnuler.Name = "RadBtnAnnuler"
-        Me.RadBtnAnnuler.Size = New System.Drawing.Size(147, 24)
-        Me.RadBtnAnnuler.TabIndex = 1
+        Me.RadBtnAnnuler.Size = New System.Drawing.Size(137, 24)
+        Me.RadBtnAnnuler.TabIndex = 9
         Me.RadBtnAnnuler.Text = "Annuler la déclaration"
         '
-        'RadBtnAbandonner
-        '
-        Me.RadBtnAbandonner.DialogResult = System.Windows.Forms.DialogResult.Cancel
-        Me.RadBtnAbandonner.Location = New System.Drawing.Point(1039, 7)
-        Me.RadBtnAbandonner.Name = "RadBtnAbandonner"
-        Me.RadBtnAbandonner.Size = New System.Drawing.Size(110, 24)
-        Me.RadBtnAbandonner.TabIndex = 0
-        Me.RadBtnAbandonner.Text = "Sortie"
-        '
-        'RadFTraitementAllergieEtCI
+        'RadFAllergieEtCISuppressionDetail
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.CancelButton = Me.RadBtnAbandonner
-        Me.ClientSize = New System.Drawing.Size(1167, 408)
-        Me.Controls.Add(Me.RadPanel3)
-        Me.Controls.Add(Me.RadPanel2)
-        Me.Controls.Add(Me.RadPanel1)
-        Me.Name = "RadFTraitementAllergieEtCI"
+        Me.ClientSize = New System.Drawing.Size(951, 349)
+        Me.Controls.Add(Me.RadBtnAnnuler)
+        Me.Controls.Add(Me.RadBtnAbandon)
+        Me.Controls.Add(Me.GbxArretTraitement)
+        Me.Controls.Add(Me.RadGroupBox2)
+        Me.Controls.Add(Me.RadGroupBox1)
+        Me.Name = "RadFAllergieEtCISuppressionDetail"
         '
         '
         '
         Me.RootElement.ApplyShapeToControl = True
-        Me.ShowInTaskbar = False
-        Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
-        Me.Text = "RadFTraitementAllergieEtCI"
-        CType(Me.RadPanel1, System.ComponentModel.ISupportInitialize).EndInit()
-        Me.RadPanel1.ResumeLayout(False)
+        Me.Text = "RadFAllergieEtCISuppressionDetail"
         CType(Me.RadGroupBox1, System.ComponentModel.ISupportInitialize).EndInit()
         Me.RadGroupBox1.ResumeLayout(False)
         Me.RadGroupBox1.PerformLayout()
-        CType(Me.RadPanel2, System.ComponentModel.ISupportInitialize).EndInit()
-        Me.RadPanel2.ResumeLayout(False)
-        CType(Me.RadTraitementDataGridView.MasterTemplate, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.RadTraitementDataGridView, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.RadPanel3, System.ComponentModel.ISupportInitialize).EndInit()
-        Me.RadPanel3.ResumeLayout(False)
+        CType(Me.GbxArretTraitement, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.GbxArretTraitement.ResumeLayout(False)
+        Me.GbxArretTraitement.PerformLayout()
+        CType(Me.RadGroupBox2, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.RadGroupBox2.ResumeLayout(False)
+        Me.RadGroupBox2.PerformLayout()
+        CType(Me.RadBtnAbandon, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.RadBtnAnnuler, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.RadBtnAbandonner, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
 
     End Sub
 
-    Friend WithEvents RadPanel1 As Telerik.WinControls.UI.RadPanel
-    Friend WithEvents RadPanel2 As Telerik.WinControls.UI.RadPanel
-    Friend WithEvents RadPanel3 As Telerik.WinControls.UI.RadPanel
     Friend WithEvents RadGroupBox1 As Telerik.WinControls.UI.RadGroupBox
     Friend WithEvents Label13 As Label
     Friend WithEvents LblPatientDateMaj As Label
@@ -449,8 +542,23 @@ Partial Class RadFTraitementAllergieEtCI
     Friend WithEvents LblPatientAdresse2 As Label
     Friend WithEvents Label2 As Label
     Friend WithEvents LblPatientAdresse1 As Label
-    Friend WithEvents RadBtnAbandonner As Telerik.WinControls.UI.RadButton
-    Friend WithEvents RadTraitementDataGridView As Telerik.WinControls.UI.RadGridView
+    Friend WithEvents GbxArretTraitement As Telerik.WinControls.UI.RadGroupBox
+    Friend WithEvents Label9 As Label
+    Friend WithEvents TxtCommentaireArret As TextBox
+    Friend WithEvents ChkContreIndication As CheckBox
+    Friend WithEvents ChkAllergie As CheckBox
+    Friend WithEvents RadGroupBox2 As Telerik.WinControls.UI.RadGroupBox
+    Friend WithEvents LblMedicamentTitulaire As Label
+    Friend WithEvents LblMedicamentAdministration As Label
+    Friend WithEvents LblMedicamentForme As Label
+    Friend WithEvents Label15 As Label
+    Friend WithEvents Label16 As Label
+    Friend WithEvents Label17 As Label
+    Friend WithEvents Label10 As Label
+    Friend WithEvents Label1 As Label
+    Friend WithEvents LblMedicamentDCI As Label
+    Friend WithEvents LblTraitementMedicamentCIS As Label
+    Friend WithEvents RadBtnAbandon As Telerik.WinControls.UI.RadButton
     Friend WithEvents RadBtnAnnuler As Telerik.WinControls.UI.RadButton
 End Class
 

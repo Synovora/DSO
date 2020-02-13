@@ -5,8 +5,6 @@ Public Class RadFTraitementAllergieEtCI
     Private privateUtilisateurConnecte As Utilisateur
     Private privateAllergieOuContreIndication As EnumAllergieOuContreIndication
 
-
-
     Public Property SelectedPatient As Patient
         Get
             Return privateSelectedPatient
@@ -34,6 +32,8 @@ Public Class RadFTraitementAllergieEtCI
         End Set
     End Property
 
+    Dim traitementDao As TraitementDao = New TraitementDao
+
     Private Sub RadFTraitementAllergieEtCI_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         initZones()
         ChargementPatient()
@@ -59,8 +59,9 @@ Public Class RadFTraitementAllergieEtCI
 
     'Chargement de la Grid
     Private Sub ChargementTraitement()
-        Dim traitementDao As TraitementDao = New TraitementDao
         Dim traitementDataTable As DataTable
+
+        RadTraitementDataGridView.Rows.Clear()
 
         'Dim traitementDataAdapter As SqlDataAdapter = New SqlDataAdapter()
 
@@ -68,12 +69,12 @@ Public Class RadFTraitementAllergieEtCI
         'Dim conxn As New SqlConnection(outils.getConnectionString())
 
         Select Case Me.AllergieOuContreIndication
-            Case 1 'Allergie
+            Case EnumAllergieOuContreIndication.Allergie
                 traitementDataTable = traitementDao.getAllTraitementAllergiebyPatient(SelectedPatient.patientId)
-                Me.Text = "Liste des allergies du patient"
-            Case 2 'Contre-indication
+                afficheTitleForm(Me, "Liste des allergies du patient")
+            Case EnumAllergieOuContreIndication.ContreIndication
                 traitementDataTable = traitementDao.getAllTraitementCIbyPatient(SelectedPatient.patientId)
-                Me.Text = "Liste des contre-indications"
+                afficheTitleForm(Me, "Liste des contre-indications")
             Case Else
                 Close()
                 Return
@@ -191,7 +192,27 @@ Public Class RadFTraitementAllergieEtCI
                     vFTraitementDetailEdit.SelectedTraitementId = TraitementId
                     vFTraitementDetailEdit.SelectedPatient = Me.SelectedPatient
                     vFTraitementDetailEdit.UtilisateurConnecte = Me.UtilisateurConnecte
-                    vFTraitementDetailEdit.ShowDialog() 'Modal
+                    vFTraitementDetailEdit.ShowDialog()
+                End Using
+            End If
+        End If
+    End Sub
+
+    Private Sub RadBtnAnnuler_Click(sender As Object, e As EventArgs) Handles RadBtnAnnuler.Click
+        If RadTraitementDataGridView.CurrentRow IsNot Nothing Then
+            Dim aRow As Integer = Me.RadTraitementDataGridView.Rows.IndexOf(Me.RadTraitementDataGridView.CurrentRow)
+            If aRow >= 0 Then
+                Dim TraitementId As Integer
+                TraitementId = RadTraitementDataGridView.Rows(aRow).Cells("TraitementId").Value
+                Dim traitement As Traitement
+                traitement = traitementDao.getTraitementById(TraitementId)
+                Using form As New RadFAllergieEtCISuppressionDetail
+                    form.SelectedTraitement = traitement
+                    form.SelectedPatient = Me.SelectedPatient
+                    form.ShowDialog()
+                    If form.CodeRetour = True Then
+                        ChargementTraitement()
+                    End If
                 End Using
             End If
         End If
@@ -200,4 +221,5 @@ Public Class RadFTraitementAllergieEtCI
     Private Sub RadBtnAbandonner_Click(sender As Object, e As EventArgs) Handles RadBtnAbandonner.Click
         Close()
     End Sub
+
 End Class

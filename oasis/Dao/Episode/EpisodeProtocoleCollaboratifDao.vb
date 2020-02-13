@@ -62,6 +62,7 @@ Public Class EpisodeProtocoleCollaboratifDao
             Case EpisodeDao.EnumTypeActiviteEpisodeCode.PREVENTION_ENFANT_PRE_SCOLAIRE
                 'Calcul âge enfant en jour
                 agePatientEnJour = outils.CalculAgeEnJour(patient.PatientDateNaissance)
+                agePatientEnJour += 5
             Case EpisodeDao.EnumTypeActiviteEpisodeCode.PREVENTION_ENFANT_SCOLAIRE
                 'Calcul âge enfant en année
                 agePatientEnAnnee = outils.CalculAgeEnAnnee(patient.PatientDateNaissance)
@@ -96,8 +97,8 @@ Public Class EpisodeProtocoleCollaboratifDao
                         End If
                     End If
                 Case EpisodeDao.EnumTypeActiviteEpisodeCode.PREVENTION_ENFANT_PRE_SCOLAIRE
-                    Dim ageMinDrcEnJour As Integer = outils.ConvertirEnJourDureeEnMois(ageMinDrc) - 5
-                    Dim ageMaxDrcEnJour As Integer = outils.ConvertirEnJourDureeEnMois(AgeMaxDrc) - 5
+                    Dim ageMinDrcEnJour As Integer = outils.ConvertirEnJourDureeEnMois(ageMinDrc)
+                    Dim ageMaxDrcEnJour As Integer = outils.ConvertirEnJourDureeEnMois(AgeMaxDrc)
                     If ageMinDrcEnJour <> 0 Then
                         If agePatientEnJour < ageMinDrcEnJour Then
                             Continue For
@@ -147,8 +148,8 @@ Public Class EpisodeProtocoleCollaboratifDao
                         End If
                     End If
                 Case EpisodeDao.EnumTypeActiviteEpisodeCode.PREVENTION_ENFANT_PRE_SCOLAIRE
-                    Dim ageMinEnJour As Integer = outils.ConvertirEnJourDureeEnMois(ageMinDrc) - 5
-                    Dim ageMaxEnJour As Integer = outils.ConvertirEnJourDureeEnMois(AgeMaxDrc) - 5
+                    Dim ageMinEnJour As Integer = outils.ConvertirEnJourDureeEnMois(ageMinDrc)
+                    Dim ageMaxEnJour As Integer = outils.ConvertirEnJourDureeEnMois(AgeMaxDrc)
                     If ageMinEnJour <> 0 Then
                         If agePatientEnJour < ageMinEnJour Then
                             Continue For
@@ -218,6 +219,7 @@ Public Class EpisodeProtocoleCollaboratifDao
             Case EpisodeDao.EnumTypeActiviteEpisodeCode.PREVENTION_ENFANT_PRE_SCOLAIRE
                 'Calcul âge enfant en jour
                 agePatientEnJour = outils.CalculAgeEnJour(patient.PatientDateNaissance)
+                agePatientEnJour += 5
             Case EpisodeDao.EnumTypeActiviteEpisodeCode.PREVENTION_ENFANT_SCOLAIRE
                 'Calcul âge enfant en année
                 agePatientEnAnnee = outils.CalculAgeEnAnnee(patient.PatientDateNaissance)
@@ -252,8 +254,8 @@ Public Class EpisodeProtocoleCollaboratifDao
                         End If
                     End If
                 Case EpisodeDao.EnumTypeActiviteEpisodeCode.PREVENTION_ENFANT_PRE_SCOLAIRE
-                    Dim ageMinDrcEnJour As Integer = outils.ConvertirEnJourDureeEnMois(ageMinDrc) - 5
-                    Dim ageMaxDrcEnJour As Integer = outils.ConvertirEnJourDureeEnMois(AgeMaxDrc) - 5
+                    Dim ageMinDrcEnJour As Integer = outils.ConvertirEnJourDureeEnMois(ageMinDrc)
+                    Dim ageMaxDrcEnJour As Integer = outils.ConvertirEnJourDureeEnMois(AgeMaxDrc)
                     If ageMinDrcEnJour <> 0 Then
                         If agePatientEnJour < ageMinDrcEnJour Then
                             Continue For
@@ -299,8 +301,8 @@ Public Class EpisodeProtocoleCollaboratifDao
                         End If
                     End If
                 Case EpisodeDao.EnumTypeActiviteEpisodeCode.PREVENTION_ENFANT_PRE_SCOLAIRE
-                    Dim ageMinEnJour As Integer = outils.ConvertirEnJourDureeEnMois(ageMinDrc) - 5
-                    Dim ageMaxEnJour As Integer = outils.ConvertirEnJourDureeEnMois(AgeMaxDrc) - 5
+                    Dim ageMinEnJour As Integer = outils.ConvertirEnJourDureeEnMois(ageMinDrc)
+                    Dim ageMaxEnJour As Integer = outils.ConvertirEnJourDureeEnMois(AgeMaxDrc)
                     If ageMinEnJour <> 0 Then
                         If agePatientEnJour < ageMinEnJour Then
                             Continue For
