@@ -6,6 +6,9 @@ Partial Class FrmTestRichText
     <System.Diagnostics.DebuggerNonUserCode()> _
     Protected Overrides Sub Dispose(ByVal disposing As Boolean)
         Try
+            RichTextEditorRibbonBar1.Dispose()
+            RadRichTextEditorRuler1.Dispose()
+            RadRichTextEditor1.Dispose()
             If disposing AndAlso components IsNot Nothing Then
                 components.Dispose()
             End If

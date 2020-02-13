@@ -4388,7 +4388,7 @@ Public Class RadFEpisodeDetail
         Me.Enabled = True
     End Sub
     Private Sub RadBtnSousEpisode_Click(sender As Object, e As EventArgs) Handles RadBtnSousEpisode.Click
-        Return
+        'Return
         Try
             Me.Cursor = Cursors.WaitCursor
             Me.Enabled = False

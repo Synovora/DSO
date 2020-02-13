@@ -46,6 +46,7 @@ Public Class EpisodeDao
     Public Enum EnumTypeProfil
         MEDICAL
         PARAMEDICAL
+        GESTION
     End Enum
 
     Friend Function GetItemTypeActiviteByCode(Code As String) As String

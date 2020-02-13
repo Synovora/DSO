@@ -15,6 +15,7 @@
             Me.Enabled = False
             Using frm = New FrmTestRichText()
                 frm.ShowDialog()
+                frm.Dispose()
             End Using
         Catch err As Exception
             MsgBox(err.Message())
