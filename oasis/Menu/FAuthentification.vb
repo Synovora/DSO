@@ -6,8 +6,8 @@ Imports Telerik.WinForms.RichTextEditor
 
 Public Class FAuthentificattion
     Enum EnumUtilisateur
-        Informaticien
         Medecin_Test
+        Informaticien
         Medecin_Francis
         Medecin_Fabrice
         IDE_Jeanne

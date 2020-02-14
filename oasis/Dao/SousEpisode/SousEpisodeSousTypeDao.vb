@@ -14,6 +14,14 @@ Public Class SousEpisodeSousTypeDao
         Next
         Return lst
     End Function
+    Public Function getDictSousEpisodeSousType(Optional idSousEpisodeType As Long = 0) As Dictionary(Of Long, SousEpisodeSousType)
+        Dim dic As Dictionary(Of Long, SousEpisodeSousType) = New Dictionary(Of Long, SousEpisodeSousType)
+        Dim data As DataTable = getTableSousEpisodeSousType(idSousEpisodeType)
+        For Each row In data.Rows
+            dic.Add(row("id"), buildBean(row))
+        Next
+        Return dic
+    End Function
 
     Public Function getTableSousEpisodeSousType(Optional idSousEpisodeType As Long = 0) As DataTable
         Dim SQLString As String

@@ -6,9 +6,9 @@ Public Class SousEpisodeDao
     Inherits StandardDao
 
 
-    Public Function getLstSousEpisode(Optional idSousEpisode As Long = 0) As List(Of SousEpisode)
+    Public Function getLstSousEpisode(Optional idEpisode As Long = 0) As List(Of SousEpisode)
         Dim lst As List(Of SousEpisode) = New List(Of SousEpisode)
-        Dim data As DataTable = getTableSousEpisode(idSousEpisode)
+        Dim data As DataTable = getTableSousEpisode(idEpisode)
         For Each row In data.Rows
             lst.Add(buildBean(row))
         Next
@@ -60,6 +60,42 @@ Public Class SousEpisodeDao
         End Using
     End Function
 
+    Friend Function CountSousEpisode(selectedEpisodeId As Long) As Integer
+        Dim SqlString As String = "SELECT COUNT(*) FROM oasis.oa_sous_episode WHERE episode_id=" & selectedEpisodeId
+
+        Using con As SqlConnection = GetConnection()
+            Dim command As SqlCommand = New SqlCommand(SqlString, con)
+            Using command
+                Return command.ExecuteScalar()
+            End Using
+        End Using
+    End Function
+
+    Friend Function ResumeSousEpisode(selectedEpisodeId As Long) As String
+        Dim str As String = ""
+        Dim dicCount As New Dictionary(Of Long, Integer)
+
+        ' --- on compte les evenements par sous type
+        Try
+            Dim lst = getLstSousEpisode(selectedEpisodeId)
+            For Each se In lst
+                Dim i As Integer
+                If dicCount.TryGetValue(se.IdSousEpisodeSousType, i) Then
+                    dicCount(se.IdSousEpisodeSousType) = i + 1
+                Else
+                    dicCount.Add(se.IdSousEpisodeSousType, 1)
+                End If
+            Next
+            If dicCount.Count > 0 Then
+                Dim dictSTRef = New SousEpisodeSousTypeDao().getDictSousEpisodeSousType()
+                For Each id In dicCount.Keys
+                    str += If(str = "", "", vbCrLf) & dicCount(id).ToString & " " & dictSTRef(id).Libelle & If(dicCount(id) > 1, "s", "")
+                Next
+            End If
+        Catch
+        End Try
+        Return str
+    End Function
 
     Friend Function Create(sousEpisode As SousEpisode) As Boolean
         Dim da As SqlDataAdapter = New SqlDataAdapter()

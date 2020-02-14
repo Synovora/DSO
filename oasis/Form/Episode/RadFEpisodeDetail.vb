@@ -182,6 +182,8 @@ Public Class RadFEpisodeDetail
         'Synthèse, chargement de la page par défaut
         ChargementAntecedent()
 
+        refreshButtonSousEpisodeProperties()
+
         Cursor.Current = Cursors.Default
     End Sub
 
@@ -4411,5 +4413,29 @@ Public Class RadFEpisodeDetail
     Private Sub RadBtnAbandon_Click(sender As Object, e As EventArgs) Handles RadBtnAbandon.Click
         Close()
     End Sub
+
+    Private Sub refreshButtonSousEpisodeProperties()
+        Dim sousEpisodeDao As SousEpisodeDao = New SousEpisodeDao
+        Dim i = sousEpisodeDao.CountSousEpisode(SelectedEpisodeId)
+        If i > 0 Then
+            Me.RadBtnSousEpisode.Text = "Sous-épisode (" & i & ")"
+            RadBtnSousEpisode.ForeColor = Color.Red
+            RadBtnSousEpisode.Font = New Font(RadBtnParametre.Font, FontStyle.Bold)
+            ToolTip.SetToolTip(RadBtnSousEpisode, "")
+        Else
+            RadBtnSousEpisode.ForeColor = Color.FromArgb(21, 66, 139)
+            RadBtnSousEpisode.Font = New Font(RadBtnParametre.Font, FontStyle.Regular)
+            ToolTip.SetToolTip(RadBtnSousEpisode, "")
+        End If
+
+
+    End Sub
+
+    Private Sub RadBtnSousEpisode_ToolTipTextNeeded(sender As Object, e As ToolTipTextNeededEventArgs) Handles RadBtnSousEpisode.ToolTipTextNeeded
+        Dim sousEpisodeDao As SousEpisodeDao = New SousEpisodeDao
+        e.ToolTipText = sousEpisodeDao.ResumeSousEpisode(SelectedEpisodeId)
+
+    End Sub
+
 
 End Class
