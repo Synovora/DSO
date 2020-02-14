@@ -231,6 +231,7 @@
     <Compile Include="Dao\Episode\EpisodeContexteDao.vb" />
     <Compile Include="Dao\LigneDeVie\PatientParametreLdvDao.vb" />
     <Compile Include="Dao\Medicament\MedicamentDao.vb" />
+    <Compile Include="Dao\SousEpisode\SousEpisodeDao.vb" />
     <Compile Include="Dao\SousEpisode\SousEpisodeSousTypeDao.vb" />
     <Compile Include="Dao\SousEpisode\SousEpisodeTypeDao.vb" />
     <Compile Include="Form\DRC\RadFActeParamedicalTest.Designer.vb">

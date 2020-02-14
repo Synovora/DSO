@@ -75,7 +75,7 @@ Public Class SousEpisodeSousTypeDao
                 .AddWithValue("@libelle", seType.Libelle)
                 .AddWithValue("@redaction_profil_types", seType.RedactionProfilTypes)
                 .AddWithValue("@validation_profil_types", seType.ValidationProfilTypes)
-                .AddWithValue("@is_ald_possible", If(seType.isALDPossible, 1, 0))
+                .AddWithValue("@is_ald_possible", seType.isALDPossible)
             End With
 
             da.InsertCommand = cmd
