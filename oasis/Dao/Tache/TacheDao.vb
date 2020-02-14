@@ -1301,7 +1301,8 @@ Public Class TacheDao
                 " AND [type] = @type" &
                 " AND (parent_id is Null or parent_id = 0)" &
                 " AND E.oa_r_fonction_type = @typeEmetteur" &
-                " AND D.oa_r_fonction_type = @typeDestinataire"
+                " AND D.oa_r_fonction_type = @typeDestinataire" &
+                " AND T.etat <> @etat"
 
             With command.Parameters
                 .AddWithValue("@episodeId", episodeId)
@@ -1309,6 +1310,7 @@ Public Class TacheDao
                 .AddWithValue("@typeDestinataire", EpisodeDao.EnumTypeProfil.MEDICAL.ToString)
                 .AddWithValue("@categorie", CategorieTache.SOIN.ToString)
                 .AddWithValue("@type", TypeTache.AVIS_EPISODE.ToString)
+                .AddWithValue("@etat", TacheDao.EtatTache.ANNULEE.ToString)
             End With
 
             Using reader As SqlDataReader = command.ExecuteReader()

@@ -706,6 +706,8 @@ Public Class RadFEpisodeDetail
         ControleActeParamedicalExiste = False
         ChargementEpisodeActesParamedicauxParamedical()
         ChargementEpisodeActesParamedicauxMedical()
+        'Vérification si le type de conclusion IDE n'a pas changé (pour les épisodes de type PARAMEDICAL)
+        ControleMAJTypeConclusionIDE()
     End Sub
 
 
@@ -1257,29 +1259,36 @@ Public Class RadFEpisodeDetail
             End Select
         Else
             ControleWorkflowEnCoursExistant = False
-            Select Case userLog.TypeProfil
-                Case ProfilDao.EnumProfilType.PARAMEDICAL.ToString
-                    RadBtnWorkflowIde.Text = "Créer"
-                    RadBtnWorkflowIde.Show()
-                    LblWorkflowIDE.Text = "Créer une demande d'avis"
-                    LblWorkflowIDE.Show()
-                    RadBtnWorkflowMed.Hide()
-                    LblWorkflowMed.Hide()
-                Case ProfilDao.EnumProfilType.MEDICAL.ToString
-                    RadBtnWorkflowMed.Text = "Créer"
-                    RadBtnWorkflowMed.Show()
-                    LblWorkflowMed.Text = "Créer une demande d'avis"
-                    LblWorkflowMed.Show()
-                    RadBtnWorkflowIde.Hide()
-                    LblWorkflowIDE.Hide()
-            End Select
+            If episode.Etat = EpisodeDao.EnumEtatEpisode.CLOTURE.ToString AndAlso episode.DateModification.Date < Date.Now.Date Then
+                RadBtnWorkflowMed.Hide()
+                LblWorkflowMed.Hide()
+                RadBtnWorkflowIde.Hide()
+                LblWorkflowIDE.Hide()
+            Else
+                Select Case userLog.TypeProfil
+                    Case ProfilDao.EnumProfilType.PARAMEDICAL.ToString
+                        RadBtnWorkflowIde.Text = "Créer"
+                        RadBtnWorkflowIde.Show()
+                        LblWorkflowIDE.Text = "Créer une demande d'avis"
+                        LblWorkflowIDE.Show()
+                        RadBtnWorkflowMed.Hide()
+                        LblWorkflowMed.Hide()
+                    Case ProfilDao.EnumProfilType.MEDICAL.ToString
+                        RadBtnWorkflowMed.Text = "Créer"
+                        RadBtnWorkflowMed.Show()
+                        LblWorkflowMed.Text = "Créer une demande d'avis"
+                        LblWorkflowMed.Show()
+                        RadBtnWorkflowIde.Hide()
+                        LblWorkflowIDE.Hide()
+                End Select
+            End If
         End If
 
         If episode.TypeProfil = EpisodeDao.EnumTypeProfil.PARAMEDICAL.ToString Then
             'Controle si Workflow de demande d'avis médical (en cours ou terminé) existe
             If tacheDao.ExisteDemandeAvisMedicalByEpisode(SelectedEpisodeId) = True Then
                 ControleDemandeAvisMedicalExiste = True
-                ControleTypeConclusionParamedicaleSurDemandeAvis()
+                ControleMAJTypeConclusionIDE()
             End If
         End If
     End Sub
@@ -1389,7 +1398,7 @@ Public Class RadFEpisodeDetail
     'Chargement conclusion médicale et paramédicale 
     Private Sub ChargementConclusion()
         ChargementConclusionEnCours = True
-        ControleTypeConclusionParamedicaleSurDemandeAvis()
+        'ControleTypeConclusionParamedicaleSurDemandeAvis()
 
         Select Case episode.TypeProfil
             Case EpisodeDao.EnumTypeProfil.MEDICAL.ToString
@@ -1424,19 +1433,23 @@ Public Class RadFEpisodeDetail
         End If
 
         'Chargement contexte(s) de conclusion
-        ChargementEpisodeContexte()
+        ChargementEpisodeContexteConclusion()
 
         ChargementConclusionEnCours = False
+        ControleMAJTypeConclusionIDE()
     End Sub
 
-    Private Sub ControleTypeConclusionParamedicaleSurDemandeAvis()
+    Private Sub ControleMAJTypeConclusionIDE()
         If episode.TypeProfil = EpisodeDao.EnumTypeProfil.PARAMEDICAL.ToString Then
+            'Si demande d'avis, conclusion IDE sur demande d'avis pas d'autre option
             If ControleDemandeAvisMedicalExiste = True Then
-                RadioBtnDemandeAvis.Checked = True
+                'Boutons radio non modifiables
                 RadioBtnDemandeAvis.Enabled = False
                 RadioBtnRolePropre.Enabled = False
                 RadioBtnSurProtocole.Enabled = False
+                'Si l'épisode n'avait pas la même option, on met à jour l'épisode
                 If episode.ConclusionIdeType <> EpisodeDao.EnumTypeConclusionParamedicale.DEMANDE_AVIS.ToString Then
+                    RadioBtnDemandeAvis.Checked = True
                     episode.ConclusionIdeType = EpisodeDao.EnumTypeConclusionParamedicale.DEMANDE_AVIS.ToString
                     episodeDao.ModificationEpisode(episode)
                     RadioTypeConclusionIdeModified = False
@@ -1444,22 +1457,66 @@ Public Class RadFEpisodeDetail
                 RadGrpConclusionIDE.Hide()
                 TxtConclusionIDE.Text = ""
             Else
-                If episode.TypeActivite = EpisodeDao.EnumTypeActiviteEpisodeCode.PATHOLOGIE_AIGUE OrElse
-                    episode.TypeActivite = EpisodeDao.EnumTypeActiviteEpisodeCode.SUIVI_CHRONIQUE Then
-                    If ControleProtocoleAiguExiste = True OrElse ControleActeParamedicalExiste = True Then
-                        If Not (episode.ConclusionIdeType = EpisodeDao.EnumTypeConclusionParamedicale.SUR_PROTOCOLE.ToString OrElse
+                If ControleProtocoleAiguExiste = True OrElse ControleActeParamedicalExiste = True Then
+                    'On positionne les boutons radio à indisponible par défaut
+                    RadioBtnDemandeAvis.Enabled = False
+                    RadioBtnRolePropre.Enabled = False
+                    RadioBtnSurProtocole.Enabled = False
+                    If Not (episode.ConclusionIdeType = EpisodeDao.EnumTypeConclusionParamedicale.SUR_PROTOCOLE.ToString OrElse
                             episode.ConclusionIdeType = EpisodeDao.EnumTypeConclusionParamedicale.DEMANDE_AVIS.ToString) Then
-                            RadioBtnSurProtocole.Checked = True
-                            episode.ConclusionIdeType = EpisodeDao.EnumTypeConclusionParamedicale.SUR_PROTOCOLE.ToString
+                        RadioBtnSurProtocole.Checked = True
+                        episode.ConclusionIdeType = EpisodeDao.EnumTypeConclusionParamedicale.SUR_PROTOCOLE.ToString
+                        episodeDao.ModificationEpisode(episode)
+                        RadioTypeConclusionIdeModified = False
+                    End If
+                    'Seules les options 'Demande d'avis' et 'Protocole' sont possibles si le profil utilisateur est IDE et si l'épisode n'est pas clôturé depuis plus d'un jour
+                    If userLog.TypeProfil = EpisodeDao.EnumTypeProfil.PARAMEDICAL.ToString Then
+                        If Not (episode.Etat = EpisodeDao.EnumEtatEpisode.CLOTURE.ToString AndAlso episode.DateModification.Date < Date.Now.Date) Then
+                            RadioBtnDemandeAvis.Enabled = True
+                            RadioBtnSurProtocole.Enabled = True
+                        End If
+                    End If
+                    RadioBtnRolePropre.Enabled = False
+                End If
+                RadGrpConclusionIDE.Show()
+            End If
+            'Si rien de coché, alors rôle propre par défaut
+            If RadioBtnSurProtocole.Checked = False AndAlso RadioBtnRolePropre.Checked = False AndAlso RadioBtnDemandeAvis.Checked = False Then
+                RadioBtnRolePropre.Checked = True
+                episode.ConclusionIdeType = EpisodeDao.EnumTypeConclusionParamedicale.ROLE_PROPRE.ToString
+                episodeDao.ModificationEpisode(episode)
+                RadioTypeConclusionIdeModified = False
+                If userLog.TypeProfil = EpisodeDao.EnumTypeProfil.PARAMEDICAL.ToString Then
+                    If Not (episode.Etat = EpisodeDao.EnumEtatEpisode.CLOTURE.ToString AndAlso episode.DateModification.Date < Date.Now.Date) Then
+                        RadioBtnDemandeAvis.Enabled = True
+                        RadioBtnSurProtocole.Enabled = True
+                        RadioBtnRolePropre.Enabled = True
+                    End If
+                End If
+            End If
+            'Autre cas, si l'utilisateur a modifié le type de conclusion
+            If RadioBtnRolePropre.Checked = True Then
+                If episode.ConclusionIdeType <> EpisodeDao.EnumTypeConclusionParamedicale.ROLE_PROPRE.ToString Then
+                    episode.ConclusionIdeType = EpisodeDao.EnumTypeConclusionParamedicale.ROLE_PROPRE.ToString
+                    episodeDao.ModificationEpisode(episode)
+                    RadioTypeConclusionIdeModified = False
+                End If
+            Else
+                If RadioBtnSurProtocole.Checked = True Then
+                    If episode.ConclusionIdeType <> EpisodeDao.EnumTypeConclusionParamedicale.SUR_PROTOCOLE.ToString Then
+                        episode.ConclusionIdeType = EpisodeDao.EnumTypeConclusionParamedicale.SUR_PROTOCOLE.ToString
+                        episodeDao.ModificationEpisode(episode)
+                        RadioTypeConclusionIdeModified = False
+                    End If
+                Else
+                    If RadioBtnDemandeAvis.Checked = True Then
+                        If episode.ConclusionIdeType <> EpisodeDao.EnumTypeConclusionParamedicale.DEMANDE_AVIS.ToString Then
+                            episode.ConclusionIdeType = EpisodeDao.EnumTypeConclusionParamedicale.DEMANDE_AVIS.ToString
                             episodeDao.ModificationEpisode(episode)
                             RadioTypeConclusionIdeModified = False
                         End If
-                        RadioBtnDemandeAvis.Enabled = True
-                        RadioBtnSurProtocole.Enabled = True
-                        RadioBtnRolePropre.Enabled = False
                     End If
                 End If
-                RadGrpConclusionIDE.Show()
             End If
         End If
     End Sub
@@ -1469,7 +1526,7 @@ Public Class RadFEpisodeDetail
     '===== Conclusion Médicale
     '======================================================
     'Chargement Contexte conclusion médicale
-    Private Sub ChargementEpisodeContexte()
+    Private Sub ChargementEpisodeContexteConclusion()
         Dim AfficheDateModification, diagnostic, categorieContexte As String
 
         Dim episodeContexteDt As DataTable
@@ -1554,7 +1611,7 @@ Public Class RadFEpisodeDetail
             form.SelectedEpisode = episode
             form.ShowDialog()
             If form.CodeRetour = True Then
-                ChargementEpisodeContexte()
+                ChargementEpisodeContexteConclusion()
             End If
         End Using
     End Sub
@@ -1577,7 +1634,7 @@ Public Class RadFEpisodeDetail
                         vFContexteDetailEdit.ShowDialog()
                         If vFContexteDetailEdit.CodeRetour = True Then
                             episodeDao.MajEpisodeConclusionMedicale(SelectedEpisodeId)
-                            ChargementEpisodeContexte()
+                            ChargementEpisodeContexteConclusion()
                             ChargementContexte()
                             ChargementCaracteristiquesEpisode()
                         End If
@@ -1650,7 +1707,7 @@ Public Class RadFEpisodeDetail
         If ChargementConclusionEnCours = False Then
             RadioTypeConclusionIdeModified = True
             episode.ConclusionIdeType = EpisodeDao.EnumTypeConclusionParamedicale.ROLE_PROPRE.ToString
-            ControleTypeConclusionParamedicaleSurDemandeAvis()
+            ControleMAJTypeConclusionIDE()
         End If
     End Sub
 
@@ -1658,7 +1715,7 @@ Public Class RadFEpisodeDetail
         If ChargementConclusionEnCours = False Then
             RadioTypeConclusionIdeModified = True
             episode.ConclusionIdeType = EpisodeDao.EnumTypeConclusionParamedicale.SUR_PROTOCOLE.ToString
-            ControleTypeConclusionParamedicaleSurDemandeAvis()
+            ControleMAJTypeConclusionIDE()
         End If
     End Sub
 
@@ -1666,7 +1723,7 @@ Public Class RadFEpisodeDetail
         If ChargementConclusionEnCours = False Then
             RadioTypeConclusionIdeModified = True
             episode.ConclusionIdeType = EpisodeDao.EnumTypeConclusionParamedicale.DEMANDE_AVIS.ToString
-            ControleTypeConclusionParamedicaleSurDemandeAvis()
+            ControleMAJTypeConclusionIDE()
         End If
     End Sub
 
@@ -1694,7 +1751,6 @@ Public Class RadFEpisodeDetail
     '=== Clôture de l'épisode
     '===========================================================================================================================================
 
-    'Clôture de l'épisode
     Private Sub RadBtnCloture_Click(sender As Object, e As EventArgs) Handles RadBtnCloture.Click
         'Si une demande d'avis est en cours (médicale ou paramédicale), on ne peut pas clôturer l'épisode
         tache = tacheDao.GetDemandeEnCoursByEpisode(SelectedEpisodeId)
@@ -1734,10 +1790,16 @@ Public Class RadFEpisodeDetail
         If episode.TypeProfil = EpisodeDao.EnumTypeProfil.PARAMEDICAL.ToString Then
             If RadioBtnRolePropre.Checked = True Or RadioBtnSurProtocole.Checked = True Then
                 If TxtConclusionIDE.Text = "" Then
-                    MessageBox.Show("Pour un épisode de type 'Paramédical', en cas de conclusion paramédicale de type 'Rôle propre' ou 'Sur Protocole'," & vbCrLf &
+                    MessageBox.Show("Pour un épisode de type 'Paramédical', en cas de conclusion paramédicale de type 'Rôle propre' ou 'Protocole'," & vbCrLf &
                                     " le commentaire de conclusion paramédical est requis pour assurer la clôture de l'épisode.")
                     Exit Sub
                 End If
+            End If
+            'Si l'épisode est PARAMEDICAL et le type de conclusion IDE n'est renseigné (rôle propre, protocole ou sur avis) n'est pas renseigné => Erreur
+            If RadioBtnRolePropre.Checked = False AndAlso RadioBtnSurProtocole.Checked = False AndAlso RadioBtnDemandeAvis.Checked = False Then
+                MessageBox.Show("Pour un épisode de type 'Paramédical', le type de conclusion paramédicale est requis ('Rôle propre' ou 'Protocole' ou" & vbCrLf &
+                                    " 'Demande d'avis') pour assurer la clôture de l'épisode.")
+                Exit Sub
             End If
         End If
 
@@ -1748,9 +1810,6 @@ Public Class RadFEpisodeDetail
                 Exit Sub
             End If
         End If
-
-        'Si l'épisode est PARAMEDICAL et le type de conclusion IDE n'est renseigné (rôle propre, protocole ou sur avis) n'est pas renseigné => Erreur
-        'TODO: Règle supplémentaire clôture épisode
 
         ClotureEpisode()
     End Sub
@@ -1764,7 +1823,7 @@ Public Class RadFEpisodeDetail
                         If ControleConclusionMedicaleExiste = True Then
                             If ControleOrdonnanceExiste = True AndAlso ControleOrdonnanceValide = False Then
                                 'Alerte : si ordonnance existe et n'est pas signée, clôture annulée
-                                MessageBox.Show("L'épiosde ne peut pas être clôturé tant que l'ordonnance médicale en cours n'est pas signée")
+                                MessageBox.Show("L'épisode ne peut pas être clôturé tant que l'ordonnance médicale en cours n'est pas signée")
                                 Exit Sub
                             End If
                             ClotureEpisode()
@@ -1812,7 +1871,7 @@ Public Class RadFEpisodeDetail
     Private Sub RadBtnAnnulerEpisode_Click(sender As Object, e As EventArgs) Handles RadBtnAnnulerEpisode.Click
         'Annulation interdite si demande d'avis médical existe
         If ControleDemandeAvisMedicalExiste = True Then
-            MessageBox.Show("Une demande d'avis médicale existe pour cet épisode, l'annulation de l'épisode n'est pas permise.")
+            MessageBox.Show("Une demande d'avis médical existe pour cet épisode, l'annulation de l'épisode n'est pas permise.")
             Exit Sub
         End If
 
@@ -3531,7 +3590,7 @@ Public Class RadFEpisodeDetail
                     vFContexteDetailEdit.ShowDialog()
                     If vFContexteDetailEdit.CodeRetour = True Then
                         ChargementContexte()
-                        ChargementEpisodeContexte()
+                        ChargementEpisodeContexteConclusion()
                         If vFContexteDetailEdit.ContexteTransformeEnAntecedent = True Then
                             'Rechargement des contextes si réactivation
                             ChargementAntecedent()
@@ -4270,10 +4329,10 @@ Public Class RadFEpisodeDetail
         RadGridViewObsIde.TableElement.BackColor = Color.WhiteSmoke
         'RadPanelConclusionIdeType.Enabled = False
 
-        RadioBtnDemandeAvis.Hide()
-        RadioBtnRolePropre.Hide()
-        RadioBtnSurProtocole.Hide()
-        TxtConclusionIDE.Hide()
+        RadioBtnDemandeAvis.Enabled = False
+        RadioBtnRolePropre.Enabled = False
+        RadioBtnSurProtocole.Enabled = False
+        TxtConclusionIDE.Enabled = False
 
         SaisieObservationToolStripMenuItem.Enabled = False
         AjoutProtocoleAiguToolStripMenuItem.Enabled = False

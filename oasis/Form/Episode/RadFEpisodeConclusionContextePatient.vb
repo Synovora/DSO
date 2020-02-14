@@ -247,6 +247,7 @@ Public Class RadFEpisodeConclusionContextePatient
                     vFContexteDetailEdit.PositionGaucheDroite = EnumPosition.Droite
                     vFContexteDetailEdit.ShowDialog() 'Modal
                     If vFContexteDetailEdit.CodeRetour = True Then
+                        CodeRetour = True
                         Select Case vFContexteDetailEdit.CodeResultat
                             Case EnumResultat.AnnulationOK
                                 Dim form As New RadFNotification()
@@ -297,6 +298,7 @@ Public Class RadFEpisodeConclusionContextePatient
                     vFContexteDetailEdit.ShowDialog()
                     'Si le traitement a été créé, on recharge la grid
                     If vFContexteDetailEdit.CodeRetour = True Then
+                        CodeRetour = True
                         Dim form As New RadFNotification()
                         form.Titre = "Notification contexte patient"
                         form.Message = "Contexte patient créé"

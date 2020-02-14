@@ -1745,7 +1745,7 @@ Partial Class RadFEpisodeDetail
         'RadioBtnDemandeAvis
         '
         Me.RadioBtnDemandeAvis.AutoSize = True
-        Me.RadioBtnDemandeAvis.Location = New System.Drawing.Point(205, 3)
+        Me.RadioBtnDemandeAvis.Location = New System.Drawing.Point(184, 3)
         Me.RadioBtnDemandeAvis.Name = "RadioBtnDemandeAvis"
         Me.RadioBtnDemandeAvis.Size = New System.Drawing.Size(148, 17)
         Me.RadioBtnDemandeAvis.TabIndex = 2
@@ -1758,10 +1758,10 @@ Partial Class RadFEpisodeDetail
         Me.RadioBtnSurProtocole.AutoSize = True
         Me.RadioBtnSurProtocole.Location = New System.Drawing.Point(104, 3)
         Me.RadioBtnSurProtocole.Name = "RadioBtnSurProtocole"
-        Me.RadioBtnSurProtocole.Size = New System.Drawing.Size(95, 17)
+        Me.RadioBtnSurProtocole.Size = New System.Drawing.Size(74, 17)
         Me.RadioBtnSurProtocole.TabIndex = 1
         Me.RadioBtnSurProtocole.TabStop = True
-        Me.RadioBtnSurProtocole.Text = "Sur protocole"
+        Me.RadioBtnSurProtocole.Text = "Protocole"
         Me.RadioBtnSurProtocole.UseVisualStyleBackColor = True
         '
         'RadioBtnRolePropre

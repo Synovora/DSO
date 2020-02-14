@@ -290,10 +290,10 @@ Public Class AntecedentDao
 
         If publication = True Then
             SQLString += " AND A.oa_antecedent_statut_affichage = 'P'" &
-            " ORDER BY A.oa_antecedent_categorie_contexte DESC, A.oa_antecedent_date_modification DESC, A.oa_antecedent_id;"
+            " ORDER BY A.oa_antecedent_categorie_contexte DESC, A.oa_antecedent_date_modification DESC, A.oa_antecedent_id DESC;"
         Else
             SQLString += " AND (A.oa_antecedent_statut_affichage = 'P' OR A.oa_antecedent_statut_affichage = 'C')" &
-            " ORDER BY A.oa_antecedent_categorie_contexte DESC, A.oa_antecedent_date_modification DESC, A.oa_antecedent_id;"
+            " ORDER BY A.oa_antecedent_categorie_contexte DESC, A.oa_antecedent_date_modification DESC, A.oa_antecedent_id DESC;"
         End If
 
         Using con As SqlConnection = GetConnection()
