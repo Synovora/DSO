@@ -1747,6 +1747,9 @@ Public Class RadFEpisodeDetail
             End If
         End If
 
+        'Si l'épisode est PARAMEDICAL et le type de conclusion IDE n'est renseigné (rôle propre, protocole ou sur avis) n'est pas renseigné => Erreur
+        'TODO: Règle supplémentaire clôture épisode
+
         ClotureEpisode()
     End Sub
 
@@ -1785,6 +1788,7 @@ Public Class RadFEpisodeDetail
                 contexte.Type = "C"
                 contexte.CategorieContexte = "M"
                 contexte.StatutAffichage = "P"
+                contexte.StatutAffichageTransformation = "P"
                 contexte.DrcId = drcIdConclusionIde
                 contexte.DateDebut = Date.Now()
                 contexte.DateFin = New Date(2999, 12, 31, 0, 0, 0)

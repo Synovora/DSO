@@ -35,6 +35,7 @@ Public Class RadFEpisodeParametreDetailEdit
     End Property
 
     Dim episodeParametreDao As New EpisodeParametreDao
+    Dim parametreDao As New ParametreDao
 
     Dim listeParametreEpisode As New List(Of Long)
 
@@ -51,12 +52,14 @@ Public Class RadFEpisodeParametreDetailEdit
         Me.RadDesktopAlert1.Popup.AlertElement.BorderColor = Color.DarkBlue
 
         afficheTitleForm(Me, "Saisie paramètres")
+        Me.Width = 491
         ChargementParametres()
 
     End Sub
 
     Private Sub ChargementParametres()
         FinChargementParametres = False
+        RadGridViewParm.Rows.Clear()
 
         Dim parmDataTable As DataTable
         parmDataTable = episodeParametreDao.getAllParametreEpisodeByEpisodeId(SelectedEpisodeId)
@@ -170,6 +173,37 @@ Public Class RadFEpisodeParametreDetailEdit
         FinChargementParametres = True
     End Sub
 
+    Private Sub ChargementParametresDisponibles()
+        RadGridView1.Rows.Clear()
+
+        Dim parmDataTable As DataTable
+        parmDataTable = parametreDao.GetAllParametre()
+        'Déclaration des variables pour réaliser le parcours du DataTable pour alimenter le DataGridView
+        Dim i As Integer
+        Dim iGrid As Integer = -1 'Indice pour alimenter la Grid qui peut comporter moins d'occurrences que le DataTable
+        Dim rowCount As Integer = parmDataTable.Rows.Count - 1
+
+        'Parcours du DataTable pour alimenter le DataGridView
+        For i = 0 To rowCount Step 1
+            Dim parametreId As Long = parmDataTable.Rows(i)("id")
+            If listeParametreEpisode.Contains(parametreId) Then
+                Continue For
+            End If
+            'Ajout d'une ligne au DataGridView
+            iGrid += 1
+            RadGridView1.Rows.Add(iGrid)
+            'Alimentation du DataGridView
+            RadGridView1.Rows(iGrid).Cells("id").Value = parmDataTable.Rows(i)("id")
+            RadGridView1.Rows(iGrid).Cells("description").Value = parmDataTable.Rows(i)("description")
+            RadGridView1.Rows(iGrid).Cells("unite").Value = parmDataTable.Rows(i)("unite")
+        Next
+
+        'Positionnement du grid sur la première occurrence
+        If RadGridView1.Rows.Count > 0 Then
+            Me.RadGridView1.CurrentRow = RadGridView1.ChildRows(0)
+        End If
+    End Sub
+
     Private Sub RadBtnAbandon_Click(sender As Object, e As EventArgs) Handles RadBtnAbandon.Click
         Dim MiseAJour As Boolean = False
         For Each rowInfo As GridViewRowInfo In RadGridViewParm.Rows
@@ -255,13 +289,22 @@ Public Class RadFEpisodeParametreDetailEdit
             Me.RadDesktopAlert1.ContentText = "Paramètres de l'épisode mis à jour"
             Me.RadDesktopAlert1.Show()
             'Rechargement grid
-            RadGridViewParm.Rows.Clear()
             ChargementParametres()
             CodeRetour = True
         End If
     End Sub
 
     Private Sub RadBtnAjouter_Click(sender As Object, e As EventArgs) Handles RadBtnAjouter.Click
+        'AjouterParametre()
+        Me.Width = 925
+        ChargementParametresDisponibles()
+    End Sub
+
+    Private Sub RadBtnCacher_Click(sender As Object, e As EventArgs) Handles RadBtnCacher.Click
+        Me.Width = 491
+    End Sub
+
+    Private Sub AjouterParametre()
         Me.Enabled = False
         Using form As New RadFParametreSelecteur
             form.ListeParametreExistant = listeParametreEpisode
@@ -296,13 +339,57 @@ Public Class RadFEpisodeParametreDetailEdit
         Me.Enabled = True
     End Sub
 
-    Private Sub MasterTemplate_CellValueChanged(sender As Object, e As GridViewCellEventArgs) Handles RadGridViewParm.CellValueChanged
-        If FinChargementParametres = True Then
-            Validation()
+
+    'Ajouter un paramètre
+    Private Sub RadBtnSelect_Click(sender As Object, e As EventArgs) Handles RadBtnSelect.Click
+        Dim aRow, maxRow As Integer
+
+        aRow = Me.RadGridView1.Rows.IndexOf(Me.RadGridView1.CurrentRow)
+        maxRow = RadGridView1.Rows.Count - 1
+
+        If aRow <= maxRow And aRow > -1 Then
+            Dim SelectedParametreId As Long
+            SelectedParametreId = RadGridView1.Rows(aRow).Cells("Id").Value
+            'Création paramètre
+            Dim SelectedParametre As Parametre
+            SelectedParametre = parametreDao.GetParametreById(SelectedParametreId)
+            Try
+                Dim episodeParametre As New EpisodeParametre
+                episodeParametre.ParametreId = SelectedParametre.Id
+                episodeParametre.EpisodeId = SelectedEpisodeId
+                episodeParametre.PatientId = SelectedPatient.patientId
+                episodeParametre.Valeur = 0
+                episodeParametre.Description = SelectedParametre.Description
+                episodeParametre.Entier = SelectedParametre.Entier
+                episodeParametre.Decimal = SelectedParametre.Decimal
+                episodeParametre.Unite = SelectedParametre.Unite
+                episodeParametre.Ordre = SelectedParametre.Ordre
+                episodeParametre.ParametreAjoute = True
+                episodeParametre.Inactif = False
+                episodeParametreDao.CreateEpisodeParametre(episodeParametre)
+            Catch ex As Exception
+                CreateLog(ex.ToString, Me.Name, LogDao.EnumTypeLog.ERREUR.ToString)
+                If ex.Message.StartsWith("Collisio") = True Then
+                    MessageBox.Show("paramètre déjà existant pour cet épisode !")
+                End If
+            End Try
+            ChargementParametres()
+            ChargementParametresDisponibles()
+            CodeRetour = True
+
         End If
     End Sub
 
+    'Enlever un paramètre
+    Private Sub RadBtnSuppprimer_Click(sender As Object, e As EventArgs) Handles RadBtnSuppprimer.Click
+        SupprimerParametre()
+    End Sub
+
     Private Sub RadBtnSupprimer_Click(sender As Object, e As EventArgs) Handles RadBtnSupprimer.Click
+        SupprimerParametre()
+    End Sub
+
+    Private Sub SupprimerParametre()
         Dim aRow, maxRow As Integer
 
         aRow = Me.RadGridViewParm.Rows.IndexOf(Me.RadGridViewParm.CurrentRow)
@@ -316,6 +403,7 @@ Public Class RadFEpisodeParametreDetailEdit
                     listeParametreEpisode.Remove(RadGridViewParm.Rows(aRow).Cells("parametre_id").Value)
                     RadGridViewParm.Rows.Clear()
                     ChargementParametres()
+                    ChargementParametresDisponibles()
                     CodeRetour = True
                 End If
             Else
@@ -323,6 +411,14 @@ Public Class RadFEpisodeParametreDetailEdit
             End If
         End If
     End Sub
+
+    Private Sub MasterTemplate_CellValueChanged(sender As Object, e As GridViewCellEventArgs) Handles RadGridViewParm.CellValueChanged
+        If FinChargementParametres = True Then
+            Validation()
+        End If
+    End Sub
+
+
 
     Private Sub MasterTemplate_ToolTipTextNeeded(sender As Object, e As ToolTipTextNeededEventArgs) Handles RadGridViewParm.ToolTipTextNeeded
         Dim hoveredCell As GridDataCellElement = TryCast(sender, GridDataCellElement)
@@ -337,4 +433,5 @@ Public Class RadFEpisodeParametreDetailEdit
             e.ToolTipText = hoveredCell.RowInfo.Cells("description").Value
         End If
     End Sub
+
 End Class
