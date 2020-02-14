@@ -1128,6 +1128,10 @@ Public Class RadFEpisodeDetail
         If RadGridViewObsMed.Rows.Count > 0 Then
             Me.RadGridViewObsMed.CurrentRow = RadGridViewObsMed.Rows(0)
             RadGridViewObsMed.TableElement.VScrollBar.Value = 0
+            If episode.TypeProfil = EpisodeDao.EnumTypeProfil.PARAMEDICAL.ToString Then
+                ControleDemandeAvisMedicalExiste = True
+                ControleMAJTypeConclusionIDE()
+            End If
         End If
 
         If RadGridViewObsIde.Rows.Count > 0 Then
