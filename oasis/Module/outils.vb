@@ -173,10 +173,14 @@ Friend Module outils
         Dim Age As String
         Dim PatientMoisRestant, PatientAn As Integer
         lMois = CalculAgeEnmois(DateNaissance)
-        If lMois > 36 Then
+        If lMois > 35 Then
             PatientMoisRestant = lMois Mod 12
             lMois = lMois - PatientMoisRestant
             PatientAn = lMois / 12
+        Else
+            Dim lJour = CalculAgeEnJour(DateNaissance)
+            lJour += 5
+            lMois = lJour \ 30.4375
         End If
         Select Case lMois
             Case 0 To 35
