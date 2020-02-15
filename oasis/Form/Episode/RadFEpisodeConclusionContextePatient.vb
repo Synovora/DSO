@@ -326,7 +326,7 @@ Public Class RadFEpisodeConclusionContextePatient
                 episodeContexte.UserCreation = userLog.UtilisateurId
                 episodeContexte.DateCreation = Date.Now()
                 episodeContexteDao.CreateEpisodeContexte(episodeContexte)
-                episodeDao.MajEpisodeConclusionMedicale(SelectedEpisode.Id)
+                'episodeDao.MajEpisodeConclusionMedicale(SelectedEpisode.Id)
                 ChargementConclusion()
                 ChargementContexte()
                 CodeRetour = True
@@ -343,7 +343,7 @@ Public Class RadFEpisodeConclusionContextePatient
                 Cursor.Current = Cursors.WaitCursor
                 episodeContexteId = RadConclusionGridView.Rows(aRow).Cells("episode_contexte_id").Value
                 EpisodeContexteDao.SuppressionEpisodeContexteById(episodeContexteId)
-                episodeDao.MajEpisodeConclusionMedicale(SelectedEpisode.Id)
+                'episodeDao.MajEpisodeConclusionMedicale(SelectedEpisode.Id)
                 ChargementConclusion()
                 ChargementContexte()
                 CodeRetour = True
@@ -353,5 +353,9 @@ Public Class RadFEpisodeConclusionContextePatient
 
     Private Sub RadBtnAbandon_Click(sender As Object, e As EventArgs) Handles RadBtnAbandon.Click
         Close()
+    End Sub
+
+    Private Sub RadFEpisodeConclusionContextePatient_FormClosed(sender As Object, e As FormClosedEventArgs) Handles MyBase.FormClosed
+        episodeDao.MajEpisodeConclusionMedicale(SelectedEpisode.Id)
     End Sub
 End Class
