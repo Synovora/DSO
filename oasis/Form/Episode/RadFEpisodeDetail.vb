@@ -669,7 +669,7 @@ Public Class RadFEpisodeDetail
             Else
                 Valeur = 0
             End If
-            valeurString = Valeur.ToString("#0.0")
+            valeurString = ValeurIMC.ToString("#0.0")
             LblParmIMC.Text = valeurString & " " & uniteIMC
         End If
 
@@ -685,7 +685,7 @@ Public Class RadFEpisodeDetail
             Else
                 Valeur = 0
             End If
-            valeurString = Valeur.ToString("##0")
+            valeurString = ValeurPAM.ToString("##0")
             LblParmPAM.Text = valeurString & " " & unitePAM
         End If
 

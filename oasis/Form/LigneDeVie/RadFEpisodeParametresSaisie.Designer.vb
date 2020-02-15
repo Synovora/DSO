@@ -604,6 +604,7 @@ Partial Class RadFEpisodeParametresSaisie
         '
         'RadBtnAbandon
         '
+        Me.RadBtnAbandon.DialogResult = System.Windows.Forms.DialogResult.Cancel
         Me.RadBtnAbandon.Location = New System.Drawing.Point(916, 177)
         Me.RadBtnAbandon.Name = "RadBtnAbandon"
         Me.RadBtnAbandon.Size = New System.Drawing.Size(110, 24)
@@ -614,15 +615,20 @@ Partial Class RadFEpisodeParametresSaisie
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
+        Me.CancelButton = Me.RadBtnAbandon
         Me.ClientSize = New System.Drawing.Size(1040, 209)
         Me.Controls.Add(Me.RadBtnAbandon)
         Me.Controls.Add(Me.RadGroupBoxEtatCivil)
         Me.Controls.Add(Me.RadGbxParametre)
+        Me.MaximizeBox = False
+        Me.MinimizeBox = False
         Me.Name = "RadFEpisodeParametresSaisie"
         '
         '
         '
         Me.RootElement.ApplyShapeToControl = True
+        Me.ShowInTaskbar = False
+        Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent
         Me.Text = "RadFEpisodeParametresSaisie"
         CType(Me.RadGbxParametre, System.ComponentModel.ISupportInitialize).EndInit()
         Me.RadGbxParametre.ResumeLayout(False)

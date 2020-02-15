@@ -117,9 +117,9 @@ Public Class RadFEpisodeParametresSaisie
         Dim i As Integer
         Dim rowCount As Integer = parmDataTable.Rows.Count - 1
         Dim entier, nombreDecimal, longueurString, idString As Integer
-        Dim Valeur As Decimal
+        Dim Valeur, ValeurIMC, ValeurPAM As Decimal
         Dim description, unite, valeurString, parametreString As String
-        Dim ParametreId As Long
+        Dim ParametreId, EpisodeParametreId, EpisodeParametreIdIMC, EpisodeParametreIdPAM As Long
         Dim valeurPoids, valeurTaille, valeurPAS, valeurPAD As Decimal
         Dim uniteIMC, unitePAM As String
         Dim IMCaCalculer As Boolean = False
@@ -142,6 +142,7 @@ Public Class RadFEpisodeParametresSaisie
             nombreDecimal = parmDataTable.Rows(i)("decimal")
             unite = parmDataTable.Rows(i)("unite")
             ParametreId = parmDataTable.Rows(i)("parametre_id")
+            EpisodeParametreId = parmDataTable.Rows(i)("episode_parametre_id")
             valeurString = ""
 
             Select Case entier
@@ -192,6 +193,8 @@ Public Class RadFEpisodeParametresSaisie
                 Case 3
                     LblLabelIMC.Text = "IMC"
                     uniteIMC = unite
+                    EpisodeParametreIdIMC = EpisodeParametreId
+                    ValeurIMC = Valeur
                     IMCaCalculer = True
                 Case 4
                     LblLabelPerimetreCranien.Text = "Per. cranien"
@@ -210,6 +213,8 @@ Public Class RadFEpisodeParametresSaisie
                 Case 8
                     LblLabelPAM.Text = "PAM"
                     unitePAM = unite
+                    EpisodeParametreIdPAM = EpisodeParametreId
+                    ValeurPAM = Valeur
                     PAMaCalculer = True
                 Case 9
                     LblLabelFR.Text = "FR"
@@ -272,22 +277,37 @@ Public Class RadFEpisodeParametresSaisie
         Next
 
         If IMCaCalculer = True Then
+            If valeurTaille = 0 Then
+                valeurTaille = SelectedPatient.Taille
+            End If
             If valeurPoids <> 0 And valeurTaille <> 0 Then
-                Valeur = valeurPoids / ((valeurTaille * valeurTaille) / 10000)
+                Dim ValeurCalcul As Decimal = valeurPoids / ((valeurTaille * valeurTaille) / 10000)
+                Dim ValeurCalculAComparer As Decimal = Decimal.Round(ValeurCalcul, 3)
+                'Mise à jour du paramètre déduit
+                If ValeurIMC <> ValeurCalculAComparer Then
+                    ValeurIMC = ValeurCalculAComparer
+                    episodeParametreDao.ModificationValeurEpisodeParametre(EpisodeParametreIdIMC, ValeurIMC)
+                End If
             Else
                 Valeur = 0
             End If
-            valeurString = Valeur.ToString("#0.0")
+            valeurString = ValeurIMC.ToString("#0.0")
             LblParmIMC.Text = valeurString & " " & uniteIMC
         End If
 
         If PAMaCalculer = True Then
             If valeurPAD <> 0 And valeurPAS <> 0 Then
-                Valeur = (valeurPAS + (2 * valeurPAD)) / 3
+                Dim ValeurCalcul As Decimal = (valeurPAS + (2 * valeurPAD)) / 3
+                Dim ValeurCalculAComparer As Decimal = Decimal.Round(ValeurCalcul, 3)
+                'Mise à jour du paramètre déduit
+                If ValeurPAM <> ValeurCalculAComparer Then
+                    ValeurPAM = ValeurCalculAComparer
+                    episodeParametreDao.ModificationValeurEpisodeParametre(EpisodeParametreIdPAM, ValeurPAM)
+                End If
             Else
                 Valeur = 0
             End If
-            valeurString = Valeur.ToString("##0")
+            valeurString = ValeurPAM.ToString("##0")
             LblParmPAM.Text = valeurString & " " & unitePAM
         End If
 
