@@ -13,6 +13,7 @@ Public Class Patient
     Private privatePatientAgeEnAnnee As Integer
     Private privatePatientGenreId As String
     Private privatePatientGenre As String
+    Private _taille As Integer
     Private privatePatientAdresse1 As String
     Private privatePatientAdresse2 As String
     Private privatePatientCodePostal As String
@@ -569,6 +570,15 @@ Public Class Patient
         End Get
         Set(value As Long)
             _PharmacienId = value
+        End Set
+    End Property
+
+    Public Property Taille As Integer
+        Get
+            Return _taille
+        End Get
+        Set(value As Integer)
+            _taille = value
         End Set
     End Property
 

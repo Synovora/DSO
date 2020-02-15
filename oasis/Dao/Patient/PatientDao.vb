@@ -203,6 +203,7 @@ Module PatientDao
             End If
             instancePatient.Profession = Coalesce(patientDataReader("oa_patient_profession"), "")
             instancePatient.PharmacienId = Coalesce(patientDataReader("oa_patient_pharmacie_id"), 0)
+            instancePatient.Taille = Coalesce(patientDataReader("oa_patient_taille"), 0)
         End If
     End Sub
 
@@ -232,6 +233,7 @@ Module PatientDao
         instancePatient.PatientGenre = ""
         instancePatient.Profession = ""
         instancePatient.PharmacienId = 0
+        instancePatient.Taille = 0
     End Sub
 
     Public Function NonExistencePatientNIR(NIR As Int64, PatientId As Integer) As Boolean
@@ -348,6 +350,34 @@ Module PatientDao
 
         With cmd.Parameters
             .AddWithValue("@date", Date.Now.ToString("yyyy-MM-dd"))
+            .AddWithValue("@patientId", patientId.ToString)
+        End With
+
+        Try
+            conxn.Open()
+            da.UpdateCommand = cmd
+            da.UpdateCommand.ExecuteNonQuery()
+        Catch ex As Exception
+            MessageBox.Show(ex.Message)
+            codeRetour = False
+        Finally
+            conxn.Close()
+        End Try
+        Return codeRetour
+    End Function
+
+    'Modification taille
+    Friend Function ModificationPatientTaille(patientId As Integer, taille As Integer) As Boolean
+        Dim da As SqlDataAdapter = New SqlDataAdapter()
+        Dim codeRetour As Boolean = True
+
+        Dim SQLstring As String = "UPDATE oasis.oa_patient SET oa_patient_taille = @taille WHERE oa_patient_id = @patientId"
+
+        Dim conxn As New SqlConnection(getConnectionString())
+        Dim cmd As New SqlCommand(SQLstring, conxn)
+
+        With cmd.Parameters
+            .AddWithValue("@taille", taille)
             .AddWithValue("@patientId", patientId.ToString)
         End With
 

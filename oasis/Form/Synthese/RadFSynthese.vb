@@ -86,6 +86,7 @@ Public Class RadFSynthese
         If IsNumeric(LongueurStringAllergieString) Then
             LongueurStringAllergie = CInt(LongueurStringAllergieString)
         Else
+            CreateLog("Paramètre application 'longueurStringAllergie' non trouvé !", "Synthese", LogDao.EnumTypeLog.ERREUR.ToString)
             LongueurStringAllergie = 12
         End If
     End Sub

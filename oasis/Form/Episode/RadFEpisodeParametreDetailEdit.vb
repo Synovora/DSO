@@ -1,6 +1,7 @@
 ﻿Imports Telerik.WinControls
 Imports Telerik.WinControls.UI
 Imports Oasis_Common
+Imports System.Configuration
 
 Public Class RadFEpisodeParametreDetailEdit
     Private _SelectedEpisodeId As Long
@@ -41,6 +42,10 @@ Public Class RadFEpisodeParametreDetailEdit
 
     Dim FinChargementParametres As Boolean = False
 
+    Dim ParametreIdTaille As Long
+    Dim AgeAdulteHomme As Integer
+    Dim AgeAdulteFemme As Integer
+
     Private Sub RadFParametreDetailEdit_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         Me.RadDesktopAlert1.Popup.AlertElement.CaptionElement.TextAndButtonsElement.TextElement.ForeColor = Color.Red
         Me.RadDesktopAlert1.Popup.AlertElement.CaptionElement.CaptionGrip.BackColor = Color.DarkBlue
@@ -51,10 +56,39 @@ Public Class RadFEpisodeParametreDetailEdit
         Me.RadDesktopAlert1.Popup.AlertElement.GradientStyle = GradientStyles.Solid
         Me.RadDesktopAlert1.Popup.AlertElement.BorderColor = Color.DarkBlue
 
+        ChargementParametreApplication()
+
         afficheTitleForm(Me, "Saisie paramètres")
         Me.Width = 491
         ChargementParametres()
 
+    End Sub
+
+    Private Sub ChargementParametreApplication()
+        'Récupération du nom de l'organisation dans les paramètres de l'application
+        Dim ParametreIdTailleString As String = ConfigurationManager.AppSettings("ParametreIdTaille")
+        If IsNumeric(ParametreIdTailleString) Then
+            ParametreIdTaille = CInt(ParametreIdTailleString)
+        Else
+            ParametreIdTaille = 2
+            CreateLog("Paramètre application 'ParametreIdTaille' non trouvé !", Me.Name, LogDao.EnumTypeLog.ERREUR.ToString)
+        End If
+
+        Dim AgeAdulteHommeString As String = ConfigurationManager.AppSettings("AgeAdulteHomme")
+        If IsNumeric(AgeAdulteHommeString) Then
+            AgeAdulteHomme = CInt(AgeAdulteHommeString)
+        Else
+            AgeAdulteHomme = 15
+            CreateLog("Paramètre application 'AgeAdulteHomme' non trouvé !", Me.Name, LogDao.EnumTypeLog.ERREUR.ToString)
+        End If
+
+        Dim AgeAdulteFemmeString As String = ConfigurationManager.AppSettings("AgeAdulteFemme")
+        If IsNumeric(AgeAdulteFemmeString) Then
+            AgeAdulteFemme = CInt(AgeAdulteFemmeString)
+        Else
+            AgeAdulteFemme = 20
+            CreateLog("Paramètre application 'AgeAdulteFemme' non trouvé !", Me.Name, LogDao.EnumTypeLog.ERREUR.ToString)
+        End If
     End Sub
 
     Private Sub ChargementParametres()
@@ -252,7 +286,7 @@ Public Class RadFEpisodeParametreDetailEdit
         For Each rowInfo As GridViewRowInfo In RadGridViewParm.Rows
             Dim valeurInput As Decimal = 0
             Dim valeur As Decimal = 0
-            Dim id As Long
+            Dim id, parametreId As Long
             For Each cellInfo As GridViewCellInfo In rowInfo.Cells
                 If (cellInfo.ColumnInfo.Name = "valeurInput") Then
                     If cellInfo.Value <> Nothing Then
@@ -275,11 +309,34 @@ Public Class RadFEpisodeParametreDetailEdit
                         id = 0
                     End If
                 End If
+                If (cellInfo.ColumnInfo.Name = "parametre_id") Then
+                    If cellInfo.Value <> Nothing Then
+                        parametreId = cellInfo.Value
+                    Else
+                        parametreId = 0
+                    End If
+                End If
             Next
             If valeurInput <> valeur Then
                 'Mise à jour du paramètre
                 'Console.WriteLine("Id : " & id.ToString & " Valeur saisie : " & valeurInput.ToString & " valeur initiale : " & valeur.ToString)
                 episodeParametreDao.ModificationValeurEpisodeParametre(id, valeurInput)
+                If parametreId = ParametreIdTaille Then
+                    Select Case SelectedPatient.PatientGenreId
+                        Case "M"
+                            If SelectedPatient.PatientAgeEnAnnee >= AgeAdulteHomme Then
+                                PatientDao.ModificationPatientTaille(SelectedPatient.patientId, valeurInput)
+                            End If
+                        Case "F"
+                            If SelectedPatient.PatientAgeEnAnnee >= AgeAdulteFemme Then
+                                PatientDao.ModificationPatientTaille(SelectedPatient.patientId, valeurInput)
+                            End If
+                        Case Else
+                            If SelectedPatient.PatientAgeEnAnnee >= AgeAdulteHomme Then
+                                PatientDao.ModificationPatientTaille(SelectedPatient.patientId, valeurInput)
+                            End If
+                    End Select
+                End If
                 MiseAJour = True
             End If
         Next
