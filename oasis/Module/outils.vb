@@ -180,6 +180,8 @@ Friend Module outils
         Else
             Dim lJour = CalculAgeEnJour(DateNaissance)
             lJour += 5
+            Dim lJourRestant = lJour Mod 30.4375
+            lJour = lJour - lJourRestant
             lMois = lJour \ 30.4375
         End If
         Select Case lMois
