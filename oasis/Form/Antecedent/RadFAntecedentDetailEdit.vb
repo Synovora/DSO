@@ -1281,6 +1281,11 @@ Public Class RadFAntecedentDetailEdit
         End If
     End Sub
 
+
+    Private Sub RadBtnCopierALD_Click(sender As Object, e As EventArgs) Handles RadBtnCopierALD.Click
+        TxtAntecedentDescription.Text = Lblcim10Description.Text
+    End Sub
+
     Private Sub LockDiagnostic()
         ChkDiagnosticConfirme.Checked = True
         ChkDiagnosticConfirme.Enabled = False

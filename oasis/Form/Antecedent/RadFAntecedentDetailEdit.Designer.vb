@@ -95,6 +95,7 @@ Partial Class RadFAntecedentDetailEdit
         Me.Lblcim10Description = New System.Windows.Forms.Label()
         Me.LblAldDescription = New System.Windows.Forms.Label()
         Me.Label11 = New System.Windows.Forms.Label()
+        Me.RadBtnCopierALD = New Telerik.WinControls.UI.RadButton()
         CType(Me.RadGroupBoxEtatCivil, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.RadGroupBoxEtatCivil.SuspendLayout()
         CType(Me.GbxPrincipal, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -111,6 +112,7 @@ Partial Class RadFAntecedentDetailEdit
         CType(Me.RadChkAldDemandeEnCours, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.RadChkAldValide, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.RadBtnSelectionAldCim10, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.RadBtnCopierALD, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
@@ -699,6 +701,7 @@ Partial Class RadFAntecedentDetailEdit
         '
         Me.RadGbxAld.AccessibleRole = System.Windows.Forms.AccessibleRole.Grouping
         Me.RadGbxAld.BackColor = System.Drawing.SystemColors.GradientInactiveCaption
+        Me.RadGbxAld.Controls.Add(Me.RadBtnCopierALD)
         Me.RadGbxAld.Controls.Add(Me.LblAldDateDemandeEnCours)
         Me.RadGbxAld.Controls.Add(Me.DteAldDateDemande)
         Me.RadGbxAld.Controls.Add(Me.LblLabelAldDemandeEnCours)
@@ -844,6 +847,14 @@ Partial Class RadFAntecedentDetailEdit
         Me.Label11.TabIndex = 76
         Me.Label11.Text = "ALD (DRC)"
         '
+        'RadBtnCopierALD
+        '
+        Me.RadBtnCopierALD.Location = New System.Drawing.Point(726, 47)
+        Me.RadBtnCopierALD.Name = "RadBtnCopierALD"
+        Me.RadBtnCopierALD.Size = New System.Drawing.Size(182, 24)
+        Me.RadBtnCopierALD.TabIndex = 81
+        Me.RadBtnCopierALD.Text = "Copier la dénomination de l'ALD"
+        '
         'RadFAntecedentDetailEdit
         '
         Me.AcceptButton = Me.RadBtnValidation
@@ -896,6 +907,7 @@ Partial Class RadFAntecedentDetailEdit
         CType(Me.RadChkAldDemandeEnCours, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.RadChkAldValide, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.RadBtnSelectionAldCim10, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.RadBtnCopierALD, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
         Me.PerformLayout()
@@ -974,5 +986,6 @@ Partial Class RadFAntecedentDetailEdit
     Friend WithEvents LblALDDateDebut As Label
     Friend WithEvents DteALDDateFin As DateTimePicker
     Friend WithEvents DteALDDateDebut As DateTimePicker
+    Friend WithEvents RadBtnCopierALD As Telerik.WinControls.UI.RadButton
 End Class
 

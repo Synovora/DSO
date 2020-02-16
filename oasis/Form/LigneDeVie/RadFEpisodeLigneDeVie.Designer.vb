@@ -693,7 +693,7 @@ Partial Class RadFEpisodeLigneDeVie
         Me.RadBtnConfiguration.Name = "RadBtnConfiguration"
         Me.RadBtnConfiguration.Size = New System.Drawing.Size(213, 24)
         Me.RadBtnConfiguration.TabIndex = 26
-        Me.RadBtnConfiguration.Text = "Sauvegarder configuration"
+        Me.RadBtnConfiguration.Text = "Sauvegarder la configuration"
         '
         'RadBtnCreationEpisodeParametre
         '
