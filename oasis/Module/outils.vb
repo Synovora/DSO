@@ -5,6 +5,8 @@ Imports Telerik.WinControls.UI
 
 Friend Module outils
 
+    Public Const JoursAAjouterPourCalculAgePreScolaire As Integer = 4
+
     Dim logDao As New LogDao
     Dim log As Log
 
@@ -179,7 +181,7 @@ Friend Module outils
             PatientAn = lMois / 12
         Else
             Dim lJour = CalculAgeEnJour(DateNaissance)
-            lJour += 5
+            lJour += JoursAAjouterPourCalculAgePreScolaire
             Dim lJourRestant = lJour Mod 30.4375
             lJour = lJour - lJourRestant
             lMois = lJour \ 30.4375

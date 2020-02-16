@@ -1471,13 +1471,13 @@ Public Class RadFEpisodeDetail
 
     Private Sub ControleMAJTypeConclusionIDE()
         If episode.TypeProfil = EpisodeDao.EnumTypeProfil.PARAMEDICAL.ToString Then
-            'Si demande d'avis, conclusion IDE sur demande d'avis pas d'autre option
-            If ControleDemandeAvisMedicalExiste = True Then
+            'Si demande d'avis, conclusion IDE obligatoirement sur demande d'avis
+            If ControleDemandeAvisMedicalExiste = True Then 'Un épisode paramédical est considéré sur demande d'avis si Workflow de demande d'avis et/ou si observation libre et/ou su conclusion médicale
                 'Boutons radio non modifiables
                 RadioBtnDemandeAvis.Enabled = False
                 RadioBtnRolePropre.Enabled = False
                 RadioBtnSurProtocole.Enabled = False
-                'Si l'épisode n'avait pas la même option, on met à jour l'épisode
+                'Si l'épisode n'avait pas la même valeur, on met à jour l'épisode
                 If episode.ConclusionIdeType <> EpisodeDao.EnumTypeConclusionParamedicale.DEMANDE_AVIS.ToString Then
                     RadioBtnDemandeAvis.Checked = True
                     episode.ConclusionIdeType = EpisodeDao.EnumTypeConclusionParamedicale.DEMANDE_AVIS.ToString
@@ -1492,6 +1492,7 @@ Public Class RadFEpisodeDetail
                     RadioBtnDemandeAvis.Enabled = False
                     RadioBtnRolePropre.Enabled = False
                     RadioBtnSurProtocole.Enabled = False
+                    'L'épisode est a minima sur protocole, mais l'IDE peut le déclarer sur demande d'avis
                     If Not (episode.ConclusionIdeType = EpisodeDao.EnumTypeConclusionParamedicale.SUR_PROTOCOLE.ToString OrElse
                             episode.ConclusionIdeType = EpisodeDao.EnumTypeConclusionParamedicale.DEMANDE_AVIS.ToString) Then
                         RadioBtnSurProtocole.Checked = True
@@ -1510,7 +1511,7 @@ Public Class RadFEpisodeDetail
                 End If
                 RadGrpConclusionIDE.Show()
             End If
-            'Si rien de coché, alors rôle propre par défaut
+            'Si l'épisode n'avait pas de valeur de définie, alors rôle propre par défaut
             If RadioBtnSurProtocole.Checked = False AndAlso RadioBtnRolePropre.Checked = False AndAlso RadioBtnDemandeAvis.Checked = False Then
                 RadioBtnRolePropre.Checked = True
                 episode.ConclusionIdeType = EpisodeDao.EnumTypeConclusionParamedicale.ROLE_PROPRE.ToString
@@ -1565,6 +1566,7 @@ Public Class RadFEpisodeDetail
         'Booléen pour déterminer si la conclusion médicale existe (au - un contexte)
         If episodeContexteDt.Rows.Count > 0 Then
             ControleConclusionMedicaleExiste = True
+            ControleDemandeAvisMedicalExiste = True  'Pour un épisode Paramédical, On considère que l'épisode est sur demande d'avis quand il y a une conclusion médicale
         End If
 
         RadGridViewContexteEpisode.Rows.Clear()

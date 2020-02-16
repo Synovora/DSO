@@ -62,7 +62,7 @@ Public Class EpisodeProtocoleCollaboratifDao
             Case EpisodeDao.EnumTypeActiviteEpisodeCode.PREVENTION_ENFANT_PRE_SCOLAIRE
                 'Calcul âge enfant en jour
                 agePatientEnJour = outils.CalculAgeEnJour(patient.PatientDateNaissance)
-                agePatientEnJour += 5
+                agePatientEnJour += outils.JoursAAjouterPourCalculAgePreScolaire
             Case EpisodeDao.EnumTypeActiviteEpisodeCode.PREVENTION_ENFANT_SCOLAIRE
                 'Calcul âge enfant en année
                 agePatientEnAnnee = outils.CalculAgeEnAnnee(patient.PatientDateNaissance)
@@ -219,7 +219,7 @@ Public Class EpisodeProtocoleCollaboratifDao
             Case EpisodeDao.EnumTypeActiviteEpisodeCode.PREVENTION_ENFANT_PRE_SCOLAIRE
                 'Calcul âge enfant en jour
                 agePatientEnJour = outils.CalculAgeEnJour(patient.PatientDateNaissance)
-                agePatientEnJour += 5
+                agePatientEnJour += outils.JoursAAjouterPourCalculAgePreScolaire
             Case EpisodeDao.EnumTypeActiviteEpisodeCode.PREVENTION_ENFANT_SCOLAIRE
                 'Calcul âge enfant en année
                 agePatientEnAnnee = outils.CalculAgeEnAnnee(patient.PatientDateNaissance)
