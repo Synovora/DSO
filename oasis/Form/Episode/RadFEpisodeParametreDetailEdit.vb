@@ -423,6 +423,9 @@ Public Class RadFEpisodeParametreDetailEdit
                 episodeParametre.Ordre = SelectedParametre.Ordre
                 episodeParametre.ParametreAjoute = True
                 episodeParametre.Inactif = False
+                If SelectedParametre.Id = ParametreIdTaille Then
+                    episodeParametre.Valeur = SelectedPatient.Taille
+                End If
                 episodeParametreDao.CreateEpisodeParametre(episodeParametre)
             Catch ex As Exception
                 CreateLog(ex.ToString, Me.Name, LogDao.EnumTypeLog.ERREUR.ToString)

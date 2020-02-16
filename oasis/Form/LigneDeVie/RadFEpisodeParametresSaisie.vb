@@ -145,6 +145,12 @@ Public Class RadFEpisodeParametresSaisie
             EpisodeParametreId = parmDataTable.Rows(i)("episode_parametre_id")
             valeurString = ""
 
+            If ParametreId = 2 Then
+                If Valeur = 0 Then
+                    Valeur = SelectedPatient.Taille
+                End If
+            End If
+
             Select Case entier
                 Case 1
                     Select Case nombreDecimal
@@ -190,6 +196,9 @@ Public Class RadFEpisodeParametresSaisie
                     LblLabelTaille.Text = "Taille"
                     LblParmTaille.Text = valeurString & " " & unite
                     valeurTaille = Valeur
+                    If valeurTaille = 0 Then
+                        valeurTaille = SelectedPatient.Taille
+                    End If
                 Case 3
                     LblLabelIMC.Text = "IMC"
                     uniteIMC = unite

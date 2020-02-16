@@ -523,6 +523,12 @@ Public Class RadFEpisodeDetail
             EpisodeParametreId = parmDataTable.Rows(i)("episode_parametre_id")
             valeurString = ""
 
+            If ParametreId = 2 Then
+                If Valeur = 0 Then
+                    Valeur = SelectedPatient.Taille
+                End If
+            End If
+
             Select Case entier
                 Case 1
                     Select Case nombreDecimal
