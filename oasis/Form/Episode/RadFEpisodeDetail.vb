@@ -2154,7 +2154,7 @@ Public Class RadFEpisodeDetail
 
             Dim DescriptionDrcAld As String = ""
             If AldValideOK Or AldDemandeEnCours Then
-                DescriptionDrcAld = Coalesce(antecedentDataTable.Rows(i)("oa_ald_cim10_description"), "")
+                'DescriptionDrcAld = Coalesce(antecedentDataTable.Rows(i)("oa_ald_cim10_description"), "")
             End If
 
             RadAntecedentDataGridView.Rows(iGrid).Cells("antecedent").Value = indentation & diagnostic & DescriptionDrcAld & " " & antecedentDescription
