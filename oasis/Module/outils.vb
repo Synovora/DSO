@@ -188,7 +188,11 @@ Friend Module outils
         End If
         Select Case lMois
             Case 0 To 35
-                Age = "(" & lMois & " mois)"
+                If lMois <> 0 Then
+                    Age = "(" & lMois & " mois)"
+                Else
+                    Age = "(Nouveau né)"
+                End If
             Case 36 To 119
                 Age = "(" & PatientAn & " ans " & PatientMoisRestant & " mois)"
             Case Else
