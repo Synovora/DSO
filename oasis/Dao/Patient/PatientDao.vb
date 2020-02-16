@@ -177,23 +177,7 @@ Module PatientDao
             If patientDataReader("oa_patient_date_naissance") Is DBNull.Value Then
                 instancePatient.PatientAge = "Inconnu"
             Else
-                Dim lMois As Integer
-                Dim PatientMoisRestant, PatientAn As Integer
-                lMois = CalculAgeEnmois(instancePatient.PatientDateNaissance)
-                If lMois > 36 Then
-                    PatientMoisRestant = lMois Mod 12
-                    lMois = lMois - PatientMoisRestant
-                    PatientAn = lMois / 12
-                    instancePatient.PatientAgeEnAnnee = PatientAn
-                End If
-                Select Case lMois
-                    Case 0 To 35
-                        instancePatient.PatientAge = "(" & lMois & " mois)"
-                    Case 36 To 119
-                        instancePatient.PatientAge = "(" & PatientAn & " ans " & PatientMoisRestant & " mois)"
-                    Case Else
-                        instancePatient.PatientAge = "(" & PatientAn.ToString & " ans)"
-                End Select
+                instancePatient.PatientAge = CalculAgeEnAnneeEtMoisString(instancePatient.PatientDateNaissance)
             End If
             Dim genre_description As String = Table_genre.GetGenreDescription(instancePatient.PatientGenreId)
             If genre_description = "" Then
