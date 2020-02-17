@@ -228,7 +228,7 @@ Public Class EpisodeDao
         Dim dateDebutRecherche As Date = dateDebut.AddDays(1)
 
 
-        SQLString = "SELECT E.episode_id, patient_id, type, type_activite, description_activite, type_profil," &
+        SQLString = "SELECT E.episode_id, patient_id, type, type_activite, description_activite, type_profil," & vbCrLf &
                     " commentaire, date_creation, observation_paramedical, observation_medical, etat" & vbCrLf
 
         If ligneDeVie.ParametreId1 <> 0 Then
@@ -257,10 +257,10 @@ Public Class EpisodeDao
         End If
 
         'Début Claude WHERE
-        ClauseWhereString = " FROM oasis.oa_episode E" &
-                    " WHERE patient_id = " & patientId.ToString &
-                    " And (inactif = 'False' OR inactif is Null)" &
-                    " AND date_creation <= '" & dateDebutRecherche.ToString("yyyy-MM-dd") & "'" &
+        ClauseWhereString = " FROM oasis.oa_episode E" & vbCrLf &
+                    " WHERE patient_id = " & patientId.ToString & vbCrLf &
+                    " AND (inactif = 'False' OR inactif is Null)" & vbCrLf &
+                    " AND date_creation <= '" & dateDebutRecherche.ToString("yyyy-MM-dd") & "'" & vbCrLf &
                     " AND date_creation >= '" & dateFin.Date.ToString("yyyy-MM-dd") & "'" & vbCrLf
 
         'Type
