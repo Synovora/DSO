@@ -222,16 +222,44 @@ Public Class EpisodeDao
     End Function
 
     Friend Function GetAllEpisodeByPatient(patientId As Long, dateDebut As Date, dateFin As Date, ligneDeVie As LigneDeVie) As DataTable
-        Dim SQLString, TypeEpisodeString, ActiviteEpisodeString, ProfilEpisodeString, OrderByString As String
+        Dim SQLString, ClauseWhereString, TypeEpisodeString, ActiviteEpisodeString, ProfilEpisodeString, OrderByString As String
+        Dim Parametre1String, Parametre2String, Parametre3String, Parametre4String, Parametre5String As String
         Dim RechercherTypeEpisode, RechercherActiviteEpisode, RechercherprofilEpisode As Boolean
         Dim dateDebutRecherche As Date = dateDebut.AddDays(1)
 
 
-        SQLString = "SELECT episode_id, patient_id, type, type_activite, description_activite, type_profil," &
-                    " commentaire, date_creation, observation_paramedical, observation_medical, etat" &
-                    " FROM oasis.oa_episode" &
+        SQLString = "SELECT E.episode_id, patient_id, type, type_activite, description_activite, type_profil," &
+                    " commentaire, date_creation, observation_paramedical, observation_medical, etat" & vbCrLf
+
+        If ligneDeVie.ParametreId1 <> 0 Then
+            Parametre1String = ",(SELECT TOP (1) valeur FROM oasis.oa_episode_parametre PE WHERE PE.parametre_id = " & ligneDeVie.ParametreId1.ToString &
+                                " AND PE.episode_id = E.episode_id) as ValeurParam1" & vbCrLf
+        End If
+
+        If ligneDeVie.ParametreId2 <> 0 Then
+            Parametre2String = ",(SELECT TOP (1) valeur FROM oasis.oa_episode_parametre PE WHERE PE.parametre_id = " & ligneDeVie.ParametreId2.ToString &
+                                " AND PE.episode_id = E.episode_id) as ValeurParam2" & vbCrLf
+        End If
+
+        If ligneDeVie.ParametreId3 <> 0 Then
+            Parametre3String = ",(SELECT TOP (1) valeur FROM oasis.oa_episode_parametre PE WHERE PE.parametre_id = " & ligneDeVie.ParametreId3.ToString &
+                                " AND PE.episode_id = E.episode_id) as ValeurParam3" & vbCrLf
+        End If
+
+        If ligneDeVie.ParametreId4 <> 0 Then
+            Parametre4String = ",(SELECT TOP (1) valeur FROM oasis.oa_episode_parametre PE WHERE PE.parametre_id = " & ligneDeVie.ParametreId4.ToString &
+                                " AND PE.episode_id = E.episode_id) as ValeurParam4" & vbCrLf
+        End If
+
+        If ligneDeVie.ParametreId5 <> 0 Then
+            Parametre5String = ",(SELECT TOP (1) valeur FROM oasis.oa_episode_parametre PE WHERE PE.parametre_id = " & ligneDeVie.ParametreId5.ToString &
+                                " AND PE.episode_id = E.episode_id) as ValeurParam5" & vbCrLf
+        End If
+
+        'Début Claude WHERE
+        ClauseWhereString = " FROM oasis.oa_episode E" &
                     " WHERE patient_id = " & patientId.ToString &
-                    " AND (inactif = 'False' OR inactif is Null)" &
+                    " And (inactif = 'False' OR inactif is Null)" &
                     " AND date_creation <= '" & dateDebutRecherche.ToString("yyyy-MM-dd") & "'" &
                     " AND date_creation >= '" & dateFin.Date.ToString("yyyy-MM-dd") & "'" & vbCrLf
 
@@ -351,6 +379,28 @@ Public Class EpisodeDao
 
         'Order by
         OrderByString = " ORDER BY date_creation DESC"
+
+        If ligneDeVie.ParametreId1 <> 0 Then
+            SQLString += Parametre1String
+        End If
+
+        If ligneDeVie.ParametreId2 <> 0 Then
+            SQLString += Parametre2String
+        End If
+
+        If ligneDeVie.ParametreId3 <> 0 Then
+            SQLString += Parametre3String
+        End If
+
+        If ligneDeVie.ParametreId4 <> 0 Then
+            SQLString += Parametre4String
+        End If
+
+        If ligneDeVie.ParametreId5 <> 0 Then
+            SQLString += Parametre5String
+        End If
+
+        SQLString += ClauseWhereString
 
         If RechercherTypeEpisode = True Then
             SQLString += TypeEpisodeString

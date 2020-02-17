@@ -200,18 +200,33 @@ Public Class RadFEpisodeLigneDeVie
 
             If patientParametreLdv.Parametre1 <> 0 Then
                 listeParametreaAfficher.Add(patientParametreLdv.Parametre1)
+                ligneDeVie.ParametreId1 = patientParametreLdv.Parametre1
+            Else
+                ligneDeVie.ParametreId1 = 0
             End If
             If patientParametreLdv.Parametre2 <> 0 Then
                 listeParametreaAfficher.Add(patientParametreLdv.Parametre2)
+                ligneDeVie.ParametreId2 = patientParametreLdv.Parametre2
+            Else
+                ligneDeVie.ParametreId2 = 0
             End If
             If patientParametreLdv.Parametre3 <> 0 Then
                 listeParametreaAfficher.Add(patientParametreLdv.Parametre3)
+                ligneDeVie.ParametreId3 = patientParametreLdv.Parametre3
+            Else
+                ligneDeVie.ParametreId3 = 0
             End If
             If patientParametreLdv.Parametre4 <> 0 Then
                 listeParametreaAfficher.Add(patientParametreLdv.Parametre4)
+                ligneDeVie.ParametreId4 = patientParametreLdv.Parametre4
+            Else
+                ligneDeVie.ParametreId4 = 0
             End If
             If patientParametreLdv.Parametre5 <> 0 Then
                 listeParametreaAfficher.Add(patientParametreLdv.Parametre5)
+                ligneDeVie.ParametreId5 = patientParametreLdv.Parametre5
+            Else
+                ligneDeVie.ParametreId5 = 0
             End If
 
             AfficheParametres()
@@ -289,6 +304,7 @@ Public Class RadFEpisodeLigneDeVie
         Dim iGrid As Integer = -1 'Indice pour alimenter la Grid qui peut comporter moins d'occurrences que le DataTable
         Dim dateCreation As Date
         Dim conclusionMedicale As String
+        Dim ValeurParametre As Decimal
         Dim rowCount As Integer = dt.Rows.Count - 1
 
         Dim etatCode As String
@@ -356,12 +372,9 @@ Public Class RadFEpisodeLigneDeVie
             If RadGridViewEpisode.Columns.Item("parametre1").IsVisible = True Then
                 RadGridViewEpisode.Rows(iGrid).Cells("parametre1").Value = ""
                 If Parametre1Id <> 0 Then
-                    Dim episodeParametre As EpisodeParametre
-                    episodeParametre = episodeParametreDao.GetEpisodeParametreByParametreIdAndEpisodeId(Parametre1Id, episodeId)
-                    If episodeParametre.Id <> 0 Then
-                        If episodeParametre.Valeur <> 0 Then
-                            RadGridViewEpisode.Rows(iGrid).Cells("parametre1").Value = episodeParametre.Valeur
-                        End If
+                    ValeurParametre = Coalesce(dt.Rows(i)("ValeurParam1"), 0)
+                    If ValeurParametre <> 0 Then
+                        RadGridViewEpisode.Rows(iGrid).Cells("parametre1").Value = ValeurParametre
                     End If
                 End If
             End If
@@ -369,12 +382,9 @@ Public Class RadFEpisodeLigneDeVie
             If RadGridViewEpisode.Columns.Item("parametre2").IsVisible = True Then
                 RadGridViewEpisode.Rows(iGrid).Cells("parametre2").Value = ""
                 If Parametre2Id <> 0 Then
-                    Dim episodeParametre As EpisodeParametre
-                    episodeParametre = episodeParametreDao.GetEpisodeParametreByParametreIdAndEpisodeId(Parametre2Id, episodeId)
-                    If episodeParametre.Id <> 0 Then
-                        If episodeParametre.Valeur <> 0 Then
-                            RadGridViewEpisode.Rows(iGrid).Cells("parametre2").Value = episodeParametre.Valeur
-                        End If
+                    ValeurParametre = Coalesce(dt.Rows(i)("ValeurParam2"), 0)
+                    If ValeurParametre <> 0 Then
+                        RadGridViewEpisode.Rows(iGrid).Cells("parametre2").Value = ValeurParametre
                     End If
                 End If
             End If
@@ -382,12 +392,9 @@ Public Class RadFEpisodeLigneDeVie
             If RadGridViewEpisode.Columns.Item("parametre3").IsVisible = True Then
                 RadGridViewEpisode.Rows(iGrid).Cells("parametre3").Value = ""
                 If Parametre3Id <> 0 Then
-                    Dim episodeParametre As EpisodeParametre
-                    episodeParametre = episodeParametreDao.GetEpisodeParametreByParametreIdAndEpisodeId(Parametre3Id, episodeId)
-                    If episodeParametre.Id <> 0 Then
-                        If episodeParametre.Valeur <> 0 Then
-                            RadGridViewEpisode.Rows(iGrid).Cells("parametre3").Value = episodeParametre.Valeur
-                        End If
+                    ValeurParametre = Coalesce(dt.Rows(i)("ValeurParam3"), 0)
+                    If ValeurParametre <> 0 Then
+                        RadGridViewEpisode.Rows(iGrid).Cells("parametre3").Value = ValeurParametre
                     End If
                 End If
             End If
@@ -395,12 +402,9 @@ Public Class RadFEpisodeLigneDeVie
             If RadGridViewEpisode.Columns.Item("parametre4").IsVisible = True Then
                 RadGridViewEpisode.Rows(iGrid).Cells("parametre4").Value = ""
                 If Parametre4Id <> 0 Then
-                    Dim episodeParametre As EpisodeParametre
-                    episodeParametre = episodeParametreDao.GetEpisodeParametreByParametreIdAndEpisodeId(Parametre4Id, episodeId)
-                    If episodeParametre.Id <> 0 Then
-                        If episodeParametre.Valeur <> 0 Then
-                            RadGridViewEpisode.Rows(iGrid).Cells("parametre4").Value = episodeParametre.Valeur
-                        End If
+                    ValeurParametre = Coalesce(dt.Rows(i)("ValeurParam4"), 0)
+                    If ValeurParametre <> 0 Then
+                        RadGridViewEpisode.Rows(iGrid).Cells("parametre4").Value = ValeurParametre
                     End If
                 End If
             End If
@@ -408,12 +412,9 @@ Public Class RadFEpisodeLigneDeVie
             If RadGridViewEpisode.Columns.Item("parametre5").IsVisible = True Then
                 RadGridViewEpisode.Rows(iGrid).Cells("parametre5").Value = ""
                 If Parametre5Id <> 0 Then
-                    Dim episodeParametre As EpisodeParametre
-                    episodeParametre = episodeParametreDao.GetEpisodeParametreByParametreIdAndEpisodeId(Parametre5Id, episodeId)
-                    If episodeParametre.Id <> 0 Then
-                        If episodeParametre.Valeur <> 0 Then
-                            RadGridViewEpisode.Rows(iGrid).Cells("parametre5").Value = episodeParametre.Valeur
-                        End If
+                    ValeurParametre = Coalesce(dt.Rows(i)("ValeurParam5"), 0)
+                    If ValeurParametre <> 0 Then
+                        RadGridViewEpisode.Rows(iGrid).Cells("parametre5").Value = ValeurParametre
                     End If
                 End If
             End If

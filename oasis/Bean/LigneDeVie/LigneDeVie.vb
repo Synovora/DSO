@@ -12,6 +12,11 @@
     Private _activiteSocial As Boolean
     Private _profilMedical As Boolean
     Private _profilParamedical As Boolean
+    Private _parametreId1 As Long
+    Private _parametreId2 As Long
+    Private _parametreId3 As Long
+    Private _parametreId4 As Long
+    Private _parametreId5 As Long
 
     Public Property TypeConsultation As Boolean
         Get
@@ -127,6 +132,51 @@
         End Get
         Set(value As Boolean)
             _typeParametre = value
+        End Set
+    End Property
+
+    Public Property ParametreId1 As Long
+        Get
+            Return _parametreId1
+        End Get
+        Set(value As Long)
+            _parametreId1 = value
+        End Set
+    End Property
+
+    Public Property ParametreId2 As Long
+        Get
+            Return _parametreId2
+        End Get
+        Set(value As Long)
+            _parametreId2 = value
+        End Set
+    End Property
+
+    Public Property ParametreId3 As Long
+        Get
+            Return _parametreId3
+        End Get
+        Set(value As Long)
+            _parametreId3 = value
+        End Set
+    End Property
+
+    Public Property ParametreId4 As Long
+        Get
+            Return _parametreId4
+        End Get
+        Set(value As Long)
+            _parametreId4 = value
+        End Set
+    End Property
+
+    Public Property ParametreId5 As Long
+        Get
+            Return _parametreId5
+        End Get
+        Set(value As Long)
+            _parametreId5 = value
         End Set
     End Property
 End Class

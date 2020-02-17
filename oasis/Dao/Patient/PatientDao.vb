@@ -178,6 +178,7 @@ Module PatientDao
                 instancePatient.PatientAge = "Inconnu"
             Else
                 instancePatient.PatientAge = CalculAgeEnAnneeEtMoisString(instancePatient.PatientDateNaissance)
+                instancePatient.PatientAgeEnAnnee = CalculAgeEnAnnee(instancePatient.PatientDateNaissance)
             End If
             Dim genre_description As String = Table_genre.GetGenreDescription(instancePatient.PatientGenreId)
             If genre_description = "" Then
