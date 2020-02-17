@@ -4491,7 +4491,7 @@ Public Class RadFEpisodeDetail
         Try
             Me.Cursor = Cursors.WaitCursor
             Me.Enabled = False
-            Using frm = New FrmSousEpisode()
+            Using frm = New FrmSousEpisode(Me.SelectedEpisodeId)
                 frm.ShowDialog()
             End Using
         Catch err As Exception

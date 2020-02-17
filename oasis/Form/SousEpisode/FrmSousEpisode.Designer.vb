@@ -1,9 +1,9 @@
-﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
+﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()>
 Partial Class FrmSousEpisode
     Inherits Telerik.WinControls.UI.RadForm
 
     'Form overrides dispose to clean up the component list.
-    <System.Diagnostics.DebuggerNonUserCode()> _
+    <System.Diagnostics.DebuggerNonUserCode()>
     Protected Overrides Sub Dispose(ByVal disposing As Boolean)
         Try
             If disposing AndAlso components IsNot Nothing Then
@@ -20,27 +20,134 @@ Partial Class FrmSousEpisode
     'NOTE: The following procedure is required by the Windows Form Designer
     'It can be modified using the Windows Form Designer.  
     'Do not modify it using the code editor.
-    <System.Diagnostics.DebuggerStepThrough()> _
+    <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
+        Dim GridViewTextBoxColumn1 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
+        Dim GridViewCheckBoxColumn1 As Telerik.WinControls.UI.GridViewCheckBoxColumn = New Telerik.WinControls.UI.GridViewCheckBoxColumn()
+        Dim GridViewDateTimeColumn1 As Telerik.WinControls.UI.GridViewDateTimeColumn = New Telerik.WinControls.UI.GridViewDateTimeColumn()
+        Dim GridViewTextBoxColumn2 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
+        Dim GridViewDateTimeColumn2 As Telerik.WinControls.UI.GridViewDateTimeColumn = New Telerik.WinControls.UI.GridViewDateTimeColumn()
+        Dim GridViewTextBoxColumn3 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
+        Dim GridViewDateTimeColumn3 As Telerik.WinControls.UI.GridViewDateTimeColumn = New Telerik.WinControls.UI.GridViewDateTimeColumn()
+        Dim GridViewTextBoxColumn4 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
+        Dim GridViewTextBoxColumn5 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
+        Dim GridViewTextBoxColumn6 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
+        Dim GridViewTextBoxColumn7 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
+        Dim TableViewDefinition1 As Telerik.WinControls.UI.TableViewDefinition = New Telerik.WinControls.UI.TableViewDefinition()
+        Me.RadPanel1 = New Telerik.WinControls.UI.RadPanel()
         Me.BtnCancel = New Telerik.WinControls.UI.RadButton()
+        Me.RadPanel2 = New Telerik.WinControls.UI.RadPanel()
+        Me.RadSousEpisodeGrid = New Telerik.WinControls.UI.RadGridView()
+        CType(Me.RadPanel1, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.RadPanel1.SuspendLayout()
         CType(Me.BtnCancel, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.RadPanel2, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.RadPanel2.SuspendLayout()
+        CType(Me.RadSousEpisodeGrid, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.RadSousEpisodeGrid.MasterTemplate, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
+        'RadPanel1
+        '
+        Me.RadPanel1.Controls.Add(Me.BtnCancel)
+        Me.RadPanel1.Dock = System.Windows.Forms.DockStyle.Bottom
+        Me.RadPanel1.Location = New System.Drawing.Point(0, 498)
+        Me.RadPanel1.Name = "RadPanel1"
+        Me.RadPanel1.Size = New System.Drawing.Size(1298, 37)
+        Me.RadPanel1.TabIndex = 0
+        '
         'BtnCancel
         '
-        Me.BtnCancel.Location = New System.Drawing.Point(341, 409)
+        Me.BtnCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel
+        Me.BtnCancel.Location = New System.Drawing.Point(1162, 6)
         Me.BtnCancel.Name = "BtnCancel"
-        Me.BtnCancel.Size = New System.Drawing.Size(257, 29)
-        Me.BtnCancel.TabIndex = 0
+        Me.BtnCancel.Size = New System.Drawing.Size(110, 24)
+        Me.BtnCancel.TabIndex = 7
         Me.BtnCancel.Text = "Abandonner"
+        '
+        'RadPanel2
+        '
+        Me.RadPanel2.Controls.Add(Me.RadSousEpisodeGrid)
+        Me.RadPanel2.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.RadPanel2.Location = New System.Drawing.Point(0, 0)
+        Me.RadPanel2.Name = "RadPanel2"
+        Me.RadPanel2.Size = New System.Drawing.Size(1298, 498)
+        Me.RadPanel2.TabIndex = 1
+        '
+        'RadSousEpisodeGrid
+        '
+        Me.RadSousEpisodeGrid.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.RadSousEpisodeGrid.EnableCustomDrawing = True
+        Me.RadSousEpisodeGrid.Location = New System.Drawing.Point(0, 0)
+        '
+        '
+        '
+        Me.RadSousEpisodeGrid.MasterTemplate.AllowAddNewRow = False
+        Me.RadSousEpisodeGrid.MasterTemplate.AllowColumnChooser = False
+        Me.RadSousEpisodeGrid.MasterTemplate.AllowEditRow = False
+        Me.RadSousEpisodeGrid.MasterTemplate.AutoSizeColumnsMode = Telerik.WinControls.UI.GridViewAutoSizeColumnsMode.Fill
+        GridViewTextBoxColumn1.DataType = GetType(Long)
+        GridViewTextBoxColumn1.FieldName = "id"
+        GridViewTextBoxColumn1.HeaderText = "Id"
+        GridViewTextBoxColumn1.IsVisible = False
+        GridViewTextBoxColumn1.Name = "id"
+        GridViewTextBoxColumn1.TextAlignment = System.Drawing.ContentAlignment.MiddleRight
+        GridViewTextBoxColumn1.Width = 43
+        GridViewCheckBoxColumn1.HeaderText = "ALD"
+        GridViewCheckBoxColumn1.Name = "IsAld"
+        GridViewCheckBoxColumn1.ReadOnly = True
+        GridViewCheckBoxColumn1.Width = 28
+        GridViewDateTimeColumn1.HeaderText = "Création"
+        GridViewDateTimeColumn1.Name = "HorodateCreation"
+        GridViewDateTimeColumn1.ReadOnly = True
+        GridViewDateTimeColumn1.Width = 64
+        GridViewTextBoxColumn2.HeaderText = "Par"
+        GridViewTextBoxColumn2.Name = "CreateUser"
+        GridViewTextBoxColumn2.ReadOnly = True
+        GridViewTextBoxColumn2.Width = 131
+        GridViewDateTimeColumn2.HeaderText = "Mise à jour"
+        GridViewDateTimeColumn2.Name = "HorodateLastUpdate"
+        GridViewDateTimeColumn2.ReadOnly = True
+        GridViewDateTimeColumn2.Width = 66
+        GridViewTextBoxColumn3.HeaderText = "Par"
+        GridViewTextBoxColumn3.Name = "LastUpdateUser"
+        GridViewTextBoxColumn3.ReadOnly = True
+        GridViewTextBoxColumn3.Width = 130
+        GridViewDateTimeColumn3.HeaderText = "Validation"
+        GridViewDateTimeColumn3.Name = "HorodateValidate"
+        GridViewDateTimeColumn3.Width = 65
+        GridViewTextBoxColumn4.HeaderText = "Par"
+        GridViewTextBoxColumn4.Name = "ValidateUser"
+        GridViewTextBoxColumn4.Width = 122
+        GridViewTextBoxColumn5.HeaderText = "Type"
+        GridViewTextBoxColumn5.Name = "Type"
+        GridViewTextBoxColumn5.ReadOnly = True
+        GridViewTextBoxColumn5.Width = 207
+        GridViewTextBoxColumn6.HeaderText = "Nom Fichier"
+        GridViewTextBoxColumn6.Name = "NomFichier"
+        GridViewTextBoxColumn6.ReadOnly = True
+        GridViewTextBoxColumn6.Width = 240
+        GridViewTextBoxColumn7.HeaderText = "Commentaire"
+        GridViewTextBoxColumn7.Name = "Commentaire"
+        GridViewTextBoxColumn7.ReadOnly = True
+        GridViewTextBoxColumn7.Width = 233
+        Me.RadSousEpisodeGrid.MasterTemplate.Columns.AddRange(New Telerik.WinControls.UI.GridViewDataColumn() {GridViewTextBoxColumn1, GridViewCheckBoxColumn1, GridViewDateTimeColumn1, GridViewTextBoxColumn2, GridViewDateTimeColumn2, GridViewTextBoxColumn3, GridViewDateTimeColumn3, GridViewTextBoxColumn4, GridViewTextBoxColumn5, GridViewTextBoxColumn6, GridViewTextBoxColumn7})
+        Me.RadSousEpisodeGrid.MasterTemplate.ViewDefinition = TableViewDefinition1
+        Me.RadSousEpisodeGrid.Name = "RadSousEpisodeGrid"
+        Me.RadSousEpisodeGrid.ReadOnly = True
+        Me.RadSousEpisodeGrid.Size = New System.Drawing.Size(1298, 498)
+        Me.RadSousEpisodeGrid.TabIndex = 3
         '
         'FrmSousEpisode
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(1006, 535)
-        Me.Controls.Add(Me.BtnCancel)
+        Me.CancelButton = Me.BtnCancel
+        Me.ClientSize = New System.Drawing.Size(1298, 535)
+        Me.Controls.Add(Me.RadPanel2)
+        Me.Controls.Add(Me.RadPanel1)
+        Me.MinimizeBox = False
         Me.Name = "FrmSousEpisode"
         '
         '
@@ -50,12 +157,21 @@ Partial Class FrmSousEpisode
         Me.ShowInTaskbar = False
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
         Me.Text = "Sous-Episodes"
+        CType(Me.RadPanel1, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.RadPanel1.ResumeLayout(False)
         CType(Me.BtnCancel, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.RadPanel2, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.RadPanel2.ResumeLayout(False)
+        CType(Me.RadSousEpisodeGrid.MasterTemplate, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.RadSousEpisodeGrid, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
 
     End Sub
 
+    Friend WithEvents RadPanel1 As Telerik.WinControls.UI.RadPanel
+    Friend WithEvents RadPanel2 As Telerik.WinControls.UI.RadPanel
+    Friend WithEvents RadSousEpisodeGrid As Telerik.WinControls.UI.RadGridView
     Friend WithEvents BtnCancel As Telerik.WinControls.UI.RadButton
 End Class
 

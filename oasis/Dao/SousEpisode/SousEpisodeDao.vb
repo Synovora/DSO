@@ -15,28 +15,45 @@ Public Class SousEpisodeDao
         Return lst
     End Function
 
-    Public Function getTableSousEpisode(Optional idEpisode As Long = 0) As DataTable
+    Public Function getTableSousEpisode(Optional idEpisode As Long = 0, Optional isComplete As Boolean = False) As DataTable
         Dim SQLString As String
         'Console.WriteLine("----------> getTableSousEpisode")
         SQLString =
             "SELECT " & vbCrLf &
-            "	  id, " & vbCrLf &
-            "     episode_id, " & vbCrLf &
-            "     id_sous_episode_type, " & vbCrLf &
-            "     id_sous_episode_sous_type, " & vbCrLf &
-            "     create_user_id, " & vbCrLf &
-            "     horodate_creation, " & vbCrLf &
-            "     last_update_user_id, " & vbCrLf &
-            "     horodate_last_update, " & vbCrLf &
-            "     validate_user_id, " & vbCrLf &
-            "     horodate_validate, " & vbCrLf &
-            "	  nom_fichier, " & vbCrLf &
-            "	  commentaire, " & vbCrLf &
-            "	  is_ald " & vbCrLf &
-            "FROM [oasis].[oa_sous_episode] " & vbCrLf
+            "	  SE.id, " & vbCrLf &
+            "     SE.episode_id, " & vbCrLf &
+            "     SE.id_sous_episode_type, " & vbCrLf &
+            "     SE.id_sous_episode_sous_type, " & vbCrLf &
+            "     SE.create_user_id, " & vbCrLf &
+            "     SE.horodate_creation, " & vbCrLf &
+            "     SE.last_update_user_id, " & vbCrLf &
+            "     SE.horodate_last_update, " & vbCrLf &
+            "     SE.validate_user_id, " & vbCrLf &
+            "     SE.horodate_validate, " & vbCrLf &
+            "	  SE.nom_fichier, " & vbCrLf &
+            "	  SE.commentaire, " & vbCrLf &
+            "	  SE.is_ald " & vbCrLf
+        If isComplete Then
+            SQLString += "" &
+            ",UC.oa_utilisateur_prenom + ' ' + UC.oa_utilisateur_nom as user_create,  " & vbCrLf &
+            "UU.oa_utilisateur_prenom + ' ' + UU.oa_utilisateur_nom as user_update, " & vbCrLf &
+            "UV.oa_utilisateur_prenom + ' ' + UV.oa_utilisateur_nom as user_validate, " & vbCrLf &
+            "T.libelle as type_libelle, " & vbCrLf &
+            "S.libelle as sous_type_libelle " & vbCrLf
+        End If
+
+        SQLString += "FROM [oasis].[oa_sous_episode] SE " & vbCrLf
+        If isComplete Then
+            SQLString += "" &
+            "Join oasis.oa_r_sous_episode_type T On T.id =SE.id_sous_episode_type " & vbCrLf &
+            "Join oasis.oa_r_sous_episode_sous_type S ON S.id =SE.id_sous_episode_sous_type " & vbCrLf &
+            "Join oasis.oa_utilisateur UC ON UC.oa_utilisateur_id =SE.create_user_id " & vbCrLf &
+            "Left Join oasis.oa_utilisateur UU ON UC.oa_utilisateur_id =SE.last_update_user_id " & vbCrLf &
+            "Left Join oasis.oa_utilisateur UV ON UV.oa_utilisateur_id =SE.validate_user_id " & vbCrLf
+        End If
 
         If idEpisode <> 0 Then
-            SQLString += "WHERE episode_id= @idEpisode " & vbCrLf
+            SQLString += "WHERE SE.episode_id= @idEpisode " & vbCrLf
         End If
 
         'Console.WriteLine(SQLString)
