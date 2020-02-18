@@ -1,4 +1,5 @@
-﻿Imports Oasis_Common
+﻿Imports System.Configuration
+Imports Oasis_Common
 Public Class SousEpisode
     Property Id As Long
     Property EpisodeId As Long
@@ -12,7 +13,11 @@ Public Class SousEpisode
     Property HorodateValidate As DateTime
     Property NomFichier As String
     Property Commentaire As String
-    Property isALD As Boolean
+    Property IsALD As Boolean
+    Property IsReponse As Boolean
+    Property DelaiSinceValidation As Integer
+    Property IsReponseRecue
+
 
     Public Sub New()
     End Sub
@@ -37,6 +42,9 @@ Public Class SousEpisode
         Me.Commentaire = Coalesce(row("commentaire"), "")
 
         Me.isALD = row("is_ald")
+        Me.IsReponse = row("is_reponse")
+        Me.DelaiSinceValidation = Coalesce(row("delai_since_validation"), ConfigurationManager.AppSettings("DelaiDefautReponseSousEpisode"))
+
     End Sub
 
 End Class

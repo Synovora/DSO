@@ -32,7 +32,9 @@ Public Class SousEpisodeDao
             "     SE.horodate_validate, " & vbCrLf &
             "	  SE.nom_fichier, " & vbCrLf &
             "	  SE.commentaire, " & vbCrLf &
-            "	  SE.is_ald " & vbCrLf
+            "	  SE.is_ald, " & vbCrLf &
+            "	  SE.is_reponse, " & vbCrLf &
+            "	  SE.delai_since_validation " & vbCrLf
         If isComplete Then
             SQLString += "" &
             ",UC.oa_utilisateur_prenom + ' ' + UC.oa_utilisateur_nom as user_create,  " & vbCrLf &
@@ -127,9 +129,9 @@ Public Class SousEpisodeDao
         Try
             Dim SQLstring As String = "INSERT INTO oa_sous_episode " &
                     "(episode_id , id_sous_episode_type , id_sous_episode_sous_type , create_user_id , horodate_creation , " &
-                    " nom_fichier , commentaire , is_ald])" &
+                    " nom_fichier , commentaire , is_ald , is_reponse, delai_since_validation )" &
             " VALUES (@episode_id, @id_sous_episode_type, @id_sous_episode_sous_type, @create_user_id, @horodate_creation, " &
-                     "@nom_fichier, @commentaire, @is_ald); SELECT SCOPE_IDENTITY()"
+                     "@nom_fichier, @commentaire, @is_ald, @is_reponse, @delai_since_validation); SELECT SCOPE_IDENTITY()"
 
             sousEpisode.HorodateCreation = DateTime.Now
             Dim cmd As New SqlCommand(SQLstring, con, transaction)
@@ -142,7 +144,9 @@ Public Class SousEpisodeDao
 
                 .AddWithValue("@nom_fichier", sousEpisode.NomFichier)
                 .AddWithValue("@commentaire", sousEpisode.Commentaire)
-                .AddWithValue("@is_ald", sousEpisode.isALD)
+                .AddWithValue("@is_ald", sousEpisode.IsALD)
+                .AddWithValue("@is_reponse", sousEpisode.IsReponse)
+                .AddWithValue("@delai_since_validation", sousEpisode.DelaiSinceValidation)
             End With
 
             da.InsertCommand = cmd
