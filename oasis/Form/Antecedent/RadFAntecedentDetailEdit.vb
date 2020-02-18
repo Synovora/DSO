@@ -1283,7 +1283,11 @@ Public Class RadFAntecedentDetailEdit
 
 
     Private Sub RadBtnCopierALD_Click(sender As Object, e As EventArgs) Handles RadBtnCopierALD.Click
-        TxtAntecedentDescription.Text = Lblcim10Description.Text
+        If DteDateDebut.Value = DteDateDebut.MinDate Then
+            TxtAntecedentDescription.Text = Lblcim10Description.Text
+        Else
+            TxtAntecedentDescription.Text = Lblcim10Description.Text & " (" & DteDateDebut.Value.ToString("MM.yyyy") & ")"
+        End If
     End Sub
 
     Private Sub LockDiagnostic()

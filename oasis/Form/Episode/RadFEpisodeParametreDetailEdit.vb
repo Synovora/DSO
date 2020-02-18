@@ -317,12 +317,13 @@ Public Class RadFEpisodeParametreDetailEdit
                     End If
                 End If
             Next
-            If valeurInput <> valeur Then
+            If valeurInput <> valeur AndAlso valeurInput <> 0 Then
                 'Mise à jour du paramètre
                 'Console.WriteLine("Id : " & id.ToString & " Valeur saisie : " & valeurInput.ToString & " valeur initiale : " & valeur.ToString)
                 episodeParametreDao.ModificationValeurEpisodeParametre(id, valeurInput)
                 If parametreId = ParametreIdTaille Then
                     Select Case SelectedPatient.PatientGenreId
+                        'Calcul age par rapport à la date de l'épisode de saisie des  
                         Case "M"
                             If SelectedPatient.PatientAgeEnAnnee >= AgeAdulteHomme Then
                                 PatientDao.ModificationPatientTaille(SelectedPatient.patientId, valeurInput)

@@ -232,7 +232,7 @@ Public Class AntecedentDao
         Dim SQLString As String = "SELECT oa_antecedent_date_modification, oa_antecedent_date_creation, oa_antecedent_statut_affichage," &
                     " oa_antecedent_ald_valide, oa_antecedent_ald_date_fin, oa_antecedent_ald_demande_en_cours, oa_antecedent_diagnostic, oa_antecedent_drc_id," &
                     " oa_antecedent_description, oa_antecedent_date_debut, A.oa_ald_cim10_description, oa_antecedent_id, oa_antecedent_niveau," &
-                    " oa_antecedent_id_niveau1, oa_antecedent_id_niveau2, D.oa_drc_libelle" &
+                    " oa_antecedent_id_niveau1, oa_antecedent_id_niveau2, oa_antecedent_ordre_affichage1, oa_antecedent_ordre_affichage2, oa_antecedent_ordre_affichage3, D.oa_drc_libelle" &
                     " FROM oasis.oa_antecedent" &
                     " LEFT JOIN oasis.oa_drc D ON D.oa_drc_id = oa_antecedent_drc_id" &
                     " LEFT JOIN oasis.oa_ald_cim10 A ON A.oa_ald_cim10_id = oa_antecedent_ald_cim_10_id" &

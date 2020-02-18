@@ -70,6 +70,8 @@ Public Class RadFEpisodeDetail
     Dim episodeActeParamedicalDao As New EpisodeActeParamedicalDao
     Dim episodeContexteDao As New EpisodeContexteDao
 
+    Dim antecedentChangementOrdreDao As New AntecedentChangementOrdreDao
+
     Dim log As Log
     Dim episode As Episode
     Dim tache As Tache
@@ -109,6 +111,11 @@ Public Class RadFEpisodeDetail
 
     Dim TypeEpisode, typeActiviteEpisode, typeProfilEpisode, DescriptionActiviteEpisode, CommentaireEpisode, UserCreation, DateCreation, UserModification, DateModification As String
 
+    'Antécédent
+    Dim iGridMax As Integer
+    Dim NouveauOrdreAffichage As Integer
+    Dim NiveauAntecedentAOrdonner As Integer
+
     Private Sub RadFEpisodeDetail_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         Dim actiondao As New ActionDao
         Dim action As New Action
@@ -118,6 +125,11 @@ Public Class RadFEpisodeDetail
         action.FonctionId = Me.SelectedEpisodeId
         action.Action = "Accès épisode patient n° " & SelectedEpisodeId
         actiondao.CreationAction(action)
+
+        RadBtnUp.Text = Char.ConvertFromUtf32(8593)
+        RadBtnDown.Text = Char.ConvertFromUtf32(8595)
+        'RadBtnRight.Text = Char.ConvertFromUtf32(8592)
+        'RadBtnLeft.Text = Char.ConvertFromUtf32(8594)
 
         InitParametre()
         LblTypeEpisode.Text = ""
@@ -2182,6 +2194,9 @@ Public Class RadFEpisodeDetail
             RadAntecedentDataGridView.Rows(iGrid).Cells("antecedentId").Value = antecedentDataTable.Rows(i)("oa_antecedent_id")
             RadAntecedentDataGridView.Rows(iGrid).Cells("antecedentDrcId").Value = antecedentDataTable.Rows(i)("oa_antecedent_drc_id")
             RadAntecedentDataGridView.Rows(iGrid).Cells("antecedentNiveau").Value = antecedentDataTable.Rows(i)("oa_antecedent_niveau")
+            RadAntecedentDataGridView.Rows(iGrid).Cells("ordreAffichage1").Value = Coalesce(antecedentDataTable.Rows(i)("oa_antecedent_ordre_affichage1"), 0)
+            RadAntecedentDataGridView.Rows(iGrid).Cells("ordreAffichage2").Value = Coalesce(antecedentDataTable.Rows(i)("oa_antecedent_ordre_affichage2"), 0)
+            RadAntecedentDataGridView.Rows(iGrid).Cells("ordreAffichage3").Value = Coalesce(antecedentDataTable.Rows(i)("oa_antecedent_ordre_affichage3"), 0)
 
             'Détermination de l'antécédent pere si niveau 2 et 3
             Select Case CInt(antecedentDataTable.Rows(i)("oa_antecedent_niveau"))
@@ -2193,6 +2208,9 @@ Public Class RadFEpisodeDetail
                     RadAntecedentDataGridView.Rows(iGrid).Cells("antecedentPereId").Value = 0
             End Select
         Next
+
+        'Récupération du nombre de lignes stockées dans la Grid
+        iGridMax = iGrid
 
         'Positionnement du grid sur la première occurrence
         If RadAntecedentDataGridView.Rows.Count > 0 Then
@@ -2244,7 +2262,6 @@ Public Class RadFEpisodeDetail
     End Sub
 
     'Créer un antécédent
-
     Private Sub RadBtnCreationAntecedent_Click(sender As Object, e As EventArgs) Handles RadBtnCreationAntecedent.Click
         CreationAntecedent()
     End Sub
@@ -2302,6 +2319,97 @@ Public Class RadFEpisodeDetail
         End If
     End Sub
 
+    'Traitement du déplacement vertical des antécédents
+    'Up
+    Private Sub RadBtnUp_Click(sender As Object, e As EventArgs) Handles RadBtnUp.Click
+        Dim CodeRetour As Boolean = False
+        Dim antecedentId, antecedentIdPere As Integer
+        Dim aRow As Integer = Me.RadAntecedentDataGridView.Rows.IndexOf(Me.RadAntecedentDataGridView.CurrentRow)
+        If aRow >= 0 Then
+            Cursor.Current = Cursors.WaitCursor
+            antecedentId = RadAntecedentDataGridView.Rows(aRow).Cells("antecedentId").Value
+            NiveauAntecedentAOrdonner = Coalesce(RadAntecedentDataGridView.Rows(aRow).Cells("antecedentNiveau").Value, 0)
+            antecedentIdPere = Coalesce(RadAntecedentDataGridView.Rows(aRow).Cells("antecedentPereId").Value, 0)
+            Select Case NiveauAntecedentAOrdonner
+                Case 1
+                    RadAntecedentDataGridView.Rows(aRow).Cells("ordreAffichage1").Value -= 30
+                    NouveauOrdreAffichage = RadAntecedentDataGridView.Rows(aRow).Cells("ordreAffichage1").Value
+                Case 2
+                    RadAntecedentDataGridView.Rows(aRow).Cells("ordreAffichage2").Value -= 30
+                    NouveauOrdreAffichage = RadAntecedentDataGridView.Rows(aRow).Cells("ordreAffichage2").Value
+                Case 3
+                    RadAntecedentDataGridView.Rows(aRow).Cells("ordreAffichage3").Value -= 30
+                    NouveauOrdreAffichage = RadAntecedentDataGridView.Rows(aRow).Cells("ordreAffichage3").Value
+                Case Else
+                    Exit Sub
+            End Select
+            AntecedentChangementOrdreDao.UpdateAntecedent(antecedentId, NouveauOrdreAffichage, NiveauAntecedentAOrdonner)
+
+            AntecedentModificationOrdre(NiveauAntecedentAOrdonner)
+            CodeRetour = antecedentChangementOrdreDao.AntecedentReorganisationOrdre(NiveauAntecedentAOrdonner, SelectedPatient.patientId, antecedentIdPere, NiveauAntecedentAOrdonner)
+            If CodeRetour = True Then
+                ChargementAntecedent()
+            End If
+            Cursor.Current = Cursors.Default
+        End If
+    End Sub
+
+    'Down
+    Private Sub RadBtnDown_Click(sender As Object, e As EventArgs) Handles RadBtnDown.Click
+        Dim CodeRetour As Boolean = False
+        Dim antecedentId, antecedentIdPere As Integer
+        Dim aRow As Integer = Me.RadAntecedentDataGridView.Rows.IndexOf(Me.RadAntecedentDataGridView.CurrentRow)
+        If aRow >= 0 Then
+            Cursor.Current = Cursors.WaitCursor
+            antecedentId = RadAntecedentDataGridView.Rows(aRow).Cells("antecedentId").Value
+            NiveauAntecedentAOrdonner = Coalesce(RadAntecedentDataGridView.Rows(aRow).Cells("antecedentNiveau").Value, 0)
+            antecedentIdPere = Coalesce(RadAntecedentDataGridView.Rows(aRow).Cells("antecedentPereId").Value, 0)
+            Select Case NiveauAntecedentAOrdonner
+                Case 1
+                    RadAntecedentDataGridView.Rows(aRow).Cells("ordreAffichage1").Value += 30
+                    NouveauOrdreAffichage = RadAntecedentDataGridView.Rows(aRow).Cells("ordreAffichage1").Value
+                Case 2
+                    RadAntecedentDataGridView.Rows(aRow).Cells("ordreAffichage2").Value += 30
+                    NouveauOrdreAffichage = RadAntecedentDataGridView.Rows(aRow).Cells("ordreAffichage2").Value
+                Case 3
+                    RadAntecedentDataGridView.Rows(aRow).Cells("ordreAffichage3").Value += 30
+                    NouveauOrdreAffichage = RadAntecedentDataGridView.Rows(aRow).Cells("ordreAffichage3").Value
+                Case Else
+                    Exit Sub
+            End Select
+            AntecedentChangementOrdreDao.UpdateAntecedent(antecedentId, NouveauOrdreAffichage, NiveauAntecedentAOrdonner)
+
+            AntecedentModificationOrdre(NiveauAntecedentAOrdonner)
+            CodeRetour = antecedentChangementOrdreDao.AntecedentReorganisationOrdre(NiveauAntecedentAOrdonner, SelectedPatient.patientId, antecedentIdPere, NiveauAntecedentAOrdonner)
+            If CodeRetour = True Then
+                ChargementAntecedent()
+            End If
+            Cursor.Current = Cursors.Default
+        End If
+    End Sub
+
+    Private Sub AntecedentModificationOrdre(NiveauAntecedentAOrdonner As Integer)
+
+        For i = 0 To iGridMax Step 1
+            Dim ordreAffichage As Integer
+            If RadAntecedentDataGridView.Rows(i).Cells("antecedentNiveau").Value = NiveauAntecedentAOrdonner Then
+                Select Case NiveauAntecedentAOrdonner
+                    Case 1
+                        ordreAffichage = RadAntecedentDataGridView.Rows(i).Cells("ordreAffichage1").Value
+                    Case 2
+                        ordreAffichage = RadAntecedentDataGridView.Rows(i).Cells("ordreAffichage2").Value
+                    Case 3
+                        ordreAffichage = RadAntecedentDataGridView.Rows(i).Cells("ordreAffichage3").Value
+                    Case Else
+                        Exit Sub
+                End Select
+                Dim AntecedentId As Integer = CInt(RadAntecedentDataGridView.Rows(i).Cells("antecedentId").Value)
+                AntecedentChangementOrdreDao.UpdateAntecedent(AntecedentId, ordreAffichage, NiveauAntecedentAOrdonner)
+            End If
+        Next
+    End Sub
+
+    'TODO: ======> Obsolète à supprimer quand validé !!!!!!!!!!!!!!!!!!!!
     'Modifier l'ordre d'un antécédent
     Private Sub ModifierLordreDunAntecedentToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ModifierLordreDunAntécédentToolStripMenuItem.Click
         'Appel de la gestion de la modification de l'ordre d'un antécédent
@@ -2362,10 +2470,6 @@ Public Class RadFEpisodeDetail
         End If
     End Sub
 
-    'Transformer En majeur (pour un antécédent non majeur)
-    Private Sub TransformerEnMajeurToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles TransformerEnMajeurToolStripMenuItem.Click
-        'TODO: Episode détail - Transformation contexte en antécédent depuis l'épisode détail
-    End Sub
 
     'Gestion des options d'affichage des antécédents sur évènement
     Private Sub RadChkPublie_ToggleStateChanged(sender As Object, args As Telerik.WinControls.UI.StateChangedEventArgs) Handles RadChkPublie.ToggleStateChanged

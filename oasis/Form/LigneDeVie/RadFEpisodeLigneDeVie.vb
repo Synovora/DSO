@@ -419,8 +419,6 @@ Public Class RadFEpisodeLigneDeVie
                 End If
             End If
 
-            'TODO: Episode détail (ligne de vie) - Traiter le calcul de l'IMC et du PAS qui dépendent de deux autres paramètres
-
             dateCreation = Coalesce(dt.Rows(i)("date_creation"), Nothing)
             If dateCreation <> Nothing Then
                 RadGridViewEpisode.Rows(iGrid).Cells("date_creation").Value = dateCreation.ToString("dd.MM.yyyy")

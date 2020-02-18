@@ -149,7 +149,13 @@ Public Class RadFAntecedentOrdreSelecteur
         Dim antecedentDataTable As DataTable = New DataTable()
         Dim SQLString As String
 
-        SQLString = "select * from oasis.oa_antecedent where oa_antecedent_type = 'A' and oa_antecedent_statut_affichage = 'P' and (oa_antecedent_inactif = '0' or oa_antecedent_inactif is Null) and oa_antecedent_patient_id = " + SelectedPatient.patientId.ToString + " and oa_antecedent_niveau = " + NiveauAntecedentAOrdonner.ToString + " order by oa_antecedent_ordre_affichage1, oa_antecedent_ordre_affichage2, oa_antecedent_ordre_affichage3;"
+        SQLString = "SELECT * FROM oasis.oa_antecedent" &
+        " WHERE oa_antecedent_type = 'A'" &
+        " AND oa_antecedent_statut_affichage = 'P'" &
+        " AND (oa_antecedent_inactif = '0' or oa_antecedent_inactif is Null)" &
+        " AND oa_antecedent_patient_id = " + SelectedPatient.patientId.ToString &
+        " AND oa_antecedent_niveau = " + NiveauAntecedentAOrdonner.ToString &
+        " ORDER BY oa_antecedent_ordre_affichage1, oa_antecedent_ordre_affichage2, oa_antecedent_ordre_affichage3;"
 
         'Lecture des données en base
         antecedentDataAdapter.SelectCommand = New SqlCommand(SQLString, conxn)
@@ -239,18 +245,6 @@ Public Class RadFAntecedentOrdreSelecteur
         conxn.Close()
         antecedentDataAdapter.Dispose()
     End Sub
-
-    'Mise à jour de l'ordre des antécédents en base de données à partir de la valeur attribuée dans la DataGrid
-    Private Function AntecedentModificationOrdre() As Boolean
-
-        For i = 0 To iGridMax Step 1
-            Dim ordreAffichage As Integer = RadAntecedentDataGridView.Rows(i).Cells("ordreAffichage").Value
-            Dim AntecedentId As Integer = CInt(RadAntecedentDataGridView.Rows(i).Cells("antecedentId").Value)
-            UpdateAntecedent(AntecedentId, ordreAffichage)
-        Next
-
-        Return CodeRetour
-    End Function
 
     'Mise à jour de l'ordre des antécédents en réorganisant l'ordre sur un pas de 20
     Private Function AntecedentReorganisationOrdre(niveau As Integer) As Boolean
@@ -380,6 +374,18 @@ Public Class RadFAntecedentOrdreSelecteur
         Me.CodeRetour = False
         Close()
     End Sub
+
+    'Mise à jour de l'ordre des antécédents en base de données à partir de la valeur attribuée dans la DataGrid
+    Private Function AntecedentModificationOrdre() As Boolean
+
+        For i = 0 To iGridMax Step 1
+            Dim ordreAffichage As Integer = RadAntecedentDataGridView.Rows(i).Cells("ordreAffichage").Value
+            Dim AntecedentId As Integer = CInt(RadAntecedentDataGridView.Rows(i).Cells("antecedentId").Value)
+            UpdateAntecedent(AntecedentId, ordreAffichage)
+        Next
+
+        Return CodeRetour
+    End Function
 
     Private Sub RadBtnConfirmerApres_Click(sender As Object, e As EventArgs) Handles RadBtnConfirmerApres.Click
         Dim antecedentId As Integer

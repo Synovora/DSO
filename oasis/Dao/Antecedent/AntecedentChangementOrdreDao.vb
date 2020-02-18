@@ -5,7 +5,7 @@ Public Class AntecedentChangementOrdreDao
     Inherits StandardDao
 
     'Mise à jour de l'ordre des antécédents en réorganisant l'ordre sur un pas de 20
-    Private Function AntecedentReorganisationOrdre(niveau As Integer, selectedPatientId As Long, AntecedentIdPere As Long, NiveauAntecedentAOrdonner As Integer) As Boolean
+    Friend Function AntecedentReorganisationOrdre(niveau As Integer, selectedPatientId As Long, AntecedentIdPere As Long, NiveauAntecedentAOrdonner As Integer) As Boolean
         'Déclaration des données de connexion
         Dim con As SqlConnection = GetConnection()
 
@@ -36,6 +36,7 @@ Public Class AntecedentChangementOrdreDao
                             " And oa_antecedent_id_niveau2 = " & AntecedentIdPere.ToString &
                             " And oa_antecedent_niveau = 3 order by oa_antecedent_ordre_affichage3;"
             Case Else
+                SQLString = ""
                 CodeRetour = False
         End Select
 
@@ -64,7 +65,7 @@ Public Class AntecedentChangementOrdreDao
     End Function
 
     'Affectation aux antécédents fils, de l'ordre d'affichage attribué à l'antécédent père
-    Private Function AffectationOrdreAntecedenetsLies(antecedentIdRef As Integer, niveau As Integer, OrdreAffichageRef As Integer, selectedPatientId As Long, NiveauAntecedentAOrdonner As Integer)
+    Friend Function AffectationOrdreAntecedenetsLies(antecedentIdRef As Integer, niveau As Integer, OrdreAffichageRef As Integer, selectedPatientId As Long, NiveauAntecedentAOrdonner As Integer)
         'Déclaration des données de connexion
         Dim con3 As SqlConnection = GetConnection()
         Dim antecedentDataAdapter As SqlDataAdapter = New SqlDataAdapter()
@@ -107,7 +108,7 @@ Public Class AntecedentChangementOrdreDao
 
     End Function
 
-    Private Function UpdateAntecedent(antecedentId As Integer, ordreAffichage As Integer, NiveauAntecedentAOrdonner As Integer) As Boolean
+    Friend Function UpdateAntecedent(antecedentId As Integer, ordreAffichage As Integer, NiveauAntecedentAOrdonner As Integer) As Boolean
         Dim con2 As SqlConnection = GetConnection()
         Dim da As SqlDataAdapter = New SqlDataAdapter()
         Dim CodeRetour As Boolean = True
@@ -134,7 +135,7 @@ Public Class AntecedentChangementOrdreDao
         End With
 
         Try
-            con2.Open()
+            'con2.Open()
             da.UpdateCommand = cmd
             da.UpdateCommand.ExecuteNonQuery()
         Catch ex As Exception

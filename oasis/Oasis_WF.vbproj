@@ -212,9 +212,10 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Bean\Antecedent\AldCim10Class.vb" />
+    <Compile Include="Bean\Antecedent\AldCim10.vb" />
     <Compile Include="Bean\Antecedent\AldClass.vb" />
-    <Compile Include="Bean\Antecedent\AntecedentClass.vb" />
+    <Compile Include="Bean\Antecedent\Antecedent.vb" />
+    <Compile Include="Bean\Antecedent\AntecedentDeplacement.vb" />
     <Compile Include="Bean\DRC\DrcActeParamedicalAsso.vb" />
     <Compile Include="Bean\DRC\DrcStandard.vb" />
     <Compile Include="Bean\LigneDeVie\PatientParametreLdv.vb" />
@@ -228,6 +229,7 @@
     <Compile Include="Bean\LigneDeVie\LigneDeVie.vb" />
     <Compile Include="Bean\Episode\EpisodeContexte.vb" />
     <Compile Include="Dao\Antecedent\AntecedentChangementOrdreDao.vb" />
+    <Compile Include="Dao\Antecedent\AntecedentDeplacementDao.vb" />
     <Compile Include="Dao\Episode\EpisodeContexteDao.vb" />
     <Compile Include="Dao\LigneDeVie\PatientParametreLdvDao.vb" />
     <Compile Include="Dao\Medicament\MedicamentDao.vb" />
@@ -268,7 +270,7 @@
     <Compile Include="Bean\Parametre\Parametre.vb" />
     <Compile Include="Bean\Parametre\ParametreDrc.vb" />
     <Compile Include="Bean\Parametre\ParametreTypeEpisodeDrc.vb" />
-    <Compile Include="Bean\Ordonnance\OrdonnanceDetailClass.vb" />
+    <Compile Include="Bean\Ordonnance\OrdonnanceDetail.vb" />
     <Compile Include="Bean\Parcours\ParcoursClass.vb" />
     <Compile Include="Bean\Parcours\ParcoursConsigneClass.vb" />
     <Compile Include="Bean\Parcours\ParcoursHistoClass.vb" />
@@ -279,7 +281,7 @@
     <Compile Include="Bean\Tache\TacheClass.vb" />
     <Compile Include="Bean\Traitement\Traitement.vb" />
     <Compile Include="Dao\ALD\AldCim10Dao.vb" />
-    <Compile Include="Bean\Antecedent\AntecedentHistoClass.vb" />
+    <Compile Include="Bean\Antecedent\AntecedentHisto.vb" />
     <Compile Include="Dao\ALD\AldDao.vb" />
     <Compile Include="Dao\Antecedent\AntecedentHistoCreationDao.vb" />
     <Compile Include="ApplicationEvents.vb" />

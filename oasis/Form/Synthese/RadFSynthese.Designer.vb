@@ -23,44 +23,47 @@ Partial Class RadFSynthese
     <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
         Me.components = New System.ComponentModel.Container()
-        Dim GridViewTextBoxColumn1 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
-        Dim GridViewTextBoxColumn2 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
-        Dim GridViewTextBoxColumn3 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
-        Dim GridViewTextBoxColumn4 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
-        Dim GridViewTextBoxColumn5 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
-        Dim GridViewTextBoxColumn6 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
-        Dim GridViewTextBoxColumn7 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
-        Dim TableViewDefinition1 As Telerik.WinControls.UI.TableViewDefinition = New Telerik.WinControls.UI.TableViewDefinition()
-        Dim GridViewTextBoxColumn8 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
-        Dim GridViewTextBoxColumn9 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
-        Dim GridViewTextBoxColumn10 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
-        Dim GridViewTextBoxColumn11 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
-        Dim GridViewTextBoxColumn12 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
-        Dim GridViewTextBoxColumn13 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
-        Dim GridViewTextBoxColumn14 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
-        Dim GridViewTextBoxColumn15 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
-        Dim GridViewTextBoxColumn16 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
-        Dim TableViewDefinition2 As Telerik.WinControls.UI.TableViewDefinition = New Telerik.WinControls.UI.TableViewDefinition()
-        Dim GridViewTextBoxColumn17 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
-        Dim GridViewTextBoxColumn18 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
-        Dim GridViewTextBoxColumn19 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
-        Dim GridViewTextBoxColumn20 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
-        Dim GridViewTextBoxColumn21 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
-        Dim GridViewTextBoxColumn22 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
-        Dim GridViewTextBoxColumn23 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
-        Dim GridViewTextBoxColumn24 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
-        Dim TableViewDefinition3 As Telerik.WinControls.UI.TableViewDefinition = New Telerik.WinControls.UI.TableViewDefinition()
-        Dim GridViewTextBoxColumn25 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
-        Dim GridViewTextBoxColumn26 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
-        Dim GridViewTextBoxColumn27 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
-        Dim TableViewDefinition4 As Telerik.WinControls.UI.TableViewDefinition = New Telerik.WinControls.UI.TableViewDefinition()
-        Dim GridViewTextBoxColumn28 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
-        Dim GridViewTextBoxColumn29 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
-        Dim GridViewTextBoxColumn30 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
-        Dim GridViewTextBoxColumn31 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
-        Dim GridViewTextBoxColumn32 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
-        Dim GridViewTextBoxColumn33 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
-        Dim TableViewDefinition5 As Telerik.WinControls.UI.TableViewDefinition = New Telerik.WinControls.UI.TableViewDefinition()
+        Dim GridViewTextBoxColumn73 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
+        Dim GridViewTextBoxColumn74 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
+        Dim GridViewTextBoxColumn75 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
+        Dim GridViewTextBoxColumn76 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
+        Dim GridViewTextBoxColumn77 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
+        Dim GridViewTextBoxColumn78 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
+        Dim GridViewTextBoxColumn79 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
+        Dim GridViewTextBoxColumn80 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
+        Dim GridViewTextBoxColumn81 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
+        Dim GridViewTextBoxColumn82 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
+        Dim TableViewDefinition11 As Telerik.WinControls.UI.TableViewDefinition = New Telerik.WinControls.UI.TableViewDefinition()
+        Dim GridViewTextBoxColumn83 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
+        Dim GridViewTextBoxColumn84 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
+        Dim GridViewTextBoxColumn85 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
+        Dim GridViewTextBoxColumn86 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
+        Dim GridViewTextBoxColumn87 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
+        Dim GridViewTextBoxColumn88 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
+        Dim GridViewTextBoxColumn89 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
+        Dim GridViewTextBoxColumn90 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
+        Dim GridViewTextBoxColumn91 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
+        Dim TableViewDefinition12 As Telerik.WinControls.UI.TableViewDefinition = New Telerik.WinControls.UI.TableViewDefinition()
+        Dim GridViewTextBoxColumn92 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
+        Dim GridViewTextBoxColumn93 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
+        Dim GridViewTextBoxColumn94 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
+        Dim GridViewTextBoxColumn95 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
+        Dim GridViewTextBoxColumn96 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
+        Dim GridViewTextBoxColumn97 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
+        Dim GridViewTextBoxColumn98 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
+        Dim GridViewTextBoxColumn99 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
+        Dim TableViewDefinition13 As Telerik.WinControls.UI.TableViewDefinition = New Telerik.WinControls.UI.TableViewDefinition()
+        Dim GridViewTextBoxColumn100 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
+        Dim GridViewTextBoxColumn101 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
+        Dim GridViewTextBoxColumn102 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
+        Dim TableViewDefinition14 As Telerik.WinControls.UI.TableViewDefinition = New Telerik.WinControls.UI.TableViewDefinition()
+        Dim GridViewTextBoxColumn103 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
+        Dim GridViewTextBoxColumn104 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
+        Dim GridViewTextBoxColumn105 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
+        Dim GridViewTextBoxColumn106 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
+        Dim GridViewTextBoxColumn107 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
+        Dim GridViewTextBoxColumn108 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
+        Dim TableViewDefinition15 As Telerik.WinControls.UI.TableViewDefinition = New Telerik.WinControls.UI.TableViewDefinition()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(RadFSynthese))
         Me.RadGroupBoxEtatCivil = New Telerik.WinControls.UI.RadGroupBox()
         Me.EtatCivilContextMenuStrip = New System.Windows.Forms.ContextMenuStrip(Me.components)
@@ -87,7 +90,6 @@ Partial Class RadFSynthese
         Me.ToolStripSeparator3 = New System.Windows.Forms.ToolStripSeparator()
         Me.ModifierLordreDunAntécédentToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.ChangerLaffectationDunAntecedentToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-        Me.TransformerEnMajeurToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.RadGroupBoxAntecedent = New Telerik.WinControls.UI.RadGroupBox()
         Me.RadChkMajeurSeul = New Telerik.WinControls.UI.RadCheckBox()
         Me.RadChkParPriorite = New Telerik.WinControls.UI.RadCheckBox()
@@ -151,6 +153,10 @@ Partial Class RadFSynthese
         Me.RadBtnCreationTraitement = New Telerik.WinControls.UI.RadButton()
         Me.RadBtnCreationAntecedent = New Telerik.WinControls.UI.RadButton()
         Me.RadBtnCreationPPSMesure = New Telerik.WinControls.UI.RadButton()
+        Me.RadBtnUp = New Telerik.WinControls.UI.RadButton()
+        Me.RadBtnDown = New Telerik.WinControls.UI.RadButton()
+        Me.RadBtnRight = New Telerik.WinControls.UI.RadButton()
+        Me.RadBtnLeft = New Telerik.WinControls.UI.RadButton()
         CType(Me.RadGroupBoxEtatCivil, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.RadGroupBoxEtatCivil.SuspendLayout()
         Me.EtatCivilContextMenuStrip.SuspendLayout()
@@ -207,6 +213,10 @@ Partial Class RadFSynthese
         CType(Me.RadBtnCreationTraitement, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.RadBtnCreationAntecedent, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.RadBtnCreationPPSMesure, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.RadBtnUp, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.RadBtnDown, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.RadBtnRight, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.RadBtnLeft, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
@@ -411,66 +421,78 @@ Partial Class RadFSynthese
         Me.RadAntecedentDataGridView.MasterTemplate.AllowDeleteRow = False
         Me.RadAntecedentDataGridView.MasterTemplate.AllowDragToGroup = False
         Me.RadAntecedentDataGridView.MasterTemplate.AllowEditRow = False
-        GridViewTextBoxColumn1.AllowGroup = False
-        GridViewTextBoxColumn1.AllowResize = False
-        GridViewTextBoxColumn1.AllowSort = False
-        GridViewTextBoxColumn1.EnableExpressionEditor = False
-        GridViewTextBoxColumn1.FieldName = "antecedent"
-        GridViewTextBoxColumn1.HeaderText = "Antécédent"
-        GridViewTextBoxColumn1.HeaderTextAlignment = System.Drawing.ContentAlignment.MiddleLeft
-        GridViewTextBoxColumn1.Name = "antecedent"
-        GridViewTextBoxColumn1.VisibleInColumnChooser = False
-        GridViewTextBoxColumn1.Width = 975
-        GridViewTextBoxColumn2.AllowGroup = False
-        GridViewTextBoxColumn2.AllowResize = False
-        GridViewTextBoxColumn2.AllowSort = False
-        GridViewTextBoxColumn2.EnableExpressionEditor = False
-        GridViewTextBoxColumn2.FieldName = "antecedentDescription"
-        GridViewTextBoxColumn2.HeaderText = "Description"
-        GridViewTextBoxColumn2.IsVisible = False
-        GridViewTextBoxColumn2.Name = "antecedentDescription"
-        GridViewTextBoxColumn2.VisibleInColumnChooser = False
-        GridViewTextBoxColumn3.EnableExpressionEditor = False
-        GridViewTextBoxColumn3.FieldName = "antecedentId"
-        GridViewTextBoxColumn3.HeaderText = "Id."
-        GridViewTextBoxColumn3.IsVisible = False
-        GridViewTextBoxColumn3.Name = "antecedentId"
-        GridViewTextBoxColumn4.AllowGroup = False
-        GridViewTextBoxColumn4.AllowResize = False
-        GridViewTextBoxColumn4.AllowSort = False
-        GridViewTextBoxColumn4.EnableExpressionEditor = False
-        GridViewTextBoxColumn4.FieldName = "antecedentDrcId"
-        GridViewTextBoxColumn4.HeaderText = "Drc Id."
-        GridViewTextBoxColumn4.IsVisible = False
-        GridViewTextBoxColumn4.Name = "antecedentDrcId"
-        GridViewTextBoxColumn4.VisibleInColumnChooser = False
-        GridViewTextBoxColumn5.AllowGroup = False
-        GridViewTextBoxColumn5.AllowResize = False
-        GridViewTextBoxColumn5.AllowSort = False
-        GridViewTextBoxColumn5.EnableExpressionEditor = False
-        GridViewTextBoxColumn5.FieldName = "antecedentNiveau"
-        GridViewTextBoxColumn5.HeaderText = "Niveau"
-        GridViewTextBoxColumn5.IsVisible = False
-        GridViewTextBoxColumn5.Name = "antecedentNiveau"
-        GridViewTextBoxColumn5.VisibleInColumnChooser = False
-        GridViewTextBoxColumn6.AllowGroup = False
-        GridViewTextBoxColumn6.AllowResize = False
-        GridViewTextBoxColumn6.AllowSort = False
-        GridViewTextBoxColumn6.EnableExpressionEditor = False
-        GridViewTextBoxColumn6.FieldName = "antecedentPereId"
-        GridViewTextBoxColumn6.HeaderText = "Id. Père"
-        GridViewTextBoxColumn6.IsVisible = False
-        GridViewTextBoxColumn6.Name = "antecedentPereId"
-        GridViewTextBoxColumn6.VisibleInColumnChooser = False
-        GridViewTextBoxColumn7.EnableExpressionEditor = False
-        GridViewTextBoxColumn7.FieldName = "antecedentAld"
-        GridViewTextBoxColumn7.HeaderText = "antecedentAld"
-        GridViewTextBoxColumn7.IsVisible = False
-        GridViewTextBoxColumn7.Name = "antecedentAld"
-        Me.RadAntecedentDataGridView.MasterTemplate.Columns.AddRange(New Telerik.WinControls.UI.GridViewDataColumn() {GridViewTextBoxColumn1, GridViewTextBoxColumn2, GridViewTextBoxColumn3, GridViewTextBoxColumn4, GridViewTextBoxColumn5, GridViewTextBoxColumn6, GridViewTextBoxColumn7})
+        GridViewTextBoxColumn73.AllowGroup = False
+        GridViewTextBoxColumn73.AllowResize = False
+        GridViewTextBoxColumn73.AllowSort = False
+        GridViewTextBoxColumn73.EnableExpressionEditor = False
+        GridViewTextBoxColumn73.FieldName = "antecedent"
+        GridViewTextBoxColumn73.HeaderText = "Antécédent"
+        GridViewTextBoxColumn73.HeaderTextAlignment = System.Drawing.ContentAlignment.MiddleLeft
+        GridViewTextBoxColumn73.Name = "antecedent"
+        GridViewTextBoxColumn73.VisibleInColumnChooser = False
+        GridViewTextBoxColumn73.Width = 975
+        GridViewTextBoxColumn74.AllowGroup = False
+        GridViewTextBoxColumn74.AllowResize = False
+        GridViewTextBoxColumn74.AllowSort = False
+        GridViewTextBoxColumn74.EnableExpressionEditor = False
+        GridViewTextBoxColumn74.FieldName = "antecedentDescription"
+        GridViewTextBoxColumn74.HeaderText = "Description"
+        GridViewTextBoxColumn74.IsVisible = False
+        GridViewTextBoxColumn74.Name = "antecedentDescription"
+        GridViewTextBoxColumn74.VisibleInColumnChooser = False
+        GridViewTextBoxColumn75.EnableExpressionEditor = False
+        GridViewTextBoxColumn75.FieldName = "antecedentId"
+        GridViewTextBoxColumn75.HeaderText = "Id."
+        GridViewTextBoxColumn75.IsVisible = False
+        GridViewTextBoxColumn75.Name = "antecedentId"
+        GridViewTextBoxColumn76.AllowGroup = False
+        GridViewTextBoxColumn76.AllowResize = False
+        GridViewTextBoxColumn76.AllowSort = False
+        GridViewTextBoxColumn76.EnableExpressionEditor = False
+        GridViewTextBoxColumn76.FieldName = "antecedentDrcId"
+        GridViewTextBoxColumn76.HeaderText = "Drc Id."
+        GridViewTextBoxColumn76.IsVisible = False
+        GridViewTextBoxColumn76.Name = "antecedentDrcId"
+        GridViewTextBoxColumn76.VisibleInColumnChooser = False
+        GridViewTextBoxColumn77.AllowGroup = False
+        GridViewTextBoxColumn77.AllowResize = False
+        GridViewTextBoxColumn77.AllowSort = False
+        GridViewTextBoxColumn77.EnableExpressionEditor = False
+        GridViewTextBoxColumn77.FieldName = "antecedentNiveau"
+        GridViewTextBoxColumn77.HeaderText = "Niveau"
+        GridViewTextBoxColumn77.IsVisible = False
+        GridViewTextBoxColumn77.Name = "antecedentNiveau"
+        GridViewTextBoxColumn77.VisibleInColumnChooser = False
+        GridViewTextBoxColumn78.AllowGroup = False
+        GridViewTextBoxColumn78.AllowResize = False
+        GridViewTextBoxColumn78.AllowSort = False
+        GridViewTextBoxColumn78.EnableExpressionEditor = False
+        GridViewTextBoxColumn78.FieldName = "antecedentPereId"
+        GridViewTextBoxColumn78.HeaderText = "Id. Père"
+        GridViewTextBoxColumn78.IsVisible = False
+        GridViewTextBoxColumn78.Name = "antecedentPereId"
+        GridViewTextBoxColumn78.VisibleInColumnChooser = False
+        GridViewTextBoxColumn79.EnableExpressionEditor = False
+        GridViewTextBoxColumn79.FieldName = "antecedentAld"
+        GridViewTextBoxColumn79.HeaderText = "antecedentAld"
+        GridViewTextBoxColumn79.IsVisible = False
+        GridViewTextBoxColumn79.Name = "antecedentAld"
+        GridViewTextBoxColumn80.EnableExpressionEditor = False
+        GridViewTextBoxColumn80.HeaderText = "Ordre affichage"
+        GridViewTextBoxColumn80.IsVisible = False
+        GridViewTextBoxColumn80.Name = "ordreAffichage1"
+        GridViewTextBoxColumn81.EnableExpressionEditor = False
+        GridViewTextBoxColumn81.HeaderText = "column1"
+        GridViewTextBoxColumn81.IsVisible = False
+        GridViewTextBoxColumn81.Name = "ordreAffichage2"
+        GridViewTextBoxColumn82.EnableExpressionEditor = False
+        GridViewTextBoxColumn82.HeaderText = "column1"
+        GridViewTextBoxColumn82.IsVisible = False
+        GridViewTextBoxColumn82.Name = "ordreAffichage3"
+        Me.RadAntecedentDataGridView.MasterTemplate.Columns.AddRange(New Telerik.WinControls.UI.GridViewDataColumn() {GridViewTextBoxColumn73, GridViewTextBoxColumn74, GridViewTextBoxColumn75, GridViewTextBoxColumn76, GridViewTextBoxColumn77, GridViewTextBoxColumn78, GridViewTextBoxColumn79, GridViewTextBoxColumn80, GridViewTextBoxColumn81, GridViewTextBoxColumn82})
         Me.RadAntecedentDataGridView.MasterTemplate.ShowColumnHeaders = False
         Me.RadAntecedentDataGridView.MasterTemplate.ShowRowHeaderColumn = False
-        Me.RadAntecedentDataGridView.MasterTemplate.ViewDefinition = TableViewDefinition1
+        Me.RadAntecedentDataGridView.MasterTemplate.ViewDefinition = TableViewDefinition11
         Me.RadAntecedentDataGridView.Name = "RadAntecedentDataGridView"
         Me.RadAntecedentDataGridView.ReadOnly = True
         Me.RadAntecedentDataGridView.RightToLeft = System.Windows.Forms.RightToLeft.No
@@ -480,9 +502,9 @@ Partial Class RadFSynthese
         '
         'AntecedentContextMenuStrip
         '
-        Me.AntecedentContextMenuStrip.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.CréerAntecedentToolStripMenuItem, Me.ModifierUnAntécédentToolStripMenuItem, Me.HistoriqueDesModificationsToolStripMenuItem, Me.ToolStripSeparator3, Me.ModifierLordreDunAntécédentToolStripMenuItem, Me.ChangerLaffectationDunAntecedentToolStripMenuItem, Me.TransformerEnMajeurToolStripMenuItem})
+        Me.AntecedentContextMenuStrip.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.CréerAntecedentToolStripMenuItem, Me.ModifierUnAntécédentToolStripMenuItem, Me.HistoriqueDesModificationsToolStripMenuItem, Me.ToolStripSeparator3, Me.ModifierLordreDunAntécédentToolStripMenuItem, Me.ChangerLaffectationDunAntecedentToolStripMenuItem})
         Me.AntecedentContextMenuStrip.Name = "AntecedentContextMenuStrip"
-        Me.AntecedentContextMenuStrip.Size = New System.Drawing.Size(316, 142)
+        Me.AntecedentContextMenuStrip.Size = New System.Drawing.Size(316, 120)
         '
         'CréerAntecedentToolStripMenuItem
         '
@@ -519,12 +541,6 @@ Partial Class RadFSynthese
         Me.ChangerLaffectationDunAntecedentToolStripMenuItem.Size = New System.Drawing.Size(315, 22)
         Me.ChangerLaffectationDunAntecedentToolStripMenuItem.Text = "Changer l'affectation d'un antécédent"
         '
-        'TransformerEnMajeurToolStripMenuItem
-        '
-        Me.TransformerEnMajeurToolStripMenuItem.Name = "TransformerEnMajeurToolStripMenuItem"
-        Me.TransformerEnMajeurToolStripMenuItem.Size = New System.Drawing.Size(315, 22)
-        Me.TransformerEnMajeurToolStripMenuItem.Text = "Transformer en majeur"
-        '
         'RadGroupBoxAntecedent
         '
         Me.RadGroupBoxAntecedent.AccessibleRole = System.Windows.Forms.AccessibleRole.Grouping
@@ -545,7 +561,7 @@ Partial Class RadFSynthese
         '
         'RadChkMajeurSeul
         '
-        Me.RadChkMajeurSeul.Location = New System.Drawing.Point(628, 0)
+        Me.RadChkMajeurSeul.Location = New System.Drawing.Point(628, -2)
         Me.RadChkMajeurSeul.Name = "RadChkMajeurSeul"
         Me.RadChkMajeurSeul.Size = New System.Drawing.Size(55, 18)
         Me.RadChkMajeurSeul.TabIndex = 5
@@ -553,7 +569,7 @@ Partial Class RadFSynthese
         '
         'RadChkParPriorite
         '
-        Me.RadChkParPriorite.Location = New System.Drawing.Point(406, 0)
+        Me.RadChkParPriorite.Location = New System.Drawing.Point(406, -2)
         Me.RadChkParPriorite.Name = "RadChkParPriorite"
         Me.RadChkParPriorite.Size = New System.Drawing.Size(76, 18)
         Me.RadChkParPriorite.TabIndex = 4
@@ -561,7 +577,7 @@ Partial Class RadFSynthese
         '
         'RadChkTous
         '
-        Me.RadChkTous.Location = New System.Drawing.Point(328, 0)
+        Me.RadChkTous.Location = New System.Drawing.Point(328, -2)
         Me.RadChkTous.Name = "RadChkTous"
         Me.RadChkTous.Size = New System.Drawing.Size(44, 18)
         Me.RadChkTous.TabIndex = 3
@@ -679,88 +695,88 @@ Partial Class RadFSynthese
         Me.RadTraitementDataGridView.MasterTemplate.AllowDeleteRow = False
         Me.RadTraitementDataGridView.MasterTemplate.AllowDragToGroup = False
         Me.RadTraitementDataGridView.MasterTemplate.AllowEditRow = False
-        GridViewTextBoxColumn8.AllowGroup = False
-        GridViewTextBoxColumn8.AllowResize = False
-        GridViewTextBoxColumn8.AllowSort = False
-        GridViewTextBoxColumn8.EnableExpressionEditor = False
-        GridViewTextBoxColumn8.FieldName = "medicamentDci"
-        GridViewTextBoxColumn8.HeaderText = "Dénomination"
-        GridViewTextBoxColumn8.HeaderTextAlignment = System.Drawing.ContentAlignment.MiddleLeft
-        GridViewTextBoxColumn8.Name = "medicamentDci"
-        GridViewTextBoxColumn8.VisibleInColumnChooser = False
-        GridViewTextBoxColumn8.Width = 350
-        GridViewTextBoxColumn9.AllowGroup = False
-        GridViewTextBoxColumn9.AllowResize = False
-        GridViewTextBoxColumn9.EnableExpressionEditor = False
-        GridViewTextBoxColumn9.FieldName = "posologie"
-        GridViewTextBoxColumn9.HeaderText = "Posologie"
-        GridViewTextBoxColumn9.Name = "posologie"
-        GridViewTextBoxColumn9.TextAlignment = System.Drawing.ContentAlignment.MiddleCenter
-        GridViewTextBoxColumn9.VisibleInColumnChooser = False
-        GridViewTextBoxColumn9.Width = 120
-        GridViewTextBoxColumn10.AllowGroup = False
-        GridViewTextBoxColumn10.AllowResize = False
-        GridViewTextBoxColumn10.AllowSort = False
-        GridViewTextBoxColumn10.EnableExpressionEditor = False
-        GridViewTextBoxColumn10.FieldName = "dateDebut"
-        GridViewTextBoxColumn10.HeaderText = "Début"
-        GridViewTextBoxColumn10.IsVisible = False
-        GridViewTextBoxColumn10.Name = "dateDebut"
-        GridViewTextBoxColumn10.TextAlignment = System.Drawing.ContentAlignment.MiddleCenter
-        GridViewTextBoxColumn10.VisibleInColumnChooser = False
-        GridViewTextBoxColumn10.Width = 100
-        GridViewTextBoxColumn11.AllowGroup = False
-        GridViewTextBoxColumn11.AllowResize = False
-        GridViewTextBoxColumn11.AllowSort = False
-        GridViewTextBoxColumn11.EnableExpressionEditor = False
-        GridViewTextBoxColumn11.FieldName = "dateModification"
-        GridViewTextBoxColumn11.HeaderText = "Modification"
-        GridViewTextBoxColumn11.Name = "dateModification"
-        GridViewTextBoxColumn11.TextAlignment = System.Drawing.ContentAlignment.MiddleCenter
-        GridViewTextBoxColumn11.VisibleInColumnChooser = False
-        GridViewTextBoxColumn11.Width = 100
-        GridViewTextBoxColumn12.AllowGroup = False
-        GridViewTextBoxColumn12.AllowResize = False
-        GridViewTextBoxColumn12.AllowSort = False
-        GridViewTextBoxColumn12.EnableExpressionEditor = False
-        GridViewTextBoxColumn12.FieldName = "traitementId"
-        GridViewTextBoxColumn12.HeaderText = "traitementId"
-        GridViewTextBoxColumn12.IsVisible = False
-        GridViewTextBoxColumn12.Name = "traitementId"
-        GridViewTextBoxColumn12.VisibleInColumnChooser = False
-        GridViewTextBoxColumn13.AllowGroup = False
-        GridViewTextBoxColumn13.AllowResize = False
-        GridViewTextBoxColumn13.AllowSort = False
-        GridViewTextBoxColumn13.EnableExpressionEditor = False
-        GridViewTextBoxColumn13.FieldName = "fenetreTherapeutique"
-        GridViewTextBoxColumn13.HeaderText = "fenetreTherapeutique"
-        GridViewTextBoxColumn13.IsVisible = False
-        GridViewTextBoxColumn13.Name = "fenetreTherapeutique"
-        GridViewTextBoxColumn13.VisibleInColumnChooser = False
-        GridViewTextBoxColumn14.AllowGroup = False
-        GridViewTextBoxColumn14.AllowResize = False
-        GridViewTextBoxColumn14.AllowSort = False
-        GridViewTextBoxColumn14.EnableExpressionEditor = False
-        GridViewTextBoxColumn14.FieldName = "medicamentCis"
-        GridViewTextBoxColumn14.HeaderText = "medicamentCis"
-        GridViewTextBoxColumn14.IsVisible = False
-        GridViewTextBoxColumn14.Name = "medicamentCis"
-        GridViewTextBoxColumn14.VisibleInColumnChooser = False
-        GridViewTextBoxColumn15.EnableExpressionEditor = False
-        GridViewTextBoxColumn15.FieldName = "commentaire"
-        GridViewTextBoxColumn15.HeaderText = "commentaire"
-        GridViewTextBoxColumn15.IsVisible = False
-        GridViewTextBoxColumn15.Name = "commentaire"
-        GridViewTextBoxColumn16.EnableExpressionEditor = False
-        GridViewTextBoxColumn16.FieldName = "commentairePosologie"
-        GridViewTextBoxColumn16.HeaderText = "commentairePosologie"
-        GridViewTextBoxColumn16.IsVisible = False
-        GridViewTextBoxColumn16.Name = "commentairePosologie"
-        Me.RadTraitementDataGridView.MasterTemplate.Columns.AddRange(New Telerik.WinControls.UI.GridViewDataColumn() {GridViewTextBoxColumn8, GridViewTextBoxColumn9, GridViewTextBoxColumn10, GridViewTextBoxColumn11, GridViewTextBoxColumn12, GridViewTextBoxColumn13, GridViewTextBoxColumn14, GridViewTextBoxColumn15, GridViewTextBoxColumn16})
+        GridViewTextBoxColumn83.AllowGroup = False
+        GridViewTextBoxColumn83.AllowResize = False
+        GridViewTextBoxColumn83.AllowSort = False
+        GridViewTextBoxColumn83.EnableExpressionEditor = False
+        GridViewTextBoxColumn83.FieldName = "medicamentDci"
+        GridViewTextBoxColumn83.HeaderText = "Dénomination"
+        GridViewTextBoxColumn83.HeaderTextAlignment = System.Drawing.ContentAlignment.MiddleLeft
+        GridViewTextBoxColumn83.Name = "medicamentDci"
+        GridViewTextBoxColumn83.VisibleInColumnChooser = False
+        GridViewTextBoxColumn83.Width = 350
+        GridViewTextBoxColumn84.AllowGroup = False
+        GridViewTextBoxColumn84.AllowResize = False
+        GridViewTextBoxColumn84.EnableExpressionEditor = False
+        GridViewTextBoxColumn84.FieldName = "posologie"
+        GridViewTextBoxColumn84.HeaderText = "Posologie"
+        GridViewTextBoxColumn84.Name = "posologie"
+        GridViewTextBoxColumn84.TextAlignment = System.Drawing.ContentAlignment.MiddleCenter
+        GridViewTextBoxColumn84.VisibleInColumnChooser = False
+        GridViewTextBoxColumn84.Width = 120
+        GridViewTextBoxColumn85.AllowGroup = False
+        GridViewTextBoxColumn85.AllowResize = False
+        GridViewTextBoxColumn85.AllowSort = False
+        GridViewTextBoxColumn85.EnableExpressionEditor = False
+        GridViewTextBoxColumn85.FieldName = "dateDebut"
+        GridViewTextBoxColumn85.HeaderText = "Début"
+        GridViewTextBoxColumn85.IsVisible = False
+        GridViewTextBoxColumn85.Name = "dateDebut"
+        GridViewTextBoxColumn85.TextAlignment = System.Drawing.ContentAlignment.MiddleCenter
+        GridViewTextBoxColumn85.VisibleInColumnChooser = False
+        GridViewTextBoxColumn85.Width = 100
+        GridViewTextBoxColumn86.AllowGroup = False
+        GridViewTextBoxColumn86.AllowResize = False
+        GridViewTextBoxColumn86.AllowSort = False
+        GridViewTextBoxColumn86.EnableExpressionEditor = False
+        GridViewTextBoxColumn86.FieldName = "dateModification"
+        GridViewTextBoxColumn86.HeaderText = "Modification"
+        GridViewTextBoxColumn86.Name = "dateModification"
+        GridViewTextBoxColumn86.TextAlignment = System.Drawing.ContentAlignment.MiddleCenter
+        GridViewTextBoxColumn86.VisibleInColumnChooser = False
+        GridViewTextBoxColumn86.Width = 100
+        GridViewTextBoxColumn87.AllowGroup = False
+        GridViewTextBoxColumn87.AllowResize = False
+        GridViewTextBoxColumn87.AllowSort = False
+        GridViewTextBoxColumn87.EnableExpressionEditor = False
+        GridViewTextBoxColumn87.FieldName = "traitementId"
+        GridViewTextBoxColumn87.HeaderText = "traitementId"
+        GridViewTextBoxColumn87.IsVisible = False
+        GridViewTextBoxColumn87.Name = "traitementId"
+        GridViewTextBoxColumn87.VisibleInColumnChooser = False
+        GridViewTextBoxColumn88.AllowGroup = False
+        GridViewTextBoxColumn88.AllowResize = False
+        GridViewTextBoxColumn88.AllowSort = False
+        GridViewTextBoxColumn88.EnableExpressionEditor = False
+        GridViewTextBoxColumn88.FieldName = "fenetreTherapeutique"
+        GridViewTextBoxColumn88.HeaderText = "fenetreTherapeutique"
+        GridViewTextBoxColumn88.IsVisible = False
+        GridViewTextBoxColumn88.Name = "fenetreTherapeutique"
+        GridViewTextBoxColumn88.VisibleInColumnChooser = False
+        GridViewTextBoxColumn89.AllowGroup = False
+        GridViewTextBoxColumn89.AllowResize = False
+        GridViewTextBoxColumn89.AllowSort = False
+        GridViewTextBoxColumn89.EnableExpressionEditor = False
+        GridViewTextBoxColumn89.FieldName = "medicamentCis"
+        GridViewTextBoxColumn89.HeaderText = "medicamentCis"
+        GridViewTextBoxColumn89.IsVisible = False
+        GridViewTextBoxColumn89.Name = "medicamentCis"
+        GridViewTextBoxColumn89.VisibleInColumnChooser = False
+        GridViewTextBoxColumn90.EnableExpressionEditor = False
+        GridViewTextBoxColumn90.FieldName = "commentaire"
+        GridViewTextBoxColumn90.HeaderText = "commentaire"
+        GridViewTextBoxColumn90.IsVisible = False
+        GridViewTextBoxColumn90.Name = "commentaire"
+        GridViewTextBoxColumn91.EnableExpressionEditor = False
+        GridViewTextBoxColumn91.FieldName = "commentairePosologie"
+        GridViewTextBoxColumn91.HeaderText = "commentairePosologie"
+        GridViewTextBoxColumn91.IsVisible = False
+        GridViewTextBoxColumn91.Name = "commentairePosologie"
+        Me.RadTraitementDataGridView.MasterTemplate.Columns.AddRange(New Telerik.WinControls.UI.GridViewDataColumn() {GridViewTextBoxColumn83, GridViewTextBoxColumn84, GridViewTextBoxColumn85, GridViewTextBoxColumn86, GridViewTextBoxColumn87, GridViewTextBoxColumn88, GridViewTextBoxColumn89, GridViewTextBoxColumn90, GridViewTextBoxColumn91})
         Me.RadTraitementDataGridView.MasterTemplate.ShowColumnHeaders = False
         Me.RadTraitementDataGridView.MasterTemplate.ShowFilteringRow = False
         Me.RadTraitementDataGridView.MasterTemplate.ShowRowHeaderColumn = False
-        Me.RadTraitementDataGridView.MasterTemplate.ViewDefinition = TableViewDefinition2
+        Me.RadTraitementDataGridView.MasterTemplate.ViewDefinition = TableViewDefinition12
         Me.RadTraitementDataGridView.Name = "RadTraitementDataGridView"
         Me.RadTraitementDataGridView.RightToLeft = System.Windows.Forms.RightToLeft.No
         Me.RadTraitementDataGridView.ShowGroupPanel = False
@@ -830,56 +846,56 @@ Partial Class RadFSynthese
         Me.RadParcoursDataGridView.MasterTemplate.AllowDeleteRow = False
         Me.RadParcoursDataGridView.MasterTemplate.AllowDragToGroup = False
         Me.RadParcoursDataGridView.MasterTemplate.AllowEditRow = False
-        GridViewTextBoxColumn17.EnableExpressionEditor = False
-        GridViewTextBoxColumn17.FieldName = "specialite"
-        GridViewTextBoxColumn17.HeaderText = "Spécialité"
-        GridViewTextBoxColumn17.HeaderTextAlignment = System.Drawing.ContentAlignment.MiddleLeft
-        GridViewTextBoxColumn17.Name = "specialite"
-        GridViewTextBoxColumn17.ReadOnly = True
-        GridViewTextBoxColumn17.Width = 120
-        GridViewTextBoxColumn18.EnableExpressionEditor = False
-        GridViewTextBoxColumn18.FieldName = "nomIntervenant"
-        GridViewTextBoxColumn18.HeaderText = "Nom"
-        GridViewTextBoxColumn18.HeaderTextAlignment = System.Drawing.ContentAlignment.MiddleLeft
-        GridViewTextBoxColumn18.Name = "nomIntervenant"
-        GridViewTextBoxColumn18.Width = 180
-        GridViewTextBoxColumn19.EnableExpressionEditor = False
-        GridViewTextBoxColumn19.FieldName = "nomStructure"
-        GridViewTextBoxColumn19.HeaderText = "Structure"
-        GridViewTextBoxColumn19.HeaderTextAlignment = System.Drawing.ContentAlignment.MiddleLeft
-        GridViewTextBoxColumn19.Name = "nomStructure"
-        GridViewTextBoxColumn19.Width = 180
-        GridViewTextBoxColumn20.EnableExpressionEditor = False
-        GridViewTextBoxColumn20.FieldName = "consultationLast"
-        GridViewTextBoxColumn20.HeaderText = "Dern. consult."
-        GridViewTextBoxColumn20.Name = "consultationLast"
-        GridViewTextBoxColumn20.TextAlignment = System.Drawing.ContentAlignment.MiddleCenter
-        GridViewTextBoxColumn20.Width = 80
-        GridViewTextBoxColumn21.EnableExpressionEditor = False
-        GridViewTextBoxColumn21.FieldName = "consultationNext"
-        GridViewTextBoxColumn21.HeaderText = "Proch. consult."
-        GridViewTextBoxColumn21.Name = "consultationNext"
-        GridViewTextBoxColumn21.TextAlignment = System.Drawing.ContentAlignment.MiddleCenter
-        GridViewTextBoxColumn21.Width = 80
-        GridViewTextBoxColumn22.EnableExpressionEditor = False
-        GridViewTextBoxColumn22.FieldName = "commentaire"
-        GridViewTextBoxColumn22.HeaderText = "Remarque"
-        GridViewTextBoxColumn22.HeaderTextAlignment = System.Drawing.ContentAlignment.MiddleLeft
-        GridViewTextBoxColumn22.Name = "commentaire"
-        GridViewTextBoxColumn22.Width = 340
-        GridViewTextBoxColumn23.EnableExpressionEditor = False
-        GridViewTextBoxColumn23.FieldName = "parcoursId"
-        GridViewTextBoxColumn23.HeaderText = "Id"
-        GridViewTextBoxColumn23.IsVisible = False
-        GridViewTextBoxColumn23.Name = "parcoursId"
-        GridViewTextBoxColumn24.EnableExpressionEditor = False
-        GridViewTextBoxColumn24.HeaderText = "HeureRDV"
-        GridViewTextBoxColumn24.IsVisible = False
-        GridViewTextBoxColumn24.Name = "ConsultationNextHeure"
-        Me.RadParcoursDataGridView.MasterTemplate.Columns.AddRange(New Telerik.WinControls.UI.GridViewDataColumn() {GridViewTextBoxColumn17, GridViewTextBoxColumn18, GridViewTextBoxColumn19, GridViewTextBoxColumn20, GridViewTextBoxColumn21, GridViewTextBoxColumn22, GridViewTextBoxColumn23, GridViewTextBoxColumn24})
+        GridViewTextBoxColumn92.EnableExpressionEditor = False
+        GridViewTextBoxColumn92.FieldName = "specialite"
+        GridViewTextBoxColumn92.HeaderText = "Spécialité"
+        GridViewTextBoxColumn92.HeaderTextAlignment = System.Drawing.ContentAlignment.MiddleLeft
+        GridViewTextBoxColumn92.Name = "specialite"
+        GridViewTextBoxColumn92.ReadOnly = True
+        GridViewTextBoxColumn92.Width = 120
+        GridViewTextBoxColumn93.EnableExpressionEditor = False
+        GridViewTextBoxColumn93.FieldName = "nomIntervenant"
+        GridViewTextBoxColumn93.HeaderText = "Nom"
+        GridViewTextBoxColumn93.HeaderTextAlignment = System.Drawing.ContentAlignment.MiddleLeft
+        GridViewTextBoxColumn93.Name = "nomIntervenant"
+        GridViewTextBoxColumn93.Width = 180
+        GridViewTextBoxColumn94.EnableExpressionEditor = False
+        GridViewTextBoxColumn94.FieldName = "nomStructure"
+        GridViewTextBoxColumn94.HeaderText = "Structure"
+        GridViewTextBoxColumn94.HeaderTextAlignment = System.Drawing.ContentAlignment.MiddleLeft
+        GridViewTextBoxColumn94.Name = "nomStructure"
+        GridViewTextBoxColumn94.Width = 180
+        GridViewTextBoxColumn95.EnableExpressionEditor = False
+        GridViewTextBoxColumn95.FieldName = "consultationLast"
+        GridViewTextBoxColumn95.HeaderText = "Dern. consult."
+        GridViewTextBoxColumn95.Name = "consultationLast"
+        GridViewTextBoxColumn95.TextAlignment = System.Drawing.ContentAlignment.MiddleCenter
+        GridViewTextBoxColumn95.Width = 80
+        GridViewTextBoxColumn96.EnableExpressionEditor = False
+        GridViewTextBoxColumn96.FieldName = "consultationNext"
+        GridViewTextBoxColumn96.HeaderText = "Proch. consult."
+        GridViewTextBoxColumn96.Name = "consultationNext"
+        GridViewTextBoxColumn96.TextAlignment = System.Drawing.ContentAlignment.MiddleCenter
+        GridViewTextBoxColumn96.Width = 80
+        GridViewTextBoxColumn97.EnableExpressionEditor = False
+        GridViewTextBoxColumn97.FieldName = "commentaire"
+        GridViewTextBoxColumn97.HeaderText = "Remarque"
+        GridViewTextBoxColumn97.HeaderTextAlignment = System.Drawing.ContentAlignment.MiddleLeft
+        GridViewTextBoxColumn97.Name = "commentaire"
+        GridViewTextBoxColumn97.Width = 340
+        GridViewTextBoxColumn98.EnableExpressionEditor = False
+        GridViewTextBoxColumn98.FieldName = "parcoursId"
+        GridViewTextBoxColumn98.HeaderText = "Id"
+        GridViewTextBoxColumn98.IsVisible = False
+        GridViewTextBoxColumn98.Name = "parcoursId"
+        GridViewTextBoxColumn99.EnableExpressionEditor = False
+        GridViewTextBoxColumn99.HeaderText = "HeureRDV"
+        GridViewTextBoxColumn99.IsVisible = False
+        GridViewTextBoxColumn99.Name = "ConsultationNextHeure"
+        Me.RadParcoursDataGridView.MasterTemplate.Columns.AddRange(New Telerik.WinControls.UI.GridViewDataColumn() {GridViewTextBoxColumn92, GridViewTextBoxColumn93, GridViewTextBoxColumn94, GridViewTextBoxColumn95, GridViewTextBoxColumn96, GridViewTextBoxColumn97, GridViewTextBoxColumn98, GridViewTextBoxColumn99})
         Me.RadParcoursDataGridView.MasterTemplate.ShowFilteringRow = False
         Me.RadParcoursDataGridView.MasterTemplate.ShowRowHeaderColumn = False
-        Me.RadParcoursDataGridView.MasterTemplate.ViewDefinition = TableViewDefinition3
+        Me.RadParcoursDataGridView.MasterTemplate.ViewDefinition = TableViewDefinition13
         Me.RadParcoursDataGridView.Name = "RadParcoursDataGridView"
         Me.RadParcoursDataGridView.ReadOnly = True
         Me.RadParcoursDataGridView.RightToLeft = System.Windows.Forms.RightToLeft.No
@@ -951,27 +967,27 @@ Partial Class RadFSynthese
         Me.RadContexteDataGridView.MasterTemplate.AllowDeleteRow = False
         Me.RadContexteDataGridView.MasterTemplate.AllowDragToGroup = False
         Me.RadContexteDataGridView.MasterTemplate.AllowEditRow = False
-        GridViewTextBoxColumn25.EnableExpressionEditor = False
-        GridViewTextBoxColumn25.FieldName = "categorieContexte"
-        GridViewTextBoxColumn25.HeaderText = "categorieContexte"
-        GridViewTextBoxColumn25.IsVisible = False
-        GridViewTextBoxColumn25.Name = "categorieContexte"
-        GridViewTextBoxColumn26.EnableExpressionEditor = False
-        GridViewTextBoxColumn26.FieldName = "contexte"
-        GridViewTextBoxColumn26.HeaderText = "contexte"
-        GridViewTextBoxColumn26.HeaderTextAlignment = System.Drawing.ContentAlignment.MiddleLeft
-        GridViewTextBoxColumn26.Name = "contexte"
-        GridViewTextBoxColumn26.Width = 975
-        GridViewTextBoxColumn27.EnableExpressionEditor = False
-        GridViewTextBoxColumn27.FieldName = "contexteId"
-        GridViewTextBoxColumn27.HeaderText = "contexteId"
-        GridViewTextBoxColumn27.IsVisible = False
-        GridViewTextBoxColumn27.Name = "contexteId"
-        Me.RadContexteDataGridView.MasterTemplate.Columns.AddRange(New Telerik.WinControls.UI.GridViewDataColumn() {GridViewTextBoxColumn25, GridViewTextBoxColumn26, GridViewTextBoxColumn27})
+        GridViewTextBoxColumn100.EnableExpressionEditor = False
+        GridViewTextBoxColumn100.FieldName = "categorieContexte"
+        GridViewTextBoxColumn100.HeaderText = "categorieContexte"
+        GridViewTextBoxColumn100.IsVisible = False
+        GridViewTextBoxColumn100.Name = "categorieContexte"
+        GridViewTextBoxColumn101.EnableExpressionEditor = False
+        GridViewTextBoxColumn101.FieldName = "contexte"
+        GridViewTextBoxColumn101.HeaderText = "contexte"
+        GridViewTextBoxColumn101.HeaderTextAlignment = System.Drawing.ContentAlignment.MiddleLeft
+        GridViewTextBoxColumn101.Name = "contexte"
+        GridViewTextBoxColumn101.Width = 975
+        GridViewTextBoxColumn102.EnableExpressionEditor = False
+        GridViewTextBoxColumn102.FieldName = "contexteId"
+        GridViewTextBoxColumn102.HeaderText = "contexteId"
+        GridViewTextBoxColumn102.IsVisible = False
+        GridViewTextBoxColumn102.Name = "contexteId"
+        Me.RadContexteDataGridView.MasterTemplate.Columns.AddRange(New Telerik.WinControls.UI.GridViewDataColumn() {GridViewTextBoxColumn100, GridViewTextBoxColumn101, GridViewTextBoxColumn102})
         Me.RadContexteDataGridView.MasterTemplate.ShowColumnHeaders = False
         Me.RadContexteDataGridView.MasterTemplate.ShowFilteringRow = False
         Me.RadContexteDataGridView.MasterTemplate.ShowRowHeaderColumn = False
-        Me.RadContexteDataGridView.MasterTemplate.ViewDefinition = TableViewDefinition4
+        Me.RadContexteDataGridView.MasterTemplate.ViewDefinition = TableViewDefinition14
         Me.RadContexteDataGridView.Name = "RadContexteDataGridView"
         Me.RadContexteDataGridView.ReadOnly = True
         Me.RadContexteDataGridView.RightToLeft = System.Windows.Forms.RightToLeft.No
@@ -1082,48 +1098,48 @@ Partial Class RadFSynthese
         Me.RadPPSDataGridView.MasterTemplate.AllowDragToGroup = False
         Me.RadPPSDataGridView.MasterTemplate.AllowEditRow = False
         Me.RadPPSDataGridView.MasterTemplate.ClipboardPasteMode = Telerik.WinControls.UI.GridViewClipboardPasteMode.EnableWithNotifications
-        GridViewTextBoxColumn28.AllowGroup = False
-        GridViewTextBoxColumn28.AllowResize = False
-        GridViewTextBoxColumn28.AllowSort = False
-        GridViewTextBoxColumn28.EnableExpressionEditor = False
-        GridViewTextBoxColumn28.FieldName = "pps"
-        GridViewTextBoxColumn28.HeaderText = "pps"
-        GridViewTextBoxColumn28.Name = "pps"
-        GridViewTextBoxColumn28.ReadOnly = True
-        GridViewTextBoxColumn28.Width = 975
-        GridViewTextBoxColumn29.AllowGroup = False
-        GridViewTextBoxColumn29.AllowResize = False
-        GridViewTextBoxColumn29.AllowSort = False
-        GridViewTextBoxColumn29.EnableExpressionEditor = False
-        GridViewTextBoxColumn29.FieldName = "ppsId"
-        GridViewTextBoxColumn29.HeaderText = "ppsId"
-        GridViewTextBoxColumn29.IsVisible = False
-        GridViewTextBoxColumn29.Name = "ppsId"
-        GridViewTextBoxColumn30.EnableExpressionEditor = False
-        GridViewTextBoxColumn30.FieldName = "categorieId"
-        GridViewTextBoxColumn30.HeaderText = "Categorie"
-        GridViewTextBoxColumn30.IsVisible = False
-        GridViewTextBoxColumn30.Name = "categorieId"
-        GridViewTextBoxColumn31.EnableExpressionEditor = False
-        GridViewTextBoxColumn31.FieldName = "sousCategorieId"
-        GridViewTextBoxColumn31.HeaderText = "Sous-catégorie"
-        GridViewTextBoxColumn31.IsVisible = False
-        GridViewTextBoxColumn31.Name = "sousCategorieId"
-        GridViewTextBoxColumn32.EnableExpressionEditor = False
-        GridViewTextBoxColumn32.FieldName = "specialiteId"
-        GridViewTextBoxColumn32.HeaderText = "Spécialité"
-        GridViewTextBoxColumn32.IsVisible = False
-        GridViewTextBoxColumn32.Name = "specialiteId"
-        GridViewTextBoxColumn33.EnableExpressionEditor = False
-        GridViewTextBoxColumn33.FieldName = "parcoursId"
-        GridViewTextBoxColumn33.HeaderText = "parcoursId"
-        GridViewTextBoxColumn33.IsVisible = False
-        GridViewTextBoxColumn33.Name = "parcoursId"
-        Me.RadPPSDataGridView.MasterTemplate.Columns.AddRange(New Telerik.WinControls.UI.GridViewDataColumn() {GridViewTextBoxColumn28, GridViewTextBoxColumn29, GridViewTextBoxColumn30, GridViewTextBoxColumn31, GridViewTextBoxColumn32, GridViewTextBoxColumn33})
+        GridViewTextBoxColumn103.AllowGroup = False
+        GridViewTextBoxColumn103.AllowResize = False
+        GridViewTextBoxColumn103.AllowSort = False
+        GridViewTextBoxColumn103.EnableExpressionEditor = False
+        GridViewTextBoxColumn103.FieldName = "pps"
+        GridViewTextBoxColumn103.HeaderText = "pps"
+        GridViewTextBoxColumn103.Name = "pps"
+        GridViewTextBoxColumn103.ReadOnly = True
+        GridViewTextBoxColumn103.Width = 975
+        GridViewTextBoxColumn104.AllowGroup = False
+        GridViewTextBoxColumn104.AllowResize = False
+        GridViewTextBoxColumn104.AllowSort = False
+        GridViewTextBoxColumn104.EnableExpressionEditor = False
+        GridViewTextBoxColumn104.FieldName = "ppsId"
+        GridViewTextBoxColumn104.HeaderText = "ppsId"
+        GridViewTextBoxColumn104.IsVisible = False
+        GridViewTextBoxColumn104.Name = "ppsId"
+        GridViewTextBoxColumn105.EnableExpressionEditor = False
+        GridViewTextBoxColumn105.FieldName = "categorieId"
+        GridViewTextBoxColumn105.HeaderText = "Categorie"
+        GridViewTextBoxColumn105.IsVisible = False
+        GridViewTextBoxColumn105.Name = "categorieId"
+        GridViewTextBoxColumn106.EnableExpressionEditor = False
+        GridViewTextBoxColumn106.FieldName = "sousCategorieId"
+        GridViewTextBoxColumn106.HeaderText = "Sous-catégorie"
+        GridViewTextBoxColumn106.IsVisible = False
+        GridViewTextBoxColumn106.Name = "sousCategorieId"
+        GridViewTextBoxColumn107.EnableExpressionEditor = False
+        GridViewTextBoxColumn107.FieldName = "specialiteId"
+        GridViewTextBoxColumn107.HeaderText = "Spécialité"
+        GridViewTextBoxColumn107.IsVisible = False
+        GridViewTextBoxColumn107.Name = "specialiteId"
+        GridViewTextBoxColumn108.EnableExpressionEditor = False
+        GridViewTextBoxColumn108.FieldName = "parcoursId"
+        GridViewTextBoxColumn108.HeaderText = "parcoursId"
+        GridViewTextBoxColumn108.IsVisible = False
+        GridViewTextBoxColumn108.Name = "parcoursId"
+        Me.RadPPSDataGridView.MasterTemplate.Columns.AddRange(New Telerik.WinControls.UI.GridViewDataColumn() {GridViewTextBoxColumn103, GridViewTextBoxColumn104, GridViewTextBoxColumn105, GridViewTextBoxColumn106, GridViewTextBoxColumn107, GridViewTextBoxColumn108})
         Me.RadPPSDataGridView.MasterTemplate.ShowColumnHeaders = False
         Me.RadPPSDataGridView.MasterTemplate.ShowFilteringRow = False
         Me.RadPPSDataGridView.MasterTemplate.ShowRowHeaderColumn = False
-        Me.RadPPSDataGridView.MasterTemplate.ViewDefinition = TableViewDefinition5
+        Me.RadPPSDataGridView.MasterTemplate.ViewDefinition = TableViewDefinition15
         Me.RadPPSDataGridView.Name = "RadPPSDataGridView"
         Me.RadPPSDataGridView.ReadOnly = True
         Me.RadPPSDataGridView.RightToLeft = System.Windows.Forms.RightToLeft.No
@@ -1157,7 +1173,7 @@ Partial Class RadFSynthese
         '
         'RadChkPublie
         '
-        Me.RadChkPublie.Location = New System.Drawing.Point(238, 46)
+        Me.RadChkPublie.Location = New System.Drawing.Point(238, 44)
         Me.RadChkPublie.Name = "RadChkPublie"
         Me.RadChkPublie.Size = New System.Drawing.Size(96, 18)
         Me.RadChkPublie.TabIndex = 3
@@ -1165,7 +1181,7 @@ Partial Class RadFSynthese
         '
         'RadChkParChronologie
         '
-        Me.RadChkParChronologie.Location = New System.Drawing.Point(500, 46)
+        Me.RadChkParChronologie.Location = New System.Drawing.Point(500, 44)
         Me.RadChkParChronologie.Name = "RadChkParChronologie"
         Me.RadChkParChronologie.Size = New System.Drawing.Size(95, 18)
         Me.RadChkParChronologie.TabIndex = 5
@@ -1254,7 +1270,7 @@ Partial Class RadFSynthese
         '
         'RadChkMajeurTous
         '
-        Me.RadChkMajeurTous.Location = New System.Drawing.Point(701, 46)
+        Me.RadChkMajeurTous.Location = New System.Drawing.Point(701, 44)
         Me.RadChkMajeurTous.Name = "RadChkMajeurTous"
         Me.RadChkMajeurTous.Size = New System.Drawing.Size(44, 18)
         Me.RadChkMajeurTous.TabIndex = 5
@@ -1278,7 +1294,7 @@ Partial Class RadFSynthese
         '
         'RadChkMesureMax
         '
-        Me.RadChkMesureMax.Location = New System.Drawing.Point(691, 737)
+        Me.RadChkMesureMax.Location = New System.Drawing.Point(691, 738)
         Me.RadChkMesureMax.Name = "RadChkMesureMax"
         Me.RadChkMesureMax.Size = New System.Drawing.Size(215, 18)
         Me.RadChkMesureMax.TabIndex = 1
@@ -1319,12 +1335,54 @@ Partial Class RadFSynthese
         Me.RadBtnCreationPPSMesure.TabIndex = 40
         Me.RadBtnCreationPPSMesure.Text = "+ Mesure préventive"
         '
+        'RadBtnUp
+        '
+        Me.RadBtnUp.Font = New System.Drawing.Font("Segoe UI", 11.0!, System.Drawing.FontStyle.Bold)
+        Me.RadBtnUp.Location = New System.Drawing.Point(109, 45)
+        Me.RadBtnUp.Name = "RadBtnUp"
+        Me.RadBtnUp.Size = New System.Drawing.Size(15, 15)
+        Me.RadBtnUp.TabIndex = 42
+        Me.RadBtnUp.Text = "↑"
+        '
+        'RadBtnDown
+        '
+        Me.RadBtnDown.Font = New System.Drawing.Font("Segoe UI", 11.0!)
+        Me.RadBtnDown.Location = New System.Drawing.Point(130, 45)
+        Me.RadBtnDown.Name = "RadBtnDown"
+        Me.RadBtnDown.Size = New System.Drawing.Size(15, 15)
+        Me.RadBtnDown.TabIndex = 43
+        Me.RadBtnDown.Text = "Down"
+        '
+        'RadBtnRight
+        '
+        Me.RadBtnRight.Font = New System.Drawing.Font("Segoe UI", 11.0!)
+        Me.RadBtnRight.Location = New System.Drawing.Point(151, 45)
+        Me.RadBtnRight.Name = "RadBtnRight"
+        Me.RadBtnRight.Size = New System.Drawing.Size(15, 15)
+        Me.RadBtnRight.TabIndex = 43
+        Me.RadBtnRight.Text = "Right"
+        Me.RadBtnRight.Visible = False
+        '
+        'RadBtnLeft
+        '
+        Me.RadBtnLeft.Font = New System.Drawing.Font("Segoe UI", 11.0!)
+        Me.RadBtnLeft.Location = New System.Drawing.Point(172, 45)
+        Me.RadBtnLeft.Name = "RadBtnLeft"
+        Me.RadBtnLeft.Size = New System.Drawing.Size(15, 15)
+        Me.RadBtnLeft.TabIndex = 43
+        Me.RadBtnLeft.Text = "Left"
+        Me.RadBtnLeft.Visible = False
+        '
         'RadFSynthese
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.CancelButton = Me.RadButtonAbandon
         Me.ClientSize = New System.Drawing.Size(1024, 947)
+        Me.Controls.Add(Me.RadBtnLeft)
+        Me.Controls.Add(Me.RadBtnRight)
+        Me.Controls.Add(Me.RadBtnDown)
+        Me.Controls.Add(Me.RadBtnUp)
         Me.Controls.Add(Me.RadBtnCreationPPSMesure)
         Me.Controls.Add(Me.RadBtnCreationAntecedent)
         Me.Controls.Add(Me.RadBtnCreationTraitement)
@@ -1421,6 +1479,10 @@ Partial Class RadFSynthese
         CType(Me.RadBtnCreationTraitement, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.RadBtnCreationAntecedent, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.RadBtnCreationPPSMesure, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.RadBtnUp, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.RadBtnDown, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.RadBtnRight, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.RadBtnLeft, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
         Me.PerformLayout()
@@ -1492,7 +1554,6 @@ Partial Class RadFSynthese
     Friend WithEvents HistoriqueDesModificationsToolStripMenuItem2 As ToolStripMenuItem
     Friend WithEvents RadBtnImprimer As Telerik.WinControls.UI.RadButton
     Friend WithEvents ModifierUnAntécédentToolStripMenuItem As ToolStripMenuItem
-    Friend WithEvents TransformerEnMajeurToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents RadChkMajeurSeul As Telerik.WinControls.UI.RadCheckBox
     Friend WithEvents RadChkMajeurTous As Telerik.WinControls.UI.RadCheckBox
     Friend WithEvents RadChkParcoursNonCache As Telerik.WinControls.UI.RadCheckBox
@@ -1517,5 +1578,9 @@ Partial Class RadFSynthese
     Friend WithEvents RadBtnCreationPPSStrategie As Telerik.WinControls.UI.RadButton
     Friend WithEvents RadBtnCreationPPSMesure As Telerik.WinControls.UI.RadButton
     Friend WithEvents RadBtnCreationPPSSuivi As Telerik.WinControls.UI.RadButton
+    Friend WithEvents RadBtnUp As Telerik.WinControls.UI.RadButton
+    Friend WithEvents RadBtnDown As Telerik.WinControls.UI.RadButton
+    Friend WithEvents RadBtnRight As Telerik.WinControls.UI.RadButton
+    Friend WithEvents RadBtnLeft As Telerik.WinControls.UI.RadButton
 End Class
 
