@@ -309,6 +309,7 @@ Partial Class RadFPatientListe
         Me.RadPatientGridView.ContextMenuStrip = Me.ContextMenuStrip1
         Me.RadPatientGridView.Cursor = System.Windows.Forms.Cursors.Default
         Me.RadPatientGridView.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.RadPatientGridView.EnableHotTracking = False
         Me.RadPatientGridView.Font = New System.Drawing.Font("Segoe UI", 8.25!)
         Me.RadPatientGridView.ForeColor = System.Drawing.Color.Black
         Me.RadPatientGridView.ImeMode = System.Windows.Forms.ImeMode.NoControl

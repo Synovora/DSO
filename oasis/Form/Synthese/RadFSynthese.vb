@@ -61,6 +61,7 @@ Public Class RadFSynthese
     Dim iGridMax As Integer
     Dim NouveauOrdreAffichage As Integer
     Dim NiveauAntecedentAOrdonner As Integer
+    Dim antecedentIdADeplacer, IndexAntecedentADeplacer As Integer
 
     Private Sub RadFSynthese_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         RadBtnUp.Text = Char.ConvertFromUtf32(8593)
@@ -326,6 +327,11 @@ Public Class RadFSynthese
             RadAntecedentDataGridView.Rows(iGrid).Cells("ordreAffichage2").Value = Coalesce(antecedentDataTable.Rows(i)("oa_antecedent_ordre_affichage2"), 0)
             RadAntecedentDataGridView.Rows(iGrid).Cells("ordreAffichage3").Value = Coalesce(antecedentDataTable.Rows(i)("oa_antecedent_ordre_affichage3"), 0)
 
+            If antecedentIdADeplacer <> 0 AndAlso antecedentIdADeplacer = antecedentDataTable.Rows(i)("oa_antecedent_id") Then
+                IndexAntecedentADeplacer = iGrid
+                antecedentIdADeplacer = 0
+            End If
+
             'Détermination de l'antécédent pere si niveau 2 et 3
             Select Case CInt(antecedentDataTable.Rows(i)("oa_antecedent_niveau"))
                 Case 2
@@ -514,6 +520,7 @@ Public Class RadFSynthese
         If aRow >= 0 Then
             Cursor.Current = Cursors.WaitCursor
             antecedentId = RadAntecedentDataGridView.Rows(aRow).Cells("antecedentId").Value
+            antecedentIdADeplacer = RadAntecedentDataGridView.Rows(aRow).Cells("antecedentId").Value
             NiveauAntecedentAOrdonner = Coalesce(RadAntecedentDataGridView.Rows(aRow).Cells("antecedentNiveau").Value, 0)
             antecedentIdPere = Coalesce(RadAntecedentDataGridView.Rows(aRow).Cells("antecedentPereId").Value, 0)
             Select Case NiveauAntecedentAOrdonner
@@ -535,6 +542,10 @@ Public Class RadFSynthese
             CodeRetour = antecedentChangementOrdreDao.AntecedentReorganisationOrdre(NiveauAntecedentAOrdonner, SelectedPatient.patientId, antecedentIdPere, NiveauAntecedentAOrdonner)
             If CodeRetour = True Then
                 ChargementAntecedent()
+                If IndexAntecedentADeplacer <> 0 AndAlso IndexAntecedentADeplacer <= iGridMax Then
+                    Me.RadAntecedentDataGridView.CurrentRow = RadAntecedentDataGridView.Rows(IndexAntecedentADeplacer)
+                    IndexAntecedentADeplacer = 0
+                End If
             End If
             Cursor.Current = Cursors.Default
         End If
@@ -547,6 +558,7 @@ Public Class RadFSynthese
         If aRow >= 0 Then
             Cursor.Current = Cursors.WaitCursor
             antecedentId = RadAntecedentDataGridView.Rows(aRow).Cells("antecedentId").Value
+            antecedentIdADeplacer = RadAntecedentDataGridView.Rows(aRow).Cells("antecedentId").Value
             NiveauAntecedentAOrdonner = Coalesce(RadAntecedentDataGridView.Rows(aRow).Cells("antecedentNiveau").Value, 0)
             antecedentIdPere = Coalesce(RadAntecedentDataGridView.Rows(aRow).Cells("antecedentPereId").Value, 0)
             Select Case NiveauAntecedentAOrdonner
@@ -568,6 +580,10 @@ Public Class RadFSynthese
             CodeRetour = antecedentChangementOrdreDao.AntecedentReorganisationOrdre(NiveauAntecedentAOrdonner, SelectedPatient.patientId, antecedentIdPere, NiveauAntecedentAOrdonner)
             If CodeRetour = True Then
                 ChargementAntecedent()
+                If IndexAntecedentADeplacer <> 0 AndAlso IndexAntecedentADeplacer <= iGridMax Then
+                    Me.RadAntecedentDataGridView.CurrentRow = RadAntecedentDataGridView.Rows(IndexAntecedentADeplacer)
+                    IndexAntecedentADeplacer = 0
+                End If
             End If
             Cursor.Current = Cursors.Default
         End If

@@ -37,6 +37,7 @@ Public Class RadFPatientListe
 
         RadGridLocalizationProvider.CurrentProvider = New FrenchRadGridViewLocalizationProvider()
 
+        'Provque le chargement de la liste des patients
         RadChkPatientOasis.CheckState = CheckState.Checked
 
         'Accès au menu Admin si l'utilisateur est autorisé
