@@ -33,13 +33,20 @@ Partial Class FrmSousEpisode
         Dim GridViewTextBoxColumn5 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
         Dim GridViewTextBoxColumn6 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
         Dim GridViewTextBoxColumn7 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
+        Dim GridViewTextBoxColumn8 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
         Dim TableViewDefinition1 As Telerik.WinControls.UI.TableViewDefinition = New Telerik.WinControls.UI.TableViewDefinition()
         Me.RadPanel1 = New Telerik.WinControls.UI.RadPanel()
+        Me.BtnValidate = New Telerik.WinControls.UI.RadButton()
+        Me.BtnDetail = New Telerik.WinControls.UI.RadButton()
+        Me.BtnCreate = New Telerik.WinControls.UI.RadButton()
         Me.BtnCancel = New Telerik.WinControls.UI.RadButton()
         Me.RadPanel2 = New Telerik.WinControls.UI.RadPanel()
         Me.RadSousEpisodeGrid = New Telerik.WinControls.UI.RadGridView()
         CType(Me.RadPanel1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.RadPanel1.SuspendLayout()
+        CType(Me.BtnValidate, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.BtnDetail, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.BtnCreate, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.BtnCancel, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.RadPanel2, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.RadPanel2.SuspendLayout()
@@ -50,12 +57,43 @@ Partial Class FrmSousEpisode
         '
         'RadPanel1
         '
+        Me.RadPanel1.Controls.Add(Me.BtnValidate)
+        Me.RadPanel1.Controls.Add(Me.BtnDetail)
+        Me.RadPanel1.Controls.Add(Me.BtnCreate)
         Me.RadPanel1.Controls.Add(Me.BtnCancel)
         Me.RadPanel1.Dock = System.Windows.Forms.DockStyle.Bottom
         Me.RadPanel1.Location = New System.Drawing.Point(0, 498)
         Me.RadPanel1.Name = "RadPanel1"
         Me.RadPanel1.Size = New System.Drawing.Size(1298, 37)
         Me.RadPanel1.TabIndex = 0
+        '
+        'BtnValidate
+        '
+        Me.BtnValidate.ForeColor = System.Drawing.Color.Red
+        Me.BtnValidate.Location = New System.Drawing.Point(282, 6)
+        Me.BtnValidate.Name = "BtnValidate"
+        Me.BtnValidate.Size = New System.Drawing.Size(110, 24)
+        Me.BtnValidate.TabIndex = 10
+        Me.BtnValidate.TabStop = False
+        Me.BtnValidate.Text = "Valider"
+        Me.BtnValidate.Visible = False
+        '
+        'BtnDetail
+        '
+        Me.BtnDetail.Location = New System.Drawing.Point(156, 6)
+        Me.BtnDetail.Name = "BtnDetail"
+        Me.BtnDetail.Size = New System.Drawing.Size(110, 24)
+        Me.BtnDetail.TabIndex = 9
+        Me.BtnDetail.Text = "Détail"
+        Me.BtnDetail.Visible = False
+        '
+        'BtnCreate
+        '
+        Me.BtnCreate.Location = New System.Drawing.Point(31, 6)
+        Me.BtnCreate.Name = "BtnCreate"
+        Me.BtnCreate.Size = New System.Drawing.Size(110, 24)
+        Me.BtnCreate.TabIndex = 8
+        Me.BtnCreate.Text = "Nouveau"
         '
         'BtnCancel
         '
@@ -77,7 +115,6 @@ Partial Class FrmSousEpisode
         '
         'RadSousEpisodeGrid
         '
-        Me.RadSousEpisodeGrid.Dock = System.Windows.Forms.DockStyle.Fill
         Me.RadSousEpisodeGrid.EnableCustomDrawing = True
         Me.RadSousEpisodeGrid.Location = New System.Drawing.Point(0, 0)
         '
@@ -97,46 +134,51 @@ Partial Class FrmSousEpisode
         GridViewCheckBoxColumn1.HeaderText = "ALD"
         GridViewCheckBoxColumn1.Name = "IsAld"
         GridViewCheckBoxColumn1.ReadOnly = True
-        GridViewCheckBoxColumn1.Width = 28
+        GridViewCheckBoxColumn1.Width = 21
         GridViewDateTimeColumn1.HeaderText = "Création"
         GridViewDateTimeColumn1.Name = "HorodateCreation"
         GridViewDateTimeColumn1.ReadOnly = True
-        GridViewDateTimeColumn1.Width = 64
+        GridViewDateTimeColumn1.Width = 47
         GridViewTextBoxColumn2.HeaderText = "Par"
         GridViewTextBoxColumn2.Name = "CreateUser"
         GridViewTextBoxColumn2.ReadOnly = True
-        GridViewTextBoxColumn2.Width = 131
+        GridViewTextBoxColumn2.Width = 97
         GridViewDateTimeColumn2.HeaderText = "Mise à jour"
         GridViewDateTimeColumn2.Name = "HorodateLastUpdate"
         GridViewDateTimeColumn2.ReadOnly = True
-        GridViewDateTimeColumn2.Width = 66
+        GridViewDateTimeColumn2.Width = 49
         GridViewTextBoxColumn3.HeaderText = "Par"
         GridViewTextBoxColumn3.Name = "LastUpdateUser"
         GridViewTextBoxColumn3.ReadOnly = True
-        GridViewTextBoxColumn3.Width = 130
+        GridViewTextBoxColumn3.Width = 96
         GridViewDateTimeColumn3.HeaderText = "Validation"
         GridViewDateTimeColumn3.Name = "HorodateValidate"
-        GridViewDateTimeColumn3.Width = 65
+        GridViewDateTimeColumn3.Width = 48
         GridViewTextBoxColumn4.HeaderText = "Par"
         GridViewTextBoxColumn4.Name = "ValidateUser"
-        GridViewTextBoxColumn4.Width = 122
+        GridViewTextBoxColumn4.Width = 90
         GridViewTextBoxColumn5.HeaderText = "Type"
         GridViewTextBoxColumn5.Name = "Type"
         GridViewTextBoxColumn5.ReadOnly = True
-        GridViewTextBoxColumn5.Width = 207
+        GridViewTextBoxColumn5.Width = 153
         GridViewTextBoxColumn6.HeaderText = "Nom Fichier"
         GridViewTextBoxColumn6.Name = "NomFichier"
         GridViewTextBoxColumn6.ReadOnly = True
-        GridViewTextBoxColumn6.Width = 240
+        GridViewTextBoxColumn6.Width = 176
         GridViewTextBoxColumn7.HeaderText = "Commentaire"
         GridViewTextBoxColumn7.Name = "Commentaire"
         GridViewTextBoxColumn7.ReadOnly = True
-        GridViewTextBoxColumn7.Width = 233
-        Me.RadSousEpisodeGrid.MasterTemplate.Columns.AddRange(New Telerik.WinControls.UI.GridViewDataColumn() {GridViewTextBoxColumn1, GridViewCheckBoxColumn1, GridViewDateTimeColumn1, GridViewTextBoxColumn2, GridViewDateTimeColumn2, GridViewTextBoxColumn3, GridViewDateTimeColumn3, GridViewTextBoxColumn4, GridViewTextBoxColumn5, GridViewTextBoxColumn6, GridViewTextBoxColumn7})
+        GridViewTextBoxColumn7.Width = 174
+        GridViewTextBoxColumn8.HeaderText = "ValidationProfilTypes"
+        GridViewTextBoxColumn8.IsVisible = False
+        GridViewTextBoxColumn8.Name = "ValidationProfilTypes"
+        GridViewTextBoxColumn8.VisibleInColumnChooser = False
+        GridViewTextBoxColumn8.Width = 46
+        Me.RadSousEpisodeGrid.MasterTemplate.Columns.AddRange(New Telerik.WinControls.UI.GridViewDataColumn() {GridViewTextBoxColumn1, GridViewCheckBoxColumn1, GridViewDateTimeColumn1, GridViewTextBoxColumn2, GridViewDateTimeColumn2, GridViewTextBoxColumn3, GridViewDateTimeColumn3, GridViewTextBoxColumn4, GridViewTextBoxColumn5, GridViewTextBoxColumn6, GridViewTextBoxColumn7, GridViewTextBoxColumn8})
         Me.RadSousEpisodeGrid.MasterTemplate.ViewDefinition = TableViewDefinition1
         Me.RadSousEpisodeGrid.Name = "RadSousEpisodeGrid"
         Me.RadSousEpisodeGrid.ReadOnly = True
-        Me.RadSousEpisodeGrid.Size = New System.Drawing.Size(1298, 498)
+        Me.RadSousEpisodeGrid.Size = New System.Drawing.Size(963, 332)
         Me.RadSousEpisodeGrid.TabIndex = 3
         '
         'FrmSousEpisode
@@ -159,6 +201,9 @@ Partial Class FrmSousEpisode
         Me.Text = "Sous-Episodes"
         CType(Me.RadPanel1, System.ComponentModel.ISupportInitialize).EndInit()
         Me.RadPanel1.ResumeLayout(False)
+        CType(Me.BtnValidate, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.BtnDetail, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.BtnCreate, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.BtnCancel, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.RadPanel2, System.ComponentModel.ISupportInitialize).EndInit()
         Me.RadPanel2.ResumeLayout(False)
@@ -173,5 +218,8 @@ Partial Class FrmSousEpisode
     Friend WithEvents RadPanel2 As Telerik.WinControls.UI.RadPanel
     Friend WithEvents RadSousEpisodeGrid As Telerik.WinControls.UI.RadGridView
     Friend WithEvents BtnCancel As Telerik.WinControls.UI.RadButton
+    Friend WithEvents BtnValidate As Telerik.WinControls.UI.RadButton
+    Friend WithEvents BtnDetail As Telerik.WinControls.UI.RadButton
+    Friend WithEvents BtnCreate As Telerik.WinControls.UI.RadButton
 End Class
 

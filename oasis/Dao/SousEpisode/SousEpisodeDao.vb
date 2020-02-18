@@ -39,7 +39,9 @@ Public Class SousEpisodeDao
             "UU.oa_utilisateur_prenom + ' ' + UU.oa_utilisateur_nom as user_update, " & vbCrLf &
             "UV.oa_utilisateur_prenom + ' ' + UV.oa_utilisateur_nom as user_validate, " & vbCrLf &
             "T.libelle as type_libelle, " & vbCrLf &
-            "S.libelle as sous_type_libelle " & vbCrLf
+            "S.libelle as sous_type_libelle, " & vbCrLf &
+            "S.redaction_profil_types, " & vbCrLf &
+            "S.validation_profil_types " & vbCrLf
         End If
 
         SQLString += "FROM [oasis].[oa_sous_episode] SE " & vbCrLf
@@ -145,6 +147,47 @@ Public Class SousEpisodeDao
 
             da.InsertCommand = cmd
             sousEpisode.Id = da.InsertCommand.ExecuteScalar()
+
+            transaction.Commit()
+
+        Catch ex As Exception
+            transaction.Rollback()
+            MessageBox.Show(ex.Message)
+            codeRetour = False
+        Finally
+            transaction.Dispose()
+            con.Close()
+        End Try
+
+        Return codeRetour
+    End Function
+
+    Friend Function updateValidation(idSousEpisode As Long) As Boolean
+        Dim da As SqlDataAdapter = New SqlDataAdapter()
+        Dim codeRetour As Boolean = True
+        Dim con As SqlConnection
+
+        con = GetConnection()
+        Dim transaction As SqlClient.SqlTransaction = con.BeginTransaction
+
+        Try
+            Dim SQLstring As String = "UPDATE oasis.oa_sous_episode " &
+                                      "SET validate_user_id = @ValidateUserId, horodate_validate = @HoroDateValidate " &
+                                      "WHERE id=@Id"
+
+            'SousEpisode.HorodateCreation = DateTime.Now
+            Dim cmd As New SqlCommand(SQLstring, con, transaction)
+            With cmd.Parameters
+                .AddWithValue("@ValidateUserId", userLog.UtilisateurId)
+                .AddWithValue("@HoroDateValidate", DateTime.Now)
+                .AddWithValue("@id", idSousEpisode)
+            End With
+
+            da.UpdateCommand = cmd
+            Dim nb As Integer = da.UpdateCommand.ExecuteNonQuery()
+            If (nb <> 1) Then
+                Throw New Exception("Validation échouée (" & nb & ")")
+            End If
 
             transaction.Commit()
 

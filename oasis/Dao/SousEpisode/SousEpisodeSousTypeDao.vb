@@ -34,7 +34,9 @@ Public Class SousEpisodeSousTypeDao
             "	  libelle, " & vbCrLf &
             "	  redaction_profil_types, " & vbCrLf &
             "	  validation_profil_types, " & vbCrLf &
-            "	  is_ald_possible " & vbCrLf &
+            "	  is_ald_possible, " & vbCrLf &
+            "	  is_reponse_requise, " & vbCrLf &
+            "	  delai_reponse " & vbCrLf &
             "FROM [oasis].[oa_r_sous_episode_sous_type] " & vbCrLf
 
         If idSousEpisodeType <> 0 Then
@@ -73,8 +75,8 @@ Public Class SousEpisodeSousTypeDao
 
         Try
             Dim SQLstring As String = "INSERT INTO oa_r_sous_episode_sous_type " &
-                    "(id_sous_episode_type, horodate_creation, libelle, redaction_profil_types, validation_profil_types, is_ald_possible)" &
-            " VALUES (@id_sous_episode_type, @dateCreation, @libelle , @redaction_profil_types, @validation_profil_types, @is_ald_possible)"
+                    "(id_sous_episode_type, horodate_creation, libelle, redaction_profil_types, validation_profil_types, is_ald_possible, is_reponse_requise, delai_reponse)" &
+            " VALUES (@id_sous_episode_type, @dateCreation, @libelle , @redaction_profil_types, @validation_profil_types, @is_ald_possible, @is_reponse_requise, @delai_reponse)"
 
             Dim cmd As New SqlCommand(SQLstring, con, transaction)
             With cmd.Parameters
@@ -83,7 +85,9 @@ Public Class SousEpisodeSousTypeDao
                 .AddWithValue("@libelle", seType.Libelle)
                 .AddWithValue("@redaction_profil_types", seType.RedactionProfilTypes)
                 .AddWithValue("@validation_profil_types", seType.ValidationProfilTypes)
-                .AddWithValue("@is_ald_possible", seType.isALDPossible)
+                .AddWithValue("@is_ald_possible", seType.IsALDPossible)
+                .AddWithValue("@is_reponse_requise", seType.IsReponseRequise)
+                .AddWithValue("@delai_reponse", seType.DelaiReponse)
             End With
 
             da.InsertCommand = cmd

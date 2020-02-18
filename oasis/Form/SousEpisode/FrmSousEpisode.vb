@@ -4,9 +4,9 @@ Imports Telerik.WinControls.UI
 
 Public Class FrmSousEpisode
     Dim sousEpisodeDao As SousEpisodeDao = New SousEpisodeDao
-    Dim idEpisode As Long
+    Dim episode As Episode, patient As Patient
 
-    Sub New(_idEpisode As Long)
+    Sub New(episode As Episode, patient As Patient)
 
         ' Cet appel est requis par le concepteur.
         InitializeComponent()
@@ -14,18 +14,19 @@ Public Class FrmSousEpisode
         ' Ajoutez une initialisation quelconque après l'appel InitializeComponent().
         afficheTitleForm(Me, Me.Text)
         ' -- episode en cours
-        Me.idEpisode = _idEpisode
-
+        Me.episode = episode
+        Me.patient = patient
+        ' 
+        RadSousEpisodeGrid.Dock = DockStyle.Fill
         refreshGrid()
 
     End Sub
 
     Private Sub refreshGrid()
         Dim exId As Long, index As Integer = -1, exPosit = 0
-        Dim strToolTip As String
         Me.Cursor = Cursors.WaitCursor
         Try
-            Dim data As DataTable = sousEpisodeDao.getTableSousEpisode(idEpisode, True)
+            Dim data As DataTable = sousEpisodeDao.getTableSousEpisode(episode.Id, True)
 
             Dim numRowGrid As Integer = 0
 
@@ -53,10 +54,11 @@ Public Class FrmSousEpisode
                     .Cells("commentaire").Value = row("commentaire")
                     .Cells("NomFichier").Value = row("nom_fichier")
                     .Cells("IsAld").Value = row("is_ald")
-                    strToolTip = " << " & .Cells("type").Value & " >>" & vbCrLf
+                    .Cells("ValidationProfilTypes").Value = row("validation_profil_types")
 
-                    strToolTip += row("commentaire") & vbCrLf
-                    RadSousEpisodeGrid.Rows.Last.Tag = strToolTip
+                    ' -- on garnit le tag pour affichage tooltip
+                    RadSousEpisodeGrid.Rows.Last.Tag = " << " & .Cells("type").Value & " >>" & vbCrLf & If(row("is_ald"), " --> ALD" & vbCrLf, "") &
+                                 row("commentaire") & vbCrLf
                 End With
 
                 numRowGrid += 1
@@ -79,10 +81,6 @@ Public Class FrmSousEpisode
 
     End Sub
 
-    Private Sub BtnCancel_Click(sender As Object, e As EventArgs) Handles BtnCancel.Click
-        Close()
-    End Sub
-
     Private Sub RadSousEpisodeGrid_CellFormatting(sender As Object, e As Telerik.WinControls.UI.CellFormattingEventArgs) Handles RadSousEpisodeGrid.CellFormatting
         If TypeOf e.Row Is GridViewDataRowInfo Then
             ' e.CellElement.Padding = New Padding(5, 0, 0, 0)
@@ -95,22 +93,57 @@ Public Class FrmSousEpisode
 
     End Sub
 
-    '    Private Sub BtnCancel_Click(sender As Object, e As EventArgs) Handles BtnCancel.Click
-    '    Try
-    '    Me.Cursor = Cursors.WaitCursor
-    '    Me.Enabled = False
-    '    Using frm = New FrmTestRichText()
-    '                frm.ShowDialog()
-    '                frm.Dispose()
-    '    End Using
-    '    Catch err As Exception
-    '            MsgBox(err.Message())
-    '    Finally
-    '    Me.Enabled = True
-    '    Me.Cursor = Cursors.Default
-    '    End Try
+    ''' <summary>
+    ''' 
+    ''' </summary>
+    ''' <param name="sender"></param>
+    ''' <param name="e"></param>
+    Private Sub RadSousEpisodeGrid_SelectionChanged(sender As Object, e As EventArgs) Handles RadSousEpisodeGrid.SelectionChanged
+        If Me.RadSousEpisodeGrid.Rows.Count = 0 OrElse Me.RadSousEpisodeGrid.CurrentRow.IsSelected = False Then
+            BtnValidate.Visible = False
+            BtnDetail.Visible = False
+        Else
+            BtnDetail.Visible = True
+            BtnValidate.Visible = Me.RadSousEpisodeGrid.CurrentRow.Cells("HorodateValidate").Value Is Nothing AndAlso
+                                  SousEpisodeSousType.isUserLogAutorise(Me.RadSousEpisodeGrid.CurrentRow.Cells("ValidationProfilTypes").Value)
+        End If
 
-    '    End Sub
+    End Sub
 
+
+    ''' <summary>
+    ''' 
+    ''' </summary>
+    ''' <param name="sender"></param>
+    ''' <param name="e"></param>
+    Private Sub BtnValidate_Click(sender As Object, e As EventArgs) Handles BtnValidate.Click
+        If MsgBox("Etes-vous sur de vouloir valider ce sous_épisode ?", MsgBoxStyle.YesNo Or MsgBoxStyle.DefaultButton2 Or MsgBoxStyle.Critical, "Validation Sous-Episode") = MsgBoxResult.Yes Then
+            Dim sousEpisodeDao = New SousEpisodeDao
+            sousEpisodeDao.updateValidation(Me.RadSousEpisodeGrid.CurrentRow.Cells("Id").Value)
+            refreshGrid()
+        End If
+    End Sub
+
+    ''' <summary>
+    ''' 
+    ''' </summary>
+    ''' <param name="sender"></param>
+    ''' <param name="e"></param>
+    Private Sub BtnDetail_Click(sender As Object, e As EventArgs) Handles BtnDetail.Click
+        Try
+            Me.Cursor = Cursors.WaitCursor
+            Me.Enabled = False
+            Using frm = New FrmTestRichText()
+                frm.ShowDialog()
+                frm.Dispose()
+            End Using
+        Catch err As Exception
+            MsgBox(err.Message())
+        Finally
+            Me.Enabled = True
+            Me.Cursor = Cursors.Default
+        End Try
+
+    End Sub
 
 End Class

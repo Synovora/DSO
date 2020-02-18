@@ -1,4 +1,6 @@
-﻿Imports System.Windows.Documents
+﻿Imports System.Configuration
+Imports System.Windows.Documents
+Imports Oasis_Common
 
 Public Class SousEpisodeSousType
     Property Id As Long
@@ -7,7 +9,9 @@ Public Class SousEpisodeSousType
     Property Libelle As String
     Property RedactionProfilTypes As String
     Property ValidationProfilTypes As String
-    Property isALDPossible As Boolean
+    Property IsALDPossible As Boolean
+    Property IsReponseRequise As Boolean
+    Property DelaiReponse As Integer
 
     Public Sub New()
     End Sub
@@ -20,27 +24,11 @@ Public Class SousEpisodeSousType
         Me.Libelle = row("libelle")
         Me.ValidationProfilTypes = row("validation_profil_types")
         Me.RedactionProfilTypes = row("redaction_profil_types")
-        Me.isALDPossible = row("is_ald_possible")
+        Me.IsALDPossible = row("is_ald_possible")
+        Me.IsReponseRequise = Coalesce(row("is_reponse_requise"), False)
+        Me.DelaiReponse = Coalesce(row("is_ald_possible"), ConfigurationManager.AppSettings("DelaiDefautReponseSousEpisode"))
     End Sub
 
-    ''' <summary>
-    ''' 
-    ''' </summary>
-    ''' <param name="profilsString"></param>
-    ''' <returns></returns>
-    Public Function getListProfilsAutoriseList(profilsString As String) As List(Of EpisodeDao.EnumTypeProfil)
-        Dim lst As List(Of EpisodeDao.EnumTypeProfil) = New List(Of EpisodeDao.EnumTypeProfil)
-        If String.IsNullOrEmpty(profilsString) Then Return lst
-        Dim tbl = profilsString.Split(",")
-        For Each strP In tbl
-            Try
-                Dim enumTypeProfilAutorises As EpisodeDao.EnumTypeProfil = [Enum].Parse(GetType(EpisodeDao.EnumTypeProfil), strP)
-                lst.Add(enumTypeProfilAutorises)
-            Catch
-            End Try
-        Next
-        Return lst
-    End Function
 
     ''' <summary>
     ''' 
@@ -63,14 +51,32 @@ Public Class SousEpisodeSousType
     ''' </summary>
     ''' <param name="strProfil"></param>
     ''' <returns></returns>
-    Private Function isUserLogAutorise(strProfil As String) As Boolean
+    Public Shared Function isUserLogAutorise(strProfil As String) As Boolean
         Dim lst As List(Of EpisodeDao.EnumTypeProfil) = getListProfilsAutoriseList(strProfil)
         Try
-            Return lst.Exists([Enum].Parse(GetType(EpisodeDao.EnumTypeProfil), userLog.TypeProfil))
+            Return lst.Contains([Enum].Parse(GetType(EpisodeDao.EnumTypeProfil), userLog.TypeProfil))
         Catch
         End Try
         Return False
     End Function
 
+    ''' <summary>
+    ''' 
+    ''' </summary>
+    ''' <param name="profilsString"></param>
+    ''' <returns></returns>
+    Private Shared Function getListProfilsAutoriseList(profilsString As String) As List(Of EpisodeDao.EnumTypeProfil)
+        Dim lst As List(Of EpisodeDao.EnumTypeProfil) = New List(Of EpisodeDao.EnumTypeProfil)
+        If String.IsNullOrEmpty(profilsString) Then Return lst
+        Dim tbl = profilsString.Split(",")
+        For Each strP In tbl
+            Try
+                Dim enumTypeProfilAutorises As EpisodeDao.EnumTypeProfil = [Enum].Parse(GetType(EpisodeDao.EnumTypeProfil), strP)
+                lst.Add(enumTypeProfilAutorises)
+            Catch
+            End Try
+        Next
+        Return lst
+    End Function
 
 End Class
