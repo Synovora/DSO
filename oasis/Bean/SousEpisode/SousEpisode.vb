@@ -16,13 +16,13 @@ Public Class SousEpisode
     Property IsALD As Boolean
     Property IsReponse As Boolean
     Property DelaiSinceValidation As Integer
-    Property IsReponseRecue
+    Property IsReponseRecue As Boolean
+    Property HorodateLastRecu As DateTime
 
 
     Public Sub New()
     End Sub
 
-    '''
     Public Sub New(row As DataRow)
         Me.Id = row("id")
         Me.EpisodeId = row("episode_id")
@@ -42,8 +42,11 @@ Public Class SousEpisode
         Me.Commentaire = Coalesce(row("commentaire"), "")
 
         Me.isALD = row("is_ald")
-        Me.IsReponse = row("is_reponse")
+        Me.IsReponse = Coalesce(row("is_reponse"), False)
         Me.DelaiSinceValidation = Coalesce(row("delai_since_validation"), ConfigurationManager.AppSettings("DelaiDefautReponseSousEpisode"))
+
+        Me.IsReponseRecue = Coalesce(row("is_reponse_recue"), False)
+        Me.HorodateLastRecu = Coalesce(row("horodate_last_recu"), Nothing)
 
     End Sub
 

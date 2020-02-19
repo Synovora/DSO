@@ -55,6 +55,8 @@ Public Class FrmSousEpisode
                     .Cells("NomFichier").Value = row("nom_fichier")
                     .Cells("IsAld").Value = row("is_ald")
                     .Cells("ValidationProfilTypes").Value = row("validation_profil_types")
+                    .Cells("IsReponseRecue").Value = Coalesce(row("is_reponse_recue"), False)
+                    .Cells("HorodateLastRecu").Value = row("horodate_last_recu")
 
                     ' -- on garnit le tag pour affichage tooltip
                     RadSousEpisodeGrid.Rows.Last.Tag = " << " & .Cells("type").Value & " >>" & vbCrLf & If(row("is_ald"), " --> ALD" & vbCrLf, "") &

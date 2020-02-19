@@ -34,7 +34,10 @@ Public Class SousEpisodeDao
             "	  SE.commentaire, " & vbCrLf &
             "	  SE.is_ald, " & vbCrLf &
             "	  SE.is_reponse, " & vbCrLf &
-            "	  SE.delai_since_validation " & vbCrLf
+            "	  SE.delai_since_validation, " & vbCrLf &
+            "	  SE.is_reponse_recue, " & vbCrLf &
+            "	  SE.horodate_last_recu " & vbCrLf
+
         If isComplete Then
             SQLString += "" &
             ",UC.oa_utilisateur_prenom + ' ' + UC.oa_utilisateur_nom as user_create,  " & vbCrLf &
@@ -43,10 +46,12 @@ Public Class SousEpisodeDao
             "T.libelle as type_libelle, " & vbCrLf &
             "S.libelle as sous_type_libelle, " & vbCrLf &
             "S.redaction_profil_types, " & vbCrLf &
-            "S.validation_profil_types " & vbCrLf
+            "S.validation_profil_types, " & vbCrLf &
+            "(SELECT COUNT(*) FROM oasis.oa_sous_episode_reponse SER WHERE SER.id_sous_episode = SE.id ) as nb_reponse " & vbCrLf
         End If
 
         SQLString += "FROM [oasis].[oa_sous_episode] SE " & vbCrLf
+
         If isComplete Then
             SQLString += "" &
             "Join oasis.oa_r_sous_episode_type T On T.id =SE.id_sous_episode_type " & vbCrLf &
