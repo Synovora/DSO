@@ -247,6 +247,12 @@ Public Class RadFEpisodeLigneDeVie
         Parametre4Id = 0
         Parametre5Id = 0
 
+        ligneDeVie.ParametreId1 = 0
+        ligneDeVie.ParametreId2 = 0
+        ligneDeVie.ParametreId3 = 0
+        ligneDeVie.ParametreId4 = 0
+        ligneDeVie.ParametreId5 = 0
+
         Dim nombreParametre As Integer = listeParametreaAfficher.Count()
         If nombreParametre >= 5 Then
             RadBtnParametre.Hide()
@@ -272,18 +278,23 @@ Public Class RadFEpisodeLigneDeVie
                     Case 1
                         Lblparametre1.Text = parametre.Description & vbCrLf & parametre.Unite
                         Parametre1Id = parametre.Id
+                        ligneDeVie.ParametreId1 = parametre.Id
                     Case 2
                         LblParametre2.Text = parametre.Description & vbCrLf & parametre.Unite
                         Parametre2Id = parametre.Id
+                        ligneDeVie.ParametreId2 = parametre.Id
                     Case 3
                         LblParametre3.Text = parametre.Description & vbCrLf & parametre.Unite
                         Parametre3Id = parametre.Id
+                        ligneDeVie.ParametreId3 = parametre.Id
                     Case 4
                         LblParametre4.Text = parametre.Description & vbCrLf & parametre.Unite
                         Parametre4Id = parametre.Id
+                        ligneDeVie.ParametreId4 = parametre.Id
                     Case 5
                         LblParametre5.Text = parametre.Description & vbCrLf & parametre.Unite
                         Parametre5Id = parametre.Id
+                        ligneDeVie.ParametreId5 = parametre.Id
                 End Select
             Else
                 Exit Sub
