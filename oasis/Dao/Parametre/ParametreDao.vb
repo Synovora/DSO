@@ -3,6 +3,15 @@ Imports Oasis_Common
 Public Class ParametreDao
     Inherits StandardDao
 
+    Public Enum enumParametreId
+        POIDS = 1
+        TAILLE = 2
+        IMC = 3
+        PAM = 8
+        PAS = 6
+        PAD = 7
+    End Enum
+
     Friend Function GetParametreById(parametreId As Integer) As Parametre
         Dim parametre As Parametre
         Dim con As SqlConnection

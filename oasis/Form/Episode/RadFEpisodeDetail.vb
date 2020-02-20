@@ -579,15 +579,15 @@ Public Class RadFEpisodeDetail
             End Select
 
             Select Case ParametreId
-                Case 1
+                Case ParametreDao.enumParametreId.POIDS
                     LblLabelPoids.Text = "Poids"
                     LblParmPoids.Text = valeurString & " " & unite
                     valeurPoids = Valeur
-                Case 2
+                Case ParametreDao.enumParametreId.TAILLE
                     LblLabelTaille.Text = "Taille"
                     LblParmTaille.Text = valeurString & " " & unite
                     valeurTaille = Valeur
-                Case 3
+                Case ParametreDao.enumParametreId.IMC
                     LblLabelIMC.Text = "IMC"
                     uniteIMC = unite
                     EpisodeParametreIdIMC = EpisodeParametreId
@@ -599,15 +599,15 @@ Public Class RadFEpisodeDetail
                 Case 5
                     LblLabelFC.Text = "FC"
                     LblParmFC.Text = valeurString & " " & unite
-                Case 6
+                Case ParametreDao.enumParametreId.PAS
                     LblLabelPAS.Text = "PAS"
                     LblParmPAS.Text = valeurString & " " & unite
                     valeurPAS = Valeur
-                Case 7
+                Case ParametreDao.enumParametreId.PAD
                     LblLabelPAD.Text = "PAD"
                     LblParmPAD.Text = valeurString & " " & unite
                     valeurPAD = Valeur
-                Case 8
+                Case ParametreDao.enumParametreId.PAM
                     LblLabelPAM.Text = "PAM"
                     unitePAM = unite
                     EpisodeParametreIdPAM = EpisodeParametreId
@@ -672,6 +672,16 @@ Public Class RadFEpisodeDetail
                     End Select
             End Select
         Next
+
+        '20/02/2020 - BGA - Si la taille n'est pas traitée et qu'elle est stockée dans la table Patient on l'affiche à l'écran
+        If LblLabelTaille.Text = "" Then
+            Dim parametre As Parametre
+            Dim parametreDao As New ParametreDao
+            parametre = parametreDao.GetParametreById(ParametreDao.enumParametreId.TAILLE) 'Taille
+            LblLabelTaille.Text = "Taille"
+            valeurString = SelectedPatient.Taille.ToString("##0")
+            LblParmTaille.Text = valeurString & " " & parametre.Unite
+        End If
 
         If IMCaCalculer = True Then
             If valeurTaille = 0 Then
