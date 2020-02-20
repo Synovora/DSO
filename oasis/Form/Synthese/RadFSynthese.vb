@@ -68,8 +68,8 @@ Public Class RadFSynthese
     Private Sub RadFSynthese_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         RadBtnUp.Text = Char.ConvertFromUtf32(8593)
         RadBtnDown.Text = Char.ConvertFromUtf32(8595)
-        RadBtnRight.Text = Char.ConvertFromUtf32(8592)
-        RadBtnLeft.Text = Char.ConvertFromUtf32(8594)
+        RadBtnRight.Text = Char.ConvertFromUtf32(8594)
+        RadBtnLeft.Text = Char.ConvertFromUtf32(8592)
 
         Dim actiondao As New ActionDao
         Dim action As New Action
@@ -206,10 +206,9 @@ Public Class RadFSynthese
         Dim AfficheDateModification As String
         Dim diagnostic As String
         Dim antecedentCache, AldValide, AldValideOK, AldDemandeEnCours As Boolean
-        Dim antecedentIdPrecedent1, antecedentIdPrecedent2, antecedentIdPrecedent3 As Long
+        Dim antecedentIdPrecedent1, antecedentIdPrecedent2 As Long
         antecedentIdPrecedent1 = 0
         antecedentIdPrecedent2 = 0
-        antecedentIdPrecedent3 = 0
 
         'Parcours du DataTable pour alimenter le DataGridView
         For i = 0 To rowCount Step 1
@@ -333,20 +332,23 @@ Public Class RadFSynthese
             RadAntecedentDataGridView.Rows(iGrid).Cells("ordreAffichage1").Value = Coalesce(antecedentDataTable.Rows(i)("oa_antecedent_ordre_affichage1"), 0)
             RadAntecedentDataGridView.Rows(iGrid).Cells("ordreAffichage2").Value = Coalesce(antecedentDataTable.Rows(i)("oa_antecedent_ordre_affichage2"), 0)
             RadAntecedentDataGridView.Rows(iGrid).Cells("ordreAffichage3").Value = Coalesce(antecedentDataTable.Rows(i)("oa_antecedent_ordre_affichage3"), 0)
+            RadAntecedentDataGridView.Rows(iGrid).Cells("antecedentIdNiveau1").Value = Coalesce(antecedentDataTable.Rows(i)("oa_antecedent_id_niveau1"), 0)
+            RadAntecedentDataGridView.Rows(iGrid).Cells("antecedentIdNiveau2").Value = Coalesce(antecedentDataTable.Rows(i)("oa_antecedent_id_niveau2"), 0)
 
             'Déplacement horizontal, détermination de l'antécédent précédent si niveau ????
             Select Case antecedentDataTable.Rows(i)("oa_antecedent_niveau")
                 Case 1
                     RadAntecedentDataGridView.Rows(iGrid).Cells("antecedentIdPrecedent").Value = antecedentIdPrecedent1
                     antecedentIdPrecedent1 = antecedentDataTable.Rows(i)("oa_antecedent_id")
+                    antecedentIdPrecedent2 = 0
                 Case 2
                     RadAntecedentDataGridView.Rows(iGrid).Cells("antecedentIdPrecedent").Value = antecedentIdPrecedent2
                     antecedentIdPrecedent2 = antecedentDataTable.Rows(i)("oa_antecedent_id")
                 Case 3
-                    RadAntecedentDataGridView.Rows(iGrid).Cells("antecedentIdPrecedent").Value = antecedentIdPrecedent3
-                    antecedentIdPrecedent3 = antecedentDataTable.Rows(i)("oa_antecedent_id")
+                    'Non concerné
             End Select
 
+            'Récupération de l'index du dernier antécédent déplacé pour lui remettre le focus lors du réaffichage de la grid
             If antecedentIdADeplacer <> 0 AndAlso antecedentIdADeplacer = antecedentDataTable.Rows(i)("oa_antecedent_id") Then
                 IndexAntecedentADeplacer = iGrid
                 antecedentIdADeplacer = 0
@@ -563,6 +565,7 @@ Public Class RadFSynthese
             If CodeRetour = True Then
                 ChargementAntecedent()
                 If IndexAntecedentADeplacer <> 0 AndAlso IndexAntecedentADeplacer <= iGridMax Then
+                    Me.RadAntecedentDataGridView.Rows(IndexAntecedentADeplacer).IsCurrent = True
                     Me.RadAntecedentDataGridView.CurrentRow = RadAntecedentDataGridView.Rows(IndexAntecedentADeplacer)
                     IndexAntecedentADeplacer = 0
                 End If
@@ -601,6 +604,7 @@ Public Class RadFSynthese
             If CodeRetour = True Then
                 ChargementAntecedent()
                 If IndexAntecedentADeplacer <> 0 AndAlso IndexAntecedentADeplacer <= iGridMax Then
+                    Me.RadAntecedentDataGridView.Rows(IndexAntecedentADeplacer).IsCurrent = True
                     Me.RadAntecedentDataGridView.CurrentRow = RadAntecedentDataGridView.Rows(IndexAntecedentADeplacer)
                     IndexAntecedentADeplacer = 0
                 End If
@@ -643,27 +647,31 @@ Public Class RadFSynthese
                 antecedentId = RadAntecedentDataGridView.Rows(aRow).Cells("antecedentId").Value
                 antecedentIdPere = RadAntecedentDataGridView.Rows(aRow).Cells("antecedentIdPrecedent").Value
                 niveauActuel = RadAntecedentDataGridView.Rows(aRow).Cells("antecedentNiveau").Value
-                antecedentPere = antecedentDao.GetAntecedentById(antecedentIdPere)
-                Select Case antecedentPere.Niveau
-                    Case 1
-                        NiveauCible = 2
-                        AntecedentId1 = antecedentIdPere
-                        AntecedentId2 = 0
-                        ordre1 = antecedentPere.Ordre1
-                        ordre2 = 990
-                        ordre3 = 0
-                        AntecedentModificationNiveau(antecedentId, antecedentIdPere, niveauActuel, NiveauCible, AntecedentId1, AntecedentId2, ordre1, ordre2, ordre3)
-                    Case 2
-                        NiveauCible = 3
-                        AntecedentId1 = antecedentPere.Niveau1Id
-                        AntecedentId2 = antecedentIdPere
-                        ordre1 = antecedentPere.Ordre1
-                        ordre2 = antecedentPere.Ordre2
-                        ordre3 = 990
-                        AntecedentModificationNiveau(antecedentId, antecedentIdPere, niveauActuel, NiveauCible, AntecedentId1, AntecedentId2, ordre1, ordre2, ordre3)
-                    Case 3
-                        'Pas d'effet
-                End Select
+                If antecedentIdPere <> 0 Then
+                    antecedentPere = antecedentDao.GetAntecedentById(antecedentIdPere)
+                    Select Case niveauActuel
+                        Case 1 'Passe de niveau 1 à niveau 2 sur antécédent niveau 1 précédent si existe
+                            NiveauCible = 2
+                            AntecedentId1 = antecedentIdPere
+                            AntecedentId2 = 0
+                            ordre1 = antecedentPere.Ordre1
+                            ordre2 = 990
+                            ordre3 = 0
+                            AntecedentModificationNiveau(antecedentId, antecedentIdPere, niveauActuel, NiveauCible, AntecedentId1, AntecedentId2, ordre1, ordre2, ordre3)
+                            ChargementAntecedent()
+                        Case 2 'Passe de niveau 2 à niveau 3 sur antécédent niveau 2 précédent si existe
+                            NiveauCible = 3
+                            AntecedentId1 = antecedentPere.Niveau1Id
+                            AntecedentId2 = antecedentIdPere
+                            ordre1 = antecedentPere.Ordre1
+                            ordre2 = antecedentPere.Ordre2
+                            ordre3 = 990
+                            AntecedentModificationNiveau(antecedentId, antecedentIdPere, niveauActuel, NiveauCible, AntecedentId1, AntecedentId2, ordre1, ordre2, ordre3)
+                            ChargementAntecedent()
+                        Case 3
+                            'Pas d'effet
+                    End Select
+                End If
             End If
         End If
     End Sub
@@ -671,10 +679,41 @@ Public Class RadFSynthese
     'Flèche gauche : recherche de l'antécédent précédent de même niveau, l'antécédent sélectionné partage le même niveau et le même antécédent père que l'antécédent précédent 
     'Particularité : pas d'antécédent père pour un antécédent de niveau 2 qui passe par conséquent en niveau 1
     'Pas d'effet sur un niveau 1 et s'il n'y a pas d'antécédent précédent
-
-
     Private Sub RadBtnLeft_Click(sender As Object, e As EventArgs) Handles RadBtnLeft.Click
-
+        If RadAntecedentDataGridView.CurrentRow IsNot Nothing Then
+            Dim aRow As Integer = Me.RadAntecedentDataGridView.Rows.IndexOf(Me.RadAntecedentDataGridView.CurrentRow)
+            If aRow >= 0 Then
+                Dim antecedentId, antecedentIdPere, niveauActuel As Integer
+                Dim NiveauCible, AntecedentId1, AntecedentId2, ordre1, ordre2, ordre3 As Integer
+                antecedentId = RadAntecedentDataGridView.Rows(aRow).Cells("antecedentId").Value
+                antecedentIdPere = RadAntecedentDataGridView.Rows(aRow).Cells("antecedentIdPrecedent").Value
+                niveauActuel = RadAntecedentDataGridView.Rows(aRow).Cells("antecedentNiveau").Value
+                Select Case niveauActuel
+                    Case 1
+                        'Pas d'effet
+                    Case 2 'Passe du niveau 2 au niveau 1 (Majeur)
+                        NiveauCible = 1
+                        AntecedentId1 = 0
+                        AntecedentId2 = 0
+                        antecedentIdPere = 0
+                        ordre1 = 990
+                        ordre2 = 0
+                        ordre3 = 0
+                        AntecedentModificationNiveau(antecedentId, antecedentIdPere, niveauActuel, NiveauCible, AntecedentId1, AntecedentId2, ordre1, ordre2, ordre3)
+                        ChargementAntecedent()
+                    Case 3 'Passe du niveau 3 au niveau 2
+                        NiveauCible = 2
+                        AntecedentId1 = RadAntecedentDataGridView.Rows(aRow).Cells("antecedentIdNiveau1").Value
+                        AntecedentId2 = 0
+                        antecedentIdPere = RadAntecedentDataGridView.Rows(aRow).Cells("antecedentIdNiveau1").Value
+                        ordre1 = RadAntecedentDataGridView.Rows(aRow).Cells("ordreAffichage1").Value
+                        ordre2 = 990
+                        ordre3 = 0
+                        AntecedentModificationNiveau(antecedentId, antecedentIdPere, niveauActuel, NiveauCible, AntecedentId1, AntecedentId2, ordre1, ordre2, ordre3)
+                        ChargementAntecedent()
+                End Select
+            End If
+        End If
     End Sub
 
     Private Sub AntecedentModificationNiveau(antecedentId As Long, antecedentIdPere As Long, niveauActuel As Integer, niveauCible As Integer, antecedentId1 As Long, antecedentId2 As Long, ordre1 As Integer, ordre2 As Integer, ordre3 As Integer)
