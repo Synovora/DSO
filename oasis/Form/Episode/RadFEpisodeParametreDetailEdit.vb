@@ -110,7 +110,7 @@ Public Class RadFEpisodeParametreDetailEdit
             If listeParametreEpisode.Contains(parametreId) = False Then
                 listeParametreEpisode.Add(parametreId)
             End If
-            If parametreId = 3 Or parametreId = 8 Then
+            If parametreId = 3 Or parametreId = 8 Then   'IMC ou PAM qui sont des paramètres calculés
                 Continue For
             End If
             'Ajout d'une ligne au DataGridView
@@ -130,6 +130,15 @@ Public Class RadFEpisodeParametreDetailEdit
                 RadGridViewParm.Rows(iGrid).Cells("ajoute").Value = "+"
             End If
             Valeur = parmDataTable.Rows(i)("valeur")
+
+            'Si c'est le paramètre taille et que la valeur n'est pas renseignée, on va récupérer la taille stocké dans la table patient
+            If parametreId = 2 Then 'Taille
+                If Valeur = 0 Then
+                    If SelectedPatient.Taille <> 0 Then
+                        Valeur = SelectedPatient.Taille
+                    End If
+                End If
+            End If
 
             'Console.WriteLine("Id : " & parametreId.ToString & " ajout : " & parmDataTable.Rows(i)("parametre_ajoute"))
 

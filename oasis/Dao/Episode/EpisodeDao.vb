@@ -378,7 +378,7 @@ Public Class EpisodeDao
         End If
 
         'Order by
-        OrderByString = " ORDER BY date_creation DESC"
+        OrderByString = " ORDER BY date_creation DESC, episode_id DESC"
 
         If ligneDeVie.ParametreId1 <> 0 Then
             SQLString += Parametre1String
