@@ -524,7 +524,8 @@ Public Class RadFEpisodeLigneDeVie
                         form.SelectedEpisodeId = EpisodeId
                         form.SelectedPatient = Me.SelectedPatient
                         form.UtilisateurConnecte = Me.UtilisateurConnecte
-                        form.ShowDialog() 'Modal
+                        form.ShowDialog()
+                        ChargementEpisode(ligneDeVie)
                     End Using
                     Me.Enabled = True
                 End If
@@ -866,4 +867,5 @@ Public Class RadFEpisodeLigneDeVie
             ChargementEpisode(ligneDeVie)
         End Using
     End Sub
+
 End Class

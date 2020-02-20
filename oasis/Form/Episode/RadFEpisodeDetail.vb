@@ -1656,7 +1656,9 @@ Public Class RadFEpisodeDetail
             form.SelectedEpisode = episode
             form.ShowDialog()
             If form.CodeRetour = True Then
-                ChargementEpisodeContexteConclusion()
+                ChargementCaracteristiquesEpisode()
+                DroitAcces()
+                ChargementConclusion()
             End If
         End Using
     End Sub

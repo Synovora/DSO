@@ -50,6 +50,8 @@ Public Class RadFSynthese
     End Property
 
     Dim antecedentChangementOrdreDao As New AntecedentChangementOrdreDao
+    Dim antecedentAffectationDao As New AntecedentAffectationDao
+    Dim antecedentDao As New AntecedentDao
 
     Dim InitPublie, InitParPriorite, InitMajeur, InitContextePublie, InitParcoursNonCache, InitContexteBioPublie As Boolean
     Dim Allergie, ContreIndication As Boolean
@@ -204,6 +206,10 @@ Public Class RadFSynthese
         Dim AfficheDateModification As String
         Dim diagnostic As String
         Dim antecedentCache, AldValide, AldValideOK, AldDemandeEnCours As Boolean
+        Dim antecedentIdPrecedent1, antecedentIdPrecedent2, antecedentIdPrecedent3 As Long
+        antecedentIdPrecedent1 = 0
+        antecedentIdPrecedent2 = 0
+        antecedentIdPrecedent3 = 0
 
         'Parcours du DataTable pour alimenter le DataGridView
         For i = 0 To rowCount Step 1
@@ -321,18 +327,32 @@ Public Class RadFSynthese
 
             'Id antécédent
             RadAntecedentDataGridView.Rows(iGrid).Cells("antecedentId").Value = antecedentDataTable.Rows(i)("oa_antecedent_id")
+
             RadAntecedentDataGridView.Rows(iGrid).Cells("antecedentDrcId").Value = antecedentDataTable.Rows(i)("oa_antecedent_drc_id")
             RadAntecedentDataGridView.Rows(iGrid).Cells("antecedentNiveau").Value = antecedentDataTable.Rows(i)("oa_antecedent_niveau")
             RadAntecedentDataGridView.Rows(iGrid).Cells("ordreAffichage1").Value = Coalesce(antecedentDataTable.Rows(i)("oa_antecedent_ordre_affichage1"), 0)
             RadAntecedentDataGridView.Rows(iGrid).Cells("ordreAffichage2").Value = Coalesce(antecedentDataTable.Rows(i)("oa_antecedent_ordre_affichage2"), 0)
             RadAntecedentDataGridView.Rows(iGrid).Cells("ordreAffichage3").Value = Coalesce(antecedentDataTable.Rows(i)("oa_antecedent_ordre_affichage3"), 0)
 
+            'Déplacement horizontal, détermination de l'antécédent précédent si niveau ????
+            Select Case antecedentDataTable.Rows(i)("oa_antecedent_niveau")
+                Case 1
+                    RadAntecedentDataGridView.Rows(iGrid).Cells("antecedentIdPrecedent").Value = antecedentIdPrecedent1
+                    antecedentIdPrecedent1 = antecedentDataTable.Rows(i)("oa_antecedent_id")
+                Case 2
+                    RadAntecedentDataGridView.Rows(iGrid).Cells("antecedentIdPrecedent").Value = antecedentIdPrecedent2
+                    antecedentIdPrecedent2 = antecedentDataTable.Rows(i)("oa_antecedent_id")
+                Case 3
+                    RadAntecedentDataGridView.Rows(iGrid).Cells("antecedentIdPrecedent").Value = antecedentIdPrecedent3
+                    antecedentIdPrecedent3 = antecedentDataTable.Rows(i)("oa_antecedent_id")
+            End Select
+
             If antecedentIdADeplacer <> 0 AndAlso antecedentIdADeplacer = antecedentDataTable.Rows(i)("oa_antecedent_id") Then
                 IndexAntecedentADeplacer = iGrid
                 antecedentIdADeplacer = 0
             End If
 
-            'Détermination de l'antécédent pere si niveau 2 et 3
+            'Déplacement vertical, détermination de l'antécédent pere si niveau 2 et 3
             Select Case CInt(antecedentDataTable.Rows(i)("oa_antecedent_niveau"))
                 Case 2
                     RadAntecedentDataGridView.Rows(iGrid).Cells("antecedentPereId").Value = antecedentDataTable.Rows(i)("oa_antecedent_id_niveau1")
@@ -611,15 +631,107 @@ Public Class RadFSynthese
     End Sub
 
     'Traitement du déplacement horizontal des antécédents
-    'Right
+    'Flèche droite : recherche de l'antécédent précédent de même niveau, l'antécédent sélectionné devient le fils de l'antécédent précédent
+    'Pas d'effet sur un niveau 3 et s'il n'y a pas d'antécédent précédent
     Private Sub RadBtnRight_Click(sender As Object, e As EventArgs) Handles RadBtnRight.Click
-
+        If RadAntecedentDataGridView.CurrentRow IsNot Nothing Then
+            Dim aRow As Integer = Me.RadAntecedentDataGridView.Rows.IndexOf(Me.RadAntecedentDataGridView.CurrentRow)
+            If aRow >= 0 Then
+                Dim antecedentPere As Antecedent
+                Dim antecedentId, antecedentIdPere, niveauActuel As Integer
+                Dim NiveauCible, AntecedentId1, AntecedentId2, ordre1, ordre2, ordre3 As Integer
+                antecedentId = RadAntecedentDataGridView.Rows(aRow).Cells("antecedentId").Value
+                antecedentIdPere = RadAntecedentDataGridView.Rows(aRow).Cells("antecedentIdPrecedent").Value
+                niveauActuel = RadAntecedentDataGridView.Rows(aRow).Cells("antecedentNiveau").Value
+                antecedentPere = antecedentDao.GetAntecedentById(antecedentIdPere)
+                Select Case antecedentPere.Niveau
+                    Case 1
+                        NiveauCible = 2
+                        AntecedentId1 = antecedentIdPere
+                        AntecedentId2 = 0
+                        ordre1 = antecedentPere.Ordre1
+                        ordre2 = 990
+                        ordre3 = 0
+                        AntecedentModificationNiveau(antecedentId, antecedentIdPere, niveauActuel, NiveauCible, AntecedentId1, AntecedentId2, ordre1, ordre2, ordre3)
+                    Case 2
+                        NiveauCible = 3
+                        AntecedentId1 = antecedentPere.Niveau1Id
+                        AntecedentId2 = antecedentIdPere
+                        ordre1 = antecedentPere.Ordre1
+                        ordre2 = antecedentPere.Ordre2
+                        ordre3 = 990
+                        AntecedentModificationNiveau(antecedentId, antecedentIdPere, niveauActuel, NiveauCible, AntecedentId1, AntecedentId2, ordre1, ordre2, ordre3)
+                    Case 3
+                        'Pas d'effet
+                End Select
+            End If
+        End If
     End Sub
 
-    'Left
+    'Flèche gauche : recherche de l'antécédent précédent de même niveau, l'antécédent sélectionné partage le même niveau et le même antécédent père que l'antécédent précédent 
+    'Particularité : pas d'antécédent père pour un antécédent de niveau 2 qui passe par conséquent en niveau 1
+    'Pas d'effet sur un niveau 1 et s'il n'y a pas d'antécédent précédent
+
+
     Private Sub RadBtnLeft_Click(sender As Object, e As EventArgs) Handles RadBtnLeft.Click
 
     End Sub
+
+    Private Sub AntecedentModificationNiveau(antecedentId As Long, antecedentIdPere As Long, niveauActuel As Integer, niveauCible As Integer, antecedentId1 As Long, antecedentId2 As Long, ordre1 As Integer, ordre2 As Integer, ordre3 As Integer)
+        antecedentAffectationDao.UpdateAntecedentaAffecter(antecedentId, niveauCible, antecedentId1, antecedentId2, ordre1, ordre2, ordre3)
+        antecedentAffectationDao.AntecedentReorganisationOrdre(antecedentId, niveauCible, SelectedPatient.patientId)
+
+        Select Case niveauActuel 'Niveau actuel de l'antécédent à affecter
+            Case 1
+                Select Case niveauCible  'Nouveau niveau affecté à l'antécédent
+                    Case 1 'Antécédent de niveau 1 reste niveau 1 : <-- sur niveau 1, !!! sans objet !!!
+                        'Cas sans objet : Un antécédent de niveau 1 n'ayant pas de père ne peut pas réaffecté
+                    Case 2 'Antécédent niveau 1 devient niveau 2 : --> sur niveau 1 => devient le fils de l'antécédent précédent de niveau 1
+                        '(1) Réaffecter les antécédents liés de niveau 2 en niveau 3
+                        antecedentAffectationDao.AffectationAntecedenetsLies(1, antecedentId, antecedentIdPere, ordre1, SelectedPatient.patientId)
+                        antecedentAffectationDao.AntecedentReorganisationOrdre(0, 1, SelectedPatient.patientId)
+                        antecedentAffectationDao.AntecedentReorganisationOrdre(antecedentIdPere, 2, SelectedPatient.patientId)
+                        antecedentAffectationDao.AntecedentReorganisationOrdre(antecedentId, 3, SelectedPatient.patientId)
+                        '(5) Occulter les antécédents liés de niveau 3
+                        antecedentAffectationDao.AffectationAntecedenetsLies(5, antecedentId, 0, 0, SelectedPatient.patientId)
+                    Case 3 'Antécédent niveau 1 devient niveau 3 : !!! Sans objet !!!
+                        antecedentAffectationDao.AntecedentReorganisationOrdre(antecedentIdPere, 3, SelectedPatient.patientId)
+                        '(4) Occulter les antécédents liés de niveau 2
+                        antecedentAffectationDao.AffectationAntecedenetsLies(4, antecedentId, 0, 0, SelectedPatient.patientId)
+                        '(5) Occulter les antécédents liés de niveau 3
+                        antecedentAffectationDao.AffectationAntecedenetsLies(5, antecedentId, 0, 0, SelectedPatient.patientId)
+                End Select
+            Case 2
+                Select Case niveauCible
+                    Case 1 'Antécédent niveau 2 devient niveau 1 (Majeur) : <-- sur niveau 2 => devient majeur
+                        '(3) Réaffecter les antécédents liés de niveau 3 en niveau 2
+                        antecedentAffectationDao.AffectationAntecedenetsLies(3, antecedentId, 0, 990, SelectedPatient.patientId)
+                        antecedentAffectationDao.AntecedentReorganisationOrdre(antecedentId, niveauCible, SelectedPatient.patientId)
+                        antecedentAffectationDao.AntecedentReorganisationOrdre(antecedentId, 2, SelectedPatient.patientId)
+                    Case 2 'Antécédent niveau 2 devient reste niveau 2, mais change de père : !!! Sans objet !!!
+                        '(2) Réaffecter les antécédents liés de niveau 3
+                        antecedentAffectationDao.AffectationAntecedenetsLies(2, antecedentId, antecedentIdPere, ordre1, SelectedPatient.patientId)
+                        antecedentAffectationDao.AntecedentReorganisationOrdre(antecedentIdPere, 2, SelectedPatient.patientId)
+                        antecedentAffectationDao.AntecedentReorganisationOrdre(antecedentId, 3, SelectedPatient.patientId)
+                    Case 3 'Antécédent niveau 2 devient niveau 3 : --> sur niveau 2 => devient fils du précédent, si existe précédent de niveau 2
+                        '(6) Occulter les antécédents liés de niveau 3
+                        antecedentAffectationDao.AntecedentReorganisationOrdre(antecedentIdPere, 3, SelectedPatient.patientId)
+                        antecedentAffectationDao.AffectationAntecedenetsLies(6, antecedentId, 0, 0, SelectedPatient.patientId)
+                End Select
+            Case 3
+                Select Case niveauCible
+                    Case 1 'Antécédent niveau 3 devient niveau 1 (Majeur) : !!! Sans objet !!!
+                        antecedentAffectationDao.AntecedentReorganisationOrdre(0, 1, SelectedPatient.patientId)
+                        'AntecedentReorganisationOrdre(AntecedentIdaAffecter, 3)
+                    Case 2 'Antécédent niveau 3 devient niveau 2 : <-- sur niveau 3 => récupère le père du précédent niveau 2
+                        antecedentAffectationDao.AntecedentReorganisationOrdre(antecedentIdPere, 2, SelectedPatient.patientId)
+                        'AntecedentReorganisationOrdre(AntecedentIdaAffecter, 3)
+                    Case 3 'Antécédent niveau 3 reste niveau 3, mais change de père
+                        antecedentAffectationDao.AntecedentReorganisationOrdre(antecedentIdPere, 3, SelectedPatient.patientId)
+                End Select
+        End Select
+    End Sub
+
 
     'Gestion des options d'affichage des antécédents sur évènement
     Private Sub RadChkPublie_ToggleStateChanged(sender As Object, args As Telerik.WinControls.UI.StateChangedEventArgs) Handles RadChkPublie.ToggleStateChanged

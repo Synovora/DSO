@@ -100,7 +100,7 @@ Public Class AntecedentAffectationDao
         Return CodeRetour
     End Function
 
-    Private Function UpdateAntecedentaAffecter(antecedentId As Integer, Niveau As Integer, AntecedentId1 As Integer, AntecedentId2 As Integer, ordre1 As Integer, ordre2 As Integer, ordre3 As Integer) As Boolean
+    Friend Function UpdateAntecedentaAffecter(antecedentId As Integer, Niveau As Integer, AntecedentId1 As Integer, AntecedentId2 As Integer, ordre1 As Integer, ordre2 As Integer, ordre3 As Integer) As Boolean
         Dim con As SqlConnection
         con = GetConnection()
 
@@ -145,7 +145,7 @@ Public Class AntecedentAffectationDao
     End Function
 
     'Mise à jour de l'ordre des antécédents en réorganisant l'ordre sur un pas de 20
-    Private Function AntecedentReorganisationOrdre(AntecedentId As Integer, niveau As Integer, SelectedPatientId As Long) As Boolean
+    Friend Function AntecedentReorganisationOrdre(AntecedentId As Integer, niveau As Integer, SelectedPatientId As Long) As Boolean
         'Déclaration des données de connexion
         Dim con As SqlConnection
         con = GetConnection()
@@ -211,7 +211,7 @@ Public Class AntecedentAffectationDao
         Return CodeRetour
     End Function
 
-    Private Function AffectationOrdreAntecedenetsLies(antecedentIdRef As Integer, niveau As Integer, OrdreAffichageRef As Integer, selectedPatientId As Long) As Boolean
+    Friend Function AffectationOrdreAntecedenetsLies(antecedentIdRef As Integer, niveau As Integer, OrdreAffichageRef As Integer, selectedPatientId As Long) As Boolean
         'Déclaration des données de connexion
         Dim con As SqlConnection
         con = GetConnection()
@@ -315,7 +315,7 @@ Public Class AntecedentAffectationDao
         Return CodeRetour
     End Function
 
-    Private Function AffectationAntecedenetsLies(Traitement As Integer, antecedentIdaAffecter As Integer, antecedentIdCible As Integer, Ordre1 As Integer, selectedPatientId As Long) As Boolean
+    Friend Function AffectationAntecedenetsLies(Traitement As Integer, antecedentIdaAffecter As Integer, antecedentIdCible As Integer, Ordre1 As Integer, selectedPatientId As Long) As Boolean
         'Déclaration des données de connexion
         Dim con As SqlConnection
         con = GetConnection()
