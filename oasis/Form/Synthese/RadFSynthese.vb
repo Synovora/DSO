@@ -335,7 +335,7 @@ Public Class RadFSynthese
             RadAntecedentDataGridView.Rows(iGrid).Cells("antecedentIdNiveau1").Value = Coalesce(antecedentDataTable.Rows(i)("oa_antecedent_id_niveau1"), 0)
             RadAntecedentDataGridView.Rows(iGrid).Cells("antecedentIdNiveau2").Value = Coalesce(antecedentDataTable.Rows(i)("oa_antecedent_id_niveau2"), 0)
 
-            'Déplacement horizontal, détermination de l'antécédent précédent si niveau ????
+            'Déplacement horizontal, détermination de l'antécédent précédent
             Select Case antecedentDataTable.Rows(i)("oa_antecedent_niveau")
                 Case 1
                     RadAntecedentDataGridView.Rows(iGrid).Cells("antecedentIdPrecedent").Value = antecedentIdPrecedent1
