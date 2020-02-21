@@ -18,6 +18,11 @@ Public Class FrmSousEpisode
         Me.patient = patient
         ' 
         RadSousEpisodeGrid.Dock = DockStyle.Fill
+
+        ' ---- init su sub grid
+        RadSousEpisodeGrid.MasterTemplate.Templates(0).HierarchyDataProvider = New GridViewEventDataProvider(RadSousEpisodeGrid.MasterTemplate.Templates(0))
+        AddHandler RadSousEpisodeGrid.RowSourceNeeded, AddressOf RadSousEpisodeGrid_RowSourceNeeded
+
         refreshGrid()
 
     End Sub
@@ -124,6 +129,54 @@ Public Class FrmSousEpisode
             sousEpisodeDao.updateValidation(Me.RadSousEpisodeGrid.CurrentRow.Cells("Id").Value)
             refreshGrid()
         End If
+    End Sub
+
+    Private Sub RadSousEpisodeGrid_RowSourceNeeded(sender As Object, e As GridViewRowSourceNeededEventArgs) Handles RadSousEpisodeGrid.RowSourceNeeded
+        If Me.RadSousEpisodeGrid.Rows.Count > 0 AndAlso Me.RadSousEpisodeGrid.CurrentRow.IsSelected Then
+            refreshReponseSubGrid()
+        End If
+
+    End Sub
+
+    Private Sub refreshReponseSubGrid()
+        Me.Cursor = Cursors.WaitCursor
+        Dim sousEpisodeReponseDao = New SousEpisodeReponseDao
+        Dim rowInfo As New GridViewDataRowInfo(RadSousEpisodeGrid.MasterTemplate.Templates(0).MasterViewInfo)
+        Try
+            Dim data As DataTable = sousEpisodeReponseDao.getTableSousEpisodeReponse(Me.RadSousEpisodeGrid.CurrentRow.Cells("Id").Value)
+
+            Dim numRowGrid As Integer = 0
+
+            RadSousEpisodeGrid.Templates(0).Rows.Clear()
+
+            For Each row In data.Rows
+                With rowInfo
+                    .Cells("id").Value = row("id")
+                    .Cells("IdSousEpisode").Value = row("id_sous_episode")
+                    .Cells("HorodateCreation").Value = row("horodate_creation")
+                    .Cells("CreateUser").Value = row("user_create")
+                    .Cells("commentaire").Value = row("commentaire")
+                    .Cells("NomFichier").Value = row("nom_fichier")
+
+                    ' -- on garnit le tag pour affichage tooltip
+                    'RadSousEpisodeGrid.Templates(0).Rows.Last.Tag = " << " & .Cells("type").Value & " >>" & vbCrLf & If(row("is_ald"), " --> ALD" & vbCrLf, "") &
+                    ' row("commentaire") & vbCrLf
+                End With
+                RadSousEpisodeGrid.Templates(0).Rows.Add(numRowGrid, rowInfo)                '------------------- Alimentation du DataGridView
+
+                numRowGrid += 1
+
+            Next
+            Me.Cursor = Cursors.Default
+
+
+        Catch err As Exception
+            MsgBox(err.Message)
+        Finally
+            Me.Cursor = Cursors.Default
+        End Try
+
+
     End Sub
 
     ''' <summary>

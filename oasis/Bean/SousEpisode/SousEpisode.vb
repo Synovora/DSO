@@ -33,7 +33,7 @@ Public Class SousEpisode
         Me.HorodateCreation = row("horodate_creation")
 
         Me.LastUpdateUserId = Coalesce(row("last_update_user_id"), 0)
-        Me.HorodateCreation = Coalesce(row("horodate_last_update"), Nothing)
+        Me.HorodateLastUpdate = Coalesce(row("horodate_last_update"), Nothing)
 
         Me.ValidateUserId = Coalesce(row("Validate_user_id"), 0)
         Me.HorodateValidate = Coalesce(row("horodate_Validate"), Nothing)
