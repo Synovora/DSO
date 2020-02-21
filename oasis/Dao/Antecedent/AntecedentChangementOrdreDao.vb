@@ -1,6 +1,7 @@
 ﻿Imports System.Data.SqlClient
 Imports Oasis_WF
 Imports Oasis_Common
+
 Public Class AntecedentChangementOrdreDao
     Inherits StandardDao
 
@@ -67,6 +68,7 @@ Public Class AntecedentChangementOrdreDao
     'Affectation aux antécédents fils, de l'ordre d'affichage attribué à l'antécédent père
     Friend Function AffectationOrdreAntecedenetsLies(antecedentIdRef As Integer, niveau As Integer, OrdreAffichageRef As Integer, selectedPatientId As Long, NiveauAntecedentAOrdonner As Integer)
         'Déclaration des données de connexion
+        Dim CodeRetour As Boolean = True
         Dim con3 As SqlConnection = GetConnection()
         Dim antecedentDataAdapter As SqlDataAdapter = New SqlDataAdapter()
         Dim antecedentDataTable As DataTable = New DataTable()
@@ -106,6 +108,7 @@ Public Class AntecedentChangementOrdreDao
 
         con3.Close()
 
+        Return CodeRetour
     End Function
 
     Friend Function UpdateAntecedent(antecedentId As Integer, ordreAffichage As Integer, NiveauAntecedentAOrdonner As Integer) As Boolean

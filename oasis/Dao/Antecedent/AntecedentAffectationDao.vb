@@ -5,100 +5,60 @@ Public Class AntecedentAffectationDao
     Inherits StandardDao
 
 
-    Friend Function AffectationAntecedent(AntecedentIdaAffecter As Long, antecedentIdSelected As Long, antecedentMajeur As Boolean, NiveauAntecedentaAffecter As Integer, SelectedPatientId As Long) As Boolean
-        Dim antecedentDao As New AntecedentDao
+    Friend Sub AntecedentModificationNiveau(antecedentId As Long, antecedentIdPere As Long, niveauActuel As Integer, niveauCible As Integer, antecedentId1 As Long, antecedentId2 As Long, ordre1 As Integer, ordre2 As Integer, ordre3 As Integer, SelectedPatient As Patient)
+        UpdateAntecedentaAffecter(antecedentId, niveauCible, antecedentId1, antecedentId2, ordre1, ordre2, ordre3)
+        AntecedentReorganisationOrdre(antecedentId, niveauCible, SelectedPatient.patientId)
 
-        Dim CodeRetour As Boolean = False
-        Dim antecedentIdNiveau1, NiveauAntecedentSelected, ordre1AntecedentSelected, ordre2AntecedentSelected As Integer
-        Dim NiveauAffected, AntecedentId1, AntecedentId2, ordre1, ordre2, ordre3 As Integer
-
-        Dim antecedentSelected As Antecedent
-        antecedentSelected = antecedentDao.GetAntecedentById(antecedentIdSelected)
-        ordre1AntecedentSelected = antecedentSelected.Ordre1
-        ordre2AntecedentSelected = antecedentSelected.Ordre2
-        NiveauAntecedentSelected = antecedentSelected.Niveau
-        antecedentIdNiveau1 = antecedentSelected.Niveau1Id
-        If antecedentMajeur = True Then
-            NiveauAffected = 1
-            AntecedentId1 = 0
-            AntecedentId2 = 0
-            ordre1 = 990
-            ordre2 = 0
-            ordre3 = 0
-        Else
-            Select Case NiveauAntecedentSelected
-                Case 1
-                    NiveauAffected = 2
-                    AntecedentId1 = antecedentIdSelected
-                    AntecedentId2 = 0
-                    ordre1 = ordre1AntecedentSelected
-                    ordre2 = 990
-                    ordre3 = 0
-                Case 2
-                    NiveauAffected = 3
-                    AntecedentId1 = antecedentIdNiveau1
-                    AntecedentId2 = antecedentIdSelected
-                    ordre1 = ordre1AntecedentSelected
-                    ordre2 = ordre2AntecedentSelected
-                    ordre3 = 990
-            End Select
-        End If
-
-        UpdateAntecedentaAffecter(AntecedentIdaAffecter, NiveauAffected, AntecedentId1, AntecedentId2, ordre1, ordre2, ordre3)
-        AntecedentReorganisationOrdre(AntecedentIdaAffecter, NiveauAffected, SelectedPatientId)
-
-        Select Case NiveauAntecedentaAffecter 'Niveau actuel de l'antécédent à affecter
+        Select Case niveauActuel 'Niveau actuel de l'antécédent à affecter
             Case 1
-                Select Case NiveauAffected  'Nouveau niveau affecté à l'antécédent
-                    Case 1 'Antécédent de niveau 1 reste niveau 1
+                Select Case niveauCible  'Nouveau niveau affecté à l'antécédent
+                    Case 1 'Antécédent de niveau 1 reste niveau 1 : <-- sur niveau 1, !!! sans objet !!!
                         'Cas sans objet : Un antécédent de niveau 1 n'ayant pas de père ne peut pas réaffecté
-                    Case 2 'Antécédent niveau 1 devient niveau 2
+                    Case 2 'Antécédent niveau 1 devient niveau 2 : --> sur niveau 1 => devient le fils de l'antécédent précédent de niveau 1
                         '(1) Réaffecter les antécédents liés de niveau 2 en niveau 3
-                        AffectationAntecedenetsLies(1, AntecedentIdaAffecter, antecedentIdSelected, ordre1AntecedentSelected, SelectedPatientId)
-                        AntecedentReorganisationOrdre(0, 1, SelectedPatientId)
-                        AntecedentReorganisationOrdre(antecedentIdSelected, 2, SelectedPatientId)
-                        AntecedentReorganisationOrdre(AntecedentIdaAffecter, 3, SelectedPatientId)
+                        AffectationAntecedenetsLies(1, antecedentId, antecedentIdPere, ordre1, SelectedPatient.patientId)
+                        AntecedentReorganisationOrdre(0, 1, SelectedPatient.patientId)
+                        AntecedentReorganisationOrdre(antecedentIdPere, 2, SelectedPatient.patientId)
+                        AntecedentReorganisationOrdre(antecedentId, 3, SelectedPatient.patientId)
                         '(5) Occulter les antécédents liés de niveau 3
-                        AffectationAntecedenetsLies(5, AntecedentIdaAffecter, 0, 0, SelectedPatientId)
-                    Case 3 'Antécédent niveau 1 devient niveau 3
-                        AntecedentReorganisationOrdre(antecedentIdSelected, 3, SelectedPatientId)
+                        AffectationAntecedenetsLies(5, antecedentId, 0, 0, SelectedPatient.patientId)
+                    Case 3 'Antécédent niveau 1 devient niveau 3 : !!! Sans objet !!!
+                        AntecedentReorganisationOrdre(antecedentIdPere, 3, SelectedPatient.patientId)
                         '(4) Occulter les antécédents liés de niveau 2
-                        AffectationAntecedenetsLies(4, AntecedentIdaAffecter, 0, 0, SelectedPatientId)
+                        AffectationAntecedenetsLies(4, antecedentId, 0, 0, SelectedPatient.patientId)
                         '(5) Occulter les antécédents liés de niveau 3
-                        AffectationAntecedenetsLies(5, AntecedentIdaAffecter, 0, 0, SelectedPatientId)
+                        AffectationAntecedenetsLies(5, antecedentId, 0, 0, SelectedPatient.patientId)
                 End Select
             Case 2
-                Select Case NiveauAffected
-                    Case 1 'Antécédent niveau 2 devient niveau 1 (Majeur)
+                Select Case niveauCible
+                    Case 1 'Antécédent niveau 2 devient niveau 1 (Majeur) : <-- sur niveau 2 => devient majeur
                         '(3) Réaffecter les antécédents liés de niveau 3 en niveau 2
-                        AffectationAntecedenetsLies(3, AntecedentIdaAffecter, 0, 990, SelectedPatientId)
-                        AntecedentReorganisationOrdre(AntecedentIdaAffecter, NiveauAffected, SelectedPatientId)
-                        AntecedentReorganisationOrdre(AntecedentIdaAffecter, 2, SelectedPatientId)
-                    Case 2 'Antécédent niveau 2 devient reste niveau 2, mais change de père
+                        AffectationAntecedenetsLies(3, antecedentId, 0, 990, SelectedPatient.patientId)
+                        AntecedentReorganisationOrdre(antecedentId, niveauCible, SelectedPatient.patientId)
+                        AntecedentReorganisationOrdre(antecedentId, 2, SelectedPatient.patientId)
+                    Case 2 'Antécédent niveau 2 devient reste niveau 2, mais change de père : !!! Sans objet !!!
                         '(2) Réaffecter les antécédents liés de niveau 3
-                        AffectationAntecedenetsLies(2, AntecedentIdaAffecter, antecedentIdSelected, ordre1AntecedentSelected, SelectedPatientId)
-                        AntecedentReorganisationOrdre(antecedentIdSelected, 2, SelectedPatientId)
-                        AntecedentReorganisationOrdre(AntecedentIdaAffecter, 3, SelectedPatientId)
-                    Case 3 'Antécédent niveau 2 devient niveau 3
+                        AffectationAntecedenetsLies(2, antecedentId, antecedentIdPere, ordre1, SelectedPatient.patientId)
+                        AntecedentReorganisationOrdre(antecedentIdPere, 2, SelectedPatient.patientId)
+                        AntecedentReorganisationOrdre(antecedentId, 3, SelectedPatient.patientId)
+                    Case 3 'Antécédent niveau 2 devient niveau 3 : --> sur niveau 2 => devient fils du précédent, si existe précédent de niveau 2
                         '(6) Occulter les antécédents liés de niveau 3
-                        AntecedentReorganisationOrdre(antecedentIdSelected, 3, SelectedPatientId)
-                        AffectationAntecedenetsLies(6, AntecedentIdaAffecter, 0, 0, SelectedPatientId)
+                        AntecedentReorganisationOrdre(antecedentIdPere, 3, SelectedPatient.patientId)
+                        AffectationAntecedenetsLies(6, antecedentId, 0, 0, SelectedPatient.patientId)
                 End Select
             Case 3
-                Select Case NiveauAffected
-                    Case 1 'Antécédent niveau 3 devient niveau 1 (Majeur)
-                        AntecedentReorganisationOrdre(0, 1, SelectedPatientId)
+                Select Case niveauCible
+                    Case 1 'Antécédent niveau 3 devient niveau 1 (Majeur) : !!! Sans objet !!!
+                        AntecedentReorganisationOrdre(0, 1, SelectedPatient.patientId)
                         'AntecedentReorganisationOrdre(AntecedentIdaAffecter, 3)
-                    Case 2 'Antécédent niveau 3 devient niveau 2
-                        AntecedentReorganisationOrdre(antecedentIdSelected, 2, SelectedPatientId)
+                    Case 2 'Antécédent niveau 3 devient niveau 2 : <-- sur niveau 3 => récupère le père du précédent niveau 2
+                        AntecedentReorganisationOrdre(antecedentIdPere, 2, SelectedPatient.patientId)
                         'AntecedentReorganisationOrdre(AntecedentIdaAffecter, 3)
                     Case 3 'Antécédent niveau 3 reste niveau 3, mais change de père
-                        AntecedentReorganisationOrdre(antecedentIdSelected, 3, SelectedPatientId)
+                        AntecedentReorganisationOrdre(antecedentIdPere, 3, SelectedPatient.patientId)
                 End Select
         End Select
-
-        Return CodeRetour
-    End Function
+    End Sub
 
     Friend Function UpdateAntecedentaAffecter(antecedentId As Integer, Niveau As Integer, AntecedentId1 As Integer, AntecedentId2 As Integer, ordre1 As Integer, ordre2 As Integer, ordre3 As Integer) As Boolean
         Dim con As SqlConnection
