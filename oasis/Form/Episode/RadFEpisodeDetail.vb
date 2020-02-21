@@ -589,6 +589,9 @@ Public Class RadFEpisodeDetail
                     LblLabelTaille.Text = "Taille"
                     LblParmTaille.Text = valeurString & " " & unite
                     valeurTaille = Valeur
+                    If valeurTaille = 0 Then
+                        valeurTaille = SelectedPatient.Taille
+                    End If
                 Case ParametreDao.enumParametreId.IMC
                     LblLabelIMC.Text = "IMC"
                     uniteIMC = unite
@@ -2513,7 +2516,6 @@ Public Class RadFEpisodeDetail
                             ordre2 = 990
                             ordre3 = 0
                             AntecedentAffectationDao.AntecedentModificationNiveau(antecedentId, antecedentIdPere, niveauActuel, NiveauCible, AntecedentId1, AntecedentId2, ordre1, ordre2, ordre3, SelectedPatient)
-                            'AntecedentModificationNiveau(antecedentId, antecedentIdPere, niveauActuel, NiveauCible, AntecedentId1, AntecedentId2, ordre1, ordre2, ordre3)
                             ChargementAntecedent()
                         Case 2 'Passe de niveau 2 à niveau 3 sur antécédent niveau 2 précédent si existe
                             NiveauCible = 3
@@ -2523,7 +2525,6 @@ Public Class RadFEpisodeDetail
                             ordre2 = antecedentPere.Ordre2
                             ordre3 = 990
                             AntecedentAffectationDao.AntecedentModificationNiveau(antecedentId, antecedentIdPere, niveauActuel, NiveauCible, AntecedentId1, AntecedentId2, ordre1, ordre2, ordre3, SelectedPatient)
-                            'AntecedentModificationNiveau(antecedentId, antecedentIdPere, niveauActuel, NiveauCible, AntecedentId1, AntecedentId2, ordre1, ordre2, ordre3)
                             ChargementAntecedent()
                         Case 3
                             'Pas d'effet
@@ -2559,7 +2560,6 @@ Public Class RadFEpisodeDetail
                         ordre2 = 0
                         ordre3 = 0
                         AntecedentAffectationDao.AntecedentModificationNiveau(antecedentId, antecedentIdPere, niveauActuel, NiveauCible, AntecedentId1, AntecedentId2, ordre1, ordre2, ordre3, SelectedPatient)
-                        'AntecedentModificationNiveau(antecedentId, antecedentIdPere, niveauActuel, NiveauCible, AntecedentId1, AntecedentId2, ordre1, ordre2, ordre3)
                         ChargementAntecedent()
                     Case 3 'Passe du niveau 3 au niveau 2
                         NiveauCible = 2
@@ -2570,45 +2570,10 @@ Public Class RadFEpisodeDetail
                         ordre2 = 990
                         ordre3 = 0
                         AntecedentAffectationDao.AntecedentModificationNiveau(antecedentId, antecedentIdPere, niveauActuel, NiveauCible, AntecedentId1, AntecedentId2, ordre1, ordre2, ordre3, SelectedPatient)
-                        'AntecedentModificationNiveau(antecedentId, antecedentIdPere, niveauActuel, NiveauCible, AntecedentId1, AntecedentId2, ordre1, ordre2, ordre3)
                         ChargementAntecedent()
                 End Select
             End If
             Cursor.Current = Cursors.Default
-        End If
-    End Sub
-
-
-    'TODO: obsolète !!!!!!!!!!!!!!!!!!!!!!!!!!!!
-    'Changer l'affectation d'un antécédent (changement d'association)
-    Private Sub ChangerLaffectationDunAntecedentToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ChangerLaffectationDunAntecedentToolStripMenuItem.Click
-        If RadAntecedentDataGridView.CurrentRow IsNot Nothing Then
-            Dim aRow As Integer = Me.RadAntecedentDataGridView.Rows.IndexOf(Me.RadAntecedentDataGridView.CurrentRow)
-            If aRow >= 0 Then
-                If RadAntecedentDataGridView.Rows(aRow).Cells("antecedentAld").Value = "X" Then
-                    MessageBox.Show("Un antécédent avec une ALD en cours de validité ou une ALD en cours de demande est obligatoirement un 'Antécédent majeur' et" &
-                                    " ne peut donc pas être affecté à un autre antécédent")
-                Else
-                    Dim AntecedentId As Integer = RadAntecedentDataGridView.Rows(aRow).Cells("antecedentId").Value
-                    Me.Enabled = False
-                    Cursor.Current = Cursors.WaitCursor
-                    Using vFAntecedentAffectationSelecteur As New RadFAntecedentAffectationSelecteur
-                        vFAntecedentAffectationSelecteur.SelectedPatient = Me.SelectedPatient
-                        vFAntecedentAffectationSelecteur.UtilisateurConnecte = Me.UtilisateurConnecte
-                        vFAntecedentAffectationSelecteur.AntecedentIdaAffecter = AntecedentId
-                        vFAntecedentAffectationSelecteur.AntecedentDescriptionaAffecter = RadAntecedentDataGridView.Rows(aRow).Cells("antecedentDescription").Value
-                        vFAntecedentAffectationSelecteur.NiveauAntecedentaAffecter = RadAntecedentDataGridView.Rows(aRow).Cells("antecedentNiveau").Value
-                        vFAntecedentAffectationSelecteur.AntecedentIdPere = RadAntecedentDataGridView.Rows(aRow).Cells("antecedentPereId").Value
-                        vFAntecedentAffectationSelecteur.PositionGaucheDroite = EnumPosition.Gauche
-                        vFAntecedentAffectationSelecteur.ShowDialog() 'Modal
-                        'Si le traitement a été modifié, on recharge la grid
-                        If vFAntecedentAffectationSelecteur.CodeRetour = True Then
-                            ChargementAntecedent()
-                        End If
-                    End Using
-                    Me.Enabled = True
-                End If
-            End If
         End If
     End Sub
 

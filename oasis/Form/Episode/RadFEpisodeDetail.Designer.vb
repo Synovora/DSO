@@ -241,7 +241,6 @@ Partial Class RadFEpisodeDetail
         Me.ModifierUnAntécédentToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.ToolStripSeparator3 = New System.Windows.Forms.ToolStripSeparator()
         Me.ModifierLordreDunAntécédentToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-        Me.ChangerLaffectationDunAntecedentToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.ToolStripSeparator5 = New System.Windows.Forms.ToolStripSeparator()
         Me.HistoriqueDesModificationsToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.ToolStripSeparator7 = New System.Windows.Forms.ToolStripSeparator()
@@ -2296,7 +2295,7 @@ Partial Class RadFEpisodeDetail
         '
         'AntecedentContextMenuStrip
         '
-        Me.AntecedentContextMenuStrip.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.CréerAntecedentToolStripMenuItem, Me.ModifierUnAntécédentToolStripMenuItem, Me.ToolStripSeparator3, Me.ModifierLordreDunAntécédentToolStripMenuItem, Me.ChangerLaffectationDunAntecedentToolStripMenuItem, Me.ToolStripSeparator5, Me.HistoriqueDesModificationsToolStripMenuItem, Me.ToolStripSeparator7, Me.RafraichirLaListeToolStripMenuItem})
+        Me.AntecedentContextMenuStrip.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.CréerAntecedentToolStripMenuItem, Me.ModifierUnAntécédentToolStripMenuItem, Me.ToolStripSeparator3, Me.ModifierLordreDunAntécédentToolStripMenuItem, Me.ToolStripSeparator5, Me.HistoriqueDesModificationsToolStripMenuItem, Me.ToolStripSeparator7, Me.RafraichirLaListeToolStripMenuItem})
         Me.AntecedentContextMenuStrip.Name = "AntecedentContextMenuStrip"
         Me.AntecedentContextMenuStrip.Size = New System.Drawing.Size(316, 154)
         '
@@ -2322,12 +2321,6 @@ Partial Class RadFEpisodeDetail
         Me.ModifierLordreDunAntécédentToolStripMenuItem.Name = "ModifierLordreDunAntécédentToolStripMenuItem"
         Me.ModifierLordreDunAntécédentToolStripMenuItem.Size = New System.Drawing.Size(315, 22)
         Me.ModifierLordreDunAntécédentToolStripMenuItem.Text = "Modifier l'ordre d'un antécédent"
-        '
-        'ChangerLaffectationDunAntecedentToolStripMenuItem
-        '
-        Me.ChangerLaffectationDunAntecedentToolStripMenuItem.Name = "ChangerLaffectationDunAntecedentToolStripMenuItem"
-        Me.ChangerLaffectationDunAntecedentToolStripMenuItem.Size = New System.Drawing.Size(315, 22)
-        Me.ChangerLaffectationDunAntecedentToolStripMenuItem.Text = "Changer l'affectation d'un antécédent"
         '
         'ToolStripSeparator5
         '
@@ -3458,7 +3451,6 @@ Partial Class RadFEpisodeDetail
     Friend WithEvents ModifierUnAntécédentToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents ToolStripSeparator3 As ToolStripSeparator
     Friend WithEvents ModifierLordreDunAntécédentToolStripMenuItem As ToolStripMenuItem
-    Friend WithEvents ChangerLaffectationDunAntecedentToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents ToolStripSeparator5 As ToolStripSeparator
     Friend WithEvents HistoriqueDesModificationsToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents RadPanel9 As Telerik.WinControls.UI.RadPanel
