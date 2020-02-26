@@ -140,7 +140,7 @@ Public Class RadFTraitementDetailEdit
             LblAllergie.Visible = True
             Dim premierPassage As Boolean = True
             Dim LongueurChaine, LongueurSub As Integer
-            Dim AllergieTooltip As String
+            Dim AllergieTooltip As String = ""
             Dim LongueurMax As Integer = 10
 
             'Chargement du TextBox
@@ -180,7 +180,7 @@ Public Class RadFTraitementDetailEdit
             'Chargement des médicaments génériques associés aux médicaments contre-indiqués déclarés
             Dim premierPassage As Boolean = True
             Dim LongueurChaine, LongueurSub As Integer
-            Dim CITooltip As String
+            Dim CITooltip As String = ""
             Dim LongueurMax As Integer = 10
 
             'Chargement du TextBox

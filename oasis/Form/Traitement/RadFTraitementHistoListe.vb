@@ -107,6 +107,8 @@ Public Class RadFTraitementHistoListe
         Dim FenetreComp, ArretComp, AllergieComp, ContreIndicationComp, AnnulationComp As Boolean
         Dim PosologieComp, OrdreAffichageComp, PosologieDureeComp, TraitementCommentaireComp, PosologieCommentaireComp, FenetreCommentaireComp, ArretCommentaireComp, AnnulationCommentaireComp As String
 
+        Posologie = ""
+
         OrdreAffichageComp = ""
         PosologieComp = ""
         PosologieDureeComp = ""

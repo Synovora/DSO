@@ -231,26 +231,31 @@ Public Class EpisodeDao
         SQLString = "SELECT E.episode_id, patient_id, type, type_activite, description_activite, type_profil," & vbCrLf &
                     " commentaire, date_creation, observation_paramedical, observation_medical, etat" & vbCrLf
 
+        Parametre1String = ""
         If ligneDeVie.ParametreId1 <> 0 Then
             Parametre1String = ",(SELECT TOP (1) valeur FROM oasis.oa_episode_parametre PE WHERE PE.parametre_id = " & ligneDeVie.ParametreId1.ToString &
                                 " AND PE.episode_id = E.episode_id) as ValeurParam1" & vbCrLf
         End If
 
+        Parametre2String = ""
         If ligneDeVie.ParametreId2 <> 0 Then
             Parametre2String = ",(SELECT TOP (1) valeur FROM oasis.oa_episode_parametre PE WHERE PE.parametre_id = " & ligneDeVie.ParametreId2.ToString &
                                 " AND PE.episode_id = E.episode_id) as ValeurParam2" & vbCrLf
         End If
 
+        Parametre3String = ""
         If ligneDeVie.ParametreId3 <> 0 Then
             Parametre3String = ",(SELECT TOP (1) valeur FROM oasis.oa_episode_parametre PE WHERE PE.parametre_id = " & ligneDeVie.ParametreId3.ToString &
                                 " AND PE.episode_id = E.episode_id) as ValeurParam3" & vbCrLf
         End If
 
+        Parametre4String = ""
         If ligneDeVie.ParametreId4 <> 0 Then
             Parametre4String = ",(SELECT TOP (1) valeur FROM oasis.oa_episode_parametre PE WHERE PE.parametre_id = " & ligneDeVie.ParametreId4.ToString &
                                 " AND PE.episode_id = E.episode_id) as ValeurParam4" & vbCrLf
         End If
 
+        Parametre5String = ""
         If ligneDeVie.ParametreId5 <> 0 Then
             Parametre5String = ",(SELECT TOP (1) valeur FROM oasis.oa_episode_parametre PE WHERE PE.parametre_id = " & ligneDeVie.ParametreId5.ToString &
                                 " AND PE.episode_id = E.episode_id) as ValeurParam5" & vbCrLf

@@ -55,7 +55,7 @@ Partial Class RadFOrdonnanceListe
         Me.RadBtnAbandon = New Telerik.WinControls.UI.RadButton()
         Me.ToolTip = New System.Windows.Forms.ToolTip(Me.components)
         Me.RadOrdonnanceDataGridView = New Telerik.WinControls.UI.RadGridView()
-        Me.ContextMenuStrip = New System.Windows.Forms.ContextMenuStrip(Me.components)
+        Me.OrdoContextMenuStrip = New System.Windows.Forms.ContextMenuStrip(Me.components)
         Me.CréerUneOrdonnanceToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.ModifierUneOrdonnanceToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.SupprimerUneOrdonnanceToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
@@ -69,7 +69,7 @@ Partial Class RadFOrdonnanceListe
         CType(Me.RadBtnAbandon, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.RadOrdonnanceDataGridView, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.RadOrdonnanceDataGridView.MasterTemplate, System.ComponentModel.ISupportInitialize).BeginInit()
-        Me.ContextMenuStrip.SuspendLayout()
+        Me.OrdoContextMenuStrip.SuspendLayout()
         CType(Me.RadBtnCreation, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.RadBtnModifier, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.RadBtnRenouveler, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -322,7 +322,7 @@ Partial Class RadFOrdonnanceListe
         'RadOrdonnanceDataGridView
         '
         Me.RadOrdonnanceDataGridView.BackColor = System.Drawing.Color.FromArgb(CType(CType(191, Byte), Integer), CType(CType(219, Byte), Integer), CType(CType(255, Byte), Integer))
-        Me.RadOrdonnanceDataGridView.ContextMenuStrip = Me.ContextMenuStrip
+        Me.RadOrdonnanceDataGridView.ContextMenuStrip = Me.OrdoContextMenuStrip
         Me.RadOrdonnanceDataGridView.Cursor = System.Windows.Forms.Cursors.Default
         Me.RadOrdonnanceDataGridView.Font = New System.Drawing.Font("Segoe UI", 8.25!)
         Me.RadOrdonnanceDataGridView.ForeColor = System.Drawing.Color.Black
@@ -386,11 +386,11 @@ Partial Class RadFOrdonnanceListe
         Me.RadOrdonnanceDataGridView.Size = New System.Drawing.Size(1131, 442)
         Me.RadOrdonnanceDataGridView.TabIndex = 3
         '
-        'ContextMenuStrip
+        'OrdoContextMenuStrip
         '
-        Me.ContextMenuStrip.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.CréerUneOrdonnanceToolStripMenuItem, Me.ModifierUneOrdonnanceToolStripMenuItem, Me.SupprimerUneOrdonnanceToolStripMenuItem, Me.RenouvellerUneOrdonnanceToolStripMenuItem})
-        Me.ContextMenuStrip.Name = "ContextMenuStrip"
-        Me.ContextMenuStrip.Size = New System.Drawing.Size(227, 92)
+        Me.OrdoContextMenuStrip.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.CréerUneOrdonnanceToolStripMenuItem, Me.ModifierUneOrdonnanceToolStripMenuItem, Me.SupprimerUneOrdonnanceToolStripMenuItem, Me.RenouvellerUneOrdonnanceToolStripMenuItem})
+        Me.OrdoContextMenuStrip.Name = "ContextMenuStrip"
+        Me.OrdoContextMenuStrip.Size = New System.Drawing.Size(227, 114)
         '
         'CréerUneOrdonnanceToolStripMenuItem
         '
@@ -475,7 +475,7 @@ Partial Class RadFOrdonnanceListe
         CType(Me.RadBtnAbandon, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.RadOrdonnanceDataGridView.MasterTemplate, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.RadOrdonnanceDataGridView, System.ComponentModel.ISupportInitialize).EndInit()
-        Me.ContextMenuStrip.ResumeLayout(False)
+        Me.OrdoContextMenuStrip.ResumeLayout(False)
         CType(Me.RadBtnCreation, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.RadBtnModifier, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.RadBtnRenouveler, System.ComponentModel.ISupportInitialize).EndInit()
@@ -510,7 +510,7 @@ Partial Class RadFOrdonnanceListe
     Friend WithEvents RadBtnAbandon As Telerik.WinControls.UI.RadButton
     Friend WithEvents ToolTip As ToolTip
     Friend WithEvents RadOrdonnanceDataGridView As Telerik.WinControls.UI.RadGridView
-    Friend WithEvents ContextMenuStrip As ContextMenuStrip
+    Friend WithEvents OrdoContextMenuStrip As ContextMenuStrip
     Friend WithEvents CréerUneOrdonnanceToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents RenouvellerUneOrdonnanceToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents RadBtnCreation As Telerik.WinControls.UI.RadButton

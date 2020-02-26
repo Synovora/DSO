@@ -52,7 +52,7 @@ Public Class RadFPPSHistoListe
         Dim natureHisto As Integer
         Dim ActionHistoString As String
         Dim dateHisto As DateTime
-        Dim Inactif, Cacher As Boolean
+        Dim Inactif As Boolean
 
         'Initialisation des variables de comparaison
         Dim AffichageSyntheseComp, InactifComp, ArretComp As Boolean

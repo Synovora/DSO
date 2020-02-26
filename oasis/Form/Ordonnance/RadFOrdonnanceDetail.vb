@@ -201,7 +201,7 @@ Public Class RadFOrdonnanceDetail
             LblAllergie.Visible = True
             Dim premierPassage As Boolean = True
             Dim LongueurChaine, LongueurSub As Integer
-            Dim AllergieTooltip As String
+            Dim AllergieTooltip As String = ""
             Dim LongueurMax As Integer = 10
 
             'Chargement du TextBox
@@ -241,11 +241,11 @@ Public Class RadFOrdonnanceDetail
             'Chargement des médicaments génériques associés aux médicaments contre-indiqués déclarés
             Dim premierPassage As Boolean = True
             Dim LongueurChaine, LongueurSub As Integer
-            Dim CITooltip As String
+            Dim CITooltip As String = ""
             Dim LongueurMax As Integer = 10
 
             'Chargement du TextBox
-            Dim CIString As String
+            Dim CIString As String = ""
             Dim SubstancesCI As New StringCollection()
             SubstancesCI = MedocDao.ListeSubstancesCI(SelectedPatient.PatientContreIndicationCis)
             Dim CIEnumerator As StringEnumerator = SubstancesCI.GetEnumerator()

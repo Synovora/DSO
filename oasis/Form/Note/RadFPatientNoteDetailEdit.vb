@@ -103,7 +103,7 @@ Public Class RadFPatientNoteDetailEdit
     End Sub
 
     Private Sub ChargementNoteExistante()
-        Dim patientNote As PatientNote
+        Dim patientNote As New PatientNote
 
 
         Try

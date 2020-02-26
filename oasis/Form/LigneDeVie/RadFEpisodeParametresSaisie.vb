@@ -128,6 +128,8 @@ Public Class RadFEpisodeParametresSaisie
         LblParametre1.Text = ""
         LblParametre2.Text = ""
         LblParametre3.Text = ""
+        uniteIMC = ""
+        unitePAM = ""
         longueurString = 0
         idString = 1
 

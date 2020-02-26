@@ -84,8 +84,7 @@ Public Class RadFPatientNoteListe
 
     'Chargement de la Grid Notes patient
     Private Sub ChargementnotePatient()
-        Dim NotePatientDataTable As DataTable
-        Dim SQLString As String
+        Dim NotePatientDataTable As New DataTable
 
         Select Case TypeNote
             Case EnumTypeNote.Medicale

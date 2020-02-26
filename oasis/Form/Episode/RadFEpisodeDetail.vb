@@ -521,6 +521,8 @@ Public Class RadFEpisodeDetail
         LblParametre1.Text = ""
         LblParametre2.Text = ""
         LblParametre3.Text = ""
+        uniteIMC = ""
+        unitePAM = ""
         longueurString = 0
         idString = 1
 
@@ -3005,7 +3007,7 @@ Public Class RadFEpisodeDetail
             LblSubstance.Show()
             Dim premierPassage As Boolean = True
             Dim LongueurChaine, LongueurSub As Integer
-            Dim AllergieTooltip As String
+            Dim AllergieTooltip As String = ""
             Dim LongueurMax As Integer = LongueurStringAllergie
 
             'Chargement du TextBox
@@ -3049,7 +3051,7 @@ Public Class RadFEpisodeDetail
             LblContreIndication.Show()
             'Chargement des médicaments génériques associés aux médicaments contre-indiqués déclarés
             Dim premierPassage As Boolean = True
-            Dim CITooltip As String
+            Dim CITooltip As String = ""
             Dim LongueurMax As Integer = LongueurStringAllergie
 
             'Chargement du TextBox
@@ -3953,7 +3955,7 @@ Public Class RadFEpisodeDetail
         RadPPSDataGridView.Rows.Clear()
 
         'Déclaration des variables pour réaliser le parcours du DataTable pour alimenter le DataGridView
-        Dim i, mesureCount As Integer
+        Dim i As Integer
         Dim iGrid As Integer = -1 'Indice pour alimenter la Grid qui peut comporter moins d'occurrences que le DataTable
         Dim dateDebut, dateModification As Date
         Dim rowCount As Integer = PPSDataTable.Rows.Count - 1
