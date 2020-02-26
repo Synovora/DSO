@@ -2394,11 +2394,7 @@ Public Class RadFEpisodeDetail
             AntecedentModificationOrdre(NiveauAntecedentAOrdonner)
             CodeRetour = antecedentChangementOrdreDao.AntecedentReorganisationOrdre(NiveauAntecedentAOrdonner, SelectedPatient.patientId, antecedentIdPere, NiveauAntecedentAOrdonner)
             If CodeRetour = True Then
-                ChargementAntecedent()
-                If IndexAntecedentADeplacer <> 0 AndAlso IndexAntecedentADeplacer <= iGridMax Then
-                    Me.RadAntecedentDataGridView.CurrentRow = RadAntecedentDataGridView.Rows(IndexAntecedentADeplacer)
-                    IndexAntecedentADeplacer = 0
-                End If
+                ChargementAntecedentAvecPositionnementCurseur()
             End If
             Cursor.Current = Cursors.Default
         End If
@@ -2433,11 +2429,7 @@ Public Class RadFEpisodeDetail
             AntecedentModificationOrdre(NiveauAntecedentAOrdonner)
             CodeRetour = antecedentChangementOrdreDao.AntecedentReorganisationOrdre(NiveauAntecedentAOrdonner, SelectedPatient.patientId, antecedentIdPere, NiveauAntecedentAOrdonner)
             If CodeRetour = True Then
-                ChargementAntecedent()
-                If IndexAntecedentADeplacer <> 0 AndAlso IndexAntecedentADeplacer <= iGridMax Then
-                    Me.RadAntecedentDataGridView.CurrentRow = RadAntecedentDataGridView.Rows(IndexAntecedentADeplacer)
-                    IndexAntecedentADeplacer = 0
-                End If
+                ChargementAntecedentAvecPositionnementCurseur()
             End If
             Cursor.Current = Cursors.Default
         End If
@@ -2505,6 +2497,7 @@ Public Class RadFEpisodeDetail
                 Dim antecedentId, antecedentIdPere, niveauActuel As Integer
                 Dim NiveauCible, AntecedentId1, AntecedentId2, ordre1, ordre2, ordre3 As Integer
                 antecedentId = RadAntecedentDataGridView.Rows(aRow).Cells("antecedentId").Value
+                antecedentIdADeplacer = RadAntecedentDataGridView.Rows(aRow).Cells("antecedentId").Value
                 antecedentIdPere = RadAntecedentDataGridView.Rows(aRow).Cells("antecedentIdPrecedent").Value
                 niveauActuel = RadAntecedentDataGridView.Rows(aRow).Cells("antecedentNiveau").Value
                 If antecedentIdPere <> 0 Then
@@ -2518,7 +2511,7 @@ Public Class RadFEpisodeDetail
                             ordre2 = 990
                             ordre3 = 0
                             AntecedentAffectationDao.AntecedentModificationNiveau(antecedentId, antecedentIdPere, niveauActuel, NiveauCible, AntecedentId1, AntecedentId2, ordre1, ordre2, ordre3, SelectedPatient)
-                            ChargementAntecedent()
+                            ChargementAntecedentAvecPositionnementCurseur()
                         Case 2 'Passe de niveau 2 à niveau 3 sur antécédent niveau 2 précédent si existe
                             NiveauCible = 3
                             AntecedentId1 = antecedentPere.Niveau1Id
@@ -2527,7 +2520,7 @@ Public Class RadFEpisodeDetail
                             ordre2 = antecedentPere.Ordre2
                             ordre3 = 990
                             AntecedentAffectationDao.AntecedentModificationNiveau(antecedentId, antecedentIdPere, niveauActuel, NiveauCible, AntecedentId1, AntecedentId2, ordre1, ordre2, ordre3, SelectedPatient)
-                            ChargementAntecedent()
+                            ChargementAntecedentAvecPositionnementCurseur()
                         Case 3
                             'Pas d'effet
                     End Select
@@ -2548,6 +2541,7 @@ Public Class RadFEpisodeDetail
                 Dim antecedentId, antecedentIdPere, niveauActuel As Integer
                 Dim NiveauCible, AntecedentId1, AntecedentId2, ordre1, ordre2, ordre3 As Integer
                 antecedentId = RadAntecedentDataGridView.Rows(aRow).Cells("antecedentId").Value
+                antecedentIdADeplacer = RadAntecedentDataGridView.Rows(aRow).Cells("antecedentId").Value
                 antecedentIdPere = RadAntecedentDataGridView.Rows(aRow).Cells("antecedentIdPrecedent").Value
                 niveauActuel = RadAntecedentDataGridView.Rows(aRow).Cells("antecedentNiveau").Value
                 Select Case niveauActuel
@@ -2562,7 +2556,7 @@ Public Class RadFEpisodeDetail
                         ordre2 = 0
                         ordre3 = 0
                         AntecedentAffectationDao.AntecedentModificationNiveau(antecedentId, antecedentIdPere, niveauActuel, NiveauCible, AntecedentId1, AntecedentId2, ordre1, ordre2, ordre3, SelectedPatient)
-                        ChargementAntecedent()
+                        ChargementAntecedentAvecPositionnementCurseur()
                     Case 3 'Passe du niveau 3 au niveau 2
                         NiveauCible = 2
                         AntecedentId1 = RadAntecedentDataGridView.Rows(aRow).Cells("antecedentIdNiveau1").Value
@@ -2572,13 +2566,21 @@ Public Class RadFEpisodeDetail
                         ordre2 = 990
                         ordre3 = 0
                         AntecedentAffectationDao.AntecedentModificationNiveau(antecedentId, antecedentIdPere, niveauActuel, NiveauCible, AntecedentId1, AntecedentId2, ordre1, ordre2, ordre3, SelectedPatient)
-                        ChargementAntecedent()
+                        ChargementAntecedentAvecPositionnementCurseur()
                 End Select
             End If
             Cursor.Current = Cursors.Default
         End If
     End Sub
 
+    Private Sub ChargementAntecedentAvecPositionnementCurseur()
+        ChargementAntecedent()
+        If IndexAntecedentADeplacer <> 0 AndAlso IndexAntecedentADeplacer <= iGridMax Then
+            Me.RadAntecedentDataGridView.Rows(IndexAntecedentADeplacer).IsCurrent = True
+            Me.RadAntecedentDataGridView.CurrentRow = RadAntecedentDataGridView.Rows(IndexAntecedentADeplacer)
+            IndexAntecedentADeplacer = 0
+        End If
+    End Sub
 
     'Gestion des options d'affichage des antécédents sur évènement
     Private Sub RadChkPublie_ToggleStateChanged(sender As Object, args As Telerik.WinControls.UI.StateChangedEventArgs) Handles RadChkPublie.ToggleStateChanged
