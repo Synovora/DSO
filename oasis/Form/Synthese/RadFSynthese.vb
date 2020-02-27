@@ -526,10 +526,14 @@ Public Class RadFSynthese
                 Case Else
                     Exit Sub
             End Select
+            Dim Cacher As String = "P"
+            If RadChkTous.Checked = True Then
+                Cacher = "C"
+            End If
             antecedentChangementOrdreDao.UpdateAntecedent(antecedentId, NouveauOrdreAffichage, NiveauAntecedentAOrdonner)
 
             AntecedentModificationOrdre(NiveauAntecedentAOrdonner)
-            CodeRetour = antecedentChangementOrdreDao.AntecedentReorganisationOrdre(NiveauAntecedentAOrdonner, SelectedPatient.patientId, antecedentIdPere, NiveauAntecedentAOrdonner)
+            CodeRetour = antecedentChangementOrdreDao.AntecedentReorganisationOrdre(NiveauAntecedentAOrdonner, SelectedPatient.patientId, antecedentIdPere, NiveauAntecedentAOrdonner, Cacher)
             If CodeRetour = True Then
                 ChargementAntecedentAvecPositionnementCurseur()
             End If
@@ -561,10 +565,14 @@ Public Class RadFSynthese
                 Case Else
                     Exit Sub
             End Select
+            Dim Cacher As String = "P"
+            If RadChkTous.Checked = True Then
+                Cacher = "C"
+            End If
             antecedentChangementOrdreDao.UpdateAntecedent(antecedentId, NouveauOrdreAffichage, NiveauAntecedentAOrdonner)
 
             AntecedentModificationOrdre(NiveauAntecedentAOrdonner)
-            CodeRetour = antecedentChangementOrdreDao.AntecedentReorganisationOrdre(NiveauAntecedentAOrdonner, SelectedPatient.patientId, antecedentIdPere, NiveauAntecedentAOrdonner)
+            CodeRetour = antecedentChangementOrdreDao.AntecedentReorganisationOrdre(NiveauAntecedentAOrdonner, SelectedPatient.patientId, antecedentIdPere, NiveauAntecedentAOrdonner, Cacher)
             If CodeRetour = True Then
                 ChargementAntecedentAvecPositionnementCurseur()
             End If
@@ -605,6 +613,10 @@ Public Class RadFSynthese
                 Dim antecedentPere As Antecedent
                 Dim antecedentId, antecedentIdPere, niveauActuel As Integer
                 Dim NiveauCible, AntecedentId1, AntecedentId2, ordre1, ordre2, ordre3 As Integer
+                Dim Cacher As String = "P"
+                If RadChkTous.Checked = True Then
+                    Cacher = "C"
+                End If
                 antecedentId = RadAntecedentDataGridView.Rows(aRow).Cells("antecedentId").Value
                 antecedentIdADeplacer = RadAntecedentDataGridView.Rows(aRow).Cells("antecedentId").Value
                 antecedentIdPere = RadAntecedentDataGridView.Rows(aRow).Cells("antecedentIdPrecedent").Value
@@ -619,7 +631,7 @@ Public Class RadFSynthese
                             ordre1 = antecedentPere.Ordre1
                             ordre2 = 990
                             ordre3 = 0
-                            antecedentAffectationDao.AntecedentModificationNiveau(antecedentId, antecedentIdPere, niveauActuel, NiveauCible, AntecedentId1, AntecedentId2, ordre1, ordre2, ordre3, SelectedPatient)
+                            antecedentAffectationDao.AntecedentModificationNiveau(antecedentId, antecedentIdPere, niveauActuel, NiveauCible, AntecedentId1, AntecedentId2, ordre1, ordre2, ordre3, SelectedPatient, Cacher)
                             'AntecedentModificationNiveau(antecedentId, antecedentIdPere, niveauActuel, NiveauCible, AntecedentId1, AntecedentId2, ordre1, ordre2, ordre3)
                             ChargementAntecedentAvecPositionnementCurseur()
                         Case 2 'Passe de niveau 2 à niveau 3 sur antécédent niveau 2 précédent si existe
@@ -629,7 +641,7 @@ Public Class RadFSynthese
                             ordre1 = antecedentPere.Ordre1
                             ordre2 = antecedentPere.Ordre2
                             ordre3 = 990
-                            antecedentAffectationDao.AntecedentModificationNiveau(antecedentId, antecedentIdPere, niveauActuel, NiveauCible, AntecedentId1, AntecedentId2, ordre1, ordre2, ordre3, SelectedPatient)
+                            antecedentAffectationDao.AntecedentModificationNiveau(antecedentId, antecedentIdPere, niveauActuel, NiveauCible, AntecedentId1, AntecedentId2, ordre1, ordre2, ordre3, SelectedPatient, Cacher)
                             'AntecedentModificationNiveau(antecedentId, antecedentIdPere, niveauActuel, NiveauCible, AntecedentId1, AntecedentId2, ordre1, ordre2, ordre3)
                             ChargementAntecedentAvecPositionnementCurseur()
                         Case 3
@@ -651,6 +663,10 @@ Public Class RadFSynthese
             If aRow >= 0 Then
                 Dim antecedentId, antecedentIdPere, niveauActuel As Integer
                 Dim NiveauCible, AntecedentId1, AntecedentId2, ordre1, ordre2, ordre3 As Integer
+                Dim Cacher As String = "P"
+                If RadChkTous.Checked = True Then
+                    Cacher = "C"
+                End If
                 antecedentId = RadAntecedentDataGridView.Rows(aRow).Cells("antecedentId").Value
                 antecedentIdADeplacer = RadAntecedentDataGridView.Rows(aRow).Cells("antecedentId").Value
                 antecedentIdPere = RadAntecedentDataGridView.Rows(aRow).Cells("antecedentIdPrecedent").Value
@@ -666,7 +682,7 @@ Public Class RadFSynthese
                         ordre1 = 990
                         ordre2 = 0
                         ordre3 = 0
-                        antecedentAffectationDao.AntecedentModificationNiveau(antecedentId, antecedentIdPere, niveauActuel, NiveauCible, AntecedentId1, AntecedentId2, ordre1, ordre2, ordre3, SelectedPatient)
+                        antecedentAffectationDao.AntecedentModificationNiveau(antecedentId, antecedentIdPere, niveauActuel, NiveauCible, AntecedentId1, AntecedentId2, ordre1, ordre2, ordre3, SelectedPatient, Cacher)
                         'AntecedentModificationNiveau(antecedentId, antecedentIdPere, niveauActuel, NiveauCible, AntecedentId1, AntecedentId2, ordre1, ordre2, ordre3)
                         ChargementAntecedentAvecPositionnementCurseur()
                     Case 3 'Passe du niveau 3 au niveau 2
@@ -677,7 +693,7 @@ Public Class RadFSynthese
                         ordre1 = RadAntecedentDataGridView.Rows(aRow).Cells("ordreAffichage1").Value
                         ordre2 = 990
                         ordre3 = 0
-                        antecedentAffectationDao.AntecedentModificationNiveau(antecedentId, antecedentIdPere, niveauActuel, NiveauCible, AntecedentId1, AntecedentId2, ordre1, ordre2, ordre3, SelectedPatient)
+                        antecedentAffectationDao.AntecedentModificationNiveau(antecedentId, antecedentIdPere, niveauActuel, NiveauCible, AntecedentId1, AntecedentId2, ordre1, ordre2, ordre3, SelectedPatient, Cacher)
                         'AntecedentModificationNiveau(antecedentId, antecedentIdPere, niveauActuel, NiveauCible, AntecedentId1, AntecedentId2, ordre1, ordre2, ordre3)
                         ChargementAntecedentAvecPositionnementCurseur()
                 End Select

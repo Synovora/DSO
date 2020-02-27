@@ -5,9 +5,9 @@ Public Class AntecedentAffectationDao
     Inherits StandardDao
 
 
-    Friend Sub AntecedentModificationNiveau(antecedentId As Long, antecedentIdPere As Long, niveauActuel As Integer, niveauCible As Integer, antecedentId1 As Long, antecedentId2 As Long, ordre1 As Integer, ordre2 As Integer, ordre3 As Integer, SelectedPatient As Patient)
+    Friend Sub AntecedentModificationNiveau(antecedentId As Long, antecedentIdPere As Long, niveauActuel As Integer, niveauCible As Integer, antecedentId1 As Long, antecedentId2 As Long, ordre1 As Integer, ordre2 As Integer, ordre3 As Integer, SelectedPatient As Patient, Cacher As String)
         UpdateAntecedentaAffecter(antecedentId, niveauCible, antecedentId1, antecedentId2, ordre1, ordre2, ordre3)
-        AntecedentReorganisationOrdre(antecedentId, niveauCible, SelectedPatient.patientId)
+        AntecedentReorganisationOrdre(antecedentId, niveauCible, SelectedPatient.patientId, Cacher)
 
         Select Case niveauActuel 'Niveau actuel de l'antécédent à affecter
             Case 1
@@ -16,46 +16,46 @@ Public Class AntecedentAffectationDao
                         'Cas sans objet : Un antécédent de niveau 1 n'ayant pas de père ne peut pas réaffecté
                     Case 2 'Antécédent niveau 1 devient niveau 2 : --> sur niveau 1 => devient le fils de l'antécédent précédent de niveau 1
                         '(1) Réaffecter les antécédents liés de niveau 2 en niveau 3
-                        AffectationAntecedenetsLies(1, antecedentId, antecedentIdPere, ordre1, SelectedPatient.patientId)
-                        AntecedentReorganisationOrdre(0, 1, SelectedPatient.patientId)
-                        AntecedentReorganisationOrdre(antecedentIdPere, 2, SelectedPatient.patientId)
-                        AntecedentReorganisationOrdre(antecedentId, 3, SelectedPatient.patientId)
+                        AffectationAntecedenetsLies(1, antecedentId, antecedentIdPere, ordre1, SelectedPatient.patientId, Cacher)
+                        AntecedentReorganisationOrdre(0, 1, SelectedPatient.patientId, Cacher)
+                        AntecedentReorganisationOrdre(antecedentIdPere, 2, SelectedPatient.patientId, Cacher)
+                        AntecedentReorganisationOrdre(antecedentId, 3, SelectedPatient.patientId, Cacher)
                         '(5) Occulter les antécédents liés de niveau 3
-                        AffectationAntecedenetsLies(5, antecedentId, 0, 0, SelectedPatient.patientId)
+                        AffectationAntecedenetsLies(5, antecedentId, 0, 0, SelectedPatient.patientId, Cacher)
                     Case 3 'Antécédent niveau 1 devient niveau 3 : !!! Sans objet !!!
-                        AntecedentReorganisationOrdre(antecedentIdPere, 3, SelectedPatient.patientId)
+                        AntecedentReorganisationOrdre(antecedentIdPere, 3, SelectedPatient.patientId, Cacher)
                         '(4) Occulter les antécédents liés de niveau 2
-                        AffectationAntecedenetsLies(4, antecedentId, 0, 0, SelectedPatient.patientId)
+                        AffectationAntecedenetsLies(4, antecedentId, 0, 0, SelectedPatient.patientId, Cacher)
                         '(5) Occulter les antécédents liés de niveau 3
-                        AffectationAntecedenetsLies(5, antecedentId, 0, 0, SelectedPatient.patientId)
+                        AffectationAntecedenetsLies(5, antecedentId, 0, 0, SelectedPatient.patientId, Cacher)
                 End Select
             Case 2
                 Select Case niveauCible
                     Case 1 'Antécédent niveau 2 devient niveau 1 (Majeur) : <-- sur niveau 2 => devient majeur
                         '(3) Réaffecter les antécédents liés de niveau 3 en niveau 2
-                        AffectationAntecedenetsLies(3, antecedentId, 0, 990, SelectedPatient.patientId)
-                        AntecedentReorganisationOrdre(antecedentId, niveauCible, SelectedPatient.patientId)
-                        AntecedentReorganisationOrdre(antecedentId, 2, SelectedPatient.patientId)
+                        AffectationAntecedenetsLies(3, antecedentId, 0, 990, SelectedPatient.patientId, Cacher)
+                        AntecedentReorganisationOrdre(antecedentId, niveauCible, SelectedPatient.patientId, Cacher)
+                        AntecedentReorganisationOrdre(antecedentId, 2, SelectedPatient.patientId, Cacher)
                     Case 2 'Antécédent niveau 2 devient reste niveau 2, mais change de père : !!! Sans objet !!!
                         '(2) Réaffecter les antécédents liés de niveau 3
-                        AffectationAntecedenetsLies(2, antecedentId, antecedentIdPere, ordre1, SelectedPatient.patientId)
-                        AntecedentReorganisationOrdre(antecedentIdPere, 2, SelectedPatient.patientId)
-                        AntecedentReorganisationOrdre(antecedentId, 3, SelectedPatient.patientId)
+                        AffectationAntecedenetsLies(2, antecedentId, antecedentIdPere, ordre1, SelectedPatient.patientId, Cacher)
+                        AntecedentReorganisationOrdre(antecedentIdPere, 2, SelectedPatient.patientId, Cacher)
+                        AntecedentReorganisationOrdre(antecedentId, 3, SelectedPatient.patientId, Cacher)
                     Case 3 'Antécédent niveau 2 devient niveau 3 : --> sur niveau 2 => devient fils du précédent, si existe précédent de niveau 2
                         '(6) Occulter les antécédents liés de niveau 3
-                        AntecedentReorganisationOrdre(antecedentIdPere, 3, SelectedPatient.patientId)
-                        AffectationAntecedenetsLies(6, antecedentId, 0, 0, SelectedPatient.patientId)
+                        AntecedentReorganisationOrdre(antecedentIdPere, 3, SelectedPatient.patientId, Cacher)
+                        AffectationAntecedenetsLies(6, antecedentId, 0, 0, SelectedPatient.patientId, Cacher)
                 End Select
             Case 3
                 Select Case niveauCible
                     Case 1 'Antécédent niveau 3 devient niveau 1 (Majeur) : !!! Sans objet !!!
-                        AntecedentReorganisationOrdre(0, 1, SelectedPatient.patientId)
+                        AntecedentReorganisationOrdre(0, 1, SelectedPatient.patientId, Cacher)
                         'AntecedentReorganisationOrdre(AntecedentIdaAffecter, 3)
                     Case 2 'Antécédent niveau 3 devient niveau 2 : <-- sur niveau 3 => récupère le père du précédent niveau 2
-                        AntecedentReorganisationOrdre(antecedentIdPere, 2, SelectedPatient.patientId)
+                        AntecedentReorganisationOrdre(antecedentIdPere, 2, SelectedPatient.patientId, Cacher)
                         'AntecedentReorganisationOrdre(AntecedentIdaAffecter, 3)
                     Case 3 'Antécédent niveau 3 reste niveau 3, mais change de père
-                        AntecedentReorganisationOrdre(antecedentIdPere, 3, SelectedPatient.patientId)
+                        AntecedentReorganisationOrdre(antecedentIdPere, 3, SelectedPatient.patientId, Cacher)
                 End Select
         End Select
     End Sub
@@ -70,8 +70,8 @@ Public Class AntecedentAffectationDao
         Dim dateModification As Date = Date.Now.Date
         Dim SQLstring As String
 
-        SQLstring = "UPDATE oasis.oa_antecedent" &
-                    " SET oa_antecedent_niveau = @niveau," &
+        SQLstring = "UPDATE oasis.oa_antecedent SET" &
+                    " oa_antecedent_niveau = @niveau," &
                     " oa_antecedent_id_niveau1 = @antecedentId1," &
                     " oa_antecedent_id_niveau2 = @antecedentId2," &
                     " oa_antecedent_ordre_affichage1 = @ordre1," &
@@ -105,7 +105,7 @@ Public Class AntecedentAffectationDao
     End Function
 
     'Mise à jour de l'ordre des antécédents en réorganisant l'ordre sur un pas de 20
-    Friend Function AntecedentReorganisationOrdre(AntecedentId As Integer, niveau As Integer, SelectedPatientId As Long) As Boolean
+    Friend Function AntecedentReorganisationOrdre(AntecedentId As Integer, niveau As Integer, SelectedPatientId As Long, Cacher As String) As Boolean
         'Déclaration des données de connexion
         Dim con As SqlConnection
         con = GetConnection()
@@ -119,7 +119,7 @@ Public Class AntecedentAffectationDao
             Case 1
                 SQLString = "SELECT * FROM oasis.oa_antecedent" &
                             " WHERE oa_antecedent_type = 'A'" &
-                            " AND oa_antecedent_statut_affichage = 'P'" &
+                            " AND (oa_antecedent_statut_affichage = 'P' OR oa_antecedent_statut_affichage = '" & Cacher & "')" &
                             " AND (oa_antecedent_inactif = '0' or oa_antecedent_inactif is Null)" &
                             " AND oa_antecedent_patient_id = " & SelectedPatientId.ToString &
                             " AND oa_antecedent_niveau = 1" &
@@ -127,7 +127,7 @@ Public Class AntecedentAffectationDao
             Case 2
                 SQLString = "SELECT * FROM oasis.oa_antecedent" &
                             " WHERE oa_antecedent_type = 'A'" &
-                            " AND oa_antecedent_statut_affichage = 'P'" &
+                            " AND (oa_antecedent_statut_affichage = 'P' OR oa_antecedent_statut_affichage = '" & Cacher & "')" &
                             " AND (oa_antecedent_inactif = '0' or oa_antecedent_inactif is Null)" &
                             " AND oa_antecedent_patient_id = " & SelectedPatientId.ToString &
                             " AND oa_antecedent_id_niveau1 = " & AntecedentId.ToString &
@@ -136,7 +136,7 @@ Public Class AntecedentAffectationDao
             Case 3
                 SQLString = "SELECT * FROM oasis.oa_antecedent" &
                             " WHERE oa_antecedent_type = 'A'" &
-                            " AND oa_antecedent_statut_affichage = 'P'" &
+                            " AND (oa_antecedent_statut_affichage = 'P' OR oa_antecedent_statut_affichage = '" & Cacher & "')" &
                             " AND (oa_antecedent_inactif = '0' or oa_antecedent_inactif is Null)" &
                             " AND oa_antecedent_patient_id = " & SelectedPatientId.ToString &
                             " AND oa_antecedent_id_niveau2 = " & AntecedentId.ToString &
@@ -163,7 +163,7 @@ Public Class AntecedentAffectationDao
             ordreAffichage += 20
             Dim AntecedentIdAModifier As Integer = CInt(antecedentDataTable.Rows(i)("oa_antecedent_id"))
             UpdateOrdreAffichageAntecedent(AntecedentIdAModifier, niveau, ordreAffichage)
-            AffectationOrdreAntecedenetsLies(AntecedentIdAModifier, niveau, ordreAffichage, SelectedPatientId)
+            AffectationOrdreAntecedenetsLies(AntecedentIdAModifier, niveau, ordreAffichage, SelectedPatientId, Cacher)
         Next
 
         con.Close()
@@ -171,7 +171,7 @@ Public Class AntecedentAffectationDao
         Return CodeRetour
     End Function
 
-    Friend Function AffectationOrdreAntecedenetsLies(antecedentIdRef As Integer, niveau As Integer, OrdreAffichageRef As Integer, selectedPatientId As Long) As Boolean
+    Friend Function AffectationOrdreAntecedenetsLies(antecedentIdRef As Integer, niveau As Integer, OrdreAffichageRef As Integer, selectedPatientId As Long, Cacher As String) As Boolean
         'Déclaration des données de connexion
         Dim con As SqlConnection
         con = GetConnection()
@@ -186,7 +186,7 @@ Public Class AntecedentAffectationDao
             Case 1
                 SQLString = "SELECT * FROM oasis.oa_antecedent" &
                             " WHERE oa_antecedent_type = 'A'" &
-                            " AND oa_antecedent_statut_affichage = 'P'" &
+                            " AND (oa_antecedent_statut_affichage = 'P' OR oa_antecedent_statut_affichage = '" & Cacher & "')" &
                             " AND (oa_antecedent_inactif = '0' or oa_antecedent_inactif is Null)" &
                             " AND oa_antecedent_patient_id = " & selectedPatientId.ToString &
                             " AND (oa_antecedent_niveau = 2 Or oa_antecedent_niveau = 3)" &
@@ -194,7 +194,7 @@ Public Class AntecedentAffectationDao
             Case 2
                 SQLString = "SELECT * FROM oasis.oa_antecedent" &
                             " WHERE oa_antecedent_type = 'A'" &
-                            " AND oa_antecedent_statut_affichage = 'P'" &
+                            " AND (oa_antecedent_statut_affichage = 'P' OR oa_antecedent_statut_affichage = '" & Cacher & "')" &
                             " AND (oa_antecedent_inactif = '0' or oa_antecedent_inactif is Null)" &
                             " AND oa_antecedent_patient_id = " & selectedPatientId.ToString &
                             " AND oa_antecedent_niveau = 3" &
@@ -275,7 +275,7 @@ Public Class AntecedentAffectationDao
         Return CodeRetour
     End Function
 
-    Friend Function AffectationAntecedenetsLies(Traitement As Integer, antecedentIdaAffecter As Integer, antecedentIdCible As Integer, Ordre1 As Integer, selectedPatientId As Long) As Boolean
+    Friend Function AffectationAntecedenetsLies(Traitement As Integer, antecedentIdaAffecter As Integer, antecedentIdCible As Integer, Ordre1 As Integer, selectedPatientId As Long, Cacher As String) As Boolean
         'Déclaration des données de connexion
         Dim con As SqlConnection
         con = GetConnection()
@@ -291,24 +291,24 @@ Public Class AntecedentAffectationDao
             Case 1, 4
                 SQLString = "SELECT * FROM oasis.oa_antecedent" &
                             " WHERE oa_antecedent_type = 'A'" &
-                            " AND oa_antecedent_statut_affichage = 'P'" &
-                            " AND (oa_antecedent_inactif = '0' or oa_antecedent_inactif is Null)" &
+                            " AND (oa_antecedent_statut_affichage = 'P' OR oa_antecedent_statut_affichage = '" & Cacher & "')" &
+                            " AND (oa_antecedent_inactif = '0' OR oa_antecedent_inactif is Null)" &
                             " AND oa_antecedent_patient_id = " & selectedPatientId.ToString &
                             " AND oa_antecedent_niveau = 2" &
                             " AND oa_antecedent_id_niveau1 = " & antecedentIdaAffecter.ToString & ";"
             Case 2, 3, 6
                 SQLString = "SELECT * FROM oasis.oa_antecedent" &
                             " WHERE oa_antecedent_type = 'A'" &
-                            " AND oa_antecedent_statut_affichage = 'P'" &
-                            " AND (oa_antecedent_inactif = '0' or oa_antecedent_inactif is Null)" &
+                            " AND (oa_antecedent_statut_affichage = 'P' OR oa_antecedent_statut_affichage = '" & Cacher & "')" &
+                            " AND (oa_antecedent_inactif = '0' OR oa_antecedent_inactif is Null)" &
                             " AND oa_antecedent_patient_id = " & selectedPatientId.ToString &
                             " AND oa_antecedent_niveau = 3" &
                             " AND oa_antecedent_id_niveau2 = " & antecedentIdaAffecter.ToString & ";"
             Case 5
                 SQLString = "SELECT * FROM oasis.oa_antecedent" &
                             " WHERE oa_antecedent_type = 'A'" &
-                            " AND oa_antecedent_statut_affichage = 'P'" &
-                            " AND (oa_antecedent_inactif = '0' or oa_antecedent_inactif is Null)" &
+                            " AND (oa_antecedent_statut_affichage = 'P' OR oa_antecedent_statut_affichage = '" & Cacher & "')" &
+                            " AND (oa_antecedent_inactif = '0' OR oa_antecedent_inactif is Null)" &
                             " AND oa_antecedent_patient_id = " & selectedPatientId.ToString &
                             " AND oa_antecedent_niveau = 3" &
                             " AND oa_antecedent_id_niveau1 = " & antecedentIdaAffecter.ToString & ";"
@@ -354,8 +354,8 @@ Public Class AntecedentAffectationDao
         Dim dateModification As Date = Date.Now.Date
         Dim SQLstring As String
 
-        SQLstring = "UPDATE oasis.oa_antecedent" &
-                    " SET oa_antecedent_niveau = 1," &
+        SQLstring = "UPDATE oasis.oa_antecedent SET" &
+                    " oa_antecedent_niveau = 1," &
                     " oa_antecedent_id_niveau1 = 0," &
                     " oa_antecedent_id_niveau2 = 0," &
                     " oa_antecedent_ordre_affichage1 = 0," &
