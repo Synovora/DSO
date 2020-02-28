@@ -22,7 +22,8 @@ Public Class FrmSousEpisode
         ' ---- init su sub grid
         RadSousEpisodeGrid.Templates(0).HierarchyDataProvider = New GridViewEventDataProvider(RadSousEpisodeGrid.Templates(0))
         AddHandler RadSousEpisodeGrid.RowSourceNeeded, AddressOf RadSousEpisodeGrid_RowSourceNeeded
-
+        '-- handler sur bouton sous_grid
+        AddHandler RadSousEpisodeGrid.CommandCellClick, AddressOf subGridReponse_CommandCellClick
         refreshGrid()
 
     End Sub
@@ -141,6 +142,11 @@ Public Class FrmSousEpisode
 
     End Sub
 
+    Sub subGridReponse_CommandCellClick(ByVal sender As Object, ByVal e As EventArgs)
+        Dim gce As GridCommandCellElement = (TryCast(sender, GridCommandCellElement))
+        MessageBox.Show("Telecharger fichier " & gce.RowInfo.Cells("NomFichier").Value & " : " & gce.RowInfo.Cells("IdSousEpisode").Value & "_" & gce.RowInfo.Cells("Id").Value)
+    End Sub
+
     Private Sub refreshReponseSubGrid(ByVal e As GridViewRowSourceNeededEventArgs)
         Me.Cursor = Cursors.WaitCursor
         Dim sousEpisodeReponseDao = New SousEpisodeReponseDao
@@ -177,6 +183,7 @@ Public Class FrmSousEpisode
 
 
     End Sub
+
 
     ''' <summary>
     ''' 
