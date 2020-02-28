@@ -27,6 +27,7 @@ Partial Class FrmSousEpisode
         Dim GridViewDateTimeColumn1 As Telerik.WinControls.UI.GridViewDateTimeColumn = New Telerik.WinControls.UI.GridViewDateTimeColumn()
         Dim GridViewTextBoxColumn3 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
         Dim GridViewTextBoxColumn4 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
+        Dim GridViewCommandColumn1 As Telerik.WinControls.UI.GridViewCommandColumn = New Telerik.WinControls.UI.GridViewCommandColumn()
         Dim GridViewTextBoxColumn5 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
         Dim TableViewDefinition1 As Telerik.WinControls.UI.TableViewDefinition = New Telerik.WinControls.UI.TableViewDefinition()
         Dim GridViewTextBoxColumn6 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
@@ -69,8 +70,14 @@ Partial Class FrmSousEpisode
         'SubGridDocs
         '
         Me.SubGridDocs.AllowAddNewRow = False
+        Me.SubGridDocs.AllowColumnChooser = False
         Me.SubGridDocs.AllowDeleteRow = False
+        Me.SubGridDocs.AllowDragToGroup = False
         Me.SubGridDocs.AllowEditRow = False
+        Me.SubGridDocs.AllowMultiColumnSorting = False
+        Me.SubGridDocs.AutoSizeColumnsMode = Telerik.WinControls.UI.GridViewAutoSizeColumnsMode.Fill
+        Me.SubGridDocs.AutoUpdateObjectRelationalSource = False
+        Me.SubGridDocs.Caption = "Documents reçus attachés (réponses)"
         GridViewTextBoxColumn1.HeaderText = "Id"
         GridViewTextBoxColumn1.IsVisible = False
         GridViewTextBoxColumn1.Name = "Id"
@@ -84,9 +91,19 @@ Partial Class FrmSousEpisode
         GridViewTextBoxColumn3.Name = "CreateUser"
         GridViewTextBoxColumn4.HeaderText = "Nom du Fichier"
         GridViewTextBoxColumn4.Name = "NomFichier"
+        GridViewCommandColumn1.DefaultText = "Télécharger"
+        GridViewCommandColumn1.HeaderText = "Télécharger"
+        GridViewCommandColumn1.MaxWidth = 100
+        GridViewCommandColumn1.Name = "SgBtnDownload"
+        GridViewCommandColumn1.TextAlignment = System.Drawing.ContentAlignment.MiddleCenter
+        GridViewCommandColumn1.UseDefaultText = True
         GridViewTextBoxColumn5.HeaderText = "Commentaire"
         GridViewTextBoxColumn5.Name = "Commentaire"
-        Me.SubGridDocs.Columns.AddRange(New Telerik.WinControls.UI.GridViewDataColumn() {GridViewTextBoxColumn1, GridViewTextBoxColumn2, GridViewDateTimeColumn1, GridViewTextBoxColumn3, GridViewTextBoxColumn4, GridViewTextBoxColumn5})
+        Me.SubGridDocs.Columns.AddRange(New Telerik.WinControls.UI.GridViewDataColumn() {GridViewTextBoxColumn1, GridViewTextBoxColumn2, GridViewDateTimeColumn1, GridViewTextBoxColumn3, GridViewTextBoxColumn4, GridViewCommandColumn1, GridViewTextBoxColumn5})
+        Me.SubGridDocs.EnableGrouping = False
+        Me.SubGridDocs.EnableSorting = False
+        Me.SubGridDocs.ReadOnly = True
+        Me.SubGridDocs.ShowChildViewCaptions = True
         Me.SubGridDocs.ShowFilterCellOperatorText = False
         Me.SubGridDocs.ShowFilteringRow = False
         Me.SubGridDocs.ViewDefinition = TableViewDefinition1
@@ -161,10 +178,10 @@ Partial Class FrmSousEpisode
         Me.RadSousEpisodeGrid.MasterTemplate.AllowEditRow = False
         Me.RadSousEpisodeGrid.MasterTemplate.AutoSizeColumnsMode = Telerik.WinControls.UI.GridViewAutoSizeColumnsMode.Fill
         GridViewTextBoxColumn6.DataType = GetType(Long)
-        GridViewTextBoxColumn6.FieldName = "id"
-        GridViewTextBoxColumn6.HeaderText = "Id"
+        GridViewTextBoxColumn6.FieldName = "IdSousEpisode"
+        GridViewTextBoxColumn6.HeaderText = "IdSousEpisode"
         GridViewTextBoxColumn6.IsVisible = False
-        GridViewTextBoxColumn6.Name = "id"
+        GridViewTextBoxColumn6.Name = "IdSousEpisode"
         GridViewTextBoxColumn6.TextAlignment = System.Drawing.ContentAlignment.MiddleRight
         GridViewTextBoxColumn6.Width = 43
         GridViewCheckBoxColumn1.HeaderText = "ALD"

@@ -20,7 +20,7 @@ Public Class FrmSousEpisode
         RadSousEpisodeGrid.Dock = DockStyle.Fill
 
         ' ---- init su sub grid
-        RadSousEpisodeGrid.MasterTemplate.Templates(0).HierarchyDataProvider = New GridViewEventDataProvider(RadSousEpisodeGrid.MasterTemplate.Templates(0))
+        RadSousEpisodeGrid.Templates(0).HierarchyDataProvider = New GridViewEventDataProvider(RadSousEpisodeGrid.Templates(0))
         AddHandler RadSousEpisodeGrid.RowSourceNeeded, AddressOf RadSousEpisodeGrid_RowSourceNeeded
 
         refreshGrid()
@@ -37,7 +37,7 @@ Public Class FrmSousEpisode
 
             ' -- recup eventuelle precedente selectionnée
             If RadSousEpisodeGrid.Rows.Count > 0 AndAlso Not IsNothing(Me.RadSousEpisodeGrid.CurrentRow) Then
-                exId = Me.RadSousEpisodeGrid.CurrentRow.Cells("id").Value
+                exId = Me.RadSousEpisodeGrid.CurrentRow.Cells("IdSousEpisode").Value
                 exPosit = Me.RadSousEpisodeGrid.CurrentRow.Index
             End If
             RadSousEpisodeGrid.Rows.Clear()
@@ -46,8 +46,8 @@ Public Class FrmSousEpisode
                 RadSousEpisodeGrid.Rows.Add(numRowGrid)
                 '------------------- Alimentation du DataGridView
                 With RadSousEpisodeGrid.Rows(numRowGrid)
-                    .Cells("id").Value = row("id")
-                    If .Cells("id").Value = exId Then index = numRowGrid   ' position exact
+                    .Cells("IdSousEpisode").Value = row("id")
+                    If .Cells("IdSousEpisode").Value = exId Then index = numRowGrid   ' position exact
                     If numRowGrid <= exPosit Then exPosit = numRowGrid     ' position approchée 
                     .Cells("HorodateCreation").Value = row("horodate_creation")
                     .Cells("CreateUser").Value = row("user_create")
@@ -106,7 +106,10 @@ Public Class FrmSousEpisode
     ''' <param name="sender"></param>
     ''' <param name="e"></param>
     Private Sub RadSousEpisodeGrid_SelectionChanged(sender As Object, e As EventArgs) Handles RadSousEpisodeGrid.SelectionChanged
-        If Me.RadSousEpisodeGrid.Rows.Count = 0 OrElse Me.RadSousEpisodeGrid.CurrentRow.IsSelected = False Then
+        If Me.RadSousEpisodeGrid.CurrentRow Is Nothing _
+                OrElse Me.RadSousEpisodeGrid.Rows.Count = 0 _
+                OrElse Me.RadSousEpisodeGrid.CurrentRow.IsSelected = False _
+                OrElse Me.RadSousEpisodeGrid.CurrentRow.Cells("HorodateValidate") Is Nothing Then
             BtnValidate.Visible = False
             BtnDetail.Visible = False
         Else
@@ -126,30 +129,29 @@ Public Class FrmSousEpisode
     Private Sub BtnValidate_Click(sender As Object, e As EventArgs) Handles BtnValidate.Click
         If MsgBox("Etes-vous sur de vouloir valider ce sous_épisode ?", MsgBoxStyle.YesNo Or MsgBoxStyle.DefaultButton2 Or MsgBoxStyle.Critical, "Validation Sous-Episode") = MsgBoxResult.Yes Then
             Dim sousEpisodeDao = New SousEpisodeDao
-            sousEpisodeDao.updateValidation(Me.RadSousEpisodeGrid.CurrentRow.Cells("Id").Value)
+            sousEpisodeDao.updateValidation(Me.RadSousEpisodeGrid.CurrentRow.Cells("IdSousEpisode").Value)
             refreshGrid()
         End If
     End Sub
 
     Private Sub RadSousEpisodeGrid_RowSourceNeeded(sender As Object, e As GridViewRowSourceNeededEventArgs) Handles RadSousEpisodeGrid.RowSourceNeeded
         If Me.RadSousEpisodeGrid.Rows.Count > 0 AndAlso Me.RadSousEpisodeGrid.CurrentRow.IsSelected Then
-            refreshReponseSubGrid()
+            refreshReponseSubGrid(e)
         End If
 
     End Sub
 
-    Private Sub refreshReponseSubGrid()
+    Private Sub refreshReponseSubGrid(ByVal e As GridViewRowSourceNeededEventArgs)
         Me.Cursor = Cursors.WaitCursor
         Dim sousEpisodeReponseDao = New SousEpisodeReponseDao
-        Dim rowInfo As New GridViewDataRowInfo(RadSousEpisodeGrid.MasterTemplate.Templates(0).MasterViewInfo)
+        Dim rowView As DataRowView = TryCast(e.ParentRow.DataBoundItem, DataRowView)
+
         Try
-            Dim data As DataTable = sousEpisodeReponseDao.getTableSousEpisodeReponse(Me.RadSousEpisodeGrid.CurrentRow.Cells("Id").Value)
-
-            Dim numRowGrid As Integer = 0
-
-            RadSousEpisodeGrid.Templates(0).Rows.Clear()
+            Dim data As DataTable = sousEpisodeReponseDao.getTableSousEpisodeReponse(Me.RadSousEpisodeGrid.CurrentRow.Cells("IdSousEpisode").Value)
+            e.SourceCollection.Clear()
 
             For Each row In data.Rows
+                Dim rowInfo As GridViewRowInfo = e.Template.Rows.NewRow()
                 With rowInfo
                     .Cells("id").Value = row("id")
                     .Cells("IdSousEpisode").Value = row("id_sous_episode")
@@ -162,10 +164,7 @@ Public Class FrmSousEpisode
                     'RadSousEpisodeGrid.Templates(0).Rows.Last.Tag = " << " & .Cells("type").Value & " >>" & vbCrLf & If(row("is_ald"), " --> ALD" & vbCrLf, "") &
                     ' row("commentaire") & vbCrLf
                 End With
-                RadSousEpisodeGrid.Templates(0).Rows.Add(numRowGrid, rowInfo)                '------------------- Alimentation du DataGridView
-
-                numRowGrid += 1
-
+                e.SourceCollection.Add(rowInfo)                '------------------- Alimentation du DataGridView
             Next
             Me.Cursor = Cursors.Default
 
