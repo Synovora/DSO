@@ -6,16 +6,16 @@ Public Class SousEpisodeDao
     Inherits StandardDao
 
 
-    Public Function getLstSousEpisode(Optional idEpisode As Long = 0) As List(Of SousEpisode)
+    Public Function getLstSousEpisode(idEpisode As Long, Optional idSousEpisode As Long = 0) As List(Of SousEpisode)
         Dim lst As List(Of SousEpisode) = New List(Of SousEpisode)
-        Dim data As DataTable = getTableSousEpisode(idEpisode)
+        Dim data As DataTable = getTableSousEpisode(idEpisode, idSousEpisode)
         For Each row In data.Rows
             lst.Add(buildBean(row))
         Next
         Return lst
     End Function
 
-    Public Function getTableSousEpisode(Optional idEpisode As Long = 0, Optional isComplete As Boolean = False) As DataTable
+    Public Function getTableSousEpisode(idEpisode As Long, Optional idSousEpisode As Long = 0, Optional isComplete As Boolean = False) As DataTable
         Dim SQLString As String
         'Console.WriteLine("----------> getTableSousEpisode")
         SQLString =
@@ -61,8 +61,14 @@ Public Class SousEpisodeDao
             "Left Join oasis.oa_utilisateur UV ON UV.oa_utilisateur_id =SE.validate_user_id " & vbCrLf
         End If
 
+        SQLString += "WHERE 1=1 " & vbCrLf
+
         If idEpisode <> 0 Then
-            SQLString += "WHERE SE.episode_id= @idEpisode " & vbCrLf
+            SQLString += "AND SE.episode_id= @idEpisode " & vbCrLf
+        End If
+
+        If idSousEpisode <> 0 Then
+            SQLString += "AND SE.id= @idSousEpisode " & vbCrLf
         End If
 
         'Console.WriteLine(SQLString)
@@ -72,6 +78,7 @@ Public Class SousEpisodeDao
             Dim tacheDataAdapter As SqlDataAdapter = New SqlDataAdapter()
             Using tacheDataAdapter
                 tacheDataAdapter.SelectCommand = New SqlCommand(SQLString, con)
+                If idSousEpisode <> 0 Then tacheDataAdapter.SelectCommand.Parameters.AddWithValue("@idSousEpisode", idSousEpisode)
                 If idEpisode <> 0 Then tacheDataAdapter.SelectCommand.Parameters.AddWithValue("@idEpisode", idEpisode)
                 Dim tacheDataTable As DataTable = New DataTable()
                 Using tacheDataTable
@@ -210,6 +217,10 @@ Public Class SousEpisodeDao
         End Try
 
         Return codeRetour
+    End Function
+
+    Friend Function getById(idSousEpisode As Long) As SousEpisode
+        Return getLstSousEpisode(0, idSousEpisode)(0)
     End Function
 
     Private Function buildBean(row As DataRow) As SousEpisode

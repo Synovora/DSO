@@ -32,7 +32,7 @@ Public Class FrmSousEpisodeListe
         Dim exId As Long, index As Integer = -1, exPosit = 0
         Me.Cursor = Cursors.WaitCursor
         Try
-            Dim data As DataTable = sousEpisodeDao.getTableSousEpisode(episode.Id, True)
+            Dim data As DataTable = sousEpisodeDao.getTableSousEpisode(episode.Id,, True)
 
             Dim numRowGrid As Integer = 0
 
@@ -191,13 +191,18 @@ Public Class FrmSousEpisodeListe
     ''' <param name="sender"></param>
     ''' <param name="e"></param>
     Private Sub BtnDetail_Click(sender As Object, e As EventArgs) Handles BtnDetail.Click
+        Dim sousEpisode
+        Dim sousEpisodeDao = New SousEpisodeDao
+
         Try
             Me.Cursor = Cursors.WaitCursor
             Me.Enabled = False
-            Using frm = New FrmTestRichText()
+            sousEpisode = sousEpisodeDao.getById(Me.RadSousEpisodeGrid.CurrentRow.Cells("IdSousEpisode").Value)
+            Using frm = New FrmSousEpisode(episode, patient, sousEpisode)
                 frm.ShowDialog()
                 frm.Dispose()
             End Using
+            refreshGrid()
         Catch err As Exception
             MsgBox(err.Message())
         Finally
