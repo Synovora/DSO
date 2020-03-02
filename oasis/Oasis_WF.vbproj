@@ -440,6 +440,12 @@
     <Compile Include="Form\SousEpisode\FrmSousEpisode.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="Form\SousEpisode\FrmSousEpisodeListe.Designer.vb">
+      <DependentUpon>FrmSousEpisodeListe.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Form\SousEpisode\FrmSousEpisodeListe.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Form\Traitement\RadFAllergieEtCISuppressionDetail.Designer.vb">
       <DependentUpon>RadFAllergieEtCISuppressionDetail.vb</DependentUpon>
     </Compile>
@@ -956,6 +962,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Form\SousEpisode\FrmSousEpisode.resx">
       <DependentUpon>FrmSousEpisode.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form\SousEpisode\FrmSousEpisodeListe.resx">
+      <DependentUpon>FrmSousEpisodeListe.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Form\Traitement\RadFAllergieEtCISuppressionDetail.resx">
       <DependentUpon>RadFAllergieEtCISuppressionDetail.vb</DependentUpon>

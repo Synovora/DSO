@@ -4722,7 +4722,7 @@ Public Class RadFEpisodeDetail
         Try
             Me.Cursor = Cursors.WaitCursor
             Me.Enabled = False
-            Using frm = New FrmSousEpisode(episode, SelectedPatient)
+            Using frm = New FrmSousEpisodeListe(episode, SelectedPatient)
                 frm.ShowDialog()
             End Using
         Catch err As Exception
