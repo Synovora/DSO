@@ -28,9 +28,9 @@ Partial Class FrmSousEpisode
         Me.BtnCreate = New Telerik.WinControls.UI.RadButton()
         Me.BtnCancel = New Telerik.WinControls.UI.RadButton()
         Me.RadPanel2 = New Telerik.WinControls.UI.RadPanel()
-        Me.RadMaskedEditBox1 = New Telerik.WinControls.UI.RadMaskedEditBox()
+        Me.TxtDelai = New Telerik.WinControls.UI.RadMaskedEditBox()
         Me.ChkBReponseAttendue = New Telerik.WinControls.UI.RadCheckBox()
-        Me.Label8 = New System.Windows.Forms.Label()
+        Me.LblDelai = New System.Windows.Forms.Label()
         Me.Label9 = New System.Windows.Forms.Label()
         Me.Label10 = New System.Windows.Forms.Label()
         Me.LblFichier = New Telerik.WinControls.UI.RadLabel()
@@ -58,7 +58,7 @@ Partial Class FrmSousEpisode
         CType(Me.BtnCancel, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.RadPanel2, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.RadPanel2.SuspendLayout()
-        CType(Me.RadMaskedEditBox1, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.TxtDelai, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.ChkBReponseAttendue, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.LblFichier, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.DropDownSousType, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -122,9 +122,9 @@ Partial Class FrmSousEpisode
         'RadPanel2
         '
         Me.RadPanel2.BackColor = System.Drawing.SystemColors.GradientInactiveCaption
-        Me.RadPanel2.Controls.Add(Me.RadMaskedEditBox1)
+        Me.RadPanel2.Controls.Add(Me.TxtDelai)
         Me.RadPanel2.Controls.Add(Me.ChkBReponseAttendue)
-        Me.RadPanel2.Controls.Add(Me.Label8)
+        Me.RadPanel2.Controls.Add(Me.LblDelai)
         Me.RadPanel2.Controls.Add(Me.Label9)
         Me.RadPanel2.Controls.Add(Me.Label10)
         Me.RadPanel2.Controls.Add(Me.LblFichier)
@@ -150,15 +150,16 @@ Partial Class FrmSousEpisode
         Me.RadPanel2.Size = New System.Drawing.Size(488, 449)
         Me.RadPanel2.TabIndex = 16
         '
-        'RadMaskedEditBox1
+        'TxtDelai
         '
-        Me.RadMaskedEditBox1.Location = New System.Drawing.Point(310, 235)
-        Me.RadMaskedEditBox1.Mask = "###"
-        Me.RadMaskedEditBox1.MaskType = Telerik.WinControls.UI.MaskType.Numeric
-        Me.RadMaskedEditBox1.Name = "RadMaskedEditBox1"
-        Me.RadMaskedEditBox1.Size = New System.Drawing.Size(42, 20)
-        Me.RadMaskedEditBox1.TabIndex = 48
-        Me.RadMaskedEditBox1.TabStop = False
+        Me.TxtDelai.Location = New System.Drawing.Point(310, 235)
+        Me.TxtDelai.Mask = "###"
+        Me.TxtDelai.MaskType = Telerik.WinControls.UI.MaskType.Numeric
+        Me.TxtDelai.Name = "TxtDelai"
+        Me.TxtDelai.Size = New System.Drawing.Size(42, 20)
+        Me.TxtDelai.TabIndex = 48
+        Me.TxtDelai.TabStop = False
+        Me.TxtDelai.Visible = False
         '
         'ChkBReponseAttendue
         '
@@ -167,15 +168,16 @@ Partial Class FrmSousEpisode
         Me.ChkBReponseAttendue.Size = New System.Drawing.Size(15, 15)
         Me.ChkBReponseAttendue.TabIndex = 47
         '
-        'Label8
+        'LblDelai
         '
-        Me.Label8.AutoSize = True
-        Me.Label8.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label8.Location = New System.Drawing.Point(180, 239)
-        Me.Label8.Name = "Label8"
-        Me.Label8.Size = New System.Drawing.Size(122, 13)
-        Me.Label8.TabIndex = 45
-        Me.Label8.Text = "Délai maxi (en jours)"
+        Me.LblDelai.AutoSize = True
+        Me.LblDelai.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.LblDelai.Location = New System.Drawing.Point(180, 239)
+        Me.LblDelai.Name = "LblDelai"
+        Me.LblDelai.Size = New System.Drawing.Size(122, 13)
+        Me.LblDelai.TabIndex = 45
+        Me.LblDelai.Text = "Délai maxi (en jours)"
+        Me.LblDelai.Visible = False
         '
         'Label9
         '
@@ -379,7 +381,7 @@ Partial Class FrmSousEpisode
         CType(Me.RadPanel2, System.ComponentModel.ISupportInitialize).EndInit()
         Me.RadPanel2.ResumeLayout(False)
         Me.RadPanel2.PerformLayout()
-        CType(Me.RadMaskedEditBox1, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.TxtDelai, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.ChkBReponseAttendue, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.LblFichier, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.DropDownSousType, System.ComponentModel.ISupportInitialize).EndInit()
@@ -417,9 +419,9 @@ Partial Class FrmSousEpisode
     Friend WithEvents Label5 As Label
     Friend WithEvents Label4 As Label
     Friend WithEvents ChkBReponseAttendue As Telerik.WinControls.UI.RadCheckBox
-    Friend WithEvents Label8 As Label
+    Friend WithEvents LblDelai As Label
     Friend WithEvents Label9 As Label
     Friend WithEvents Label10 As Label
-    Friend WithEvents RadMaskedEditBox1 As Telerik.WinControls.UI.RadMaskedEditBox
+    Friend WithEvents TxtDelai As Telerik.WinControls.UI.RadMaskedEditBox
 End Class
 

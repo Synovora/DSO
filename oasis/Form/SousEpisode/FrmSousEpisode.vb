@@ -1,4 +1,5 @@
 ﻿Imports Oasis_Common
+Imports Telerik.WinControls.Enumerations
 Imports Telerik.WinControls.UI
 
 Public Class FrmSousEpisode
@@ -35,6 +36,11 @@ Public Class FrmSousEpisode
         initSousTypes(lstSousEpisodeType(e.Position).Id)
     End Sub
 
+    Private Sub ChkBReponseAttendue_ToggleStateChanged(sender As Object, args As StateChangedEventArgs) Handles ChkBReponseAttendue.ToggleStateChanged
+        TxtDelai.Visible = If(args.ToggleState = ToggleState.On, True, False)
+        LblDelai.Visible = If(args.ToggleState = ToggleState.On, True, False)
+    End Sub
+
     Private Sub initControls()
         ' -- listes de references
         lstSousEpisodeType = sousEpisodeTypeDao.getLstSousEpisodeType()
@@ -64,7 +70,8 @@ Public Class FrmSousEpisode
             End If
 
         End With
-
+        ChkBReponseAttendue.Checked = sousEpisode.IsReponse
+        TxtDelai.Value = If(sousEpisode.DelaiSinceValidation = Nothing, "", sousEpisode.DelaiSinceValidation)
 
     End Sub
     Private Sub initSousTypes(idType As Long)

@@ -60,13 +60,19 @@ Public Class FrmSousEpisodeListe
                     .Cells("commentaire").Value = row("commentaire")
                     .Cells("NomFichier").Value = row("nom_fichier")
                     .Cells("IsAld").Value = row("is_ald")
+                    .Cells("IsReponse").Value = row("is_reponse")
                     .Cells("ValidationProfilTypes").Value = row("validation_profil_types")
                     .Cells("IsReponseRecue").Value = Coalesce(row("is_reponse_recue"), False)
                     .Cells("HorodateLastRecu").Value = row("horodate_last_recu")
 
                     ' -- on garnit le tag pour affichage tooltip
-                    RadSousEpisodeGrid.Rows.Last.Tag = " << " & .Cells("type").Value & " >>" & vbCrLf & If(row("is_ald"), " --> ALD" & vbCrLf, "") &
-                                 row("commentaire") & vbCrLf
+                    RadSousEpisodeGrid.Rows.Last.Tag = " << " & .Cells("type").Value & " >>" & vbCrLf &
+                                If(Coalesce(row("is_ald"), False), " --> ALD" & vbCrLf, "") &
+                                "Fichier : " & row("nom_fichier") & vbCrLf &
+                                If(Coalesce(row("is_reponse"), False), " ... Réponse requise sous " & row("delai_since_validation") & " j à partir de la date de validation" & vbCrLf, "") &
+                                If(Coalesce(row("is_reponse_recue"), False), " ... Dernière reçue le  " & row("horodate_last_recu"), " ... NON REÇUE ...") & vbCrLf &
+                                " ------------------------------------------" & vbCrLf &
+                                row("commentaire") & vbCrLf
                 End With
 
                 numRowGrid += 1
