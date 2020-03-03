@@ -28,28 +28,28 @@ Partial Class FrmSousEpisode
         Me.BtnCreate = New Telerik.WinControls.UI.RadButton()
         Me.BtnCancel = New Telerik.WinControls.UI.RadButton()
         Me.RadPanel2 = New Telerik.WinControls.UI.RadPanel()
-        Me.Label16 = New System.Windows.Forms.Label()
-        Me.TxtRDVCommentaire = New System.Windows.Forms.TextBox()
-        Me.Label12 = New System.Windows.Forms.Label()
-        Me.Label2 = New System.Windows.Forms.Label()
-        Me.lblDateCreation = New Telerik.WinControls.UI.RadLabel()
-        Me.LblDateModif = New Telerik.WinControls.UI.RadLabel()
-        Me.Label1 = New System.Windows.Forms.Label()
-        Me.LblDateValidation = New Telerik.WinControls.UI.RadLabel()
-        Me.Label3 = New System.Windows.Forms.Label()
-        Me.Label4 = New System.Windows.Forms.Label()
-        Me.Label5 = New System.Windows.Forms.Label()
-        Me.RadDropDownList1 = New Telerik.WinControls.UI.RadDropDownList()
-        Me.DropDownType = New Telerik.WinControls.UI.RadDropDownList()
-        Me.DropDownSousType = New Telerik.WinControls.UI.RadDropDownList()
-        Me.Label6 = New System.Windows.Forms.Label()
-        Me.Label7 = New System.Windows.Forms.Label()
-        Me.LblFichier = New Telerik.WinControls.UI.RadLabel()
+        Me.RadMaskedEditBox1 = New Telerik.WinControls.UI.RadMaskedEditBox()
+        Me.ChkBReponseAttendue = New Telerik.WinControls.UI.RadCheckBox()
         Me.Label8 = New System.Windows.Forms.Label()
         Me.Label9 = New System.Windows.Forms.Label()
         Me.Label10 = New System.Windows.Forms.Label()
-        Me.ChkBReponseAttendue = New Telerik.WinControls.UI.RadCheckBox()
-        Me.RadMaskedEditBox1 = New Telerik.WinControls.UI.RadMaskedEditBox()
+        Me.LblFichier = New Telerik.WinControls.UI.RadLabel()
+        Me.Label7 = New System.Windows.Forms.Label()
+        Me.DropDownSousType = New Telerik.WinControls.UI.RadDropDownList()
+        Me.Label6 = New System.Windows.Forms.Label()
+        Me.DropDownType = New Telerik.WinControls.UI.RadDropDownList()
+        Me.RadDropDownList1 = New Telerik.WinControls.UI.RadDropDownList()
+        Me.Label5 = New System.Windows.Forms.Label()
+        Me.Label4 = New System.Windows.Forms.Label()
+        Me.LblDateValidation = New Telerik.WinControls.UI.RadLabel()
+        Me.Label3 = New System.Windows.Forms.Label()
+        Me.LblDateModif = New Telerik.WinControls.UI.RadLabel()
+        Me.Label1 = New System.Windows.Forms.Label()
+        Me.lblDateCreation = New Telerik.WinControls.UI.RadLabel()
+        Me.Label2 = New System.Windows.Forms.Label()
+        Me.Label16 = New System.Windows.Forms.Label()
+        Me.TxtRDVCommentaire = New System.Windows.Forms.TextBox()
+        Me.Label12 = New System.Windows.Forms.Label()
         CType(Me.RadPanel1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.RadPanel1.SuspendLayout()
         CType(Me.BtnValidate, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -58,15 +58,15 @@ Partial Class FrmSousEpisode
         CType(Me.BtnCancel, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.RadPanel2, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.RadPanel2.SuspendLayout()
-        CType(Me.lblDateCreation, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.LblDateModif, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.LblDateValidation, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.RadDropDownList1, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.DropDownType, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.DropDownSousType, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.LblFichier, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.ChkBReponseAttendue, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.RadMaskedEditBox1, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.ChkBReponseAttendue, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.LblFichier, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.DropDownSousType, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.DropDownType, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.RadDropDownList1, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.LblDateValidation, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.LblDateModif, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.lblDateCreation, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
@@ -77,7 +77,7 @@ Partial Class FrmSousEpisode
         Me.RadPanel1.Controls.Add(Me.BtnCreate)
         Me.RadPanel1.Controls.Add(Me.BtnCancel)
         Me.RadPanel1.Dock = System.Windows.Forms.DockStyle.Bottom
-        Me.RadPanel1.Location = New System.Drawing.Point(0, 609)
+        Me.RadPanel1.Location = New System.Drawing.Point(0, 460)
         Me.RadPanel1.Name = "RadPanel1"
         Me.RadPanel1.Size = New System.Drawing.Size(488, 37)
         Me.RadPanel1.TabIndex = 1
@@ -150,6 +150,179 @@ Partial Class FrmSousEpisode
         Me.RadPanel2.Size = New System.Drawing.Size(488, 449)
         Me.RadPanel2.TabIndex = 16
         '
+        'RadMaskedEditBox1
+        '
+        Me.RadMaskedEditBox1.Location = New System.Drawing.Point(310, 235)
+        Me.RadMaskedEditBox1.Mask = "###"
+        Me.RadMaskedEditBox1.MaskType = Telerik.WinControls.UI.MaskType.Numeric
+        Me.RadMaskedEditBox1.Name = "RadMaskedEditBox1"
+        Me.RadMaskedEditBox1.Size = New System.Drawing.Size(42, 20)
+        Me.RadMaskedEditBox1.TabIndex = 48
+        Me.RadMaskedEditBox1.TabStop = False
+        '
+        'ChkBReponseAttendue
+        '
+        Me.ChkBReponseAttendue.Location = New System.Drawing.Point(152, 238)
+        Me.ChkBReponseAttendue.Name = "ChkBReponseAttendue"
+        Me.ChkBReponseAttendue.Size = New System.Drawing.Size(15, 15)
+        Me.ChkBReponseAttendue.TabIndex = 47
+        '
+        'Label8
+        '
+        Me.Label8.AutoSize = True
+        Me.Label8.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label8.Location = New System.Drawing.Point(180, 239)
+        Me.Label8.Name = "Label8"
+        Me.Label8.Size = New System.Drawing.Size(122, 13)
+        Me.Label8.TabIndex = 45
+        Me.Label8.Text = "Délai maxi (en jours)"
+        '
+        'Label9
+        '
+        Me.Label9.AutoSize = True
+        Me.Label9.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label9.Location = New System.Drawing.Point(12, 239)
+        Me.Label9.Name = "Label9"
+        Me.Label9.Size = New System.Drawing.Size(111, 13)
+        Me.Label9.TabIndex = 43
+        Me.Label9.Text = "Réponse attendue"
+        '
+        'Label10
+        '
+        Me.Label10.BackColor = System.Drawing.SystemColors.GradientActiveCaption
+        Me.Label10.Location = New System.Drawing.Point(6, 214)
+        Me.Label10.Name = "Label10"
+        Me.Label10.Size = New System.Drawing.Size(474, 13)
+        Me.Label10.TabIndex = 42
+        Me.Label10.Text = "Réponses / Documents reçus"
+        Me.Label10.TextAlign = System.Drawing.ContentAlignment.TopCenter
+        '
+        'LblFichier
+        '
+        Me.LblFichier.Location = New System.Drawing.Point(152, 178)
+        Me.LblFichier.Name = "LblFichier"
+        Me.LblFichier.Size = New System.Drawing.Size(53, 18)
+        Me.LblFichier.TabIndex = 41
+        Me.LblFichier.Text = "LblFichier"
+        '
+        'Label7
+        '
+        Me.Label7.AutoSize = True
+        Me.Label7.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label7.Location = New System.Drawing.Point(12, 185)
+        Me.Label7.Name = "Label7"
+        Me.Label7.Size = New System.Drawing.Size(45, 13)
+        Me.Label7.TabIndex = 40
+        Me.Label7.Text = "Fichier"
+        '
+        'DropDownSousType
+        '
+        Me.DropDownSousType.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend
+        Me.DropDownSousType.Location = New System.Drawing.Point(152, 152)
+        Me.DropDownSousType.Name = "DropDownSousType"
+        Me.DropDownSousType.Size = New System.Drawing.Size(328, 20)
+        Me.DropDownSousType.TabIndex = 39
+        '
+        'Label6
+        '
+        Me.Label6.AutoSize = True
+        Me.Label6.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label6.Location = New System.Drawing.Point(12, 159)
+        Me.Label6.Name = "Label6"
+        Me.Label6.Size = New System.Drawing.Size(67, 13)
+        Me.Label6.TabIndex = 38
+        Me.Label6.Text = "Sous-Type"
+        '
+        'DropDownType
+        '
+        Me.DropDownType.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend
+        Me.DropDownType.Location = New System.Drawing.Point(152, 126)
+        Me.DropDownType.Name = "DropDownType"
+        Me.DropDownType.Size = New System.Drawing.Size(328, 20)
+        Me.DropDownType.TabIndex = 37
+        '
+        'RadDropDownList1
+        '
+        Me.RadDropDownList1.Location = New System.Drawing.Point(545, 197)
+        Me.RadDropDownList1.Name = "RadDropDownList1"
+        Me.RadDropDownList1.Size = New System.Drawing.Size(8, 20)
+        Me.RadDropDownList1.TabIndex = 36
+        Me.RadDropDownList1.Text = "RadDropDownList1"
+        '
+        'Label5
+        '
+        Me.Label5.AutoSize = True
+        Me.Label5.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label5.Location = New System.Drawing.Point(12, 133)
+        Me.Label5.Name = "Label5"
+        Me.Label5.Size = New System.Drawing.Size(35, 13)
+        Me.Label5.TabIndex = 35
+        Me.Label5.Text = "Type"
+        '
+        'Label4
+        '
+        Me.Label4.BackColor = System.Drawing.SystemColors.GradientActiveCaption
+        Me.Label4.Location = New System.Drawing.Point(6, 347)
+        Me.Label4.Name = "Label4"
+        Me.Label4.Size = New System.Drawing.Size(474, 13)
+        Me.Label4.TabIndex = 34
+        Me.Label4.Text = "Commentaire"
+        Me.Label4.TextAlign = System.Drawing.ContentAlignment.TopCenter
+        '
+        'LblDateValidation
+        '
+        Me.LblDateValidation.Location = New System.Drawing.Point(154, 76)
+        Me.LblDateValidation.Name = "LblDateValidation"
+        Me.LblDateValidation.Size = New System.Drawing.Size(95, 18)
+        Me.LblDateValidation.TabIndex = 33
+        Me.LblDateValidation.Text = "LblDateValidation"
+        '
+        'Label3
+        '
+        Me.Label3.AutoSize = True
+        Me.Label3.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label3.Location = New System.Drawing.Point(13, 79)
+        Me.Label3.Name = "Label3"
+        Me.Label3.Size = New System.Drawing.Size(63, 13)
+        Me.Label3.TabIndex = 32
+        Me.Label3.Text = "Validation"
+        '
+        'LblDateModif
+        '
+        Me.LblDateModif.Location = New System.Drawing.Point(154, 52)
+        Me.LblDateModif.Name = "LblDateModif"
+        Me.LblDateModif.Size = New System.Drawing.Size(74, 18)
+        Me.LblDateModif.TabIndex = 31
+        Me.LblDateModif.Text = "LblDateModif"
+        '
+        'Label1
+        '
+        Me.Label1.AutoSize = True
+        Me.Label1.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label1.Location = New System.Drawing.Point(14, 55)
+        Me.Label1.Name = "Label1"
+        Me.Label1.Size = New System.Drawing.Size(128, 13)
+        Me.Label1.TabIndex = 30
+        Me.Label1.Text = "Dernière Modification"
+        '
+        'lblDateCreation
+        '
+        Me.lblDateCreation.Location = New System.Drawing.Point(154, 29)
+        Me.lblDateCreation.Name = "lblDateCreation"
+        Me.lblDateCreation.Size = New System.Drawing.Size(87, 18)
+        Me.lblDateCreation.TabIndex = 29
+        Me.lblDateCreation.Text = "LblDateCreation"
+        '
+        'Label2
+        '
+        Me.Label2.BackColor = System.Drawing.SystemColors.GradientActiveCaption
+        Me.Label2.Location = New System.Drawing.Point(5, 9)
+        Me.Label2.Name = "Label2"
+        Me.Label2.Size = New System.Drawing.Size(474, 13)
+        Me.Label2.TabIndex = 28
+        Me.Label2.Text = "Horodatages"
+        Me.Label2.TextAlign = System.Drawing.ContentAlignment.TopCenter
+        '
         'Label16
         '
         Me.Label16.BackColor = System.Drawing.SystemColors.GradientActiveCaption
@@ -179,183 +352,12 @@ Partial Class FrmSousEpisode
         Me.Label12.TabIndex = 16
         Me.Label12.Text = "Création"
         '
-        'Label2
-        '
-        Me.Label2.BackColor = System.Drawing.SystemColors.GradientActiveCaption
-        Me.Label2.Location = New System.Drawing.Point(5, 9)
-        Me.Label2.Name = "Label2"
-        Me.Label2.Size = New System.Drawing.Size(474, 13)
-        Me.Label2.TabIndex = 28
-        Me.Label2.Text = "Horodatages"
-        Me.Label2.TextAlign = System.Drawing.ContentAlignment.TopCenter
-        '
-        'lblDateCreation
-        '
-        Me.lblDateCreation.Location = New System.Drawing.Point(154, 29)
-        Me.lblDateCreation.Name = "lblDateCreation"
-        Me.lblDateCreation.Size = New System.Drawing.Size(87, 18)
-        Me.lblDateCreation.TabIndex = 29
-        Me.lblDateCreation.Text = "LblDateCreation"
-        '
-        'LblDateModif
-        '
-        Me.LblDateModif.Location = New System.Drawing.Point(154, 52)
-        Me.LblDateModif.Name = "LblDateModif"
-        Me.LblDateModif.Size = New System.Drawing.Size(74, 18)
-        Me.LblDateModif.TabIndex = 31
-        Me.LblDateModif.Text = "LblDateModif"
-        '
-        'Label1
-        '
-        Me.Label1.AutoSize = True
-        Me.Label1.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label1.Location = New System.Drawing.Point(14, 55)
-        Me.Label1.Name = "Label1"
-        Me.Label1.Size = New System.Drawing.Size(128, 13)
-        Me.Label1.TabIndex = 30
-        Me.Label1.Text = "Dernière Modification"
-        '
-        'LblDateValidation
-        '
-        Me.LblDateValidation.Location = New System.Drawing.Point(154, 76)
-        Me.LblDateValidation.Name = "LblDateValidation"
-        Me.LblDateValidation.Size = New System.Drawing.Size(95, 18)
-        Me.LblDateValidation.TabIndex = 33
-        Me.LblDateValidation.Text = "LblDateValidation"
-        '
-        'Label3
-        '
-        Me.Label3.AutoSize = True
-        Me.Label3.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label3.Location = New System.Drawing.Point(13, 79)
-        Me.Label3.Name = "Label3"
-        Me.Label3.Size = New System.Drawing.Size(63, 13)
-        Me.Label3.TabIndex = 32
-        Me.Label3.Text = "Validation"
-        '
-        'Label4
-        '
-        Me.Label4.BackColor = System.Drawing.SystemColors.GradientActiveCaption
-        Me.Label4.Location = New System.Drawing.Point(6, 347)
-        Me.Label4.Name = "Label4"
-        Me.Label4.Size = New System.Drawing.Size(474, 13)
-        Me.Label4.TabIndex = 34
-        Me.Label4.Text = "Commentaire"
-        Me.Label4.TextAlign = System.Drawing.ContentAlignment.TopCenter
-        '
-        'Label5
-        '
-        Me.Label5.AutoSize = True
-        Me.Label5.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label5.Location = New System.Drawing.Point(12, 133)
-        Me.Label5.Name = "Label5"
-        Me.Label5.Size = New System.Drawing.Size(35, 13)
-        Me.Label5.TabIndex = 35
-        Me.Label5.Text = "Type"
-        '
-        'RadDropDownList1
-        '
-        Me.RadDropDownList1.Location = New System.Drawing.Point(545, 197)
-        Me.RadDropDownList1.Name = "RadDropDownList1"
-        Me.RadDropDownList1.Size = New System.Drawing.Size(8, 8)
-        Me.RadDropDownList1.TabIndex = 36
-        Me.RadDropDownList1.Text = "RadDropDownList1"
-        '
-        'DropDownType
-        '
-        Me.DropDownType.Location = New System.Drawing.Point(152, 126)
-        Me.DropDownType.Name = "DropDownType"
-        Me.DropDownType.Size = New System.Drawing.Size(328, 20)
-        Me.DropDownType.TabIndex = 37
-        '
-        'DropDownSousType
-        '
-        Me.DropDownSousType.Location = New System.Drawing.Point(152, 152)
-        Me.DropDownSousType.Name = "DropDownSousType"
-        Me.DropDownSousType.Size = New System.Drawing.Size(328, 20)
-        Me.DropDownSousType.TabIndex = 39
-        '
-        'Label6
-        '
-        Me.Label6.AutoSize = True
-        Me.Label6.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label6.Location = New System.Drawing.Point(12, 159)
-        Me.Label6.Name = "Label6"
-        Me.Label6.Size = New System.Drawing.Size(67, 13)
-        Me.Label6.TabIndex = 38
-        Me.Label6.Text = "Sous-Type"
-        '
-        'Label7
-        '
-        Me.Label7.AutoSize = True
-        Me.Label7.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label7.Location = New System.Drawing.Point(12, 185)
-        Me.Label7.Name = "Label7"
-        Me.Label7.Size = New System.Drawing.Size(45, 13)
-        Me.Label7.TabIndex = 40
-        Me.Label7.Text = "Fichier"
-        '
-        'LblFichier
-        '
-        Me.LblFichier.Location = New System.Drawing.Point(152, 178)
-        Me.LblFichier.Name = "LblFichier"
-        Me.LblFichier.Size = New System.Drawing.Size(53, 18)
-        Me.LblFichier.TabIndex = 41
-        Me.LblFichier.Text = "LblFichier"
-        '
-        'Label8
-        '
-        Me.Label8.AutoSize = True
-        Me.Label8.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label8.Location = New System.Drawing.Point(294, 239)
-        Me.Label8.Name = "Label8"
-        Me.Label8.Size = New System.Drawing.Size(122, 13)
-        Me.Label8.TabIndex = 45
-        Me.Label8.Text = "Délai maxi (en jours)"
-        '
-        'Label9
-        '
-        Me.Label9.AutoSize = True
-        Me.Label9.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label9.Location = New System.Drawing.Point(12, 239)
-        Me.Label9.Name = "Label9"
-        Me.Label9.Size = New System.Drawing.Size(111, 13)
-        Me.Label9.TabIndex = 43
-        Me.Label9.Text = "Réponse attendue"
-        '
-        'Label10
-        '
-        Me.Label10.BackColor = System.Drawing.SystemColors.GradientActiveCaption
-        Me.Label10.Location = New System.Drawing.Point(6, 214)
-        Me.Label10.Name = "Label10"
-        Me.Label10.Size = New System.Drawing.Size(474, 13)
-        Me.Label10.TabIndex = 42
-        Me.Label10.Text = "Réponses / Documents reçus"
-        Me.Label10.TextAlign = System.Drawing.ContentAlignment.TopCenter
-        '
-        'ChkBReponseAttendue
-        '
-        Me.ChkBReponseAttendue.Location = New System.Drawing.Point(152, 238)
-        Me.ChkBReponseAttendue.Name = "ChkBReponseAttendue"
-        Me.ChkBReponseAttendue.Size = New System.Drawing.Size(15, 15)
-        Me.ChkBReponseAttendue.TabIndex = 47
-        '
-        'RadMaskedEditBox1
-        '
-        Me.RadMaskedEditBox1.Location = New System.Drawing.Point(434, 235)
-        Me.RadMaskedEditBox1.Mask = "###"
-        Me.RadMaskedEditBox1.MaskType = Telerik.WinControls.UI.MaskType.Numeric
-        Me.RadMaskedEditBox1.Name = "RadMaskedEditBox1"
-        Me.RadMaskedEditBox1.Size = New System.Drawing.Size(42, 20)
-        Me.RadMaskedEditBox1.TabIndex = 48
-        Me.RadMaskedEditBox1.TabStop = False
-        '
         'FrmSousEpisode
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.CancelButton = Me.BtnCancel
-        Me.ClientSize = New System.Drawing.Size(488, 646)
+        Me.ClientSize = New System.Drawing.Size(488, 497)
         Me.Controls.Add(Me.RadPanel2)
         Me.Controls.Add(Me.RadPanel1)
         Me.MinimizeBox = False
@@ -366,6 +368,7 @@ Partial Class FrmSousEpisode
         Me.RootElement.ApplyShapeToControl = True
         Me.ShowIcon = False
         Me.ShowInTaskbar = False
+        Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent
         Me.Text = "Sous-Episode"
         CType(Me.RadPanel1, System.ComponentModel.ISupportInitialize).EndInit()
         Me.RadPanel1.ResumeLayout(False)
@@ -376,15 +379,15 @@ Partial Class FrmSousEpisode
         CType(Me.RadPanel2, System.ComponentModel.ISupportInitialize).EndInit()
         Me.RadPanel2.ResumeLayout(False)
         Me.RadPanel2.PerformLayout()
-        CType(Me.lblDateCreation, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.LblDateModif, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.LblDateValidation, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.RadDropDownList1, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.DropDownType, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.DropDownSousType, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.LblFichier, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.ChkBReponseAttendue, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.RadMaskedEditBox1, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.ChkBReponseAttendue, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.LblFichier, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.DropDownSousType, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.DropDownType, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.RadDropDownList1, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.LblDateValidation, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.LblDateModif, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.lblDateCreation, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
 

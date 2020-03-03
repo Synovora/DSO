@@ -184,6 +184,30 @@ Public Class FrmSousEpisodeListe
 
     End Sub
 
+    Private Sub BtnCreate_Click(sender As Object, e As EventArgs) Handles BtnCreate.Click
+        Dim sousEpisode = New SousEpisode
+
+        Try
+            Me.Cursor = Cursors.WaitCursor
+            Me.Enabled = False
+            Using frm = New FrmSousEpisode(episode, patient, sousEpisode)
+                frm.ShowDialog()
+                frm.Dispose()
+            End Using
+            refreshGrid()
+        Catch err As Exception
+            MsgBox(err.Message())
+        Finally
+            Me.Enabled = True
+            Me.Cursor = Cursors.Default
+        End Try
+
+    End Sub
+
+    Private Sub RadSousEpisodeGrid_MouseDoubleClick(sender As Object, e As MouseEventArgs) Handles RadSousEpisodeGrid.MouseDoubleClick
+        If Me.RadSousEpisodeGrid.Rows.Count = 0 OrElse Me.RadSousEpisodeGrid.CurrentRow.IsSelected = False Then Return
+        detailSousEpisode()
+    End Sub
 
     ''' <summary>
     ''' 
@@ -191,6 +215,10 @@ Public Class FrmSousEpisodeListe
     ''' <param name="sender"></param>
     ''' <param name="e"></param>
     Private Sub BtnDetail_Click(sender As Object, e As EventArgs) Handles BtnDetail.Click
+        detailSousEpisode()
+    End Sub
+
+    Private Sub detailSousEpisode()
         Dim sousEpisode
         Dim sousEpisodeDao = New SousEpisodeDao
 

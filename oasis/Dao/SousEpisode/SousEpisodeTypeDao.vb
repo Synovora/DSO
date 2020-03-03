@@ -11,7 +11,7 @@ End Enum
 Public Class SousEpisodeTypeDao
     Inherits StandardDao
 
-    Friend Function getLstSousEpisodeType() As List(Of SousEpisodeType)
+    Public Function getLstSousEpisodeType() As List(Of SousEpisodeType)
         Dim lst As List(Of SousEpisodeType) = New List(Of SousEpisodeType)
         Dim data As DataTable = getTableSousEpisodeType()
         For Each row In data.Rows
@@ -20,7 +20,7 @@ Public Class SousEpisodeTypeDao
         Return lst
     End Function
 
-    Friend Function getTableSousEpisodeType() As DataTable
+    Public Function getTableSousEpisodeType() As DataTable
         Dim SQLString As String
         'Console.WriteLine("----------> getAllTacheEnCours")
         SQLString =
@@ -55,7 +55,7 @@ Public Class SousEpisodeTypeDao
     End Function
 
 
-    Friend Function Create(seType As SousEpisodeType) As Boolean
+    Public Function Create(seType As SousEpisodeType) As Boolean
         Dim da As SqlDataAdapter = New SqlDataAdapter()
         Dim codeRetour As Boolean = True
         Dim con As SqlConnection

@@ -247,7 +247,7 @@ Partial Class FrmSousEpisodeListe
         Me.RadSousEpisodeGrid.Size = New System.Drawing.Size(1295, 332)
         Me.RadSousEpisodeGrid.TabIndex = 3
         '
-        'FrmSousEpisode
+        'FrmSousEpisodeListe
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
@@ -256,7 +256,7 @@ Partial Class FrmSousEpisodeListe
         Me.Controls.Add(Me.RadPanel2)
         Me.Controls.Add(Me.RadPanel1)
         Me.MinimizeBox = False
-        Me.Name = "FrmSousEpisode"
+        Me.Name = "FrmSousEpisodeListe"
         '
         '
         '
