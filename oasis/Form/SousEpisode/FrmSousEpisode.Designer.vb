@@ -22,34 +22,49 @@ Partial Class FrmSousEpisode
     'Do not modify it using the code editor.
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
+        Dim GridViewTextBoxColumn13 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
+        Dim GridViewTextBoxColumn14 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
+        Dim GridViewTextBoxColumn15 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
+        Dim GridViewTextBoxColumn16 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
+        Dim GridViewTextBoxColumn17 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
+        Dim GridViewCommandColumn3 As Telerik.WinControls.UI.GridViewCommandColumn = New Telerik.WinControls.UI.GridViewCommandColumn()
+        Dim GridViewTextBoxColumn18 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
+        Dim TableViewDefinition3 As Telerik.WinControls.UI.TableViewDefinition = New Telerik.WinControls.UI.TableViewDefinition()
         Me.RadPanel1 = New Telerik.WinControls.UI.RadPanel()
         Me.BtnValidate = New Telerik.WinControls.UI.RadButton()
         Me.BtnDetail = New Telerik.WinControls.UI.RadButton()
         Me.BtnCreate = New Telerik.WinControls.UI.RadButton()
         Me.BtnCancel = New Telerik.WinControls.UI.RadButton()
         Me.RadPanel2 = New Telerik.WinControls.UI.RadPanel()
-        Me.TxtDelai = New Telerik.WinControls.UI.RadMaskedEditBox()
-        Me.ChkBReponseAttendue = New Telerik.WinControls.UI.RadCheckBox()
-        Me.LblDelai = New System.Windows.Forms.Label()
-        Me.Label9 = New System.Windows.Forms.Label()
-        Me.Label10 = New System.Windows.Forms.Label()
-        Me.LblFichier = New Telerik.WinControls.UI.RadLabel()
-        Me.Label7 = New System.Windows.Forms.Label()
-        Me.DropDownSousType = New Telerik.WinControls.UI.RadDropDownList()
-        Me.Label6 = New System.Windows.Forms.Label()
-        Me.DropDownType = New Telerik.WinControls.UI.RadDropDownList()
-        Me.RadDropDownList1 = New Telerik.WinControls.UI.RadDropDownList()
-        Me.Label5 = New System.Windows.Forms.Label()
-        Me.Label4 = New System.Windows.Forms.Label()
+        Me.RadSplitContainer1 = New Telerik.WinControls.UI.RadSplitContainer()
+        Me.SplitPanel1 = New Telerik.WinControls.UI.SplitPanel()
+        Me.Label2 = New System.Windows.Forms.Label()
         Me.LblDateValidation = New Telerik.WinControls.UI.RadLabel()
         Me.Label3 = New System.Windows.Forms.Label()
         Me.LblDateModif = New Telerik.WinControls.UI.RadLabel()
         Me.Label1 = New System.Windows.Forms.Label()
         Me.lblDateCreation = New Telerik.WinControls.UI.RadLabel()
-        Me.Label2 = New System.Windows.Forms.Label()
-        Me.Label16 = New System.Windows.Forms.Label()
-        Me.TxtRDVCommentaire = New System.Windows.Forms.TextBox()
         Me.Label12 = New System.Windows.Forms.Label()
+        Me.SplitPanel2 = New Telerik.WinControls.UI.SplitPanel()
+        Me.LblFichier = New Telerik.WinControls.UI.RadLabel()
+        Me.Label7 = New System.Windows.Forms.Label()
+        Me.DropDownSousType = New Telerik.WinControls.UI.RadDropDownList()
+        Me.Label6 = New System.Windows.Forms.Label()
+        Me.DropDownType = New Telerik.WinControls.UI.RadDropDownList()
+        Me.Label5 = New System.Windows.Forms.Label()
+        Me.Label16 = New System.Windows.Forms.Label()
+        Me.RadPanel3 = New Telerik.WinControls.UI.RadPanel()
+        Me.LblReponses = New System.Windows.Forms.Label()
+        Me.RadPanel4 = New Telerik.WinControls.UI.RadPanel()
+        Me.TxtDelai = New Telerik.WinControls.UI.RadMaskedEditBox()
+        Me.Label9 = New System.Windows.Forms.Label()
+        Me.ChkBReponseAttendue = New Telerik.WinControls.UI.RadCheckBox()
+        Me.LblDelai = New System.Windows.Forms.Label()
+        Me.RadPanel5 = New Telerik.WinControls.UI.RadPanel()
+        Me.RadPanel6 = New Telerik.WinControls.UI.RadPanel()
+        Me.LblCommentaire = New System.Windows.Forms.Label()
+        Me.TxtRDVCommentaire = New System.Windows.Forms.TextBox()
+        Me.RadTacheToTreatGrid = New Telerik.WinControls.UI.RadGridView()
         CType(Me.RadPanel1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.RadPanel1.SuspendLayout()
         CType(Me.BtnValidate, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -58,15 +73,30 @@ Partial Class FrmSousEpisode
         CType(Me.BtnCancel, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.RadPanel2, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.RadPanel2.SuspendLayout()
-        CType(Me.TxtDelai, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.ChkBReponseAttendue, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.LblFichier, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.DropDownSousType, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.DropDownType, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.RadDropDownList1, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.RadSplitContainer1, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.RadSplitContainer1.SuspendLayout()
+        CType(Me.SplitPanel1, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.SplitPanel1.SuspendLayout()
         CType(Me.LblDateValidation, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.LblDateModif, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.lblDateCreation, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.SplitPanel2, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.SplitPanel2.SuspendLayout()
+        CType(Me.LblFichier, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.DropDownSousType, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.DropDownType, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.RadPanel3, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.RadPanel3.SuspendLayout()
+        CType(Me.RadPanel4, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.RadPanel4.SuspendLayout()
+        CType(Me.TxtDelai, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.ChkBReponseAttendue, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.RadPanel5, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.RadPanel5.SuspendLayout()
+        CType(Me.RadPanel6, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.RadPanel6.SuspendLayout()
+        CType(Me.RadTacheToTreatGrid, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.RadTacheToTreatGrid.MasterTemplate, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
@@ -77,9 +107,9 @@ Partial Class FrmSousEpisode
         Me.RadPanel1.Controls.Add(Me.BtnCreate)
         Me.RadPanel1.Controls.Add(Me.BtnCancel)
         Me.RadPanel1.Dock = System.Windows.Forms.DockStyle.Bottom
-        Me.RadPanel1.Location = New System.Drawing.Point(0, 460)
+        Me.RadPanel1.Location = New System.Drawing.Point(0, 456)
         Me.RadPanel1.Name = "RadPanel1"
-        Me.RadPanel1.Size = New System.Drawing.Size(488, 37)
+        Me.RadPanel1.Size = New System.Drawing.Size(1117, 37)
         Me.RadPanel1.TabIndex = 1
         '
         'BtnValidate
@@ -122,244 +152,382 @@ Partial Class FrmSousEpisode
         'RadPanel2
         '
         Me.RadPanel2.BackColor = System.Drawing.SystemColors.GradientInactiveCaption
-        Me.RadPanel2.Controls.Add(Me.TxtDelai)
-        Me.RadPanel2.Controls.Add(Me.ChkBReponseAttendue)
-        Me.RadPanel2.Controls.Add(Me.LblDelai)
-        Me.RadPanel2.Controls.Add(Me.Label9)
-        Me.RadPanel2.Controls.Add(Me.Label10)
-        Me.RadPanel2.Controls.Add(Me.LblFichier)
-        Me.RadPanel2.Controls.Add(Me.Label7)
-        Me.RadPanel2.Controls.Add(Me.DropDownSousType)
-        Me.RadPanel2.Controls.Add(Me.Label6)
-        Me.RadPanel2.Controls.Add(Me.DropDownType)
-        Me.RadPanel2.Controls.Add(Me.RadDropDownList1)
-        Me.RadPanel2.Controls.Add(Me.Label5)
-        Me.RadPanel2.Controls.Add(Me.Label4)
-        Me.RadPanel2.Controls.Add(Me.LblDateValidation)
-        Me.RadPanel2.Controls.Add(Me.Label3)
-        Me.RadPanel2.Controls.Add(Me.LblDateModif)
-        Me.RadPanel2.Controls.Add(Me.Label1)
-        Me.RadPanel2.Controls.Add(Me.lblDateCreation)
-        Me.RadPanel2.Controls.Add(Me.Label2)
-        Me.RadPanel2.Controls.Add(Me.Label16)
-        Me.RadPanel2.Controls.Add(Me.TxtRDVCommentaire)
-        Me.RadPanel2.Controls.Add(Me.Label12)
+        Me.RadPanel2.Controls.Add(Me.RadSplitContainer1)
         Me.RadPanel2.Dock = System.Windows.Forms.DockStyle.Top
         Me.RadPanel2.Location = New System.Drawing.Point(0, 0)
         Me.RadPanel2.Name = "RadPanel2"
-        Me.RadPanel2.Size = New System.Drawing.Size(488, 449)
+        Me.RadPanel2.Size = New System.Drawing.Size(1117, 129)
         Me.RadPanel2.TabIndex = 16
         '
-        'TxtDelai
+        'RadSplitContainer1
         '
-        Me.TxtDelai.Location = New System.Drawing.Point(310, 235)
-        Me.TxtDelai.Mask = "###"
-        Me.TxtDelai.MaskType = Telerik.WinControls.UI.MaskType.Numeric
-        Me.TxtDelai.Name = "TxtDelai"
-        Me.TxtDelai.Size = New System.Drawing.Size(42, 20)
-        Me.TxtDelai.TabIndex = 48
-        Me.TxtDelai.TabStop = False
-        Me.TxtDelai.Visible = False
+        Me.RadSplitContainer1.Controls.Add(Me.SplitPanel1)
+        Me.RadSplitContainer1.Controls.Add(Me.SplitPanel2)
+        Me.RadSplitContainer1.Dock = System.Windows.Forms.DockStyle.Top
+        Me.RadSplitContainer1.Location = New System.Drawing.Point(0, 0)
+        Me.RadSplitContainer1.Name = "RadSplitContainer1"
         '
-        'ChkBReponseAttendue
         '
-        Me.ChkBReponseAttendue.Location = New System.Drawing.Point(152, 238)
-        Me.ChkBReponseAttendue.Name = "ChkBReponseAttendue"
-        Me.ChkBReponseAttendue.Size = New System.Drawing.Size(15, 15)
-        Me.ChkBReponseAttendue.TabIndex = 47
         '
-        'LblDelai
+        Me.RadSplitContainer1.RootElement.MinSize = New System.Drawing.Size(25, 25)
+        Me.RadSplitContainer1.Size = New System.Drawing.Size(1117, 120)
+        Me.RadSplitContainer1.TabIndex = 50
+        Me.RadSplitContainer1.TabStop = False
         '
-        Me.LblDelai.AutoSize = True
-        Me.LblDelai.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.LblDelai.Location = New System.Drawing.Point(180, 239)
-        Me.LblDelai.Name = "LblDelai"
-        Me.LblDelai.Size = New System.Drawing.Size(122, 13)
-        Me.LblDelai.TabIndex = 45
-        Me.LblDelai.Text = "Délai maxi (en jours)"
-        Me.LblDelai.Visible = False
+        'SplitPanel1
         '
-        'Label9
+        Me.SplitPanel1.Controls.Add(Me.Label2)
+        Me.SplitPanel1.Controls.Add(Me.LblDateValidation)
+        Me.SplitPanel1.Controls.Add(Me.Label3)
+        Me.SplitPanel1.Controls.Add(Me.LblDateModif)
+        Me.SplitPanel1.Controls.Add(Me.Label1)
+        Me.SplitPanel1.Controls.Add(Me.lblDateCreation)
+        Me.SplitPanel1.Controls.Add(Me.Label12)
+        Me.SplitPanel1.Location = New System.Drawing.Point(0, 0)
+        Me.SplitPanel1.Name = "SplitPanel1"
         '
-        Me.Label9.AutoSize = True
-        Me.Label9.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label9.Location = New System.Drawing.Point(12, 239)
-        Me.Label9.Name = "Label9"
-        Me.Label9.Size = New System.Drawing.Size(111, 13)
-        Me.Label9.TabIndex = 43
-        Me.Label9.Text = "Réponse attendue"
         '
-        'Label10
         '
-        Me.Label10.BackColor = System.Drawing.SystemColors.GradientActiveCaption
-        Me.Label10.Location = New System.Drawing.Point(6, 214)
-        Me.Label10.Name = "Label10"
-        Me.Label10.Size = New System.Drawing.Size(474, 13)
-        Me.Label10.TabIndex = 42
-        Me.Label10.Text = "Réponses / Documents reçus"
-        Me.Label10.TextAlign = System.Drawing.ContentAlignment.TopCenter
+        Me.SplitPanel1.RootElement.MinSize = New System.Drawing.Size(25, 25)
+        Me.SplitPanel1.Size = New System.Drawing.Size(638, 120)
+        Me.SplitPanel1.SizeInfo.AutoSizeScale = New System.Drawing.SizeF(0.07286429!, 0!)
+        Me.SplitPanel1.SizeInfo.SplitterCorrection = New System.Drawing.Size(72, 0)
+        Me.SplitPanel1.TabIndex = 0
+        Me.SplitPanel1.TabStop = False
+        Me.SplitPanel1.Text = "SplitPanel1"
         '
-        'LblFichier
+        'Label2
         '
-        Me.LblFichier.Location = New System.Drawing.Point(152, 178)
-        Me.LblFichier.Name = "LblFichier"
-        Me.LblFichier.Size = New System.Drawing.Size(53, 18)
-        Me.LblFichier.TabIndex = 41
-        Me.LblFichier.Text = "LblFichier"
-        '
-        'Label7
-        '
-        Me.Label7.AutoSize = True
-        Me.Label7.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label7.Location = New System.Drawing.Point(12, 185)
-        Me.Label7.Name = "Label7"
-        Me.Label7.Size = New System.Drawing.Size(45, 13)
-        Me.Label7.TabIndex = 40
-        Me.Label7.Text = "Fichier"
-        '
-        'DropDownSousType
-        '
-        Me.DropDownSousType.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend
-        Me.DropDownSousType.Location = New System.Drawing.Point(152, 152)
-        Me.DropDownSousType.Name = "DropDownSousType"
-        Me.DropDownSousType.Size = New System.Drawing.Size(328, 20)
-        Me.DropDownSousType.TabIndex = 39
-        '
-        'Label6
-        '
-        Me.Label6.AutoSize = True
-        Me.Label6.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label6.Location = New System.Drawing.Point(12, 159)
-        Me.Label6.Name = "Label6"
-        Me.Label6.Size = New System.Drawing.Size(67, 13)
-        Me.Label6.TabIndex = 38
-        Me.Label6.Text = "Sous-Type"
-        '
-        'DropDownType
-        '
-        Me.DropDownType.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend
-        Me.DropDownType.Location = New System.Drawing.Point(152, 126)
-        Me.DropDownType.Name = "DropDownType"
-        Me.DropDownType.Size = New System.Drawing.Size(328, 20)
-        Me.DropDownType.TabIndex = 37
-        '
-        'RadDropDownList1
-        '
-        Me.RadDropDownList1.Location = New System.Drawing.Point(545, 197)
-        Me.RadDropDownList1.Name = "RadDropDownList1"
-        Me.RadDropDownList1.Size = New System.Drawing.Size(8, 20)
-        Me.RadDropDownList1.TabIndex = 36
-        Me.RadDropDownList1.Text = "RadDropDownList1"
-        '
-        'Label5
-        '
-        Me.Label5.AutoSize = True
-        Me.Label5.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label5.Location = New System.Drawing.Point(12, 133)
-        Me.Label5.Name = "Label5"
-        Me.Label5.Size = New System.Drawing.Size(35, 13)
-        Me.Label5.TabIndex = 35
-        Me.Label5.Text = "Type"
-        '
-        'Label4
-        '
-        Me.Label4.BackColor = System.Drawing.SystemColors.GradientActiveCaption
-        Me.Label4.Location = New System.Drawing.Point(6, 347)
-        Me.Label4.Name = "Label4"
-        Me.Label4.Size = New System.Drawing.Size(474, 13)
-        Me.Label4.TabIndex = 34
-        Me.Label4.Text = "Commentaire"
-        Me.Label4.TextAlign = System.Drawing.ContentAlignment.TopCenter
+        Me.Label2.BackColor = System.Drawing.SystemColors.GradientActiveCaption
+        Me.Label2.Dock = System.Windows.Forms.DockStyle.Top
+        Me.Label2.Location = New System.Drawing.Point(0, 0)
+        Me.Label2.Name = "Label2"
+        Me.Label2.Size = New System.Drawing.Size(638, 15)
+        Me.Label2.TabIndex = 35
+        Me.Label2.Text = "Horodatages"
+        Me.Label2.TextAlign = System.Drawing.ContentAlignment.TopCenter
         '
         'LblDateValidation
         '
-        Me.LblDateValidation.Location = New System.Drawing.Point(154, 76)
+        Me.LblDateValidation.Location = New System.Drawing.Point(158, 76)
         Me.LblDateValidation.Name = "LblDateValidation"
         Me.LblDateValidation.Size = New System.Drawing.Size(95, 18)
-        Me.LblDateValidation.TabIndex = 33
+        Me.LblDateValidation.TabIndex = 40
         Me.LblDateValidation.Text = "LblDateValidation"
         '
         'Label3
         '
         Me.Label3.AutoSize = True
         Me.Label3.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label3.Location = New System.Drawing.Point(13, 79)
+        Me.Label3.Location = New System.Drawing.Point(12, 76)
         Me.Label3.Name = "Label3"
         Me.Label3.Size = New System.Drawing.Size(63, 13)
-        Me.Label3.TabIndex = 32
+        Me.Label3.TabIndex = 39
         Me.Label3.Text = "Validation"
         '
         'LblDateModif
         '
-        Me.LblDateModif.Location = New System.Drawing.Point(154, 52)
+        Me.LblDateModif.Location = New System.Drawing.Point(159, 52)
         Me.LblDateModif.Name = "LblDateModif"
         Me.LblDateModif.Size = New System.Drawing.Size(74, 18)
-        Me.LblDateModif.TabIndex = 31
+        Me.LblDateModif.TabIndex = 38
         Me.LblDateModif.Text = "LblDateModif"
         '
         'Label1
         '
         Me.Label1.AutoSize = True
         Me.Label1.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label1.Location = New System.Drawing.Point(14, 55)
+        Me.Label1.Location = New System.Drawing.Point(12, 53)
         Me.Label1.Name = "Label1"
         Me.Label1.Size = New System.Drawing.Size(128, 13)
-        Me.Label1.TabIndex = 30
+        Me.Label1.TabIndex = 37
         Me.Label1.Text = "Dernière Modification"
         '
         'lblDateCreation
         '
-        Me.lblDateCreation.Location = New System.Drawing.Point(154, 29)
+        Me.lblDateCreation.Location = New System.Drawing.Point(158, 29)
         Me.lblDateCreation.Name = "lblDateCreation"
         Me.lblDateCreation.Size = New System.Drawing.Size(87, 18)
-        Me.lblDateCreation.TabIndex = 29
+        Me.lblDateCreation.TabIndex = 36
         Me.lblDateCreation.Text = "LblDateCreation"
-        '
-        'Label2
-        '
-        Me.Label2.BackColor = System.Drawing.SystemColors.GradientActiveCaption
-        Me.Label2.Location = New System.Drawing.Point(5, 9)
-        Me.Label2.Name = "Label2"
-        Me.Label2.Size = New System.Drawing.Size(474, 13)
-        Me.Label2.TabIndex = 28
-        Me.Label2.Text = "Horodatages"
-        Me.Label2.TextAlign = System.Drawing.ContentAlignment.TopCenter
-        '
-        'Label16
-        '
-        Me.Label16.BackColor = System.Drawing.SystemColors.GradientActiveCaption
-        Me.Label16.Location = New System.Drawing.Point(6, 106)
-        Me.Label16.Name = "Label16"
-        Me.Label16.Size = New System.Drawing.Size(474, 13)
-        Me.Label16.TabIndex = 27
-        Me.Label16.Text = "Typologie"
-        Me.Label16.TextAlign = System.Drawing.ContentAlignment.TopCenter
-        '
-        'TxtRDVCommentaire
-        '
-        Me.TxtRDVCommentaire.Location = New System.Drawing.Point(6, 363)
-        Me.TxtRDVCommentaire.MaxLength = 200
-        Me.TxtRDVCommentaire.Multiline = True
-        Me.TxtRDVCommentaire.Name = "TxtRDVCommentaire"
-        Me.TxtRDVCommentaire.Size = New System.Drawing.Size(474, 68)
-        Me.TxtRDVCommentaire.TabIndex = 26
         '
         'Label12
         '
         Me.Label12.AutoSize = True
         Me.Label12.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label12.Location = New System.Drawing.Point(14, 32)
+        Me.Label12.Location = New System.Drawing.Point(12, 30)
         Me.Label12.Name = "Label12"
         Me.Label12.Size = New System.Drawing.Size(54, 13)
-        Me.Label12.TabIndex = 16
+        Me.Label12.TabIndex = 34
         Me.Label12.Text = "Création"
+        '
+        'SplitPanel2
+        '
+        Me.SplitPanel2.Controls.Add(Me.LblFichier)
+        Me.SplitPanel2.Controls.Add(Me.Label7)
+        Me.SplitPanel2.Controls.Add(Me.DropDownSousType)
+        Me.SplitPanel2.Controls.Add(Me.Label6)
+        Me.SplitPanel2.Controls.Add(Me.DropDownType)
+        Me.SplitPanel2.Controls.Add(Me.Label5)
+        Me.SplitPanel2.Controls.Add(Me.Label16)
+        Me.SplitPanel2.Location = New System.Drawing.Point(642, 0)
+        Me.SplitPanel2.Name = "SplitPanel2"
+        '
+        '
+        '
+        Me.SplitPanel2.RootElement.MinSize = New System.Drawing.Size(25, 25)
+        Me.SplitPanel2.Size = New System.Drawing.Size(475, 120)
+        Me.SplitPanel2.SizeInfo.AutoSizeScale = New System.Drawing.SizeF(-0.07286432!, 0!)
+        Me.SplitPanel2.SizeInfo.SplitterCorrection = New System.Drawing.Size(-72, 0)
+        Me.SplitPanel2.TabIndex = 1
+        Me.SplitPanel2.TabStop = False
+        Me.SplitPanel2.Text = "SplitPanel2"
+        '
+        'LblFichier
+        '
+        Me.LblFichier.Location = New System.Drawing.Point(89, 85)
+        Me.LblFichier.Name = "LblFichier"
+        Me.LblFichier.Size = New System.Drawing.Size(53, 18)
+        Me.LblFichier.TabIndex = 48
+        Me.LblFichier.Text = "LblFichier"
+        '
+        'Label7
+        '
+        Me.Label7.AutoSize = True
+        Me.Label7.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label7.Location = New System.Drawing.Point(12, 88)
+        Me.Label7.Name = "Label7"
+        Me.Label7.Size = New System.Drawing.Size(45, 13)
+        Me.Label7.TabIndex = 47
+        Me.Label7.Text = "Fichier"
+        '
+        'DropDownSousType
+        '
+        Me.DropDownSousType.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend
+        Me.DropDownSousType.Location = New System.Drawing.Point(89, 58)
+        Me.DropDownSousType.Name = "DropDownSousType"
+        Me.DropDownSousType.Size = New System.Drawing.Size(328, 20)
+        Me.DropDownSousType.TabIndex = 46
+        '
+        'Label6
+        '
+        Me.Label6.AutoSize = True
+        Me.Label6.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label6.Location = New System.Drawing.Point(12, 62)
+        Me.Label6.Name = "Label6"
+        Me.Label6.Size = New System.Drawing.Size(67, 13)
+        Me.Label6.TabIndex = 45
+        Me.Label6.Text = "Sous-Type"
+        '
+        'DropDownType
+        '
+        Me.DropDownType.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend
+        Me.DropDownType.Location = New System.Drawing.Point(88, 29)
+        Me.DropDownType.Name = "DropDownType"
+        Me.DropDownType.Size = New System.Drawing.Size(328, 20)
+        Me.DropDownType.TabIndex = 44
+        '
+        'Label5
+        '
+        Me.Label5.AutoSize = True
+        Me.Label5.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label5.Location = New System.Drawing.Point(12, 36)
+        Me.Label5.Name = "Label5"
+        Me.Label5.Size = New System.Drawing.Size(35, 13)
+        Me.Label5.TabIndex = 43
+        Me.Label5.Text = "Type"
+        '
+        'Label16
+        '
+        Me.Label16.BackColor = System.Drawing.SystemColors.GradientActiveCaption
+        Me.Label16.Dock = System.Windows.Forms.DockStyle.Top
+        Me.Label16.Location = New System.Drawing.Point(0, 0)
+        Me.Label16.Name = "Label16"
+        Me.Label16.Size = New System.Drawing.Size(475, 13)
+        Me.Label16.TabIndex = 42
+        Me.Label16.Text = "Typologie"
+        Me.Label16.TextAlign = System.Drawing.ContentAlignment.TopCenter
+        '
+        'RadPanel3
+        '
+        Me.RadPanel3.BackColor = System.Drawing.SystemColors.GradientInactiveCaption
+        Me.RadPanel3.Controls.Add(Me.RadPanel6)
+        Me.RadPanel3.Controls.Add(Me.RadPanel5)
+        Me.RadPanel3.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.RadPanel3.Location = New System.Drawing.Point(0, 129)
+        Me.RadPanel3.Name = "RadPanel3"
+        Me.RadPanel3.Size = New System.Drawing.Size(1117, 327)
+        Me.RadPanel3.TabIndex = 17
+        '
+        'LblReponses
+        '
+        Me.LblReponses.BackColor = System.Drawing.SystemColors.GradientActiveCaption
+        Me.LblReponses.Dock = System.Windows.Forms.DockStyle.Top
+        Me.LblReponses.Location = New System.Drawing.Point(0, 0)
+        Me.LblReponses.Name = "LblReponses"
+        Me.LblReponses.Size = New System.Drawing.Size(1117, 15)
+        Me.LblReponses.TabIndex = 52
+        Me.LblReponses.Text = "Réponses / Documents reçus"
+        Me.LblReponses.TextAlign = System.Drawing.ContentAlignment.TopCenter
+        '
+        'RadPanel4
+        '
+        Me.RadPanel4.Controls.Add(Me.RadTacheToTreatGrid)
+        Me.RadPanel4.Dock = System.Windows.Forms.DockStyle.Bottom
+        Me.RadPanel4.Location = New System.Drawing.Point(0, 52)
+        Me.RadPanel4.Name = "RadPanel4"
+        Me.RadPanel4.Size = New System.Drawing.Size(1117, 108)
+        Me.RadPanel4.TabIndex = 18
+        '
+        'TxtDelai
+        '
+        Me.TxtDelai.Location = New System.Drawing.Point(662, 23)
+        Me.TxtDelai.Mask = "###"
+        Me.TxtDelai.MaskType = Telerik.WinControls.UI.MaskType.Standard
+        Me.TxtDelai.Name = "TxtDelai"
+        Me.TxtDelai.PromptChar = Global.Microsoft.VisualBasic.ChrW(32)
+        Me.TxtDelai.Size = New System.Drawing.Size(24, 20)
+        Me.TxtDelai.TabIndex = 60
+        Me.TxtDelai.TabStop = False
+        Me.TxtDelai.Text = "   "
+        Me.TxtDelai.Visible = False
+        '
+        'Label9
+        '
+        Me.Label9.AutoSize = True
+        Me.Label9.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label9.Location = New System.Drawing.Point(358, 27)
+        Me.Label9.Name = "Label9"
+        Me.Label9.Size = New System.Drawing.Size(111, 13)
+        Me.Label9.TabIndex = 57
+        Me.Label9.Text = "Réponse attendue"
+        '
+        'ChkBReponseAttendue
+        '
+        Me.ChkBReponseAttendue.Location = New System.Drawing.Point(486, 25)
+        Me.ChkBReponseAttendue.Name = "ChkBReponseAttendue"
+        Me.ChkBReponseAttendue.Size = New System.Drawing.Size(15, 15)
+        Me.ChkBReponseAttendue.TabIndex = 59
+        '
+        'LblDelai
+        '
+        Me.LblDelai.AutoSize = True
+        Me.LblDelai.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.LblDelai.Location = New System.Drawing.Point(534, 27)
+        Me.LblDelai.Name = "LblDelai"
+        Me.LblDelai.Size = New System.Drawing.Size(122, 13)
+        Me.LblDelai.TabIndex = 58
+        Me.LblDelai.Text = "Délai maxi (en jours)"
+        Me.LblDelai.Visible = False
+        '
+        'RadPanel5
+        '
+        Me.RadPanel5.Controls.Add(Me.Label9)
+        Me.RadPanel5.Controls.Add(Me.LblReponses)
+        Me.RadPanel5.Controls.Add(Me.LblDelai)
+        Me.RadPanel5.Controls.Add(Me.ChkBReponseAttendue)
+        Me.RadPanel5.Controls.Add(Me.TxtDelai)
+        Me.RadPanel5.Controls.Add(Me.RadPanel4)
+        Me.RadPanel5.Dock = System.Windows.Forms.DockStyle.Bottom
+        Me.RadPanel5.Location = New System.Drawing.Point(0, 167)
+        Me.RadPanel5.Name = "RadPanel5"
+        Me.RadPanel5.Size = New System.Drawing.Size(1117, 160)
+        Me.RadPanel5.TabIndex = 18
+        '
+        'RadPanel6
+        '
+        Me.RadPanel6.Controls.Add(Me.TxtRDVCommentaire)
+        Me.RadPanel6.Controls.Add(Me.LblCommentaire)
+        Me.RadPanel6.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.RadPanel6.Location = New System.Drawing.Point(0, 0)
+        Me.RadPanel6.Name = "RadPanel6"
+        Me.RadPanel6.Size = New System.Drawing.Size(1117, 167)
+        Me.RadPanel6.TabIndex = 58
+        '
+        'LblCommentaire
+        '
+        Me.LblCommentaire.BackColor = System.Drawing.SystemColors.GradientActiveCaption
+        Me.LblCommentaire.Dock = System.Windows.Forms.DockStyle.Top
+        Me.LblCommentaire.Location = New System.Drawing.Point(0, 0)
+        Me.LblCommentaire.Name = "LblCommentaire"
+        Me.LblCommentaire.Size = New System.Drawing.Size(1117, 16)
+        Me.LblCommentaire.TabIndex = 53
+        Me.LblCommentaire.Text = "Commentaire"
+        Me.LblCommentaire.TextAlign = System.Drawing.ContentAlignment.TopCenter
+        '
+        'TxtRDVCommentaire
+        '
+        Me.TxtRDVCommentaire.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.TxtRDVCommentaire.Location = New System.Drawing.Point(0, 16)
+        Me.TxtRDVCommentaire.MaxLength = 200
+        Me.TxtRDVCommentaire.Multiline = True
+        Me.TxtRDVCommentaire.Name = "TxtRDVCommentaire"
+        Me.TxtRDVCommentaire.ScrollBars = System.Windows.Forms.ScrollBars.Vertical
+        Me.TxtRDVCommentaire.Size = New System.Drawing.Size(1117, 151)
+        Me.TxtRDVCommentaire.TabIndex = 52
+        '
+        'RadTacheToTreatGrid
+        '
+        Me.RadTacheToTreatGrid.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.RadTacheToTreatGrid.EnableCustomDrawing = True
+        Me.RadTacheToTreatGrid.Location = New System.Drawing.Point(0, 0)
+        '
+        '
+        '
+        Me.RadTacheToTreatGrid.MasterTemplate.AllowAddNewRow = False
+        Me.RadTacheToTreatGrid.MasterTemplate.AllowCellContextMenu = False
+        Me.RadTacheToTreatGrid.MasterTemplate.AllowColumnChooser = False
+        Me.RadTacheToTreatGrid.MasterTemplate.AllowDragToGroup = False
+        Me.RadTacheToTreatGrid.MasterTemplate.AllowEditRow = False
+        Me.RadTacheToTreatGrid.MasterTemplate.AutoSizeColumnsMode = Telerik.WinControls.UI.GridViewAutoSizeColumnsMode.Fill
+        GridViewTextBoxColumn13.DataType = GetType(Long)
+        GridViewTextBoxColumn13.FieldName = "id"
+        GridViewTextBoxColumn13.HeaderText = "Id"
+        GridViewTextBoxColumn13.IsVisible = False
+        GridViewTextBoxColumn13.Name = "id"
+        GridViewTextBoxColumn13.TextAlignment = System.Drawing.ContentAlignment.MiddleRight
+        GridViewTextBoxColumn13.Width = 43
+        GridViewTextBoxColumn14.HeaderText = "Date"
+        GridViewTextBoxColumn14.MaxWidth = 110
+        GridViewTextBoxColumn14.MinWidth = 50
+        GridViewTextBoxColumn14.Name = "HorodateCreation"
+        GridViewTextBoxColumn14.RowSpan = 110
+        GridViewTextBoxColumn14.TextAlignment = System.Drawing.ContentAlignment.MiddleCenter
+        GridViewTextBoxColumn14.Width = 90
+        GridViewTextBoxColumn15.HeaderText = "Nom du fichier"
+        GridViewTextBoxColumn15.Name = "NomFichier"
+        GridViewTextBoxColumn15.Width = 320
+        GridViewTextBoxColumn16.HeaderText = "Commentaire"
+        GridViewTextBoxColumn16.Name = "Commentaire"
+        GridViewTextBoxColumn16.Width = 590
+        GridViewTextBoxColumn17.HeaderText = "Utilisateur"
+        GridViewTextBoxColumn17.IsVisible = False
+        GridViewTextBoxColumn17.Name = "CreateUser"
+        GridViewTextBoxColumn17.Width = 38
+        GridViewCommandColumn3.DefaultText = "Voir"
+        GridViewCommandColumn3.HeaderText = "Action"
+        GridViewCommandColumn3.Name = "Telecharger"
+        GridViewCommandColumn3.Width = 99
+        GridViewTextBoxColumn18.HeaderText = "IdSousEpisode"
+        GridViewTextBoxColumn18.IsVisible = False
+        GridViewTextBoxColumn18.Name = "IdSousEpisode"
+        GridViewTextBoxColumn18.Width = 48
+        Me.RadTacheToTreatGrid.MasterTemplate.Columns.AddRange(New Telerik.WinControls.UI.GridViewDataColumn() {GridViewTextBoxColumn13, GridViewTextBoxColumn14, GridViewTextBoxColumn15, GridViewTextBoxColumn16, GridViewTextBoxColumn17, GridViewCommandColumn3, GridViewTextBoxColumn18})
+        Me.RadTacheToTreatGrid.MasterTemplate.EnableGrouping = False
+        Me.RadTacheToTreatGrid.MasterTemplate.EnableSorting = False
+        Me.RadTacheToTreatGrid.MasterTemplate.ViewDefinition = TableViewDefinition3
+        Me.RadTacheToTreatGrid.Name = "RadTacheToTreatGrid"
+        Me.RadTacheToTreatGrid.ReadOnly = True
+        Me.RadTacheToTreatGrid.Size = New System.Drawing.Size(1117, 108)
+        Me.RadTacheToTreatGrid.TabIndex = 58
         '
         'FrmSousEpisode
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.CancelButton = Me.BtnCancel
-        Me.ClientSize = New System.Drawing.Size(488, 497)
+        Me.ClientSize = New System.Drawing.Size(1117, 493)
+        Me.Controls.Add(Me.RadPanel3)
         Me.Controls.Add(Me.RadPanel2)
         Me.Controls.Add(Me.RadPanel1)
         Me.MinimizeBox = False
@@ -380,16 +548,34 @@ Partial Class FrmSousEpisode
         CType(Me.BtnCancel, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.RadPanel2, System.ComponentModel.ISupportInitialize).EndInit()
         Me.RadPanel2.ResumeLayout(False)
-        Me.RadPanel2.PerformLayout()
-        CType(Me.TxtDelai, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.ChkBReponseAttendue, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.LblFichier, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.DropDownSousType, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.DropDownType, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.RadDropDownList1, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.RadSplitContainer1, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.RadSplitContainer1.ResumeLayout(False)
+        CType(Me.SplitPanel1, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.SplitPanel1.ResumeLayout(False)
+        Me.SplitPanel1.PerformLayout()
         CType(Me.LblDateValidation, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.LblDateModif, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.lblDateCreation, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.SplitPanel2, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.SplitPanel2.ResumeLayout(False)
+        Me.SplitPanel2.PerformLayout()
+        CType(Me.LblFichier, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.DropDownSousType, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.DropDownType, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.RadPanel3, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.RadPanel3.ResumeLayout(False)
+        CType(Me.RadPanel4, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.RadPanel4.ResumeLayout(False)
+        CType(Me.TxtDelai, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.ChkBReponseAttendue, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.RadPanel5, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.RadPanel5.ResumeLayout(False)
+        Me.RadPanel5.PerformLayout()
+        CType(Me.RadPanel6, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.RadPanel6.ResumeLayout(False)
+        Me.RadPanel6.PerformLayout()
+        CType(Me.RadTacheToTreatGrid.MasterTemplate, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.RadTacheToTreatGrid, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
 
@@ -401,27 +587,34 @@ Partial Class FrmSousEpisode
     Friend WithEvents BtnCreate As Telerik.WinControls.UI.RadButton
     Friend WithEvents BtnCancel As Telerik.WinControls.UI.RadButton
     Friend WithEvents RadPanel2 As Telerik.WinControls.UI.RadPanel
-    Friend WithEvents lblDateCreation As Telerik.WinControls.UI.RadLabel
+    Friend WithEvents RadSplitContainer1 As Telerik.WinControls.UI.RadSplitContainer
+    Friend WithEvents SplitPanel1 As Telerik.WinControls.UI.SplitPanel
     Friend WithEvents Label2 As Label
-    Friend WithEvents Label16 As Label
-    Friend WithEvents TxtRDVCommentaire As TextBox
-    Friend WithEvents Label12 As Label
-    Friend WithEvents LblDateModif As Telerik.WinControls.UI.RadLabel
-    Friend WithEvents Label1 As Label
     Friend WithEvents LblDateValidation As Telerik.WinControls.UI.RadLabel
     Friend WithEvents Label3 As Label
+    Friend WithEvents LblDateModif As Telerik.WinControls.UI.RadLabel
+    Friend WithEvents Label1 As Label
+    Friend WithEvents lblDateCreation As Telerik.WinControls.UI.RadLabel
+    Friend WithEvents Label12 As Label
+    Friend WithEvents SplitPanel2 As Telerik.WinControls.UI.SplitPanel
     Friend WithEvents LblFichier As Telerik.WinControls.UI.RadLabel
     Friend WithEvents Label7 As Label
     Friend WithEvents DropDownSousType As Telerik.WinControls.UI.RadDropDownList
     Friend WithEvents Label6 As Label
     Friend WithEvents DropDownType As Telerik.WinControls.UI.RadDropDownList
-    Friend WithEvents RadDropDownList1 As Telerik.WinControls.UI.RadDropDownList
     Friend WithEvents Label5 As Label
-    Friend WithEvents Label4 As Label
+    Friend WithEvents Label16 As Label
+    Friend WithEvents RadPanel3 As Telerik.WinControls.UI.RadPanel
+    Friend WithEvents RadPanel6 As Telerik.WinControls.UI.RadPanel
+    Friend WithEvents LblCommentaire As Label
+    Friend WithEvents TxtRDVCommentaire As TextBox
+    Friend WithEvents RadPanel5 As Telerik.WinControls.UI.RadPanel
+    Friend WithEvents RadTacheToTreatGrid As Telerik.WinControls.UI.RadGridView
+    Friend WithEvents RadPanel4 As Telerik.WinControls.UI.RadPanel
+    Friend WithEvents TxtDelai As Telerik.WinControls.UI.RadMaskedEditBox
+    Friend WithEvents Label9 As Label
     Friend WithEvents ChkBReponseAttendue As Telerik.WinControls.UI.RadCheckBox
     Friend WithEvents LblDelai As Label
-    Friend WithEvents Label9 As Label
-    Friend WithEvents Label10 As Label
-    Friend WithEvents TxtDelai As Telerik.WinControls.UI.RadMaskedEditBox
+    Friend WithEvents LblReponses As Label
 End Class
 

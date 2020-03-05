@@ -6,6 +6,11 @@ Public Class FrmSousEpisodeListe
     Dim sousEpisodeDao As SousEpisodeDao = New SousEpisodeDao
     Dim episode As Episode, patient As Patient
 
+    ''' <summary>
+    ''' 
+    ''' </summary>
+    ''' <param name="episode"></param>
+    ''' <param name="patient"></param>
     Sub New(episode As Episode, patient As Patient)
 
         ' Cet appel est requis par le concepteur.
@@ -28,6 +33,9 @@ Public Class FrmSousEpisodeListe
 
     End Sub
 
+    ''' <summary>
+    ''' 
+    ''' </summary>
     Private Sub refreshGrid()
         Dim exId As Long, index As Integer = -1, exPosit = 0
         Me.Cursor = Cursors.WaitCursor
@@ -95,6 +103,11 @@ Public Class FrmSousEpisodeListe
 
     End Sub
 
+    ''' <summary>
+    ''' 
+    ''' </summary>
+    ''' <param name="sender"></param>
+    ''' <param name="e"></param>
     Private Sub RadSousEpisodeGrid_CellFormatting(sender As Object, e As Telerik.WinControls.UI.CellFormattingEventArgs) Handles RadSousEpisodeGrid.CellFormatting
         If TypeOf e.Row Is GridViewDataRowInfo Then
             ' e.CellElement.Padding = New Padding(5, 0, 0, 0)
@@ -141,6 +154,11 @@ Public Class FrmSousEpisodeListe
         End If
     End Sub
 
+    ''' <summary>
+    ''' 
+    ''' </summary>
+    ''' <param name="sender"></param>
+    ''' <param name="e"></param>
     Private Sub RadSousEpisodeGrid_RowSourceNeeded(sender As Object, e As GridViewRowSourceNeededEventArgs) Handles RadSousEpisodeGrid.RowSourceNeeded
         If Me.RadSousEpisodeGrid.Rows.Count > 0 AndAlso Me.RadSousEpisodeGrid.CurrentRow.IsSelected Then
             refreshReponseSubGrid(e)
@@ -148,11 +166,20 @@ Public Class FrmSousEpisodeListe
 
     End Sub
 
+    ''' <summary>
+    ''' 
+    ''' </summary>
+    ''' <param name="sender"></param>
+    ''' <param name="e"></param>
     Sub subGridReponse_CommandCellClick(ByVal sender As Object, ByVal e As EventArgs)
         Dim gce As GridCommandCellElement = (TryCast(sender, GridCommandCellElement))
         MessageBox.Show("Telecharger fichier " & gce.RowInfo.Cells("NomFichier").Value & " : " & gce.RowInfo.Cells("IdSousEpisode").Value & "_" & gce.RowInfo.Cells("Id").Value)
     End Sub
 
+    ''' <summary>
+    ''' 
+    ''' </summary>
+    ''' <param name="e"></param>
     Private Sub refreshReponseSubGrid(ByVal e As GridViewRowSourceNeededEventArgs)
         Me.Cursor = Cursors.WaitCursor
         Dim sousEpisodeReponseDao = New SousEpisodeReponseDao
@@ -190,29 +217,24 @@ Public Class FrmSousEpisodeListe
 
     End Sub
 
+    ''' <summary>
+    ''' 
+    ''' </summary>
+    ''' <param name="sender"></param>
+    ''' <param name="e"></param>
     Private Sub BtnCreate_Click(sender As Object, e As EventArgs) Handles BtnCreate.Click
         Dim sousEpisode = New SousEpisode
-
-        Try
-            Me.Cursor = Cursors.WaitCursor
-            Me.Enabled = False
-            Using frm = New FrmSousEpisode(episode, patient, sousEpisode)
-                frm.ShowDialog()
-                frm.Dispose()
-            End Using
-            refreshGrid()
-        Catch err As Exception
-            MsgBox(err.Message())
-        Finally
-            Me.Enabled = True
-            Me.Cursor = Cursors.Default
-        End Try
+        ficheSousEpisode(sousEpisode, userLog.UtilisateurPrenom + " " + userLog.UtilisateurNom, Nothing, Nothing)
 
     End Sub
 
+    ''' <summary>
+    ''' 
+    ''' </summary>
+    ''' <param name="sender"></param>
+    ''' <param name="e"></param>
     Private Sub RadSousEpisodeGrid_MouseDoubleClick(sender As Object, e As MouseEventArgs) Handles RadSousEpisodeGrid.MouseDoubleClick
-        If Me.RadSousEpisodeGrid.Rows.Count = 0 OrElse Me.RadSousEpisodeGrid.CurrentRow.IsSelected = False Then Return
-        detailSousEpisode()
+        editSousEpisode()
     End Sub
 
     ''' <summary>
@@ -221,18 +243,45 @@ Public Class FrmSousEpisodeListe
     ''' <param name="sender"></param>
     ''' <param name="e"></param>
     Private Sub BtnDetail_Click(sender As Object, e As EventArgs) Handles BtnDetail.Click
-        detailSousEpisode()
+        editSousEpisode()
     End Sub
 
-    Private Sub detailSousEpisode()
-        Dim sousEpisode
-        Dim sousEpisodeDao = New SousEpisodeDao
+    ''' <summary>
+    ''' 
+    ''' </summary>
+    Private Sub editSousEpisode()
+        If Me.RadSousEpisodeGrid.Rows.Count = 0 OrElse Me.RadSousEpisodeGrid.CurrentRow.IsSelected = False Then Return
+
+        Dim sousEpisode As SousEpisode
+        Try
+            Me.Cursor = Cursors.WaitCursor
+            sousEpisode = sousEpisodeDao.getById(Me.RadSousEpisodeGrid.CurrentRow.Cells("IdSousEpisode").Value)
+        Catch err As Exception
+            MsgBox(err.Message())
+            Return
+        Finally
+            Me.Cursor = Cursors.Default
+        End Try
+
+        With Me.RadSousEpisodeGrid.CurrentRow
+            ficheSousEpisode(sousEpisode, .Cells("CreateUser").Value, .Cells("LastUpdateUser").Value, .Cells("ValidateUser").Value)
+        End With
+
+    End Sub
+
+    ''' <summary>
+    ''' 
+    ''' </summary>
+    ''' <param name="sousEpisode"></param>
+    ''' <param name="userCreateNom"></param>
+    ''' <param name="userUpdateNom"></param>
+    ''' <param name="userValidateNom"></param>
+    Private Sub ficheSousEpisode(sousEpisode As SousEpisode, userCreateNom As String, userUpdateNom As String, userValidateNom As String)
 
         Try
             Me.Cursor = Cursors.WaitCursor
             Me.Enabled = False
-            sousEpisode = sousEpisodeDao.getById(Me.RadSousEpisodeGrid.CurrentRow.Cells("IdSousEpisode").Value)
-            Using frm = New FrmSousEpisode(episode, patient, sousEpisode)
+            Using frm = New FrmSousEpisode(episode, patient, sousEpisode, userCreateNom, userUpdateNom, userValidateNom)
                 frm.ShowDialog()
                 frm.Dispose()
             End Using
