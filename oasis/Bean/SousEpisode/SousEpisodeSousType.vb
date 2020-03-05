@@ -52,9 +52,9 @@ Public Class SousEpisodeSousType
     ''' <param name="strProfil"></param>
     ''' <returns></returns>
     Public Shared Function isUserLogAutorise(strProfil As String) As Boolean
-        Dim lst As List(Of EpisodeDao.EnumTypeProfil) = getListProfilsAutoriseList(strProfil)
+        Dim lst As List(Of ProfilDao.EnumProfilType) = getListProfilsAutoriseList(strProfil)
         Try
-            Return lst.Contains([Enum].Parse(GetType(EpisodeDao.EnumTypeProfil), userLog.TypeProfil))
+            Return lst.Contains([Enum].Parse(GetType(ProfilDao.EnumProfilType), userLog.TypeProfil))
         Catch
         End Try
         Return False
@@ -65,13 +65,13 @@ Public Class SousEpisodeSousType
     ''' </summary>
     ''' <param name="profilsString"></param>
     ''' <returns></returns>
-    Private Shared Function getListProfilsAutoriseList(profilsString As String) As List(Of EpisodeDao.EnumTypeProfil)
-        Dim lst As List(Of EpisodeDao.EnumTypeProfil) = New List(Of EpisodeDao.EnumTypeProfil)
+    Private Shared Function getListProfilsAutoriseList(profilsString As String) As List(Of ProfilDao.EnumProfilType)
+        Dim lst As List(Of ProfilDao.EnumProfilType) = New List(Of ProfilDao.EnumProfilType)
         If String.IsNullOrEmpty(profilsString) Then Return lst
         Dim tbl = profilsString.Split(",")
         For Each strP In tbl
             Try
-                Dim enumTypeProfilAutorises As EpisodeDao.EnumTypeProfil = [Enum].Parse(GetType(EpisodeDao.EnumTypeProfil), strP)
+                Dim enumTypeProfilAutorises As ProfilDao.EnumProfilType = [Enum].Parse(GetType(ProfilDao.EnumProfilType), strP)
                 lst.Add(enumTypeProfilAutorises)
             Catch
             End Try

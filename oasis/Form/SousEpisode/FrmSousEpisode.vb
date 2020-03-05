@@ -52,6 +52,24 @@ Public Class FrmSousEpisode
         LblDelai.Visible = If(args.ToggleState = ToggleState.On, True, False)
     End Sub
 
+    Private Sub BtnAjoutReponse_Click(sender As Object, e As EventArgs) Handles BtnAjoutReponse.Click
+        Dim dr As DialogResult = OpenFileDialog1.ShowDialog()
+
+        If dr = System.Windows.Forms.DialogResult.OK Then
+            Dim fileName As String = OpenFileDialog1.FileName
+            Dim comment = RadInputBox.Show("Fichier : " & fileName & vbCrLf & "Saisissez votre commentaire", "Introduction de document reçu", "#CANCEL#")
+
+            If comment = "#CANCEL#" Then
+                Notification.show("Ajout document", "Ajout annulé !")
+                Return
+            End If
+
+
+            MsgBox(fileName)
+            Notification.show("Ajout document", "Ajout terminée avec succès !")
+        End If
+    End Sub
+
     Private Sub initControls()
         ' -- listes de references
         lstSousEpisodeType = sousEpisodeTypeDao.getLstSousEpisodeType()
@@ -82,10 +100,12 @@ Public Class FrmSousEpisode
             Me.TxtRDVCommentaire.Text = .Commentaire
             Me.TxtRDVCommentaire.Enabled = isCreation
         End With
+        ' -- reponses
         ChkBReponseAttendue.Checked = sousEpisode.IsReponse
         TxtDelai.Value = If(sousEpisode.DelaiSinceValidation = Nothing, "", sousEpisode.DelaiSinceValidation)
         ChkBReponseAttendue.Enabled = isCreation
         TxtDelai.Enabled = isCreation
+        BtnAjoutReponse.Visible = Not isCreation
         '-- refresh grid reponse
         refreshGrid()
 

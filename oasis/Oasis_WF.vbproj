@@ -864,6 +864,8 @@
     <Compile Include="Form\General\FmUniteSanitaire.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="UtilsUI\Notification.vb" />
+    <Compile Include="UtilsUI\RadInputBox.vb" />
     <Compile Include="Version old\SChkContexteValide.Designer.vb">
       <DependentUpon>SChkContexteValide.vb</DependentUpon>
     </Compile>

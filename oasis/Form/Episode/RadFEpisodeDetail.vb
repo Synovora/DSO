@@ -1966,10 +1966,7 @@ Public Class RadFEpisodeDetail
         episode.DateModification = Date.Now()
         episode.UserModification = userLog.UtilisateurId
         If episodeDao.ModificationEpisode(episode) = True Then
-            Dim form As New RadFNotification()
-            form.Titre = "Notification épisode patient"
-            form.Message = "=== Episode annulé ==="
-            form.Show()
+            Notification.show("Notification épisode patient", "=== Episode annulé ===")
             Close()
         End If
     End Sub

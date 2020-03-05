@@ -33,7 +33,6 @@ Partial Class FrmSousEpisode
         Me.RadPanel1 = New Telerik.WinControls.UI.RadPanel()
         Me.BtnValidate = New Telerik.WinControls.UI.RadButton()
         Me.BtnDetail = New Telerik.WinControls.UI.RadButton()
-        Me.BtnCreate = New Telerik.WinControls.UI.RadButton()
         Me.BtnCancel = New Telerik.WinControls.UI.RadButton()
         Me.RadPanel2 = New Telerik.WinControls.UI.RadPanel()
         Me.RadSplitContainer1 = New Telerik.WinControls.UI.RadSplitContainer()
@@ -54,22 +53,23 @@ Partial Class FrmSousEpisode
         Me.Label5 = New System.Windows.Forms.Label()
         Me.Label16 = New System.Windows.Forms.Label()
         Me.RadPanel3 = New Telerik.WinControls.UI.RadPanel()
-        Me.LblReponses = New System.Windows.Forms.Label()
-        Me.RadPanel4 = New Telerik.WinControls.UI.RadPanel()
-        Me.TxtDelai = New Telerik.WinControls.UI.RadMaskedEditBox()
-        Me.Label9 = New System.Windows.Forms.Label()
-        Me.ChkBReponseAttendue = New Telerik.WinControls.UI.RadCheckBox()
-        Me.LblDelai = New System.Windows.Forms.Label()
-        Me.RadPanel5 = New Telerik.WinControls.UI.RadPanel()
         Me.RadPanel6 = New Telerik.WinControls.UI.RadPanel()
-        Me.LblCommentaire = New System.Windows.Forms.Label()
         Me.TxtRDVCommentaire = New System.Windows.Forms.TextBox()
+        Me.LblCommentaire = New System.Windows.Forms.Label()
+        Me.RadPanel5 = New Telerik.WinControls.UI.RadPanel()
+        Me.BtnAjoutReponse = New Telerik.WinControls.UI.RadButton()
+        Me.Label9 = New System.Windows.Forms.Label()
+        Me.LblReponses = New System.Windows.Forms.Label()
+        Me.LblDelai = New System.Windows.Forms.Label()
+        Me.ChkBReponseAttendue = New Telerik.WinControls.UI.RadCheckBox()
+        Me.TxtDelai = New Telerik.WinControls.UI.RadMaskedEditBox()
+        Me.RadPanel4 = New Telerik.WinControls.UI.RadPanel()
         Me.RadTacheToTreatGrid = New Telerik.WinControls.UI.RadGridView()
+        Me.OpenFileDialog1 = New System.Windows.Forms.OpenFileDialog()
         CType(Me.RadPanel1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.RadPanel1.SuspendLayout()
         CType(Me.BtnValidate, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.BtnDetail, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.BtnCreate, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.BtnCancel, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.RadPanel2, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.RadPanel2.SuspendLayout()
@@ -87,14 +87,15 @@ Partial Class FrmSousEpisode
         CType(Me.DropDownType, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.RadPanel3, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.RadPanel3.SuspendLayout()
-        CType(Me.RadPanel4, System.ComponentModel.ISupportInitialize).BeginInit()
-        Me.RadPanel4.SuspendLayout()
-        CType(Me.TxtDelai, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.ChkBReponseAttendue, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.RadPanel5, System.ComponentModel.ISupportInitialize).BeginInit()
-        Me.RadPanel5.SuspendLayout()
         CType(Me.RadPanel6, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.RadPanel6.SuspendLayout()
+        CType(Me.RadPanel5, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.RadPanel5.SuspendLayout()
+        CType(Me.BtnAjoutReponse, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.ChkBReponseAttendue, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.TxtDelai, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.RadPanel4, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.RadPanel4.SuspendLayout()
         CType(Me.RadTacheToTreatGrid, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.RadTacheToTreatGrid.MasterTemplate, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -104,10 +105,9 @@ Partial Class FrmSousEpisode
         '
         Me.RadPanel1.Controls.Add(Me.BtnValidate)
         Me.RadPanel1.Controls.Add(Me.BtnDetail)
-        Me.RadPanel1.Controls.Add(Me.BtnCreate)
         Me.RadPanel1.Controls.Add(Me.BtnCancel)
         Me.RadPanel1.Dock = System.Windows.Forms.DockStyle.Bottom
-        Me.RadPanel1.Location = New System.Drawing.Point(0, 456)
+        Me.RadPanel1.Location = New System.Drawing.Point(0, 374)
         Me.RadPanel1.Name = "RadPanel1"
         Me.RadPanel1.Size = New System.Drawing.Size(1117, 37)
         Me.RadPanel1.TabIndex = 1
@@ -132,18 +132,10 @@ Partial Class FrmSousEpisode
         Me.BtnDetail.Text = "Détail"
         Me.BtnDetail.Visible = False
         '
-        'BtnCreate
-        '
-        Me.BtnCreate.Location = New System.Drawing.Point(31, 6)
-        Me.BtnCreate.Name = "BtnCreate"
-        Me.BtnCreate.Size = New System.Drawing.Size(110, 24)
-        Me.BtnCreate.TabIndex = 8
-        Me.BtnCreate.Text = "Nouveau"
-        '
         'BtnCancel
         '
         Me.BtnCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel
-        Me.BtnCancel.Location = New System.Drawing.Point(401, 6)
+        Me.BtnCancel.Location = New System.Drawing.Point(1024, 6)
         Me.BtnCancel.Name = "BtnCancel"
         Me.BtnCancel.Size = New System.Drawing.Size(81, 24)
         Me.BtnCancel.TabIndex = 7
@@ -156,7 +148,7 @@ Partial Class FrmSousEpisode
         Me.RadPanel2.Dock = System.Windows.Forms.DockStyle.Top
         Me.RadPanel2.Location = New System.Drawing.Point(0, 0)
         Me.RadPanel2.Name = "RadPanel2"
-        Me.RadPanel2.Size = New System.Drawing.Size(1117, 129)
+        Me.RadPanel2.Size = New System.Drawing.Size(1117, 124)
         Me.RadPanel2.TabIndex = 16
         '
         'RadSplitContainer1
@@ -285,7 +277,7 @@ Partial Class FrmSousEpisode
         '
         'LblFichier
         '
-        Me.LblFichier.Location = New System.Drawing.Point(89, 85)
+        Me.LblFichier.Location = New System.Drawing.Point(93, 79)
         Me.LblFichier.Name = "LblFichier"
         Me.LblFichier.Size = New System.Drawing.Size(53, 18)
         Me.LblFichier.TabIndex = 48
@@ -295,7 +287,7 @@ Partial Class FrmSousEpisode
         '
         Me.Label7.AutoSize = True
         Me.Label7.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label7.Location = New System.Drawing.Point(12, 88)
+        Me.Label7.Location = New System.Drawing.Point(16, 82)
         Me.Label7.Name = "Label7"
         Me.Label7.Size = New System.Drawing.Size(45, 13)
         Me.Label7.TabIndex = 47
@@ -304,7 +296,7 @@ Partial Class FrmSousEpisode
         'DropDownSousType
         '
         Me.DropDownSousType.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend
-        Me.DropDownSousType.Location = New System.Drawing.Point(89, 58)
+        Me.DropDownSousType.Location = New System.Drawing.Point(93, 52)
         Me.DropDownSousType.Name = "DropDownSousType"
         Me.DropDownSousType.Size = New System.Drawing.Size(328, 20)
         Me.DropDownSousType.TabIndex = 46
@@ -313,7 +305,7 @@ Partial Class FrmSousEpisode
         '
         Me.Label6.AutoSize = True
         Me.Label6.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label6.Location = New System.Drawing.Point(12, 62)
+        Me.Label6.Location = New System.Drawing.Point(16, 56)
         Me.Label6.Name = "Label6"
         Me.Label6.Size = New System.Drawing.Size(67, 13)
         Me.Label6.TabIndex = 45
@@ -322,7 +314,7 @@ Partial Class FrmSousEpisode
         'DropDownType
         '
         Me.DropDownType.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend
-        Me.DropDownType.Location = New System.Drawing.Point(88, 29)
+        Me.DropDownType.Location = New System.Drawing.Point(92, 23)
         Me.DropDownType.Name = "DropDownType"
         Me.DropDownType.Size = New System.Drawing.Size(328, 20)
         Me.DropDownType.TabIndex = 44
@@ -331,7 +323,7 @@ Partial Class FrmSousEpisode
         '
         Me.Label5.AutoSize = True
         Me.Label5.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label5.Location = New System.Drawing.Point(12, 36)
+        Me.Label5.Location = New System.Drawing.Point(16, 28)
         Me.Label5.Name = "Label5"
         Me.Label5.Size = New System.Drawing.Size(35, 13)
         Me.Label5.TabIndex = 43
@@ -354,10 +346,75 @@ Partial Class FrmSousEpisode
         Me.RadPanel3.Controls.Add(Me.RadPanel6)
         Me.RadPanel3.Controls.Add(Me.RadPanel5)
         Me.RadPanel3.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.RadPanel3.Location = New System.Drawing.Point(0, 129)
+        Me.RadPanel3.Location = New System.Drawing.Point(0, 124)
         Me.RadPanel3.Name = "RadPanel3"
-        Me.RadPanel3.Size = New System.Drawing.Size(1117, 327)
+        Me.RadPanel3.Size = New System.Drawing.Size(1117, 250)
         Me.RadPanel3.TabIndex = 17
+        '
+        'RadPanel6
+        '
+        Me.RadPanel6.Controls.Add(Me.TxtRDVCommentaire)
+        Me.RadPanel6.Controls.Add(Me.LblCommentaire)
+        Me.RadPanel6.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.RadPanel6.Location = New System.Drawing.Point(0, 0)
+        Me.RadPanel6.Name = "RadPanel6"
+        Me.RadPanel6.Size = New System.Drawing.Size(1117, 90)
+        Me.RadPanel6.TabIndex = 58
+        '
+        'TxtRDVCommentaire
+        '
+        Me.TxtRDVCommentaire.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.TxtRDVCommentaire.Location = New System.Drawing.Point(0, 16)
+        Me.TxtRDVCommentaire.MaxLength = 200
+        Me.TxtRDVCommentaire.Multiline = True
+        Me.TxtRDVCommentaire.Name = "TxtRDVCommentaire"
+        Me.TxtRDVCommentaire.ScrollBars = System.Windows.Forms.ScrollBars.Vertical
+        Me.TxtRDVCommentaire.Size = New System.Drawing.Size(1117, 74)
+        Me.TxtRDVCommentaire.TabIndex = 52
+        '
+        'LblCommentaire
+        '
+        Me.LblCommentaire.BackColor = System.Drawing.SystemColors.GradientActiveCaption
+        Me.LblCommentaire.Dock = System.Windows.Forms.DockStyle.Top
+        Me.LblCommentaire.Location = New System.Drawing.Point(0, 0)
+        Me.LblCommentaire.Name = "LblCommentaire"
+        Me.LblCommentaire.Size = New System.Drawing.Size(1117, 16)
+        Me.LblCommentaire.TabIndex = 53
+        Me.LblCommentaire.Text = "Commentaire"
+        Me.LblCommentaire.TextAlign = System.Drawing.ContentAlignment.TopCenter
+        '
+        'RadPanel5
+        '
+        Me.RadPanel5.Controls.Add(Me.BtnAjoutReponse)
+        Me.RadPanel5.Controls.Add(Me.Label9)
+        Me.RadPanel5.Controls.Add(Me.LblReponses)
+        Me.RadPanel5.Controls.Add(Me.LblDelai)
+        Me.RadPanel5.Controls.Add(Me.ChkBReponseAttendue)
+        Me.RadPanel5.Controls.Add(Me.TxtDelai)
+        Me.RadPanel5.Controls.Add(Me.RadPanel4)
+        Me.RadPanel5.Dock = System.Windows.Forms.DockStyle.Bottom
+        Me.RadPanel5.Location = New System.Drawing.Point(0, 90)
+        Me.RadPanel5.Name = "RadPanel5"
+        Me.RadPanel5.Size = New System.Drawing.Size(1117, 160)
+        Me.RadPanel5.TabIndex = 18
+        '
+        'BtnAjoutReponse
+        '
+        Me.BtnAjoutReponse.Location = New System.Drawing.Point(750, 21)
+        Me.BtnAjoutReponse.Name = "BtnAjoutReponse"
+        Me.BtnAjoutReponse.Size = New System.Drawing.Size(110, 24)
+        Me.BtnAjoutReponse.TabIndex = 62
+        Me.BtnAjoutReponse.Text = "Ajout Réponse"
+        '
+        'Label9
+        '
+        Me.Label9.AutoSize = True
+        Me.Label9.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label9.Location = New System.Drawing.Point(358, 27)
+        Me.Label9.Name = "Label9"
+        Me.Label9.Size = New System.Drawing.Size(111, 13)
+        Me.Label9.TabIndex = 57
+        Me.Label9.Text = "Réponse attendue"
         '
         'LblReponses
         '
@@ -370,14 +427,23 @@ Partial Class FrmSousEpisode
         Me.LblReponses.Text = "Réponses / Documents reçus"
         Me.LblReponses.TextAlign = System.Drawing.ContentAlignment.TopCenter
         '
-        'RadPanel4
+        'LblDelai
         '
-        Me.RadPanel4.Controls.Add(Me.RadTacheToTreatGrid)
-        Me.RadPanel4.Dock = System.Windows.Forms.DockStyle.Bottom
-        Me.RadPanel4.Location = New System.Drawing.Point(0, 52)
-        Me.RadPanel4.Name = "RadPanel4"
-        Me.RadPanel4.Size = New System.Drawing.Size(1117, 108)
-        Me.RadPanel4.TabIndex = 18
+        Me.LblDelai.AutoSize = True
+        Me.LblDelai.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.LblDelai.Location = New System.Drawing.Point(534, 27)
+        Me.LblDelai.Name = "LblDelai"
+        Me.LblDelai.Size = New System.Drawing.Size(122, 13)
+        Me.LblDelai.TabIndex = 58
+        Me.LblDelai.Text = "Délai maxi (en jours)"
+        Me.LblDelai.Visible = False
+        '
+        'ChkBReponseAttendue
+        '
+        Me.ChkBReponseAttendue.Location = New System.Drawing.Point(486, 25)
+        Me.ChkBReponseAttendue.Name = "ChkBReponseAttendue"
+        Me.ChkBReponseAttendue.Size = New System.Drawing.Size(15, 15)
+        Me.ChkBReponseAttendue.TabIndex = 59
         '
         'TxtDelai
         '
@@ -392,79 +458,14 @@ Partial Class FrmSousEpisode
         Me.TxtDelai.Text = "   "
         Me.TxtDelai.Visible = False
         '
-        'Label9
+        'RadPanel4
         '
-        Me.Label9.AutoSize = True
-        Me.Label9.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label9.Location = New System.Drawing.Point(358, 27)
-        Me.Label9.Name = "Label9"
-        Me.Label9.Size = New System.Drawing.Size(111, 13)
-        Me.Label9.TabIndex = 57
-        Me.Label9.Text = "Réponse attendue"
-        '
-        'ChkBReponseAttendue
-        '
-        Me.ChkBReponseAttendue.Location = New System.Drawing.Point(486, 25)
-        Me.ChkBReponseAttendue.Name = "ChkBReponseAttendue"
-        Me.ChkBReponseAttendue.Size = New System.Drawing.Size(15, 15)
-        Me.ChkBReponseAttendue.TabIndex = 59
-        '
-        'LblDelai
-        '
-        Me.LblDelai.AutoSize = True
-        Me.LblDelai.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.LblDelai.Location = New System.Drawing.Point(534, 27)
-        Me.LblDelai.Name = "LblDelai"
-        Me.LblDelai.Size = New System.Drawing.Size(122, 13)
-        Me.LblDelai.TabIndex = 58
-        Me.LblDelai.Text = "Délai maxi (en jours)"
-        Me.LblDelai.Visible = False
-        '
-        'RadPanel5
-        '
-        Me.RadPanel5.Controls.Add(Me.Label9)
-        Me.RadPanel5.Controls.Add(Me.LblReponses)
-        Me.RadPanel5.Controls.Add(Me.LblDelai)
-        Me.RadPanel5.Controls.Add(Me.ChkBReponseAttendue)
-        Me.RadPanel5.Controls.Add(Me.TxtDelai)
-        Me.RadPanel5.Controls.Add(Me.RadPanel4)
-        Me.RadPanel5.Dock = System.Windows.Forms.DockStyle.Bottom
-        Me.RadPanel5.Location = New System.Drawing.Point(0, 167)
-        Me.RadPanel5.Name = "RadPanel5"
-        Me.RadPanel5.Size = New System.Drawing.Size(1117, 160)
-        Me.RadPanel5.TabIndex = 18
-        '
-        'RadPanel6
-        '
-        Me.RadPanel6.Controls.Add(Me.TxtRDVCommentaire)
-        Me.RadPanel6.Controls.Add(Me.LblCommentaire)
-        Me.RadPanel6.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.RadPanel6.Location = New System.Drawing.Point(0, 0)
-        Me.RadPanel6.Name = "RadPanel6"
-        Me.RadPanel6.Size = New System.Drawing.Size(1117, 167)
-        Me.RadPanel6.TabIndex = 58
-        '
-        'LblCommentaire
-        '
-        Me.LblCommentaire.BackColor = System.Drawing.SystemColors.GradientActiveCaption
-        Me.LblCommentaire.Dock = System.Windows.Forms.DockStyle.Top
-        Me.LblCommentaire.Location = New System.Drawing.Point(0, 0)
-        Me.LblCommentaire.Name = "LblCommentaire"
-        Me.LblCommentaire.Size = New System.Drawing.Size(1117, 16)
-        Me.LblCommentaire.TabIndex = 53
-        Me.LblCommentaire.Text = "Commentaire"
-        Me.LblCommentaire.TextAlign = System.Drawing.ContentAlignment.TopCenter
-        '
-        'TxtRDVCommentaire
-        '
-        Me.TxtRDVCommentaire.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.TxtRDVCommentaire.Location = New System.Drawing.Point(0, 16)
-        Me.TxtRDVCommentaire.MaxLength = 200
-        Me.TxtRDVCommentaire.Multiline = True
-        Me.TxtRDVCommentaire.Name = "TxtRDVCommentaire"
-        Me.TxtRDVCommentaire.ScrollBars = System.Windows.Forms.ScrollBars.Vertical
-        Me.TxtRDVCommentaire.Size = New System.Drawing.Size(1117, 151)
-        Me.TxtRDVCommentaire.TabIndex = 52
+        Me.RadPanel4.Controls.Add(Me.RadTacheToTreatGrid)
+        Me.RadPanel4.Dock = System.Windows.Forms.DockStyle.Bottom
+        Me.RadPanel4.Location = New System.Drawing.Point(0, 52)
+        Me.RadPanel4.Name = "RadPanel4"
+        Me.RadPanel4.Size = New System.Drawing.Size(1117, 108)
+        Me.RadPanel4.TabIndex = 18
         '
         'RadTacheToTreatGrid
         '
@@ -507,6 +508,7 @@ Partial Class FrmSousEpisode
         GridViewCommandColumn3.DefaultText = "Voir"
         GridViewCommandColumn3.HeaderText = "Action"
         GridViewCommandColumn3.Name = "Telecharger"
+        GridViewCommandColumn3.UseDefaultText = True
         GridViewCommandColumn3.Width = 99
         GridViewTextBoxColumn18.HeaderText = "IdSousEpisode"
         GridViewTextBoxColumn18.IsVisible = False
@@ -526,7 +528,7 @@ Partial Class FrmSousEpisode
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.CancelButton = Me.BtnCancel
-        Me.ClientSize = New System.Drawing.Size(1117, 493)
+        Me.ClientSize = New System.Drawing.Size(1117, 411)
         Me.Controls.Add(Me.RadPanel3)
         Me.Controls.Add(Me.RadPanel2)
         Me.Controls.Add(Me.RadPanel1)
@@ -544,7 +546,6 @@ Partial Class FrmSousEpisode
         Me.RadPanel1.ResumeLayout(False)
         CType(Me.BtnValidate, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.BtnDetail, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.BtnCreate, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.BtnCancel, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.RadPanel2, System.ComponentModel.ISupportInitialize).EndInit()
         Me.RadPanel2.ResumeLayout(False)
@@ -564,16 +565,17 @@ Partial Class FrmSousEpisode
         CType(Me.DropDownType, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.RadPanel3, System.ComponentModel.ISupportInitialize).EndInit()
         Me.RadPanel3.ResumeLayout(False)
-        CType(Me.RadPanel4, System.ComponentModel.ISupportInitialize).EndInit()
-        Me.RadPanel4.ResumeLayout(False)
-        CType(Me.TxtDelai, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.ChkBReponseAttendue, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.RadPanel5, System.ComponentModel.ISupportInitialize).EndInit()
-        Me.RadPanel5.ResumeLayout(False)
-        Me.RadPanel5.PerformLayout()
         CType(Me.RadPanel6, System.ComponentModel.ISupportInitialize).EndInit()
         Me.RadPanel6.ResumeLayout(False)
         Me.RadPanel6.PerformLayout()
+        CType(Me.RadPanel5, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.RadPanel5.ResumeLayout(False)
+        Me.RadPanel5.PerformLayout()
+        CType(Me.BtnAjoutReponse, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.ChkBReponseAttendue, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.TxtDelai, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.RadPanel4, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.RadPanel4.ResumeLayout(False)
         CType(Me.RadTacheToTreatGrid.MasterTemplate, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.RadTacheToTreatGrid, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me, System.ComponentModel.ISupportInitialize).EndInit()
@@ -584,7 +586,6 @@ Partial Class FrmSousEpisode
     Friend WithEvents RadPanel1 As Telerik.WinControls.UI.RadPanel
     Friend WithEvents BtnValidate As Telerik.WinControls.UI.RadButton
     Friend WithEvents BtnDetail As Telerik.WinControls.UI.RadButton
-    Friend WithEvents BtnCreate As Telerik.WinControls.UI.RadButton
     Friend WithEvents BtnCancel As Telerik.WinControls.UI.RadButton
     Friend WithEvents RadPanel2 As Telerik.WinControls.UI.RadPanel
     Friend WithEvents RadSplitContainer1 As Telerik.WinControls.UI.RadSplitContainer
@@ -616,5 +617,7 @@ Partial Class FrmSousEpisode
     Friend WithEvents ChkBReponseAttendue As Telerik.WinControls.UI.RadCheckBox
     Friend WithEvents LblDelai As Label
     Friend WithEvents LblReponses As Label
+    Friend WithEvents BtnAjoutReponse As Telerik.WinControls.UI.RadButton
+    Friend WithEvents OpenFileDialog1 As OpenFileDialog
 End Class
 
