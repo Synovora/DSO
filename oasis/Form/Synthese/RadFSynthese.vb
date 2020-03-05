@@ -424,6 +424,10 @@ Public Class RadFSynthese
     End Sub
 
     Private Sub CreationAntecedent()
+        If outils.AccesFonctionMedicaleSynthese(SelectedPatient) = False Then
+            Exit Sub
+        End If
+
         Dim SelectedDrcId As Integer
         Me.Enabled = False
         Cursor.Current = Cursors.WaitCursor
@@ -504,6 +508,10 @@ Public Class RadFSynthese
     'Déplacement vertical des antécédents (Up et Down)
     'Up
     Private Sub RadBtnUp_Click(sender As Object, e As EventArgs) Handles RadBtnUp.Click
+        If outils.AccesFonctionMedicaleSynthese(SelectedPatient) = False Then
+            Exit Sub
+        End If
+
         Dim CodeRetour As Boolean = False
         Dim antecedentId, antecedentIdPere As Integer
         Dim aRow As Integer = Me.RadAntecedentDataGridView.Rows.IndexOf(Me.RadAntecedentDataGridView.CurrentRow)
@@ -543,6 +551,10 @@ Public Class RadFSynthese
 
     'Down
     Private Sub RadBtnDown_Click(sender As Object, e As EventArgs) Handles RadBtnDown.Click
+        If outils.AccesFonctionMedicaleSynthese(SelectedPatient) = False Then
+            Exit Sub
+        End If
+
         Dim CodeRetour As Boolean = False
         Dim antecedentId, antecedentIdPere As Integer
         Dim aRow As Integer = Me.RadAntecedentDataGridView.Rows.IndexOf(Me.RadAntecedentDataGridView.CurrentRow)
@@ -606,6 +618,10 @@ Public Class RadFSynthese
     'Flèche droite : recherche de l'antécédent précédent de même niveau, l'antécédent sélectionné devient le fils de l'antécédent précédent
     'Pas d'effet sur un niveau 3 et s'il n'y a pas d'antécédent précédent
     Private Sub RadBtnRight_Click(sender As Object, e As EventArgs) Handles RadBtnRight.Click
+        If outils.AccesFonctionMedicaleSynthese(SelectedPatient) = False Then
+            Exit Sub
+        End If
+
         If RadAntecedentDataGridView.CurrentRow IsNot Nothing Then
             Dim aRow As Integer = Me.RadAntecedentDataGridView.Rows.IndexOf(Me.RadAntecedentDataGridView.CurrentRow)
             Cursor.Current = Cursors.WaitCursor
@@ -657,6 +673,10 @@ Public Class RadFSynthese
     'Particularité : pas d'antécédent père pour un antécédent de niveau 2 qui passe par conséquent en niveau 1
     'Pas d'effet sur un niveau 1 et s'il n'y a pas d'antécédent précédent
     Private Sub RadBtnLeft_Click(sender As Object, e As EventArgs) Handles RadBtnLeft.Click
+        If outils.AccesFonctionMedicaleSynthese(SelectedPatient) = False Then
+            Exit Sub
+        End If
+
         If RadAntecedentDataGridView.CurrentRow IsNot Nothing Then
             Dim aRow As Integer = Me.RadAntecedentDataGridView.Rows.IndexOf(Me.RadAntecedentDataGridView.CurrentRow)
             Cursor.Current = Cursors.WaitCursor
@@ -1257,6 +1277,10 @@ Public Class RadFSynthese
     End Sub
 
     Private Sub CreationTraitement()
+        If outils.AccesFonctionMedicaleSynthese(SelectedPatient) = False Then
+            Exit Sub
+        End If
+
         Dim SelectedMedicamentCis As Integer
         Me.Enabled = False
         Cursor.Current = Cursors.WaitCursor
@@ -1389,6 +1413,10 @@ Public Class RadFSynthese
 
     'Déclaration d'une allergie ou d'une contre-indication
     Private Sub DéclarationAllergieOuContreindicationToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles DéclarationAllergieOuContreindicationToolStripMenuItem.Click
+        If outils.AccesFonctionMedicaleSynthese(SelectedPatient) = False Then
+            Exit Sub
+        End If
+
         Me.Enabled = False
         Cursor.Current = Cursors.WaitCursor
         Dim SelectedMedicamentCis As Integer
@@ -1436,6 +1464,10 @@ Public Class RadFSynthese
 
     'Gestion d'une fenêtre thérapeutique pour un traitement donné
     Private Sub GérerUneFenetreTherapeutiqueToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles GérerUneFenêtreThérapeutiqueToolStripMenuItem.Click
+        If outils.AccesFonctionMedicaleSynthese(SelectedPatient) = False Then
+            Exit Sub
+        End If
+
         If RadTraitementDataGridView.CurrentRow IsNot Nothing Then
             Dim aRow As Integer = Me.RadTraitementDataGridView.Rows.IndexOf(Me.RadTraitementDataGridView.CurrentRow)
             If aRow >= 0 Then
@@ -2525,6 +2557,43 @@ Public Class RadFSynthese
             CréerUnTraitementToolStripMenuItem1.Enabled = True
         Else
             CréerUnTraitementToolStripMenuItem1.Enabled = False
+        End If
+
+        If outils.AccesFonctionMedicaleSynthese(SelectedPatient) = False Then
+            'Antécédent
+            RadBtnCreationAntecedent.Enabled = False
+            RadBtnUp.Enabled = False
+            RadBtnDown.Enabled = False
+            RadBtnRight.Enabled = False
+            RadBtnLeft.Enabled = False
+            CréerAntecedentToolStripMenuItem.Enabled = False
+            ModifierUnAntécédentToolStripMenuItem.Enabled = False
+            ModifierLordreDunAntécédentToolStripMenuItem.Enabled = False
+
+            'Traitement
+            RadBtnCreationTraitement.Enabled = False
+            CréerUnTraitementToolStripMenuItem1.Enabled = False
+            GérerUneFenêtreThérapeutiqueToolStripMenuItem.Enabled = False
+            DéclarationAllergieOuContreindicationToolStripMenuItem.Enabled = False
+
+            'Parcours
+            RadBtnCreationParcours.Enabled = False
+            CréerUnIntervenantToolStripMenuItem.Enabled = False
+
+            'Contexte
+            RadBtnCreationContexte.Enabled = False
+            ToolStripMenuItem1.Enabled = False
+            CréerUnIntervenantToolStripMenuItem.Enabled = False
+
+            'PPS
+            RadBtnCreationPPSMesure.Enabled = False
+            RadBtnCreationPPSObjectif.Enabled = False
+            RadBtnCreationPPSStrategie.Enabled = False
+            RadBtnCreationPPSSuivi.Enabled = False
+            CréerUnObjectifDeSantéToolStripMenuItem.Enabled = False
+            CréerUneMesurePréventiveToolStripMenuItem.Enabled = False
+            CréerUneStratégieContextuelleToolStripMenuItem.Enabled = False
+            CréerUnSuiviToolStripMenuItem.Enabled = False
         End If
     End Sub
 

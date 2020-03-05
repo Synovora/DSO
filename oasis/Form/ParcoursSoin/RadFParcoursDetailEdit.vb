@@ -123,6 +123,7 @@ Public Class RadFParcoursDetailEdit
     Private Sub RadFParcoursDetailEdit_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         Init()
         ChargementEtatCivil()
+        DroitAcces()
 
         If SelectedParcoursId <> 0 Then
             'Modification
@@ -1321,6 +1322,22 @@ Public Class RadFParcoursDetailEdit
     Private Sub LblDateProchainRendezVous_MouseHover(sender As Object, e As EventArgs) Handles LblDateProchainRendezVous.MouseHover
         If RendezVousPlanifieExiste = True Then
             ToolTip1.SetToolTip(LblDateProchainRendezVous, "Heure rendez-vous : " & DateRendezVous.ToString("HH:mm"))
+        End If
+    End Sub
+
+    Private Sub DroitAcces()
+        If outils.AccesFonctionMedicaleSynthese(SelectedPatient) = False Then
+            RadBtnActeParamedical.Hide()
+            RadBtnMesurePreventive.Hide()
+            RadBtnParametreConsigne.Hide()
+            RadBtnprotocoleConsigne.Hide()
+            RadBtnRORSelect.Hide()
+            RadBtnAnnuler.Hide()
+            NumRythme.Enabled = False
+            CbxBase.Enabled = False
+            TxtCommentaire.Enabled = False
+            ChkMasquerIntervenant.Enabled = False
+            CbxOasisExterne.Enabled = False
         End If
     End Sub
 End Class

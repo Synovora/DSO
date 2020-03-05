@@ -189,6 +189,8 @@ Module PatientDao
             instancePatient.Profession = Coalesce(patientDataReader("oa_patient_profession"), "")
             instancePatient.PharmacienId = Coalesce(patientDataReader("oa_patient_pharmacie_id"), 0)
             instancePatient.Taille = Coalesce(patientDataReader("oa_patient_taille"), 0)
+            instancePatient.BlocageMedical = Coalesce(patientDataReader("oa_patient_blocage_medical"), False)
+            instancePatient.INS = Coalesce(patientDataReader("oa_patient_INS"), 0)
         End If
     End Sub
 
@@ -219,6 +221,8 @@ Module PatientDao
         instancePatient.Profession = ""
         instancePatient.PharmacienId = 0
         instancePatient.Taille = 0
+        instancePatient.BlocageMedical = False
+        instancePatient.INS = 0
     End Sub
 
     Public Function NonExistencePatientNIR(NIR As Int64, PatientId As Integer) As Boolean
@@ -289,11 +293,13 @@ Module PatientDao
         Dim dt As DataTable = New DataTable()
         Dim SQLString As String
 
-        SQLString = "SELECT * FROM oasis.oa_patient WHERE 1 = 1"
+        SQLString = "SELECT oa_patient_id, oa_patient_nir, oa_patient_prenom, oa_patient_nom, oa_patient_date_naissance," &
+                    " oa_patient_lieu_naissance, oa_patient_date_entree_oasis, oa_patient_date_sortie_oasis, oa_patient_site_id" &
+                    " FROM oasis.oa_patient WHERE 1 = 1"
 
         Dim FiltrePatientOasis As String =
-                    " AND oa_patient_date_entree_oasis is not NULL" &
-                    " AND oa_patient_date_entree_oasis <> '9998-12-31'" &
+                    " And oa_patient_date_entree_oasis Is Not NULL" &
+                    " And oa_patient_date_entree_oasis <> '9998-12-31'" &
                     " AND (oa_patient_date_sortie_oasis Is NULL OR oa_patient_date_sortie_oasis > '" & Date.Now.ToString("yyyy-MM-dd") & "')"
 
         Dim FiltrePatientNonOasis As String =
@@ -328,7 +334,9 @@ Module PatientDao
         Dim da As SqlDataAdapter = New SqlDataAdapter()
         Dim codeRetour As Boolean = True
 
-        Dim SQLstring As String = "update oasis.oa_patient set oa_patient_synthese_date_maj = @date where oa_patient_id = @patientId"
+        Dim patient As Patient = getPatientById(patientId)
+
+        Dim SQLstring As String = "UPDATE oasis.oa_patient SET oa_patient_synthese_date_maj = @date WHERE oa_patient_id = @patientId"
 
         Dim conxn As New SqlConnection(getConnectionString())
         Dim cmd As New SqlCommand(SQLstring, conxn)
@@ -348,6 +356,11 @@ Module PatientDao
         Finally
             conxn.Close()
         End Try
+
+        If patient.BlocageMedical = False AndAlso userLog.TypeProfil = EpisodeDao.EnumTypeProfil.MEDICAL.ToString Then
+            BlocageMedical(patientId)
+        End If
+
         Return codeRetour
     End Function
 
@@ -363,6 +376,34 @@ Module PatientDao
 
         With cmd.Parameters
             .AddWithValue("@taille", taille)
+            .AddWithValue("@patientId", patientId.ToString)
+        End With
+
+        Try
+            conxn.Open()
+            da.UpdateCommand = cmd
+            da.UpdateCommand.ExecuteNonQuery()
+        Catch ex As Exception
+            MessageBox.Show(ex.Message)
+            codeRetour = False
+        Finally
+            conxn.Close()
+        End Try
+        Return codeRetour
+    End Function
+
+    'Modification taille
+    Friend Function BlocageMedical(patientId As Integer) As Boolean
+        Dim da As SqlDataAdapter = New SqlDataAdapter()
+        Dim codeRetour As Boolean = True
+
+        Dim SQLstring As String = "UPDATE oasis.oa_patient SET oa_patient_blocage_medical = @blocageMedical WHERE oa_patient_id = @patientId"
+
+        Dim conxn As New SqlConnection(getConnectionString())
+        Dim cmd As New SqlCommand(SQLstring, conxn)
+
+        With cmd.Parameters
+            .AddWithValue("@blocageMedical", True)
             .AddWithValue("@patientId", patientId.ToString)
         End With
 

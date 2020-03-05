@@ -105,7 +105,9 @@ Public Class RadFPPSDetailEdit
                 LblPriorite.Hide()
         End Select
         Dim conxn As New SqlConnection(getConnectionString())
+        DroitAcces()
         ChargementEtatCivil()
+
         RadBtnConfirmationAnnulation.Hide()
         TxtCommentaireArret.Hide()
         LblLabelCommentaireArret.Hide()
@@ -639,4 +641,20 @@ Public Class RadFPPSDetailEdit
     Private Sub RadBtnRecupereDrc_Click(sender As Object, e As EventArgs) Handles RadBtnRecupereDrc.Click
         TxtCommentaire.Text = TxtDrcDescription.Text
     End Sub
+
+    Private Sub DroitAcces()
+        If outils.AccesFonctionMedicaleSynthese(SelectedPatient) = False Then
+            RadBtnConfirmationAnnulation.Hide()
+            RadBtnAnnulation.Hide()
+            RadBtnConfirmationAnnulation.Hide()
+            RadBtnDrcSelecteur.Hide()
+            RadBtnRecupereDrc.Hide()
+            RadBtnValidation.Hide()
+            CbxTypeStrategie.Enabled = False
+            TxtCommentaire.Enabled = False
+            NumPriorite.Enabled = False
+            TxtCommentaireArret.Enabled = False
+        End If
+    End Sub
+
 End Class

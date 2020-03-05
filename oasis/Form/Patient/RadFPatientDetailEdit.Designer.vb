@@ -23,10 +23,10 @@ Partial Class RadFPatientDetailEdit
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
         Me.components = New System.ComponentModel.Container()
-        Dim GridViewTextBoxColumn1 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
-        Dim GridViewTextBoxColumn2 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
-        Dim GridViewDecimalColumn1 As Telerik.WinControls.UI.GridViewDecimalColumn = New Telerik.WinControls.UI.GridViewDecimalColumn()
-        Dim TableViewDefinition1 As Telerik.WinControls.UI.TableViewDefinition = New Telerik.WinControls.UI.TableViewDefinition()
+        Dim GridViewTextBoxColumn3 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
+        Dim GridViewTextBoxColumn4 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
+        Dim GridViewDecimalColumn2 As Telerik.WinControls.UI.GridViewDecimalColumn = New Telerik.WinControls.UI.GridViewDecimalColumn()
+        Dim TableViewDefinition2 As Telerik.WinControls.UI.TableViewDefinition = New Telerik.WinControls.UI.TableViewDefinition()
         Me.RadNotePatientDataGridView = New Telerik.WinControls.UI.RadGridView()
         Me.NoteContextMenuStrip = New System.Windows.Forms.ContextMenuStrip(Me.components)
         Me.CréerUneNoteToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
@@ -90,6 +90,7 @@ Partial Class RadFPatientDetailEdit
         Me.TxtAdresse1 = New System.Windows.Forms.TextBox()
         Me.TxtNom = New System.Windows.Forms.TextBox()
         Me.TxtPrenom = New System.Windows.Forms.TextBox()
+        Me.ToolTip = New System.Windows.Forms.ToolTip(Me.components)
         CType(Me.RadNotePatientDataGridView, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.RadNotePatientDataGridView.MasterTemplate, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.NoteContextMenuStrip.SuspendLayout()
@@ -126,27 +127,27 @@ Partial Class RadFPatientDetailEdit
         Me.RadNotePatientDataGridView.MasterTemplate.AllowDeleteRow = False
         Me.RadNotePatientDataGridView.MasterTemplate.AllowDragToGroup = False
         Me.RadNotePatientDataGridView.MasterTemplate.AllowEditRow = False
-        GridViewTextBoxColumn1.EnableExpressionEditor = False
-        GridViewTextBoxColumn1.HeaderText = "Auteur"
-        GridViewTextBoxColumn1.Name = "auteur"
-        GridViewTextBoxColumn1.TextAlignment = System.Drawing.ContentAlignment.MiddleCenter
-        GridViewTextBoxColumn1.Width = 120
-        GridViewTextBoxColumn2.AcceptsReturn = True
-        GridViewTextBoxColumn2.AcceptsTab = True
-        GridViewTextBoxColumn2.EnableExpressionEditor = False
-        GridViewTextBoxColumn2.HeaderText = "Note"
-        GridViewTextBoxColumn2.HeaderTextAlignment = System.Drawing.ContentAlignment.MiddleLeft
-        GridViewTextBoxColumn2.Name = "note"
-        GridViewTextBoxColumn2.ReadOnly = True
-        GridViewTextBoxColumn2.Width = 550
-        GridViewTextBoxColumn2.WrapText = True
-        GridViewDecimalColumn1.EnableExpressionEditor = False
-        GridViewDecimalColumn1.HeaderText = "Id. Note"
-        GridViewDecimalColumn1.IsVisible = False
-        GridViewDecimalColumn1.Name = "noteId"
-        Me.RadNotePatientDataGridView.MasterTemplate.Columns.AddRange(New Telerik.WinControls.UI.GridViewDataColumn() {GridViewTextBoxColumn1, GridViewTextBoxColumn2, GridViewDecimalColumn1})
+        GridViewTextBoxColumn3.EnableExpressionEditor = False
+        GridViewTextBoxColumn3.HeaderText = "Auteur"
+        GridViewTextBoxColumn3.Name = "auteur"
+        GridViewTextBoxColumn3.TextAlignment = System.Drawing.ContentAlignment.MiddleCenter
+        GridViewTextBoxColumn3.Width = 120
+        GridViewTextBoxColumn4.AcceptsReturn = True
+        GridViewTextBoxColumn4.AcceptsTab = True
+        GridViewTextBoxColumn4.EnableExpressionEditor = False
+        GridViewTextBoxColumn4.HeaderText = "Note"
+        GridViewTextBoxColumn4.HeaderTextAlignment = System.Drawing.ContentAlignment.MiddleLeft
+        GridViewTextBoxColumn4.Name = "note"
+        GridViewTextBoxColumn4.ReadOnly = True
+        GridViewTextBoxColumn4.Width = 550
+        GridViewTextBoxColumn4.WrapText = True
+        GridViewDecimalColumn2.EnableExpressionEditor = False
+        GridViewDecimalColumn2.HeaderText = "Id. Note"
+        GridViewDecimalColumn2.IsVisible = False
+        GridViewDecimalColumn2.Name = "noteId"
+        Me.RadNotePatientDataGridView.MasterTemplate.Columns.AddRange(New Telerik.WinControls.UI.GridViewDataColumn() {GridViewTextBoxColumn3, GridViewTextBoxColumn4, GridViewDecimalColumn2})
         Me.RadNotePatientDataGridView.MasterTemplate.ShowRowHeaderColumn = False
-        Me.RadNotePatientDataGridView.MasterTemplate.ViewDefinition = TableViewDefinition1
+        Me.RadNotePatientDataGridView.MasterTemplate.ViewDefinition = TableViewDefinition2
         Me.RadNotePatientDataGridView.Name = "RadNotePatientDataGridView"
         Me.RadNotePatientDataGridView.ReadOnly = True
         Me.RadNotePatientDataGridView.RightToLeft = System.Windows.Forms.RightToLeft.No
@@ -773,6 +774,7 @@ Partial Class RadFPatientDetailEdit
         '
         '
         Me.RootElement.ApplyShapeToControl = True
+        Me.ShowInTaskbar = False
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
         Me.Text = "Patient Détail"
         CType(Me.RadNotePatientDataGridView.MasterTemplate, System.ComponentModel.ISupportInitialize).EndInit()
@@ -861,5 +863,6 @@ Partial Class RadFPatientDetailEdit
     Friend WithEvents Label1 As Label
     Friend WithEvents TxtProfession As TextBox
     Friend WithEvents RadBtnRDV As Telerik.WinControls.UI.RadButton
+    Friend WithEvents ToolTip As ToolTip
 End Class
 

@@ -39,6 +39,8 @@ Public Class Patient
     Private privatePatientContreIndicationDci As StringCollection
     Private privatePatientContreIndicationCis As StringCollection
     Private privatePatientMedicamentsPrescritsCis As StringCollection
+    Private _blocageMedical As Boolean
+    Private _INS As Long
 
     Sub New()
         InitInstance()
@@ -219,6 +221,7 @@ Public Class Patient
 
                 Me.Profession = Coalesce(patientDataReader("oa_patient_profession"), "")
                 Me.PharmacienId = Coalesce(patientDataReader("oa_patient_pharmacie_id"), 0)
+                Me.BlocageMedical = Coalesce(patientDataReader("oa_patient_blocage_medical"), False)
 
             Else
                 MessageBox.Show("Erreur de lecture du patient")
@@ -265,6 +268,7 @@ Public Class Patient
         Me.PatientContreIndicationDci = New StringCollection()
         Me.PatientContreIndicationCis = New StringCollection()
         Me.PatientMedicamentsPrescritsCis = New StringCollection()
+        Me.BlocageMedical = False
     End Sub
 
     Public Property patientId As Integer
@@ -579,6 +583,24 @@ Public Class Patient
         End Get
         Set(value As Integer)
             _taille = value
+        End Set
+    End Property
+
+    Public Property BlocageMedical As Boolean
+        Get
+            Return _blocageMedical
+        End Get
+        Set(value As Boolean)
+            _blocageMedical = value
+        End Set
+    End Property
+
+    Public Property INS As Long
+        Get
+            Return _INS
+        End Get
+        Set(value As Long)
+            _INS = value
         End Set
     End Property
 

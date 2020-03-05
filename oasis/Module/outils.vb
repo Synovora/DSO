@@ -2,6 +2,7 @@
 Imports System.Configuration
 Imports System.Data.SqlClient
 Imports Telerik.WinControls.UI
+Imports Oasis_Common
 
 Friend Module outils
 
@@ -47,6 +48,27 @@ Friend Module outils
             Return System.Reflection.Assembly.GetExecutingAssembly().GetName().Version.ToString()
         End Get
     End Property
+
+    Public Function AccesFonctionMedicaleSynthese(patient As Patient) As Boolean
+        Dim CodeRetour As Boolean = False
+
+        If userLog.TypeProfil = ProfilDao.EnumProfilType.MEDICAL.ToString OrElse
+            (userLog.TypeProfil = ProfilDao.EnumProfilType.PARAMEDICAL.ToString AndAlso patient.BlocageMedical = False) Then
+            CodeRetour = True
+        End If
+
+        Return CodeRetour
+    End Function
+
+    Public Function AccesFonctionMedicale() As Boolean
+        Dim CodeRetour As Boolean = False
+
+        If userLog.TypeProfil = ProfilDao.EnumProfilType.MEDICAL.ToString Then
+            CodeRetour = True
+        End If
+
+        Return CodeRetour
+    End Function
 
     Public Function CalculDureeEnJourEtHeureString(dateDebut As Date, dateFin As Date) As String
         Dim DureeString As String = ""

@@ -1317,9 +1317,11 @@ Public Class RadFAntecedentDetailEdit
 
     Private Sub DroitAcces()
         'Si l'utilisateur n'a pas les droits requis ou que le traitement a été arrêté, les zones de saisie ne sont pas modifiables 
-        If UtilisateurConnecte.UtilisateurNiveauAcces <> 1 Then
+        If outils.AccesFonctionMedicaleSynthese(SelectedPatient) = False Then
+            InhiberZonesDeSaisie()
             RadBtnValidation.Hide()
             RadBtnSupprimer.Hide()
+            RadBtnRecupereDrc.Hide()
         End If
     End Sub
 

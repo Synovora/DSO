@@ -4520,9 +4520,6 @@ Public Class RadFEpisodeDetail
             End If
         End If
 
-
-
-
         If episode.Etat <> EpisodeDao.EnumEtatEpisode.CLOTURE.ToString Then
             If userLog.TypeProfil = ProfilDao.EnumProfilType.MEDICAL.ToString Or userLog.UtilisateurAdmin = True Then
                 'LibereAccesMed()
@@ -4535,6 +4532,44 @@ Public Class RadFEpisodeDetail
             If userLog.UtilisateurAdmin = False Then
                 RadBtnGenProtocole.Hide()
             End If
+        End If
+
+        'Synthèse
+        If outils.AccesFonctionMedicaleSynthese(SelectedPatient) = False Then
+            'Antécédent
+            RadBtnCreationAntecedent.Enabled = False
+            RadBtnUp.Enabled = False
+            RadBtnDown.Enabled = False
+            RadBtnRight.Enabled = False
+            RadBtnLeft.Enabled = False
+            CréerAntecedentToolStripMenuItem.Enabled = False
+            ModifierUnAntécédentToolStripMenuItem.Enabled = False
+            ModifierLordreDunAntécédentToolStripMenuItem.Enabled = False
+
+            'Traitement
+            RadBtnCreationTraitement.Enabled = False
+            CréerUnTraitementToolStripMenuItem1.Enabled = False
+            GérerUneFenêtreThérapeutiqueToolStripMenuItem.Enabled = False
+            DéclarationAllergieOuContreindicationToolStripMenuItem.Enabled = False
+
+            'Parcours
+            RadBtnCreationParcours.Enabled = False
+            CréerUnIntervenantToolStripMenuItem.Enabled = False
+
+            'Contexte
+            RadBtnCreationContexte.Enabled = False
+            ToolStripMenuItem1.Enabled = False
+            CréerUnIntervenantToolStripMenuItem.Enabled = False
+
+            'PPS
+            RadBtnCreationPPSMesure.Enabled = False
+            RadBtnCreationPPSObjectif.Enabled = False
+            RadBtnCreationPPSStrategie.Enabled = False
+            RadBtnCreationPPSSuivi.Enabled = False
+            CréerUnObjectifDeSantéToolStripMenuItem.Enabled = False
+            CréerUneMesurePréventiveToolStripMenuItem.Enabled = False
+            CréerUneStratégieContextuelleToolStripMenuItem.Enabled = False
+            CréerUnSuiviToolStripMenuItem.Enabled = False
         End If
     End Sub
 

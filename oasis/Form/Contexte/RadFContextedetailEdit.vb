@@ -142,16 +142,8 @@ Public Class RadFContextedetailEdit
             afficheTitleForm(Me, "Détail contexte")
         End If
 
-        If contexteUpdate.Inactif = True OrElse
-            contexteUpdate.Type = "A" OrElse
-            userLog.TypeProfil <> EpisodeDao.EnumTypeProfil.MEDICAL.ToString() Then
-            ControleAutorisationModification = False
-            RadValidation.Enabled = False
-            RadBtnTransformer.Enabled = False
-            RadBtnSupprimer.Enabled = False
-        End If
-
         InitZone()
+        DroitAcces()
         ChargementEtatCivil()
         LblEtatContexte.Text = ""
         If SelectedContexteId <> 0 Then
@@ -782,6 +774,35 @@ Public Class RadFContextedetailEdit
                     RadValidation.Enabled = False
                 End If
             End If
+        End If
+    End Sub
+
+    Private Sub DroitAcces()
+        If contexteUpdate.Inactif = True OrElse
+            contexteUpdate.Type = "A" Then
+            ControleAutorisationModification = False
+            RadValidation.Enabled = False
+            RadBtnTransformer.Enabled = False
+            RadBtnSupprimer.Enabled = False
+        End If
+
+        If outils.AccesFonctionMedicaleSynthese(SelectedPatient) = False Then
+            RadBtnDrcSelect.Hide()
+            RadBtnRecupereDrc.Hide()
+            RadBtnSupprimer.Hide()
+            RadBtnTransformer.Hide()
+            CbxCategorieContexte.Enabled = False
+            TxtContexteDescription.Enabled = False
+            DteDateDebut.Enabled = False
+            DteDateFin.Enabled = False
+            ChkCache.Enabled = False
+            ChkCacheTransformation.Enabled = False
+            ChkDiagnosticConfirme.Enabled = False
+            ChkDiagnosticNotion.Enabled = False
+            ChkDiagnosticSuspecte.Enabled = False
+            ChkPublie.Enabled = False
+            ChkPublieTransformation.Enabled = False
+            ChkOcculteTransformation.Enabled = False
         End If
     End Sub
 

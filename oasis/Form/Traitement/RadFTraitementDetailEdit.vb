@@ -1237,7 +1237,7 @@ Public Class RadFTraitementDetailEdit
 
     Private Sub DroitAcces()
         'Si l'utilisateur n'a pas les droits requis ou que le traitement a été arrêté, les zones de saisie ne sont pas modifiables 
-        If UtilisateurConnecte.UtilisateurNiveauAcces <> 1 Then
+        If outils.AccesFonctionMedicaleSynthese(SelectedPatient) = False Then
             Me.Text = "Visualisation détail traitement patient"
             LblstatutTraitement.Text = "Visualisation détail traitement patient"
             LblstatutTraitement.Hide()

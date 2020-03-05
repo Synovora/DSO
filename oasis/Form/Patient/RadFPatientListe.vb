@@ -40,10 +40,7 @@ Public Class RadFPatientListe
         'Provque le chargement de la liste des patients
         RadChkPatientOasis.CheckState = CheckState.Checked
 
-        'Accès au menu Admin si l'utilisateur est autorisé
-        If UtilisateurConnecte.UtilisateurAdmin = False Then
-            RadBtnAdmin.Hide()
-        End If
+        InitHabilitation()
 
         InitZonesSelectionPatient()
 
@@ -237,6 +234,17 @@ Public Class RadFPatientListe
                     ToolTip.SetToolTip(RadBtnEpisode, "Ce patient n'a pas d'épisode en cours")
                 End If
             End If
+
+            'Gestion des habilitations
+            If Not (userLog.TypeProfil = ProfilDao.EnumProfilType.MEDICAL.ToString OrElse userLog.TypeProfil = ProfilDao.EnumProfilType.PARAMEDICAL.ToString) Then
+                RadBtnEpisode.Hide()
+                RadBtnLigneDeVie.Hide()
+                RadBtnSynthese.Hide()
+                If Not (userLog.TypeProfil = ProfilDao.EnumProfilType.ACCUEIL.ToString) Then
+                    RadBtnRendezVous.Hide()
+                End If
+            End If
+
             IndexGrid = aRow
         Else
             InitZonesSelectionPatient()
@@ -246,7 +254,9 @@ Public Class RadFPatientListe
 
     Private Sub RadPatientGridView_DoubleClick(sender As Object, e As EventArgs) Handles RadPatientGridView.DoubleClick
         SelectionPatient()
-        Synthese()
+        If userLog.TypeProfil = ProfilDao.EnumProfilType.MEDICAL.ToString OrElse userLog.TypeProfil = ProfilDao.EnumProfilType.PARAMEDICAL.ToString Then
+            Synthese()
+        End If
     End Sub
 
     'Gestion de l'affichage des zones d'écran
@@ -274,6 +284,27 @@ Public Class RadFPatientListe
         RadBtnSynthese.Hide()
         RadBtnEpisode.Hide()
     End Sub
+
+    Private Sub InitHabilitation()
+        'Accès au menu Admin si l'utilisateur est autorisé
+        If UtilisateurConnecte.UtilisateurAdmin = False Then
+            RadBtnAdmin.Hide()
+        End If
+
+        'Gestion des habilitations
+        If Not (userLog.TypeProfil = ProfilDao.EnumProfilType.MEDICAL.ToString OrElse
+            userLog.TypeProfil = ProfilDao.EnumProfilType.PARAMEDICAL.ToString) Then
+            RadBtnEpisodeEnCours.Hide()
+            RadBtnListeAction.Hide()
+        End If
+
+        If Not (userLog.TypeProfil = ProfilDao.EnumProfilType.MEDICAL.ToString OrElse
+            userLog.TypeProfil = ProfilDao.EnumProfilType.PARAMEDICAL.ToString OrElse
+            userLog.TypeProfil = ProfilDao.EnumProfilType.ACCUEIL.ToString) Then
+            RadBtnCreatePatient.Hide()
+        End If
+    End Sub
+
 
     Private Sub RadBtnCreatePatient_Click(sender As Object, e As EventArgs) Handles RadBtnCreatePatient.Click
         Cursor.Current = Cursors.WaitCursor

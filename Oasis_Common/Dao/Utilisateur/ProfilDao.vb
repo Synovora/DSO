@@ -7,6 +7,7 @@ Public Class ProfilDao
         PARAMEDICAL
         MEDICAL
         GESTION
+        ACCUEIL
     End Enum
 
     Public Function getProfilById(id As String) As Profil

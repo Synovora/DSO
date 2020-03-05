@@ -1,6 +1,7 @@
 ﻿Imports System.Data.SqlClient
 Imports Telerik.WinControls.UI.Localization
 Imports Oasis_Common
+Imports Telerik.WinControls.UI
 
 Public Class RadFPatientDetailEdit
     Private privateSelectedPatientId As Integer
@@ -907,6 +908,19 @@ Public Class RadFPatientDetailEdit
     Private Sub InitAction()
         RadBtnValider.Enabled = False
         RadBtnSortieOasis.Enabled = True
+
+        'Droits personnel non Médical, non Paramédical, non Accueil paramédical
+        If Not (userLog.TypeProfil = ProfilDao.EnumProfilType.MEDICAL.ToString OrElse
+            userLog.TypeProfil = ProfilDao.EnumProfilType.PARAMEDICAL.ToString OrElse
+            userLog.TypeProfil = ProfilDao.EnumProfilType.ACCUEIL.ToString) Then
+            RadBtnModifier.Hide()
+            RadBtnPharmacien.Hide()
+            RadBtnRDV.Hide()
+            RadBtnValidationDateNaissance.Hide()
+            RadBtnSortieOasis.Hide()
+            RadBtnValider.Hide()
+            BtnCreerNote.Hide()
+        End If
     End Sub
 
     'Gestion de l'affichage du contrôle de saisie de la date de naissance
@@ -1105,5 +1119,12 @@ Public Class RadFPatientDetailEdit
             form.ShowDialog()
         End Using
         Me.Enabled = True
+    End Sub
+
+    Private Sub RadNotePatientDataGridView_ToolTipTextNeeded(sender As Object, e As Telerik.WinControls.ToolTipTextNeededEventArgs) Handles RadNotePatientDataGridView.ToolTipTextNeeded
+        Dim cell As GridDataCellElement = TryCast(sender, GridDataCellElement)
+        If cell IsNot Nothing AndAlso cell.ColumnInfo.Name = "note" Then
+            e.ToolTipText = cell.Value.ToString()
+        End If
     End Sub
 End Class
