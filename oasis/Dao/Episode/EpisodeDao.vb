@@ -43,12 +43,6 @@ Public Class EpisodeDao
         PARAMETRE
     End Enum
 
-    Public Enum EnumTypeProfil
-        MEDICAL
-        PARAMEDICAL
-        GESTION
-    End Enum
-
     Friend Function GetItemTypeActiviteByCode(Code As String) As String
         Dim Item As String
         Select Case Code
@@ -296,14 +290,14 @@ Public Class EpisodeDao
         ProfilEpisodeString = " AND type_profil IN ('"
         If ligneDeVie.ProfilMedical = True Then
             RechercherprofilEpisode = True
-            ProfilEpisodeString += EpisodeDao.EnumTypeProfil.MEDICAL.ToString & "'"
+            ProfilEpisodeString += ProfilDao.EnumProfilType.MEDICAL.ToString & "'"
         End If
         If ligneDeVie.ProfilParamedical = True Then
             If RechercherprofilEpisode = True Then
                 ProfilEpisodeString += ", '"
             End If
             RechercherprofilEpisode = True
-            ProfilEpisodeString += EpisodeDao.EnumTypeProfil.PARAMEDICAL.ToString & "'"
+            ProfilEpisodeString += ProfilDao.EnumProfilType.PARAMEDICAL.ToString & "'"
         End If
         If RechercherprofilEpisode = True Then
             ProfilEpisodeString += ")" & vbCrLf

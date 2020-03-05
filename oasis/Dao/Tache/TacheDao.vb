@@ -1306,8 +1306,8 @@ Public Class TacheDao
 
             With command.Parameters
                 .AddWithValue("@episodeId", episodeId)
-                .AddWithValue("@typeEmetteur", EpisodeDao.EnumTypeProfil.PARAMEDICAL.ToString)
-                .AddWithValue("@typeDestinataire", EpisodeDao.EnumTypeProfil.MEDICAL.ToString)
+                .AddWithValue("@typeEmetteur", ProfilDao.EnumProfilType.PARAMEDICAL.ToString)
+                .AddWithValue("@typeDestinataire", ProfilDao.EnumProfilType.MEDICAL.ToString)
                 .AddWithValue("@categorie", CategorieTache.SOIN.ToString)
                 .AddWithValue("@type", TypeTache.AVIS_EPISODE.ToString)
                 .AddWithValue("@etat", TacheDao.EtatTache.ANNULEE.ToString)

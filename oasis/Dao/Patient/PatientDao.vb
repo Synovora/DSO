@@ -357,7 +357,7 @@ Module PatientDao
             conxn.Close()
         End Try
 
-        If patient.BlocageMedical = False AndAlso userLog.TypeProfil = EpisodeDao.EnumTypeProfil.MEDICAL.ToString Then
+        If patient.BlocageMedical = False AndAlso userLog.TypeProfil = ProfilDao.EnumProfilType.MEDICAL.ToString Then
             BlocageMedical(patientId)
         End If
 

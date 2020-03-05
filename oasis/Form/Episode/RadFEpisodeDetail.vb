@@ -774,7 +774,7 @@ Public Class RadFEpisodeDetail
     Private Sub ChargementEpisodeActesParamedicauxParamedical()
         FinChargementActesParamedicauxParamedical = False
         Dim acteParamedicalDataTable As DataTable
-        acteParamedicalDataTable = episodeActeParamedicalDao.getAllEpisodeActeParamedicalByEpisodeId(SelectedEpisodeId, EpisodeDao.EnumTypeProfil.PARAMEDICAL.ToString)
+        acteParamedicalDataTable = episodeActeParamedicalDao.getAllEpisodeActeParamedicalByEpisodeId(SelectedEpisodeId, ProfilDao.EnumProfilType.PARAMEDICAL.ToString)
 
         RadObsSpeIdeDataGridView.Rows.Clear()
 
@@ -873,7 +873,7 @@ Public Class RadFEpisodeDetail
     End Sub
 
     Private Sub SaisieObservation()
-        If userLog.TypeProfil <> EpisodeDao.EnumTypeProfil.PARAMEDICAL.ToString Then
+        If userLog.TypeProfil <> ProfilDao.EnumProfilType.PARAMEDICAL.ToString Then
             Exit Sub
         End If
 
@@ -976,7 +976,7 @@ Public Class RadFEpisodeDetail
     Private Sub ChargementEpisodeActesParamedicauxMedical()
         FinChargementActesParamedicauxMedical = False
         Dim acteParamedicalDataTable As DataTable
-        acteParamedicalDataTable = episodeActeParamedicalDao.getAllEpisodeActeParamedicalByEpisodeId(SelectedEpisodeId, EpisodeDao.EnumTypeProfil.MEDICAL.ToString)
+        acteParamedicalDataTable = episodeActeParamedicalDao.getAllEpisodeActeParamedicalByEpisodeId(SelectedEpisodeId, ProfilDao.EnumProfilType.MEDICAL.ToString)
 
         RadObsSpeMedDataGridView.Rows.Clear()
 
@@ -1031,7 +1031,7 @@ Public Class RadFEpisodeDetail
     End Sub
 
     Private Sub ToolStripMenuItem2_Click(sender As Object, e As EventArgs) Handles SaisieObservationSpecifiqueMedicaleItem.Click
-        If userLog.TypeProfil <> EpisodeDao.EnumTypeProfil.MEDICAL.ToString Then
+        If userLog.TypeProfil <> ProfilDao.EnumProfilType.MEDICAL.ToString Then
             Exit Sub
         End If
 
@@ -1184,7 +1184,7 @@ Public Class RadFEpisodeDetail
         If RadGridViewObsMed.Rows.Count > 0 Then
             Me.RadGridViewObsMed.CurrentRow = RadGridViewObsMed.Rows(0)
             RadGridViewObsMed.TableElement.VScrollBar.Value = 0
-            If episode.TypeProfil = EpisodeDao.EnumTypeProfil.PARAMEDICAL.ToString Then
+            If episode.TypeProfil = ProfilDao.EnumProfilType.PARAMEDICAL.ToString Then
                 ControleDemandeAvisMedicalExiste = True
                 ControleMAJTypeConclusionIDE()
             End If
@@ -1344,7 +1344,7 @@ Public Class RadFEpisodeDetail
             End If
         End If
 
-        If episode.TypeProfil = EpisodeDao.EnumTypeProfil.PARAMEDICAL.ToString Then
+        If episode.TypeProfil = ProfilDao.EnumProfilType.PARAMEDICAL.ToString Then
             'Controle si Workflow de demande d'avis médical (en cours ou terminé) existe
             If tacheDao.ExisteDemandeAvisMedicalByEpisode(SelectedEpisodeId) = True Then
                 ControleDemandeAvisMedicalExiste = True
@@ -1461,10 +1461,10 @@ Public Class RadFEpisodeDetail
         'ControleTypeConclusionParamedicaleSurDemandeAvis()
 
         Select Case episode.TypeProfil
-            Case EpisodeDao.EnumTypeProfil.MEDICAL.ToString
+            Case ProfilDao.EnumProfilType.MEDICAL.ToString
                 RadPanelConclusionIdeType.Hide()
                 episode.ConclusionIdeType = ""
-            Case EpisodeDao.EnumTypeProfil.PARAMEDICAL.ToString
+            Case ProfilDao.EnumProfilType.PARAMEDICAL.ToString
                 Select Case episode.ConclusionIdeType
                     Case EpisodeDao.EnumTypeConclusionParamedicale.ROLE_PROPRE.ToString
                         RadioBtnRolePropre.Checked = True
@@ -1500,7 +1500,7 @@ Public Class RadFEpisodeDetail
     End Sub
 
     Private Sub ControleMAJTypeConclusionIDE()
-        If episode.TypeProfil = EpisodeDao.EnumTypeProfil.PARAMEDICAL.ToString Then
+        If episode.TypeProfil = ProfilDao.EnumProfilType.PARAMEDICAL.ToString Then
             'Si demande d'avis, conclusion IDE obligatoirement sur demande d'avis
             If ControleDemandeAvisMedicalExiste = True Then 'Un épisode paramédical est considéré sur demande d'avis si Workflow de demande d'avis et/ou si observation libre et/ou su conclusion médicale
                 'Boutons radio non modifiables
@@ -1531,7 +1531,7 @@ Public Class RadFEpisodeDetail
                         RadioTypeConclusionIdeModified = False
                     End If
                     'Seules les options 'Demande d'avis' et 'Protocole' sont possibles si le profil utilisateur est IDE et si l'épisode n'est pas clôturé depuis plus d'un jour
-                    If userLog.TypeProfil = EpisodeDao.EnumTypeProfil.PARAMEDICAL.ToString Then
+                    If userLog.TypeProfil = ProfilDao.EnumProfilType.PARAMEDICAL.ToString Then
                         If Not (episode.Etat = EpisodeDao.EnumEtatEpisode.CLOTURE.ToString AndAlso episode.DateModification.Date < Date.Now.Date) Then
                             RadioBtnDemandeAvis.Enabled = True
                             RadioBtnSurProtocole.Enabled = True
@@ -1547,7 +1547,7 @@ Public Class RadFEpisodeDetail
                 episode.ConclusionIdeType = EpisodeDao.EnumTypeConclusionParamedicale.ROLE_PROPRE.ToString
                 episodeDao.ModificationEpisode(episode)
                 RadioTypeConclusionIdeModified = False
-                If userLog.TypeProfil = EpisodeDao.EnumTypeProfil.PARAMEDICAL.ToString Then
+                If userLog.TypeProfil = ProfilDao.EnumProfilType.PARAMEDICAL.ToString Then
                     If Not (episode.Etat = EpisodeDao.EnumEtatEpisode.CLOTURE.ToString AndAlso episode.DateModification.Date < Date.Now.Date) Then
                         RadioBtnDemandeAvis.Enabled = True
                         RadioBtnSurProtocole.Enabled = True
@@ -1833,7 +1833,7 @@ Public Class RadFEpisodeDetail
         End If
 
         'Si l'épisode a été créé par un profil Médical, la conclusion médicale est requise pour clôturer l'épisode
-        If episode.TypeProfil = EpisodeDao.EnumTypeProfil.MEDICAL.ToString Then
+        If episode.TypeProfil = ProfilDao.EnumProfilType.MEDICAL.ToString Then
             If ControleConclusionMedicaleExiste = False Then
                 MessageBox.Show("Episode créé par un profil 'Médical', la clôture de l'épisode est impossible tant que la conclusion médicale n'est pas réalisée" & vbCrLf &
                                 "(Une conclusion médicale implique d'associer au moins un contexte à l'épisode")
@@ -1851,7 +1851,7 @@ Public Class RadFEpisodeDetail
         End If
 
         'Si l'épisode a été créé par un profil Paramédical, en cas de Rôle propre ou sur protocole, le commentaire de conclusion paramédicale est requis pour clôturer l'épisode
-        If episode.TypeProfil = EpisodeDao.EnumTypeProfil.PARAMEDICAL.ToString Then
+        If episode.TypeProfil = ProfilDao.EnumProfilType.PARAMEDICAL.ToString Then
             If RadioBtnRolePropre.Checked = True Or RadioBtnSurProtocole.Checked = True Then
                 If TxtConclusionIDE.Text = "" Then
                     MessageBox.Show("Pour un épisode de type 'Paramédical', en cas de conclusion paramédicale de type 'Rôle propre' ou 'Protocole'," & vbCrLf &
@@ -1881,7 +1881,7 @@ Public Class RadFEpisodeDetail
     'Vérification si l'épisode peut être clôturé automatiquement
     Private Sub GestionClotureAutomatique()
         If userLog.TypeProfil = ProfilDao.EnumProfilType.PARAMEDICAL.ToString Then
-            If episode.TypeProfil = EpisodeDao.EnumTypeProfil.PARAMEDICAL.ToString Then
+            If episode.TypeProfil = ProfilDao.EnumProfilType.PARAMEDICAL.ToString Then
                 If ControleDemandeAvisMedicalExiste = True Then
                     If ControleWorkflowEnCoursExistant = False Then
                         If ControleConclusionMedicaleExiste = True Then
@@ -4503,9 +4503,9 @@ Public Class RadFEpisodeDetail
             InhibeAccesMed()
         Else
             Select Case userLog.TypeProfil
-                Case EpisodeDao.EnumTypeProfil.MEDICAL.ToString
+                Case ProfilDao.EnumProfilType.MEDICAL.ToString
                     InhibeAccesIDE()
-                Case EpisodeDao.EnumTypeProfil.PARAMEDICAL.ToString
+                Case ProfilDao.EnumProfilType.PARAMEDICAL.ToString
                     InhibeAccesMed()
                     If episode.TypeActivite <> EpisodeDao.EnumTypeActiviteEpisodeCode.PATHOLOGIE_AIGUE Then
                         AjoutProtocoleAiguToolStripMenuItem.Visible = False
