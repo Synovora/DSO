@@ -51,6 +51,9 @@ Public Class RadFEpisodeLigneDeVie
     Dim Parametre4Id As Long
     Dim Parametre5Id As Long
 
+    Dim Entier1, Entier2, Entier3, Entier4, Entier5 As Integer
+    Dim Decimale1, Decimale2, Decimale3, Decimale4, Decimale5 As Integer
+
     Dim ConfigurationParametreExiste As Boolean
 
     Private Sub RadFEpisodeListe_Load(sender As Object, e As EventArgs) Handles MyBase.Load
@@ -159,6 +162,18 @@ Public Class RadFEpisodeLigneDeVie
         Parametre4Id = 0
         Parametre5Id = 0
 
+        Entier1 = 0
+        Entier2 = 0
+        Entier3 = 0
+        Entier4 = 0
+        Entier5 = 0
+
+        Decimale1 = 0
+        Decimale2 = 0
+        Decimale3 = 0
+        Decimale4 = 0
+        Decimale5 = 0
+
         DteDepuis.Value = Date.Now()
 
         DteJusqua.Value = Date.Now().AddYears(-1)
@@ -247,6 +262,18 @@ Public Class RadFEpisodeLigneDeVie
         Parametre4Id = 0
         Parametre5Id = 0
 
+        Entier1 = 0
+        Entier2 = 0
+        Entier3 = 0
+        Entier4 = 0
+        Entier5 = 0
+
+        Decimale1 = 0
+        Decimale2 = 0
+        Decimale3 = 0
+        Decimale4 = 0
+        Decimale5 = 0
+
         ligneDeVie.ParametreId1 = 0
         ligneDeVie.ParametreId2 = 0
         ligneDeVie.ParametreId3 = 0
@@ -279,22 +306,32 @@ Public Class RadFEpisodeLigneDeVie
                         Lblparametre1.Text = parametre.Description & vbCrLf & parametre.Unite
                         Parametre1Id = parametre.Id
                         ligneDeVie.ParametreId1 = parametre.Id
+                        Entier1 = parametre.Entier
+                        Decimale1 = parametre.Decimal
                     Case 2
                         LblParametre2.Text = parametre.Description & vbCrLf & parametre.Unite
                         Parametre2Id = parametre.Id
                         ligneDeVie.ParametreId2 = parametre.Id
+                        Entier2 = parametre.Entier
+                        Decimale2 = parametre.Decimal
                     Case 3
                         LblParametre3.Text = parametre.Description & vbCrLf & parametre.Unite
                         Parametre3Id = parametre.Id
                         ligneDeVie.ParametreId3 = parametre.Id
+                        Entier3 = parametre.Entier
+                        Decimale3 = parametre.Decimal
                     Case 4
                         LblParametre4.Text = parametre.Description & vbCrLf & parametre.Unite
                         Parametre4Id = parametre.Id
                         ligneDeVie.ParametreId4 = parametre.Id
+                        Entier4 = parametre.Entier
+                        Decimale4 = parametre.Decimal
                     Case 5
                         LblParametre5.Text = parametre.Description & vbCrLf & parametre.Unite
                         Parametre5Id = parametre.Id
                         ligneDeVie.ParametreId5 = parametre.Id
+                        Entier5 = parametre.Entier
+                        Decimale5 = parametre.Decimal
                 End Select
             Else
                 Exit Sub
@@ -316,6 +353,7 @@ Public Class RadFEpisodeLigneDeVie
         Dim dateCreation As Date
         Dim conclusionMedicale As String
         Dim ValeurParametre As Decimal
+        Dim ValeurString As String
         Dim rowCount As Integer = dt.Rows.Count - 1
 
         Dim etatCode As String
@@ -385,7 +423,8 @@ Public Class RadFEpisodeLigneDeVie
                 If Parametre1Id <> 0 Then
                     ValeurParametre = Coalesce(dt.Rows(i)("ValeurParam1"), 0)
                     If ValeurParametre <> 0 Then
-                        RadGridViewEpisode.Rows(iGrid).Cells("parametre1").Value = ValeurParametre
+                        ValeurString = FormatParametre(Entier1, Decimale1, ValeurParametre)
+                        RadGridViewEpisode.Rows(iGrid).Cells("parametre1").Value = ValeurString
                     End If
                 End If
             End If
@@ -395,7 +434,8 @@ Public Class RadFEpisodeLigneDeVie
                 If Parametre2Id <> 0 Then
                     ValeurParametre = Coalesce(dt.Rows(i)("ValeurParam2"), 0)
                     If ValeurParametre <> 0 Then
-                        RadGridViewEpisode.Rows(iGrid).Cells("parametre2").Value = ValeurParametre
+                        ValeurString = FormatParametre(Entier2, Decimale2, ValeurParametre)
+                        RadGridViewEpisode.Rows(iGrid).Cells("parametre2").Value = ValeurString
                     End If
                 End If
             End If
@@ -405,7 +445,8 @@ Public Class RadFEpisodeLigneDeVie
                 If Parametre3Id <> 0 Then
                     ValeurParametre = Coalesce(dt.Rows(i)("ValeurParam3"), 0)
                     If ValeurParametre <> 0 Then
-                        RadGridViewEpisode.Rows(iGrid).Cells("parametre3").Value = ValeurParametre
+                        ValeurString = FormatParametre(Entier3, Decimale3, ValeurParametre)
+                        RadGridViewEpisode.Rows(iGrid).Cells("parametre3").Value = ValeurString
                     End If
                 End If
             End If
@@ -415,7 +456,8 @@ Public Class RadFEpisodeLigneDeVie
                 If Parametre4Id <> 0 Then
                     ValeurParametre = Coalesce(dt.Rows(i)("ValeurParam4"), 0)
                     If ValeurParametre <> 0 Then
-                        RadGridViewEpisode.Rows(iGrid).Cells("parametre4").Value = ValeurParametre
+                        ValeurString = FormatParametre(Entier4, Decimale4, ValeurParametre)
+                        RadGridViewEpisode.Rows(iGrid).Cells("parametre4").Value = ValeurString
                     End If
                 End If
             End If
@@ -425,7 +467,8 @@ Public Class RadFEpisodeLigneDeVie
                 If Parametre5Id <> 0 Then
                     ValeurParametre = Coalesce(dt.Rows(i)("ValeurParam5"), 0)
                     If ValeurParametre <> 0 Then
-                        RadGridViewEpisode.Rows(iGrid).Cells("parametre5").Value = ValeurParametre
+                        ValeurString = FormatParametre(Entier5, Decimale5, ValeurParametre)
+                        RadGridViewEpisode.Rows(iGrid).Cells("parametre5").Value = ValeurString
                     End If
                 End If
             End If
@@ -868,4 +911,44 @@ Public Class RadFEpisodeLigneDeVie
         End Using
     End Sub
 
+    Private Function FormatParametre(Entier As Integer, Decimale As Integer, Valeur As Decimal) As String
+        Dim ValeurString As String = ""
+        Select Case Entier
+            Case 1
+                Select Case Decimale
+                    Case 0
+                        ValeurString = Valeur.ToString("0")
+                    Case 1
+                        ValeurString = Valeur.ToString("0.0")
+                    Case 2
+                        ValeurString = Valeur.ToString("0.00")
+                    Case 3
+                        ValeurString = Valeur.ToString("0.000")
+                End Select
+            Case 2
+                Select Case Decimale
+                    Case 0
+                        ValeurString = Valeur.ToString("#0")
+                    Case 1
+                        ValeurString = Valeur.ToString("#0.0")
+                    Case 2
+                        ValeurString = Valeur.ToString("#0.00")
+                    Case 3
+                        ValeurString = Valeur.ToString("#0.000")
+                End Select
+            Case 3
+                Select Case Decimale
+                    Case 0
+                        ValeurString = Valeur.ToString("##0")
+                    Case 1
+                        ValeurString = Valeur.ToString("##0.0")
+                    Case 2
+                        ValeurString = Valeur.ToString("##0.00")
+                    Case 3
+                        ValeurString = Valeur.ToString("##0.000")
+                End Select
+        End Select
+
+        Return ValeurString
+    End Function
 End Class
