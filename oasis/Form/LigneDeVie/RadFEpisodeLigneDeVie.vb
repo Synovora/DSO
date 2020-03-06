@@ -671,6 +671,25 @@ Public Class RadFEpisodeLigneDeVie
         End If
     End Sub
 
+    Private Sub SousépisodesToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles SousépisodesToolStripMenuItem.Click
+        If RadGridViewEpisode.CurrentRow IsNot Nothing Then
+            Try
+                Me.Cursor = Cursors.WaitCursor
+                Me.Enabled = False
+                Dim EpisodeId As Integer = RadGridViewEpisode.CurrentRow.Cells("episode_Id").Value
+                Dim episode As Episode = episodeDao.GetEpisodeById(EpisodeId)
+                Using frm = New FrmSousEpisodeListe(episode, SelectedPatient)
+                    frm.ShowDialog()
+                End Using
+            Catch err As Exception
+                MsgBox(err.Message())
+            Finally
+                Me.Enabled = True
+                Me.Cursor = Cursors.Default
+            End Try
+        End If
+    End Sub
+
     Private Sub LblParametre4_Click(sender As Object, e As EventArgs) Handles LblParametre4.Click
         Dim nombreParametre As Integer = listeParametreaAfficher.Count()
         If nombreParametre >= 4 Then

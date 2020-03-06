@@ -25,8 +25,10 @@ Partial Class RadFNotification
         Me.components = New System.ComponentModel.Container()
         Me.Timer1 = New System.Windows.Forms.Timer(Me.components)
         Me.Timer2 = New System.Windows.Forms.Timer(Me.components)
-        Me.Texte = New System.Windows.Forms.TextBox()
-        Me.Label1 = New System.Windows.Forms.Label()
+        Me.RadLabel1 = New Telerik.WinControls.UI.RadLabel()
+        Me.Texte = New Telerik.WinControls.UI.RadPanel()
+        CType(Me.RadLabel1, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.Texte, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
@@ -38,37 +40,35 @@ Partial Class RadFNotification
         '
         Me.Timer2.Interval = 2000
         '
+        'RadLabel1
+        '
+        Me.RadLabel1.Dock = System.Windows.Forms.DockStyle.Bottom
+        Me.RadLabel1.ForeColor = System.Drawing.Color.Red
+        Me.RadLabel1.Location = New System.Drawing.Point(0, 172)
+        Me.RadLabel1.Name = "RadLabel1"
+        Me.RadLabel1.Size = New System.Drawing.Size(298, 18)
+        Me.RadLabel1.TabIndex = 3
+        Me.RadLabel1.Text = "Placez le curseur dans la fenêtre pour conserver l'affichage"
+        '
         'Texte
         '
-        Me.Texte.BackColor = System.Drawing.Color.FromArgb(CType(CType(191, Byte), Integer), CType(CType(219, Byte), Integer), CType(CType(255, Byte), Integer))
-        Me.Texte.BorderStyle = System.Windows.Forms.BorderStyle.None
-        Me.Texte.Dock = System.Windows.Forms.DockStyle.Bottom
-        Me.Texte.Font = New System.Drawing.Font("Segoe UI", 10.0!)
-        Me.Texte.Location = New System.Drawing.Point(0, 40)
-        Me.Texte.Multiline = True
+        Me.Texte.BackColor = System.Drawing.SystemColors.GradientInactiveCaption
+        Me.Texte.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.Texte.Location = New System.Drawing.Point(0, 0)
         Me.Texte.Name = "Texte"
-        Me.Texte.Size = New System.Drawing.Size(552, 164)
-        Me.Texte.TabIndex = 1
-        Me.Texte.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
-        '
-        'Label1
-        '
-        Me.Label1.AutoSize = True
-        Me.Label1.ForeColor = System.Drawing.Color.Red
-        Me.Label1.Location = New System.Drawing.Point(124, 9)
-        Me.Label1.Name = "Label1"
-        Me.Label1.Size = New System.Drawing.Size(308, 13)
-        Me.Label1.TabIndex = 2
-        Me.Label1.Text = "Placez le curseur dans la fenêtre pour conserver l'affichage"
+        Me.Texte.Size = New System.Drawing.Size(602, 172)
+        Me.Texte.TabIndex = 4
+        Me.Texte.Text = "Texte du message"
+        Me.Texte.TextAlignment = System.Drawing.ContentAlignment.MiddleCenter
         '
         'RadFNotification
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.BackColor = System.Drawing.Color.FromArgb(CType(CType(191, Byte), Integer), CType(CType(219, Byte), Integer), CType(CType(255, Byte), Integer))
-        Me.ClientSize = New System.Drawing.Size(552, 204)
-        Me.Controls.Add(Me.Label1)
+        Me.ClientSize = New System.Drawing.Size(602, 190)
         Me.Controls.Add(Me.Texte)
+        Me.Controls.Add(Me.RadLabel1)
         Me.ForeColor = System.Drawing.Color.Maroon
         Me.MaximizeBox = False
         Me.MinimizeBox = False
@@ -77,10 +77,13 @@ Partial Class RadFNotification
         '
         '
         Me.RootElement.ApplyShapeToControl = True
+        Me.ShowIcon = False
         Me.ShowInTaskbar = False
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent
         Me.Text = "RadFNotification"
         Me.TopMost = True
+        CType(Me.RadLabel1, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.Texte, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
         Me.PerformLayout()
@@ -88,7 +91,7 @@ Partial Class RadFNotification
     End Sub
     Friend WithEvents Timer1 As Timer
     Friend WithEvents Timer2 As Timer
-    Friend WithEvents Texte As TextBox
-    Friend WithEvents Label1 As Label
+    Friend WithEvents RadLabel1 As Telerik.WinControls.UI.RadLabel
+    Friend WithEvents Texte As Telerik.WinControls.UI.RadPanel
 End Class
 

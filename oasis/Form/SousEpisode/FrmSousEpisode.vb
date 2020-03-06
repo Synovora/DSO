@@ -42,14 +42,32 @@ Public Class FrmSousEpisode
         initControls()
     End Sub
 
+    Private Sub initALDetReponse()
+        If Me.DropDownSousType.SelectedItem IsNot Nothing Then
+            Dim sousType As SousEpisodeSousType = TryCast(Me.DropDownSousType.SelectedItem.Value, SousEpisodeSousType)
+            Dim visible = sousType.IsALDPossible
+            ChkALD.Visible = visible
+            LblALD.Visible = visible
+
+            If isCreation Then
+                ChkBReponseAttendue.Checked = sousType.IsReponseRequise
+                ChkBReponseAttendue.Enabled = Not sousType.IsReponseRequise
+            End If
+        End If
+    End Sub
+
     Private Sub DropDownType_SelectedIndexChanged(sender As Object, e As Data.PositionChangedEventArgs) Handles DropDownType.SelectedIndexChanged
         initSousTypes(lstSousEpisodeType(e.Position).Id)
     End Sub
 
+    Private Sub DropDownSousType_SelectedIndexChanged(sender As Object, e As Data.PositionChangedEventArgs) Handles DropDownSousType.SelectedIndexChanged
+        initALDetReponse()
+    End Sub
 
     Private Sub ChkBReponseAttendue_ToggleStateChanged(sender As Object, args As StateChangedEventArgs) Handles ChkBReponseAttendue.ToggleStateChanged
-        TxtDelai.Visible = If(args.ToggleState = ToggleState.On, True, False)
-        LblDelai.Visible = If(args.ToggleState = ToggleState.On, True, False)
+        Dim visible = (args.ToggleState = ToggleState.On)
+        TxtDelai.Visible = visible
+        LblDelai.Visible = visible
     End Sub
 
     Private Sub BtnAjoutReponse_Click(sender As Object, e As EventArgs) Handles BtnAjoutReponse.Click
@@ -69,6 +87,7 @@ Public Class FrmSousEpisode
             Notification.show("Ajout document", "Ajout terminée avec succès !")
         End If
     End Sub
+
 
     Private Sub initControls()
         ' -- listes de references
@@ -93,17 +112,24 @@ Public Class FrmSousEpisode
             Next
             If isCreation AndAlso Me.DropDownType.Items.Count > 0 Then
                 Me.DropDownType.SelectedItem = Me.DropDownType.Items(0)
+                initSousTypes(TryCast(Me.DropDownType.SelectedItem.Value, SousEpisodeType).Id)
             End If
             Me.DropDownType.Enabled = isCreation
 
+            ChkALD.Checked = sousEpisode.IsALD
+            ChkALD.Enabled = isCreation
+
             Me.LblFichier.Text = .NomFichier
+
             Me.TxtRDVCommentaire.Text = .Commentaire
             Me.TxtRDVCommentaire.Enabled = isCreation
         End With
         ' -- reponses
-        ChkBReponseAttendue.Checked = sousEpisode.IsReponse
+        If Not isCreation Then
+            ChkBReponseAttendue.Checked = sousEpisode.IsReponse
+            ChkBReponseAttendue.Enabled = isCreation
+        End If
         TxtDelai.Value = If(sousEpisode.DelaiSinceValidation = Nothing, "", sousEpisode.DelaiSinceValidation)
-        ChkBReponseAttendue.Enabled = isCreation
         TxtDelai.Enabled = isCreation
         BtnAjoutReponse.Visible = Not isCreation
         '-- refresh grid reponse
@@ -195,6 +221,7 @@ Public Class FrmSousEpisode
         If DropDownSousType.SelectedItem Is Nothing AndAlso DropDownSousType.Items.Count > 0 Then
             Me.DropDownSousType.SelectedItem = Me.DropDownSousType.Items(0)
         End If
+
         Me.DropDownSousType.Enabled = isCreation
 
     End Sub

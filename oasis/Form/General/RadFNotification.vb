@@ -57,7 +57,7 @@
         SubMouseLeave()
     End Sub
 
-    Private Sub Texte_MouseLeave(sender As Object, e As EventArgs) Handles Texte.MouseLeave
+    Private Sub Texte_MouseLeave(sender As Object, e As EventArgs)
         SubMouseLeave()
     End Sub
 
@@ -71,7 +71,7 @@
         SubMouseHover()
     End Sub
 
-    Private Sub Texte_MouseHover(sender As Object, e As EventArgs) Handles Texte.MouseHover
+    Private Sub Texte_MouseHover(sender As Object, e As EventArgs)
         SubMouseHover()
     End Sub
 
