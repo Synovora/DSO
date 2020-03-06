@@ -139,6 +139,12 @@ Public Class FAuthentificattion
         UtilisateurConnecte.UtilisateurAdmin = Admin
         userLog = UtilisateurConnecte
 
+        ' -- pour test api rest
+        loginRequestLog = New LoginRequest() With {
+                .login = "Bertrand.Gambet",
+                .password = "a"
+        }
+
         '  --- init internationnalisation du richTextBoxEditor
         RichTextBoxLocalizationProvider.CurrentProvider = RichTextBoxLocalizationProvider.FromStream(New MemoryStream(New System.Text.UTF8Encoding().GetBytes(FrenchRichTextBoxStrings.RichTextBoxStrings)))
 

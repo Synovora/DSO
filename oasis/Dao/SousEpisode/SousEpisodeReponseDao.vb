@@ -1,21 +1,31 @@
 ﻿Imports System.Data.SqlClient
 Imports Oasis_WF
 Imports Oasis_Common
+Imports System.IO
 
 Public Class SousEpisodeReponseDao
     Inherits StandardDao
 
-
-    Public Function getLstSousEpisodeReponse(Optional idSousEpisodeType As Long = 0) As List(Of SousEpisodeReponse)
+    ''' <summary>
+    ''' 
+    ''' </summary>
+    ''' <param name="idSousEpisodeReponse"></param>
+    ''' <returns></returns>
+    Public Function getLstSousEpisodeReponse(idSousEpisode As Long, Optional idSousEpisodeReponse As Long = 0) As List(Of SousEpisodeReponse)
         Dim lst As List(Of SousEpisodeReponse) = New List(Of SousEpisodeReponse)
-        Dim data As DataTable = getTableSousEpisodeReponse(idSousEpisodeType)
+        Dim data As DataTable = getTableSousEpisodeReponse(idSousEpisode, idSousEpisodeReponse)
         For Each row In data.Rows
             lst.Add(buildBean(row))
         Next
         Return lst
     End Function
 
-    Public Function getTableSousEpisodeReponse(idSousEpisode As Long) As DataTable
+    ''' <summary>
+    ''' 
+    ''' </summary>
+    ''' <param name="idSousEpisode"></param>
+    ''' <returns></returns>
+    Public Function getTableSousEpisodeReponse(Optional idSousEpisode As Long = 0, Optional idSousEpisodeReponse As Long = 0) As DataTable
         Dim SQLString As String
         'Console.WriteLine("----------> getAllTacheEnCours")
         SQLString =
@@ -29,8 +39,13 @@ Public Class SousEpisodeReponseDao
             "     UC.oa_utilisateur_prenom + ' ' + UC.oa_utilisateur_nom as user_create " & vbCrLf &
             "FROM oasis.oa_sous_episode_reponse SER " & vbCrLf &
             "JOIN oasis.oa_utilisateur UC ON UC.oa_utilisateur_id = SER.create_user_id " & vbCrLf &
-            "WHERE id_sous_episode = @idSousEpisode " & vbCrLf
-
+            "WHERE 1=1 " & vbCrLf
+        If idSousEpisode <> 0 Then
+            SQLString += "AND id_sous_episode = @idSousEpisode " & vbCrLf
+        End If
+        If idSousEpisodeReponse <> 0 Then
+            SQLString += "AND id = @id"
+        End If
         'Console.WriteLine(SQLString)
 
         Using con As SqlConnection = GetConnection()
@@ -38,8 +53,13 @@ Public Class SousEpisodeReponseDao
             Dim tacheDataAdapter As SqlDataAdapter = New SqlDataAdapter()
             Using tacheDataAdapter
                 tacheDataAdapter.SelectCommand = New SqlCommand(SQLString, con)
-                tacheDataAdapter.SelectCommand.Parameters.AddWithValue("@idSousEpisode", idSousEpisode)
-                Dim tacheDataTable As DataTable = New DataTable()
+                If idSousEpisode <> 0 Then
+                    tacheDataAdapter.SelectCommand.Parameters.AddWithValue("@idSousEpisode", idSousEpisode)
+                End If
+                If idSousEpisodeReponse <> 0 Then
+                        tacheDataAdapter.SelectCommand.Parameters.AddWithValue("@id", idSousEpisodeReponse)
+                    End If
+                    Dim tacheDataTable As DataTable = New DataTable()
                 Using tacheDataTable
                     Try
                         tacheDataAdapter.Fill(tacheDataTable)
@@ -52,8 +72,14 @@ Public Class SousEpisodeReponseDao
         End Using
     End Function
 
-
-    Friend Function Create(seType As SousEpisodeReponse) As Boolean
+    ''' <summary>
+    ''' 
+    ''' </summary>
+    ''' <param name="sousEpisode"></param>
+    ''' <param name="sousEpisodeReponse"></param>
+    ''' <param name="filenameSrc"></param>
+    ''' <returns></returns>
+    Friend Function Create(sousEpisode As SousEpisode, sousEpisodeReponse As SousEpisodeReponse, filenameSrc As String) As Boolean
         Dim da As SqlDataAdapter = New SqlDataAdapter()
         Dim codeRetour As Boolean = True
         Dim con As SqlConnection
@@ -62,21 +88,31 @@ Public Class SousEpisodeReponseDao
         Dim transaction As SqlClient.SqlTransaction = con.BeginTransaction
 
         Try
-            Dim SQLstring As String = "INSERT INTO oa_r_sous_episode_reponse " &
-                    "(id_sous_episode, create_user, horodate_creation, nom_fichier, commentaire)" &
-            " VALUES (@id_sous_episode, @CreateUser, @dateCreation, @NomFichier , @Commentaire)"
+            Dim SQLstring As String = "INSERT INTO oasis.oa_sous_episode_reponse " &
+                    "(id_sous_episode, create_user_id, horodate_creation, nom_fichier, commentaire)" &
+            " VALUES (@id_sous_episode, @CreateUser, @dateCreation, @NomFichier , @Commentaire); SELECT SCOPE_IDENTITY()"
 
             Dim cmd As New SqlCommand(SQLstring, con, transaction)
             With cmd.Parameters
-                .AddWithValue("@id_sous_episode", seType.IdSousEpisode)
-                .AddWithValue("@CreateUser", seType.CreateUserId)
-                .AddWithValue("@dateCreation", seType.HorodateCreation)
-                .AddWithValue("@NomFichier", seType.NomFichier)
-                .AddWithValue("@Commentaire", seType.Commentaire)
+                .AddWithValue("@id_sous_episode", sousEpisodeReponse.IdSousEpisode)
+                .AddWithValue("@CreateUser", sousEpisodeReponse.CreateUserId)
+                .AddWithValue("@dateCreation", sousEpisodeReponse.HorodateCreation)
+                .AddWithValue("@NomFichier", sousEpisodeReponse.NomFichier)
+                .AddWithValue("@Commentaire", sousEpisodeReponse.Commentaire)
             End With
 
             da.InsertCommand = cmd
-            da.InsertCommand.ExecuteNonQuery()
+            Dim idSEReponse = da.InsertCommand.ExecuteScalar()
+
+            ' --- tentative d'upload
+            Using apiOasis As New ApiOasis()
+                apiOasis.uploadFileRest(loginRequestLog.login,
+                                        loginRequestLog.password,
+                                        sousEpisodeReponse.getFilenameServer(sousEpisode.EpisodeId, idSEReponse),
+                                        File.ReadAllBytes(filenameSrc))
+            End Using
+            ' -- upload ok => on fixe l'id de la reponse
+            sousEpisodeReponse.Id = idSEReponse
 
             transaction.Commit()
 
@@ -92,6 +128,28 @@ Public Class SousEpisodeReponseDao
         Return codeRetour
     End Function
 
+    Public Function getContenu(idEpisode As Long, sousEpisodeReponse As SousEpisodeReponse) As Byte()
+        Dim filename = sousEpisodeReponse.getFilenameServer(idEpisode)
+        ' -- download
+        Using apiOasis As New ApiOasis()
+            Dim downloadRequest As New DownloadRequest With {
+               .LoginRequest = loginRequestLog,
+               .FileName = filename
+               }
+            Return apiOasis.downloadFileRest(downloadRequest)
+        End Using
+
+    End Function
+
+    Friend Function getById(idSousEpisodeReponse As Long) As SousEpisodeReponse
+        Return getLstSousEpisodeReponse(0, idSousEpisodeReponse)(0)
+    End Function
+
+    ''' <summary>
+    ''' 
+    ''' </summary>
+    ''' <param name="row"></param>
+    ''' <returns></returns>
     Private Function buildBean(row As DataRow) As SousEpisodeReponse
         Dim seType As New SousEpisodeReponse(row)
         Return seType

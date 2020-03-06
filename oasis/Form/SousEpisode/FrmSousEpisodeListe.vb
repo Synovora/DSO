@@ -4,6 +4,7 @@ Imports Telerik.WinControls.UI
 
 Public Class FrmSousEpisodeListe
     Dim sousEpisodeDao As SousEpisodeDao = New SousEpisodeDao
+    Dim sousEpisodeReponseDao As SousEpisodeReponseDao = New SousEpisodeReponseDao
     Dim episode As Episode, patient As Patient
 
     ''' <summary>
@@ -173,7 +174,19 @@ Public Class FrmSousEpisodeListe
     ''' <param name="e"></param>
     Sub subGridReponse_CommandCellClick(ByVal sender As Object, ByVal e As EventArgs)
         Dim gce As GridCommandCellElement = (TryCast(sender, GridCommandCellElement))
-        MessageBox.Show("Telecharger fichier " & gce.RowInfo.Cells("NomFichier").Value & " : " & gce.RowInfo.Cells("IdSousEpisode").Value & "_" & gce.RowInfo.Cells("Id").Value)
+        'MessageBox.Show("Telecharger fichier " & gce.RowInfo.Cells("NomFichier").Value & " : " & gce.RowInfo.Cells("IdSousEpisode").Value & "_" & gce.RowInfo.Cells("Id").Value)
+        Dim sousEpisodeReponse As SousEpisodeReponse
+        Try
+            Me.Cursor = Cursors.WaitCursor
+            sousEpisodeReponse = sousEpisodeReponseDao.getById(gce.RowInfo.Cells("Id").Value)
+        Catch err As Exception
+            MsgBox(err.Message())
+            Return
+        Finally
+            Me.Cursor = Cursors.Default
+        End Try
+
+        Dim tbl As Byte() = sousEpisodeReponseDao.getContenu(episode.Id, sousEpisodeReponse)
     End Sub
 
     ''' <summary>
@@ -182,7 +195,6 @@ Public Class FrmSousEpisodeListe
     ''' <param name="e"></param>
     Private Sub refreshReponseSubGrid(ByVal e As GridViewRowSourceNeededEventArgs)
         Me.Cursor = Cursors.WaitCursor
-        Dim sousEpisodeReponseDao = New SousEpisodeReponseDao
         Dim rowView As DataRowView = TryCast(e.ParentRow.DataBoundItem, DataRowView)
 
         Try

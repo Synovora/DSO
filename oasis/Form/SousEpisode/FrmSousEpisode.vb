@@ -1,4 +1,5 @@
-﻿Imports Oasis_Common
+﻿Imports System.IO
+Imports Oasis_Common
 Imports Telerik.WinControls.Enumerations
 Imports Telerik.WinControls.UI
 
@@ -82,9 +83,21 @@ Public Class FrmSousEpisode
                 Return
             End If
 
+            Dim sousEpisodeReponse As SousEpisodeReponse = New SousEpisodeReponse
+            With sousEpisodeReponse
+                .IdSousEpisode = sousEpisode.Id
+                .CreateUserId = userLog.UtilisateurId
+                .HorodateCreation = DateTime.Now
+                .NomFichier = Path.GetFileName(fileName)
+                .Commentaire = comment
+            End With
+            If sousEpisodeReponseDao.Create(sousEpisode, sousEpisodeReponse, fileName) = False Then
+                Notification.show("Ajout document", "ERREUR insertion du nouveau document !!!")
+            Else
+                Notification.show("Ajout document", "Ajout terminée avec succès !")
+                refreshGrid()
+            End If
 
-            MsgBox(fileName)
-            Notification.show("Ajout document", "Ajout terminée avec succès !")
         End If
     End Sub
 
