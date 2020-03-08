@@ -141,12 +141,12 @@ Public Class FrmSousEpisode
         If Not isCreation Then
             ChkBReponseAttendue.Checked = sousEpisode.IsReponse
             ChkBReponseAttendue.Enabled = isCreation
+            refreshGrid()
         End If
         TxtDelai.Value = If(sousEpisode.DelaiSinceValidation = Nothing, "", sousEpisode.DelaiSinceValidation)
         TxtDelai.Enabled = isCreation
         BtnAjoutReponse.Visible = Not isCreation
         '-- refresh grid reponse
-        refreshGrid()
 
     End Sub
 

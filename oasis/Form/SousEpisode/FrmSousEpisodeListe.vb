@@ -129,14 +129,14 @@ Public Class FrmSousEpisodeListe
     Private Sub RadSousEpisodeGrid_SelectionChanged(sender As Object, e As EventArgs) Handles RadSousEpisodeGrid.SelectionChanged
         If Me.RadSousEpisodeGrid.CurrentRow Is Nothing _
                 OrElse Me.RadSousEpisodeGrid.Rows.Count = 0 _
-                OrElse Me.RadSousEpisodeGrid.CurrentRow.IsSelected = False _
-                OrElse Me.RadSousEpisodeGrid.CurrentRow.Cells("HorodateValidate") Is Nothing Then
+                OrElse Me.RadSousEpisodeGrid.CurrentRow.IsSelected = False Then
             BtnValidate.Visible = False
             BtnDetail.Visible = False
         Else
             BtnDetail.Visible = True
-            BtnValidate.Visible = Me.RadSousEpisodeGrid.CurrentRow.Cells("HorodateValidate").Value Is Nothing AndAlso
-                                  SousEpisodeSousType.isUserLogAutorise(Me.RadSousEpisodeGrid.CurrentRow.Cells("ValidationProfilTypes").Value)
+            BtnValidate.Visible = TryCast(Me.RadSousEpisodeGrid.CurrentRow.Parent, MasterGridViewTemplate) IsNot Nothing _
+                                  AndAlso Me.RadSousEpisodeGrid.CurrentRow.Cells("HorodateValidate").Value Is Nothing _
+                                  AndAlso SousEpisodeSousType.isUserLogAutorise(Me.RadSousEpisodeGrid.CurrentRow.Cells("ValidationProfilTypes").Value)
         End If
 
     End Sub
@@ -179,6 +179,9 @@ Public Class FrmSousEpisodeListe
         Try
             Me.Cursor = Cursors.WaitCursor
             sousEpisodeReponse = sousEpisodeReponseDao.getById(gce.RowInfo.Cells("Id").Value)
+
+            Dim tbl As Byte() = sousEpisodeReponseDao.getContenu(episode.Id, sousEpisodeReponse)
+
         Catch err As Exception
             MsgBox(err.Message())
             Return
@@ -186,7 +189,6 @@ Public Class FrmSousEpisodeListe
             Me.Cursor = Cursors.Default
         End Try
 
-        Dim tbl As Byte() = sousEpisodeReponseDao.getContenu(episode.Id, sousEpisodeReponse)
     End Sub
 
     ''' <summary>
@@ -274,8 +276,9 @@ Public Class FrmSousEpisodeListe
         Finally
             Me.Cursor = Cursors.Default
         End Try
-
-        With Me.RadSousEpisodeGrid.CurrentRow
+        ' -- si selection = subgrid => on prend le parent
+        Dim gridViewRow As GridViewRowInfo = If(TryCast(Me.RadSousEpisodeGrid.CurrentRow.Parent, MasterGridViewTemplate) Is Nothing, Me.RadSousEpisodeGrid.CurrentRow.Parent, Me.RadSousEpisodeGrid.CurrentRow)
+        With gridViewRow
             ficheSousEpisode(sousEpisode, .Cells("CreateUser").Value, .Cells("LastUpdateUser").Value, .Cells("ValidateUser").Value)
         End With
 
