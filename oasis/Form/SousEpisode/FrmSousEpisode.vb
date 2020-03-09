@@ -137,6 +137,9 @@ Public Class FrmSousEpisode
             Me.TxtRDVCommentaire.Text = .Commentaire
             Me.TxtRDVCommentaire.Enabled = isCreation
         End With
+        '-- handler sur bouton sous_grid
+        AddHandler RadTacheToTreatGrid.CommandCellClick, AddressOf gridReponse_CommandCellClick
+
         ' -- reponses
         If Not isCreation Then
             ChkBReponseAttendue.Checked = sousEpisode.IsReponse
@@ -147,6 +150,43 @@ Public Class FrmSousEpisode
         TxtDelai.Enabled = isCreation
         BtnAjoutReponse.Visible = Not isCreation
         '-- refresh grid reponse
+
+    End Sub
+
+    Private Sub gridReponse_CommandCellClick(sender As Object, e As GridViewCellEventArgs)
+        Dim gce As GridCommandCellElement = (TryCast(sender, GridCommandCellElement))
+        Select Case gce.ColumnInfo.Name.ToLower
+            Case "telecharger"
+                telecharger(gce)
+            Case "supprimer"
+                MsgBox("supprimer")
+        End Select
+    End Sub
+
+    Private Sub telecharger(gce As GridCommandCellElement)
+        'MessageBox.Show("Telecharger fichier " & gce.RowInfo.Cells("NomFichier").Value & " : " & gce.RowInfo.Cells("IdSousEpisode").Value & "_" & gce.RowInfo.Cells("Id").Value)
+        Dim sousEpisodeReponse As SousEpisodeReponse
+        Try
+            Me.Cursor = Cursors.WaitCursor
+            sousEpisodeReponse = sousEpisodeReponseDao.getById(gce.RowInfo.Cells("Id").Value)
+
+            Dim tbl As Byte() = sousEpisodeReponseDao.getContenu(episode.Id, sousEpisodeReponse)
+            Me.Cursor = Cursors.Default
+            SaveFileDialog1.FileName = sousEpisodeReponse.NomFichier
+            Select Case (SaveFileDialog1.ShowDialog())
+                Case DialogResult.Abort, DialogResult.Cancel
+                    Notification.show("Réponse Sous-épisode", "Téléchargement abandonné !")
+                Case DialogResult.OK, DialogResult
+                    File.WriteAllBytes(SaveFileDialog1.FileName, tbl)
+                    Notification.show("Réponse Sous-épisode", "Téléchargement de " & SaveFileDialog1.FileName & " Terminé !")
+            End Select
+
+        Catch err As Exception
+            MsgBox(err.Message())
+            Return
+        Finally
+            Me.Cursor = Cursors.Default
+        End Try
 
     End Sub
 

@@ -26,10 +26,10 @@ Partial Class FrmSousEpisode
         Dim GridViewTextBoxColumn2 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
         Dim GridViewTextBoxColumn3 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
         Dim GridViewTextBoxColumn4 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
+        Dim GridViewCommandColumn1 As Telerik.WinControls.UI.GridViewCommandColumn = New Telerik.WinControls.UI.GridViewCommandColumn()
+        Dim GridViewCommandColumn2 As Telerik.WinControls.UI.GridViewCommandColumn = New Telerik.WinControls.UI.GridViewCommandColumn()
         Dim GridViewTextBoxColumn5 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
         Dim GridViewTextBoxColumn6 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
-        Dim GridViewCommandColumn1 As Telerik.WinControls.UI.GridViewCommandColumn = New Telerik.WinControls.UI.GridViewCommandColumn()
-        Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(FrmSousEpisode))
         Dim TableViewDefinition1 As Telerik.WinControls.UI.TableViewDefinition = New Telerik.WinControls.UI.TableViewDefinition()
         Me.RadPanel1 = New Telerik.WinControls.UI.RadPanel()
         Me.BtnValidate = New Telerik.WinControls.UI.RadButton()
@@ -68,6 +68,7 @@ Partial Class FrmSousEpisode
         Me.RadPanel4 = New Telerik.WinControls.UI.RadPanel()
         Me.RadTacheToTreatGrid = New Telerik.WinControls.UI.RadGridView()
         Me.OpenFileDialog1 = New System.Windows.Forms.OpenFileDialog()
+        Me.SaveFileDialog1 = New System.Windows.Forms.SaveFileDialog()
         CType(Me.RadPanel1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.RadPanel1.SuspendLayout()
         CType(Me.BtnValidate, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -509,25 +510,35 @@ Partial Class FrmSousEpisode
         GridViewTextBoxColumn3.Name = "HorodateCreation"
         GridViewTextBoxColumn3.RowSpan = 110
         GridViewTextBoxColumn3.TextAlignment = System.Drawing.ContentAlignment.MiddleCenter
-        GridViewTextBoxColumn3.Width = 90
+        GridViewTextBoxColumn3.Width = 86
         GridViewTextBoxColumn4.HeaderText = "Nom du fichier"
         GridViewTextBoxColumn4.Name = "NomFichier"
-        GridViewTextBoxColumn4.Width = 320
-        GridViewTextBoxColumn5.HeaderText = "Commentaire"
-        GridViewTextBoxColumn5.Name = "Commentaire"
-        GridViewTextBoxColumn5.Width = 639
-        GridViewTextBoxColumn6.HeaderText = "Utilisateur"
-        GridViewTextBoxColumn6.IsVisible = False
-        GridViewTextBoxColumn6.Name = "CreateUser"
-        GridViewTextBoxColumn6.Width = 38
-        GridViewCommandColumn1.DefaultText = "Voir"
-        GridViewCommandColumn1.HeaderText = "Action"
-        GridViewCommandColumn1.Image = CType(resources.GetObject("GridViewCommandColumn1.Image"), System.Drawing.Image)
-        GridViewCommandColumn1.MaxWidth = 50
+        GridViewTextBoxColumn4.Width = 308
+        GridViewCommandColumn1.DefaultText = "Télécharger"
+        GridViewCommandColumn1.HeaderText = "Télécharger"
+        GridViewCommandColumn1.ImageLayout = System.Windows.Forms.ImageLayout.Stretch
+        GridViewCommandColumn1.MaxWidth = 75
+        GridViewCommandColumn1.MinWidth = 75
         GridViewCommandColumn1.Name = "Telecharger"
         GridViewCommandColumn1.TextAlignment = System.Drawing.ContentAlignment.MiddleCenter
         GridViewCommandColumn1.UseDefaultText = True
-        Me.RadTacheToTreatGrid.MasterTemplate.Columns.AddRange(New Telerik.WinControls.UI.GridViewDataColumn() {GridViewTextBoxColumn1, GridViewTextBoxColumn2, GridViewTextBoxColumn3, GridViewTextBoxColumn4, GridViewTextBoxColumn5, GridViewTextBoxColumn6, GridViewCommandColumn1})
+        GridViewCommandColumn1.Width = 75
+        GridViewCommandColumn2.DefaultText = "Supprimer"
+        GridViewCommandColumn2.HeaderText = "Supprimer"
+        GridViewCommandColumn2.ImageLayout = System.Windows.Forms.ImageLayout.Stretch
+        GridViewCommandColumn2.MaxWidth = 65
+        GridViewCommandColumn2.MinWidth = 65
+        GridViewCommandColumn2.Name = "Supprimer"
+        GridViewCommandColumn2.UseDefaultText = True
+        GridViewCommandColumn2.Width = 65
+        GridViewTextBoxColumn5.HeaderText = "Commentaire"
+        GridViewTextBoxColumn5.Name = "Commentaire"
+        GridViewTextBoxColumn5.Width = 507
+        GridViewTextBoxColumn6.HeaderText = "Utilisateur"
+        GridViewTextBoxColumn6.MinWidth = 60
+        GridViewTextBoxColumn6.Name = "CreateUser"
+        GridViewTextBoxColumn6.Width = 60
+        Me.RadTacheToTreatGrid.MasterTemplate.Columns.AddRange(New Telerik.WinControls.UI.GridViewDataColumn() {GridViewTextBoxColumn1, GridViewTextBoxColumn2, GridViewTextBoxColumn3, GridViewTextBoxColumn4, GridViewCommandColumn1, GridViewCommandColumn2, GridViewTextBoxColumn5, GridViewTextBoxColumn6})
         Me.RadTacheToTreatGrid.MasterTemplate.EnableGrouping = False
         Me.RadTacheToTreatGrid.MasterTemplate.EnableSorting = False
         Me.RadTacheToTreatGrid.MasterTemplate.ViewDefinition = TableViewDefinition1
@@ -634,5 +645,6 @@ Partial Class FrmSousEpisode
     Friend WithEvents BtnAjoutReponse As Telerik.WinControls.UI.RadButton
     Friend WithEvents OpenFileDialog1 As OpenFileDialog
     Friend WithEvents ChkALD As Telerik.WinControls.UI.RadCheckBox
+    Friend WithEvents SaveFileDialog1 As SaveFileDialog
 End Class
 

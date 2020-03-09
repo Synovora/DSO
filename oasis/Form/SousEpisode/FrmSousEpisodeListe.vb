@@ -1,4 +1,5 @@
 ﻿
+Imports System.IO
 Imports Oasis_Common
 Imports Telerik.WinControls.UI
 
@@ -181,6 +182,15 @@ Public Class FrmSousEpisodeListe
             sousEpisodeReponse = sousEpisodeReponseDao.getById(gce.RowInfo.Cells("Id").Value)
 
             Dim tbl As Byte() = sousEpisodeReponseDao.getContenu(episode.Id, sousEpisodeReponse)
+            Me.Cursor = Cursors.Default
+            SaveFileDialog1.FileName = sousEpisodeReponse.NomFichier
+            Select Case (SaveFileDialog1.ShowDialog())
+                Case DialogResult.Abort, DialogResult.Cancel
+                    Notification.show("Réponse Sous-épisode", "Téléchargement abandonné !")
+                Case DialogResult.OK, DialogResult
+                    File.WriteAllBytes(SaveFileDialog1.FileName, tbl)
+                    Notification.show("Réponse Sous-épisode", "Téléchargement de " & SaveFileDialog1.FileName & " Terminé !")
+            End Select
 
         Catch err As Exception
             MsgBox(err.Message())

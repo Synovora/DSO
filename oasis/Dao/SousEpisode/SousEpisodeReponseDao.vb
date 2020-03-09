@@ -104,6 +104,19 @@ Public Class SousEpisodeReponseDao
             da.InsertCommand = cmd
             Dim idSEReponse = da.InsertCommand.ExecuteScalar()
 
+            ' --- Update du record pere
+            SQLstring = " UPDATE oasis.oa_sous_episode SET is_reponse_recue = 'true', horodate_last_recu = @dateCreation WHERE id = @id_sous_episode"
+            cmd = New SqlCommand(SQLstring, con, transaction)
+            With cmd.Parameters
+                .AddWithValue("@id_sous_episode", sousEpisodeReponse.IdSousEpisode)
+                .AddWithValue("@dateCreation", sousEpisodeReponse.HorodateCreation)
+            End With
+            da.UpdateCommand = cmd
+            Dim nbUpdate = da.UpdateCommand.ExecuteNonQuery()
+            If nbUpdate <> 1 Then
+                Throw New Exception("Problème : Enregistrements mouvementés : " & nbUpdate & " au lieu de 1 !")
+            End If
+
             ' --- tentative d'upload
             Using apiOasis As New ApiOasis()
                 apiOasis.uploadFileRest(loginRequestLog.login,

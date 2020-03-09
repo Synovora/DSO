@@ -117,18 +117,10 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
-  <data name="GridViewCommandColumn1.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
-    <value>
-        iVBORw0KGgoAAAANSUhEUgAAABoAAAAaCAMAAACelLz8AAAABGdBTUEAAK/INwWK6QAAAFpQTFRF//7+
-        /lZf/qux/1xl/1pj/mpz/quw/rC1/rK3/q+z/mt0/rG2/ltl/l1m/q6y/wAO/wMR/l5n/0tV/hAd/lVe
-        /wkX/hkm/y05/jdC/0JM/iIu/P78/////kxW07e6KQAAABl0RVh0U29mdHdhcmUAQWRvYmUgSW1hZ2VS
-        ZWFkeXHJZTwAAAB8SURBVChTzdLLDoJAEETRAVERHyAKPqr9/9+0OqlkEobeuPKsqnO3nSyULO2qT6Gq
-        GazWtXBhOmkvnJk0C3+ZAA33c+oForNnGkQFOgemKQM0HNMtAzQc05wBGo7pHWB6BJieAaZXgKkZV22Y
-        DvdVe6Z03F4LXevPFjD7ApkgQgs2bmNzAAAAAElFTkSuQmCC
-</value>
-  </data>
   <metadata name="OpenFileDialog1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>150, 17</value>
+  </metadata>
+  <metadata name="SaveFileDialog1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>292, 17</value>
   </metadata>
 </root>
