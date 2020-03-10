@@ -113,7 +113,7 @@ Public Class AldDao
         Dim dt As DataTable = New DataTable()
 
         Dim DateMax As New Date(2999, 12, 31, 0, 0, 0)
-        Dim DateValide As Date = Date.Now().AddDays(30)
+        Dim DateValide As Date = Date.Now().AddDays(-30)
 
         Dim PremierPassage As Boolean = True
 
