@@ -1,4 +1,5 @@
 ﻿
+Imports System.Configuration
 Imports System.IO
 Imports Oasis_Common
 Imports Telerik.WinControls.UI
@@ -183,14 +184,30 @@ Public Class FrmSousEpisodeListe
 
             Dim tbl As Byte() = sousEpisodeReponseDao.getContenu(episode.Id, sousEpisodeReponse)
             Me.Cursor = Cursors.Default
-            SaveFileDialog1.FileName = sousEpisodeReponse.NomFichier
-            Select Case (SaveFileDialog1.ShowDialog())
-                Case DialogResult.Abort, DialogResult.Cancel
-                    Notification.show("Réponse Sous-épisode", "Téléchargement abandonné !")
-                Case DialogResult.OK, DialogResult
-                    File.WriteAllBytes(SaveFileDialog1.FileName, tbl)
-                    Notification.show("Réponse Sous-épisode", "Téléchargement de " & SaveFileDialog1.FileName & " Terminé !")
-            End Select
+            'SaveFileDialog1.FileName = sousEpisodeReponse.NomFichier
+            'Select Case (SaveFileDialog1.ShowDialog())
+            '    Case DialogResult.Abort, DialogResult.Cancel
+            '        Notification.show("Réponse Sous-épisode", "Téléchargement abandonné !")
+            '    Case DialogResult.OK, DialogResult
+            '        File.WriteAllBytes(SaveFileDialog1.FileName, tbl)
+            '        Notification.show("Réponse Sous-épisode", "Téléchargement de " & SaveFileDialog1.FileName & " Terminé !")
+            'End Select
+            Dim pathDownload = ConfigurationManager.AppSettings("CheminTelechargement")
+            If (Not System.IO.Directory.Exists(pathDownload)) Then
+                System.IO.Directory.CreateDirectory(pathDownload)
+            End If
+
+            File.WriteAllBytes(pathDownload & "\" & sousEpisodeReponse.NomFichier, tbl)
+            Dim proc As New Process()
+            ' Nom du fichier dont l'extension est connue du shell à ouvrir 
+            Try
+                proc.StartInfo.FileName = pathDownload & "\" & sousEpisodeReponse.NomFichier
+                proc.Start()
+                ' On libère les ressources 
+                proc.Close()
+            Catch err As Exception
+                MsgBox(err.Message() & vbCrLf & "Votre fichier est téléchargé et disponible dans le répertoire suivant : " & vbCrLf & pathDownload)
+            End Try
 
         Catch err As Exception
             MsgBox(err.Message())

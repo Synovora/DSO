@@ -1,4 +1,5 @@
-﻿Imports System.IO
+﻿Imports System.Configuration
+Imports System.IO
 Imports Oasis_Common
 Imports Telerik.WinControls.Enumerations
 Imports Telerik.WinControls.UI
@@ -8,15 +9,18 @@ Public Class FrmSousEpisode
     Dim sousEpisodeDao As SousEpisodeDao = New SousEpisodeDao
     Dim sousEpisodeTypeDao As SousEpisodeTypeDao = New SousEpisodeTypeDao
     Dim sousEpisodeSousTypeDao As SousEpisodeSousTypeDao = New SousEpisodeSousTypeDao
+    Dim sousEpisodeSousSousTypeDao As SousEpisodeSousSousTypeDao = New SousEpisodeSousSousTypeDao
     Dim sousEpisodeReponseDao As SousEpisodeReponseDao = New SousEpisodeReponseDao
 
     Dim episode As Episode, patient As Patient, sousEpisode As SousEpisode
     Dim userCreateNom As String, userUpdateNom As String, userValidateNom As String
     Dim isCreation As Boolean
     Dim isNotValidate As Boolean
+    Dim isPatientALD As Boolean
 
     Dim lstSousEpisodeType As List(Of SousEpisodeType) = New List(Of SousEpisodeType)
     Dim lstSousEpisodeSousType As List(Of SousEpisodeSousType) = New List(Of SousEpisodeSousType)
+    Dim lstSousEpisodeSousSousType As List(Of SousEpisodeSousSousType) = New List(Of SousEpisodeSousSousType)
 
 
     Sub New(episode As Episode, patient As Patient, sousEpisode As SousEpisode, userCreateNom As String, userUpdateNom As String, userValidateNom As String)
@@ -38,6 +42,9 @@ Public Class FrmSousEpisode
         '  -- somme nous en mode creation (sinon mode update)
         isCreation = If(sousEpisode.Id = 0, True, False)
         isNotValidate = (sousEpisode.HorodateValidate = Nothing)
+        ' -- le patient est il en ALD
+        Dim aldDO = New AldDao()
+        isPatientALD = aldDO.IsPatientALD(patient.patientId)
 
         ' -- initialisation des controles du formulaire
         initControls()
@@ -46,7 +53,7 @@ Public Class FrmSousEpisode
     Private Sub initALDetReponse()
         If Me.DropDownSousType.SelectedItem IsNot Nothing Then
             Dim sousType As SousEpisodeSousType = TryCast(Me.DropDownSousType.SelectedItem.Value, SousEpisodeSousType)
-            Dim visible = sousType.IsALDPossible
+            Dim visible = sousType.IsALDPossible AndAlso isPatientALD
             ChkALD.Visible = visible
             LblALD.Visible = visible
 
@@ -106,6 +113,7 @@ Public Class FrmSousEpisode
         ' -- listes de references
         lstSousEpisodeType = sousEpisodeTypeDao.getLstSousEpisodeType()
         lstSousEpisodeSousType = sousEpisodeSousTypeDao.getLstSousEpisodeSousType()
+        lstSousEpisodeSousSousType = sousEpisodeSousSousTypeDao.getLstSousEpisodeSousSousType()
         With sousEpisode
             If .HorodateCreation = Nothing Then .HorodateCreation = DateTime.Now
             Me.lblDateCreation.Text = .HorodateCreation.ToString("dd/MM/yyyy HH:mm") & " par " & userCreateNom
@@ -138,7 +146,7 @@ Public Class FrmSousEpisode
             Me.TxtRDVCommentaire.Enabled = isCreation
         End With
         '-- handler sur bouton sous_grid
-        AddHandler RadTacheToTreatGrid.CommandCellClick, AddressOf gridReponse_CommandCellClick
+        AddHandler RadReponseGrid.CommandCellClick, AddressOf gridReponse_CommandCellClick
 
         ' -- reponses
         If Not isCreation Then
@@ -171,18 +179,34 @@ Public Class FrmSousEpisode
             sousEpisodeReponse = sousEpisodeReponseDao.getById(gce.RowInfo.Cells("Id").Value)
 
             Dim tbl As Byte() = sousEpisodeReponseDao.getContenu(episode.Id, sousEpisodeReponse)
-            Me.Cursor = Cursors.Default
-            SaveFileDialog1.FileName = sousEpisodeReponse.NomFichier
-            Select Case (SaveFileDialog1.ShowDialog())
-                Case DialogResult.Abort, DialogResult.Cancel
-                    Notification.show("Réponse Sous-épisode", "Téléchargement abandonné !")
-                Case DialogResult.OK, DialogResult
-                    File.WriteAllBytes(SaveFileDialog1.FileName, tbl)
-                    Notification.show("Réponse Sous-épisode", "Téléchargement de " & SaveFileDialog1.FileName & " Terminé !")
-            End Select
+            'Me.Cursor = Cursors.Default
+            'SaveFileDialog1.FileName = sousEpisodeReponse.NomFichier
+            'Select Case (SaveFileDialog1.ShowDialog())
+            '    Case DialogResult.Abort, DialogResult.Cancel
+            '        Notification.show("Réponse Sous-épisode", "Téléchargement abandonné !")
+            '    Case DialogResult.OK, DialogResult
+            '        File.WriteAllBytes(SaveFileDialog1.FileName, tbl)
+            '        Notification.show("Réponse Sous-épisode", "Téléchargement de " & SaveFileDialog1.FileName & " Terminé !")
+            'End Select
 
-        Catch err As Exception
-            MsgBox(err.Message())
+            Dim pathDownload = ConfigurationManager.AppSettings("CheminTelechargement")
+            If (Not System.IO.Directory.Exists(pathDownload)) Then
+                System.IO.Directory.CreateDirectory(pathDownload)
+            End If
+
+            File.WriteAllBytes(pathDownload & "\" & sousEpisodeReponse.NomFichier, tbl)
+            Dim proc As New Process()
+            ' Nom du fichier dont l'extension est connue du shell à ouvrir 
+            Try
+                proc.StartInfo.FileName = pathDownload & "\" & sousEpisodeReponse.NomFichier
+                proc.Start()
+                ' On libère les ressources 
+                proc.Close()
+            Catch err As Exception
+                MsgBox(err.Message() & vbCrLf & "Votre fichier est téléchargé et disponible dans le répertoire suivant : " & vbCrLf & pathDownload)
+            End Try
+        Catch Err As Exception
+            MsgBox(Err.Message())
             Return
         Finally
             Me.Cursor = Cursors.Default
@@ -199,16 +223,16 @@ Public Class FrmSousEpisode
             Dim numRowGrid As Integer = 0
 
             ' -- recup eventuelle precedente selectionnée
-            If RadTacheToTreatGrid.Rows.Count > 0 AndAlso Not IsNothing(Me.RadTacheToTreatGrid.CurrentRow) Then
-                exId = Me.RadTacheToTreatGrid.CurrentRow.Cells("Id").Value
-                exPosit = Me.RadTacheToTreatGrid.CurrentRow.Index
+            If RadReponseGrid.Rows.Count > 0 AndAlso Not IsNothing(Me.RadReponseGrid.CurrentRow) Then
+                exId = Me.RadReponseGrid.CurrentRow.Cells("Id").Value
+                exPosit = Me.RadReponseGrid.CurrentRow.Index
             End If
-            RadTacheToTreatGrid.Rows.Clear()
+            RadReponseGrid.Rows.Clear()
 
             For Each row In data.Rows
-                RadTacheToTreatGrid.Rows.Add(numRowGrid)
+                RadReponseGrid.Rows.Add(numRowGrid)
                 '------------------- Alimentation du DataGridView
-                With RadTacheToTreatGrid.Rows(numRowGrid)
+                With RadReponseGrid.Rows(numRowGrid)
                     .Cells("Id").Value = row("id")
                     If .Cells("Id").Value = exId Then index = numRowGrid   ' position exact
                     If numRowGrid <= exPosit Then exPosit = numRowGrid     ' position approchée 
@@ -233,7 +257,7 @@ Public Class FrmSousEpisode
             Next
             ' -- positionnement a la ligne la plus proche de la precedente
             If data.Rows.Count > 0 Then
-                Me.RadTacheToTreatGrid.CurrentRow = RadTacheToTreatGrid.Rows(If(index >= 0, index, exPosit))
+                Me.RadReponseGrid.CurrentRow = RadReponseGrid.Rows(If(index >= 0, index, exPosit))
             End If
             Me.Cursor = Cursors.Default
 
@@ -269,15 +293,53 @@ Public Class FrmSousEpisode
             Me.DropDownSousType.Items.Add(radListItemST)
             If sousEpisodeSousType.Id = sousEpisode.IdSousEpisodeSousType Then
                 radListItemST.Selected = True
+                initSousSousTypes(sousEpisodeSousType.Id)
             End If
         Next
         If DropDownSousType.SelectedItem Is Nothing AndAlso DropDownSousType.Items.Count > 0 Then
             Me.DropDownSousType.SelectedItem = Me.DropDownSousType.Items(0)
+            initSousSousTypes(TryCast(Me.DropDownType.SelectedItem.Value, SousEpisodeSousType).Id)
         End If
 
         Me.DropDownSousType.Enabled = isCreation
 
     End Sub
+
+    Private Sub initSousSousTypes(idSousType As Long)
+        Me.Cursor = Cursors.WaitCursor
+        Try
+            'Dim data As DataTable = sousEpisodeReponseDao.getTableSousEpisodeReponse(sousEpisode.Id)
+
+            Dim numRowGrid As Integer = 0
+
+            RadSousSousTypeGrid.Rows.Clear()
+
+            For Each sousEpisodeSousSousType As SousEpisodeSousSousType In lstSousEpisodeSousSousType
+                If sousEpisodeSousSousType.IdSousEpisodeSousType <> idSousType Then Continue For ' pas pour ce sous type d'episode
+                RadSousSousTypeGrid.Rows.Add(numRowGrid)
+                '------------------- Alimentation du DataGridView
+                With RadSousSousTypeGrid.Rows(numRowGrid)
+                    .Cells("Id").Value = sousEpisodeSousSousType.Id
+                    .Cells("IdSousEpisodeSousType").Value = sousEpisodeSousSousType.IdSousEpisodeSousType
+                    .Cells("Libelle").Value = sousEpisodeSousSousType.Libelle
+                    '.cells("ChkChoisir").value = TODO
+                    '.cells("ChkALD").value = TODO
+                End With
+
+                numRowGrid += 1
+
+            Next
+            Me.Cursor = Cursors.Default
+
+
+        Catch err As Exception
+            MsgBox(err.Message)
+        Finally
+            Me.Cursor = Cursors.Default
+        End Try
+
+    End Sub
+
 
 End Class
 
