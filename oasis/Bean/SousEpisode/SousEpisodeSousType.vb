@@ -26,7 +26,7 @@ Public Class SousEpisodeSousType
         Me.RedactionProfilTypes = row("redaction_profil_types")
         Me.IsALDPossible = row("is_ald_possible")
         Me.IsReponseRequise = Coalesce(row("is_reponse_requise"), False)
-        Me.DelaiReponse = Coalesce(row("is_ald_possible"), ConfigurationManager.AppSettings("DelaiDefautReponseSousEpisode"))
+        Me.DelaiReponse = Coalesce(row("delai_reponse"), ConfigurationManager.AppSettings("DelaiDefautReponseSousEpisode"))
     End Sub
 
 

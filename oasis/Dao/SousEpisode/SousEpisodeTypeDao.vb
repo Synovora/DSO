@@ -6,6 +6,7 @@ Public Enum CategorieSE
     PRESCRIPTION
     CERTIFICAT
     COURRIER
+    COMPTE_RENDU
 End Enum
 
 Public Class SousEpisodeTypeDao

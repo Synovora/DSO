@@ -70,12 +70,32 @@ Public Class FrmSousEpisode
     End Sub
 
     Private Sub DropDownSousType_SelectedIndexChanged(sender As Object, e As Data.PositionChangedEventArgs) Handles DropDownSousType.SelectedIndexChanged
-        initALDetReponse()
         If Me.DropDownSousType.SelectedItem IsNot Nothing Then
             initSousSousTypes(TryCast(Me.DropDownSousType.SelectedItem.Value, SousEpisodeSousType).Id)
+            setDefaultALDGrid()
+            If isCreation Then
+                Dim sousEpisodeSousType As SousEpisodeSousType = TryCast(Me.DropDownSousType.SelectedItem.Value, SousEpisodeSousType)
+                TxtDelai.Value = Coalesce(sousEpisodeSousType.DelaiReponse, "")
+                ChkBReponseAttendue.Checked = sousEpisodeSousType.IsReponseRequise
+            End If
+
         End If
     End Sub
 
+    Private Sub ChkALD_ToggleStateChanged(sender As Object, args As StateChangedEventArgs) Handles ChkALD.ToggleStateChanged
+        setDefaultALDGrid()
+    End Sub
+
+    Private Sub setDefaultALDGrid()
+        If isCreation Then
+            Dim sousType As SousEpisodeSousType = TryCast(Me.DropDownSousType.SelectedItem.Value, SousEpisodeSousType)
+            Dim isALD = sousType.IsALDPossible AndAlso isPatientALD AndAlso ChkALD.Checked
+            For Each row In RadSousSousTypeGrid.Rows
+                row.Cells("ChkALD").Value = isALD
+            Next
+        End If
+
+    End Sub
     Private Sub ChkBReponseAttendue_ToggleStateChanged(sender As Object, args As StateChangedEventArgs) Handles ChkBReponseAttendue.ToggleStateChanged
         Dim visible = (args.ToggleState = ToggleState.On)
         TxtDelai.Visible = visible
@@ -157,9 +177,9 @@ Public Class FrmSousEpisode
         If Not isCreation Then
             ChkBReponseAttendue.Checked = sousEpisode.IsReponse
             ChkBReponseAttendue.Enabled = isCreation
+            TxtDelai.Value = If(sousEpisode.DelaiSinceValidation = Nothing, "", sousEpisode.DelaiSinceValidation)
             refreshGrid()
         End If
-        TxtDelai.Value = If(sousEpisode.DelaiSinceValidation = Nothing, "", sousEpisode.DelaiSinceValidation)
         TxtDelai.Enabled = isCreation
         BtnAjoutReponse.Visible = Not isCreation
         '-- refresh grid reponse
@@ -218,6 +238,7 @@ Public Class FrmSousEpisode
         End Try
 
     End Sub
+
 
     Private Sub refreshGrid()
         Dim exId As Long, index As Integer = -1, exPosit = 0
@@ -303,7 +324,6 @@ Public Class FrmSousEpisode
         Next
         If DropDownSousType.SelectedItem Is Nothing AndAlso DropDownSousType.Items.Count > 0 Then
             Me.DropDownSousType.SelectedItem = Me.DropDownSousType.Items(0)
-            'initSousSousTypes(TryCast(Me.DropDownSousType.SelectedItem.Value, SousEpisodeSousType).Id)
         End If
 
         Me.DropDownSousType.Enabled = isCreation
@@ -328,7 +348,11 @@ Public Class FrmSousEpisode
                     .Cells("IdSousEpisodeSousType").Value = sousEpisodeSousSousType.IdSousEpisodeSousType
                     .Cells("Libelle").Value = sousEpisodeSousSousType.Libelle
                     '.cells("ChkChoisir").value = TODO
-                    '.cells("ChkALD").value = TODO
+                    If isCreation Then
+                        .Cells("ChkALD").Value = isPatientALD
+                    Else
+                        '.Cells("ChkALD").Value = TODO
+                    End If
                 End With
 
                 numRowGrid += 1

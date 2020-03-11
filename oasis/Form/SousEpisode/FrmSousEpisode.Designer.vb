@@ -79,6 +79,7 @@ Partial Class FrmSousEpisode
         Me.SplitPanel3 = New Telerik.WinControls.UI.SplitPanel()
         Me.SplitPanelSousSousType = New Telerik.WinControls.UI.SplitPanel()
         Me.RadSousSousTypeGrid = New Telerik.WinControls.UI.RadGridView()
+        Me.Label4 = New System.Windows.Forms.Label()
         CType(Me.RadPanel1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.RadPanel1.SuspendLayout()
         CType(Me.BtnValidate, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -277,6 +278,7 @@ Partial Class FrmSousEpisode
         '
         'SplitPanel2
         '
+        Me.SplitPanel2.Controls.Add(Me.Label16)
         Me.SplitPanel2.Controls.Add(Me.ChkALD)
         Me.SplitPanel2.Controls.Add(Me.LblFichier)
         Me.SplitPanel2.Controls.Add(Me.LblALD)
@@ -284,7 +286,6 @@ Partial Class FrmSousEpisode
         Me.SplitPanel2.Controls.Add(Me.Label6)
         Me.SplitPanel2.Controls.Add(Me.DropDownType)
         Me.SplitPanel2.Controls.Add(Me.Label5)
-        Me.SplitPanel2.Controls.Add(Me.Label16)
         Me.SplitPanel2.Location = New System.Drawing.Point(433, 0)
         Me.SplitPanel2.Name = "SplitPanel2"
         '
@@ -601,6 +602,7 @@ Partial Class FrmSousEpisode
         '
         Me.SplitPanelSousSousType.BackColor = System.Drawing.SystemColors.GradientInactiveCaption
         Me.SplitPanelSousSousType.Controls.Add(Me.RadSousSousTypeGrid)
+        Me.SplitPanelSousSousType.Controls.Add(Me.Label4)
         Me.SplitPanelSousSousType.Location = New System.Drawing.Point(881, 0)
         Me.SplitPanelSousSousType.Name = "SplitPanelSousSousType"
         '
@@ -618,7 +620,7 @@ Partial Class FrmSousEpisode
         Me.RadSousSousTypeGrid.Dock = System.Windows.Forms.DockStyle.Fill
         Me.RadSousSousTypeGrid.EnableCustomDrawing = True
         Me.RadSousSousTypeGrid.HideSelection = True
-        Me.RadSousSousTypeGrid.Location = New System.Drawing.Point(0, 0)
+        Me.RadSousSousTypeGrid.Location = New System.Drawing.Point(0, 13)
         '
         '
         '
@@ -664,9 +666,19 @@ Partial Class FrmSousEpisode
         Me.RadSousSousTypeGrid.MasterTemplate.SelectionMode = Telerik.WinControls.UI.GridViewSelectionMode.None
         Me.RadSousSousTypeGrid.MasterTemplate.ViewDefinition = TableViewDefinition4
         Me.RadSousSousTypeGrid.Name = "RadSousSousTypeGrid"
-        Me.RadSousSousTypeGrid.ReadOnly = True
-        Me.RadSousSousTypeGrid.Size = New System.Drawing.Size(277, 568)
+        Me.RadSousSousTypeGrid.Size = New System.Drawing.Size(277, 555)
         Me.RadSousSousTypeGrid.TabIndex = 59
+        '
+        'Label4
+        '
+        Me.Label4.BackColor = System.Drawing.SystemColors.GradientActiveCaption
+        Me.Label4.Dock = System.Windows.Forms.DockStyle.Top
+        Me.Label4.Location = New System.Drawing.Point(0, 0)
+        Me.Label4.Name = "Label4"
+        Me.Label4.Size = New System.Drawing.Size(277, 13)
+        Me.Label4.TabIndex = 43
+        Me.Label4.Text = "Détail"
+        Me.Label4.TextAlign = System.Drawing.ContentAlignment.TopCenter
         '
         'FrmSousEpisode
         '
@@ -778,5 +790,6 @@ Partial Class FrmSousEpisode
     Friend WithEvents SplitPanel3 As Telerik.WinControls.UI.SplitPanel
     Friend WithEvents SplitPanelSousSousType As Telerik.WinControls.UI.SplitPanel
     Friend WithEvents RadSousSousTypeGrid As Telerik.WinControls.UI.RadGridView
+    Friend WithEvents Label4 As Label
 End Class
 
