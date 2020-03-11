@@ -56,6 +56,7 @@ Public Class FrmSousEpisode
             Dim visible = sousType.IsALDPossible AndAlso isPatientALD
             ChkALD.Visible = visible
             LblALD.Visible = visible
+            RadSousSousTypeGrid.Columns("ChkALD").IsVisible = visible
 
             If isCreation Then
                 ChkBReponseAttendue.Checked = sousType.IsReponseRequise
@@ -70,6 +71,9 @@ Public Class FrmSousEpisode
 
     Private Sub DropDownSousType_SelectedIndexChanged(sender As Object, e As Data.PositionChangedEventArgs) Handles DropDownSousType.SelectedIndexChanged
         initALDetReponse()
+        If Me.DropDownSousType.SelectedItem IsNot Nothing Then
+            initSousSousTypes(TryCast(Me.DropDownSousType.SelectedItem.Value, SousEpisodeSousType).Id)
+        End If
     End Sub
 
     Private Sub ChkBReponseAttendue_ToggleStateChanged(sender As Object, args As StateChangedEventArgs) Handles ChkBReponseAttendue.ToggleStateChanged
@@ -137,7 +141,7 @@ Public Class FrmSousEpisode
             End If
             Me.DropDownType.Enabled = isCreation
 
-            ChkALD.Checked = sousEpisode.IsALD
+            ChkALD.Checked = If(isCreation, isPatientALD, sousEpisode.IsALD)
             ChkALD.Enabled = isCreation
 
             Me.LblFichier.Text = .NomFichier
@@ -145,7 +149,8 @@ Public Class FrmSousEpisode
             Me.TxtRDVCommentaire.Text = .Commentaire
             Me.TxtRDVCommentaire.Enabled = isCreation
         End With
-        '-- handler sur bouton sous_grid
+
+        '-- handler sur boutons grid reponse
         AddHandler RadReponseGrid.CommandCellClick, AddressOf gridReponse_CommandCellClick
 
         ' -- reponses
@@ -293,12 +298,12 @@ Public Class FrmSousEpisode
             Me.DropDownSousType.Items.Add(radListItemST)
             If sousEpisodeSousType.Id = sousEpisode.IdSousEpisodeSousType Then
                 radListItemST.Selected = True
-                initSousSousTypes(sousEpisodeSousType.Id)
+                'initSousSousTypes(sousEpisodeSousType.Id)
             End If
         Next
         If DropDownSousType.SelectedItem Is Nothing AndAlso DropDownSousType.Items.Count > 0 Then
             Me.DropDownSousType.SelectedItem = Me.DropDownSousType.Items(0)
-            initSousSousTypes(TryCast(Me.DropDownType.SelectedItem.Value, SousEpisodeSousType).Id)
+            'initSousSousTypes(TryCast(Me.DropDownSousType.SelectedItem.Value, SousEpisodeSousType).Id)
         End If
 
         Me.DropDownSousType.Enabled = isCreation
@@ -329,9 +334,8 @@ Public Class FrmSousEpisode
                 numRowGrid += 1
 
             Next
+            Me.SplitPanelSousSousType.Collapsed = (numRowGrid = 0)
             Me.Cursor = Cursors.Default
-
-
         Catch err As Exception
             MsgBox(err.Message)
         Finally
