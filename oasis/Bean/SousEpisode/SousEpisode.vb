@@ -11,7 +11,6 @@ Public Class SousEpisode
     Property HorodateLastUpdate As DateTime
     Property ValidateUserId As Long
     Property HorodateValidate As DateTime
-    Property NomFichier As String
     Property Commentaire As String
     Property IsALD As Boolean
     Property IsReponse As Boolean
@@ -38,7 +37,6 @@ Public Class SousEpisode
         Me.ValidateUserId = Coalesce(row("Validate_user_id"), 0)
         Me.HorodateValidate = Coalesce(row("horodate_Validate"), Nothing)
 
-        Me.NomFichier = Coalesce(row("nom_fichier"), "")
         Me.Commentaire = Coalesce(row("commentaire"), "")
 
         Me.isALD = row("is_ald")

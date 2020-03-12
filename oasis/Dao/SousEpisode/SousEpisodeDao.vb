@@ -30,7 +30,6 @@ Public Class SousEpisodeDao
             "     SE.horodate_last_update, " & vbCrLf &
             "     SE.validate_user_id, " & vbCrLf &
             "     SE.horodate_validate, " & vbCrLf &
-            "	  SE.nom_fichier, " & vbCrLf &
             "	  SE.commentaire, " & vbCrLf &
             "	  SE.is_ald, " & vbCrLf &
             "	  SE.is_reponse, " & vbCrLf &
@@ -139,11 +138,11 @@ Public Class SousEpisodeDao
         Dim transaction As SqlClient.SqlTransaction = con.BeginTransaction
 
         Try
-            Dim SQLstring As String = "INSERT INTO oa_sous_episode " &
+            Dim SQLstring As String = "INSERT INTO oasis.oa_sous_episode " &
                     "(episode_id , id_sous_episode_type , id_sous_episode_sous_type , create_user_id , horodate_creation , " &
-                    " nom_fichier , commentaire , is_ald , is_reponse, delai_since_validation )" &
+                    " commentaire , is_ald , is_reponse, delai_since_validation )" &
             " VALUES (@episode_id, @id_sous_episode_type, @id_sous_episode_sous_type, @create_user_id, @horodate_creation, " &
-                     "@nom_fichier, @commentaire, @is_ald, @is_reponse, @delai_since_validation); SELECT SCOPE_IDENTITY()"
+                     " @commentaire, @is_ald, @is_reponse, @delai_since_validation); SELECT SCOPE_IDENTITY()"
 
             sousEpisode.HorodateCreation = DateTime.Now
             Dim cmd As New SqlCommand(SQLstring, con, transaction)
@@ -154,7 +153,6 @@ Public Class SousEpisodeDao
                 .AddWithValue("@create_user_id", sousEpisode.CreateUserId)
                 .AddWithValue("@horodate_creation", sousEpisode.HorodateCreation)
 
-                .AddWithValue("@nom_fichier", sousEpisode.NomFichier)
                 .AddWithValue("@commentaire", sousEpisode.Commentaire)
                 .AddWithValue("@is_ald", sousEpisode.IsALD)
                 .AddWithValue("@is_reponse", sousEpisode.IsReponse)

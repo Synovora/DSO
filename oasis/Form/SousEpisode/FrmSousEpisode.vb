@@ -260,8 +260,6 @@ Public Class FrmSousEpisode
             ChkALD.Checked = If(isCreation, isPatientALD, sousEpisode.IsALD)
             ChkALD.Enabled = isCreation
 
-            Me.LblFichier.Text = .NomFichier
-
             Me.TxtRDVCommentaire.Text = .Commentaire
             Me.TxtRDVCommentaire.Enabled = isCreation
         End With
@@ -451,11 +449,15 @@ Public Class FrmSousEpisode
             .IdSousEpisodeSousType = TryCast(Me.DropDownSousType.SelectedItem.Value, SousEpisodeSousType).Id
             .CreateUserId = userLog.UtilisateurId
             .Commentaire = TxtRDVCommentaire.Text
-            .IsALD = ChkALD.Checked And TryCast(Me.DropDownSousType.SelectedItem.Value, SousEpisodeSousType).IsALDPossible
+            .IsALD = ChkALD.Checked And TryCast(Me.DropDownSousType.SelectedItem.Value, SousEpisodeSousType).IsALDPossible And isPatientALD
             .IsReponse = ChkALD.Checked
             .DelaiSinceValidation = TxtDelai.Value
-
         End With
+        sousEpisodeDao.Create(sousEpisode)
+
+        ' --- reaffiche le formulaire en mode update
+        isCreation = False
+        initControls()
     End Sub
 
 End Class

@@ -55,9 +55,9 @@ Public Class FrmSousEpisodeListe
             RadSousEpisodeGrid.Rows.Clear()
 
             For Each row In data.Rows
-                RadSousEpisodeGrid.Rows.Add(numRowGrid)
+                Dim newRow As GridViewRowInfo = RadSousEpisodeGrid.Rows.NewRow()
                 '------------------- Alimentation du DataGridView
-                With RadSousEpisodeGrid.Rows(numRowGrid)
+                With newRow
                     .Cells("IdSousEpisode").Value = row("id")
                     If .Cells("IdSousEpisode").Value = exId Then index = numRowGrid   ' position exact
                     If numRowGrid <= exPosit Then exPosit = numRowGrid     ' position approchée 
@@ -69,7 +69,6 @@ Public Class FrmSousEpisodeListe
                     .Cells("HorodateValidate").Value = row("horodate_validate")
                     .Cells("ValidateUser").Value = row("user_validate")
                     .Cells("commentaire").Value = row("commentaire")
-                    .Cells("NomFichier").Value = row("nom_fichier")
                     .Cells("IsAld").Value = row("is_ald")
                     .Cells("IsReponse").Value = row("is_reponse")
                     .Cells("ValidationProfilTypes").Value = row("validation_profil_types")
@@ -77,15 +76,14 @@ Public Class FrmSousEpisodeListe
                     .Cells("HorodateLastRecu").Value = row("horodate_last_recu")
 
                     ' -- on garnit le tag pour affichage tooltip
-                    RadSousEpisodeGrid.Rows.Last.Tag = " << " & .Cells("type").Value & " >>" & vbCrLf &
+                    newRow.Tag = " << " & .Cells("type").Value & " >>" & vbCrLf &
                                 If(Coalesce(row("is_ald"), False), " --> ALD" & vbCrLf, "") &
-                                "Fichier : " & row("nom_fichier") & vbCrLf &
                                 If(Coalesce(row("is_reponse"), False), " ... Réponse requise sous " & row("delai_since_validation") & " j à partir de la date de validation" & vbCrLf, "") &
                                 If(Coalesce(row("is_reponse_recue"), False), " ... Dernière reçue le  " & row("horodate_last_recu"), " ... NON REÇUE ...") & vbCrLf &
                                 " ------------------------------------------" & vbCrLf &
                                 row("commentaire") & vbCrLf
                 End With
-
+                RadSousEpisodeGrid.Rows.Add(newRow)
                 numRowGrid += 1
 
             Next
