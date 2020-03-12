@@ -55,6 +55,7 @@ Public Class FrmSousEpisode
         isPatientALD = aldDO.IsPatientALD(patient.patientId)
 
         ' -- initialisation des controles du formulaire
+        initOneShot()
         initControls()
     End Sub
 
@@ -81,6 +82,7 @@ Public Class FrmSousEpisode
                 TxtDelai.Value = Coalesce(sousEpisodeSousType.DelaiReponse, "")
                 ChkBReponseAttendue.Checked = sousEpisodeSousType.IsReponseRequise
             End If
+            initALDetReponse()
 
         End If
     End Sub
@@ -229,7 +231,7 @@ Public Class FrmSousEpisode
     ''' <summary>
     ''' 
     ''' </summary>
-    Private Sub initControls()
+    Private Sub initOneShot()
         ' -- listes de references
         lstSousEpisodeType = sousEpisodeTypeDao.getLstSousEpisodeType()
         lstSousEpisodeSousType = sousEpisodeSousTypeDao.getLstSousEpisodeSousType()
@@ -239,7 +241,7 @@ Public Class FrmSousEpisode
             Me.lblDateCreation.Text = .HorodateCreation.ToString("dd/MM/yyyy HH:mm") & " par " & userCreateNom
             Me.LblDateModif.Text = If(.HorodateLastUpdate = Nothing, "Non Modifiée", .HorodateLastUpdate.ToString("dd/MM/yyyy HH:mm") & " par " & userUpdateNom)
             Me.LblDateValidation.Text = If(.HorodateValidate = Nothing, "Non Validée", .HorodateValidate.ToString("dd/MM/yyyy HH:mm") & " par " & userValidateNom)
-
+            Me.DropDownType.Items.Clear()
             For Each sousEpisodeType As SousEpisodeType In lstSousEpisodeType
                 If filtreTypeByProfil(sousEpisodeType) Then Continue For
                 Dim radListItem As New RadListDataItem(sousEpisodeType.Libelle, sousEpisodeType)
@@ -255,17 +257,16 @@ Public Class FrmSousEpisode
                 Me.DropDownType.SelectedItem = Me.DropDownType.Items(0)
                 initSousTypes(TryCast(Me.DropDownType.SelectedItem.Value, SousEpisodeType).Id)
             End If
-            Me.DropDownType.Enabled = isCreation
-
-            ChkALD.Checked = If(isCreation, isPatientALD, sousEpisode.IsALD)
-            ChkALD.Enabled = isCreation
-
-            Me.TxtRDVCommentaire.Text = .Commentaire
-            Me.TxtRDVCommentaire.Enabled = isCreation
         End With
 
         '-- handler sur boutons grid reponse
         AddHandler RadReponseGrid.CommandCellClick, AddressOf gridReponse_CommandCellClick
+
+    End Sub
+    ''' <summary>
+    ''' 
+    ''' </summary>
+    Private Sub initControls()
 
         ' -- reponses
         If Not isCreation Then
@@ -277,7 +278,17 @@ Public Class FrmSousEpisode
         TxtDelai.Enabled = isCreation
         BtnAjoutReponse.Visible = Not isCreation
         BtnValidate.Visible = isCreation
+
+        Me.DropDownType.Enabled = isCreation
+
+        ChkALD.Checked = If(isCreation, isPatientALD, sousEpisode.IsALD)
+        ChkALD.Enabled = isCreation
+
+        Me.TxtRDVCommentaire.Text = sousEpisode.Commentaire
+        Me.TxtRDVCommentaire.Enabled = isCreation
+        Me.DropDownSousType.Enabled = isCreation
         Me.RadSousSousTypeGrid.ReadOnly = Not isCreation
+
     End Sub
 
     ''' <summary>
