@@ -455,7 +455,7 @@ Public Class FrmSousEpisode
 
             If isCreation Then
                 ChkBReponseAttendue.Checked = sousType.IsReponseRequise
-                ChkBReponseAttendue.Enabled = Not sousType.IsReponseRequise
+                'ChkBReponseAttendue.Enabled = Not sousType.IsReponseRequise
             End If
         End If
     End Sub
@@ -469,7 +469,7 @@ Public Class FrmSousEpisode
             .CreateUserId = userLog.UtilisateurId
             .Commentaire = TxtRDVCommentaire.Text
             .IsALD = ChkALD.Checked And TryCast(Me.DropDownSousType.SelectedItem.Value, SousEpisodeSousType).IsALDPossible And isPatientALD
-            .IsReponse = ChkALD.Checked
+            .IsReponse = ChkBReponseAttendue.Checked
             .DelaiSinceValidation = TxtDelai.Value
 
             Dim lstDetail As New List(Of SousEpisodeDetailSousType)
