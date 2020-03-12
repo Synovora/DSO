@@ -162,6 +162,15 @@ Public Class SousEpisodeDao
             da.InsertCommand = cmd
             sousEpisode.Id = da.InsertCommand.ExecuteScalar()
 
+            ' -- on fixe les idSousEpisode de la table fille (details)
+            If sousEpisode.lstDetail.Count > 0 Then
+                Dim sousEpisodeDetailSousTypeDao As SousEpisodeDetailSousTypeDao = New SousEpisodeDetailSousTypeDao
+                For Each detail In sousEpisode.lstDetail
+                    detail.IdSousEpisode = sousEpisode.Id
+                    sousEpisodeDetailSousTypeDao.Create(con, detail, transaction)
+                Next
+            End If
+
             transaction.Commit()
 
         Catch ex As Exception

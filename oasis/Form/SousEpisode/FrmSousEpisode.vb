@@ -47,13 +47,6 @@ Public Class FrmSousEpisode
         Me.userUpdateNom = userUpdateNom
         Me.userValidateNom = userValidateNom
 
-        '  -- somme nous en mode creation (sinon mode update)
-        isCreation = If(sousEpisode.Id = 0, True, False)
-        isNotValidate = (sousEpisode.HorodateValidate = Nothing)
-        ' -- le patient est il en ALD
-        Dim aldDO = New AldDao()
-        isPatientALD = aldDO.IsPatientALD(patient.patientId)
-
         ' -- initialisation des controles du formulaire
         initOneShot()
         initControls()
@@ -232,6 +225,19 @@ Public Class FrmSousEpisode
     ''' 
     ''' </summary>
     Private Sub initOneShot()
+        '  -- somme nous en mode creation (sinon mode update)
+        isCreation = If(sousEpisode.Id = 0, True, False)
+        isNotValidate = (sousEpisode.HorodateValidate = Nothing)
+        ' -- le patient est il en ALD
+        Dim aldDO = New AldDao()
+        isPatientALD = aldDO.IsPatientALD(patient.patientId)
+
+        ' -- init des details du bean SousEpisode
+        If Not isCreation Then
+            Dim sousEpisodeDetailSousTypeDao As SousEpisodeDetailSousTypeDao = New SousEpisodeDetailSousTypeDao
+            sousEpisode.lstDetail = sousEpisodeDetailSousTypeDao.getLstSousEpisodeDetailSousType(sousEpisode.Id)
+        End If
+
         ' -- listes de references
         lstSousEpisodeType = sousEpisodeTypeDao.getLstSousEpisodeType()
         lstSousEpisodeSousType = sousEpisodeSousTypeDao.getLstSousEpisodeSousType()
@@ -407,17 +413,18 @@ Public Class FrmSousEpisode
 
             For Each sousEpisodeSousSousType As SousEpisodeSousSousType In lstSousEpisodeSousSousType
                 If sousEpisodeSousSousType.IdSousEpisodeSousType <> idSousType Then Continue For ' pas pour ce sous type d'episode
+                If Not isCreation AndAlso sousEpisode.isThisSousSousTypePresent(sousEpisodeSousSousType.Id) = False Then Continue For
                 RadSousSousTypeGrid.Rows.Add(numRowGrid)
                 '------------------- Alimentation du DataGridView
                 With RadSousSousTypeGrid.Rows(numRowGrid)
                     .Cells("Id").Value = sousEpisodeSousSousType.Id
                     .Cells("IdSousEpisodeSousType").Value = sousEpisodeSousSousType.IdSousEpisodeSousType
                     .Cells("Libelle").Value = sousEpisodeSousSousType.Libelle
-                    '.cells("ChkChoisir").value = TODO
                     If isCreation Then
                         .Cells("ChkALD").Value = isPatientALD
                     Else
-                        '.Cells("ChkALD").Value = TODO
+                        .Cells("ChkChoice").Value = True
+                        .Cells("ChkALD").Value = sousEpisode.isThisDetailALD(sousEpisodeSousSousType.Id)
                     End If
                 End With
 
@@ -463,7 +470,26 @@ Public Class FrmSousEpisode
             .IsALD = ChkALD.Checked And TryCast(Me.DropDownSousType.SelectedItem.Value, SousEpisodeSousType).IsALDPossible And isPatientALD
             .IsReponse = ChkALD.Checked
             .DelaiSinceValidation = TxtDelai.Value
+
+            Dim lstDetail As New List(Of SousEpisodeDetailSousType)
+            Dim sousEpisodeDetail As SousEpisodeDetailSousType
+            For Each row In RadSousSousTypeGrid.Rows
+                If row.Cells("ChkChoice").Value Then
+                    sousEpisodeDetail = New SousEpisodeDetailSousType()
+                    sousEpisodeDetail.IdSousEpisode = sousEpisode.EpisodeId
+                    sousEpisodeDetail.IdSousEpisodeSousSousType = row.Cells("Id").Value
+                    sousEpisodeDetail.IsALD = row.Cells("ChkALD").Value
+                    lstDetail.Add(sousEpisodeDetail)
+                End If
+            Next
+            If lstDetail.Count = 0 AndAlso RadSousSousTypeGrid.Rows.Count > 0 Then
+                MsgBox("Vous devez choisir au moins un élément dans le tableau des détails ! ")
+                Return
+            End If
+            .lstDetail = lstDetail
         End With
+
+
         sousEpisodeDao.Create(sousEpisode)
 
         ' --- reaffiche le formulaire en mode update

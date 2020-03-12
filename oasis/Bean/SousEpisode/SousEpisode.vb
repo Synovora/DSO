@@ -17,6 +17,7 @@ Public Class SousEpisode
     Property DelaiSinceValidation As Integer
     Property IsReponseRecue As Boolean
     Property HorodateLastRecu As DateTime
+    Property lstDetail As List(Of SousEpisodeDetailSousType)
 
 
     Public Sub New()
@@ -47,5 +48,21 @@ Public Class SousEpisode
         Me.HorodateLastRecu = Coalesce(row("horodate_last_recu"), Nothing)
 
     End Sub
+
+    Public Function isThisDetailALD(idSousSousType As Long) As Boolean
+        If Me.lstDetail Is Nothing Then Return False
+        For Each s In Me.lstDetail
+            If s.IdSousEpisodeSousSousType = idSousSousType Then Return s.IsALD
+        Next
+        Return False
+    End Function
+
+    Public Function isThisSousSousTypePresent(idSousSousType As Long) As Boolean
+        If Me.lstDetail Is Nothing Then Return False
+        For Each s In Me.lstDetail
+            If s.IdSousEpisodeSousSousType = idSousSousType Then Return True
+        Next
+        Return False
+    End Function
 
 End Class

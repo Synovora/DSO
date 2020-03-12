@@ -13,14 +13,6 @@ Public Class SousEpisodeSousSousTypeDao
         Next
         Return lst
     End Function
-    Public Function getDictSousEpisodeSousType(Optional idSousEpisodeSousType As Long = 0) As Dictionary(Of Long, SousEpisodeSousSousType)
-        Dim dic As Dictionary(Of Long, SousEpisodeSousSousType) = New Dictionary(Of Long, SousEpisodeSousSousType)
-        Dim data As DataTable = getTableSousEpisodeSousSousType(idSousEpisodeSousType)
-        For Each row In data.Rows
-            dic.Add(row("id"), buildBean(row))
-        Next
-        Return dic
-    End Function
 
     Public Function getTableSousEpisodeSousSousType(Optional idSousEpisodeSousType As Long = 0) As DataTable
         Dim SQLString As String
