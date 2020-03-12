@@ -129,7 +129,7 @@ Partial Class FrmSousEpisodeListe
         Me.BtnValidate.Size = New System.Drawing.Size(110, 24)
         Me.BtnValidate.TabIndex = 10
         Me.BtnValidate.TabStop = False
-        Me.BtnValidate.Text = "Valider"
+        Me.BtnValidate.Text = "Signer"
         Me.BtnValidate.Visible = False
         '
         'BtnDetail
@@ -209,7 +209,7 @@ Partial Class FrmSousEpisodeListe
         GridViewTextBoxColumn8.ReadOnly = True
         GridViewTextBoxColumn8.Width = 134
         GridViewDateTimeColumn4.FormatString = "{0:dd/MM/yyyy HH:mm}"
-        GridViewDateTimeColumn4.HeaderText = "Validation"
+        GridViewDateTimeColumn4.HeaderText = "Signature"
         GridViewDateTimeColumn4.Name = "HorodateValidate"
         GridViewDateTimeColumn4.Width = 68
         GridViewTextBoxColumn9.HeaderText = "Par"

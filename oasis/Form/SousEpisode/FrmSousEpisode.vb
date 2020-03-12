@@ -245,8 +245,8 @@ Public Class FrmSousEpisode
         With sousEpisode
             If .HorodateCreation = Nothing Then .HorodateCreation = DateTime.Now
             Me.lblDateCreation.Text = .HorodateCreation.ToString("dd/MM/yyyy HH:mm") & " par " & userCreateNom
-            Me.LblDateModif.Text = If(.HorodateLastUpdate = Nothing, "Non Modifiée", .HorodateLastUpdate.ToString("dd/MM/yyyy HH:mm") & " par " & userUpdateNom)
-            Me.LblDateValidation.Text = If(.HorodateValidate = Nothing, "Non Validée", .HorodateValidate.ToString("dd/MM/yyyy HH:mm") & " par " & userValidateNom)
+            Me.LblDateModif.Text = If(.HorodateLastUpdate = Nothing, "Non Modifié", .HorodateLastUpdate.ToString("dd/MM/yyyy HH:mm") & " par " & userUpdateNom)
+            Me.LblDateValidation.Text = If(.HorodateValidate = Nothing, "Non Signé", .HorodateValidate.ToString("dd/MM/yyyy HH:mm") & " par " & userValidateNom)
             Me.DropDownType.Items.Clear()
             For Each sousEpisodeType As SousEpisodeType In lstSousEpisodeType
                 If filtreTypeByProfil(sousEpisodeType) Then Continue For
@@ -282,7 +282,7 @@ Public Class FrmSousEpisode
             refreshGrid()
         End If
         TxtDelai.Enabled = isCreation
-        BtnAjoutReponse.Visible = Not isCreation
+        BtnAjoutReponse.Visible = Not isCreation AndAlso isNotValidate = False
         BtnValidate.Visible = isCreation
 
         Me.DropDownType.Enabled = isCreation
@@ -451,6 +451,7 @@ Public Class FrmSousEpisode
             ChkALD.Visible = visible
             LblALD.Visible = visible
             RadSousSousTypeGrid.Columns("ChkALD").IsVisible = visible
+            RadSousSousTypeGrid.Columns("ChkChoice").IsVisible = isCreation
 
             If isCreation Then
                 ChkBReponseAttendue.Checked = sousType.IsReponseRequise
