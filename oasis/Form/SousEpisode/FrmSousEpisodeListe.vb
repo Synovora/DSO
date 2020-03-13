@@ -148,7 +148,7 @@ Public Class FrmSousEpisodeListe
     ''' <param name="sender"></param>
     ''' <param name="e"></param>
     Private Sub BtnValidate_Click(sender As Object, e As EventArgs) Handles BtnValidate.Click
-        If MsgBox("Etes-vous sur de vouloir valider ce sous_épisode ?", MsgBoxStyle.YesNo Or MsgBoxStyle.DefaultButton2 Or MsgBoxStyle.Critical, "Validation Sous-Episode") = MsgBoxResult.Yes Then
+        If MsgBox("Etes-vous sur de vouloir signer ce sous-épisode ?", MsgBoxStyle.YesNo Or MsgBoxStyle.DefaultButton2 Or MsgBoxStyle.Critical, "Signature Sous-Episode") = MsgBoxResult.Yes Then
             Dim sousEpisodeDao = New SousEpisodeDao
             sousEpisodeDao.updateValidation(Me.RadSousEpisodeGrid.CurrentRow.Cells("IdSousEpisode").Value)
             refreshGrid()
