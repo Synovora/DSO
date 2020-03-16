@@ -150,7 +150,7 @@ Public Class FrmSousEpisodeListe
     Private Sub BtnValidate_Click(sender As Object, e As EventArgs) Handles BtnValidate.Click
         If MsgBox("Etes-vous sur de vouloir signer ce sous-épisode ?", MsgBoxStyle.YesNo Or MsgBoxStyle.DefaultButton2 Or MsgBoxStyle.Critical, "Signature Sous-Episode") = MsgBoxResult.Yes Then
             Dim sousEpisodeDao = New SousEpisodeDao
-            sousEpisodeDao.updateValidation(Me.RadSousEpisodeGrid.CurrentRow.Cells("IdSousEpisode").Value)
+            sousEpisodeDao.updateValidation(Nothing, Me.RadSousEpisodeGrid.CurrentRow.Cells("IdSousEpisode").Value, Nothing)
             refreshGrid()
         End If
     End Sub

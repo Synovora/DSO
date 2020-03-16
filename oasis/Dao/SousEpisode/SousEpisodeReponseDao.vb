@@ -57,9 +57,9 @@ Public Class SousEpisodeReponseDao
                     tacheDataAdapter.SelectCommand.Parameters.AddWithValue("@idSousEpisode", idSousEpisode)
                 End If
                 If idSousEpisodeReponse <> 0 Then
-                        tacheDataAdapter.SelectCommand.Parameters.AddWithValue("@id", idSousEpisodeReponse)
-                    End If
-                    Dim tacheDataTable As DataTable = New DataTable()
+                    tacheDataAdapter.SelectCommand.Parameters.AddWithValue("@id", idSousEpisodeReponse)
+                End If
+                Dim tacheDataTable As DataTable = New DataTable()
                 Using tacheDataTable
                     Try
                         tacheDataAdapter.Fill(tacheDataTable)
@@ -72,6 +72,47 @@ Public Class SousEpisodeReponseDao
         End Using
     End Function
 
+    Friend Sub delete(sousEpisode As SousEpisode, idReponseRecue As Long, isDernier As Boolean)
+        Dim da As SqlDataAdapter = New SqlDataAdapter()
+        Dim codeRetour As Boolean = True
+        Dim con As SqlConnection
+
+        con = GetConnection()
+        Dim transaction As SqlClient.SqlTransaction = con.BeginTransaction
+
+        Try
+            Dim SQLstring As String = "delete oasis.oa_sous_episode_reponse " &
+                    "WHERE id = @id"
+
+            Dim cmd As New SqlCommand(SQLstring, con, transaction)
+            With cmd.Parameters
+                .AddWithValue("@id", idReponseRecue)
+            End With
+
+            da.DeleteCommand = cmd
+            Dim nb = da.DeleteCommand.ExecuteNonQuery()
+            If nb <> 1 Then Throw New Exception("Pb suppression : " & nb & " au lieu de 1 enrigistrement supprimé")
+
+            If isDernier Then
+                ' -- update pere pour dire "pas de reponse recue"
+                Dim sousEpisodeDao As SousEpisodeDao = New SousEpisodeDao
+                sousEpisodeDao.resetReponseRecue(con, sousEpisode, transaction)
+            End If
+
+            transaction.Commit()
+
+        Catch ex As Exception
+            transaction.Rollback()
+            MessageBox.Show(ex.Message)
+            codeRetour = False
+        Finally
+            transaction.Dispose()
+            con.Close()
+        End Try
+
+
+
+    End Sub
     ''' <summary>
     ''' 
     ''' </summary>

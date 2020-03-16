@@ -92,20 +92,6 @@ Public Class FrmSousEpisode
     ''' <summary>
     ''' 
     ''' </summary>
-    Private Sub setDefaultALDGrid()
-        If isCreation Then
-            Dim sousType As SousEpisodeSousType = TryCast(Me.DropDownSousType.SelectedItem.Value, SousEpisodeSousType)
-            Dim isALD = sousType.IsALDPossible AndAlso isPatientALD AndAlso ChkALD.Checked
-            For Each row In RadSousSousTypeGrid.Rows
-                row.Cells("ChkALD").Value = isALD
-            Next
-        End If
-
-    End Sub
-
-    ''' <summary>
-    ''' 
-    ''' </summary>
     ''' <param name="sender"></param>
     ''' <param name="args"></param>
     Private Sub ChkBReponseAttendue_ToggleStateChanged(sender As Object, args As StateChangedEventArgs) Handles ChkBReponseAttendue.ToggleStateChanged
@@ -161,7 +147,7 @@ Public Class FrmSousEpisode
             Case "telecharger"
                 telecharger(gce)
             Case "supprimer"
-                MsgBox("supprimer")
+                supprimer(gce)
         End Select
     End Sub
 
@@ -171,7 +157,24 @@ Public Class FrmSousEpisode
     ''' <param name="sender"></param>
     ''' <param name="e"></param>
     Private Sub BtnValidate_Click(sender As Object, e As EventArgs) Handles BtnValidate.Click
-        serializeSousEpisode()
+        serializeSousEpisode(False)
+    End Sub
+
+    ''' <summary>
+    ''' 
+    ''' </summary>
+    ''' <param name="sender"></param>
+    ''' <param name="e"></param>
+    Private Sub BtnValideAndSign_Click(sender As Object, e As EventArgs) Handles BtnValideAndSign.Click
+        If isCreation Then
+            serializeSousEpisode(True)
+        Else
+            sousEpisodeDao.updateValidation(Nothing, sousEpisode.Id, Nothing)
+            sousEpisode.ValidateUserId = userLog.UtilisateurId
+            sousEpisode.HorodateValidate = Date.Now
+            userValidateNom = userLog.UtilisateurPrenom + " " + userLog.UtilisateurNom
+            initControls()
+        End If
     End Sub
 
     ''' <summary>
@@ -221,13 +224,37 @@ Public Class FrmSousEpisode
 
     End Sub
 
+    Private Sub supprimer(gce As GridCommandCellElement)
+        'MessageBox.Show("Telecharger fichier " & gce.RowInfo.Cells("NomFichier").Value & " : " & gce.RowInfo.Cells("IdSousEpisode").Value & "_" & gce.RowInfo.Cells("Id").Value)
+        If MsgBox("Etes-vous sur de vouloir supprimer ce fichier ?", MsgBoxStyle.YesNo Or MsgBoxStyle.DefaultButton2 Or MsgBoxStyle.Critical, "Suppression") = MsgBoxResult.Yes Then
+            Dim isDernier As Boolean = Me.RadReponseGrid.Rows.Count < 2
+            sousEpisodeReponseDao.delete(sousEpisode, gce.RowInfo.Cells("Id").Value, isDernier)
+            refreshGrid()
+        End If
+
+
+    End Sub
+
+    ''' <summary>
+    ''' 
+    ''' </summary>
+    Private Sub setDefaultALDGrid()
+        If isCreation Then
+            Dim sousType As SousEpisodeSousType = TryCast(Me.DropDownSousType.SelectedItem.Value, SousEpisodeSousType)
+            Dim isALD = sousType.IsALDPossible AndAlso isPatientALD AndAlso ChkALD.Checked
+            For Each row In RadSousSousTypeGrid.Rows
+                row.Cells("ChkALD").Value = isALD
+            Next
+        End If
+
+    End Sub
+
     ''' <summary>
     ''' 
     ''' </summary>
     Private Sub initOneShot()
         '  -- somme nous en mode creation (sinon mode update)
         isCreation = If(sousEpisode.Id = 0, True, False)
-        isNotValidate = (sousEpisode.HorodateValidate = Nothing)
         ' -- le patient est il en ALD
         Dim aldDO = New AldDao()
         isPatientALD = aldDO.IsPatientALD(patient.patientId)
@@ -243,10 +270,6 @@ Public Class FrmSousEpisode
         lstSousEpisodeSousType = sousEpisodeSousTypeDao.getLstSousEpisodeSousType()
         lstSousEpisodeSousSousType = sousEpisodeSousSousTypeDao.getLstSousEpisodeSousSousType()
         With sousEpisode
-            If .HorodateCreation = Nothing Then .HorodateCreation = DateTime.Now
-            Me.lblDateCreation.Text = .HorodateCreation.ToString("dd/MM/yyyy HH:mm") & " par " & userCreateNom
-            Me.LblDateModif.Text = If(.HorodateLastUpdate = Nothing, "Non Modifié", .HorodateLastUpdate.ToString("dd/MM/yyyy HH:mm") & " par " & userUpdateNom)
-            Me.LblDateValidation.Text = If(.HorodateValidate = Nothing, "Non Signé", .HorodateValidate.ToString("dd/MM/yyyy HH:mm") & " par " & userValidateNom)
             Me.DropDownType.Items.Clear()
             For Each sousEpisodeType As SousEpisodeType In lstSousEpisodeType
                 If filtreTypeByProfil(sousEpisodeType) Then Continue For
@@ -273,6 +296,14 @@ Public Class FrmSousEpisode
     ''' 
     ''' </summary>
     Private Sub initControls()
+        isNotValidate = (sousEpisode.HorodateValidate = Nothing)
+
+        With sousEpisode
+            If .HorodateCreation = Nothing Then .HorodateCreation = DateTime.Now
+            Me.lblDateCreation.Text = .HorodateCreation.ToString("dd/MM/yyyy HH:mm") & " par " & userCreateNom
+            Me.LblDateModif.Text = If(.HorodateLastUpdate = Nothing, "Non Modifié", .HorodateLastUpdate.ToString("dd/MM/yyyy HH:mm") & " par " & userUpdateNom)
+            Me.LblDateValidation.Text = If(.HorodateValidate = Nothing, "Non Signé", .HorodateValidate.ToString("dd/MM/yyyy HH:mm") & " par " & userValidateNom)
+        End With
 
         ' -- reponses
         If Not isCreation Then
@@ -284,6 +315,12 @@ Public Class FrmSousEpisode
         TxtDelai.Enabled = isCreation
         BtnAjoutReponse.Visible = Not isCreation AndAlso isNotValidate = False
         BtnValidate.Visible = isCreation
+
+        Dim sousEpisodeSousType As SousEpisodeSousType = TryCast(Me.DropDownSousType.SelectedItem.Value, SousEpisodeSousType)
+
+        BtnValideAndSign.Text = If(isCreation, "Valider et Signer", "Signer")
+        BtnValideAndSign.Visible = isNotValidate _
+                                  AndAlso SousEpisodeSousType.isUserLogAutorise(sousEpisodeSousType.ValidationProfilTypes)
 
         Me.DropDownType.Enabled = isCreation
 
@@ -298,7 +335,7 @@ Public Class FrmSousEpisode
     End Sub
 
     ''' <summary>
-    ''' 
+    ''' refresh du grid des reponses au sous-episode
     ''' </summary>
     Private Sub refreshGrid()
         Dim exId As Long, index As Integer = -1, exPosit = 0
@@ -460,7 +497,7 @@ Public Class FrmSousEpisode
         End If
     End Sub
 
-    Private Sub serializeSousEpisode()
+    Private Sub serializeSousEpisode(isWithSign As Boolean)
         With sousEpisode
             .HorodateCreation = DateTime.Now
             .EpisodeId = episode.Id
@@ -491,7 +528,8 @@ Public Class FrmSousEpisode
         End With
 
 
-        sousEpisodeDao.Create(sousEpisode)
+        sousEpisodeDao.Create(sousEpisode, isWithSign)
+        If isWithSign Then userValidateNom = userLog.UtilisateurPrenom + " " + userLog.UtilisateurNom
 
         ' --- reaffiche le formulaire en mode update
         isCreation = False

@@ -129,7 +129,24 @@ Public Class SousEpisodeDao
         Return str
     End Function
 
-    Friend Function Create(sousEpisode As SousEpisode) As Boolean
+    Friend Sub resetReponseRecue(con As SqlConnection, sousEpisode As SousEpisode, transaction As SqlTransaction)
+        Dim da As SqlDataAdapter = New SqlDataAdapter()
+        Dim SQLstring = " UPDATE oasis.oa_sous_episode SET is_reponse_recue = 'false', horodate_last_recu = @dateLastRecu WHERE id = @id"
+        Dim cmd = New SqlCommand(SQLstring, con, transaction)
+        With cmd.Parameters
+            .AddWithValue("@id", sousEpisode.Id)
+            .AddWithValue("@dateLastRecu", DBNull.Value)
+        End With
+        da.UpdateCommand = cmd
+        Dim nbUpdate = da.UpdateCommand.ExecuteNonQuery()
+        If nbUpdate <> 1 Then
+            Throw New Exception("Problème : Enregistrements mouvementés : " & nbUpdate & " au lieu de 1 !")
+        End If
+
+
+    End Sub
+
+    Friend Function Create(sousEpisode As SousEpisode, isWithSign As Boolean) As Boolean
         Dim da As SqlDataAdapter = New SqlDataAdapter()
         Dim codeRetour As Boolean = True
         Dim con As SqlConnection
@@ -171,6 +188,13 @@ Public Class SousEpisodeDao
                 Next
             End If
 
+            ' --- process de signature 
+            If isWithSign Then
+                updateValidation(con, sousEpisode.Id, transaction)
+                sousEpisode.HorodateValidate = Date.Now
+                sousEpisode.ValidateUserId = userLog.UtilisateurId
+            End If
+
             transaction.Commit()
 
         Catch ex As Exception
@@ -185,13 +209,15 @@ Public Class SousEpisodeDao
         Return codeRetour
     End Function
 
-    Friend Function updateValidation(idSousEpisode As Long) As Boolean
+    Friend Function updateValidation(con As SqlConnection, idSousEpisode As Long, transaction As SqlTransaction) As Boolean
         Dim da As SqlDataAdapter = New SqlDataAdapter()
         Dim codeRetour As Boolean = True
-        Dim con As SqlConnection
 
-        con = GetConnection()
-        Dim transaction As SqlClient.SqlTransaction = con.BeginTransaction
+        Dim isMyTransaction As Boolean = (transaction Is Nothing)
+        If isMyTransaction Then
+            con = GetConnection()
+            transaction = con.BeginTransaction
+        End If
 
         Try
             Dim SQLstring As String = "UPDATE oasis.oa_sous_episode " &
@@ -212,15 +238,19 @@ Public Class SousEpisodeDao
                 Throw New Exception("Validation échouée (" & nb & ")")
             End If
 
-            transaction.Commit()
+            If isMyTransaction Then transaction.Commit()
 
         Catch ex As Exception
-            transaction.Rollback()
+            If isMyTransaction Then
+                transaction.Rollback()
+            Else
+                Throw ex    ' on remonte l'excaption a l'appelant
+            End If
             MessageBox.Show(ex.Message)
             codeRetour = False
         Finally
-            transaction.Dispose()
-            con.Close()
+            If isMyTransaction Then transaction.Dispose()
+            If isMyTransaction Then con.Close()
         End Try
 
         Return codeRetour
