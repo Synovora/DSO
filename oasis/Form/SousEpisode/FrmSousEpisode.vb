@@ -116,22 +116,25 @@ Public Class FrmSousEpisode
                 Notification.show("Ajout document", "Ajout annulé !")
                 Return
             End If
-
-            Dim sousEpisodeReponse As SousEpisodeReponse = New SousEpisodeReponse
-            With sousEpisodeReponse
-                .IdSousEpisode = sousEpisode.Id
-                .CreateUserId = userLog.UtilisateurId
-                .HorodateCreation = DateTime.Now
-                .NomFichier = Path.GetFileName(fileName)
-                .Commentaire = comment
-            End With
-            If sousEpisodeReponseDao.Create(sousEpisode, sousEpisodeReponse, fileName) = False Then
-                Notification.show("Ajout document", "ERREUR insertion du nouveau document !!!")
-            Else
-                Notification.show("Ajout document", "Ajout terminée avec succès !")
-                refreshGrid()
-            End If
-
+            Try
+                Me.Cursor = Cursors.WaitCursor
+                Dim sousEpisodeReponse As SousEpisodeReponse = New SousEpisodeReponse
+                With sousEpisodeReponse
+                    .IdSousEpisode = sousEpisode.Id
+                    .CreateUserId = userLog.UtilisateurId
+                    .HorodateCreation = DateTime.Now
+                    .NomFichier = Path.GetFileName(fileName)
+                    .Commentaire = comment
+                End With
+                If sousEpisodeReponseDao.Create(sousEpisode, sousEpisodeReponse, fileName) = False Then
+                    Notification.show("Ajout document", "ERREUR insertion du nouveau document !!!")
+                Else
+                    Notification.show("Ajout document", "Ajout terminée avec succès !")
+                    refreshGrid()
+                End If
+            Finally
+                Me.Cursor = Cursors.Default
+            End Try
         End If
     End Sub
 
@@ -212,6 +215,7 @@ Public Class FrmSousEpisode
                 proc.Start()
                 ' On libère les ressources 
                 proc.Close()
+                Notification.show("Lancement du logiciel associé", "Veuillez patienter pendant le lancement du logiciel associé à la visualisation de votre fichier !")
             Catch err As Exception
                 MsgBox(err.Message() & vbCrLf & "Votre fichier est téléchargé et disponible dans le répertoire suivant : " & vbCrLf & pathDownload)
             End Try
@@ -315,6 +319,8 @@ Public Class FrmSousEpisode
         TxtDelai.Enabled = isCreation
         BtnAjoutReponse.Visible = Not isCreation AndAlso isNotValidate = False
         BtnValidate.Visible = isCreation
+
+        BtnEditerDocument.Visible = Not isCreation AndAlso isNotValidate
 
         Dim sousEpisodeSousType As SousEpisodeSousType = TryCast(Me.DropDownSousType.SelectedItem.Value, SousEpisodeSousType)
 

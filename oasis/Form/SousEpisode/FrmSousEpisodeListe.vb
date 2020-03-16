@@ -203,6 +203,7 @@ Public Class FrmSousEpisodeListe
                 proc.Start()
                 ' On libère les ressources 
                 proc.Close()
+                Notification.show("Lancement du logiciel associé", "Veuillez patienter pendant le lancement du logiciel associé à la visualisation de votre fichier !")
             Catch err As Exception
                 MsgBox(err.Message() & vbCrLf & "Votre fichier est téléchargé et disponible dans le répertoire suivant : " & vbCrLf & pathDownload)
             End Try
