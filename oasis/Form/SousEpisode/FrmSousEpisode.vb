@@ -415,6 +415,24 @@ Public Class FrmSousEpisode
         Return True '  => pas autorisé
     End Function
 
+    Private Sub BtnEditerDocument_Click(sender As Object, e As EventArgs) Handles BtnEditerDocument.Click
+        Try
+            Me.Cursor = Cursors.WaitCursor
+            Me.Enabled = False
+            Using frm = New FrmTestRichText()
+                frm.ShowDialog()
+                frm.Dispose()
+            End Using
+            refreshGrid()
+        Catch err As Exception
+            MsgBox(err.Message())
+        Finally
+            Me.Enabled = True
+            Me.Cursor = Cursors.Default
+        End Try
+
+    End Sub
+
     ''' <summary>
     ''' 
     ''' </summary>
