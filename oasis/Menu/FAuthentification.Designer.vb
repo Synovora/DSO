@@ -33,6 +33,7 @@ Partial Class FAuthentificattion
         Me.BtnListePatient = New System.Windows.Forms.Button()
         Me.BtnAdmin = New System.Windows.Forms.Button()
         Me.RadDesktopAlert1 = New Telerik.WinControls.UI.RadDesktopAlert(Me.components)
+        Me.BtnTheriaque = New System.Windows.Forms.Button()
         Me.GroupBox1.SuspendLayout()
         Me.SuspendLayout()
         '
@@ -128,12 +129,22 @@ Partial Class FAuthentificattion
         '
         Me.RadDesktopAlert1.AutoCloseDelay = 5
         '
+        'BtnTheriaque
+        '
+        Me.BtnTheriaque.Location = New System.Drawing.Point(20, 238)
+        Me.BtnTheriaque.Name = "BtnTheriaque"
+        Me.BtnTheriaque.Size = New System.Drawing.Size(117, 23)
+        Me.BtnTheriaque.TabIndex = 16
+        Me.BtnTheriaque.Text = "Thériaque"
+        Me.BtnTheriaque.UseVisualStyleBackColor = True
+        '
         'FAuthentificattion
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.CancelButton = Me.BtnAbandon
         Me.ClientSize = New System.Drawing.Size(372, 310)
+        Me.Controls.Add(Me.BtnTheriaque)
         Me.Controls.Add(Me.BtnAdmin)
         Me.Controls.Add(Me.BtnListePatient)
         Me.Controls.Add(Me.BtnAbandon)
@@ -161,4 +172,5 @@ Partial Class FAuthentificattion
     Friend WithEvents BtnListePatient As Button
     Friend WithEvents BtnAdmin As Button
     Friend WithEvents RadDesktopAlert1 As Telerik.WinControls.UI.RadDesktopAlert
+    Friend WithEvents BtnTheriaque As Button
 End Class

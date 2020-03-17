@@ -242,6 +242,7 @@
     <Compile Include="Dao\SousEpisode\SousEpisodeSousSousTypeDao.vb" />
     <Compile Include="Dao\SousEpisode\SousEpisodeSousTypeDao.vb" />
     <Compile Include="Dao\SousEpisode\SousEpisodeTypeDao.vb" />
+    <Compile Include="Dao\Theriaque\TheriaqueDao.vb" />
     <Compile Include="Form\DRC\RadFActeParamedicalTest.Designer.vb">
       <DependentUpon>RadFActeParamedicalTest.vb</DependentUpon>
     </Compile>
@@ -430,6 +431,12 @@
       <DependentUpon>RadFLigneDeVieGraphe.vb</DependentUpon>
     </Compile>
     <Compile Include="Form\LigneDeVie\RadFLigneDeVieGraphe.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form\Medicament\RadFATCListe.Designer.vb">
+      <DependentUpon>RadFATCListe.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Form\Medicament\RadFATCListe.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Form\Patient\RadFPatientRendez-vousListe.Designer.vb">
@@ -962,6 +969,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Form\LigneDeVie\RadFLigneDeVieGraphe.resx">
       <DependentUpon>RadFLigneDeVieGraphe.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form\Medicament\RadFATCListe.resx">
+      <DependentUpon>RadFATCListe.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Form\Patient\RadFPatientRendez-vousListe.resx">
       <DependentUpon>RadFPatientRendez-vousListe.vb</DependentUpon>

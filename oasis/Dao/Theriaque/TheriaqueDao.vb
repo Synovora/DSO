@@ -1,6 +1,6 @@
 ﻿Imports System.Data.SqlClient
 Imports Oasis_Common
-Public Class MedicamentDao
+Public Class TheriaqueDao
     Inherits StandardDao
 
     Friend Function GetMedicamentById(medicamentCis As Integer) As Medicament
@@ -88,7 +88,32 @@ Public Class MedicamentDao
             Finally
                 con.Close()
             End Try
-            'End Using
+        End Using
+
+        Return dt
+    End Function
+
+    Friend Function getSpecialiteByATC(CodeATC As String) As DataTable
+        Dim dt As New DataTable
+        Dim ds As New DataSet
+
+        Using con As SqlConnection = GetConnection()
+            Try
+                Dim command As New SqlCommand("@CodeATC", con)
+                command.CommandType = CommandType.StoredProcedure
+                command.Connection.ChangeDatabase("Theriak")
+                command.CommandText = "theriaque.GET_THE_SPECIALITE"
+                command.Parameters.AddWithValue("@codeId", CodeATC & "%")
+                command.Parameters.AddWithValue("@VarTyp", 10)
+                command.Parameters.AddWithValue("@MonoVir", 0)
+
+                Dim da As New SqlDataAdapter(command)
+                da.Fill(dt)
+            Catch ex As Exception
+                Throw ex
+            Finally
+                con.Close()
+            End Try
         End Using
 
         Return dt
