@@ -433,10 +433,10 @@
     <Compile Include="Form\LigneDeVie\RadFLigneDeVieGraphe.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Form\Medicament\RadFATCListe.Designer.vb">
+    <Compile Include="Form\Theriaque\RadFATCListe.Designer.vb">
       <DependentUpon>RadFATCListe.vb</DependentUpon>
     </Compile>
-    <Compile Include="Form\Medicament\RadFATCListe.vb">
+    <Compile Include="Form\Theriaque\RadFATCListe.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Form\Patient\RadFPatientRendez-vousListe.Designer.vb">
@@ -970,7 +970,7 @@
     <EmbeddedResource Include="Form\LigneDeVie\RadFLigneDeVieGraphe.resx">
       <DependentUpon>RadFLigneDeVieGraphe.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Form\Medicament\RadFATCListe.resx">
+    <EmbeddedResource Include="Form\Theriaque\RadFATCListe.resx">
       <DependentUpon>RadFATCListe.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Form\Patient\RadFPatientRendez-vousListe.resx">
