@@ -575,10 +575,10 @@
     <Compile Include="Menu\FrmMain.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Menu\FrmTestRichText.Designer.vb">
+    <Compile Include="Form\SousEpisode\FrmTestRichText.Designer.vb">
       <DependentUpon>FrmTestRichText.vb</DependentUpon>
     </Compile>
-    <Compile Include="Menu\FrmTestRichText.vb">
+    <Compile Include="Form\SousEpisode\FrmTestRichText.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Module\CacheGlobal.vb" />
@@ -1126,7 +1126,7 @@
     <EmbeddedResource Include="Form\Traitement\RadFTraitementObsoletes.resx">
       <DependentUpon>RadFTraitementObsoletes.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Menu\FrmTestRichText.resx">
+    <EmbeddedResource Include="Form\SousEpisode\FrmTestRichText.resx">
       <DependentUpon>FrmTestRichText.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="My Project\licenses.licx" />

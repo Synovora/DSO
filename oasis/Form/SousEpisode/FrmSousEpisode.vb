@@ -3,6 +3,7 @@ Imports System.IO
 Imports Oasis_Common
 Imports Telerik.WinControls.Enumerations
 Imports Telerik.WinControls.UI
+Imports Telerik.WinForms.Documents.FormatProviders.OpenXml.Docx
 
 Public Class FrmSousEpisode
 
@@ -420,6 +421,12 @@ Public Class FrmSousEpisode
             Me.Cursor = Cursors.WaitCursor
             Me.Enabled = False
             Using frm = New FrmTestRichText()
+                Dim tbl = File.ReadAllBytes("c:\db\oasis\modeleradiologie.docx")
+                Dim ins = New MemoryStream(tbl)
+                Dim provider = New DocxFormatProvider()
+                frm.RadRichTextEditor1.Document = provider.Import(ins)
+                ins.Dispose()
+                tbl = Nothing
                 frm.ShowDialog()
                 frm.Dispose()
             End Using
