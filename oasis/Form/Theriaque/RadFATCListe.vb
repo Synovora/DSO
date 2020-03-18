@@ -1,13 +1,15 @@
 ﻿Public Class RadFATCListe
 
-    Dim CodeAtc2, CodeAtc3 As String
     Private Sub RadFATCListe_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         ChargementATC1()
     End Sub
 
-    Private Sub RadBtnFiltre_Click(sender As Object, e As EventArgs) Handles RadBtnFiltre.Click
-        If RadTxtATCFiltre.Text <> "" Then
-            ChargementATC2(RadTxtATCFiltre.Text)
+    Private Sub RadBtnFiltre_Click(sender As Object, e As EventArgs) Handles RadBtnFiltreSpecialite.Click
+        Dim NbCar As Integer = RadTxtSpecialite.Text.Length
+        If RadTxtSpecialite.Text <> "" And NbCar > 2 Then
+            ChargementSpecialiteByNomSpecialite(RadTxtSpecialite.Text)
+        Else
+            MessageBox.Show("Vous devez saisir au moins 3 caractères pour lancer cette option de recherche de médicaments !")
         End If
     End Sub
 
@@ -29,7 +31,8 @@
         Next
 
         If RadGridViewATC1.Rows.Count > 0 Then
-            Me.RadGridViewATC1.CurrentRow = RadGridViewATC1.Rows(0)
+            RadGridViewATC1.CurrentRow = RadGridViewATC1.ChildRows(0)
+            RadGridViewATC1.TableElement.VScrollBar.Value = 0
         End If
     End Sub
 
@@ -51,7 +54,8 @@
         Next
 
         If RadGridViewATC2.Rows.Count > 0 Then
-            Me.RadGridViewATC2.CurrentRow = RadGridViewATC2.Rows(0)
+            RadGridViewATC2.CurrentRow = RadGridViewATC2.ChildRows(0)
+            RadGridViewATC2.TableElement.VScrollBar.Value = 0
         End If
     End Sub
 
@@ -73,7 +77,8 @@
         Next
 
         If RadGridViewATC3.Rows.Count > 0 Then
-            Me.RadGridViewATC3.CurrentRow = RadGridViewATC3.Rows(0)
+            RadGridViewATC3.CurrentRow = RadGridViewATC3.ChildRows(0)
+            RadGridViewATC3.TableElement.VScrollBar.Value = 0
         End If
     End Sub
 
@@ -95,7 +100,8 @@
         Next
 
         If RadGridViewATC4.Rows.Count > 0 Then
-            Me.RadGridViewATC4.CurrentRow = RadGridViewATC4.Rows(0)
+            RadGridViewATC4.CurrentRow = RadGridViewATC4.ChildRows(0)
+            RadGridViewATC4.TableElement.VScrollBar.Value = 0
         End If
     End Sub
 
@@ -140,29 +146,8 @@
         If RadGridViewATC2.CurrentRow IsNot Nothing Then
             Dim aRow As Integer = Me.RadGridViewATC2.Rows.IndexOf(Me.RadGridViewATC2.CurrentRow)
             If aRow >= 0 Then
-                CodeAtc2 = RadGridViewATC2.Rows(aRow).Cells("catc_code_pk").Value
-                RadGridViewSpe.Rows.Clear()
-                Dim dt As DataTable
-                Dim theriaqueDao As New TheriaqueDao
-                dt = theriaqueDao.getSpecialiteByATC(CodeAtc2)
-
-                Dim iGrid As Integer = -1 'Indice pour alimenter la Grid qui peut comporter moins d'occurrences que le DataTable
-                Dim rowCount As Integer = dt.Rows.Count - 1
-
-                For i = 0 To rowCount Step 1
-                    iGrid += 1
-                    RadGridViewSpe.Rows.Add(iGrid)
-
-                    RadGridViewSpe.Rows(iGrid).Cells("SP_CODE_SQ_PK").Value = dt.Rows(i)("SP_CODE_SQ_PK")
-                    RadGridViewSpe.Rows(iGrid).Cells("SP_CATC_CODE_FK").Value = dt.Rows(i)("SP_CATC_CODE_FK")
-                    RadGridViewSpe.Rows(iGrid).Cells("SP_PR_CODE_FK").Value = dt.Rows(i)("SP_PR_CODE_FK")
-                    RadGridViewSpe.Rows(iGrid).Cells("SP_NOM").Value = dt.Rows(i)("SP_NOM")
-                    RadGridViewSpe.Rows(iGrid).Cells("SP_CIPUCD").Value = dt.Rows(i)("SP_CIPUCD")
-                Next
-
-                If RadGridViewSpe.Rows.Count > 0 Then
-                    Me.RadGridViewSpe.CurrentRow = RadGridViewSpe.Rows(0)
-                End If
+                Dim CodeAtc As String = RadGridViewATC2.Rows(aRow).Cells("catc_code_pk").Value
+                ChargementSpecialiteByATC(CodeAtc)
             End If
         End If
     End Sub
@@ -171,29 +156,8 @@
         If RadGridViewATC3.CurrentRow IsNot Nothing Then
             Dim aRow As Integer = Me.RadGridViewATC3.Rows.IndexOf(Me.RadGridViewATC3.CurrentRow)
             If aRow >= 0 Then
-                CodeAtc3 = RadGridViewATC3.Rows(aRow).Cells("catc_code_pk").Value
-                RadGridViewSpe.Rows.Clear()
-                Dim dt As DataTable
-                Dim theriaqueDao As New TheriaqueDao
-                dt = theriaqueDao.getSpecialiteByATC(CodeAtc3)
-
-                Dim iGrid As Integer = -1 'Indice pour alimenter la Grid qui peut comporter moins d'occurrences que le DataTable
-                Dim rowCount As Integer = dt.Rows.Count - 1
-
-                For i = 0 To rowCount Step 1
-                    iGrid += 1
-                    RadGridViewSpe.Rows.Add(iGrid)
-
-                    RadGridViewSpe.Rows(iGrid).Cells("SP_CODE_SQ_PK").Value = dt.Rows(i)("SP_CODE_SQ_PK")
-                    RadGridViewSpe.Rows(iGrid).Cells("SP_CATC_CODE_FK").Value = dt.Rows(i)("SP_CATC_CODE_FK")
-                    RadGridViewSpe.Rows(iGrid).Cells("SP_PR_CODE_FK").Value = dt.Rows(i)("SP_PR_CODE_FK")
-                    RadGridViewSpe.Rows(iGrid).Cells("SP_NOM").Value = dt.Rows(i)("SP_NOM")
-                    RadGridViewSpe.Rows(iGrid).Cells("SP_CIPUCD").Value = dt.Rows(i)("SP_CIPUCD")
-                Next
-
-                If RadGridViewSpe.Rows.Count > 0 Then
-                    Me.RadGridViewSpe.CurrentRow = RadGridViewSpe.Rows(0)
-                End If
+                Dim CodeAtc As String = RadGridViewATC3.Rows(aRow).Cells("catc_code_pk").Value
+                ChargementSpecialiteByATC(CodeAtc)
             End If
         End If
     End Sub
@@ -203,29 +167,58 @@
             Dim aRow As Integer = Me.RadGridViewATC4.Rows.IndexOf(Me.RadGridViewATC4.CurrentRow)
             If aRow >= 0 Then
                 Dim CodeAtc As String = RadGridViewATC4.Rows(aRow).Cells("catc_code_pk").Value
-                RadGridViewSpe.Rows.Clear()
-                Dim dt As DataTable
-                Dim theriaqueDao As New TheriaqueDao
-                dt = theriaqueDao.getSpecialiteByATC(CodeAtc)
-
-                Dim iGrid As Integer = -1 'Indice pour alimenter la Grid qui peut comporter moins d'occurrences que le DataTable
-                Dim rowCount As Integer = dt.Rows.Count - 1
-
-                For i = 0 To rowCount Step 1
-                    iGrid += 1
-                    RadGridViewSpe.Rows.Add(iGrid)
-
-                    RadGridViewSpe.Rows(iGrid).Cells("SP_CODE_SQ_PK").Value = dt.Rows(i)("SP_CODE_SQ_PK")
-                    RadGridViewSpe.Rows(iGrid).Cells("SP_CATC_CODE_FK").Value = dt.Rows(i)("SP_CATC_CODE_FK")
-                    RadGridViewSpe.Rows(iGrid).Cells("SP_PR_CODE_FK").Value = dt.Rows(i)("SP_PR_CODE_FK")
-                    RadGridViewSpe.Rows(iGrid).Cells("SP_NOM").Value = dt.Rows(i)("SP_NOM")
-                    RadGridViewSpe.Rows(iGrid).Cells("SP_CIPUCD").Value = dt.Rows(i)("SP_CIPUCD")
-                Next
-
-                If RadGridViewSpe.Rows.Count > 0 Then
-                    Me.RadGridViewSpe.CurrentRow = RadGridViewSpe.Rows(0)
-                End If
+                ChargementSpecialiteByATC(CodeAtc)
             End If
+        End If
+    End Sub
+
+    Private Sub ChargementSpecialiteByATC(CodeAtc As String)
+        Cursor.Current = Cursors.WaitCursor
+
+        Dim dt As DataTable
+        Dim theriaqueDao As New TheriaqueDao
+        dt = theriaqueDao.getSpecialiteByATC(CodeAtc, TheriaqueDao.EnumGetSpecialite.CLASSE_ATC)
+
+        ChargementSpecialite(dt)
+
+        Cursor.Current = Cursors.Default
+    End Sub
+
+    Private Sub ChargementSpecialiteByNomSpecialite(NomSpecialite As String)
+        Cursor.Current = Cursors.WaitCursor
+
+        Dim dt As DataTable
+        Dim theriaqueDao As New TheriaqueDao
+        NomSpecialite = "%" & NomSpecialite
+        dt = theriaqueDao.getSpecialiteByATC(NomSpecialite, TheriaqueDao.EnumGetSpecialite.NOM_SPECIALITE)
+
+        ChargementSpecialite(dt)
+
+        Cursor.Current = Cursors.Default
+    End Sub
+
+    Private Sub ChargementSpecialite(dt As DataTable)
+        RadGridViewSpe.Rows.Clear()
+        RadGridViewSpe.FilterDescriptors.Clear()
+
+        Dim iGrid As Integer = -1 'Indice pour alimenter la Grid qui peut comporter moins d'occurrences que le DataTable
+        Dim rowCount As Integer = dt.Rows.Count - 1
+
+        For i = 0 To rowCount Step 1
+            iGrid += 1
+            RadGridViewSpe.Rows.Add(iGrid)
+
+            RadGridViewSpe.Rows(iGrid).Cells("SP_CODE_SQ_PK").Value = dt.Rows(i)("SP_CODE_SQ_PK")
+            RadGridViewSpe.Rows(iGrid).Cells("SP_CATC_CODE_FK").Value = dt.Rows(i)("SP_CATC_CODE_FK")
+            RadGridViewSpe.Rows(iGrid).Cells("SP_PR_CODE_FK").Value = dt.Rows(i)("SP_PR_CODE_FK")
+            RadGridViewSpe.Rows(iGrid).Cells("SP_NOM").Value = dt.Rows(i)("SP_NOM")
+            RadGridViewSpe.Rows(iGrid).Cells("SP_NOMCOMP").Value = dt.Rows(i)("SP_NOMCOMP")
+            RadGridViewSpe.Rows(iGrid).Cells("SP_CIPUCD").Value = dt.Rows(i)("SP_CIPUCD")
+        Next
+
+        If RadGridViewSpe.Rows.Count > 0 Then
+            RadGridViewSpe.CurrentRow = RadGridViewSpe.ChildRows(0)
+            RadGridViewSpe.TableElement.VScrollBar.Value = 0
         End If
     End Sub
 

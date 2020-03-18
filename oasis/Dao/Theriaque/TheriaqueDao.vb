@@ -3,6 +3,27 @@ Imports Oasis_Common
 Public Class TheriaqueDao
     Inherits StandardDao
 
+    Public Enum EnumGetSpecialite
+        VIRTUEL_NE_PAS_UTILISER
+        ID_THERIAQUE
+        CODE_UCD
+        CODE_CIP
+        LABO_TITULAIRE_AMM
+        LABO_EXPLOITANT
+        CODE_FICHE_INDICATION
+        SUBSTANCE_ACTIVE
+        EXCIPIENT
+        CLASSE_EPHMRA
+        CLASSE_ATC
+        CLASSE_PHARMACO_THERAPEUTIQUE
+        CLASSE_GESTION_AP_HP
+        GENERIQUE_THERIAQUE
+        GENERIQUE_AFSSAPS
+        NOM_SPECIALITE
+        CODE_UCD13
+        CODE_CIP13
+    End Enum
+
     Friend Function GetMedicamentById(medicamentCis As Integer) As Medicament
         Dim medicament As Medicament
         Dim con As SqlConnection
@@ -93,7 +114,7 @@ Public Class TheriaqueDao
         Return dt
     End Function
 
-    Friend Function getSpecialiteByATC(CodeATC As String) As DataTable
+    Friend Function getSpecialiteByATC(CodeId As String, VarTyp As EnumGetSpecialite) As DataTable
         Dim dt As New DataTable
         Dim ds As New DataSet
 
@@ -103,8 +124,8 @@ Public Class TheriaqueDao
                 command.CommandType = CommandType.StoredProcedure
                 command.Connection.ChangeDatabase("Theriak")
                 command.CommandText = "theriaque.GET_THE_SPECIALITE"
-                command.Parameters.AddWithValue("@codeId", CodeATC & "%")
-                command.Parameters.AddWithValue("@VarTyp", 10)
+                command.Parameters.AddWithValue("@codeId", CodeId & "%")
+                command.Parameters.AddWithValue("@VarTyp", VarTyp)
                 command.Parameters.AddWithValue("@MonoVir", 0)
 
                 Dim da As New SqlDataAdapter(command)
