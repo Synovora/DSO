@@ -31,31 +31,31 @@
     <value>Measure in:</value>
   </data>
   <data name="Documents_ColumnProperties_NextColumn" xml:space="preserve">
-    <value>Next Column</value>
+    <value>Prochaine colonne</value>
   </data>
   <data name="Documents_ColumnProperties_Percents" xml:space="preserve">
-    <value>Percent</value>
+    <value>Pourcent</value>
   </data>
   <data name="Documents_ColumnProperties_Pixels" xml:space="preserve">
     <value>Pixels</value>
   </data>
   <data name="Documents_ColumnProperties_PreferredWidth" xml:space="preserve">
-    <value>Preferred width:</value>
+    <value>Largeur préférée:</value>
   </data>
   <data name="Documents_ColumnProperties_PreferredWidth_InvalidNumberMessage" xml:space="preserve">
-    <value>Enter number.</value>
+    <value>Entrer Numéro.</value>
   </data>
   <data name="Documents_ColumnProperties_PreferredWidth_InvalidNumberMessageHeader" xml:space="preserve">
-    <value>Column width</value>
+    <value>Largeur Colonne</value>
   </data>
   <data name="Documents_ColumnProperties_PreviousColumn" xml:space="preserve">
-    <value>Previous Column</value>
+    <value>Colonne précédente</value>
   </data>
   <data name="Documents_ColumnProperties_Size" xml:space="preserve">
-    <value>Size</value>
+    <value>Taille</value>
   </data>
   <data name="Documents_RowProperties_RowIndex" xml:space="preserve">
-    <value>Row index: {0}</value>
+    <value>Index ligne: {0}</value>
   </data>
   <data name="Documents_RowProperties_Size" xml:space="preserve">
     <value>Size</value>
@@ -157,55 +157,55 @@
     <value>Select</value>
   </data>
   <data name="Documents_ContextMenu_Table_SelectCell" xml:space="preserve">
-    <value>Select Cell</value>
+    <value>Select Cellule</value>
   </data>
   <data name="Documents_ContextMenu_Table_SelectColumn" xml:space="preserve">
-    <value>Select Column</value>
+    <value>Select Colonne</value>
   </data>
   <data name="Documents_ContextMenu_Table_SelectRow" xml:space="preserve">
-    <value>Select Row</value>
+    <value>Select Ligne</value>
   </data>
   <data name="Documents_ContextMenu_Table_SelectTable" xml:space="preserve">
-    <value>Select Table</value>
+    <value>Select Tableau</value>
   </data>
   <data name="Documents_ContextMenu_Table_TableBordersProperties" xml:space="preserve">
-    <value>Table Borders...</value>
+    <value>Bordures Tableau...</value>
   </data>
   <data name="Documents_ContextMenu_Table_TableProperties" xml:space="preserve">
-    <value>Table Properties...</value>
+    <value>Propriétés Tableau...</value>
   </data>
   <data name="Documents_ContextMenu_Text_ShowFontPropertiesDialog" xml:space="preserve">
-    <value>Font...</value>
+    <value>Police...</value>
   </data>
   <data name="Documents_ContextMenu_Text_ShowParagraphPropertiesDialog" xml:space="preserve">
-    <value>Paragraph...</value>
+    <value>Paragraphe...</value>
   </data>
   <data name="Documents_FindReplaceDialog_FindNext" xml:space="preserve">
-    <value>Find Next</value>
+    <value>Chercher Suivant</value>
   </data>
   <data name="Documents_FindReplaceDialog_FinishedSearching" xml:space="preserve">
-    <value>Finished searching the document.</value>
+    <value>Recherche terminée.</value>
   </data>
   <data name="Documents_FindReplaceDialog_Header" xml:space="preserve">
-    <value>Find/Replace</value>
+    <value>Chercher/Remplacer</value>
   </data>
   <data name="Documents_FindReplaceDialog_MadeReplacements" xml:space="preserve">
-    <value>{0} replacements made.</value>
+    <value>{0} remplacements effectués.</value>
   </data>
   <data name="Documents_FindReplaceDialog_Replace" xml:space="preserve">
-    <value>Replace</value>
+    <value>Remplacer</value>
   </data>
   <data name="Documents_FindReplaceDialog_ReplaceAll" xml:space="preserve">
-    <value>Replace All</value>
+    <value>Remplacer Tout</value>
   </data>
   <data name="Documents_FindReplaceDialog_ReplaceWith" xml:space="preserve">
-    <value>Replace with</value>
+    <value>Remplacer avec</value>
   </data>
   <data name="Documents_FindReplaceDialog_SearchedTextNotFound" xml:space="preserve">
-    <value>The searched text was not found: "{0}"</value>
+    <value>Texte non trouvé : "{0}"</value>
   </data>
   <data name="Documents_FindReplaceDialog_TextToFind" xml:space="preserve">
-    <value>Text to find</value>
+    <value>Texte à chercher</value>
   </data>
   <data name="Documents_RadRichTextBox_FinishedSpellChecking" xml:space="preserve">
     <value>Finished spell checking.</value>
@@ -2947,28 +2947,28 @@
     <value>View</value>
   </data>
   <data name="RibbonUI_CheckBoxHeaderRow">
-    <value>Header Rows</value>
+    <value>Lignes Entête</value>
   </data>
   <data name="RibbonUI_CheckBoxTotalRow">
-    <value>Total Rows</value>
+    <value>Total Lignes</value>
   </data>
   <data name="RibbonUI_CheckBoxBandedRows">
-    <value>Banded Rows</value>
+    <value>Lignes Rayées</value>
   </data>
   <data name="RibbonUI_CheckBoxFirstColumn">
-    <value>First Column</value>
+    <value>1ere Colonne</value>
   </data>
   <data name="RibbonUI_CheckBoxLastColumn">
-    <value>Total Column</value>
+    <value>Total Colonne</value>
   </data>
   <data name="RibbonUI_CheckBoxBandedColumns">
-    <value>Banded Column</value>
+    <value>Colonne Rayée</value>
   </data>
   <data name="RibbonUI_GroupTableStyleOptions">
-    <value>Table Style Options</value>
+    <value>Options de Style du Tableau</value>
   </data>
   <data name="RibbonUI_GroupTableStyles">
-    <value>Table Styles</value>
+    <value>Styles du Tableau</value>
   </data>
   <data name="RibbonUI_TabTableStyle">
     <value>Design</value>
@@ -3040,7 +3040,7 @@
     <value>Repeat\nHeader Rows</value>
   </data>
   <data name="RibbonUI_TabTableLayout">
-    <value>Layout</value>
+    <value>Disposition</value>
   </data>
   <data name="RibbonUI_ButtonInsertDateAndTime">
     <value>Date &amp;&amp; Time</value>
@@ -3067,25 +3067,25 @@
     <value>Options</value>
   </data>
   <data name="RibbonUI_LabelHeaderFromTop">
-    <value>Header from Top:</value>
+    <value>Entête depui le Haut:</value>
   </data>
   <data name="RibbonUI_LabelFooterFromBottom">
-    <value>Footer from Bottom:</value>
+    <value>Pied depuis le Bas:</value>
   </data>
   <data name="RibbonUI_GroupPosition">
     <value>Position</value>
   </data>
   <data name="RibbonUI_ButtonCloseHeaderAndFooter">
-    <value>Close\nHeader and Footer</value>
+    <value>Close\nEntête et Pied</value>
   </data>
   <data name="RibbonUI_GroupClose">
-    <value>Close</value>
+    <value>Fermer</value>
   </data>
   <data name="RibbonUI_TabHeaderFooter">
     <value>Design</value>
   </data>
   <data name="RibbonUI_TabGroupTable">
-    <value>Table tools</value>
+    <value>Outils Tableau</value>
   </data>
   <data name="RibbonUI_TabGroupHeaderAndFooter">
     <value>Header &amp;&amp; Footer Tools</value>
@@ -3094,7 +3094,7 @@
     <value>List Library</value>
   </data>
   <data name="RibbonUI_MenuItemInsertTable">
-    <value>Insert Table...</value>
+    <value>Insérer Tableau...</value>
   </data>
   <data name="RibbonUI_PaperSizeA0">
     <value>A0</value>
@@ -3292,16 +3292,16 @@
     <value>Predefined</value>
   </data>
   <data name="RibbonUI_MenuItemSelectCell">
-    <value>Select Cell</value>
+    <value>Select. Cellule</value>
   </data>
   <data name="RibbonUI_MenuItemSelectColumn">
-    <value>Select Column</value>
+    <value>Select. Colonne</value>
   </data>
   <data name="RibbonUI_MenuItemSelectRow">
-    <value>Select Row</value>
+    <value>Select. Ligne</value>
   </data>
   <data name="RibbonUI_MenuItemSelectTable">
-    <value>Select Table</value>
+    <value>Select. Tableau</value>
   </data>
   <data name="RibbonUI_MenuItemAutoFitToWindow">
     <value>AutoFit to Window</value>

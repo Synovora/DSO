@@ -25,8 +25,10 @@ Partial Class FrmEditDocxSousEpisode
     'Do not modify it using the code editor.
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
+        Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(FrmEditDocxSousEpisode))
         Me.RadRichTextEditor1 = New Telerik.WinControls.UI.RadRichTextEditor()
         Me.RichTextEditorRibbonBar1 = New Telerik.WinControls.UI.RichTextEditorRibbonBar()
+        Me.RadButtonElement1 = New Telerik.WinControls.UI.RadButtonElement()
         Me.RadRibbonFormBehavior1 = New Telerik.WinControls.UI.RadRibbonFormBehavior()
         Me.RadRichTextEditorRuler1 = New Telerik.WinControls.UI.RadRichTextEditorRuler()
         CType(Me.RadRichTextEditor1, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -57,16 +59,44 @@ Partial Class FrmEditDocxSousEpisode
         Me.RichTextEditorRibbonBar1.ExitButton.Text = "Exit"
         Me.RichTextEditorRibbonBar1.LocalizationSettings.LayoutModeText = "Simplified Layout"
         Me.RichTextEditorRibbonBar1.Location = New System.Drawing.Point(0, 0)
+        Me.RichTextEditorRibbonBar1.MinimizeButton = False
         Me.RichTextEditorRibbonBar1.Name = "RichTextEditorRibbonBar1"
         '
         '
         '
         Me.RichTextEditorRibbonBar1.OptionsButton.Text = "Options"
+        Me.RichTextEditorRibbonBar1.QuickAccessToolBarItems.AddRange(New Telerik.WinControls.RadItem() {Me.RadButtonElement1})
+        Me.RichTextEditorRibbonBar1.ShowItemToolTips = False
         Me.RichTextEditorRibbonBar1.ShowLayoutModeButton = True
         Me.RichTextEditorRibbonBar1.Size = New System.Drawing.Size(1024, 174)
         Me.RichTextEditorRibbonBar1.TabIndex = 4
         Me.RichTextEditorRibbonBar1.TabStop = False
-        Me.RichTextEditorRibbonBar1.Text = "RichTextEditorRibbonBar2"
+        Me.RichTextEditorRibbonBar1.Text = "Document sous-épisode"
+        CType(Me.RichTextEditorRibbonBar1.GetChildAt(0), Telerik.WinControls.UI.RadRibbonBarElement).Text = "Document sous-épisode"
+        CType(Me.RichTextEditorRibbonBar1.GetChildAt(0).GetChildAt(2).GetChildAt(0).GetChildAt(2).GetChildAt(0), Telerik.WinControls.UI.RadButtonElement).Image = CType(resources.GetObject("resource.Image"), System.Drawing.Image)
+        CType(Me.RichTextEditorRibbonBar1.GetChildAt(0).GetChildAt(2).GetChildAt(0).GetChildAt(2).GetChildAt(0), Telerik.WinControls.UI.RadButtonElement).ImageAlignment = System.Drawing.ContentAlignment.MiddleCenter
+        CType(Me.RichTextEditorRibbonBar1.GetChildAt(0).GetChildAt(2).GetChildAt(0).GetChildAt(2).GetChildAt(0), Telerik.WinControls.UI.RadButtonElement).DisplayStyle = Telerik.WinControls.DisplayStyle.Image
+        CType(Me.RichTextEditorRibbonBar1.GetChildAt(0).GetChildAt(2).GetChildAt(0).GetChildAt(2).GetChildAt(0), Telerik.WinControls.UI.RadButtonElement).Text = "Save"
+        CType(Me.RichTextEditorRibbonBar1.GetChildAt(0).GetChildAt(2).GetChildAt(0).GetChildAt(2).GetChildAt(0), Telerik.WinControls.UI.RadButtonElement).Padding = New System.Windows.Forms.Padding(2, 1, 2, 2)
+        CType(Me.RichTextEditorRibbonBar1.GetChildAt(0).GetChildAt(2).GetChildAt(0).GetChildAt(2).GetChildAt(0), Telerik.WinControls.UI.RadButtonElement).Visibility = Telerik.WinControls.ElementVisibility.Collapsed
+        CType(Me.RichTextEditorRibbonBar1.GetChildAt(0).GetChildAt(2).GetChildAt(0).GetChildAt(2).GetChildAt(0), Telerik.WinControls.UI.RadButtonElement).Name = "buttonSave"
+        CType(Me.RichTextEditorRibbonBar1.GetChildAt(0).GetChildAt(2).GetChildAt(0).GetChildAt(2).GetChildAt(0), Telerik.WinControls.UI.RadButtonElement).StretchHorizontally = False
+        CType(Me.RichTextEditorRibbonBar1.GetChildAt(0).GetChildAt(2).GetChildAt(0).GetChildAt(2).GetChildAt(0), Telerik.WinControls.UI.RadButtonElement).StretchVertically = False
+        CType(Me.RichTextEditorRibbonBar1.GetChildAt(0).GetChildAt(2).GetChildAt(1), Telerik.WinControls.UI.RadQuickAccessOverflowButton).Visibility = Telerik.WinControls.ElementVisibility.Collapsed
+        CType(Me.RichTextEditorRibbonBar1.GetChildAt(0).GetChildAt(4).GetChildAt(0), Telerik.WinControls.UI.StripViewItemContainer).Padding = New System.Windows.Forms.Padding(44, 0, 84, 0)
+        CType(Me.RichTextEditorRibbonBar1.GetChildAt(0).GetChildAt(4).GetChildAt(0).GetChildAt(0).GetChildAt(6), Telerik.WinControls.UI.RichTextEditorRibbonUI.RichTextEditorRibbonTab).Text = "View"
+        CType(Me.RichTextEditorRibbonBar1.GetChildAt(0).GetChildAt(4).GetChildAt(0).GetChildAt(0).GetChildAt(6), Telerik.WinControls.UI.RichTextEditorRibbonUI.RichTextEditorRibbonTab).Visibility = Telerik.WinControls.ElementVisibility.Hidden
+        CType(Me.RichTextEditorRibbonBar1.GetChildAt(0).GetChildAt(4).GetChildAt(0).GetChildAt(0).GetChildAt(6), Telerik.WinControls.UI.RichTextEditorRibbonUI.RichTextEditorRibbonTab).Name = "tabView"
+        '
+        'RadButtonElement1
+        '
+        Me.RadButtonElement1.DisplayStyle = Telerik.WinControls.DisplayStyle.Image
+        Me.RadButtonElement1.Image = CType(resources.GetObject("RadButtonElement1.Image"), System.Drawing.Image)
+        Me.RadButtonElement1.Name = "RadButtonElement1"
+        Me.RadButtonElement1.StretchHorizontally = False
+        Me.RadButtonElement1.StretchVertically = False
+        Me.RadButtonElement1.Text = "Enregistrer"
+        Me.RadButtonElement1.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText
         '
         'RadRibbonFormBehavior1
         '
@@ -81,7 +111,7 @@ Partial Class FrmEditDocxSousEpisode
         Me.RadRichTextEditorRuler1.Size = New System.Drawing.Size(1024, 31)
         Me.RadRichTextEditorRuler1.TabIndex = 5
         '
-        'FrmTestRichText
+        'FrmEditDocxSousEpisode
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
@@ -91,12 +121,12 @@ Partial Class FrmEditDocxSousEpisode
         Me.Controls.Add(Me.RichTextEditorRibbonBar1)
         Me.FormBehavior = Me.RadRibbonFormBehavior1
         Me.IconScaling = Telerik.WinControls.Enumerations.ImageScaling.None
-        Me.Name = "FrmTestRichText"
+        Me.Name = "FrmEditDocxSousEpisode"
         '
         '
         '
         Me.RootElement.ApplyShapeToControl = True
-        Me.Text = "RichTextEditorRibbonBar2"
+        Me.Text = "Document sous-épisode"
         CType(Me.RadRichTextEditor1, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.RichTextEditorRibbonBar1, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.RadRichTextEditorRuler1, System.ComponentModel.ISupportInitialize).EndInit()
@@ -110,5 +140,6 @@ Partial Class FrmEditDocxSousEpisode
     Friend WithEvents RichTextEditorRibbonBar1 As Telerik.WinControls.UI.RichTextEditorRibbonBar
     Friend WithEvents RadRibbonFormBehavior1 As Telerik.WinControls.UI.RadRibbonFormBehavior
     Friend WithEvents RadRichTextEditorRuler1 As Telerik.WinControls.UI.RadRichTextEditorRuler
+    Friend WithEvents RadButtonElement1 As Telerik.WinControls.UI.RadButtonElement
 End Class
 
