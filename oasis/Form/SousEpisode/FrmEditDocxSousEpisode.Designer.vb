@@ -1,5 +1,5 @@
 ﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
-Partial Class FrmTestRichText
+Partial Class FrmEditDocxSousEpisode
     Inherits Telerik.WinControls.UI.RadForm
 
     'Form overrides dispose to clean up the component list.
@@ -42,7 +42,7 @@ Partial Class FrmTestRichText
         Me.RadRichTextEditor1.Location = New System.Drawing.Point(0, 205)
         Me.RadRichTextEditor1.Name = "RadRichTextEditor1"
         Me.RadRichTextEditor1.SelectionFill = System.Drawing.Color.FromArgb(CType(CType(128, Byte), Integer), CType(CType(78, Byte), Integer), CType(CType(158, Byte), Integer), CType(CType(255, Byte), Integer))
-        Me.RadRichTextEditor1.Size = New System.Drawing.Size(819, 217)
+        Me.RadRichTextEditor1.Size = New System.Drawing.Size(1024, 374)
         Me.RadRichTextEditor1.TabIndex = 3
         '
         'RichTextEditorRibbonBar1
@@ -63,7 +63,7 @@ Partial Class FrmTestRichText
         '
         Me.RichTextEditorRibbonBar1.OptionsButton.Text = "Options"
         Me.RichTextEditorRibbonBar1.ShowLayoutModeButton = True
-        Me.RichTextEditorRibbonBar1.Size = New System.Drawing.Size(819, 174)
+        Me.RichTextEditorRibbonBar1.Size = New System.Drawing.Size(1024, 174)
         Me.RichTextEditorRibbonBar1.TabIndex = 4
         Me.RichTextEditorRibbonBar1.TabStop = False
         Me.RichTextEditorRibbonBar1.Text = "RichTextEditorRibbonBar2"
@@ -78,14 +78,14 @@ Partial Class FrmTestRichText
         Me.RadRichTextEditorRuler1.Dock = System.Windows.Forms.DockStyle.Top
         Me.RadRichTextEditorRuler1.Location = New System.Drawing.Point(0, 174)
         Me.RadRichTextEditorRuler1.Name = "RadRichTextEditorRuler1"
-        Me.RadRichTextEditorRuler1.Size = New System.Drawing.Size(819, 31)
+        Me.RadRichTextEditorRuler1.Size = New System.Drawing.Size(1024, 31)
         Me.RadRichTextEditorRuler1.TabIndex = 5
         '
         'FrmTestRichText
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(819, 422)
+        Me.ClientSize = New System.Drawing.Size(1024, 579)
         Me.Controls.Add(Me.RadRichTextEditor1)
         Me.Controls.Add(Me.RadRichTextEditorRuler1)
         Me.Controls.Add(Me.RichTextEditorRibbonBar1)

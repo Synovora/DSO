@@ -420,7 +420,7 @@ Public Class FrmSousEpisode
         Try
             Me.Cursor = Cursors.WaitCursor
             Me.Enabled = False
-            Using frm = New FrmTestRichText()
+            Using frm = New FrmEditDocxSousEpisode()
                 Dim tbl = File.ReadAllBytes("c:\db\oasis\modeleradiologie.docx")
                 Dim ins = New MemoryStream(tbl)
                 Dim provider = New DocxFormatProvider()

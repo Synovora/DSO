@@ -5,7 +5,7 @@ Imports Telerik.WinControls.UI
 Imports Telerik.WinControls.UI.RichTextEditorRibbonUI
 Imports Telerik.WinForms.RichTextEditor
 
-Public Class FrmTestRichText
+Public Class FrmEditDocxSousEpisode
 
     Sub New()
         'RichTextBoxLocalizationProvider.CurrentProvider = RichTextBoxLocalizationProvider.FromStream(New MemoryStream(New System.Text.UTF8Encoding().GetBytes(FrenchRichTextBoxStrings.RichTextBoxStrings)))
