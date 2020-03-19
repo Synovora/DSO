@@ -7,6 +7,7 @@ Imports Telerik.WinForms.RichTextEditor
 
 Public Class FrmEditDocxSousEpisode
     Inherits RadForm
+
     Sub New()
         ' Cet appel est requis par le concepteur.
         InitializeComponent()
@@ -68,13 +69,14 @@ Public Class FrmEditDocxSousEpisode
         'Me.RichTextEditorRibbonBar1.ApplicationMenuStyle = ApplicationMenuStyle.ApplicationMenu
         Me.RichTextEditorRibbonBar1.MinimizeButton = False
         Me.MinimizeBox = False
+
     End Sub
     ' Ajoutez une initialisation quelconque après l'appel InitializeComponent().
     Private Sub HideCommandGroups()
 
         For Each commandTab As RichTextEditorRibbonTab In Me.RichTextEditorRibbonBar1.CommandTabs
             Console.WriteLine(commandTab.Name & " : " & commandTab.Text)
-            If commandTab.Name <> "tabHome" Then
+            If commandTab.Name <> "tabHome" AndAlso commandTab.Name <> "tabMailings" Then
                 commandTab.Visibility = ElementVisibility.Collapsed
             Else
 

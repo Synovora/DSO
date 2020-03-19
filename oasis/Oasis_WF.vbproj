@@ -223,6 +223,7 @@
     <Compile Include="Bean\Ordonnance\OrdonnanceDetailGrid.vb" />
     <Compile Include="Bean\Medicament\Medicament.vb" />
     <Compile Include="Bean\SousEpisode\SousEpisodeDetailSousType.vb" />
+    <Compile Include="Bean\SousEpisode\SousEpisodeFusion.vb" />
     <Compile Include="Bean\SousEpisode\SousEpisodeReponse.vb" />
     <Compile Include="Bean\SousEpisode\SousEpisodeSousType.vb" />
     <Compile Include="Bean\SousEpisode\SousEpisode.vb" />
