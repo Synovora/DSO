@@ -76,7 +76,7 @@ Public Class FrmEditDocxSousEpisode
 
         For Each commandTab As RichTextEditorRibbonTab In Me.RichTextEditorRibbonBar1.CommandTabs
             Console.WriteLine(commandTab.Name & " : " & commandTab.Text)
-            If commandTab.Name <> "tabHome" AndAlso commandTab.Name <> "tabMailings" Then
+            If commandTab.Name <> "tabHome" Then ' AndAlso commandTab.Name <> "tabMailings" Then
                 commandTab.Visibility = ElementVisibility.Collapsed
             Else
 

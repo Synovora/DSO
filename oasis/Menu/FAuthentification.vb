@@ -172,4 +172,11 @@ Public Class FAuthentificattion
         Dim form As New RadFATCListe()
         form.ShowDialog()
     End Sub
+
+    Private Sub BtnTemplateSsEpisode_Click(sender As Object, e As EventArgs) Handles BtnTemplateSsEpisode.Click
+        InitAppelForm()
+        Dim form As New FrmAdminTemplateSousEpisode
+        form.ShowDialog()
+
+    End Sub
 End Class

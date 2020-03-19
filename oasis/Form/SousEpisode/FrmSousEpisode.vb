@@ -60,7 +60,10 @@ Public Class FrmSousEpisode
     ''' <param name="sender"></param>
     ''' <param name="e"></param>
     Private Sub DropDownType_SelectedIndexChanged(sender As Object, e As Data.PositionChangedEventArgs) Handles DropDownType.SelectedIndexChanged
-        initSousTypes(lstSousEpisodeType(e.Position).Id)
+        If Me.DropDownType.SelectedItem IsNot Nothing Then
+            initSousTypes(TryCast(Me.DropDownType.SelectedItem.Value, SousEpisodeType).Id)
+            'initSousTypes(lstSousEpisodeType(e.Position).Id)
+        End If
     End Sub
 
     ''' <summary>
@@ -292,6 +295,8 @@ Public Class FrmSousEpisode
                 Me.DropDownType.SelectedItem = Me.DropDownType.Items(0)
                 initSousTypes(TryCast(Me.DropDownType.SelectedItem.Value, SousEpisodeType).Id)
             End If
+            Me.DropDownType.DefaultItemsCountInDropDown = DropDownType.Items.Count
+
         End With
 
         '-- handler sur boutons grid reponse
@@ -485,6 +490,7 @@ Public Class FrmSousEpisode
         End If
 
         Me.DropDownSousType.Enabled = isCreation
+        Me.DropDownSousType.DefaultItemsCountInDropDown = DropDownSousType.Items.Count
 
     End Sub
 

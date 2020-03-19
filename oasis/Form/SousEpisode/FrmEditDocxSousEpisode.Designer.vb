@@ -34,17 +34,17 @@ Partial Class FrmEditDocxSousEpisode
         CType(Me.RadRichTextEditor1, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.RichTextEditorRibbonBar1, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.RadRichTextEditorRuler1, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.RadRichTextEditorRuler1.SuspendLayout()
         CType(Me, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'RadRichTextEditor1
         '
         Me.RadRichTextEditor1.BorderColor = System.Drawing.Color.FromArgb(CType(CType(156, Byte), Integer), CType(CType(189, Byte), Integer), CType(CType(232, Byte), Integer))
-        Me.RadRichTextEditor1.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.RadRichTextEditor1.Location = New System.Drawing.Point(0, 205)
+        Me.RadRichTextEditor1.Location = New System.Drawing.Point(29, 29)
         Me.RadRichTextEditor1.Name = "RadRichTextEditor1"
         Me.RadRichTextEditor1.SelectionFill = System.Drawing.Color.FromArgb(CType(CType(128, Byte), Integer), CType(CType(78, Byte), Integer), CType(CType(158, Byte), Integer), CType(CType(255, Byte), Integer))
-        Me.RadRichTextEditor1.Size = New System.Drawing.Size(1024, 374)
+        Me.RadRichTextEditor1.Size = New System.Drawing.Size(994, 375)
         Me.RadRichTextEditor1.TabIndex = 3
         '
         'RichTextEditorRibbonBar1
@@ -105,10 +105,11 @@ Partial Class FrmEditDocxSousEpisode
         'RadRichTextEditorRuler1
         '
         Me.RadRichTextEditorRuler1.AssociatedRichTextBox = Me.RadRichTextEditor1
-        Me.RadRichTextEditorRuler1.Dock = System.Windows.Forms.DockStyle.Top
+        Me.RadRichTextEditorRuler1.Controls.Add(Me.RadRichTextEditor1)
+        Me.RadRichTextEditorRuler1.Dock = System.Windows.Forms.DockStyle.Fill
         Me.RadRichTextEditorRuler1.Location = New System.Drawing.Point(0, 174)
         Me.RadRichTextEditorRuler1.Name = "RadRichTextEditorRuler1"
-        Me.RadRichTextEditorRuler1.Size = New System.Drawing.Size(1024, 31)
+        Me.RadRichTextEditorRuler1.Size = New System.Drawing.Size(1024, 405)
         Me.RadRichTextEditorRuler1.TabIndex = 5
         '
         'FrmEditDocxSousEpisode
@@ -116,7 +117,6 @@ Partial Class FrmEditDocxSousEpisode
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(1024, 579)
-        Me.Controls.Add(Me.RadRichTextEditor1)
         Me.Controls.Add(Me.RadRichTextEditorRuler1)
         Me.Controls.Add(Me.RichTextEditorRibbonBar1)
         Me.FormBehavior = Me.RadRibbonFormBehavior1
@@ -130,6 +130,7 @@ Partial Class FrmEditDocxSousEpisode
         CType(Me.RadRichTextEditor1, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.RichTextEditorRibbonBar1, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.RadRichTextEditorRuler1, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.RadRichTextEditorRuler1.ResumeLayout(False)
         CType(Me, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
         Me.PerformLayout()
