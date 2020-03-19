@@ -1,6 +1,9 @@
 ﻿Public Class RadFATCListe
 
+    Dim theriaqueDao As New TheriaqueDao
+
     Private Sub RadFATCListe_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        RadioBtnVirtuel.Checked = True
         ChargementATC1()
     End Sub
 
@@ -16,7 +19,6 @@
     Private Sub ChargementATC1()
         RadGridViewATC1.Rows.Clear()
         Dim dt As DataTable
-        Dim theriaqueDao As New TheriaqueDao
         dt = theriaqueDao.GetAllATC()
 
         Dim iGrid As Integer = -1 'Indice pour alimenter la Grid qui peut comporter moins d'occurrences que le DataTable
@@ -39,7 +41,6 @@
     Private Sub ChargementATC2(CodeATC As String)
         RadGridViewATC2.Rows.Clear()
         Dim dt As DataTable
-        Dim theriaqueDao As New TheriaqueDao
         dt = theriaqueDao.getATCByATC(CodeATC)
 
         Dim iGrid As Integer = -1 'Indice pour alimenter la Grid qui peut comporter moins d'occurrences que le DataTable
@@ -62,7 +63,6 @@
     Private Sub ChargementATC3(CodeATC As String)
         RadGridViewATC3.Rows.Clear()
         Dim dt As DataTable
-        Dim theriaqueDao As New TheriaqueDao
         dt = theriaqueDao.getATCByATC(CodeATC)
 
         Dim iGrid As Integer = -1 'Indice pour alimenter la Grid qui peut comporter moins d'occurrences que le DataTable
@@ -85,7 +85,6 @@
     Private Sub ChargementATC4(CodeATC As String)
         RadGridViewATC4.Rows.Clear()
         Dim dt As DataTable
-        Dim theriaqueDao As New TheriaqueDao
         dt = theriaqueDao.getATCByATC(CodeATC)
 
         Dim iGrid As Integer = -1 'Indice pour alimenter la Grid qui peut comporter moins d'occurrences que le DataTable
@@ -103,10 +102,6 @@
             RadGridViewATC4.CurrentRow = RadGridViewATC4.ChildRows(0)
             RadGridViewATC4.TableElement.VScrollBar.Value = 0
         End If
-    End Sub
-
-    Private Sub RadBtnAbandon_Click(sender As Object, e As EventArgs) Handles RadBtnAbandon.Click
-        Close()
     End Sub
 
     Private Sub MasterTemplate_Click(sender As Object, e As EventArgs) Handles RadGridViewATC1.Click
@@ -175,10 +170,10 @@
     Private Sub ChargementSpecialiteByATC(CodeAtc As String)
         Cursor.Current = Cursors.WaitCursor
 
-        Dim dt As DataTable
-        Dim theriaqueDao As New TheriaqueDao
-        dt = theriaqueDao.getSpecialiteByATC(CodeAtc, TheriaqueDao.EnumGetSpecialite.CLASSE_ATC)
+        Dim Monovir As Integer = GetMonovir()
 
+        Dim dt As DataTable
+        dt = theriaqueDao.getSpecialiteByArgument(CodeAtc, TheriaqueDao.EnumGetSpecialite.CLASSE_ATC, Monovir)
         ChargementSpecialite(dt)
 
         Cursor.Current = Cursors.Default
@@ -187,11 +182,11 @@
     Private Sub ChargementSpecialiteByNomSpecialite(NomSpecialite As String)
         Cursor.Current = Cursors.WaitCursor
 
-        Dim dt As DataTable
-        Dim theriaqueDao As New TheriaqueDao
-        NomSpecialite = "%" & NomSpecialite
-        dt = theriaqueDao.getSpecialiteByATC(NomSpecialite, TheriaqueDao.EnumGetSpecialite.NOM_SPECIALITE)
+        Dim Monovir As Integer = GetMonovir()
 
+        Dim dt As DataTable
+        NomSpecialite = "%" & NomSpecialite
+        dt = theriaqueDao.getSpecialiteByArgument(NomSpecialite, TheriaqueDao.EnumGetSpecialite.NOM_SPECIALITE, Monovir)
         ChargementSpecialite(dt)
 
         Cursor.Current = Cursors.Default
@@ -220,6 +215,23 @@
             RadGridViewSpe.CurrentRow = RadGridViewSpe.ChildRows(0)
             RadGridViewSpe.TableElement.VScrollBar.Value = 0
         End If
+    End Sub
+
+    Private Function GetMonovir() As Integer
+        Dim Monovir As Integer
+
+        If RadioBtnVirtuel.Checked = True Then
+            Monovir = 1
+        Else
+            Monovir = 0
+        End If
+
+        Return Monovir
+    End Function
+
+
+    Private Sub RadBtnAbandon_Click(sender As Object, e As EventArgs) Handles RadBtnAbandon.Click
+        Close()
     End Sub
 
 End Class

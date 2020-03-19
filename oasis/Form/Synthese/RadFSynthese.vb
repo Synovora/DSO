@@ -1646,7 +1646,8 @@ Public Class RadFSynthese
 
         'Positionnement du grid sur la première occurrence
         If RadParcoursDataGridView.Rows.Count > 0 Then
-            Me.RadParcoursDataGridView.CurrentRow = RadParcoursDataGridView.Rows(0)
+            RadParcoursDataGridView.CurrentRow = RadParcoursDataGridView.ChildRows(0)
+            RadParcoursDataGridView.TableElement.VScrollBar.Value = 0
         End If
     End Sub
 

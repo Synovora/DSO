@@ -52,6 +52,8 @@ Partial Class RadFATCListe
         Me.RadBtnSpec3 = New Telerik.WinControls.UI.RadButton()
         Me.RadGridViewATC4 = New Telerik.WinControls.UI.RadGridView()
         Me.RadBtnSpec4 = New Telerik.WinControls.UI.RadButton()
+        Me.RadioBtnVirtuel = New System.Windows.Forms.RadioButton()
+        Me.RadioBtnClassique = New System.Windows.Forms.RadioButton()
         CType(Me.RadTxtSpecialite, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.RadGridViewATC2, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.RadGridViewATC2.MasterTemplate, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -120,7 +122,7 @@ Partial Class RadFATCListe
         '
         'RadBtnFiltreSpecialite
         '
-        Me.RadBtnFiltreSpecialite.Location = New System.Drawing.Point(312, 12)
+        Me.RadBtnFiltreSpecialite.Location = New System.Drawing.Point(576, 8)
         Me.RadBtnFiltreSpecialite.Name = "RadBtnFiltreSpecialite"
         Me.RadBtnFiltreSpecialite.Size = New System.Drawing.Size(110, 24)
         Me.RadBtnFiltreSpecialite.TabIndex = 3
@@ -296,12 +298,36 @@ Partial Class RadFATCListe
         Me.RadBtnSpec4.TabIndex = 8
         Me.RadBtnSpec4.Text = "Liste médicament"
         '
+        'RadioBtnVirtuel
+        '
+        Me.RadioBtnVirtuel.AutoSize = True
+        Me.RadioBtnVirtuel.Location = New System.Drawing.Point(334, 12)
+        Me.RadioBtnVirtuel.Name = "RadioBtnVirtuel"
+        Me.RadioBtnVirtuel.Size = New System.Drawing.Size(59, 17)
+        Me.RadioBtnVirtuel.TabIndex = 9
+        Me.RadioBtnVirtuel.TabStop = True
+        Me.RadioBtnVirtuel.Text = "Virtuel"
+        Me.RadioBtnVirtuel.UseVisualStyleBackColor = True
+        '
+        'RadioBtnClassique
+        '
+        Me.RadioBtnClassique.AutoSize = True
+        Me.RadioBtnClassique.Location = New System.Drawing.Point(399, 12)
+        Me.RadioBtnClassique.Name = "RadioBtnClassique"
+        Me.RadioBtnClassique.Size = New System.Drawing.Size(74, 17)
+        Me.RadioBtnClassique.TabIndex = 10
+        Me.RadioBtnClassique.TabStop = True
+        Me.RadioBtnClassique.Text = "Classique"
+        Me.RadioBtnClassique.UseVisualStyleBackColor = True
+        '
         'RadFATCListe
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.CancelButton = Me.RadBtnAbandon
         Me.ClientSize = New System.Drawing.Size(1497, 715)
+        Me.Controls.Add(Me.RadioBtnClassique)
+        Me.Controls.Add(Me.RadioBtnVirtuel)
         Me.Controls.Add(Me.RadBtnSpec4)
         Me.Controls.Add(Me.RadGridViewATC4)
         Me.Controls.Add(Me.RadBtnSpec3)
@@ -353,5 +379,7 @@ Partial Class RadFATCListe
     Friend WithEvents RadBtnSpec3 As Telerik.WinControls.UI.RadButton
     Friend WithEvents RadGridViewATC4 As Telerik.WinControls.UI.RadGridView
     Friend WithEvents RadBtnSpec4 As Telerik.WinControls.UI.RadButton
+    Friend WithEvents RadioBtnVirtuel As RadioButton
+    Friend WithEvents RadioBtnClassique As RadioButton
 End Class
 

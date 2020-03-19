@@ -114,7 +114,7 @@ Public Class TheriaqueDao
         Return dt
     End Function
 
-    Friend Function getSpecialiteByATC(CodeId As String, VarTyp As EnumGetSpecialite) As DataTable
+    Friend Function getSpecialiteByArgument(CodeId As String, VarTyp As EnumGetSpecialite, Monovir As Integer) As DataTable
         Dim dt As New DataTable
         Dim ds As New DataSet
 
@@ -126,7 +126,7 @@ Public Class TheriaqueDao
                 command.CommandText = "theriaque.GET_THE_SPECIALITE"
                 command.Parameters.AddWithValue("@codeId", CodeId & "%")
                 command.Parameters.AddWithValue("@VarTyp", VarTyp)
-                command.Parameters.AddWithValue("@MonoVir", 0)
+                command.Parameters.AddWithValue("@MonoVir", Monovir)
 
                 Dim da As New SqlDataAdapter(command)
                 da.Fill(dt)
