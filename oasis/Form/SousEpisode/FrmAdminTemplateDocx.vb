@@ -39,7 +39,7 @@ Public Class FrmAdminTemplateDocx
         Dim radItemSaveAs As BackstageTabItem = Nothing
         Me.RichTextEditorRibbonBar1.BackstageControl.Items("backstageButtonNew").Visibility = ElementVisibility.Collapsed
         'Me.RichTextEditorRibbonBar1.BackstageControl.Items("backstageButtonOpen").Visibility = ElementVisibility.Collapsed
-        Me.RichTextEditorRibbonBar1.BackstageControl.Items("backstageButtonSave").Visibility = ElementVisibility.Collapsed
+        'Me.RichTextEditorRibbonBar1.BackstageControl.Items("backstageButtonSave").Visibility = ElementVisibility.Collapsed
         Me.RichTextEditorRibbonBar1.BackstageControl.Items("backstageTabItemSaveAs").Visibility = ElementVisibility.Collapsed
 
         For Each radItem As RadItem In Me.RichTextEditorRibbonBar1.BackstageControl.Items

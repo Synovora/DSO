@@ -6,6 +6,7 @@ Imports Telerik.WinForms.Documents.Model
 Public Class FrmAdminTemplateSousEpisode
     Dim sousEpisodeTypeDao As SousEpisodeTypeDao = New SousEpisodeTypeDao
     Dim sousEpisodeSousTypeDao As SousEpisodeSousTypeDao = New SousEpisodeSousTypeDao
+    Dim sousEpisodeSousSousTypeDao As SousEpisodeSousSousTypeDao = New SousEpisodeSousSousTypeDao
     Dim lstSousEpisodeType As List(Of SousEpisodeType) = New List(Of SousEpisodeType)
     Dim lstSousEpisodeSousType As List(Of SousEpisodeSousType) = New List(Of SousEpisodeSousType)
 
@@ -30,11 +31,11 @@ Public Class FrmAdminTemplateSousEpisode
             Me.Cursor = Cursors.WaitCursor
             Me.Enabled = False
             Dim lstSousEpisodeFusion As List(Of SousEpisodeFusion) = constitueFusion()
+            Dim tbl = telecharger_model(sousType)
+            Dim ins = New MemoryStream(tbl)
+            Dim provider = New DocxFormatProvider()
 
             Using frm = New FrmAdminTemplateDocx(sousType)
-                Dim tbl = telecharger_model(sousType)
-                Dim ins = New MemoryStream(tbl)
-                Dim provider = New DocxFormatProvider()
                 If tbl.Count > 0 Then
                     frm.RadRichTextEditor1.Document = provider.Import(ins)
                 End If
@@ -45,7 +46,6 @@ Public Class FrmAdminTemplateSousEpisode
                 ins.Dispose()
                 tbl = Nothing
                 frm.ShowDialog()
-                frm.Dispose()
             End Using
 
         Catch err As Exception
@@ -54,9 +54,10 @@ Public Class FrmAdminTemplateSousEpisode
             Me.Enabled = True
             Me.Cursor = Cursors.Default
         End Try
-
+        Exit Sub
 
     End Sub
+
 
     ''' <summary>
     ''' 
@@ -92,7 +93,7 @@ Public Class FrmAdminTemplateSousEpisode
         If Me.DropDownType.Items.Count > 0 Then
             Me.DropDownType.DefaultItemsCountInDropDown = DropDownType.Items.Count
             Me.DropDownType.SelectedItem = Me.DropDownType.Items(0)
-            initSousTypes(TryCast(Me.DropDownType.SelectedItem.Value, SousEpisodeType).Id)
+            'initSousTypes(TryCast(Me.DropDownType.SelectedItem.Value, SousEpisodeType).Id)
         End If
 
 
@@ -124,11 +125,11 @@ Public Class FrmAdminTemplateSousEpisode
         Dim lstFusion = New List(Of SousEpisodeFusion)(1)
         Dim sousEF As New SousEpisodeFusion With {
            .USNom = "Nom de l'unité sanitaire",
-           .USAdr1 = "Maison Xori Lur",
-           .USAdr2 = "154 allée Hégui Eder",
-           .USCP = "64990",
-           .USVille = "Mouguerre",
-           .Commentaire = "Mon commentaire sur 3 ligne" & vbCrLf & "Ligne 2" & vbCrLf & "Ligne 3",
+           .USAdr1 = "Adresse 1 de l'U.S.",
+           .USAdr2 = "Adresse 2 de l'U.S.",
+           .USCP = "64100",
+           .USVille = "Ville de l'U.S.",
+           .Commentaire = "Ex. de commentaire sur 3 lignes" & vbCrLf & "Ligne 2" & vbCrLf & "Ligne 3",
            .SiteNom = "Nom du site",
            .SiteAdr1 = "adresse site ligne 1",
            .SiteAdr2 = "adresse site ligne 2",
@@ -143,18 +144,24 @@ Public Class FrmAdminTemplateSousEpisode
            .Patient_NIR = "1980264000000",
            .Patient_Poids = "72,5",
            .Type_Libelle = Me.DropDownType.SelectedItem.Text,
-           .Sous_Type_Libelle = Me.DropDownSousType.SelectedItem.Text
+           .Sous_Type_Libelle = Me.DropDownSousType.SelectedItem.Text,
+           .Signature_Date = Date.Now.ToString("dd MMM yyyy"),
+           .Signataire_Fonction = userLog.UtilisateurProfilId.ToLower.Trim.Replace("_", " "),
+           .Signataire_PrenomNom = userLog.UtilisateurPrenom.Trim & " " & userLog.UtilisateurNom.Trim
         }
 
         ' -- recherche des sous-type_detail (sousoustype)
-
+        Dim lstSousTypeDetail = sousEpisodeSousSousTypeDao.getLstSousEpisodeSousSousType(TryCast(Me.DropDownSousType.SelectedItem.Value, SousEpisodeSousType).Id)
+        If lstSousTypeDetail.Count > 0 Then
+            For Each detail As SousEpisodeSousSousType In lstSousTypeDetail
+                sousEF.Sous_Type_Libelle_Detail_ALD += (detail.Libelle & vbCrLf)
+                sousEF.Sous_Type_Libelle_Detail_Non_ALD += (detail.Libelle & vbCrLf)
+            Next
+        End If
 
         lstFusion.Add(sousEF)
 
         Return lstFusion
     End Function
 
-    Private Sub RadButton2_Click(sender As Object, e As EventArgs) Handles RadButton2.Click
-        Close()
-    End Sub
 End Class

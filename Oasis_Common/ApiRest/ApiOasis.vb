@@ -96,7 +96,7 @@ Public Class ApiOasis
             End If
             Throw New Exception(response.ReasonPhrase)
         End If
-        Return response.Content.ReadAsAsync(Of String)()
+        Return response.Content.ReadAsStringAsync()
     End Function
 
 

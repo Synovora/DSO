@@ -174,9 +174,18 @@ Public Class FAuthentificattion
     End Sub
 
     Private Sub BtnTemplateSsEpisode_Click(sender As Object, e As EventArgs) Handles BtnTemplateSsEpisode.Click
-        InitAppelForm()
-        Dim form As New FrmAdminTemplateSousEpisode
-        form.Show()
-
+        Try
+            InitAppelForm()
+            Me.Cursor = Cursors.WaitCursor
+            Me.Enabled = False
+            Using formT As New FrmAdminTemplateSousEpisode()
+                formT.ShowDialog()
+            End Using
+        Catch ex As Exception
+            MsgBox(ex.Message)
+        Finally
+            Me.Cursor = Cursors.Default
+            Me.Enabled = True
+        End Try
     End Sub
 End Class

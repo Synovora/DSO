@@ -434,6 +434,12 @@
     <Compile Include="Form\LigneDeVie\RadFLigneDeVieGraphe.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="Form\SousEpisode\FrmAdminTemplate.Designer.vb">
+      <DependentUpon>FrmAdminTemplate.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Form\SousEpisode\FrmAdminTemplate.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Form\SousEpisode\FrmAdminTemplateDocx.Designer.vb">
       <DependentUpon>FrmAdminTemplateDocx.vb</DependentUpon>
     </Compile>
@@ -982,6 +988,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Form\LigneDeVie\RadFLigneDeVieGraphe.resx">
       <DependentUpon>RadFLigneDeVieGraphe.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form\SousEpisode\FrmAdminTemplate.resx">
+      <DependentUpon>FrmAdminTemplate.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Form\SousEpisode\FrmAdminTemplateDocx.resx">
       <DependentUpon>FrmAdminTemplateDocx.vb</DependentUpon>
