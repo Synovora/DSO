@@ -62,7 +62,6 @@ Partial Class FrmAdminTemplateSousEpisode
         '
         'RadButton1
         '
-        Me.RadButton1.DialogResult = System.Windows.Forms.DialogResult.Cancel
         Me.RadButton1.Location = New System.Drawing.Point(214, 114)
         Me.RadButton1.Name = "RadButton1"
         Me.RadButton1.Size = New System.Drawing.Size(83, 37)
