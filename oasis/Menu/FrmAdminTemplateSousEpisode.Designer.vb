@@ -23,18 +23,18 @@ Partial Class FrmAdminTemplateSousEpisode
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
         Me.RadPanel1 = New Telerik.WinControls.UI.RadPanel()
+        Me.RadButton2 = New Telerik.WinControls.UI.RadButton()
         Me.RadButton1 = New Telerik.WinControls.UI.RadButton()
         Me.DropDownSousType = New Telerik.WinControls.UI.RadDropDownList()
         Me.Label6 = New System.Windows.Forms.Label()
         Me.DropDownType = New Telerik.WinControls.UI.RadDropDownList()
         Me.Label5 = New System.Windows.Forms.Label()
-        Me.RadButton2 = New Telerik.WinControls.UI.RadButton()
         CType(Me.RadPanel1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.RadPanel1.SuspendLayout()
+        CType(Me.RadButton2, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.RadButton1, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.DropDownSousType, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.DropDownType, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.RadButton2, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
@@ -50,6 +50,15 @@ Partial Class FrmAdminTemplateSousEpisode
         Me.RadPanel1.Name = "RadPanel1"
         Me.RadPanel1.Size = New System.Drawing.Size(536, 174)
         Me.RadPanel1.TabIndex = 0
+        '
+        'RadButton2
+        '
+        Me.RadButton2.DialogResult = System.Windows.Forms.DialogResult.Cancel
+        Me.RadButton2.Location = New System.Drawing.Point(350, 115)
+        Me.RadButton2.Name = "RadButton2"
+        Me.RadButton2.Size = New System.Drawing.Size(119, 35)
+        Me.RadButton2.TabIndex = 52
+        Me.RadButton2.Text = "Abandonner"
         '
         'RadButton1
         '
@@ -98,15 +107,6 @@ Partial Class FrmAdminTemplateSousEpisode
         Me.Label5.TabIndex = 47
         Me.Label5.Text = "Type"
         '
-        'RadButton2
-        '
-        Me.RadButton2.DialogResult = System.Windows.Forms.DialogResult.Cancel
-        Me.RadButton2.Location = New System.Drawing.Point(350, 115)
-        Me.RadButton2.Name = "RadButton2"
-        Me.RadButton2.Size = New System.Drawing.Size(119, 35)
-        Me.RadButton2.TabIndex = 52
-        Me.RadButton2.Text = "Abandonner"
-        '
         'FrmAdminTemplateSousEpisode
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -120,14 +120,15 @@ Partial Class FrmAdminTemplateSousEpisode
         '
         Me.RootElement.ApplyShapeToControl = True
         Me.ShowInTaskbar = False
+        Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent
         Me.Text = "Editeur template Sous-Episode"
         CType(Me.RadPanel1, System.ComponentModel.ISupportInitialize).EndInit()
         Me.RadPanel1.ResumeLayout(False)
         Me.RadPanel1.PerformLayout()
+        CType(Me.RadButton2, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.RadButton1, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.DropDownSousType, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.DropDownType, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.RadButton2, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
 

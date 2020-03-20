@@ -163,7 +163,9 @@ Partial Class FAuthentificattion
         Me.Controls.Add(Me.BtnValidation)
         Me.Controls.Add(Me.CbxUtilisateur)
         Me.Controls.Add(Me.Label3)
+        Me.MinimizeBox = False
         Me.Name = "FAuthentificattion"
+        Me.ShowIcon = False
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
         Me.Text = "Authentification"
         Me.GroupBox1.ResumeLayout(False)

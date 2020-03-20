@@ -126,6 +126,7 @@ Partial Class FrmEditDocxSousEpisode
         '
         '
         Me.RootElement.ApplyShapeToControl = True
+        Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent
         Me.Text = "Document sous-épisode"
         CType(Me.RadRichTextEditor1, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.RichTextEditorRibbonBar1, System.ComponentModel.ISupportInitialize).EndInit()

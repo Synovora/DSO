@@ -22,14 +22,65 @@ Public Class FrmAdminTemplateSousEpisode
 
     End Sub
 
+    Private Sub RadButton1_Click(sender As Object, e As EventArgs) Handles RadButton1.Click
+        If Me.DropDownSousType.SelectedItem Is Nothing Then Return
+        Dim sousType = (TryCast(Me.DropDownSousType.SelectedItem.Value, SousEpisodeSousType))
+
+        Try
+            Me.Cursor = Cursors.WaitCursor
+            Me.Enabled = False
+            Dim lstSousEpisodeFusion As List(Of SousEpisodeFusion) = constitueFusion()
+
+            Using frm = New FrmAdminTemplateDocx(sousType)
+                Dim tbl = telecharger_model(sousType)
+                Dim ins = New MemoryStream(tbl)
+                Dim provider = New DocxFormatProvider()
+                If tbl.Count > 0 Then
+                    frm.RadRichTextEditor1.Document = provider.Import(ins)
+                End If
+                frm.RadRichTextEditor1.Document.MailMergeDataSource.ItemsSource = lstSousEpisodeFusion
+                frm.RadRichTextEditor1.UpdateAllFields(FieldDisplayMode.DisplayName)
+                'Dim merged = frm.RadRichTextEditor1.MailMerge()
+                'frm.RadRichTextEditor1.Document = merged
+                ins.Dispose()
+                tbl = Nothing
+                frm.ShowDialog()
+                frm.Dispose()
+            End Using
+
+        Catch err As Exception
+            MsgBox(err.Message())
+        Finally
+            Me.Enabled = True
+            Me.Cursor = Cursors.Default
+        End Try
+
+
+    End Sub
+
     ''' <summary>
     ''' 
     ''' </summary>
     ''' <param name="sender"></param>
     ''' <param name="e"></param>
     Private Sub DropDownType_SelectedIndexChanged(sender As Object, e As Data.PositionChangedEventArgs) Handles DropDownType.SelectedIndexChanged
-        initSousTypes(lstSousEpisodeType(e.Position).Id)
+        If Me.DropDownType.SelectedItem IsNot Nothing Then
+            initSousTypes(TryCast(Me.DropDownType.SelectedItem.Value, SousEpisodeType).Id)
+        End If
     End Sub
+
+    Private Function telecharger_model(sousEpisodeSousType As SousEpisodeSousType) As Byte()
+        Dim tbl As Byte() = {}
+        Try
+            tbl = sousEpisodeSousType.getContenuModel()
+            Return tbl
+        Catch err As Exception
+            If err IsNot Nothing AndAlso err.Message IsNot Nothing AndAlso err.Message.Contains("Fichier demandé inexistant") Then
+                Return tbl
+            End If
+            Throw err
+        End Try
+    End Function
 
     Private Sub initOneShot()
 
@@ -39,6 +90,7 @@ Public Class FrmAdminTemplateSousEpisode
             Me.DropDownType.Items.Add(radListItem)
         Next
         If Me.DropDownType.Items.Count > 0 Then
+            Me.DropDownType.DefaultItemsCountInDropDown = DropDownType.Items.Count
             Me.DropDownType.SelectedItem = Me.DropDownType.Items(0)
             initSousTypes(TryCast(Me.DropDownType.SelectedItem.Value, SousEpisodeType).Id)
         End If
@@ -60,6 +112,7 @@ Public Class FrmAdminTemplateSousEpisode
             Me.DropDownSousType.Items.Add(radListItemST)
         Next
         If DropDownSousType.SelectedItem Is Nothing AndAlso DropDownSousType.Items.Count > 0 Then
+            Me.DropDownSousType.DefaultItemsCountInDropDown = DropDownSousType.Items.Count
             Me.DropDownSousType.SelectedItem = Me.DropDownSousType.Items(0)
         End If
 
@@ -70,7 +123,7 @@ Public Class FrmAdminTemplateSousEpisode
     Private Function constitueFusion() As List(Of SousEpisodeFusion)
         Dim lstFusion = New List(Of SousEpisodeFusion)(1)
         Dim sousEF As New SousEpisodeFusion With {
-           .USNom = "Nom de l'unité sanitaire modifiée",
+           .USNom = "Nom de l'unité sanitaire",
            .USAdr1 = "Maison Xori Lur",
            .USAdr2 = "154 allée Hégui Eder",
            .USCP = "64990",
@@ -89,8 +142,11 @@ Public Class FrmAdminTemplateSousEpisode
            .Patient_Age = "22 ans et 1 mois",
            .Patient_NIR = "1980264000000",
            .Patient_Poids = "72,5",
-           .Type_Libelle = Me.DropDownType.SelectedItem.Text
+           .Type_Libelle = Me.DropDownType.SelectedItem.Text,
+           .Sous_Type_Libelle = Me.DropDownSousType.SelectedItem.Text
         }
+
+        ' -- recherche des sous-type_detail (sousoustype)
 
 
         lstFusion.Add(sousEF)
@@ -98,34 +154,7 @@ Public Class FrmAdminTemplateSousEpisode
         Return lstFusion
     End Function
 
-    Private Sub RadButton1_Click(sender As Object, e As EventArgs) Handles RadButton1.Click
-        Try
-            Me.Cursor = Cursors.WaitCursor
-            Me.Enabled = False
-            Dim lstSousEpisodeFusion As List(Of SousEpisodeFusion) = constitueFusion()
-
-            Using frm = New FrmAdminTemplateDocx
-                Dim tbl = File.ReadAllBytes("c:\db\oasis\modeleradiologie.docx")
-                Dim ins = New MemoryStream(tbl)
-                Dim provider = New DocxFormatProvider()
-                frm.RadRichTextEditor1.Document = provider.Import(ins)
-                frm.RadRichTextEditor1.Document.MailMergeDataSource.ItemsSource = lstSousEpisodeFusion
-                'frm.RadRichTextEditor1.UpdateAllFields(FieldDisplayMode.Result)
-                'Dim merged = frm.RadRichTextEditor1.MailMerge()
-                'frm.RadRichTextEditor1.Document = merged
-                ins.Dispose()
-                tbl = Nothing
-                frm.ShowDialog()
-                frm.Dispose()
-            End Using
-
-        Catch err As Exception
-            MsgBox(err.Message())
-        Finally
-            Me.Enabled = True
-            Me.Cursor = Cursors.Default
-        End Try
-
-
+    Private Sub RadButton2_Click(sender As Object, e As EventArgs) Handles RadButton2.Click
+        Close()
     End Sub
 End Class

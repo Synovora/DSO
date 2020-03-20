@@ -3,6 +3,7 @@ Imports Oasis_WF.My.Resources
 Imports Telerik.WinControls
 Imports Telerik.WinControls.UI
 Imports Telerik.WinControls.UI.RichTextEditorRibbonUI
+Imports Telerik.WinForms.Documents.Model
 Imports Telerik.WinForms.RichTextEditor
 
 Public Class FrmEditDocxSousEpisode
@@ -69,6 +70,8 @@ Public Class FrmEditDocxSousEpisode
         'Me.RichTextEditorRibbonBar1.ApplicationMenuStyle = ApplicationMenuStyle.ApplicationMenu
         Me.RichTextEditorRibbonBar1.MinimizeButton = False
         Me.MinimizeBox = False
+
+        Me.RadRichTextEditor1.LayoutMode = DocumentLayoutMode.Paged
 
     End Sub
     ' Ajoutez une initialisation quelconque après l'appel InitializeComponent().

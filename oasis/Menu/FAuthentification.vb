@@ -176,7 +176,7 @@ Public Class FAuthentificattion
     Private Sub BtnTemplateSsEpisode_Click(sender As Object, e As EventArgs) Handles BtnTemplateSsEpisode.Click
         InitAppelForm()
         Dim form As New FrmAdminTemplateSousEpisode
-        form.ShowDialog()
+        form.Show()
 
     End Sub
 End Class
