@@ -55,13 +55,17 @@ Public Class RadFATCListe
                             End If
                         Next
                         Dim EnumeratorATC As StringEnumerator = ListATC.GetEnumerator()
+                        Dim RowsCount As Integer = 0
+                        Dim iGrid As Integer = -1
                         While EnumeratorATC.MoveNext()
                             Dim CodeATC As String = EnumeratorATC.Current.ToString
                             dt = theriaqueDao.getSpecialiteByArgument(CodeATC, TheriaqueDao.EnumGetSpecialite.CLASSE_ATC, TheriaqueDao.EnumMonoVir.VIRTUEL)
                             If dt.Rows.Count > 0 Then
                                 ResultatOk = True
+                                RowsCount += dt.Rows.Count
                             End If
-                            ChargementSpecialite(dt, False)
+                            ChargementSpecialite(dt, False, RowsCount, iGrid)
+                            iGrid += dt.Rows.Count
                         End While
 
                         'Si pas de correspondance ATC entre Virtuel et classique en nom pariel, on affiche les classiques en nom partiel
@@ -264,20 +268,30 @@ Public Class RadFATCListe
     End Function
 
     'Chargement du Grid affichant les spécialités
-    Private Sub ChargementSpecialite(dt As DataTable, ClearRows As Boolean)
-        If ClearRows = True Then
-            RadGridViewSpe.Rows.Clear()
-            RadGridViewSpe.FilterDescriptors.Clear()
+    Private Sub ChargementSpecialite(dt As DataTable, ClearRows As Boolean, Optional NombreOccurrencesParametre As Integer = 0, Optional iGridParametre As Integer = 0)
+        Dim iGrid As Integer
+
+        Dim NombreOccurrencesLues As Integer
+        If NombreOccurrencesParametre <> 0 Then
+            NombreOccurrencesLues = NombreOccurrencesParametre
+        Else
+            NombreOccurrencesLues = dt.Rows.Count
         End If
 
-        Dim NombreOccurrencesLues As Integer = dt.Rows.Count
         If NombreOccurrencesLues > 1 Then
             LblOccurrencesLues.Text = NombreOccurrencesLues & " occurrences correspondant aux critères de recherche"
         Else
             LblOccurrencesLues.Text = NombreOccurrencesLues & " occurrence correspondant aux critères de recherche"
         End If
 
-        Dim iGrid As Integer = -1 'Indice pour alimenter la Grid qui peut comporter moins d'occurrences que le DataTable
+        If ClearRows = True Then
+            RadGridViewSpe.Rows.Clear()
+            RadGridViewSpe.FilterDescriptors.Clear()
+            iGrid = -1 'Indice pour alimenter la Grid qui peut comporter moins d'occurrences que le DataTable
+        Else
+            iGrid = iGridParametre
+        End If
+
         Dim rowCount As Integer = dt.Rows.Count - 1
 
         For i = 0 To rowCount Step 1
