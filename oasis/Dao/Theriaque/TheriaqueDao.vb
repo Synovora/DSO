@@ -24,6 +24,11 @@ Public Class TheriaqueDao
         CODE_CIP13
     End Enum
 
+    Public Enum EnumMonoVir
+        CLASSIQUE
+        VIRTUEL
+    End Enum
+
     Friend Function GetMedicamentById(medicamentCis As Integer) As Medicament
         Dim medicament As Medicament
         Dim con As SqlConnection
@@ -124,7 +129,7 @@ Public Class TheriaqueDao
                 command.CommandType = CommandType.StoredProcedure
                 command.Connection.ChangeDatabase("Theriak")
                 command.CommandText = "theriaque.GET_THE_SPECIALITE"
-                command.Parameters.AddWithValue("@codeId", CodeId & "%")
+                command.Parameters.AddWithValue("@codeId", CodeId)
                 command.Parameters.AddWithValue("@VarTyp", VarTyp)
                 command.Parameters.AddWithValue("@MonoVir", Monovir)
 

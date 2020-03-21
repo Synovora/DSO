@@ -1,16 +1,40 @@
-﻿Public Class RadFATCListe
+﻿Imports Telerik.WinControls.UI
+
+Public Class RadFATCListe
 
     Dim theriaqueDao As New TheriaqueDao
 
     Private Sub RadFATCListe_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         RadioBtnVirtuel.Checked = True
         ChargementATC1()
+        LblOccurrencesLues.Text = ""
     End Sub
 
+    'Liste des médicaments par dénomination
     Private Sub RadBtnFiltre_Click(sender As Object, e As EventArgs) Handles RadBtnFiltreSpecialite.Click
         Dim NbCar As Integer = RadTxtSpecialite.Text.Length
         If RadTxtSpecialite.Text <> "" And NbCar > 2 Then
-            ChargementSpecialiteByNomSpecialite(RadTxtSpecialite.Text)
+            Cursor.Current = Cursors.WaitCursor
+            '1 - Recherche spécialités virtuelles en nom partiel
+            Dim dt As DataTable
+            Dim NomSpecialite As String = "%" & RadTxtSpecialite.Text & "%"
+            dt = ChargementSpecialiteByNomSpecialite(NomSpecialite, TheriaqueDao.EnumMonoVir.VIRTUEL)
+            If dt.Rows.Count > 0 Then
+                ChargementSpecialite(dt)
+            Else
+                '2 - Recherche spécialités classiques en nom complet
+                NomSpecialite = "%" & RadTxtSpecialite.Text & " %"
+                dt = ChargementSpecialiteByNomSpecialite(NomSpecialite, TheriaqueDao.EnumMonoVir.CLASSIQUE)
+                If dt.Rows.Count > 0 Then
+                    ChargementSpecialite(dt)
+                Else
+                    '3 - Recherche spécialités classiques en nom partiel
+                    NomSpecialite = "%" & RadTxtSpecialite.Text & "%"
+                    dt = ChargementSpecialiteByNomSpecialite(NomSpecialite, TheriaqueDao.EnumMonoVir.CLASSIQUE)
+                    ChargementSpecialite(dt)
+                End If
+            End If
+            Cursor.Current = Cursors.Default
         Else
             MessageBox.Show("Vous devez saisir au moins 3 caractères pour lancer cette option de recherche de médicaments !")
         End If
@@ -137,6 +161,7 @@
         End If
     End Sub
 
+    'Liste des médicaments ATC niveau 2
     Private Sub RadBtnSpec1_Click(sender As Object, e As EventArgs) Handles RadBtnSpec2.Click
         If RadGridViewATC2.CurrentRow IsNot Nothing Then
             Dim aRow As Integer = Me.RadGridViewATC2.Rows.IndexOf(Me.RadGridViewATC2.CurrentRow)
@@ -147,6 +172,7 @@
         End If
     End Sub
 
+    'Liste des médicaments ATC niveau 3
     Private Sub RadBtnSpec2_Click(sender As Object, e As EventArgs) Handles RadBtnSpec3.Click
         If RadGridViewATC3.CurrentRow IsNot Nothing Then
             Dim aRow As Integer = Me.RadGridViewATC3.Rows.IndexOf(Me.RadGridViewATC3.CurrentRow)
@@ -157,6 +183,7 @@
         End If
     End Sub
 
+    'Liste des médicaments ATC niveau 4
     Private Sub RadBtnSpec4_Click(sender As Object, e As EventArgs) Handles RadBtnSpec4.Click
         If RadGridViewATC4.CurrentRow IsNot Nothing Then
             Dim aRow As Integer = Me.RadGridViewATC4.Rows.IndexOf(Me.RadGridViewATC4.CurrentRow)
@@ -171,6 +198,7 @@
         Cursor.Current = Cursors.WaitCursor
 
         Dim Monovir As Integer = GetMonovir()
+        CodeAtc &= "%"
 
         Dim dt As DataTable
         dt = theriaqueDao.getSpecialiteByArgument(CodeAtc, TheriaqueDao.EnumGetSpecialite.CLASSE_ATC, Monovir)
@@ -179,22 +207,22 @@
         Cursor.Current = Cursors.Default
     End Sub
 
-    Private Sub ChargementSpecialiteByNomSpecialite(NomSpecialite As String)
-        Cursor.Current = Cursors.WaitCursor
-
-        Dim Monovir As Integer = GetMonovir()
-
+    Private Function ChargementSpecialiteByNomSpecialite(NomSpecialite As String, Monovir As Integer) As DataTable
         Dim dt As DataTable
-        NomSpecialite = "%" & NomSpecialite
         dt = theriaqueDao.getSpecialiteByArgument(NomSpecialite, TheriaqueDao.EnumGetSpecialite.NOM_SPECIALITE, Monovir)
-        ChargementSpecialite(dt)
-
-        Cursor.Current = Cursors.Default
-    End Sub
+        Return dt
+    End Function
 
     Private Sub ChargementSpecialite(dt As DataTable)
         RadGridViewSpe.Rows.Clear()
         RadGridViewSpe.FilterDescriptors.Clear()
+
+        Dim NombreOccurrencesLues As Integer = dt.Rows.Count
+        If NombreOccurrencesLues > 1 Then
+            LblOccurrencesLues.Text = NombreOccurrencesLues & " occurrences correspondant aux critères de recherche"
+        Else
+            LblOccurrencesLues.Text = NombreOccurrencesLues & " occurrence correspondant aux critères de recherche"
+        End If
 
         Dim iGrid As Integer = -1 'Indice pour alimenter la Grid qui peut comporter moins d'occurrences que le DataTable
         Dim rowCount As Integer = dt.Rows.Count - 1
@@ -208,6 +236,7 @@
             RadGridViewSpe.Rows(iGrid).Cells("SP_PR_CODE_FK").Value = dt.Rows(i)("SP_PR_CODE_FK")
             RadGridViewSpe.Rows(iGrid).Cells("SP_NOM").Value = dt.Rows(i)("SP_NOM")
             RadGridViewSpe.Rows(iGrid).Cells("SP_NOMCOMP").Value = dt.Rows(i)("SP_NOMCOMP")
+            RadGridViewSpe.Rows(iGrid).Cells("SP_NOMLONG").Value = dt.Rows(i)("SP_NOMLONG")
             RadGridViewSpe.Rows(iGrid).Cells("SP_CIPUCD").Value = dt.Rows(i)("SP_CIPUCD")
         Next
 
@@ -234,4 +263,9 @@
         Close()
     End Sub
 
+    Private Sub MasterTemplate_CellFormatting(sender As Object, e As Telerik.WinControls.UI.CellFormattingEventArgs) Handles RadGridViewSpe.CellFormatting
+        If TypeOf e.Row Is GridViewDataRowInfo Then
+            e.CellElement.ToolTipText = e.CellElement.Text
+        End If
+    End Sub
 End Class
