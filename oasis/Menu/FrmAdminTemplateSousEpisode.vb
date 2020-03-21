@@ -147,14 +147,18 @@ Public Class FrmAdminTemplateSousEpisode
            .Sous_Type_Libelle = Me.DropDownSousType.SelectedItem.Text,
            .Signature_Date = Date.Now.ToString("dd MMM yyyy"),
            .Signataire_Fonction = userLog.UtilisateurProfilId.ToLower.Trim.Replace("_", " "),
-           .Signataire_PrenomNom = userLog.UtilisateurPrenom.Trim & " " & userLog.UtilisateurNom.Trim
+           .Signataire_PrenomNom = userLog.UtilisateurPrenom.Trim & " " & userLog.UtilisateurNom.Trim,
+           .Patient_sexe = "masculin",
+           .Episode_DateHeure = Date.Now.ToString("dd MMM yyyy")
         }
 
         ' -- recherche des sous-type_detail (sousoustype)
         Dim lstSousTypeDetail = sousEpisodeSousSousTypeDao.getLstSousEpisodeSousSousType(TryCast(Me.DropDownSousType.SelectedItem.Value, SousEpisodeSousType).Id)
         If lstSousTypeDetail.Count > 0 Then
             For Each detail As SousEpisodeSousSousType In lstSousTypeDetail
+                sousEF.Sous_Type_Libelle_Detail_ALD += vbCrLf
                 sousEF.Sous_Type_Libelle_Detail_ALD += (detail.Libelle & vbCrLf)
+                sousEF.Sous_Type_Libelle_Detail_Non_ALD += vbCrLf
                 sousEF.Sous_Type_Libelle_Detail_Non_ALD += (detail.Libelle & vbCrLf)
             Next
         End If

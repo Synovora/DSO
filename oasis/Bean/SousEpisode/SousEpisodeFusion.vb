@@ -19,6 +19,10 @@
     Property Patient_NIR As String
     Property Patient_Age As String
     Property Patient_Poids As String
+    Property Patient_sexe As String
+
+    Property Episode_DateHeure As String
+
 
     Property Type_Libelle As String
     Property Sous_Type_Libelle As String
