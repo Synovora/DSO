@@ -41,6 +41,7 @@ Partial Class RadFAffichaeInfo
         Me.TextBoxInfo.Location = New System.Drawing.Point(0, 0)
         Me.TextBoxInfo.Multiline = True
         Me.TextBoxInfo.Name = "TextBoxInfo"
+        Me.TextBoxInfo.ReadOnly = True
         Me.TextBoxInfo.ScrollBars = System.Windows.Forms.ScrollBars.Vertical
         Me.TextBoxInfo.Size = New System.Drawing.Size(1001, 637)
         Me.TextBoxInfo.TabIndex = 0

@@ -392,4 +392,19 @@ Public Class RadFMedicamentSelecteur
             End If
         End If
     End Sub
+
+    Private Sub RadBtnEffetIndesirable_Click(sender As Object, e As EventArgs) Handles RadBtnEffetIndesirable.Click
+        If RadGridViewSpe.CurrentRow IsNot Nothing Then
+            Dim aRow As Integer = Me.RadGridViewSpe.Rows.IndexOf(Me.RadGridViewSpe.CurrentRow)
+            If aRow >= 0 Then
+                Dim SpecialiteId As Long = RadGridViewSpe.Rows(aRow).Cells("SP_CODE_SQ_PK").Value
+                Me.Enabled = False
+                Using form As New RadFEffetSecondaire
+                    form.MedicamentId = SpecialiteId
+                    form.ShowDialog()
+                End Using
+                Me.Enabled = True
+            End If
+        End If
+    End Sub
 End Class

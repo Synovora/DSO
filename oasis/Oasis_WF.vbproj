@@ -452,6 +452,12 @@
     <Compile Include="Form\SousEpisode\FrmAdminTemplateDocx.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="Form\Theriaque\RadFEffetSecondaire.Designer.vb">
+      <DependentUpon>RadFEffetSecondaire.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Form\Theriaque\RadFEffetSecondaire.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Form\Theriaque\RadFMedicamentSelecteur.Designer.vb">
       <DependentUpon>RadFMedicamentSelecteur.vb</DependentUpon>
     </Compile>
@@ -1003,6 +1009,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Form\SousEpisode\FrmAdminTemplateDocx.resx">
       <DependentUpon>FrmAdminTemplateDocx.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form\Theriaque\RadFEffetSecondaire.resx">
+      <DependentUpon>RadFEffetSecondaire.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Form\Theriaque\RadFMedicamentSelecteur.resx">
       <DependentUpon>RadFMedicamentSelecteur.vb</DependentUpon>

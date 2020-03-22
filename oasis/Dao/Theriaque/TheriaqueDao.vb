@@ -194,18 +194,19 @@ Public Class TheriaqueDao
         Return Pharmacotext
     End Function
 
-    Friend Function GetEffetIndesirableBySpecialite(CodeId As String, Type As EnumTypeEffetIndesirable) As StringCollection
+    Friend Function GetEffetIndesirableBySpecialite(CodeId As String, Type As EnumTypeEffetIndesirable) As String
         Dim dt As New DataTable
         Dim ds As New DataSet
-        Dim sc As New StringCollection
+        Dim EffetIndesirable As String = ""
+        Dim PremierPassage As Boolean = False
 
         Using con As SqlConnection = GetConnection()
             Try
                 Dim command As New SqlCommand("theriaque.GET_THE_EFFIND_SPE", con)
                 command.CommandType = CommandType.StoredProcedure
                 command.Connection.ChangeDatabase("Theriak")
-                command.Parameters.AddWithValue("@codeId", CodeId)
-                command.Parameters.AddWithValue("@type", Type)
+                command.Parameters.AddWithValue("@CodeId", CodeId)
+                command.Parameters.AddWithValue("@TypId", Type)
 
                 Dim da As New SqlDataAdapter(command)
                 da.Fill(dt)
@@ -213,7 +214,12 @@ Public Class TheriaqueDao
                 Dim rowCount As Integer = dt.Rows.Count - 1
 
                 For i = 0 To rowCount Step 1
-                    sc.Add(dt.Rows(i)("TEXTEFFET"))
+                    If PremierPassage = False Then
+                        PremierPassage = True
+                        EffetIndesirable = dt.Rows(i)("TEXTEFFET")
+                    Else
+                        EffetIndesirable += vbCrLf & dt.Rows(i)("TEXTEFFET")
+                    End If
                 Next
             Catch ex As Exception
                 Throw ex
@@ -222,7 +228,7 @@ Public Class TheriaqueDao
             End Try
         End Using
 
-        Return sc
+        Return EffetIndesirable
     End Function
 
     Friend Function GetPharmacoDynamiqueBySpecialite(CodeId As String) As String
