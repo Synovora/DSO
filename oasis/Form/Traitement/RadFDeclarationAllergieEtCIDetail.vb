@@ -60,7 +60,7 @@ Public Class RadFDeclarationAllergieEtCIDetail
             ChkContreIndication.Checked = False
             traitement = New Traitement()
             traitement.PatientId = SelectedPatient.patientId
-            traitement.MedicamentCis = SelectedMedicamentCis
+            traitement.MedicamentId = SelectedMedicamentCis
             traitement.MedicamentDci = medicament.MedicamentDci
             traitement.Allergie = False
             traitement.ContreIndication = False

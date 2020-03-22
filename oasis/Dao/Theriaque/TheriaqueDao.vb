@@ -1,4 +1,5 @@
-﻿Imports System.Data.SqlClient
+﻿Imports System.Collections.Specialized
+Imports System.Data.SqlClient
 Imports Oasis_Common
 Public Class TheriaqueDao
     Inherits StandardDao
@@ -27,6 +28,14 @@ Public Class TheriaqueDao
     Public Enum EnumMonoVir
         CLASSIQUE
         VIRTUEL
+        NULL
+    End Enum
+
+    Public Enum EnumTypeEffetIndesirable
+        CLINIQUE = 1
+        PARA_CLINIQUE = 2
+        CLINIQUE_SURDOSAGE = 3
+        PARA_CLINIQUE_SURDOSAGE = 4
     End Enum
 
     Friend Function GetMedicamentById(medicamentCis As Integer) As Medicament
@@ -101,10 +110,10 @@ Public Class TheriaqueDao
 
         Using con As SqlConnection = GetConnection()
             Try
-                Dim command As New SqlCommand("@CodeATC", con)
+                Dim command As New SqlCommand("theriaque.GET_THE_ATC_ATC", con)
                 command.CommandType = CommandType.StoredProcedure
                 command.Connection.ChangeDatabase("Theriak")
-                command.CommandText = "theriaque.GET_THE_ATC_ATC"
+                'command.CommandText = "theriaque.GET_THE_ATC_ATC"
                 command.Parameters.AddWithValue("@codeId", CodeATC)
 
                 Dim da As New SqlDataAdapter(command)
@@ -125,13 +134,17 @@ Public Class TheriaqueDao
 
         Using con As SqlConnection = GetConnection()
             Try
-                Dim command As New SqlCommand("@CodeATC", con)
+                Dim command As New SqlCommand("theriaque.GET_THE_SPECIALITE", con)
                 command.CommandType = CommandType.StoredProcedure
                 command.Connection.ChangeDatabase("Theriak")
-                command.CommandText = "theriaque.GET_THE_SPECIALITE"
+                'command.CommandText = "theriaque.GET_THE_SPECIALITE"
                 command.Parameters.AddWithValue("@codeId", CodeId)
                 command.Parameters.AddWithValue("@VarTyp", VarTyp)
-                command.Parameters.AddWithValue("@MonoVir", Monovir)
+                If Monovir = TheriaqueDao.EnumMonoVir.NULL Then
+                    command.Parameters.AddWithValue("@MonoVir", DBNull.Value)
+                Else
+                    command.Parameters.AddWithValue("@MonoVir", Monovir)
+                End If
 
                 Dim da As New SqlDataAdapter(command)
                 da.Fill(dt)
@@ -143,6 +156,111 @@ Public Class TheriaqueDao
         End Using
 
         Return dt
+    End Function
+
+    Friend Function GetPharmacoCinetqueBySpecialite(CodeId As String) As String
+        Dim dt As New DataTable
+        Dim ds As New DataSet
+        Dim Pharmacotext As String = ""
+        Dim PremierPassage As Boolean = False
+
+        Using con As SqlConnection = GetConnection()
+            Try
+                Dim command As New SqlCommand("theriaque.GET_THE_CINETIQUE_SPE", con)
+                command.CommandType = CommandType.StoredProcedure
+                command.Connection.ChangeDatabase("Theriak")
+                command.Parameters.AddWithValue("@codeId", CodeId)
+
+                Dim da As New SqlDataAdapter(command)
+                da.Fill(dt)
+
+                Dim rowCount As Integer = dt.Rows.Count - 1
+
+                For i = 0 To rowCount Step 1
+                    If PremierPassage = False Then
+                        PremierPassage = True
+                        Pharmacotext = dt.Rows(i)("PHARMACOTEXT")
+                    Else
+                        Pharmacotext += vbCrLf & dt.Rows(i)("PHARMACOTEXT")
+                    End If
+                Next
+            Catch ex As Exception
+                Throw ex
+            Finally
+                con.Close()
+            End Try
+        End Using
+
+        Return Pharmacotext
+    End Function
+
+    Friend Function GetEffetIndesirableBySpecialite(CodeId As String, Type As EnumTypeEffetIndesirable) As StringCollection
+        Dim dt As New DataTable
+        Dim ds As New DataSet
+        Dim sc As New StringCollection
+
+        Using con As SqlConnection = GetConnection()
+            Try
+                Dim command As New SqlCommand("theriaque.GET_THE_EFFIND_SPE", con)
+                command.CommandType = CommandType.StoredProcedure
+                command.Connection.ChangeDatabase("Theriak")
+                command.Parameters.AddWithValue("@codeId", CodeId)
+                command.Parameters.AddWithValue("@type", Type)
+
+                Dim da As New SqlDataAdapter(command)
+                da.Fill(dt)
+
+                Dim rowCount As Integer = dt.Rows.Count - 1
+
+                For i = 0 To rowCount Step 1
+                    sc.Add(dt.Rows(i)("TEXTEFFET"))
+                Next
+            Catch ex As Exception
+                Throw ex
+            Finally
+                con.Close()
+            End Try
+        End Using
+
+        Return sc
+    End Function
+
+    Friend Function GetPharmacoDynamiqueBySpecialite(CodeId As String) As String
+        Dim dt As New DataTable
+        Dim ds As New DataSet
+        Dim PharmacoDynamique As String = ""
+        Dim PremierPassage As Boolean = False
+
+
+        Using con As SqlConnection = GetConnection()
+            Try
+                Dim command As New SqlCommand("theriaque.GET_THE_DET_PHDYNA", con)
+                command.CommandType = CommandType.StoredProcedure
+                command.Connection.ChangeDatabase("Theriak")
+                command.Parameters.AddWithValue("@codeId", CodeId)
+                command.Parameters.AddWithValue("@typId", 1)
+
+                Dim da As New SqlDataAdapter(command)
+                da.Fill(dt)
+
+                Dim rowCount As Integer = dt.Rows.Count - 1
+
+                For i = 0 To rowCount Step 1
+                    If PremierPassage = False Then
+                        PremierPassage = True
+                        PharmacoDynamique = dt.Rows(i)("TEXTEPH")
+                    Else
+                        PharmacoDynamique += vbCrLf & dt.Rows(i)("TEXTEPH")
+                    End If
+                Next
+            Catch ex As Exception
+                Throw ex
+            Finally
+                con.Close()
+            End Try
+        End Using
+
+        Return PharmacoDynamique
     End Function
 
 End Class

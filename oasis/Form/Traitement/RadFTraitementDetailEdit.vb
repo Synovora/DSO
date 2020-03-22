@@ -7,7 +7,7 @@ Imports Oasis_Common
 Public Class RadFTraitementDetailEdit
     Private privateSelectedPatient As Patient
     Private privateUtilisateurConnecte As Utilisateur
-    Private privateSelectedMedicamentCis As Integer
+    Private privateSelectedMedicamentId As Integer
     Private privateSelectedTraitementId As Integer
     Private privateAllergie As Boolean
     Private privateContreIndication As Boolean
@@ -32,12 +32,12 @@ Public Class RadFTraitementDetailEdit
         End Set
     End Property
 
-    Public Property SelectedMedicamentCis As Integer
+    Public Property SelectedMedicamentId As Integer
         Get
-            Return privateSelectedMedicamentCis
+            Return privateSelectedMedicamentId
         End Get
         Set(value As Integer)
-            privateSelectedMedicamentCis = value
+            privateSelectedMedicamentId = value
         End Set
     End Property
 
@@ -95,6 +95,7 @@ Public Class RadFTraitementDetailEdit
     End Enum
 
     Dim traitementDao As New TraitementDao
+    Dim TheriaqueDao As New TheriaqueDao
 
     'Déclaration des variables de travail
     Dim EditMode As Char = ""
@@ -222,7 +223,7 @@ Public Class RadFTraitementDetailEdit
             LblstatutTraitement.Hide()
             RadPnlStatutTraitement.Hide()
             'Récupération du cis du médicament sélectionné
-            medicament_selecteur_cis = SelectedMedicamentCis
+            medicament_selecteur_cis = SelectedMedicamentId
             'Chargement des données du médicament sélectionné
             ChargementMedoc()
             'Cacher la posologie journalière car la base n'a pas encore été saisie
@@ -319,8 +320,8 @@ Public Class RadFTraitementDetailEdit
 
         'Stockage de l'utilisateur qui a créé le traitement pour le contrôle en cas de demande de suppression du traitement
         utilisateurCreation = traitement.UserCreation
-        medicament_selecteur_cis = traitement.MedicamentCis
-        LblTraitementMedicamentCIS.Text = traitement.MedicamentCis
+        medicament_selecteur_cis = traitement.MedicamentId
+        LblTraitementMedicamentId.Text = traitement.MedicamentId
         LblMedicamentDCI.Text = traitement.MedicamentDci
 
         'Formatage de la posologie
@@ -627,42 +628,22 @@ Public Class RadFTraitementDetailEdit
 
     Private Sub ChargementMedoc()
         If EditMode = "C" Then
-            LblTraitementMedicamentCIS.Text = SelectedMedicamentCis.ToString
+            LblTraitementMedicamentId.Text = SelectedMedicamentId.ToString
         End If
 
-        Dim medicamentDataReader As SqlDataReader
-        SQLString = "select * from oasis.oa_r_medicament where oa_medicament_cis = " & SelectedMedicamentCis.ToString & ";"
-        Dim myCommand As New SqlCommand(SQLString, conxn)
-
-        conxn.Open()
-        medicamentDataReader = myCommand.ExecuteReader()
-        If medicamentDataReader.Read() Then
-            If medicamentDataReader("oa_medicament_dci") Is DBNull.Value Then
-                LblMedicamentDCI.Text = ""
-            Else
-                LblMedicamentDCI.Text = medicamentDataReader("oa_medicament_dci")
-            End If
-
-            If medicamentDataReader("oa_medicament_forme") Is DBNull.Value Then
-                LblMedicamentForme.Text = ""
-            Else
-                LblMedicamentForme.Text = medicamentDataReader("oa_medicament_forme")
-            End If
-
-            If medicamentDataReader("oa_medicament_voie_administration") Is DBNull.Value Then
-                LblMedicamentAdministration.Text = ""
-            Else
-                LblMedicamentAdministration.Text = medicamentDataReader("oa_medicament_voie_administration")
-            End If
-
-            If medicamentDataReader("oa_medicament_titulaire") Is DBNull.Value Then
-                LblMedicamentTitulaire.Text = ""
-            Else
-                LblMedicamentTitulaire.Text = medicamentDataReader("oa_medicament_titulaire")
-            End If
+        Dim dt As DataTable
+        dt = TheriaqueDao.getSpecialiteByArgument(SelectedMedicamentId.ToString, TheriaqueDao.EnumGetSpecialite.ID_THERIAQUE, TheriaqueDao.EnumMonoVir.NULL)
+        If dt.Rows.Count > 0 Then
+            LblMedicamentDCI.Text = dt.Rows(0)("SP_NOM")
+            LblMedicamentDCI.Text = LblMedicamentDCI.Text.Replace(" §", "")
+            LblMedicamentDenominationLongue.Text = dt.Rows(0)("SP_NOMLONG")
+            LblMedicamentDenominationLongue.Text = LblMedicamentDenominationLongue.Text.Replace("(MEDICAMENT VIRTUEL)", "")
+        Else
+            LblMedicamentDCI.Text = ""
+            LblMedicamentDenominationLongue.Text = ""
+            LblMedicamentAdministration.Text = ""
+            LblMedicamentTitulaire.Text = ""
         End If
-        conxn.Close()
-        myCommand.Dispose()
     End Sub
 
     Private Sub ChargerZonesArret(traitement As Traitement)
@@ -765,7 +746,7 @@ Public Class RadFTraitementDetailEdit
     'Affichage de l'écran détaillant un médicament
     Private Sub RadBtnMedoc_Click(sender As Object, e As EventArgs) Handles RadBtnMedoc.Click
         Using vFMedocDetail As New RadFMedocDetail
-            vFMedocDetail.MedicamentCis = LblTraitementMedicamentCIS.Text
+            vFMedocDetail.MedicamentCis = LblTraitementMedicamentId.Text
             vFMedocDetail.ShowDialog()
         End Using
     End Sub
@@ -962,8 +943,9 @@ Public Class RadFTraitementDetailEdit
         Dim traitementaCreer As New Traitement
         traitementaCreer.TraitementId = SelectedTraitementId
         traitementaCreer.PatientId = SelectedPatient.patientId
-        traitementaCreer.MedicamentCis = medicament_selecteur_cis
+        traitementaCreer.MedicamentId = medicament_selecteur_cis
         traitementaCreer.MedicamentDci = LblMedicamentDCI.Text
+        traitementaCreer.DenominationLongue = LblMedicamentDenominationLongue.Text
         traitementaCreer.Allergie = False
         traitementaCreer.ContreIndication = False
         traitementaCreer.PosologieBase = traitementDao.GetBaseCodeByItem(CbxTraitementBase.Text)
@@ -1219,8 +1201,8 @@ Public Class RadFTraitementDetailEdit
         ActionEnCours = EnumAction.Sans
         Me.CodeRetour = False
         LblMedicamentDCI.Text = ""
-        LblTraitementMedicamentCIS.Text = ""
-        LblMedicamentForme.Text = ""
+        LblTraitementMedicamentId.Text = ""
+        LblMedicamentDenominationLongue.Text = ""
         LblMedicamentAdministration.Text = ""
         LblMedicamentTitulaire.Text = ""
         LblTraitementPosologie.Text = ""
@@ -1600,4 +1582,5 @@ Public Class RadFTraitementDetailEdit
     Private Sub RadBtnRetour_Click(sender As Object, e As EventArgs) Handles RadBtnRetour.Click
         Close()
     End Sub
+
 End Class

@@ -1281,21 +1281,18 @@ Public Class RadFSynthese
             Exit Sub
         End If
 
-        Dim SelectedMedicamentCis As Integer
+        Dim SelectedMedicamentId As Integer
         Me.Enabled = False
         Cursor.Current = Cursors.WaitCursor
-        Using vFMedocSelecteur As New RadFMedocSelecteur
-            vFMedocSelecteur.SelectedPatient = Me.SelectedPatient
-            vFMedocSelecteur.Allergie = Me.Allergie
-            vFMedocSelecteur.ContreIndication = Me.ContreIndication
-            vFMedocSelecteur.ShowDialog() 'Modal
-            SelectedMedicamentCis = vFMedocSelecteur.SelectedMedicamentCis
+        Using form As New RadFMedicamentSelecteur
+            form.ShowDialog() 'Modal
+            SelectedMedicamentId = form.SelectedSpecialiteId
             'Si un médicament a été sélectionné
-            If SelectedMedicamentCis <> 0 Then
+            If SelectedMedicamentId <> 0 Then
                 Using vFTraitementDetailEdit As New RadFTraitementDetailEdit
                     vFTraitementDetailEdit.SelectedPatient = Me.SelectedPatient
                     vFTraitementDetailEdit.UtilisateurConnecte = Me.UtilisateurConnecte
-                    vFTraitementDetailEdit.SelectedMedicamentCis = SelectedMedicamentCis
+                    vFTraitementDetailEdit.SelectedMedicamentId = SelectedMedicamentId
                     vFTraitementDetailEdit.Allergie = Me.Allergie
                     vFTraitementDetailEdit.ContreIndication = Me.ContreIndication
                     vFTraitementDetailEdit.SelectedTraitementId = 0
@@ -1309,6 +1306,7 @@ Public Class RadFSynthese
             End If
         End Using
         Me.Enabled = True
+
     End Sub
 
     'Affichage du détail d'un traitement dans un popup
@@ -1325,7 +1323,7 @@ Public Class RadFSynthese
                     vFTraitementDetailEdit.SelectedTraitementId = TraitementId
                     vFTraitementDetailEdit.SelectedPatient = Me.SelectedPatient
                     vFTraitementDetailEdit.UtilisateurConnecte = Me.UtilisateurConnecte
-                    vFTraitementDetailEdit.SelectedMedicamentCis = SelectedMedicamentCis
+                    vFTraitementDetailEdit.SelectedMedicamentId = SelectedMedicamentCis
                     vFTraitementDetailEdit.Allergie = Me.Allergie
                     vFTraitementDetailEdit.ContreIndication = Me.ContreIndication
                     vFTraitementDetailEdit.PositionGaucheDroite = EnumPosition.Droite

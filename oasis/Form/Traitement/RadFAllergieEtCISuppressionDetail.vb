@@ -59,7 +59,7 @@
     End Sub
 
     Private Sub ChargementMedicament()
-        medicament = medicamentDao.GetMedicamentById(SelectedTraitement.MedicamentCis)
+        medicament = medicamentDao.GetMedicamentById(SelectedTraitement.MedicamentId)
         LblMedicamentDCI.Text = Medicament.MedicamentDci
         LblMedicamentForme.Text = Medicament.Forme
         LblMedicamentAdministration.Text = Medicament.VoieAdministration

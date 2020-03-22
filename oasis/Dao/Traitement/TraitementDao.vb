@@ -242,8 +242,9 @@ Public Class TraitementDao
 
         traitement.TraitementId = reader("oa_traitement_id")
         traitement.PatientId = Coalesce(reader("oa_traitement_patient_id"), "")
-        traitement.MedicamentCis = Coalesce(reader("oa_traitement_medicament_cis"), "")
+        traitement.MedicamentId = Coalesce(reader("oa_traitement_medicament_cis"), "")
         traitement.MedicamentDci = Coalesce(reader("oa_traitement_medicament_dci"), "")
+        traitement.DenominationLongue = Coalesce(reader("oa_traitement_denomination_longue"), "")
         traitement.UserCreation = Coalesce(reader("oa_traitement_identifiant_creation"), 0)
         traitement.DateCreation = Coalesce(reader("oa_traitement_date_creation"), Nothing)
         traitement.UserModification = Coalesce(reader("oa_traitement_identifiant_modification"), 0)
@@ -371,14 +372,14 @@ Public Class TraitementDao
         Dim codeRetour As Boolean = True
 
         Dim SQLstring As String = "INSERT INTO oasis.oa_traitement" &
-        " (oa_traitement_patient_id, oa_traitement_medicament_cis, oa_traitement_medicament_dci, oa_traitement_allergie," &
+        " (oa_traitement_patient_id, oa_traitement_medicament_cis, oa_traitement_medicament_dci, oa_traitement_denomination_longue, oa_traitement_allergie," &
         " oa_traitement_contre_indication, oa_traitement_identifiant_creation, oa_traitement_identifiant_modification," &
         " oa_traitement_ordre_affichage, oa_traitement_posologie_base, oa_traitement_posologie_rythme," &
         " oa_traitement_posologie_matin, oa_traitement_posologie_midi, oa_traitement_posologie_apres_midi, oa_traitement_posologie_soir," &
         " oa_traitement_fraction_matin,oa_traitement_fraction_midi, oa_traitement_fraction_apres_midi, oa_traitement_fraction_soir," &
         " oa_traitement_date_creation, oa_traitement_posologie_commentaire, oa_traitement_commentaire," &
         " oa_traitement_date_debut, oa_traitement_date_fin)" &
-        " VALUES (@patientId, @cis, @dci, @allergie," &
+        " VALUES (@patientId, @cis, @dci, @denominationLongue, @allergie," &
         " @contreIndication, @utilisateurCreation, @utilisateurModification," &
         " @ordreAffichage, @posologieBase, @posologierythme," &
         " @PosologieMatin, @PosologieMidi, @PosologieApresMidi, @PosologieSoir," &
@@ -390,8 +391,9 @@ Public Class TraitementDao
 
         With cmd.Parameters
             .AddWithValue("@patientId", traitement.PatientId.ToString)
-            .AddWithValue("@cis", traitement.MedicamentCis.ToString)
+            .AddWithValue("@cis", traitement.MedicamentId.ToString)
             .AddWithValue("@dci", traitement.MedicamentDci)
+            .AddWithValue("@denominationLongue", traitement.DenominationLongue)
             .AddWithValue("@allergie", 0)
             .AddWithValue("@contreIndication", 0)
             .AddWithValue("@utilisateurCreation", userLog.UtilisateurId.ToString)
@@ -661,7 +663,7 @@ Public Class TraitementDao
 
         With cmd.Parameters
             .AddWithValue("@patientId", traitement.PatientId.ToString)
-            .AddWithValue("@cis", traitement.MedicamentCis.ToString)
+            .AddWithValue("@cis", traitement.MedicamentId.ToString)
             .AddWithValue("@dci", traitement.MedicamentDci)
             .AddWithValue("@allergie", traitement.Allergie)
             .AddWithValue("@contreIndication", traitement.ContreIndication)

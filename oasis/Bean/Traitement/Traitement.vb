@@ -3,6 +3,7 @@
     Private _patientId As Integer
     Private _medicamentCis As Integer
     Private _medicamentDci As String
+    Private _denomination_longue As String
     Private _userCreation As Integer
     Private _dateCreation As Date
     Private _userModification As Integer
@@ -52,7 +53,7 @@
         End Set
     End Property
 
-    Public Property MedicamentCis As Integer
+    Public Property MedicamentId As Integer
         Get
             Return _medicamentCis
         End Get
@@ -337,6 +338,15 @@
         End Get
         Set(value As String)
             _fractionSoir = value
+        End Set
+    End Property
+
+    Public Property DenominationLongue As String
+        Get
+            Return _denomination_longue
+        End Get
+        Set(value As String)
+            _denomination_longue = value
         End Set
     End Property
 

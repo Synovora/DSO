@@ -1,5 +1,5 @@
 ﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
-Partial Class RadFATCListe
+Partial Class RadFMedicamentSelecteur
     Inherits Telerik.WinControls.UI.RadForm
 
     'Form overrides dispose to clean up the component list.
@@ -56,6 +56,9 @@ Partial Class RadFATCListe
         Me.RadioBtnVirtuel = New System.Windows.Forms.RadioButton()
         Me.RadioBtnClassique = New System.Windows.Forms.RadioButton()
         Me.LblOccurrencesLues = New System.Windows.Forms.Label()
+        Me.RadBtnPharmacocinetique = New Telerik.WinControls.UI.RadButton()
+        Me.RadBtnSelection = New Telerik.WinControls.UI.RadButton()
+        Me.RadBtnParmacodynamique = New Telerik.WinControls.UI.RadButton()
         CType(Me.RadTxtSpecialite, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.RadGridViewATC2, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.RadGridViewATC2.MasterTemplate, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -72,6 +75,9 @@ Partial Class RadFATCListe
         CType(Me.RadGridViewATC4, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.RadGridViewATC4.MasterTemplate, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.RadBtnSpec4, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.RadBtnPharmacocinetique, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.RadBtnSelection, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.RadBtnParmacodynamique, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
@@ -342,13 +348,40 @@ Partial Class RadFATCListe
         Me.LblOccurrencesLues.TabIndex = 11
         Me.LblOccurrencesLues.Text = "n occurrences lues"
         '
-        'RadFATCListe
+        'RadBtnPharmacocinetique
+        '
+        Me.RadBtnPharmacocinetique.Location = New System.Drawing.Point(1061, 475)
+        Me.RadBtnPharmacocinetique.Name = "RadBtnPharmacocinetique"
+        Me.RadBtnPharmacocinetique.Size = New System.Drawing.Size(124, 24)
+        Me.RadBtnPharmacocinetique.TabIndex = 12
+        Me.RadBtnPharmacocinetique.Text = "Pharmaco-cinétique"
+        '
+        'RadBtnSelection
+        '
+        Me.RadBtnSelection.Location = New System.Drawing.Point(1061, 653)
+        Me.RadBtnSelection.Name = "RadBtnSelection"
+        Me.RadBtnSelection.Size = New System.Drawing.Size(124, 24)
+        Me.RadBtnSelection.TabIndex = 13
+        Me.RadBtnSelection.Text = "Sélection"
+        '
+        'RadBtnParmacodynamique
+        '
+        Me.RadBtnParmacodynamique.Location = New System.Drawing.Point(1061, 505)
+        Me.RadBtnParmacodynamique.Name = "RadBtnParmacodynamique"
+        Me.RadBtnParmacodynamique.Size = New System.Drawing.Size(124, 24)
+        Me.RadBtnParmacodynamique.TabIndex = 14
+        Me.RadBtnParmacodynamique.Text = "Pharmaco-dynamique"
+        '
+        'RadFMedicamentSelecteur
         '
         Me.AcceptButton = Me.RadBtnFiltreSpecialite
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.CancelButton = Me.RadBtnAbandon
         Me.ClientSize = New System.Drawing.Size(1497, 738)
+        Me.Controls.Add(Me.RadBtnParmacodynamique)
+        Me.Controls.Add(Me.RadBtnSelection)
+        Me.Controls.Add(Me.RadBtnPharmacocinetique)
         Me.Controls.Add(Me.LblOccurrencesLues)
         Me.Controls.Add(Me.RadioBtnClassique)
         Me.Controls.Add(Me.RadioBtnVirtuel)
@@ -363,7 +396,7 @@ Partial Class RadFATCListe
         Me.Controls.Add(Me.RadBtnAbandon)
         Me.Controls.Add(Me.RadGridViewATC2)
         Me.Controls.Add(Me.RadTxtSpecialite)
-        Me.Name = "RadFATCListe"
+        Me.Name = "RadFMedicamentSelecteur"
         '
         '
         '
@@ -386,6 +419,9 @@ Partial Class RadFATCListe
         CType(Me.RadGridViewATC4.MasterTemplate, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.RadGridViewATC4, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.RadBtnSpec4, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.RadBtnPharmacocinetique, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.RadBtnSelection, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.RadBtnParmacodynamique, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
         Me.PerformLayout()
@@ -406,5 +442,8 @@ Partial Class RadFATCListe
     Friend WithEvents RadioBtnVirtuel As RadioButton
     Friend WithEvents RadioBtnClassique As RadioButton
     Friend WithEvents LblOccurrencesLues As Label
+    Friend WithEvents RadBtnPharmacocinetique As Telerik.WinControls.UI.RadButton
+    Friend WithEvents RadBtnSelection As Telerik.WinControls.UI.RadButton
+    Friend WithEvents RadBtnParmacodynamique As Telerik.WinControls.UI.RadButton
 End Class
 

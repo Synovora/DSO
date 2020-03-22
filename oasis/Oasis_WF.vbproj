@@ -416,6 +416,12 @@
     <Compile Include="Form\Episode\RadFEpisodeConclusionContextePatient.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="Form\General\RadFAffichaeInfo.Designer.vb">
+      <DependentUpon>RadFAffichaeInfo.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Form\General\RadFAffichaeInfo.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Form\LigneDeVie\RadFEpisodeParametresCreation.Designer.vb">
       <DependentUpon>RadFEpisodeParametresCreation.vb</DependentUpon>
     </Compile>
@@ -446,10 +452,10 @@
     <Compile Include="Form\SousEpisode\FrmAdminTemplateDocx.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Form\Theriaque\RadFATCListe.Designer.vb">
-      <DependentUpon>RadFATCListe.vb</DependentUpon>
+    <Compile Include="Form\Theriaque\RadFMedicamentSelecteur.Designer.vb">
+      <DependentUpon>RadFMedicamentSelecteur.vb</DependentUpon>
     </Compile>
-    <Compile Include="Form\Theriaque\RadFATCListe.vb">
+    <Compile Include="Form\Theriaque\RadFMedicamentSelecteur.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Form\Patient\RadFPatientRendez-vousListe.Designer.vb">
@@ -980,6 +986,9 @@
     <EmbeddedResource Include="Form\Episode\RadFEpisodeConclusionContextePatient.resx">
       <DependentUpon>RadFEpisodeConclusionContextePatient.vb</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Form\General\RadFAffichaeInfo.resx">
+      <DependentUpon>RadFAffichaeInfo.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Form\LigneDeVie\RadFEpisodeParametresCreation.resx">
       <DependentUpon>RadFEpisodeParametresCreation.vb</DependentUpon>
     </EmbeddedResource>
@@ -995,8 +1004,8 @@
     <EmbeddedResource Include="Form\SousEpisode\FrmAdminTemplateDocx.resx">
       <DependentUpon>FrmAdminTemplateDocx.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Form\Theriaque\RadFATCListe.resx">
-      <DependentUpon>RadFATCListe.vb</DependentUpon>
+    <EmbeddedResource Include="Form\Theriaque\RadFMedicamentSelecteur.resx">
+      <DependentUpon>RadFMedicamentSelecteur.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Form\Patient\RadFPatientRendez-vousListe.resx">
       <DependentUpon>RadFPatientRendez-vousListe.vb</DependentUpon>

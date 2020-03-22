@@ -3155,18 +3155,15 @@ Public Class RadFEpisodeDetail
         Dim SelectedMedicamentCis As Integer
         Cursor.Current = Cursors.WaitCursor
         Me.Enabled = False
-        Using vFMedocSelecteur As New RadFMedocSelecteur
-            vFMedocSelecteur.SelectedPatient = Me.SelectedPatient
-            vFMedocSelecteur.Allergie = Me.Allergie
-            vFMedocSelecteur.ContreIndication = Me.ContreIndication
-            vFMedocSelecteur.ShowDialog() 'Modal
-            SelectedMedicamentCis = vFMedocSelecteur.SelectedMedicamentCis
+        Using form As New RadFMedicamentSelecteur
+            form.ShowDialog() 'Modal
+            SelectedMedicamentCis = form.SelectedSpecialiteId
             'Si un médicament a été sélectionné
             If SelectedMedicamentCis <> 0 Then
                 Using vFTraitementDetailEdit As New RadFTraitementDetailEdit
                     vFTraitementDetailEdit.SelectedPatient = Me.SelectedPatient
                     vFTraitementDetailEdit.UtilisateurConnecte = Me.UtilisateurConnecte
-                    vFTraitementDetailEdit.SelectedMedicamentCis = SelectedMedicamentCis
+                    vFTraitementDetailEdit.SelectedMedicamentId = SelectedMedicamentCis
                     vFTraitementDetailEdit.Allergie = Me.Allergie
                     vFTraitementDetailEdit.ContreIndication = Me.ContreIndication
                     vFTraitementDetailEdit.SelectedTraitementId = 0
@@ -3197,7 +3194,7 @@ Public Class RadFEpisodeDetail
                     vFTraitementDetailEdit.SelectedTraitementId = TraitementId
                     vFTraitementDetailEdit.SelectedPatient = Me.SelectedPatient
                     vFTraitementDetailEdit.UtilisateurConnecte = Me.UtilisateurConnecte
-                    vFTraitementDetailEdit.SelectedMedicamentCis = SelectedMedicamentCis
+                    vFTraitementDetailEdit.SelectedMedicamentId = SelectedMedicamentCis
                     vFTraitementDetailEdit.Allergie = Me.Allergie
                     vFTraitementDetailEdit.ContreIndication = Me.ContreIndication
                     vFTraitementDetailEdit.PositionGaucheDroite = EnumPosition.Gauche

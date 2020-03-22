@@ -1,7 +1,7 @@
 ﻿Imports System.Collections.Specialized
 Imports Telerik.WinControls.UI
 
-Public Class RadFATCListe
+Public Class RadFMedicamentSelecteur
     Private _SelectedSpecialiteId As Long
 
     Public Property SelectedSpecialiteId As Long
@@ -16,6 +16,7 @@ Public Class RadFATCListe
     Dim theriaqueDao As New TheriaqueDao
 
     Private Sub RadFATCListe_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        afficheTitleForm(Me, "Thériaque - Recherche médicament")
         RadioBtnVirtuel.Checked = True
         ChargementATC1()
         LblOccurrencesLues.Text = ""
@@ -328,15 +329,25 @@ Public Class RadFATCListe
 
     'Sélection d'une spécialité, renvoi de la valeur de la clé Thériaque
     Private Sub RadGridViewSpe_DoubleClick(sender As Object, e As EventArgs) Handles RadGridViewSpe.DoubleClick
+        Selection()
+    End Sub
+
+    Private Sub RadBtnSelection_Click(sender As Object, e As EventArgs) Handles RadBtnSelection.Click
+        Selection()
+    End Sub
+
+    Private Sub Selection()
         If RadGridViewSpe.CurrentRow IsNot Nothing Then
             Dim aRow As Integer = Me.RadGridViewSpe.Rows.IndexOf(Me.RadGridViewSpe.CurrentRow)
             If aRow >= 0 Then
                 Dim SpecialiteId As Long = RadGridViewSpe.Rows(aRow).Cells("SP_CODE_SQ_PK").Value
                 SelectedSpecialiteId = SpecialiteId
+                Close()
             End If
         End If
     End Sub
 
+    'Affichage popup détail grid spécialité
     Private Sub MasterTemplate_CellFormatting(sender As Object, e As Telerik.WinControls.UI.CellFormattingEventArgs) Handles RadGridViewSpe.CellFormatting
         If TypeOf e.Row Is GridViewDataRowInfo Then
             e.CellElement.ToolTipText = e.CellElement.Text
@@ -348,4 +359,37 @@ Public Class RadFATCListe
         Close()
     End Sub
 
+    Private Sub RadBtnPharmacocinetique_Click(sender As Object, e As EventArgs) Handles RadBtnPharmacocinetique.Click
+        If RadGridViewSpe.CurrentRow IsNot Nothing Then
+            Dim aRow As Integer = Me.RadGridViewSpe.Rows.IndexOf(Me.RadGridViewSpe.CurrentRow)
+            If aRow >= 0 Then
+                Dim SpecialiteId As Long = RadGridViewSpe.Rows(aRow).Cells("SP_CODE_SQ_PK").Value
+                Dim PharmacoCinetique As String = theriaqueDao.GetPharmacoCinetqueBySpecialite(SpecialiteId)
+                Me.Enabled = False
+                Using form As New RadFAffichaeInfo
+                    form.InfoToDisplay = PharmacoCinetique
+                    form.Titre = "Information Pharmaco-cinétique"
+                    form.ShowDialog()
+                End Using
+                Me.Enabled = True
+            End If
+        End If
+    End Sub
+
+    Private Sub RadBtnParmacodynamique_Click(sender As Object, e As EventArgs) Handles RadBtnParmacodynamique.Click
+        If RadGridViewSpe.CurrentRow IsNot Nothing Then
+            Dim aRow As Integer = Me.RadGridViewSpe.Rows.IndexOf(Me.RadGridViewSpe.CurrentRow)
+            If aRow >= 0 Then
+                Dim SpecialiteId As Long = RadGridViewSpe.Rows(aRow).Cells("SP_CODE_SQ_PK").Value
+                Dim PharmacoCinetique As String = theriaqueDao.GetPharmacoDynamiqueBySpecialite(SpecialiteId)
+                Me.Enabled = False
+                Using form As New RadFAffichaeInfo
+                    form.InfoToDisplay = PharmacoCinetique
+                    form.Titre = "Information Pharmaco-dynamique"
+                    form.ShowDialog()
+                End Using
+                Me.Enabled = True
+            End If
+        End If
+    End Sub
 End Class

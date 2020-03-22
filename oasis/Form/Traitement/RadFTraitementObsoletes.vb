@@ -337,7 +337,7 @@ Public Class RadFTraitementObsoletes
                     vFTraitementDetailEdit.SelectedTraitementId = TraitementId
                     vFTraitementDetailEdit.SelectedPatient = Me.SelectedPatient
                     vFTraitementDetailEdit.UtilisateurConnecte = Me.UtilisateurConnecte
-                    vFTraitementDetailEdit.SelectedMedicamentCis = RadTraitementDataGridView.Rows(aRow).Cells("medicamentCis").Value
+                    vFTraitementDetailEdit.SelectedMedicamentId = RadTraitementDataGridView.Rows(aRow).Cells("medicamentCis").Value
                     vFTraitementDetailEdit.ShowDialog() 'Modal
                 End Using
             End If
