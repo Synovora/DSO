@@ -22,21 +22,21 @@ Partial Class FrmSousEpisode
     'Do not modify it using the code editor.
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
-        Dim GridViewTextBoxColumn10 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
-        Dim GridViewTextBoxColumn11 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
-        Dim GridViewTextBoxColumn12 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
-        Dim GridViewTextBoxColumn13 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
-        Dim GridViewCommandColumn3 As Telerik.WinControls.UI.GridViewCommandColumn = New Telerik.WinControls.UI.GridViewCommandColumn()
-        Dim GridViewCommandColumn4 As Telerik.WinControls.UI.GridViewCommandColumn = New Telerik.WinControls.UI.GridViewCommandColumn()
-        Dim GridViewTextBoxColumn14 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
-        Dim GridViewTextBoxColumn15 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
-        Dim TableViewDefinition3 As Telerik.WinControls.UI.TableViewDefinition = New Telerik.WinControls.UI.TableViewDefinition()
-        Dim GridViewTextBoxColumn16 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
-        Dim GridViewTextBoxColumn17 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
-        Dim GridViewCheckBoxColumn3 As Telerik.WinControls.UI.GridViewCheckBoxColumn = New Telerik.WinControls.UI.GridViewCheckBoxColumn()
-        Dim GridViewTextBoxColumn18 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
-        Dim GridViewCheckBoxColumn4 As Telerik.WinControls.UI.GridViewCheckBoxColumn = New Telerik.WinControls.UI.GridViewCheckBoxColumn()
-        Dim TableViewDefinition4 As Telerik.WinControls.UI.TableViewDefinition = New Telerik.WinControls.UI.TableViewDefinition()
+        Dim GridViewTextBoxColumn1 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
+        Dim GridViewTextBoxColumn2 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
+        Dim GridViewTextBoxColumn3 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
+        Dim GridViewTextBoxColumn4 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
+        Dim GridViewCommandColumn1 As Telerik.WinControls.UI.GridViewCommandColumn = New Telerik.WinControls.UI.GridViewCommandColumn()
+        Dim GridViewCommandColumn2 As Telerik.WinControls.UI.GridViewCommandColumn = New Telerik.WinControls.UI.GridViewCommandColumn()
+        Dim GridViewTextBoxColumn5 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
+        Dim GridViewTextBoxColumn6 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
+        Dim TableViewDefinition1 As Telerik.WinControls.UI.TableViewDefinition = New Telerik.WinControls.UI.TableViewDefinition()
+        Dim GridViewTextBoxColumn7 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
+        Dim GridViewTextBoxColumn8 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
+        Dim GridViewCheckBoxColumn1 As Telerik.WinControls.UI.GridViewCheckBoxColumn = New Telerik.WinControls.UI.GridViewCheckBoxColumn()
+        Dim GridViewTextBoxColumn9 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
+        Dim GridViewCheckBoxColumn2 As Telerik.WinControls.UI.GridViewCheckBoxColumn = New Telerik.WinControls.UI.GridViewCheckBoxColumn()
+        Dim TableViewDefinition2 As Telerik.WinControls.UI.TableViewDefinition = New Telerik.WinControls.UI.TableViewDefinition()
         Me.RadPanel1 = New Telerik.WinControls.UI.RadPanel()
         Me.BtnValideAndSign = New Telerik.WinControls.UI.RadButton()
         Me.BtnValidate = New Telerik.WinControls.UI.RadButton()
@@ -52,6 +52,7 @@ Partial Class FrmSousEpisode
         Me.lblDateCreation = New Telerik.WinControls.UI.RadLabel()
         Me.Label12 = New System.Windows.Forms.Label()
         Me.SplitPanel2 = New Telerik.WinControls.UI.SplitPanel()
+        Me.BtnEditerDocument = New Telerik.WinControls.UI.RadButton()
         Me.Label16 = New System.Windows.Forms.Label()
         Me.ChkALD = New Telerik.WinControls.UI.RadCheckBox()
         Me.LblALD = New System.Windows.Forms.Label()
@@ -79,7 +80,6 @@ Partial Class FrmSousEpisode
         Me.SplitPanelSousSousType = New Telerik.WinControls.UI.SplitPanel()
         Me.RadSousSousTypeGrid = New Telerik.WinControls.UI.RadGridView()
         Me.Label4 = New System.Windows.Forms.Label()
-        Me.BtnEditerDocument = New Telerik.WinControls.UI.RadButton()
         CType(Me.RadPanel1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.RadPanel1.SuspendLayout()
         CType(Me.BtnValideAndSign, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -96,6 +96,7 @@ Partial Class FrmSousEpisode
         CType(Me.lblDateCreation, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.SplitPanel2, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SplitPanel2.SuspendLayout()
+        CType(Me.BtnEditerDocument, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.ChkALD, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.DropDownSousType, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.DropDownType, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -120,7 +121,6 @@ Partial Class FrmSousEpisode
         Me.SplitPanelSousSousType.SuspendLayout()
         CType(Me.RadSousSousTypeGrid, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.RadSousSousTypeGrid.MasterTemplate, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.BtnEditerDocument, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
@@ -301,6 +301,17 @@ Partial Class FrmSousEpisode
         Me.SplitPanel2.TabStop = False
         Me.SplitPanel2.Text = "SplitPanel2"
         '
+        'BtnEditerDocument
+        '
+        Me.BtnEditerDocument.ForeColor = System.Drawing.Color.Red
+        Me.BtnEditerDocument.Location = New System.Drawing.Point(312, 83)
+        Me.BtnEditerDocument.Name = "BtnEditerDocument"
+        Me.BtnEditerDocument.Size = New System.Drawing.Size(108, 24)
+        Me.BtnEditerDocument.TabIndex = 61
+        Me.BtnEditerDocument.TabStop = False
+        Me.BtnEditerDocument.Text = "Editer document"
+        Me.BtnEditerDocument.Visible = False
+        '
         'Label16
         '
         Me.Label16.BackColor = System.Drawing.SystemColors.GradientActiveCaption
@@ -477,55 +488,55 @@ Partial Class FrmSousEpisode
         Me.RadReponseGrid.MasterTemplate.AllowDragToGroup = False
         Me.RadReponseGrid.MasterTemplate.AllowEditRow = False
         Me.RadReponseGrid.MasterTemplate.AutoSizeColumnsMode = Telerik.WinControls.UI.GridViewAutoSizeColumnsMode.Fill
-        GridViewTextBoxColumn10.DataType = GetType(Long)
-        GridViewTextBoxColumn10.FieldName = "id"
-        GridViewTextBoxColumn10.HeaderText = "Id"
-        GridViewTextBoxColumn10.IsVisible = False
-        GridViewTextBoxColumn10.Name = "id"
-        GridViewTextBoxColumn10.TextAlignment = System.Drawing.ContentAlignment.MiddleRight
-        GridViewTextBoxColumn10.Width = 43
-        GridViewTextBoxColumn11.HeaderText = "IdSousEpisode"
-        GridViewTextBoxColumn11.IsVisible = False
-        GridViewTextBoxColumn11.Name = "IdSousEpisode"
-        GridViewTextBoxColumn11.Width = 48
-        GridViewTextBoxColumn12.HeaderText = "Date"
-        GridViewTextBoxColumn12.MaxWidth = 110
-        GridViewTextBoxColumn12.MinWidth = 50
-        GridViewTextBoxColumn12.Name = "HorodateCreation"
-        GridViewTextBoxColumn12.RowSpan = 110
-        GridViewTextBoxColumn12.TextAlignment = System.Drawing.ContentAlignment.MiddleCenter
-        GridViewTextBoxColumn12.Width = 67
-        GridViewTextBoxColumn13.HeaderText = "Nom du fichier"
-        GridViewTextBoxColumn13.Name = "NomFichier"
-        GridViewTextBoxColumn13.Width = 241
-        GridViewCommandColumn3.DefaultText = "Ouvrir"
-        GridViewCommandColumn3.HeaderText = "Ouvrir"
-        GridViewCommandColumn3.ImageLayout = System.Windows.Forms.ImageLayout.Stretch
-        GridViewCommandColumn3.MaxWidth = 75
-        GridViewCommandColumn3.MinWidth = 75
-        GridViewCommandColumn3.Name = "Telecharger"
-        GridViewCommandColumn3.TextAlignment = System.Drawing.ContentAlignment.MiddleCenter
-        GridViewCommandColumn3.UseDefaultText = True
-        GridViewCommandColumn3.Width = 75
-        GridViewCommandColumn4.DefaultText = "Supprimer"
-        GridViewCommandColumn4.HeaderText = "Supprimer"
-        GridViewCommandColumn4.ImageLayout = System.Windows.Forms.ImageLayout.Stretch
-        GridViewCommandColumn4.MaxWidth = 65
-        GridViewCommandColumn4.MinWidth = 65
-        GridViewCommandColumn4.Name = "Supprimer"
-        GridViewCommandColumn4.UseDefaultText = True
-        GridViewCommandColumn4.Width = 65
-        GridViewTextBoxColumn14.HeaderText = "Commentaire"
-        GridViewTextBoxColumn14.Name = "Commentaire"
-        GridViewTextBoxColumn14.Width = 345
-        GridViewTextBoxColumn15.HeaderText = "Utilisateur"
-        GridViewTextBoxColumn15.MinWidth = 60
-        GridViewTextBoxColumn15.Name = "CreateUser"
-        GridViewTextBoxColumn15.Width = 68
-        Me.RadReponseGrid.MasterTemplate.Columns.AddRange(New Telerik.WinControls.UI.GridViewDataColumn() {GridViewTextBoxColumn10, GridViewTextBoxColumn11, GridViewTextBoxColumn12, GridViewTextBoxColumn13, GridViewCommandColumn3, GridViewCommandColumn4, GridViewTextBoxColumn14, GridViewTextBoxColumn15})
+        GridViewTextBoxColumn1.DataType = GetType(Long)
+        GridViewTextBoxColumn1.FieldName = "id"
+        GridViewTextBoxColumn1.HeaderText = "Id"
+        GridViewTextBoxColumn1.IsVisible = False
+        GridViewTextBoxColumn1.Name = "id"
+        GridViewTextBoxColumn1.TextAlignment = System.Drawing.ContentAlignment.MiddleRight
+        GridViewTextBoxColumn1.Width = 43
+        GridViewTextBoxColumn2.HeaderText = "IdSousEpisode"
+        GridViewTextBoxColumn2.IsVisible = False
+        GridViewTextBoxColumn2.Name = "IdSousEpisode"
+        GridViewTextBoxColumn2.Width = 48
+        GridViewTextBoxColumn3.HeaderText = "Date"
+        GridViewTextBoxColumn3.MaxWidth = 110
+        GridViewTextBoxColumn3.MinWidth = 50
+        GridViewTextBoxColumn3.Name = "HorodateCreation"
+        GridViewTextBoxColumn3.RowSpan = 110
+        GridViewTextBoxColumn3.TextAlignment = System.Drawing.ContentAlignment.MiddleCenter
+        GridViewTextBoxColumn3.Width = 67
+        GridViewTextBoxColumn4.HeaderText = "Nom du fichier"
+        GridViewTextBoxColumn4.Name = "NomFichier"
+        GridViewTextBoxColumn4.Width = 241
+        GridViewCommandColumn1.DefaultText = "Ouvrir"
+        GridViewCommandColumn1.HeaderText = "Ouvrir"
+        GridViewCommandColumn1.ImageLayout = System.Windows.Forms.ImageLayout.Stretch
+        GridViewCommandColumn1.MaxWidth = 75
+        GridViewCommandColumn1.MinWidth = 75
+        GridViewCommandColumn1.Name = "Telecharger"
+        GridViewCommandColumn1.TextAlignment = System.Drawing.ContentAlignment.MiddleCenter
+        GridViewCommandColumn1.UseDefaultText = True
+        GridViewCommandColumn1.Width = 75
+        GridViewCommandColumn2.DefaultText = "Supprimer"
+        GridViewCommandColumn2.HeaderText = "Supprimer"
+        GridViewCommandColumn2.ImageLayout = System.Windows.Forms.ImageLayout.Stretch
+        GridViewCommandColumn2.MaxWidth = 65
+        GridViewCommandColumn2.MinWidth = 65
+        GridViewCommandColumn2.Name = "Supprimer"
+        GridViewCommandColumn2.UseDefaultText = True
+        GridViewCommandColumn2.Width = 65
+        GridViewTextBoxColumn5.HeaderText = "Commentaire"
+        GridViewTextBoxColumn5.Name = "Commentaire"
+        GridViewTextBoxColumn5.Width = 345
+        GridViewTextBoxColumn6.HeaderText = "Utilisateur"
+        GridViewTextBoxColumn6.MinWidth = 60
+        GridViewTextBoxColumn6.Name = "CreateUser"
+        GridViewTextBoxColumn6.Width = 68
+        Me.RadReponseGrid.MasterTemplate.Columns.AddRange(New Telerik.WinControls.UI.GridViewDataColumn() {GridViewTextBoxColumn1, GridViewTextBoxColumn2, GridViewTextBoxColumn3, GridViewTextBoxColumn4, GridViewCommandColumn1, GridViewCommandColumn2, GridViewTextBoxColumn5, GridViewTextBoxColumn6})
         Me.RadReponseGrid.MasterTemplate.EnableGrouping = False
         Me.RadReponseGrid.MasterTemplate.EnableSorting = False
-        Me.RadReponseGrid.MasterTemplate.ViewDefinition = TableViewDefinition3
+        Me.RadReponseGrid.MasterTemplate.ViewDefinition = TableViewDefinition1
         Me.RadReponseGrid.Name = "RadReponseGrid"
         Me.RadReponseGrid.ReadOnly = True
         Me.RadReponseGrid.Size = New System.Drawing.Size(877, 108)
@@ -614,9 +625,14 @@ Partial Class FrmSousEpisode
         '
         'RadSousSousTypeGrid
         '
+        Me.RadSousSousTypeGrid.BackColor = System.Drawing.SystemColors.GradientInactiveCaption
+        Me.RadSousSousTypeGrid.Cursor = System.Windows.Forms.Cursors.Default
         Me.RadSousSousTypeGrid.Dock = System.Windows.Forms.DockStyle.Fill
         Me.RadSousSousTypeGrid.EnableCustomDrawing = True
+        Me.RadSousSousTypeGrid.Font = New System.Drawing.Font("Segoe UI", 8.25!)
+        Me.RadSousSousTypeGrid.ForeColor = System.Drawing.Color.Black
         Me.RadSousSousTypeGrid.HideSelection = True
+        Me.RadSousSousTypeGrid.ImeMode = System.Windows.Forms.ImeMode.NoControl
         Me.RadSousSousTypeGrid.Location = New System.Drawing.Point(0, 13)
         '
         '
@@ -629,40 +645,47 @@ Partial Class FrmSousEpisode
         Me.RadSousSousTypeGrid.MasterTemplate.AllowDragToGroup = False
         Me.RadSousSousTypeGrid.MasterTemplate.AutoGenerateColumns = False
         Me.RadSousSousTypeGrid.MasterTemplate.AutoSizeColumnsMode = Telerik.WinControls.UI.GridViewAutoSizeColumnsMode.Fill
-        GridViewTextBoxColumn16.DataType = GetType(Long)
-        GridViewTextBoxColumn16.FieldName = "id"
-        GridViewTextBoxColumn16.HeaderText = "Id"
-        GridViewTextBoxColumn16.IsVisible = False
-        GridViewTextBoxColumn16.Name = "id"
-        GridViewTextBoxColumn16.TextAlignment = System.Drawing.ContentAlignment.MiddleRight
-        GridViewTextBoxColumn16.Width = 43
-        GridViewTextBoxColumn17.HeaderText = "IdSousEpisodeSousType"
-        GridViewTextBoxColumn17.IsVisible = False
-        GridViewTextBoxColumn17.Name = "IdSousEpisodeSousType"
-        GridViewTextBoxColumn17.Width = 48
-        GridViewCheckBoxColumn3.EditMode = Telerik.WinControls.UI.EditMode.OnValueChange
-        GridViewCheckBoxColumn3.HeaderText = "Choix"
-        GridViewCheckBoxColumn3.MaxWidth = 40
-        GridViewCheckBoxColumn3.MinWidth = 10
-        GridViewCheckBoxColumn3.Name = "ChkChoice"
-        GridViewCheckBoxColumn3.Width = 40
-        GridViewTextBoxColumn18.HeaderText = "Libellé"
-        GridViewTextBoxColumn18.MinWidth = 80
-        GridViewTextBoxColumn18.Name = "Libelle"
-        GridViewTextBoxColumn18.ReadOnly = True
-        GridViewTextBoxColumn18.Width = 188
-        GridViewCheckBoxColumn4.EditMode = Telerik.WinControls.UI.EditMode.OnValueChange
-        GridViewCheckBoxColumn4.HeaderText = "ALD"
-        GridViewCheckBoxColumn4.MaxWidth = 30
-        GridViewCheckBoxColumn4.MinWidth = 10
-        GridViewCheckBoxColumn4.Name = "ChkALD"
-        GridViewCheckBoxColumn4.Width = 30
-        Me.RadSousSousTypeGrid.MasterTemplate.Columns.AddRange(New Telerik.WinControls.UI.GridViewDataColumn() {GridViewTextBoxColumn16, GridViewTextBoxColumn17, GridViewCheckBoxColumn3, GridViewTextBoxColumn18, GridViewCheckBoxColumn4})
+        GridViewTextBoxColumn7.DataType = GetType(Long)
+        GridViewTextBoxColumn7.EnableExpressionEditor = False
+        GridViewTextBoxColumn7.FieldName = "id"
+        GridViewTextBoxColumn7.HeaderText = "Id"
+        GridViewTextBoxColumn7.IsVisible = False
+        GridViewTextBoxColumn7.Name = "id"
+        GridViewTextBoxColumn7.TextAlignment = System.Drawing.ContentAlignment.MiddleRight
+        GridViewTextBoxColumn7.Width = 43
+        GridViewTextBoxColumn8.EnableExpressionEditor = False
+        GridViewTextBoxColumn8.HeaderText = "IdSousEpisodeSousType"
+        GridViewTextBoxColumn8.IsVisible = False
+        GridViewTextBoxColumn8.Name = "IdSousEpisodeSousType"
+        GridViewTextBoxColumn8.Width = 48
+        GridViewCheckBoxColumn1.EditMode = Telerik.WinControls.UI.EditMode.OnValueChange
+        GridViewCheckBoxColumn1.EnableExpressionEditor = False
+        GridViewCheckBoxColumn1.HeaderText = "Choix"
+        GridViewCheckBoxColumn1.MaxWidth = 40
+        GridViewCheckBoxColumn1.MinWidth = 10
+        GridViewCheckBoxColumn1.Name = "ChkChoice"
+        GridViewCheckBoxColumn1.Width = 18
+        GridViewTextBoxColumn9.EnableExpressionEditor = False
+        GridViewTextBoxColumn9.HeaderText = "Libellé"
+        GridViewTextBoxColumn9.MinWidth = 80
+        GridViewTextBoxColumn9.Name = "Libelle"
+        GridViewTextBoxColumn9.ReadOnly = True
+        GridViewTextBoxColumn9.Width = 246
+        GridViewCheckBoxColumn2.EditMode = Telerik.WinControls.UI.EditMode.OnValueChange
+        GridViewCheckBoxColumn2.EnableExpressionEditor = False
+        GridViewCheckBoxColumn2.HeaderText = "ALD"
+        GridViewCheckBoxColumn2.MaxWidth = 30
+        GridViewCheckBoxColumn2.MinWidth = 10
+        GridViewCheckBoxColumn2.Name = "ChkALD"
+        GridViewCheckBoxColumn2.Width = 14
+        Me.RadSousSousTypeGrid.MasterTemplate.Columns.AddRange(New Telerik.WinControls.UI.GridViewDataColumn() {GridViewTextBoxColumn7, GridViewTextBoxColumn8, GridViewCheckBoxColumn1, GridViewTextBoxColumn9, GridViewCheckBoxColumn2})
         Me.RadSousSousTypeGrid.MasterTemplate.EnableGrouping = False
         Me.RadSousSousTypeGrid.MasterTemplate.EnableSorting = False
         Me.RadSousSousTypeGrid.MasterTemplate.SelectionMode = Telerik.WinControls.UI.GridViewSelectionMode.None
-        Me.RadSousSousTypeGrid.MasterTemplate.ViewDefinition = TableViewDefinition4
+        Me.RadSousSousTypeGrid.MasterTemplate.ShowRowHeaderColumn = False
+        Me.RadSousSousTypeGrid.MasterTemplate.ViewDefinition = TableViewDefinition2
         Me.RadSousSousTypeGrid.Name = "RadSousSousTypeGrid"
+        Me.RadSousSousTypeGrid.RightToLeft = System.Windows.Forms.RightToLeft.No
         Me.RadSousSousTypeGrid.Size = New System.Drawing.Size(277, 520)
         Me.RadSousSousTypeGrid.TabIndex = 59
         '
@@ -676,17 +699,6 @@ Partial Class FrmSousEpisode
         Me.Label4.TabIndex = 43
         Me.Label4.Text = "Détail"
         Me.Label4.TextAlign = System.Drawing.ContentAlignment.TopCenter
-        '
-        'BtnEditerDocument
-        '
-        Me.BtnEditerDocument.ForeColor = System.Drawing.Color.Red
-        Me.BtnEditerDocument.Location = New System.Drawing.Point(312, 83)
-        Me.BtnEditerDocument.Name = "BtnEditerDocument"
-        Me.BtnEditerDocument.Size = New System.Drawing.Size(108, 24)
-        Me.BtnEditerDocument.TabIndex = 61
-        Me.BtnEditerDocument.TabStop = False
-        Me.BtnEditerDocument.Text = "Editer document"
-        Me.BtnEditerDocument.Visible = False
         '
         'FrmSousEpisode
         '
@@ -724,6 +736,7 @@ Partial Class FrmSousEpisode
         CType(Me.SplitPanel2, System.ComponentModel.ISupportInitialize).EndInit()
         Me.SplitPanel2.ResumeLayout(False)
         Me.SplitPanel2.PerformLayout()
+        CType(Me.BtnEditerDocument, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.ChkALD, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.DropDownSousType, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.DropDownType, System.ComponentModel.ISupportInitialize).EndInit()
@@ -750,7 +763,6 @@ Partial Class FrmSousEpisode
         Me.SplitPanelSousSousType.ResumeLayout(False)
         CType(Me.RadSousSousTypeGrid.MasterTemplate, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.RadSousSousTypeGrid, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.BtnEditerDocument, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
 

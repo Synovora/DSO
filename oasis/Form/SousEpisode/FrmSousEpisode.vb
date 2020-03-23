@@ -489,19 +489,62 @@ Public Class FrmSousEpisode
         Dim lstFusion = New List(Of SousEpisodeFusion)(1)
         Dim sousEF As New SousEpisodeFusion
         Dim episodeParametreDao = New EpisodeParametreDao
+        Dim uniteSanitaireDao = New UniteSanitaireDao
+        Dim siteDao = New SiteDao
+        ' -- recherche de l'unite sanitaire et du site du patient
+        Dim uniteSanitaire = uniteSanitaireDao.getUniteSanitaireById(patient.PatientUniteSanitaireId)
+        Dim site = siteDao.getSiteById(patient.PatientSiteId)
         With sousEF
-            .USNom = "Nom de l'unité sanitaire"
-            .USAdr1 = "Maison Xori Lur"
-            .USAdr2 = "154 allée Hégui Eder"
-            .USCP = "64990"
-            .USVille = "Mouguerre"
+            .USNom = uniteSanitaire.Oa_unite_sanitaire_description
+            .USAdr1 = uniteSanitaire.Oa_unite_sanitaire_adresse1
+            .USAdr2 = uniteSanitaire.Oa_unite_sanitaire_adresse2
+            .USCP = uniteSanitaire.Oa_unite_sanitaire_code_postal
+            .USVille = uniteSanitaire.Oa_unite_sanitaire_ville
 
-            .Patient_PrenomNom = patient.PatientPrenom & " " & patient.PatientPrenom
+            .SiteNom = site.Oa_site_description
+            .SiteAdr1 = site.Oa_site_adresse1
+            .SiteAdr2 = site.Oa_site_adresse2
+            .SiteCP = site.Oa_site_code_postal
+            .SiteVille = site.Oa_site_ville
+            .SiteTel = "tel du site"
+            .SiteFax = "tel du site"
+            .SiteEmail = "tel du site"
+
+            .Patient_PrenomNom = patient.PatientPrenom & " " & patient.PatientNom
             .Patient_NIR = patient.PatientNir
             .Patient_Date_Naissance = patient.PatientDateNaissance.ToString("dd/MM/yyyy")
             .Patient_Age = patient.PatientAge
             .Patient_Poids = "" & episodeParametreDao.getPoidsByEpisodeIdOrLastKnow(sousEpisode.EpisodeId, patient.patientId)
             .Patient_Poids = If(.Patient_Poids = "0", "", .Patient_Poids)
+            .Patient_sexe = patient.PatientGenre.ToLower
+
+            .Commentaire = sousEpisode.Commentaire
+
+            .Episode_DateHeure = episode.DateCreation.ToString("dd MMMM yyyy à hh:mm")
+            .Type_Libelle = Me.DropDownType.SelectedItem.Text
+            .Sous_Type_Libelle = Me.DropDownSousType.SelectedItem.Text
+
+            ' -- recherche des sous-type_detail (sousoustype)
+            Dim isWithALD = False, isWithNonAld = False
+            If Me.RadSousSousTypeGrid.Rows.Count > 0 Then
+                For Each row In RadSousSousTypeGrid.Rows
+                    If row.Cells("ChkALD").Value Then ' ALD
+                        isWithALD = True
+                        .Sous_Type_Libelle_Detail_ALD += vbCrLf
+                        .Sous_Type_Libelle_Detail_ALD += (row.Cells("Libelle").Value & vbCrLf)
+                    Else
+                        isWithNonAld = True
+                        .Sous_Type_Libelle_Detail_Non_ALD += vbCrLf
+                        .Sous_Type_Libelle_Detail_Non_ALD += (row.Cells("Libelle").Value & vbCrLf)
+                    End If
+                Next
+            End If
+            If isWithALD = False Then .ALD_Avec_Entete = ""
+            If isWithNonAld = False Then .ALD_Sans_Entete = ""
+
+            .Signature_Date = Date.Now.ToString("dd MMM yyyy")
+            .Signataire_Fonction = userLog.UtilisateurProfilId.ToLower.Trim.Replace("_", " ")
+            .Signataire_PrenomNom = userLog.UtilisateurPrenom.Trim & " " & userLog.UtilisateurNom.Trim
 
         End With
         lstFusion.Add(sousEF)

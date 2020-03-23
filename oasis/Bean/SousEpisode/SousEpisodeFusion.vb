@@ -29,8 +29,8 @@
     Property Sous_Type_Libelle_Detail_ALD As String
     Property Sous_Type_Libelle_Detail_Non_ALD As String
     Property Commentaire As String
-    Property ALD_Avec_Entete As String = "Prescriptions relatives au traitement de l’affection de longue durée reconnue (liste ou hors liste)" & vbCrLf & "AFFECTION EXONERANTE"
-    Property ALD_Sans_Entete As String = "Prescriptions sans rapport avec l'affection de longue durée" & vbCrLf & "MALADIES INTERCURRENTES"
+    Property ALD_Avec_Entete As String = "AFFECTION EXONERANTE" & vbCrLf & "Prescriptions relatives au traitement de l’affection de longue durée reconnue (liste ou hors liste)"
+    Property ALD_Sans_Entete As String = "MALADIES INTERCURRENTES" & vbCrLf & "Prescriptions sans rapport avec l'affection de longue durée"
 
     Property Signataire_PrenomNom As String
     Property Signataire_Fonction As String
