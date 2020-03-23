@@ -1,8 +1,10 @@
 ﻿Imports System.IO
 Imports Telerik.WinControls
 Imports Telerik.WinControls.UI
+Imports Telerik.WinForms.Documents
 Imports Telerik.WinForms.Documents.FormatProviders.OpenXml.Docx
 Imports Telerik.WinForms.Documents.Model
+Imports Telerik.WinForms.Documents.TextSearch
 
 Public Class FrmAdminTemplateDocx
     Dim sousEpisodeSousType As SousEpisodeSousType
@@ -14,6 +16,7 @@ Public Class FrmAdminTemplateDocx
         ' Ajoutez une initialisation quelconque après l'appel InitializeComponent().
         Me.sousEpisodeSousType = sousEpisodeSousType
         initCtrl()
+
     End Sub
 
     Private Sub backstageButtonSaveAs_Click(sender As Object, e As EventArgs)
@@ -29,6 +32,10 @@ Public Class FrmAdminTemplateDocx
         Finally
             Me.Cursor = Cursors.Default
         End Try
+    End Sub
+
+    Private Sub RadButtonElement1_Click(sender As Object, e As EventArgs) Handles RadButtonElement1.Click
+        backstageButtonSaveAs_Click(sender, e)
     End Sub
 
     Private Sub initCtrl()
@@ -79,7 +86,22 @@ Public Class FrmAdminTemplateDocx
 
     End Sub
 
-    Private Sub RadButtonElement1_Click(sender As Object, e As EventArgs) Handles RadButtonElement1.Click
-        backstageButtonSaveAs_Click(sender, e)
+
+    Public Sub ReplaceAllMatches(ByVal toSearch As String, ByVal toReplaceWith As String)
+        Me.RadRichTextEditor1.Document.Selection.Clear() ' this clears the selection before processing
+        Dim search As New DocumentTextSearch(Me.RadRichTextEditor1.Document)
+        Dim rangesTrackingDocumentChanges As New List(Of Telerik.WinForms.Documents.TextSearch.TextRange)()
+        For Each textRange In search.FindAll(toSearch)
+            Dim newRange As New TextSearch.TextRange(New Telerik.WinForms.Documents.DocumentPosition(textRange.StartPosition, True), New DocumentPosition(textRange.EndPosition, True))
+            rangesTrackingDocumentChanges.Add(newRange)
+        Next textRange
+        For Each textRange In rangesTrackingDocumentChanges
+            Me.RadRichTextEditor1.Document.Selection.AddSelectionStart(textRange.StartPosition)
+            Me.RadRichTextEditor1.Document.Selection.AddSelectionEnd(textRange.EndPosition)
+            Me.RadRichTextEditor1.Insert(toReplaceWith)
+            textRange.StartPosition.Dispose()
+            textRange.EndPosition.Dispose()
+        Next textRange
     End Sub
+
 End Class

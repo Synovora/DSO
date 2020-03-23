@@ -109,6 +109,50 @@ Public Class EpisodeParametreDao
         End Using
     End Function
 
+    Friend Function getPoidsByEpisodeIdOrLastKnow(idEpisode As Long, idPatient As Long) As Double
+        Dim SQLString As String
+
+        SQLString = "SELECT TOP 1 COALESCE(EP1.valeur, " & vbCrLf &
+                                 "      (SELECT TOP 1 EP2.valeur " & vbCrLf &
+                                 "  	FROM oasis.oa_episode_parametre EP2 " & vbCrLf &
+                                 "  	WHERE EP2.parametre_id= @TypeParam " & vbCrLf &
+                                 "  	AND EP2.patient_id = @PatientId " & vbCrLf &
+                                 "  	AND EP2.valeur>0" & vbCrLf &
+                                 "  	ORDER by EP2.episode_id DESC " & vbCrLf &
+                                 "      )" & vbCrLf &
+                                 ") as valeur" & vbCrLf &
+                    "FROM oasis.oa_patient P " & vbCrLf &
+                    "LEFT JOIN oasis.oa_episode_parametre EP1 " & vbCrLf &
+                        "ON EP1.parametre_id=@TypeParam" & vbCrLf &
+                            "AND EP1.patient_id=P.oa_patient_id" & vbCrLf &
+                            "AND EP1.episode_id = @EpisodeId" & vbCrLf &
+                            "AND EP1.valeur>0" & vbCrLf &
+                            "AND COALESCE(EP1.inactif,0) = 0 " & vbCrLf &
+                    "WHERE P.oa_patient_id = @PatientId"
+
+        Using con As SqlConnection = GetConnection()
+
+            Dim tacheDataAdapter As SqlDataAdapter = New SqlDataAdapter()
+            Using tacheDataAdapter
+                tacheDataAdapter.SelectCommand = New SqlCommand(SQLString, con)
+                tacheDataAdapter.SelectCommand.Parameters.AddWithValue("@TypeParam", ParametreDao.enumParametreId.POIDS)
+                tacheDataAdapter.SelectCommand.Parameters.AddWithValue("@EpisodeId", idEpisode)
+                tacheDataAdapter.SelectCommand.Parameters.AddWithValue("@PatientId", idPatient)
+                Dim tacheDataTable As DataTable = New DataTable()
+                Using tacheDataTable
+                    Try
+                        tacheDataAdapter.Fill(tacheDataTable)
+                    Catch ex As Exception
+                        Throw ex
+                    End Try
+                    Return Coalesce(tacheDataTable.Rows(0)("valeur"), 0)
+                End Using
+            End Using
+        End Using
+    End Function
+
+
+
     Friend Function CreateEpisodeParametre(episodeParametre As EpisodeParametre) As Boolean
         Dim nbcreate As Integer
         Dim da As SqlDataAdapter = New SqlDataAdapter()

@@ -3,22 +3,37 @@ Imports Oasis_WF.My.Resources
 Imports Telerik.WinControls
 Imports Telerik.WinControls.UI
 Imports Telerik.WinControls.UI.RichTextEditorRibbonUI
+Imports Telerik.WinForms.Documents.FormatProviders.OpenXml.Docx
 Imports Telerik.WinForms.Documents.Model
 Imports Telerik.WinForms.RichTextEditor
 
 Public Class FrmEditDocxSousEpisode
     Inherits RadForm
 
-    Sub New()
+    Dim sousEpisode As SousEpisode
+
+    Sub New(sousEpisode As SousEpisode)
         ' Cet appel est requis par le concepteur.
         InitializeComponent()
 
+        Me.sousEpisode = sousEpisode
         initCtrl()
 
     End Sub
 
     Private Sub backstageButtonSaveAs_Click(sender As Object, e As EventArgs)
-        RadMessageBox.Show("Save")
+        Dim tbl As Byte()
+        Dim provider As DocxFormatProvider = New DocxFormatProvider()
+        Me.Cursor = Cursors.WaitCursor
+        Try
+            tbl = provider.Export(Me.RadRichTextEditor1.Document)
+            SousEpisode.writeContenuModel(tbl)
+            Notification.show("Sauvegarde", "Sauvegarde effectuée avec succès !")
+        Catch err As Exception
+            MsgBox(err.Message())
+        Finally
+            Me.Cursor = Cursors.Default
+        End Try
     End Sub
 
     Private Sub RadButtonElement1_Click(sender As Object, e As EventArgs) Handles RadButtonElement1.Click

@@ -41,10 +41,12 @@ Public Class FrmAdminTemplateSousEpisode
                 End If
                 frm.RadRichTextEditor1.Document.MailMergeDataSource.ItemsSource = lstSousEpisodeFusion
                 frm.RadRichTextEditor1.UpdateAllFields(FieldDisplayMode.DisplayName)
+
                 'Dim merged = frm.RadRichTextEditor1.MailMerge()
                 'frm.RadRichTextEditor1.Document = merged
                 ins.Dispose()
                 tbl = Nothing
+                'frm.ReplaceAllMatches("toto", "titi")
                 frm.ShowDialog()
             End Using
 

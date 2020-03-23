@@ -65,4 +65,31 @@ Public Class SousEpisode
         Return False
     End Function
 
+    Public Function getContenu() As Byte()
+        Dim filename = getFilenameServer()
+        ' -- download
+        Using apiOasis As New ApiOasis()
+            Dim downloadRequest As New DownloadRequest With {
+               .LoginRequest = loginRequestLog,
+               .FileName = filename
+               }
+            Return apiOasis.downloadFileRest(downloadRequest)
+        End Using
+
+    End Function
+
+    Public Sub writeContenuModel(tblContenu As Byte())
+        ' --- tentative d'upload
+        Using apiOasis As New ApiOasis()
+            apiOasis.uploadFileRest(loginRequestLog.login,
+                                        loginRequestLog.password,
+                                        getFilenameServer(),
+                                        tblContenu)
+        End Using
+
+    End Sub
+    Private Function getFilenameServer() As String
+        Return "Episode_" & Me.EpisodeId & "_SousEpisode_" & Me.Id & "_SousEpisodeSousType_" & Me.IdSousEpisodeSousType & ".DOCX"
+    End Function
+
 End Class

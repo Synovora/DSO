@@ -153,7 +153,7 @@ Public Class FrmSousEpisode
         Dim gce As GridCommandCellElement = (TryCast(sender, GridCommandCellElement))
         Select Case gce.ColumnInfo.Name.ToLower
             Case "telecharger"
-                telecharger(gce)
+                TelechargerReponse(gce)
             Case "supprimer"
                 supprimer(gce)
         End Select
@@ -189,7 +189,7 @@ Public Class FrmSousEpisode
     ''' 
     ''' </summary>
     ''' <param name="gce"></param>
-    Private Sub telecharger(gce As GridCommandCellElement)
+    Private Sub TelechargerReponse(gce As GridCommandCellElement)
         'MessageBox.Show("Telecharger fichier " & gce.RowInfo.Cells("NomFichier").Value & " : " & gce.RowInfo.Cells("IdSousEpisode").Value & "_" & gce.RowInfo.Cells("Id").Value)
         Dim sousEpisodeReponse As SousEpisodeReponse
         Try
@@ -423,24 +423,29 @@ Public Class FrmSousEpisode
     End Function
 
     Private Sub BtnEditerDocument_Click(sender As Object, e As EventArgs) Handles BtnEditerDocument.Click
+        If Me.DropDownSousType.SelectedItem Is Nothing Then Return
+        Dim sousType = (TryCast(Me.DropDownSousType.SelectedItem.Value, SousEpisodeSousType))
         Try
             Me.Cursor = Cursors.WaitCursor
             Me.Enabled = False
             Dim lstSousEpisodeFusion As List(Of SousEpisodeFusion) = constitueFusion()
+            Dim tbl = telecharger_SousEpisodeDemande(sousType)
+            Dim ins = New MemoryStream(tbl)
+            Dim provider = New DocxFormatProvider()
 
-            Using frm = New FrmEditDocxSousEpisode()
-                Dim tbl = File.ReadAllBytes("c:\db\oasis\modeleradiologie.docx")
-                Dim ins = New MemoryStream(tbl)
-                Dim provider = New DocxFormatProvider()
-                frm.RadRichTextEditor1.Document = provider.Import(ins)
+            Using frm = New FrmEditDocxSousEpisode(sousEpisode)
+                If tbl.Count > 0 Then
+                    frm.RadRichTextEditor1.Document = provider.Import(ins)
+                End If
                 frm.RadRichTextEditor1.Document.MailMergeDataSource.ItemsSource = lstSousEpisodeFusion
-                frm.RadRichTextEditor1.UpdateAllFields(FieldDisplayMode.Result)
-                'Dim merged = frm.RadRichTextEditor1.MailMerge()
-                'frm.RadRichTextEditor1.Document = merged
+                frm.RadRichTextEditor1.UpdateAllFields(FieldDisplayMode.DisplayName)
+
+                Dim merged = frm.RadRichTextEditor1.MailMerge()
+                frm.RadRichTextEditor1.Document = merged
                 ins.Dispose()
                 tbl = Nothing
+                'frm.ReplaceAllMatches("toto", "titi")
                 frm.ShowDialog()
-                frm.Dispose()
             End Using
             refreshGrid()
         Catch err As Exception
@@ -452,15 +457,53 @@ Public Class FrmSousEpisode
 
     End Sub
 
+    Private Function telecharger_model(sousEpisodeSousType As SousEpisodeSousType) As Byte()
+        Dim tbl As Byte() = {}
+        Try
+            tbl = sousEpisodeSousType.getContenuModel()
+            Return tbl
+        Catch err As Exception
+            If err IsNot Nothing AndAlso err.Message IsNot Nothing AndAlso err.Message.Contains("Fichier demandé inexistant") Then
+                Return tbl
+            End If
+            Throw err
+        End Try
+    End Function
+
+    Private Function telecharger_SousEpisodeDemande(sousEpisodeSousType As SousEpisodeSousType) As Byte()
+        Dim tbl As Byte() = {}
+        Try
+            tbl = sousEpisode.getContenu()
+            Return tbl
+        Catch err As Exception
+            ' --- si inexistant => 1ere saisie : on récupère le modèle
+            If err IsNot Nothing AndAlso err.Message IsNot Nothing AndAlso err.Message.Contains("Fichier demandé inexistant") Then
+                tbl = sousEpisodeSousType.getContenuModel()
+                Return tbl
+            End If
+            Throw err
+        End Try
+    End Function
+
     Private Function constitueFusion() As List(Of SousEpisodeFusion)
         Dim lstFusion = New List(Of SousEpisodeFusion)(1)
-        Dim sousEF As New SousEpisodeFusion With {
-           .USNom = "Nom de l'unité sanitaire",
-           .USAdr1 = "Maison Xori Lur",
-           .USAdr2 = "154 allée Hégui Eder",
-           .USCP = "64990",
-           .USVille = "Mouguerre"
-        }
+        Dim sousEF As New SousEpisodeFusion
+        Dim episodeParametreDao = New EpisodeParametreDao
+        With sousEF
+            .USNom = "Nom de l'unité sanitaire"
+            .USAdr1 = "Maison Xori Lur"
+            .USAdr2 = "154 allée Hégui Eder"
+            .USCP = "64990"
+            .USVille = "Mouguerre"
+
+            .Patient_PrenomNom = patient.PatientPrenom & " " & patient.PatientPrenom
+            .Patient_NIR = patient.PatientNir
+            .Patient_Date_Naissance = patient.PatientDateNaissance.ToString("dd/MM/yyyy")
+            .Patient_Age = patient.PatientAge
+            .Patient_Poids = "" & episodeParametreDao.getPoidsByEpisodeIdOrLastKnow(sousEpisode.EpisodeId, patient.patientId)
+            .Patient_Poids = If(.Patient_Poids = "0", "", .Patient_Poids)
+
+        End With
         lstFusion.Add(sousEF)
 
         Return lstFusion
