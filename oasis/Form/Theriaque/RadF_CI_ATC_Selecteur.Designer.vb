@@ -99,7 +99,7 @@ Partial Class RadF_CI_ATC_Selecteur
         '
         'RadBtnEffetIndesirable
         '
-        Me.RadBtnEffetIndesirable.Location = New System.Drawing.Point(1108, 534)
+        Me.RadBtnEffetIndesirable.Location = New System.Drawing.Point(1103, 154)
         Me.RadBtnEffetIndesirable.Name = "RadBtnEffetIndesirable"
         Me.RadBtnEffetIndesirable.Size = New System.Drawing.Size(124, 24)
         Me.RadBtnEffetIndesirable.TabIndex = 33
@@ -107,7 +107,7 @@ Partial Class RadF_CI_ATC_Selecteur
         '
         'RadBtnParmacodynamique
         '
-        Me.RadBtnParmacodynamique.Location = New System.Drawing.Point(1108, 504)
+        Me.RadBtnParmacodynamique.Location = New System.Drawing.Point(1103, 124)
         Me.RadBtnParmacodynamique.Name = "RadBtnParmacodynamique"
         Me.RadBtnParmacodynamique.Size = New System.Drawing.Size(124, 24)
         Me.RadBtnParmacodynamique.TabIndex = 32
@@ -115,7 +115,7 @@ Partial Class RadF_CI_ATC_Selecteur
         '
         'RadBtnSelectionATC5
         '
-        Me.RadBtnSelectionATC5.Location = New System.Drawing.Point(1578, 397)
+        Me.RadBtnSelectionATC5.Location = New System.Drawing.Point(1578, 660)
         Me.RadBtnSelectionATC5.Name = "RadBtnSelectionATC5"
         Me.RadBtnSelectionATC5.Size = New System.Drawing.Size(124, 24)
         Me.RadBtnSelectionATC5.TabIndex = 31
@@ -123,7 +123,7 @@ Partial Class RadF_CI_ATC_Selecteur
         '
         'RadBtnPharmacocinetique
         '
-        Me.RadBtnPharmacocinetique.Location = New System.Drawing.Point(1108, 474)
+        Me.RadBtnPharmacocinetique.Location = New System.Drawing.Point(1103, 94)
         Me.RadBtnPharmacocinetique.Name = "RadBtnPharmacocinetique"
         Me.RadBtnPharmacocinetique.Size = New System.Drawing.Size(124, 24)
         Me.RadBtnPharmacocinetique.TabIndex = 30
@@ -133,7 +133,7 @@ Partial Class RadF_CI_ATC_Selecteur
         '
         Me.LblOccurrencesLues.AutoSize = True
         Me.LblOccurrencesLues.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Bold)
-        Me.LblOccurrencesLues.Location = New System.Drawing.Point(4, 429)
+        Me.LblOccurrencesLues.Location = New System.Drawing.Point(1, 45)
         Me.LblOccurrencesLues.Name = "LblOccurrencesLues"
         Me.LblOccurrencesLues.Size = New System.Drawing.Size(102, 13)
         Me.LblOccurrencesLues.TabIndex = 29
@@ -142,7 +142,7 @@ Partial Class RadF_CI_ATC_Selecteur
         'RadioBtnClassique
         '
         Me.RadioBtnClassique.AutoSize = True
-        Me.RadioBtnClassique.Location = New System.Drawing.Point(215, 397)
+        Me.RadioBtnClassique.Location = New System.Drawing.Point(215, 660)
         Me.RadioBtnClassique.Name = "RadioBtnClassique"
         Me.RadioBtnClassique.Size = New System.Drawing.Size(74, 17)
         Me.RadioBtnClassique.TabIndex = 28
@@ -153,7 +153,7 @@ Partial Class RadF_CI_ATC_Selecteur
         'RadioBtnVirtuel
         '
         Me.RadioBtnVirtuel.AutoSize = True
-        Me.RadioBtnVirtuel.Location = New System.Drawing.Point(150, 397)
+        Me.RadioBtnVirtuel.Location = New System.Drawing.Point(150, 660)
         Me.RadioBtnVirtuel.Name = "RadioBtnVirtuel"
         Me.RadioBtnVirtuel.Size = New System.Drawing.Size(59, 17)
         Me.RadioBtnVirtuel.TabIndex = 27
@@ -163,7 +163,7 @@ Partial Class RadF_CI_ATC_Selecteur
         '
         'RadBtnSpec4
         '
-        Me.RadBtnSpec4.Location = New System.Drawing.Point(1312, 397)
+        Me.RadBtnSpec4.Location = New System.Drawing.Point(1312, 660)
         Me.RadBtnSpec4.Name = "RadBtnSpec4"
         Me.RadBtnSpec4.Size = New System.Drawing.Size(173, 24)
         Me.RadBtnSpec4.TabIndex = 26
@@ -176,7 +176,7 @@ Partial Class RadF_CI_ATC_Selecteur
         Me.RadGridViewATC4.Font = New System.Drawing.Font("Segoe UI", 8.25!)
         Me.RadGridViewATC4.ForeColor = System.Drawing.Color.Black
         Me.RadGridViewATC4.ImeMode = System.Windows.Forms.ImeMode.NoControl
-        Me.RadGridViewATC4.Location = New System.Drawing.Point(1095, 50)
+        Me.RadGridViewATC4.Location = New System.Drawing.Point(1095, 313)
         '
         '
         '
@@ -203,7 +203,7 @@ Partial Class RadF_CI_ATC_Selecteur
         '
         'RadBtnSpec3
         '
-        Me.RadBtnSpec3.Location = New System.Drawing.Point(916, 397)
+        Me.RadBtnSpec3.Location = New System.Drawing.Point(916, 660)
         Me.RadBtnSpec3.Name = "RadBtnSpec3"
         Me.RadBtnSpec3.Size = New System.Drawing.Size(173, 24)
         Me.RadBtnSpec3.TabIndex = 24
@@ -216,7 +216,7 @@ Partial Class RadF_CI_ATC_Selecteur
         Me.RadGridViewATC3.Font = New System.Drawing.Font("Segoe UI", 8.25!)
         Me.RadGridViewATC3.ForeColor = System.Drawing.Color.Black
         Me.RadGridViewATC3.ImeMode = System.Windows.Forms.ImeMode.NoControl
-        Me.RadGridViewATC3.Location = New System.Drawing.Point(698, 50)
+        Me.RadGridViewATC3.Location = New System.Drawing.Point(698, 313)
         '
         '
         '
@@ -241,7 +241,7 @@ Partial Class RadF_CI_ATC_Selecteur
         '
         'RadBtnSpec2
         '
-        Me.RadBtnSpec2.Location = New System.Drawing.Point(519, 397)
+        Me.RadBtnSpec2.Location = New System.Drawing.Point(519, 660)
         Me.RadBtnSpec2.Name = "RadBtnSpec2"
         Me.RadBtnSpec2.Size = New System.Drawing.Size(173, 24)
         Me.RadBtnSpec2.TabIndex = 22
@@ -254,7 +254,7 @@ Partial Class RadF_CI_ATC_Selecteur
         Me.RadGridViewSpe.Font = New System.Drawing.Font("Segoe UI", 8.25!)
         Me.RadGridViewSpe.ForeColor = System.Drawing.Color.Black
         Me.RadGridViewSpe.ImeMode = System.Windows.Forms.ImeMode.NoControl
-        Me.RadGridViewSpe.Location = New System.Drawing.Point(4, 453)
+        Me.RadGridViewSpe.Location = New System.Drawing.Point(4, 67)
         '
         '
         '
@@ -305,7 +305,7 @@ Partial Class RadF_CI_ATC_Selecteur
         Me.RadGridViewSpe.Name = "RadGridViewSpe"
         Me.RadGridViewSpe.RightToLeft = System.Windows.Forms.RightToLeft.No
         Me.RadGridViewSpe.ShowGroupPanel = False
-        Me.RadGridViewSpe.Size = New System.Drawing.Size(1093, 251)
+        Me.RadGridViewSpe.Size = New System.Drawing.Size(1093, 240)
         Me.RadGridViewSpe.TabIndex = 21
         '
         'RadGridViewATC1
@@ -315,7 +315,7 @@ Partial Class RadF_CI_ATC_Selecteur
         Me.RadGridViewATC1.Font = New System.Drawing.Font("Segoe UI", 8.25!)
         Me.RadGridViewATC1.ForeColor = System.Drawing.Color.Black
         Me.RadGridViewATC1.ImeMode = System.Windows.Forms.ImeMode.NoControl
-        Me.RadGridViewATC1.Location = New System.Drawing.Point(4, 50)
+        Me.RadGridViewATC1.Location = New System.Drawing.Point(4, 313)
         '
         '
         '
@@ -343,7 +343,7 @@ Partial Class RadF_CI_ATC_Selecteur
         '
         'RadBtnFiltreSpecialite
         '
-        Me.RadBtnFiltreSpecialite.Location = New System.Drawing.Point(302, 9)
+        Me.RadBtnFiltreSpecialite.Location = New System.Drawing.Point(302, 7)
         Me.RadBtnFiltreSpecialite.Name = "RadBtnFiltreSpecialite"
         Me.RadBtnFiltreSpecialite.Size = New System.Drawing.Size(209, 24)
         Me.RadBtnFiltreSpecialite.TabIndex = 19
@@ -352,7 +352,7 @@ Partial Class RadF_CI_ATC_Selecteur
         'RadBtnAbandon
         '
         Me.RadBtnAbandon.DialogResult = System.Windows.Forms.DialogResult.Cancel
-        Me.RadBtnAbandon.Location = New System.Drawing.Point(1367, 701)
+        Me.RadBtnAbandon.Location = New System.Drawing.Point(1771, 694)
         Me.RadBtnAbandon.Name = "RadBtnAbandon"
         Me.RadBtnAbandon.Size = New System.Drawing.Size(110, 24)
         Me.RadBtnAbandon.TabIndex = 18
@@ -365,7 +365,7 @@ Partial Class RadF_CI_ATC_Selecteur
         Me.RadGridViewATC2.Font = New System.Drawing.Font("Segoe UI", 8.25!)
         Me.RadGridViewATC2.ForeColor = System.Drawing.Color.Black
         Me.RadGridViewATC2.ImeMode = System.Windows.Forms.ImeMode.NoControl
-        Me.RadGridViewATC2.Location = New System.Drawing.Point(302, 50)
+        Me.RadGridViewATC2.Location = New System.Drawing.Point(302, 313)
         '
         '
         '
@@ -392,7 +392,7 @@ Partial Class RadF_CI_ATC_Selecteur
         'RadTxtSpecialite
         '
         Me.RadTxtSpecialite.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper
-        Me.RadTxtSpecialite.Location = New System.Drawing.Point(4, 11)
+        Me.RadTxtSpecialite.Location = New System.Drawing.Point(4, 9)
         Me.RadTxtSpecialite.Name = "RadTxtSpecialite"
         Me.RadTxtSpecialite.Size = New System.Drawing.Size(292, 20)
         Me.RadTxtSpecialite.TabIndex = 16
@@ -404,7 +404,7 @@ Partial Class RadF_CI_ATC_Selecteur
         Me.RadGridViewATC5.Font = New System.Drawing.Font("Segoe UI", 8.25!)
         Me.RadGridViewATC5.ForeColor = System.Drawing.Color.Black
         Me.RadGridViewATC5.ImeMode = System.Windows.Forms.ImeMode.NoControl
-        Me.RadGridViewATC5.Location = New System.Drawing.Point(1491, 50)
+        Me.RadGridViewATC5.Location = New System.Drawing.Point(1491, 313)
         '
         '
         '
@@ -431,7 +431,7 @@ Partial Class RadF_CI_ATC_Selecteur
         '
         'RadBtnSpec5
         '
-        Me.RadBtnSpec5.Location = New System.Drawing.Point(1708, 397)
+        Me.RadBtnSpec5.Location = New System.Drawing.Point(1708, 660)
         Me.RadBtnSpec5.Name = "RadBtnSpec5"
         Me.RadBtnSpec5.Size = New System.Drawing.Size(173, 24)
         Me.RadBtnSpec5.TabIndex = 27
@@ -439,7 +439,7 @@ Partial Class RadF_CI_ATC_Selecteur
         '
         'RadBtnSelectionATC2
         '
-        Me.RadBtnSelectionATC2.Location = New System.Drawing.Point(389, 397)
+        Me.RadBtnSelectionATC2.Location = New System.Drawing.Point(389, 660)
         Me.RadBtnSelectionATC2.Name = "RadBtnSelectionATC2"
         Me.RadBtnSelectionATC2.Size = New System.Drawing.Size(124, 24)
         Me.RadBtnSelectionATC2.TabIndex = 35
@@ -447,7 +447,7 @@ Partial Class RadF_CI_ATC_Selecteur
         '
         'RadBtnSelectionATC3
         '
-        Me.RadBtnSelectionATC3.Location = New System.Drawing.Point(786, 397)
+        Me.RadBtnSelectionATC3.Location = New System.Drawing.Point(786, 660)
         Me.RadBtnSelectionATC3.Name = "RadBtnSelectionATC3"
         Me.RadBtnSelectionATC3.Size = New System.Drawing.Size(124, 24)
         Me.RadBtnSelectionATC3.TabIndex = 32
@@ -455,7 +455,7 @@ Partial Class RadF_CI_ATC_Selecteur
         '
         'RadBtnSelectionATC4
         '
-        Me.RadBtnSelectionATC4.Location = New System.Drawing.Point(1182, 397)
+        Me.RadBtnSelectionATC4.Location = New System.Drawing.Point(1182, 660)
         Me.RadBtnSelectionATC4.Name = "RadBtnSelectionATC4"
         Me.RadBtnSelectionATC4.Size = New System.Drawing.Size(124, 24)
         Me.RadBtnSelectionATC4.TabIndex = 32
@@ -467,7 +467,7 @@ Partial Class RadF_CI_ATC_Selecteur
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.CancelButton = Me.RadBtnAbandon
-        Me.ClientSize = New System.Drawing.Size(1881, 730)
+        Me.ClientSize = New System.Drawing.Size(1884, 730)
         Me.Controls.Add(Me.RadBtnSelectionATC3)
         Me.Controls.Add(Me.RadBtnSelectionATC4)
         Me.Controls.Add(Me.RadBtnSelectionATC2)
