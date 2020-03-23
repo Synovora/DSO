@@ -50,7 +50,7 @@ Partial Class RadFDeclarationAllergieEtCIDetail
         Me.RadGroupBox2 = New Telerik.WinControls.UI.RadGroupBox()
         Me.LblMedicamentTitulaire = New System.Windows.Forms.Label()
         Me.LblMedicamentAdministration = New System.Windows.Forms.Label()
-        Me.LblMedicamentForme = New System.Windows.Forms.Label()
+        Me.LblMedicamentDenominationLongue = New System.Windows.Forms.Label()
         Me.Label15 = New System.Windows.Forms.Label()
         Me.Label16 = New System.Windows.Forms.Label()
         Me.Label17 = New System.Windows.Forms.Label()
@@ -340,7 +340,7 @@ Partial Class RadFDeclarationAllergieEtCIDetail
         Me.RadGroupBox2.BackColor = System.Drawing.SystemColors.GradientInactiveCaption
         Me.RadGroupBox2.Controls.Add(Me.LblMedicamentTitulaire)
         Me.RadGroupBox2.Controls.Add(Me.LblMedicamentAdministration)
-        Me.RadGroupBox2.Controls.Add(Me.LblMedicamentForme)
+        Me.RadGroupBox2.Controls.Add(Me.LblMedicamentDenominationLongue)
         Me.RadGroupBox2.Controls.Add(Me.Label15)
         Me.RadGroupBox2.Controls.Add(Me.Label16)
         Me.RadGroupBox2.Controls.Add(Me.Label17)
@@ -362,49 +362,53 @@ Partial Class RadFDeclarationAllergieEtCIDetail
         'LblMedicamentTitulaire
         '
         Me.LblMedicamentTitulaire.AutoSize = True
-        Me.LblMedicamentTitulaire.Location = New System.Drawing.Point(109, 81)
+        Me.LblMedicamentTitulaire.Location = New System.Drawing.Point(874, 18)
         Me.LblMedicamentTitulaire.Name = "LblMedicamentTitulaire"
         Me.LblMedicamentTitulaire.Size = New System.Drawing.Size(164, 13)
         Me.LblMedicamentTitulaire.TabIndex = 67
         Me.LblMedicamentTitulaire.Text = "ACCORD HEALTHCARE FRANCE"
+        Me.LblMedicamentTitulaire.Visible = False
         '
         'LblMedicamentAdministration
         '
         Me.LblMedicamentAdministration.AutoSize = True
-        Me.LblMedicamentAdministration.Location = New System.Drawing.Point(532, 60)
+        Me.LblMedicamentAdministration.Location = New System.Drawing.Point(893, 39)
         Me.LblMedicamentAdministration.Name = "LblMedicamentAdministration"
         Me.LblMedicamentAdministration.Size = New System.Drawing.Size(33, 13)
         Me.LblMedicamentAdministration.TabIndex = 66
         Me.LblMedicamentAdministration.Text = "orale"
+        Me.LblMedicamentAdministration.Visible = False
         '
-        'LblMedicamentForme
+        'LblMedicamentDenominationLongue
         '
-        Me.LblMedicamentForme.AutoSize = True
-        Me.LblMedicamentForme.Location = New System.Drawing.Point(109, 60)
-        Me.LblMedicamentForme.Name = "LblMedicamentForme"
-        Me.LblMedicamentForme.Size = New System.Drawing.Size(103, 13)
-        Me.LblMedicamentForme.TabIndex = 65
-        Me.LblMedicamentForme.Text = "comprime pellicule"
+        Me.LblMedicamentDenominationLongue.AutoSize = True
+        Me.LblMedicamentDenominationLongue.Location = New System.Drawing.Point(151, 60)
+        Me.LblMedicamentDenominationLongue.Name = "LblMedicamentDenominationLongue"
+        Me.LblMedicamentDenominationLongue.Size = New System.Drawing.Size(103, 13)
+        Me.LblMedicamentDenominationLongue.TabIndex = 65
+        Me.LblMedicamentDenominationLongue.Text = "comprime pellicule"
         '
         'Label15
         '
         Me.Label15.AutoSize = True
         Me.Label15.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label15.Location = New System.Drawing.Point(13, 81)
+        Me.Label15.Location = New System.Drawing.Point(793, 18)
         Me.Label15.Name = "Label15"
         Me.Label15.Size = New System.Drawing.Size(61, 13)
         Me.Label15.TabIndex = 64
         Me.Label15.Text = "Titulaire :"
+        Me.Label15.Visible = False
         '
         'Label16
         '
         Me.Label16.AutoSize = True
         Me.Label16.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label16.Location = New System.Drawing.Point(432, 61)
+        Me.Label16.Location = New System.Drawing.Point(793, 39)
         Me.Label16.Name = "Label16"
         Me.Label16.Size = New System.Drawing.Size(94, 13)
         Me.Label16.TabIndex = 63
         Me.Label16.Text = "Administration :"
+        Me.Label16.Visible = False
         '
         'Label17
         '
@@ -412,9 +416,9 @@ Partial Class RadFDeclarationAllergieEtCIDetail
         Me.Label17.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label17.Location = New System.Drawing.Point(13, 60)
         Me.Label17.Name = "Label17"
-        Me.Label17.Size = New System.Drawing.Size(49, 13)
+        Me.Label17.Size = New System.Drawing.Size(134, 13)
         Me.Label17.TabIndex = 62
-        Me.Label17.Text = "Forme :"
+        Me.Label17.Text = "Dénomination longue :"
         '
         'Label10
         '
@@ -422,9 +426,9 @@ Partial Class RadFDeclarationAllergieEtCIDetail
         Me.Label10.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label10.Location = New System.Drawing.Point(13, 18)
         Me.Label10.Name = "Label10"
-        Me.Label10.Size = New System.Drawing.Size(35, 13)
+        Me.Label10.Size = New System.Drawing.Size(87, 13)
         Me.Label10.TabIndex = 60
-        Me.Label10.Text = "CIS :"
+        Me.Label10.Text = "Id Thériaque :"
         '
         'Label1
         '
@@ -439,7 +443,7 @@ Partial Class RadFDeclarationAllergieEtCIDetail
         'LblMedicamentDCI
         '
         Me.LblMedicamentDCI.AutoSize = True
-        Me.LblMedicamentDCI.Location = New System.Drawing.Point(109, 39)
+        Me.LblMedicamentDCI.Location = New System.Drawing.Point(151, 39)
         Me.LblMedicamentDCI.Name = "LblMedicamentDCI"
         Me.LblMedicamentDCI.Size = New System.Drawing.Size(317, 13)
         Me.LblMedicamentDCI.TabIndex = 59
@@ -448,7 +452,7 @@ Partial Class RadFDeclarationAllergieEtCIDetail
         'LblTraitementMedicamentCIS
         '
         Me.LblTraitementMedicamentCIS.AutoSize = True
-        Me.LblTraitementMedicamentCIS.Location = New System.Drawing.Point(109, 18)
+        Me.LblTraitementMedicamentCIS.Location = New System.Drawing.Point(151, 18)
         Me.LblTraitementMedicamentCIS.Name = "LblTraitementMedicamentCIS"
         Me.LblTraitementMedicamentCIS.Size = New System.Drawing.Size(55, 13)
         Me.LblTraitementMedicamentCIS.TabIndex = 61
@@ -587,7 +591,7 @@ Partial Class RadFDeclarationAllergieEtCIDetail
     Friend WithEvents RadGroupBox2 As Telerik.WinControls.UI.RadGroupBox
     Friend WithEvents LblMedicamentTitulaire As Label
     Friend WithEvents LblMedicamentAdministration As Label
-    Friend WithEvents LblMedicamentForme As Label
+    Friend WithEvents LblMedicamentDenominationLongue As Label
     Friend WithEvents Label15 As Label
     Friend WithEvents Label16 As Label
     Friend WithEvents Label17 As Label

@@ -3284,18 +3284,15 @@ Public Class RadFEpisodeDetail
     Private Sub DéclarationAllergieOuContreindicationToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles DéclarationAllergieOuContreindicationToolStripMenuItem.Click
         Me.Enabled = False
         Cursor.Current = Cursors.WaitCursor
-        Dim SelectedMedicamentCis As Integer
-        Using vFMedocSelecteur As New RadFMedocSelecteur
-            vFMedocSelecteur.SelectedPatient = Me.SelectedPatient
-            vFMedocSelecteur.Allergie = Me.Allergie
-            vFMedocSelecteur.ContreIndication = Me.ContreIndication
-            vFMedocSelecteur.ShowDialog() 'Modal
-            SelectedMedicamentCis = vFMedocSelecteur.SelectedMedicamentCis
+        Dim SelectedMedicamentId As Integer
+        Using formSelecteur As New RadFMedicamentSelecteur
+            formSelecteur.ShowDialog() 'Modal
+            SelectedMedicamentId = formSelecteur.SelectedSpecialiteId
             'Si un médicament a été sélectionné
-            If SelectedMedicamentCis <> 0 Then
+            If SelectedMedicamentId <> 0 Then
                 Using form As New RadFDeclarationAllergieEtCIDetail
                     form.SelectedPatient = Me.SelectedPatient
-                    form.SelectedMedicamentCis = SelectedMedicamentCis
+                    form.SelectedMedicamentId = SelectedMedicamentId
                     form.SelectedTraitementId = 0
                     form.ShowDialog()
                     If form.CodeRetour = True Then

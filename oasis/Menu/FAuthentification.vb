@@ -170,7 +170,7 @@ Public Class FAuthentificattion
 
     Private Sub BtnTheriaque_Click(sender As Object, e As EventArgs) Handles BtnTheriaque.Click
         InitAppelForm()
-        Dim form As New RadFMedicamentSelecteur()
+        Dim form As New RadF_CI_ATC_Selecteur()
         form.ShowDialog()
     End Sub
 

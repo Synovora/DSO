@@ -1,22 +1,22 @@
 ﻿Imports System.Collections.Specialized
 Imports Telerik.WinControls.UI
+Public Class RadF_CI_ATC_Selecteur
 
-Public Class RadFMedicamentSelecteur
-    Private _SelectedSpecialiteId As Long
+    Private _SelectedCodeATC As String
 
-    Public Property SelectedSpecialiteId As Long
+    Public Property SelectedCodeATC As String
         Get
-            Return _SelectedSpecialiteId
+            Return _SelectedCodeATC
         End Get
-        Set(value As Long)
-            _SelectedSpecialiteId = value
+        Set(value As String)
+            _SelectedCodeATC = value
         End Set
     End Property
 
     Dim theriaqueDao As New TheriaqueDao
 
     Private Sub RadFATCListe_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-        afficheTitleForm(Me, "Thériaque - Recherche médicament")
+        afficheTitleForm(Me, "Déclaration contre-indication - Sélection classe thérapeutique")
         RadioBtnVirtuel.Checked = True
         ChargementATC1()
         LblOccurrencesLues.Text = ""
@@ -25,7 +25,7 @@ Public Class RadFMedicamentSelecteur
     'Liste des médicaments par dénomination
     Private Sub RadBtnFiltre_Click(sender As Object, e As EventArgs) Handles RadBtnFiltreSpecialite.Click
         Dim NbCar As Integer = RadTxtSpecialite.Text.Length
-        If RadTxtSpecialite.Text <> "" And NbCar > 3 Then
+        If RadTxtSpecialite.Text <> "" And NbCar > 2 Then
             Cursor.Current = Cursors.WaitCursor
             '1 - Recherche spécialités virtuelles en nom partiel
             Dim dt As DataTable
@@ -82,7 +82,7 @@ Public Class RadFMedicamentSelecteur
             End If
             Cursor.Current = Cursors.Default
         Else
-            MessageBox.Show("Vous devez saisir au moins 4 caractères pour lancer cette option de recherche des médicaments !")
+            MessageBox.Show("Vous devez saisir au moins 3 caractères pour lancer cette option de recherche des médicaments !")
         End If
     End Sub
 
@@ -178,6 +178,29 @@ Public Class RadFMedicamentSelecteur
         End If
     End Sub
 
+    'Chargement du Grid affichant la classe thérapeutique de niveau 5
+    Private Sub ChargementATC5(CodeATC As String)
+        RadGridViewATC5.Rows.Clear()
+        Dim dt As DataTable
+        dt = theriaqueDao.getATCByATC(CodeATC)
+
+        Dim iGrid As Integer = -1 'Indice pour alimenter la Grid qui peut comporter moins d'occurrences que le DataTable
+        Dim rowCount As Integer = dt.Rows.Count - 1
+
+        For i = 0 To rowCount Step 1
+            iGrid += 1
+            RadGridViewATC5.Rows.Add(iGrid)
+
+            RadGridViewATC5.Rows(iGrid).Cells("catc_code_pk").Value = dt.Rows(i)("catc_code_pk")
+            RadGridViewATC5.Rows(iGrid).Cells("catc_nomf").Value = dt.Rows(i)("catc_nomf")
+        Next
+
+        If RadGridViewATC5.Rows.Count > 0 Then
+            RadGridViewATC5.CurrentRow = RadGridViewATC5.ChildRows(0)
+            RadGridViewATC5.TableElement.VScrollBar.Value = 0
+        End If
+    End Sub
+
     'Lancement de l'affichage du Grid affichant la classe thérapeutique de niveau 2 depuis le niveau 1
     Private Sub MasterTemplate_Click(sender As Object, e As EventArgs) Handles RadGridViewATC1.Click
         If RadGridViewATC1.CurrentRow IsNot Nothing Then
@@ -186,6 +209,7 @@ Public Class RadFMedicamentSelecteur
             If aRow >= 0 Then
                 RadGridViewATC3.Rows.Clear()
                 RadGridViewATC4.Rows.Clear()
+                RadGridViewATC5.Rows.Clear()
                 ChargementATC2(ATCCode)
             End If
         End If
@@ -198,6 +222,7 @@ Public Class RadFMedicamentSelecteur
             Dim ATCCode As String = RadGridViewATC2.Rows(aRow).Cells("catc_code_pk").Value
             If aRow >= 0 Then
                 RadGridViewATC4.Rows.Clear()
+                RadGridViewATC5.Rows.Clear()
                 ChargementATC3(ATCCode)
             End If
         End If
@@ -209,10 +234,23 @@ Public Class RadFMedicamentSelecteur
             Dim aRow As Integer = Me.RadGridViewATC3.Rows.IndexOf(Me.RadGridViewATC3.CurrentRow)
             Dim ATCCode As String = RadGridViewATC3.Rows(aRow).Cells("catc_code_pk").Value
             If aRow >= 0 Then
+                RadGridViewATC5.Rows.Clear()
                 ChargementATC4(ATCCode)
             End If
         End If
     End Sub
+
+    'Lancement de l'affichage du Grid affichant la classe thérapeutique de niveau 5 depuis le niveau 4
+    Private Sub RadGridViewATC4_Click(sender As Object, e As EventArgs) Handles RadGridViewATC4.Click
+        If RadGridViewATC4.CurrentRow IsNot Nothing Then
+            Dim aRow As Integer = Me.RadGridViewATC4.Rows.IndexOf(Me.RadGridViewATC4.CurrentRow)
+            Dim ATCCode As String = RadGridViewATC4.Rows(aRow).Cells("catc_code_pk").Value
+            If aRow >= 0 Then
+                ChargementATC5(ATCCode)
+            End If
+        End If
+    End Sub
+
 
     'Bouton d'appel de l'affichage de la Liste des médicaments depuis la classe thérapeutique de niveau 2
     Private Sub RadBtnSpec1_Click(sender As Object, e As EventArgs) Handles RadBtnSpec2.Click
@@ -242,6 +280,17 @@ Public Class RadFMedicamentSelecteur
             Dim aRow As Integer = Me.RadGridViewATC4.Rows.IndexOf(Me.RadGridViewATC4.CurrentRow)
             If aRow >= 0 Then
                 Dim CodeAtc As String = RadGridViewATC4.Rows(aRow).Cells("catc_code_pk").Value
+                GetSpecialiteByATC(CodeAtc)
+            End If
+        End If
+    End Sub
+
+    'Bouton d'appel de l'affichage de la Liste des médicaments depuis la classe thérapeutique de niveau 5
+    Private Sub RadBtnSpec5_Click(sender As Object, e As EventArgs) Handles RadBtnSpec5.Click
+        If RadGridViewATC5.CurrentRow IsNot Nothing Then
+            Dim aRow As Integer = Me.RadGridViewATC5.Rows.IndexOf(Me.RadGridViewATC5.CurrentRow)
+            If aRow >= 0 Then
+                Dim CodeAtc As String = RadGridViewATC5.Rows(aRow).Cells("catc_code_pk").Value
                 GetSpecialiteByATC(CodeAtc)
             End If
         End If
@@ -327,26 +376,6 @@ Public Class RadFMedicamentSelecteur
         Return Monovir
     End Function
 
-    'Sélection d'une spécialité, renvoi de la valeur de la clé Thériaque
-    Private Sub RadGridViewSpe_DoubleClick(sender As Object, e As EventArgs) Handles RadGridViewSpe.DoubleClick
-        Selection()
-    End Sub
-
-    Private Sub RadBtnSelection_Click(sender As Object, e As EventArgs) Handles RadBtnSelection.Click
-        Selection()
-    End Sub
-
-    Private Sub Selection()
-        If RadGridViewSpe.CurrentRow IsNot Nothing Then
-            Dim aRow As Integer = Me.RadGridViewSpe.Rows.IndexOf(Me.RadGridViewSpe.CurrentRow)
-            If aRow >= 0 Then
-                Dim SpecialiteId As Long = RadGridViewSpe.Rows(aRow).Cells("SP_CODE_SQ_PK").Value
-                SelectedSpecialiteId = SpecialiteId
-                Close()
-            End If
-        End If
-    End Sub
-
     'Affichage popup détail grid spécialité
     Private Sub MasterTemplate_CellFormatting(sender As Object, e As Telerik.WinControls.UI.CellFormattingEventArgs) Handles RadGridViewSpe.CellFormatting
         If TypeOf e.Row Is GridViewDataRowInfo Then
@@ -407,4 +436,55 @@ Public Class RadFMedicamentSelecteur
             End If
         End If
     End Sub
+
+    'Sélection ARC niveau 2
+    Private Sub RadBtnSelectionATC2_Click(sender As Object, e As EventArgs) Handles RadBtnSelectionATC2.Click
+        If RadGridViewATC2.CurrentRow IsNot Nothing Then
+            Dim aRow As Integer = Me.RadGridViewATC2.Rows.IndexOf(Me.RadGridViewATC2.CurrentRow)
+            If aRow >= 0 Then
+                Dim codeATC As String = RadGridViewATC2.Rows(aRow).Cells("catc_code_pk").Value
+                Selection(codeATC)
+                Close()
+            End If
+        End If
+    End Sub
+
+    Private Sub RadBtnSelectionATC3_Click(sender As Object, e As EventArgs) Handles RadBtnSelectionATC3.Click
+        If RadGridViewATC3.CurrentRow IsNot Nothing Then
+            Dim aRow As Integer = Me.RadGridViewATC3.Rows.IndexOf(Me.RadGridViewATC3.CurrentRow)
+            If aRow >= 0 Then
+                Dim codeATC As String = RadGridViewATC3.Rows(aRow).Cells("catc_code_pk").Value
+                Selection(codeATC)
+                Close()
+            End If
+        End If
+    End Sub
+
+    Private Sub RadBtnSelectionATC4_Click(sender As Object, e As EventArgs) Handles RadBtnSelectionATC4.Click
+        If RadGridViewATC4.CurrentRow IsNot Nothing Then
+            Dim aRow As Integer = Me.RadGridViewATC4.Rows.IndexOf(Me.RadGridViewATC4.CurrentRow)
+            If aRow >= 0 Then
+                Dim codeATC As String = RadGridViewATC4.Rows(aRow).Cells("catc_code_pk").Value
+                Selection(codeATC)
+                Close()
+            End If
+        End If
+    End Sub
+
+    Private Sub RadBtnSelectionATC5_Click(sender As Object, e As EventArgs) Handles RadBtnSelectionATC5.Click
+        If RadGridViewATC5.CurrentRow IsNot Nothing Then
+            Dim aRow As Integer = Me.RadGridViewATC5.Rows.IndexOf(Me.RadGridViewATC5.CurrentRow)
+            If aRow >= 0 Then
+                Dim codeATC As String = RadGridViewATC5.Rows(aRow).Cells("catc_code_pk").Value
+                Selection(codeATC)
+                Close()
+            End If
+        End If
+    End Sub
+
+    Private Sub Selection(CodeATC As String)
+        SelectedCodeATC = CodeATC
+        Close()
+    End Sub
+
 End Class

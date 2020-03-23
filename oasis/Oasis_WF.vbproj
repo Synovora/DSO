@@ -476,6 +476,12 @@
     <Compile Include="Form\SousEpisode\FrmSousEpisodeListe.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="Form\Theriaque\RadF_CI_ATC_Selecteur.Designer.vb">
+      <DependentUpon>RadF_CI_ATC_Selecteur.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Form\Theriaque\RadF_CI_ATC_Selecteur.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Form\Traitement\RadFAllergieEtCISuppressionDetail.Designer.vb">
       <DependentUpon>RadFAllergieEtCISuppressionDetail.vb</DependentUpon>
     </Compile>
@@ -1015,6 +1021,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Form\SousEpisode\FrmSousEpisodeListe.resx">
       <DependentUpon>FrmSousEpisodeListe.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form\Theriaque\RadF_CI_ATC_Selecteur.resx">
+      <DependentUpon>RadF_CI_ATC_Selecteur.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Form\Traitement\RadFAllergieEtCISuppressionDetail.resx">
       <DependentUpon>RadFAllergieEtCISuppressionDetail.vb</DependentUpon>

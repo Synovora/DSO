@@ -400,7 +400,9 @@ Public Class RadFAntecedentDetailEdit
         If MsgBox("Attention, la suppression d'un antécédent est irréversible, confirmez-vous l'annulation", MsgBoxStyle.YesNo, "") = MsgBoxResult.Yes Then
             'Annulation antécédent
             If AnnulationAntecedent() = True Then
-                MessageBox.Show("L'antécédent patient a été annulé")
+                Dim form As New RadFNotification()
+                form.Message = "antécédent patient annulé"
+                form.Show()
                 Me.CodeRetour = True
                 Close()
             Else
@@ -972,7 +974,9 @@ Public Class RadFAntecedentDetailEdit
             conxn.Open()
             da.UpdateCommand = cmd
             da.UpdateCommand.ExecuteNonQuery()
-            MessageBox.Show("Antécédent patient modifié")
+            Dim form As New RadFNotification()
+            form.Message = "Antécédent patient modifié"
+            form.Show()
         Catch ex As Exception
             'PgbMiseAJour.Hide()
             MessageBox.Show(ex.Message)
@@ -1145,8 +1149,9 @@ Public Class RadFAntecedentDetailEdit
             Dim n As Integer 'Pour récupérer le nombre d'occurences enregistrées
             da.InsertCommand = cmd
             n = da.InsertCommand.ExecuteNonQuery()
-            'PgbMiseAJour.Hide()
-            MessageBox.Show("Antecedent patient créé")
+            Dim form As New RadFNotification()
+            form.Message = "Antecedent patient créé"
+            form.Show()
         Catch ex As Exception
             'PgbMiseAJour.Hide()
             MessageBox.Show(ex.Message)
@@ -1412,7 +1417,6 @@ Public Class RadFAntecedentDetailEdit
             da.UpdateCommand = cmd
             da.UpdateCommand.ExecuteNonQuery()
         Catch ex As Exception
-            'PgbMiseAJour.Hide()
             MessageBox.Show(ex.Message)
             codeRetour = False
         Finally
@@ -1468,7 +1472,6 @@ Public Class RadFAntecedentDetailEdit
             da.UpdateCommand = cmd
             da.UpdateCommand.ExecuteNonQuery()
         Catch ex As Exception
-            'PgbMiseAJour.Hide()
             MessageBox.Show(ex.Message)
             codeRetour = False
         Finally

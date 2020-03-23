@@ -117,12 +117,14 @@ Partial Class RadFTraitementDetailEdit
         Me.LblFenetreDateFin = New System.Windows.Forms.Label()
         Me.RadBtnValidation = New Telerik.WinControls.UI.RadButton()
         Me.RadBtnRetour = New Telerik.WinControls.UI.RadButton()
-        Me.RadBtnMedoc = New Telerik.WinControls.UI.RadButton()
         Me.RadBtnArretTraitement = New Telerik.WinControls.UI.RadButton()
         Me.RadBtnSupprimerTraitement = New Telerik.WinControls.UI.RadButton()
         Me.RadBtnAnnulerTraitement = New Telerik.WinControls.UI.RadButton()
         Me.RadGbxFenetreTherapeutique = New Telerik.WinControls.UI.RadGroupBox()
         Me.RadPnlStatutTraitement = New Telerik.WinControls.UI.RadGroupBox()
+        Me.RadBtnPharmacocinetique = New Telerik.WinControls.UI.RadButton()
+        Me.RadBtnParmacodynamique = New Telerik.WinControls.UI.RadButton()
+        Me.RadBtnEffetIndesirable = New Telerik.WinControls.UI.RadButton()
         CType(Me.RadGroupBox1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.RadGroupBox1.SuspendLayout()
         CType(Me.RadGroupBox2, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -143,7 +145,6 @@ Partial Class RadFTraitementDetailEdit
         Me.GbxAnnulationTraitement.SuspendLayout()
         CType(Me.RadBtnValidation, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.RadBtnRetour, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.RadBtnMedoc, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.RadBtnArretTraitement, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.RadBtnSupprimerTraitement, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.RadBtnAnnulerTraitement, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -151,6 +152,9 @@ Partial Class RadFTraitementDetailEdit
         Me.RadGbxFenetreTherapeutique.SuspendLayout()
         CType(Me.RadPnlStatutTraitement, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.RadPnlStatutTraitement.SuspendLayout()
+        CType(Me.RadBtnPharmacocinetique, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.RadBtnParmacodynamique, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.RadBtnEffetIndesirable, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
@@ -1136,17 +1140,9 @@ Partial Class RadFTraitementDetailEdit
         Me.RadBtnRetour.TabIndex = 85
         Me.RadBtnRetour.Text = "Abandon"
         '
-        'RadBtnMedoc
-        '
-        Me.RadBtnMedoc.Location = New System.Drawing.Point(3, 912)
-        Me.RadBtnMedoc.Name = "RadBtnMedoc"
-        Me.RadBtnMedoc.Size = New System.Drawing.Size(110, 24)
-        Me.RadBtnMedoc.TabIndex = 90
-        Me.RadBtnMedoc.Text = "Détail médicament"
-        '
         'RadBtnArretTraitement
         '
-        Me.RadBtnArretTraitement.Location = New System.Drawing.Point(119, 912)
+        Me.RadBtnArretTraitement.Location = New System.Drawing.Point(8, 912)
         Me.RadBtnArretTraitement.Name = "RadBtnArretTraitement"
         Me.RadBtnArretTraitement.Size = New System.Drawing.Size(132, 24)
         Me.RadBtnArretTraitement.TabIndex = 95
@@ -1154,7 +1150,7 @@ Partial Class RadFTraitementDetailEdit
         '
         'RadBtnSupprimerTraitement
         '
-        Me.RadBtnSupprimerTraitement.Location = New System.Drawing.Point(386, 912)
+        Me.RadBtnSupprimerTraitement.Location = New System.Drawing.Point(275, 912)
         Me.RadBtnSupprimerTraitement.Name = "RadBtnSupprimerTraitement"
         Me.RadBtnSupprimerTraitement.Size = New System.Drawing.Size(130, 24)
         Me.RadBtnSupprimerTraitement.TabIndex = 110
@@ -1162,7 +1158,7 @@ Partial Class RadFTraitementDetailEdit
         '
         'RadBtnAnnulerTraitement
         '
-        Me.RadBtnAnnulerTraitement.Location = New System.Drawing.Point(257, 912)
+        Me.RadBtnAnnulerTraitement.Location = New System.Drawing.Point(146, 912)
         Me.RadBtnAnnulerTraitement.Name = "RadBtnAnnulerTraitement"
         Me.RadBtnAnnulerTraitement.Size = New System.Drawing.Size(123, 24)
         Me.RadBtnAnnulerTraitement.TabIndex = 100
@@ -1198,6 +1194,30 @@ Partial Class RadFTraitementDetailEdit
         Me.RadPnlStatutTraitement.TabIndex = 112
         Me.RadPnlStatutTraitement.Text = "Statut traitement"
         '
+        'RadBtnPharmacocinetique
+        '
+        Me.RadBtnPharmacocinetique.Location = New System.Drawing.Point(473, 912)
+        Me.RadBtnPharmacocinetique.Name = "RadBtnPharmacocinetique"
+        Me.RadBtnPharmacocinetique.Size = New System.Drawing.Size(124, 24)
+        Me.RadBtnPharmacocinetique.TabIndex = 113
+        Me.RadBtnPharmacocinetique.Text = "Pharmacocinétique"
+        '
+        'RadBtnParmacodynamique
+        '
+        Me.RadBtnParmacodynamique.Location = New System.Drawing.Point(603, 912)
+        Me.RadBtnParmacodynamique.Name = "RadBtnParmacodynamique"
+        Me.RadBtnParmacodynamique.Size = New System.Drawing.Size(124, 24)
+        Me.RadBtnParmacodynamique.TabIndex = 114
+        Me.RadBtnParmacodynamique.Text = "Pharmacodynamie"
+        '
+        'RadBtnEffetIndesirable
+        '
+        Me.RadBtnEffetIndesirable.Location = New System.Drawing.Point(733, 912)
+        Me.RadBtnEffetIndesirable.Name = "RadBtnEffetIndesirable"
+        Me.RadBtnEffetIndesirable.Size = New System.Drawing.Size(124, 24)
+        Me.RadBtnEffetIndesirable.TabIndex = 115
+        Me.RadBtnEffetIndesirable.Text = "Effet indésirable"
+        '
         'RadFTraitementDetailEdit
         '
         Me.AcceptButton = Me.RadBtnValidation
@@ -1205,12 +1225,14 @@ Partial Class RadFTraitementDetailEdit
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.CancelButton = Me.RadBtnRetour
         Me.ClientSize = New System.Drawing.Size(1174, 943)
+        Me.Controls.Add(Me.RadBtnEffetIndesirable)
+        Me.Controls.Add(Me.RadBtnParmacodynamique)
+        Me.Controls.Add(Me.RadBtnPharmacocinetique)
         Me.Controls.Add(Me.RadPnlStatutTraitement)
         Me.Controls.Add(Me.RadGbxFenetreTherapeutique)
         Me.Controls.Add(Me.RadBtnAnnulerTraitement)
         Me.Controls.Add(Me.RadBtnSupprimerTraitement)
         Me.Controls.Add(Me.RadBtnArretTraitement)
-        Me.Controls.Add(Me.RadBtnMedoc)
         Me.Controls.Add(Me.RadBtnRetour)
         Me.Controls.Add(Me.RadBtnValidation)
         Me.Controls.Add(Me.LblId)
@@ -1266,7 +1288,6 @@ Partial Class RadFTraitementDetailEdit
         Me.GbxAnnulationTraitement.PerformLayout()
         CType(Me.RadBtnValidation, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.RadBtnRetour, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.RadBtnMedoc, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.RadBtnArretTraitement, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.RadBtnSupprimerTraitement, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.RadBtnAnnulerTraitement, System.ComponentModel.ISupportInitialize).EndInit()
@@ -1276,6 +1297,9 @@ Partial Class RadFTraitementDetailEdit
         CType(Me.RadPnlStatutTraitement, System.ComponentModel.ISupportInitialize).EndInit()
         Me.RadPnlStatutTraitement.ResumeLayout(False)
         Me.RadPnlStatutTraitement.PerformLayout()
+        CType(Me.RadBtnPharmacocinetique, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.RadBtnParmacodynamique, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.RadBtnEffetIndesirable, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
         Me.PerformLayout()
@@ -1371,7 +1395,6 @@ Partial Class RadFTraitementDetailEdit
     Friend WithEvents RadBtnValidation As Telerik.WinControls.UI.RadButton
     Friend WithEvents RadBtnRetour As Telerik.WinControls.UI.RadButton
     Friend WithEvents RadBtnArretTraitement As Telerik.WinControls.UI.RadButton
-    Friend WithEvents RadBtnMedoc As Telerik.WinControls.UI.RadButton
     Friend WithEvents RadBtnSupprimerTraitement As Telerik.WinControls.UI.RadButton
     Friend WithEvents RadBtnAnnulerTraitement As Telerik.WinControls.UI.RadButton
     Friend WithEvents RadGbxFenetreTherapeutique As Telerik.WinControls.UI.RadGroupBox
@@ -1382,5 +1405,8 @@ Partial Class RadFTraitementDetailEdit
     Friend WithEvents CbxFractionApresMidi As ComboBox
     Friend WithEvents CbxFractionSoir As ComboBox
     Friend WithEvents CbxFractionMatin As ComboBox
+    Friend WithEvents RadBtnPharmacocinetique As Telerik.WinControls.UI.RadButton
+    Friend WithEvents RadBtnParmacodynamique As Telerik.WinControls.UI.RadButton
+    Friend WithEvents RadBtnEffetIndesirable As Telerik.WinControls.UI.RadButton
 End Class
 

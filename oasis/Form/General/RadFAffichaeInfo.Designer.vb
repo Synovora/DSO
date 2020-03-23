@@ -38,6 +38,7 @@ Partial Class RadFAffichaeInfo
         '
         Me.TextBoxInfo.AcceptsReturn = True
         Me.TextBoxInfo.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.TextBoxInfo.Font = New System.Drawing.Font("Segoe UI", 11.0!)
         Me.TextBoxInfo.Location = New System.Drawing.Point(0, 0)
         Me.TextBoxInfo.Multiline = True
         Me.TextBoxInfo.Name = "TextBoxInfo"

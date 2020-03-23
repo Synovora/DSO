@@ -4,7 +4,7 @@ Imports Telerik.WinControls.UI.Localization
 Imports Oasis_Common
 Public Class RadFDeclarationAllergieEtCIDetail
     Private _SelectedPatient As Patient
-    Private _SelectedMedicamentCis As Integer
+    Private _SelectedMedicamentId As Integer
     Private _SelectedTraitementId As Integer
     Private _CodeRetour As Boolean
 
@@ -17,12 +17,12 @@ Public Class RadFDeclarationAllergieEtCIDetail
         End Set
     End Property
 
-    Public Property SelectedMedicamentCis As Integer
+    Public Property SelectedMedicamentId As Integer
         Get
-            Return _SelectedMedicamentCis
+            Return _SelectedMedicamentId
         End Get
         Set(value As Integer)
-            _SelectedMedicamentCis = value
+            _SelectedMedicamentId = value
         End Set
     End Property
 
@@ -44,10 +44,9 @@ Public Class RadFDeclarationAllergieEtCIDetail
         End Set
     End Property
 
-    Dim medicamentDao As New MedicamentDao
+    Dim theriaqueDao As New TheriaqueDao
     Dim traitementDao As New TraitementDao
 
-    Dim medicament As Medicament
     Dim traitement As Traitement
 
     Private Sub RadFDeclarationAllergieEtCIDetail_Load(sender As Object, e As EventArgs) Handles MyBase.Load
@@ -60,8 +59,9 @@ Public Class RadFDeclarationAllergieEtCIDetail
             ChkContreIndication.Checked = False
             traitement = New Traitement()
             traitement.PatientId = SelectedPatient.patientId
-            traitement.MedicamentId = SelectedMedicamentCis
-            traitement.MedicamentDci = medicament.MedicamentDci
+            traitement.MedicamentId = SelectedMedicamentId
+            traitement.MedicamentDci = LblMedicamentDCI.Text
+            traitement.DenominationLongue = LblMedicamentDenominationLongue.Text
             traitement.Allergie = False
             traitement.ContreIndication = False
             traitement.ArretCommentaire = ""
@@ -97,11 +97,20 @@ Public Class RadFDeclarationAllergieEtCIDetail
     End Sub
 
     Private Sub ChargementMedicament()
-        medicament = medicamentDao.GetMedicamentById(SelectedMedicamentCis)
-        LblMedicamentDCI.Text = medicament.MedicamentDci
-        LblMedicamentForme.Text = medicament.Forme
-        LblMedicamentAdministration.Text = medicament.VoieAdministration
-        LblMedicamentTitulaire.Text = medicament.Titulaire
+        LblTraitementMedicamentCIS.Text = SelectedMedicamentId
+        Dim dt As DataTable
+        dt = theriaqueDao.getSpecialiteByArgument(SelectedMedicamentId.ToString, TheriaqueDao.EnumGetSpecialite.ID_THERIAQUE, TheriaqueDao.EnumMonoVir.NULL)
+        If dt.Rows.Count > 0 Then
+            LblMedicamentDCI.Text = dt.Rows(0)("SP_NOM")
+            LblMedicamentDCI.Text = LblMedicamentDCI.Text.Replace(" §", "")
+            LblMedicamentDenominationLongue.Text = dt.Rows(0)("SP_NOMLONG")
+            LblMedicamentDenominationLongue.Text = LblMedicamentDenominationLongue.Text.Replace("(MEDICAMENT VIRTUEL)", "")
+        Else
+            LblMedicamentDCI.Text = ""
+            LblMedicamentDenominationLongue.Text = ""
+            LblMedicamentAdministration.Text = ""
+            LblMedicamentTitulaire.Text = ""
+        End If
     End Sub
 
     Private Sub ChargementTraitementExistant()

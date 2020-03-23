@@ -743,14 +743,6 @@ Public Class RadFTraitementDetailEdit
         End If
     End Sub
 
-    'Affichage de l'écran détaillant un médicament
-    Private Sub RadBtnMedoc_Click(sender As Object, e As EventArgs) Handles RadBtnMedoc.Click
-        Using vFMedocDetail As New RadFMedocDetail
-            vFMedocDetail.MedicamentCis = LblTraitementMedicamentId.Text
-            vFMedocDetail.ShowDialog()
-        End Using
-    End Sub
-
     'Appel de la suppression du traitement affiché
     Private Sub BtnSupprimer_Click(sender As Object, e As EventArgs) Handles RadBtnSupprimerTraitement.Click
         'Contrôle si on doit traiter la suppression ou l'annulation
@@ -1583,4 +1575,34 @@ Public Class RadFTraitementDetailEdit
         Close()
     End Sub
 
+    Private Sub RadBtnPharmacocinetique_Click(sender As Object, e As EventArgs) Handles RadBtnPharmacocinetique.Click
+        Dim PharmacoCinetique As String = TheriaqueDao.GetPharmacoCinetqueBySpecialite(SelectedMedicamentId)
+        Me.Enabled = False
+        Using form As New RadFAffichaeInfo
+            form.InfoToDisplay = PharmacoCinetique
+            form.Titre = "Information Pharmacocinétique"
+            form.ShowDialog()
+        End Using
+        Me.Enabled = True
+    End Sub
+
+    Private Sub RadBtnParmacodynamique_Click(sender As Object, e As EventArgs) Handles RadBtnParmacodynamique.Click
+        Dim PharmacoCinetique As String = TheriaqueDao.GetPharmacoDynamiqueBySpecialite(SelectedMedicamentId)
+        Me.Enabled = False
+        Using form As New RadFAffichaeInfo
+            form.InfoToDisplay = PharmacoCinetique
+            form.Titre = "Information Pharmacodynamique"
+            form.ShowDialog()
+        End Using
+        Me.Enabled = True
+    End Sub
+
+    Private Sub RadBtnEffetIndesirable_Click(sender As Object, e As EventArgs) Handles RadBtnEffetIndesirable.Click
+        Me.Enabled = False
+        Using form As New RadFEffetSecondaire
+            form.MedicamentId = SelectedMedicamentId
+            form.ShowDialog()
+        End Using
+        Me.Enabled = True
+    End Sub
 End Class
