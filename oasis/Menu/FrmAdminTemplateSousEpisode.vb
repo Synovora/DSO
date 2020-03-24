@@ -164,8 +164,13 @@ Public Class FrmAdminTemplateSousEpisode
             For Each detail As SousEpisodeSousSousType In lstSousTypeDetail
                 sousEF.Sous_Type_Libelle_Detail_ALD += vbCrLf
                 sousEF.Sous_Type_Libelle_Detail_ALD += (detail.Libelle & vbCrLf)
+                sousEF.Sous_Type_Libelle_Detail_commentaire_ALD += vbCrLf
+                sousEF.Sous_Type_Libelle_Detail_commentaire_ALD += (detail.commentaire & vbCrLf)
+
                 sousEF.Sous_Type_Libelle_Detail_Non_ALD += vbCrLf
                 sousEF.Sous_Type_Libelle_Detail_Non_ALD += (detail.Libelle & vbCrLf)
+                sousEF.Sous_Type_Libelle_Detail_commentaire_non_ALD += vbCrLf
+                sousEF.Sous_Type_Libelle_Detail_commentaire_non_ALD += (detail.commentaire & vbCrLf)
             Next
         End If
 

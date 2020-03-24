@@ -331,8 +331,7 @@ Public Class FrmSousEpisode
 
         Dim sousEpisodeSousType As SousEpisodeSousType = TryCast(Me.DropDownSousType.SelectedItem.Value, SousEpisodeSousType)
 
-        BtnValideAndSign.Text = If(isCreation, "Valider et Signer", "Signer")
-        BtnValideAndSign.Visible = isNotValidate _
+        BtnValideAndSign.Visible = isCreation = False AndAlso isNotValidate _
                                   AndAlso SousEpisodeSousType.isUserLogAutorise(sousEpisodeSousType.ValidationProfilTypes)
 
         Me.DropDownType.Enabled = isCreation
@@ -536,10 +535,14 @@ Public Class FrmSousEpisode
                             isWithALD = True
                             .Sous_Type_Libelle_Detail_ALD += vbCrLf
                             .Sous_Type_Libelle_Detail_ALD += (row.Cells("Libelle").Value & vbCrLf)
+                            .Sous_Type_Libelle_Detail_commentaire_ALD += vbCrLf
+                            .Sous_Type_Libelle_Detail_commentaire_ALD += (row.Cells("Commentaire").Value & vbCrLf)
                         Else
                             isWithNonAld = True
                             .Sous_Type_Libelle_Detail_Non_ALD += vbCrLf
                             .Sous_Type_Libelle_Detail_Non_ALD += (row.Cells("Libelle").Value & vbCrLf)
+                            .Sous_Type_Libelle_Detail_commentaire_non_ALD += vbCrLf
+                            .Sous_Type_Libelle_Detail_commentaire_non_ALD += (row.Cells("Commentaire").Value & vbCrLf)
                         End If
                     End If
                 Next
@@ -592,8 +595,6 @@ Public Class FrmSousEpisode
     Private Sub initSousSousTypes(idSousType As Long)
         Me.Cursor = Cursors.WaitCursor
         Try
-            'Dim data As DataTable = sousEpisodeReponseDao.getTableSousEpisodeReponse(sousEpisode.Id)
-
             Dim numRowGrid As Integer = 0
 
             RadSousSousTypeGrid.Rows.Clear()
@@ -607,12 +608,13 @@ Public Class FrmSousEpisode
                     .Cells("Id").Value = sousEpisodeSousSousType.Id
                     .Cells("IdSousEpisodeSousType").Value = sousEpisodeSousSousType.IdSousEpisodeSousType
                     .Cells("Libelle").Value = sousEpisodeSousSousType.Libelle
-                    .Cells("ChkChoice").Value = True
                     If isCreation Then
                         .Cells("ChkALD").Value = isPatientALD
                     Else
+                        .Cells("ChkChoice").Value = True
                         .Cells("ChkALD").Value = sousEpisode.isThisDetailALD(sousEpisodeSousSousType.Id)
                     End If
+                    .Cells("Commentaire").Value = sousEpisodeSousSousType.commentaire
                 End With
 
                 numRowGrid += 1

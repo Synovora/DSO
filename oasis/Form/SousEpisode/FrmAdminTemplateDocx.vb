@@ -109,6 +109,7 @@ Public Class FrmAdminTemplateDocx
         Me.MinimizeBox = False
 
         Me.RadRichTextEditor1.LayoutMode = DocumentLayoutMode.Paged
+        Me.RadRichTextEditor1.Document.SectionDefaultPageSize = PaperTypeConverter.ToSize(PaperTypes.A4)
 
 
     End Sub

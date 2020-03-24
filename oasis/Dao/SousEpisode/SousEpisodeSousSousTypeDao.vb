@@ -22,7 +22,8 @@ Public Class SousEpisodeSousSousTypeDao
             "	  id, " & vbCrLf &
             "     id_sous_episode_sous_type, " & vbCrLf &
             "     horodate_creation, " & vbCrLf &
-            "	  libelle " & vbCrLf &
+            "	  libelle, " & vbCrLf &
+            "	  commentaire " & vbCrLf &
             "FROM [oasis].[oa_r_sous_episode_sous_sous_type] " & vbCrLf
 
         If idSousEpisodeSousType <> 0 Then
@@ -61,14 +62,15 @@ Public Class SousEpisodeSousSousTypeDao
 
         Try
             Dim SQLstring As String = "INSERT INTO oa_r_sous_episode_sous_sous_type " &
-                    "(id_sous_episode_sous_type, horodate_creation, libelle)" &
-            " VALUES (@id_sous_episode_sous_type, @dateCreation, @libelle)"
+                    "(id_sous_episode_sous_type, horodate_creation, libelle, commentaire)" &
+            " VALUES (@id_sous_episode_sous_type, @dateCreation, @libelle, @commentaire)"
 
             Dim cmd As New SqlCommand(SQLstring, con, transaction)
             With cmd.Parameters
                 .AddWithValue("@id_sous_episode_sous_type", seType.IdSousEpisodeSousType)
                 .AddWithValue("@dateCreation", seType.HorodateCreation)
                 .AddWithValue("@libelle", seType.Libelle)
+                .AddWithValue("@commentaire", seType.commentaire)
             End With
 
             da.InsertCommand = cmd
