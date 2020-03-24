@@ -119,7 +119,6 @@ Public Class RadF_CI_ATC_Selecteur
                 End If
             Next
         End If
-
     End Sub
 
     'Chargement du Grid affichant la classe thérapeutique de niveau 2
@@ -152,7 +151,6 @@ Public Class RadF_CI_ATC_Selecteur
                 End If
             Next
         End If
-
     End Sub
 
     'Chargement du Grid affichant la classe thérapeutique de niveau 3

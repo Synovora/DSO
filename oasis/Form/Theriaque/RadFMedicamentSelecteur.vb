@@ -15,6 +15,8 @@ Public Class RadFMedicamentSelecteur
 
     Dim theriaqueDao As New TheriaqueDao
 
+    Dim RowCountATC1 As Integer
+
     Private Sub RadFATCListe_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         afficheTitleForm(Me, "Thériaque - Recherche médicament")
         RadioBtnVirtuel.Checked = True
@@ -87,30 +89,40 @@ Public Class RadFMedicamentSelecteur
     End Sub
 
     'Chargement du Grid affichant la classe thérapeutique de niveau 1
-    Private Sub ChargementATC1()
-        RadGridViewATC1.Rows.Clear()
-        Dim dt As DataTable
-        dt = theriaqueDao.GetAllATC()
+    Private Sub ChargementATC1(Optional codeATCFocus As String = "")
+        If codeATCFocus = "" Then
+            RadGridViewATC1.Rows.Clear()
+            Dim dt As DataTable
+            dt = theriaqueDao.GetAllATC()
 
-        Dim iGrid As Integer = -1 'Indice pour alimenter la Grid qui peut comporter moins d'occurrences que le DataTable
-        Dim rowCount As Integer = dt.Rows.Count - 1
+            Dim iGrid As Integer = -1 'Indice pour alimenter la Grid qui peut comporter moins d'occurrences que le DataTable
+            Dim rowCount As Integer = dt.Rows.Count - 1
+            RowCountATC1 = dt.Rows.Count - 1
 
-        For i = 0 To rowCount Step 1
-            iGrid += 1
-            RadGridViewATC1.Rows.Add(iGrid)
+            For i = 0 To rowCount Step 1
+                iGrid += 1
+                RadGridViewATC1.Rows.Add(iGrid)
 
-            RadGridViewATC1.Rows(iGrid).Cells("catc_code_pk").Value = dt.Rows(i)("catc_code_pk")
-            RadGridViewATC1.Rows(iGrid).Cells("catc_nomf").Value = dt.Rows(i)("catc_nomf")
-        Next
+                RadGridViewATC1.Rows(iGrid).Cells("catc_code_pk").Value = dt.Rows(i)("catc_code_pk")
+                RadGridViewATC1.Rows(iGrid).Cells("catc_nomf").Value = dt.Rows(i)("catc_nomf")
+            Next
 
-        If RadGridViewATC1.Rows.Count > 0 Then
-            RadGridViewATC1.CurrentRow = RadGridViewATC1.ChildRows(0)
-            RadGridViewATC1.TableElement.VScrollBar.Value = 0
+            If RadGridViewATC1.Rows.Count > 0 Then
+                RadGridViewATC1.CurrentRow = RadGridViewATC1.ChildRows(0)
+                RadGridViewATC1.TableElement.VScrollBar.Value = 0
+            End If
+        Else
+            For i = 0 To RowCountATC1 Step 1
+                If codeATCFocus = RadGridViewATC1.Rows(i).Cells("catc_code_pk").Value Then
+                    RadGridViewATC1.CurrentRow = RadGridViewATC1.ChildRows(i)
+                    RadGridViewATC1.TableElement.VScrollBar.Value = 0
+                End If
+            Next
         End If
     End Sub
 
     'Chargement du Grid affichant la classe thérapeutique de niveau 2
-    Private Sub ChargementATC2(CodeATC As String)
+    Private Sub ChargementATC2(CodeATC As String, Optional codeATCFocus As String = "")
         RadGridViewATC2.Rows.Clear()
         Dim dt As DataTable
         dt = theriaqueDao.getATCByATC(CodeATC)
@@ -126,14 +138,23 @@ Public Class RadFMedicamentSelecteur
             RadGridViewATC2.Rows(iGrid).Cells("catc_nomf").Value = dt.Rows(i)("catc_nomf")
         Next
 
-        If RadGridViewATC2.Rows.Count > 0 Then
-            RadGridViewATC2.CurrentRow = RadGridViewATC2.ChildRows(0)
-            RadGridViewATC2.TableElement.VScrollBar.Value = 0
+        If codeATCFocus = "" Then
+            If RadGridViewATC2.Rows.Count > 0 Then
+                RadGridViewATC2.CurrentRow = RadGridViewATC2.ChildRows(0)
+                RadGridViewATC2.TableElement.VScrollBar.Value = 0
+            End If
+        Else
+            For i = 0 To rowCount Step 1
+                If codeATCFocus = RadGridViewATC2.Rows(i).Cells("catc_code_pk").Value Then
+                    RadGridViewATC2.CurrentRow = RadGridViewATC2.ChildRows(i)
+                    RadGridViewATC2.TableElement.VScrollBar.Value = 0
+                End If
+            Next
         End If
     End Sub
 
     'Chargement du Grid affichant la classe thérapeutique de niveau 3
-    Private Sub ChargementATC3(CodeATC As String)
+    Private Sub ChargementATC3(CodeATC As String, Optional codeATCFocus As String = "")
         RadGridViewATC3.Rows.Clear()
         Dim dt As DataTable
         dt = theriaqueDao.getATCByATC(CodeATC)
@@ -149,14 +170,23 @@ Public Class RadFMedicamentSelecteur
             RadGridViewATC3.Rows(iGrid).Cells("catc_nomf").Value = dt.Rows(i)("catc_nomf")
         Next
 
-        If RadGridViewATC3.Rows.Count > 0 Then
-            RadGridViewATC3.CurrentRow = RadGridViewATC3.ChildRows(0)
-            RadGridViewATC3.TableElement.VScrollBar.Value = 0
+        If codeATCFocus = "" Then
+            If RadGridViewATC3.Rows.Count > 0 Then
+                RadGridViewATC3.CurrentRow = RadGridViewATC3.ChildRows(0)
+                RadGridViewATC3.TableElement.VScrollBar.Value = 0
+            End If
+        Else
+            For i = 0 To rowCount Step 1
+                If codeATCFocus = RadGridViewATC3.Rows(i).Cells("catc_code_pk").Value Then
+                    RadGridViewATC3.CurrentRow = RadGridViewATC3.ChildRows(i)
+                    RadGridViewATC3.TableElement.VScrollBar.Value = 0
+                End If
+            Next
         End If
     End Sub
 
     'Chargement du Grid affichant la classe thérapeutique de niveau 4
-    Private Sub ChargementATC4(CodeATC As String)
+    Private Sub ChargementATC4(CodeATC As String, Optional codeATCFocus As String = "")
         RadGridViewATC4.Rows.Clear()
         Dim dt As DataTable
         dt = theriaqueDao.getATCByATC(CodeATC)
@@ -172,9 +202,18 @@ Public Class RadFMedicamentSelecteur
             RadGridViewATC4.Rows(iGrid).Cells("catc_nomf").Value = dt.Rows(i)("catc_nomf")
         Next
 
-        If RadGridViewATC4.Rows.Count > 0 Then
-            RadGridViewATC4.CurrentRow = RadGridViewATC4.ChildRows(0)
-            RadGridViewATC4.TableElement.VScrollBar.Value = 0
+        If codeATCFocus = "" Then
+            If RadGridViewATC4.Rows.Count > 0 Then
+                RadGridViewATC4.CurrentRow = RadGridViewATC4.ChildRows(0)
+                RadGridViewATC4.TableElement.VScrollBar.Value = 0
+            End If
+        Else
+            For i = 0 To rowCount Step 1
+                If codeATCFocus = RadGridViewATC4.Rows(i).Cells("catc_code_pk").Value Then
+                    RadGridViewATC4.CurrentRow = RadGridViewATC4.ChildRows(i)
+                    RadGridViewATC4.TableElement.VScrollBar.Value = 0
+                End If
+            Next
         End If
     End Sub
 
@@ -327,6 +366,25 @@ Public Class RadFMedicamentSelecteur
         Return Monovir
     End Function
 
+    'Focus sur une spécialité, affichage de l'ATC correspondante
+    Private Sub RadGridViewSpe_Click(sender As Object, e As EventArgs) Handles RadGridViewSpe.Click
+        If RadGridViewSpe.CurrentRow IsNot Nothing Then
+            Dim aRow As Integer = Me.RadGridViewSpe.Rows.IndexOf(Me.RadGridViewSpe.CurrentRow)
+            If aRow >= 0 Then
+                Dim CodeATC As String = RadGridViewSpe.Rows(aRow).Cells("SP_CATC_CODE_FK").Value
+                Dim codeATC1, codeATC2, codeATC3, codeATC4 As String
+                codeATC1 = CodeATC.Substring(0, 1)
+                codeATC2 = CodeATC.Substring(0, 3)
+                codeATC3 = CodeATC.Substring(0, 4)
+                codeATC4 = CodeATC.Substring(0, 5)
+                ChargementATC1(codeATC1)
+                ChargementATC2(codeATC1, codeATC2)
+                ChargementATC3(codeATC2, codeATC3)
+                ChargementATC4(codeATC3, codeATC4)
+            End If
+        End If
+    End Sub
+
     'Sélection d'une spécialité, renvoi de la valeur de la clé Thériaque
     Private Sub RadGridViewSpe_DoubleClick(sender As Object, e As EventArgs) Handles RadGridViewSpe.DoubleClick
         Selection()
@@ -407,4 +465,5 @@ Public Class RadFMedicamentSelecteur
             End If
         End If
     End Sub
+
 End Class
