@@ -246,6 +246,8 @@ Partial Class RadFEpisodeDetail
         Me.ToolStripSeparator7 = New System.Windows.Forms.ToolStripSeparator()
         Me.RafraichirLaListeToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.RadPanel4 = New Telerik.WinControls.UI.RadPanel()
+        Me.RadBtnLeft = New Telerik.WinControls.UI.RadButton()
+        Me.RadBtnRight = New Telerik.WinControls.UI.RadButton()
         Me.RadBtnDown = New Telerik.WinControls.UI.RadButton()
         Me.RadBtnUp = New Telerik.WinControls.UI.RadButton()
         Me.RadBtnCreationAntecedent = New Telerik.WinControls.UI.RadButton()
@@ -268,6 +270,7 @@ Partial Class RadFEpisodeDetail
         Me.ListeDesMédicamentsDéclarésAllergiquesToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.ListeDesMédicamentsDéclarésContreindiquésToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.DéclarationAllergieOuContreindicationToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.DéclarationAllergieToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.ToolStripSeparator11 = New System.Windows.Forms.ToolStripSeparator()
         Me.OrdonnanceToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.ToolStripSeparator6 = New System.Windows.Forms.ToolStripSeparator()
@@ -326,8 +329,8 @@ Partial Class RadFEpisodeDetail
         Me.ToolStripMenuItemMaps = New System.Windows.Forms.ToolStripMenuItem()
         Me.DétailPatientToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.RadDesktopAlert1 = New Telerik.WinControls.UI.RadDesktopAlert(Me.components)
-        Me.RadBtnLeft = New Telerik.WinControls.UI.RadButton()
-        Me.RadBtnRight = New Telerik.WinControls.UI.RadButton()
+        Me.ToolStripSeparator13 = New System.Windows.Forms.ToolStripSeparator()
+        Me.ToolStripSeparator14 = New System.Windows.Forms.ToolStripSeparator()
         CType(Me.RadPanel1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.RadPanel1.SuspendLayout()
         CType(Me.RadGroupBox3, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -436,6 +439,8 @@ Partial Class RadFEpisodeDetail
         Me.AntecedentContextMenuStrip.SuspendLayout()
         CType(Me.RadPanel4, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.RadPanel4.SuspendLayout()
+        CType(Me.RadBtnLeft, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.RadBtnRight, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.RadBtnDown, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.RadBtnUp, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.RadBtnCreationAntecedent, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -488,8 +493,6 @@ Partial Class RadFEpisodeDetail
         CType(Me.RadBtnCreationPPSObjectif, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.TLMContextMenuStrip.SuspendLayout()
         Me.EtatCivilContextMenuStrip.SuspendLayout()
-        CType(Me.RadBtnLeft, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.RadBtnRight, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
@@ -2297,7 +2300,7 @@ Partial Class RadFEpisodeDetail
         '
         Me.AntecedentContextMenuStrip.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.CréerAntecedentToolStripMenuItem, Me.ModifierUnAntécédentToolStripMenuItem, Me.ToolStripSeparator3, Me.ModifierLordreDunAntécédentToolStripMenuItem, Me.ToolStripSeparator5, Me.HistoriqueDesModificationsToolStripMenuItem, Me.ToolStripSeparator7, Me.RafraichirLaListeToolStripMenuItem})
         Me.AntecedentContextMenuStrip.Name = "AntecedentContextMenuStrip"
-        Me.AntecedentContextMenuStrip.Size = New System.Drawing.Size(316, 154)
+        Me.AntecedentContextMenuStrip.Size = New System.Drawing.Size(316, 132)
         '
         'CréerAntecedentToolStripMenuItem
         '
@@ -2362,6 +2365,24 @@ Partial Class RadFEpisodeDetail
         Me.RadPanel4.Name = "RadPanel4"
         Me.RadPanel4.Size = New System.Drawing.Size(532, 28)
         Me.RadPanel4.TabIndex = 0
+        '
+        'RadBtnLeft
+        '
+        Me.RadBtnLeft.Font = New System.Drawing.Font("Segoe UI", 11.0!)
+        Me.RadBtnLeft.Location = New System.Drawing.Point(92, 7)
+        Me.RadBtnLeft.Name = "RadBtnLeft"
+        Me.RadBtnLeft.Size = New System.Drawing.Size(15, 15)
+        Me.RadBtnLeft.TabIndex = 50
+        Me.RadBtnLeft.Text = "Left"
+        '
+        'RadBtnRight
+        '
+        Me.RadBtnRight.Font = New System.Drawing.Font("Segoe UI", 11.0!)
+        Me.RadBtnRight.Location = New System.Drawing.Point(71, 7)
+        Me.RadBtnRight.Name = "RadBtnRight"
+        Me.RadBtnRight.Size = New System.Drawing.Size(15, 15)
+        Me.RadBtnRight.TabIndex = 51
+        Me.RadBtnRight.Text = "Right"
         '
         'RadBtnDown
         '
@@ -2538,9 +2559,9 @@ Partial Class RadFEpisodeDetail
         '
         'TraitementContextMenuStrip
         '
-        Me.TraitementContextMenuStrip.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.CréerUnTraitementToolStripMenuItem1, Me.ToolStripSeparator2, Me.GérerUneFenêtreThérapeutiqueToolStripMenuItem, Me.HistoriqueToolStripMenuItem, Me.ToolStripSeparator1, Me.TraitementsObsoletesToolStripMenuItem, Me.ListeDesMédicamentsDéclarésAllergiquesToolStripMenuItem, Me.ListeDesMédicamentsDéclarésContreindiquésToolStripMenuItem, Me.DéclarationAllergieOuContreindicationToolStripMenuItem, Me.ToolStripSeparator11, Me.OrdonnanceToolStripMenuItem, Me.ToolStripSeparator6, Me.RafraichirLécranToolStripMenuItem})
+        Me.TraitementContextMenuStrip.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.CréerUnTraitementToolStripMenuItem1, Me.ToolStripSeparator2, Me.GérerUneFenêtreThérapeutiqueToolStripMenuItem, Me.HistoriqueToolStripMenuItem, Me.ToolStripSeparator1, Me.TraitementsObsoletesToolStripMenuItem, Me.ToolStripSeparator13, Me.DéclarationAllergieToolStripMenuItem, Me.ListeDesMédicamentsDéclarésAllergiquesToolStripMenuItem, Me.ToolStripSeparator14, Me.DéclarationAllergieOuContreindicationToolStripMenuItem, Me.ListeDesMédicamentsDéclarésContreindiquésToolStripMenuItem, Me.ToolStripSeparator11, Me.OrdonnanceToolStripMenuItem, Me.ToolStripSeparator6, Me.RafraichirLécranToolStripMenuItem})
         Me.TraitementContextMenuStrip.Name = "TraitementContextMenuStrip"
-        Me.TraitementContextMenuStrip.Size = New System.Drawing.Size(346, 226)
+        Me.TraitementContextMenuStrip.Size = New System.Drawing.Size(346, 260)
         '
         'CréerUnTraitementToolStripMenuItem1
         '
@@ -2586,13 +2607,19 @@ Partial Class RadFEpisodeDetail
         '
         Me.ListeDesMédicamentsDéclarésContreindiquésToolStripMenuItem.Name = "ListeDesMédicamentsDéclarésContreindiquésToolStripMenuItem"
         Me.ListeDesMédicamentsDéclarésContreindiquésToolStripMenuItem.Size = New System.Drawing.Size(345, 22)
-        Me.ListeDesMédicamentsDéclarésContreindiquésToolStripMenuItem.Text = "Liste des substances contre-indiquées"
+        Me.ListeDesMédicamentsDéclarésContreindiquésToolStripMenuItem.Text = "Liste des contre-indications"
         '
         'DéclarationAllergieOuContreindicationToolStripMenuItem
         '
         Me.DéclarationAllergieOuContreindicationToolStripMenuItem.Name = "DéclarationAllergieOuContreindicationToolStripMenuItem"
         Me.DéclarationAllergieOuContreindicationToolStripMenuItem.Size = New System.Drawing.Size(345, 22)
-        Me.DéclarationAllergieOuContreindicationToolStripMenuItem.Text = "Déclaration allergie ou contre-indication"
+        Me.DéclarationAllergieOuContreindicationToolStripMenuItem.Text = "Déclaration contre-indication"
+        '
+        'DéclarationAllergieToolStripMenuItem
+        '
+        Me.DéclarationAllergieToolStripMenuItem.Name = "DéclarationAllergieToolStripMenuItem"
+        Me.DéclarationAllergieToolStripMenuItem.Size = New System.Drawing.Size(345, 22)
+        Me.DéclarationAllergieToolStripMenuItem.Text = "Déclaration allergie"
         '
         'ToolStripSeparator11
         '
@@ -3180,23 +3207,15 @@ Partial Class RadFEpisodeDetail
         Me.RadDesktopAlert1.ScreenPosition = Telerik.WinControls.UI.AlertScreenPosition.TopCenter
         Me.RadDesktopAlert1.ThemeName = ""
         '
-        'RadBtnLeft
+        'ToolStripSeparator13
         '
-        Me.RadBtnLeft.Font = New System.Drawing.Font("Segoe UI", 11.0!)
-        Me.RadBtnLeft.Location = New System.Drawing.Point(92, 7)
-        Me.RadBtnLeft.Name = "RadBtnLeft"
-        Me.RadBtnLeft.Size = New System.Drawing.Size(15, 15)
-        Me.RadBtnLeft.TabIndex = 50
-        Me.RadBtnLeft.Text = "Left"
+        Me.ToolStripSeparator13.Name = "ToolStripSeparator13"
+        Me.ToolStripSeparator13.Size = New System.Drawing.Size(342, 6)
         '
-        'RadBtnRight
+        'ToolStripSeparator14
         '
-        Me.RadBtnRight.Font = New System.Drawing.Font("Segoe UI", 11.0!)
-        Me.RadBtnRight.Location = New System.Drawing.Point(71, 7)
-        Me.RadBtnRight.Name = "RadBtnRight"
-        Me.RadBtnRight.Size = New System.Drawing.Size(15, 15)
-        Me.RadBtnRight.TabIndex = 51
-        Me.RadBtnRight.Text = "Right"
+        Me.ToolStripSeparator14.Name = "ToolStripSeparator14"
+        Me.ToolStripSeparator14.Size = New System.Drawing.Size(342, 6)
         '
         'RadFEpisodeDetail
         '
@@ -3334,6 +3353,8 @@ Partial Class RadFEpisodeDetail
         CType(Me.RadPanel4, System.ComponentModel.ISupportInitialize).EndInit()
         Me.RadPanel4.ResumeLayout(False)
         Me.RadPanel4.PerformLayout()
+        CType(Me.RadBtnLeft, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.RadBtnRight, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.RadBtnDown, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.RadBtnUp, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.RadBtnCreationAntecedent, System.ComponentModel.ISupportInitialize).EndInit()
@@ -3389,8 +3410,6 @@ Partial Class RadFEpisodeDetail
         CType(Me.RadBtnCreationPPSObjectif, System.ComponentModel.ISupportInitialize).EndInit()
         Me.TLMContextMenuStrip.ResumeLayout(False)
         Me.EtatCivilContextMenuStrip.ResumeLayout(False)
-        CType(Me.RadBtnLeft, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.RadBtnRight, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
 
@@ -3624,5 +3643,8 @@ Partial Class RadFEpisodeDetail
     Friend WithEvents RadBtnUp As Telerik.WinControls.UI.RadButton
     Friend WithEvents RadBtnLeft As Telerik.WinControls.UI.RadButton
     Friend WithEvents RadBtnRight As Telerik.WinControls.UI.RadButton
+    Friend WithEvents DéclarationAllergieToolStripMenuItem As ToolStripMenuItem
+    Friend WithEvents ToolStripSeparator13 As ToolStripSeparator
+    Friend WithEvents ToolStripSeparator14 As ToolStripSeparator
 End Class
 

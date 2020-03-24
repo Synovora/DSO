@@ -22,8 +22,9 @@ Partial Class RadFPatientContreIndicationListe
     'Do not modify it using the code editor.
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
-        Dim GridViewTextBoxColumn1 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
-        Dim TableViewDefinition1 As Telerik.WinControls.UI.TableViewDefinition = New Telerik.WinControls.UI.TableViewDefinition()
+        Dim GridViewTextBoxColumn3 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
+        Dim GridViewTextBoxColumn4 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
+        Dim TableViewDefinition2 As Telerik.WinControls.UI.TableViewDefinition = New Telerik.WinControls.UI.TableViewDefinition()
         Me.RadPanel1 = New Telerik.WinControls.UI.RadPanel()
         Me.RadGroupBox1 = New Telerik.WinControls.UI.RadGroupBox()
         Me.Label13 = New System.Windows.Forms.Label()
@@ -49,7 +50,6 @@ Partial Class RadFPatientContreIndicationListe
         Me.RadPanel2 = New Telerik.WinControls.UI.RadPanel()
         Me.RadAllergiesPatientDataGridView = New Telerik.WinControls.UI.RadGridView()
         Me.RadPanel3 = New Telerik.WinControls.UI.RadPanel()
-        Me.RadBtnMedicament = New Telerik.WinControls.UI.RadButton()
         Me.RadBtnAbandonner = New Telerik.WinControls.UI.RadButton()
         CType(Me.RadPanel1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.RadPanel1.SuspendLayout()
@@ -61,7 +61,6 @@ Partial Class RadFPatientContreIndicationListe
         CType(Me.RadAllergiesPatientDataGridView.MasterTemplate, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.RadPanel3, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.RadPanel3.SuspendLayout()
-        CType(Me.RadBtnMedicament, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.RadBtnAbandonner, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
@@ -72,7 +71,7 @@ Partial Class RadFPatientContreIndicationListe
         Me.RadPanel1.Dock = System.Windows.Forms.DockStyle.Top
         Me.RadPanel1.Location = New System.Drawing.Point(0, 0)
         Me.RadPanel1.Name = "RadPanel1"
-        Me.RadPanel1.Size = New System.Drawing.Size(926, 83)
+        Me.RadPanel1.Size = New System.Drawing.Size(660, 83)
         Me.RadPanel1.TabIndex = 0
         '
         'RadGroupBox1
@@ -103,7 +102,7 @@ Partial Class RadFPatientContreIndicationListe
         Me.RadGroupBox1.HeaderText = "Etat civil"
         Me.RadGroupBox1.Location = New System.Drawing.Point(0, 0)
         Me.RadGroupBox1.Name = "RadGroupBox1"
-        Me.RadGroupBox1.Size = New System.Drawing.Size(926, 83)
+        Me.RadGroupBox1.Size = New System.Drawing.Size(660, 83)
         Me.RadGroupBox1.TabIndex = 2
         Me.RadGroupBox1.Text = "Etat civil"
         '
@@ -299,7 +298,7 @@ Partial Class RadFPatientContreIndicationListe
         Me.RadPanel2.Dock = System.Windows.Forms.DockStyle.Fill
         Me.RadPanel2.Location = New System.Drawing.Point(0, 83)
         Me.RadPanel2.Name = "RadPanel2"
-        Me.RadPanel2.Size = New System.Drawing.Size(926, 269)
+        Me.RadPanel2.Size = New System.Drawing.Size(660, 269)
         Me.RadPanel2.TabIndex = 1
         '
         'RadAllergiesPatientDataGridView
@@ -316,43 +315,39 @@ Partial Class RadFPatientContreIndicationListe
         '
         Me.RadAllergiesPatientDataGridView.MasterTemplate.AllowAddNewRow = False
         Me.RadAllergiesPatientDataGridView.MasterTemplate.AllowDragToGroup = False
-        GridViewTextBoxColumn1.EnableExpressionEditor = False
-        GridViewTextBoxColumn1.FieldName = "allergie"
-        GridViewTextBoxColumn1.HeaderText = "Substance"
-        GridViewTextBoxColumn1.HeaderTextAlignment = System.Drawing.ContentAlignment.MiddleLeft
-        GridViewTextBoxColumn1.Name = "allergie"
-        GridViewTextBoxColumn1.Width = 925
-        Me.RadAllergiesPatientDataGridView.MasterTemplate.Columns.AddRange(New Telerik.WinControls.UI.GridViewDataColumn() {GridViewTextBoxColumn1})
-        Me.RadAllergiesPatientDataGridView.MasterTemplate.ViewDefinition = TableViewDefinition1
+        GridViewTextBoxColumn3.EnableExpressionEditor = False
+        GridViewTextBoxColumn3.FieldName = "allergie"
+        GridViewTextBoxColumn3.HeaderText = "Code"
+        GridViewTextBoxColumn3.HeaderTextAlignment = System.Drawing.ContentAlignment.MiddleLeft
+        GridViewTextBoxColumn3.Name = "code_atc"
+        GridViewTextBoxColumn3.Width = 70
+        GridViewTextBoxColumn4.EnableExpressionEditor = False
+        GridViewTextBoxColumn4.HeaderText = "Dénomination"
+        GridViewTextBoxColumn4.HeaderTextAlignment = System.Drawing.ContentAlignment.MiddleLeft
+        GridViewTextBoxColumn4.Name = "denomination_atc"
+        GridViewTextBoxColumn4.Width = 400
+        Me.RadAllergiesPatientDataGridView.MasterTemplate.Columns.AddRange(New Telerik.WinControls.UI.GridViewDataColumn() {GridViewTextBoxColumn3, GridViewTextBoxColumn4})
+        Me.RadAllergiesPatientDataGridView.MasterTemplate.ViewDefinition = TableViewDefinition2
         Me.RadAllergiesPatientDataGridView.Name = "RadAllergiesPatientDataGridView"
         Me.RadAllergiesPatientDataGridView.ReadOnly = True
         Me.RadAllergiesPatientDataGridView.RightToLeft = System.Windows.Forms.RightToLeft.No
         Me.RadAllergiesPatientDataGridView.ShowGroupPanel = False
-        Me.RadAllergiesPatientDataGridView.Size = New System.Drawing.Size(926, 269)
+        Me.RadAllergiesPatientDataGridView.Size = New System.Drawing.Size(660, 269)
         Me.RadAllergiesPatientDataGridView.TabIndex = 0
         '
         'RadPanel3
         '
-        Me.RadPanel3.Controls.Add(Me.RadBtnMedicament)
         Me.RadPanel3.Controls.Add(Me.RadBtnAbandonner)
         Me.RadPanel3.Dock = System.Windows.Forms.DockStyle.Bottom
         Me.RadPanel3.Location = New System.Drawing.Point(0, 311)
         Me.RadPanel3.Name = "RadPanel3"
-        Me.RadPanel3.Size = New System.Drawing.Size(926, 41)
+        Me.RadPanel3.Size = New System.Drawing.Size(660, 41)
         Me.RadPanel3.TabIndex = 2
-        '
-        'RadBtnMedicament
-        '
-        Me.RadBtnMedicament.Location = New System.Drawing.Point(662, 7)
-        Me.RadBtnMedicament.Name = "RadBtnMedicament"
-        Me.RadBtnMedicament.Size = New System.Drawing.Size(139, 24)
-        Me.RadBtnMedicament.TabIndex = 3
-        Me.RadBtnMedicament.Text = "Liste des médicaments"
         '
         'RadBtnAbandonner
         '
         Me.RadBtnAbandonner.DialogResult = System.Windows.Forms.DialogResult.Cancel
-        Me.RadBtnAbandonner.Location = New System.Drawing.Point(807, 7)
+        Me.RadBtnAbandonner.Location = New System.Drawing.Point(534, 7)
         Me.RadBtnAbandonner.Name = "RadBtnAbandonner"
         Me.RadBtnAbandonner.Size = New System.Drawing.Size(110, 24)
         Me.RadBtnAbandonner.TabIndex = 2
@@ -363,7 +358,7 @@ Partial Class RadFPatientContreIndicationListe
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.CancelButton = Me.RadBtnAbandonner
-        Me.ClientSize = New System.Drawing.Size(926, 352)
+        Me.ClientSize = New System.Drawing.Size(660, 352)
         Me.Controls.Add(Me.RadPanel3)
         Me.Controls.Add(Me.RadPanel2)
         Me.Controls.Add(Me.RadPanel1)
@@ -374,7 +369,7 @@ Partial Class RadFPatientContreIndicationListe
         Me.RootElement.ApplyShapeToControl = True
         Me.ShowInTaskbar = False
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
-        Me.Text = "Liste des substances contre-indiquées du patient"
+        Me.Text = "Liste des contre-indications du patient"
         CType(Me.RadPanel1, System.ComponentModel.ISupportInitialize).EndInit()
         Me.RadPanel1.ResumeLayout(False)
         CType(Me.RadGroupBox1, System.ComponentModel.ISupportInitialize).EndInit()
@@ -386,7 +381,6 @@ Partial Class RadFPatientContreIndicationListe
         CType(Me.RadAllergiesPatientDataGridView, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.RadPanel3, System.ComponentModel.ISupportInitialize).EndInit()
         Me.RadPanel3.ResumeLayout(False)
-        CType(Me.RadBtnMedicament, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.RadBtnAbandonner, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
@@ -417,7 +411,6 @@ Partial Class RadFPatientContreIndicationListe
     Friend WithEvents LblPatientAdresse2 As Label
     Friend WithEvents Label2 As Label
     Friend WithEvents LblPatientAdresse1 As Label
-    Friend WithEvents RadBtnMedicament As Telerik.WinControls.UI.RadButton
     Friend WithEvents RadBtnAbandonner As Telerik.WinControls.UI.RadButton
     Friend WithEvents RadAllergiesPatientDataGridView As Telerik.WinControls.UI.RadGridView
 End Class

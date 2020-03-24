@@ -1,27 +1,79 @@
 ﻿Imports System.Collections.Specialized
 Imports Telerik.WinControls.UI
 Public Class RadF_CI_ATC_Selecteur
+    Private _SelectedPatient As Patient
 
-    Private _SelectedCodeATC As String
-
-    Public Property SelectedCodeATC As String
+    Public Property SelectedPatient As Patient
         Get
-            Return _SelectedCodeATC
+            Return _SelectedPatient
         End Get
-        Set(value As String)
-            _SelectedCodeATC = value
+        Set(value As Patient)
+            _SelectedPatient = value
         End Set
     End Property
 
     Dim theriaqueDao As New TheriaqueDao
+    Dim contreIndicationDao As New ContreIndicationDao
+
+    Dim ATCListe As New List(Of String)
 
     Dim RowCountATC1 As Integer
 
     Private Sub RadFATCListe_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         afficheTitleForm(Me, "Déclaration contre-indication - Sélection classe thérapeutique")
         RadioBtnVirtuel.Checked = True
+        ChargementEtatCivil()
         ChargementATC1()
         LblOccurrencesLues.Text = ""
+    End Sub
+
+    Private Sub ChargementEtatCivil()
+        If SelectedPatient Is Nothing Then
+            Exit Sub
+        End If
+
+        LblPatientNIR.Text = SelectedPatient.PatientNir
+        LblPatientPrenom.Text = SelectedPatient.PatientPrenom
+        LblPatientNom.Text = SelectedPatient.PatientNom
+        LblPatientAge.Text = SelectedPatient.PatientAge
+        LblPatientGenre.Text = SelectedPatient.PatientGenre
+        LblPatientAdresse1.Text = SelectedPatient.PatientAdresse1
+        LblPatientAdresse2.Text = SelectedPatient.PatientAdresse2
+        LblPatientCodePostal.Text = SelectedPatient.PatientCodePostal
+        LblPatientVille.Text = SelectedPatient.PatientVille
+        LblPatientTel1.Text = SelectedPatient.PatientTel1
+        LblPatientTel2.Text = SelectedPatient.PatientTel2
+        LblPatientSite.Text = Environnement.Table_site.GetSiteDescription(SelectedPatient.PatientSiteId)
+        LblPatientUniteSanitaire.Text = Environnement.Table_unite_sanitaire.GetUniteSanitaireDescription(SelectedPatient.PatientUniteSanitaireId)
+        LblPatientDateMaj.Text = SelectedPatient.PatientSyntheseDateMaj.ToString("dd/MM/yyyy")
+
+        'Vérification de l'existence d'ALD
+        Dim aldDao As New AldDao
+        Dim StringALDTooltip As String = aldDao.DateFinALD(Me.SelectedPatient.patientId)
+        If StringALDTooltip = "" Then
+            LblALD.Hide()
+        Else
+            LblALD.Show()
+            ToolTip.SetToolTip(LblALD, StringALDTooltip)
+        End If
+
+        'Contre-indication
+        Dim StringContreIndicationToolTip As String = PatientDao.GetStringContreIndicationByPatient(SelectedPatient.patientId)
+        If StringContreIndicationToolTip = "" Then
+            lblContreIndication.Hide()
+        Else
+            lblContreIndication.Show()
+            ToolTip.SetToolTip(lblContreIndication, StringContreIndicationToolTip)
+        End If
+
+        'Allergie
+        Dim StringAllergieToolTip As String = ""
+        If StringAllergieToolTip = "" Then
+            LblAllergie.Hide()
+        Else
+            LblAllergie.Show()
+        End If
+
     End Sub
 
     'Liste des médicaments par dénomination
@@ -125,7 +177,7 @@ Public Class RadF_CI_ATC_Selecteur
     Private Sub ChargementATC2(CodeATC As String, Optional codeATCFocus As String = "")
         RadGridViewATC2.Rows.Clear()
         Dim dt As DataTable
-        dt = theriaqueDao.getATCByATC(CodeATC)
+        dt = theriaqueDao.getATCListeByATCPere(CodeATC)
 
         Dim iGrid As Integer = -1 'Indice pour alimenter la Grid qui peut comporter moins d'occurrences que le DataTable
         Dim rowCount As Integer = dt.Rows.Count - 1
@@ -157,7 +209,7 @@ Public Class RadF_CI_ATC_Selecteur
     Private Sub ChargementATC3(CodeATC As String, Optional codeATCFocus As String = "")
         RadGridViewATC3.Rows.Clear()
         Dim dt As DataTable
-        dt = theriaqueDao.getATCByATC(CodeATC)
+        dt = theriaqueDao.getATCListeByATCPere(CodeATC)
 
         Dim iGrid As Integer = -1 'Indice pour alimenter la Grid qui peut comporter moins d'occurrences que le DataTable
         Dim rowCount As Integer = dt.Rows.Count - 1
@@ -189,7 +241,7 @@ Public Class RadF_CI_ATC_Selecteur
     Private Sub ChargementATC4(CodeATC As String, Optional codeATCFocus As String = "")
         RadGridViewATC4.Rows.Clear()
         Dim dt As DataTable
-        dt = theriaqueDao.getATCByATC(CodeATC)
+        dt = theriaqueDao.getATCListeByATCPere(CodeATC)
 
         Dim iGrid As Integer = -1 'Indice pour alimenter la Grid qui peut comporter moins d'occurrences que le DataTable
         Dim rowCount As Integer = dt.Rows.Count - 1
@@ -221,7 +273,7 @@ Public Class RadF_CI_ATC_Selecteur
     Private Sub ChargementATC5(CodeATC As String, Optional codeATCFocus As String = "")
         RadGridViewATC5.Rows.Clear()
         Dim dt As DataTable
-        dt = theriaqueDao.getATCByATC(CodeATC)
+        dt = theriaqueDao.getATCListeByATCPere(CodeATC)
 
         Dim iGrid As Integer = -1 'Indice pour alimenter la Grid qui peut comporter moins d'occurrences que le DataTable
         Dim rowCount As Integer = dt.Rows.Count - 1
@@ -415,6 +467,7 @@ Public Class RadF_CI_ATC_Selecteur
         If RadGridViewSpe.CurrentRow IsNot Nothing Then
             Dim aRow As Integer = Me.RadGridViewSpe.Rows.IndexOf(Me.RadGridViewSpe.CurrentRow)
             If aRow >= 0 Then
+                'Chargement ATC
                 Dim CodeATC As String = RadGridViewSpe.Rows(aRow).Cells("SP_CATC_CODE_FK").Value
                 Dim codeATC1, codeATC2, codeATC3, codeATC4, codeATC5 As String
                 codeATC1 = CodeATC.Substring(0, 1)
@@ -484,7 +537,7 @@ Public Class RadF_CI_ATC_Selecteur
             Dim aRow As Integer = Me.RadGridViewSpe.Rows.IndexOf(Me.RadGridViewSpe.CurrentRow)
             If aRow >= 0 Then
                 Dim SpecialiteId As Long = RadGridViewSpe.Rows(aRow).Cells("SP_CODE_SQ_PK").Value
-                Dim PharmacoCinetique As String = theriaqueDao.GetPharmacoCinetqueBySpecialite(SpecialiteId)
+                Dim PharmacoCinetique As String = theriaqueDao.GetPharmacoCinetiqueBySpecialite(SpecialiteId)
                 Me.Enabled = False
                 Using form As New RadFAffichaeInfo
                     form.InfoToDisplay = PharmacoCinetique
@@ -528,6 +581,21 @@ Public Class RadF_CI_ATC_Selecteur
         End If
     End Sub
 
+    Private Sub RadBtnSubstance_Click_1(sender As Object, e As EventArgs) Handles RadBtnSubstance.Click
+        If RadGridViewSpe.CurrentRow IsNot Nothing Then
+            Dim aRow As Integer = Me.RadGridViewSpe.Rows.IndexOf(Me.RadGridViewSpe.CurrentRow)
+            If aRow >= 0 Then
+                Dim SpecialiteId As Long = RadGridViewSpe.Rows(aRow).Cells("SP_CODE_SQ_PK").Value
+                Me.Enabled = False
+                Using form As New RadFSubstancesListe
+                    form.SelectedSpecialite = SpecialiteId
+                    form.ShowDialog()
+                End Using
+                Me.Enabled = True
+            End If
+        End If
+    End Sub
+
     'Sélection ATC
     Private Sub RadBtnSelectionATC2_Click(sender As Object, e As EventArgs) Handles RadBtnSelectionATC2.Click
         If RadGridViewATC2.CurrentRow IsNot Nothing Then
@@ -535,7 +603,6 @@ Public Class RadF_CI_ATC_Selecteur
             If aRow >= 0 Then
                 Dim codeATC As String = RadGridViewATC2.Rows(aRow).Cells("catc_code_pk").Value
                 Selection(codeATC)
-                Close()
             End If
         End If
     End Sub
@@ -546,7 +613,6 @@ Public Class RadF_CI_ATC_Selecteur
             If aRow >= 0 Then
                 Dim codeATC As String = RadGridViewATC3.Rows(aRow).Cells("catc_code_pk").Value
                 Selection(codeATC)
-                Close()
             End If
         End If
     End Sub
@@ -557,7 +623,6 @@ Public Class RadF_CI_ATC_Selecteur
             If aRow >= 0 Then
                 Dim codeATC As String = RadGridViewATC4.Rows(aRow).Cells("catc_code_pk").Value
                 Selection(codeATC)
-                Close()
             End If
         End If
     End Sub
@@ -568,15 +633,98 @@ Public Class RadF_CI_ATC_Selecteur
             If aRow >= 0 Then
                 Dim codeATC As String = RadGridViewATC5.Rows(aRow).Cells("catc_code_pk").Value
                 Selection(codeATC)
-                Close()
             End If
         End If
     End Sub
 
     Private Sub Selection(CodeATC As String)
-        SelectedCodeATC = CodeATC
-        MessageBox.Show("Vous avez sélectionné le code ATC : " & CodeATC)
-        'Close()
+        If ATCListe.Contains(CodeATC) = False Then
+            ATCListe.Add(CodeATC)
+        End If
+        ChargementATCListe()
     End Sub
 
+
+    Private Sub ChargementATCListe()
+        Dim iGrid As Integer = -1
+        Dim EnumeratorSubstanceListe As IEnumerator = ATCListe.GetEnumerator()
+        RadGridViewATCListe.Rows.Clear()
+        While EnumeratorSubstanceListe.MoveNext()
+            Dim ATCId As String = EnumeratorSubstanceListe.Current
+            iGrid += 1
+            RadGridViewATCListe.Rows.Add(iGrid)
+            RadGridViewATCListe.Rows(iGrid).Cells("catc_code_pk").Value = ATCId
+            Dim ATCDenomination As String = theriaqueDao.GetATCDenominationById(ATCId)
+            RadGridViewATCListe.Rows(iGrid).Cells("catc_nomf").Value = ATCDenomination
+        End While
+    End Sub
+
+
+    Private Sub RadBtnSelectionCI_Click(sender As Object, e As EventArgs) Handles RadBtnSelectionCI.Click
+        Dim NombreCICreation As Integer = 0
+        Dim EnumeratorSubstanceListe As IEnumerator = ATCListe.GetEnumerator()
+        While EnumeratorSubstanceListe.MoveNext()
+            Dim ATCId As String = EnumeratorSubstanceListe.Current
+            Dim ATCDenomination As String = theriaqueDao.GetATCDenominationById(ATCId)
+            Dim contreIndication As New ContreIndication
+            contreIndication.PatientId = SelectedPatient.patientId
+            contreIndication.ATCId = ATCId
+            contreIndication.DenominationATC = ATCDenomination
+
+            If contreIndicationDao.CreationContreIndication(contreIndication) = True Then
+                NombreCICreation += 1
+            End If
+        End While
+
+        Dim form As New RadFNotification()
+        Select Case NombreCICreation
+            Case 0
+                form.Message = "Attention, aucune contre-indication a été créée pour le patient"
+                form.Show()
+            Case 1
+                form.Message = "1 contre-indication a été créée pour le patient"
+                form.Show()
+            Case Else
+                form.Message = NombreCICreation & "Contre-indications ont été créées pour le patient"
+                form.Show()
+        End Select
+
+        Close()
+    End Sub
+
+    Private Sub RadBtnListeMedeocATCSelection_Click(sender As Object, e As EventArgs) Handles RadBtnListeMedeocATCSelection.Click
+        If RadGridViewATCListe.CurrentRow IsNot Nothing Then
+            Dim aRow As Integer = Me.RadGridViewATCListe.Rows.IndexOf(Me.RadGridViewATCListe.CurrentRow)
+            If aRow >= 0 Then
+                Dim CodeAtc As String = RadGridViewATCListe.Rows(aRow).Cells("catc_code_pk").Value
+                GetSpecialiteByATC(CodeAtc)
+            End If
+        End If
+    End Sub
+
+    Private Sub RadBtnEnleverATCListe_Click(sender As Object, e As EventArgs) Handles RadBtnEnleverATCListe.Click
+        If RadGridViewATCListe.CurrentRow IsNot Nothing Then
+            Dim aRow As Integer = Me.RadGridViewATCListe.Rows.IndexOf(Me.RadGridViewATCListe.CurrentRow)
+            If aRow >= 0 Then
+                Dim CodeAtc As String = RadGridViewATCListe.Rows(aRow).Cells("catc_code_pk").Value
+                ATCListe.Remove(CodeAtc)
+                ChargementATCListe()
+            End If
+        End If
+    End Sub
+
+    Private Sub RadBtnViderListeATC_Click(sender As Object, e As EventArgs) Handles RadBtnViderListeATC.Click
+        ATCListe.Clear()
+        ChargementATCListe()
+    End Sub
+
+    Private Sub lblContreIndication_Click(sender As Object, e As EventArgs) Handles lblContreIndication.Click
+        Me.Enabled = False
+        Cursor.Current = Cursors.WaitCursor
+        Using vFPatientContreIndicationListe As New RadFPatientContreIndicationListe
+            vFPatientContreIndicationListe.SelectedPatient = Me.SelectedPatient
+            vFPatientContreIndicationListe.ShowDialog() 'Modal
+        End Using
+        Me.Enabled = True
+    End Sub
 End Class

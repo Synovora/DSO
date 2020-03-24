@@ -105,7 +105,7 @@ Public Class TheriaqueDao
         Return dt
     End Function
 
-    Friend Function getATCByATC(CodeATC As String) As DataTable
+    Friend Function getATCListeByATCPere(CodeATC As String) As DataTable
         Dim dt As New DataTable
         Dim ds As New DataSet
 
@@ -127,6 +127,38 @@ Public Class TheriaqueDao
         End Using
 
         Return dt
+    End Function
+
+    Friend Function GetATCDenominationById(CodeId As String) As String
+        Dim dt As New DataTable
+        Dim ds As New DataSet
+        Dim ATCDenomination As String = ""
+
+
+        Using con As SqlConnection = GetConnection()
+            Try
+                Dim command As New SqlCommand("theriaque.GET_THE_ATC_ID", con)
+                command.CommandType = CommandType.StoredProcedure
+                command.Connection.ChangeDatabase("Theriak")
+                command.Parameters.AddWithValue("@codeId", CodeId)
+
+                Dim da As New SqlDataAdapter(command)
+                da.Fill(dt)
+
+                Dim rowCount As Integer = dt.Rows.Count
+                If dt.Rows.Count > 0 Then
+                    ATCDenomination = dt.Rows(0)("catc_nomf")
+                Else
+                    ATCDenomination = ""
+                End If
+            Catch ex As Exception
+                Throw ex
+            Finally
+                con.Close()
+            End Try
+        End Using
+
+        Return ATCDenomination
     End Function
 
     Friend Function getSpecialiteByArgument(CodeId As String, VarTyp As EnumGetSpecialite, Monovir As Integer) As DataTable
@@ -159,7 +191,7 @@ Public Class TheriaqueDao
         Return dt
     End Function
 
-    Friend Function GetPharmacoCinetqueBySpecialite(CodeId As String) As String
+    Friend Function GetPharmacoCinetiqueBySpecialite(CodeId As String) As String
         Dim dt As New DataTable
         Dim ds As New DataSet
         Dim Pharmacotext As String = ""
@@ -268,6 +300,74 @@ Public Class TheriaqueDao
         End Using
 
         Return PharmacoDynamique
+    End Function
+
+    Friend Function GetSubstanceCodeListBySpecialite(CodeId As String) As List(Of Integer)
+        Dim dt As New DataTable
+        Dim ds As New DataSet
+        Dim SubstanceCodeList As New List(Of Integer)
+
+        Using con As SqlConnection = GetConnection()
+            Try
+                Dim command As New SqlCommand("theriaque.GET_THE_SUB_SPE", con)
+                command.CommandType = CommandType.StoredProcedure
+                command.Connection.ChangeDatabase("Theriak")
+                command.Parameters.AddWithValue("@codeId", CodeId)
+                command.Parameters.AddWithValue("@typId", 2) 'Substance active
+
+                Dim da As New SqlDataAdapter(command)
+                da.Fill(dt)
+
+                Dim rowCount As Integer = dt.Rows.Count - 1
+
+                For i = 0 To rowCount Step 1
+                    Dim SubstanceCode As Integer = dt.Rows(i)("CODESUBST")
+                    If SubstanceCodeList.Contains(SubstanceCode) = False Then
+                        SubstanceCodeList.Add(SubstanceCode)
+                    End If
+                Next
+            Catch ex As Exception
+                Throw ex
+            Finally
+                con.Close()
+            End Try
+        End Using
+
+        Return SubstanceCodeList
+    End Function
+
+
+    Friend Function GetSubstanceDenominationById(CodeId As String) As String
+        Dim dt As New DataTable
+        Dim ds As New DataSet
+        Dim SubstanceDenomination As String = ""
+
+
+        Using con As SqlConnection = GetConnection()
+            Try
+                Dim command As New SqlCommand("theriaque.GET_THE_SUB_ID", con)
+                command.CommandType = CommandType.StoredProcedure
+                command.Connection.ChangeDatabase("Theriak")
+                command.Parameters.AddWithValue("@codeId", CodeId)
+                command.Parameters.AddWithValue("@VarType", 1) 'Substance active
+
+                Dim da As New SqlDataAdapter(command)
+                da.Fill(dt)
+
+                Dim rowCount As Integer = dt.Rows.Count
+                If dt.Rows.Count > 0 Then
+                    SubstanceDenomination = dt.Rows(0)("SAC_NOM")
+                Else
+                    SubstanceDenomination = ""
+                End If
+            Catch ex As Exception
+                Throw ex
+            Finally
+                con.Close()
+            End Try
+        End Using
+
+        Return SubstanceDenomination
     End Function
 
 End Class

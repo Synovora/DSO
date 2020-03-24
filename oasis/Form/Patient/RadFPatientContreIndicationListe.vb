@@ -2,29 +2,8 @@
 Imports Oasis_Common
 
 Public Class RadFPatientContreIndicationListe
-    Private privateSelectedPatientId As Integer
     Private privateSelectedPatient As Patient
-    Private privateSelectedPatientCICis As StringCollection
-    Private privateUtilisateurConnecte As Utilisateur
     Private privateCodeRetour As Boolean
-
-    Public Property SelectedPatientId As Integer
-        Get
-            Return privateSelectedPatientId
-        End Get
-        Set(value As Integer)
-            privateSelectedPatientId = value
-        End Set
-    End Property
-
-    Public Property UtilisateurConnecte As Utilisateur
-        Get
-            Return privateUtilisateurConnecte
-        End Get
-        Set(value As Utilisateur)
-            privateUtilisateurConnecte = value
-        End Set
-    End Property
 
     Public Property CodeRetour As Boolean
         Get
@@ -32,15 +11,6 @@ Public Class RadFPatientContreIndicationListe
         End Get
         Set(value As Boolean)
             privateCodeRetour = value
-        End Set
-    End Property
-
-    Public Property SelectedPatientCICis As StringCollection
-        Get
-            Return privateSelectedPatientCICis
-        End Get
-        Set(value As StringCollection)
-            privateSelectedPatientCICis = value
         End Set
     End Property
 
@@ -53,26 +23,26 @@ Public Class RadFPatientContreIndicationListe
         End Set
     End Property
 
+    Dim contreIndicationDao As New ContreIndicationDao
+
     Private Sub RadFPatientContreIndicationListe_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         ChargementPatient()
-        ChargementAllergiesPatient()
+        ChargementContreIndicationPatient()
     End Sub
 
     'Chargement de la Grid Notes patient
-    Private Sub ChargementAllergiesPatient()
-        Dim allergieString As String
-        Dim SubstancesAllergiques As StringCollection = ListeSubstancesAllergiques(SelectedPatientCICis)
-        Dim allergieEnumerator As StringEnumerator = SubstancesAllergiques.GetEnumerator()
+    Private Sub ChargementContreIndicationPatient()
+        Dim dt As DataTable = contreIndicationDao.getAllContreIndicationbyPatient(SelectedPatient.patientId)
 
-        Dim iGrid As Integer = -1
+        Dim iGrid As Integer = -1 'Indice pour alimenter la Grid qui peut comporter moins d'occurrences que le DataTable
+        Dim rowCount As Integer = dt.Rows.Count - 1
 
-        While allergieEnumerator.MoveNext()
-            allergieString = allergieEnumerator.Current.ToString
+        For i = 0 To rowCount Step 1
             iGrid += 1
             RadAllergiesPatientDataGridView.Rows.Add(iGrid)
-            'Alimentation du DataGridView
-            RadAllergiesPatientDataGridView.Rows(iGrid).Cells("allergie").Value = allergieString
-        End While
+            RadAllergiesPatientDataGridView.Rows(iGrid).Cells("code_atc").Value = dt.Rows(i)("code_atc")
+            RadAllergiesPatientDataGridView.Rows(iGrid).Cells("denomination_atc").Value = dt.Rows(i)("denomination_atc")
+        Next
 
         'Positionnement du grid sur la première occurrence
         If RadAllergiesPatientDataGridView.Rows.Count > 0 Then
@@ -95,15 +65,6 @@ Public Class RadFPatientContreIndicationListe
         LblPatientSite.Text = Environnement.Table_site.GetSiteDescription(SelectedPatient.PatientSiteId)
         LblPatientUniteSanitaire.Text = Environnement.Table_unite_sanitaire.GetUniteSanitaireDescription(SelectedPatient.PatientUniteSanitaireId)
         LblPatientDateMaj.Text = SelectedPatient.PatientSyntheseDateMaj.ToString("dd/MM/yyyy")
-    End Sub
-
-    Private Sub BtnMedicament_Click(sender As Object, e As EventArgs) Handles RadBtnMedicament.Click
-        Using vFTraitementAllergieEtCI As New RadFTraitementAllergieEtCI
-            vFTraitementAllergieEtCI.SelectedPatient = Me.SelectedPatient
-            vFTraitementAllergieEtCI.UtilisateurConnecte = Me.UtilisateurConnecte
-            vFTraitementAllergieEtCI.AllergieOuContreIndication = EnumAllergieOuContreIndication.ContreIndication
-            vFTraitementAllergieEtCI.ShowDialog() 'Modal
-        End Using
     End Sub
 
     Private Sub RadBtnAbandonner_Click(sender As Object, e As EventArgs) Handles RadBtnAbandonner.Click

@@ -228,6 +228,7 @@
     <Compile Include="Bean\SousEpisode\SousEpisodeSousType.vb" />
     <Compile Include="Bean\SousEpisode\SousEpisode.vb" />
     <Compile Include="Bean\SousEpisode\SousEpisodeType.vb" />
+    <Compile Include="Bean\Theriaque\ContreIndication.vb" />
     <Compile Include="Dao\Antecedent\AntecedentAffectationDao.vb" />
     <Compile Include="Bean\LigneDeVie\LigneDeVie.vb" />
     <Compile Include="Bean\Episode\EpisodeContexte.vb" />
@@ -243,6 +244,7 @@
     <Compile Include="Dao\SousEpisode\SousEpisodeSousSousTypeDao.vb" />
     <Compile Include="Dao\SousEpisode\SousEpisodeSousTypeDao.vb" />
     <Compile Include="Dao\SousEpisode\SousEpisodeTypeDao.vb" />
+    <Compile Include="Dao\Theriaque\ContreIndicationDao.vb" />
     <Compile Include="Dao\Theriaque\TheriaqueDao.vb" />
     <Compile Include="Form\DRC\RadFActeParamedicalTest.Designer.vb">
       <DependentUpon>RadFActeParamedicalTest.vb</DependentUpon>
@@ -474,6 +476,12 @@
       <DependentUpon>FrmSousEpisodeListe.vb</DependentUpon>
     </Compile>
     <Compile Include="Form\SousEpisode\FrmSousEpisodeListe.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form\Theriaque\RadFSubstancesListe.Designer.vb">
+      <DependentUpon>RadFSubstancesListe.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Form\Theriaque\RadFSubstancesListe.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Form\Theriaque\RadF_CI_ATC_Selecteur.Designer.vb">
@@ -1021,6 +1029,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Form\SousEpisode\FrmSousEpisodeListe.resx">
       <DependentUpon>FrmSousEpisodeListe.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form\Theriaque\RadFSubstancesListe.resx">
+      <DependentUpon>RadFSubstancesListe.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Form\Theriaque\RadF_CI_ATC_Selecteur.resx">
       <DependentUpon>RadF_CI_ATC_Selecteur.vb</DependentUpon>

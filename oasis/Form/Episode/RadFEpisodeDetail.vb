@@ -324,8 +324,43 @@ Public Class RadFEpisodeDetail
         'Vérification de l'existence d'ALD
         LblALD.Hide()
         ChargementToolTipAld()
+
+        'Contre-indication
+        GetContreIndication()
+
+        'Allergie
+        GetAllergie()
     End Sub
 
+    Private Sub GetContreIndication()
+        Dim StringContreIndicationToolTip As String = PatientDao.GetStringContreIndicationByPatient(SelectedPatient.patientId)
+        If StringContreIndicationToolTip = "" Then
+            LblContreIndication.Hide()
+            ContreIndication = False
+            ListeDesMédicamentsDéclarésContreindiquésToolStripMenuItem.Enabled = False
+        Else
+            LblContreIndication.Show()
+            ToolTip.SetToolTip(LblContreIndication, StringContreIndicationToolTip)
+            ContreIndication = True
+            ListeDesMédicamentsDéclarésContreindiquésToolStripMenuItem.Enabled = True
+        End If
+    End Sub
+
+    Private Sub GetAllergie()
+        Dim StringContreIndicationToolTip As String = ""
+        If StringContreIndicationToolTip = "" Then
+            Allergie = False
+            LblAllergie.Hide()
+            LblSubstance.Hide()
+            ListeDesMédicamentsDéclarésAllergiquesToolStripMenuItem.Enabled = False
+        Else
+            Allergie = True
+            LblAllergie.Show()
+            LblSubstance.Show()
+            'Alimentation du label LblSubstance
+            ListeDesMédicamentsDéclarésAllergiquesToolStripMenuItem.Enabled = True
+        End If
+    End Sub
 
     '=========================================================
     '=== Caractéristiques épisode
@@ -2313,6 +2348,10 @@ Public Class RadFEpisodeDetail
     End Sub
 
     Private Sub CreationAntecedent()
+        If outils.AccesFonctionMedicaleSynthese(SelectedPatient) = False Then
+            Exit Sub
+        End If
+
         Dim SelectedDrcId As Integer
         Me.Enabled = False
         Cursor.Current = Cursors.WaitCursor
@@ -2364,6 +2403,10 @@ Public Class RadFEpisodeDetail
     'Traitement du déplacement vertical des antécédents
     'Up
     Private Sub RadBtnUp_Click(sender As Object, e As EventArgs) Handles RadBtnUp.Click
+        If outils.AccesFonctionMedicaleSynthese(SelectedPatient) = False Then
+            Exit Sub
+        End If
+
         Dim CodeRetour As Boolean = False
         Dim antecedentId, antecedentIdPere As Integer
         Dim aRow As Integer = Me.RadAntecedentDataGridView.Rows.IndexOf(Me.RadAntecedentDataGridView.CurrentRow)
@@ -2403,6 +2446,10 @@ Public Class RadFEpisodeDetail
 
     'Down
     Private Sub RadBtnDown_Click(sender As Object, e As EventArgs) Handles RadBtnDown.Click
+        If outils.AccesFonctionMedicaleSynthese(SelectedPatient) = False Then
+            Exit Sub
+        End If
+
         Dim CodeRetour As Boolean = False
         Dim antecedentId, antecedentIdPere As Integer
         Dim aRow As Integer = Me.RadAntecedentDataGridView.Rows.IndexOf(Me.RadAntecedentDataGridView.CurrentRow)
@@ -2494,6 +2541,10 @@ Public Class RadFEpisodeDetail
     'Flèche droite : recherche de l'antécédent précédent de même niveau, l'antécédent sélectionné devient le fils de l'antécédent précédent
     'Pas d'effet sur un niveau 3 et s'il n'y a pas d'antécédent précédent
     Private Sub RadBtnRight_Click(sender As Object, e As EventArgs) Handles RadBtnRight.Click
+        If outils.AccesFonctionMedicaleSynthese(SelectedPatient) = False Then
+            Exit Sub
+        End If
+
         If RadAntecedentDataGridView.CurrentRow IsNot Nothing Then
             Dim aRow As Integer = Me.RadAntecedentDataGridView.Rows.IndexOf(Me.RadAntecedentDataGridView.CurrentRow)
             Cursor.Current = Cursors.WaitCursor
@@ -2510,7 +2561,7 @@ Public Class RadFEpisodeDetail
                 antecedentIdPere = RadAntecedentDataGridView.Rows(aRow).Cells("antecedentIdPrecedent").Value
                 niveauActuel = RadAntecedentDataGridView.Rows(aRow).Cells("antecedentNiveau").Value
                 If antecedentIdPere <> 0 Then
-                    antecedentPere = AntecedentDao.GetAntecedentById(antecedentIdPere)
+                    antecedentPere = antecedentDao.GetAntecedentById(antecedentIdPere)
                     Select Case niveauActuel
                         Case 1 'Passe de niveau 1 à niveau 2 sur antécédent niveau 1 précédent si existe
                             NiveauCible = 2
@@ -2543,6 +2594,10 @@ Public Class RadFEpisodeDetail
     'Particularité : pas d'antécédent père pour un antécédent de niveau 2 qui passe par conséquent en niveau 1
     'Pas d'effet sur un niveau 1 et s'il n'y a pas d'antécédent précédent
     Private Sub RadBtnLeft_Click(sender As Object, e As EventArgs) Handles RadBtnLeft.Click
+        If outils.AccesFonctionMedicaleSynthese(SelectedPatient) = False Then
+            Exit Sub
+        End If
+
         If RadAntecedentDataGridView.CurrentRow IsNot Nothing Then
             Dim aRow As Integer = Me.RadAntecedentDataGridView.Rows.IndexOf(Me.RadAntecedentDataGridView.CurrentRow)
             Cursor.Current = Cursors.WaitCursor
@@ -2734,26 +2789,26 @@ Public Class RadFEpisodeDetail
         'Dim Allergie As Boolean = False
         Dim FenetreDateDebut, FenetreDateFin As Date
 
-        Allergie = False
+        'Allergie = False
 
-        ContreIndication = False
-        LblAllergie.Visible = False
-        LblSubstance.Hide()
-        LblContreIndication.Visible = False
-        SelectedPatient.PatientAllergieCis.Clear()
-        SelectedPatient.PatientAllergieDci.Clear()
-        SelectedPatient.PatientContreIndicationCis.Clear()
-        SelectedPatient.PatientContreIndicationDci.Clear()
-        SelectedPatient.PatientMedicamentsPrescritsCis.Clear()
+        'ContreIndication = False
+        'LblAllergie.Visible = False
+        'LblSubstance.Hide()
+        'LblContreIndication.Visible = False
+        'SelectedPatient.PatientAllergieCis.Clear()
+        'SelectedPatient.PatientAllergieDci.Clear()
+        'SelectedPatient.PatientContreIndicationCis.Clear()
+        'SelectedPatient.PatientContreIndicationDci.Clear()
+        'SelectedPatient.PatientMedicamentsPrescritsCis.Clear()
 
         'Parcours du DataTable pour alimenter les colonnes du DataGridView
         For i = 0 To rowCount Step 1
             'Récupération des médicaments déclarés 'allergique' et exclusion de l'affichage
             If traitementDataTable.Rows(i)("oa_traitement_allergie") IsNot DBNull.Value Then
                 If traitementDataTable.Rows(i)("oa_traitement_allergie") = "1" Then
-                    Allergie = True
-                    SelectedPatient.PatientAllergieDci.Add(traitementDataTable.Rows(i)("oa_traitement_medicament_dci"))
-                    SelectedPatient.PatientAllergieCis.Add(traitementDataTable.Rows(i)("oa_traitement_medicament_cis"))
+                    'Allergie = True
+                    'SelectedPatient.PatientAllergieDci.Add(traitementDataTable.Rows(i)("oa_traitement_medicament_dci"))
+                    'SelectedPatient.PatientAllergieCis.Add(traitementDataTable.Rows(i)("oa_traitement_medicament_cis"))
                     Continue For
                 End If
             End If
@@ -2761,9 +2816,9 @@ Public Class RadFEpisodeDetail
             'Récupération des médicaments déclarés 'contre-indiqué' et exclusion de l'affichage
             If traitementDataTable.Rows(i)("oa_traitement_contre_indication") IsNot DBNull.Value Then
                 If traitementDataTable.Rows(i)("oa_traitement_contre_indication") = "1" Then
-                    ContreIndication = True
-                    SelectedPatient.PatientContreIndicationDci.Add(traitementDataTable.Rows(i)("oa_traitement_medicament_dci"))
-                    SelectedPatient.PatientContreIndicationCis.Add(traitementDataTable.Rows(i)("oa_traitement_medicament_cis"))
+                    'ContreIndication = True
+                    'SelectedPatient.PatientContreIndicationDci.Add(traitementDataTable.Rows(i)("oa_traitement_medicament_dci"))
+                    'SelectedPatient.PatientContreIndicationCis.Add(traitementDataTable.Rows(i)("oa_traitement_medicament_cis"))
                     Continue For
                 End If
             End If
@@ -3026,69 +3081,69 @@ Public Class RadFEpisodeDetail
             Dim LongueurMax As Integer = LongueurStringAllergie
 
             'Chargement du TextBox
-            Dim allergieString As String
-            Dim SubstancesAllergiques As New StringCollection()
-            SubstancesAllergiques = MedocDao.ListeSubstancesAllergiques(SelectedPatient.PatientAllergieCis)
-            Dim allergieEnumerator As StringEnumerator = SubstancesAllergiques.GetEnumerator()
-            While allergieEnumerator.MoveNext()
-                If premierPassage = True Then
-                    allergieString = allergieEnumerator.Current.ToString
-                    LongueurChaine = allergieString.Length
-                    If LongueurChaine > LongueurMax Then
-                        LongueurSub = LongueurMax
-                    Else
-                        LongueurSub = LongueurChaine
-                    End If
-                    LblSubstance.Text = allergieString.Substring(0, LongueurSub)
-                    AllergieTooltip = allergieString
-                    premierPassage = False
-                Else
-                    allergieString = allergieEnumerator.Current.ToString
-                    LongueurChaine = allergieString.Length
-                    LongueurChaine = allergieString.Length
-                    If LongueurChaine > LongueurMax Then
-                        LongueurSub = LongueurMax
-                    Else
-                        LongueurSub = LongueurChaine
-                    End If
-                    LblSubstance.Text = LblSubstance.Text & " + " & allergieString.Substring(0, LongueurSub)
-                    AllergieTooltip = AllergieTooltip + vbCrLf + allergieString
-                End If
-            End While
-            ToolTip.SetToolTip(LblAllergie, AllergieTooltip)
+            'Dim allergieString As String
+            'Dim SubstancesAllergiques As New StringCollection()
+            'SubstancesAllergiques = MedocDao.ListeSubstancesAllergiques(SelectedPatient.PatientAllergieCis)
+            'Dim allergieEnumerator As StringEnumerator = SubstancesAllergiques.GetEnumerator()
+            'While allergieEnumerator.MoveNext()
+            'If premierPassage = True Then
+            'allergieString = allergieEnumerator.Current.ToString
+            'LongueurChaine = allergieString.Length
+            'If LongueurChaine > LongueurMax Then
+            'LongueurSub = LongueurMax
+            'Else
+            'LongueurSub = LongueurChaine
+            'End If
+            'LblSubstance.Text = allergieString.Substring(0, LongueurSub)
+            'AllergieTooltip = allergieString
+            'premierPassage = False
+            'Else
+            'allergieString = allergieEnumerator.Current.ToString
+            'LongueurChaine = allergieString.Length
+            'LongueurChaine = allergieString.Length
+            'If LongueurChaine > LongueurMax Then
+            'LongueurSub = LongueurMax
+            'Else
+            'LongueurSub = LongueurChaine
+            'End If
+            'LblSubstance.Text = LblSubstance.Text & " + " & allergieString.Substring(0, LongueurSub)
+            'AllergieTooltip = AllergieTooltip + vbCrLf + allergieString
+            'End If
+            'End While
+            'ToolTip.SetToolTip(LblAllergie, AllergieTooltip)
             'Chargement des médicaments génériques associés aux médicaments allergiques déclarés
             TraitementAllergies(Me.SelectedPatient)
         Else
-            ListeDesMédicamentsDéclarésAllergiquesToolStripMenuItem.Enabled = False
+            'ListeDesMédicamentsDéclarésAllergiquesToolStripMenuItem.Enabled = False
         End If
 
         If ContreIndication = True Then
-            LblContreIndication.Show()
+            'LblContreIndication.Show()
             'Chargement des médicaments génériques associés aux médicaments contre-indiqués déclarés
-            Dim premierPassage As Boolean = True
-            Dim CITooltip As String = ""
-            Dim LongueurMax As Integer = LongueurStringAllergie
+            'Dim premierPassage As Boolean = True
+            'Dim CITooltip As String = ""
+            'Dim LongueurMax As Integer = LongueurStringAllergie
 
             'Chargement du TextBox
-            Dim CIString As String
-            Dim SubstancesCI As New StringCollection()
-            SubstancesCI = MedocDao.ListeSubstancesCI(SelectedPatient.PatientContreIndicationCis)
-            Dim CIEnumerator As StringEnumerator = SubstancesCI.GetEnumerator()
-            While CIEnumerator.MoveNext()
-                If premierPassage = True Then
-                    CIString = CIEnumerator.Current.ToString
-                    CITooltip = CIString
-                    premierPassage = False
-                Else
-                    CIString = CIEnumerator.Current.ToString
-                    CITooltip = CITooltip + vbCrLf + CIString
-                End If
-            End While
-            ToolTip.SetToolTip(LblContreIndication, CITooltip)
+            'Dim CIString As String
+            'Dim SubstancesCI As New StringCollection()
+            'SubstancesCI = MedocDao.ListeSubstancesCI(SelectedPatient.PatientContreIndicationCis)
+            'Dim CIEnumerator As StringEnumerator = SubstancesCI.GetEnumerator()
+            'While CIEnumerator.MoveNext()
+            'If premierPassage = True Then
+            'CIString = CIEnumerator.Current.ToString
+            'CITooltip = CIString
+            'premierPassage = False
+            'Else
+            'CIString = CIEnumerator.Current.ToString
+            'CITooltip = CITooltip + vbCrLf + CIString
+            'End If
+            'End While
+            'ToolTip.SetToolTip(LblContreIndication, CITooltip)
             'Chargement des médicaments génériques associés aux médicaments allergiques déclarés
             'TraitementAllergies(Me.SelectedPatient)
         Else
-            ListeDesMédicamentsDéclarésContreindiquésToolStripMenuItem.Enabled = False
+            'ListeDesMédicamentsDéclarésContreindiquésToolStripMenuItem.Enabled = False
         End If
 
         'Traitements arrêtés
@@ -3152,10 +3207,15 @@ Public Class RadFEpisodeDetail
     End Sub
 
     Private Sub CreationTraitement()
+        If outils.AccesFonctionMedicaleSynthese(SelectedPatient) = False Then
+            Exit Sub
+        End If
+
         Dim SelectedMedicamentCis As Integer
         Cursor.Current = Cursors.WaitCursor
         Me.Enabled = False
         Using form As New RadFMedicamentSelecteur
+            form.SelectedPatient = SelectedPatient
             form.ShowDialog() 'Modal
             SelectedMedicamentCis = form.SelectedSpecialiteId
             'Si un médicament a été sélectionné
@@ -3227,9 +3287,6 @@ Public Class RadFEpisodeDetail
         Cursor.Current = Cursors.WaitCursor
         Using vFPatientContreIndicationListe As New RadFPatientContreIndicationListe
             vFPatientContreIndicationListe.SelectedPatient = Me.SelectedPatient
-            vFPatientContreIndicationListe.SelectedPatientId = Me.SelectedPatient.patientId
-            vFPatientContreIndicationListe.SelectedPatientCICis = Me.SelectedPatient.PatientContreIndicationCis
-            vFPatientContreIndicationListe.UtilisateurConnecte = Me.UtilisateurConnecte
             vFPatientContreIndicationListe.ShowDialog() 'Modal
         End Using
         Me.Enabled = True
@@ -3241,9 +3298,6 @@ Public Class RadFEpisodeDetail
             Cursor.Current = Cursors.WaitCursor
             Using vFPatientContreIndicationListe As New RadFPatientContreIndicationListe
                 vFPatientContreIndicationListe.SelectedPatient = Me.SelectedPatient
-                vFPatientContreIndicationListe.SelectedPatientId = Me.SelectedPatient.patientId
-                vFPatientContreIndicationListe.SelectedPatientCICis = Me.SelectedPatient.PatientContreIndicationCis
-                vFPatientContreIndicationListe.UtilisateurConnecte = Me.UtilisateurConnecte
                 vFPatientContreIndicationListe.ShowDialog() 'Modal
             End Using
             Me.Enabled = True
@@ -3280,28 +3334,31 @@ Public Class RadFEpisodeDetail
         End If
     End Sub
 
-    'Déclaration d'une allergie ou d'une contre-indication
-    Private Sub DéclarationAllergieOuContreindicationToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles DéclarationAllergieOuContreindicationToolStripMenuItem.Click
+    'Déclaration d'une contre-indication
+    Private Sub DéclarationContreindicationToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles DéclarationAllergieOuContreindicationToolStripMenuItem.Click
+        If outils.AccesFonctionMedicaleSynthese(SelectedPatient) = False Then
+            Exit Sub
+        End If
+
         Me.Enabled = False
         Cursor.Current = Cursors.WaitCursor
-        Dim SelectedMedicamentId As Integer
-        Using formSelecteur As New RadFMedicamentSelecteur
+        Using formSelecteur As New RadF_CI_ATC_Selecteur
+            formSelecteur.SelectedPatient = Me.SelectedPatient
             formSelecteur.ShowDialog() 'Modal
-            SelectedMedicamentId = formSelecteur.SelectedSpecialiteId
-            'Si un médicament a été sélectionné
-            If SelectedMedicamentId <> 0 Then
-                Using form As New RadFDeclarationAllergieEtCIDetail
-                    form.SelectedPatient = Me.SelectedPatient
-                    form.SelectedMedicamentId = SelectedMedicamentId
-                    form.SelectedTraitementId = 0
-                    form.ShowDialog()
-                    If form.CodeRetour = True Then
-                        ChargementTraitement()
-                    End If
-                End Using
-            End If
         End Using
         Me.Enabled = True
+
+        GetContreIndication()
+    End Sub
+
+    'Déclaration d'une allergie
+    Private Sub DéclarationAllergieToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles DéclarationAllergieToolStripMenuItem.Click
+        If outils.AccesFonctionMedicaleSynthese(SelectedPatient) = False Then
+            Exit Sub
+        End If
+
+
+        GetAllergie()
     End Sub
 
     'Visualisation de l'historique des actions réalisées sur un traitement
@@ -3326,6 +3383,10 @@ Public Class RadFEpisodeDetail
 
     'Gestion d'une fenêtre thérapeutique pour un traitement donné
     Private Sub GérerUneFenetreTherapeutiqueToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles GérerUneFenêtreThérapeutiqueToolStripMenuItem.Click
+        If outils.AccesFonctionMedicaleSynthese(SelectedPatient) = False Then
+            Exit Sub
+        End If
+
         If RadTraitementDataGridView.CurrentRow IsNot Nothing Then
             Dim aRow As Integer = Me.RadTraitementDataGridView.Rows.IndexOf(Me.RadTraitementDataGridView.CurrentRow)
             If aRow >= 0 Then
@@ -3581,6 +3642,10 @@ Public Class RadFEpisodeDetail
     End Sub
 
     Private Sub CreationIntervenant()
+        If outils.AccesFonctionMedicaleSynthese(SelectedPatient) = False Then
+            Exit Sub
+        End If
+
         Cursor.Current = Cursors.WaitCursor
         Me.Enabled = False
         Using vFSpecialiteSelecteur As New RadFSpecialiteSelecteur
@@ -3866,6 +3931,10 @@ Public Class RadFEpisodeDetail
     End Sub
 
     Private Sub CreationContexte()
+        If outils.AccesFonctionMedicaleSynthese(SelectedPatient) = False Then
+            Exit Sub
+        End If
+
         Dim SelectedDrcId As Integer
         Cursor.Current = Cursors.WaitCursor
         Me.Enabled = False
@@ -4267,6 +4336,10 @@ Public Class RadFEpisodeDetail
     End Sub
 
     Private Sub CreationPPSObjectif()
+        If outils.AccesFonctionMedicaleSynthese(SelectedPatient) = False Then
+            Exit Sub
+        End If
+
         'Contrôler si un objectif de santé valide existe
         Dim ppsdao As New PpsDao
         If ppsdao.ExistPPSObjectifByPatientId(SelectedPatient.patientId) = False Then
@@ -4299,6 +4372,10 @@ Public Class RadFEpisodeDetail
     End Sub
 
     Private Sub CreationMesurePreventive()
+        If outils.AccesFonctionMedicaleSynthese(SelectedPatient) = False Then
+            Exit Sub
+        End If
+
         Me.Enabled = False
         Cursor.Current = Cursors.WaitCursor
         Using vFFPPSMesurePreventive As New RadFPPSDetailEdit
@@ -4325,6 +4402,10 @@ Public Class RadFEpisodeDetail
     End Sub
 
     Private Sub CreationStrategieContextuelle()
+        If outils.AccesFonctionMedicaleSynthese(SelectedPatient) = False Then
+            Exit Sub
+        End If
+
         Me.Enabled = False
         Cursor.Current = Cursors.WaitCursor
         Using vFPPSStrategie As New RadFPPSDetailEdit
@@ -4351,6 +4432,10 @@ Public Class RadFEpisodeDetail
     End Sub
 
     Private Sub CreationSuiviIntervenant()
+        If outils.AccesFonctionMedicaleSynthese(SelectedPatient) = False Then
+            Exit Sub
+        End If
+
         Cursor.Current = Cursors.WaitCursor
         Me.Enabled = False
         Using vFSpecialiteSelecteur As New RadFSpecialiteSelecteur

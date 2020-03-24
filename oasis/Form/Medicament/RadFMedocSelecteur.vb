@@ -215,9 +215,6 @@ Public Class RadFMedocSelecteur
     Private Sub LblContreIndication_Click(sender As Object, e As EventArgs) Handles lblContreIndication.Click
         Using vFPatientContreIndicationListe As New RadFPatientContreIndicationListe
             vFPatientContreIndicationListe.SelectedPatient = Me.SelectedPatient
-            vFPatientContreIndicationListe.SelectedPatientId = Me.SelectedPatient.patientId
-            vFPatientContreIndicationListe.SelectedPatientCICis = Me.SelectedPatient.PatientContreIndicationCis
-            vFPatientContreIndicationListe.UtilisateurConnecte = Me.UtilisateurConnecte
             vFPatientContreIndicationListe.ShowDialog() 'Modal
         End Using
     End Sub
