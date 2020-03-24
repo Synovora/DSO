@@ -22,8 +22,8 @@ Partial Class RadFSubstancesListe
     'Do not modify it using the code editor.
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
-        Dim GridViewTextBoxColumn1 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
-        Dim TableViewDefinition1 As Telerik.WinControls.UI.TableViewDefinition = New Telerik.WinControls.UI.TableViewDefinition()
+        Dim GridViewTextBoxColumn2 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
+        Dim TableViewDefinition2 As Telerik.WinControls.UI.TableViewDefinition = New Telerik.WinControls.UI.TableViewDefinition()
         Me.RadGridViewSubstance = New Telerik.WinControls.UI.RadGridView()
         Me.TextBoxSpecialite = New System.Windows.Forms.TextBox()
         Me.RadBtnAbandon = New Telerik.WinControls.UI.RadButton()
@@ -47,14 +47,14 @@ Partial Class RadFSubstancesListe
         Me.RadGridViewSubstance.MasterTemplate.AllowAddNewRow = False
         Me.RadGridViewSubstance.MasterTemplate.AllowDeleteRow = False
         Me.RadGridViewSubstance.MasterTemplate.AllowEditRow = False
-        GridViewTextBoxColumn1.EnableExpressionEditor = False
-        GridViewTextBoxColumn1.HeaderText = "column1"
-        GridViewTextBoxColumn1.HeaderTextAlignment = System.Drawing.ContentAlignment.MiddleLeft
-        GridViewTextBoxColumn1.Name = "SAC_NOM"
-        GridViewTextBoxColumn1.Width = 450
-        Me.RadGridViewSubstance.MasterTemplate.Columns.AddRange(New Telerik.WinControls.UI.GridViewDataColumn() {GridViewTextBoxColumn1})
+        GridViewTextBoxColumn2.EnableExpressionEditor = False
+        GridViewTextBoxColumn2.HeaderText = "column1"
+        GridViewTextBoxColumn2.HeaderTextAlignment = System.Drawing.ContentAlignment.MiddleLeft
+        GridViewTextBoxColumn2.Name = "SAC_NOM"
+        GridViewTextBoxColumn2.Width = 450
+        Me.RadGridViewSubstance.MasterTemplate.Columns.AddRange(New Telerik.WinControls.UI.GridViewDataColumn() {GridViewTextBoxColumn2})
         Me.RadGridViewSubstance.MasterTemplate.ShowColumnHeaders = False
-        Me.RadGridViewSubstance.MasterTemplate.ViewDefinition = TableViewDefinition1
+        Me.RadGridViewSubstance.MasterTemplate.ViewDefinition = TableViewDefinition2
         Me.RadGridViewSubstance.Name = "RadGridViewSubstance"
         Me.RadGridViewSubstance.RightToLeft = System.Windows.Forms.RightToLeft.No
         Me.RadGridViewSubstance.ShowGroupPanel = False

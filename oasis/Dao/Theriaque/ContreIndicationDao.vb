@@ -77,7 +77,11 @@ Public Class ContreIndicationDao
         Dim codeRetour As Boolean = True
         Dim n As Integer 'Pour récupérer le nombre d'occurences enregistrées
 
-        Dim SQLstring As String = "IF NOT EXISTS (SELECT 1 FROM oasis.oa_patient_contre_indication WHERE patient_id = @patientId And code_atc = @atcCode)" &
+        Dim SQLstring As String = "IF NOT EXISTS" &
+            " (SELECT 1 FROM oasis.oa_patient_contre_indication" &
+            " WHERE patient_id = @patientId" &
+            " AND code_atc = @atcCode)" &
+            " AND (inactif Is Null OR inactif = 'False')" &
             " INSERT INTO oasis.oa_patient_contre_indication" &
             " (patient_id, code_atc, denomination_atc, creation_user_id, creation_date, inactif)" &
             " VALUES" &

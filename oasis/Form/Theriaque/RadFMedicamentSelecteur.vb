@@ -409,6 +409,8 @@ Public Class RadFMedicamentSelecteur
         If RadGridViewSpe.Rows.Count > 0 Then
             RadGridViewSpe.CurrentRow = RadGridViewSpe.ChildRows(0)
             RadGridViewSpe.TableElement.VScrollBar.Value = 0
+            Dim CodeATC As String = RadGridViewSpe.Rows(0).Cells("SP_CATC_CODE_FK").Value
+            AfficheATC(CodeATC)
         End If
     End Sub
 
@@ -426,30 +428,34 @@ Public Class RadFMedicamentSelecteur
     End Function
 
     'Focus sur une spécialité, affichage de l'ATC correspondante
-    Private Sub RadGridViewSpe_Click(sender As Object, e As EventArgs) Handles RadGridViewSpe.Click
+    Private Sub RadGridViewSpe_Click_1(sender As Object, e As EventArgs) Handles RadGridViewSpe.Click
         If RadGridViewSpe.CurrentRow IsNot Nothing Then
             Dim aRow As Integer = Me.RadGridViewSpe.Rows.IndexOf(Me.RadGridViewSpe.CurrentRow)
             If aRow >= 0 Then
                 Dim CodeATC As String = RadGridViewSpe.Rows(aRow).Cells("SP_CATC_CODE_FK").Value
-                Dim codeATC1, codeATC2, codeATC3, codeATC4 As String
-                codeATC1 = CodeATC.Substring(0, 1)
-                codeATC2 = CodeATC.Substring(0, 3)
-                codeATC3 = CodeATC.Substring(0, 4)
-                codeATC4 = CodeATC.Substring(0, 5)
-                ChargementATC1(codeATC1)
-                ChargementATC2(codeATC1, codeATC2)
-                ChargementATC3(codeATC2, codeATC3)
-                ChargementATC4(codeATC3, codeATC4)
+                AfficheATC(CodeATC)
             End If
         End If
     End Sub
 
+    Private Sub AfficheATC(CodeATC As String)
+        Dim codeATC1, codeATC2, codeATC3, codeATC4 As String
+        codeATC1 = CodeATC.Substring(0, 1)
+        codeATC2 = CodeATC.Substring(0, 3)
+        codeATC3 = CodeATC.Substring(0, 4)
+        codeATC4 = CodeATC.Substring(0, 5)
+        ChargementATC1(codeATC1)
+        ChargementATC2(codeATC1, codeATC2)
+        ChargementATC3(codeATC2, codeATC3)
+        ChargementATC4(codeATC3, codeATC4)
+    End Sub
+
     'Sélection d'une spécialité, renvoi de la valeur de la clé Thériaque
-    Private Sub RadGridViewSpe_DoubleClick(sender As Object, e As EventArgs) Handles RadGridViewSpe.DoubleClick
+    Private Sub RadGridViewSpe_DoubleClick(sender As Object, e As EventArgs)
         Selection()
     End Sub
 
-    Private Sub RadBtnSelection_Click(sender As Object, e As EventArgs) Handles RadBtnSelection.Click
+    Private Sub RadBtnSelection_Click(sender As Object, e As EventArgs)
         Selection()
     End Sub
 
@@ -482,7 +488,7 @@ Public Class RadFMedicamentSelecteur
     End Sub
 
     'Affichage popup détail grid spécialité
-    Private Sub MasterTemplate_CellFormatting(sender As Object, e As Telerik.WinControls.UI.CellFormattingEventArgs) Handles RadGridViewSpe.CellFormatting
+    Private Sub MasterTemplate_CellFormatting(sender As Object, e As Telerik.WinControls.UI.CellFormattingEventArgs)
         If TypeOf e.Row Is GridViewDataRowInfo Then
             e.CellElement.ToolTipText = e.CellElement.Text
         End If
@@ -493,7 +499,7 @@ Public Class RadFMedicamentSelecteur
         Close()
     End Sub
 
-    Private Sub RadBtnPharmacocinetique_Click(sender As Object, e As EventArgs) Handles RadBtnPharmacocinetique.Click
+    Private Sub RadBtnPharmacocinetique_Click(sender As Object, e As EventArgs)
         If RadGridViewSpe.CurrentRow IsNot Nothing Then
             Dim aRow As Integer = Me.RadGridViewSpe.Rows.IndexOf(Me.RadGridViewSpe.CurrentRow)
             If aRow >= 0 Then
@@ -510,7 +516,7 @@ Public Class RadFMedicamentSelecteur
         End If
     End Sub
 
-    Private Sub RadBtnParmacodynamique_Click(sender As Object, e As EventArgs) Handles RadBtnParmacodynamique.Click
+    Private Sub RadBtnParmacodynamique_Click(sender As Object, e As EventArgs)
         If RadGridViewSpe.CurrentRow IsNot Nothing Then
             Dim aRow As Integer = Me.RadGridViewSpe.Rows.IndexOf(Me.RadGridViewSpe.CurrentRow)
             If aRow >= 0 Then
@@ -527,7 +533,7 @@ Public Class RadFMedicamentSelecteur
         End If
     End Sub
 
-    Private Sub RadBtnEffetIndesirable_Click(sender As Object, e As EventArgs) Handles RadBtnEffetIndesirable.Click
+    Private Sub RadBtnEffetIndesirable_Click(sender As Object, e As EventArgs)
         If RadGridViewSpe.CurrentRow IsNot Nothing Then
             Dim aRow As Integer = Me.RadGridViewSpe.Rows.IndexOf(Me.RadGridViewSpe.CurrentRow)
             If aRow >= 0 Then
@@ -542,7 +548,7 @@ Public Class RadFMedicamentSelecteur
         End If
     End Sub
 
-    Private Sub RadBtnSubstance_Click(sender As Object, e As EventArgs) Handles RadBtnSubstance.Click
+    Private Sub RadBtnSubstance_Click(sender As Object, e As EventArgs)
         If RadGridViewSpe.CurrentRow IsNot Nothing Then
             Dim aRow As Integer = Me.RadGridViewSpe.Rows.IndexOf(Me.RadGridViewSpe.CurrentRow)
             If aRow >= 0 Then
@@ -566,4 +572,5 @@ Public Class RadFMedicamentSelecteur
         End Using
         Me.Enabled = True
     End Sub
+
 End Class
