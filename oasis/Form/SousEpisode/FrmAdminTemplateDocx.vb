@@ -8,6 +8,8 @@ Imports Telerik.WinForms.Documents.TextSearch
 
 Public Class FrmAdminTemplateDocx
     Dim sousEpisodeSousType As SousEpisodeSousType
+    Dim isDocumentChange As Boolean = False
+
     Public Sub New(sousEpisodeSousType As SousEpisodeSousType)
 
         ' Cet appel est requis par le concepteur.
@@ -26,6 +28,7 @@ Public Class FrmAdminTemplateDocx
         Try
             tbl = provider.Export(Me.RadRichTextEditor1.Document)
             sousEpisodeSousType.writeContenuModel(tbl)
+            ResetFlagChange()
             Notification.show("Sauvegarde modèle", "Sauvegarde effectuée avec succès !")
         Catch err As Exception
             MsgBox(err.Message())
@@ -36,6 +39,30 @@ Public Class FrmAdminTemplateDocx
 
     Private Sub RadButtonElement1_Click(sender As Object, e As EventArgs) Handles RadButtonElement1.Click
         backstageButtonSaveAs_Click(sender, e)
+    End Sub
+
+    Private Sub FrmEditDocxSousEpisode_Shown(sender As Object, e As EventArgs) Handles MyBase.Shown
+        AddHandler RadRichTextEditor1.DocumentChanged, AddressOf RadRichTextEditor1_DocumentChanged
+        AddHandler RadRichTextEditor1.DocumentContentChanged, AddressOf RadRichTextEditor1_DocumentContentChanged
+        ResetFlagChange()
+    End Sub
+
+    Private Sub RadRichTextEditor1_DocumentContentChanged(sender As Object, e As EventArgs)
+        isDocumentChange = True
+    End Sub
+    Private Sub RadRichTextEditor1_DocumentChanged(sender As Object, e As EventArgs)
+        isDocumentChange = True
+    End Sub
+    Private Sub FrmAdminTemplateDocx_FormClosing(sender As Object, e As FormClosingEventArgs) Handles MyBase.FormClosing
+        If isDocumentChange Then
+            If Not MsgBox("Etes-vous sur de vouloir quitter sans sauvegarder ce fichier ?", MsgBoxStyle.YesNo Or MsgBoxStyle.DefaultButton2 Or MsgBoxStyle.Critical, "Suppression") = MsgBoxResult.Yes Then
+                e.Cancel = True
+            End If
+        End If
+    End Sub
+
+    Private Sub ResetFlagChange()
+        isDocumentChange = False
     End Sub
 
     Private Sub initCtrl()

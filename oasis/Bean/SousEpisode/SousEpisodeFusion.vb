@@ -4,6 +4,9 @@
     Property USAdr2 As String
     Property USCP As String
     Property USVille As String
+    Property USTel As String
+    Property USFax As String
+    Property USEmail As String
 
     Property SiteNom As String
     Property SiteAdr1 As String

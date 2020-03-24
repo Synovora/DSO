@@ -46,6 +46,7 @@ Public Class FrmAdminTemplateSousEpisode
                 'frm.RadRichTextEditor1.Document = merged
                 ins.Dispose()
                 tbl = Nothing
+                Application.DoEvents()
                 'frm.ReplaceAllMatches("toto", "titi")
                 frm.ShowDialog()
             End Using
@@ -131,6 +132,9 @@ Public Class FrmAdminTemplateSousEpisode
            .USAdr2 = "Adresse 2 de l'U.S.",
            .USCP = "64100",
            .USVille = "Ville de l'U.S.",
+           .USTel = "tel U.S.",
+           .USFax = "fax U.S.",
+           .USEmail = "email U.S.",
            .Commentaire = "Ex. de commentaire sur 3 lignes" & vbCrLf & "Ligne 2" & vbCrLf & "Ligne 3",
            .SiteNom = "Nom du site",
            .SiteAdr1 = "adresse site ligne 1",
@@ -138,11 +142,11 @@ Public Class FrmAdminTemplateSousEpisode
            .SiteCP = "64200",
            .SiteVille = "Ville du site",
            .SiteTel = "tel du site",
-           .SiteFax = "tel du site",
-           .SiteEmail = "tel du site",
+           .SiteFax = "fax du site",
+           .SiteEmail = "email du site",
            .Patient_PrenomNom = "Charles-Henri Dupond de la Motte",
            .Patient_Date_Naissance = "20-02-1998",
-           .Patient_Age = "22 ans et 1 mois",
+           .Patient_Age = "(22 ans)",
            .Patient_NIR = "1980264000000",
            .Patient_Poids = "72,5",
            .Type_Libelle = Me.DropDownType.SelectedItem.Text,

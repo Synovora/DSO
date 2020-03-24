@@ -500,6 +500,9 @@ Public Class FrmSousEpisode
             .USAdr2 = uniteSanitaire.Oa_unite_sanitaire_adresse2
             .USCP = uniteSanitaire.Oa_unite_sanitaire_code_postal
             .USVille = uniteSanitaire.Oa_unite_sanitaire_ville
+            .USTel = ""
+            .USFax = ""
+            .USEmail = ""
 
             .SiteNom = site.Oa_site_description
             .SiteAdr1 = site.Oa_site_adresse1
@@ -528,14 +531,16 @@ Public Class FrmSousEpisode
             Dim isWithALD = False, isWithNonAld = False
             If Me.RadSousSousTypeGrid.Rows.Count > 0 Then
                 For Each row In RadSousSousTypeGrid.Rows
-                    If row.Cells("ChkALD").Value Then ' ALD
-                        isWithALD = True
-                        .Sous_Type_Libelle_Detail_ALD += vbCrLf
-                        .Sous_Type_Libelle_Detail_ALD += (row.Cells("Libelle").Value & vbCrLf)
-                    Else
-                        isWithNonAld = True
-                        .Sous_Type_Libelle_Detail_Non_ALD += vbCrLf
-                        .Sous_Type_Libelle_Detail_Non_ALD += (row.Cells("Libelle").Value & vbCrLf)
+                    If row.Cells("ChkChoice").Value Then
+                        If row.Cells("ChkALD").Value Then ' ALD
+                            isWithALD = True
+                            .Sous_Type_Libelle_Detail_ALD += vbCrLf
+                            .Sous_Type_Libelle_Detail_ALD += (row.Cells("Libelle").Value & vbCrLf)
+                        Else
+                            isWithNonAld = True
+                            .Sous_Type_Libelle_Detail_Non_ALD += vbCrLf
+                            .Sous_Type_Libelle_Detail_Non_ALD += (row.Cells("Libelle").Value & vbCrLf)
+                        End If
                     End If
                 Next
             End If
@@ -602,10 +607,10 @@ Public Class FrmSousEpisode
                     .Cells("Id").Value = sousEpisodeSousSousType.Id
                     .Cells("IdSousEpisodeSousType").Value = sousEpisodeSousSousType.IdSousEpisodeSousType
                     .Cells("Libelle").Value = sousEpisodeSousSousType.Libelle
+                    .Cells("ChkChoice").Value = True
                     If isCreation Then
                         .Cells("ChkALD").Value = isPatientALD
                     Else
-                        .Cells("ChkChoice").Value = True
                         .Cells("ChkALD").Value = sousEpisode.isThisDetailALD(sousEpisodeSousSousType.Id)
                     End If
                 End With

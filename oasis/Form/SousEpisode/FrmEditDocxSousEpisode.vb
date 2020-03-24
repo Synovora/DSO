@@ -11,6 +11,7 @@ Public Class FrmEditDocxSousEpisode
     Inherits RadForm
 
     Dim sousEpisode As SousEpisode
+    Dim isDocumentChange As Boolean = False
 
     Sub New(sousEpisode As SousEpisode)
         ' Cet appel est requis par le concepteur.
@@ -28,6 +29,7 @@ Public Class FrmEditDocxSousEpisode
         Try
             tbl = provider.Export(Me.RadRichTextEditor1.Document)
             SousEpisode.writeContenuModel(tbl)
+            ResetFlagChange()
             Notification.show("Sauvegarde", "Sauvegarde effectuée avec succès !")
         Catch err As Exception
             MsgBox(err.Message())
@@ -38,6 +40,30 @@ Public Class FrmEditDocxSousEpisode
 
     Private Sub RadButtonElement1_Click(sender As Object, e As EventArgs) Handles RadButtonElement1.Click
         backstageButtonSaveAs_Click(sender, e)
+    End Sub
+
+    Private Sub FrmEditDocxSousEpisode_FormClosing(sender As Object, e As FormClosingEventArgs) Handles MyBase.FormClosing
+        If isDocumentChange Then
+            If Not MsgBox("Etes-vous sur de vouloir quitter sans sauvegarder ce fichier ?", MsgBoxStyle.YesNo Or MsgBoxStyle.DefaultButton2 Or MsgBoxStyle.Critical, "Suppression") = MsgBoxResult.Yes Then
+                e.Cancel = True
+            End If
+        End If
+    End Sub
+
+    Private Sub FrmEditDocxSousEpisode_Shown(sender As Object, e As EventArgs) Handles MyBase.Shown
+        AddHandler RadRichTextEditor1.DocumentChanged, AddressOf RadRichTextEditor1_DocumentChanged
+        AddHandler RadRichTextEditor1.DocumentContentChanged, AddressOf RadRichTextEditor1_DocumentContentChanged
+    End Sub
+
+    Private Sub RadRichTextEditor1_DocumentContentChanged(sender As Object, e As EventArgs)
+        isDocumentChange = True
+    End Sub
+    Private Sub RadRichTextEditor1_DocumentChanged(sender As Object, e As EventArgs)
+        isDocumentChange = True
+    End Sub
+
+    Private Sub ResetFlagChange()
+        isDocumentChange = False
     End Sub
 
     ''' <summary>

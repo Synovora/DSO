@@ -25,9 +25,9 @@ Partial Class FrmAdminTemplateDocx
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(FrmAdminTemplateDocx))
         Me.RichTextEditorRibbonBar1 = New Telerik.WinControls.UI.RichTextEditorRibbonBar()
         Me.RadRichTextEditor1 = New Telerik.WinControls.UI.RadRichTextEditor()
+        Me.RadButtonElement1 = New Telerik.WinControls.UI.RadButtonElement()
         Me.RadRibbonFormBehavior1 = New Telerik.WinControls.UI.RadRibbonFormBehavior()
         Me.RadRichTextEditorRuler1 = New Telerik.WinControls.UI.RadRichTextEditorRuler()
-        Me.RadButtonElement1 = New Telerik.WinControls.UI.RadButtonElement()
         CType(Me.RichTextEditorRibbonBar1, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.RadRichTextEditor1, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.RadRichTextEditorRuler1, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -58,6 +58,7 @@ Partial Class FrmAdminTemplateDocx
         Me.RichTextEditorRibbonBar1.TabIndex = 1
         Me.RichTextEditorRibbonBar1.TabStop = False
         Me.RichTextEditorRibbonBar1.Text = "Edition Modèle Sous-Type"
+        CType(Me.RichTextEditorRibbonBar1.GetChildAt(0), Telerik.WinControls.UI.RadRibbonBarElement).Text = "Edition Modèle Sous-Type"
         CType(Me.RichTextEditorRibbonBar1.GetChildAt(0).GetChildAt(2).GetChildAt(0).GetChildAt(2).GetChildAt(0), Telerik.WinControls.UI.RadButtonElement).Image = CType(resources.GetObject("resource.Image"), System.Drawing.Image)
         CType(Me.RichTextEditorRibbonBar1.GetChildAt(0).GetChildAt(2).GetChildAt(0).GetChildAt(2).GetChildAt(0), Telerik.WinControls.UI.RadButtonElement).ImageAlignment = System.Drawing.ContentAlignment.MiddleCenter
         CType(Me.RichTextEditorRibbonBar1.GetChildAt(0).GetChildAt(2).GetChildAt(0).GetChildAt(2).GetChildAt(0), Telerik.WinControls.UI.RadButtonElement).DisplayStyle = Telerik.WinControls.DisplayStyle.Image
@@ -78,6 +79,16 @@ Partial Class FrmAdminTemplateDocx
         Me.RadRichTextEditor1.Size = New System.Drawing.Size(985, 399)
         Me.RadRichTextEditor1.TabIndex = 1
         '
+        'RadButtonElement1
+        '
+        Me.RadButtonElement1.DisplayStyle = Telerik.WinControls.DisplayStyle.Image
+        Me.RadButtonElement1.Image = CType(resources.GetObject("RadButtonElement1.Image"), System.Drawing.Image)
+        Me.RadButtonElement1.ImageAlignment = System.Drawing.ContentAlignment.MiddleCenter
+        Me.RadButtonElement1.Name = "RadButtonElement1"
+        Me.RadButtonElement1.StretchHorizontally = False
+        Me.RadButtonElement1.StretchVertically = False
+        Me.RadButtonElement1.Text = "Enregistrer"
+        '
         'RadRibbonFormBehavior1
         '
         Me.RadRibbonFormBehavior1.Form = Me
@@ -91,16 +102,6 @@ Partial Class FrmAdminTemplateDocx
         Me.RadRichTextEditorRuler1.Name = "RadRichTextEditorRuler1"
         Me.RadRichTextEditorRuler1.Size = New System.Drawing.Size(1015, 429)
         Me.RadRichTextEditorRuler1.TabIndex = 0
-        '
-        'RadButtonElement1
-        '
-        Me.RadButtonElement1.DisplayStyle = Telerik.WinControls.DisplayStyle.Image
-        Me.RadButtonElement1.Image = CType(resources.GetObject("RadButtonElement1.Image"), System.Drawing.Image)
-        Me.RadButtonElement1.ImageAlignment = System.Drawing.ContentAlignment.MiddleCenter
-        Me.RadButtonElement1.Name = "RadButtonElement1"
-        Me.RadButtonElement1.StretchHorizontally = False
-        Me.RadButtonElement1.StretchVertically = False
-        Me.RadButtonElement1.Text = "Enregistrer"
         '
         'FrmAdminTemplateDocx
         '
