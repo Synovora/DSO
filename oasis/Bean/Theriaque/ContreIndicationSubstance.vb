@@ -1,8 +1,8 @@
-﻿Public Class ContreIndication
+﻿Public Class ContreIndicationSubstance
     Private _contreIndicationId As Long
     Private _patientId As Long
-    Private _ATCId As String
-    Private _denominationATC As String
+    Private _substanceId As Long
+    Private _denominationSubstance As String
     Private _userCreation As Long
     Private _dateCreation As DateTime
     Private _userAnnulation As Long
@@ -27,21 +27,21 @@
         End Set
     End Property
 
-    Public Property ATCId As String
+    Public Property SubstanceId As Long
         Get
-            Return _ATCId
+            Return _substanceId
         End Get
-        Set(value As String)
-            _ATCId = value
+        Set(value As Long)
+            _substanceId = value
         End Set
     End Property
 
-    Public Property DenominationATC As String
+    Public Property DenominationSubstance As String
         Get
-            Return _denominationATC
+            Return _denominationSubstance
         End Get
         Set(value As String)
-            _denominationATC = value
+            _denominationSubstance = value
         End Set
     End Property
 

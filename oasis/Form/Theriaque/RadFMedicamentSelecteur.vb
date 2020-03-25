@@ -468,9 +468,9 @@ Public Class RadFMedicamentSelecteur
                 'Contrôle allergie
 
                 'Contrôle contre-indication
-                Dim contreIndicationDao As New ContreIndicationDao
+                Dim contreIndicationDao As New ContreIndicationATCDao
                 Dim dt As DataTable
-                dt = contreIndicationDao.getAllContreIndicationbyPatient(SelectedPatient.patientId)
+                dt = contreIndicationDao.getAllContreIndicationATCbyPatient(SelectedPatient.patientId)
                 Dim rowCount As Integer = dt.Rows.Count - 1
                 For i = 0 To rowCount Step 1
                     Dim codeATC As String = dt.Rows(i)("code_atc")

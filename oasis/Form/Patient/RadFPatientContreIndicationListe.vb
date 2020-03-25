@@ -23,7 +23,7 @@ Public Class RadFPatientContreIndicationListe
         End Set
     End Property
 
-    Dim contreIndicationDao As New ContreIndicationDao
+    Dim contreIndicationDao As New ContreIndicationATCDao
 
     Private Sub RadFPatientContreIndicationListe_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         ChargementPatient()
@@ -32,7 +32,7 @@ Public Class RadFPatientContreIndicationListe
 
     'Chargement de la Grid Notes patient
     Private Sub ChargementContreIndicationPatient()
-        Dim dt As DataTable = contreIndicationDao.getAllContreIndicationbyPatient(SelectedPatient.patientId)
+        Dim dt As DataTable = contreIndicationDao.getAllContreIndicationATCbyPatient(SelectedPatient.patientId)
 
         Dim iGrid As Integer = -1 'Indice pour alimenter la Grid qui peut comporter moins d'occurrences que le DataTable
         Dim rowCount As Integer = dt.Rows.Count - 1

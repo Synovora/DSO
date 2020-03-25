@@ -1,10 +1,10 @@
 ﻿Imports System.Data.SqlClient
 Imports Oasis_Common
-Public Class ContreIndicationDao
+Public Class ContreIndicationATCDao
     Inherits StandardDao
 
-    Friend Function GetContreIndicationById(contreIndicationId As Long) As ContreIndication
-        Dim contreIndication As ContreIndication
+    Friend Function GetContreIndicationATCById(contreIndicationATCId As Long) As ContreIndicationATC
+        Dim contreIndication As ContreIndicationATC
         Dim con As SqlConnection
 
         con = GetConnection()
@@ -13,13 +13,13 @@ Public Class ContreIndicationDao
             Dim command As SqlCommand = con.CreateCommand()
 
             command.CommandText =
-                "SELECT * FROM oasis.oa_patient_contre_indication WHERE contre_indication_id = @Id"
-            command.Parameters.AddWithValue("@id", contreIndicationId)
+                "SELECT * FROM oasis.oa_patient_contre_indication_atc WHERE contre_indication_id = @Id"
+            command.Parameters.AddWithValue("@id", contreIndicationATCId)
             Using reader As SqlDataReader = command.ExecuteReader()
                 If reader.Read() Then
                     contreIndication = BuildBean(reader)
                 Else
-                    Throw New ArgumentException("Contre-indication inexistante !")
+                    Throw New ArgumentException("Contre-indication ATC inexistante !")
                 End If
             End Using
         Catch ex As Exception
@@ -31,8 +31,8 @@ Public Class ContreIndicationDao
         Return contreIndication
     End Function
 
-    Private Function BuildBean(reader As SqlDataReader) As ContreIndication
-        Dim contreIndication As New ContreIndication
+    Private Function BuildBean(reader As SqlDataReader) As ContreIndicationATC
+        Dim contreIndication As New ContreIndicationATC
 
         contreIndication.ContreIndicationId = reader("contre_indication_id")
         contreIndication.PatientId = Coalesce(reader("patient_id"), 0)
@@ -47,9 +47,9 @@ Public Class ContreIndicationDao
         Return contreIndication
     End Function
 
-    Public Function getAllContreIndicationbyPatient(patientId As Integer) As DataTable
+    Public Function getAllContreIndicationATCbyPatient(patientId As Integer) As DataTable
         Dim SQLString As String = "SELECT * " &
-        " FROM oasis.oa_patient_contre_indication" &
+        " FROM oasis.oa_patient_contre_indication_atc" &
         " WHERE (inactif Is Null OR inactif = 'False')" &
         " AND patient_id = " & patientId.ToString &
         " ORDER BY code_atc"
@@ -72,17 +72,17 @@ Public Class ContreIndicationDao
         End Using
     End Function
 
-    Friend Function CreationContreIndication(contreIndication As ContreIndication) As Boolean
+    Friend Function CreationContreIndicationATC(contreIndicationATC As ContreIndicationATC) As Boolean
         Dim da As SqlDataAdapter = New SqlDataAdapter()
         Dim codeRetour As Boolean = True
         Dim n As Integer 'Pour récupérer le nombre d'occurences enregistrées
 
         Dim SQLstring As String = "IF NOT EXISTS" &
-            " (SELECT 1 FROM oasis.oa_patient_contre_indication" &
+            " (SELECT 1 FROM oasis.oa_patient_contre_indication_atc" &
             " WHERE patient_id = @patientId" &
             " AND code_atc = @atcCode)" &
             " AND (inactif Is Null OR inactif = 'False')" &
-            " INSERT INTO oasis.oa_patient_contre_indication" &
+            " INSERT INTO oasis.oa_patient_contre_indication_atc" &
             " (patient_id, code_atc, denomination_atc, creation_user_id, creation_date, inactif)" &
             " VALUES" &
             " (@patientId, @atcCode, @atcDenomination, @userCreation, @dateCreation, @inactif)"
@@ -91,9 +91,9 @@ Public Class ContreIndicationDao
         Dim cmd As New SqlCommand(SQLstring, con)
 
         With cmd.Parameters
-            .AddWithValue("@patientId", contreIndication.PatientId.ToString)
-            .AddWithValue("@atcCode", contreIndication.ATCId)
-            .AddWithValue("@atcDenomination", contreIndication.DenominationATC)
+            .AddWithValue("@patientId", contreIndicationATC.PatientId.ToString)
+            .AddWithValue("@atcCode", contreIndicationATC.ATCId)
+            .AddWithValue("@atcDenomination", contreIndicationATC.DenominationATC)
             .AddWithValue("@userCreation", userLog.UtilisateurId)
             .AddWithValue("@dateCreation", Date.Now())
             .AddWithValue("@inactif", False)

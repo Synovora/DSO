@@ -13,7 +13,7 @@ Public Class RadF_CI_ATC_Selecteur
     End Property
 
     Dim theriaqueDao As New TheriaqueDao
-    Dim contreIndicationDao As New ContreIndicationDao
+    Dim contreIndicationDao As New ContreIndicationATCDao
 
     Dim ATCListe As New List(Of String)
     Dim SubstanceListe As New List(Of Integer)
@@ -703,12 +703,12 @@ Public Class RadF_CI_ATC_Selecteur
         While EnumeratorSubstanceListe.MoveNext()
             Dim ATCId As String = EnumeratorSubstanceListe.Current
             Dim ATCDenomination As String = theriaqueDao.GetATCDenominationById(ATCId)
-            Dim contreIndication As New ContreIndication
+            Dim contreIndication As New ContreIndicationATC
             contreIndication.PatientId = SelectedPatient.patientId
             contreIndication.ATCId = ATCId
             contreIndication.DenominationATC = ATCDenomination
 
-            If contreIndicationDao.CreationContreIndication(contreIndication) = True Then
+            If contreIndicationDao.CreationContreIndicationATC(contreIndication) = True Then
                 NombreCICreation += 1
             End If
         End While

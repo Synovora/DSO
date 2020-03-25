@@ -421,10 +421,10 @@ Module PatientDao
     End Function
 
     Friend Function GetStringContreIndicationByPatient(patientId As Long) As String
-        Dim contreIndicationDao As New ContreIndicationDao
+        Dim contreIndicationDao As New ContreIndicationATCDao
         Dim dt As DataTable
         Dim StringContreIndication As String = ""
-        dt = contreIndicationDao.getAllContreIndicationbyPatient(patientId)
+        dt = contreIndicationDao.getAllContreIndicationATCbyPatient(patientId)
         Dim rowCount As Integer = dt.Rows.Count - 1
         For i = 0 To rowCount Step 1
             StringContreIndication += dt.Rows(i)("code_atc") & " : " & dt.Rows(i)("Denomination_atc") & vbCrLf

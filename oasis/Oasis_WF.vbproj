@@ -231,7 +231,8 @@
     <Compile Include="Bean\SousEpisode\SousEpisodeSousType.vb" />
     <Compile Include="Bean\SousEpisode\SousEpisode.vb" />
     <Compile Include="Bean\SousEpisode\SousEpisodeType.vb" />
-    <Compile Include="Bean\Theriaque\ContreIndication.vb" />
+    <Compile Include="Bean\Theriaque\ContreIndicationATC.vb" />
+    <Compile Include="Bean\Theriaque\ContreIndicationSubstance.vb" />
     <Compile Include="Bean\Traitement\TraitementCourrier.vb" />
     <Compile Include="Dao\Antecedent\AntecedentAffectationDao.vb" />
     <Compile Include="Bean\LigneDeVie\LigneDeVie.vb" />
@@ -248,7 +249,8 @@
     <Compile Include="Dao\SousEpisode\SousEpisodeSousSousTypeDao.vb" />
     <Compile Include="Dao\SousEpisode\SousEpisodeSousTypeDao.vb" />
     <Compile Include="Dao\SousEpisode\SousEpisodeTypeDao.vb" />
-    <Compile Include="Dao\Theriaque\ContreIndicationDao.vb" />
+    <Compile Include="Dao\Theriaque\ContreIndicationATCDao.vb" />
+    <Compile Include="Dao\Theriaque\ContreIndicationSubstanceDao.vb" />
     <Compile Include="Dao\Theriaque\TheriaqueDao.vb" />
     <Compile Include="Form\DRC\RadFActeParamedicalTest.Designer.vb">
       <DependentUpon>RadFActeParamedicalTest.vb</DependentUpon>
