@@ -158,32 +158,51 @@ Public Class ParcoursDao
         Return parcours
     End Function
 
-    Public Function getParcoursVisiblebyPatient(patientId As Integer) As DataTable
+    Public Function GetListOfIntervenantNonOasisByPatient(patientId As Integer) As List(Of IntervenantParcours)
+        Dim rorDao As New RorDao
+
+        Dim ListIntervenant As New List(Of IntervenantParcours)
         Dim SQLString As String
-        SQLString = "SELECT * FROM oasis.oa_patient_parcours WHERE (oa_parcours_inactif = 'False' OR oa_parcours_inactif is Null)" &
-                    " AND (oa_parcours_cacher = 'False' OR oa_parcours_cacher is Null) AND oa_parcours_patient_id = " & patientId.ToString &
+        SQLString = "SELECT * FROM oasis.oa_patient_parcours" &
+                    " WHERE (oa_parcours_inactif = 'False' OR oa_parcours_inactif IS Null)" &
+                    " AND oa_parcours_patient_id = " & patientId.ToString &
+                    " AND (oa_parcours_intervenant_oasis = 'False' OR oa_parcours_intervenant_oasis IS Null)" &
                     " ORDER BY oa_parcours_sous_categorie_id, oa_parcours_specialite"
 
-        Dim ParcoursDataTable As DataTable = New DataTable()
+        Dim dt As DataTable = New DataTable()
 
         Using con As SqlConnection = GetConnection()
-            Dim ParcoursDataAdapter As SqlDataAdapter = New SqlDataAdapter()
-            Using ParcoursDataAdapter
-                ParcoursDataAdapter.SelectCommand = New SqlCommand(SQLString, con)
-                'Using ParcoursDataTable
+            Dim da As SqlDataAdapter = New SqlDataAdapter()
+            Using da
+                da.SelectCommand = New SqlCommand(SQLString, con)
                 Try
-                    ParcoursDataAdapter.Fill(ParcoursDataTable)
+                    da.Fill(dt)
                     Dim command As SqlCommand = con.CreateCommand()
                 Catch ex As Exception
                     Throw ex
                 Finally
                     con.Close()
                 End Try
-                'End Using
+
+                Dim rowCount As Integer = dt.Rows.Count - 1
+                For i = 0 To rowCount Step 1
+                    Dim intervenantParcours As New IntervenantParcours
+                    intervenantParcours.IntervenantId = dt.Rows(i)("oa_parcours_ror_id")
+                    intervenantParcours.PatientId = dt.Rows(i)("oa_parcours_patient_id")
+                    Dim Intervenant As Ror
+                    Intervenant = rorDao.getRorById(intervenantParcours.IntervenantId)
+                    intervenantParcours.Nom = Intervenant.Nom
+                    intervenantParcours.Structure = Intervenant.StructureNom
+
+                    Dim SpecialiteId As Long = dt.Rows(i)("oa_parcours_specialite")
+                    intervenantParcours.Specialite = Environnement.Table_specialite.GetSpecialiteDescription(SpecialiteId)
+
+                    ListIntervenant.Add(intervenantParcours)
+                Next
             End Using
         End Using
 
-        Return ParcoursDataTable
+        Return ListIntervenant
     End Function
 
     Public Function GetAllIntervenantOasisByPatient(patientId As Integer) As DataTable

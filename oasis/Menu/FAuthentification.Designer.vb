@@ -136,7 +136,7 @@ Partial Class FAuthentificattion
         Me.BtnTheriaque.Name = "BtnTheriaque"
         Me.BtnTheriaque.Size = New System.Drawing.Size(117, 23)
         Me.BtnTheriaque.TabIndex = 16
-        Me.BtnTheriaque.Text = "Thériaque"
+        Me.BtnTheriaque.Text = "Test"
         Me.BtnTheriaque.UseVisualStyleBackColor = True
         '
         'BtnTemplateSsEpisode

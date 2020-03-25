@@ -215,13 +215,16 @@
     <Compile Include="Bean\Antecedent\AldCim10.vb" />
     <Compile Include="Bean\Antecedent\AldClass.vb" />
     <Compile Include="Bean\Antecedent\Antecedent.vb" />
+    <Compile Include="Bean\Antecedent\AntecedentCourrier.vb" />
     <Compile Include="Bean\Antecedent\AntecedentDeplacement.vb" />
+    <Compile Include="Bean\Contexte\ContexteCourrier.vb" />
     <Compile Include="Bean\DRC\DrcActeParamedicalAsso.vb" />
     <Compile Include="Bean\DRC\DrcStandard.vb" />
     <Compile Include="Bean\LigneDeVie\PatientParametreLdv.vb" />
     <Compile Include="Bean\Ordonnance\Ordonnance.vb" />
     <Compile Include="Bean\Ordonnance\OrdonnanceDetailGrid.vb" />
     <Compile Include="Bean\Medicament\Medicament.vb" />
+    <Compile Include="Bean\Parcours\IntervenantParcours.vb" />
     <Compile Include="Bean\SousEpisode\SousEpisodeDetailSousType.vb" />
     <Compile Include="Bean\SousEpisode\SousEpisodeFusion.vb" />
     <Compile Include="Bean\SousEpisode\SousEpisodeReponse.vb" />
@@ -229,6 +232,7 @@
     <Compile Include="Bean\SousEpisode\SousEpisode.vb" />
     <Compile Include="Bean\SousEpisode\SousEpisodeType.vb" />
     <Compile Include="Bean\Theriaque\ContreIndication.vb" />
+    <Compile Include="Bean\Traitement\TraitementCourrier.vb" />
     <Compile Include="Dao\Antecedent\AntecedentAffectationDao.vb" />
     <Compile Include="Bean\LigneDeVie\LigneDeVie.vb" />
     <Compile Include="Bean\Episode\EpisodeContexte.vb" />
@@ -446,6 +450,12 @@
       <DependentUpon>FrmAdminTemplateDocx.vb</DependentUpon>
     </Compile>
     <Compile Include="Form\SousEpisode\FrmAdminTemplateDocx.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form\Test\RadFTestMethodes.Designer.vb">
+      <DependentUpon>RadFTestMethodes.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Form\Test\RadFTestMethodes.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Form\Theriaque\RadFEffetSecondaire.Designer.vb">
@@ -1014,6 +1024,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Form\SousEpisode\FrmAdminTemplateDocx.resx">
       <DependentUpon>FrmAdminTemplateDocx.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form\Test\RadFTestMethodes.resx">
+      <DependentUpon>RadFTestMethodes.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Form\Theriaque\RadFEffetSecondaire.resx">
       <DependentUpon>RadFEffetSecondaire.vb</DependentUpon>
