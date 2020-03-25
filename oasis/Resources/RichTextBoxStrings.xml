@@ -2944,7 +2944,7 @@
     <value>Document Views</value>
   </data>
   <data name="RibbonUI_TabView">
-    <value>View</value>
+    <value>Vue</value>
   </data>
   <data name="RibbonUI_CheckBoxHeaderRow">
     <value>Lignes Entête</value>
@@ -3031,7 +3031,7 @@
     <value>Cell Size</value>
   </data>
   <data name="RibbonUI_GroupAlignment">
-    <value>Alignment</value>
+    <value>Alignement</value>
   </data>
   <data name="RibbonUI_GroupData">
     <value>Data</value>
@@ -3067,7 +3067,7 @@
     <value>Options</value>
   </data>
   <data name="RibbonUI_LabelHeaderFromTop">
-    <value>Entête depui le Haut:</value>
+    <value>Entête depuis le Haut:</value>
   </data>
   <data name="RibbonUI_LabelFooterFromBottom">
     <value>Pied depuis le Bas:</value>

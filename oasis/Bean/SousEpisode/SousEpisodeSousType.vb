@@ -12,6 +12,7 @@ Public Class SousEpisodeSousType
     Property IsALDPossible As Boolean
     Property IsReponseRequise As Boolean
     Property DelaiReponse As Integer
+    Property Commentaire As String
 
     Public Sub New()
     End Sub
@@ -27,6 +28,7 @@ Public Class SousEpisodeSousType
         Me.IsALDPossible = row("is_ald_possible")
         Me.IsReponseRequise = Coalesce(row("is_reponse_requise"), False)
         Me.DelaiReponse = Coalesce(row("delai_reponse"), ConfigurationManager.AppSettings("DelaiDefautReponseSousEpisode"))
+        Me.Commentaire = Coalesce(row("commentaire"), False)
     End Sub
 
 

@@ -490,27 +490,37 @@ Public Class FrmSousEpisode
         Dim episodeParametreDao = New EpisodeParametreDao
         Dim uniteSanitaireDao = New UniteSanitaireDao
         Dim siteDao = New SiteDao
+        Dim parcoursDaoDao = New ParcoursDao
+        Dim contexteDao = New ContexteDao
+        Dim antecedentDao = New AntecedentDao
+        Dim traitementDao = New TraitementDao
+
         ' -- recherche de l'unite sanitaire et du site du patient
         Dim uniteSanitaire = uniteSanitaireDao.getUniteSanitaireById(patient.PatientUniteSanitaireId)
         Dim site = siteDao.getSiteById(patient.PatientSiteId)
+        Dim lstContexte = contexteDao.GetListOfContextebyPatient(patient.patientId)
+        Dim lstAntecedent = antecedentDao.GetListOfAntecedentPatient(patient.patientId)
+        Dim lstTraitement = traitementDao.GetListOfTraitementPatient(patient.patientId)
+        Dim sousType As SousEpisodeSousType = TryCast(Me.DropDownSousType.SelectedItem.Value, SousEpisodeSousType)
+
         With sousEF
             .USNom = uniteSanitaire.Oa_unite_sanitaire_description
             .USAdr1 = uniteSanitaire.Oa_unite_sanitaire_adresse1
             .USAdr2 = uniteSanitaire.Oa_unite_sanitaire_adresse2
             .USCP = uniteSanitaire.Oa_unite_sanitaire_code_postal
             .USVille = uniteSanitaire.Oa_unite_sanitaire_ville
-            .USTel = ""
-            .USFax = ""
-            .USEmail = ""
+            .USTel = uniteSanitaire.Telephone
+            .USFax = uniteSanitaire.Fax
+            .USEmail = uniteSanitaire.Mail
 
             .SiteNom = site.Oa_site_description
             .SiteAdr1 = site.Oa_site_adresse1
             .SiteAdr2 = site.Oa_site_adresse2
             .SiteCP = site.Oa_site_code_postal
             .SiteVille = site.Oa_site_ville
-            .SiteTel = "tel du site"
-            .SiteFax = "tel du site"
-            .SiteEmail = "tel du site"
+            .SiteTel = site.Telephone
+            .SiteFax = site.Fax
+            .SiteEmail = site.Mail
 
             .Patient_PrenomNom = patient.PatientPrenom & " " & patient.PatientNom
             .Patient_NIR = patient.PatientNir
@@ -524,31 +534,61 @@ Public Class FrmSousEpisode
 
             .Episode_DateHeure = episode.DateCreation.ToString("dd MMMM yyyy à hh:mm")
             .Type_Libelle = Me.DropDownType.SelectedItem.Text
-            .Sous_Type_Libelle = Me.DropDownSousType.SelectedItem.Text
+            .Sous_Type_Libelle = sousType.Libelle
 
             ' -- recherche des sous-type_detail (sousoustype)
             Dim isWithALD = False, isWithNonAld = False
             If Me.RadSousSousTypeGrid.Rows.Count > 0 Then
+                Dim isSautLigneAvant = Me.RadSousSousTypeGrid.Rows.Count < 6
                 For Each row In RadSousSousTypeGrid.Rows
                     If row.Cells("ChkChoice").Value Then
                         If row.Cells("ChkALD").Value Then ' ALD
                             isWithALD = True
-                            .Sous_Type_Libelle_Detail_ALD += vbCrLf
+                            If isSautLigneAvant Then .Sous_Type_Libelle_Detail_ALD += vbCrLf
                             .Sous_Type_Libelle_Detail_ALD += (row.Cells("Libelle").Value & vbCrLf)
-                            .Sous_Type_Libelle_Detail_commentaire_ALD += vbCrLf
+                            If isSautLigneAvant Then .Sous_Type_Libelle_Detail_commentaire_ALD += vbCrLf
                             .Sous_Type_Libelle_Detail_commentaire_ALD += (row.Cells("Commentaire").Value & vbCrLf)
                         Else
                             isWithNonAld = True
-                            .Sous_Type_Libelle_Detail_Non_ALD += vbCrLf
+                            If isSautLigneAvant Then .Sous_Type_Libelle_Detail_Non_ALD += vbCrLf
                             .Sous_Type_Libelle_Detail_Non_ALD += (row.Cells("Libelle").Value & vbCrLf)
-                            .Sous_Type_Libelle_Detail_commentaire_non_ALD += vbCrLf
+                            If isSautLigneAvant Then .Sous_Type_Libelle_Detail_commentaire_non_ALD += vbCrLf
                             .Sous_Type_Libelle_Detail_commentaire_non_ALD += (row.Cells("Commentaire").Value & vbCrLf)
                         End If
                     End If
                 Next
             End If
-            If isWithALD = False Then .ALD_Avec_Entete = ""
-            If isWithNonAld = False Then .ALD_Sans_Entete = ""
+
+            ' -- gestion des entete et fairefaire
+            If isWithALD = False Then .ALD_Avec_Entete = "" Else .ALD_Avec_FaireFaire = sousType.Commentaire
+            If isWithNonAld = False Then
+                If isWithALD = False Then
+                    .ALD_Sans_Entete = ""
+                End If
+            Else
+                .ALD_Sans_FaireFaire = sousType.Commentaire
+                If isWithALD = False Then .ALD_Sans_Entete = ""
+            End If
+
+            ' --- gestion des context
+            Dim isNotFirst = False
+            For Each contexte In lstContexte
+                If isNotFirst Then .Contexte += vbCrLf
+                .Contexte += contexte.Description
+                isNotFirst = True
+            Next
+            isNotFirst = False
+            For Each antecedent In lstAntecedent
+                If isNotFirst Then .Antecedent += vbCrLf
+                .Antecedent += antecedent.Description
+                isNotFirst = True
+            Next
+            isNotFirst = False
+            For Each traitement In lstTraitement
+                If isNotFirst Then .Traitement += vbCrLf
+                .Traitement += traitement.Denomination & " : " & traitement.Posologie
+                isNotFirst = True
+            Next
 
             .Signature_Date = Date.Now.ToString("dd MMM yyyy")
             .Signataire_Fonction = userLog.UtilisateurProfilId.ToLower.Trim.Replace("_", " ")
