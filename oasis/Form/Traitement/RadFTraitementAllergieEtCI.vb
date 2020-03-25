@@ -70,7 +70,7 @@ Public Class RadFTraitementAllergieEtCI
 
         Select Case Me.AllergieOuContreIndication
             Case EnumAllergieOuContreIndication.Allergie
-                traitementDataTable = traitementDao.getAllTraitementAllergiebyPatient(SelectedPatient.patientId)
+                traitementDataTable = traitementDao.GetAllTraitementAllergiebyPatient(SelectedPatient.patientId)
                 afficheTitleForm(Me, "Liste des allergies du patient")
             Case EnumAllergieOuContreIndication.ContreIndication
                 traitementDataTable = traitementDao.getAllTraitementCIbyPatient(SelectedPatient.patientId)

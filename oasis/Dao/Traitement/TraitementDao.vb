@@ -68,13 +68,15 @@ Public Class TraitementDao
 
 
     Public Function getAllTraitementCIbyPatient(patientId As Integer) As DataTable
-        Dim SQLString As String = "select oa_traitement_id, oa_traitement_medicament_dci, oa_traitement_arret, oa_traitement_posologie_base," &
+        Dim SQLString As String = "SELECT oa_traitement_id, oa_traitement_medicament_dci, oa_traitement_arret, oa_traitement_posologie_base," &
         " oa_traitement_posologie_rythme, oa_traitement_posologie_matin, oa_traitement_posologie_midi, oa_traitement_posologie_apres_midi," &
         " oa_traitement_posologie_soir, oa_traitement_posologie_commentaire, oa_traitement_ordre_affichage, oa_traitement_date_debut," &
         " oa_traitement_date_fin, oa_traitement_arret_commentaire, oa_traitement_allergie, oa_traitement_contre_indication" &
-        " from oasis.oa_traitement where (oa_traitement_annulation Is Null Or oa_traitement_annulation = '')" &
-        " And oa_traitement_contre_indication = '1' and oa_traitement_patient_id = " & patientId.ToString &
-        " order by oa_traitement_date_fin desc;"
+        " FROM oasis.oa_traitement" &
+        " WHERE (oa_traitement_annulation IS Null Or oa_traitement_annulation = '')" &
+        " AND oa_traitement_contre_indication = '1'" &
+        " AND oa_traitement_patient_id = " & patientId.ToString &
+        " ORDER BY oa_traitement_date_fin DESC;"
 
         Using con As SqlConnection = GetConnection()
             Dim TraitementDataAdapter As SqlDataAdapter = New SqlDataAdapter()
@@ -94,7 +96,9 @@ Public Class TraitementDao
         End Using
     End Function
 
-    Public Function getAllTraitementAllergiebyPatient(patientId As Integer) As DataTable
+
+    'Obsolète ===================== à supprimer !!!!!!!!!!!!!!!!!!!!!!
+    Public Function GetAllTraitementAllergiebyPatient(patientId As Integer) As DataTable
         Dim SQLString As String = "select oa_traitement_id, oa_traitement_medicament_dci, oa_traitement_arret, oa_traitement_posologie_base," &
         " oa_traitement_posologie_rythme, oa_traitement_posologie_matin, oa_traitement_posologie_midi, oa_traitement_posologie_apres_midi," &
         " oa_traitement_posologie_soir, oa_traitement_posologie_commentaire, oa_traitement_ordre_affichage, oa_traitement_date_debut," &
@@ -122,15 +126,21 @@ Public Class TraitementDao
         End Using
     End Function
 
-    Public Function getAllTraitementbyPatient(patientId As Integer, filtreDateFin As Date) As DataTable
-        Dim SQLString As String = "select oa_traitement_id, oa_traitement_medicament_cis, oa_traitement_medicament_dci," &
+    Public Function GetAllTraitementObsoletebyPatient(patientId As Integer, filtreDateFin As Date) As DataTable
+
+        Dim DateJourSuivant As Date = Date.Now().AddDays(1)
+
+        Dim SQLString As String = "SELECT oa_traitement_id, oa_traitement_medicament_cis, oa_traitement_medicament_dci," &
         " oa_traitement_arret, oa_traitement_posologie_base, oa_traitement_posologie_rythme, oa_traitement_posologie_matin," &
         " oa_traitement_posologie_midi, oa_traitement_posologie_apres_midi, oa_traitement_posologie_soir," &
         " oa_traitement_posologie_commentaire, oa_traitement_ordre_affichage, oa_traitement_date_debut, oa_traitement_date_fin," &
         " oa_traitement_arret_commentaire, oa_traitement_annulation, oa_traitement_annulation_commentaire," &
         " oa_traitement_declaratif_hors_traitement, oa_traitement_allergie, oa_traitement_contre_indication" &
-        " from oasis.oa_traitement where oa_traitement_patient_id = " & patientId.ToString &
-        " And oa_traitement_date_fin >= '" & filtreDateFin.ToString("yyyy-MM-dd") & "' order by oa_traitement_date_fin desc;"
+        " FROM oasis.oa_traitement" &
+        " WHERE oa_traitement_patient_id = " & patientId.ToString &
+        " AND oa_traitement_date_fin >= '" & filtreDateFin.ToString("yyyy-MM-dd") & "'" &
+        " AND oa_traitement_date_fin < '" & DateJourSuivant.ToString("yyyy-MM-dd") & "'" &
+        " ORDER BY oa_traitement_date_fin desc;"
 
         Using con As SqlConnection = GetConnection()
             Dim TraitementDataAdapter As SqlDataAdapter = New SqlDataAdapter()

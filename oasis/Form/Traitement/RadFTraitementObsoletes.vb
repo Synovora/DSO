@@ -27,6 +27,8 @@ Public Class RadFTraitementObsoletes
 
     Dim Horizon As Integer
 
+    Dim PremierAffichage As Boolean = True
+
 
     Private Sub RadFTraitementObsoletes_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         RadGridLocalizationProvider.CurrentProvider = New FrenchRadGridViewLocalizationProvider()
@@ -93,7 +95,7 @@ Public Class RadFTraitementObsoletes
 
         Dim traitementDataTable As DataTable
         Dim traitementDao As TraitementDao = New TraitementDao
-        traitementDataTable = traitementDao.getAllTraitementbyPatient(Me.SelectedPatient.patientId, filtreDateFin)
+        traitementDataTable = traitementDao.GetAllTraitementObsoletebyPatient(Me.SelectedPatient.patientId, filtreDateFin)
 
         'Ajout d'une colonne 'oa_traitement_posologie' dans le DataTable de traitement
         traitementDataTable.Columns.Add("oa_traitement_posologie", Type.GetType("System.String"))
@@ -345,9 +347,13 @@ Public Class RadFTraitementObsoletes
     End Sub
 
     Private Sub DteHorizonAffichage_ValueChanged(sender As Object, e As EventArgs) Handles DteHorizonAffichage.ValueChanged
-        'Rechargement grid
-        RadTraitementDataGridView.Rows.Clear()
-        ChargementTraitement()
+        If PremierAffichage = True Then
+            PremierAffichage = False
+        Else
+            'Rechargement grid
+            RadTraitementDataGridView.Rows.Clear()
+            ChargementTraitement()
+        End If
     End Sub
 
     Private Sub RadBtnAbandon_Click(sender As Object, e As EventArgs) Handles RadBtnAbandon.Click
@@ -379,4 +385,5 @@ Public Class RadFTraitementObsoletes
         'e.ToolTipText = cell.Value.ToString()
         'End If
     End Sub
+
 End Class
