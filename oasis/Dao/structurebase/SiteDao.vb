@@ -108,6 +108,9 @@ Public Class SiteDao
         bean.Oa_site_adresse2 = Coalesce(reader("oa_site_adresse2"), "")
         bean.Oa_site_ville = Coalesce(reader("oa_site_ville"), "")
         bean.Oa_site_code_postal = Coalesce(reader("oa_site_code_postal"), "")
+        bean.Telephone = Coalesce(reader("telephone"), "")
+        bean.Mail = Coalesce(reader("mail"), "")
+        bean.Fax = Coalesce(reader("fax"), "")
         bean.Oa_site_inactif = Coalesce(reader("oa_site_inactif"), False)
 
         Return bean

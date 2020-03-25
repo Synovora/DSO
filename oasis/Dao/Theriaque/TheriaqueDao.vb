@@ -78,6 +78,9 @@ Public Class TheriaqueDao
         Return medicament
     End Function
 
+    '=============================================================================================
+    '   ATC
+    '=============================================================================================
     Public Function GetAllATC() As DataTable
         Dim SQLString As String
         SQLString = "SELECT CATC_CODE_PK, CATC_NOMF FROM [Theriak].[theriaque].[CATC_CLASSEATC]" &
@@ -161,6 +164,9 @@ Public Class TheriaqueDao
         Return ATCDenomination
     End Function
 
+    '=============================================================================================
+    '   Spécialité
+    '=============================================================================================
     Friend Function getSpecialiteByArgument(CodeId As String, VarTyp As EnumGetSpecialite, Monovir As Integer) As DataTable
         Dim dt As New DataTable
         Dim ds As New DataSet
@@ -302,6 +308,9 @@ Public Class TheriaqueDao
         Return PharmacoDynamique
     End Function
 
+    '=============================================================================================
+    '   Substance
+    '=============================================================================================
     Friend Function GetSubstanceCodeListBySpecialite(CodeId As String) As List(Of Integer)
         Dim dt As New DataTable
         Dim ds As New DataSet
@@ -368,6 +377,40 @@ Public Class TheriaqueDao
         End Using
 
         Return SubstanceDenomination
+    End Function
+
+    Friend Function GetATCCodeListBySubstanceId(SubstanceId As String) As List(Of String)
+        Dim dt As New DataTable
+        Dim ds As New DataSet
+        Dim ATCCodeList As New List(Of String)
+
+        Using con As SqlConnection = GetConnection()
+            Try
+                Dim command As New SqlCommand("theriaque.GET_THE_DET_SUBACT", con)
+                command.CommandType = CommandType.StoredProcedure
+                command.Connection.ChangeDatabase("Theriak")
+                command.Parameters.AddWithValue("@codeId", SubstanceId)
+                command.Parameters.AddWithValue("@typId", 4) 'ATC
+
+                Dim da As New SqlDataAdapter(command)
+                da.Fill(dt)
+
+                Dim rowCount As Integer = dt.Rows.Count - 1
+
+                For i = 0 To rowCount Step 1
+                    Dim ATCCode As String = dt.Rows(i)("CODE")
+                    If ATCCodeList.Contains(ATCCode) = False Then
+                        ATCCodeList.Add(ATCCode)
+                    End If
+                Next
+            Catch ex As Exception
+                Throw ex
+            Finally
+                con.Close()
+            End Try
+        End Using
+
+        Return ATCCodeList
     End Function
 
 End Class

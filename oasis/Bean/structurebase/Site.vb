@@ -8,6 +8,9 @@
     Private _oa_site_ville As String
     Private _oa_site_code_postal As String
     Private _oa_site_inactif As Boolean
+    Private _telephone As String
+    Private _mail As String
+    Private _fax As String
 
     Public Property Oa_site_id As Long
         Get
@@ -87,6 +90,33 @@
         End Get
         Set(value As Boolean)
             _oa_site_inactif = value
+        End Set
+    End Property
+
+    Public Property Telephone As String
+        Get
+            Return _telephone
+        End Get
+        Set(value As String)
+            _telephone = value
+        End Set
+    End Property
+
+    Public Property Mail As String
+        Get
+            Return _mail
+        End Get
+        Set(value As String)
+            _mail = value
+        End Set
+    End Property
+
+    Public Property Fax As String
+        Get
+            Return _fax
+        End Get
+        Set(value As String)
+            _fax = value
         End Set
     End Property
 

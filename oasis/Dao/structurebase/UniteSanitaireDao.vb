@@ -108,6 +108,9 @@ Public Class UniteSanitaireDao
         bean.Oa_unite_sanitaire_adresse2 = Coalesce(reader("oa_unite_sanitaire_adresse2"), "")
         bean.Oa_unite_sanitaire_ville = Coalesce(reader("oa_unite_sanitaire_ville"), "")
         bean.Oa_unite_sanitaire_code_postal = Coalesce(reader("oa_unite_sanitaire_code_postal"), "")
+        bean.Telephone = Coalesce(reader("telephone"), "")
+        bean.Mail = Coalesce(reader("mail"), "")
+        bean.Fax = Coalesce(reader("fax"), "")
         bean.Oa_unite_sanitaire_inactif = Coalesce(reader("oa_unite_sanitaire_inactif"), False)
 
         Return bean

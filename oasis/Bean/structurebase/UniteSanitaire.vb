@@ -11,6 +11,9 @@ Public Class UniteSanitaire
     Private _oa_unite_sanitaire_ville As String
     Private _oa_unite_sanitaire_code_postal As String
     Private _oa_unite_sanitaire_inactif As Boolean
+    Private _telephone As String
+    Private _mail As String
+    Private _fax As String
     ' liste des sites associés (uniquement rempli dans le filtre tache)
     Private _lstSite As List(Of Site)
 
@@ -92,6 +95,33 @@ Public Class UniteSanitaire
         End Get
         Set(value As List(Of Site))
             _lstSite = value
+        End Set
+    End Property
+
+    Public Property Telephone As String
+        Get
+            Return _telephone
+        End Get
+        Set(value As String)
+            _telephone = value
+        End Set
+    End Property
+
+    Public Property Mail As String
+        Get
+            Return _mail
+        End Get
+        Set(value As String)
+            _mail = value
+        End Set
+    End Property
+
+    Public Property Fax As String
+        Get
+            Return _fax
+        End Get
+        Set(value As String)
+            _fax = value
         End Set
     End Property
 
