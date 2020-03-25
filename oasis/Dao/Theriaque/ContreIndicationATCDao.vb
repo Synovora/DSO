@@ -80,8 +80,8 @@ Public Class ContreIndicationATCDao
         Dim SQLstring As String = "IF NOT EXISTS" &
             " (SELECT 1 FROM oasis.oa_patient_contre_indication_atc" &
             " WHERE patient_id = @patientId" &
-            " AND code_atc = @atcCode)" &
-            " AND (inactif Is Null OR inactif = 'False')" &
+            " AND code_atc = @atcCode" &
+            " AND (inactif Is Null OR inactif = 'False'))" &
             " INSERT INTO oasis.oa_patient_contre_indication_atc" &
             " (patient_id, code_atc, denomination_atc, creation_user_id, creation_date, inactif)" &
             " VALUES" &

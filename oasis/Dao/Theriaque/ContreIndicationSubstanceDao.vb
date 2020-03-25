@@ -72,7 +72,7 @@ Public Class ContreIndicationSubstanceDao
         End Using
     End Function
 
-    Friend Function CreationContreIndication(contreIndication As ContreIndicationSubstance) As Boolean
+    Friend Function CreationContreIndicationSubstance(contreIndication As ContreIndicationSubstance) As Boolean
         Dim da As SqlDataAdapter = New SqlDataAdapter()
         Dim codeRetour As Boolean = True
         Dim n As Integer 'Pour récupérer le nombre d'occurences enregistrées
@@ -80,12 +80,12 @@ Public Class ContreIndicationSubstanceDao
         Dim SQLstring As String = "IF NOT EXISTS" &
             " (SELECT 1 FROM oasis.oa_patient_contre_indication_substance" &
             " WHERE patient_id = @patientId" &
-            " AND substance_id = @substanceId)" &
-            " AND (inactif Is Null OR inactif = 'False')" &
-            " INSERT INTO oasis.oa_patient_contre_indication_atc" &
-            " (patient_id, substanceId, denomination_substance, creation_user_id, creation_date, inactif)" &
+            " AND substance_id = @substanceId" &
+            " AND (inactif Is Null OR inactif = 'False'))" &
+            " INSERT INTO oasis.oa_patient_contre_indication_substance" &
+            " (patient_id, substance_id, denomination_substance, creation_user_id, creation_date, inactif)" &
             " VALUES" &
-            " (@patientId, @atcCode, @substanceDenomination, @userCreation, @dateCreation, @inactif)"
+            " (@patientId, @substanceId, @substanceDenomination, @userCreation, @dateCreation, @inactif)"
 
         Dim con As SqlConnection = GetConnection()
         Dim cmd As New SqlCommand(SQLstring, con)

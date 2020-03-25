@@ -13,7 +13,8 @@ Public Class RadF_CI_ATC_Selecteur
     End Property
 
     Dim theriaqueDao As New TheriaqueDao
-    Dim contreIndicationDao As New ContreIndicationATCDao
+    Dim contreIndicationATCDao As New ContreIndicationATCDao
+    Dim contreIndicationSubstanceDao As New ContreIndicationSubstanceDao
 
     Dim ATCListe As New List(Of String)
     Dim SubstanceListe As New List(Of Integer)
@@ -699,16 +700,30 @@ Public Class RadF_CI_ATC_Selecteur
     'Sélection substance et ATC pour création contre-indication
     Private Sub RadBtnSelectionCI_Click(sender As Object, e As EventArgs) Handles RadBtnSelectionCI.Click
         Dim NombreCICreation As Integer = 0
-        Dim EnumeratorSubstanceListe As IEnumerator = ATCListe.GetEnumerator()
-        While EnumeratorSubstanceListe.MoveNext()
-            Dim ATCId As String = EnumeratorSubstanceListe.Current
+        Dim EnumeratorATCListe As IEnumerator = ATCListe.GetEnumerator()
+        While EnumeratorATCListe.MoveNext()
+            Dim ATCId As String = EnumeratorATCListe.Current
             Dim ATCDenomination As String = theriaqueDao.GetATCDenominationById(ATCId)
-            Dim contreIndication As New ContreIndicationATC
-            contreIndication.PatientId = SelectedPatient.patientId
-            contreIndication.ATCId = ATCId
-            contreIndication.DenominationATC = ATCDenomination
+            Dim contreIndicationATC As New ContreIndicationATC
+            contreIndicationATC.PatientId = SelectedPatient.patientId
+            contreIndicationATC.ATCId = ATCId
+            contreIndicationATC.DenominationATC = ATCDenomination
 
-            If contreIndicationDao.CreationContreIndicationATC(contreIndication) = True Then
+            If contreIndicationATCDao.CreationContreIndicationATC(contreIndicationATC) = True Then
+                NombreCICreation += 1
+            End If
+        End While
+
+        Dim EnumeratorSubstanceListe As IEnumerator = SubstanceListe.GetEnumerator()
+        While EnumeratorSubstanceListe.MoveNext()
+            Dim SubstanceId As Long = EnumeratorSubstanceListe.Current
+            Dim SubstanceDenomination As String = theriaqueDao.GetSubstanceDenominationById(SubstanceId)
+            Dim contreIndicationSubstance As New ContreIndicationSubstance
+            contreIndicationSubstance.PatientId = SelectedPatient.patientId
+            contreIndicationSubstance.SubstanceId = SubstanceId
+            contreIndicationSubstance.DenominationSubstance = SubstanceDenomination
+
+            If contreIndicationSubstanceDao.CreationContreIndicationSubstance(contreIndicationSubstance) = True Then
                 NombreCICreation += 1
             End If
         End While
@@ -722,11 +737,9 @@ Public Class RadF_CI_ATC_Selecteur
                 form.Message = "1 contre-indication a été créée pour le patient"
                 form.Show()
             Case Else
-                form.Message = NombreCICreation & "Contre-indications ont été créées pour le patient"
+                form.Message = NombreCICreation & " Contre-indications ont été créées pour le patient"
                 form.Show()
         End Select
-
-        'TODO: création des contre-indications pour les substances sélectionnées
 
         Close()
     End Sub
