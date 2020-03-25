@@ -314,4 +314,65 @@ Public Class AntecedentDao
         End Using
     End Function
 
+    Public Function GetListOfAntecedentPatient(patientId As Integer) As List(Of AntecedentCourrier)
+        Dim ListAntecedent As New List(Of AntecedentCourrier)
+        Dim antecedentDao As New AntecedentDao
+        Dim dt As DataTable
+        dt = antecedentDao.GetAllAntecedentbyPatient(patientId, False, False)
+
+        Dim indentation As String
+        Dim diagnostic As String
+
+        Dim rowCount As Integer = dt.Rows.Count - 1
+        For i = 0 To rowCount Step 1
+            Dim antecedentCourrier As New AntecedentCourrier
+            antecedentCourrier.PatientId = patientId
+            antecedentCourrier.Id = dt.Rows(i)("oa_antecedent_id")
+
+            Select Case dt.Rows(i)("oa_antecedent_niveau")
+                Case 1
+                    indentation = ""
+                Case 2
+                    indentation = "           > "
+                Case 3
+                    indentation = "                        >> "
+                Case Else
+                    indentation = ""
+            End Select
+
+            diagnostic = ""
+            If dt.Rows(i)("oa_antecedent_diagnostic") IsNot DBNull.Value Then
+                If CInt(dt.Rows(i)("oa_antecedent_diagnostic")) = ContexteDao.EnumDiagnostic.SUSPICION_DE Then
+                    diagnostic = "Suspicion de : "
+                Else
+                    If CInt(dt.Rows(i)("oa_antecedent_diagnostic")) = ContexteDao.EnumDiagnostic.NOTION_DE Then
+                        diagnostic = "Notion de : "
+                    End If
+                End If
+            End If
+
+            Dim longueurString As Integer
+            Dim longueurMax As Integer = 100
+            Dim antecedentDescription As String
+
+            If dt.Rows(i)("oa_antecedent_description") Is DBNull.Value Or dt.Rows(i)("oa_antecedent_description") = "" Then
+                antecedentDescription = ""
+            Else
+                antecedentDescription = dt.Rows(i)("oa_antecedent_description")
+                antecedentDescription = Replace(antecedentDescription, vbCrLf, " ")
+                longueurString = antecedentDescription.Length
+                If longueurString > longueurMax Then
+                    longueurString = longueurMax
+                End If
+                antecedentDescription = antecedentDescription.Substring(0, longueurString)
+            End If
+
+            antecedentCourrier.Description = indentation & diagnostic & " " & antecedentDescription
+
+            ListAntecedent.Add(antecedentCourrier)
+        Next
+
+        Return ListAntecedent
+    End Function
+
 End Class
