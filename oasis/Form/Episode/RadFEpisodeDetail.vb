@@ -2770,7 +2770,7 @@ Public Class RadFEpisodeDetail
         Cursor.Current = Cursors.WaitCursor
         RadTraitementDataGridView.Rows.Clear()
 
-        traitementDataTable = traitementDao.getTraitementNotCancelledbyPatient(Me.SelectedPatient.patientId)
+        traitementDataTable = traitementDao.getTraitementEnCoursbyPatient(Me.SelectedPatient.patientId)
 
         'Ajout d'une colonne 'oa_traitement_posologie' dans le DataTable de traitement
         traitementDataTable.Columns.Add("oa_traitement_posologie", Type.GetType("System.String"))

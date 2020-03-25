@@ -298,7 +298,7 @@ Public Class OrdonnanceDao
 
         PatientAld = alddao.IsPatientALD(patientId)
 
-        TraitementDataTable = TraitementDao.getTraitementNotCancelledbyPatient(patientId)
+        TraitementDataTable = TraitementDao.getTraitementEnCoursbyPatient(patientId)
 
         Dim i As Integer
         Dim rowCount As Integer = TraitementDataTable.Rows.Count - 1

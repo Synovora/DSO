@@ -246,7 +246,7 @@ Public Class PdfSynthese
         Dim table As New Table(3)
         Dim traitementDataTable As DataTable
         Dim traitementDao As TraitementDao = New TraitementDao
-        traitementDataTable = traitementDao.getTraitementNotCancelledbyPatient(Me.SelectedPatient.patientId)
+        traitementDataTable = traitementDao.getTraitementEnCoursbyPatient(Me.SelectedPatient.patientId)
 
         'Ajout d'une colonne 'oa_traitement_posologie' dans le DataTable de traitement
         traitementDataTable.Columns.Add("oa_traitement_posologie", Type.GetType("System.String"))

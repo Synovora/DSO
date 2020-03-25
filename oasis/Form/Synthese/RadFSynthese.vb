@@ -882,7 +882,7 @@ Public Class RadFSynthese
 
         Dim traitementDataTable As DataTable
         Dim traitementDao As TraitementDao = New TraitementDao
-        traitementDataTable = traitementDao.getTraitementNotCancelledbyPatient(Me.SelectedPatient.patientId)
+        traitementDataTable = traitementDao.getTraitementEnCoursbyPatient(Me.SelectedPatient.patientId)
 
         'Ajout d'une colonne 'oa_traitement_posologie' dans le DataTable de traitement
         traitementDataTable.Columns.Add("oa_traitement_posologie", Type.GetType("System.String"))
@@ -915,6 +915,7 @@ Public Class RadFSynthese
 
         'Parcours du DataTable pour alimenter les colonnes du DataGridView
         For i = 0 To rowCount Step 1
+            '=========================================================================> Obsolète début
             'Récupération des médicaments déclarés 'allergique' et exclusion de l'affichage
             If traitementDataTable.Rows(i)("oa_traitement_allergie") IsNot DBNull.Value Then
                 If traitementDataTable.Rows(i)("oa_traitement_allergie") = "1" Then
@@ -942,6 +943,7 @@ Public Class RadFSynthese
                     Continue For
                 End If
             End If
+            '===========================================================================> Obsolète fin
 
             'Date de fin
             If traitementDataTable.Rows(i)("oa_traitement_date_fin") IsNot DBNull.Value Then
@@ -971,6 +973,7 @@ Public Class RadFSynthese
                 dateModification = dateCreation
             End If
 
+            '===========================================================================> Obsolète début
             'Exclusion de l'affichage des traitements dont la date de fin est < à la date du jour
             'Cette condition est traitée en exclusion (et non dans la requête SQL) pour stocker les allergies et les contre-indications dans la StringCollection quel que soit leur date de fin
             Dim dateJouraComparer As New Date(Date.Now.Year, Date.Now.Month, Date.Now.Day, 0, 0, 0)
@@ -978,6 +981,7 @@ Public Class RadFSynthese
             If (dateFinaComparer < dateJouraComparer) Then
                 Continue For
             End If
+            '===========================================================================> Obsolète fin
 
             'Vérification de l'existence d'une fenêtre thérapeutique active et à venir
             FenetreTherapeutiqueEnCours = False

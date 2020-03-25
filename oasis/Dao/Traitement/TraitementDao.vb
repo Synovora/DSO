@@ -160,6 +160,42 @@ Public Class TraitementDao
         End Using
     End Function
 
+    Public Function getTraitementEnCoursbyPatient(patientId As Integer) As DataTable
+        Dim SQLString As String = "SELECT oa_traitement_id, oa_traitement_medicament_cis, oa_traitement_medicament_dci," &
+        " oa_traitement_posologie_base, oa_traitement_posologie_rythme, oa_traitement_posologie_matin, oa_traitement_posologie_midi," &
+        " oa_traitement_posologie_apres_midi, oa_traitement_posologie_soir," &
+        " oa_traitement_fraction_matin, oa_traitement_fraction_midi, oa_traitement_fraction_apres_midi, oa_traitement_fraction_soir," &
+        " oa_traitement_posologie_commentaire, oa_traitement_ordre_affichage, oa_traitement_date_creation," &
+        " oa_traitement_commentaire, oa_traitement_date_modification, oa_traitement_date_debut, oa_traitement_date_fin, oa_traitement_fenetre," &
+        " oa_traitement_fenetre_date_debut, oa_traitement_fenetre_date_fin, oa_traitement_arret, oa_traitement_allergie," &
+        " oa_traitement_contre_indication FROM oasis.oa_traitement" &
+        " WHERE (oa_traitement_annulation Is Null Or oa_traitement_annulation = '')" &
+        " AND (oa_traitement_date_fin >= CONVERT(DATE, GETDATE()))" &
+        " AND (oa_traitement_arret is Null OR oa_traitement_arret <> 'A')" &
+        " AND (oa_traitement_allergie is Null OR oa_traitement_allergie = 'False')" &
+        " AND (oa_traitement_contre_indication is Null OR oa_traitement_contre_indication = 'False')" &
+        " AND oa_traitement_patient_id = " & patientId.ToString &
+        " ORDER BY oa_traitement_ordre_affichage;"
+
+        Using con As SqlConnection = GetConnection()
+            Dim TraitementDataAdapter As SqlDataAdapter = New SqlDataAdapter()
+            Using TraitementDataAdapter
+                TraitementDataAdapter.SelectCommand = New SqlCommand(SQLString, con)
+                Dim TraitementDataTable As DataTable = New DataTable()
+                Using TraitementDataTable
+                    Try
+                        TraitementDataAdapter.Fill(TraitementDataTable)
+                        Dim command As SqlCommand = con.CreateCommand()
+                    Catch ex As Exception
+                        Throw ex
+                    End Try
+                    Return TraitementDataTable
+                End Using
+            End Using
+        End Using
+    End Function
+
+    'Version sauvegardée de la précédente version utilisée (remplacée par getTraitementEnCoursbyPatient) ===> A supprimer
     Public Function getTraitementNotCancelledbyPatient(patientId As Integer) As DataTable
         Dim SQLString As String = "SELECT oa_traitement_id, oa_traitement_medicament_cis, oa_traitement_medicament_dci," &
         " oa_traitement_posologie_base, oa_traitement_posologie_rythme, oa_traitement_posologie_matin, oa_traitement_posologie_midi," &
@@ -698,6 +734,179 @@ Public Class TraitementDao
         PatientDao.ModificationDateMajSynthesePatient(traitement.PatientId)
 
         Return codeRetour
+    End Function
+
+    Public Function GetListOfTraitementPatient(patientId As Integer) As List(Of TraitementCourrier)
+        Dim ListTraitement As New List(Of TraitementCourrier)
+        Dim traitementDao As New TraitementDao
+        Dim dt As DataTable
+        dt = traitementDao.getTraitementEnCoursbyPatient(patientId)
+
+        Dim rowCount As Integer = dt.Rows.Count - 1
+        For i = 0 To rowCount Step 1
+            Dim traitementCourrier As New TraitementCourrier
+            traitementCourrier.PatientId = patientId
+            traitementCourrier.TraitementId = dt.Rows(i)("oa_traitement_id")
+            traitementCourrier.Denomination = dt.Rows(i)("oa_traitement_medicament_dci")
+
+            Dim Base As String
+            Dim Posologie As String
+            Dim posologieMatin, posologieMidi, posologieApresMidi, posologieSoir As Integer
+            Dim Rythme As Integer
+            Dim FenetreDateDebut, FenetreDateFin As Date
+            Dim dateFin As Date
+            Dim FenetreTherapeutiqueEnCours As Boolean
+
+            'Exclusion de l'affichage des traitements dont la date de fin est < à la date du jour
+            'Cette condition est traitée en exclusion (et non dans la requête SQL) pour stocker les allergies et les contre-indications dans la StringCollection quel que soit leur date de fin
+            'Date de fin
+            If dt.Rows(i)("oa_traitement_date_fin") IsNot DBNull.Value Then
+                dateFin = dt.Rows(i)("oa_traitement_date_fin")
+            Else
+                dateFin = "31/12/2999"
+            End If
+            Dim dateJouraComparer As New Date(Date.Now.Year, Date.Now.Month, Date.Now.Day, 0, 0, 0)
+            Dim dateFinaComparer As New Date(dateFin.Year, dateFin.Month, dateFin.Day, 0, 0, 0)
+            If (dateFinaComparer < dateJouraComparer) Then
+                Continue For
+            End If
+
+            'Vérification de l'existence d'une fenêtre thérapeutique active et à venir
+            FenetreTherapeutiqueEnCours = False
+
+            'Existence d'une fenêtre thérapeutique
+            Dim dateDebutFenetreaComparer As New Date(FenetreDateDebut.Year, FenetreDateDebut.Month, FenetreDateDebut.Day, 0, 0, 0)
+            Dim dateFinFenetreaComparer As New Date(FenetreDateFin.Year, FenetreDateFin.Month, FenetreDateFin.Day, 0, 0, 0)
+            If dt.Rows(i)("oa_traitement_fenetre") IsNot DBNull.Value Then
+                If dt.Rows(i)("oa_traitement_fenetre") = "1" Then
+                    'Fenêtre thérapeutique en cours, à venir ou obsolète
+                    If FenetreDateDebut <= dateJouraComparer And FenetreDateFin >= dateJouraComparer Then
+                        'Fenêtre thérapeutique en cours
+                        FenetreTherapeutiqueEnCours = True
+                        Posologie = "Fenêtre Th."
+                    End If
+                End If
+            End If
+
+            'Formatage de la posologie
+            Posologie = ""
+            If FenetreTherapeutiqueEnCours = False Then
+                Dim PosologieMatinString, PosologieMidiString, PosologieApresMidiString, PosologieSoirString As String
+                Dim FractionMatin, FractionMidi, FractionApresMidi, FractionSoir As String
+                Dim PosologieBase As String
+
+                FractionMatin = Coalesce(dt.Rows(i)("oa_traitement_fraction_matin"), TraitementDao.EnumFraction.Non)
+                FractionMidi = Coalesce(dt.Rows(i)("oa_traitement_fraction_midi"), TraitementDao.EnumFraction.Non)
+                FractionApresMidi = Coalesce(dt.Rows(i)("oa_traitement_fraction_apres_midi"), TraitementDao.EnumFraction.Non)
+                FractionSoir = Coalesce(dt.Rows(i)("oa_traitement_fraction_soir"), TraitementDao.EnumFraction.Non)
+
+                posologieMatin = Coalesce(dt.Rows(i)("oa_traitement_Posologie_matin"), 0)
+                posologieMidi = Coalesce(dt.Rows(i)("oa_traitement_Posologie_midi"), 0)
+                posologieApresMidi = Coalesce(dt.Rows(i)("oa_traitement_Posologie_apres_midi"), 0)
+                posologieSoir = Coalesce(dt.Rows(i)("oa_traitement_Posologie_soir"), 0)
+
+                PosologieBase = Coalesce(dt.Rows(i)("oa_traitement_Posologie_base"), "")
+
+                If FractionMatin <> "" AndAlso FractionMatin <> TraitementDao.EnumFraction.Non Then
+                    If posologieMatin <> 0 Then
+                        PosologieMatinString = posologieMatin.ToString & "+" & FractionMatin
+                    Else
+                        PosologieMatinString = FractionMatin
+                    End If
+                Else
+                    If posologieMatin <> 0 Then
+                        PosologieMatinString = posologieMatin.ToString
+                    Else
+                        PosologieMatinString = "0"
+                    End If
+                End If
+
+                If FractionMidi <> "" AndAlso FractionMidi <> TraitementDao.EnumFraction.Non Then
+                    If posologieMidi <> 0 Then
+                        PosologieMidiString = posologieMidi.ToString & "+" & FractionMidi
+                    Else
+                        PosologieMidiString = FractionMidi
+                    End If
+                Else
+                    If posologieMidi <> 0 Then
+                        PosologieMidiString = posologieMidi.ToString
+                    Else
+                        PosologieMidiString = "0"
+                    End If
+                End If
+
+                PosologieApresMidiString = ""
+                If FractionApresMidi <> "" AndAlso FractionApresMidi <> TraitementDao.EnumFraction.Non Then
+                    If posologieApresMidi <> 0 Then
+                        PosologieApresMidiString = posologieApresMidi.ToString & "+" & FractionApresMidi
+                    Else
+                        PosologieApresMidiString = FractionApresMidi
+                    End If
+                Else
+                    If posologieApresMidi <> 0 Then
+                        PosologieApresMidiString = posologieApresMidi.ToString
+                    End If
+                End If
+
+                If FractionSoir <> "" AndAlso FractionSoir <> TraitementDao.EnumFraction.Non Then
+                    If posologieSoir <> 0 Then
+                        PosologieSoirString = posologieSoir.ToString & "+" & FractionSoir
+                    Else
+                        PosologieSoirString = FractionSoir
+                    End If
+                Else
+                    If posologieSoir <> 0 Then
+                        PosologieSoirString = posologieSoir.ToString
+                    Else
+                        PosologieSoirString = "0"
+                    End If
+                End If
+                If dt.Rows(i)("oa_traitement_posologie_base") IsNot DBNull.Value Then
+                    Rythme = dt.Rows(i)("oa_traitement_posologie_rythme")
+                    Select Case PosologieBase
+                        Case TraitementDao.EnumBaseCode.JOURNALIER
+                            Base = ""
+                            If posologieApresMidi <> 0 OrElse FractionApresMidi <> TraitementDao.EnumFraction.Non Then
+                                Posologie = Base + PosologieMatinString + ". " + PosologieMidiString + ". " + PosologieApresMidiString + ". " + PosologieSoirString
+                            Else
+                                Posologie = Base + " " + PosologieMatinString + ". " + PosologieMidiString + ". " + PosologieSoirString
+                            End If
+                        Case Else
+                            Dim RythmeString As String = ""
+                            If FractionMatin <> "" AndAlso FractionMatin <> TraitementDao.EnumFraction.Non Then
+                                If Rythme <> 0 Then
+                                    RythmeString = Rythme.ToString & "+" & FractionMatin
+                                Else
+                                    RythmeString = FractionMatin
+                                End If
+                            Else
+                                If Rythme <> 0 Then
+                                    RythmeString = Rythme.ToString
+                                End If
+                            End If
+                            Select Case dt.Rows(i)("oa_traitement_posologie_base")
+                                Case TraitementDao.EnumBaseCode.CONDITIONNEL
+                                    Base = "Conditionnel : "
+                                Case TraitementDao.EnumBaseCode.HEBDOMADAIRE
+                                    Base = "Hebdo : "
+                                Case TraitementDao.EnumBaseCode.MENSUEL
+                                    Base = "Mensuel : "
+                                Case TraitementDao.EnumBaseCode.ANNUEL
+                                    Base = "Annuel : "
+                                Case Else
+                                    Base = "Base inconnue ! "
+                            End Select
+                            Posologie = Base + RythmeString
+                    End Select
+                End If
+            End If
+
+            traitementCourrier.Posologie = Posologie
+
+            ListTraitement.Add(traitementCourrier)
+        Next
+
+        Return ListTraitement
     End Function
 
 End Class

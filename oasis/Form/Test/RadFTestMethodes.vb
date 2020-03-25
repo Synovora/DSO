@@ -3,6 +3,7 @@
     Dim parcoursDao As New ParcoursDao
     Dim contexteDao As New ContexteDao
     Dim antecedentDao As New AntecedentDao
+    Dim traitementDao As New TraitementDao
 
     Private Sub RadBtnAbandon_Click(sender As Object, e As EventArgs) Handles RadBtnAbandon.Click
         Close()
@@ -18,5 +19,9 @@
 
     Private Sub RadBtnAntecedent_Click(sender As Object, e As EventArgs) Handles RadBtnAntecedent.Click
         antecedentDao.GetListOfAntecedentPatient(1)
+    End Sub
+
+    Private Sub RadBtnTraitement_Click(sender As Object, e As EventArgs) Handles RadBtnTraitement.Click
+        traitementDao.GetListOfTraitementPatient(1)
     End Sub
 End Class
