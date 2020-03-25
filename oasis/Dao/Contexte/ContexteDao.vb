@@ -13,6 +13,11 @@ Public Class ContexteDao
         Const BioEnvironnemental = "B"
     End Structure
 
+    Public Enum EnumDiagnostic
+        SUSPICION_DE = 2
+        NOTION_DE = 3
+    End Enum
+
     Friend Function getContexteObsolete() As DataTable
         Dim SQLString As String
 
@@ -401,6 +406,72 @@ Public Class ContexteDao
         End If
 
         Return codeRetour
+    End Function
+
+    Public Function GetListOfContextebyPatient(patientId As Integer) As List(Of ContexteCourrier)
+        Dim ListContexte As New List(Of ContexteCourrier)
+        Dim antecedentDao As New AntecedentDao
+        Dim dt As DataTable
+        dt = antecedentDao.GetContextebyPatient(patientId, True)
+
+        Dim rowCount As Integer = dt.Rows.Count - 1
+        For i = 0 To rowCount Step 1
+            Dim contexteCourrier As New ContexteCourrier
+            contexteCourrier.PatientId = patientId
+            contexteCourrier.Id = dt.Rows(i)("oa_antecedent_id")
+
+            'Préparation de l'affichage du contexte
+            Dim longueurString As Integer
+            Dim longueurMax As Integer = 150
+            Dim contexteDescription As String = Coalesce(dt.Rows(i)("oa_antecedent_description"), "")
+            If contexteDescription <> "" Then
+                contexteDescription = Replace(contexteDescription, vbCrLf, " ")
+                longueurString = contexteDescription.Length
+                If longueurString > longueurMax Then
+                    longueurString = longueurMax
+                End If
+                contexteDescription.Substring(0, longueurString)
+            End If
+
+            Dim AfficheDateModification, diagnostic As String
+            Dim categorieContexte As String
+            Dim dateModification As Date
+
+            categorieContexte = ""
+            If dt.Rows(i)("oa_antecedent_categorie_contexte") IsNot DBNull.Value Then
+                categorieContexte = dt.Rows(i)("oa_antecedent_categorie_contexte")
+            End If
+
+            AfficheDateModification = ""
+            If categorieContexte = "M" Then
+                If dt.Rows(i)("oa_antecedent_date_modification") IsNot DBNull.Value Then
+                    dateModification = dt.Rows(i)("oa_antecedent_date_modification")
+                    AfficheDateModification = FormatageDateAffichage(dateModification) + " : "
+                Else
+                    If dt.Rows(i)("oa_antecedent_date_creation") IsNot DBNull.Value Then
+                        dateModification = dt.Rows(i)("oa_antecedent_date_creation")
+                        AfficheDateModification = FormatageDateAffichage(dateModification) + " : "
+                    End If
+                End If
+            End If
+
+            diagnostic = ""
+            If dt.Rows(i)("oa_antecedent_diagnostic") IsNot DBNull.Value Then
+                If CInt(dt.Rows(i)("oa_antecedent_diagnostic")) = EnumDiagnostic.SUSPICION_DE Then
+                    diagnostic = "Suspicion de "
+                Else
+                    If CInt(dt.Rows(i)("oa_antecedent_diagnostic")) = EnumDiagnostic.NOTION_DE Then
+                        diagnostic = "Notion de "
+                    End If
+                End If
+            End If
+
+            contexteCourrier.Description = AfficheDateModification & diagnostic & " " & contexteDescription
+
+            ListContexte.Add(contexteCourrier)
+        Next
+
+        Return ListContexte
     End Function
 
 End Class
