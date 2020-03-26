@@ -774,6 +774,9 @@ Public Class TraitementDao
             'Vérification de l'existence d'une fenêtre thérapeutique active et à venir
             FenetreTherapeutiqueEnCours = False
 
+            'Formatage de la posologie
+            Posologie = ""
+
             'Existence d'une fenêtre thérapeutique
             Dim dateDebutFenetreaComparer As New Date(FenetreDateDebut.Year, FenetreDateDebut.Month, FenetreDateDebut.Day, 0, 0, 0)
             Dim dateFinFenetreaComparer As New Date(FenetreDateFin.Year, FenetreDateFin.Month, FenetreDateFin.Day, 0, 0, 0)
@@ -788,8 +791,6 @@ Public Class TraitementDao
                 End If
             End If
 
-            'Formatage de la posologie
-            Posologie = ""
             If FenetreTherapeutiqueEnCours = False Then
                 Dim PosologieMatinString, PosologieMidiString, PosologieApresMidiString, PosologieSoirString As String
                 Dim FractionMatin, FractionMidi, FractionApresMidi, FractionSoir As String
