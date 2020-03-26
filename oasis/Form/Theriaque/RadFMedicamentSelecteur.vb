@@ -312,35 +312,36 @@ Public Class RadFMedicamentSelecteur
         End If
     End Sub
 
-    'Bouton d'appel de l'affichage de la Liste des médicaments depuis la classe thérapeutique de niveau 2
+    'Bouton d'appel de l'affichage de la Liste des médicaments depuis la classe thérapeutique
     Private Sub RadBtnSpec1_Click(sender As Object, e As EventArgs) Handles RadBtnSpec2.Click
         If RadGridViewATC2.CurrentRow IsNot Nothing Then
             Dim aRow As Integer = Me.RadGridViewATC2.Rows.IndexOf(Me.RadGridViewATC2.CurrentRow)
             If aRow >= 0 Then
                 Dim CodeAtc As String = RadGridViewATC2.Rows(aRow).Cells("catc_code_pk").Value
                 GetSpecialiteByATC(CodeAtc)
+                RadTxtSpecialite.Text = ""
             End If
         End If
     End Sub
 
-    'Bouton d'appel de l'affichage de la Liste des médicaments depuis la classe thérapeutique de niveau 3
     Private Sub RadBtnSpec2_Click(sender As Object, e As EventArgs) Handles RadBtnSpec3.Click
         If RadGridViewATC3.CurrentRow IsNot Nothing Then
             Dim aRow As Integer = Me.RadGridViewATC3.Rows.IndexOf(Me.RadGridViewATC3.CurrentRow)
             If aRow >= 0 Then
                 Dim CodeAtc As String = RadGridViewATC3.Rows(aRow).Cells("catc_code_pk").Value
                 GetSpecialiteByATC(CodeAtc)
+                RadTxtSpecialite.Text = ""
             End If
         End If
     End Sub
 
-    'Bouton d'appel de l'affichage de la Liste des médicaments depuis la classe thérapeutique de niveau 4
     Private Sub RadBtnSpec4_Click(sender As Object, e As EventArgs) Handles RadBtnSpec4.Click
         If RadGridViewATC4.CurrentRow IsNot Nothing Then
             Dim aRow As Integer = Me.RadGridViewATC4.Rows.IndexOf(Me.RadGridViewATC4.CurrentRow)
             If aRow >= 0 Then
                 Dim CodeAtc As String = RadGridViewATC4.Rows(aRow).Cells("catc_code_pk").Value
                 GetSpecialiteByATC(CodeAtc)
+                RadTxtSpecialite.Text = ""
             End If
         End If
     End Sub
@@ -573,4 +574,87 @@ Public Class RadFMedicamentSelecteur
         Me.Enabled = True
     End Sub
 
+    'Sélection spécialité
+    Private Sub RadBtnSelection_Click_1(sender As Object, e As EventArgs) Handles RadBtnSelection.Click
+        SelectionSpecialite()
+    End Sub
+
+    Private Sub RadGridViewSpe_DoubleClick_1(sender As Object, e As EventArgs) Handles RadGridViewSpe.DoubleClick
+        SelectionSpecialite()
+    End Sub
+
+    Private Sub SelectionSpecialite()
+        If RadGridViewSpe.CurrentRow IsNot Nothing Then
+            Dim aRow As Integer = Me.RadGridViewSpe.Rows.IndexOf(Me.RadGridViewSpe.CurrentRow)
+            If aRow >= 0 Then
+                Dim SpecialiteId As Long = RadGridViewSpe.Rows(aRow).Cells("SP_CODE_SQ_PK").Value
+                SelectedSpecialiteId = SpecialiteId
+            End If
+        End If
+        Close()
+    End Sub
+
+    Private Sub RadBtnPharmacocinetique_Click_1(sender As Object, e As EventArgs) Handles RadBtnPharmacocinetique.Click
+        If RadGridViewSpe.CurrentRow IsNot Nothing Then
+            Dim aRow As Integer = Me.RadGridViewSpe.Rows.IndexOf(Me.RadGridViewSpe.CurrentRow)
+            If aRow >= 0 Then
+                Dim SpecialiteId As Long = RadGridViewSpe.Rows(aRow).Cells("SP_CODE_SQ_PK").Value
+                Dim PharmacoCinetique As String = theriaqueDao.GetPharmacoCinetiqueBySpecialite(SpecialiteId)
+                Me.Enabled = False
+                Using form As New RadFAffichaeInfo
+                    form.InfoToDisplay = PharmacoCinetique
+                    form.Titre = "Information Pharmacocinétique"
+                    form.ShowDialog()
+                End Using
+                Me.Enabled = True
+            End If
+        End If
+    End Sub
+
+    Private Sub RadBtnParmacodynamique_Click_1(sender As Object, e As EventArgs) Handles RadBtnParmacodynamique.Click
+        If RadGridViewSpe.CurrentRow IsNot Nothing Then
+            Dim aRow As Integer = Me.RadGridViewSpe.Rows.IndexOf(Me.RadGridViewSpe.CurrentRow)
+            If aRow >= 0 Then
+                Dim SpecialiteId As Long = RadGridViewSpe.Rows(aRow).Cells("SP_CODE_SQ_PK").Value
+                Dim PharmacoDynamique As String = theriaqueDao.GetPharmacoDynamiqueBySpecialite(SpecialiteId)
+                Me.Enabled = False
+                Using form As New RadFAffichaeInfo
+                    form.InfoToDisplay = PharmacoDynamique
+                    form.Titre = "Information Pharmacodynamique"
+                    form.ShowDialog()
+                End Using
+                Me.Enabled = True
+            End If
+        End If
+    End Sub
+
+    Private Sub RadBtnEffetIndesirable_Click_1(sender As Object, e As EventArgs) Handles RadBtnEffetIndesirable.Click
+        If RadGridViewSpe.CurrentRow IsNot Nothing Then
+            Dim aRow As Integer = Me.RadGridViewSpe.Rows.IndexOf(Me.RadGridViewSpe.CurrentRow)
+            If aRow >= 0 Then
+                Dim SpecialiteId As Long = RadGridViewSpe.Rows(aRow).Cells("SP_CODE_SQ_PK").Value
+                Me.Enabled = False
+                Using form As New RadFEffetSecondaire
+                    form.MedicamentId = SpecialiteId
+                    form.ShowDialog()
+                End Using
+                Me.Enabled = True
+            End If
+        End If
+    End Sub
+
+    Private Sub RadBtnSubstance_Click_1(sender As Object, e As EventArgs) Handles RadBtnSubstance.Click
+        If RadGridViewSpe.CurrentRow IsNot Nothing Then
+            Dim aRow As Integer = Me.RadGridViewSpe.Rows.IndexOf(Me.RadGridViewSpe.CurrentRow)
+            If aRow >= 0 Then
+                Dim SpecialiteId As Long = RadGridViewSpe.Rows(aRow).Cells("SP_CODE_SQ_PK").Value
+                Me.Enabled = False
+                Using form As New RadFSubstancesListe
+                    form.SelectedSpecialite = SpecialiteId
+                    form.ShowDialog()
+                End Using
+                Me.Enabled = True
+            End If
+        End If
+    End Sub
 End Class

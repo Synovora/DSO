@@ -318,7 +318,7 @@ Public Class AntecedentDao
         Dim ListAntecedent As New List(Of AntecedentCourrier)
         Dim antecedentDao As New AntecedentDao
         Dim dt As DataTable
-        dt = antecedentDao.GetAllAntecedentbyPatient(patientId, False, False)
+        dt = antecedentDao.GetAllAntecedentbyPatient(patientId, False, True)
 
         Dim indentation As String
         Dim diagnostic As String

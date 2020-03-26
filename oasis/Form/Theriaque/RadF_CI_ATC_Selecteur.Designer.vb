@@ -913,9 +913,9 @@ Partial Class RadF_CI_ATC_Selecteur
         Me.RadGridViewSubstanceSelected.MasterTemplate.AllowDeleteRow = False
         Me.RadGridViewSubstanceSelected.MasterTemplate.AllowEditRow = False
         GridViewTextBoxColumn22.EnableExpressionEditor = False
-        GridViewTextBoxColumn22.HeaderText = "column1"
-        GridViewTextBoxColumn22.IsVisible = False
+        GridViewTextBoxColumn22.HeaderText = "Code"
         GridViewTextBoxColumn22.Name = "SAC_CODE_SQ_PK"
+        GridViewTextBoxColumn22.Width = 55
         GridViewTextBoxColumn23.EnableExpressionEditor = False
         GridViewTextBoxColumn23.HeaderText = "Dénomination substance"
         GridViewTextBoxColumn23.HeaderTextAlignment = System.Drawing.ContentAlignment.MiddleLeft

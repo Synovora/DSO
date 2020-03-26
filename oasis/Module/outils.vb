@@ -215,14 +215,14 @@ Friend Module outils
         Select Case lMois
             Case 0 To 35
                 If lMois <> 0 Then
-                    Age = "(" & lMois & " mois)"
+                    Age = lMois & " mois"
                 Else
-                    Age = "(Nouveau né)"
+                    Age = "Nouveau né"
                 End If
             Case 36 To 119
-                Age = "(" & PatientAn & " ans " & PatientMoisRestant & " mois)"
+                Age = PatientAn & " ans " & PatientMoisRestant & " mois"
             Case Else
-                Age = "(" & PatientAn.ToString & " ans)"
+                Age = PatientAn.ToString & " ans"
         End Select
 
         Return Age

@@ -81,7 +81,7 @@ Public Class RadF_CI_ATC_Selecteur
     'Liste des médicaments par dénomination
     Private Sub RadBtnFiltre_Click(sender As Object, e As EventArgs) Handles RadBtnFiltreSpecialite.Click
         Dim NbCar As Integer = RadTxtSpecialite.Text.Length
-        If RadTxtSpecialite.Text <> "" And NbCar > 2 Then
+        If RadTxtSpecialite.Text <> "" And NbCar > 3 Then
             Cursor.Current = Cursors.WaitCursor
             '1 - Recherche spécialités virtuelles en nom partiel
             Dim dt As DataTable
@@ -138,7 +138,7 @@ Public Class RadF_CI_ATC_Selecteur
             End If
             Cursor.Current = Cursors.Default
         Else
-            MessageBox.Show("Vous devez saisir au moins 3 caractères pour lancer cette option de recherche des médicaments !")
+            MessageBox.Show("Vous devez saisir au moins 4 caractères pour lancer cette option de recherche des médicaments !")
         End If
     End Sub
 
@@ -754,8 +754,36 @@ Public Class RadF_CI_ATC_Selecteur
         End If
     End Sub
 
+    'Liste des médicaments correspondant à la substance sélectionnée
     Private Sub RadBtnListeMedicamentSubstance_Click(sender As Object, e As EventArgs) Handles RadBtnListeMedicamentSubstance.Click
-        'TODO: liste des médicaments correspondant à la substance
+        If RadGridViewSubstanceSelected.CurrentRow IsNot Nothing Then
+            Dim aRow As Integer = Me.RadGridViewSubstanceSelected.Rows.IndexOf(Me.RadGridViewSubstanceSelected.CurrentRow)
+            If aRow >= 0 Then
+                Cursor.Current = Cursors.WaitCursor
+                RadTxtSpecialite.Text = ""
+                RadGridViewSpe.Rows.Clear()
+                RadGridViewSpe.FilterDescriptors.Clear()
+                Dim SubstanceId As Integer = RadGridViewSubstanceSelected.Rows(aRow).Cells("SAC_CODE_SQ_PK").Value
+                Dim ListATC As List(Of String)
+                ListATC = theriaqueDao.GetATCCodeListBySubstanceId(SubstanceId)
+
+                Dim EnumeratorATC As IEnumerator = ListATC.GetEnumerator()
+                Dim dt As DataTable
+                Dim RowsCount As Integer = 0
+                Dim iGrid As Integer = -1
+                While EnumeratorATC.MoveNext()
+                    Dim CodeATC As String = EnumeratorATC.Current.ToString
+                    dt = theriaqueDao.getSpecialiteByArgument(CodeATC, TheriaqueDao.EnumGetSpecialite.CLASSE_ATC, TheriaqueDao.EnumMonoVir.VIRTUEL)
+                    If dt.Rows.Count > 0 Then
+                        'ResultatOk = True
+                        RowsCount += dt.Rows.Count
+                    End If
+                    ChargementSpecialite(dt, False, RowsCount, iGrid)
+                    iGrid += dt.Rows.Count
+                End While
+                Cursor.Current = Cursors.Default
+            End If
+        End If
     End Sub
 
     Private Sub RadBtnEnleverATCListe_Click(sender As Object, e As EventArgs) Handles RadBtnEnleverATCListe.Click
@@ -775,7 +803,7 @@ Public Class RadF_CI_ATC_Selecteur
             If aRow >= 0 Then
                 Dim SubstanceId As Integer = RadGridViewSubstanceSelected.Rows(aRow).Cells("SAC_CODE_SQ_PK").Value
                 SubstanceListe.Remove(SubstanceId)
-                ChargementATCListe()
+                ChargementSubstanceListe()
             End If
         End If
     End Sub
