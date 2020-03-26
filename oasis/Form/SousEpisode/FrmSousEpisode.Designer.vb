@@ -39,7 +39,6 @@ Partial Class FrmSousEpisode
         Dim GridViewTextBoxColumn10 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
         Dim TableViewDefinition2 As Telerik.WinControls.UI.TableViewDefinition = New Telerik.WinControls.UI.TableViewDefinition()
         Me.RadPanel1 = New Telerik.WinControls.UI.RadPanel()
-        Me.BtnValideAndSign = New Telerik.WinControls.UI.RadButton()
         Me.BtnValidate = New Telerik.WinControls.UI.RadButton()
         Me.BtnCancel = New Telerik.WinControls.UI.RadButton()
         Me.RadPanel2 = New Telerik.WinControls.UI.RadPanel()
@@ -83,7 +82,6 @@ Partial Class FrmSousEpisode
         Me.Label4 = New System.Windows.Forms.Label()
         CType(Me.RadPanel1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.RadPanel1.SuspendLayout()
-        CType(Me.BtnValideAndSign, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.BtnValidate, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.BtnCancel, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.RadPanel2, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -127,7 +125,6 @@ Partial Class FrmSousEpisode
         '
         'RadPanel1
         '
-        Me.RadPanel1.Controls.Add(Me.BtnValideAndSign)
         Me.RadPanel1.Controls.Add(Me.BtnValidate)
         Me.RadPanel1.Controls.Add(Me.BtnCancel)
         Me.RadPanel1.Dock = System.Windows.Forms.DockStyle.Bottom
@@ -135,17 +132,6 @@ Partial Class FrmSousEpisode
         Me.RadPanel1.Name = "RadPanel1"
         Me.RadPanel1.Size = New System.Drawing.Size(1158, 37)
         Me.RadPanel1.TabIndex = 1
-        '
-        'BtnValideAndSign
-        '
-        Me.BtnValideAndSign.ForeColor = System.Drawing.Color.Red
-        Me.BtnValideAndSign.Location = New System.Drawing.Point(158, 6)
-        Me.BtnValideAndSign.Name = "BtnValideAndSign"
-        Me.BtnValideAndSign.Size = New System.Drawing.Size(109, 24)
-        Me.BtnValideAndSign.TabIndex = 11
-        Me.BtnValideAndSign.TabStop = False
-        Me.BtnValideAndSign.Text = "Signer"
-        Me.BtnValideAndSign.Visible = False
         '
         'BtnValidate
         '
@@ -726,7 +712,6 @@ Partial Class FrmSousEpisode
         Me.Text = "Sous-Episode"
         CType(Me.RadPanel1, System.ComponentModel.ISupportInitialize).EndInit()
         Me.RadPanel1.ResumeLayout(False)
-        CType(Me.BtnValideAndSign, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.BtnValidate, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.BtnCancel, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.RadPanel2, System.ComponentModel.ISupportInitialize).EndInit()
@@ -815,7 +800,6 @@ Partial Class FrmSousEpisode
     Friend WithEvents SplitPanelSousSousType As Telerik.WinControls.UI.SplitPanel
     Friend WithEvents RadSousSousTypeGrid As Telerik.WinControls.UI.RadGridView
     Friend WithEvents Label4 As Label
-    Friend WithEvents BtnValideAndSign As Telerik.WinControls.UI.RadButton
     Friend WithEvents BtnEditerDocument As Telerik.WinControls.UI.RadButton
 End Class
 

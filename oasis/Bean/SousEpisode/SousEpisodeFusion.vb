@@ -22,6 +22,11 @@
     Property Patient_NIR As String
     Property Patient_Age As String
     Property Patient_Poids As String
+    Property Patient_FC As String
+    Property Patient_PAS As String
+    Property Patient_PAD As String
+    Property Patient_SAT As String
+    Property Patient_Dextro As String
     Property Patient_sexe As String
 
     Property Episode_DateHeure As String

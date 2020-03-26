@@ -171,23 +171,6 @@ Public Class FrmSousEpisode
     ''' <summary>
     ''' 
     ''' </summary>
-    ''' <param name="sender"></param>
-    ''' <param name="e"></param>
-    Private Sub BtnValideAndSign_Click(sender As Object, e As EventArgs) Handles BtnValideAndSign.Click
-        If isCreation Then
-            serializeSousEpisode(True)
-        Else
-            sousEpisodeDao.updateValidation(Nothing, sousEpisode.Id, Nothing)
-            sousEpisode.ValidateUserId = userLog.UtilisateurId
-            sousEpisode.HorodateValidate = Date.Now
-            userValidateNom = userLog.UtilisateurPrenom + " " + userLog.UtilisateurNom
-            initControls()
-        End If
-    End Sub
-
-    ''' <summary>
-    ''' 
-    ''' </summary>
     ''' <param name="gce"></param>
     Private Sub TelechargerReponse(gce As GridCommandCellElement)
         'MessageBox.Show("Telecharger fichier " & gce.RowInfo.Cells("NomFichier").Value & " : " & gce.RowInfo.Cells("IdSousEpisode").Value & "_" & gce.RowInfo.Cells("Id").Value)
@@ -330,9 +313,6 @@ Public Class FrmSousEpisode
         BtnEditerDocument.Visible = Not isCreation AndAlso isNotValidate
 
         Dim sousEpisodeSousType As SousEpisodeSousType = TryCast(Me.DropDownSousType.SelectedItem.Value, SousEpisodeSousType)
-
-        BtnValideAndSign.Visible = isCreation = False AndAlso isNotValidate _
-                                  AndAlso SousEpisodeSousType.isUserLogAutorise(sousEpisodeSousType.ValidationProfilTypes)
 
         Me.DropDownType.Enabled = isCreation
 
@@ -522,14 +502,16 @@ Public Class FrmSousEpisode
             .SiteFax = site.Fax
             .SiteEmail = site.Mail
 
+            ' -- alimente automatiquement tous les parametres (poids, FC ..etc) 
+            episodeParametreDao.alimenteFusionDocumentParametres(sousEF, sousEpisode.EpisodeId, patient.patientId)
+
             .Patient_PrenomNom = patient.PatientPrenom & " " & patient.PatientNom
             .Patient_NIR = patient.PatientNir
             .Patient_Date_Naissance = patient.PatientDateNaissance.ToString("dd/MM/yyyy")
             .Patient_Age = patient.PatientAge
-            .Patient_Poids = "" & episodeParametreDao.getPoidsByEpisodeIdOrLastKnow(sousEpisode.EpisodeId, patient.patientId)
+            '.Patient_Poids = "" & episodeParametreDao.getPoidsByEpisodeIdOrLastKnow(sousEpisode.EpisodeId, patient.patientId)
             .Patient_Poids = If(.Patient_Poids = "0", "", .Patient_Poids)
             .Patient_sexe = patient.PatientGenre.ToLower
-
             .Commentaire = sousEpisode.Commentaire
 
             .Episode_DateHeure = episode.DateCreation.ToString("dd MMMM yyyy à hh:mm")
@@ -599,7 +581,6 @@ Public Class FrmSousEpisode
 
         Return lstFusion
     End Function
-
 
     ''' <summary>
     ''' 

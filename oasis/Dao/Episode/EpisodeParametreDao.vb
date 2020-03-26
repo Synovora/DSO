@@ -109,6 +109,50 @@ Public Class EpisodeParametreDao
         End Using
     End Function
 
+    ''' <summary>
+    ''' 
+    ''' </summary>
+    ''' <param name="sousEpisodeFusion"></param>
+    ''' <param name="idEpisode"></param>
+    ''' <param name="idPatient"></param>
+    Friend Sub alimenteFusionDocumentParametres(sousEpisodeFusion As SousEpisodeFusion, idEpisode As Long, idPatient As Long)
+
+        Using con As SqlConnection = GetConnection()
+            Dim valeur As Double
+            Dim isComposite As Boolean
+            Dim strTodo As String
+            Dim dataAdapter As SqlDataAdapter = New SqlDataAdapter()
+            Using dataAdapter
+                Dim command As New SqlCommand("oasis.GET_PARAMETRE_FUSION_DOC", con)
+                command.CommandType = CommandType.StoredProcedure
+
+                dataAdapter.SelectCommand = command
+
+                dataAdapter.SelectCommand.Parameters.AddWithValue("@ID_EPISODE", idEpisode)
+                dataAdapter.SelectCommand.Parameters.AddWithValue("@ID_PATIENT", idPatient)
+                Dim dataTable As DataTable = New DataTable()
+                Using dataTable
+                    Try
+                        dataAdapter.Fill(dataTable)
+                    Catch ex As Exception
+                        Throw ex
+                    End Try
+                    For Each row In dataTable.Rows
+                        valeur = Coalesce(row("valeur"), 0)
+                        isComposite = Coalesce(row("is_composite_fusion_document"), False)
+                        If isComposite Then
+                            strTodo = "" & valeur
+                        Else
+                            strTodo = row("description") & " : " & valeur & " " & row("unite")
+                        End If
+                        If valeur <> 0 Then CallByName(sousEpisodeFusion, row("field_fusion_name"), CallType.Set, strTodo)
+                    Next
+                End Using
+            End Using
+        End Using
+
+    End Sub
+
     Friend Function getPoidsByEpisodeIdOrLastKnow(idEpisode As Long, idPatient As Long) As Double
         Dim SQLString As String
 

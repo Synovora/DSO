@@ -130,29 +130,11 @@ Public Class FrmSousEpisodeListe
         If Me.RadSousEpisodeGrid.CurrentRow Is Nothing _
                 OrElse Me.RadSousEpisodeGrid.Rows.Count = 0 _
                 OrElse Me.RadSousEpisodeGrid.CurrentRow.IsSelected = False Then
-            BtnValidate.Visible = False
             BtnDetail.Visible = False
         Else
             BtnDetail.Visible = True
-            BtnValidate.Visible = TryCast(Me.RadSousEpisodeGrid.CurrentRow.Parent, MasterGridViewTemplate) IsNot Nothing _
-                                  AndAlso Me.RadSousEpisodeGrid.CurrentRow.Cells("HorodateValidate").Value Is Nothing _
-                                  AndAlso SousEpisodeSousType.isUserLogAutorise(Me.RadSousEpisodeGrid.CurrentRow.Cells("ValidationProfilTypes").Value)
         End If
 
-    End Sub
-
-
-    ''' <summary>
-    ''' 
-    ''' </summary>
-    ''' <param name="sender"></param>
-    ''' <param name="e"></param>
-    Private Sub BtnValidate_Click(sender As Object, e As EventArgs) Handles BtnValidate.Click
-        If MsgBox("Etes-vous sur de vouloir signer ce sous-épisode ?", MsgBoxStyle.YesNo Or MsgBoxStyle.DefaultButton2 Or MsgBoxStyle.Critical, "Signature Sous-Episode") = MsgBoxResult.Yes Then
-            Dim sousEpisodeDao = New SousEpisodeDao
-            sousEpisodeDao.updateValidation(Nothing, Me.RadSousEpisodeGrid.CurrentRow.Cells("IdSousEpisode").Value, Nothing)
-            refreshGrid()
-        End If
     End Sub
 
     ''' <summary>
