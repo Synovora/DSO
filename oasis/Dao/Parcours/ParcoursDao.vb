@@ -184,17 +184,16 @@ Public Class ParcoursDao
                     con.Close()
                 End Try
 
-                Dim rowCount As Integer = dt.Rows.Count - 1
-                For i = 0 To rowCount Step 1
+                For Each row In dt.Rows
                     Dim intervenantParcours As New IntervenantParcours
-                    intervenantParcours.IntervenantId = dt.Rows(i)("oa_parcours_ror_id")
-                    intervenantParcours.PatientId = dt.Rows(i)("oa_parcours_patient_id")
+                    intervenantParcours.IntervenantId = row("oa_parcours_ror_id")
+                    intervenantParcours.PatientId = row("oa_parcours_patient_id")
                     Dim Intervenant As Ror
                     Intervenant = rorDao.getRorById(intervenantParcours.IntervenantId)
                     intervenantParcours.Nom = Intervenant.Nom
                     intervenantParcours.Structure = Intervenant.StructureNom
 
-                    Dim SpecialiteId As Long = dt.Rows(i)("oa_parcours_specialite")
+                    Dim SpecialiteId As Long = row("oa_parcours_specialite")
                     intervenantParcours.Specialite = Environnement.Table_specialite.GetSpecialiteDescription(SpecialiteId)
 
                     ListIntervenant.Add(intervenantParcours)

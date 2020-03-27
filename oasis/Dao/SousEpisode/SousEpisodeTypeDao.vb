@@ -29,7 +29,8 @@ Public Class SousEpisodeTypeDao
             "	  id, " & vbCrLf &
             "     categorie, " & vbCrLf &
             "     horodate_creation, " & vbCrLf &
-            "	  libelle " & vbCrLf &
+            "	  libelle, " & vbCrLf &
+            "	  is_with_destinataire " & vbCrLf &
             "FROM [oasis].[oa_r_sous_episode_type] " & vbCrLf '&
         '"WHERE type<> @type " & vbCrLf
 
@@ -66,14 +67,15 @@ Public Class SousEpisodeTypeDao
 
         Try
             Dim SQLstring As String = "INSERT INTO oa_r_sous_episode_type " &
-                    "(categorie, horodate_creation, libelle)" &
-            " VALUES (@categorie, @dateCreation, @libelle)"
+                    "(categorie, horodate_creation, libelle, is_with_destinataire)" &
+            " VALUES (@categorie, @dateCreation, @libelle, @is_with_destinataire)"
 
             Dim cmd As New SqlCommand(SQLstring, con, transaction)
             With cmd.Parameters
                 .AddWithValue("@categorie", seType.Category)
                 .AddWithValue("@dateCreation", seType.HorodateCreation)
                 .AddWithValue("@libelle", seType.Libelle)
+                .AddWithValue("@is_with_destinataire", seType.isWithDestinataire)
             End With
 
             da.InsertCommand = cmd
@@ -99,6 +101,7 @@ Public Class SousEpisodeTypeDao
         seType.Category = Coalesce(row("categorie"), "")
         seType.HorodateCreation = row("horodate_creation")
         seType.Libelle = row("libelle")
+        seType.isWithDestinataire = Coalesce(row("is_with_destinataire"), False)
         seType.LstSousEpisodeSousType = New SousEpisodeSousTypeDao().getLstSousEpisodeSousType(seType.Id)
         Return seType
     End Function

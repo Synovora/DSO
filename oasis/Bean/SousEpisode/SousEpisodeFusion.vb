@@ -17,6 +17,10 @@
     Property SiteFax As String
     Property SiteEmail As String
 
+    Property IntervenantNom
+    Property IntervenantSpecialite
+    Property IntervenantStructure
+
     Property Patient_PrenomNom As String
     Property Patient_Date_Naissance As String
     Property Patient_NIR As String

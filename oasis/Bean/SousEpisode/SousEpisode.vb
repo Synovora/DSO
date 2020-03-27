@@ -2,6 +2,7 @@
 Imports Oasis_Common
 Public Class SousEpisode
     Property Id As Long
+    Property IdIntervenant As Long
     Property EpisodeId As Long
     Property IdSousEpisodeType As Long
     Property IdSousEpisodeSousType As Long
@@ -26,6 +27,7 @@ Public Class SousEpisode
     Public Sub New(row As DataRow)
         Me.Id = row("id")
         Me.EpisodeId = row("episode_id")
+        Me.IdIntervenant = Coalesce(row("id_intervenant"), 0)
         Me.IdSousEpisodeType = row("id_sous_episode_type")
         Me.IdSousEpisodeSousType = row("id_sous_episode_sous_type")
 
@@ -63,6 +65,10 @@ Public Class SousEpisode
             If s.IdSousEpisodeSousSousType = idSousSousType Then Return True
         Next
         Return False
+    End Function
+
+    Public Function isIntervenant() As Boolean
+        Return Me.IdIntervenant <> 0
     End Function
 
     Public Function getContenu() As Byte()

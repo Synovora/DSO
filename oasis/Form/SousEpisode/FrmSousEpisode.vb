@@ -13,6 +13,7 @@ Public Class FrmSousEpisode
     Dim sousEpisodeSousTypeDao As SousEpisodeSousTypeDao = New SousEpisodeSousTypeDao
     Dim sousEpisodeSousSousTypeDao As SousEpisodeSousSousTypeDao = New SousEpisodeSousSousTypeDao
     Dim sousEpisodeReponseDao As SousEpisodeReponseDao = New SousEpisodeReponseDao
+    Dim parcoursDao As ParcoursDao = New ParcoursDao
 
     Dim episode As Episode, patient As Patient, sousEpisode As SousEpisode
     Dim userCreateNom As String, userUpdateNom As String, userValidateNom As String
@@ -20,9 +21,10 @@ Public Class FrmSousEpisode
     Dim isNotValidate As Boolean
     Dim isPatientALD As Boolean
 
-    Dim lstSousEpisodeType As List(Of SousEpisodeType) = New List(Of SousEpisodeType)
-    Dim lstSousEpisodeSousType As List(Of SousEpisodeSousType) = New List(Of SousEpisodeSousType)
-    Dim lstSousEpisodeSousSousType As List(Of SousEpisodeSousSousType) = New List(Of SousEpisodeSousSousType)
+    Dim lstSousEpisodeType As List(Of SousEpisodeType)
+    Dim lstSousEpisodeSousType As List(Of SousEpisodeSousType)
+    Dim lstSousEpisodeSousSousType As List(Of SousEpisodeSousSousType)
+    Dim lstIntervenant As List(Of IntervenantParcours)
 
     ''' <summary>
     ''' 
@@ -61,8 +63,9 @@ Public Class FrmSousEpisode
     ''' <param name="e"></param>
     Private Sub DropDownType_SelectedIndexChanged(sender As Object, e As Data.PositionChangedEventArgs) Handles DropDownType.SelectedIndexChanged
         If Me.DropDownType.SelectedItem IsNot Nothing Then
-            initSousTypes(TryCast(Me.DropDownType.SelectedItem.Value, SousEpisodeType).Id)
-            'initSousTypes(lstSousEpisodeType(e.Position).Id)
+            Dim seType = TryCast(Me.DropDownType.SelectedItem.Value, SousEpisodeType)
+            initSousTypes(seType.Id)
+            initDestinataire(seType)
         End If
     End Sub
 
@@ -165,7 +168,9 @@ Public Class FrmSousEpisode
     ''' <param name="sender"></param>
     ''' <param name="e"></param>
     Private Sub BtnValidate_Click(sender As Object, e As EventArgs) Handles BtnValidate.Click
-        serializeSousEpisode(False)
+        serializeSousEpisode()
+        ' -- on enchaine directe sur edition doc
+        BtnEditerDocument_Click(sender, e)
     End Sub
 
     ''' <summary>
@@ -258,10 +263,14 @@ Public Class FrmSousEpisode
         End If
 
         ' -- listes de references
+        lstIntervenant = parcoursDao.GetListOfIntervenantNonOasisByPatient(patient.patientId)
         lstSousEpisodeType = sousEpisodeTypeDao.getLstSousEpisodeType()
         lstSousEpisodeSousType = sousEpisodeSousTypeDao.getLstSousEpisodeSousType()
         lstSousEpisodeSousSousType = sousEpisodeSousSousTypeDao.getLstSousEpisodeSousSousType()
+
         With sousEpisode
+
+            ' -- combo type
             Me.DropDownType.Items.Clear()
             For Each sousEpisodeType As SousEpisodeType In lstSousEpisodeType
                 If filtreTypeByProfil(sousEpisodeType) Then Continue For
@@ -279,6 +288,19 @@ Public Class FrmSousEpisode
                 initSousTypes(TryCast(Me.DropDownType.SelectedItem.Value, SousEpisodeType).Id)
             End If
             Me.DropDownType.DefaultItemsCountInDropDown = DropDownType.Items.Count
+
+            ' -- combo destinataires
+            Me.DropDownDestinataire.Items.Clear()
+            For Each intervenant As IntervenantParcours In lstIntervenant
+                Dim radListItem As New RadListDataItem(intervenant.Nom, intervenant)
+                Me.DropDownDestinataire.Items.Add(radListItem)
+                'If TryCast(radListItem.Value, SousEpisodeType).Id = Me.sousEpisode.IdSousEpisodeType Then
+                If intervenant.IntervenantId = Me.sousEpisode.IdIntervenant Then radListItem.Selected = True
+            Next
+            If isCreation AndAlso Me.DropDownDestinataire.Items.Count > 0 Then
+                Me.DropDownDestinataire.SelectedItem = Me.DropDownDestinataire.Items(0)
+            End If
+            Me.DropDownDestinataire.DefaultItemsCountInDropDown = DropDownDestinataire.Items.Count
 
         End With
 
@@ -315,6 +337,7 @@ Public Class FrmSousEpisode
         Dim sousEpisodeSousType As SousEpisodeSousType = TryCast(Me.DropDownSousType.SelectedItem.Value, SousEpisodeSousType)
 
         Me.DropDownType.Enabled = isCreation
+        Me.DropDownDestinataire.Enabled = isCreation
 
         ChkALD.Checked = If(isCreation, isPatientALD, sousEpisode.IsALD)
         ChkALD.Enabled = isCreation
@@ -482,8 +505,13 @@ Public Class FrmSousEpisode
         Dim lstAntecedent = antecedentDao.GetListOfAntecedentPatient(patient.patientId)
         Dim lstTraitement = traitementDao.GetListOfTraitementPatient(patient.patientId)
         Dim sousType As SousEpisodeSousType = TryCast(Me.DropDownSousType.SelectedItem.Value, SousEpisodeSousType)
+        Dim intervenant As IntervenantParcours
+        intervenant = If(DropDownDestinataire.SelectedIndex = -1,
+                        New IntervenantParcours,
+                       TryCast(Me.DropDownDestinataire.SelectedItem.Value, IntervenantParcours))
 
         With sousEF
+
             .USNom = uniteSanitaire.Oa_unite_sanitaire_description
             .USAdr1 = uniteSanitaire.Oa_unite_sanitaire_adresse1
             .USAdr2 = uniteSanitaire.Oa_unite_sanitaire_adresse2
@@ -502,6 +530,10 @@ Public Class FrmSousEpisode
             .SiteFax = site.Fax
             .SiteEmail = site.Mail
 
+            .IntervenantNom = Coalesce(intervenant.Nom, "")
+            .IntervenantSpecialite = Coalesce(intervenant.Specialite, "")
+            .IntervenantStructure = Coalesce(intervenant.Structure, "")
+
             ' -- alimente automatiquement tous les parametres (poids, FC ..etc) 
             episodeParametreDao.alimenteFusionDocumentParametres(sousEF, sousEpisode.EpisodeId, patient.patientId)
 
@@ -519,9 +551,13 @@ Public Class FrmSousEpisode
             .Sous_Type_Libelle = sousType.Libelle
 
             ' -- recherche des sous-type_detail (sousoustype)
-            Dim isWithALD = False, isWithNonAld = False
+            Dim isWithALD = False, isWithNonAld = False, nbSelected = 0
             If Me.RadSousSousTypeGrid.Rows.Count > 0 Then
-                Dim isSautLigneAvant = Me.RadSousSousTypeGrid.Rows.Count < 6
+                Dim isSautLigneAvant = True
+                For Each row In RadSousSousTypeGrid.Rows
+                    If row.Cells("ChkChoice").Value Then nbSelected += 1
+                    If nbSelected > 5 Then isSautLigneAvant = False : Exit For
+                Next
                 For Each row In RadSousSousTypeGrid.Rows
                     If row.Cells("ChkChoice").Value Then
                         If row.Cells("ChkALD").Value Then ' ALD
@@ -651,6 +687,11 @@ Public Class FrmSousEpisode
 
     End Sub
 
+    Private Sub initDestinataire(sousEpisodeType As SousEpisodeType)
+        Me.LblDestinataire.Visible = sousEpisodeType.isWithDestinataire()
+        Me.DropDownDestinataire.Visible = sousEpisodeType.isWithDestinataire()
+    End Sub
+
     ''' <summary>
     ''' 
     ''' </summary>
@@ -670,12 +711,13 @@ Public Class FrmSousEpisode
         End If
     End Sub
 
-    Private Sub serializeSousEpisode(isWithSign As Boolean)
+    Private Sub serializeSousEpisode()
         With sousEpisode
             .HorodateCreation = DateTime.Now
             .EpisodeId = episode.Id
             .IdSousEpisodeType = TryCast(Me.DropDownType.SelectedItem.Value, SousEpisodeType).Id
             .IdSousEpisodeSousType = TryCast(Me.DropDownSousType.SelectedItem.Value, SousEpisodeSousType).Id
+            .IdIntervenant = If(Me.DropDownDestinataire.SelectedIndex = -1, 0, TryCast(Me.DropDownDestinataire.SelectedItem.Value, IntervenantParcours).IntervenantId)
             .CreateUserId = userLog.UtilisateurId
             .Commentaire = TxtRDVCommentaire.Text
             .IsALD = ChkALD.Checked And TryCast(Me.DropDownSousType.SelectedItem.Value, SousEpisodeSousType).IsALDPossible And isPatientALD
@@ -701,8 +743,7 @@ Public Class FrmSousEpisode
         End With
 
 
-        sousEpisodeDao.Create(sousEpisode, isWithSign)
-        If isWithSign Then userValidateNom = userLog.UtilisateurPrenom + " " + userLog.UtilisateurNom
+        sousEpisodeDao.Create(sousEpisode)
 
         ' --- reaffiche le formulaire en mode update
         isCreation = False

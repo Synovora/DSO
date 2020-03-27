@@ -1,5 +1,4 @@
 ﻿Imports System.IO
-Imports Oasis_WF.My.Resources
 Imports Telerik.WinControls
 Imports Telerik.WinControls.UI
 Imports Telerik.WinControls.UI.RichTextEditorRibbonUI
@@ -12,6 +11,13 @@ Public Class FrmEditDocxSousEpisode
 
     Dim sousEpisode As SousEpisode
     Dim isDocumentChange As Boolean = False
+
+    Enum ActionDOC
+        QUITTER = -1
+        RETOUR = 0
+        ENREGISTRER = 1
+        ENREGISTRER_ET_SIGNER = 2
+    End Enum
 
     Sub New(sousEpisode As SousEpisode)
         ' Cet appel est requis par le concepteur.
@@ -28,7 +34,7 @@ Public Class FrmEditDocxSousEpisode
         Me.Cursor = Cursors.WaitCursor
         Try
             tbl = provider.Export(Me.RadRichTextEditor1.Document)
-            SousEpisode.writeContenuModel(tbl)
+            sousEpisode.writeContenuModel(tbl)
             ResetFlagChange()
             Notification.show("Sauvegarde", "Sauvegarde effectuée avec succès !")
         Catch err As Exception
@@ -43,11 +49,20 @@ Public Class FrmEditDocxSousEpisode
     End Sub
 
     Private Sub FrmEditDocxSousEpisode_FormClosing(sender As Object, e As FormClosingEventArgs) Handles MyBase.FormClosing
-        If isDocumentChange Then
-            If Not MsgBox("Etes-vous sur de vouloir quitter sans sauvegarder ce fichier ?", MsgBoxStyle.YesNo Or MsgBoxStyle.DefaultButton2 Or MsgBoxStyle.Critical, "Suppression") = MsgBoxResult.Yes Then
-                e.Cancel = True
-            End If
-        End If
+        Dim choix = choixAction()
+
+        Select Case choix
+            Case ActionDOC.RETOUR
+                e.Cancel = True : Return
+            Case ActionDOC.ENREGISTRER
+                backstageButtonSaveAs_Click(sender, e)
+            Case ActionDOC.QUITTER
+                If isDocumentChange Then
+                    If Not MsgBox("Des modifications vont être abandonnées !" & vbCrLf & "Etes vous sùr ? ", MsgBoxStyle.YesNo Or MsgBoxStyle.DefaultButton2 Or MsgBoxStyle.Critical, "Suppression") = MsgBoxResult.Yes Then
+                        e.Cancel = True
+                    End If
+                End If
+        End Select
     End Sub
 
     Private Sub FrmEditDocxSousEpisode_Shown(sender As Object, e As EventArgs) Handles MyBase.Shown
@@ -136,5 +151,14 @@ Public Class FrmEditDocxSousEpisode
         Next
     End Sub
 
+    Private Function choixAction() As ActionDOC
+        Dim choix As ActionDOC
+        Using frmAction As FrmActionDoc = New FrmActionDoc
+            frmAction.Location = New Point(MousePosition.X - frmAction.Size.Width - 30, MousePosition.Y)
+            frmAction.ShowDialog()
+            choix = frmAction.ActionChoisie
+            Return choix
+        End Using
+    End Function
 
 End Class

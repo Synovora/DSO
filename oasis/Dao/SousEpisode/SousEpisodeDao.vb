@@ -22,6 +22,7 @@ Public Class SousEpisodeDao
             "SELECT " & vbCrLf &
             "	  SE.id, " & vbCrLf &
             "     SE.episode_id, " & vbCrLf &
+            "     SE.id_intervenant, " & vbCrLf &
             "     SE.id_sous_episode_type, " & vbCrLf &
             "     SE.id_sous_episode_sous_type, " & vbCrLf &
             "     SE.create_user_id, " & vbCrLf &
@@ -146,7 +147,7 @@ Public Class SousEpisodeDao
 
     End Sub
 
-    Friend Function Create(sousEpisode As SousEpisode, isWithSign As Boolean) As Boolean
+    Friend Function Create(sousEpisode As SousEpisode) As Boolean
         Dim da As SqlDataAdapter = New SqlDataAdapter()
         Dim codeRetour As Boolean = True
         Dim con As SqlConnection
@@ -156,15 +157,16 @@ Public Class SousEpisodeDao
 
         Try
             Dim SQLstring As String = "INSERT INTO oasis.oa_sous_episode " &
-                    "(episode_id , id_sous_episode_type , id_sous_episode_sous_type , create_user_id , horodate_creation , " &
+                    "(episode_id , id_intervenant, id_sous_episode_type , id_sous_episode_sous_type , create_user_id , horodate_creation , " &
                     " commentaire , is_ald , is_reponse, delai_since_validation )" &
-            " VALUES (@episode_id, @id_sous_episode_type, @id_sous_episode_sous_type, @create_user_id, @horodate_creation, " &
+            " VALUES (@episode_id, @id_intervenant, @id_sous_episode_type, @id_sous_episode_sous_type, @create_user_id, @horodate_creation, " &
                      " @commentaire, @is_ald, @is_reponse, @delai_since_validation); SELECT SCOPE_IDENTITY()"
 
             sousEpisode.HorodateCreation = DateTime.Now
             Dim cmd As New SqlCommand(SQLstring, con, transaction)
             With cmd.Parameters
                 .AddWithValue("@episode_id", sousEpisode.EpisodeId)
+                .AddWithValue("@id_intervenant", If(sousEpisode.IdIntervenant = 0, DBNull.Value, sousEpisode.IdIntervenant))
                 .AddWithValue("@id_sous_episode_type", sousEpisode.IdSousEpisodeType)
                 .AddWithValue("@id_sous_episode_sous_type", sousEpisode.IdSousEpisodeSousType)
                 .AddWithValue("@create_user_id", sousEpisode.CreateUserId)
@@ -189,11 +191,11 @@ Public Class SousEpisodeDao
             End If
 
             ' --- process de signature 
-            If isWithSign Then
-                updateValidation(con, sousEpisode.Id, transaction)
-                sousEpisode.HorodateValidate = Date.Now
-                sousEpisode.ValidateUserId = userLog.UtilisateurId
-            End If
+            'If isWithSign Then
+            ' updateValidation(con, sousEpisode.Id, transaction)
+            ' sousEpisode.HorodateValidate = Date.Now
+            ' sousEpisode.ValidateUserId = userLog.UtilisateurId
+            'End If
 
             transaction.Commit()
 
