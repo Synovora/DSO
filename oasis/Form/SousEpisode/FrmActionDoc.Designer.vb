@@ -72,6 +72,7 @@ Partial Class FrmActionDoc
         Me.AllowResize = False
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
+        Me.BackColor = System.Drawing.Color.FromArgb(CType(CType(191, Byte), Integer), CType(CType(219, Byte), Integer), CType(CType(255, Byte), Integer))
         Me.BorderColor = System.Drawing.Color.FromArgb(CType(CType(59, Byte), Integer), CType(CType(90, Byte), Integer), CType(CType(130, Byte), Integer))
         Me.CancelButton = Me.BtnAnnulation
         Me.ClientSize = New System.Drawing.Size(239, 153)
@@ -86,7 +87,7 @@ Partial Class FrmActionDoc
         Me.ShowInTaskbar = False
         Me.StartPosition = System.Windows.Forms.FormStartPosition.Manual
         Me.Text = "FrmActionDoc"
-        Me.ThemeName = ""
+        Me.ThemeName = "ControlDefault"
         CType(Me.BtnEnregistrer, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.BtnAnnulation, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.RBtnQuitterSansEnreg, System.ComponentModel.ISupportInitialize).EndInit()

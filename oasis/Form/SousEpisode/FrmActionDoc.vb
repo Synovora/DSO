@@ -17,4 +17,9 @@ Public Class FrmActionDoc
         ActionChoisie = FrmEditDocxSousEpisode.ActionDOC.ENREGISTRER
         Close()
     End Sub
+
+    Private Sub BtnSigner_Click(sender As Object, e As EventArgs) Handles BtnSigner.Click
+        ActionChoisie = FrmEditDocxSousEpisode.ActionDOC.ENREGISTRER_ET_SIGNER
+        Close()
+    End Sub
 End Class

@@ -1,34 +1,8 @@
 ﻿Public Class RadFNotification
-    Private _titre As String
-    Private _message As String
-    Private _duree As Integer
 
     Public Property Titre As String
-        Get
-            Return _titre
-        End Get
-        Set(value As String)
-            _titre = value
-        End Set
-    End Property
-
     Public Property Message As String
-        Get
-            Return _message
-        End Get
-        Set(value As String)
-            _message = value
-        End Set
-    End Property
-
     Public Property Duree As Integer
-        Get
-            Return _duree
-        End Get
-        Set(value As Integer)
-            _duree = value
-        End Set
-    End Property
 
     Dim Interval As Integer
 

@@ -211,6 +211,55 @@ Public Class SousEpisodeDao
         Return codeRetour
     End Function
 
+
+    Friend Sub writeDocAndEventualySign(sousEpisode As SousEpisode, tbl As Byte(), isSignAlso As Boolean, dateSignature As Date)
+        Dim da As SqlDataAdapter = New SqlDataAdapter()
+        Dim con As SqlConnection = GetConnection()
+        Dim transaction As SqlTransaction = con.BeginTransaction
+
+        Try
+            ' -- 1 : enregistrement en base si signataure
+            If isSignAlso Then
+                dateSignature = DateTime.Now
+                Dim SQLstring As String = "UPDATE oasis.oa_sous_episode " &
+                                      "SET validate_user_id = @ValidateUserId, horodate_validate = @HoroDateValidate " &
+                                      "WHERE id=@Id"
+
+                Dim cmd As New SqlCommand(SQLstring, con, transaction)
+                With cmd.Parameters
+                    .AddWithValue("@ValidateUserId", userLog.UtilisateurId)
+                    .AddWithValue("@HoroDateValidate", dateSignature)
+                    .AddWithValue("@id", sousEpisode.Id)
+                End With
+
+                da.UpdateCommand = cmd
+                Dim nb As Integer = da.UpdateCommand.ExecuteNonQuery()
+                If (nb <> 1) Then
+                    Throw New Exception("Validation échouée (" & nb & ")")
+                End If
+            End If
+
+            ' -- 2 : serialisation du fichier
+            sousEpisode.writeContenuModel(tbl)
+
+            ' -- 3 : commit et maj bean si signature
+            If isSignAlso Then
+                transaction.Commit()
+                sousEpisode.ValidateUserId = userLog.UtilisateurId
+                sousEpisode.HorodateValidate = dateSignature
+            End If
+
+
+        Catch ex As Exception
+            If isSignAlso Then transaction.Rollback()
+            Throw ex
+        Finally
+            transaction.Dispose()
+            con.Close()
+        End Try
+
+    End Sub
+
     Friend Function updateValidation(con As SqlConnection, idSousEpisode As Long, transaction As SqlTransaction) As Boolean
         Dim da As SqlDataAdapter = New SqlDataAdapter()
         Dim codeRetour As Boolean = True

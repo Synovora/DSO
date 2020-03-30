@@ -18,8 +18,9 @@ Public Class FrmSousEpisode
     Dim episode As Episode, patient As Patient, sousEpisode As SousEpisode
     Dim userCreateNom As String, userUpdateNom As String, userValidateNom As String
     Dim isCreation As Boolean
-    Dim isNotValidate As Boolean
+    Dim isNotSigned As Boolean
     Dim isPatientALD As Boolean
+    Dim isFusionTodo As Boolean
 
     Dim lstSousEpisodeType As List(Of SousEpisodeType)
     Dim lstSousEpisodeSousType As List(Of SousEpisodeSousType)
@@ -312,7 +313,7 @@ Public Class FrmSousEpisode
     ''' 
     ''' </summary>
     Private Sub initControls()
-        isNotValidate = (sousEpisode.HorodateValidate = Nothing)
+        isNotSigned = (sousEpisode.HorodateValidate = Nothing)
 
         With sousEpisode
             If .HorodateCreation = Nothing Then .HorodateCreation = DateTime.Now
@@ -329,10 +330,10 @@ Public Class FrmSousEpisode
             refreshGrid()
         End If
         TxtDelai.Enabled = isCreation
-        BtnAjoutReponse.Visible = Not isCreation AndAlso isNotValidate = False
+        BtnAjoutReponse.Visible = isCreation = False AndAlso isNotSigned = False
         BtnValidate.Visible = isCreation
 
-        BtnEditerDocument.Visible = Not isCreation AndAlso isNotValidate
+        BtnEditerDocument.Visible = Not isCreation
 
         Dim sousEpisodeSousType As SousEpisodeSousType = TryCast(Me.DropDownSousType.SelectedItem.Value, SousEpisodeSousType)
 
@@ -435,19 +436,27 @@ Public Class FrmSousEpisode
             Dim ins = New MemoryStream(tbl)
             Dim provider = New DocxFormatProvider()
 
-            Using frm = New FrmEditDocxSousEpisode(sousEpisode)
+            Using frm = New FrmEditDocxSousEpisode(sousEpisode, isNotSigned, sousType.ValidationProfilTypes)
                 If tbl.Count > 0 Then
                     frm.RadRichTextEditor1.Document = provider.Import(ins)
                 End If
-                frm.RadRichTextEditor1.Document.MailMergeDataSource.ItemsSource = lstSousEpisodeFusion
-                frm.RadRichTextEditor1.UpdateAllFields(FieldDisplayMode.DisplayName)
+                If isNotSigned AndAlso isFusionTodo Then
+                    frm.RadRichTextEditor1.Document.MailMergeDataSource.ItemsSource = lstSousEpisodeFusion
+                    frm.RadRichTextEditor1.UpdateAllFields(FieldDisplayMode.DisplayName)
 
-                Dim merged = frm.RadRichTextEditor1.MailMerge()
-                frm.RadRichTextEditor1.Document = merged
+                    Dim merged = frm.RadRichTextEditor1.MailMerge()
+                    frm.RadRichTextEditor1.Document = merged
+                End If
                 ins.Dispose()
                 tbl = Nothing
                 'frm.ReplaceAllMatches("toto", "titi")
                 frm.ShowDialog()
+                Dim isNotSignedNew = (sousEpisode.HorodateValidate = Nothing)
+                If isNotSignedNew = False AndAlso isNotSignedNew <> isNotSigned Then
+                    isNotSigned = isNotSignedNew
+                    userValidateNom = userLog.UtilisateurPrenom + " " + userLog.UtilisateurNom
+                    initControls()
+                End If
             End Using
             refreshGrid()
         Catch err As Exception
@@ -476,11 +485,13 @@ Public Class FrmSousEpisode
         Dim tbl As Byte() = {}
         Try
             tbl = sousEpisode.getContenu()
+            isFusionTodo = False
             Return tbl
         Catch err As Exception
             ' --- si inexistant => 1ere saisie : on récupère le modèle
             If err IsNot Nothing AndAlso err.Message IsNot Nothing AndAlso err.Message.Contains("Fichier demandé inexistant") Then
                 tbl = sousEpisodeSousType.getContenuModel()
+                isFusionTodo = True ' 
                 Return tbl
             End If
             Throw err
@@ -542,7 +553,6 @@ Public Class FrmSousEpisode
             .Patient_Date_Naissance = patient.PatientDateNaissance.ToString("dd/MM/yyyy")
             .Patient_Age = patient.PatientAge
             '.Patient_Poids = "" & episodeParametreDao.getPoidsByEpisodeIdOrLastKnow(sousEpisode.EpisodeId, patient.patientId)
-            .Patient_Poids = If(.Patient_Poids = "0", "", .Patient_Poids)
             .Patient_sexe = patient.PatientGenre.ToLower
             .Commentaire = sousEpisode.Commentaire
 
@@ -577,16 +587,27 @@ Public Class FrmSousEpisode
                 Next
             End If
 
-            ' -- gestion des entete et fairefaire
-            If isWithALD = False Then .ALD_Avec_Entete = "" Else .ALD_Avec_FaireFaire = sousType.Commentaire
-            If isWithNonAld = False Then
-                If isWithALD = False Then
-                    .ALD_Sans_Entete = ""
-                End If
+            ' -- gestion des entete et fairefaire et signature
+            If isWithALD Then
+                .ALD_Avec_FaireFaire = sousType.Commentaire
+                .Signataire_Fonction_ALD = "@Signataire_Fonction"
+                .Signataire_PrenomNom_ALD = "@Signataire_PrenomNom"
             Else
-                .ALD_Sans_FaireFaire = sousType.Commentaire
-                If isWithALD = False Then .ALD_Sans_Entete = ""
+                .ALD_Avec_Entete = ""
+                .Signataire_Fonction_ALD = ""
+                .Signataire_PrenomNom_ALD = ""
             End If
+
+            If isWithNonAld Then
+                .ALD_Sans_FaireFaire = sousType.Commentaire
+                .Signataire_Fonction = "@Signataire_Fonction"
+                .Signataire_PrenomNom = "@Signataire_PrenomNom"
+            Else
+                .Signataire_Fonction = ""
+                .Signataire_PrenomNom = ""
+            End If
+            ' -- pas d'entete sur le non ald si pas d'ald
+            If isWithALD = False Then .ALD_Sans_Entete = ""
 
             ' --- gestion des context
             Dim isNotFirst = False
@@ -608,9 +629,11 @@ Public Class FrmSousEpisode
                 isNotFirst = True
             Next
 
-            .Signature_Date = Date.Now.ToString("dd MMM yyyy")
-            .Signataire_Fonction = userLog.UtilisateurProfilId.ToLower.Trim.Replace("_", " ")
-            .Signataire_PrenomNom = userLog.UtilisateurPrenom.Trim & " " & userLog.UtilisateurNom.Trim
+            '.Signature_Date = Date.Now.ToString("dd MMM yyyy")
+            '.Signataire_Fonction = userLog.UtilisateurProfilId.ToLower.Trim.Replace("_", " ")
+            '.Signataire_PrenomNom = userLog.UtilisateurPrenom.Trim & " " & userLog.UtilisateurNom.Trim
+
+            .Signature_Date = "@Signature_Date"
 
         End With
         lstFusion.Add(sousEF)
@@ -720,7 +743,7 @@ Public Class FrmSousEpisode
             .IdIntervenant = If(Me.DropDownDestinataire.SelectedIndex = -1, 0, TryCast(Me.DropDownDestinataire.SelectedItem.Value, IntervenantParcours).IntervenantId)
             .CreateUserId = userLog.UtilisateurId
             .Commentaire = TxtRDVCommentaire.Text
-            .IsALD = ChkALD.Checked And TryCast(Me.DropDownSousType.SelectedItem.Value, SousEpisodeSousType).IsALDPossible And isPatientALD
+            .IsALD = ChkALD.Checked AndAlso TryCast(Me.DropDownSousType.SelectedItem.Value, SousEpisodeSousType).IsALDPossible And isPatientALD
             .IsReponse = ChkBReponseAttendue.Checked
             .DelaiSinceValidation = TxtDelai.Value
 
@@ -732,6 +755,7 @@ Public Class FrmSousEpisode
                     sousEpisodeDetail.IdSousEpisode = sousEpisode.EpisodeId
                     sousEpisodeDetail.IdSousEpisodeSousSousType = row.Cells("Id").Value
                     sousEpisodeDetail.IsALD = row.Cells("ChkALD").Value
+                    If sousEpisodeDetail.IsALD Then .IsALD = True
                     lstDetail.Add(sousEpisodeDetail)
                 End If
             Next

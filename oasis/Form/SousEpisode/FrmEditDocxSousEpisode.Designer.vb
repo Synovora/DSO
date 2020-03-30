@@ -1,9 +1,9 @@
-﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
+﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()>
 Partial Class FrmEditDocxSousEpisode
     Inherits Telerik.WinControls.UI.RadForm
 
     'Form overrides dispose to clean up the component list.
-    <System.Diagnostics.DebuggerNonUserCode()> _
+    <System.Diagnostics.DebuggerNonUserCode()>
     Protected Overrides Sub Dispose(ByVal disposing As Boolean)
         Try
             RichTextEditorRibbonBar1.Dispose()
@@ -23,7 +23,7 @@ Partial Class FrmEditDocxSousEpisode
     'NOTE: The following procedure is required by the Windows Form Designer
     'It can be modified using the Windows Form Designer.  
     'Do not modify it using the code editor.
-    <System.Diagnostics.DebuggerStepThrough()> _
+    <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(FrmEditDocxSousEpisode))
         Me.RadRichTextEditor1 = New Telerik.WinControls.UI.RadRichTextEditor()
@@ -44,7 +44,7 @@ Partial Class FrmEditDocxSousEpisode
         Me.RadRichTextEditor1.Location = New System.Drawing.Point(29, 29)
         Me.RadRichTextEditor1.Name = "RadRichTextEditor1"
         Me.RadRichTextEditor1.SelectionFill = System.Drawing.Color.FromArgb(CType(CType(128, Byte), Integer), CType(CType(78, Byte), Integer), CType(CType(158, Byte), Integer), CType(CType(255, Byte), Integer))
-        Me.RadRichTextEditor1.Size = New System.Drawing.Size(994, 375)
+        Me.RadRichTextEditor1.Size = New System.Drawing.Size(963, 553)
         Me.RadRichTextEditor1.TabIndex = 3
         '
         'RichTextEditorRibbonBar1
@@ -66,9 +66,10 @@ Partial Class FrmEditDocxSousEpisode
         '
         Me.RichTextEditorRibbonBar1.OptionsButton.Text = "Options"
         Me.RichTextEditorRibbonBar1.QuickAccessToolBarItems.AddRange(New Telerik.WinControls.RadItem() {Me.RadButtonElement1})
+        Me.RichTextEditorRibbonBar1.ShowExpandButton = False
         Me.RichTextEditorRibbonBar1.ShowItemToolTips = False
         Me.RichTextEditorRibbonBar1.ShowLayoutModeButton = True
-        Me.RichTextEditorRibbonBar1.Size = New System.Drawing.Size(1024, 174)
+        Me.RichTextEditorRibbonBar1.Size = New System.Drawing.Size(993, 174)
         Me.RichTextEditorRibbonBar1.TabIndex = 4
         Me.RichTextEditorRibbonBar1.TabStop = False
         Me.RichTextEditorRibbonBar1.Text = "Document sous-épisode"
@@ -83,6 +84,7 @@ Partial Class FrmEditDocxSousEpisode
         CType(Me.RichTextEditorRibbonBar1.GetChildAt(0).GetChildAt(2).GetChildAt(0).GetChildAt(2).GetChildAt(0), Telerik.WinControls.UI.RadButtonElement).StretchHorizontally = False
         CType(Me.RichTextEditorRibbonBar1.GetChildAt(0).GetChildAt(2).GetChildAt(0).GetChildAt(2).GetChildAt(0), Telerik.WinControls.UI.RadButtonElement).StretchVertically = False
         CType(Me.RichTextEditorRibbonBar1.GetChildAt(0).GetChildAt(2).GetChildAt(1), Telerik.WinControls.UI.RadQuickAccessOverflowButton).Visibility = Telerik.WinControls.ElementVisibility.Collapsed
+        CType(Me.RichTextEditorRibbonBar1.GetChildAt(0).GetChildAt(3).GetChildAt(1).GetChildAt(0), Telerik.WinControls.UI.RadImageButtonElement).Visibility = Telerik.WinControls.ElementVisibility.Visible
         CType(Me.RichTextEditorRibbonBar1.GetChildAt(0).GetChildAt(4).GetChildAt(0), Telerik.WinControls.UI.StripViewItemContainer).Padding = New System.Windows.Forms.Padding(44, 0, 84, 0)
         CType(Me.RichTextEditorRibbonBar1.GetChildAt(0).GetChildAt(4).GetChildAt(0).GetChildAt(0).GetChildAt(6), Telerik.WinControls.UI.RichTextEditorRibbonUI.RichTextEditorRibbonTab).Text = "View"
         CType(Me.RichTextEditorRibbonBar1.GetChildAt(0).GetChildAt(4).GetChildAt(0).GetChildAt(0).GetChildAt(6), Telerik.WinControls.UI.RichTextEditorRibbonUI.RichTextEditorRibbonTab).Visibility = Telerik.WinControls.ElementVisibility.Hidden
@@ -109,14 +111,14 @@ Partial Class FrmEditDocxSousEpisode
         Me.RadRichTextEditorRuler1.Dock = System.Windows.Forms.DockStyle.Fill
         Me.RadRichTextEditorRuler1.Location = New System.Drawing.Point(0, 174)
         Me.RadRichTextEditorRuler1.Name = "RadRichTextEditorRuler1"
-        Me.RadRichTextEditorRuler1.Size = New System.Drawing.Size(1024, 405)
+        Me.RadRichTextEditorRuler1.Size = New System.Drawing.Size(993, 583)
         Me.RadRichTextEditorRuler1.TabIndex = 5
         '
         'FrmEditDocxSousEpisode
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(1024, 579)
+        Me.ClientSize = New System.Drawing.Size(993, 757)
         Me.Controls.Add(Me.RadRichTextEditorRuler1)
         Me.Controls.Add(Me.RichTextEditorRibbonBar1)
         Me.FormBehavior = Me.RadRibbonFormBehavior1
@@ -126,6 +128,7 @@ Partial Class FrmEditDocxSousEpisode
         '
         '
         Me.RootElement.ApplyShapeToControl = True
+        Me.ShowInTaskbar = False
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent
         Me.Text = "Document sous-épisode"
         CType(Me.RadRichTextEditor1, System.ComponentModel.ISupportInitialize).EndInit()

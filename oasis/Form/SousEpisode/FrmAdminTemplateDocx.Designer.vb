@@ -6,6 +6,9 @@ Partial Class FrmAdminTemplateDocx
     <System.Diagnostics.DebuggerNonUserCode()> _
     Protected Overrides Sub Dispose(ByVal disposing As Boolean)
         Try
+            RichTextEditorRibbonBar1.Dispose()
+            RadRichTextEditorRuler1.Dispose()
+            RadRichTextEditor1.Dispose()
             If disposing AndAlso components IsNot Nothing Then
                 components.Dispose()
             End If
@@ -117,6 +120,8 @@ Partial Class FrmAdminTemplateDocx
         '
         '
         Me.RootElement.ApplyShapeToControl = True
+        Me.ShowInTaskbar = False
+        Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent
         Me.Text = "Edition Modèle Sous-Type"
         CType(Me.RichTextEditorRibbonBar1, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.RadRichTextEditor1, System.ComponentModel.ISupportInitialize).EndInit()
