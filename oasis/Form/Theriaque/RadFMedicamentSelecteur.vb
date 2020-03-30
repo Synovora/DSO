@@ -594,6 +594,8 @@ Public Class RadFMedicamentSelecteur
         Close()
     End Sub
 
+
+    'Affichage Pharmacocinétique
     Private Sub RadBtnPharmacocinetique_Click_1(sender As Object, e As EventArgs) Handles RadBtnPharmacocinetique.Click
         If RadGridViewSpe.CurrentRow IsNot Nothing Then
             Dim aRow As Integer = Me.RadGridViewSpe.Rows.IndexOf(Me.RadGridViewSpe.CurrentRow)
@@ -611,6 +613,7 @@ Public Class RadFMedicamentSelecteur
         End If
     End Sub
 
+    'Affichage Pharmacodynamie
     Private Sub RadBtnParmacodynamique_Click_1(sender As Object, e As EventArgs) Handles RadBtnParmacodynamique.Click
         If RadGridViewSpe.CurrentRow IsNot Nothing Then
             Dim aRow As Integer = Me.RadGridViewSpe.Rows.IndexOf(Me.RadGridViewSpe.CurrentRow)
@@ -628,6 +631,7 @@ Public Class RadFMedicamentSelecteur
         End If
     End Sub
 
+    'Affichage effets indésirables
     Private Sub RadBtnEffetIndesirable_Click_1(sender As Object, e As EventArgs) Handles RadBtnEffetIndesirable.Click
         If RadGridViewSpe.CurrentRow IsNot Nothing Then
             Dim aRow As Integer = Me.RadGridViewSpe.Rows.IndexOf(Me.RadGridViewSpe.CurrentRow)
@@ -643,6 +647,7 @@ Public Class RadFMedicamentSelecteur
         End If
     End Sub
 
+    'Affichage substances actives
     Private Sub RadBtnSubstance_Click_1(sender As Object, e As EventArgs) Handles RadBtnSubstance.Click
         If RadGridViewSpe.CurrentRow IsNot Nothing Then
             Dim aRow As Integer = Me.RadGridViewSpe.Rows.IndexOf(Me.RadGridViewSpe.CurrentRow)
