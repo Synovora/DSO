@@ -442,13 +442,19 @@ Public Class RadFMedicamentSelecteur
     Private Sub AfficheATC(CodeATC As String)
         Dim codeATC1, codeATC2, codeATC3, codeATC4 As String
         codeATC1 = CodeATC.Substring(0, 1)
-        codeATC2 = CodeATC.Substring(0, 3)
-        codeATC3 = CodeATC.Substring(0, 4)
-        codeATC4 = CodeATC.Substring(0, 5)
         ChargementATC1(codeATC1)
-        ChargementATC2(codeATC1, codeATC2)
-        ChargementATC3(codeATC2, codeATC3)
-        ChargementATC4(codeATC3, codeATC4)
+        If CodeATC.Length >= 3 Then
+            codeATC2 = CodeATC.Substring(0, 3)
+            ChargementATC2(codeATC1, codeATC2)
+            If CodeATC.Length >= 4 Then
+                codeATC3 = CodeATC.Substring(0, 4)
+                ChargementATC3(codeATC2, codeATC3)
+                If CodeATC.Length >= 5 Then
+                    codeATC4 = CodeATC.Substring(0, 5)
+                    ChargementATC4(codeATC3, codeATC4)
+                End If
+            End If
+        End If
     End Sub
 
     'Sélection d'une spécialité, renvoi de la valeur de la clé Thériaque

@@ -85,7 +85,7 @@ Public Class TheriaqueDao
         Dim SQLString As String
         SQLString = "SELECT CATC_CODE_PK, CATC_NOMF FROM [Theriak].[theriaque].[CATC_CLASSEATC]" &
                     " WHERE (CATC_CATC_CODE_FK is Null)" &
-                    " AND CATC_CODE_PK NOT IN ('X', 'Z')" &
+                    " AND CATC_CODE_PK NOT IN ('X')" &
                     " ORDER BY CATC_CODE_PK"
 
         Dim dt As DataTable = New DataTable()

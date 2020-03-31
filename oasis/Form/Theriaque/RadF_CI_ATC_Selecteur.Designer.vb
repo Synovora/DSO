@@ -181,7 +181,7 @@ Partial Class RadF_CI_ATC_Selecteur
         'RadBtnSelectionATC5
         '
         Me.RadBtnSelectionATC5.ForeColor = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(0, Byte), Integer), CType(CType(0, Byte), Integer))
-        Me.RadBtnSelectionATC5.Location = New System.Drawing.Point(1538, 746)
+        Me.RadBtnSelectionATC5.Location = New System.Drawing.Point(1538, 792)
         Me.RadBtnSelectionATC5.Name = "RadBtnSelectionATC5"
         Me.RadBtnSelectionATC5.Size = New System.Drawing.Size(124, 24)
         Me.RadBtnSelectionATC5.TabIndex = 31
@@ -208,7 +208,7 @@ Partial Class RadF_CI_ATC_Selecteur
         'RadioBtnClassique
         '
         Me.RadioBtnClassique.AutoSize = True
-        Me.RadioBtnClassique.Location = New System.Drawing.Point(204, 746)
+        Me.RadioBtnClassique.Location = New System.Drawing.Point(204, 792)
         Me.RadioBtnClassique.Name = "RadioBtnClassique"
         Me.RadioBtnClassique.Size = New System.Drawing.Size(84, 17)
         Me.RadioBtnClassique.TabIndex = 28
@@ -219,7 +219,7 @@ Partial Class RadF_CI_ATC_Selecteur
         'RadioBtnVirtuel
         '
         Me.RadioBtnVirtuel.AutoSize = True
-        Me.RadioBtnVirtuel.Location = New System.Drawing.Point(150, 746)
+        Me.RadioBtnVirtuel.Location = New System.Drawing.Point(150, 792)
         Me.RadioBtnVirtuel.Name = "RadioBtnVirtuel"
         Me.RadioBtnVirtuel.Size = New System.Drawing.Size(43, 17)
         Me.RadioBtnVirtuel.TabIndex = 27
@@ -229,7 +229,7 @@ Partial Class RadF_CI_ATC_Selecteur
         '
         'RadBtnSpec4
         '
-        Me.RadBtnSpec4.Location = New System.Drawing.Point(1272, 746)
+        Me.RadBtnSpec4.Location = New System.Drawing.Point(1272, 792)
         Me.RadBtnSpec4.Name = "RadBtnSpec4"
         Me.RadBtnSpec4.Size = New System.Drawing.Size(173, 24)
         Me.RadBtnSpec4.TabIndex = 26
@@ -264,12 +264,12 @@ Partial Class RadF_CI_ATC_Selecteur
         Me.RadGridViewATC4.Name = "RadGridViewATC4"
         Me.RadGridViewATC4.RightToLeft = System.Windows.Forms.RightToLeft.No
         Me.RadGridViewATC4.ShowGroupPanel = False
-        Me.RadGridViewATC4.Size = New System.Drawing.Size(390, 341)
+        Me.RadGridViewATC4.Size = New System.Drawing.Size(390, 387)
         Me.RadGridViewATC4.TabIndex = 25
         '
         'RadBtnSpec3
         '
-        Me.RadBtnSpec3.Location = New System.Drawing.Point(876, 746)
+        Me.RadBtnSpec3.Location = New System.Drawing.Point(876, 792)
         Me.RadBtnSpec3.Name = "RadBtnSpec3"
         Me.RadBtnSpec3.Size = New System.Drawing.Size(173, 24)
         Me.RadBtnSpec3.TabIndex = 24
@@ -302,12 +302,12 @@ Partial Class RadF_CI_ATC_Selecteur
         Me.RadGridViewATC3.Name = "RadGridViewATC3"
         Me.RadGridViewATC3.RightToLeft = System.Windows.Forms.RightToLeft.No
         Me.RadGridViewATC3.ShowGroupPanel = False
-        Me.RadGridViewATC3.Size = New System.Drawing.Size(391, 341)
+        Me.RadGridViewATC3.Size = New System.Drawing.Size(391, 387)
         Me.RadGridViewATC3.TabIndex = 23
         '
         'RadBtnSpec2
         '
-        Me.RadBtnSpec2.Location = New System.Drawing.Point(479, 746)
+        Me.RadBtnSpec2.Location = New System.Drawing.Point(479, 792)
         Me.RadBtnSpec2.Name = "RadBtnSpec2"
         Me.RadBtnSpec2.Size = New System.Drawing.Size(173, 24)
         Me.RadBtnSpec2.TabIndex = 22
@@ -405,7 +405,7 @@ Partial Class RadF_CI_ATC_Selecteur
         Me.RadGridViewATC1.Name = "RadGridViewATC1"
         Me.RadGridViewATC1.RightToLeft = System.Windows.Forms.RightToLeft.No
         Me.RadGridViewATC1.ShowGroupPanel = False
-        Me.RadGridViewATC1.Size = New System.Drawing.Size(292, 344)
+        Me.RadGridViewATC1.Size = New System.Drawing.Size(292, 387)
         Me.RadGridViewATC1.TabIndex = 20
         '
         'RadBtnFiltreSpecialite
@@ -419,7 +419,7 @@ Partial Class RadF_CI_ATC_Selecteur
         'RadBtnAbandon
         '
         Me.RadBtnAbandon.DialogResult = System.Windows.Forms.DialogResult.Cancel
-        Me.RadBtnAbandon.Location = New System.Drawing.Point(1771, 779)
+        Me.RadBtnAbandon.Location = New System.Drawing.Point(1771, 825)
         Me.RadBtnAbandon.Name = "RadBtnAbandon"
         Me.RadBtnAbandon.Size = New System.Drawing.Size(110, 24)
         Me.RadBtnAbandon.TabIndex = 18
@@ -453,7 +453,7 @@ Partial Class RadF_CI_ATC_Selecteur
         Me.RadGridViewATC2.Name = "RadGridViewATC2"
         Me.RadGridViewATC2.RightToLeft = System.Windows.Forms.RightToLeft.No
         Me.RadGridViewATC2.ShowGroupPanel = False
-        Me.RadGridViewATC2.Size = New System.Drawing.Size(390, 341)
+        Me.RadGridViewATC2.Size = New System.Drawing.Size(390, 387)
         Me.RadGridViewATC2.TabIndex = 17
         '
         'RadGridViewATC5
@@ -485,12 +485,12 @@ Partial Class RadF_CI_ATC_Selecteur
         Me.RadGridViewATC5.Name = "RadGridViewATC5"
         Me.RadGridViewATC5.RightToLeft = System.Windows.Forms.RightToLeft.No
         Me.RadGridViewATC5.ShowGroupPanel = False
-        Me.RadGridViewATC5.Size = New System.Drawing.Size(390, 341)
+        Me.RadGridViewATC5.Size = New System.Drawing.Size(390, 387)
         Me.RadGridViewATC5.TabIndex = 34
         '
         'RadBtnSpec5
         '
-        Me.RadBtnSpec5.Location = New System.Drawing.Point(1668, 746)
+        Me.RadBtnSpec5.Location = New System.Drawing.Point(1668, 792)
         Me.RadBtnSpec5.Name = "RadBtnSpec5"
         Me.RadBtnSpec5.Size = New System.Drawing.Size(173, 24)
         Me.RadBtnSpec5.TabIndex = 27
@@ -499,7 +499,7 @@ Partial Class RadF_CI_ATC_Selecteur
         'RadBtnSelectionATC2
         '
         Me.RadBtnSelectionATC2.ForeColor = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(0, Byte), Integer), CType(CType(0, Byte), Integer))
-        Me.RadBtnSelectionATC2.Location = New System.Drawing.Point(349, 746)
+        Me.RadBtnSelectionATC2.Location = New System.Drawing.Point(349, 792)
         Me.RadBtnSelectionATC2.Name = "RadBtnSelectionATC2"
         Me.RadBtnSelectionATC2.Size = New System.Drawing.Size(124, 24)
         Me.RadBtnSelectionATC2.TabIndex = 35
@@ -508,7 +508,7 @@ Partial Class RadF_CI_ATC_Selecteur
         'RadBtnSelectionATC3
         '
         Me.RadBtnSelectionATC3.ForeColor = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(0, Byte), Integer), CType(CType(0, Byte), Integer))
-        Me.RadBtnSelectionATC3.Location = New System.Drawing.Point(746, 746)
+        Me.RadBtnSelectionATC3.Location = New System.Drawing.Point(746, 792)
         Me.RadBtnSelectionATC3.Name = "RadBtnSelectionATC3"
         Me.RadBtnSelectionATC3.Size = New System.Drawing.Size(124, 24)
         Me.RadBtnSelectionATC3.TabIndex = 32
@@ -517,7 +517,7 @@ Partial Class RadF_CI_ATC_Selecteur
         'RadBtnSelectionATC4
         '
         Me.RadBtnSelectionATC4.ForeColor = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(0, Byte), Integer), CType(CType(0, Byte), Integer))
-        Me.RadBtnSelectionATC4.Location = New System.Drawing.Point(1142, 746)
+        Me.RadBtnSelectionATC4.Location = New System.Drawing.Point(1142, 792)
         Me.RadBtnSelectionATC4.Name = "RadBtnSelectionATC4"
         Me.RadBtnSelectionATC4.Size = New System.Drawing.Size(124, 24)
         Me.RadBtnSelectionATC4.TabIndex = 32
@@ -990,7 +990,7 @@ Partial Class RadF_CI_ATC_Selecteur
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.CancelButton = Me.RadBtnAbandon
-        Me.ClientSize = New System.Drawing.Size(1884, 813)
+        Me.ClientSize = New System.Drawing.Size(1884, 853)
         Me.Controls.Add(Me.Label8)
         Me.Controls.Add(Me.RadBtnListeMedeocATCSelection)
         Me.Controls.Add(Me.RadBtnSelectionSubstance)
