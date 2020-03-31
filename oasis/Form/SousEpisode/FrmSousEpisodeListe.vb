@@ -2,6 +2,7 @@
 Imports System.Configuration
 Imports System.IO
 Imports Oasis_Common
+Imports Telerik.WinControls
 Imports Telerik.WinControls.UI
 
 Public Class FrmSousEpisodeListe
@@ -63,10 +64,11 @@ Public Class FrmSousEpisodeListe
                     If numRowGrid <= exPosit Then exPosit = numRowGrid     ' position approchée 
                     .Cells("HorodateCreation").Value = row("horodate_creation")
                     .Cells("CreateUser").Value = row("user_create")
-                    .Cells("type").Value = row("type_libelle") & If(row("sous_type_libelle") <> row("type_libelle"), "/" + row("sous_type_libelle"), "")
+                    .Cells("SousType").Value = row("sous_type_libelle") ' & If(row("sous_type_libelle") <> row("type_libelle"), "/" + row("sous_type_libelle"), "")
                     .Cells("HorodateLastUpdate").Value = row("horodate_last_update")
                     .Cells("LastUpdateUser").Value = row("user_update")
                     .Cells("HorodateValidate").Value = row("horodate_validate")
+                    .Cells("IsSigne").Value = Not IsDBNull(row("horodate_validate"))
                     .Cells("ValidateUser").Value = row("user_validate")
                     .Cells("commentaire").Value = row("commentaire")
                     .Cells("IsAld").Value = row("is_ald")
@@ -76,7 +78,7 @@ Public Class FrmSousEpisodeListe
                     .Cells("HorodateLastRecu").Value = row("horodate_last_recu")
 
                     ' -- on garnit le tag pour affichage tooltip
-                    newRow.Tag = " << " & .Cells("type").Value & " >>" & vbCrLf &
+                    newRow.Tag = " << " & .Cells("SousType").Value & " >>" & vbCrLf &
                                 If(Coalesce(row("is_ald"), False), " --> ALD" & vbCrLf, "") &
                                 If(Coalesce(row("is_reponse"), False), " ... Réponse requise sous " & row("delai_since_validation") & " j à partir de la date de validation" & vbCrLf, "") &
                                 If(Coalesce(row("is_reponse_recue"), False), " ... Dernière reçue le  " & row("horodate_last_recu"), " ... NON REÇUE ...") & vbCrLf &
@@ -118,9 +120,41 @@ Public Class FrmSousEpisodeListe
 
             End Try
         End If
+        ' --- on enleve le carre des checkbox
+        Dim checkBoxCell As GridCheckBoxCellElement = TryCast(e.CellElement, GridCheckBoxCellElement)
+        If checkBoxCell IsNot Nothing Then
+            Dim editor As RadCheckBoxEditor = TryCast(checkBoxCell.Editor, RadCheckBoxEditor)
+            Dim element As RadCheckBoxEditorElement = TryCast(editor.EditorElement, RadCheckBoxEditorElement)
+            element.Checkmark.Border.Visibility = ElementVisibility.Collapsed
+            element.Checkmark.Fill.Visibility = ElementVisibility.Collapsed
+        End If
 
     End Sub
 
+    ''' <summary>
+    ''' permet avec les 2 methodes IsExpandable et RadSousEpisodeGrid_ChildViewExpanding de faire disparaitre le "+" su sous grid reponse si pas de reponse
+    ''' </summary>
+    ''' <param name="sender"></param>
+    ''' <param name="e"></param>
+    Private Sub radGridView1_ViewCellFormatting(ByVal sender As Object, ByVal e As CellFormattingEventArgs) Handles RadSousEpisodeGrid.ViewCellFormatting
+        Dim cell As GridGroupExpanderCellElement = TryCast(e.CellElement, GridGroupExpanderCellElement)
+
+        If cell IsNot Nothing AndAlso TypeOf e.CellElement.RowElement Is GridDataRowElement Then
+            If Not IsExpandable(cell.RowInfo) Then
+                cell.Expander.Visibility = ElementVisibility.Hidden
+            Else
+                cell.Expander.Visibility = ElementVisibility.Visible
+            End If
+        End If
+    End Sub
+
+    Private Function IsExpandable(rowInfo As GridViewRowInfo) As Boolean
+        Return rowInfo.Cells("IsReponseRecue").Value
+    End Function
+
+    Private Sub RadSousEpisodeGrid_ChildViewExpanding(sender As Object, e As ChildViewExpandingEventArgs) Handles RadSousEpisodeGrid.ChildViewExpanding
+        e.Cancel = Not IsExpandable(e.ParentRow)
+    End Sub
     ''' <summary>
     ''' 
     ''' </summary>
@@ -291,6 +325,7 @@ Public Class FrmSousEpisodeListe
         End With
 
     End Sub
+
 
     ''' <summary>
     ''' 

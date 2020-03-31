@@ -18,6 +18,7 @@ Public Class SousEpisode
     Property DelaiSinceValidation As Integer
     Property IsReponseRecue As Boolean
     Property HorodateLastRecu As DateTime
+    Property isInactif As Boolean
     Property lstDetail As List(Of SousEpisodeDetailSousType)
 
 
@@ -48,6 +49,7 @@ Public Class SousEpisode
 
         Me.IsReponseRecue = Coalesce(row("is_reponse_recue"), False)
         Me.HorodateLastRecu = Coalesce(row("horodate_last_recu"), Nothing)
+        Me.isInactif = Coalesce(row("is_inactif"), False)
 
     End Sub
 

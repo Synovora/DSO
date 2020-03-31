@@ -1,6 +1,7 @@
 ﻿Imports System.Configuration
 Imports System.IO
 Imports Oasis_Common
+Imports Telerik.WinControls
 Imports Telerik.WinControls.Enumerations
 Imports Telerik.WinControls.UI
 Imports Telerik.WinForms.Documents.FormatProviders.OpenXml.Docx
@@ -169,9 +170,10 @@ Public Class FrmSousEpisode
     ''' <param name="sender"></param>
     ''' <param name="e"></param>
     Private Sub BtnValidate_Click(sender As Object, e As EventArgs) Handles BtnValidate.Click
-        serializeSousEpisode()
-        ' -- on enchaine directe sur edition doc
-        BtnEditerDocument_Click(sender, e)
+        If serializeSousEpisode() Then
+            ' -- on enchaine directe sur edition doc
+            BtnEditerDocument_Click(sender, e)
+        End If
     End Sub
 
     ''' <summary>
@@ -223,14 +225,18 @@ Public Class FrmSousEpisode
     End Sub
 
     Private Sub supprimer(gce As GridCommandCellElement)
-        'MessageBox.Show("Telecharger fichier " & gce.RowInfo.Cells("NomFichier").Value & " : " & gce.RowInfo.Cells("IdSousEpisode").Value & "_" & gce.RowInfo.Cells("Id").Value)
         If MsgBox("Etes-vous sur de vouloir supprimer ce fichier ?", MsgBoxStyle.YesNo Or MsgBoxStyle.DefaultButton2 Or MsgBoxStyle.Critical, "Suppression") = MsgBoxResult.Yes Then
             Dim isDernier As Boolean = Me.RadReponseGrid.Rows.Count < 2
             sousEpisodeReponseDao.delete(sousEpisode, gce.RowInfo.Cells("Id").Value, isDernier)
             refreshGrid()
         End If
+    End Sub
 
-
+    Private Sub BtnSupprSousEpisode_Click(sender As Object, e As EventArgs) Handles BtnSupprSousEpisode.Click
+        If MsgBox("Etes-vous sùr de vouloir supprimer ce sous épisode ?", MsgBoxStyle.YesNo Or MsgBoxStyle.DefaultButton2 Or MsgBoxStyle.Critical, "Suppression") = MsgBoxResult.Yes Then
+            sousEpisode.isInactif = sousEpisodeDao.inactiverSousEpisode(Nothing, sousEpisode.Id, Nothing)
+            Close()
+        End If
     End Sub
 
     ''' <summary>
@@ -347,6 +353,7 @@ Public Class FrmSousEpisode
         Me.TxtRDVCommentaire.Enabled = isCreation
         Me.DropDownSousType.Enabled = isCreation
         Me.RadSousSousTypeGrid.ReadOnly = Not isCreation
+        Me.BtnSupprSousEpisode.Visible = Not isCreation AndAlso Not sousEpisode.isInactif
 
     End Sub
 
@@ -668,6 +675,19 @@ Public Class FrmSousEpisode
 
     End Sub
 
+    Private Sub RadSousSousTypeGrid_CellFormatting(sender As Object, e As CellFormattingEventArgs) Handles RadSousSousTypeGrid.CellFormatting
+        ' --- on enleve le carre des checkbox
+        If Not isCreation Then
+            Dim checkBoxCell As GridCheckBoxCellElement = TryCast(e.CellElement, GridCheckBoxCellElement)
+            If checkBoxCell IsNot Nothing Then
+                Dim editor As RadCheckBoxEditor = TryCast(checkBoxCell.Editor, RadCheckBoxEditor)
+                Dim element As RadCheckBoxEditorElement = TryCast(editor.EditorElement, RadCheckBoxEditorElement)
+                element.Checkmark.Border.Visibility = ElementVisibility.Collapsed
+                element.Checkmark.Fill.Visibility = ElementVisibility.Collapsed
+            End If
+        End If
+    End Sub
+
     ''' <summary>
     ''' 
     ''' </summary>
@@ -734,7 +754,8 @@ Public Class FrmSousEpisode
         End If
     End Sub
 
-    Private Sub serializeSousEpisode()
+    Private Function serializeSousEpisode() As Boolean
+
         With sousEpisode
             .HorodateCreation = DateTime.Now
             .EpisodeId = episode.Id
@@ -761,18 +782,21 @@ Public Class FrmSousEpisode
             Next
             If lstDetail.Count = 0 AndAlso RadSousSousTypeGrid.Rows.Count > 0 Then
                 MsgBox("Vous devez choisir au moins un élément dans le tableau des détails ! ")
-                Return
+                Return False
             End If
             .lstDetail = lstDetail
         End With
 
 
-        sousEpisodeDao.Create(sousEpisode)
+        If sousEpisodeDao.Create(sousEpisode) = False Then
+            Return False
+        End If
 
         ' --- reaffiche le formulaire en mode update
         isCreation = False
         initControls()
-    End Sub
+        Return True
+    End Function
 
 End Class
 

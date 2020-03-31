@@ -620,10 +620,10 @@
     <Compile Include="Menu\FrmAbout.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Menu\FrmAdminTemplateSousEpisode.Designer.vb">
+    <Compile Include="Form\SousEpisode\FrmAdminTemplateSousEpisode.Designer.vb">
       <DependentUpon>FrmAdminTemplateSousEpisode.vb</DependentUpon>
     </Compile>
-    <Compile Include="Menu\FrmAdminTemplateSousEpisode.vb">
+    <Compile Include="Form\SousEpisode\FrmAdminTemplateSousEpisode.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Menu\FrmMain.Designer.vb">
@@ -1114,7 +1114,7 @@
     <EmbeddedResource Include="Menu\FrmAbout.resx">
       <DependentUpon>FrmAbout.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Menu\FrmAdminTemplateSousEpisode.resx">
+    <EmbeddedResource Include="Form\SousEpisode\FrmAdminTemplateSousEpisode.resx">
       <DependentUpon>FrmAdminTemplateSousEpisode.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Menu\FrmMain.resx">

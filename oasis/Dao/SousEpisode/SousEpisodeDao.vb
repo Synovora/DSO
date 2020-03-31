@@ -6,16 +6,16 @@ Public Class SousEpisodeDao
     Inherits StandardDao
 
 
-    Public Function getLstSousEpisode(idEpisode As Long, Optional idSousEpisode As Long = 0) As List(Of SousEpisode)
+    Public Function getLstSousEpisode(idEpisode As Long, Optional idSousEpisode As Long = 0, Optional isWithInactif As Boolean = False) As List(Of SousEpisode)
         Dim lst As List(Of SousEpisode) = New List(Of SousEpisode)
-        Dim data As DataTable = getTableSousEpisode(idEpisode, idSousEpisode)
+        Dim data As DataTable = getTableSousEpisode(idEpisode, idSousEpisode, isWithInactif)
         For Each row In data.Rows
             lst.Add(buildBean(row))
         Next
         Return lst
     End Function
 
-    Public Function getTableSousEpisode(idEpisode As Long, Optional idSousEpisode As Long = 0, Optional isComplete As Boolean = False) As DataTable
+    Public Function getTableSousEpisode(idEpisode As Long, Optional idSousEpisode As Long = 0, Optional isComplete As Boolean = False, Optional isWithInactif As Boolean = False) As DataTable
         Dim SQLString As String
         'Console.WriteLine("----------> getTableSousEpisode")
         SQLString =
@@ -36,7 +36,8 @@ Public Class SousEpisodeDao
             "	  SE.is_reponse, " & vbCrLf &
             "	  SE.delai_since_validation, " & vbCrLf &
             "	  SE.is_reponse_recue, " & vbCrLf &
-            "	  SE.horodate_last_recu " & vbCrLf
+            "	  SE.horodate_last_recu, " & vbCrLf &
+            "	  SE.is_inactif " & vbCrLf
 
         If isComplete Then
             SQLString += "" &
@@ -71,6 +72,12 @@ Public Class SousEpisodeDao
             SQLString += "AND SE.id= @idSousEpisode " & vbCrLf
         End If
 
+        If isWithInactif = False Then
+            SQLString += "AND SE.is_inactif= @is_inactif " & vbCrLf
+        End If
+
+        SQLString += "ORDER by SE.id DESC"
+
         'Console.WriteLine(SQLString)
 
         Using con As SqlConnection = GetConnection()
@@ -80,6 +87,7 @@ Public Class SousEpisodeDao
                 tacheDataAdapter.SelectCommand = New SqlCommand(SQLString, con)
                 If idSousEpisode <> 0 Then tacheDataAdapter.SelectCommand.Parameters.AddWithValue("@idSousEpisode", idSousEpisode)
                 If idEpisode <> 0 Then tacheDataAdapter.SelectCommand.Parameters.AddWithValue("@idEpisode", idEpisode)
+                If isWithInactif = False Then tacheDataAdapter.SelectCommand.Parameters.AddWithValue("@is_inactif", False)
                 Dim tacheDataTable As DataTable = New DataTable()
                 Using tacheDataTable
                     Try
@@ -93,8 +101,9 @@ Public Class SousEpisodeDao
         End Using
     End Function
 
-    Friend Function CountSousEpisode(selectedEpisodeId As Long) As Integer
-        Dim SqlString As String = "SELECT COUNT(*) FROM oasis.oa_sous_episode WHERE episode_id=" & selectedEpisodeId
+    Friend Function CountSousEpisode(selectedEpisodeId As Long, Optional isWithInactif As Boolean = False) As Integer
+        Dim SqlString As String = "SELECT COUNT(*) FROM oasis.oa_sous_episode WHERE episode_id=" & selectedEpisodeId &
+            If(isWithInactif, "", " AND is_inactif = 0 ")
 
         Using con As SqlConnection = GetConnection()
             Dim command As SqlCommand = New SqlCommand(SqlString, con)
@@ -104,13 +113,13 @@ Public Class SousEpisodeDao
         End Using
     End Function
 
-    Friend Function ResumeSousEpisode(selectedEpisodeId As Long) As String
+    Friend Function ResumeSousEpisode(selectedEpisodeId As Long, Optional isWithInactif As Boolean = False) As String
         Dim str As String = ""
         Dim dicCount As New Dictionary(Of Long, Integer)
 
         ' --- on compte les evenements par sous type
         Try
-            Dim lst = getLstSousEpisode(selectedEpisodeId)
+            Dim lst = getLstSousEpisode(selectedEpisodeId,, isWithInactif)
             For Each se In lst
                 Dim i As Integer
                 If dicCount.TryGetValue(se.IdSousEpisodeSousType, i) Then
@@ -307,8 +316,59 @@ Public Class SousEpisodeDao
         Return codeRetour
     End Function
 
+    Friend Function inactiverSousEpisode(con As SqlConnection, idSousEpisode As Long, transaction As SqlTransaction) As Boolean
+        Dim da As SqlDataAdapter = New SqlDataAdapter()
+        Dim codeRetour As Boolean = True
+
+        Dim isMyTransaction As Boolean = (transaction Is Nothing)
+        If isMyTransaction Then
+            con = GetConnection()
+            transaction = con.BeginTransaction
+        End If
+
+        Try
+            Dim SQLstring As String = "UPDATE oasis.oa_sous_episode " &
+                                      "SET is_inactif = @is_inactif " &
+                                      "WHERE id=@Id"
+
+            'SousEpisode.HorodateCreation = DateTime.Now
+            Dim cmd As New SqlCommand(SQLstring, con, transaction)
+            With cmd.Parameters
+                .AddWithValue("@is_inactif", True)
+                .AddWithValue("@id", idSousEpisode)
+            End With
+
+            da.UpdateCommand = cmd
+            Dim nb As Integer = da.UpdateCommand.ExecuteNonQuery()
+            If (nb <> 1) Then
+                Throw New Exception("Inactivation échouée (" & nb & ")")
+            End If
+
+            If isMyTransaction Then transaction.Commit()
+
+        Catch ex As Exception
+            If isMyTransaction Then
+                transaction.Rollback()
+            Else
+                Throw ex    ' on remonte l'excaption a l'appelant
+            End If
+            MessageBox.Show(ex.Message)
+            codeRetour = False
+        Finally
+            If isMyTransaction Then transaction.Dispose()
+            If isMyTransaction Then con.Close()
+        End Try
+
+        Return codeRetour
+    End Function
+
+    ''' <summary>
+    ''' 
+    ''' </summary>
+    ''' <param name="idSousEpisode"></param>
+    ''' <returns></returns>
     Friend Function getById(idSousEpisode As Long) As SousEpisode
-        Return getLstSousEpisode(0, idSousEpisode)(0)
+        Return getLstSousEpisode(0, idSousEpisode, True)(0)
     End Function
 
     Private Function buildBean(row As DataRow) As SousEpisode
