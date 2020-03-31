@@ -299,7 +299,7 @@ Public Class FrmSousEpisode
             ' -- combo destinataires
             Me.DropDownDestinataire.Items.Clear()
             For Each intervenant As IntervenantParcours In lstIntervenant
-                Dim radListItem As New RadListDataItem(intervenant.Nom, intervenant)
+                Dim radListItem As New RadListDataItem(intervenant.Nom & " - " & intervenant.Specialite, intervenant)
                 Me.DropDownDestinataire.Items.Add(radListItem)
                 'If TryCast(radListItem.Value, SousEpisodeType).Id = Me.sousEpisode.IdSousEpisodeType Then
                 If intervenant.IntervenantId = Me.sousEpisode.IdIntervenant Then radListItem.Selected = True

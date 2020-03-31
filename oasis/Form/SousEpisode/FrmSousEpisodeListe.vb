@@ -338,21 +338,6 @@ Public Class FrmSousEpisodeListe
 
     End Sub
 
-    Private Sub RadSousEpisodeGrid_ToolTipTextNeeded(sender As Object, e As ToolTipTextNeededEventArgs) ' Handles RadSousEpisodeGrid.ToolTipTextNeeded
-        Dim cell As GridDataCellElement = TryCast(sender, GridDataCellElement)
-        If cell IsNot Nothing AndAlso cell.ColumnInfo.Name <> "Detail" Then
-            Select Case cell.ColumnInfo.Name
-                Case "SousType"
-                    e.ToolTipText = sender.tag
-                Case "Detail"
-                    e.ToolTipText = "tout le détail"
-                Case Else
-                    e.ToolTipText = cell.Value.ToString()
-            End Select
-        End If
-
-    End Sub
-
     ''' <summary>
     ''' 
     ''' </summary>
