@@ -475,6 +475,19 @@ Public Class FrmSousEpisode
 
     End Sub
 
+    Private Sub RadSousSousTypeGrid_CellFormatting(sender As Object, e As CellFormattingEventArgs) Handles RadSousSousTypeGrid.CellFormatting
+        ' --- on enleve le carre des checkbox
+        If Not isCreation Then
+            Dim checkBoxCell As GridCheckBoxCellElement = TryCast(e.CellElement, GridCheckBoxCellElement)
+            If checkBoxCell IsNot Nothing Then
+                Dim editor As RadCheckBoxEditor = TryCast(checkBoxCell.Editor, RadCheckBoxEditor)
+                Dim element As RadCheckBoxEditorElement = TryCast(editor.EditorElement, RadCheckBoxEditorElement)
+                element.Checkmark.Border.Visibility = ElementVisibility.Collapsed
+                element.Checkmark.Fill.Visibility = ElementVisibility.Collapsed
+            End If
+        End If
+    End Sub
+
     Private Function telecharger_model(sousEpisodeSousType As SousEpisodeSousType) As Byte()
         Dim tbl As Byte() = {}
         Try
@@ -673,19 +686,6 @@ Public Class FrmSousEpisode
         Me.DropDownSousType.Enabled = isCreation
         Me.DropDownSousType.DefaultItemsCountInDropDown = DropDownSousType.Items.Count
 
-    End Sub
-
-    Private Sub RadSousSousTypeGrid_CellFormatting(sender As Object, e As CellFormattingEventArgs) Handles RadSousSousTypeGrid.CellFormatting
-        ' --- on enleve le carre des checkbox
-        If Not isCreation Then
-            Dim checkBoxCell As GridCheckBoxCellElement = TryCast(e.CellElement, GridCheckBoxCellElement)
-            If checkBoxCell IsNot Nothing Then
-                Dim editor As RadCheckBoxEditor = TryCast(checkBoxCell.Editor, RadCheckBoxEditor)
-                Dim element As RadCheckBoxEditorElement = TryCast(editor.EditorElement, RadCheckBoxEditorElement)
-                element.Checkmark.Border.Visibility = ElementVisibility.Collapsed
-                element.Checkmark.Fill.Visibility = ElementVisibility.Collapsed
-            End If
-        End If
     End Sub
 
     ''' <summary>

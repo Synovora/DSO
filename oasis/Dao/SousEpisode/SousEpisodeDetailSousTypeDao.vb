@@ -21,9 +21,11 @@ Public Class SousEpisodeDetailSousTypeDao
             "	  SED.id, " & vbCrLf &
             "     SED.id_sous_episode, " & vbCrLf &
             "     SED.id_sous_episode_sous_sous_type, " & vbCrLf &
-            "	  SED.is_ald " & vbCrLf
+            "	  SED.is_ald, " & vbCrLf &
+            "	  SST.libelle " & vbCrLf
 
         SQLString += "FROM oasis.oa_sous_episode_detail SED " & vbCrLf
+        SQLString += "JOIN oasis.oa_r_sous_episode_sous_sous_type SST ON SST.id = SED.id_sous_episode_sous_sous_type " & vbCrLf
         SQLString += "WHERE 1=1 " & vbCrLf
         SQLString += "AND SED.id_sous_episode= @idSousEpisode " & vbCrLf
 

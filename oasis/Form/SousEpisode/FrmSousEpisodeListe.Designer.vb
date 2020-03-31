@@ -32,20 +32,20 @@ Partial Class FrmSousEpisodeListe
         Dim GridViewTextBoxColumn4 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
         Dim GridViewTextBoxColumn5 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
         Dim GridViewCheckBoxColumn2 As Telerik.WinControls.UI.GridViewCheckBoxColumn = New Telerik.WinControls.UI.GridViewCheckBoxColumn()
-        Dim GridViewComboBoxColumn1 As Telerik.WinControls.UI.GridViewComboBoxColumn = New Telerik.WinControls.UI.GridViewComboBoxColumn()
         Dim GridViewTextBoxColumn6 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
-        Dim GridViewCheckBoxColumn3 As Telerik.WinControls.UI.GridViewCheckBoxColumn = New Telerik.WinControls.UI.GridViewCheckBoxColumn()
         Dim GridViewTextBoxColumn7 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
+        Dim GridViewCheckBoxColumn3 As Telerik.WinControls.UI.GridViewCheckBoxColumn = New Telerik.WinControls.UI.GridViewCheckBoxColumn()
+        Dim GridViewTextBoxColumn8 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
         Dim GridViewCheckBoxColumn4 As Telerik.WinControls.UI.GridViewCheckBoxColumn = New Telerik.WinControls.UI.GridViewCheckBoxColumn()
         Dim GridViewDateTimeColumn4 As Telerik.WinControls.UI.GridViewDateTimeColumn = New Telerik.WinControls.UI.GridViewDateTimeColumn()
         Dim TableViewDefinition2 As Telerik.WinControls.UI.TableViewDefinition = New Telerik.WinControls.UI.TableViewDefinition()
-        Dim GridViewTextBoxColumn8 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
         Dim GridViewTextBoxColumn9 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
-        Dim GridViewDateTimeColumn5 As Telerik.WinControls.UI.GridViewDateTimeColumn = New Telerik.WinControls.UI.GridViewDateTimeColumn()
         Dim GridViewTextBoxColumn10 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
+        Dim GridViewDateTimeColumn5 As Telerik.WinControls.UI.GridViewDateTimeColumn = New Telerik.WinControls.UI.GridViewDateTimeColumn()
         Dim GridViewTextBoxColumn11 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
-        Dim GridViewCommandColumn1 As Telerik.WinControls.UI.GridViewCommandColumn = New Telerik.WinControls.UI.GridViewCommandColumn()
         Dim GridViewTextBoxColumn12 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
+        Dim GridViewCommandColumn1 As Telerik.WinControls.UI.GridViewCommandColumn = New Telerik.WinControls.UI.GridViewCommandColumn()
+        Dim GridViewTextBoxColumn13 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
         Dim TableViewDefinition1 As Telerik.WinControls.UI.TableViewDefinition = New Telerik.WinControls.UI.TableViewDefinition()
         Me.RadPanel1 = New Telerik.WinControls.UI.RadPanel()
         Me.BtnDetail = New Telerik.WinControls.UI.RadButton()
@@ -53,8 +53,8 @@ Partial Class FrmSousEpisodeListe
         Me.BtnCancel = New Telerik.WinControls.UI.RadButton()
         Me.RadPanel2 = New Telerik.WinControls.UI.RadPanel()
         Me.RadSousEpisodeGrid = New Telerik.WinControls.UI.RadGridView()
-        Me.GridViewTemplate1 = New Telerik.WinControls.UI.GridViewTemplate()
         Me.SaveFileDialog1 = New System.Windows.Forms.SaveFileDialog()
+        Me.GridViewTemplate1 = New Telerik.WinControls.UI.GridViewTemplate()
         CType(Me.RadPanel1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.RadPanel1.SuspendLayout()
         CType(Me.BtnDetail, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -116,6 +116,7 @@ Partial Class FrmSousEpisodeListe
         '
         'RadSousEpisodeGrid
         '
+        Me.RadSousEpisodeGrid.AutoSizeRows = True
         Me.RadSousEpisodeGrid.BackColor = System.Drawing.Color.FromArgb(CType(CType(191, Byte), Integer), CType(CType(219, Byte), Integer), CType(CType(255, Byte), Integer))
         Me.RadSousEpisodeGrid.Cursor = System.Windows.Forms.Cursors.Default
         Me.RadSousEpisodeGrid.EnableCustomDrawing = True
@@ -198,21 +199,23 @@ Partial Class FrmSousEpisodeListe
         GridViewCheckBoxColumn2.MinWidth = 20
         GridViewCheckBoxColumn2.Name = "IsReponse"
         GridViewCheckBoxColumn2.Width = 45
-        GridViewComboBoxColumn1.AllowSort = False
-        GridViewComboBoxColumn1.EnableExpressionEditor = False
-        GridViewComboBoxColumn1.HeaderText = "Détail"
-        GridViewComboBoxColumn1.MaxWidth = 300
-        GridViewComboBoxColumn1.MinWidth = 300
-        GridViewComboBoxColumn1.Name = "Détail"
-        GridViewComboBoxColumn1.ReadOnly = True
-        GridViewComboBoxColumn1.Width = 300
         GridViewTextBoxColumn6.AllowSort = False
         GridViewTextBoxColumn6.EnableExpressionEditor = False
-        GridViewTextBoxColumn6.HeaderText = "Commentaire"
-        GridViewTextBoxColumn6.MinWidth = 200
-        GridViewTextBoxColumn6.Name = "Commentaire"
+        GridViewTextBoxColumn6.HeaderText = "Détail"
+        GridViewTextBoxColumn6.MaxWidth = 300
+        GridViewTextBoxColumn6.MinWidth = 300
+        GridViewTextBoxColumn6.Name = "Detail"
         GridViewTextBoxColumn6.ReadOnly = True
-        GridViewTextBoxColumn6.Width = 576
+        GridViewTextBoxColumn6.TextAlignment = System.Drawing.ContentAlignment.TopLeft
+        GridViewTextBoxColumn6.Width = 300
+        GridViewTextBoxColumn7.AllowSort = False
+        GridViewTextBoxColumn7.EnableExpressionEditor = False
+        GridViewTextBoxColumn7.HeaderText = "Commentaire"
+        GridViewTextBoxColumn7.MinWidth = 200
+        GridViewTextBoxColumn7.Name = "Commentaire"
+        GridViewTextBoxColumn7.ReadOnly = True
+        GridViewTextBoxColumn7.TextAlignment = System.Drawing.ContentAlignment.TopLeft
+        GridViewTextBoxColumn7.Width = 576
         GridViewCheckBoxColumn3.AllowSort = False
         GridViewCheckBoxColumn3.EnableExpressionEditor = False
         GridViewCheckBoxColumn3.HeaderText = "Signé"
@@ -220,12 +223,12 @@ Partial Class FrmSousEpisodeListe
         GridViewCheckBoxColumn3.MinWidth = 50
         GridViewCheckBoxColumn3.Name = "isSigne"
         GridViewCheckBoxColumn3.ReadOnly = True
-        GridViewTextBoxColumn7.EnableExpressionEditor = False
-        GridViewTextBoxColumn7.HeaderText = "ValidationProfilTypes"
-        GridViewTextBoxColumn7.IsVisible = False
-        GridViewTextBoxColumn7.Name = "ValidationProfilTypes"
-        GridViewTextBoxColumn7.VisibleInColumnChooser = False
-        GridViewTextBoxColumn7.Width = 46
+        GridViewTextBoxColumn8.EnableExpressionEditor = False
+        GridViewTextBoxColumn8.HeaderText = "ValidationProfilTypes"
+        GridViewTextBoxColumn8.IsVisible = False
+        GridViewTextBoxColumn8.Name = "ValidationProfilTypes"
+        GridViewTextBoxColumn8.VisibleInColumnChooser = False
+        GridViewTextBoxColumn8.Width = 46
         GridViewCheckBoxColumn4.AllowGroup = False
         GridViewCheckBoxColumn4.EnableExpressionEditor = False
         GridViewCheckBoxColumn4.HeaderText = "Résultat"
@@ -240,7 +243,7 @@ Partial Class FrmSousEpisodeListe
         GridViewDateTimeColumn4.Name = "HorodateLastRecu"
         GridViewDateTimeColumn4.ReadOnly = True
         GridViewDateTimeColumn4.Width = 13
-        Me.RadSousEpisodeGrid.MasterTemplate.Columns.AddRange(New Telerik.WinControls.UI.GridViewDataColumn() {GridViewTextBoxColumn1, GridViewCheckBoxColumn1, GridViewDateTimeColumn1, GridViewTextBoxColumn2, GridViewDateTimeColumn2, GridViewTextBoxColumn3, GridViewDateTimeColumn3, GridViewTextBoxColumn4, GridViewTextBoxColumn5, GridViewCheckBoxColumn2, GridViewComboBoxColumn1, GridViewTextBoxColumn6, GridViewCheckBoxColumn3, GridViewTextBoxColumn7, GridViewCheckBoxColumn4, GridViewDateTimeColumn4})
+        Me.RadSousEpisodeGrid.MasterTemplate.Columns.AddRange(New Telerik.WinControls.UI.GridViewDataColumn() {GridViewTextBoxColumn1, GridViewCheckBoxColumn1, GridViewDateTimeColumn1, GridViewTextBoxColumn2, GridViewDateTimeColumn2, GridViewTextBoxColumn3, GridViewDateTimeColumn3, GridViewTextBoxColumn4, GridViewTextBoxColumn5, GridViewCheckBoxColumn2, GridViewTextBoxColumn6, GridViewTextBoxColumn7, GridViewCheckBoxColumn3, GridViewTextBoxColumn8, GridViewCheckBoxColumn4, GridViewDateTimeColumn4})
         Me.RadSousEpisodeGrid.MasterTemplate.EnableGrouping = False
         Me.RadSousEpisodeGrid.MasterTemplate.ShowRowHeaderColumn = False
         Me.RadSousEpisodeGrid.MasterTemplate.Templates.AddRange(New Telerik.WinControls.UI.GridViewTemplate() {Me.GridViewTemplate1})
@@ -262,24 +265,24 @@ Partial Class FrmSousEpisodeListe
         Me.GridViewTemplate1.AutoSizeColumnsMode = Telerik.WinControls.UI.GridViewAutoSizeColumnsMode.Fill
         Me.GridViewTemplate1.AutoUpdateObjectRelationalSource = False
         Me.GridViewTemplate1.Caption = "Documents reçus attachés (réponses)"
-        GridViewTextBoxColumn8.EnableExpressionEditor = False
-        GridViewTextBoxColumn8.HeaderText = "Id"
-        GridViewTextBoxColumn8.IsVisible = False
-        GridViewTextBoxColumn8.Name = "Id"
         GridViewTextBoxColumn9.EnableExpressionEditor = False
-        GridViewTextBoxColumn9.HeaderText = "IdSousEpisode"
+        GridViewTextBoxColumn9.HeaderText = "Id"
         GridViewTextBoxColumn9.IsVisible = False
-        GridViewTextBoxColumn9.Name = "IdSousEpisode"
+        GridViewTextBoxColumn9.Name = "Id"
+        GridViewTextBoxColumn10.EnableExpressionEditor = False
+        GridViewTextBoxColumn10.HeaderText = "IdSousEpisode"
+        GridViewTextBoxColumn10.IsVisible = False
+        GridViewTextBoxColumn10.Name = "IdSousEpisode"
         GridViewDateTimeColumn5.EnableExpressionEditor = False
         GridViewDateTimeColumn5.FormatString = "{0:dd/MM/yyyy HH:mm}"
         GridViewDateTimeColumn5.HeaderText = "Création"
         GridViewDateTimeColumn5.Name = "HorodateCreation"
-        GridViewTextBoxColumn10.EnableExpressionEditor = False
-        GridViewTextBoxColumn10.HeaderText = "Par"
-        GridViewTextBoxColumn10.Name = "CreateUser"
         GridViewTextBoxColumn11.EnableExpressionEditor = False
-        GridViewTextBoxColumn11.HeaderText = "Nom du Fichier"
-        GridViewTextBoxColumn11.Name = "NomFichier"
+        GridViewTextBoxColumn11.HeaderText = "Par"
+        GridViewTextBoxColumn11.Name = "CreateUser"
+        GridViewTextBoxColumn12.EnableExpressionEditor = False
+        GridViewTextBoxColumn12.HeaderText = "Nom du Fichier"
+        GridViewTextBoxColumn12.Name = "NomFichier"
         GridViewCommandColumn1.DefaultText = "Ouvrir"
         GridViewCommandColumn1.EnableExpressionEditor = False
         GridViewCommandColumn1.HeaderText = "Ouvrir"
@@ -287,10 +290,10 @@ Partial Class FrmSousEpisodeListe
         GridViewCommandColumn1.Name = "SgBtnDownload"
         GridViewCommandColumn1.TextAlignment = System.Drawing.ContentAlignment.MiddleCenter
         GridViewCommandColumn1.UseDefaultText = True
-        GridViewTextBoxColumn12.EnableExpressionEditor = False
-        GridViewTextBoxColumn12.HeaderText = "Commentaire"
-        GridViewTextBoxColumn12.Name = "Commentaire"
-        Me.GridViewTemplate1.Columns.AddRange(New Telerik.WinControls.UI.GridViewDataColumn() {GridViewTextBoxColumn8, GridViewTextBoxColumn9, GridViewDateTimeColumn5, GridViewTextBoxColumn10, GridViewTextBoxColumn11, GridViewCommandColumn1, GridViewTextBoxColumn12})
+        GridViewTextBoxColumn13.EnableExpressionEditor = False
+        GridViewTextBoxColumn13.HeaderText = "Commentaire"
+        GridViewTextBoxColumn13.Name = "Commentaire"
+        Me.GridViewTemplate1.Columns.AddRange(New Telerik.WinControls.UI.GridViewDataColumn() {GridViewTextBoxColumn9, GridViewTextBoxColumn10, GridViewDateTimeColumn5, GridViewTextBoxColumn11, GridViewTextBoxColumn12, GridViewCommandColumn1, GridViewTextBoxColumn13})
         Me.GridViewTemplate1.EnableGrouping = False
         Me.GridViewTemplate1.EnableSorting = False
         Me.GridViewTemplate1.ReadOnly = True

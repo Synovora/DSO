@@ -41,11 +41,12 @@ Public Class FrmSousEpisodeListe
     ''' 
     ''' </summary>
     Private Sub refreshGrid()
-        Dim exId As Long, index As Integer = -1, exPosit = 0
+        Dim exId As Long, index As Integer = -1, exPosit = 0, sousEpisodeDetailSousTypeDao = New SousEpisodeDetailSousTypeDao
+        Dim dataDetail As DataTable
+
         Me.Cursor = Cursors.WaitCursor
         Try
             Dim data As DataTable = sousEpisodeDao.getTableSousEpisode(episode.Id,, True)
-
             Dim numRowGrid As Integer = 0
 
             ' -- recup eventuelle precedente selectionnée
@@ -78,12 +79,23 @@ Public Class FrmSousEpisodeListe
                     .Cells("HorodateLastRecu").Value = row("horodate_last_recu")
 
                     ' -- on garnit le tag pour affichage tooltip
-                    newRow.Tag = " << " & .Cells("SousType").Value & " >>" & vbCrLf &
-                                If(Coalesce(row("is_ald"), False), " --> ALD" & vbCrLf, "") &
-                                If(Coalesce(row("is_reponse"), False), " ... Réponse requise sous " & row("delai_since_validation") & " j à partir de la date de validation" & vbCrLf, "") &
-                                If(Coalesce(row("is_reponse_recue"), False), " ... Dernière reçue le  " & row("horodate_last_recu"), " ... NON REÇUE ...") & vbCrLf &
-                                " ------------------------------------------" & vbCrLf &
-                                row("commentaire") & vbCrLf
+                    newRow.Tag = "Créé le " & row("horodate_creation") & " par " & row("user_create") & vbCrLf &
+                                If(IsDBNull(row("horodate_last_update")), "Non modifié.", "Modifié le " & row("horodate_last_update") & " par " & row("user_update")) & vbCrLf &
+                                If(IsDBNull(row("horodate_validate")), "Non Signé.", "Signé le " & row("horodate_validate") & " par " & row("user_validate")) & vbCrLf &
+                                If(Coalesce(row("is_ald"), False), " ... ALD" & vbCrLf, "") &
+                                If(Coalesce(row("is_reponse"), False) AndAlso Coalesce(row("is_reponse_recue"), False) = False,
+                                                 " ... Résultat requis sous " & row("delai_since_validation") & " j à partir de la date de signature" & vbCrLf, "") &
+                                If(Coalesce(row("is_reponse_recue"), False) AndAlso Coalesce(row("is_reponse"), False),
+                                                " ... Dernier résultat reçu le  " & row("horodate_last_recu"),
+                                                If(Coalesce(row("is_reponse"), False), " ... Résultat NON reçu ..." & vbCrLf, ""))
+                    ' -- gestion du detail
+                    dataDetail = sousEpisodeDetailSousTypeDao.getTableSousEpisodeDetailSousType(row("id"))
+                    Dim str As String = ""
+                    For Each rowDetail In dataDetail.Rows
+                        str += rowDetail("libelle") & vbCrLf
+                    Next
+                    .Cells("Detail").Value = str
+
                 End With
                 RadSousEpisodeGrid.Rows.Add(newRow)
                 numRowGrid += 1
@@ -326,6 +338,20 @@ Public Class FrmSousEpisodeListe
 
     End Sub
 
+    Private Sub RadSousEpisodeGrid_ToolTipTextNeeded(sender As Object, e As ToolTipTextNeededEventArgs) ' Handles RadSousEpisodeGrid.ToolTipTextNeeded
+        Dim cell As GridDataCellElement = TryCast(sender, GridDataCellElement)
+        If cell IsNot Nothing AndAlso cell.ColumnInfo.Name <> "Detail" Then
+            Select Case cell.ColumnInfo.Name
+                Case "SousType"
+                    e.ToolTipText = sender.tag
+                Case "Detail"
+                    e.ToolTipText = "tout le détail"
+                Case Else
+                    e.ToolTipText = cell.Value.ToString()
+            End Select
+        End If
+
+    End Sub
 
     ''' <summary>
     ''' 
