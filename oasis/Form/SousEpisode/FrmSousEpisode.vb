@@ -79,7 +79,7 @@ Public Class FrmSousEpisode
     Private Sub DropDownSousType_SelectedIndexChanged(sender As Object, e As Data.PositionChangedEventArgs) Handles DropDownSousType.SelectedIndexChanged
         If Me.DropDownSousType.SelectedItem IsNot Nothing Then
             initSousSousTypes(TryCast(Me.DropDownSousType.SelectedItem.Value, SousEpisodeSousType).Id)
-            setDefaultALDGrid()
+            'setDefaultALDGrid()
             If isCreation Then
                 Dim sousEpisodeSousType As SousEpisodeSousType = TryCast(Me.DropDownSousType.SelectedItem.Value, SousEpisodeSousType)
                 TxtDelai.Value = Coalesce(sousEpisodeSousType.DelaiReponse, "")
@@ -96,7 +96,7 @@ Public Class FrmSousEpisode
     ''' <param name="sender"></param>
     ''' <param name="args"></param>
     Private Sub ChkALD_ToggleStateChanged(sender As Object, args As StateChangedEventArgs) Handles ChkALD.ToggleStateChanged
-        setDefaultALDGrid()
+        'setDefaultALDGrid()
     End Sub
 
     ''' <summary>
@@ -605,6 +605,9 @@ Public Class FrmSousEpisode
                         End If
                     End If
                 Next
+            Else
+                isWithALD = Me.ChkALD.Checked
+                isWithNonAld = Not isWithALD
             End If
 
             ' -- gestion des entete et fairefaire et signature
@@ -688,6 +691,12 @@ Public Class FrmSousEpisode
 
     End Sub
 
+    Private Sub MasterTemplate_CellValueChanged(sender As Object, e As GridViewCellEventArgs) Handles RadSousSousTypeGrid.CellValueChanged
+        If e.Column.Name = "ChkALD" Then
+            e.Row.Cells("ChkChoice").Value = e.Value
+        End If
+    End Sub
+
     ''' <summary>
     ''' 
     ''' </summary>
@@ -708,9 +717,7 @@ Public Class FrmSousEpisode
                     .Cells("Id").Value = sousEpisodeSousSousType.Id
                     .Cells("IdSousEpisodeSousType").Value = sousEpisodeSousSousType.IdSousEpisodeSousType
                     .Cells("Libelle").Value = sousEpisodeSousSousType.Libelle
-                    If isCreation Then
-                        .Cells("ChkALD").Value = isPatientALD
-                    Else
+                    If Not isCreation Then
                         .Cells("ChkChoice").Value = True
                         .Cells("ChkALD").Value = sousEpisode.isThisDetailALD(sousEpisodeSousSousType.Id)
                     End If
@@ -770,16 +777,22 @@ Public Class FrmSousEpisode
 
             Dim lstDetail As New List(Of SousEpisodeDetailSousType)
             Dim sousEpisodeDetail As SousEpisodeDetailSousType
+            Dim isSousTypeDetailALD As Boolean = .IsALD
             For Each row In RadSousSousTypeGrid.Rows
                 If row.Cells("ChkChoice").Value Then
                     sousEpisodeDetail = New SousEpisodeDetailSousType()
                     sousEpisodeDetail.IdSousEpisode = sousEpisode.EpisodeId
                     sousEpisodeDetail.IdSousEpisodeSousSousType = row.Cells("Id").Value
                     sousEpisodeDetail.IsALD = row.Cells("ChkALD").Value
-                    If sousEpisodeDetail.IsALD Then .IsALD = True
+                    If sousEpisodeDetail.IsALD Then
+                        isSousTypeDetailALD = True
+                        .IsALD = True
+                    End If
+
                     lstDetail.Add(sousEpisodeDetail)
                 End If
             Next
+            If RadSousSousTypeGrid.Rows.Count > 0 AndAlso isSousTypeDetailALD <> .IsALD Then .IsALD = isSousTypeDetailALD
             If lstDetail.Count = 0 AndAlso RadSousSousTypeGrid.Rows.Count > 0 Then
                 MsgBox("Vous devez choisir au moins un élément dans le tableau des détails ! ")
                 Return False
