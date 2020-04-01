@@ -47,6 +47,7 @@ Partial Class FrmMain
         Me.RadTileElementHabilitation = New Telerik.WinControls.UI.RadTileElement()
         Me.TileGroupGeneraux = New Telerik.WinControls.UI.TileGroupElement()
         Me.RadTileElementParamMetier = New Telerik.WinControls.UI.RadTileElement()
+        Me.RadTileElementTemplateSE = New Telerik.WinControls.UI.RadTileElement()
         Me.TileGroupOutils = New Telerik.WinControls.UI.TileGroupElement()
         Me.RadTileElementRepublication = New Telerik.WinControls.UI.RadTileElement()
         Me.RadTileElementAPropos = New Telerik.WinControls.UI.RadTileElement()
@@ -262,15 +263,24 @@ Partial Class FrmMain
         '
         'TileGroupGeneraux
         '
+        Me.TileGroupGeneraux.AutoSize = True
         Me.TileGroupGeneraux.CellSize = New System.Drawing.Size(130, 100)
-        Me.TileGroupGeneraux.Items.AddRange(New Telerik.WinControls.RadItem() {Me.RadTileElementParamMetier})
+        Me.TileGroupGeneraux.Items.AddRange(New Telerik.WinControls.RadItem() {Me.RadTileElementParamMetier, Me.RadTileElementTemplateSE})
         Me.TileGroupGeneraux.Name = "TileGroupGeneraux"
+        Me.TileGroupGeneraux.RowsCount = 2
         Me.TileGroupGeneraux.Text = "Généraux"
         '
         'RadTileElementParamMetier
         '
         Me.RadTileElementParamMetier.Name = "RadTileElementParamMetier"
         Me.RadTileElementParamMetier.Text = "Paramètres " & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "métier" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10)
+        '
+        'RadTileElementTemplateSE
+        '
+        Me.RadTileElementTemplateSE.Name = "RadTileElementTemplateSE"
+        Me.RadTileElementTemplateSE.Row = 1
+        Me.RadTileElementTemplateSE.Text = "Modèles Sous-Episode"
+        Me.RadTileElementTemplateSE.TextWrap = True
         '
         'TileGroupOutils
         '
@@ -346,5 +356,6 @@ Partial Class FrmMain
     Friend WithEvents RadTileElementParamMetier As Telerik.WinControls.UI.RadTileElement
     Friend WithEvents RadTileElementAPropos As Telerik.WinControls.UI.RadTileElement
     Friend WithEvents RadBtnAbandon As Telerik.WinControls.UI.RadButton
+    Friend WithEvents RadTileElementTemplateSE As Telerik.WinControls.UI.RadTileElement
 End Class
 

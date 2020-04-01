@@ -1,4 +1,6 @@
 ﻿
+Imports Oasis_Common
+
 Public Class FrmMain
     Private Sub RadTileElementUtilisateur_Click(sender As Object, e As EventArgs) Handles RadTileElementUtilisateur.Click
         Me.Cursor = Cursors.WaitCursor
@@ -73,5 +75,28 @@ Public Class FrmMain
         Using vRadFRorListe As New RadFRorListe
             vRadFRorListe.ShowDialog()
         End Using
+    End Sub
+
+    Private Sub RadTileElementTemplateSE_Click(sender As Object, e As EventArgs) Handles RadTileElementTemplateSE.Click
+        Try
+            ' --- TODO : pour phase Dev -> a virer des que les users sont finis
+            If IsNothing(loginRequestLog) Then
+                loginRequestLog = New LoginRequest() With {
+                .login = "Bertrand.Gambet",
+                .password = "a"
+            }
+            End If
+            Me.Cursor = Cursors.WaitCursor
+            Me.Enabled = False
+            Using formT As New FrmAdminTemplateSousEpisode()
+                formT.ShowDialog()
+            End Using
+        Catch ex As Exception
+            MsgBox(ex.Message)
+        Finally
+            Me.Cursor = Cursors.Default
+            Me.Enabled = True
+        End Try
+
     End Sub
 End Class
