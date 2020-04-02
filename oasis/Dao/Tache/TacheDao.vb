@@ -81,6 +81,14 @@ Public Class TacheDao
         ANNEE
     End Enum
 
+    Public Enum EnumOptionWorkflow
+        REPONSE_AVIS
+        DEMANDE_PRECISION
+        VALIDATION_AVIS
+        RELANCE_AVIS
+        NULL
+    End Enum
+
     Friend Function getCodeNatureTacheByItem(item As String) As String
         Dim CodeNatureTache As String
 
