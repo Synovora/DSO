@@ -581,27 +581,28 @@ Public Class FrmSousEpisode
             .Sous_Type_Libelle = sousType.Libelle
 
             ' -- recherche des sous-type_detail (sousoustype)
-            Dim isWithALD = False, isWithNonAld = False, nbSelected = 0
+            Dim isWithALD = False, isWithNonAld = False, isOnlyOne = False, nbSelected = 0
             If Me.RadSousSousTypeGrid.Rows.Count > 0 Then
                 Dim isSautLigneAvant = True
                 For Each row In RadSousSousTypeGrid.Rows
                     If row.Cells("ChkChoice").Value Then nbSelected += 1
                     If nbSelected > 5 Then isSautLigneAvant = False : Exit For
                 Next
+                If nbSelected = 1 Then isSautLigneAvant = False : isOnlyOne = True
                 For Each row In RadSousSousTypeGrid.Rows
                     If row.Cells("ChkChoice").Value Then
                         If row.Cells("ChkALD").Value Then ' ALD
                             isWithALD = True
                             If isSautLigneAvant Then .Sous_Type_Libelle_Detail_ALD += vbCrLf
-                            .Sous_Type_Libelle_Detail_ALD += (row.Cells("Libelle").Value & vbCrLf)
+                            .Sous_Type_Libelle_Detail_ALD += (row.Cells("Libelle").Value & If(isOnlyOne, "", vbCrLf))
                             If isSautLigneAvant Then .Sous_Type_Libelle_Detail_commentaire_ALD += vbCrLf
-                            .Sous_Type_Libelle_Detail_commentaire_ALD += (row.Cells("Commentaire").Value & vbCrLf)
+                            .Sous_Type_Libelle_Detail_commentaire_ALD += (row.Cells("Commentaire").Value & If(isOnlyOne, "", vbCrLf))
                         Else
                             isWithNonAld = True
                             If isSautLigneAvant Then .Sous_Type_Libelle_Detail_Non_ALD += vbCrLf
-                            .Sous_Type_Libelle_Detail_Non_ALD += (row.Cells("Libelle").Value & vbCrLf)
+                            .Sous_Type_Libelle_Detail_Non_ALD += (row.Cells("Libelle").Value & If(isOnlyOne, "", vbCrLf))
                             If isSautLigneAvant Then .Sous_Type_Libelle_Detail_commentaire_non_ALD += vbCrLf
-                            .Sous_Type_Libelle_Detail_commentaire_non_ALD += (row.Cells("Commentaire").Value & vbCrLf)
+                            .Sous_Type_Libelle_Detail_commentaire_non_ALD += (row.Cells("Commentaire").Value & If(isOnlyOne, "", vbCrLf))
                         End If
                     End If
                 Next
