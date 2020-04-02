@@ -377,7 +377,7 @@ Partial Class RadFEpisodeConclusionContextePatient
         Me.RootElement.ApplyShapeToControl = True
         Me.ShowInTaskbar = False
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent
-        Me.Text = "RadFEpisodeSelecteurContextePatient"
+        Me.Text = "Conclusion médicale - Selection contexte du patient"
         CType(Me.RadGroupBoxEtatCivil, System.ComponentModel.ISupportInitialize).EndInit()
         Me.RadGroupBoxEtatCivil.ResumeLayout(False)
         Me.RadGroupBoxEtatCivil.PerformLayout()
