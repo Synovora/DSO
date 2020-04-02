@@ -163,8 +163,8 @@ Public Class FrmAdminTemplateSousEpisode
             .Signataire_Fonction = userLog.UtilisateurProfilId.ToLower.Trim.Replace("_", " ")
             .Signataire_PrenomNom = userLog.UtilisateurPrenom.Trim & " " & userLog.UtilisateurNom.Trim
 
-            .Signataire_Fonction_ALD = userLog.UtilisateurProfilId.ToLower.Trim.Replace("_", " ")
-            .Signataire_PrenomNom_ALD = userLog.UtilisateurPrenom.Trim & " " & userLog.UtilisateurNom.Trim
+            .Signataire_Fonction_ALD = .Signataire_Fonction
+            .Signataire_PrenomNom_ALD = .Signataire_PrenomNom
 
             .Patient_sexe = "masculin"
             .Patient_Poids = "Poids 72,5 kg"
@@ -179,8 +179,12 @@ Public Class FrmAdminTemplateSousEpisode
             .Contexte = "Ex. de contexte sur 3 lignes" & vbCrLf & "Ligne 2" & vbCrLf & "Ligne 3"
             .Traitement = "Ex. de traitement sur 3 lignes" & vbCrLf & "Ligne 2" & vbCrLf & "Ligne 3"
 
+            Dim sousType = TryCast(Me.DropDownSousType.SelectedItem.Value, SousEpisodeSousType)
+            .ALD_Sans_FaireFaire = sousType.Commentaire
+            .ALD_Avec_FaireFaire = sousType.Commentaire
+
             ' -- recherche des sous-type_detail (sousoustype)
-            Dim lstSousTypeDetail = sousEpisodeSousSousTypeDao.getLstSousEpisodeSousSousType(TryCast(Me.DropDownSousType.SelectedItem.Value, SousEpisodeSousType).Id)
+            Dim lstSousTypeDetail = sousEpisodeSousSousTypeDao.getLstSousEpisodeSousSousType(sousType.Id)
             Dim isSautLigneAvant = lstSousTypeDetail.Count <= 5
             If lstSousTypeDetail.Count > 0 Then
                 For Each detail As SousEpisodeSousSousType In lstSousTypeDetail

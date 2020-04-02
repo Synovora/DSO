@@ -626,6 +626,7 @@ Public Class FrmSousEpisode
                 .Signataire_Fonction = "@Signataire_Fonction"
                 .Signataire_PrenomNom = "@Signataire_PrenomNom"
             Else
+                .ALD_Sans_FaireFaire = ""
                 .Signataire_Fonction = ""
                 .Signataire_PrenomNom = ""
             End If
@@ -718,8 +719,8 @@ Public Class FrmSousEpisode
                     .Cells("IdSousEpisodeSousType").Value = sousEpisodeSousSousType.IdSousEpisodeSousType
                     .Cells("Libelle").Value = sousEpisodeSousSousType.Libelle
                     If Not isCreation Then
-                        .Cells("ChkChoice").Value = True
                         .Cells("ChkALD").Value = sousEpisode.isThisDetailALD(sousEpisodeSousSousType.Id)
+                        .Cells("ChkChoice").Value = True
                     End If
                     .Cells("Commentaire").Value = sousEpisodeSousSousType.commentaire
                 End With
