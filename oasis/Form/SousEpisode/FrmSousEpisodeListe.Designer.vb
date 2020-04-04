@@ -53,8 +53,8 @@ Partial Class FrmSousEpisodeListe
         Me.BtnCancel = New Telerik.WinControls.UI.RadButton()
         Me.RadPanel2 = New Telerik.WinControls.UI.RadPanel()
         Me.RadSousEpisodeGrid = New Telerik.WinControls.UI.RadGridView()
-        Me.SaveFileDialog1 = New System.Windows.Forms.SaveFileDialog()
         Me.GridViewTemplate1 = New Telerik.WinControls.UI.GridViewTemplate()
+        Me.SaveFileDialog1 = New System.Windows.Forms.SaveFileDialog()
         CType(Me.RadPanel1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.RadPanel1.SuspendLayout()
         CType(Me.BtnDetail, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -129,6 +129,7 @@ Partial Class FrmSousEpisodeListe
         '
         Me.RadSousEpisodeGrid.MasterTemplate.AllowAddNewRow = False
         Me.RadSousEpisodeGrid.MasterTemplate.AllowColumnChooser = False
+        Me.RadSousEpisodeGrid.MasterTemplate.AllowColumnReorder = False
         Me.RadSousEpisodeGrid.MasterTemplate.AllowEditRow = False
         Me.RadSousEpisodeGrid.MasterTemplate.AutoSizeColumnsMode = Telerik.WinControls.UI.GridViewAutoSizeColumnsMode.Fill
         GridViewTextBoxColumn1.DataType = GetType(Long)

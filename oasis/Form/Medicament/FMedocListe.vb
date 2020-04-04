@@ -8,9 +8,16 @@ Public Class FMedocListe
 
     'Le DataTable contient les données que le Grid va afficher (on pourrait utiliser un Dataset si on utilise plusieurs tables)
     Dim medicamentDataTable As DataTable = New DataTable()
-    Private Sub Form6_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+
+    Public Sub New()
+
+        ' Cet appel est requis par le concepteur.
+        InitializeComponent()
+
+        ' Ajoutez une initialisation quelconque après l'appel InitializeComponent().
         'Récupération des données de la table [oa_patient] dans un DataTable et liason du DataTable avec la grid
         BindGrid()
+
     End Sub
 
     Private Sub BindGrid()
