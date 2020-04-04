@@ -166,12 +166,16 @@ Public Class RadFParcoursDetailEdit
             Select Case SelectedSpecialiteId
                 Case EnumSpecialiteOasis.medecinReferent
                     ParcoursUpdate.SousCategorieId = EnumSousCategoriePPS.medecinReferent
+                    ParcoursUpdate.IntervenantOasis = True
                 Case EnumSpecialiteOasis.IDE
                     ParcoursUpdate.SousCategorieId = EnumSousCategoriePPS.IDE
+                    ParcoursUpdate.IntervenantOasis = True
                 Case EnumSpecialiteOasis.sageFemmeOasis
                     ParcoursUpdate.SousCategorieId = EnumSousCategoriePPS.sageFemme
+                    ParcoursUpdate.IntervenantOasis = True
                 Case Else
                     ParcoursUpdate.SousCategorieId = EnumSousCategoriePPS.specialiste
+                    ParcoursUpdate.IntervenantOasis = False
             End Select
             ParcoursUpdate.Commentaire = ""
             TxtCommentaire.Text = ""
