@@ -312,7 +312,11 @@ Public Class RadFPatientDetailEdit
         If SelectedPatient.PatientDateEntree > DteDateEntree.MaxDate Then
             DteDateEntree.Value = DteDateEntree.MaxDate
         Else
-            DteDateEntree.Value = SelectedPatient.PatientDateEntree
+            If SelectedPatient.PatientDateEntree < DteDateEntree.MinDate Then
+                DteDateEntree.Value = DteDateEntree.MaxDate
+            Else
+                DteDateEntree.Value = SelectedPatient.PatientDateEntree
+            End If
         End If
         If DteDateEntree.Value <> DteDateEntree.MaxDate Then
             DteDateEntree.Format = DateTimePickerFormat.Long
@@ -1125,6 +1129,12 @@ Public Class RadFPatientDetailEdit
         Dim cell As GridDataCellElement = TryCast(sender, GridDataCellElement)
         If cell IsNot Nothing AndAlso cell.ColumnInfo.Name = "note" Then
             e.ToolTipText = cell.Value.ToString()
+        End If
+    End Sub
+
+    Private Sub DteDateEntree_ValueChanged(sender As Object, e As EventArgs) Handles DteDateEntree.ValueChanged
+        If DteDateEntree.Value <> DteDateEntree.MaxDate Then
+            DteDateEntree.Format = DateTimePickerFormat.Long
         End If
     End Sub
 End Class

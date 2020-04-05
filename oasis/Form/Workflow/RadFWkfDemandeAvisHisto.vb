@@ -43,6 +43,7 @@ Public Class RadFWkfDemandeAvisHisto
         Dim rowCount As Integer = histoWorkflow.Rows.Count - 1
         Dim iGrid As Integer = -1
         Dim clotureWorkflow As Boolean
+        Dim naturePrecedente As String = ""
 
         'Parcours du DataTable pour alimenter le DataGridView
         For i = 0 To rowCount Step 1
@@ -69,12 +70,21 @@ Public Class RadFWkfDemandeAvisHisto
 
             Select Case histoWorkflow.Rows(i)("nature")
                 Case TacheDao.NatureTache.DEMANDE.ToString
-                    RadHistoDataGridView.Rows(iGrid).Cells("nature").Value = "Demande d'avis"
+                    Select Case naturePrecedente
+                        Case TacheDao.NatureTache.COMPLEMENT.ToString
+                            RadHistoDataGridView.Rows(iGrid).Cells("nature").Value = "Précision rendue"
+                        Case TacheDao.NatureTache.REPONSE.ToString
+                            RadHistoDataGridView.Rows(iGrid).Cells("nature").Value = "Relande de la demande d'avis"
+                        Case Else
+                            RadHistoDataGridView.Rows(iGrid).Cells("nature").Value = "Demande d'avis"
+                    End Select
                 Case TacheDao.NatureTache.COMPLEMENT.ToString
-                    RadHistoDataGridView.Rows(iGrid).Cells("nature").Value = "Demande de complément d'information"
+                    RadHistoDataGridView.Rows(iGrid).Cells("nature").Value = "Demande de précision"
                 Case TacheDao.NatureTache.REPONSE.ToString
-                    RadHistoDataGridView.Rows(iGrid).Cells("nature").Value = "Réponse à la demande d'avis"
+                    RadHistoDataGridView.Rows(iGrid).Cells("nature").Value = "Demande d'avis rendue"
             End Select
+
+            naturePrecedente = histoWorkflow.Rows(i)("nature")
 
             clotureWorkflow = Coalesce(histoWorkflow.Rows(i)("cloture"), False)
             If clotureWorkflow = True Then

@@ -3,6 +3,7 @@ Imports System.Configuration
 Imports Telerik.WinControls
 Imports Telerik.WinControls.UI
 Imports Oasis_Common
+Imports Telerik.WinControls.UI.Docking
 
 Public Class RadFEpisodeDetail
     Private _SelectedEpisodeId As Long
@@ -69,6 +70,7 @@ Public Class RadFEpisodeDetail
     Dim episodeParametreDao As New EpisodeParametreDao
     Dim episodeActeParamedicalDao As New EpisodeActeParamedicalDao
     Dim episodeContexteDao As New EpisodeContexteDao
+    Dim sousEpisodeDao As New SousEpisodeDao
 
     Dim antecedentChangementOrdreDao As New AntecedentChangementOrdreDao
     Dim antecedentAffectationDao As New AntecedentAffectationDao
@@ -106,6 +108,8 @@ Public Class RadFEpisodeDetail
     Dim ControleOrdonnanceValide As Boolean = False
     Dim ControleOrdonnanceExiste As Boolean = False
 
+    Dim OptionWorkflow As TacheDao.EnumOptionWorkflow
+
     Dim ControleAjoutConclusion As Boolean = True
 
     Dim LongueurStringAllergie As Integer
@@ -137,11 +141,6 @@ Public Class RadFEpisodeDetail
         InitParametre()
         LblTypeEpisode.Text = ""
         LblTypeProfil.Text = ""
-        LblDuree.Text = ""
-        LblEpisodeCommentaire.Text = ""
-        LblUserCreation.Text = ""
-        LBlUserModification.Text = ""
-        LblDateModification.Text = ""
         LblPatientNIR.Text = ""
         LblPatientPrenom.Text = ""
         LblPatientNom.Text = ""
@@ -156,14 +155,16 @@ Public Class RadFEpisodeDetail
         RadGridViewObsIde.TableElement.RowHeight = 35
         RadGridViewObsMed.TableElement.RowHeight = 35
 
-        Me.RadDesktopAlert1.Popup.AlertElement.CaptionElement.TextAndButtonsElement.TextElement.ForeColor = Color.Red
-        Me.RadDesktopAlert1.Popup.AlertElement.CaptionElement.CaptionGrip.BackColor = Color.DarkBlue
-        Me.RadDesktopAlert1.Popup.AlertElement.CaptionElement.CaptionGrip.GradientStyle = GradientStyles.Solid
-        Me.RadDesktopAlert1.Popup.AlertElement.ContentElement.Font = New Font("Arial", 8.0F, FontStyle.Italic)
-        Me.RadDesktopAlert1.Popup.AlertElement.ContentElement.TextImageRelation = TextImageRelation.TextBeforeImage
-        Me.RadDesktopAlert1.Popup.AlertElement.BackColor = Color.MistyRose
-        Me.RadDesktopAlert1.Popup.AlertElement.GradientStyle = GradientStyles.Solid
-        Me.RadDesktopAlert1.Popup.AlertElement.BorderColor = Color.DarkBlue
+        'Me.RadSplitContainer1.SplitPanels("SplitPanelTop").SizeInfo.SizeMode = Telerik.WinControls.UI.Docking.SplitPanelSizeMode.Absolute; 
+        'SplitPanelTop.SizeInfo.SizeMode = SplitPanelSizeMode.Absolute
+        'SplitPanelTop.Height = 122
+
+        SplitPanelObservation.SizeInfo.SizeMode = SplitPanelSizeMode.Absolute
+        SplitPanelObservation.SizeInfo.AbsoluteSize = New Size(0, 450)
+
+
+        RadBtnWorkflowIde.Hide()
+        RadBtnWorkflowMed.Hide()
 
         ClotureAutomatiqueRendezVous()
         ChargementParametreApplication()
@@ -176,10 +177,10 @@ Public Class RadFEpisodeDetail
 
         ChargementAffichageBlocWorkflow()
         If episode.TypeActivite = EpisodeDao.EnumTypeActiviteEpisodeCode.SOCIAL Or episode.Type = EpisodeDao.EnumTypeEpisode.VIRTUEL.ToString Then
-            SplitPanel7.Hide()
-            Me.RadSplitContainer3.MoveSplitter(Me.RadSplitContainer3.Splitters(0), RadDirection.Up)
-            SplitPanel4.Hide()
-            Me.RadSplitContainer2.MoveSplitter(Me.RadSplitContainer2.Splitters(0), RadDirection.Up)
+            SplitPanelObsMedProtocole.Hide()
+            Me.RadSplitContainerObsMed.MoveSplitter(Me.RadSplitContainerObsMed.Splitters(0), RadDirection.Up)
+            SplitPanelObsIdeProtocole.Hide()
+            Me.RadSplitContainerObsIde.MoveSplitter(Me.RadSplitContainerObsIde.Splitters(0), RadDirection.Up)
             RadObsSpeIdeDataGridView.Hide()
             RadBtnParametre.Hide()
             RadGbxParametre.Text = ""
@@ -187,6 +188,8 @@ Public Class RadFEpisodeDetail
             ChargementObservationSpecifique()
             ChargementParametres()
         End If
+
+        ChargementSousEpisode()
 
         ChargementObservationLibre()
         ChargementConclusion()
@@ -380,30 +383,15 @@ Public Class RadFEpisodeDetail
         typeProfilEpisode = episode.TypeProfil
         LblTypeProfil.Text = episode.TypeProfil
         CommentaireEpisode = episode.Commentaire
-        LblEpisodeCommentaire.Text = episode.Commentaire
 
         UtilisateurDao.SetUtilisateur(user, episode.UserCreation)
-        LblUserCreation.Text = user.UtilisateurPrenom.Trim & " " & user.UtilisateurNom.Trim
         UserCreation = user.UtilisateurPrenom.Trim & " " & user.UtilisateurNom.Trim
         DateCreation = episode.DateCreation.ToString("dd/MM/yyyy HH:mm")
-
-        LblDuree.Text = "Durée (" & outils.CalculDureeEnJourEtHeureString(DateCreation, Date.Now) & ")"
+        DateModification = episode.DateModification.ToString("dd/MM/yyyy HH:mm")
 
         If episode.UserModification <> 0 Then
             UtilisateurDao.SetUtilisateur(user, episode.UserModification)
-            LBlUserModification.Text = user.UtilisateurPrenom.Trim & " " & user.UtilisateurNom.Trim
             UserModification = user.UtilisateurPrenom.Trim & " " & user.UtilisateurNom.Trim
-        Else
-            LblLabelUserModification.Text = ""
-            LBlUserModification.Text = ""
-        End If
-
-        If episode.DateModification <> Nothing Then
-            LblDateModification.Text = episode.DateModification.ToString("dd/MM/yyyy HH:mm")
-            DateModification = LblDateModification.Text
-        Else
-            LblLabelDateModification.Text = ""
-            LblDateModification.Text = ""
         End If
 
         ChargementEtatEpisode()
@@ -458,8 +446,7 @@ Public Class RadFEpisodeDetail
         AfficheTooltipCaracetristiqueEpisode(sender)
     End Sub
 
-
-    Private Sub Label3_MouseHover(sender As Object, e As EventArgs) Handles Label3.MouseHover
+    Private Sub LblTypeEpisode_MouseHover(sender As Object, e As EventArgs) Handles LblTypeEpisode.MouseHover
         AfficheTooltipCaracetristiqueEpisode(sender)
     End Sub
 
@@ -468,7 +455,7 @@ Public Class RadFEpisodeDetail
 
     End Sub
 
-    Private Sub Label3_Click(sender As Object, e As EventArgs) Handles Label3.Click
+    Private Sub LblTypeEpisode_Click(sender As Object, e As EventArgs) Handles LblTypeEpisode.Click
         Dim form As New RadFNotification()
         form.Titre = "Caractéristique épisode patient"
         form.Message = ConstitutionNotification()
@@ -483,7 +470,9 @@ Public Class RadFEpisodeDetail
                             "Type activité : " & typeActiviteEpisode & " " & DescriptionActiviteEpisode & vbCrLf &
                             "Commentaire : " & CommentaireEpisode & vbCrLf &
                             "Créé par : " & UserCreation & " (" & typeProfilEpisode & ")" & " Le : " & DateCreation & vbCrLf &
-                            "Modifié par : " & UserModification & " Le : " & DateModification
+                            "Modifié par : " & UserModification & " Le : " & DateModification & vbCrLf &
+                            "Temps écoulé depuis sa création (" & outils.CalculDureeEnJourEtHeureString(DateCreation, Date.Now) & ")" & vbCrLf &
+                            LblLabelEtatEpisode.Text
         Return message
     End Function
 
@@ -788,6 +777,114 @@ Public Class RadFEpisodeDetail
         Me.Enabled = True
     End Sub
 
+    '====================================================================================================================================
+    '=== Sous-épisodes
+    '====================================================================================================================================
+    Private Sub ChargementSousEpisode()
+        Dim dt As DataTable
+        dt = sousEpisodeDao.getTableSousEpisode(SelectedEpisodeId,, True)
+
+        RadGridViewSousEpisode.Rows.Clear()
+
+        Dim iGrid As Integer = -1
+        Dim rowCount As Integer = dt.Rows.Count - 1
+        For i = 0 To rowCount Step 1
+            iGrid += 1
+            'Ajout d'une ligne au DataGridView
+            RadGridViewSousEpisode.Rows.Add(iGrid)
+            RadGridViewSousEpisode.Rows(iGrid).Cells("id").Value = dt.Rows(i)("id")
+            RadGridViewSousEpisode.Rows(iGrid).Cells("sousType").Value = dt.Rows(i)("sous_type_libelle")
+            RadGridViewSousEpisode.Rows(iGrid).Cells("CreateUser").Value = dt.Rows(i)("user_create")
+            RadGridViewSousEpisode.Rows(iGrid).Cells("LastUpdateUser").Value = dt.Rows(i)("user_update")
+            RadGridViewSousEpisode.Rows(iGrid).Cells("ValidateUser").Value = dt.Rows(i)("user_validate")
+            RadGridViewSousEpisode.Rows(iGrid).Cells("isSigne").Value = Not IsDBNull(dt.Rows(i)("horodate_validate"))
+            RadGridViewSousEpisode.Rows(iGrid).Cells("isReponseRecue").Value = Coalesce(dt.Rows(i)("is_reponse_recue"), False)
+            If RadGridViewSousEpisode.Rows(iGrid).Cells("isReponseRecue").Value = True Then
+                'Vert
+                RadGridViewSousEpisode.Rows(iGrid).Cells("sousType").Style.ForeColor = Color.Green
+            Else
+                If RadGridViewSousEpisode.Rows(iGrid).Cells("isSigne").Value = True Then
+                    'Noir
+
+                Else
+                    'Rouge
+                    RadGridViewSousEpisode.Rows(iGrid).Cells("sousType").Style.ForeColor = Color.Red
+                End If
+            End If
+            ' -- on garnit le tag pour affichage tooltip
+            RadGridViewSousEpisode.Rows(iGrid).Tag = "Créé le " & dt.Rows(i)("horodate_creation") & " par " & dt.Rows(i)("user_create") & vbCrLf &
+                        If(IsDBNull(dt.Rows(i)("horodate_last_update")), "Non modifié.", "Modifié le " & dt.Rows(i)("horodate_last_update") & " par " & dt.Rows(i)("user_update")) & vbCrLf &
+                        If(IsDBNull(dt.Rows(i)("horodate_validate")), "Non Signé.", "Signé le " & dt.Rows(i)("horodate_validate") & " par " & dt.Rows(i)("user_validate")) & vbCrLf &
+                        If(Coalesce(dt.Rows(i)("is_ald"), False), " ... ALD" & vbCrLf, "") &
+                        If(Coalesce(dt.Rows(i)("is_reponse"), False) AndAlso Coalesce(dt.Rows(i)("is_reponse_recue"), False) = False,
+                                         " ... Résultat requis sous " & dt.Rows(i)("delai_since_validation") & " j à partir de la date de signature" & vbCrLf, "") &
+                        If(Coalesce(dt.Rows(i)("is_reponse_recue"), False) AndAlso Coalesce(dt.Rows(i)("is_reponse"), False),
+                                        " ... Dernier résultat reçu le  " & dt.Rows(i)("horodate_last_recu"),
+                                        If(Coalesce(dt.Rows(i)("is_reponse"), False), " ... Résultat NON reçu ..." & vbCrLf, ""))
+        Next
+
+        'Positionnement du grid sur la première occurrence
+        If RadGridViewSousEpisode.Rows.Count > 0 Then
+            RadGridViewSousEpisode.CurrentRow = RadGridViewSousEpisode.ChildRows(0)
+            RadGridViewSousEpisode.TableElement.VScrollBar.Value = 0
+        End If
+    End Sub
+
+    Private Sub RadGridViewSousEpisode_CellFormatting(sender As Object, e As CellFormattingEventArgs) Handles RadGridViewSousEpisode.CellFormatting
+        If TypeOf e.Row Is GridViewDataRowInfo Then
+            Try
+                If e.Row.Tag <> Nothing Then e.CellElement.ToolTipText = e.Row.Tag
+            Catch ex As Exception
+
+            End Try
+        End If
+        ' --- on enleve le carre des checkbox
+        Dim checkBoxCell As GridCheckBoxCellElement = TryCast(e.CellElement, GridCheckBoxCellElement)
+        If checkBoxCell IsNot Nothing Then
+            Dim editor As RadCheckBoxEditor = TryCast(checkBoxCell.Editor, RadCheckBoxEditor)
+            Dim element As RadCheckBoxEditorElement = TryCast(editor.EditorElement, RadCheckBoxEditorElement)
+            element.Checkmark.Border.Visibility = ElementVisibility.Collapsed
+            element.Checkmark.Fill.Visibility = ElementVisibility.Collapsed
+        End If
+    End Sub
+
+    'Détail sous-épisode
+    Private Sub RadGridViewSousEpisode_DoubleClick(sender As Object, e As EventArgs) Handles RadGridViewSousEpisode.DoubleClick
+        If Me.RadGridViewSousEpisode.Rows.Count = 0 OrElse Me.RadGridViewSousEpisode.CurrentRow.IsSelected = False Then Return
+
+        Dim sousEpisode As SousEpisode
+        Try
+            Me.Cursor = Cursors.WaitCursor
+            sousEpisode = sousEpisodeDao.getById(Me.RadGridViewSousEpisode.CurrentRow.Cells("Id").Value)
+        Catch err As Exception
+            MsgBox(err.Message())
+            Return
+        Finally
+            Me.Cursor = Cursors.Default
+        End Try
+
+        With RadGridViewSousEpisode.CurrentRow
+            ficheSousEpisode(sousEpisode, .Cells("CreateUser").Value, .Cells("LastUpdateUser").Value, .Cells("ValidateUser").Value)
+        End With
+    End Sub
+
+    Private Sub ficheSousEpisode(sousEpisode As SousEpisode, userCreateNom As String, userUpdateNom As String, userValidateNom As String)
+        Try
+            Me.Cursor = Cursors.WaitCursor
+            Me.Enabled = False
+            Using frm = New FrmSousEpisode(episode, SelectedPatient, sousEpisode, userCreateNom, userUpdateNom, userValidateNom)
+                frm.ShowDialog()
+                frm.Dispose()
+            End Using
+            ChargementSousEpisode()
+        Catch err As Exception
+            MsgBox(err.Message())
+        Finally
+            Me.Enabled = True
+            Me.Cursor = Cursors.Default
+        End Try
+    End Sub
+
 
     '====================================================================================================================================
     '=== Observations spécifiques
@@ -894,15 +991,20 @@ Public Class RadFEpisodeDetail
         Next
 
         If MiseAJour = True Then
-            Me.RadDesktopAlert1.CaptionText = "Notification saisie observation spécifique patient"
-            Me.RadDesktopAlert1.ContentText = "Observation spécifique mise à jour"
-            Me.RadDesktopAlert1.Show()
+            Dim form As New RadFNotification()
+            form.Titre = "Notification saisie observation spécifique patient"
+            form.Message = "Observation spécifique mise à jour"
+            form.Show()
             'Rechargement grid
             ChargementEpisodeActesParamedicauxParamedical()
         End If
     End Sub
 
     'Saisie observation spécifique via l'écran dédié selon le type de la DORC
+
+    Private Sub RadMenuItemObsSpeIdeSaisieObservation_Click(sender As Object, e As EventArgs) Handles RadMenuItemObsSpeIdeSaisieObservation.Click
+        SaisieObservation()
+    End Sub
     Private Sub SaisieObservationToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles SaisieObservationToolStripMenuItem.Click
         SaisieObservation()
     End Sub
@@ -960,6 +1062,14 @@ Public Class RadFEpisodeDetail
 
     'Ajout protocole aigue (pour les épisodes de type "Pathologie aiguë")
     Private Sub AjoutProtocoleAiguToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles AjoutProtocoleAiguToolStripMenuItem.Click
+        AjoutProtocoleAigue()
+    End Sub
+
+    Private Sub RadMenuItemObseSpeIdeAjoutProtocoleAigue_Click(sender As Object, e As EventArgs) Handles RadMenuItemObseSpeIdeAjoutProtocoleAigue.Click
+        AjoutProtocoleAigue()
+    End Sub
+
+    Private Sub AjoutProtocoleAigue()
         Dim SelectedDrcId As Integer
         Cursor.Current = Cursors.WaitCursor
         Using vFDrcSelecteur As New RadFDRCSelecteur
@@ -1154,9 +1264,10 @@ Public Class RadFEpisodeDetail
         Next
 
         If MiseAJour = True Then
-            Me.RadDesktopAlert1.CaptionText = "Notification saisie observation spécifique patient"
-            Me.RadDesktopAlert1.ContentText = "Observation spécifique mise à jour"
-            Me.RadDesktopAlert1.Show()
+            Dim form As New RadFNotification()
+            form.Titre = "Notification saisie observation spécifique patient"
+            form.Message = "Observation spécifique mise à jour"
+            form.Show()
             'Rechargement grid
             ChargementEpisodeActesParamedicauxMedical()
         End If
@@ -1244,7 +1355,19 @@ Public Class RadFEpisodeDetail
     End Sub
 
     'Créer une observation libre
+    Private Sub RadBtnAddObsLibreIde_Click(sender As Object, e As EventArgs) Handles RadBtnAddObsLibreIde.Click
+        CreationObservationLibre()
+    End Sub
+
+    Private Sub RadBtnAddObsLibreMed_Click(sender As Object, e As EventArgs) Handles RadBtnAddObsLibreMed.Click
+        CreationObservationLibre()
+    End Sub
+
     Private Sub CréerUneObservationToolStripMenuItem1_Click(sender As Object, e As EventArgs) Handles CréerUneObservationToolStripMenuItem1.Click
+        CreationObservationLibre()
+    End Sub
+
+    Private Sub CreationObservationLibre()
         Cursor.Current = Cursors.WaitCursor
         Me.Enabled = False
         Using vRadFEpisodeObservationDetailEdit As New RadFEpisodeObservationDetailEdit
@@ -1314,67 +1437,109 @@ Public Class RadFEpisodeDetail
         tache = tacheDao.GetDemandeEnCoursByEpisode(SelectedEpisodeId)
         If tache.Id <> 0 Then
             ControleWorkflowEnCoursExistant = True
+            OptionWorkflow = TacheDao.EnumOptionWorkflow.NULL
             Dim fonctionDestinataire As Fonction
             fonctionDestinataire = fonctionDao.getFonctionById(tache.DestinataireFonctionId)
             Select Case fonctionDestinataire.Type
                 Case ProfilDao.EnumProfilType.PARAMEDICAL.ToString
-                    RadBtnWorkflowIde.Text = "Traiter"
+                    'RadBtnWorkflowIde.Text = "Traiter"
                     RadBtnWorkflowIde.Show()
+                    RadBtnWorkflowIde.Enabled = True
+                    RadBtnWorkflowIde.ForeColor = Color.Red
+                    RadBtnWorkflowIde.Font = New Font(RadBtnWorkflowIde.Font, FontStyle.Bold)
                     Select Case tache.Nature
                         Case TacheDao.NatureTache.DEMANDE.ToString
-                            LblWorkflowIDE.Text = "Demande d'avis à traiter"
-                            LblWorkflowMed.Text = "Attente rendu de demande d'avis"
+                            'LblWorkflowIDE.Text = "Demande d'avis à traiter"
+                            'LblWorkflowMed.Text = "Attente rendu de demande d'avis"
+                            RadBtnWorkflowIde.Text = "Réponse à rendre"
+                            RadBtnWorkflowMed.Text = "Avis demandé"
                         Case TacheDao.NatureTache.REPONSE.ToString
-                            LblWorkflowIDE.Text = "Réponse à valider"
-                            LblWorkflowMed.Text = "Demande d'avis rendue"
+                            'LblWorkflowIDE.Text = "Réponse à valider"
+                            'LblWorkflowMed.Text = "Demande d'avis rendue"
+                            RadBtnWorkflowIde.Text = "Avis à valider"
+                            RadBtnWorkflowMed.Text = "Avis rendu"
                         Case TacheDao.NatureTache.COMPLEMENT.ToString
-                            LblWorkflowIDE.Text = "Demande de complément d'information"
-                            LblWorkflowMed.Text = "Attente complément d'information"
+                            'LblWorkflowIDE.Text = "Demande de complément d'information"
+                            'LblWorkflowMed.Text = "Attente complément d'information"
+                            RadBtnWorkflowIde.Text = "Précision à rendre"
+                            RadBtnWorkflowMed.Text = "Demande précision"
                     End Select
-                    RadBtnWorkflowMed.Hide()
-                    LblWorkflowMed.Show()
-                    LblWorkflowIDE.Show()
-                Case ProfilDao.EnumProfilType.MEDICAL.ToString
-                    RadBtnWorkflowMed.Text = "Traiter"
+                    'RadBtnWorkflowMed.Hide()
                     RadBtnWorkflowMed.Show()
+                    RadBtnWorkflowMed.Enabled = False
+                    RadBtnWorkflowMed.ForeColor = Color.FromArgb(21, 66, 139)
+                    RadBtnWorkflowMed.Font = New Font(RadBtnWorkflowMed.Font, FontStyle.Regular)
+                    LblWorkFlow.Text = "<-----------------------------------"
+                    LblWorkFlow.Show()
+                Case ProfilDao.EnumProfilType.MEDICAL.ToString
+                    'RadBtnWorkflowMed.Text = "Traiter"
+                    RadBtnWorkflowMed.Show()
+                    RadBtnWorkflowMed.Enabled = True
+                    RadBtnWorkflowMed.ForeColor = Color.Red
+                    RadBtnWorkflowMed.Font = New Font(RadBtnWorkflowMed.Font, FontStyle.Bold)
                     Select Case tache.Nature
                         Case TacheDao.NatureTache.DEMANDE.ToString
-                            LblWorkflowMed.Text = "Demande d'avis à traiter"
-                            LblWorkflowIDE.Text = "Attente rendu de demande d'avis"
+                            'LblWorkflowMed.Text = "Demande d'avis à traiter"
+                            'LblWorkflowIDE.Text = "Attente rendu de demande d'avis"
+                            RadBtnWorkflowMed.Text = "Réponse à rendre"
+                            RadBtnWorkflowIde.Text = "Avis demandé"
                         Case TacheDao.NatureTache.REPONSE.ToString
-                            LblWorkflowMed.Text = "Réponse à valider"
-                            LblWorkflowIDE.Text = "Demande d'avis rendue"
+                            'LblWorkflowMed.Text = "Réponse à valider"
+                            'LblWorkflowIDE.Text = "Demande d'avis rendue"
+                            RadBtnWorkflowMed.Text = "Avis à valider"
+                            RadBtnWorkflowIde.Text = "Avis rendu"
                         Case TacheDao.NatureTache.COMPLEMENT.ToString
-                            LblWorkflowMed.Text = "Demande de complément d'information"
-                            LblWorkflowIDE.Text = "Attente complément d'information"
+                            'LblWorkflowMed.Text = "Demande de complément d'information"
+                            'LblWorkflowIDE.Text = "Attente complément d'information"
+                            RadBtnWorkflowMed.Text = "Précision à rendre"
+                            RadBtnWorkflowIde.Text = "Demande de précision"
                     End Select
-                    RadBtnWorkflowIde.Hide()
-                    LblWorkflowIDE.Show()
-                    LblWorkflowMed.Show()
+                    'RadBtnWorkflowIde.Hide()
+                    RadBtnWorkflowIde.Show()
+                    RadBtnWorkflowIde.Enabled = False
+                    RadBtnWorkflowIde.ForeColor = Color.FromArgb(21, 66, 139)
+                    RadBtnWorkflowIde.Font = New Font(RadBtnWorkflowIde.Font, FontStyle.Regular)
+                    LblWorkFlow.Text = "----------------------------------->"
+                    LblWorkFlow.Show()
+            End Select
+            Select Case userLog.TypeProfil
+                Case ProfilDao.EnumProfilType.PARAMEDICAL.ToString
+                    RadBtnWorkflowMed.Enabled = False
+                Case ProfilDao.EnumProfilType.MEDICAL.ToString
+                    RadBtnWorkflowIde.Enabled = False
             End Select
         Else
+            LblWorkFlow.Text = ""
             ControleWorkflowEnCoursExistant = False
             If episode.Etat = EpisodeDao.EnumEtatEpisode.CLOTURE.ToString AndAlso episode.DateModification.Date < Date.Now.Date Then
                 RadBtnWorkflowMed.Hide()
-                LblWorkflowMed.Hide()
                 RadBtnWorkflowIde.Hide()
-                LblWorkflowIDE.Hide()
+                LblWorkFlow.Hide()
+                LblWorkFlow.Text = ""
             Else
+                RadBtnWorkflowIde.ForeColor = Color.FromArgb(21, 66, 139)
+                RadBtnWorkflowIde.Font = New Font(RadBtnWorkflowIde.Font, FontStyle.Regular)
+                RadBtnWorkflowMed.ForeColor = Color.FromArgb(21, 66, 139)
+                RadBtnWorkflowMed.Font = New Font(RadBtnWorkflowMed.Font, FontStyle.Regular)
                 Select Case userLog.TypeProfil
                     Case ProfilDao.EnumProfilType.PARAMEDICAL.ToString
-                        RadBtnWorkflowIde.Text = "Créer"
+                        'RadBtnWorkflowIde.Text = "Créer"
                         RadBtnWorkflowIde.Show()
-                        LblWorkflowIDE.Text = "Créer une demande d'avis"
-                        LblWorkflowIDE.Show()
+                        RadBtnWorkflowIde.Text = "Demande d'avis"
+                        RadBtnWorkflowIde.Enabled = True
+                        'LblWorkflowIDE.Text = "Créer une demande d'avis"
+                        'LblWorkflowIDE.Show()
                         RadBtnWorkflowMed.Hide()
-                        LblWorkflowMed.Hide()
+                        'LblWorkflowMed.Hide()
                     Case ProfilDao.EnumProfilType.MEDICAL.ToString
-                        RadBtnWorkflowMed.Text = "Créer"
+                        'RadBtnWorkflowMed.Text = "Créer"
                         RadBtnWorkflowMed.Show()
-                        LblWorkflowMed.Text = "Créer une demande d'avis"
-                        LblWorkflowMed.Show()
+                        RadBtnWorkflowMed.Text = "demande d'avis"
+                        RadBtnWorkflowMed.Enabled = True
+                        'LblWorkflowMed.Text = "Créer une demande d'avis"
+                        'LblWorkflowMed.Show()
                         RadBtnWorkflowIde.Hide()
-                        LblWorkflowIDE.Hide()
+                        'LblWorkflowIDE.Hide()
                 End Select
             End If
         End If
@@ -1396,7 +1561,6 @@ Public Class RadFEpisodeDetail
 
     Private Sub RadBtnWorkflowMed_Click(sender As Object, e As EventArgs) Handles RadBtnWorkflowMed.Click
         ControleGestionWorkflow()
-        'GestionClotureAutomatique()
     End Sub
 
     Private Sub ControleGestionWorkflow()
@@ -1437,6 +1601,7 @@ Public Class RadFEpisodeDetail
                 vRadFWkfDemandeAvis.SelectedPatient = Me.SelectedPatient
                 vRadFWkfDemandeAvis.SelectedTacheId = tache.Id
                 vRadFWkfDemandeAvis.Creation = False
+                vRadFWkfDemandeAvis.Provenance = RadFWkfDemandeAvis.EnumProvenance.EPISODE
                 vRadFWkfDemandeAvis.ShowDialog()
             End Using
             Me.Enabled = True
@@ -1448,6 +1613,7 @@ Public Class RadFEpisodeDetail
                 vRadFWkfDemandeAvis.SelectedPatient = Me.SelectedPatient
                 vRadFWkfDemandeAvis.SelectedTacheId = 0
                 vRadFWkfDemandeAvis.Creation = True
+                vRadFWkfDemandeAvis.Provenance = RadFWkfDemandeAvis.EnumProvenance.EPISODE
                 vRadFWkfDemandeAvis.ShowDialog()
             End Using
             Me.Enabled = True
@@ -1474,6 +1640,7 @@ Public Class RadFEpisodeDetail
         If tache.isAttribue AndAlso tache.TraiteUserId = userLog.UtilisateurId Then
             tacheDao.desattribueTache(tache.Id)
             Dim form As New RadFNotification()
+            form.Titre = "Notification épisode"
             form.Message = "La sortie de l'épisode sans traiter la demande d'avis a automatiquement annulé l'attribution de la tâche"
             form.Show()
         End If
@@ -1549,7 +1716,7 @@ Public Class RadFEpisodeDetail
                     episodeDao.ModificationEpisode(episode)
                     RadioTypeConclusionIdeModified = False
                 End If
-                RadGrpConclusionIDE.Hide()
+                TxtConclusionIDE.Hide()
                 TxtConclusionIDE.Text = ""
             Else
                 If ControleProtocoleAiguExiste = True OrElse ControleActeParamedicalExiste = True Then
@@ -1574,7 +1741,7 @@ Public Class RadFEpisodeDetail
                     End If
                     RadioBtnRolePropre.Enabled = False
                 End If
-                RadGrpConclusionIDE.Show()
+                TxtConclusionIDE.Show()
             End If
             'Si l'épisode n'avait pas de valeur de définie, alors rôle propre par défaut
             If RadioBtnSurProtocole.Checked = False AndAlso RadioBtnRolePropre.Checked = False AndAlso RadioBtnDemandeAvis.Checked = False Then
@@ -2026,9 +2193,10 @@ Public Class RadFEpisodeDetail
             episodeProtocoleCollaboratifDao.GenerateParametreEtProtocoleCollaboratifByEpisode(episode)
             Cursor.Current = Cursors.Default
             Refresh()
-            Me.RadDesktopAlert1.CaptionText = "Notification épisode"
-            Me.RadDesktopAlert1.ContentText = "Traitement de génération des paramètres et des protocoles terminé"
-            Me.RadDesktopAlert1.Show()
+            Dim form As New RadFNotification()
+            form.Titre = "Notification épisode"
+            form.Message = "Traitement de génération des paramètres et des protocoles terminé"
+            form.Show()
         End If
     End Sub
 
@@ -2048,6 +2216,7 @@ Public Class RadFEpisodeDetail
         ChargementAffichageBlocWorkflow()
         InitParametre()
         ChargementParametres()
+        ChargementSousEpisode()
         ChargementObservationSpecifique()
         ChargementObservationLibre()
         ChargementConclusion()
@@ -2504,7 +2673,7 @@ Public Class RadFEpisodeDetail
                         Exit Sub
                 End Select
                 Dim AntecedentId As Integer = CInt(RadAntecedentDataGridView.Rows(i).Cells("antecedentId").Value)
-                AntecedentChangementOrdreDao.UpdateAntecedent(AntecedentId, ordreAffichage, NiveauAntecedentAOrdonner)
+                antecedentChangementOrdreDao.UpdateAntecedent(AntecedentId, ordreAffichage, NiveauAntecedentAOrdonner)
             End If
         Next
     End Sub
@@ -4512,7 +4681,6 @@ Public Class RadFEpisodeDetail
     '===========================================================
     '======================= Généralités =======================
     '===========================================================
-
     Private Sub initZones()
         LblParametre1.Text = ""
         LblParametre2.Text = ""
@@ -4566,7 +4734,6 @@ Public Class RadFEpisodeDetail
             CreateLog("Paramètre application 'drcIdConclusionIde' non trouvé !", "Episode", LogDao.EnumTypeLog.ERREUR.ToString)
         End If
     End Sub
-
 
 
     '===========================================================
@@ -4666,78 +4833,92 @@ Public Class RadFEpisodeDetail
                 'Regénération paramètres et actes paramédicaux
                 RadBtnGenProtocole.Hide()
 
-                'Observations libres
-                CréerUneObservationToolStripMenuItem.Enabled = False
-                CréerUneObservationToolStripMenuItem1.Enabled = False
+                'Observations spécifiques IDE
+                RadDropDownBtnObseSpeIde.Enabled = False
                 SaisieObservationToolStripMenuItem.Enabled = False
                 AjoutProtocoleAiguToolStripMenuItem.Enabled = False
-                ObsContextMenuStrip.Visible = False
+
+                'Observations spécifiques Médicale
                 SaisieObservationSpecifiqueMedicaleItem.Enabled = False
                 AttributionDesObservationsSpécifiquesToolStripMenuItem.Enabled = False
 
-                'Saisie commentaire paramédiacle
+                'Observations libres (IDE et médicale)
+                CréerUneObservationToolStripMenuItem.Enabled = False
+                CréerUneObservationToolStripMenuItem1.Enabled = False
+                RadBtnAddObsLibreIde.Enabled = False
+                RadBtnAddObsLibreMed.Enabled = False
+                ObsContextMenuStrip.Visible = False
+
+                'Saisie commentaire conclusion (Paramédicale)
                 TxtConclusionIDE.Enabled = False
 
-                'Conclusion médicale
-                RadBtnConclusion.Enabled = False
-                RadBtnConclusionCreerConsigne.Enabled = False
-
-                'Choix conclusion paramédicale
+                'Choix conclusion épisode paramédical (Paramédicale)
                 RadioBtnDemandeAvis.Enabled = False
                 RadioBtnRolePropre.Enabled = False
                 RadioBtnSurProtocole.Enabled = False
+
+                'Consigne IDE (médical)
+                RadBtnConclusionCreerConsigne.Enabled = False
+
+                'Contexte de conclusion (Médicale)
+                RadBtnConclusion.Enabled = False
+                RadBtnConclusionCreerConsigne.Enabled = False
             End If
         End If
     End Sub
 
     Private Sub InhibeAccesIDE()
         RadBtnWorkflowIde.Enabled = False
-        RadPnlWorkflowIDE.Enabled = False
+        'RadPnlWorkflowIDE.Enabled = False
 
         TxtConclusionIDE.Enabled = False
         RadioBtnDemandeAvis.Enabled = False
         RadioBtnRolePropre.Enabled = False
         RadioBtnSurProtocole.Enabled = False
 
-        'RadObsSpeIdeDataGridView.Enabled = False
         RadObsSpeIdeDataGridView.TableElement.BackColor = Color.WhiteSmoke
-        'RadGridViewObsIde.Enabled = False
         RadGridViewObsIde.TableElement.BackColor = Color.WhiteSmoke
-        'RadPanelConclusionIdeType.Enabled = False
 
         RadioBtnDemandeAvis.Enabled = False
         RadioBtnRolePropre.Enabled = False
         RadioBtnSurProtocole.Enabled = False
         TxtConclusionIDE.Enabled = False
 
+        'Observation spécifique
         SaisieObservationToolStripMenuItem.Enabled = False
         AjoutProtocoleAiguToolStripMenuItem.Enabled = False
+        RadDropDownBtnObseSpeIde.Enabled = False
+
+        'Observation libre
+        RadBtnAddObsLibreIde.Enabled = False
     End Sub
 
     Private Sub InhibeAccesMed()
         RadBtnWorkflowMed.Enabled = False
-        RadPnlWorkflowMed.Enabled = False
         RadBtnConclusionCreerConsigne.Enabled = False
         RadBtnConclusion.Enabled = False
         ControleAjoutConclusion = False
 
-        'RadObsSpeMedDataGridView.Enabled = False
+        'Observation libre
+        RadBtnAddObsLibreMed.Enabled = False
+
+        'Consigne IDE (médical)
+        RadBtnConclusionCreerConsigne.Enabled = False
+
         RadObsSpeMedDataGridView.TableElement.BackColor = Color.WhiteSmoke
-        'RadGridViewObsMed.Enabled = False
         RadGridViewObsMed.TableElement.BackColor = Color.WhiteSmoke
-        'RadGridViewContexteEpisode.Enabled = False
         RadGridViewContexteEpisode.TableElement.BackColor = Color.WhiteSmoke
     End Sub
 
     Private Sub LibereAccesIde()
         RadBtnWorkflowIde.Enabled = True
-        RadPnlWorkflowIDE.Enabled = True
         TxtConclusionIDE.Enabled = True
         If episode.ConclusionIdeType = EpisodeDao.EnumTypeConclusionParamedicale.DEMANDE_AVIS.ToString Then
             If ControleDemandeAvisMedicalExiste = True Then
                 Exit Sub
             End If
         End If
+
         RadioBtnDemandeAvis.Enabled = True
         RadioBtnRolePropre.Enabled = True
         RadioBtnSurProtocole.Enabled = True
@@ -4750,7 +4931,6 @@ Public Class RadFEpisodeDetail
 
     Private Sub LibereAccesMed()
         RadBtnWorkflowMed.Enabled = True
-        RadPnlWorkflowMed.Enabled = True
         RadBtnConclusionCreerConsigne.Enabled = True
         RadBtnConclusion.Enabled = True
 
@@ -4829,7 +5009,6 @@ Public Class RadFEpisodeDetail
         Me.Enabled = True
     End Sub
     Private Sub RadBtnSousEpisode_Click(sender As Object, e As EventArgs) Handles RadBtnSousEpisode.Click
-        'Return
         Try
             Me.Cursor = Cursors.WaitCursor
             Me.Enabled = False

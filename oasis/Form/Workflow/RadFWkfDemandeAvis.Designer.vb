@@ -24,306 +24,100 @@ Partial Class RadFWkfDemandeAvis
     Private Sub InitializeComponent()
         Me.components = New System.ComponentModel.Container()
         Me.RadGroupBoxEtatCivil = New Telerik.WinControls.UI.RadGroupBox()
-        Me.LblALD = New System.Windows.Forms.Label()
-        Me.Label13 = New System.Windows.Forms.Label()
-        Me.LblPatientDateMaj = New System.Windows.Forms.Label()
-        Me.Label5 = New System.Windows.Forms.Label()
-        Me.LblPatientUniteSanitaire = New System.Windows.Forms.Label()
-        Me.Label6 = New System.Windows.Forms.Label()
-        Me.LblPatientSite = New System.Windows.Forms.Label()
-        Me.Label4 = New System.Windows.Forms.Label()
-        Me.LblPatientTel2 = New System.Windows.Forms.Label()
-        Me.LblPatientPrenom = New System.Windows.Forms.Label()
-        Me.LblPatientTel1 = New System.Windows.Forms.Label()
+        Me.LblPatientDateNaissance = New System.Windows.Forms.Label()
         Me.LblPatientNom = New System.Windows.Forms.Label()
-        Me.Label3 = New System.Windows.Forms.Label()
         Me.LblPatientAge = New System.Windows.Forms.Label()
-        Me.LblPatientVille = New System.Windows.Forms.Label()
-        Me.LblPatientGenre = New System.Windows.Forms.Label()
-        Me.LblPatientCodePostal = New System.Windows.Forms.Label()
-        Me.LblPatientNIR = New System.Windows.Forms.Label()
-        Me.LblPatientAdresse2 = New System.Windows.Forms.Label()
-        Me.Label2 = New System.Windows.Forms.Label()
-        Me.LblPatientAdresse1 = New System.Windows.Forms.Label()
         Me.ToolTip = New System.Windows.Forms.ToolTip(Me.components)
         Me.RadBtnAbandon = New Telerik.WinControls.UI.RadButton()
         Me.RadBtnValidation = New Telerik.WinControls.UI.RadButton()
         Me.LblLabelTypeTache = New System.Windows.Forms.Label()
-        Me.Label7 = New System.Windows.Forms.Label()
-        Me.Label8 = New System.Windows.Forms.Label()
-        Me.CbxAction = New System.Windows.Forms.ComboBox()
-        Me.LblLabelEmetteur = New System.Windows.Forms.Label()
-        Me.RadGroupBox1 = New Telerik.WinControls.UI.RadGroupBox()
-        Me.Label1 = New System.Windows.Forms.Label()
-        Me.TxtCommentaireEpisode = New System.Windows.Forms.TextBox()
-        Me.LblUserCreation = New System.Windows.Forms.Label()
-        Me.Label9 = New System.Windows.Forms.Label()
-        Me.LblDateModification = New System.Windows.Forms.Label()
-        Me.LblLabelDateModification = New System.Windows.Forms.Label()
-        Me.LBlUserModification = New System.Windows.Forms.Label()
-        Me.LblLabelUserModification = New System.Windows.Forms.Label()
-        Me.LblTypeEpisode = New System.Windows.Forms.Label()
-        Me.Label10 = New System.Windows.Forms.Label()
-        Me.Label11 = New System.Windows.Forms.Label()
+        Me.LblEmetteurNom = New System.Windows.Forms.Label()
         Me.TxtCommentaireDemande = New System.Windows.Forms.TextBox()
-        Me.RadGroupBox2 = New Telerik.WinControls.UI.RadGroupBox()
-        Me.CbxFonctionDestinataire = New System.Windows.Forms.ComboBox()
-        Me.RadGrpCommentaireEmetteur = New Telerik.WinControls.UI.RadGroupBox()
-        Me.TxtCommentaireEmetteur = New System.Windows.Forms.TextBox()
-        Me.RadioBtnAvisUrgent = New System.Windows.Forms.RadioButton()
-        Me.RadioBtnSynchrone = New System.Windows.Forms.RadioButton()
+        Me.LblPriorite = New System.Windows.Forms.Label()
         Me.RadioBtnAsynchrone = New System.Windows.Forms.RadioButton()
-        Me.Label12 = New System.Windows.Forms.Label()
+        Me.RadioBtnSynchrone = New System.Windows.Forms.RadioButton()
+        Me.RadioBtnAvisUrgent = New System.Windows.Forms.RadioButton()
+        Me.CbxDestinataireFonction = New System.Windows.Forms.ComboBox()
+        Me.RadPanelEmetteur = New Telerik.WinControls.UI.RadPanel()
+        Me.LblEmetteurLocalisation = New System.Windows.Forms.Label()
+        Me.LblEmetteurFonction = New System.Windows.Forms.Label()
+        Me.RadPanel2 = New Telerik.WinControls.UI.RadPanel()
+        Me.LblDestinataireFonction = New System.Windows.Forms.Label()
+        Me.LblDestinataireLocalisation = New System.Windows.Forms.Label()
+        Me.LblDestinataireNom = New System.Windows.Forms.Label()
+        Me.LblVersDestinataire = New System.Windows.Forms.Label()
+        Me.RadBtnEpisode = New Telerik.WinControls.UI.RadButton()
+        Me.RadBtnSousEpisode = New Telerik.WinControls.UI.RadButton()
+        Me.RadBtnSynthèse = New Telerik.WinControls.UI.RadButton()
+        Me.RadBtnLigneDeVie = New Telerik.WinControls.UI.RadButton()
+        Me.LblWorkflowDescription = New System.Windows.Forms.Label()
+        Me.RadBtnMessagePrecedent = New Telerik.WinControls.UI.RadButton()
+        Me.CheckBox1 = New System.Windows.Forms.CheckBox()
+        Me.CheckBox2 = New System.Windows.Forms.CheckBox()
         CType(Me.RadGroupBoxEtatCivil, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.RadGroupBoxEtatCivil.SuspendLayout()
         CType(Me.RadBtnAbandon, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.RadBtnValidation, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.RadGroupBox1, System.ComponentModel.ISupportInitialize).BeginInit()
-        Me.RadGroupBox1.SuspendLayout()
-        CType(Me.RadGroupBox2, System.ComponentModel.ISupportInitialize).BeginInit()
-        Me.RadGroupBox2.SuspendLayout()
-        CType(Me.RadGrpCommentaireEmetteur, System.ComponentModel.ISupportInitialize).BeginInit()
-        Me.RadGrpCommentaireEmetteur.SuspendLayout()
+        CType(Me.RadPanelEmetteur, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.RadPanelEmetteur.SuspendLayout()
+        CType(Me.RadPanel2, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.RadPanel2.SuspendLayout()
+        CType(Me.RadBtnEpisode, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.RadBtnSousEpisode, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.RadBtnSynthèse, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.RadBtnLigneDeVie, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.RadBtnMessagePrecedent, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'RadGroupBoxEtatCivil
         '
         Me.RadGroupBoxEtatCivil.AccessibleRole = System.Windows.Forms.AccessibleRole.Grouping
-        Me.RadGroupBoxEtatCivil.BackColor = System.Drawing.SystemColors.GradientInactiveCaption
-        Me.RadGroupBoxEtatCivil.Controls.Add(Me.LblALD)
-        Me.RadGroupBoxEtatCivil.Controls.Add(Me.Label13)
-        Me.RadGroupBoxEtatCivil.Controls.Add(Me.LblPatientDateMaj)
-        Me.RadGroupBoxEtatCivil.Controls.Add(Me.Label5)
-        Me.RadGroupBoxEtatCivil.Controls.Add(Me.LblPatientUniteSanitaire)
-        Me.RadGroupBoxEtatCivil.Controls.Add(Me.Label6)
-        Me.RadGroupBoxEtatCivil.Controls.Add(Me.LblPatientSite)
-        Me.RadGroupBoxEtatCivil.Controls.Add(Me.Label4)
-        Me.RadGroupBoxEtatCivil.Controls.Add(Me.LblPatientTel2)
-        Me.RadGroupBoxEtatCivil.Controls.Add(Me.LblPatientPrenom)
-        Me.RadGroupBoxEtatCivil.Controls.Add(Me.LblPatientTel1)
+        Me.RadGroupBoxEtatCivil.BackColor = System.Drawing.Color.Bisque
+        Me.RadGroupBoxEtatCivil.Controls.Add(Me.LblPatientDateNaissance)
         Me.RadGroupBoxEtatCivil.Controls.Add(Me.LblPatientNom)
-        Me.RadGroupBoxEtatCivil.Controls.Add(Me.Label3)
         Me.RadGroupBoxEtatCivil.Controls.Add(Me.LblPatientAge)
-        Me.RadGroupBoxEtatCivil.Controls.Add(Me.LblPatientVille)
-        Me.RadGroupBoxEtatCivil.Controls.Add(Me.LblPatientGenre)
-        Me.RadGroupBoxEtatCivil.Controls.Add(Me.LblPatientCodePostal)
-        Me.RadGroupBoxEtatCivil.Controls.Add(Me.LblPatientNIR)
-        Me.RadGroupBoxEtatCivil.Controls.Add(Me.LblPatientAdresse2)
-        Me.RadGroupBoxEtatCivil.Controls.Add(Me.Label2)
-        Me.RadGroupBoxEtatCivil.Controls.Add(Me.LblPatientAdresse1)
         Me.RadGroupBoxEtatCivil.GroupBoxStyle = Telerik.WinControls.UI.RadGroupBoxStyle.Office
-        Me.RadGroupBoxEtatCivil.HeaderText = "Etat civil"
-        Me.RadGroupBoxEtatCivil.Location = New System.Drawing.Point(3, 4)
+        Me.RadGroupBoxEtatCivil.HeaderText = ""
+        Me.RadGroupBoxEtatCivil.Location = New System.Drawing.Point(3, 146)
         Me.RadGroupBoxEtatCivil.Name = "RadGroupBoxEtatCivil"
-        Me.RadGroupBoxEtatCivil.Size = New System.Drawing.Size(952, 71)
+        Me.RadGroupBoxEtatCivil.Size = New System.Drawing.Size(704, 37)
         Me.RadGroupBoxEtatCivil.TabIndex = 3
-        Me.RadGroupBoxEtatCivil.Text = "Etat civil"
         CType(Me.RadGroupBoxEtatCivil.GetChildAt(0).GetChildAt(1), Telerik.WinControls.UI.GroupBoxHeader).GroupBoxStyle = Telerik.WinControls.UI.RadGroupBoxStyle.Office
         CType(Me.RadGroupBoxEtatCivil.GetChildAt(0).GetChildAt(1).GetChildAt(0), Telerik.WinControls.Primitives.FillPrimitive).BackColor = System.Drawing.SystemColors.ActiveCaption
         CType(Me.RadGroupBoxEtatCivil.GetChildAt(0).GetChildAt(1).GetChildAt(0), Telerik.WinControls.Primitives.FillPrimitive).SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.None
         '
-        'LblALD
+        'LblPatientDateNaissance
         '
-        Me.LblALD.AutoSize = True
-        Me.LblALD.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.LblALD.ForeColor = System.Drawing.Color.OrangeRed
-        Me.LblALD.Location = New System.Drawing.Point(902, 20)
-        Me.LblALD.Name = "LblALD"
-        Me.LblALD.Size = New System.Drawing.Size(31, 13)
-        Me.LblALD.TabIndex = 43
-        Me.LblALD.Text = "ALD"
-        '
-        'Label13
-        '
-        Me.Label13.AutoSize = True
-        Me.Label13.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label13.Location = New System.Drawing.Point(510, 20)
-        Me.Label13.Name = "Label13"
-        Me.Label13.Size = New System.Drawing.Size(37, 13)
-        Me.Label13.TabIndex = 42
-        Me.Label13.Text = "NIR :"
-        '
-        'LblPatientDateMaj
-        '
-        Me.LblPatientDateMaj.AutoSize = True
-        Me.LblPatientDateMaj.Location = New System.Drawing.Point(801, 20)
-        Me.LblPatientDateMaj.Name = "LblPatientDateMaj"
-        Me.LblPatientDateMaj.Size = New System.Drawing.Size(63, 13)
-        Me.LblPatientDateMaj.TabIndex = 41
-        Me.LblPatientDateMaj.Text = "23-05-2019"
-        '
-        'Label5
-        '
-        Me.Label5.AutoSize = True
-        Me.Label5.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label5.Location = New System.Drawing.Point(667, 20)
-        Me.Label5.Name = "Label5"
-        Me.Label5.Size = New System.Drawing.Size(128, 13)
-        Me.Label5.TabIndex = 40
-        Me.Label5.Text = "Dernière mise à jour :"
-        '
-        'LblPatientUniteSanitaire
-        '
-        Me.LblPatientUniteSanitaire.AutoSize = True
-        Me.LblPatientUniteSanitaire.Location = New System.Drawing.Point(848, 53)
-        Me.LblPatientUniteSanitaire.Name = "LblPatientUniteSanitaire"
-        Me.LblPatientUniteSanitaire.Size = New System.Drawing.Size(46, 13)
-        Me.LblPatientUniteSanitaire.TabIndex = 39
-        Me.LblPatientUniteSanitaire.Text = "Auxerre"
-        '
-        'Label6
-        '
-        Me.Label6.AutoSize = True
-        Me.Label6.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label6.Location = New System.Drawing.Point(667, 53)
-        Me.Label6.Name = "Label6"
-        Me.Label6.Size = New System.Drawing.Size(175, 13)
-        Me.Label6.TabIndex = 38
-        Me.Label6.Text = "Centre médical de référence :"
-        '
-        'LblPatientSite
-        '
-        Me.LblPatientSite.AutoSize = True
-        Me.LblPatientSite.Location = New System.Drawing.Point(710, 37)
-        Me.LblPatientSite.Name = "LblPatientSite"
-        Me.LblPatientSite.Size = New System.Drawing.Size(36, 13)
-        Me.LblPatientSite.TabIndex = 37
-        Me.LblPatientSite.Text = "Cluny"
-        '
-        'Label4
-        '
-        Me.Label4.AutoSize = True
-        Me.Label4.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label4.Location = New System.Drawing.Point(667, 37)
-        Me.Label4.Name = "Label4"
-        Me.Label4.Size = New System.Drawing.Size(37, 13)
-        Me.Label4.TabIndex = 36
-        Me.Label4.Text = "Site :"
-        '
-        'LblPatientTel2
-        '
-        Me.LblPatientTel2.AutoSize = True
-        Me.LblPatientTel2.Location = New System.Drawing.Point(403, 53)
-        Me.LblPatientTel2.Name = "LblPatientTel2"
-        Me.LblPatientTel2.Size = New System.Drawing.Size(67, 13)
-        Me.LblPatientTel2.TabIndex = 35
-        Me.LblPatientTel2.Text = "0968542357"
-        '
-        'LblPatientPrenom
-        '
-        Me.LblPatientPrenom.AutoSize = True
-        Me.LblPatientPrenom.Location = New System.Drawing.Point(11, 20)
-        Me.LblPatientPrenom.Name = "LblPatientPrenom"
-        Me.LblPatientPrenom.Size = New System.Drawing.Size(63, 13)
-        Me.LblPatientPrenom.TabIndex = 23
-        Me.LblPatientPrenom.Text = "Jean-Pierre"
-        '
-        'LblPatientTel1
-        '
-        Me.LblPatientTel1.AutoSize = True
-        Me.LblPatientTel1.Location = New System.Drawing.Point(403, 37)
-        Me.LblPatientTel1.Name = "LblPatientTel1"
-        Me.LblPatientTel1.Size = New System.Drawing.Size(67, 13)
-        Me.LblPatientTel1.TabIndex = 34
-        Me.LblPatientTel1.Text = "0288425678"
+        Me.LblPatientDateNaissance.AutoSize = True
+        Me.LblPatientDateNaissance.Location = New System.Drawing.Point(381, 9)
+        Me.LblPatientDateNaissance.Name = "LblPatientDateNaissance"
+        Me.LblPatientDateNaissance.Size = New System.Drawing.Size(63, 13)
+        Me.LblPatientDateNaissance.TabIndex = 26
+        Me.LblPatientDateNaissance.Text = "jj/mm/aaaa"
         '
         'LblPatientNom
         '
         Me.LblPatientNom.AutoSize = True
-        Me.LblPatientNom.Location = New System.Drawing.Point(133, 20)
+        Me.LblPatientNom.Location = New System.Drawing.Point(11, 9)
         Me.LblPatientNom.Name = "LblPatientNom"
-        Me.LblPatientNom.Size = New System.Drawing.Size(46, 13)
-        Me.LblPatientNom.TabIndex = 24
-        Me.LblPatientNom.Text = "Durand"
-        '
-        'Label3
-        '
-        Me.Label3.AutoSize = True
-        Me.Label3.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label3.Location = New System.Drawing.Point(360, 37)
-        Me.Label3.Name = "Label3"
-        Me.Label3.Size = New System.Drawing.Size(37, 13)
-        Me.Label3.TabIndex = 33
-        Me.Label3.Text = "Tel. :"
+        Me.LblPatientNom.Size = New System.Drawing.Size(82, 13)
+        Me.LblPatientNom.TabIndex = 23
+        Me.LblPatientNom.Text = "LblPatientNom"
         '
         'LblPatientAge
         '
         Me.LblPatientAge.AutoSize = True
-        Me.LblPatientAge.Location = New System.Drawing.Point(314, 20)
+        Me.LblPatientAge.Location = New System.Drawing.Point(486, 9)
         Me.LblPatientAge.Name = "LblPatientAge"
         Me.LblPatientAge.Size = New System.Drawing.Size(40, 13)
         Me.LblPatientAge.TabIndex = 25
         Me.LblPatientAge.Text = "35 ans"
         '
-        'LblPatientVille
-        '
-        Me.LblPatientVille.AutoSize = True
-        Me.LblPatientVille.Location = New System.Drawing.Point(125, 53)
-        Me.LblPatientVille.Name = "LblPatientVille"
-        Me.LblPatientVille.Size = New System.Drawing.Size(57, 13)
-        Me.LblPatientVille.TabIndex = 32
-        Me.LblPatientVille.Text = "Lournand"
-        '
-        'LblPatientGenre
-        '
-        Me.LblPatientGenre.AutoSize = True
-        Me.LblPatientGenre.Location = New System.Drawing.Point(424, 20)
-        Me.LblPatientGenre.Name = "LblPatientGenre"
-        Me.LblPatientGenre.Size = New System.Drawing.Size(53, 13)
-        Me.LblPatientGenre.TabIndex = 26
-        Me.LblPatientGenre.Text = "Masculin"
-        '
-        'LblPatientCodePostal
-        '
-        Me.LblPatientCodePostal.AutoSize = True
-        Me.LblPatientCodePostal.Location = New System.Drawing.Point(82, 53)
-        Me.LblPatientCodePostal.Name = "LblPatientCodePostal"
-        Me.LblPatientCodePostal.Size = New System.Drawing.Size(37, 13)
-        Me.LblPatientCodePostal.TabIndex = 31
-        Me.LblPatientCodePostal.Text = "71250"
-        '
-        'LblPatientNIR
-        '
-        Me.LblPatientNIR.AutoSize = True
-        Me.LblPatientNIR.Location = New System.Drawing.Point(561, 20)
-        Me.LblPatientNIR.Name = "LblPatientNIR"
-        Me.LblPatientNIR.Size = New System.Drawing.Size(85, 13)
-        Me.LblPatientNIR.TabIndex = 27
-        Me.LblPatientNIR.Text = "1840675370367"
-        '
-        'LblPatientAdresse2
-        '
-        Me.LblPatientAdresse2.AutoSize = True
-        Me.LblPatientAdresse2.Location = New System.Drawing.Point(236, 36)
-        Me.LblPatientAdresse2.Name = "LblPatientAdresse2"
-        Me.LblPatientAdresse2.Size = New System.Drawing.Size(55, 13)
-        Me.LblPatientAdresse2.TabIndex = 30
-        Me.LblPatientAdresse2.Text = "adresse 2"
-        '
-        'Label2
-        '
-        Me.Label2.AutoSize = True
-        Me.Label2.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label2.Location = New System.Drawing.Point(11, 36)
-        Me.Label2.Name = "Label2"
-        Me.Label2.Size = New System.Drawing.Size(60, 13)
-        Me.Label2.TabIndex = 28
-        Me.Label2.Text = "Adresse :"
-        '
-        'LblPatientAdresse1
-        '
-        Me.LblPatientAdresse1.AutoSize = True
-        Me.LblPatientAdresse1.Location = New System.Drawing.Point(82, 36)
-        Me.LblPatientAdresse1.Name = "LblPatientAdresse1"
-        Me.LblPatientAdresse1.Size = New System.Drawing.Size(121, 13)
-        Me.LblPatientAdresse1.TabIndex = 29
-        Me.LblPatientAdresse1.Text = "3 rue de la république"
-        '
         'RadBtnAbandon
         '
         Me.RadBtnAbandon.DialogResult = System.Windows.Forms.DialogResult.Cancel
-        Me.RadBtnAbandon.Location = New System.Drawing.Point(845, 523)
+        Me.RadBtnAbandon.Location = New System.Drawing.Point(597, 298)
         Me.RadBtnAbandon.Name = "RadBtnAbandon"
         Me.RadBtnAbandon.Size = New System.Drawing.Size(110, 24)
         Me.RadBtnAbandon.TabIndex = 4
@@ -331,7 +125,7 @@ Partial Class RadFWkfDemandeAvis
         '
         'RadBtnValidation
         '
-        Me.RadBtnValidation.Location = New System.Drawing.Point(729, 523)
+        Me.RadBtnValidation.Location = New System.Drawing.Point(3, 298)
         Me.RadBtnValidation.Name = "RadBtnValidation"
         Me.RadBtnValidation.Size = New System.Drawing.Size(110, 24)
         Me.RadBtnValidation.TabIndex = 5
@@ -340,277 +134,46 @@ Partial Class RadFWkfDemandeAvis
         'LblLabelTypeTache
         '
         Me.LblLabelTypeTache.AutoSize = True
-        Me.LblLabelTypeTache.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Bold)
+        Me.LblLabelTypeTache.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Bold)
         Me.LblLabelTypeTache.ForeColor = System.Drawing.Color.DarkRed
-        Me.LblLabelTypeTache.Location = New System.Drawing.Point(11, 23)
+        Me.LblLabelTypeTache.Location = New System.Drawing.Point(5, 7)
         Me.LblLabelTypeTache.Name = "LblLabelTypeTache"
-        Me.LblLabelTypeTache.Size = New System.Drawing.Size(136, 13)
+        Me.LblLabelTypeTache.Size = New System.Drawing.Size(144, 15)
         Me.LblLabelTypeTache.TabIndex = 7
         Me.LblLabelTypeTache.Text = "Création demande d'avis"
         '
-        'Label7
+        'LblEmetteurNom
         '
-        Me.Label7.AutoSize = True
-        Me.Label7.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Bold)
-        Me.Label7.Location = New System.Drawing.Point(11, 52)
-        Me.Label7.Name = "Label7"
-        Me.Label7.Size = New System.Drawing.Size(60, 13)
-        Me.Label7.TabIndex = 8
-        Me.Label7.Text = "Emetteur :"
-        '
-        'Label8
-        '
-        Me.Label8.AutoSize = True
-        Me.Label8.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Bold)
-        Me.Label8.Location = New System.Drawing.Point(11, 81)
-        Me.Label8.Name = "Label8"
-        Me.Label8.Size = New System.Drawing.Size(123, 13)
-        Me.Label8.TabIndex = 9
-        Me.Label8.Text = "Fonction destinataire :"
-        '
-        'CbxAction
-        '
-        Me.CbxAction.FormattingEnabled = True
-        Me.CbxAction.Location = New System.Drawing.Point(160, 20)
-        Me.CbxAction.Name = "CbxAction"
-        Me.CbxAction.Size = New System.Drawing.Size(424, 21)
-        Me.CbxAction.TabIndex = 10
-        '
-        'LblLabelEmetteur
-        '
-        Me.LblLabelEmetteur.AutoSize = True
-        Me.LblLabelEmetteur.Location = New System.Drawing.Point(157, 52)
-        Me.LblLabelEmetteur.Name = "LblLabelEmetteur"
-        Me.LblLabelEmetteur.Size = New System.Drawing.Size(174, 13)
-        Me.LblLabelEmetteur.TabIndex = 11
-        Me.LblLabelEmetteur.Text = "Jean Dupond - IDE / Paramedical"
-        '
-        'RadGroupBox1
-        '
-        Me.RadGroupBox1.AccessibleRole = System.Windows.Forms.AccessibleRole.Grouping
-        Me.RadGroupBox1.BackColor = System.Drawing.SystemColors.GradientInactiveCaption
-        Me.RadGroupBox1.Controls.Add(Me.Label1)
-        Me.RadGroupBox1.Controls.Add(Me.TxtCommentaireEpisode)
-        Me.RadGroupBox1.Controls.Add(Me.LblUserCreation)
-        Me.RadGroupBox1.Controls.Add(Me.Label9)
-        Me.RadGroupBox1.Controls.Add(Me.LblDateModification)
-        Me.RadGroupBox1.Controls.Add(Me.LblLabelDateModification)
-        Me.RadGroupBox1.Controls.Add(Me.LBlUserModification)
-        Me.RadGroupBox1.Controls.Add(Me.LblLabelUserModification)
-        Me.RadGroupBox1.Controls.Add(Me.LblTypeEpisode)
-        Me.RadGroupBox1.Controls.Add(Me.Label10)
-        Me.RadGroupBox1.GroupBoxStyle = Telerik.WinControls.UI.RadGroupBoxStyle.Office
-        Me.RadGroupBox1.HeaderText = "Episode"
-        Me.RadGroupBox1.Location = New System.Drawing.Point(3, 81)
-        Me.RadGroupBox1.Name = "RadGroupBox1"
-        Me.RadGroupBox1.Size = New System.Drawing.Size(952, 118)
-        Me.RadGroupBox1.TabIndex = 13
-        Me.RadGroupBox1.Text = "Episode"
-        CType(Me.RadGroupBox1.GetChildAt(0).GetChildAt(1), Telerik.WinControls.UI.GroupBoxHeader).GroupBoxStyle = Telerik.WinControls.UI.RadGroupBoxStyle.Office
-        CType(Me.RadGroupBox1.GetChildAt(0).GetChildAt(1).GetChildAt(0), Telerik.WinControls.Primitives.FillPrimitive).BackColor = System.Drawing.SystemColors.ActiveCaption
-        CType(Me.RadGroupBox1.GetChildAt(0).GetChildAt(1).GetChildAt(0), Telerik.WinControls.Primitives.FillPrimitive).SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.None
-        '
-        'Label1
-        '
-        Me.Label1.AutoSize = True
-        Me.Label1.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Bold)
-        Me.Label1.Location = New System.Drawing.Point(11, 75)
-        Me.Label1.Name = "Label1"
-        Me.Label1.Size = New System.Drawing.Size(83, 13)
-        Me.Label1.TabIndex = 18
-        Me.Label1.Text = "Commentaire :"
-        '
-        'TxtCommentaireEpisode
-        '
-        Me.TxtCommentaireEpisode.Location = New System.Drawing.Point(160, 72)
-        Me.TxtCommentaireEpisode.Multiline = True
-        Me.TxtCommentaireEpisode.Name = "TxtCommentaireEpisode"
-        Me.TxtCommentaireEpisode.ReadOnly = True
-        Me.TxtCommentaireEpisode.Size = New System.Drawing.Size(787, 38)
-        Me.TxtCommentaireEpisode.TabIndex = 17
-        '
-        'LblUserCreation
-        '
-        Me.LblUserCreation.AutoSize = True
-        Me.LblUserCreation.Location = New System.Drawing.Point(97, 48)
-        Me.LblUserCreation.Name = "LblUserCreation"
-        Me.LblUserCreation.Size = New System.Drawing.Size(89, 13)
-        Me.LblUserCreation.TabIndex = 16
-        Me.LblUserCreation.Text = "Jeanne Dupond"
-        '
-        'Label9
-        '
-        Me.Label9.AutoSize = True
-        Me.Label9.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Bold)
-        Me.Label9.Location = New System.Drawing.Point(11, 48)
-        Me.Label9.Name = "Label9"
-        Me.Label9.Size = New System.Drawing.Size(56, 13)
-        Me.Label9.TabIndex = 15
-        Me.Label9.Text = "Créé par :"
-        '
-        'LblDateModification
-        '
-        Me.LblDateModification.AutoSize = True
-        Me.LblDateModification.Location = New System.Drawing.Point(482, 48)
-        Me.LblDateModification.Name = "LblDateModification"
-        Me.LblDateModification.Size = New System.Drawing.Size(102, 13)
-        Me.LblDateModification.TabIndex = 14
-        Me.LblDateModification.Text = "23/11/2019 à 12:35"
-        '
-        'LblLabelDateModification
-        '
-        Me.LblLabelDateModification.AutoSize = True
-        Me.LblLabelDateModification.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Bold)
-        Me.LblLabelDateModification.Location = New System.Drawing.Point(399, 48)
-        Me.LblLabelDateModification.Name = "LblLabelDateModification"
-        Me.LblLabelDateModification.Size = New System.Drawing.Size(77, 13)
-        Me.LblLabelDateModification.TabIndex = 13
-        Me.LblLabelDateModification.Text = "Mis à jour le :"
-        '
-        'LBlUserModification
-        '
-        Me.LBlUserModification.AutoSize = True
-        Me.LBlUserModification.Location = New System.Drawing.Point(626, 48)
-        Me.LBlUserModification.Name = "LBlUserModification"
-        Me.LBlUserModification.Size = New System.Drawing.Size(86, 13)
-        Me.LBlUserModification.TabIndex = 12
-        Me.LBlUserModification.Text = "Jacques Lebrun"
-        '
-        'LblLabelUserModification
-        '
-        Me.LblLabelUserModification.AutoSize = True
-        Me.LblLabelUserModification.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Bold)
-        Me.LblLabelUserModification.Location = New System.Drawing.Point(590, 48)
-        Me.LblLabelUserModification.Name = "LblLabelUserModification"
-        Me.LblLabelUserModification.Size = New System.Drawing.Size(30, 13)
-        Me.LblLabelUserModification.TabIndex = 11
-        Me.LblLabelUserModification.Text = "par :"
-        '
-        'LblTypeEpisode
-        '
-        Me.LblTypeEpisode.AutoSize = True
-        Me.LblTypeEpisode.Location = New System.Drawing.Point(97, 27)
-        Me.LblTypeEpisode.Name = "LblTypeEpisode"
-        Me.LblTypeEpisode.Size = New System.Drawing.Size(139, 13)
-        Me.LblTypeEpisode.TabIndex = 10
-        Me.LblTypeEpisode.Text = "Suivi de pathologie aigue"
-        '
-        'Label10
-        '
-        Me.Label10.AutoSize = True
-        Me.Label10.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Bold)
-        Me.Label10.Location = New System.Drawing.Point(11, 27)
-        Me.Label10.Name = "Label10"
-        Me.Label10.Size = New System.Drawing.Size(85, 13)
-        Me.Label10.TabIndex = 9
-        Me.Label10.Text = "Type épisode : "
-        '
-        'Label11
-        '
-        Me.Label11.AutoSize = True
-        Me.Label11.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Bold)
-        Me.Label11.Location = New System.Drawing.Point(11, 131)
-        Me.Label11.Name = "Label11"
-        Me.Label11.Size = New System.Drawing.Size(83, 13)
-        Me.Label11.TabIndex = 14
-        Me.Label11.Text = "Commentaire :"
+        Me.LblEmetteurNom.AutoSize = True
+        Me.LblEmetteurNom.Location = New System.Drawing.Point(11, 13)
+        Me.LblEmetteurNom.Name = "LblEmetteurNom"
+        Me.LblEmetteurNom.Size = New System.Drawing.Size(92, 13)
+        Me.LblEmetteurNom.TabIndex = 11
+        Me.LblEmetteurNom.Text = "LblEmetteurNom"
         '
         'TxtCommentaireDemande
         '
-        Me.TxtCommentaireDemande.Location = New System.Drawing.Point(160, 128)
+        Me.TxtCommentaireDemande.Location = New System.Drawing.Point(3, 183)
         Me.TxtCommentaireDemande.MaxLength = 512
         Me.TxtCommentaireDemande.Multiline = True
         Me.TxtCommentaireDemande.Name = "TxtCommentaireDemande"
-        Me.TxtCommentaireDemande.Size = New System.Drawing.Size(787, 59)
+        Me.TxtCommentaireDemande.Size = New System.Drawing.Size(704, 59)
         Me.TxtCommentaireDemande.TabIndex = 15
         '
-        'RadGroupBox2
+        'LblPriorite
         '
-        Me.RadGroupBox2.AccessibleRole = System.Windows.Forms.AccessibleRole.Grouping
-        Me.RadGroupBox2.BackColor = System.Drawing.SystemColors.GradientInactiveCaption
-        Me.RadGroupBox2.Controls.Add(Me.Label12)
-        Me.RadGroupBox2.Controls.Add(Me.RadioBtnAsynchrone)
-        Me.RadGroupBox2.Controls.Add(Me.RadioBtnSynchrone)
-        Me.RadGroupBox2.Controls.Add(Me.RadioBtnAvisUrgent)
-        Me.RadGroupBox2.Controls.Add(Me.CbxFonctionDestinataire)
-        Me.RadGroupBox2.Controls.Add(Me.LblLabelTypeTache)
-        Me.RadGroupBox2.Controls.Add(Me.TxtCommentaireDemande)
-        Me.RadGroupBox2.Controls.Add(Me.Label7)
-        Me.RadGroupBox2.Controls.Add(Me.Label11)
-        Me.RadGroupBox2.Controls.Add(Me.Label8)
-        Me.RadGroupBox2.Controls.Add(Me.CbxAction)
-        Me.RadGroupBox2.Controls.Add(Me.LblLabelEmetteur)
-        Me.RadGroupBox2.GroupBoxStyle = Telerik.WinControls.UI.RadGroupBoxStyle.Office
-        Me.RadGroupBox2.HeaderText = "Workflow"
-        Me.RadGroupBox2.Location = New System.Drawing.Point(3, 305)
-        Me.RadGroupBox2.Name = "RadGroupBox2"
-        Me.RadGroupBox2.Size = New System.Drawing.Size(952, 204)
-        Me.RadGroupBox2.TabIndex = 16
-        Me.RadGroupBox2.Text = "Workflow"
-        CType(Me.RadGroupBox2.GetChildAt(0).GetChildAt(1), Telerik.WinControls.UI.GroupBoxHeader).GroupBoxStyle = Telerik.WinControls.UI.RadGroupBoxStyle.Office
-        CType(Me.RadGroupBox2.GetChildAt(0).GetChildAt(1).GetChildAt(0), Telerik.WinControls.Primitives.FillPrimitive).BackColor = System.Drawing.SystemColors.ActiveCaption
-        CType(Me.RadGroupBox2.GetChildAt(0).GetChildAt(1).GetChildAt(0), Telerik.WinControls.Primitives.FillPrimitive).SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.None
-        '
-        'CbxFonctionDestinataire
-        '
-        Me.CbxFonctionDestinataire.FormattingEnabled = True
-        Me.CbxFonctionDestinataire.Location = New System.Drawing.Point(160, 78)
-        Me.CbxFonctionDestinataire.Name = "CbxFonctionDestinataire"
-        Me.CbxFonctionDestinataire.Size = New System.Drawing.Size(149, 21)
-        Me.CbxFonctionDestinataire.TabIndex = 16
-        '
-        'RadGrpCommentaireEmetteur
-        '
-        Me.RadGrpCommentaireEmetteur.AccessibleRole = System.Windows.Forms.AccessibleRole.Grouping
-        Me.RadGrpCommentaireEmetteur.BackColor = System.Drawing.SystemColors.GradientInactiveCaption
-        Me.RadGrpCommentaireEmetteur.Controls.Add(Me.TxtCommentaireEmetteur)
-        Me.RadGrpCommentaireEmetteur.GroupBoxStyle = Telerik.WinControls.UI.RadGroupBoxStyle.Office
-        Me.RadGrpCommentaireEmetteur.HeaderText = "Commentaire émetteur"
-        Me.RadGrpCommentaireEmetteur.Location = New System.Drawing.Point(3, 205)
-        Me.RadGrpCommentaireEmetteur.Name = "RadGrpCommentaireEmetteur"
-        Me.RadGrpCommentaireEmetteur.Size = New System.Drawing.Size(952, 94)
-        Me.RadGrpCommentaireEmetteur.TabIndex = 17
-        Me.RadGrpCommentaireEmetteur.Text = "Commentaire émetteur"
-        CType(Me.RadGrpCommentaireEmetteur.GetChildAt(0).GetChildAt(1), Telerik.WinControls.UI.GroupBoxHeader).GroupBoxStyle = Telerik.WinControls.UI.RadGroupBoxStyle.Office
-        CType(Me.RadGrpCommentaireEmetteur.GetChildAt(0).GetChildAt(1).GetChildAt(0), Telerik.WinControls.Primitives.FillPrimitive).BackColor = System.Drawing.SystemColors.ActiveCaption
-        CType(Me.RadGrpCommentaireEmetteur.GetChildAt(0).GetChildAt(1).GetChildAt(0), Telerik.WinControls.Primitives.FillPrimitive).SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.None
-        '
-        'TxtCommentaireEmetteur
-        '
-        Me.TxtCommentaireEmetteur.Location = New System.Drawing.Point(160, 21)
-        Me.TxtCommentaireEmetteur.MaxLength = 512
-        Me.TxtCommentaireEmetteur.Multiline = True
-        Me.TxtCommentaireEmetteur.Name = "TxtCommentaireEmetteur"
-        Me.TxtCommentaireEmetteur.ReadOnly = True
-        Me.TxtCommentaireEmetteur.Size = New System.Drawing.Size(787, 59)
-        Me.TxtCommentaireEmetteur.TabIndex = 16
-        '
-        'RadioBtnAvisUrgent
-        '
-        Me.RadioBtnAvisUrgent.AutoSize = True
-        Me.RadioBtnAvisUrgent.Location = New System.Drawing.Point(160, 105)
-        Me.RadioBtnAvisUrgent.Name = "RadioBtnAvisUrgent"
-        Me.RadioBtnAvisUrgent.Size = New System.Drawing.Size(83, 17)
-        Me.RadioBtnAvisUrgent.TabIndex = 17
-        Me.RadioBtnAvisUrgent.TabStop = True
-        Me.RadioBtnAvisUrgent.Text = "Avis urgent"
-        Me.RadioBtnAvisUrgent.UseVisualStyleBackColor = True
-        '
-        'RadioBtnSynchrone
-        '
-        Me.RadioBtnSynchrone.AutoSize = True
-        Me.RadioBtnSynchrone.Location = New System.Drawing.Point(263, 105)
-        Me.RadioBtnSynchrone.Name = "RadioBtnSynchrone"
-        Me.RadioBtnSynchrone.Size = New System.Drawing.Size(79, 17)
-        Me.RadioBtnSynchrone.TabIndex = 18
-        Me.RadioBtnSynchrone.TabStop = True
-        Me.RadioBtnSynchrone.Text = "Synchrone"
-        Me.RadioBtnSynchrone.UseVisualStyleBackColor = True
+        Me.LblPriorite.AutoSize = True
+        Me.LblPriorite.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Bold)
+        Me.LblPriorite.Location = New System.Drawing.Point(323, 250)
+        Me.LblPriorite.Name = "LblPriorite"
+        Me.LblPriorite.Size = New System.Drawing.Size(51, 13)
+        Me.LblPriorite.TabIndex = 20
+        Me.LblPriorite.Text = "Priorité :"
         '
         'RadioBtnAsynchrone
         '
         Me.RadioBtnAsynchrone.AutoSize = True
-        Me.RadioBtnAsynchrone.Location = New System.Drawing.Point(366, 105)
+        Me.RadioBtnAsynchrone.Location = New System.Drawing.Point(594, 248)
         Me.RadioBtnAsynchrone.Name = "RadioBtnAsynchrone"
         Me.RadioBtnAsynchrone.Size = New System.Drawing.Size(85, 17)
         Me.RadioBtnAsynchrone.TabIndex = 19
@@ -618,26 +181,210 @@ Partial Class RadFWkfDemandeAvis
         Me.RadioBtnAsynchrone.Text = "Asynchrone"
         Me.RadioBtnAsynchrone.UseVisualStyleBackColor = True
         '
-        'Label12
+        'RadioBtnSynchrone
         '
-        Me.Label12.AutoSize = True
-        Me.Label12.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Bold)
-        Me.Label12.Location = New System.Drawing.Point(11, 107)
-        Me.Label12.Name = "Label12"
-        Me.Label12.Size = New System.Drawing.Size(51, 13)
-        Me.Label12.TabIndex = 20
-        Me.Label12.Text = "Priorité :"
+        Me.RadioBtnSynchrone.AutoSize = True
+        Me.RadioBtnSynchrone.Location = New System.Drawing.Point(491, 248)
+        Me.RadioBtnSynchrone.Name = "RadioBtnSynchrone"
+        Me.RadioBtnSynchrone.Size = New System.Drawing.Size(79, 17)
+        Me.RadioBtnSynchrone.TabIndex = 18
+        Me.RadioBtnSynchrone.TabStop = True
+        Me.RadioBtnSynchrone.Text = "Synchrone"
+        Me.RadioBtnSynchrone.UseVisualStyleBackColor = True
+        '
+        'RadioBtnAvisUrgent
+        '
+        Me.RadioBtnAvisUrgent.AutoSize = True
+        Me.RadioBtnAvisUrgent.Location = New System.Drawing.Point(388, 248)
+        Me.RadioBtnAvisUrgent.Name = "RadioBtnAvisUrgent"
+        Me.RadioBtnAvisUrgent.Size = New System.Drawing.Size(83, 17)
+        Me.RadioBtnAvisUrgent.TabIndex = 17
+        Me.RadioBtnAvisUrgent.TabStop = True
+        Me.RadioBtnAvisUrgent.Text = "Avis urgent"
+        Me.RadioBtnAvisUrgent.UseVisualStyleBackColor = True
+        '
+        'CbxDestinataireFonction
+        '
+        Me.CbxDestinataireFonction.FormattingEnabled = True
+        Me.CbxDestinataireFonction.Location = New System.Drawing.Point(365, 10)
+        Me.CbxDestinataireFonction.Name = "CbxDestinataireFonction"
+        Me.CbxDestinataireFonction.Size = New System.Drawing.Size(149, 21)
+        Me.CbxDestinataireFonction.TabIndex = 16
+        '
+        'RadPanelEmetteur
+        '
+        Me.RadPanelEmetteur.BackColor = System.Drawing.Color.Thistle
+        Me.RadPanelEmetteur.Controls.Add(Me.LblEmetteurLocalisation)
+        Me.RadPanelEmetteur.Controls.Add(Me.LblEmetteurFonction)
+        Me.RadPanelEmetteur.Controls.Add(Me.LblEmetteurNom)
+        Me.RadPanelEmetteur.Location = New System.Drawing.Point(3, 29)
+        Me.RadPanelEmetteur.Name = "RadPanelEmetteur"
+        Me.RadPanelEmetteur.Size = New System.Drawing.Size(704, 41)
+        Me.RadPanelEmetteur.TabIndex = 17
+        '
+        'LblEmetteurLocalisation
+        '
+        Me.LblEmetteurLocalisation.AutoSize = True
+        Me.LblEmetteurLocalisation.Location = New System.Drawing.Point(546, 13)
+        Me.LblEmetteurLocalisation.Name = "LblEmetteurLocalisation"
+        Me.LblEmetteurLocalisation.Size = New System.Drawing.Size(129, 13)
+        Me.LblEmetteurLocalisation.TabIndex = 18
+        Me.LblEmetteurLocalisation.Text = "LblEmetteurLocalisation"
+        '
+        'LblEmetteurFonction
+        '
+        Me.LblEmetteurFonction.AutoSize = True
+        Me.LblEmetteurFonction.Location = New System.Drawing.Point(365, 13)
+        Me.LblEmetteurFonction.Name = "LblEmetteurFonction"
+        Me.LblEmetteurFonction.Size = New System.Drawing.Size(114, 13)
+        Me.LblEmetteurFonction.TabIndex = 17
+        Me.LblEmetteurFonction.Text = "LblFonctionEmetteur"
+        '
+        'RadPanel2
+        '
+        Me.RadPanel2.BackColor = System.Drawing.Color.Thistle
+        Me.RadPanel2.Controls.Add(Me.LblDestinataireFonction)
+        Me.RadPanel2.Controls.Add(Me.LblDestinataireLocalisation)
+        Me.RadPanel2.Controls.Add(Me.LblDestinataireNom)
+        Me.RadPanel2.Controls.Add(Me.CbxDestinataireFonction)
+        Me.RadPanel2.Location = New System.Drawing.Point(3, 101)
+        Me.RadPanel2.Name = "RadPanel2"
+        Me.RadPanel2.Size = New System.Drawing.Size(704, 40)
+        Me.RadPanel2.TabIndex = 18
+        '
+        'LblDestinataireFonction
+        '
+        Me.LblDestinataireFonction.AutoSize = True
+        Me.LblDestinataireFonction.Location = New System.Drawing.Point(232, 13)
+        Me.LblDestinataireFonction.Name = "LblDestinataireFonction"
+        Me.LblDestinataireFonction.Size = New System.Drawing.Size(130, 13)
+        Me.LblDestinataireFonction.TabIndex = 19
+        Me.LblDestinataireFonction.Text = "LblDestinataireFonction"
+        '
+        'LblDestinataireLocalisation
+        '
+        Me.LblDestinataireLocalisation.AutoSize = True
+        Me.LblDestinataireLocalisation.Location = New System.Drawing.Point(546, 13)
+        Me.LblDestinataireLocalisation.Name = "LblDestinataireLocalisation"
+        Me.LblDestinataireLocalisation.Size = New System.Drawing.Size(145, 13)
+        Me.LblDestinataireLocalisation.TabIndex = 18
+        Me.LblDestinataireLocalisation.Text = "LblDestinataireLocalisation"
+        '
+        'LblDestinataireNom
+        '
+        Me.LblDestinataireNom.AutoSize = True
+        Me.LblDestinataireNom.Location = New System.Drawing.Point(11, 13)
+        Me.LblDestinataireNom.Name = "LblDestinataireNom"
+        Me.LblDestinataireNom.Size = New System.Drawing.Size(108, 13)
+        Me.LblDestinataireNom.TabIndex = 17
+        Me.LblDestinataireNom.Text = "LblDestinataireNom"
+        '
+        'LblVersDestinataire
+        '
+        Me.LblVersDestinataire.AutoSize = True
+        Me.LblVersDestinataire.Font = New System.Drawing.Font("Segoe UI", 14.0!, System.Drawing.FontStyle.Bold)
+        Me.LblVersDestinataire.Location = New System.Drawing.Point(0, 72)
+        Me.LblVersDestinataire.Name = "LblVersDestinataire"
+        Me.LblVersDestinataire.Size = New System.Drawing.Size(22, 25)
+        Me.LblVersDestinataire.TabIndex = 21
+        Me.LblVersDestinataire.Text = "à"
+        '
+        'RadBtnEpisode
+        '
+        Me.RadBtnEpisode.Location = New System.Drawing.Point(152, 298)
+        Me.RadBtnEpisode.Name = "RadBtnEpisode"
+        Me.RadBtnEpisode.Size = New System.Drawing.Size(97, 24)
+        Me.RadBtnEpisode.TabIndex = 22
+        Me.RadBtnEpisode.Text = "Episode"
+        '
+        'RadBtnSousEpisode
+        '
+        Me.RadBtnSousEpisode.Location = New System.Drawing.Point(255, 298)
+        Me.RadBtnSousEpisode.Name = "RadBtnSousEpisode"
+        Me.RadBtnSousEpisode.Size = New System.Drawing.Size(97, 24)
+        Me.RadBtnSousEpisode.TabIndex = 23
+        Me.RadBtnSousEpisode.Text = "Sous-épisode"
+        '
+        'RadBtnSynthèse
+        '
+        Me.RadBtnSynthèse.Location = New System.Drawing.Point(358, 298)
+        Me.RadBtnSynthèse.Name = "RadBtnSynthèse"
+        Me.RadBtnSynthèse.Size = New System.Drawing.Size(97, 24)
+        Me.RadBtnSynthèse.TabIndex = 24
+        Me.RadBtnSynthèse.Text = "Synthèse"
+        '
+        'RadBtnLigneDeVie
+        '
+        Me.RadBtnLigneDeVie.Location = New System.Drawing.Point(461, 298)
+        Me.RadBtnLigneDeVie.Name = "RadBtnLigneDeVie"
+        Me.RadBtnLigneDeVie.Size = New System.Drawing.Size(97, 24)
+        Me.RadBtnLigneDeVie.TabIndex = 25
+        Me.RadBtnLigneDeVie.Text = "Ligne de vie"
+        '
+        'LblWorkflowDescription
+        '
+        Me.LblWorkflowDescription.AutoSize = True
+        Me.LblWorkflowDescription.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Bold)
+        Me.LblWorkflowDescription.Location = New System.Drawing.Point(198, 7)
+        Me.LblWorkflowDescription.Name = "LblWorkflowDescription"
+        Me.LblWorkflowDescription.Size = New System.Drawing.Size(143, 15)
+        Me.LblWorkflowDescription.TabIndex = 26
+        Me.LblWorkflowDescription.Text = "LblWorkflowDescription"
+        '
+        'RadBtnMessagePrecedent
+        '
+        Me.RadBtnMessagePrecedent.Location = New System.Drawing.Point(682, 239)
+        Me.RadBtnMessagePrecedent.Name = "RadBtnMessagePrecedent"
+        Me.RadBtnMessagePrecedent.Size = New System.Drawing.Size(25, 24)
+        Me.RadBtnMessagePrecedent.TabIndex = 27
+        Me.RadBtnMessagePrecedent.Text = ">"
+        '
+        'CheckBox1
+        '
+        Me.CheckBox1.AutoSize = True
+        Me.CheckBox1.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Bold)
+        Me.CheckBox1.Location = New System.Drawing.Point(3, 248)
+        Me.CheckBox1.Name = "CheckBox1"
+        Me.CheckBox1.Size = New System.Drawing.Size(83, 17)
+        Me.CheckBox1.TabIndex = 28
+        Me.CheckBox1.Text = "CheckBox1"
+        Me.CheckBox1.UseVisualStyleBackColor = True
+        '
+        'CheckBox2
+        '
+        Me.CheckBox2.AutoSize = True
+        Me.CheckBox2.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Bold)
+        Me.CheckBox2.Location = New System.Drawing.Point(3, 271)
+        Me.CheckBox2.Name = "CheckBox2"
+        Me.CheckBox2.Size = New System.Drawing.Size(83, 17)
+        Me.CheckBox2.TabIndex = 29
+        Me.CheckBox2.Text = "CheckBox2"
+        Me.CheckBox2.UseVisualStyleBackColor = True
         '
         'RadFWkfDemandeAvis
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.CancelButton = Me.RadBtnAbandon
-        Me.ClientSize = New System.Drawing.Size(957, 556)
-        Me.Controls.Add(Me.RadGrpCommentaireEmetteur)
-        Me.Controls.Add(Me.RadGroupBox2)
-        Me.Controls.Add(Me.RadGroupBox1)
+        Me.ClientSize = New System.Drawing.Size(713, 328)
+        Me.Controls.Add(Me.CheckBox2)
+        Me.Controls.Add(Me.CheckBox1)
+        Me.Controls.Add(Me.RadBtnMessagePrecedent)
+        Me.Controls.Add(Me.LblWorkflowDescription)
+        Me.Controls.Add(Me.RadBtnLigneDeVie)
+        Me.Controls.Add(Me.RadBtnSynthèse)
+        Me.Controls.Add(Me.RadBtnSousEpisode)
+        Me.Controls.Add(Me.RadBtnEpisode)
+        Me.Controls.Add(Me.LblVersDestinataire)
+        Me.Controls.Add(Me.LblLabelTypeTache)
+        Me.Controls.Add(Me.LblPriorite)
+        Me.Controls.Add(Me.RadioBtnAsynchrone)
+        Me.Controls.Add(Me.RadPanel2)
+        Me.Controls.Add(Me.RadioBtnSynchrone)
+        Me.Controls.Add(Me.RadPanelEmetteur)
+        Me.Controls.Add(Me.RadioBtnAvisUrgent)
         Me.Controls.Add(Me.RadBtnValidation)
+        Me.Controls.Add(Me.TxtCommentaireDemande)
         Me.Controls.Add(Me.RadBtnAbandon)
         Me.Controls.Add(Me.RadGroupBoxEtatCivil)
         Me.MaximizeBox = False
@@ -648,77 +395,60 @@ Partial Class RadFWkfDemandeAvis
         '
         Me.RootElement.ApplyShapeToControl = True
         Me.ShowInTaskbar = False
-        Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
+        Me.StartPosition = System.Windows.Forms.FormStartPosition.Manual
         Me.Text = "RadFWkfDemandeAvis"
         CType(Me.RadGroupBoxEtatCivil, System.ComponentModel.ISupportInitialize).EndInit()
         Me.RadGroupBoxEtatCivil.ResumeLayout(False)
         Me.RadGroupBoxEtatCivil.PerformLayout()
         CType(Me.RadBtnAbandon, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.RadBtnValidation, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.RadGroupBox1, System.ComponentModel.ISupportInitialize).EndInit()
-        Me.RadGroupBox1.ResumeLayout(False)
-        Me.RadGroupBox1.PerformLayout()
-        CType(Me.RadGroupBox2, System.ComponentModel.ISupportInitialize).EndInit()
-        Me.RadGroupBox2.ResumeLayout(False)
-        Me.RadGroupBox2.PerformLayout()
-        CType(Me.RadGrpCommentaireEmetteur, System.ComponentModel.ISupportInitialize).EndInit()
-        Me.RadGrpCommentaireEmetteur.ResumeLayout(False)
-        Me.RadGrpCommentaireEmetteur.PerformLayout()
+        CType(Me.RadPanelEmetteur, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.RadPanelEmetteur.ResumeLayout(False)
+        Me.RadPanelEmetteur.PerformLayout()
+        CType(Me.RadPanel2, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.RadPanel2.ResumeLayout(False)
+        Me.RadPanel2.PerformLayout()
+        CType(Me.RadBtnEpisode, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.RadBtnSousEpisode, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.RadBtnSynthèse, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.RadBtnLigneDeVie, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.RadBtnMessagePrecedent, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
+        Me.PerformLayout()
 
     End Sub
 
     Friend WithEvents RadGroupBoxEtatCivil As Telerik.WinControls.UI.RadGroupBox
-    Friend WithEvents LblALD As Label
-    Friend WithEvents Label13 As Label
-    Friend WithEvents LblPatientDateMaj As Label
-    Friend WithEvents Label5 As Label
-    Friend WithEvents LblPatientUniteSanitaire As Label
-    Friend WithEvents Label6 As Label
-    Friend WithEvents LblPatientSite As Label
-    Friend WithEvents Label4 As Label
-    Friend WithEvents LblPatientTel2 As Label
-    Friend WithEvents LblPatientPrenom As Label
-    Friend WithEvents LblPatientTel1 As Label
     Friend WithEvents LblPatientNom As Label
-    Friend WithEvents Label3 As Label
     Friend WithEvents LblPatientAge As Label
-    Friend WithEvents LblPatientVille As Label
-    Friend WithEvents LblPatientGenre As Label
-    Friend WithEvents LblPatientCodePostal As Label
-    Friend WithEvents LblPatientNIR As Label
-    Friend WithEvents LblPatientAdresse2 As Label
-    Friend WithEvents Label2 As Label
-    Friend WithEvents LblPatientAdresse1 As Label
     Friend WithEvents ToolTip As ToolTip
     Friend WithEvents RadBtnAbandon As Telerik.WinControls.UI.RadButton
     Friend WithEvents RadBtnValidation As Telerik.WinControls.UI.RadButton
     Friend WithEvents LblLabelTypeTache As Label
-    Friend WithEvents Label7 As Label
-    Friend WithEvents Label8 As Label
-    Friend WithEvents CbxAction As ComboBox
-    Friend WithEvents LblLabelEmetteur As Label
-    Friend WithEvents RadGroupBox1 As Telerik.WinControls.UI.RadGroupBox
-    Friend WithEvents LblUserCreation As Label
-    Friend WithEvents Label9 As Label
-    Friend WithEvents LblDateModification As Label
-    Friend WithEvents LblLabelDateModification As Label
-    Friend WithEvents LBlUserModification As Label
-    Friend WithEvents LblLabelUserModification As Label
-    Friend WithEvents LblTypeEpisode As Label
-    Friend WithEvents Label10 As Label
-    Friend WithEvents Label1 As Label
-    Friend WithEvents TxtCommentaireEpisode As TextBox
-    Friend WithEvents Label11 As Label
+    Friend WithEvents LblEmetteurNom As Label
     Friend WithEvents TxtCommentaireDemande As TextBox
-    Friend WithEvents RadGroupBox2 As Telerik.WinControls.UI.RadGroupBox
-    Friend WithEvents CbxFonctionDestinataire As ComboBox
-    Friend WithEvents RadGrpCommentaireEmetteur As Telerik.WinControls.UI.RadGroupBox
-    Friend WithEvents TxtCommentaireEmetteur As TextBox
+    Friend WithEvents CbxDestinataireFonction As ComboBox
     Friend WithEvents RadioBtnAsynchrone As RadioButton
     Friend WithEvents RadioBtnSynchrone As RadioButton
     Friend WithEvents RadioBtnAvisUrgent As RadioButton
-    Friend WithEvents Label12 As Label
+    Friend WithEvents LblPriorite As Label
+    Friend WithEvents RadPanelEmetteur As Telerik.WinControls.UI.RadPanel
+    Friend WithEvents RadPanel2 As Telerik.WinControls.UI.RadPanel
+    Friend WithEvents LblEmetteurLocalisation As Label
+    Friend WithEvents LblEmetteurFonction As Label
+    Friend WithEvents LblPatientDateNaissance As Label
+    Friend WithEvents LblDestinataireNom As Label
+    Friend WithEvents LblVersDestinataire As Label
+    Friend WithEvents LblDestinataireLocalisation As Label
+    Friend WithEvents RadBtnEpisode As Telerik.WinControls.UI.RadButton
+    Friend WithEvents RadBtnSousEpisode As Telerik.WinControls.UI.RadButton
+    Friend WithEvents RadBtnSynthèse As Telerik.WinControls.UI.RadButton
+    Friend WithEvents RadBtnLigneDeVie As Telerik.WinControls.UI.RadButton
+    Friend WithEvents LblWorkflowDescription As Label
+    Friend WithEvents RadBtnMessagePrecedent As Telerik.WinControls.UI.RadButton
+    Friend WithEvents LblDestinataireFonction As Label
+    Friend WithEvents CheckBox1 As CheckBox
+    Friend WithEvents CheckBox2 As CheckBox
 End Class
 

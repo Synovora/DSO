@@ -136,7 +136,7 @@ Public Class RadFPatientListe
         Dim aRow As Integer
         Dim maxRow As Integer
         Dim DateSortie, DateEntree, dateNaissance As Date
-        Dim DateIllimite As Date = "31/12/2999"
+        Dim DateMax As Date = "31/12/2999"
 
         aRow = Me.RadPatientGridView.Rows.IndexOf(Me.RadPatientGridView.CurrentRow)
         maxRow = RadPatientGridView.Rows.Count - 1
@@ -162,12 +162,12 @@ Public Class RadFPatientListe
                 LblAgeSelected.Hide()
             End If
 
-            DateSortie = DateIllimite
+            DateSortie = DateMax
             If RadPatientGridView.Rows(aRow).Cells("oa_patient_date_sortie_oasis").Value <> "" Then
                 DateSortie = Coalesce(RadPatientGridView.Rows(aRow).Cells("oa_patient_date_sortie_oasis").Value, Nothing)
             End If
 
-            DateEntree = DateIllimite
+            DateEntree = DateMax
             If RadPatientGridView.Rows(aRow).Cells("oa_patient_date_entree_oasis").Value <> "" Then
                 DateEntree = RadPatientGridView.Rows(aRow).Cells("oa_patient_date_entree_oasis").Value
             End If

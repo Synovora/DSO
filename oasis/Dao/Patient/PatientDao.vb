@@ -298,8 +298,8 @@ Module PatientDao
                     " FROM oasis.oa_patient WHERE 1 = 1"
 
         Dim FiltrePatientOasis As String =
-                    " And oa_patient_date_entree_oasis Is Not NULL" &
-                    " And oa_patient_date_entree_oasis <> '9998-12-31'" &
+                    " AND oa_patient_date_entree_oasis Is Not NULL" &
+                    " AND oa_patient_date_entree_oasis <> '9998-12-31'" &
                     " AND (oa_patient_date_sortie_oasis Is NULL OR oa_patient_date_sortie_oasis > '" & Date.Now.ToString("yyyy-MM-dd") & "')"
 
         Dim FiltrePatientNonOasis As String =
