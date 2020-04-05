@@ -76,7 +76,8 @@ Public Class RadFWkfDemandeAvisHisto
                         Case TacheDao.NatureTache.REPONSE.ToString
                             RadHistoDataGridView.Rows(iGrid).Cells("nature").Value = "Relande de la demande d'avis"
                         Case Else
-                            RadHistoDataGridView.Rows(iGrid).Cells("nature").Value = "Demande d'avis"
+                            RadHistoDataGridView.Rows(iGrid).Cells("nature").Value = "Demande d'avis (début de workflow)"
+                            RadHistoDataGridView.Rows(iGrid).Cells("nature").Style.ForeColor = Color.Blue
                     End Select
                 Case TacheDao.NatureTache.COMPLEMENT.ToString
                     RadHistoDataGridView.Rows(iGrid).Cells("nature").Value = "Demande de précision"
@@ -90,14 +91,16 @@ Public Class RadFWkfDemandeAvisHisto
             If clotureWorkflow = True Then
                 iGrid += 1
                 RadHistoDataGridView.Rows.Add(iGrid)
-                RadHistoDataGridView.Rows(iGrid).Cells("emetteur").Value = ""
+                RadHistoDataGridView.Rows(iGrid).Cells("emetteur").Value = histoWorkflow.Rows(i)("user_traite_prenom") & " " &
+                                histoWorkflow.Rows(i)("user_traite_nom") & " / " & histoWorkflow.Rows(i)("user_traite_profil")
                 RadHistoDataGridView.Rows(iGrid).Cells("traitePar").Value = ""
                 RadHistoDataGridView.Rows(iGrid).Cells("destinataire").Value = ""
                 RadHistoDataGridView.Rows(iGrid).Cells("commentaire").Value = ""
                 RadHistoDataGridView.Rows(iGrid).Cells("dateCreation").Value = ""
                 RadHistoDataGridView.Rows(iGrid).Cells("dateTraitement").Value = ""
-                RadHistoDataGridView.Rows(iGrid).Cells("nature").Value = "- Workflow terminé -"
+                RadHistoDataGridView.Rows(iGrid).Cells("nature").Value = "Avis validé (workflow terminé)"
                 RadHistoDataGridView.Rows(iGrid).Cells("nature").Style.ForeColor = Color.Red
+                naturePrecedente = ""
             End If
         Next
 

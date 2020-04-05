@@ -768,27 +768,10 @@ Public Class RadF_CI_ATC_Selecteur
             Dim aRow As Integer = Me.RadGridViewSubstanceSelected.Rows.IndexOf(Me.RadGridViewSubstanceSelected.CurrentRow)
             If aRow >= 0 Then
                 Cursor.Current = Cursors.WaitCursor
-                RadTxtSpecialite.Text = ""
-                RadGridViewSpe.Rows.Clear()
-                RadGridViewSpe.FilterDescriptors.Clear()
                 Dim SubstanceId As Integer = RadGridViewSubstanceSelected.Rows(aRow).Cells("SAC_CODE_SQ_PK").Value
-                Dim ListATC As List(Of String)
-                ListATC = theriaqueDao.GetATCCodeListBySubstanceId(SubstanceId)
-
-                Dim EnumeratorATC As IEnumerator = ListATC.GetEnumerator()
                 Dim dt As DataTable
-                Dim RowsCount As Integer = 0
-                Dim iGrid As Integer = -1
-                While EnumeratorATC.MoveNext()
-                    Dim CodeATC As String = EnumeratorATC.Current.ToString
-                    dt = theriaqueDao.getSpecialiteByArgument(CodeATC, TheriaqueDao.EnumGetSpecialite.CLASSE_ATC, TheriaqueDao.EnumMonoVir.VIRTUEL)
-                    If dt.Rows.Count > 0 Then
-                        'ResultatOk = True
-                        RowsCount += dt.Rows.Count
-                    End If
-                    ChargementSpecialite(dt, False, RowsCount, iGrid)
-                    iGrid += dt.Rows.Count
-                End While
+                dt = theriaqueDao.getSpecialiteByArgument(SubstanceId, TheriaqueDao.EnumGetSpecialite.SUBSTANCE_ACTIVE, TheriaqueDao.EnumMonoVir.VIRTUEL)
+                ChargementSpecialite(dt, True)
                 Cursor.Current = Cursors.Default
             End If
         End If
