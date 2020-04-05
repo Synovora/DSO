@@ -452,8 +452,17 @@ Public Class RadFMedicamentSelecteur
                 If CodeATC.Length >= 5 Then
                     codeATC4 = CodeATC.Substring(0, 5)
                     ChargementATC4(codeATC3, codeATC4)
+                Else
+                    RadGridViewATC4.Rows.Clear()
                 End If
+            Else
+                RadGridViewATC3.Rows.Clear()
+                RadGridViewATC4.Rows.Clear()
             End If
+        Else
+            RadGridViewATC2.Rows.Clear()
+            RadGridViewATC3.Rows.Clear()
+            RadGridViewATC4.Rows.Clear()
         End If
     End Sub
 

@@ -524,9 +524,23 @@ Public Class RadF_CI_ATC_Selecteur
                     If CodeATC.Length >= 7 Then
                         codeATC5 = CodeATC.Substring(0, 7)
                         ChargementATC5(codeATC4, codeATC5)
+                    Else
+                        RadGridViewATC5.Rows.Clear()
                     End If
+                Else
+                    RadGridViewATC4.Rows.Clear()
+                    RadGridViewATC5.Rows.Clear()
                 End If
+            Else
+                RadGridViewATC3.Rows.Clear()
+                RadGridViewATC4.Rows.Clear()
+                RadGridViewATC5.Rows.Clear()
             End If
+        Else
+            RadGridViewATC2.Rows.Clear()
+            RadGridViewATC3.Rows.Clear()
+            RadGridViewATC4.Rows.Clear()
+            RadGridViewATC5.Rows.Clear()
         End If
     End Sub
 
