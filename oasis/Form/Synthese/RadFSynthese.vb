@@ -1372,6 +1372,8 @@ Public Class RadFSynthese
                     vFTraitementDetailEdit.ShowDialog() 'Modal
                     If vFTraitementDetailEdit.CodeRetour = True Then
                         ChargementTraitement()
+                        GetAllergie()
+                        GetContreIndication()
                     End If
                 End Using
                 Me.Enabled = True
@@ -1410,6 +1412,7 @@ Public Class RadFSynthese
             vFPatientContreIndicationListe.SelectedPatient = Me.SelectedPatient
             vFPatientContreIndicationListe.ShowDialog() 'Modal
         End Using
+        GetContreIndication()
         Me.Enabled = True
     End Sub
 
@@ -1435,6 +1438,7 @@ Public Class RadFSynthese
             vFPatientAllergieListe.UtilisateurConnecte = Me.UtilisateurConnecte
             vFPatientAllergieListe.ShowDialog() 'Modal
         End Using
+        GetAllergie()
         Me.Enabled = True
     End Sub
 

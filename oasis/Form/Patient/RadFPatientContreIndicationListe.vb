@@ -23,30 +23,61 @@ Public Class RadFPatientContreIndicationListe
         End Set
     End Property
 
-    Dim contreIndicationDao As New ContreIndicationATCDao
+    Dim contreIndicationATCDao As New ContreIndicationATCDao
+    Dim contreIndicationSubstanceDao As New ContreIndicationSubstanceDao
 
     Private Sub RadFPatientContreIndicationListe_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         ChargementPatient()
-        ChargementContreIndicationPatient()
+        ChargementContreIndicationATCPatient()
+        ChargementContreIndicationSubstancePatient()
+        If outils.AccesFonctionMedicaleSynthese(SelectedPatient) = False Then
+            RadBtnAnnulerATC.Hide()
+            RadBtnAnnulerSubstance.Hide()
+        End If
     End Sub
 
     'Chargement de la Grid Notes patient
-    Private Sub ChargementContreIndicationPatient()
-        Dim dt As DataTable = contreIndicationDao.getAllContreIndicationATCbyPatient(SelectedPatient.patientId)
+    Private Sub ChargementContreIndicationATCPatient()
+        Dim dt As DataTable = contreIndicationATCDao.getAllContreIndicationATCbyPatient(SelectedPatient.patientId)
+
+        RadCIATCPatientDataGridView.Rows.Clear()
 
         Dim iGrid As Integer = -1 'Indice pour alimenter la Grid qui peut comporter moins d'occurrences que le DataTable
         Dim rowCount As Integer = dt.Rows.Count - 1
 
         For i = 0 To rowCount Step 1
             iGrid += 1
-            RadAllergiesPatientDataGridView.Rows.Add(iGrid)
-            RadAllergiesPatientDataGridView.Rows(iGrid).Cells("code_atc").Value = dt.Rows(i)("code_atc")
-            RadAllergiesPatientDataGridView.Rows(iGrid).Cells("denomination_atc").Value = dt.Rows(i)("denomination_atc")
+            RadCIATCPatientDataGridView.Rows.Add(iGrid)
+            RadCIATCPatientDataGridView.Rows(iGrid).Cells("code_atc").Value = dt.Rows(i)("code_atc")
+            RadCIATCPatientDataGridView.Rows(iGrid).Cells("denomination_atc").Value = dt.Rows(i)("denomination_atc")
+            RadCIATCPatientDataGridView.Rows(iGrid).Cells("contre_indication_id").Value = dt.Rows(i)("contre_indication_id")
         Next
 
         'Positionnement du grid sur la première occurrence
-        If RadAllergiesPatientDataGridView.Rows.Count > 0 Then
-            Me.RadAllergiesPatientDataGridView.CurrentRow = RadAllergiesPatientDataGridView.ChildRows(0)
+        If RadCIATCPatientDataGridView.Rows.Count > 0 Then
+            Me.RadCIATCPatientDataGridView.CurrentRow = RadCIATCPatientDataGridView.ChildRows(0)
+        End If
+    End Sub
+
+    Private Sub ChargementContreIndicationSubstancePatient()
+        Dim dt As DataTable = contreIndicationSubstanceDao.getAllContreIndicationSubstancebyPatient(SelectedPatient.patientId)
+
+        RadCISubstancePatientDataGridView.Rows.Clear()
+
+        Dim iGrid As Integer = -1 'Indice pour alimenter la Grid qui peut comporter moins d'occurrences que le DataTable
+        Dim rowCount As Integer = dt.Rows.Count - 1
+
+        For i = 0 To rowCount Step 1
+            iGrid += 1
+            RadCISubstancePatientDataGridView.Rows.Add(iGrid)
+            RadCISubstancePatientDataGridView.Rows(iGrid).Cells("substance_id").Value = dt.Rows(i)("substance_id")
+            RadCISubstancePatientDataGridView.Rows(iGrid).Cells("denomination_substance").Value = dt.Rows(i)("denomination_substance")
+            RadCISubstancePatientDataGridView.Rows(iGrid).Cells("contre_indication_id").Value = dt.Rows(i)("contre_indication_id")
+        Next
+
+        'Positionnement du grid sur la première occurrence
+        If RadCISubstancePatientDataGridView.Rows.Count > 0 Then
+            Me.RadCISubstancePatientDataGridView.CurrentRow = RadCISubstancePatientDataGridView.ChildRows(0)
         End If
     End Sub
 
@@ -70,5 +101,37 @@ Public Class RadFPatientContreIndicationListe
     Private Sub RadBtnAbandonner_Click(sender As Object, e As EventArgs) Handles RadBtnAbandonner.Click
         Me.CodeRetour = False
         Close()
+    End Sub
+
+    Private Sub RadBtnAnnulerATC_Click(sender As Object, e As EventArgs) Handles RadBtnAnnulerATC.Click
+        If outils.AccesFonctionMedicaleSynthese(SelectedPatient) = False Then
+            Exit Sub
+        End If
+
+        If RadCIATCPatientDataGridView.CurrentRow IsNot Nothing Then
+            Dim aRow As Integer = Me.RadCIATCPatientDataGridView.Rows.IndexOf(Me.RadCIATCPatientDataGridView.CurrentRow)
+            If aRow >= 0 Then
+                Dim ContreIndicationId As Integer = RadCIATCPatientDataGridView.Rows(aRow).Cells("contre_indication_id").Value
+                contreIndicationATCDao.AnnulationContreIndicationATC(ContreIndicationId)
+            End If
+        End If
+
+        ChargementContreIndicationATCPatient()
+    End Sub
+
+    Private Sub RadBtnAnnulerSubstance_Click(sender As Object, e As EventArgs) Handles RadBtnAnnulerSubstance.Click
+        If outils.AccesFonctionMedicaleSynthese(SelectedPatient) = False Then
+            Exit Sub
+        End If
+
+        If RadCISubstancePatientDataGridView.CurrentRow IsNot Nothing Then
+            Dim aRow As Integer = Me.RadCISubstancePatientDataGridView.Rows.IndexOf(Me.RadCISubstancePatientDataGridView.CurrentRow)
+            If aRow >= 0 Then
+                Dim ContreIndicationId As Integer = RadCISubstancePatientDataGridView.Rows(aRow).Cells("contre_indication_id").Value
+                contreIndicationSubstanceDao.AnnulationContreIndicationSubstance(ContreIndicationId)
+            End If
+        End If
+
+        ChargementContreIndicationSubstancePatient()
     End Sub
 End Class

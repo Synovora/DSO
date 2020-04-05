@@ -116,5 +116,40 @@ Public Class ContreIndicationATCDao
         Return codeRetour
     End Function
 
+    Friend Function AnnulationContreIndicationATC(contreIndicationId) As Boolean
+        Dim da As SqlDataAdapter = New SqlDataAdapter()
+        Dim codeRetour As Boolean = True
+        Dim n As Integer 'Pour récupérer le nombre d'occurences enregistrées
+
+        Dim SQLstring As String = "UPDATE oasis.oa_patient_contre_indication_atc" &
+            " SET inactif = @inactif, annulation_user_id = @user, annulation_date = @dateAnnulation" &
+            " WHERE contre_indication_id = @contreIndicationId"
+
+        Dim con As SqlConnection = GetConnection()
+        Dim cmd As New SqlCommand(SQLstring, con)
+
+        With cmd.Parameters
+            .AddWithValue("@contreIndicationId", contreIndicationId)
+            .AddWithValue("@inactif", True)
+            .AddWithValue("@user", userLog.UtilisateurId)
+            .AddWithValue("@dateAnnulation", Date.Now())
+        End With
+
+        Try
+            da.InsertCommand = cmd
+            n = da.InsertCommand.ExecuteNonQuery()
+        Catch ex As Exception
+            MessageBox.Show(ex.Message)
+            codeRetour = False
+        Finally
+            con.Close()
+        End Try
+
+        If n <= 0 Then
+            codeRetour = False
+        End If
+
+        Return codeRetour
+    End Function
 
 End Class
