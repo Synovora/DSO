@@ -1394,6 +1394,16 @@ Public Class RadFSynthese
 
     'Liste des substances contre-indiquées
     Private Sub LblContreIndication_Click(sender As Object, e As EventArgs) Handles LblContreIndication.Click
+        ListeMedicamentCI()
+    End Sub
+
+    Private Sub ListeDesMédicamentsDéclarésContreindiquésToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ListeDesMédicamentsDéclarésContreindiquésToolStripMenuItem.Click
+        If ContreIndication = True Then
+            ListeMedicamentCI()
+        End If
+    End Sub
+
+    Private Sub ListeMedicamentCI()
         Me.Enabled = False
         Cursor.Current = Cursors.WaitCursor
         Using vFPatientContreIndicationListe As New RadFPatientContreIndicationListe
@@ -1403,20 +1413,19 @@ Public Class RadFSynthese
         Me.Enabled = True
     End Sub
 
-    Private Sub ListeDesMédicamentsDéclarésContreindiquésToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ListeDesMédicamentsDéclarésContreindiquésToolStripMenuItem.Click
-        If ContreIndication = True Then
-            Me.Enabled = False
-            Cursor.Current = Cursors.WaitCursor
-            Using vFPatientContreIndicationListe As New RadFPatientContreIndicationListe
-                vFPatientContreIndicationListe.SelectedPatient = Me.SelectedPatient
-                vFPatientContreIndicationListe.ShowDialog() 'Modal
-            End Using
-            Me.Enabled = True
+    'Liste des substances allergiques
+    Private Sub ListeDesMedicamentsDeclaresAllergiquesToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ListeDesMédicamentsDéclarésAllergiquesToolStripMenuItem.Click
+        ListeMedicamentAllergie()
+    End Sub
+
+    Private Sub LblAllergie_Click(sender As Object, e As EventArgs) Handles LblAllergie.Click
+        'Traitement : afficher les allergies dans un popup
+        If Allergie = True Then
+            ListeMedicamentAllergie()
         End If
     End Sub
 
-    'Liste des substances allergiques
-    Private Sub ListeDesMedicamentsDeclaresAllergiquesToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ListeDesMédicamentsDéclarésAllergiquesToolStripMenuItem.Click
+    Private Sub ListeMedicamentAllergie()
         Me.Enabled = False
         Cursor.Current = Cursors.WaitCursor
         Using vFPatientAllergieListe As New RadFPatientAllergieListe
@@ -1427,22 +1436,6 @@ Public Class RadFSynthese
             vFPatientAllergieListe.ShowDialog() 'Modal
         End Using
         Me.Enabled = True
-    End Sub
-
-    Private Sub LblAllergie_Click(sender As Object, e As EventArgs) Handles LblAllergie.Click
-        'Traitement : afficher les allergies dans un popup
-        If Allergie = True Then
-            Me.Enabled = False
-            Cursor.Current = Cursors.WaitCursor
-            Using vFPatientAllergieListe As New RadFPatientAllergieListe
-                vFPatientAllergieListe.SelectedPatient = Me.SelectedPatient
-                vFPatientAllergieListe.SelectedPatientId = Me.SelectedPatient.patientId
-                vFPatientAllergieListe.SelectedPatientAllergieCis = Me.SelectedPatient.PatientAllergieCis
-                vFPatientAllergieListe.UtilisateurConnecte = Me.UtilisateurConnecte
-                vFPatientAllergieListe.ShowDialog() 'Modal
-            End Using
-            Me.Enabled = True
-        End If
     End Sub
 
     'Déclaration d'une contre-indication

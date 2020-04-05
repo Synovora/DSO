@@ -52,7 +52,7 @@ Public Class ContreIndicationSubstanceDao
         " FROM oasis.oa_patient_contre_indication_substance" &
         " WHERE (inactif Is Null OR inactif = 'False')" &
         " AND patient_id = " & patientId.ToString &
-        " ORDER BY code_atc"
+        " ORDER BY denomination_substance"
 
         Using con As SqlConnection = GetConnection()
             Dim TraitementDataAdapter As SqlDataAdapter = New SqlDataAdapter()
