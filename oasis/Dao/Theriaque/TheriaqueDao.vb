@@ -197,6 +197,37 @@ Public Class TheriaqueDao
         Return dt
     End Function
 
+    Friend Function getSpecialiteDenominationById(CodeId As String) As String
+        Dim dt As New DataTable
+        Dim ds As New DataSet
+        Dim Denomination As String = ""
+
+        Using con As SqlConnection = GetConnection()
+            Try
+                Dim command As New SqlCommand("theriaque.GET_THE_SPECIALITE", con)
+                command.CommandType = CommandType.StoredProcedure
+                command.Connection.ChangeDatabase("Theriak")
+                'command.CommandText = "theriaque.GET_THE_SPECIALITE"
+                command.Parameters.AddWithValue("@codeId", CodeId)
+                command.Parameters.AddWithValue("@VarTyp", EnumGetSpecialite.ID_THERIAQUE)
+                command.Parameters.AddWithValue("@MonoVir", EnumMonoVir.VIRTUEL)
+
+                Dim da As New SqlDataAdapter(command)
+                da.Fill(dt)
+
+                If dt.Rows.Count > 0 Then
+                    Denomination = dt.Rows(0)("SP_NOM")
+                End If
+            Catch ex As Exception
+                Throw ex
+            Finally
+                con.Close()
+            End Try
+        End Using
+
+        Return Denomination
+    End Function
+
     Friend Function GetPharmacoCinetiqueBySpecialite(CodeId As String) As String
         Dim dt As New DataTable
         Dim ds As New DataSet

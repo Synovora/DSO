@@ -407,7 +407,8 @@ Public Class RadFSynthese
 
         'Positionnement du grid sur la première occurrence
         If RadAntecedentDataGridView.Rows.Count > 0 Then
-            Me.RadAntecedentDataGridView.CurrentRow = RadAntecedentDataGridView.Rows(0)
+            RadAntecedentDataGridView.CurrentRow = RadAntecedentDataGridView.Rows(0)
+            RadAntecedentDataGridView.TableElement.VScrollBar.Value = 0
         End If
     End Sub
 
@@ -1288,7 +1289,8 @@ Public Class RadFSynthese
 
         'Positionnement du grid sur la première occurrence
         If RadTraitementDataGridView.Rows.Count > 0 Then
-            Me.RadTraitementDataGridView.CurrentRow = RadTraitementDataGridView.Rows(0)
+            RadTraitementDataGridView.CurrentRow = RadTraitementDataGridView.Rows(0)
+            RadTraitementDataGridView.TableElement.VScrollBar.Value = 0
         End If
     End Sub
 
@@ -1935,7 +1937,8 @@ Public Class RadFSynthese
 
         'Positionnement du grid sur la première occurrence
         If RadContexteDataGridView.Rows.Count > 0 Then
-            Me.RadContexteDataGridView.CurrentRow = RadContexteDataGridView.ChildRows(0)
+            RadContexteDataGridView.CurrentRow = RadContexteDataGridView.ChildRows(0)
+            RadContexteDataGridView.TableElement.VScrollBar.Value = 0
         End If
 
     End Sub
@@ -2290,7 +2293,8 @@ Public Class RadFSynthese
 
         'Positionnement du grid sur la première occurrence
         If RadPPSDataGridView.Rows.Count > 0 Then
-            Me.RadPPSDataGridView.CurrentRow = RadPPSDataGridView.Rows(0)
+            RadPPSDataGridView.CurrentRow = RadPPSDataGridView.Rows(0)
+            RadPPSDataGridView.TableElement.VScrollBar.Value = 0
         End If
     End Sub
 

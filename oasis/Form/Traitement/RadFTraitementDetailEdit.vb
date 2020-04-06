@@ -1062,6 +1062,16 @@ Public Class RadFTraitementDetailEdit
         traitementaArreter.ContreIndication = contreIndication
 
         codeRetour = traitementDao.ArretTraitement(traitementaArreter, TraitementHistoACreer)
+
+        'Si déclaration de traitement arrêté pour contre-indication
+        If contreIndication = 1 Then
+            Using formSelecteur As New RadF_CI_ATC_Selecteur
+                formSelecteur.SelectedPatient = Me.SelectedPatient
+                formSelecteur.SelectedSpecialiteId = CInt(LblTraitementMedicamentId.Text)
+                formSelecteur.ShowDialog()
+            End Using
+        End If
+
         If codeRetour = True Then
             Dim form As New RadFNotification()
             form.Message = "Traitement patient arrêté"
