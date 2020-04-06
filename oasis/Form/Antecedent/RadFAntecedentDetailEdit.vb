@@ -466,7 +466,7 @@ Public Class RadFAntecedentDetailEdit
             MessageErreur1 = "Le code DRC est obligatoire"
         End If
 
-        If TxtAntecedentDescription.Text = "" Then
+        If TxtAntecedentDescription.Text.Trim() = "" Then
             Valide = False
             MessageErreur2 = "La description de l'antécédent est obligatoire"
         End If
