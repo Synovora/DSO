@@ -1,29 +1,8 @@
 ﻿Imports System.Collections.Specialized
 Imports Oasis_Common
 Public Class RadFPatientAllergieListe
-    Private privateSelectedPatientId As Integer
     Private privateSelectedPatient As Patient
-    Private privateSelectedPatientAllergieCis As StringCollection
-    Private privateUtilisateurConnecte As Utilisateur
     Private privateCodeRetour As Boolean
-
-    Public Property SelectedPatientId As Integer
-        Get
-            Return privateSelectedPatientId
-        End Get
-        Set(value As Integer)
-            privateSelectedPatientId = value
-        End Set
-    End Property
-
-    Public Property UtilisateurConnecte As Utilisateur
-        Get
-            Return privateUtilisateurConnecte
-        End Get
-        Set(value As Utilisateur)
-            privateUtilisateurConnecte = value
-        End Set
-    End Property
 
     Public Property CodeRetour As Boolean
         Get
@@ -31,15 +10,6 @@ Public Class RadFPatientAllergieListe
         End Get
         Set(value As Boolean)
             privateCodeRetour = value
-        End Set
-    End Property
-
-    Public Property SelectedPatientAllergieCis As StringCollection
-        Get
-            Return privateSelectedPatientAllergieCis
-        End Get
-        Set(value As StringCollection)
-            privateSelectedPatientAllergieCis = value
         End Set
     End Property
 
@@ -52,31 +22,36 @@ Public Class RadFPatientAllergieListe
         End Set
     End Property
 
+    Dim allergieDao As New AllergieDao
+
     Private Sub RadFPatientAllergieListe_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         ChargementPatient()
         ChargementAllergiesPatient()
+        If outils.AccesFonctionMedicaleSynthese(SelectedPatient) = False Then
+            RadBtnAnnulerSubstance.Hide()
+        End If
     End Sub
 
     'Chargement de la Grid Notes patient
     Private Sub ChargementAllergiesPatient()
-        Dim allergieString As String
-        Dim SubstancesAllergiques As StringCollection = ListeSubstancesAllergiques(SelectedPatientAllergieCis)
-        Dim allergieEnumerator As StringEnumerator = SubstancesAllergiques.GetEnumerator()
+        Dim dt As DataTable = allergieDao.getAllAllergiebyPatient(SelectedPatient.patientId)
 
-        Dim iGrid As Integer = -1
+        RadCISubstancePatientDataGridView.Rows.Clear()
 
-        While allergieEnumerator.MoveNext()
-            allergieString = allergieEnumerator.Current.ToString
+        Dim iGrid As Integer = -1 'Indice pour alimenter la Grid qui peut comporter moins d'occurrences que le DataTable
+        Dim rowCount As Integer = dt.Rows.Count - 1
+
+        For i = 0 To rowCount Step 1
             iGrid += 1
-            RadAllergiesPatientDataGridView.Rows.Add(iGrid)
-            'Alimentation du DataGridView
-            RadAllergiesPatientDataGridView.Rows(iGrid).Cells("allergie").Value = allergieString
-        End While
-
+            RadCISubstancePatientDataGridView.Rows.Add(iGrid)
+            RadCISubstancePatientDataGridView.Rows(iGrid).Cells("substance_id").Value = dt.Rows(i)("substance_id")
+            RadCISubstancePatientDataGridView.Rows(iGrid).Cells("denomination_substance").Value = dt.Rows(i)("denomination_substance")
+            RadCISubstancePatientDataGridView.Rows(iGrid).Cells("allergie_id").Value = dt.Rows(i)("allergie_id")
+        Next
 
         'Positionnement du grid sur la première occurrence
-        If RadAllergiesPatientDataGridView.Rows.Count > 0 Then
-            Me.RadAllergiesPatientDataGridView.CurrentRow = RadAllergiesPatientDataGridView.ChildRows(0)
+        If RadCISubstancePatientDataGridView.Rows.Count > 0 Then
+            Me.RadCISubstancePatientDataGridView.CurrentRow = RadCISubstancePatientDataGridView.ChildRows(0)
         End If
     End Sub
 
@@ -97,15 +72,23 @@ Public Class RadFPatientAllergieListe
         LblPatientDateMaj.Text = SelectedPatient.PatientSyntheseDateMaj.ToString("dd/MM/yyyy")
     End Sub
 
-    Private Sub BtnMedicament_Click(sender As Object, e As EventArgs) Handles RadBtnMedicament.Click
-        Using vFTraitementAllergieEtCI As New RadFTraitementAllergieEtCI
-            vFTraitementAllergieEtCI.SelectedPatient = Me.SelectedPatient
-            vFTraitementAllergieEtCI.UtilisateurConnecte = Me.UtilisateurConnecte
-            vFTraitementAllergieEtCI.AllergieOuContreIndication = EnumAllergieOuContreIndication.Allergie
-            vFTraitementAllergieEtCI.ShowDialog() 'Modal
-        End Using
-    End Sub
     Private Sub RadBtnAbandon_Click(sender As Object, e As EventArgs) Handles RadBtnAbandon.Click
         Close()
+    End Sub
+
+    Private Sub RadBtnAnnulerSubstance_Click(sender As Object, e As EventArgs) Handles RadBtnAnnulerSubstance.Click
+        If outils.AccesFonctionMedicaleSynthese(SelectedPatient) = False Then
+            Exit Sub
+        End If
+
+        If RadCISubstancePatientDataGridView.CurrentRow IsNot Nothing Then
+            Dim aRow As Integer = Me.RadCISubstancePatientDataGridView.Rows.IndexOf(Me.RadCISubstancePatientDataGridView.CurrentRow)
+            If aRow >= 0 Then
+                Dim AllergieId As Integer = RadCISubstancePatientDataGridView.Rows(aRow).Cells("allergie_id").Value
+                allergieDao.AnnulationAllergie(AllergieId)
+            End If
+        End If
+
+        ChargementAllergiesPatient()
     End Sub
 End Class

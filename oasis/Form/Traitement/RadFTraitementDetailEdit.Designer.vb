@@ -48,6 +48,8 @@ Partial Class RadFTraitementDetailEdit
         Me.Label7 = New System.Windows.Forms.Label()
         Me.LblPatientAdresse1 = New System.Windows.Forms.Label()
         Me.RadGroupBox2 = New Telerik.WinControls.UI.RadGroupBox()
+        Me.LblATC = New System.Windows.Forms.Label()
+        Me.Label19 = New System.Windows.Forms.Label()
         Me.LblMedicamentTitulaire = New System.Windows.Forms.Label()
         Me.LblMedicamentAdministration = New System.Windows.Forms.Label()
         Me.LblMedicamentDenominationLongue = New System.Windows.Forms.Label()
@@ -125,6 +127,7 @@ Partial Class RadFTraitementDetailEdit
         Me.RadBtnPharmacocinetique = New Telerik.WinControls.UI.RadButton()
         Me.RadBtnParmacodynamique = New Telerik.WinControls.UI.RadButton()
         Me.RadBtnEffetIndesirable = New Telerik.WinControls.UI.RadButton()
+        Me.RadBtnSubstance = New Telerik.WinControls.UI.RadButton()
         CType(Me.RadGroupBox1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.RadGroupBox1.SuspendLayout()
         CType(Me.RadGroupBox2, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -155,6 +158,7 @@ Partial Class RadFTraitementDetailEdit
         CType(Me.RadBtnPharmacocinetique, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.RadBtnParmacodynamique, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.RadBtnEffetIndesirable, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.RadBtnSubstance, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
@@ -201,7 +205,7 @@ Partial Class RadFTraitementDetailEdit
         Me.lblContreIndication.AutoSize = True
         Me.lblContreIndication.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.lblContreIndication.ForeColor = System.Drawing.Color.OrangeRed
-        Me.lblContreIndication.Location = New System.Drawing.Point(1029, 60)
+        Me.lblContreIndication.Location = New System.Drawing.Point(949, 60)
         Me.lblContreIndication.Name = "lblContreIndication"
         Me.lblContreIndication.Size = New System.Drawing.Size(117, 13)
         Me.lblContreIndication.TabIndex = 66
@@ -223,7 +227,7 @@ Partial Class RadFTraitementDetailEdit
         Me.LblAllergie.AutoSize = True
         Me.LblAllergie.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.LblAllergie.ForeColor = System.Drawing.Color.OrangeRed
-        Me.LblAllergie.Location = New System.Drawing.Point(949, 60)
+        Me.LblAllergie.Location = New System.Drawing.Point(1083, 60)
         Me.LblAllergie.Name = "LblAllergie"
         Me.LblAllergie.Size = New System.Drawing.Size(63, 13)
         Me.LblAllergie.TabIndex = 65
@@ -419,6 +423,8 @@ Partial Class RadFTraitementDetailEdit
         '
         Me.RadGroupBox2.AccessibleRole = System.Windows.Forms.AccessibleRole.Grouping
         Me.RadGroupBox2.BackColor = System.Drawing.SystemColors.GradientInactiveCaption
+        Me.RadGroupBox2.Controls.Add(Me.LblATC)
+        Me.RadGroupBox2.Controls.Add(Me.Label19)
         Me.RadGroupBox2.Controls.Add(Me.LblMedicamentTitulaire)
         Me.RadGroupBox2.Controls.Add(Me.LblMedicamentAdministration)
         Me.RadGroupBox2.Controls.Add(Me.LblMedicamentDenominationLongue)
@@ -439,6 +445,25 @@ Partial Class RadFTraitementDetailEdit
         CType(Me.RadGroupBox2.GetChildAt(0).GetChildAt(1), Telerik.WinControls.UI.GroupBoxHeader).GroupBoxStyle = Telerik.WinControls.UI.RadGroupBoxStyle.Office
         CType(Me.RadGroupBox2.GetChildAt(0).GetChildAt(1).GetChildAt(0), Telerik.WinControls.Primitives.FillPrimitive).BackColor = System.Drawing.SystemColors.ActiveCaption
         CType(Me.RadGroupBox2.GetChildAt(0).GetChildAt(1).GetChildAt(0), Telerik.WinControls.Primitives.FillPrimitive).SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.None
+        '
+        'LblATC
+        '
+        Me.LblATC.AutoSize = True
+        Me.LblATC.Location = New System.Drawing.Point(147, 81)
+        Me.LblATC.Name = "LblATC"
+        Me.LblATC.Size = New System.Drawing.Size(39, 13)
+        Me.LblATC.TabIndex = 69
+        Me.LblATC.Text = "LblATC"
+        '
+        'Label19
+        '
+        Me.Label19.AutoSize = True
+        Me.Label19.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Bold)
+        Me.Label19.Location = New System.Drawing.Point(13, 81)
+        Me.Label19.Name = "Label19"
+        Me.Label19.Size = New System.Drawing.Size(33, 13)
+        Me.Label19.TabIndex = 68
+        Me.Label19.Text = "ATC :"
         '
         'LblMedicamentTitulaire
         '
@@ -1196,7 +1221,7 @@ Partial Class RadFTraitementDetailEdit
         '
         'RadBtnPharmacocinetique
         '
-        Me.RadBtnPharmacocinetique.Location = New System.Drawing.Point(473, 912)
+        Me.RadBtnPharmacocinetique.Location = New System.Drawing.Point(418, 912)
         Me.RadBtnPharmacocinetique.Name = "RadBtnPharmacocinetique"
         Me.RadBtnPharmacocinetique.Size = New System.Drawing.Size(124, 24)
         Me.RadBtnPharmacocinetique.TabIndex = 113
@@ -1204,7 +1229,7 @@ Partial Class RadFTraitementDetailEdit
         '
         'RadBtnParmacodynamique
         '
-        Me.RadBtnParmacodynamique.Location = New System.Drawing.Point(603, 912)
+        Me.RadBtnParmacodynamique.Location = New System.Drawing.Point(548, 912)
         Me.RadBtnParmacodynamique.Name = "RadBtnParmacodynamique"
         Me.RadBtnParmacodynamique.Size = New System.Drawing.Size(124, 24)
         Me.RadBtnParmacodynamique.TabIndex = 114
@@ -1212,11 +1237,19 @@ Partial Class RadFTraitementDetailEdit
         '
         'RadBtnEffetIndesirable
         '
-        Me.RadBtnEffetIndesirable.Location = New System.Drawing.Point(733, 912)
+        Me.RadBtnEffetIndesirable.Location = New System.Drawing.Point(678, 912)
         Me.RadBtnEffetIndesirable.Name = "RadBtnEffetIndesirable"
         Me.RadBtnEffetIndesirable.Size = New System.Drawing.Size(124, 24)
         Me.RadBtnEffetIndesirable.TabIndex = 115
         Me.RadBtnEffetIndesirable.Text = "Effet indésirable"
+        '
+        'RadBtnSubstance
+        '
+        Me.RadBtnSubstance.Location = New System.Drawing.Point(808, 912)
+        Me.RadBtnSubstance.Name = "RadBtnSubstance"
+        Me.RadBtnSubstance.Size = New System.Drawing.Size(110, 24)
+        Me.RadBtnSubstance.TabIndex = 116
+        Me.RadBtnSubstance.Text = "Substance"
         '
         'RadFTraitementDetailEdit
         '
@@ -1225,6 +1258,7 @@ Partial Class RadFTraitementDetailEdit
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.CancelButton = Me.RadBtnRetour
         Me.ClientSize = New System.Drawing.Size(1174, 943)
+        Me.Controls.Add(Me.RadBtnSubstance)
         Me.Controls.Add(Me.RadBtnEffetIndesirable)
         Me.Controls.Add(Me.RadBtnParmacodynamique)
         Me.Controls.Add(Me.RadBtnPharmacocinetique)
@@ -1300,6 +1334,7 @@ Partial Class RadFTraitementDetailEdit
         CType(Me.RadBtnPharmacocinetique, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.RadBtnParmacodynamique, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.RadBtnEffetIndesirable, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.RadBtnSubstance, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
         Me.PerformLayout()
@@ -1408,5 +1443,8 @@ Partial Class RadFTraitementDetailEdit
     Friend WithEvents RadBtnPharmacocinetique As Telerik.WinControls.UI.RadButton
     Friend WithEvents RadBtnParmacodynamique As Telerik.WinControls.UI.RadButton
     Friend WithEvents RadBtnEffetIndesirable As Telerik.WinControls.UI.RadButton
+    Friend WithEvents LblATC As Label
+    Friend WithEvents Label19 As Label
+    Friend WithEvents RadBtnSubstance As Telerik.WinControls.UI.RadButton
 End Class
 

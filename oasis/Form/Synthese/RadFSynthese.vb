@@ -52,9 +52,10 @@ Public Class RadFSynthese
     Dim antecedentChangementOrdreDao As New AntecedentChangementOrdreDao
     Dim antecedentAffectationDao As New AntecedentAffectationDao
     Dim antecedentDao As New AntecedentDao
+    Dim theriaqueDao As New TheriaqueDao
 
     Dim InitPublie, InitParPriorite, InitMajeur, InitContextePublie, InitParcoursNonCache, InitContexteBioPublie As Boolean
-    Dim Allergie, ContreIndication As Boolean
+    Dim PatientAllergie, PatientContreIndication As Boolean
     Dim PPSSuiviIdeExiste, PPSSuiviSageFemmeExiste, PPSSuiviMedecinExiste As Boolean
     Dim LongueurStringAllergie As Integer
     Dim ParcoursListProfilsOasis As New List(Of Integer)
@@ -159,28 +160,28 @@ Public Class RadFSynthese
         Dim StringContreIndicationToolTip As String = PatientDao.GetStringContreIndicationByPatient(SelectedPatient.patientId)
         If StringContreIndicationToolTip = "" Then
             LblContreIndication.Hide()
-            ContreIndication = False
+            PatientContreIndication = False
             ListeDesMédicamentsDéclarésContreindiquésToolStripMenuItem.Enabled = False
         Else
             LblContreIndication.Show()
             ToolTip.SetToolTip(LblContreIndication, StringContreIndicationToolTip)
-            ContreIndication = True
+            PatientContreIndication = True
             ListeDesMédicamentsDéclarésContreindiquésToolStripMenuItem.Enabled = True
         End If
     End Sub
 
     Private Sub GetAllergie()
-        Dim StringContreIndicationToolTip As String = ""
-        If StringContreIndicationToolTip = "" Then
-            Allergie = False
+        Dim StringAllergieToolTip As String = PatientDao.GetStringAllergieByPatient(SelectedPatient.patientId)
+        If StringAllergieToolTip = "" Then
+            PatientAllergie = False
             LblAllergie.Hide()
             LblSubstance.Hide()
             ListeDesMédicamentsDéclarésAllergiquesToolStripMenuItem.Enabled = False
         Else
-            Allergie = True
+            PatientAllergie = True
             LblAllergie.Show()
             LblSubstance.Show()
-            'Alimentation du label LblSubstance
+            LblSubstance.Text = StringAllergieToolTip.Replace(vbCrLf, " ")
             ListeDesMédicamentsDéclarésAllergiquesToolStripMenuItem.Enabled = True
         End If
     End Sub
@@ -1189,7 +1190,7 @@ Public Class RadFSynthese
         Next
 
         'Si allergie, affichage des substances allergiques
-        If Allergie = True Then
+        If PatientAllergie = True Then
             'LblAllergie.Visible = True
             'LblSubstance.Show()
             'Dim premierPassage As Boolean = True
@@ -1234,7 +1235,7 @@ Public Class RadFSynthese
             'ListeDesMédicamentsDéclarésAllergiquesToolStripMenuItem.Enabled = False
         End If
 
-        If ContreIndication = True Then
+        If PatientContreIndication = True Then
             'LblContreIndication.Show()
             'Chargement des médicaments génériques associés aux médicaments contre-indiqués déclarés
             'Dim premierPassage As Boolean = True
@@ -1310,7 +1311,6 @@ Public Class RadFSynthese
 
 
     'Création d'un traitement
-
     Private Sub RadBtnCreationTraitement_Click(sender As Object, e As EventArgs) Handles RadBtnCreationTraitement.Click
         CreationTraitement()
     End Sub
@@ -1337,8 +1337,8 @@ Public Class RadFSynthese
                     vFTraitementDetailEdit.SelectedPatient = Me.SelectedPatient
                     vFTraitementDetailEdit.UtilisateurConnecte = Me.UtilisateurConnecte
                     vFTraitementDetailEdit.SelectedMedicamentId = SelectedMedicamentId
-                    vFTraitementDetailEdit.Allergie = Me.Allergie
-                    vFTraitementDetailEdit.ContreIndication = Me.ContreIndication
+                    vFTraitementDetailEdit.Allergie = Me.PatientAllergie
+                    vFTraitementDetailEdit.ContreIndication = Me.PatientContreIndication
                     vFTraitementDetailEdit.SelectedTraitementId = 0
                     vFTraitementDetailEdit.PositionGaucheDroite = EnumPosition.Droite
                     vFTraitementDetailEdit.ShowDialog() 'Modal
@@ -1368,8 +1368,8 @@ Public Class RadFSynthese
                     vFTraitementDetailEdit.SelectedPatient = Me.SelectedPatient
                     vFTraitementDetailEdit.UtilisateurConnecte = Me.UtilisateurConnecte
                     vFTraitementDetailEdit.SelectedMedicamentId = SelectedMedicamentCis
-                    vFTraitementDetailEdit.Allergie = Me.Allergie
-                    vFTraitementDetailEdit.ContreIndication = Me.ContreIndication
+                    vFTraitementDetailEdit.Allergie = Me.PatientAllergie
+                    vFTraitementDetailEdit.ContreIndication = Me.PatientContreIndication
                     vFTraitementDetailEdit.PositionGaucheDroite = EnumPosition.Droite
                     vFTraitementDetailEdit.ShowDialog() 'Modal
                     If vFTraitementDetailEdit.CodeRetour = True Then
@@ -1402,7 +1402,7 @@ Public Class RadFSynthese
     End Sub
 
     Private Sub ListeDesMédicamentsDéclarésContreindiquésToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ListeDesMédicamentsDéclarésContreindiquésToolStripMenuItem.Click
-        If ContreIndication = True Then
+        If PatientContreIndication = True Then
             ListeMedicamentCI()
         End If
     End Sub
@@ -1425,7 +1425,7 @@ Public Class RadFSynthese
 
     Private Sub LblAllergie_Click(sender As Object, e As EventArgs) Handles LblAllergie.Click
         'Traitement : afficher les allergies dans un popup
-        If Allergie = True Then
+        If PatientAllergie = True Then
             ListeMedicamentAllergie()
         End If
     End Sub
@@ -1435,10 +1435,7 @@ Public Class RadFSynthese
         Cursor.Current = Cursors.WaitCursor
         Using vFPatientAllergieListe As New RadFPatientAllergieListe
             vFPatientAllergieListe.SelectedPatient = Me.SelectedPatient
-            vFPatientAllergieListe.SelectedPatientId = Me.SelectedPatient.patientId
-            vFPatientAllergieListe.SelectedPatientAllergieCis = Me.SelectedPatient.PatientAllergieCis
-            vFPatientAllergieListe.UtilisateurConnecte = Me.UtilisateurConnecte
-            vFPatientAllergieListe.ShowDialog() 'Modal
+            vFPatientAllergieListe.ShowDialog()
         End Using
         GetAllergie()
         Me.Enabled = True
@@ -1455,6 +1452,29 @@ Public Class RadFSynthese
         Using formSelecteur As New RadF_CI_ATC_Selecteur
             formSelecteur.SelectedPatient = Me.SelectedPatient
             formSelecteur.ShowDialog() 'Modal
+            If formSelecteur.CodeRetour = True Then
+                'Contrôle des contre-indications pour les traitements en cours
+                Dim MessageContreIndication As String = ""
+                Dim PremierPassage As Boolean = True
+                Dim contreIndication As Boolean = False
+                Dim rowCount As Integer = RadTraitementDataGridView.Rows.Count - 1
+                For i = 0 To rowCount Step 1
+                    Dim SpecialiteId As Integer = RadTraitementDataGridView.Rows(i).Cells("medicamentCis").Value
+                    Dim specialiteContreIndique As SpecialiteContreIndique = theriaqueDao.IsSpecialiteContreIndique(SelectedPatient, SpecialiteId)
+                    If specialiteContreIndique.ContreIndication = True Then
+                        contreIndication = True
+                        If PremierPassage = True Then
+                            PremierPassage = False
+                        Else
+                            MessageContreIndication += vbCrLf & vbCrLf
+                        End If
+                        MessageContreIndication += specialiteContreIndique.MessageContreIndication
+                    End If
+                Next
+                If contreIndication = True Then
+                    MessageBox.Show(MessageContreIndication)
+                End If
+            End If
         End Using
         Me.Enabled = True
 
@@ -1467,6 +1487,36 @@ Public Class RadFSynthese
             Exit Sub
         End If
 
+        Me.Enabled = False
+        Cursor.Current = Cursors.WaitCursor
+        Using formSelecteur As New RadF_AllergieSelecteur
+            formSelecteur.SelectedPatient = Me.SelectedPatient
+            formSelecteur.ShowDialog() 'Modal
+            If formSelecteur.CodeRetour = True Then
+                'Contrôle des allergies pour les traitements en cours
+                Dim MessageAllergie As String = ""
+                Dim PremierPassage As Boolean = True
+                Dim allergie As Boolean = False
+                Dim rowCount As Integer = RadTraitementDataGridView.Rows.Count - 1
+                For i = 0 To rowCount Step 1
+                    Dim SpecialiteId As Integer = RadTraitementDataGridView.Rows(i).Cells("medicamentCis").Value
+                    Dim specialiteAllergique As SpecialiteAllergique = theriaqueDao.IsSpecialiteAllergique(SelectedPatient, SpecialiteId)
+                    If specialiteAllergique.Allergie = True Then
+                        allergie = True
+                        If PremierPassage = True Then
+                            PremierPassage = False
+                        Else
+                            MessageAllergie += vbCrLf & vbCrLf
+                        End If
+                        MessageAllergie += specialiteAllergique.MessageAllergie
+                    End If
+                Next
+                If allergie = True Then
+                    MessageBox.Show(MessageAllergie)
+                End If
+            End If
+        End Using
+        Me.Enabled = True
 
         GetAllergie()
     End Sub

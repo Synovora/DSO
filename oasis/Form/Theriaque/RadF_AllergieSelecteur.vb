@@ -1,6 +1,6 @@
 ﻿Imports System.Collections.Specialized
 Imports Telerik.WinControls.UI
-Public Class RadF_CI_ATC_Selecteur
+Public Class RadF_AllergieSelecteur
     Private _SelectedPatient As Patient
     Private _selectedSpecialiteId As Integer
     Private _codeRetour As Boolean
@@ -33,16 +33,15 @@ Public Class RadF_CI_ATC_Selecteur
     End Property
 
     Dim theriaqueDao As New TheriaqueDao
-    Dim contreIndicationATCDao As New ContreIndicationATCDao
-    Dim contreIndicationSubstanceDao As New ContreIndicationSubstanceDao
+    'Dim contreIndicationATCDao As New ContreIndicationATCDao
+    Dim allergieDao As New AllergieDao
 
-    Dim ATCListe As New List(Of String)
     Dim SubstanceListe As New List(Of Integer)
 
     Dim RowCountATC1 As Integer
 
-    Private Sub RadFATCListe_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-        afficheTitleForm(Me, "Déclaration contre-indication - Sélection Substance / Classe Thérapeutique")
+    Private Sub RadF_AllergieSelecteur_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        afficheTitleForm(Me, "Déclaration allergie - Sélection substance")
 
         Me.CodeRetour = False
         RadioBtnVirtuel.Checked = True
@@ -682,69 +681,6 @@ Public Class RadF_CI_ATC_Selecteur
         End If
     End Sub
 
-    'Sélection ATC
-    Private Sub RadBtnSelectionATC2_Click(sender As Object, e As EventArgs) Handles RadBtnSelectionATC2.Click
-        If RadGridViewATC2.CurrentRow IsNot Nothing Then
-            Dim aRow As Integer = Me.RadGridViewATC2.Rows.IndexOf(Me.RadGridViewATC2.CurrentRow)
-            If aRow >= 0 Then
-                Dim codeATC As String = RadGridViewATC2.Rows(aRow).Cells("catc_code_pk").Value
-                Selection(codeATC)
-            End If
-        End If
-    End Sub
-
-    Private Sub RadBtnSelectionATC3_Click(sender As Object, e As EventArgs) Handles RadBtnSelectionATC3.Click
-        If RadGridViewATC3.CurrentRow IsNot Nothing Then
-            Dim aRow As Integer = Me.RadGridViewATC3.Rows.IndexOf(Me.RadGridViewATC3.CurrentRow)
-            If aRow >= 0 Then
-                Dim codeATC As String = RadGridViewATC3.Rows(aRow).Cells("catc_code_pk").Value
-                Selection(codeATC)
-            End If
-        End If
-    End Sub
-
-    Private Sub RadBtnSelectionATC4_Click(sender As Object, e As EventArgs) Handles RadBtnSelectionATC4.Click
-        If RadGridViewATC4.CurrentRow IsNot Nothing Then
-            Dim aRow As Integer = Me.RadGridViewATC4.Rows.IndexOf(Me.RadGridViewATC4.CurrentRow)
-            If aRow >= 0 Then
-                Dim codeATC As String = RadGridViewATC4.Rows(aRow).Cells("catc_code_pk").Value
-                Selection(codeATC)
-            End If
-        End If
-    End Sub
-
-    Private Sub RadBtnSelectionATC5_Click(sender As Object, e As EventArgs) Handles RadBtnSelectionATC5.Click
-        If RadGridViewATC5.CurrentRow IsNot Nothing Then
-            Dim aRow As Integer = Me.RadGridViewATC5.Rows.IndexOf(Me.RadGridViewATC5.CurrentRow)
-            If aRow >= 0 Then
-                Dim codeATC As String = RadGridViewATC5.Rows(aRow).Cells("catc_code_pk").Value
-                Selection(codeATC)
-            End If
-        End If
-    End Sub
-
-    Private Sub Selection(CodeATC As String)
-        If ATCListe.Contains(CodeATC) = False Then
-            ATCListe.Add(CodeATC)
-        End If
-        ChargementATCListe()
-    End Sub
-
-    'Chargement des ATC sélectionnées
-    Private Sub ChargementATCListe()
-        Dim iGrid As Integer = -1
-        Dim EnumeratorSubstanceListe As IEnumerator = ATCListe.GetEnumerator()
-        RadGridViewATCListe.Rows.Clear()
-        While EnumeratorSubstanceListe.MoveNext()
-            Dim ATCId As String = EnumeratorSubstanceListe.Current
-            iGrid += 1
-            RadGridViewATCListe.Rows.Add(iGrid)
-            RadGridViewATCListe.Rows(iGrid).Cells("catc_code_pk").Value = ATCId
-            Dim ATCDenomination As String = theriaqueDao.GetATCDenominationById(ATCId)
-            RadGridViewATCListe.Rows(iGrid).Cells("catc_nomf").Value = ATCDenomination
-        End While
-    End Sub
-
     'Chargement des substances sélectionnées
     Private Sub ChargementSubstanceListe()
         Dim iGrid As Integer = -1
@@ -763,30 +699,17 @@ Public Class RadF_CI_ATC_Selecteur
     'Sélection substance et ATC pour création contre-indication
     Private Sub RadBtnSelectionCI_Click(sender As Object, e As EventArgs) Handles RadBtnSelectionCI.Click
         Dim NombreCICreation As Integer = 0
-        Dim EnumeratorATCListe As IEnumerator = ATCListe.GetEnumerator()
-        While EnumeratorATCListe.MoveNext()
-            Dim ATCId As String = EnumeratorATCListe.Current
-            Dim ATCDenomination As String = theriaqueDao.GetATCDenominationById(ATCId)
-            Dim contreIndicationATC As New ContreIndicationATC
-            contreIndicationATC.PatientId = SelectedPatient.patientId
-            contreIndicationATC.ATCId = ATCId
-            contreIndicationATC.DenominationATC = ATCDenomination
-
-            If contreIndicationATCDao.CreationContreIndicationATC(contreIndicationATC) = True Then
-                NombreCICreation += 1
-            End If
-        End While
 
         Dim EnumeratorSubstanceListe As IEnumerator = SubstanceListe.GetEnumerator()
         While EnumeratorSubstanceListe.MoveNext()
             Dim SubstanceId As Long = EnumeratorSubstanceListe.Current
             Dim SubstanceDenomination As String = theriaqueDao.GetSubstanceDenominationById(SubstanceId)
-            Dim contreIndicationSubstance As New ContreIndicationSubstance
-            contreIndicationSubstance.PatientId = SelectedPatient.patientId
-            contreIndicationSubstance.SubstanceId = SubstanceId
-            contreIndicationSubstance.DenominationSubstance = SubstanceDenomination
+            Dim allergieSubstance As New Allergie
+            allergieSubstance.PatientId = SelectedPatient.patientId
+            allergieSubstance.SubstanceId = SubstanceId
+            allergieSubstance.DenominationSubstance = SubstanceDenomination
 
-            If contreIndicationSubstanceDao.CreationContreIndicationSubstance(contreIndicationSubstance) = True Then
+            If allergieDao.CreationAllergie(allergieSubstance) = True Then
                 NombreCICreation += 1
             End If
         End While
@@ -794,28 +717,18 @@ Public Class RadF_CI_ATC_Selecteur
         Dim form As New RadFNotification()
         Select Case NombreCICreation
             Case 0
-                form.Message = "Attention, aucune contre-indication a été créée pour le patient"
+                form.Message = "Attention, aucune allergie a été créée pour le patient"
                 form.Show()
             Case 1
-                form.Message = "1 contre-indication a été créée pour le patient"
+                form.Message = "1 allergie a été créée pour le patient"
                 form.Show()
             Case Else
-                form.Message = NombreCICreation & " Contre-indications ont été créées pour le patient"
+                form.Message = NombreCICreation & " allergies ont été créées pour le patient"
                 form.Show()
         End Select
 
         Me.CodeRetour = True
         Close()
-    End Sub
-
-    Private Sub RadBtnListeMedeocATCSelection_Click(sender As Object, e As EventArgs) Handles RadBtnListeMedeocATCSelection.Click
-        If RadGridViewATCListe.CurrentRow IsNot Nothing Then
-            Dim aRow As Integer = Me.RadGridViewATCListe.Rows.IndexOf(Me.RadGridViewATCListe.CurrentRow)
-            If aRow >= 0 Then
-                Dim CodeAtc As String = RadGridViewATCListe.Rows(aRow).Cells("catc_code_pk").Value
-                GetSpecialiteByATC(CodeAtc)
-            End If
-        End If
     End Sub
 
     'Liste des médicaments correspondant à la substance sélectionnée
@@ -833,17 +746,6 @@ Public Class RadF_CI_ATC_Selecteur
         End If
     End Sub
 
-    Private Sub RadBtnEnleverATCListe_Click(sender As Object, e As EventArgs) Handles RadBtnEnleverATCListe.Click
-        If RadGridViewATCListe.CurrentRow IsNot Nothing Then
-            Dim aRow As Integer = Me.RadGridViewATCListe.Rows.IndexOf(Me.RadGridViewATCListe.CurrentRow)
-            If aRow >= 0 Then
-                Dim CodeAtc As String = RadGridViewATCListe.Rows(aRow).Cells("catc_code_pk").Value
-                ATCListe.Remove(CodeAtc)
-                ChargementATCListe()
-            End If
-        End If
-    End Sub
-
     Private Sub RadBtnEnleverSubstance_Click(sender As Object, e As EventArgs) Handles RadBtnEnleverSubstance.Click
         If RadGridViewSubstanceSelected.CurrentRow IsNot Nothing Then
             Dim aRow As Integer = Me.RadGridViewSubstanceSelected.Rows.IndexOf(Me.RadGridViewSubstanceSelected.CurrentRow)
@@ -853,11 +755,6 @@ Public Class RadF_CI_ATC_Selecteur
                 ChargementSubstanceListe()
             End If
         End If
-    End Sub
-
-    Private Sub RadBtnViderListeATC_Click(sender As Object, e As EventArgs) Handles RadBtnViderListeATC.Click
-        ATCListe.Clear()
-        ChargementATCListe()
     End Sub
 
     Private Sub RadBtnViderSubstances_Click(sender As Object, e As EventArgs) Handles RadBtnViderSubstances.Click
@@ -888,4 +785,5 @@ Public Class RadF_CI_ATC_Selecteur
             End If
         End If
     End Sub
+
 End Class

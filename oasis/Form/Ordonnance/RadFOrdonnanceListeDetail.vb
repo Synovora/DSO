@@ -489,9 +489,6 @@ Public Class RadFOrdonnanceListeDetail
         If Allergie = True Then
             Using vFPatientAllergieListe As New RadFPatientAllergieListe
                 vFPatientAllergieListe.SelectedPatient = Me.SelectedPatient
-                vFPatientAllergieListe.SelectedPatientId = Me.SelectedPatient.patientId
-                vFPatientAllergieListe.SelectedPatientAllergieCis = Me.SelectedPatient.PatientAllergieCis
-                vFPatientAllergieListe.UtilisateurConnecte = Me.UtilisateurConnecte
                 vFPatientAllergieListe.ShowDialog() 'Modal
             End Using
         End If

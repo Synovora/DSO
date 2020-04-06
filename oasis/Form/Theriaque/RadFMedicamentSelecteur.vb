@@ -66,6 +66,13 @@ Public Class RadFMedicamentSelecteur
         End If
 
         'Contre-indication
+        GetContreIndication()
+
+        'Allergie
+        GetAllergie()
+    End Sub
+
+    Private Sub GetContreIndication()
         Dim StringContreIndicationToolTip As String = PatientDao.GetStringContreIndicationByPatient(SelectedPatient.patientId)
         If StringContreIndicationToolTip = "" Then
             lblContreIndication.Hide()
@@ -73,13 +80,16 @@ Public Class RadFMedicamentSelecteur
             lblContreIndication.Show()
             ToolTip.SetToolTip(lblContreIndication, StringContreIndicationToolTip)
         End If
+    End Sub
 
-        'Allergie
-        Dim StringAllergieToolTip As String = ""
+
+    Private Sub GetAllergie()
+        Dim StringAllergieToolTip As String = PatientDao.GetStringAllergieByPatient(SelectedPatient.patientId)
         If StringAllergieToolTip = "" Then
             LblAllergie.Hide()
         Else
             LblAllergie.Show()
+            ToolTip.SetToolTip(LblAllergie, StringAllergieToolTip)
         End If
     End Sub
 
@@ -549,6 +559,18 @@ Public Class RadFMedicamentSelecteur
             vFPatientContreIndicationListe.SelectedPatient = Me.SelectedPatient
             vFPatientContreIndicationListe.ShowDialog()
         End Using
+        GetContreIndication()
+        Me.Enabled = True
+    End Sub
+
+    Private Sub LblAllergie_Click(sender As Object, e As EventArgs) Handles LblAllergie.Click
+        Me.Enabled = False
+        Cursor.Current = Cursors.WaitCursor
+        Using Form As New RadFPatientAllergieListe
+            Form.SelectedPatient = Me.SelectedPatient
+            Form.ShowDialog()
+        End Using
+        GetAllergie()
         Me.Enabled = True
     End Sub
 
@@ -567,60 +589,31 @@ Public Class RadFMedicamentSelecteur
             If aRow >= 0 Then
                 Dim SpecialiteId As Long = RadGridViewSpe.Rows(aRow).Cells("SP_CODE_SQ_PK").Value
                 Dim SpecialiteATCId As String = RadGridViewSpe.Rows(aRow).Cells("SP_CATC_CODE_FK").Value
+                Dim messageAlerte As String
+
+                '===============================================================================================
                 'Contrôle allergie
+                '===============================================================================================
+                Dim specialiteAllergie As SpecialiteAllergique = theriaqueDao.IsSpecialiteAllergique(SelectedPatient, SpecialiteId)
+                If specialiteAllergie.Allergie = True Then
+                    messageAlerte = specialiteAllergie.MessageAllergie
+                    messageAlerte += vbCrLf & "Ce médicament ne peut pas être prescrit pour ce patient !"
+                    MessageBox.Show(messageAlerte)
+                    Exit Sub
+                End If
 
-                'Contrôle contre-indication (ATC)
-                Dim contreIndicationATCDao As New ContreIndicationATCDao
-                Dim dt As DataTable
-                dt = contreIndicationATCDao.getAllContreIndicationATCbyPatient(SelectedPatient.patientId)
-                Dim rowCount As Integer = dt.Rows.Count - 1
-                For i = 0 To rowCount Step 1
-                    Dim codeATC As String = dt.Rows(i)("code_atc")
-                    If SpecialiteATCId.StartsWith(codeATC) = True Then
-                        Dim SpecialiteATCDenomination As String = theriaqueDao.GetATCDenominationById(SpecialiteATCId)
-                        Dim messageAlerte As String = ""
-                        If SpecialiteATCId = codeATC Then
-                            messageAlerte = "Attention, ce médicament appartient à la classe thérapeutique (" &
-                                  SpecialiteATCId & " - " & SpecialiteATCDenomination &
-                                  ") qui est contre-indiquée pour ce patient! Confirmez-vous la sélection du médicament"
-                        Else
-                            Dim ATCDenomination As String = theriaqueDao.GetATCDenominationById(codeATC)
-                            messageAlerte = "Attention, ce médicament appartient à la classe thérapeutique (" &
-                                  SpecialiteATCId & " - " & SpecialiteATCDenomination &
-                                  "), comprise dans la classe thérapeutique (" &
-                                  codeATC & " - " & ATCDenomination &
-                                  ") qui est contre-indiquée pour ce patient! Confirmez-vous la sélection du médicament"
-                        End If
-                        If MsgBox(messageAlerte, MsgBoxStyle.YesNo Or MsgBoxStyle.Critical, "") <> MsgBoxResult.Yes Then
-                            Exit Sub
-                        End If
+                '===============================================================================================
+                'Contrôle contre-indication (ATC et Substance)
+                '===============================================================================================
+
+                Dim specialiteContreIndique As SpecialiteContreIndique = theriaqueDao.IsSpecialiteContreIndique(SelectedPatient, SpecialiteId)
+                If specialiteContreIndique.ContreIndication = True Then
+                    messageAlerte = specialiteContreIndique.MessageContreIndication
+                    messageAlerte += vbCrLf & "Confirmez-vous la sélection du médicament ?"
+                    If MsgBox(messageAlerte, MsgBoxStyle.YesNo Or MsgBoxStyle.Critical, "") <> MsgBoxResult.Yes Then
+                        Exit Sub
                     End If
-                Next
-
-                'Contrôle contre-indication (Substance)
-                '--> Liste des substances du médicament
-                Dim SubstanceListe As List(Of Integer)
-                SubstanceListe = theriaqueDao.GetSubstanceCodeListBySpecialite(SpecialiteId)
-                Dim EnumeratorSubstanceListe As IEnumerator = SubstanceListe.GetEnumerator()
-
-                '--> Liste des substances en contre-indication pour le patient
-                Dim contreIndicationSubstanceDao As New ContreIndicationSubstanceDao
-                dt = contreIndicationSubstanceDao.getAllContreIndicationSubstancebyPatient(SelectedPatient.patientId)
-                rowCount = dt.Rows.Count - 1
-                For i = 0 To rowCount Step 1
-                    Dim codeSubstanceCI As Long = dt.Rows(i)("substance_id")
-                    While EnumeratorSubstanceListe.MoveNext()
-                        Dim CodeSubstanceSpecialite As Integer = EnumeratorSubstanceListe.Current
-                        If codeSubstanceCI = CodeSubstanceSpecialite Then
-                            Dim SubstanceDenomination As String = theriaqueDao.GetSubstanceDenominationById(CodeSubstanceSpecialite)
-                            If MsgBox("Attention, ce médicament comporte une substance (" &
-                                      SubstanceDenomination &
-                                      "), contre-indiquée pour ce patient! Confirmez-vous la sélection du médicament", MsgBoxStyle.YesNo Or MsgBoxStyle.Critical, "") <> MsgBoxResult.Yes Then
-                                Exit Sub
-                            End If
-                        End If
-                    End While
-                Next
+                End If
 
                 SelectedSpecialiteId = SpecialiteId
                 Close()
@@ -696,4 +689,5 @@ Public Class RadFMedicamentSelecteur
             End If
         End If
     End Sub
+
 End Class

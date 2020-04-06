@@ -38,44 +38,37 @@ Public Class TheriaqueDao
         PARA_CLINIQUE_SURDOSAGE = 4
     End Enum
 
-    Friend Function GetMedicamentById(medicamentCis As Integer) As Medicament
-        Dim medicament As Medicament
-        Dim con As SqlConnection
-
-        con = GetConnection()
+    Friend Function GetSpecialiteById(SpecialiteId As Integer) As SpecialiteTheriaque
+        Dim specialite As New SpecialiteTheriaque
+        Dim dt As DataTable
 
         Try
-            Dim command As SqlCommand = con.CreateCommand()
-
-            command.CommandText =
-                "SELECT * FROM oasis.oa_r_medicament WHERE oa_medicament_cis = @Id"
-            command.Parameters.AddWithValue("@id", medicamentCis)
-            Using reader As SqlDataReader = command.ExecuteReader()
-                If reader.Read() Then
-                    medicament = BuildBean(reader)
-                Else
-                    Throw New ArgumentException("Médicament inexistant !")
-                End If
-            End Using
+            dt = getSpecialiteByArgument(SpecialiteId, EnumGetSpecialite.ID_THERIAQUE, 1)
+            Dim rowCount As Integer = dt.Rows.Count
+            If dt.Rows.Count > 0 Then
+                specialite = BuildBean(dt)
+            Else
+                specialite.Id = 0
+                specialite.CodeAtc = ""
+                specialite.Dci = ""
+                specialite.DciLongue = ""
+            End If
         Catch ex As Exception
             Throw ex
-        Finally
-            con.Close()
         End Try
 
-        Return medicament
+        Return specialite
     End Function
 
-    Private Function BuildBean(reader As SqlDataReader) As Medicament
-        Dim medicament As New Medicament
+    Private Function BuildBean(dt As DataTable) As SpecialiteTheriaque
+        Dim specialite As New SpecialiteTheriaque
 
-        medicament.MedicamentCis = reader("oa_medicament_cis")
-        medicament.MedicamentDci = Coalesce(reader("oa_medicament_dci"), "")
-        medicament.Forme = Coalesce(reader("oa_medicament_forme"), "")
-        medicament.Titulaire = Coalesce(reader("oa_medicament_titulaire"), "")
-        medicament.VoieAdministration = Coalesce(reader("oa_medicament_voie_administration"), "")
+        specialite.Id = dt.Rows(0)("SP_CODE_SQ_PK")
+        specialite.CodeAtc = Coalesce(dt.Rows(0)("SP_CODE_SQ_PK"), "")
+        specialite.Dci = Coalesce(dt.Rows(0)("SP_NOM").Replace("§", ""), "")
+        specialite.DciLongue = Coalesce(dt.Rows(0)("SP_NOMLONG"), "")
 
-        Return medicament
+        Return specialite
     End Function
 
     '=============================================================================================
@@ -226,6 +219,37 @@ Public Class TheriaqueDao
         End Using
 
         Return Denomination
+    End Function
+
+    Friend Function getCodeAtcBySpecialiteId(CodeId As String) As String
+        Dim dt As New DataTable
+        Dim ds As New DataSet
+        Dim CodeATC As String = ""
+
+        Using con As SqlConnection = GetConnection()
+            Try
+                Dim command As New SqlCommand("theriaque.GET_THE_SPECIALITE", con)
+                command.CommandType = CommandType.StoredProcedure
+                command.Connection.ChangeDatabase("Theriak")
+                'command.CommandText = "theriaque.GET_THE_SPECIALITE"
+                command.Parameters.AddWithValue("@codeId", CodeId)
+                command.Parameters.AddWithValue("@VarTyp", EnumGetSpecialite.ID_THERIAQUE)
+                command.Parameters.AddWithValue("@MonoVir", EnumMonoVir.VIRTUEL)
+
+                Dim da As New SqlDataAdapter(command)
+                da.Fill(dt)
+
+                If dt.Rows.Count > 0 Then
+                    CodeATC = dt.Rows(0)("SP_CATC_CODE_FK")
+                End If
+            Catch ex As Exception
+                Throw ex
+            Finally
+                con.Close()
+            End Try
+        End Using
+
+        Return CodeATC
     End Function
 
     Friend Function GetPharmacoCinetiqueBySpecialite(CodeId As String) As String
@@ -442,6 +466,116 @@ Public Class TheriaqueDao
         End Using
 
         Return ATCCodeList
+    End Function
+
+    Friend Function IsSpecialiteContreIndique(patient As Patient, specialiteId As Long) As SpecialiteContreIndique
+        Dim specialiteContreIndique As New SpecialiteContreIndique
+        specialiteContreIndique.ContreIndication = False
+        specialiteContreIndique.MessageContreIndication = ""
+
+        Dim specialite As SpecialiteTheriaque
+        specialite = GetSpecialiteById(specialiteId)
+
+        '===============================================================================================
+        'Contrôle contre-indication (ATC)
+        '===============================================================================================
+        Dim contreIndicationATCDao As New ContreIndicationATCDao
+        Dim dt As DataTable
+
+        Dim codeAtcSpecialite As String = getCodeAtcBySpecialiteId(specialiteId)
+
+        dt = contreIndicationATCDao.getAllContreIndicationATCbyPatient(patient.patientId)
+        Dim rowCount As Integer = dt.Rows.Count - 1
+        For i = 0 To rowCount Step 1
+            Dim codeAtcContreIndication As String = dt.Rows(i)("code_atc")
+            If codeAtcSpecialite.StartsWith(codeAtcContreIndication) = True Then
+                specialiteContreIndique.ContreIndication = True
+                Dim denominationAtcSpecialite As String = GetATCDenominationById(codeAtcSpecialite)
+                If codeAtcSpecialite = codeAtcContreIndication Then
+                    specialiteContreIndique.MessageContreIndication = "Attention, le médicament (" & specialite.Dci & ") appartient à la classe thérapeutique (" &
+                          codeAtcSpecialite & " - " & denominationAtcSpecialite &
+                          ") qui est contre-indiquée pour ce patient !"
+                Else
+                    Dim denominationAtcContreIndication As String = GetATCDenominationById(codeAtcContreIndication)
+                    specialiteContreIndique.MessageContreIndication = "Attention, le médicament (" & specialite.Dci & ") appartient à la classe thérapeutique (" &
+                          codeAtcSpecialite & " - " & denominationAtcSpecialite &
+                          "), comprise dans la classe thérapeutique (" &
+                          codeAtcContreIndication & " - " & denominationAtcContreIndication &
+                          ") qui est contre-indiquée pour ce patient !"
+                End If
+            End If
+        Next
+
+        '===============================================================================================
+        'Contrôle contre-indication (Substance)
+        '===============================================================================================
+        '--> Liste des substances du médicament
+        Dim SubstanceListe As List(Of Integer)
+        SubstanceListe = GetSubstanceCodeListBySpecialite(specialiteId)
+
+        '--> Liste des substances en contre-indication pour le patient
+        Dim contreIndicationSubstanceDao As New ContreIndicationSubstanceDao
+        dt = contreIndicationSubstanceDao.getAllContreIndicationSubstancebyPatient(patient.patientId)
+        rowCount = dt.Rows.Count - 1
+        For i = 0 To rowCount Step 1
+            Dim codeSubstanceCI As Long = dt.Rows(i)("substance_id")
+            Dim EnumeratorSubstanceListe As IEnumerator = SubstanceListe.GetEnumerator()
+            While EnumeratorSubstanceListe.MoveNext()
+                Dim CodeSubstanceSpecialite As Integer = EnumeratorSubstanceListe.Current
+                If codeSubstanceCI = CodeSubstanceSpecialite Then
+                    Dim SubstanceDenomination As String = GetSubstanceDenominationById(CodeSubstanceSpecialite)
+                    If specialiteContreIndique.ContreIndication = True Then
+                        specialiteContreIndique.MessageContreIndication += vbCrLf
+                    Else
+                        specialiteContreIndique.ContreIndication = True
+                    End If
+                    specialiteContreIndique.MessageContreIndication += "Attention, le médicament (" & specialite.Dci & ") comporte une substance (" &
+                                      SubstanceDenomination &
+                                      "), contre-indiquée pour ce patient !"
+                End If
+            End While
+        Next
+
+        Return specialiteContreIndique
+    End Function
+
+    Friend Function IsSpecialiteAllergique(patient As Patient, specialiteId As Long) As SpecialiteAllergique
+        Dim specialiteAllergique As New SpecialiteAllergique
+        specialiteAllergique.Allergie = False
+        specialiteAllergique.MessageAllergie = ""
+
+        Dim specialite As SpecialiteTheriaque
+        specialite = GetSpecialiteById(specialiteId)
+
+        Dim dt As DataTable
+
+        Dim codeAtcSpecialite As String = getCodeAtcBySpecialiteId(specialiteId)
+
+        '--> Liste des substances du médicament
+        Dim SubstanceListe As List(Of Integer)
+        SubstanceListe = GetSubstanceCodeListBySpecialite(specialiteId)
+
+
+        '--> Liste des substances déclarées en allergie pour le patient
+        Dim allergieDao As New AllergieDao
+        dt = allergieDao.getAllAllergiebyPatient(patient.patientId)
+        Dim rowCount As Integer = dt.Rows.Count - 1
+        For i = 0 To rowCount Step 1
+            Dim codeSubstanceAllergie As Long = dt.Rows(i)("substance_id")
+            Dim EnumeratorSubstanceListe As IEnumerator = SubstanceListe.GetEnumerator()
+            While EnumeratorSubstanceListe.MoveNext()
+                Dim CodeSubstanceSpecialite As Integer = EnumeratorSubstanceListe.Current
+                If codeSubstanceAllergie = CodeSubstanceSpecialite Then
+                    Dim SubstanceDenomination As String = GetSubstanceDenominationById(CodeSubstanceSpecialite)
+                    specialiteAllergique.Allergie = True
+                    specialiteAllergique.MessageAllergie += "Attention, le médicament (" & specialite.Dci & ") comporte une substance (" &
+                                      SubstanceDenomination &
+                                      "), déclarée allergique pour ce patient !"
+                End If
+            End While
+        Next
+
+        Return specialiteAllergique
     End Function
 
 End Class

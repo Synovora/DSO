@@ -307,6 +307,13 @@ Public Class RadFTraitementDetailEdit
         End If
 
         'Contre-indication
+        GetContreIndication()
+
+        'Allergie
+        GetAllergie()
+    End Sub
+
+    Private Sub GetContreIndication()
         Dim StringContreIndicationToolTip As String = PatientDao.GetStringContreIndicationByPatient(SelectedPatient.patientId)
         If StringContreIndicationToolTip = "" Then
             lblContreIndication.Hide()
@@ -314,13 +321,15 @@ Public Class RadFTraitementDetailEdit
             lblContreIndication.Show()
             ToolTip.SetToolTip(lblContreIndication, StringContreIndicationToolTip)
         End If
+    End Sub
 
-        'Allergie
-        Dim StringAllergieToolTip As String = ""
+    Private Sub GetAllergie()
+        Dim StringAllergieToolTip As String = PatientDao.GetStringAllergieByPatient(SelectedPatient.patientId)
         If StringAllergieToolTip = "" Then
             LblAllergie.Hide()
         Else
             LblAllergie.Show()
+            ToolTip.SetToolTip(LblAllergie, StringAllergieToolTip)
         End If
     End Sub
 
@@ -655,11 +664,14 @@ Public Class RadFTraitementDetailEdit
             LblMedicamentDCI.Text = LblMedicamentDCI.Text.Replace(" §", "")
             LblMedicamentDenominationLongue.Text = dt.Rows(0)("SP_NOMLONG")
             LblMedicamentDenominationLongue.Text = LblMedicamentDenominationLongue.Text.Replace("(MEDICAMENT VIRTUEL)", "")
+            Dim ATCDenomination As String = TheriaqueDao.GetATCDenominationById(Coalesce(dt.Rows(0)("SP_CATC_CODE_FK"), ""))
+            LblATC.Text = Coalesce(dt.Rows(0)("SP_CATC_CODE_FK"), "") & " - " & ATCDenomination
         Else
             LblMedicamentDCI.Text = ""
             LblMedicamentDenominationLongue.Text = ""
             LblMedicamentAdministration.Text = ""
             LblMedicamentTitulaire.Text = ""
+            LblATC.Text = ""
         End If
     End Sub
 
@@ -1443,11 +1455,9 @@ Public Class RadFTraitementDetailEdit
             Me.Enabled = False
             Using vFPatientAllergieListe As New RadFPatientAllergieListe
                 vFPatientAllergieListe.SelectedPatient = Me.SelectedPatient
-                vFPatientAllergieListe.SelectedPatientId = Me.SelectedPatient.patientId
-                vFPatientAllergieListe.SelectedPatientAllergieCis = Me.SelectedPatient.PatientAllergieCis
-                vFPatientAllergieListe.UtilisateurConnecte = Me.UtilisateurConnecte
                 vFPatientAllergieListe.ShowDialog()
             End Using
+            GetAllergie()
             Me.Enabled = True
         End If
     End Sub
@@ -1459,6 +1469,7 @@ Public Class RadFTraitementDetailEdit
             vFPatientContreIndicationListe.SelectedPatient = Me.SelectedPatient
             vFPatientContreIndicationListe.ShowDialog()
         End Using
+        GetContreIndication()
         Me.Enabled = True
     End Sub
 
@@ -1625,6 +1636,15 @@ Public Class RadFTraitementDetailEdit
         Me.Enabled = False
         Using form As New RadFEffetSecondaire
             form.MedicamentId = SelectedMedicamentId
+            form.ShowDialog()
+        End Using
+        Me.Enabled = True
+    End Sub
+
+    Private Sub RadBtnSubstance_Click(sender As Object, e As EventArgs) Handles RadBtnSubstance.Click
+        Me.Enabled = False
+        Using form As New RadFSubstancesListe
+            form.SelectedSpecialite = SelectedMedicamentId
             form.ShowDialog()
         End Using
         Me.Enabled = True

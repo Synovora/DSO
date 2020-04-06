@@ -451,4 +451,24 @@ Module PatientDao
         Return StringContreIndication
     End Function
 
+    Friend Function GetStringAllergieByPatient(patientId As Long) As String
+        Dim allergieDao As New AllergieDao
+
+        Dim dt As DataTable
+        Dim StringContreIndication As String = ""
+        Dim PremierPassage As Boolean = True
+
+        dt = allergieDao.getAllAllergiebyPatient(patientId)
+        Dim rowCount As Integer = dt.Rows.Count - 1
+        For i = 0 To rowCount Step 1
+            If PremierPassage = True Then
+                StringContreIndication += "Substance :" & vbCrLf
+                PremierPassage = False
+            End If
+            StringContreIndication += dt.Rows(i)("substance_id") & " : " & dt.Rows(i)("denomination_substance") & vbCrLf
+        Next
+
+        Return StringContreIndication
+    End Function
+
 End Module

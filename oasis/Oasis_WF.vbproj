@@ -233,8 +233,12 @@
     <Compile Include="Bean\SousEpisode\SousEpisodeSousType.vb" />
     <Compile Include="Bean\SousEpisode\SousEpisode.vb" />
     <Compile Include="Bean\SousEpisode\SousEpisodeType.vb" />
+    <Compile Include="Bean\Theriaque\Allergie.vb" />
     <Compile Include="Bean\Theriaque\ContreIndicationATC.vb" />
     <Compile Include="Bean\Theriaque\ContreIndicationSubstance.vb" />
+    <Compile Include="Bean\Theriaque\SpecialiteAllergique.vb" />
+    <Compile Include="Bean\Theriaque\SpecialiteContreIndique.vb" />
+    <Compile Include="Bean\Theriaque\SpecialiteTheriaque.vb" />
     <Compile Include="Bean\Traitement\TraitementCourrier.vb" />
     <Compile Include="Dao\Antecedent\AntecedentAffectationDao.vb" />
     <Compile Include="Bean\LigneDeVie\LigneDeVie.vb" />
@@ -251,6 +255,7 @@
     <Compile Include="Dao\SousEpisode\SousEpisodeSousSousTypeDao.vb" />
     <Compile Include="Dao\SousEpisode\SousEpisodeSousTypeDao.vb" />
     <Compile Include="Dao\SousEpisode\SousEpisodeTypeDao.vb" />
+    <Compile Include="Dao\Theriaque\AllergieDao.vb" />
     <Compile Include="Dao\Theriaque\ContreIndicationATCDao.vb" />
     <Compile Include="Dao\Theriaque\ContreIndicationSubstanceDao.vb" />
     <Compile Include="Dao\Theriaque\TheriaqueDao.vb" />
@@ -502,6 +507,12 @@
       <DependentUpon>RadFSubstancesListe.vb</DependentUpon>
     </Compile>
     <Compile Include="Form\Theriaque\RadFSubstancesListe.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form\Theriaque\RadF_AllergieSelecteur.Designer.vb">
+      <DependentUpon>RadF_AllergieSelecteur.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Form\Theriaque\RadF_AllergieSelecteur.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Form\Theriaque\RadF_CI_ATC_Selecteur.Designer.vb">
@@ -1064,6 +1075,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Form\Theriaque\RadFSubstancesListe.resx">
       <DependentUpon>RadFSubstancesListe.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form\Theriaque\RadF_AllergieSelecteur.resx">
+      <DependentUpon>RadF_AllergieSelecteur.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Form\Theriaque\RadF_CI_ATC_Selecteur.resx">
       <DependentUpon>RadF_CI_ATC_Selecteur.vb</DependentUpon>
