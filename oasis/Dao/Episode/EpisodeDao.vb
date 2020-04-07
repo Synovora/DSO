@@ -437,14 +437,22 @@ Public Class EpisodeDao
 
     Friend Function GetAllEpisodeEnCours() As DataTable
         Dim SQLString As String
-        SQLString = "SELECT episode_id, patient_id, type, type_activite, type_profil, commentaire, user_creation, date_creation," &
+        SQLString = "SELECT E.episode_id, E.patient_id, E.[type], type_activite, type_profil, commentaire, user_creation, date_creation," &
                     " U.oa_utilisateur_prenom, U.oa_utilisateur_nom, P.oa_patient_site_id, P.oa_patient_nom," &
-                    " P.oa_patient_prenom, P.oa_patient_date_naissance" &
-                    " FROM oasis.oa_episode" &
-                    " LEFT JOIN oasis.oa_patient P ON P.oa_patient_id = patient_id" &
+                    " P.oa_patient_prenom, P.oa_patient_date_naissance, TACHE.nature, TACHE.destinataire_fonction_id, TACHE.etat, TACHE.oa_r_fonction_designation," &
+                    " TACHE.oa_utilisateur_prenom, TACHE.oa_utilisateur_nom, TACHE.oa_r_fonction_type" &
+                    " FROM oasis.oa_episode E" &
+                    " LEFT JOIN oasis.oa_patient P ON P.oa_patient_id = E.patient_id" &
                     " LEFT JOIN oasis.oa_utilisateur U ON U.oa_utilisateur_id = user_creation" &
-                    " WHERE etat = 'EN_COURS'" &
-                    " AND ([type] = '" & EnumTypeEpisode.CONSULTATION.ToString & "' OR [type] = '" & EnumTypeEpisode.VIRTUEL.ToString & "')" &
+                    " OUTER APPLY (Select TOP (1) * FROM oasis.oasis.oa_tache" &
+                        " LEFT JOIN oasis.oasis.oa_r_fonction ON destinataire_fonction_id = oa_r_fonction_id" &
+                        " LEFT JOIN oasis.oasis.oa_utilisateur ON oa_utilisateur_id = traite_user_id" &
+                        " WHERE episode_Id = E.episode_id" &
+                        " AND (etat = '" & TacheDao.EtatTache.EN_ATTENTE.ToString() & "' OR etat = '" & TacheDao.EtatTache.EN_COURS.ToString() & "')" &
+                        " AND [type] = '" & TacheDao.TypeTache.AVIS_EPISODE.ToString() & "'" &
+                        " AND categorie = 'SOIN') AS TACHE" &
+                    " WHERE E.etat = 'EN_COURS'" &
+                    " AND (E.[type] = '" & EnumTypeEpisode.CONSULTATION.ToString & "' OR E.[type] = '" & EnumTypeEpisode.VIRTUEL.ToString & "')" &
                     " AND (inactif = 'False' OR inactif is Null)" &
                     " ORDER BY date_creation"
 
