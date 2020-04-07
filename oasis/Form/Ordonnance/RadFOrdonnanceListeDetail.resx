@@ -117,11 +117,19 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <metadata name="ALDContextMenuStrip.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>109, 17</value>
-  </metadata>
   <metadata name="ToolTip.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>17, 17</value>
+  </metadata>
+  <data name="Label9.ToolTip" xml:space="preserve">
+    <value>Cette mention apparaît quand le patient a au moins un médicament déclaré en "Allergie"
+Un clic de souris sur cette mention permet d'accéder à l'écran listant les médicaments déclarés en "Allergie" pour ce patient.</value>
+  </data>
+  <data name="Label10.ToolTip" xml:space="preserve">
+    <value>Cette mention apparaît quand le patient a au moins un médicament déclaré en "Contre-indication"
+Un clic de souris sur cette mention permet d'accéder à l'écran listant les médicaments déclarés en "Contre-indication" pour ce patient.</value>
+  </data>
+  <metadata name="ALDContextMenuStrip.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>109, 17</value>
   </metadata>
   <metadata name="NonALDContextMenuStrip.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>282, 17</value>

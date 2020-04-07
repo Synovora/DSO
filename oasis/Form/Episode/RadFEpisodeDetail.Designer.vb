@@ -52,6 +52,14 @@ Partial Class RadFEpisodeDetail
         Dim GridViewTextBoxColumn23 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
         Dim GridViewTextBoxColumn24 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
         Dim TableViewDefinition4 As Telerik.WinControls.UI.TableViewDefinition = New Telerik.WinControls.UI.TableViewDefinition()
+        Dim GridViewTextBoxColumn25 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
+        Dim GridViewTextBoxColumn26 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
+        Dim GridViewTextBoxColumn27 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
+        Dim GridViewTextBoxColumn28 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
+        Dim GridViewTextBoxColumn29 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
+        Dim GridViewCheckBoxColumn1 As Telerik.WinControls.UI.GridViewCheckBoxColumn = New Telerik.WinControls.UI.GridViewCheckBoxColumn()
+        Dim GridViewCheckBoxColumn2 As Telerik.WinControls.UI.GridViewCheckBoxColumn = New Telerik.WinControls.UI.GridViewCheckBoxColumn()
+        Dim TableViewDefinition5 As Telerik.WinControls.UI.TableViewDefinition = New Telerik.WinControls.UI.TableViewDefinition()
         Dim GridViewTextBoxColumn30 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
         Dim GridViewTextBoxColumn31 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
         Dim GridViewTextBoxColumn32 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
@@ -100,14 +108,6 @@ Partial Class RadFEpisodeDetail
         Dim GridViewTextBoxColumn70 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
         Dim GridViewTextBoxColumn71 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
         Dim TableViewDefinition11 As Telerik.WinControls.UI.TableViewDefinition = New Telerik.WinControls.UI.TableViewDefinition()
-        Dim GridViewTextBoxColumn25 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
-        Dim GridViewTextBoxColumn26 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
-        Dim GridViewTextBoxColumn27 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
-        Dim GridViewTextBoxColumn28 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
-        Dim GridViewTextBoxColumn29 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
-        Dim GridViewCheckBoxColumn1 As Telerik.WinControls.UI.GridViewCheckBoxColumn = New Telerik.WinControls.UI.GridViewCheckBoxColumn()
-        Dim GridViewCheckBoxColumn2 As Telerik.WinControls.UI.GridViewCheckBoxColumn = New Telerik.WinControls.UI.GridViewCheckBoxColumn()
-        Dim TableViewDefinition5 As Telerik.WinControls.UI.TableViewDefinition = New Telerik.WinControls.UI.TableViewDefinition()
         Me.RadPanelEtatCivil = New Telerik.WinControls.UI.RadPanel()
         Me.RadGbxParametre = New Telerik.WinControls.UI.RadGroupBox()
         Me.LblParmEVA = New System.Windows.Forms.Label()
@@ -173,11 +173,11 @@ Partial Class RadFEpisodeDetail
         Me.RadBtnDirectives = New Telerik.WinControls.UI.RadButton()
         Me.RadBtnNotesMedicales = New Telerik.WinControls.UI.RadButton()
         Me.RadBtnGenProtocole = New Telerik.WinControls.UI.RadButton()
-        Me.RadBtnSousEpisode = New Telerik.WinControls.UI.RadButton()
         Me.RadBtnHistoWorkflow = New Telerik.WinControls.UI.RadButton()
         Me.RadBtnRefresh = New Telerik.WinControls.UI.RadButton()
         Me.RadBtnCloture = New Telerik.WinControls.UI.RadButton()
         Me.RadBtnAbandon = New Telerik.WinControls.UI.RadButton()
+        Me.RadBtnSousEpisode = New Telerik.WinControls.UI.RadButton()
         Me.RadPanelPrincipal = New Telerik.WinControls.UI.RadPanel()
         Me.RadSplitContainerCorpsPrincipal = New Telerik.WinControls.UI.RadSplitContainer()
         Me.SplitPanelEpisode = New Telerik.WinControls.UI.SplitPanel()
@@ -190,11 +190,15 @@ Partial Class RadFEpisodeDetail
         Me.RadGroupBox4 = New Telerik.WinControls.UI.RadGroupBox()
         Me.RadSplitContainer4 = New Telerik.WinControls.UI.RadSplitContainer()
         Me.SplitPanelConsigneParamedicale = New Telerik.WinControls.UI.SplitPanel()
+        Me.RadDropDownBtnObseSpeIde = New Telerik.WinControls.UI.RadDropDownButton()
+        Me.RadMenuItemObsSpeIdeSaisieObservation = New Telerik.WinControls.UI.RadMenuItem()
+        Me.RadMenuItemObseSpeIdeAjoutProtocoleAigue = New Telerik.WinControls.UI.RadMenuItem()
         Me.RadObsSpeIdeDataGridView = New Telerik.WinControls.UI.RadGridView()
         Me.ActeParamedicalMenuStrip = New System.Windows.Forms.ContextMenuStrip(Me.components)
         Me.SaisieObservationToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.AjoutProtocoleAiguToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.SplitPanel2 = New Telerik.WinControls.UI.SplitPanel()
+        Me.RadBtnAddObsLibreIde = New Telerik.WinControls.UI.RadButton()
         Me.RadGridViewObsIde = New Telerik.WinControls.UI.RadGridView()
         Me.ObsContextMenuStrip = New System.Windows.Forms.ContextMenuStrip(Me.components)
         Me.CréerUneObservationToolStripMenuItem1 = New System.Windows.Forms.ToolStripMenuItem()
@@ -207,15 +211,21 @@ Partial Class RadFEpisodeDetail
         Me.SaisieObservationSpecifiqueMedicaleItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.AttributionDesObservationsSpécifiquesToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.SplitPanelObsMedLibre = New Telerik.WinControls.UI.SplitPanel()
+        Me.RadBtnAddObsLibreMed = New Telerik.WinControls.UI.RadButton()
         Me.RadGridViewObsMed = New Telerik.WinControls.UI.RadGridView()
         Me.SplitPanelDecision = New Telerik.WinControls.UI.SplitPanel()
         Me.RadSplitContainer3 = New Telerik.WinControls.UI.RadSplitContainer()
         Me.SplitPanel5 = New Telerik.WinControls.UI.SplitPanel()
+        Me.RadSplitContainer5 = New Telerik.WinControls.UI.RadSplitContainer()
+        Me.SplitPanel6 = New Telerik.WinControls.UI.SplitPanel()
+        Me.RadPanelConclusionIdeType = New Telerik.WinControls.UI.RadPanel()
         Me.RadioBtnRolePropre = New System.Windows.Forms.RadioButton()
         Me.RadioBtnSurProtocole = New System.Windows.Forms.RadioButton()
         Me.RadioBtnDemandeAvis = New System.Windows.Forms.RadioButton()
         Me.RadGrpConsigneIDE = New Telerik.WinControls.UI.RadGroupBox()
         Me.TxtConsigneMedicale = New System.Windows.Forms.TextBox()
+        Me.SplitPanel11 = New Telerik.WinControls.UI.SplitPanel()
+        Me.RadGridViewSousEpisode = New Telerik.WinControls.UI.RadGridView()
         Me.SplitPanelWorkflow = New Telerik.WinControls.UI.SplitPanel()
         Me.RadSplitContainerWorkflow = New Telerik.WinControls.UI.RadSplitContainer()
         Me.SplitPanel4 = New Telerik.WinControls.UI.SplitPanel()
@@ -341,16 +351,6 @@ Partial Class RadFEpisodeDetail
         Me.SplitPanelTop = New Telerik.WinControls.UI.SplitPanel()
         Me.SplitPanelBody = New Telerik.WinControls.UI.SplitPanel()
         Me.SplitPanelBottom = New Telerik.WinControls.UI.SplitPanel()
-        Me.RadSplitContainer5 = New Telerik.WinControls.UI.RadSplitContainer()
-        Me.SplitPanel6 = New Telerik.WinControls.UI.SplitPanel()
-        Me.SplitPanel11 = New Telerik.WinControls.UI.SplitPanel()
-        Me.RadGridViewSousEpisode = New Telerik.WinControls.UI.RadGridView()
-        Me.RadBtnAddObsLibreIde = New Telerik.WinControls.UI.RadButton()
-        Me.RadBtnAddObsLibreMed = New Telerik.WinControls.UI.RadButton()
-        Me.RadDropDownBtnObseSpeIde = New Telerik.WinControls.UI.RadDropDownButton()
-        Me.RadMenuItemObsSpeIdeSaisieObservation = New Telerik.WinControls.UI.RadMenuItem()
-        Me.RadMenuItemObseSpeIdeAjoutProtocoleAigue = New Telerik.WinControls.UI.RadMenuItem()
-        Me.RadPanelConclusionIdeType = New Telerik.WinControls.UI.RadPanel()
         CType(Me.RadPanelEtatCivil, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.RadPanelEtatCivil.SuspendLayout()
         CType(Me.RadGbxParametre, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -371,11 +371,11 @@ Partial Class RadFEpisodeDetail
         CType(Me.RadBtnDirectives, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.RadBtnNotesMedicales, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.RadBtnGenProtocole, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.RadBtnSousEpisode, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.RadBtnHistoWorkflow, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.RadBtnRefresh, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.RadBtnCloture, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.RadBtnAbandon, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.RadBtnSousEpisode, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.RadPanelPrincipal, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.RadPanelPrincipal.SuspendLayout()
         CType(Me.RadSplitContainerCorpsPrincipal, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -400,11 +400,13 @@ Partial Class RadFEpisodeDetail
         Me.RadSplitContainer4.SuspendLayout()
         CType(Me.SplitPanelConsigneParamedicale, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SplitPanelConsigneParamedicale.SuspendLayout()
+        CType(Me.RadDropDownBtnObseSpeIde, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.RadObsSpeIdeDataGridView, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.RadObsSpeIdeDataGridView.MasterTemplate, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.ActeParamedicalMenuStrip.SuspendLayout()
         CType(Me.SplitPanel2, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SplitPanel2.SuspendLayout()
+        CType(Me.RadBtnAddObsLibreIde, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.RadGridViewObsIde, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.RadGridViewObsIde.MasterTemplate, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.ObsContextMenuStrip.SuspendLayout()
@@ -421,6 +423,7 @@ Partial Class RadFEpisodeDetail
         Me.ObsSpeMedMenuStrip.SuspendLayout()
         CType(Me.SplitPanelObsMedLibre, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SplitPanelObsMedLibre.SuspendLayout()
+        CType(Me.RadBtnAddObsLibreMed, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.RadGridViewObsMed, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.RadGridViewObsMed.MasterTemplate, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.SplitPanelDecision, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -429,8 +432,18 @@ Partial Class RadFEpisodeDetail
         Me.RadSplitContainer3.SuspendLayout()
         CType(Me.SplitPanel5, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SplitPanel5.SuspendLayout()
+        CType(Me.RadSplitContainer5, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.RadSplitContainer5.SuspendLayout()
+        CType(Me.SplitPanel6, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.SplitPanel6.SuspendLayout()
+        CType(Me.RadPanelConclusionIdeType, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.RadPanelConclusionIdeType.SuspendLayout()
         CType(Me.RadGrpConsigneIDE, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.RadGrpConsigneIDE.SuspendLayout()
+        CType(Me.SplitPanel11, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.SplitPanel11.SuspendLayout()
+        CType(Me.RadGridViewSousEpisode, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.RadGridViewSousEpisode.MasterTemplate, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.SplitPanelWorkflow, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SplitPanelWorkflow.SuspendLayout()
         CType(Me.RadSplitContainerWorkflow, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -533,19 +546,6 @@ Partial Class RadFEpisodeDetail
         Me.SplitPanelBody.SuspendLayout()
         CType(Me.SplitPanelBottom, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SplitPanelBottom.SuspendLayout()
-        CType(Me.RadSplitContainer5, System.ComponentModel.ISupportInitialize).BeginInit()
-        Me.RadSplitContainer5.SuspendLayout()
-        CType(Me.SplitPanel6, System.ComponentModel.ISupportInitialize).BeginInit()
-        Me.SplitPanel6.SuspendLayout()
-        CType(Me.SplitPanel11, System.ComponentModel.ISupportInitialize).BeginInit()
-        Me.SplitPanel11.SuspendLayout()
-        CType(Me.RadGridViewSousEpisode, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.RadGridViewSousEpisode.MasterTemplate, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.RadBtnAddObsLibreIde, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.RadBtnAddObsLibreMed, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.RadDropDownBtnObseSpeIde, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.RadPanelConclusionIdeType, System.ComponentModel.ISupportInitialize).BeginInit()
-        Me.RadPanelConclusionIdeType.SuspendLayout()
         CType(Me, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
@@ -1232,15 +1232,6 @@ Partial Class RadFEpisodeDetail
         Me.RadBtnGenProtocole.TabIndex = 44
         Me.RadBtnGenProtocole.Text = "Re-générer paramètres et protocoles"
         '
-        'RadBtnSousEpisode
-        '
-        Me.RadBtnSousEpisode.Anchor = System.Windows.Forms.AnchorStyles.Top
-        Me.RadBtnSousEpisode.Location = New System.Drawing.Point(447, 3)
-        Me.RadBtnSousEpisode.Name = "RadBtnSousEpisode"
-        Me.RadBtnSousEpisode.Size = New System.Drawing.Size(110, 21)
-        Me.RadBtnSousEpisode.TabIndex = 43
-        Me.RadBtnSousEpisode.Text = "Sous-épisode"
-        '
         'RadBtnHistoWorkflow
         '
         Me.RadBtnHistoWorkflow.Location = New System.Drawing.Point(325, 6)
@@ -1274,6 +1265,15 @@ Partial Class RadFEpisodeDetail
         Me.RadBtnAbandon.Size = New System.Drawing.Size(110, 24)
         Me.RadBtnAbandon.TabIndex = 0
         Me.RadBtnAbandon.Text = "Abandonner"
+        '
+        'RadBtnSousEpisode
+        '
+        Me.RadBtnSousEpisode.Anchor = System.Windows.Forms.AnchorStyles.Top
+        Me.RadBtnSousEpisode.Location = New System.Drawing.Point(447, 3)
+        Me.RadBtnSousEpisode.Name = "RadBtnSousEpisode"
+        Me.RadBtnSousEpisode.Size = New System.Drawing.Size(110, 21)
+        Me.RadBtnSousEpisode.TabIndex = 43
+        Me.RadBtnSousEpisode.Text = "Sous-épisode"
         '
         'RadPanelPrincipal
         '
@@ -1462,6 +1462,25 @@ Partial Class RadFEpisodeDetail
         Me.SplitPanelConsigneParamedicale.TabStop = False
         Me.SplitPanelConsigneParamedicale.Text = "SplitPanel10"
         '
+        'RadDropDownBtnObseSpeIde
+        '
+        Me.RadDropDownBtnObseSpeIde.Items.AddRange(New Telerik.WinControls.RadItem() {Me.RadMenuItemObsSpeIdeSaisieObservation, Me.RadMenuItemObseSpeIdeAjoutProtocoleAigue})
+        Me.RadDropDownBtnObseSpeIde.Location = New System.Drawing.Point(8, 7)
+        Me.RadDropDownBtnObseSpeIde.Name = "RadDropDownBtnObseSpeIde"
+        Me.RadDropDownBtnObseSpeIde.Size = New System.Drawing.Size(37, 15)
+        Me.RadDropDownBtnObseSpeIde.TabIndex = 2
+        Me.RadDropDownBtnObseSpeIde.Text = ">"
+        '
+        'RadMenuItemObsSpeIdeSaisieObservation
+        '
+        Me.RadMenuItemObsSpeIdeSaisieObservation.Name = "RadMenuItemObsSpeIdeSaisieObservation"
+        Me.RadMenuItemObsSpeIdeSaisieObservation.Text = "Saisie observation"
+        '
+        'RadMenuItemObseSpeIdeAjoutProtocoleAigue
+        '
+        Me.RadMenuItemObseSpeIdeAjoutProtocoleAigue.Name = "RadMenuItemObseSpeIdeAjoutProtocoleAigue"
+        Me.RadMenuItemObseSpeIdeAjoutProtocoleAigue.Text = "Ajout protocole aiguë"
+        '
         'RadObsSpeIdeDataGridView
         '
         Me.RadObsSpeIdeDataGridView.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
@@ -1577,6 +1596,15 @@ Partial Class RadFEpisodeDetail
         Me.SplitPanel2.TabIndex = 1
         Me.SplitPanel2.TabStop = False
         Me.SplitPanel2.Text = "SplitPanel2"
+        '
+        'RadBtnAddObsLibreIde
+        '
+        Me.RadBtnAddObsLibreIde.Font = New System.Drawing.Font("Segoe UI", 11.0!)
+        Me.RadBtnAddObsLibreIde.Location = New System.Drawing.Point(7, 6)
+        Me.RadBtnAddObsLibreIde.Name = "RadBtnAddObsLibreIde"
+        Me.RadBtnAddObsLibreIde.Size = New System.Drawing.Size(15, 15)
+        Me.RadBtnAddObsLibreIde.TabIndex = 48
+        Me.RadBtnAddObsLibreIde.Text = "+"
         '
         'RadGridViewObsIde
         '
@@ -1823,6 +1851,15 @@ Partial Class RadFEpisodeDetail
         Me.SplitPanelObsMedLibre.TabStop = False
         Me.SplitPanelObsMedLibre.Text = "SplitPanel4"
         '
+        'RadBtnAddObsLibreMed
+        '
+        Me.RadBtnAddObsLibreMed.Font = New System.Drawing.Font("Segoe UI", 11.0!)
+        Me.RadBtnAddObsLibreMed.Location = New System.Drawing.Point(7, 9)
+        Me.RadBtnAddObsLibreMed.Name = "RadBtnAddObsLibreMed"
+        Me.RadBtnAddObsLibreMed.Size = New System.Drawing.Size(15, 15)
+        Me.RadBtnAddObsLibreMed.TabIndex = 49
+        Me.RadBtnAddObsLibreMed.Text = "+"
+        '
         'RadGridViewObsMed
         '
         Me.RadGridViewObsMed.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
@@ -1921,6 +1958,48 @@ Partial Class RadFEpisodeDetail
         Me.SplitPanel5.TabStop = False
         Me.SplitPanel5.Text = "SplitPanel5"
         '
+        'RadSplitContainer5
+        '
+        Me.RadSplitContainer5.Controls.Add(Me.SplitPanel6)
+        Me.RadSplitContainer5.Controls.Add(Me.SplitPanel11)
+        Me.RadSplitContainer5.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.RadSplitContainer5.Location = New System.Drawing.Point(0, 0)
+        Me.RadSplitContainer5.Name = "RadSplitContainer5"
+        '
+        '
+        '
+        Me.RadSplitContainer5.RootElement.MinSize = New System.Drawing.Size(25, 25)
+        Me.RadSplitContainer5.Size = New System.Drawing.Size(1004, 118)
+        Me.RadSplitContainer5.TabIndex = 3
+        Me.RadSplitContainer5.TabStop = False
+        '
+        'SplitPanel6
+        '
+        Me.SplitPanel6.Controls.Add(Me.RadPanelConclusionIdeType)
+        Me.SplitPanel6.Controls.Add(Me.RadGrpConsigneIDE)
+        Me.SplitPanel6.Location = New System.Drawing.Point(0, 0)
+        Me.SplitPanel6.Name = "SplitPanel6"
+        '
+        '
+        '
+        Me.SplitPanel6.RootElement.MinSize = New System.Drawing.Size(25, 25)
+        Me.SplitPanel6.Size = New System.Drawing.Size(500, 118)
+        Me.SplitPanel6.TabIndex = 0
+        Me.SplitPanel6.TabStop = False
+        Me.SplitPanel6.Text = "SplitPanel6"
+        '
+        'RadPanelConclusionIdeType
+        '
+        Me.RadPanelConclusionIdeType.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.RadPanelConclusionIdeType.Controls.Add(Me.RadioBtnRolePropre)
+        Me.RadPanelConclusionIdeType.Controls.Add(Me.RadioBtnSurProtocole)
+        Me.RadPanelConclusionIdeType.Controls.Add(Me.RadioBtnDemandeAvis)
+        Me.RadPanelConclusionIdeType.Location = New System.Drawing.Point(9, 6)
+        Me.RadPanelConclusionIdeType.Name = "RadPanelConclusionIdeType"
+        Me.RadPanelConclusionIdeType.Size = New System.Drawing.Size(483, 30)
+        Me.RadPanelConclusionIdeType.TabIndex = 3
+        '
         'RadioBtnRolePropre
         '
         Me.RadioBtnRolePropre.AutoSize = True
@@ -1977,6 +2056,80 @@ Partial Class RadFEpisodeDetail
         Me.TxtConsigneMedicale.ReadOnly = True
         Me.TxtConsigneMedicale.Size = New System.Drawing.Size(481, 30)
         Me.TxtConsigneMedicale.TabIndex = 0
+        '
+        'SplitPanel11
+        '
+        Me.SplitPanel11.Controls.Add(Me.RadGridViewSousEpisode)
+        Me.SplitPanel11.Location = New System.Drawing.Point(504, 0)
+        Me.SplitPanel11.Name = "SplitPanel11"
+        '
+        '
+        '
+        Me.SplitPanel11.RootElement.MinSize = New System.Drawing.Size(25, 25)
+        Me.SplitPanel11.Size = New System.Drawing.Size(500, 118)
+        Me.SplitPanel11.TabIndex = 1
+        Me.SplitPanel11.TabStop = False
+        Me.SplitPanel11.Text = "SplitPanel11"
+        '
+        'RadGridViewSousEpisode
+        '
+        Me.RadGridViewSousEpisode.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
+            Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
+        Me.RadGridViewSousEpisode.BackColor = System.Drawing.Color.FromArgb(CType(CType(191, Byte), Integer), CType(CType(219, Byte), Integer), CType(CType(255, Byte), Integer))
+        Me.RadGridViewSousEpisode.Cursor = System.Windows.Forms.Cursors.Default
+        Me.RadGridViewSousEpisode.Font = New System.Drawing.Font("Segoe UI", 8.25!)
+        Me.RadGridViewSousEpisode.ForeColor = System.Drawing.Color.Black
+        Me.RadGridViewSousEpisode.ImeMode = System.Windows.Forms.ImeMode.NoControl
+        Me.RadGridViewSousEpisode.Location = New System.Drawing.Point(44, 13)
+        '
+        '
+        '
+        Me.RadGridViewSousEpisode.MasterTemplate.AllowAddNewRow = False
+        Me.RadGridViewSousEpisode.MasterTemplate.AllowDeleteRow = False
+        Me.RadGridViewSousEpisode.MasterTemplate.AllowEditRow = False
+        Me.RadGridViewSousEpisode.MasterTemplate.AutoSizeColumnsMode = Telerik.WinControls.UI.GridViewAutoSizeColumnsMode.Fill
+        GridViewTextBoxColumn25.EnableExpressionEditor = False
+        GridViewTextBoxColumn25.HeaderText = "id sous-type"
+        GridViewTextBoxColumn25.IsVisible = False
+        GridViewTextBoxColumn25.Name = "id"
+        GridViewTextBoxColumn26.EnableExpressionEditor = False
+        GridViewTextBoxColumn26.HeaderText = "column1"
+        GridViewTextBoxColumn26.HeaderTextAlignment = System.Drawing.ContentAlignment.MiddleLeft
+        GridViewTextBoxColumn26.Name = "sousType"
+        GridViewTextBoxColumn26.Width = 351
+        GridViewTextBoxColumn27.EnableExpressionEditor = False
+        GridViewTextBoxColumn27.HeaderText = "CreateUser"
+        GridViewTextBoxColumn27.IsVisible = False
+        GridViewTextBoxColumn27.Name = "CreateUser"
+        GridViewTextBoxColumn27.Width = 46
+        GridViewTextBoxColumn28.EnableExpressionEditor = False
+        GridViewTextBoxColumn28.HeaderText = "LastUpdateUser"
+        GridViewTextBoxColumn28.IsVisible = False
+        GridViewTextBoxColumn28.Name = "LastUpdateUser"
+        GridViewTextBoxColumn28.Width = 46
+        GridViewTextBoxColumn29.EnableExpressionEditor = False
+        GridViewTextBoxColumn29.HeaderText = "ValidateUser"
+        GridViewTextBoxColumn29.IsVisible = False
+        GridViewTextBoxColumn29.Name = "ValidateUser"
+        GridViewTextBoxColumn29.Width = 46
+        GridViewCheckBoxColumn1.EnableExpressionEditor = False
+        GridViewCheckBoxColumn1.HeaderText = "isSigne"
+        GridViewCheckBoxColumn1.MinWidth = 20
+        GridViewCheckBoxColumn1.Name = "isSigne"
+        GridViewCheckBoxColumn1.Width = 30
+        GridViewCheckBoxColumn2.EnableExpressionEditor = False
+        GridViewCheckBoxColumn2.HeaderText = "isReponseRecue"
+        GridViewCheckBoxColumn2.MinWidth = 20
+        GridViewCheckBoxColumn2.Name = "isReponseRecue"
+        GridViewCheckBoxColumn2.Width = 33
+        Me.RadGridViewSousEpisode.MasterTemplate.Columns.AddRange(New Telerik.WinControls.UI.GridViewDataColumn() {GridViewTextBoxColumn25, GridViewTextBoxColumn26, GridViewTextBoxColumn27, GridViewTextBoxColumn28, GridViewTextBoxColumn29, GridViewCheckBoxColumn1, GridViewCheckBoxColumn2})
+        Me.RadGridViewSousEpisode.MasterTemplate.ShowColumnHeaders = False
+        Me.RadGridViewSousEpisode.MasterTemplate.ViewDefinition = TableViewDefinition5
+        Me.RadGridViewSousEpisode.Name = "RadGridViewSousEpisode"
+        Me.RadGridViewSousEpisode.RightToLeft = System.Windows.Forms.RightToLeft.No
+        Me.RadGridViewSousEpisode.ShowGroupPanel = False
+        Me.RadGridViewSousEpisode.Size = New System.Drawing.Size(433, 90)
+        Me.RadGridViewSousEpisode.TabIndex = 0
         '
         'SplitPanelWorkflow
         '
@@ -3432,159 +3585,6 @@ Partial Class RadFEpisodeDetail
         Me.SplitPanelBottom.TabStop = False
         Me.SplitPanelBottom.Text = "SplitPanel4"
         '
-        'RadSplitContainer5
-        '
-        Me.RadSplitContainer5.Controls.Add(Me.SplitPanel6)
-        Me.RadSplitContainer5.Controls.Add(Me.SplitPanel11)
-        Me.RadSplitContainer5.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.RadSplitContainer5.Location = New System.Drawing.Point(0, 0)
-        Me.RadSplitContainer5.Name = "RadSplitContainer5"
-        '
-        '
-        '
-        Me.RadSplitContainer5.RootElement.MinSize = New System.Drawing.Size(25, 25)
-        Me.RadSplitContainer5.Size = New System.Drawing.Size(1004, 118)
-        Me.RadSplitContainer5.TabIndex = 3
-        Me.RadSplitContainer5.TabStop = False
-        '
-        'SplitPanel6
-        '
-        Me.SplitPanel6.Controls.Add(Me.RadPanelConclusionIdeType)
-        Me.SplitPanel6.Controls.Add(Me.RadGrpConsigneIDE)
-        Me.SplitPanel6.Location = New System.Drawing.Point(0, 0)
-        Me.SplitPanel6.Name = "SplitPanel6"
-        '
-        '
-        '
-        Me.SplitPanel6.RootElement.MinSize = New System.Drawing.Size(25, 25)
-        Me.SplitPanel6.Size = New System.Drawing.Size(500, 118)
-        Me.SplitPanel6.TabIndex = 0
-        Me.SplitPanel6.TabStop = False
-        Me.SplitPanel6.Text = "SplitPanel6"
-        '
-        'SplitPanel11
-        '
-        Me.SplitPanel11.Controls.Add(Me.RadGridViewSousEpisode)
-        Me.SplitPanel11.Location = New System.Drawing.Point(504, 0)
-        Me.SplitPanel11.Name = "SplitPanel11"
-        '
-        '
-        '
-        Me.SplitPanel11.RootElement.MinSize = New System.Drawing.Size(25, 25)
-        Me.SplitPanel11.Size = New System.Drawing.Size(500, 118)
-        Me.SplitPanel11.TabIndex = 1
-        Me.SplitPanel11.TabStop = False
-        Me.SplitPanel11.Text = "SplitPanel11"
-        '
-        'RadGridViewSousEpisode
-        '
-        Me.RadGridViewSousEpisode.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
-            Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
-        Me.RadGridViewSousEpisode.BackColor = System.Drawing.Color.FromArgb(CType(CType(191, Byte), Integer), CType(CType(219, Byte), Integer), CType(CType(255, Byte), Integer))
-        Me.RadGridViewSousEpisode.Cursor = System.Windows.Forms.Cursors.Default
-        Me.RadGridViewSousEpisode.Font = New System.Drawing.Font("Segoe UI", 8.25!)
-        Me.RadGridViewSousEpisode.ForeColor = System.Drawing.Color.Black
-        Me.RadGridViewSousEpisode.ImeMode = System.Windows.Forms.ImeMode.NoControl
-        Me.RadGridViewSousEpisode.Location = New System.Drawing.Point(44, 13)
-        '
-        '
-        '
-        Me.RadGridViewSousEpisode.MasterTemplate.AllowAddNewRow = False
-        Me.RadGridViewSousEpisode.MasterTemplate.AllowDeleteRow = False
-        Me.RadGridViewSousEpisode.MasterTemplate.AllowEditRow = False
-        Me.RadGridViewSousEpisode.MasterTemplate.AutoSizeColumnsMode = Telerik.WinControls.UI.GridViewAutoSizeColumnsMode.Fill
-        GridViewTextBoxColumn25.EnableExpressionEditor = False
-        GridViewTextBoxColumn25.HeaderText = "id sous-type"
-        GridViewTextBoxColumn25.IsVisible = False
-        GridViewTextBoxColumn25.Name = "id"
-        GridViewTextBoxColumn26.EnableExpressionEditor = False
-        GridViewTextBoxColumn26.HeaderText = "column1"
-        GridViewTextBoxColumn26.HeaderTextAlignment = System.Drawing.ContentAlignment.MiddleLeft
-        GridViewTextBoxColumn26.Name = "sousType"
-        GridViewTextBoxColumn26.Width = 351
-        GridViewTextBoxColumn27.EnableExpressionEditor = False
-        GridViewTextBoxColumn27.HeaderText = "CreateUser"
-        GridViewTextBoxColumn27.IsVisible = False
-        GridViewTextBoxColumn27.Name = "CreateUser"
-        GridViewTextBoxColumn27.Width = 46
-        GridViewTextBoxColumn28.EnableExpressionEditor = False
-        GridViewTextBoxColumn28.HeaderText = "LastUpdateUser"
-        GridViewTextBoxColumn28.IsVisible = False
-        GridViewTextBoxColumn28.Name = "LastUpdateUser"
-        GridViewTextBoxColumn28.Width = 46
-        GridViewTextBoxColumn29.EnableExpressionEditor = False
-        GridViewTextBoxColumn29.HeaderText = "ValidateUser"
-        GridViewTextBoxColumn29.IsVisible = False
-        GridViewTextBoxColumn29.Name = "ValidateUser"
-        GridViewTextBoxColumn29.Width = 46
-        GridViewCheckBoxColumn1.EnableExpressionEditor = False
-        GridViewCheckBoxColumn1.HeaderText = "isSigne"
-        GridViewCheckBoxColumn1.MinWidth = 20
-        GridViewCheckBoxColumn1.Name = "isSigne"
-        GridViewCheckBoxColumn1.Width = 30
-        GridViewCheckBoxColumn2.EnableExpressionEditor = False
-        GridViewCheckBoxColumn2.HeaderText = "isReponseRecue"
-        GridViewCheckBoxColumn2.MinWidth = 20
-        GridViewCheckBoxColumn2.Name = "isReponseRecue"
-        GridViewCheckBoxColumn2.Width = 33
-        Me.RadGridViewSousEpisode.MasterTemplate.Columns.AddRange(New Telerik.WinControls.UI.GridViewDataColumn() {GridViewTextBoxColumn25, GridViewTextBoxColumn26, GridViewTextBoxColumn27, GridViewTextBoxColumn28, GridViewTextBoxColumn29, GridViewCheckBoxColumn1, GridViewCheckBoxColumn2})
-        Me.RadGridViewSousEpisode.MasterTemplate.ShowColumnHeaders = False
-        Me.RadGridViewSousEpisode.MasterTemplate.ViewDefinition = TableViewDefinition5
-        Me.RadGridViewSousEpisode.Name = "RadGridViewSousEpisode"
-        Me.RadGridViewSousEpisode.RightToLeft = System.Windows.Forms.RightToLeft.No
-        Me.RadGridViewSousEpisode.ShowGroupPanel = False
-        Me.RadGridViewSousEpisode.Size = New System.Drawing.Size(433, 90)
-        Me.RadGridViewSousEpisode.TabIndex = 0
-        '
-        'RadBtnAddObsLibreIde
-        '
-        Me.RadBtnAddObsLibreIde.Font = New System.Drawing.Font("Segoe UI", 11.0!)
-        Me.RadBtnAddObsLibreIde.Location = New System.Drawing.Point(7, 6)
-        Me.RadBtnAddObsLibreIde.Name = "RadBtnAddObsLibreIde"
-        Me.RadBtnAddObsLibreIde.Size = New System.Drawing.Size(15, 15)
-        Me.RadBtnAddObsLibreIde.TabIndex = 48
-        Me.RadBtnAddObsLibreIde.Text = "+"
-        '
-        'RadBtnAddObsLibreMed
-        '
-        Me.RadBtnAddObsLibreMed.Font = New System.Drawing.Font("Segoe UI", 11.0!)
-        Me.RadBtnAddObsLibreMed.Location = New System.Drawing.Point(7, 9)
-        Me.RadBtnAddObsLibreMed.Name = "RadBtnAddObsLibreMed"
-        Me.RadBtnAddObsLibreMed.Size = New System.Drawing.Size(15, 15)
-        Me.RadBtnAddObsLibreMed.TabIndex = 49
-        Me.RadBtnAddObsLibreMed.Text = "+"
-        '
-        'RadDropDownBtnObseSpeIde
-        '
-        Me.RadDropDownBtnObseSpeIde.Items.AddRange(New Telerik.WinControls.RadItem() {Me.RadMenuItemObsSpeIdeSaisieObservation, Me.RadMenuItemObseSpeIdeAjoutProtocoleAigue})
-        Me.RadDropDownBtnObseSpeIde.Location = New System.Drawing.Point(8, 7)
-        Me.RadDropDownBtnObseSpeIde.Name = "RadDropDownBtnObseSpeIde"
-        Me.RadDropDownBtnObseSpeIde.Size = New System.Drawing.Size(37, 15)
-        Me.RadDropDownBtnObseSpeIde.TabIndex = 2
-        Me.RadDropDownBtnObseSpeIde.Text = ">"
-        '
-        'RadMenuItemObsSpeIdeSaisieObservation
-        '
-        Me.RadMenuItemObsSpeIdeSaisieObservation.Name = "RadMenuItemObsSpeIdeSaisieObservation"
-        Me.RadMenuItemObsSpeIdeSaisieObservation.Text = "Saisie observation"
-        '
-        'RadMenuItemObseSpeIdeAjoutProtocoleAigue
-        '
-        Me.RadMenuItemObseSpeIdeAjoutProtocoleAigue.Name = "RadMenuItemObseSpeIdeAjoutProtocoleAigue"
-        Me.RadMenuItemObseSpeIdeAjoutProtocoleAigue.Text = "Ajout protocole aiguë"
-        '
-        'RadPanelConclusionIdeType
-        '
-        Me.RadPanelConclusionIdeType.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
-            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.RadPanelConclusionIdeType.Controls.Add(Me.RadioBtnRolePropre)
-        Me.RadPanelConclusionIdeType.Controls.Add(Me.RadioBtnSurProtocole)
-        Me.RadPanelConclusionIdeType.Controls.Add(Me.RadioBtnDemandeAvis)
-        Me.RadPanelConclusionIdeType.Location = New System.Drawing.Point(9, 6)
-        Me.RadPanelConclusionIdeType.Name = "RadPanelConclusionIdeType"
-        Me.RadPanelConclusionIdeType.Size = New System.Drawing.Size(483, 30)
-        Me.RadPanelConclusionIdeType.TabIndex = 3
-        '
         'RadFEpisodeDetail
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -3625,11 +3625,11 @@ Partial Class RadFEpisodeDetail
         CType(Me.RadBtnDirectives, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.RadBtnNotesMedicales, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.RadBtnGenProtocole, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.RadBtnSousEpisode, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.RadBtnHistoWorkflow, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.RadBtnRefresh, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.RadBtnCloture, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.RadBtnAbandon, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.RadBtnSousEpisode, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.RadPanelPrincipal, System.ComponentModel.ISupportInitialize).EndInit()
         Me.RadPanelPrincipal.ResumeLayout(False)
         CType(Me.RadSplitContainerCorpsPrincipal, System.ComponentModel.ISupportInitialize).EndInit()
@@ -3654,11 +3654,13 @@ Partial Class RadFEpisodeDetail
         Me.RadSplitContainer4.ResumeLayout(False)
         CType(Me.SplitPanelConsigneParamedicale, System.ComponentModel.ISupportInitialize).EndInit()
         Me.SplitPanelConsigneParamedicale.ResumeLayout(False)
+        CType(Me.RadDropDownBtnObseSpeIde, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.RadObsSpeIdeDataGridView.MasterTemplate, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.RadObsSpeIdeDataGridView, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ActeParamedicalMenuStrip.ResumeLayout(False)
         CType(Me.SplitPanel2, System.ComponentModel.ISupportInitialize).EndInit()
         Me.SplitPanel2.ResumeLayout(False)
+        CType(Me.RadBtnAddObsLibreIde, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.RadGridViewObsIde.MasterTemplate, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.RadGridViewObsIde, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ObsContextMenuStrip.ResumeLayout(False)
@@ -3675,6 +3677,7 @@ Partial Class RadFEpisodeDetail
         Me.ObsSpeMedMenuStrip.ResumeLayout(False)
         CType(Me.SplitPanelObsMedLibre, System.ComponentModel.ISupportInitialize).EndInit()
         Me.SplitPanelObsMedLibre.ResumeLayout(False)
+        CType(Me.RadBtnAddObsLibreMed, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.RadGridViewObsMed.MasterTemplate, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.RadGridViewObsMed, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.SplitPanelDecision, System.ComponentModel.ISupportInitialize).EndInit()
@@ -3683,9 +3686,20 @@ Partial Class RadFEpisodeDetail
         Me.RadSplitContainer3.ResumeLayout(False)
         CType(Me.SplitPanel5, System.ComponentModel.ISupportInitialize).EndInit()
         Me.SplitPanel5.ResumeLayout(False)
+        CType(Me.RadSplitContainer5, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.RadSplitContainer5.ResumeLayout(False)
+        CType(Me.SplitPanel6, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.SplitPanel6.ResumeLayout(False)
+        CType(Me.RadPanelConclusionIdeType, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.RadPanelConclusionIdeType.ResumeLayout(False)
+        Me.RadPanelConclusionIdeType.PerformLayout()
         CType(Me.RadGrpConsigneIDE, System.ComponentModel.ISupportInitialize).EndInit()
         Me.RadGrpConsigneIDE.ResumeLayout(False)
         Me.RadGrpConsigneIDE.PerformLayout()
+        CType(Me.SplitPanel11, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.SplitPanel11.ResumeLayout(False)
+        CType(Me.RadGridViewSousEpisode.MasterTemplate, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.RadGridViewSousEpisode, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.SplitPanelWorkflow, System.ComponentModel.ISupportInitialize).EndInit()
         Me.SplitPanelWorkflow.ResumeLayout(False)
         CType(Me.RadSplitContainerWorkflow, System.ComponentModel.ISupportInitialize).EndInit()
@@ -3795,20 +3809,6 @@ Partial Class RadFEpisodeDetail
         Me.SplitPanelBody.ResumeLayout(False)
         CType(Me.SplitPanelBottom, System.ComponentModel.ISupportInitialize).EndInit()
         Me.SplitPanelBottom.ResumeLayout(False)
-        CType(Me.RadSplitContainer5, System.ComponentModel.ISupportInitialize).EndInit()
-        Me.RadSplitContainer5.ResumeLayout(False)
-        CType(Me.SplitPanel6, System.ComponentModel.ISupportInitialize).EndInit()
-        Me.SplitPanel6.ResumeLayout(False)
-        CType(Me.SplitPanel11, System.ComponentModel.ISupportInitialize).EndInit()
-        Me.SplitPanel11.ResumeLayout(False)
-        CType(Me.RadGridViewSousEpisode.MasterTemplate, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.RadGridViewSousEpisode, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.RadBtnAddObsLibreIde, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.RadBtnAddObsLibreMed, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.RadDropDownBtnObseSpeIde, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.RadPanelConclusionIdeType, System.ComponentModel.ISupportInitialize).EndInit()
-        Me.RadPanelConclusionIdeType.ResumeLayout(False)
-        Me.RadPanelConclusionIdeType.PerformLayout()
         CType(Me, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
 

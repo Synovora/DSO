@@ -71,6 +71,7 @@ Public Class RadFEpisodeDetail
     Dim episodeActeParamedicalDao As New EpisodeActeParamedicalDao
     Dim episodeContexteDao As New EpisodeContexteDao
     Dim sousEpisodeDao As New SousEpisodeDao
+    Dim theriaqueDao As New TheriaqueDao
 
     Dim antecedentChangementOrdreDao As New AntecedentChangementOrdreDao
     Dim antecedentAffectationDao As New AntecedentAffectationDao
@@ -359,8 +360,9 @@ Public Class RadFEpisodeDetail
         Else
             PatientAllergie = True
             LblAllergie.Show()
-            LblSubstance.Show()
-            LblSubstance.Text = StringAllergieToolTip.Replace(vbCrLf, ", ")
+            LblSubstance.Hide()
+            'LblSubstance.Text = StringAllergieToolTip.Replace(vbCrLf, ", ")
+            ToolTip.SetToolTip(LblAllergie, StringAllergieToolTip)
             ListeDesMédicamentsDéclarésAllergiquesToolStripMenuItem.Enabled = True
         End If
     End Sub
@@ -3490,6 +3492,7 @@ Public Class RadFEpisodeDetail
             vFPatientAllergieListe.SelectedPatient = Me.SelectedPatient
             vFPatientAllergieListe.ShowDialog() 'Modal
         End Using
+        GetAllergie()
         Me.Enabled = True
     End Sub
 
@@ -3504,6 +3507,29 @@ Public Class RadFEpisodeDetail
         Using formSelecteur As New RadF_CI_ATC_Selecteur
             formSelecteur.SelectedPatient = Me.SelectedPatient
             formSelecteur.ShowDialog() 'Modal
+            If formSelecteur.CodeRetour = True Then
+                'Contrôle des contre-indications pour les traitements en cours
+                Dim MessageContreIndication As String = ""
+                Dim PremierPassage As Boolean = True
+                Dim contreIndication As Boolean = False
+                Dim rowCount As Integer = RadTraitementDataGridView.Rows.Count - 1
+                For i = 0 To rowCount Step 1
+                    Dim SpecialiteId As Integer = RadTraitementDataGridView.Rows(i).Cells("medicamentCis").Value
+                    Dim specialiteContreIndique As SpecialiteContreIndique = TheriaqueDao.IsSpecialiteContreIndique(SelectedPatient, SpecialiteId)
+                    If specialiteContreIndique.ContreIndication = True Then
+                        contreIndication = True
+                        If PremierPassage = True Then
+                            PremierPassage = False
+                        Else
+                            MessageContreIndication += vbCrLf & vbCrLf
+                        End If
+                        MessageContreIndication += specialiteContreIndique.MessageContreIndication
+                    End If
+                Next
+                If contreIndication = True Then
+                    MessageBox.Show(MessageContreIndication)
+                End If
+            End If
         End Using
         Me.Enabled = True
 
@@ -3516,6 +3542,36 @@ Public Class RadFEpisodeDetail
             Exit Sub
         End If
 
+        Me.Enabled = False
+        Cursor.Current = Cursors.WaitCursor
+        Using formSelecteur As New RadF_AllergieSelecteur
+            formSelecteur.SelectedPatient = Me.SelectedPatient
+            formSelecteur.ShowDialog() 'Modal
+            If formSelecteur.CodeRetour = True Then
+                'Contrôle des allergies pour les traitements en cours
+                Dim MessageAllergie As String = ""
+                Dim PremierPassage As Boolean = True
+                Dim allergie As Boolean = False
+                Dim rowCount As Integer = RadTraitementDataGridView.Rows.Count - 1
+                For i = 0 To rowCount Step 1
+                    Dim SpecialiteId As Integer = RadTraitementDataGridView.Rows(i).Cells("medicamentCis").Value
+                    Dim specialiteAllergique As SpecialiteAllergique = TheriaqueDao.IsSpecialiteAllergique(SelectedPatient, SpecialiteId)
+                    If specialiteAllergique.Allergie = True Then
+                        allergie = True
+                        If PremierPassage = True Then
+                            PremierPassage = False
+                        Else
+                            MessageAllergie += vbCrLf & vbCrLf
+                        End If
+                        MessageAllergie += specialiteAllergique.MessageAllergie
+                    End If
+                Next
+                If allergie = True Then
+                    MessageBox.Show(MessageAllergie)
+                End If
+            End If
+        End Using
+        Me.Enabled = True
 
         GetAllergie()
     End Sub

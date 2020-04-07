@@ -850,4 +850,25 @@ Public Class RadFOrdonnanceListeDetail
         Close()
     End Sub
 
+    'Liste des contre-indications
+    Private Sub Label10_Click(sender As Object, e As EventArgs) Handles Label10.Click
+        Me.Enabled = False
+        Cursor.Current = Cursors.WaitCursor
+        Using vFPatientContreIndicationListe As New RadFPatientContreIndicationListe
+            vFPatientContreIndicationListe.SelectedPatient = Me.SelectedPatient
+            vFPatientContreIndicationListe.ShowDialog() 'Modal
+        End Using
+        Me.Enabled = True
+    End Sub
+
+    'Liste des allergies
+    Private Sub Label9_Click(sender As Object, e As EventArgs) Handles Label9.Click
+        Me.Enabled = False
+        Cursor.Current = Cursors.WaitCursor
+        Using vFPatientAllergieListe As New RadFPatientAllergieListe
+            vFPatientAllergieListe.SelectedPatient = Me.SelectedPatient
+            vFPatientAllergieListe.ShowDialog()
+        End Using
+        Me.Enabled = True
+    End Sub
 End Class

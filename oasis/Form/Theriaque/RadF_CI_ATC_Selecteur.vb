@@ -875,6 +875,15 @@ Public Class RadF_CI_ATC_Selecteur
         Me.Enabled = True
     End Sub
 
+    Private Sub LblAllergie_Click(sender As Object, e As EventArgs) Handles LblAllergie.Click
+        Me.Enabled = False
+        Cursor.Current = Cursors.WaitCursor
+        Using vFPatientAllergieListe As New RadFPatientAllergieListe
+            vFPatientAllergieListe.SelectedPatient = Me.SelectedPatient
+            vFPatientAllergieListe.ShowDialog()
+        End Using
+        Me.Enabled = True
+    End Sub
 
     Private Sub RadBtnSelectionSubstance_Click(sender As Object, e As EventArgs) Handles RadBtnSelectionSubstance.Click
         If RadGridViewSubstance.CurrentRow IsNot Nothing Then
@@ -888,4 +897,5 @@ Public Class RadF_CI_ATC_Selecteur
             End If
         End If
     End Sub
+
 End Class
