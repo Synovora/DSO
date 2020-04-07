@@ -1075,9 +1075,18 @@ Public Class RadFTraitementDetailEdit
 
         codeRetour = traitementDao.ArretTraitement(traitementaArreter, TraitementHistoACreer)
 
-        'Si déclaration de traitement arrêté pour contre-indication
+        'Déclaration de traitement arrêté pour contre-indication
         If contreIndication = 1 Then
             Using formSelecteur As New RadF_CI_ATC_Selecteur
+                formSelecteur.SelectedPatient = Me.SelectedPatient
+                formSelecteur.SelectedSpecialiteId = CInt(LblTraitementMedicamentId.Text)
+                formSelecteur.ShowDialog()
+            End Using
+        End If
+
+        'Déclaration de traitement arrêté pour allergie
+        If allergie = 1 Then
+            Using formSelecteur As New RadF_AllergieSelecteur
                 formSelecteur.SelectedPatient = Me.SelectedPatient
                 formSelecteur.SelectedSpecialiteId = CInt(LblTraitementMedicamentId.Text)
                 formSelecteur.ShowDialog()
