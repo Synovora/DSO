@@ -2466,7 +2466,7 @@ Partial Class RadFEpisodeDetail
         Me.RadPageView1.Dock = System.Windows.Forms.DockStyle.Fill
         Me.RadPageView1.Location = New System.Drawing.Point(0, 0)
         Me.RadPageView1.Name = "RadPageView1"
-        Me.RadPageView1.SelectedPage = Me.PgvTraitement
+        Me.RadPageView1.SelectedPage = Me.PgvPPS
         Me.RadPageView1.Size = New System.Drawing.Size(465, 513)
         Me.RadPageView1.TabIndex = 0
         Me.RadPageView1.TabStop = False

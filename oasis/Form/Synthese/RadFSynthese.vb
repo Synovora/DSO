@@ -470,29 +470,37 @@ Public Class RadFSynthese
         Dim SelectedDrcId As Integer
         Me.Enabled = False
         Cursor.Current = Cursors.WaitCursor
-        Using vFDrcSelecteur As New RadFDRCSelecteur
-            vFDrcSelecteur.SelectedPatient = Me.SelectedPatient
-            vFDrcSelecteur.CategorieOasis = 1       'Catégorie Oasis : "Antécédent et Contexte"
-            vFDrcSelecteur.ShowDialog()             'Modal
-            SelectedDrcId = vFDrcSelecteur.SelectedDrcId
-            'Si un DRC a été sélectionné
-            If SelectedDrcId <> 0 Then
-                Using vFAntecedentDetailEdit As New RadFAntecedentDetailEdit
-                    vFAntecedentDetailEdit.SelectedPatient = Me.SelectedPatient
-                    vFAntecedentDetailEdit.UtilisateurConnecte = Me.UtilisateurConnecte
-                    vFAntecedentDetailEdit.SelectedDrcId = SelectedDrcId
-                    vFAntecedentDetailEdit.SelectedDrc = vFDrcSelecteur.SelectedDrc
-                    vFAntecedentDetailEdit.SelectedAntecedentId = 0
-                    vFAntecedentDetailEdit.PositionGaucheDroite = EnumPosition.Droite
-                    vFAntecedentDetailEdit.ShowDialog() 'Modal
-                    'Si le traitement a été créé, on recharge la grid
-                    If vFAntecedentDetailEdit.CodeRetour = True Then
-                        ChargementAntecedent()
-                        ChargementToolTipAld()
-                    End If
-                End Using
-            End If
-        End Using
+        Try
+            Using vFDrcSelecteur As New RadFDRCSelecteur
+                vFDrcSelecteur.SelectedPatient = Me.SelectedPatient
+                vFDrcSelecteur.CategorieOasis = 1       'Catégorie Oasis : "Antécédent et Contexte"
+                vFDrcSelecteur.ShowDialog()             'Modal
+                SelectedDrcId = vFDrcSelecteur.SelectedDrcId
+                'Si un DRC a été sélectionné
+                If SelectedDrcId <> 0 Then
+                    Try
+                        Using vFAntecedentDetailEdit As New RadFAntecedentDetailEdit
+                            vFAntecedentDetailEdit.SelectedPatient = Me.SelectedPatient
+                            vFAntecedentDetailEdit.UtilisateurConnecte = Me.UtilisateurConnecte
+                            vFAntecedentDetailEdit.SelectedDrcId = SelectedDrcId
+                            vFAntecedentDetailEdit.SelectedDrc = vFDrcSelecteur.SelectedDrc
+                            vFAntecedentDetailEdit.SelectedAntecedentId = 0
+                            vFAntecedentDetailEdit.PositionGaucheDroite = EnumPosition.Droite
+                            vFAntecedentDetailEdit.ShowDialog() 'Modal
+                            'Si le traitement a été créé, on recharge la grid
+                            If vFAntecedentDetailEdit.CodeRetour = True Then
+                                ChargementAntecedent()
+                                ChargementToolTipAld()
+                            End If
+                        End Using
+                    Catch ex As Exception
+                        MsgBox(ex.Message())
+                    End Try
+                End If
+            End Using
+        Catch ex As Exception
+            MsgBox(ex.Message())
+        End Try
         Me.Enabled = True
     End Sub
 
@@ -504,12 +512,16 @@ Public Class RadFSynthese
                 Dim AntecedentId As Integer = RadAntecedentDataGridView.Rows(aRow).Cells("antecedentId").Value
                 Me.Enabled = False
                 Cursor.Current = Cursors.WaitCursor
-                Using vFAntecedenttHistoListe As New RadFAntecedentHistoListe
-                    vFAntecedenttHistoListe.SelectedAntecedentId = AntecedentId
-                    vFAntecedenttHistoListe.SelectedPatient = Me.SelectedPatient
-                    vFAntecedenttHistoListe.UtilisateurConnecte = Me.UtilisateurConnecte
-                    vFAntecedenttHistoListe.ShowDialog()
-                End Using
+                Try
+                    Using vFAntecedenttHistoListe As New RadFAntecedentHistoListe
+                        vFAntecedenttHistoListe.SelectedAntecedentId = AntecedentId
+                        vFAntecedenttHistoListe.SelectedPatient = Me.SelectedPatient
+                        vFAntecedenttHistoListe.UtilisateurConnecte = Me.UtilisateurConnecte
+                        vFAntecedenttHistoListe.ShowDialog()
+                    End Using
+                Catch ex As Exception
+                    MsgBox(ex.Message())
+                End Try
                 Me.Enabled = True
             End If
         End If
@@ -524,20 +536,24 @@ Public Class RadFSynthese
                 Dim AntecedentId As Integer = RadAntecedentDataGridView.Rows(aRow).Cells("antecedentId").Value
                 Me.Enabled = False
                 Cursor.Current = Cursors.WaitCursor
-                Using vFAntecedentOrdreSelecteur As New RadFAntecedentOrdreSelecteur
-                    vFAntecedentOrdreSelecteur.SelectedPatient = Me.SelectedPatient
-                    vFAntecedentOrdreSelecteur.UtilisateurConnecte = Me.UtilisateurConnecte
-                    vFAntecedentOrdreSelecteur.AntecedentIdaOrdonner = AntecedentId
-                    vFAntecedentOrdreSelecteur.AntecedentDescriptionAOrdonner = RadAntecedentDataGridView.Rows(aRow).Cells("antecedentDescription").Value
-                    vFAntecedentOrdreSelecteur.NiveauAntecedentAOrdonner = RadAntecedentDataGridView.Rows(aRow).Cells("antecedentNiveau").Value
-                    vFAntecedentOrdreSelecteur.AntecedentIdPere = RadAntecedentDataGridView.Rows(aRow).Cells("antecedentPereId").Value
-                    vFAntecedentOrdreSelecteur.PositionGaucheDroite = EnumPosition.Droite
-                    vFAntecedentOrdreSelecteur.ShowDialog() 'Modal
-                    'Si le traitement a été modifié, on recharge la grid
-                    If vFAntecedentOrdreSelecteur.CodeRetour = True Then
-                        ChargementAntecedent()
-                    End If
-                End Using
+                Try
+                    Using vFAntecedentOrdreSelecteur As New RadFAntecedentOrdreSelecteur
+                        vFAntecedentOrdreSelecteur.SelectedPatient = Me.SelectedPatient
+                        vFAntecedentOrdreSelecteur.UtilisateurConnecte = Me.UtilisateurConnecte
+                        vFAntecedentOrdreSelecteur.AntecedentIdaOrdonner = AntecedentId
+                        vFAntecedentOrdreSelecteur.AntecedentDescriptionAOrdonner = RadAntecedentDataGridView.Rows(aRow).Cells("antecedentDescription").Value
+                        vFAntecedentOrdreSelecteur.NiveauAntecedentAOrdonner = RadAntecedentDataGridView.Rows(aRow).Cells("antecedentNiveau").Value
+                        vFAntecedentOrdreSelecteur.AntecedentIdPere = RadAntecedentDataGridView.Rows(aRow).Cells("antecedentPereId").Value
+                        vFAntecedentOrdreSelecteur.PositionGaucheDroite = EnumPosition.Droite
+                        vFAntecedentOrdreSelecteur.ShowDialog() 'Modal
+                        'Si le traitement a été modifié, on recharge la grid
+                        If vFAntecedentOrdreSelecteur.CodeRetour = True Then
+                            ChargementAntecedent()
+                        End If
+                    End Using
+                Catch ex As Exception
+                    MsgBox(ex.Message())
+                End Try
                 Me.Enabled = True
             End If
         End If
@@ -556,34 +572,38 @@ Public Class RadFSynthese
         Dim aRow As Integer = Me.RadAntecedentDataGridView.Rows.IndexOf(Me.RadAntecedentDataGridView.CurrentRow)
         If aRow >= 0 Then
             Cursor.Current = Cursors.WaitCursor
-            antecedentId = RadAntecedentDataGridView.Rows(aRow).Cells("antecedentId").Value
-            antecedentIdADeplacer = RadAntecedentDataGridView.Rows(aRow).Cells("antecedentId").Value
-            NiveauAntecedentAOrdonner = Coalesce(RadAntecedentDataGridView.Rows(aRow).Cells("antecedentNiveau").Value, 0)
-            antecedentIdPere = Coalesce(RadAntecedentDataGridView.Rows(aRow).Cells("antecedentPereId").Value, 0)
-            Select Case NiveauAntecedentAOrdonner
-                Case 1
-                    RadAntecedentDataGridView.Rows(aRow).Cells("ordreAffichage1").Value -= 30
-                    NouveauOrdreAffichage = RadAntecedentDataGridView.Rows(aRow).Cells("ordreAffichage1").Value
-                Case 2
-                    RadAntecedentDataGridView.Rows(aRow).Cells("ordreAffichage2").Value -= 30
-                    NouveauOrdreAffichage = RadAntecedentDataGridView.Rows(aRow).Cells("ordreAffichage2").Value
-                Case 3
-                    RadAntecedentDataGridView.Rows(aRow).Cells("ordreAffichage3").Value -= 30
-                    NouveauOrdreAffichage = RadAntecedentDataGridView.Rows(aRow).Cells("ordreAffichage3").Value
-                Case Else
-                    Exit Sub
-            End Select
-            Dim Cacher As String = "P"
-            If RadChkTous.Checked = True Then
-                Cacher = "C"
-            End If
-            antecedentChangementOrdreDao.UpdateAntecedent(antecedentId, NouveauOrdreAffichage, NiveauAntecedentAOrdonner)
+            Try
+                antecedentId = RadAntecedentDataGridView.Rows(aRow).Cells("antecedentId").Value
+                antecedentIdADeplacer = RadAntecedentDataGridView.Rows(aRow).Cells("antecedentId").Value
+                NiveauAntecedentAOrdonner = Coalesce(RadAntecedentDataGridView.Rows(aRow).Cells("antecedentNiveau").Value, 0)
+                antecedentIdPere = Coalesce(RadAntecedentDataGridView.Rows(aRow).Cells("antecedentPereId").Value, 0)
+                Select Case NiveauAntecedentAOrdonner
+                    Case 1
+                        RadAntecedentDataGridView.Rows(aRow).Cells("ordreAffichage1").Value -= 30
+                        NouveauOrdreAffichage = RadAntecedentDataGridView.Rows(aRow).Cells("ordreAffichage1").Value
+                    Case 2
+                        RadAntecedentDataGridView.Rows(aRow).Cells("ordreAffichage2").Value -= 30
+                        NouveauOrdreAffichage = RadAntecedentDataGridView.Rows(aRow).Cells("ordreAffichage2").Value
+                    Case 3
+                        RadAntecedentDataGridView.Rows(aRow).Cells("ordreAffichage3").Value -= 30
+                        NouveauOrdreAffichage = RadAntecedentDataGridView.Rows(aRow).Cells("ordreAffichage3").Value
+                    Case Else
+                        Exit Sub
+                End Select
+                Dim Cacher As String = "P"
+                If RadChkTous.Checked = True Then
+                    Cacher = "C"
+                End If
+                antecedentChangementOrdreDao.UpdateAntecedent(antecedentId, NouveauOrdreAffichage, NiveauAntecedentAOrdonner)
 
-            AntecedentModificationOrdre(NiveauAntecedentAOrdonner)
-            CodeRetour = antecedentChangementOrdreDao.AntecedentReorganisationOrdre(NiveauAntecedentAOrdonner, SelectedPatient.patientId, antecedentIdPere, NiveauAntecedentAOrdonner, Cacher)
-            If CodeRetour = True Then
-                ChargementAntecedentAvecPositionnementCurseur()
-            End If
+                AntecedentModificationOrdre(NiveauAntecedentAOrdonner)
+                CodeRetour = antecedentChangementOrdreDao.AntecedentReorganisationOrdre(NiveauAntecedentAOrdonner, SelectedPatient.patientId, antecedentIdPere, NiveauAntecedentAOrdonner, Cacher)
+                If CodeRetour = True Then
+                    ChargementAntecedentAvecPositionnementCurseur()
+                End If
+            Catch ex As Exception
+                MsgBox(ex.Message())
+            End Try
             Cursor.Current = Cursors.Default
         End If
     End Sub
@@ -599,34 +619,38 @@ Public Class RadFSynthese
         Dim aRow As Integer = Me.RadAntecedentDataGridView.Rows.IndexOf(Me.RadAntecedentDataGridView.CurrentRow)
         If aRow >= 0 Then
             Cursor.Current = Cursors.WaitCursor
-            antecedentId = RadAntecedentDataGridView.Rows(aRow).Cells("antecedentId").Value
-            antecedentIdADeplacer = RadAntecedentDataGridView.Rows(aRow).Cells("antecedentId").Value
-            NiveauAntecedentAOrdonner = Coalesce(RadAntecedentDataGridView.Rows(aRow).Cells("antecedentNiveau").Value, 0)
-            antecedentIdPere = Coalesce(RadAntecedentDataGridView.Rows(aRow).Cells("antecedentPereId").Value, 0)
-            Select Case NiveauAntecedentAOrdonner
-                Case 1
-                    RadAntecedentDataGridView.Rows(aRow).Cells("ordreAffichage1").Value += 30
-                    NouveauOrdreAffichage = RadAntecedentDataGridView.Rows(aRow).Cells("ordreAffichage1").Value
-                Case 2
-                    RadAntecedentDataGridView.Rows(aRow).Cells("ordreAffichage2").Value += 30
-                    NouveauOrdreAffichage = RadAntecedentDataGridView.Rows(aRow).Cells("ordreAffichage2").Value
-                Case 3
-                    RadAntecedentDataGridView.Rows(aRow).Cells("ordreAffichage3").Value += 30
-                    NouveauOrdreAffichage = RadAntecedentDataGridView.Rows(aRow).Cells("ordreAffichage3").Value
-                Case Else
-                    Exit Sub
-            End Select
-            Dim Cacher As String = "P"
-            If RadChkTous.Checked = True Then
-                Cacher = "C"
-            End If
-            antecedentChangementOrdreDao.UpdateAntecedent(antecedentId, NouveauOrdreAffichage, NiveauAntecedentAOrdonner)
+            Try
+                antecedentId = RadAntecedentDataGridView.Rows(aRow).Cells("antecedentId").Value
+                antecedentIdADeplacer = RadAntecedentDataGridView.Rows(aRow).Cells("antecedentId").Value
+                NiveauAntecedentAOrdonner = Coalesce(RadAntecedentDataGridView.Rows(aRow).Cells("antecedentNiveau").Value, 0)
+                antecedentIdPere = Coalesce(RadAntecedentDataGridView.Rows(aRow).Cells("antecedentPereId").Value, 0)
+                Select Case NiveauAntecedentAOrdonner
+                    Case 1
+                        RadAntecedentDataGridView.Rows(aRow).Cells("ordreAffichage1").Value += 30
+                        NouveauOrdreAffichage = RadAntecedentDataGridView.Rows(aRow).Cells("ordreAffichage1").Value
+                    Case 2
+                        RadAntecedentDataGridView.Rows(aRow).Cells("ordreAffichage2").Value += 30
+                        NouveauOrdreAffichage = RadAntecedentDataGridView.Rows(aRow).Cells("ordreAffichage2").Value
+                    Case 3
+                        RadAntecedentDataGridView.Rows(aRow).Cells("ordreAffichage3").Value += 30
+                        NouveauOrdreAffichage = RadAntecedentDataGridView.Rows(aRow).Cells("ordreAffichage3").Value
+                    Case Else
+                        Exit Sub
+                End Select
+                Dim Cacher As String = "P"
+                If RadChkTous.Checked = True Then
+                    Cacher = "C"
+                End If
+                antecedentChangementOrdreDao.UpdateAntecedent(antecedentId, NouveauOrdreAffichage, NiveauAntecedentAOrdonner)
 
-            AntecedentModificationOrdre(NiveauAntecedentAOrdonner)
-            CodeRetour = antecedentChangementOrdreDao.AntecedentReorganisationOrdre(NiveauAntecedentAOrdonner, SelectedPatient.patientId, antecedentIdPere, NiveauAntecedentAOrdonner, Cacher)
-            If CodeRetour = True Then
-                ChargementAntecedentAvecPositionnementCurseur()
-            End If
+                AntecedentModificationOrdre(NiveauAntecedentAOrdonner)
+                CodeRetour = antecedentChangementOrdreDao.AntecedentReorganisationOrdre(NiveauAntecedentAOrdonner, SelectedPatient.patientId, antecedentIdPere, NiveauAntecedentAOrdonner, Cacher)
+                If CodeRetour = True Then
+                    ChargementAntecedentAvecPositionnementCurseur()
+                End If
+            Catch ex As Exception
+                MsgBox(ex.Message())
+            End Try
             Cursor.Current = Cursors.Default
         End If
     End Sub
@@ -664,46 +688,50 @@ Public Class RadFSynthese
         If RadAntecedentDataGridView.CurrentRow IsNot Nothing Then
             Dim aRow As Integer = Me.RadAntecedentDataGridView.Rows.IndexOf(Me.RadAntecedentDataGridView.CurrentRow)
             Cursor.Current = Cursors.WaitCursor
-            If aRow >= 0 Then
-                Dim antecedentPere As Antecedent
-                Dim antecedentId, antecedentIdPere, niveauActuel As Integer
-                Dim NiveauCible, AntecedentId1, AntecedentId2, ordre1, ordre2, ordre3 As Integer
-                Dim Cacher As String = "P"
-                If RadChkTous.Checked = True Then
-                    Cacher = "C"
+            Try
+                If aRow >= 0 Then
+                    Dim antecedentPere As Antecedent
+                    Dim antecedentId, antecedentIdPere, niveauActuel As Integer
+                    Dim NiveauCible, AntecedentId1, AntecedentId2, ordre1, ordre2, ordre3 As Integer
+                    Dim Cacher As String = "P"
+                    If RadChkTous.Checked = True Then
+                        Cacher = "C"
+                    End If
+                    antecedentId = RadAntecedentDataGridView.Rows(aRow).Cells("antecedentId").Value
+                    antecedentIdADeplacer = RadAntecedentDataGridView.Rows(aRow).Cells("antecedentId").Value
+                    antecedentIdPere = RadAntecedentDataGridView.Rows(aRow).Cells("antecedentIdPrecedent").Value
+                    niveauActuel = RadAntecedentDataGridView.Rows(aRow).Cells("antecedentNiveau").Value
+                    If antecedentIdPere <> 0 Then
+                        antecedentPere = antecedentDao.GetAntecedentById(antecedentIdPere)
+                        Select Case niveauActuel
+                            Case 1 'Passe de niveau 1 à niveau 2 sur antécédent niveau 1 précédent si existe
+                                NiveauCible = 2
+                                AntecedentId1 = antecedentIdPere
+                                AntecedentId2 = 0
+                                ordre1 = antecedentPere.Ordre1
+                                ordre2 = 990
+                                ordre3 = 0
+                                antecedentAffectationDao.AntecedentModificationNiveau(antecedentId, antecedentIdPere, niveauActuel, NiveauCible, AntecedentId1, AntecedentId2, ordre1, ordre2, ordre3, SelectedPatient, Cacher)
+                                'AntecedentModificationNiveau(antecedentId, antecedentIdPere, niveauActuel, NiveauCible, AntecedentId1, AntecedentId2, ordre1, ordre2, ordre3)
+                                ChargementAntecedentAvecPositionnementCurseur()
+                            Case 2 'Passe de niveau 2 à niveau 3 sur antécédent niveau 2 précédent si existe
+                                NiveauCible = 3
+                                AntecedentId1 = antecedentPere.Niveau1Id
+                                AntecedentId2 = antecedentIdPere
+                                ordre1 = antecedentPere.Ordre1
+                                ordre2 = antecedentPere.Ordre2
+                                ordre3 = 990
+                                antecedentAffectationDao.AntecedentModificationNiveau(antecedentId, antecedentIdPere, niveauActuel, NiveauCible, AntecedentId1, AntecedentId2, ordre1, ordre2, ordre3, SelectedPatient, Cacher)
+                                'AntecedentModificationNiveau(antecedentId, antecedentIdPere, niveauActuel, NiveauCible, AntecedentId1, AntecedentId2, ordre1, ordre2, ordre3)
+                                ChargementAntecedentAvecPositionnementCurseur()
+                            Case 3
+                                'Pas d'effet
+                        End Select
+                    End If
                 End If
-                antecedentId = RadAntecedentDataGridView.Rows(aRow).Cells("antecedentId").Value
-                antecedentIdADeplacer = RadAntecedentDataGridView.Rows(aRow).Cells("antecedentId").Value
-                antecedentIdPere = RadAntecedentDataGridView.Rows(aRow).Cells("antecedentIdPrecedent").Value
-                niveauActuel = RadAntecedentDataGridView.Rows(aRow).Cells("antecedentNiveau").Value
-                If antecedentIdPere <> 0 Then
-                    antecedentPere = antecedentDao.GetAntecedentById(antecedentIdPere)
-                    Select Case niveauActuel
-                        Case 1 'Passe de niveau 1 à niveau 2 sur antécédent niveau 1 précédent si existe
-                            NiveauCible = 2
-                            AntecedentId1 = antecedentIdPere
-                            AntecedentId2 = 0
-                            ordre1 = antecedentPere.Ordre1
-                            ordre2 = 990
-                            ordre3 = 0
-                            antecedentAffectationDao.AntecedentModificationNiveau(antecedentId, antecedentIdPere, niveauActuel, NiveauCible, AntecedentId1, AntecedentId2, ordre1, ordre2, ordre3, SelectedPatient, Cacher)
-                            'AntecedentModificationNiveau(antecedentId, antecedentIdPere, niveauActuel, NiveauCible, AntecedentId1, AntecedentId2, ordre1, ordre2, ordre3)
-                            ChargementAntecedentAvecPositionnementCurseur()
-                        Case 2 'Passe de niveau 2 à niveau 3 sur antécédent niveau 2 précédent si existe
-                            NiveauCible = 3
-                            AntecedentId1 = antecedentPere.Niveau1Id
-                            AntecedentId2 = antecedentIdPere
-                            ordre1 = antecedentPere.Ordre1
-                            ordre2 = antecedentPere.Ordre2
-                            ordre3 = 990
-                            antecedentAffectationDao.AntecedentModificationNiveau(antecedentId, antecedentIdPere, niveauActuel, NiveauCible, AntecedentId1, AntecedentId2, ordre1, ordre2, ordre3, SelectedPatient, Cacher)
-                            'AntecedentModificationNiveau(antecedentId, antecedentIdPere, niveauActuel, NiveauCible, AntecedentId1, AntecedentId2, ordre1, ordre2, ordre3)
-                            ChargementAntecedentAvecPositionnementCurseur()
-                        Case 3
-                            'Pas d'effet
-                    End Select
-                End If
-            End If
+            Catch ex As Exception
+                MsgBox(ex.Message())
+            End Try
             Cursor.Current = Cursors.Default
         End If
     End Sub
@@ -716,49 +744,53 @@ Public Class RadFSynthese
             Exit Sub
         End If
 
-        If RadAntecedentDataGridView.CurrentRow IsNot Nothing Then
-            Dim aRow As Integer = Me.RadAntecedentDataGridView.Rows.IndexOf(Me.RadAntecedentDataGridView.CurrentRow)
-            Cursor.Current = Cursors.WaitCursor
-            If aRow >= 0 Then
-                Dim antecedentId, antecedentIdPere, niveauActuel As Integer
-                Dim NiveauCible, AntecedentId1, AntecedentId2, ordre1, ordre2, ordre3 As Integer
-                Dim Cacher As String = "P"
-                If RadChkTous.Checked = True Then
-                    Cacher = "C"
-                End If
-                antecedentId = RadAntecedentDataGridView.Rows(aRow).Cells("antecedentId").Value
-                antecedentIdADeplacer = RadAntecedentDataGridView.Rows(aRow).Cells("antecedentId").Value
-                antecedentIdPere = RadAntecedentDataGridView.Rows(aRow).Cells("antecedentIdPrecedent").Value
-                niveauActuel = RadAntecedentDataGridView.Rows(aRow).Cells("antecedentNiveau").Value
-                Select Case niveauActuel
-                    Case 1
+        Cursor.Current = Cursors.WaitCursor
+        Try
+            If RadAntecedentDataGridView.CurrentRow IsNot Nothing Then
+                Dim aRow As Integer = Me.RadAntecedentDataGridView.Rows.IndexOf(Me.RadAntecedentDataGridView.CurrentRow)
+                If aRow >= 0 Then
+                    Dim antecedentId, antecedentIdPere, niveauActuel As Integer
+                    Dim NiveauCible, AntecedentId1, AntecedentId2, ordre1, ordre2, ordre3 As Integer
+                    Dim Cacher As String = "P"
+                    If RadChkTous.Checked = True Then
+                        Cacher = "C"
+                    End If
+                    antecedentId = RadAntecedentDataGridView.Rows(aRow).Cells("antecedentId").Value
+                    antecedentIdADeplacer = RadAntecedentDataGridView.Rows(aRow).Cells("antecedentId").Value
+                    antecedentIdPere = RadAntecedentDataGridView.Rows(aRow).Cells("antecedentIdPrecedent").Value
+                    niveauActuel = RadAntecedentDataGridView.Rows(aRow).Cells("antecedentNiveau").Value
+                    Select Case niveauActuel
+                        Case 1
                         'Pas d'effet
-                    Case 2 'Passe du niveau 2 au niveau 1 (Majeur)
-                        NiveauCible = 1
-                        AntecedentId1 = 0
-                        AntecedentId2 = 0
-                        antecedentIdPere = 0
-                        ordre1 = 990
-                        ordre2 = 0
-                        ordre3 = 0
-                        antecedentAffectationDao.AntecedentModificationNiveau(antecedentId, antecedentIdPere, niveauActuel, NiveauCible, AntecedentId1, AntecedentId2, ordre1, ordre2, ordre3, SelectedPatient, Cacher)
-                        'AntecedentModificationNiveau(antecedentId, antecedentIdPere, niveauActuel, NiveauCible, AntecedentId1, AntecedentId2, ordre1, ordre2, ordre3)
-                        ChargementAntecedentAvecPositionnementCurseur()
-                    Case 3 'Passe du niveau 3 au niveau 2
-                        NiveauCible = 2
-                        AntecedentId1 = RadAntecedentDataGridView.Rows(aRow).Cells("antecedentIdNiveau1").Value
-                        AntecedentId2 = 0
-                        antecedentIdPere = RadAntecedentDataGridView.Rows(aRow).Cells("antecedentIdNiveau1").Value
-                        ordre1 = RadAntecedentDataGridView.Rows(aRow).Cells("ordreAffichage1").Value
-                        ordre2 = 990
-                        ordre3 = 0
-                        antecedentAffectationDao.AntecedentModificationNiveau(antecedentId, antecedentIdPere, niveauActuel, NiveauCible, AntecedentId1, AntecedentId2, ordre1, ordre2, ordre3, SelectedPatient, Cacher)
-                        'AntecedentModificationNiveau(antecedentId, antecedentIdPere, niveauActuel, NiveauCible, AntecedentId1, AntecedentId2, ordre1, ordre2, ordre3)
-                        ChargementAntecedentAvecPositionnementCurseur()
-                End Select
+                        Case 2 'Passe du niveau 2 au niveau 1 (Majeur)
+                            NiveauCible = 1
+                            AntecedentId1 = 0
+                            AntecedentId2 = 0
+                            antecedentIdPere = 0
+                            ordre1 = 990
+                            ordre2 = 0
+                            ordre3 = 0
+                            antecedentAffectationDao.AntecedentModificationNiveau(antecedentId, antecedentIdPere, niveauActuel, NiveauCible, AntecedentId1, AntecedentId2, ordre1, ordre2, ordre3, SelectedPatient, Cacher)
+                            'AntecedentModificationNiveau(antecedentId, antecedentIdPere, niveauActuel, NiveauCible, AntecedentId1, AntecedentId2, ordre1, ordre2, ordre3)
+                            ChargementAntecedentAvecPositionnementCurseur()
+                        Case 3 'Passe du niveau 3 au niveau 2
+                            NiveauCible = 2
+                            AntecedentId1 = RadAntecedentDataGridView.Rows(aRow).Cells("antecedentIdNiveau1").Value
+                            AntecedentId2 = 0
+                            antecedentIdPere = RadAntecedentDataGridView.Rows(aRow).Cells("antecedentIdNiveau1").Value
+                            ordre1 = RadAntecedentDataGridView.Rows(aRow).Cells("ordreAffichage1").Value
+                            ordre2 = 990
+                            ordre3 = 0
+                            antecedentAffectationDao.AntecedentModificationNiveau(antecedentId, antecedentIdPere, niveauActuel, NiveauCible, AntecedentId1, AntecedentId2, ordre1, ordre2, ordre3, SelectedPatient, Cacher)
+                            'AntecedentModificationNiveau(antecedentId, antecedentIdPere, niveauActuel, NiveauCible, AntecedentId1, AntecedentId2, ordre1, ordre2, ordre3)
+                            ChargementAntecedentAvecPositionnementCurseur()
+                    End Select
+                End If
             End If
-            Cursor.Current = Cursors.Default
-        End If
+        Catch ex As Exception
+            MsgBox(ex.Message())
+        End Try
+        Cursor.Current = Cursors.Default
     End Sub
 
     Private Sub ChargementAntecedentAvecPositionnementCurseur()
@@ -902,18 +934,6 @@ Public Class RadFSynthese
 
         'Dim Allergie As Boolean = False
         Dim FenetreDateDebut, FenetreDateFin As Date
-
-        'Allergie = False
-
-        'ContreIndication = False
-        'LblAllergie.Visible = False
-        'LblSubstance.Hide()
-        'LblContreIndication.Visible = False
-        'SelectedPatient.PatientAllergieCis.Clear()
-        'SelectedPatient.PatientAllergieDci.Clear()
-        'SelectedPatient.PatientContreIndicationCis.Clear()
-        'SelectedPatient.PatientContreIndicationDci.Clear()
-        'SelectedPatient.PatientMedicamentsPrescritsCis.Clear()
 
         'Parcours du DataTable pour alimenter les colonnes du DataGridView
         For i = 0 To rowCount Step 1
@@ -1189,81 +1209,6 @@ Public Class RadFSynthese
             End If
         Next
 
-        'Si allergie, affichage des substances allergiques
-        If PatientAllergie = True Then
-            'LblAllergie.Visible = True
-            'LblSubstance.Show()
-            'Dim premierPassage As Boolean = True
-            'Dim LongueurChaine, LongueurSub As Integer
-            'Dim AllergieTooltip As String = ""
-            'Dim LongueurMax As Integer = LongueurStringAllergie
-
-            'Chargement du TextBox
-            'Dim allergieString As String
-            'Dim SubstancesAllergiques As New StringCollection()
-            'SubstancesAllergiques = MedocDao.ListeSubstancesAllergiques(SelectedPatient.PatientAllergieCis)
-            'Dim allergieEnumerator As StringEnumerator = SubstancesAllergiques.GetEnumerator()
-            'While allergieEnumerator.MoveNext()
-            'If premierPassage = True Then
-            'allergieString = allergieEnumerator.Current.ToString
-            'LongueurChaine = allergieString.Length
-            'If LongueurChaine > LongueurMax Then
-            'LongueurSub = LongueurMax
-            'Else
-            'LongueurSub = LongueurChaine
-            'End If
-            'LblSubstance.Text = allergieString.Substring(0, LongueurSub)
-            'AllergieTooltip = allergieString
-            'premierPassage = False
-            'Else
-            'allergieString = allergieEnumerator.Current.ToString
-            'LongueurChaine = allergieString.Length
-            'LongueurChaine = allergieString.Length
-            'If LongueurChaine > LongueurMax Then
-            'LongueurSub = LongueurMax
-            'Else
-            'LongueurSub = LongueurChaine
-            'End If
-            'LblSubstance.Text = LblSubstance.Text & " + " & allergieString.Substring(0, LongueurSub)
-            'AllergieTooltip = AllergieTooltip + vbCrLf + allergieString
-            'End If
-            'End While
-            'ToolTip.SetToolTip(LblAllergie, AllergieTooltip)
-            'Chargement des médicaments génériques associés aux médicaments allergiques déclarés
-            'TraitementAllergies(Me.SelectedPatient)
-        Else
-            'ListeDesMédicamentsDéclarésAllergiquesToolStripMenuItem.Enabled = False
-        End If
-
-        If PatientContreIndication = True Then
-            'LblContreIndication.Show()
-            'Chargement des médicaments génériques associés aux médicaments contre-indiqués déclarés
-            'Dim premierPassage As Boolean = True
-            'Dim CITooltip As String = ""
-            'Dim LongueurMax As Integer = LongueurStringAllergie
-
-            'Chargement du TextBox
-            'Dim CIString As String
-            'Dim SubstancesCI As New StringCollection()
-            'SubstancesCI = MedocDao.ListeSubstancesCI(SelectedPatient.PatientContreIndicationCis)
-            'Dim CIEnumerator As StringEnumerator = SubstancesCI.GetEnumerator()
-            'While CIEnumerator.MoveNext()
-            'If premierPassage = True Then
-            'CIString = CIEnumerator.Current.ToString
-            'CITooltip = CIString
-            'premierPassage = False
-            'Else
-            '   CIString = CIEnumerator.Current.ToString
-            'CITooltip = CITooltip + vbCrLf + CIString
-            'End If
-            'End While
-            'ToolTip.SetToolTip(LblContreIndication, CITooltip)
-            'Chargement des médicaments génériques associés aux médicaments allergiques déclarés
-            'TraitementAllergies(Me.SelectedPatient)
-        Else
-            'ListeDesMédicamentsDéclarésContreindiquésToolStripMenuItem.Enabled = False
-        End If
-
         'Traitements arrêtés
         Dim isTraitementArret As Boolean = False
         Dim TraitementArretTooltip As String = ""
@@ -1327,28 +1272,36 @@ Public Class RadFSynthese
         Dim SelectedMedicamentId As Integer
         Me.Enabled = False
         Cursor.Current = Cursors.WaitCursor
-        Using form As New RadFMedicamentSelecteur
-            form.SelectedPatient = SelectedPatient
-            form.ShowDialog() 'Modal
-            SelectedMedicamentId = form.SelectedSpecialiteId
-            'Si un médicament a été sélectionné
-            If SelectedMedicamentId <> 0 Then
-                Using vFTraitementDetailEdit As New RadFTraitementDetailEdit
-                    vFTraitementDetailEdit.SelectedPatient = Me.SelectedPatient
-                    vFTraitementDetailEdit.UtilisateurConnecte = Me.UtilisateurConnecte
-                    vFTraitementDetailEdit.SelectedMedicamentId = SelectedMedicamentId
-                    vFTraitementDetailEdit.Allergie = Me.PatientAllergie
-                    vFTraitementDetailEdit.ContreIndication = Me.PatientContreIndication
-                    vFTraitementDetailEdit.SelectedTraitementId = 0
-                    vFTraitementDetailEdit.PositionGaucheDroite = EnumPosition.Droite
-                    vFTraitementDetailEdit.ShowDialog() 'Modal
-                    'Si le traitement a été créé, on recharge la grid
-                    If vFTraitementDetailEdit.CodeRetour = True Then
-                        ChargementTraitement()
-                    End If
-                End Using
-            End If
-        End Using
+        Try
+            Using form As New RadFMedicamentSelecteur
+                form.SelectedPatient = SelectedPatient
+                form.ShowDialog() 'Modal
+                SelectedMedicamentId = form.SelectedSpecialiteId
+                'Si un médicament a été sélectionné
+                If SelectedMedicamentId <> 0 Then
+                    Try
+                        Using vFTraitementDetailEdit As New RadFTraitementDetailEdit
+                            vFTraitementDetailEdit.SelectedPatient = Me.SelectedPatient
+                            vFTraitementDetailEdit.UtilisateurConnecte = Me.UtilisateurConnecte
+                            vFTraitementDetailEdit.SelectedMedicamentId = SelectedMedicamentId
+                            vFTraitementDetailEdit.Allergie = Me.PatientAllergie
+                            vFTraitementDetailEdit.ContreIndication = Me.PatientContreIndication
+                            vFTraitementDetailEdit.SelectedTraitementId = 0
+                            vFTraitementDetailEdit.PositionGaucheDroite = EnumPosition.Droite
+                            vFTraitementDetailEdit.ShowDialog() 'Modal
+                            'Si le traitement a été créé, on recharge la grid
+                            If vFTraitementDetailEdit.CodeRetour = True Then
+                                ChargementTraitement()
+                            End If
+                        End Using
+                    Catch ex As Exception
+                        MsgBox(ex.Message())
+                    End Try
+                End If
+            End Using
+        Catch ex As Exception
+            MsgBox(ex.Message())
+        End Try
         Me.Enabled = True
 
     End Sub
@@ -1363,21 +1316,25 @@ Public Class RadFSynthese
                 SelectedMedicamentCis = RadTraitementDataGridView.Rows(aRow).Cells("MedicamentCis").Value
                 Cursor.Current = Cursors.WaitCursor
                 Me.Enabled = False
-                Using vFTraitementDetailEdit As New RadFTraitementDetailEdit
-                    vFTraitementDetailEdit.SelectedTraitementId = TraitementId
-                    vFTraitementDetailEdit.SelectedPatient = Me.SelectedPatient
-                    vFTraitementDetailEdit.UtilisateurConnecte = Me.UtilisateurConnecte
-                    vFTraitementDetailEdit.SelectedMedicamentId = SelectedMedicamentCis
-                    vFTraitementDetailEdit.Allergie = Me.PatientAllergie
-                    vFTraitementDetailEdit.ContreIndication = Me.PatientContreIndication
-                    vFTraitementDetailEdit.PositionGaucheDroite = EnumPosition.Droite
-                    vFTraitementDetailEdit.ShowDialog() 'Modal
-                    If vFTraitementDetailEdit.CodeRetour = True Then
-                        ChargementTraitement()
-                        GetAllergie()
-                        GetContreIndication()
-                    End If
-                End Using
+                Try
+                    Using vFTraitementDetailEdit As New RadFTraitementDetailEdit
+                        vFTraitementDetailEdit.SelectedTraitementId = TraitementId
+                        vFTraitementDetailEdit.SelectedPatient = Me.SelectedPatient
+                        vFTraitementDetailEdit.UtilisateurConnecte = Me.UtilisateurConnecte
+                        vFTraitementDetailEdit.SelectedMedicamentId = SelectedMedicamentCis
+                        vFTraitementDetailEdit.Allergie = Me.PatientAllergie
+                        vFTraitementDetailEdit.ContreIndication = Me.PatientContreIndication
+                        vFTraitementDetailEdit.PositionGaucheDroite = EnumPosition.Droite
+                        vFTraitementDetailEdit.ShowDialog() 'Modal
+                        If vFTraitementDetailEdit.CodeRetour = True Then
+                            ChargementTraitement()
+                            GetAllergie()
+                            GetContreIndication()
+                        End If
+                    End Using
+                Catch ex As Exception
+                    MsgBox(ex.Message())
+                End Try
                 Me.Enabled = True
             End If
         End If
@@ -1388,11 +1345,15 @@ Public Class RadFSynthese
         'Traitement : afficher les traitement stoppés dans un popup dédié
         Me.Enabled = False
         Cursor.Current = Cursors.WaitCursor
-        Using vFTraitementObsoletes As New RadFTraitementObsoletes
-            vFTraitementObsoletes.SelectedPatient = Me.SelectedPatient
-            vFTraitementObsoletes.UtilisateurConnecte = Me.UtilisateurConnecte
-            vFTraitementObsoletes.ShowDialog() 'Modal
-        End Using
+        Try
+            Using vFTraitementObsoletes As New RadFTraitementObsoletes
+                vFTraitementObsoletes.SelectedPatient = Me.SelectedPatient
+                vFTraitementObsoletes.UtilisateurConnecte = Me.UtilisateurConnecte
+                vFTraitementObsoletes.ShowDialog() 'Modal
+            End Using
+        Catch ex As Exception
+            MsgBox(ex.Message())
+        End Try
         Me.Enabled = True
     End Sub
 
@@ -1410,11 +1371,15 @@ Public Class RadFSynthese
     Private Sub ListeMedicamentCI()
         Me.Enabled = False
         Cursor.Current = Cursors.WaitCursor
-        Using vFPatientContreIndicationListe As New RadFPatientContreIndicationListe
-            vFPatientContreIndicationListe.SelectedPatient = Me.SelectedPatient
-            vFPatientContreIndicationListe.ShowDialog() 'Modal
-        End Using
-        GetContreIndication()
+        Try
+            Using vFPatientContreIndicationListe As New RadFPatientContreIndicationListe
+                vFPatientContreIndicationListe.SelectedPatient = Me.SelectedPatient
+                vFPatientContreIndicationListe.ShowDialog() 'Modal
+            End Using
+            GetContreIndication()
+        Catch ex As Exception
+            MsgBox(ex.Message())
+        End Try
         Me.Enabled = True
     End Sub
 
@@ -1433,11 +1398,15 @@ Public Class RadFSynthese
     Private Sub ListeMedicamentAllergie()
         Me.Enabled = False
         Cursor.Current = Cursors.WaitCursor
-        Using vFPatientAllergieListe As New RadFPatientAllergieListe
-            vFPatientAllergieListe.SelectedPatient = Me.SelectedPatient
-            vFPatientAllergieListe.ShowDialog()
-        End Using
-        GetAllergie()
+        Try
+            Using vFPatientAllergieListe As New RadFPatientAllergieListe
+                vFPatientAllergieListe.SelectedPatient = Me.SelectedPatient
+                vFPatientAllergieListe.ShowDialog()
+            End Using
+            GetAllergie()
+        Catch ex As Exception
+            MsgBox(ex.Message())
+        End Try
         Me.Enabled = True
     End Sub
 
@@ -1449,36 +1418,40 @@ Public Class RadFSynthese
 
         Me.Enabled = False
         Cursor.Current = Cursors.WaitCursor
-        Using formSelecteur As New RadF_CI_ATC_Selecteur
-            formSelecteur.SelectedPatient = Me.SelectedPatient
-            formSelecteur.ShowDialog() 'Modal
-            If formSelecteur.CodeRetour = True Then
-                'Contrôle des contre-indications pour les traitements en cours
-                Dim MessageContreIndication As String = ""
-                Dim PremierPassage As Boolean = True
-                Dim contreIndication As Boolean = False
-                Dim rowCount As Integer = RadTraitementDataGridView.Rows.Count - 1
-                For i = 0 To rowCount Step 1
-                    Dim SpecialiteId As Integer = RadTraitementDataGridView.Rows(i).Cells("medicamentCis").Value
-                    Dim specialiteContreIndique As SpecialiteContreIndique = theriaqueDao.IsSpecialiteContreIndique(SelectedPatient, SpecialiteId)
-                    If specialiteContreIndique.ContreIndication = True Then
-                        contreIndication = True
-                        If PremierPassage = True Then
-                            PremierPassage = False
-                        Else
-                            MessageContreIndication += vbCrLf & vbCrLf
+        Try
+            Using formSelecteur As New RadF_CI_ATC_Selecteur
+                formSelecteur.SelectedPatient = Me.SelectedPatient
+                formSelecteur.ShowDialog() 'Modal
+                If formSelecteur.CodeRetour = True Then
+                    'Contrôle des contre-indications pour les traitements en cours
+                    Dim MessageContreIndication As String = ""
+                    Dim PremierPassage As Boolean = True
+                    Dim contreIndication As Boolean = False
+                    Dim rowCount As Integer = RadTraitementDataGridView.Rows.Count - 1
+                    For i = 0 To rowCount Step 1
+                        Dim SpecialiteId As Integer = RadTraitementDataGridView.Rows(i).Cells("medicamentCis").Value
+                        Dim specialiteContreIndique As SpecialiteContreIndique = theriaqueDao.IsSpecialiteContreIndique(SelectedPatient, SpecialiteId)
+                        If specialiteContreIndique.ContreIndication = True Then
+                            contreIndication = True
+                            If PremierPassage = True Then
+                                PremierPassage = False
+                            Else
+                                MessageContreIndication += vbCrLf & vbCrLf
+                            End If
+                            MessageContreIndication += specialiteContreIndique.MessageContreIndication
                         End If
-                        MessageContreIndication += specialiteContreIndique.MessageContreIndication
+                    Next
+                    If contreIndication = True Then
+                        MessageBox.Show(MessageContreIndication)
                     End If
-                Next
-                If contreIndication = True Then
-                    MessageBox.Show(MessageContreIndication)
                 End If
-            End If
-        End Using
+            End Using
+        Catch ex As Exception
+            MsgBox(ex.Message())
+        End Try
+        GetContreIndication()
         Me.Enabled = True
 
-        GetContreIndication()
     End Sub
 
     'Déclaration d'une allergie
@@ -1489,36 +1462,40 @@ Public Class RadFSynthese
 
         Me.Enabled = False
         Cursor.Current = Cursors.WaitCursor
-        Using formSelecteur As New RadF_AllergieSelecteur
-            formSelecteur.SelectedPatient = Me.SelectedPatient
-            formSelecteur.ShowDialog() 'Modal
-            If formSelecteur.CodeRetour = True Then
-                'Contrôle des allergies pour les traitements en cours
-                Dim MessageAllergie As String = ""
-                Dim PremierPassage As Boolean = True
-                Dim allergie As Boolean = False
-                Dim rowCount As Integer = RadTraitementDataGridView.Rows.Count - 1
-                For i = 0 To rowCount Step 1
-                    Dim SpecialiteId As Integer = RadTraitementDataGridView.Rows(i).Cells("medicamentCis").Value
-                    Dim specialiteAllergique As SpecialiteAllergique = theriaqueDao.IsSpecialiteAllergique(SelectedPatient, SpecialiteId)
-                    If specialiteAllergique.Allergie = True Then
-                        allergie = True
-                        If PremierPassage = True Then
-                            PremierPassage = False
-                        Else
-                            MessageAllergie += vbCrLf & vbCrLf
+        Try
+            Using formSelecteur As New RadF_AllergieSelecteur
+                formSelecteur.SelectedPatient = Me.SelectedPatient
+                formSelecteur.ShowDialog() 'Modal
+                If formSelecteur.CodeRetour = True Then
+                    'Contrôle des allergies pour les traitements en cours
+                    Dim MessageAllergie As String = ""
+                    Dim PremierPassage As Boolean = True
+                    Dim allergie As Boolean = False
+                    Dim rowCount As Integer = RadTraitementDataGridView.Rows.Count - 1
+                    For i = 0 To rowCount Step 1
+                        Dim SpecialiteId As Integer = RadTraitementDataGridView.Rows(i).Cells("medicamentCis").Value
+                        Dim specialiteAllergique As SpecialiteAllergique = theriaqueDao.IsSpecialiteAllergique(SelectedPatient, SpecialiteId)
+                        If specialiteAllergique.Allergie = True Then
+                            allergie = True
+                            If PremierPassage = True Then
+                                PremierPassage = False
+                            Else
+                                MessageAllergie += vbCrLf & vbCrLf
+                            End If
+                            MessageAllergie += specialiteAllergique.MessageAllergie
                         End If
-                        MessageAllergie += specialiteAllergique.MessageAllergie
+                    Next
+                    If allergie = True Then
+                        MessageBox.Show(MessageAllergie)
                     End If
-                Next
-                If allergie = True Then
-                    MessageBox.Show(MessageAllergie)
                 End If
-            End If
-        End Using
+            End Using
+        Catch ex As Exception
+            MsgBox(ex.Message())
+        End Try
+        GetAllergie()
         Me.Enabled = True
 
-        GetAllergie()
     End Sub
 
     'Visualisation de l'historique des actions réalisées sur un traitement
@@ -1529,13 +1506,17 @@ Public Class RadFSynthese
                 Dim TraitementId As Integer = RadTraitementDataGridView.Rows(aRow).Cells("traitementId").Value
                 Me.Enabled = False
                 Cursor.Current = Cursors.WaitCursor
-                Using vFTraitementHistoListe As New RadFTraitementHistoListe
-                    vFTraitementHistoListe.SelectedTraitementId = TraitementId
-                    vFTraitementHistoListe.SelectedPatient = Me.SelectedPatient
-                    vFTraitementHistoListe.UtilisateurConnecte = Me.UtilisateurConnecte
-                    vFTraitementHistoListe.MedicamentDenomination = RadTraitementDataGridView.Rows(aRow).Cells("medicamentDci").Value
-                    vFTraitementHistoListe.ShowDialog() 'Modal
-                End Using
+                Try
+                    Using vFTraitementHistoListe As New RadFTraitementHistoListe
+                        vFTraitementHistoListe.SelectedTraitementId = TraitementId
+                        vFTraitementHistoListe.SelectedPatient = Me.SelectedPatient
+                        vFTraitementHistoListe.UtilisateurConnecte = Me.UtilisateurConnecte
+                        vFTraitementHistoListe.MedicamentDenomination = RadTraitementDataGridView.Rows(aRow).Cells("medicamentDci").Value
+                        vFTraitementHistoListe.ShowDialog() 'Modal
+                    End Using
+                Catch ex As Exception
+                    MsgBox(ex.Message())
+                End Try
                 Me.Enabled = True
             End If
         End If
@@ -1553,22 +1534,26 @@ Public Class RadFSynthese
                 Dim SelectedTraitementId As Integer = RadTraitementDataGridView.Rows(aRow).Cells("TraitementId").Value
                 Me.Enabled = False
                 Cursor.Current = Cursors.WaitCursor
-                Using vFTraitementFenetreTh As New RadFTraitementFenetreTh
-                    vFTraitementFenetreTh.SelectedPatient = Me.SelectedPatient
-                    vFTraitementFenetreTh.UtilisateurConnecte = Me.UtilisateurConnecte
-                    vFTraitementFenetreTh.SelectedTraitementId = SelectedTraitementId
-                    Dim fenetreTherapeutiqueExiste As Char = RadTraitementDataGridView.Rows(aRow).Cells("fenetreTherapeutique").Value
-                    If fenetreTherapeutiqueExiste = "O" Then
-                        vFTraitementFenetreTh.FenetreTherapeutiqueExiste = True
-                    Else
-                        vFTraitementFenetreTh.FenetreTherapeutiqueExiste = False
-                    End If
-                    vFTraitementFenetreTh.ShowDialog() 'Modal
-                    'Si le traitement a été créé, on recharge la grid
-                    If vFTraitementFenetreTh.CodeRetour = True Then
-                        ChargementTraitement()
-                    End If
-                End Using
+                Try
+                    Using vFTraitementFenetreTh As New RadFTraitementFenetreTh
+                        vFTraitementFenetreTh.SelectedPatient = Me.SelectedPatient
+                        vFTraitementFenetreTh.UtilisateurConnecte = Me.UtilisateurConnecte
+                        vFTraitementFenetreTh.SelectedTraitementId = SelectedTraitementId
+                        Dim fenetreTherapeutiqueExiste As Char = RadTraitementDataGridView.Rows(aRow).Cells("fenetreTherapeutique").Value
+                        If fenetreTherapeutiqueExiste = "O" Then
+                            vFTraitementFenetreTh.FenetreTherapeutiqueExiste = True
+                        Else
+                            vFTraitementFenetreTh.FenetreTherapeutiqueExiste = False
+                        End If
+                        vFTraitementFenetreTh.ShowDialog() 'Modal
+                        'Si le traitement a été créé, on recharge la grid
+                        If vFTraitementFenetreTh.CodeRetour = True Then
+                            ChargementTraitement()
+                        End If
+                    End Using
+                Catch ex As Exception
+                    MsgBox(ex.Message())
+                End Try
                 Me.Enabled = True
             End If
         End If
@@ -1754,35 +1739,39 @@ Public Class RadFSynthese
 
         Me.Enabled = False
         Cursor.Current = Cursors.WaitCursor
-        Using vFSpecialiteSelecteur As New RadFSpecialiteSelecteur
-            vFSpecialiteSelecteur.ListProfilOasis = ParcoursListProfilsOasis
-            vFSpecialiteSelecteur.ShowDialog()                  'Sélection de spécialité
-            If vFSpecialiteSelecteur.SelectedSpecialiteId <> 0 Then
-                Using vRadFRorListe As New RadFRorListe
-                    vRadFRorListe.Selecteur = True
-                    vRadFRorListe.PatientId = Me.SelectedPatient.patientId
-                    vRadFRorListe.SpecialiteId = vFSpecialiteSelecteur.SelectedSpecialiteId
-                    vRadFRorListe.TypeRor = "Intervenant"
-                    vRadFRorListe.ShowDialog()                  'Sélection d'un professionnel de santé
-                    If vRadFRorListe.CodeRetour = True Then
-                        Using vFParcoursDetailEdit As New RadFParcoursDetailEdit
-                            vFParcoursDetailEdit.SelectedParcoursId = 0
-                            vFParcoursDetailEdit.SelectedRorId = vRadFRorListe.SelectedRorId
-                            vFParcoursDetailEdit.SelectedSpecialiteId = vFSpecialiteSelecteur.SelectedSpecialiteId
-                            vFParcoursDetailEdit.SelectedPatient = Me.SelectedPatient
-                            vFParcoursDetailEdit.UtilisateurConnecte = Me.UtilisateurConnecte
-                            vFParcoursDetailEdit.RythmeObligatoire = False
-                            vFParcoursDetailEdit.PositionGaucheDroite = EnumPosition.Droite
-                            vFParcoursDetailEdit.ShowDialog()   'Gestion de l'intervenant
-                            If vFParcoursDetailEdit.CodeRetour = True Then
-                                ChargementParcoursDeSoin()
-                                ChargementPPS()
-                            End If
-                        End Using
-                    End If
-                End Using
-            End If
-        End Using
+        Try
+            Using vFSpecialiteSelecteur As New RadFSpecialiteSelecteur
+                vFSpecialiteSelecteur.ListProfilOasis = ParcoursListProfilsOasis
+                vFSpecialiteSelecteur.ShowDialog()                  'Sélection de spécialité
+                If vFSpecialiteSelecteur.SelectedSpecialiteId <> 0 Then
+                    Using vRadFRorListe As New RadFRorListe
+                        vRadFRorListe.Selecteur = True
+                        vRadFRorListe.PatientId = Me.SelectedPatient.patientId
+                        vRadFRorListe.SpecialiteId = vFSpecialiteSelecteur.SelectedSpecialiteId
+                        vRadFRorListe.TypeRor = "Intervenant"
+                        vRadFRorListe.ShowDialog()                  'Sélection d'un professionnel de santé
+                        If vRadFRorListe.CodeRetour = True Then
+                            Using vFParcoursDetailEdit As New RadFParcoursDetailEdit
+                                vFParcoursDetailEdit.SelectedParcoursId = 0
+                                vFParcoursDetailEdit.SelectedRorId = vRadFRorListe.SelectedRorId
+                                vFParcoursDetailEdit.SelectedSpecialiteId = vFSpecialiteSelecteur.SelectedSpecialiteId
+                                vFParcoursDetailEdit.SelectedPatient = Me.SelectedPatient
+                                vFParcoursDetailEdit.UtilisateurConnecte = Me.UtilisateurConnecte
+                                vFParcoursDetailEdit.RythmeObligatoire = False
+                                vFParcoursDetailEdit.PositionGaucheDroite = EnumPosition.Droite
+                                vFParcoursDetailEdit.ShowDialog()   'Gestion de l'intervenant
+                                If vFParcoursDetailEdit.CodeRetour = True Then
+                                    ChargementParcoursDeSoin()
+                                    ChargementPPS()
+                                End If
+                            End Using
+                        End If
+                    End Using
+                End If
+            End Using
+        Catch ex As Exception
+            MsgBox(ex.Message())
+        End Try
         Cursor.Current = Cursors.Default
         Me.Enabled = True
     End Sub
@@ -1795,18 +1784,22 @@ Public Class RadFSynthese
                 Dim ParcoursId As Integer = RadParcoursDataGridView.Rows(aRow).Cells("parcoursId").Value
                 Me.Enabled = False
                 Cursor.Current = Cursors.WaitCursor
-                Using vFParcoursDetailEdit As New RadFParcoursDetailEdit
-                    vFParcoursDetailEdit.SelectedParcoursId = ParcoursId
-                    vFParcoursDetailEdit.SelectedPatient = Me.SelectedPatient
-                    vFParcoursDetailEdit.UtilisateurConnecte = Me.UtilisateurConnecte
-                    vFParcoursDetailEdit.RythmeObligatoire = False
-                    vFParcoursDetailEdit.PositionGaucheDroite = EnumPosition.Droite
-                    vFParcoursDetailEdit.ShowDialog() 'Modal
-                    If vFParcoursDetailEdit.CodeRetour = True Then
-                        ChargementParcoursDeSoin()
-                        ChargementPPS()
-                    End If
-                End Using
+                Try
+                    Using vFParcoursDetailEdit As New RadFParcoursDetailEdit
+                        vFParcoursDetailEdit.SelectedParcoursId = ParcoursId
+                        vFParcoursDetailEdit.SelectedPatient = Me.SelectedPatient
+                        vFParcoursDetailEdit.UtilisateurConnecte = Me.UtilisateurConnecte
+                        vFParcoursDetailEdit.RythmeObligatoire = False
+                        vFParcoursDetailEdit.PositionGaucheDroite = EnumPosition.Droite
+                        vFParcoursDetailEdit.ShowDialog() 'Modal
+                        If vFParcoursDetailEdit.CodeRetour = True Then
+                            ChargementParcoursDeSoin()
+                            ChargementPPS()
+                        End If
+                    End Using
+                Catch ex As Exception
+                    MsgBox(ex.Message())
+                End Try
                 Me.Enabled = True
             End If
         End If
@@ -1820,12 +1813,16 @@ Public Class RadFSynthese
                 Dim ParcoursId As Integer = RadParcoursDataGridView.Rows(aRow).Cells("parcoursId").Value
                 Me.Enabled = False
                 Cursor.Current = Cursors.WaitCursor
-                Using vRadFParcoursHistoListe As New RadFParcoursHistoListe
-                    vRadFParcoursHistoListe.SelectedParcoursId = ParcoursId
-                    vRadFParcoursHistoListe.SelectedPatient = Me.SelectedPatient
-                    vRadFParcoursHistoListe.UtilisateurConnecte = Me.UtilisateurConnecte
-                    vRadFParcoursHistoListe.ShowDialog()
-                End Using
+                Try
+                    Using vRadFParcoursHistoListe As New RadFParcoursHistoListe
+                        vRadFParcoursHistoListe.SelectedParcoursId = ParcoursId
+                        vRadFParcoursHistoListe.SelectedPatient = Me.SelectedPatient
+                        vRadFParcoursHistoListe.UtilisateurConnecte = Me.UtilisateurConnecte
+                        vRadFParcoursHistoListe.ShowDialog()
+                    End Using
+                Catch ex As Exception
+                    MsgBox(ex.Message())
+                End Try
                 Me.Enabled = True
             End If
         End If
@@ -2001,21 +1998,25 @@ Public Class RadFSynthese
                 Dim ContexteId As Integer = RadContexteDataGridView.Rows(aRow).Cells("ContexteId").Value
                 Cursor.Current = Cursors.WaitCursor
                 Me.Enabled = False
-                Using Form As New RadFContextedetailEdit
-                    Form.SelectedContexteId = ContexteId
-                    Form.SelectedPatient = Me.SelectedPatient
-                    Form.UtilisateurConnecte = Me.UtilisateurConnecte
-                    Form.SelectedDrcId = 0
-                    Form.PositionGaucheDroite = EnumPosition.Droite
-                    Form.ShowDialog()
-                    If Form.CodeRetour = True Then
-                        ChargementContexte()
-                        If Form.ContexteTransformeEnAntecedent = True Then
-                            'Rechargement des contextes si réactivation
-                            ChargementAntecedent()
+                Try
+                    Using Form As New RadFContextedetailEdit
+                        Form.SelectedContexteId = ContexteId
+                        Form.SelectedPatient = Me.SelectedPatient
+                        Form.UtilisateurConnecte = Me.UtilisateurConnecte
+                        Form.SelectedDrcId = 0
+                        Form.PositionGaucheDroite = EnumPosition.Droite
+                        Form.ShowDialog()
+                        If Form.CodeRetour = True Then
+                            ChargementContexte()
+                            If Form.ContexteTransformeEnAntecedent = True Then
+                                'Rechargement des contextes si réactivation
+                                ChargementAntecedent()
+                            End If
                         End If
-                    End If
-                End Using
+                    End Using
+                Catch ex As Exception
+                    MsgBox(ex.Message())
+                End Try
                 Me.Enabled = True
             End If
         End If
@@ -2038,27 +2039,31 @@ Public Class RadFSynthese
         Dim SelectedDrcId As Integer
         Me.Enabled = False
         Cursor.Current = Cursors.WaitCursor
-        Using vFDrcSelecteur As New RadFDRCSelecteur
-            vFDrcSelecteur.SelectedPatient = Me.SelectedPatient
-            vFDrcSelecteur.CategorieOasis = DrcDao.EnumCategorieOasisCode.Contexte
-            vFDrcSelecteur.ShowDialog()
-            SelectedDrcId = vFDrcSelecteur.SelectedDrcId
-            'Si un médicament a été sélectionné, on appelle le Formulaire de création
-            If SelectedDrcId <> 0 Then
-                Using Fom As New RadFContextedetailEdit
-                    Fom.SelectedPatient = Me.SelectedPatient
-                    Fom.UtilisateurConnecte = Me.UtilisateurConnecte
-                    Fom.SelectedDrcId = SelectedDrcId
-                    Fom.SelectedContexteId = 0
-                    Fom.PositionGaucheDroite = EnumPosition.Droite
-                    Fom.ShowDialog()
-                    'Si le traitement a été créé, on recharge la grid
-                    If Fom.CodeRetour = True Then
-                        ChargementContexte()
-                    End If
-                End Using
-            End If
-        End Using
+        Try
+            Using vFDrcSelecteur As New RadFDRCSelecteur
+                vFDrcSelecteur.SelectedPatient = Me.SelectedPatient
+                vFDrcSelecteur.CategorieOasis = DrcDao.EnumCategorieOasisCode.Contexte
+                vFDrcSelecteur.ShowDialog()
+                SelectedDrcId = vFDrcSelecteur.SelectedDrcId
+                'Si un médicament a été sélectionné, on appelle le Formulaire de création
+                If SelectedDrcId <> 0 Then
+                    Using Fom As New RadFContextedetailEdit
+                        Fom.SelectedPatient = Me.SelectedPatient
+                        Fom.UtilisateurConnecte = Me.UtilisateurConnecte
+                        Fom.SelectedDrcId = SelectedDrcId
+                        Fom.SelectedContexteId = 0
+                        Fom.PositionGaucheDroite = EnumPosition.Droite
+                        Fom.ShowDialog()
+                        'Si le traitement a été créé, on recharge la grid
+                        If Fom.CodeRetour = True Then
+                            ChargementContexte()
+                        End If
+                    End Using
+                End If
+            End Using
+        Catch ex As Exception
+            MsgBox(ex.Message())
+        End Try
         Me.Enabled = True
     End Sub
 
@@ -2069,12 +2074,16 @@ Public Class RadFSynthese
                 Dim ContexteId As Integer = RadContexteDataGridView.Rows(aRow).Cells("ContexteId").Value
                 Me.Enabled = False
                 Cursor.Current = Cursors.WaitCursor
-                Using Form As New RadFAntecedentHistoListe
-                    Form.SelectedAntecedentId = ContexteId
-                    Form.SelectedPatient = Me.SelectedPatient
-                    Form.UtilisateurConnecte = Me.UtilisateurConnecte
-                    Form.ShowDialog()
-                End Using
+                Try
+                    Using Form As New RadFAntecedentHistoListe
+                        Form.SelectedAntecedentId = ContexteId
+                        Form.SelectedPatient = Me.SelectedPatient
+                        Form.UtilisateurConnecte = Me.UtilisateurConnecte
+                        Form.ShowDialog()
+                    End Using
+                Catch ex As Exception
+                    MsgBox(ex.Message())
+                End Try
                 Me.Enabled = True
             End If
         End If
@@ -2370,62 +2379,78 @@ Public Class RadFSynthese
                     Case 1 'Objectif de santé
                         Cursor.Current = Cursors.WaitCursor
                         Me.Enabled = False
-                        Using vRadFPPSObjectifSanteDetail As New RadFPPSDetailEdit
-                            vRadFPPSObjectifSanteDetail.PPSId = PPSId
-                            vRadFPPSObjectifSanteDetail.CategoriePPS = EnumCategoriePPS.Objectif
-                            vRadFPPSObjectifSanteDetail.SelectedPatient = Me.SelectedPatient
-                            vRadFPPSObjectifSanteDetail.UtilisateurConnecte = Me.UtilisateurConnecte
-                            vRadFPPSObjectifSanteDetail.PositionGaucheDroite = EnumPosition.Droite
-                            vRadFPPSObjectifSanteDetail.ShowDialog() 'Modal
-                            If vRadFPPSObjectifSanteDetail.CodeRetour = True Then
-                                ChargementPPS()
-                            End If
-                        End Using
+                        Try
+                            Using vRadFPPSObjectifSanteDetail As New RadFPPSDetailEdit
+                                vRadFPPSObjectifSanteDetail.PPSId = PPSId
+                                vRadFPPSObjectifSanteDetail.CategoriePPS = EnumCategoriePPS.Objectif
+                                vRadFPPSObjectifSanteDetail.SelectedPatient = Me.SelectedPatient
+                                vRadFPPSObjectifSanteDetail.UtilisateurConnecte = Me.UtilisateurConnecte
+                                vRadFPPSObjectifSanteDetail.PositionGaucheDroite = EnumPosition.Droite
+                                vRadFPPSObjectifSanteDetail.ShowDialog() 'Modal
+                                If vRadFPPSObjectifSanteDetail.CodeRetour = True Then
+                                    ChargementPPS()
+                                End If
+                            End Using
+                        Catch ex As Exception
+                            MsgBox(ex.Message())
+                        End Try
                         Me.Enabled = True
                     Case 2 'Mesure préventive
                         Cursor.Current = Cursors.WaitCursor
                         Me.Enabled = False
-                        Using vFFPPSMesurePreventive As New RadFPPSDetailEdit
-                            vFFPPSMesurePreventive.PPSId = PPSId
-                            vFFPPSMesurePreventive.CategoriePPS = EnumCategoriePPS.MesurePreventive
-                            vFFPPSMesurePreventive.SelectedPatient = Me.SelectedPatient
-                            vFFPPSMesurePreventive.UtilisateurConnecte = Me.UtilisateurConnecte
-                            vFFPPSMesurePreventive.PositionGaucheDroite = EnumPosition.Droite
-                            vFFPPSMesurePreventive.ShowDialog() 'Modal
-                            If vFFPPSMesurePreventive.CodeRetour = True Then
-                                ChargementPPS()
-                            End If
-                        End Using
+                        Try
+                            Using vFFPPSMesurePreventive As New RadFPPSDetailEdit
+                                vFFPPSMesurePreventive.PPSId = PPSId
+                                vFFPPSMesurePreventive.CategoriePPS = EnumCategoriePPS.MesurePreventive
+                                vFFPPSMesurePreventive.SelectedPatient = Me.SelectedPatient
+                                vFFPPSMesurePreventive.UtilisateurConnecte = Me.UtilisateurConnecte
+                                vFFPPSMesurePreventive.PositionGaucheDroite = EnumPosition.Droite
+                                vFFPPSMesurePreventive.ShowDialog() 'Modal
+                                If vFFPPSMesurePreventive.CodeRetour = True Then
+                                    ChargementPPS()
+                                End If
+                            End Using
+                        Catch ex As Exception
+                            MsgBox(ex.Message())
+                        End Try
                         Me.Enabled = True
                     Case 3 'Suivi intervenant
                         Cursor.Current = Cursors.WaitCursor
                         Me.Enabled = False
-                        Using vFParcoursDetailEdit As New RadFParcoursDetailEdit
-                            vFParcoursDetailEdit.SelectedParcoursId = ParcoursId
-                            vFParcoursDetailEdit.SelectedPatient = Me.SelectedPatient
-                            vFParcoursDetailEdit.UtilisateurConnecte = Me.UtilisateurConnecte
-                            vFParcoursDetailEdit.PositionGaucheDroite = EnumPosition.Droite
-                            vFParcoursDetailEdit.ShowDialog() 'Modal
-                            If vFParcoursDetailEdit.CodeRetour = True Then
-                                ChargementParcoursDeSoin()
-                                ChargementPPS()
-                            End If
-                        End Using
+                        Try
+                            Using vFParcoursDetailEdit As New RadFParcoursDetailEdit
+                                vFParcoursDetailEdit.SelectedParcoursId = ParcoursId
+                                vFParcoursDetailEdit.SelectedPatient = Me.SelectedPatient
+                                vFParcoursDetailEdit.UtilisateurConnecte = Me.UtilisateurConnecte
+                                vFParcoursDetailEdit.PositionGaucheDroite = EnumPosition.Droite
+                                vFParcoursDetailEdit.ShowDialog() 'Modal
+                                If vFParcoursDetailEdit.CodeRetour = True Then
+                                    ChargementParcoursDeSoin()
+                                    ChargementPPS()
+                                End If
+                            End Using
+                        Catch ex As Exception
+                            MsgBox(ex.Message())
+                        End Try
                         Me.Enabled = True
                     Case 4 'Stratégie
                         Cursor.Current = Cursors.WaitCursor
                         Me.Enabled = False
-                        Using vFPPSStrategie As New RadFPPSDetailEdit
-                            vFPPSStrategie.PPSId = PPSId
-                            vFPPSStrategie.CategoriePPS = EnumCategoriePPS.Strategie
-                            vFPPSStrategie.SelectedPatient = Me.SelectedPatient
-                            vFPPSStrategie.UtilisateurConnecte = Me.UtilisateurConnecte
-                            vFPPSStrategie.PositionGaucheDroite = EnumPosition.Droite
-                            vFPPSStrategie.ShowDialog() 'Modal
-                            If vFPPSStrategie.CodeRetour = True Then
-                                ChargementPPS()
-                            End If
-                        End Using
+                        Try
+                            Using vFPPSStrategie As New RadFPPSDetailEdit
+                                vFPPSStrategie.PPSId = PPSId
+                                vFPPSStrategie.CategoriePPS = EnumCategoriePPS.Strategie
+                                vFPPSStrategie.SelectedPatient = Me.SelectedPatient
+                                vFPPSStrategie.UtilisateurConnecte = Me.UtilisateurConnecte
+                                vFPPSStrategie.PositionGaucheDroite = EnumPosition.Droite
+                                vFPPSStrategie.ShowDialog() 'Modal
+                                If vFPPSStrategie.CodeRetour = True Then
+                                    ChargementPPS()
+                                End If
+                            End Using
+                        Catch ex As Exception
+                            MsgBox(ex.Message())
+                        End Try
                         Me.Enabled = True
                 End Select
             End If
@@ -2452,17 +2477,21 @@ Public Class RadFSynthese
         If ppsdao.ExistPPSObjectifByPatientId(SelectedPatient.patientId) = False Then
             Me.Enabled = False
             Cursor.Current = Cursors.WaitCursor
-            Using vRadFPPSObjectifSanteDetail As New RadFPPSDetailEdit
-                vRadFPPSObjectifSanteDetail.PPSId = 0
-                vRadFPPSObjectifSanteDetail.CategoriePPS = EnumCategoriePPS.Objectif
-                vRadFPPSObjectifSanteDetail.SelectedPatient = Me.SelectedPatient
-                vRadFPPSObjectifSanteDetail.UtilisateurConnecte = Me.UtilisateurConnecte
-                vRadFPPSObjectifSanteDetail.PositionGaucheDroite = EnumPosition.Droite
-                vRadFPPSObjectifSanteDetail.ShowDialog() 'Modal
-                If vRadFPPSObjectifSanteDetail.CodeRetour = True Then
-                    ChargementPPS()
-                End If
-            End Using
+            Try
+                Using vRadFPPSObjectifSanteDetail As New RadFPPSDetailEdit
+                    vRadFPPSObjectifSanteDetail.PPSId = 0
+                    vRadFPPSObjectifSanteDetail.CategoriePPS = EnumCategoriePPS.Objectif
+                    vRadFPPSObjectifSanteDetail.SelectedPatient = Me.SelectedPatient
+                    vRadFPPSObjectifSanteDetail.UtilisateurConnecte = Me.UtilisateurConnecte
+                    vRadFPPSObjectifSanteDetail.PositionGaucheDroite = EnumPosition.Droite
+                    vRadFPPSObjectifSanteDetail.ShowDialog() 'Modal
+                    If vRadFPPSObjectifSanteDetail.CodeRetour = True Then
+                        ChargementPPS()
+                    End If
+                End Using
+            Catch ex As Exception
+                MsgBox(ex.Message())
+            End Try
             Me.Enabled = True
         Else
             MessageBox.Show("Création impossible, un Objectif de santé existe déjà pour ce patient")
@@ -2486,17 +2515,21 @@ Public Class RadFSynthese
 
         Me.Enabled = False
         Cursor.Current = Cursors.WaitCursor
-        Using vFFPPSMesurePreventive As New RadFPPSDetailEdit
-            vFFPPSMesurePreventive.PPSId = 0
-            vFFPPSMesurePreventive.CategoriePPS = EnumCategoriePPS.MesurePreventive
-            vFFPPSMesurePreventive.SelectedPatient = Me.SelectedPatient
-            vFFPPSMesurePreventive.UtilisateurConnecte = Me.UtilisateurConnecte
-            vFFPPSMesurePreventive.PositionGaucheDroite = EnumPosition.Droite
-            vFFPPSMesurePreventive.ShowDialog() 'Modal
-            If vFFPPSMesurePreventive.CodeRetour = True Then
-                ChargementPPS()
-            End If
-        End Using
+        Try
+            Using vFFPPSMesurePreventive As New RadFPPSDetailEdit
+                vFFPPSMesurePreventive.PPSId = 0
+                vFFPPSMesurePreventive.CategoriePPS = EnumCategoriePPS.MesurePreventive
+                vFFPPSMesurePreventive.SelectedPatient = Me.SelectedPatient
+                vFFPPSMesurePreventive.UtilisateurConnecte = Me.UtilisateurConnecte
+                vFFPPSMesurePreventive.PositionGaucheDroite = EnumPosition.Droite
+                vFFPPSMesurePreventive.ShowDialog() 'Modal
+                If vFFPPSMesurePreventive.CodeRetour = True Then
+                    ChargementPPS()
+                End If
+            End Using
+        Catch ex As Exception
+            MsgBox(ex.Message())
+        End Try
         Me.Enabled = True
     End Sub
 
@@ -2517,17 +2550,21 @@ Public Class RadFSynthese
 
         Me.Enabled = False
         Cursor.Current = Cursors.WaitCursor
-        Using vFPPSStrategie As New RadFPPSDetailEdit
-            vFPPSStrategie.PPSId = 0
-            vFPPSStrategie.CategoriePPS = EnumCategoriePPS.Strategie
-            vFPPSStrategie.SelectedPatient = Me.SelectedPatient
-            vFPPSStrategie.UtilisateurConnecte = Me.UtilisateurConnecte
-            vFPPSStrategie.PositionGaucheDroite = EnumPosition.Droite
-            vFPPSStrategie.ShowDialog() 'Modal
-            If vFPPSStrategie.CodeRetour = True Then
-                ChargementPPS()
-            End If
-        End Using
+        Try
+            Using vFPPSStrategie As New RadFPPSDetailEdit
+                vFPPSStrategie.PPSId = 0
+                vFPPSStrategie.CategoriePPS = EnumCategoriePPS.Strategie
+                vFPPSStrategie.SelectedPatient = Me.SelectedPatient
+                vFPPSStrategie.UtilisateurConnecte = Me.UtilisateurConnecte
+                vFPPSStrategie.PositionGaucheDroite = EnumPosition.Droite
+                vFPPSStrategie.ShowDialog() 'Modal
+                If vFPPSStrategie.CodeRetour = True Then
+                    ChargementPPS()
+                End If
+            End Using
+        Catch ex As Exception
+            MsgBox(ex.Message())
+        End Try
         Me.Enabled = True
     End Sub
 
@@ -2545,39 +2582,62 @@ Public Class RadFSynthese
             Exit Sub
         End If
 
-        Me.Enabled = False
         Cursor.Current = Cursors.WaitCursor
-        Using vFSpecialiteSelecteur As New RadFSpecialiteSelecteur
-            vFSpecialiteSelecteur.ListProfilOasis = ParcoursListProfilsOasis
-            vFSpecialiteSelecteur.ShowDialog()                  'Sélection de spécialité
-            If vFSpecialiteSelecteur.SelectedSpecialiteId <> 0 Then
-                Using vRadFRorListe As New RadFRorListe
-                    vRadFRorListe.Selecteur = True
-                    vRadFRorListe.PatientId = Me.SelectedPatient.patientId
-                    vRadFRorListe.SpecialiteId = vFSpecialiteSelecteur.SelectedSpecialiteId
-                    vRadFRorListe.TypeRor = "Intervenant"
-                    vRadFRorListe.ShowDialog()                  'Sélection d'un professionnel de santé
-                    If vRadFRorListe.CodeRetour = True Then
-                        Using vFParcoursDetailEdit As New RadFParcoursDetailEdit
-                            vFParcoursDetailEdit.SelectedParcoursId = 0
-                            vFParcoursDetailEdit.SelectedRorId = vRadFRorListe.SelectedRorId
-                            vFParcoursDetailEdit.SelectedSpecialiteId = vFSpecialiteSelecteur.SelectedSpecialiteId
-                            vFParcoursDetailEdit.SelectedPatient = Me.SelectedPatient
-                            vFParcoursDetailEdit.UtilisateurConnecte = Me.UtilisateurConnecte
-                            vFParcoursDetailEdit.RythmeObligatoire = True
-                            vFParcoursDetailEdit.PositionGaucheDroite = EnumPosition.Droite
-                            vFParcoursDetailEdit.ShowDialog()   'Gestion de l'intervenant
-                            If vFParcoursDetailEdit.CodeRetour = True Then
-                                ChargementParcoursDeSoin()
-                                ChargementPPS()
-                            End If
-                        End Using
-                    End If
-                End Using
-            End If
-        End Using
+        Me.Enabled = False
+        Try
+            Using form As New RadFPPSListeParcours
+                form.SelectedPatient = Me.SelectedPatient
+                form.ShowDialog()
+            End Using
+            ChargementParcoursDeSoin()
+            ChargementPPS()
+        Catch ex As Exception
+            MsgBox(ex.Message())
+        End Try
+
         Cursor.Current = Cursors.Default
         Me.Enabled = True
+
+        'Obsolète ================>
+        Exit Sub
+        Me.Enabled = False
+        Cursor.Current = Cursors.WaitCursor
+        Try
+            Using vFSpecialiteSelecteur As New RadFSpecialiteSelecteur
+                vFSpecialiteSelecteur.ListProfilOasis = ParcoursListProfilsOasis
+                vFSpecialiteSelecteur.ShowDialog()                  'Sélection de spécialité
+                If vFSpecialiteSelecteur.SelectedSpecialiteId <> 0 Then
+                    Using vRadFRorListe As New RadFRorListe
+                        vRadFRorListe.Selecteur = True
+                        vRadFRorListe.PatientId = Me.SelectedPatient.patientId
+                        vRadFRorListe.SpecialiteId = vFSpecialiteSelecteur.SelectedSpecialiteId
+                        vRadFRorListe.TypeRor = "Intervenant"
+                        vRadFRorListe.ShowDialog()                  'Sélection d'un professionnel de santé
+                        If vRadFRorListe.CodeRetour = True Then
+                            Using vFParcoursDetailEdit As New RadFParcoursDetailEdit
+                                vFParcoursDetailEdit.SelectedParcoursId = 0
+                                vFParcoursDetailEdit.SelectedRorId = vRadFRorListe.SelectedRorId
+                                vFParcoursDetailEdit.SelectedSpecialiteId = vFSpecialiteSelecteur.SelectedSpecialiteId
+                                vFParcoursDetailEdit.SelectedPatient = Me.SelectedPatient
+                                vFParcoursDetailEdit.UtilisateurConnecte = Me.UtilisateurConnecte
+                                vFParcoursDetailEdit.RythmeObligatoire = True
+                                vFParcoursDetailEdit.PositionGaucheDroite = EnumPosition.Droite
+                                vFParcoursDetailEdit.ShowDialog()   'Gestion de l'intervenant
+                                If vFParcoursDetailEdit.CodeRetour = True Then
+                                    ChargementParcoursDeSoin()
+                                    ChargementPPS()
+                                End If
+                            End Using
+                        End If
+                    End Using
+                End If
+            End Using
+        Catch ex As Exception
+            MsgBox(ex.Message())
+        End Try
+        Cursor.Current = Cursors.Default
+        Me.Enabled = True
+        'Obsolète ================>
     End Sub
 
     Private Sub HistoriqueDesModificationsToolStripMenuItem3_Click(sender As Object, e As EventArgs) Handles HistoriqueDesModificationsToolStripMenuItem3.Click
@@ -2589,23 +2649,31 @@ Public Class RadFSynthese
                     Dim ParcoursId As Integer = RadPPSDataGridView.Rows(aRow).Cells("parcoursId").Value
                     Me.Enabled = False
                     Cursor.Current = Cursors.WaitCursor
-                    Using vRadFParcoursHistoListe As New RadFParcoursHistoListe
-                        vRadFParcoursHistoListe.SelectedParcoursId = ParcoursId
-                        vRadFParcoursHistoListe.SelectedPatient = Me.SelectedPatient
-                        vRadFParcoursHistoListe.UtilisateurConnecte = Me.UtilisateurConnecte
-                        vRadFParcoursHistoListe.ShowDialog()
-                    End Using
+                    Try
+                        Using vRadFParcoursHistoListe As New RadFParcoursHistoListe
+                            vRadFParcoursHistoListe.SelectedParcoursId = ParcoursId
+                            vRadFParcoursHistoListe.SelectedPatient = Me.SelectedPatient
+                            vRadFParcoursHistoListe.UtilisateurConnecte = Me.UtilisateurConnecte
+                            vRadFParcoursHistoListe.ShowDialog()
+                        End Using
+                    Catch ex As Exception
+                        MsgBox(ex.Message())
+                    End Try
                     Me.Enabled = True
                 Else
                     Dim PPSId As Integer = RadPPSDataGridView.Rows(aRow).Cells("ppsId").Value
                     Me.Enabled = False
                     Cursor.Current = Cursors.WaitCursor
-                    Using vFPPSHistoListe As New RadFPPSHistoListe
-                        vFPPSHistoListe.SelectedPPSId = PPSId
-                        vFPPSHistoListe.SelectedPatient = Me.SelectedPatient
-                        vFPPSHistoListe.UtilisateurConnecte = Me.UtilisateurConnecte
-                        vFPPSHistoListe.ShowDialog()
-                    End Using
+                    Try
+                        Using vFPPSHistoListe As New RadFPPSHistoListe
+                            vFPPSHistoListe.SelectedPPSId = PPSId
+                            vFPPSHistoListe.SelectedPatient = Me.SelectedPatient
+                            vFPPSHistoListe.UtilisateurConnecte = Me.UtilisateurConnecte
+                            vFPPSHistoListe.ShowDialog()
+                        End Using
+                    Catch ex As Exception
+                        MsgBox(ex.Message())
+                    End Try
                     Me.Enabled = True
                 End If
             End If
@@ -2706,65 +2774,81 @@ Public Class RadFSynthese
     Private Sub RadBtnSocial_Click(sender As Object, e As EventArgs) Handles RadBtnSocial.Click
         Me.Enabled = False
         Cursor.Current = Cursors.WaitCursor
-        Using vFPatientNoteListe As New RadFPatientNoteListe
-            vFPatientNoteListe.TypeNote = EnumTypeNote.Social
-            vFPatientNoteListe.SelectedPatientId = Me.SelectedPatient.patientId
-            vFPatientNoteListe.SelectedPatient = Me.SelectedPatient
-            vFPatientNoteListe.UtilisateurConnecte = Me.UtilisateurConnecte
-            vFPatientNoteListe.ShowDialog() 'Modal
-        End Using
+        Try
+            Using vFPatientNoteListe As New RadFPatientNoteListe
+                vFPatientNoteListe.TypeNote = EnumTypeNote.Social
+                vFPatientNoteListe.SelectedPatientId = Me.SelectedPatient.patientId
+                vFPatientNoteListe.SelectedPatient = Me.SelectedPatient
+                vFPatientNoteListe.UtilisateurConnecte = Me.UtilisateurConnecte
+                vFPatientNoteListe.ShowDialog() 'Modal
+            End Using
+        Catch ex As Exception
+            MsgBox(ex.Message())
+        End Try
         Me.Enabled = True
-    End Sub
-
-    Private Sub RadAntecedentDataGridView_Click(sender As Object, e As EventArgs) Handles RadAntecedentDataGridView.Click
-
     End Sub
 
     Private Sub RadBtnVaccins_Click(sender As Object, e As EventArgs) Handles RadBtnVaccins.Click
         Me.Enabled = False
         Cursor.Current = Cursors.WaitCursor
-        Using vFPatientNoteListe As New RadFPatientNoteListe
-            vFPatientNoteListe.TypeNote = EnumTypeNote.Vaccin
-            vFPatientNoteListe.SelectedPatientId = Me.SelectedPatient.patientId
-            vFPatientNoteListe.SelectedPatient = Me.SelectedPatient
-            vFPatientNoteListe.UtilisateurConnecte = Me.UtilisateurConnecte
-            vFPatientNoteListe.ShowDialog() 'Modal
-        End Using
+        Try
+            Using vFPatientNoteListe As New RadFPatientNoteListe
+                vFPatientNoteListe.TypeNote = EnumTypeNote.Vaccin
+                vFPatientNoteListe.SelectedPatientId = Me.SelectedPatient.patientId
+                vFPatientNoteListe.SelectedPatient = Me.SelectedPatient
+                vFPatientNoteListe.UtilisateurConnecte = Me.UtilisateurConnecte
+                vFPatientNoteListe.ShowDialog() 'Modal
+            End Using
+        Catch ex As Exception
+            MsgBox(ex.Message())
+        End Try
         Me.Enabled = True
     End Sub
 
     Private Sub RadBtnNotesMedicales_Click(sender As Object, e As EventArgs) Handles RadBtnNotesMedicales.Click
         Me.Enabled = False
         Cursor.Current = Cursors.WaitCursor
-        Using vFPatientNoteListe As New RadFPatientNoteListe
-            vFPatientNoteListe.TypeNote = EnumTypeNote.Medicale
-            vFPatientNoteListe.SelectedPatientId = Me.SelectedPatient.patientId
-            vFPatientNoteListe.SelectedPatient = Me.SelectedPatient
-            vFPatientNoteListe.UtilisateurConnecte = Me.UtilisateurConnecte
-            vFPatientNoteListe.ShowDialog() 'Modal
-        End Using
+        Try
+            Using vFPatientNoteListe As New RadFPatientNoteListe
+                vFPatientNoteListe.TypeNote = EnumTypeNote.Medicale
+                vFPatientNoteListe.SelectedPatientId = Me.SelectedPatient.patientId
+                vFPatientNoteListe.SelectedPatient = Me.SelectedPatient
+                vFPatientNoteListe.UtilisateurConnecte = Me.UtilisateurConnecte
+                vFPatientNoteListe.ShowDialog() 'Modal
+            End Using
+        Catch ex As Exception
+            MsgBox(ex.Message())
+        End Try
         Me.Enabled = True
     End Sub
 
     Private Sub RadBtnDirectives_Click(sender As Object, e As EventArgs) Handles RadBtnDirectives.Click
         Me.Enabled = False
         Cursor.Current = Cursors.WaitCursor
-        Using vFPatientNoteListe As New RadFPatientNoteListe
-            vFPatientNoteListe.TypeNote = EnumTypeNote.Directive
-            vFPatientNoteListe.SelectedPatientId = Me.SelectedPatient.patientId
-            vFPatientNoteListe.SelectedPatient = Me.SelectedPatient
-            vFPatientNoteListe.UtilisateurConnecte = Me.UtilisateurConnecte
-            vFPatientNoteListe.ShowDialog() 'Modal
-        End Using
+        Try
+            Using vFPatientNoteListe As New RadFPatientNoteListe
+                vFPatientNoteListe.TypeNote = EnumTypeNote.Directive
+                vFPatientNoteListe.SelectedPatientId = Me.SelectedPatient.patientId
+                vFPatientNoteListe.SelectedPatient = Me.SelectedPatient
+                vFPatientNoteListe.UtilisateurConnecte = Me.UtilisateurConnecte
+                vFPatientNoteListe.ShowDialog() 'Modal
+            End Using
+        Catch ex As Exception
+            MsgBox(ex.Message())
+        End Try
         Me.Enabled = True
     End Sub
 
     'Imprimer la synthèse du patient
     Private Sub RadBtnImprimer_Click(sender As Object, e As EventArgs) Handles RadBtnImprimer.Click
         Cursor.Current = Cursors.WaitCursor
-        Dim pdfSynthese As New PdfSynthese
-        pdfSynthese.SelectedPatient = SelectedPatient
-        pdfSynthese.ImprimeSynthese()
+        Try
+            Dim pdfSynthese As New PdfSynthese
+            pdfSynthese.SelectedPatient = SelectedPatient
+            pdfSynthese.ImprimeSynthese()
+        Catch ex As Exception
+            MsgBox(ex.Message())
+        End Try
         Cursor.Current = Cursors.Default
     End Sub
 
@@ -2772,11 +2856,15 @@ Public Class RadFSynthese
     Private Sub RadBtnLigneDeVie_Click(sender As Object, e As EventArgs) Handles RadBtnLigneDeVie.Click
         Me.Enabled = False
         Cursor.Current = Cursors.WaitCursor
-        Using vadFEpisodeListe As New RadFEpisodeLigneDeVie
-            vadFEpisodeListe.SelectedPatient = Me.SelectedPatient
-            vadFEpisodeListe.UtilisateurConnecte = Me.UtilisateurConnecte
-            vadFEpisodeListe.ShowDialog() 'Modal
-        End Using
+        Try
+            Using vadFEpisodeListe As New RadFEpisodeLigneDeVie
+                vadFEpisodeListe.SelectedPatient = Me.SelectedPatient
+                vadFEpisodeListe.UtilisateurConnecte = Me.UtilisateurConnecte
+                vadFEpisodeListe.ShowDialog() 'Modal
+            End Using
+        Catch ex As Exception
+            MsgBox(ex.Message())
+        End Try
         Me.Enabled = True
     End Sub
 

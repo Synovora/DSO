@@ -33,6 +33,10 @@ Public Class RadFEpisodeEnCoursListe
             RadGridViewEpisode.Rows(iGrid).Cells("type_activite").Value = Coalesce(episodeDataTable.Rows(i)("type_activite"), "")
             RadGridViewEpisode.Rows(iGrid).Cells("type_profil").Value = Coalesce(episodeDataTable.Rows(i)("type_profil"), "")
             RadGridViewEpisode.Rows(iGrid).Cells("commentaire").Value = Coalesce(episodeDataTable.Rows(i)("commentaire"), "")
+            'Activité pour un épisode virtuel
+            If RadGridViewEpisode.Rows(iGrid).Cells("type_activite").Value = "" Then
+                RadGridViewEpisode.Rows(iGrid).Cells("type_activite").Value = Coalesce(episodeDataTable.Rows(i)("type"), "")
+            End If
 
             'Workflow --------------
             If Coalesce(episodeDataTable.Rows(i)("nature"), "") <> "" Then

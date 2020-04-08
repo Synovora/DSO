@@ -44,7 +44,7 @@ Public Class PdfSynthese
             MessageBox.Show(ex.ToString)
             Dim form As New RadFNotification()
             form.Titre = "Notification - Imprimer synthèse"
-            form.Message = "Le pDF à générer est en consultation et ne peut être rempacé"
+            form.Message = "Le PDF à générer est en consultation et ne peut être remplacé"
             form.Show()
             Exit Sub
         End Try

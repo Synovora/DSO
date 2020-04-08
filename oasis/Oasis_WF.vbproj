@@ -455,6 +455,12 @@
     <Compile Include="Form\LigneDeVie\RadFLigneDeVieGraphe.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="Form\PPS\RadFPPSListeParcours.Designer.vb">
+      <DependentUpon>RadFPPSListeParcours.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Form\PPS\RadFPPSListeParcours.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Form\SousEpisode\FrmActionDoc.Designer.vb">
       <DependentUpon>FrmActionDoc.vb</DependentUpon>
     </Compile>
@@ -844,6 +850,7 @@
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Dao\Traitement\TraitementDao.vb" />
+    <Compile Include="Pdf\PdfOrdonnance.vb" />
     <Compile Include="Pdf\PdfSynthese.vb" />
     <Compile Include="Resources\FrenchRichTextBoxStrings.Designer.vb">
       <AutoGen>True</AutoGen>
@@ -1048,6 +1055,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Form\LigneDeVie\RadFLigneDeVieGraphe.resx">
       <DependentUpon>RadFLigneDeVieGraphe.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form\PPS\RadFPPSListeParcours.resx">
+      <DependentUpon>RadFPPSListeParcours.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Form\SousEpisode\FrmActionDoc.resx">
       <DependentUpon>FrmActionDoc.vb</DependentUpon>

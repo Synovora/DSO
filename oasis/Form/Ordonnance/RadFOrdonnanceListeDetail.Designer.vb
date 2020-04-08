@@ -23,6 +23,7 @@ Partial Class RadFOrdonnanceListeDetail
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
         Me.components = New System.ComponentModel.Container()
+        Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(RadFOrdonnanceListeDetail))
         Dim GridViewTextBoxColumn1 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
         Dim GridViewTextBoxColumn2 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
         Dim GridViewTextBoxColumn3 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
@@ -43,8 +44,9 @@ Partial Class RadFOrdonnanceListeDetail
         Dim GridViewTextBoxColumn17 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
         Dim GridViewTextBoxColumn18 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
         Dim TableViewDefinition2 As Telerik.WinControls.UI.TableViewDefinition = New Telerik.WinControls.UI.TableViewDefinition()
-        Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(RadFOrdonnanceListeDetail))
         Me.RadGroupBoxEtatCivil = New Telerik.WinControls.UI.RadGroupBox()
+        Me.Label9 = New System.Windows.Forms.Label()
+        Me.Label10 = New System.Windows.Forms.Label()
         Me.LblPharmacienNom = New System.Windows.Forms.Label()
         Me.LblLabelPharmacien = New System.Windows.Forms.Label()
         Me.lblContreIndication = New System.Windows.Forms.Label()
@@ -109,8 +111,6 @@ Partial Class RadFOrdonnanceListeDetail
         Me.SplitPanel6 = New Telerik.WinControls.UI.SplitPanel()
         Me.RadBtnAnnulerOrdonnance = New Telerik.WinControls.UI.RadButton()
         Me.RadBtnAjoutLigne = New Telerik.WinControls.UI.RadButton()
-        Me.Label9 = New System.Windows.Forms.Label()
-        Me.Label10 = New System.Windows.Forms.Label()
         CType(Me.RadGroupBoxEtatCivil, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.RadGroupBoxEtatCivil.SuspendLayout()
         CType(Me.RadGroupBox1, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -190,6 +190,30 @@ Partial Class RadFOrdonnanceListeDetail
         CType(Me.RadGroupBoxEtatCivil.GetChildAt(0).GetChildAt(0), Telerik.WinControls.UI.GroupBoxContent).Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Bold)
         CType(Me.RadGroupBoxEtatCivil.GetChildAt(0).GetChildAt(1), Telerik.WinControls.UI.GroupBoxHeader).GroupBoxStyle = Telerik.WinControls.UI.RadGroupBoxStyle.Office
         CType(Me.RadGroupBoxEtatCivil.GetChildAt(0).GetChildAt(1), Telerik.WinControls.UI.GroupBoxHeader).Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Bold)
+        '
+        'Label9
+        '
+        Me.Label9.AutoSize = True
+        Me.Label9.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label9.ForeColor = System.Drawing.Color.OrangeRed
+        Me.Label9.Location = New System.Drawing.Point(1030, 36)
+        Me.Label9.Name = "Label9"
+        Me.Label9.Size = New System.Drawing.Size(67, 13)
+        Me.Label9.TabIndex = 72
+        Me.Label9.Text = "Allergie(s) "
+        Me.ToolTip.SetToolTip(Me.Label9, resources.GetString("Label9.ToolTip"))
+        '
+        'Label10
+        '
+        Me.Label10.AutoSize = True
+        Me.Label10.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label10.ForeColor = System.Drawing.Color.OrangeRed
+        Me.Label10.Location = New System.Drawing.Point(895, 36)
+        Me.Label10.Name = "Label10"
+        Me.Label10.Size = New System.Drawing.Size(117, 13)
+        Me.Label10.TabIndex = 71
+        Me.Label10.Text = "Contre-indication(s)"
+        Me.ToolTip.SetToolTip(Me.Label10, resources.GetString("Label10.ToolTip"))
         '
         'LblPharmacienNom
         '
@@ -959,30 +983,6 @@ Partial Class RadFOrdonnanceListeDetail
         Me.RadBtnAjoutLigne.Size = New System.Drawing.Size(151, 24)
         Me.RadBtnAjoutLigne.TabIndex = 1
         Me.RadBtnAjoutLigne.Text = "Ajout ligne commentaire"
-        '
-        'Label9
-        '
-        Me.Label9.AutoSize = True
-        Me.Label9.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label9.ForeColor = System.Drawing.Color.OrangeRed
-        Me.Label9.Location = New System.Drawing.Point(1030, 36)
-        Me.Label9.Name = "Label9"
-        Me.Label9.Size = New System.Drawing.Size(67, 13)
-        Me.Label9.TabIndex = 72
-        Me.Label9.Text = "Allergie(s) "
-        Me.ToolTip.SetToolTip(Me.Label9, resources.GetString("Label9.ToolTip"))
-        '
-        'Label10
-        '
-        Me.Label10.AutoSize = True
-        Me.Label10.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label10.ForeColor = System.Drawing.Color.OrangeRed
-        Me.Label10.Location = New System.Drawing.Point(895, 36)
-        Me.Label10.Name = "Label10"
-        Me.Label10.Size = New System.Drawing.Size(117, 13)
-        Me.Label10.TabIndex = 71
-        Me.Label10.Text = "Contre-indication(s)"
-        Me.ToolTip.SetToolTip(Me.Label10, resources.GetString("Label10.ToolTip"))
         '
         'RadFOrdonnanceListeDetail
         '

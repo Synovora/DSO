@@ -871,4 +871,17 @@ Public Class RadFOrdonnanceListeDetail
         End Using
         Me.Enabled = True
     End Sub
+
+    Private Sub RadBtnImprimer_Click(sender As Object, e As EventArgs) Handles RadBtnImprimer.Click
+        Cursor.Current = Cursors.WaitCursor
+        Try
+            Dim printPdf As New PdfOrdonnance
+            printPdf.SelectedPatient = SelectedPatient
+            printPdf.SelectedOrdonnanceId = SelectedOrdonnanceId
+            printPdf.ImprimeOrdonnance()
+        Catch ex As Exception
+            MsgBox(ex.Message())
+        End Try
+        Cursor.Current = Cursors.Default
+    End Sub
 End Class

@@ -287,6 +287,7 @@ Partial Class RadFEpisodeLigneDeVie
         GridViewTextBoxColumn2.EnableExpressionEditor = False
         GridViewTextBoxColumn2.HeaderText = "Type"
         GridViewTextBoxColumn2.HeaderTextAlignment = System.Drawing.ContentAlignment.MiddleLeft
+        GridViewTextBoxColumn2.IsVisible = False
         GridViewTextBoxColumn2.Name = "type"
         GridViewTextBoxColumn2.Width = 100
         GridViewTextBoxColumn3.EnableExpressionEditor = False
@@ -362,7 +363,7 @@ Partial Class RadFEpisodeLigneDeVie
         '
         Me.ContextMenuStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.OrdonnanceMédicaleToolStripMenuItem, Me.SousépisodesToolStripMenuItem})
         Me.ContextMenuStrip1.Name = "ContextMenuStrip1"
-        Me.ContextMenuStrip1.Size = New System.Drawing.Size(192, 70)
+        Me.ContextMenuStrip1.Size = New System.Drawing.Size(192, 48)
         '
         'OrdonnanceMédicaleToolStripMenuItem
         '

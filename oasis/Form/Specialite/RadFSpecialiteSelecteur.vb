@@ -1,4 +1,6 @@
 ﻿Imports System.Collections.Specialized
+Imports Telerik.WinControls
+Imports Telerik.WinControls.UI
 
 Public Class RadFSpecialiteSelecteur
     Private _SelectedSpecialiteId As Integer
@@ -103,4 +105,21 @@ Public Class RadFSpecialiteSelecteur
         Close()
     End Sub
 
+    Private Sub RadSpecialiteDataGridView_CellFormatting(sender As Object, e As Telerik.WinControls.UI.CellFormattingEventArgs) Handles RadSpecialiteDataGridView.CellFormatting
+        If TypeOf e.Row Is GridViewDataRowInfo Then
+            Try
+                If e.Row.Tag <> Nothing Then e.CellElement.ToolTipText = e.Row.Tag
+            Catch ex As Exception
+
+            End Try
+        End If
+        ' --- on enleve le carre des checkbox
+        Dim checkBoxCell As GridCheckBoxCellElement = TryCast(e.CellElement, GridCheckBoxCellElement)
+        If checkBoxCell IsNot Nothing Then
+            Dim editor As RadCheckBoxEditor = TryCast(checkBoxCell.Editor, RadCheckBoxEditor)
+            Dim element As RadCheckBoxEditorElement = TryCast(editor.EditorElement, RadCheckBoxEditorElement)
+            element.Checkmark.Border.Visibility = ElementVisibility.Collapsed
+            element.Checkmark.Fill.Visibility = ElementVisibility.Collapsed
+        End If
+    End Sub
 End Class

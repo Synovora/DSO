@@ -407,6 +407,11 @@ Public Class RadFEpisodeLigneDeVie
                 RadGridViewEpisode.Rows(iGrid).Cells("type_activite").Value = episodeDao.GetItemTypeActiviteByCode(Coalesce(dt.Rows(i)("type_activite"), ""))
             End If
 
+            'Activité pour un épisode virtuel
+            If RadGridViewEpisode.Rows(iGrid).Cells("type_activite").Value = "" Then
+                RadGridViewEpisode.Rows(iGrid).Cells("type_activite").Value = Coalesce(dt.Rows(i)("type"), "")
+            End If
+
             RadGridViewEpisode.Rows(iGrid).Cells("type_profil").Value = Coalesce(dt.Rows(i)("type_profil"), "")
             RadGridViewEpisode.Rows(iGrid).Cells("description_activite").Value = Coalesce(dt.Rows(i)("description_activite"), "")
 
