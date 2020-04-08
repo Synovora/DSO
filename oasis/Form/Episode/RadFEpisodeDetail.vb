@@ -4999,6 +4999,19 @@ Public Class RadFEpisodeDetail
         End Try
     End Sub
 
+    'Appel synthèse
+    Private Sub RadBtnSynthèse_Click(sender As Object, e As EventArgs) Handles RadBtnSynthèse.Click
+        Cursor.Current = Cursors.WaitCursor
+        Me.Enabled = False
+        Using form As New RadFSynthese
+            form.SelectedPatient = Me.SelectedPatient
+            form.UtilisateurConnecte = userLog
+            form.OrigineAppel = RadFSynthese.enumOrigineAppel.EPISODE
+            form.ShowDialog()
+        End Using
+        Me.Enabled = True
+    End Sub
+
     'Abandon
     Private Sub RadBtnAbandon_Click(sender As Object, e As EventArgs) Handles RadBtnAbandon.Click
         Close()

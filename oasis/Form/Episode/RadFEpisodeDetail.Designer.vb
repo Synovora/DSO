@@ -351,6 +351,7 @@ Partial Class RadFEpisodeDetail
         Me.SplitPanelTop = New Telerik.WinControls.UI.SplitPanel()
         Me.SplitPanelBody = New Telerik.WinControls.UI.SplitPanel()
         Me.SplitPanelBottom = New Telerik.WinControls.UI.SplitPanel()
+        Me.RadBtnSynthèse = New Telerik.WinControls.UI.RadButton()
         CType(Me.RadPanelEtatCivil, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.RadPanelEtatCivil.SuspendLayout()
         CType(Me.RadGbxParametre, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -546,6 +547,7 @@ Partial Class RadFEpisodeDetail
         Me.SplitPanelBody.SuspendLayout()
         CType(Me.SplitPanelBottom, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SplitPanelBottom.SuspendLayout()
+        CType(Me.RadBtnSynthèse, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
@@ -1173,20 +1175,21 @@ Partial Class RadFEpisodeDetail
         '
         'RadPanel12
         '
+        Me.RadPanel12.Controls.Add(Me.RadBtnSynthèse)
         Me.RadPanel12.Controls.Add(Me.RadBtnSocial)
         Me.RadPanel12.Controls.Add(Me.RadBtnLigneDeVie)
         Me.RadPanel12.Controls.Add(Me.RadBtnVaccins)
         Me.RadPanel12.Controls.Add(Me.RadBtnDirectives)
         Me.RadPanel12.Controls.Add(Me.RadBtnNotesMedicales)
         Me.RadPanel12.Dock = System.Windows.Forms.DockStyle.Right
-        Me.RadPanel12.Location = New System.Drawing.Point(954, 0)
+        Me.RadPanel12.Location = New System.Drawing.Point(862, 0)
         Me.RadPanel12.Name = "RadPanel12"
-        Me.RadPanel12.Size = New System.Drawing.Size(519, 33)
+        Me.RadPanel12.Size = New System.Drawing.Size(611, 33)
         Me.RadPanel12.TabIndex = 8
         '
         'RadBtnSocial
         '
-        Me.RadBtnSocial.Location = New System.Drawing.Point(33, 6)
+        Me.RadBtnSocial.Location = New System.Drawing.Point(25, 6)
         Me.RadBtnSocial.Name = "RadBtnSocial"
         Me.RadBtnSocial.Size = New System.Drawing.Size(85, 24)
         Me.RadBtnSocial.TabIndex = 36
@@ -1194,7 +1197,7 @@ Partial Class RadFEpisodeDetail
         '
         'RadBtnLigneDeVie
         '
-        Me.RadBtnLigneDeVie.Location = New System.Drawing.Point(422, 6)
+        Me.RadBtnLigneDeVie.Location = New System.Drawing.Point(514, 6)
         Me.RadBtnLigneDeVie.Name = "RadBtnLigneDeVie"
         Me.RadBtnLigneDeVie.Size = New System.Drawing.Size(85, 24)
         Me.RadBtnLigneDeVie.TabIndex = 39
@@ -1202,7 +1205,7 @@ Partial Class RadFEpisodeDetail
         '
         'RadBtnVaccins
         '
-        Me.RadBtnVaccins.Location = New System.Drawing.Point(124, 6)
+        Me.RadBtnVaccins.Location = New System.Drawing.Point(116, 6)
         Me.RadBtnVaccins.Name = "RadBtnVaccins"
         Me.RadBtnVaccins.Size = New System.Drawing.Size(85, 24)
         Me.RadBtnVaccins.TabIndex = 37
@@ -1210,7 +1213,7 @@ Partial Class RadFEpisodeDetail
         '
         'RadBtnDirectives
         '
-        Me.RadBtnDirectives.Location = New System.Drawing.Point(306, 6)
+        Me.RadBtnDirectives.Location = New System.Drawing.Point(298, 6)
         Me.RadBtnDirectives.Name = "RadBtnDirectives"
         Me.RadBtnDirectives.Size = New System.Drawing.Size(110, 24)
         Me.RadBtnDirectives.TabIndex = 40
@@ -1218,7 +1221,7 @@ Partial Class RadFEpisodeDetail
         '
         'RadBtnNotesMedicales
         '
-        Me.RadBtnNotesMedicales.Location = New System.Drawing.Point(215, 6)
+        Me.RadBtnNotesMedicales.Location = New System.Drawing.Point(207, 6)
         Me.RadBtnNotesMedicales.Name = "RadBtnNotesMedicales"
         Me.RadBtnNotesMedicales.Size = New System.Drawing.Size(85, 24)
         Me.RadBtnNotesMedicales.TabIndex = 38
@@ -1260,7 +1263,7 @@ Partial Class RadFEpisodeDetail
         'RadBtnAbandon
         '
         Me.RadBtnAbandon.DialogResult = System.Windows.Forms.DialogResult.Cancel
-        Me.RadBtnAbandon.Location = New System.Drawing.Point(803, 6)
+        Me.RadBtnAbandon.Location = New System.Drawing.Point(762, 6)
         Me.RadBtnAbandon.Name = "RadBtnAbandon"
         Me.RadBtnAbandon.Size = New System.Drawing.Size(110, 24)
         Me.RadBtnAbandon.TabIndex = 0
@@ -3585,6 +3588,14 @@ Partial Class RadFEpisodeDetail
         Me.SplitPanelBottom.TabStop = False
         Me.SplitPanelBottom.Text = "SplitPanel4"
         '
+        'RadBtnSynthèse
+        '
+        Me.RadBtnSynthèse.Location = New System.Drawing.Point(414, 6)
+        Me.RadBtnSynthèse.Name = "RadBtnSynthèse"
+        Me.RadBtnSynthèse.Size = New System.Drawing.Size(94, 24)
+        Me.RadBtnSynthèse.TabIndex = 41
+        Me.RadBtnSynthèse.Text = "Synthèse"
+        '
         'RadFEpisodeDetail
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -3809,6 +3820,7 @@ Partial Class RadFEpisodeDetail
         Me.SplitPanelBody.ResumeLayout(False)
         CType(Me.SplitPanelBottom, System.ComponentModel.ISupportInitialize).EndInit()
         Me.SplitPanelBottom.ResumeLayout(False)
+        CType(Me.RadBtnSynthèse, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
 
@@ -4057,5 +4069,6 @@ Partial Class RadFEpisodeDetail
     Friend WithEvents RadMenuItemObsSpeIdeSaisieObservation As Telerik.WinControls.UI.RadMenuItem
     Friend WithEvents RadMenuItemObseSpeIdeAjoutProtocoleAigue As Telerik.WinControls.UI.RadMenuItem
     Friend WithEvents RadPanelConclusionIdeType As Telerik.WinControls.UI.RadPanel
+    Friend WithEvents RadBtnSynthèse As Telerik.WinControls.UI.RadButton
 End Class
 

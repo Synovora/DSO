@@ -12,6 +12,7 @@ Public Class RadFSynthese
     Private privateUtilisateurConnecte As Utilisateur
     Private _rendezVousId As Long
     Private _IsRendezVousCloture As Boolean
+    Private _origineAppel As enumOrigineAppel
 
     Public Property SelectedPatient As Patient
         Get
@@ -48,6 +49,20 @@ Public Class RadFSynthese
             _IsRendezVousCloture = value
         End Set
     End Property
+
+    Public Property OrigineAppel As enumOrigineAppel
+        Get
+            Return _origineAppel
+        End Get
+        Set(value As enumOrigineAppel)
+            _origineAppel = value
+        End Set
+    End Property
+
+    Public Enum enumOrigineAppel
+        AUTRE = 0
+        EPISODE = 2
+    End Enum
 
     Dim antecedentChangementOrdreDao As New AntecedentChangementOrdreDao
     Dim antecedentAffectationDao As New AntecedentAffectationDao
@@ -113,10 +128,15 @@ Public Class RadFSynthese
         episode = episodeDao.GetEpisodeEnCoursByPatientId(Me.SelectedPatient.patientId)
         Dim BtnColor As New Color
         BtnColor = RadBtnEpisode.BackColor
-        If episode.Id <> 0 Then
-            RadBtnEpisode.ForeColor = Color.Red
-            RadBtnEpisode.Font = New Font(RadBtnEpisode.Font, FontStyle.Bold)
-            ToolTip.SetToolTip(RadBtnEpisode, "Episode en cours existant pour ce patient")
+
+        If OrigineAppel = enumOrigineAppel.EPISODE Then
+            RadBtnEpisode.Hide()
+        Else
+            If episode.Id <> 0 Then
+                RadBtnEpisode.ForeColor = Color.Red
+                RadBtnEpisode.Font = New Font(RadBtnEpisode.Font, FontStyle.Bold)
+                ToolTip.SetToolTip(RadBtnEpisode, "Episode en cours existant pour ce patient")
+            End If
         End If
     End Sub
 
