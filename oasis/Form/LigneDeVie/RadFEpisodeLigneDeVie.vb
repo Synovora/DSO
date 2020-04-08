@@ -6,6 +6,7 @@ Public Class RadFEpisodeLigneDeVie
     Private privateSelectedPatient As Patient
     Private privateUtilisateurConnecte As Utilisateur
     Private _EpisodeIdDejaOuvert As Long
+    Private _ecranPrecedent As EnumAccesEcranPrecedent
 
     Public Property SelectedPatient As Patient
         Get
@@ -31,6 +32,15 @@ Public Class RadFEpisodeLigneDeVie
         End Get
         Set(value As Long)
             _EpisodeIdDejaOuvert = value
+        End Set
+    End Property
+
+    Friend Property EcranPrecedent As EnumAccesEcranPrecedent
+        Get
+            Return _ecranPrecedent
+        End Get
+        Set(value As EnumAccesEcranPrecedent)
+            _ecranPrecedent = value
         End Set
     End Property
 

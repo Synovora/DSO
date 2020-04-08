@@ -37,7 +37,9 @@ Public Class ContreIndicationSubstanceDao
         contreIndication.ContreIndicationId = reader("contre_indication_id")
         contreIndication.PatientId = Coalesce(reader("patient_id"), 0)
         contreIndication.SubstanceId = Coalesce(reader("substance_id"), 0)
+        contreIndication.SubstancePereId = Coalesce(reader("substance_pere_id"), 0)
         contreIndication.DenominationSubstance = Coalesce(reader("denomination_substance"), "")
+        contreIndication.DenominationSubstancePere = Coalesce(reader("denomination_substance_pere"), "")
         contreIndication.UserCreation = Coalesce(reader("creation_user_id"), 0)
         contreIndication.DateCreation = Coalesce(reader("creation_date"), Nothing)
         contreIndication.UserAnnulation = Coalesce(reader("annulation_user_id"), 0)
@@ -79,13 +81,29 @@ Public Class ContreIndicationSubstanceDao
 
         Dim SQLstring As String = "IF NOT EXISTS" &
             " (SELECT 1 FROM oasis.oa_patient_contre_indication_substance" &
-            " WHERE patient_id = @patientId" &
-            " AND substance_id = @substanceId" &
-            " AND (inactif Is Null OR inactif = 'False'))" &
+            " WHERE patient_id = @patientId"
+
+        Dim SqlStringCond1 As String = " AND substance_id = @substanceId"
+
+        Dim SqlStringCond2 As String = " AND substance_pere_id = @substancePereId"
+
+        Dim SqlStringFin As String = " AND (inactif Is Null OR inactif = 'False'))" &
             " INSERT INTO oasis.oa_patient_contre_indication_substance" &
-            " (patient_id, substance_id, denomination_substance, creation_user_id, creation_date, inactif)" &
+            " (patient_id, substance_id, substance_pere_id, denomination_substance, denomination_substance_pere, creation_user_id, creation_date, inactif)" &
             " VALUES" &
-            " (@patientId, @substanceId, @substanceDenomination, @userCreation, @dateCreation, @inactif)"
+            " (@patientId, @substanceId, @substancePereId, @substanceDenomination, @substanceDenominationPere, @userCreation, @dateCreation, @inactif)"
+
+        If contreIndication.SubstancePereId = 0 Then
+            SQLstring += SqlStringCond1
+            contreIndication.DenominationSubstancePere = ""
+        Else
+            SQLstring += SqlStringCond2
+            contreIndication.SubstanceId = 0
+            contreIndication.DenominationSubstance = ""
+            'TODO: récupérer la dénomination de la substance père
+        End If
+
+        SQLstring += SqlStringFin
 
         Dim con As SqlConnection = GetConnection()
         Dim cmd As New SqlCommand(SQLstring, con)
@@ -93,7 +111,9 @@ Public Class ContreIndicationSubstanceDao
         With cmd.Parameters
             .AddWithValue("@patientId", contreIndication.PatientId.ToString)
             .AddWithValue("@substanceId", contreIndication.SubstanceId)
+            .AddWithValue("@substancePereId", contreIndication.SubstancePereId)
             .AddWithValue("@substanceDenomination", contreIndication.DenominationSubstance)
+            .AddWithValue("@substanceDenominationPere", contreIndication.DenominationSubstancePere)
             .AddWithValue("@userCreation", userLog.UtilisateurId)
             .AddWithValue("@dateCreation", Date.Now())
             .AddWithValue("@inactif", False)

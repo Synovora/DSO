@@ -366,6 +366,44 @@ Public Class TheriaqueDao
     '=============================================================================================
     '   Substance
     '=============================================================================================
+    Friend Function GetSubstanceById(CodeId As String) As Substance
+        Dim dt As New DataTable
+        Dim ds As New DataSet
+        Dim substance As New Substance
+        Dim SubstanceDenomination As String = ""
+
+
+        Using con As SqlConnection = GetConnection()
+            Try
+                Dim command As New SqlCommand("theriaque.GET_THE_SUB_ID", con)
+                command.CommandType = CommandType.StoredProcedure
+                command.Connection.ChangeDatabase("Theriak")
+                command.Parameters.AddWithValue("@codeId", CodeId)
+                command.Parameters.AddWithValue("@VarType", 1) 'Substance active
+
+                Dim da As New SqlDataAdapter(command)
+                da.Fill(dt)
+
+                Dim rowCount As Integer = dt.Rows.Count
+                If dt.Rows.Count > 0 Then
+                    substance.SubstanceId = dt.Rows(0)("SAC_CODE_SQ_PK")
+                    substance.SubstanceDenomination = Coalesce(dt.Rows(0)("SAC_NOM"), "")
+                    substance.SubstancePereId = Coalesce(dt.Rows(0)("SAC_GSAC_CODE_FK"), 0)
+                Else
+                    substance.SubstanceId = 0
+                    substance.SubstanceDenomination = ""
+                    substance.SubstancePereId = 0
+                End If
+            Catch ex As Exception
+                Throw ex
+            Finally
+                con.Close()
+            End Try
+        End Using
+
+        Return substance
+    End Function
+
     Friend Function GetSubstanceCodeListBySpecialite(CodeId As String) As List(Of Integer)
         Dim dt As New DataTable
         Dim ds As New DataSet

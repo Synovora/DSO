@@ -11,6 +11,7 @@ Public Class RadFEpisodeDetail
     Private _rendezVousId As Long
     Private _isRendezVousCloture As Boolean
     Private _UtilisateurConnecte As Utilisateur
+    Private _ecranPrecedent As EnumAccesEcranPrecedent
 
     Public Property SelectedEpisodeId As Long
         Get
@@ -54,6 +55,15 @@ Public Class RadFEpisodeDetail
         End Get
         Set(value As Boolean)
             _isRendezVousCloture = value
+        End Set
+    End Property
+
+    Friend Property EcranPrecedent As EnumAccesEcranPrecedent
+        Get
+            Return _ecranPrecedent
+        End Get
+        Set(value As EnumAccesEcranPrecedent)
+            _ecranPrecedent = value
         End Set
     End Property
 
@@ -2372,8 +2382,8 @@ Public Class RadFEpisodeDetail
                 End If
             End If
 
-            Dim longueurString As Integer
-            Dim longueurMax As Integer = 100
+            'Dim longueurString As Integer
+            'Dim longueurMax As Integer = 100
             Dim antecedentDescription As String
 
             '===== Affichage antécédent
@@ -2382,11 +2392,11 @@ Public Class RadFEpisodeDetail
             Else
                 antecedentDescription = antecedentDataTable.Rows(i)("oa_antecedent_description")
                 antecedentDescription = Replace(antecedentDescription, vbCrLf, " ")
-                longueurString = antecedentDescription.Length
-                If longueurString > longueurMax Then
-                    longueurString = longueurMax
-                End If
-                antecedentDescription = antecedentDescription.Substring(0, longueurString)
+                'longueurString = antecedentDescription.Length
+                'If longueurString > longueurMax Then
+                'longueurString = longueurMax
+                'End If
+                'antecedentDescription = antecedentDescription.Substring(0, longueurString)
                 RadAntecedentDataGridView.Rows(iGrid).Cells("antecedentDescription").Value = antecedentDataTable.Rows(i)("oa_antecedent_description")
             End If
 
@@ -5006,7 +5016,7 @@ Public Class RadFEpisodeDetail
         Using form As New RadFSynthese
             form.SelectedPatient = Me.SelectedPatient
             form.UtilisateurConnecte = userLog
-            form.OrigineAppel = RadFSynthese.enumOrigineAppel.EPISODE
+            form.EcranPrecedent = EnumAccesEcranPrecedent.SANS
             form.ShowDialog()
         End Using
         Me.Enabled = True

@@ -37,7 +37,9 @@ Public Class AllergieDao
         allergie.AllergieId = reader("allergie_id")
         allergie.PatientId = Coalesce(reader("patient_id"), 0)
         allergie.SubstanceId = Coalesce(reader("substance_id"), 0)
+        allergie.SubstancePereId = Coalesce(reader("substance_pere_id"), 0)
         allergie.DenominationSubstance = Coalesce(reader("denomination_substance"), "")
+        allergie.DenominationSubstancePere = Coalesce(reader("denomination_substance_pere"), "")
         allergie.UserCreation = Coalesce(reader("creation_user_id"), 0)
         allergie.DateCreation = Coalesce(reader("creation_date"), Nothing)
         allergie.UserAnnulation = Coalesce(reader("annulation_user_id"), 0)
@@ -79,13 +81,29 @@ Public Class AllergieDao
 
         Dim SQLstring As String = "IF NOT EXISTS" &
             " (SELECT 1 FROM oasis.oa_patient_allergie" &
-            " WHERE patient_id = @patientId" &
-            " AND substance_id = @substanceId" &
-            " AND (inactif Is Null OR inactif = 'False'))" &
+            " WHERE patient_id = @patientId"
+
+        Dim SqlStringCond1 As String = " AND substance_id = @substanceId"
+
+        Dim SqlStringCond2 As String = " AND substance_pere_id = @substancePereId"
+
+        Dim SqlStringFin As String = " AND (inactif Is Null Or inactif = 'False'))" &
             " INSERT INTO oasis.oa_patient_allergie" &
-            " (patient_id, substance_id, denomination_substance, creation_user_id, creation_date, inactif)" &
+            " (patient_id, substance_id, substance_pere_id, denomination_substance, denomination_substance_pere, creation_user_id, creation_date, inactif)" &
             " VALUES" &
-            " (@patientId, @substanceId, @substanceDenomination, @userCreation, @dateCreation, @inactif)"
+            " (@patientId, @substanceId, @substancePereId, @substanceDenomination, @substanceDenominationPere, @userCreation, @dateCreation, @inactif)"
+
+        If allergie.SubstancePereId = 0 Then
+            SQLstring += SqlStringCond1
+            allergie.DenominationSubstancePere = ""
+        Else
+            SQLstring += SqlStringCond2
+            allergie.SubstanceId = 0
+            allergie.DenominationSubstance = ""
+            'TODO: récupérer la dénomination de la substance père
+        End If
+
+        SQLstring += SqlStringFin
 
         Dim con As SqlConnection = GetConnection()
         Dim cmd As New SqlCommand(SQLstring, con)
@@ -93,7 +111,9 @@ Public Class AllergieDao
         With cmd.Parameters
             .AddWithValue("@patientId", allergie.PatientId.ToString)
             .AddWithValue("@substanceId", allergie.SubstanceId)
+            .AddWithValue("@substancePereId", allergie.SubstancePereId)
             .AddWithValue("@substanceDenomination", allergie.DenominationSubstance)
+            .AddWithValue("@substanceDenominationPere", allergie.DenominationSubstancePere)
             .AddWithValue("@userCreation", userLog.UtilisateurId)
             .AddWithValue("@dateCreation", Date.Now())
             .AddWithValue("@inactif", False)

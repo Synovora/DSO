@@ -252,11 +252,6 @@ Public Class RadFWkfDemandeAvis
                     DescriptionPriorite = ""
             End Select
 
-            LblPriorite.Hide()
-            RadioBtnAvisUrgent.Hide()
-            RadioBtnSynchrone.Hide()
-            RadioBtnAsynchrone.Hide()
-
             '===========================================================================================================
             ' Description du Workflow
             '===========================================================================================================

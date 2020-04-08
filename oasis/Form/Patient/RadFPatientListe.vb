@@ -391,6 +391,7 @@ Public Class RadFPatientListe
                 PatientDao.SetPatient(Me.SelectedPatient, patientId)
                 form.SelectedPatient = Me.SelectedPatient
                 form.UtilisateurConnecte = Me.UtilisateurConnecte
+                form.EcranPrecedent = EnumAccesEcranPrecedent.SANS
                 form.ShowDialog()
             End Using
             Me.Enabled = True
@@ -463,7 +464,7 @@ Public Class RadFPatientListe
             PatientDao.SetPatient(Me.SelectedPatient, patientId)
             Cursor.Current = Cursors.WaitCursor
             Me.Enabled = False
-            episodeDao.CallEpisode(SelectedPatient, 0)
+            episodeDao.CallEpisode(SelectedPatient, 0, EnumAccesEcranPrecedent.SANS)
             Me.Enabled = True
             episode = episodeDao.GetEpisodeEnCoursByPatientId(Me.SelectedPatient.patientId)
             If episode.Id <> 0 Then
@@ -515,6 +516,7 @@ Public Class RadFPatientListe
             PatientDao.SetPatient(Me.SelectedPatient, patientId)
             vadFEpisodeListe.SelectedPatient = Me.SelectedPatient
             vadFEpisodeListe.UtilisateurConnecte = Me.UtilisateurConnecte
+            vadFEpisodeListe.EcranPrecedent = EnumAccesEcranPrecedent.SANS
             vadFEpisodeListe.ShowDialog()
         End Using
         Me.Enabled = True

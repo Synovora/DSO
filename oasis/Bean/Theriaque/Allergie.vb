@@ -2,7 +2,9 @@
     Private _allergieId As Long
     Private _patientId As Long
     Private _substanceId As Long
+    Private _substancePereId As Long
     Private _denominationSubstance As String
+    Private _denominationSubstancePere As String
     Private _userCreation As Long
     Private _dateCreation As DateTime
     Private _userAnnulation As Long
@@ -87,6 +89,24 @@
         End Get
         Set(value As Boolean)
             _inactif = value
+        End Set
+    End Property
+
+    Public Property SubstancePereId As Long
+        Get
+            Return _substancePereId
+        End Get
+        Set(value As Long)
+            _substancePereId = value
+        End Set
+    End Property
+
+    Public Property DenominationSubstancePere As String
+        Get
+            Return _denominationSubstancePere
+        End Get
+        Set(value As String)
+            _denominationSubstancePere = value
         End Set
     End Property
 End Class

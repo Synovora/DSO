@@ -703,11 +703,20 @@ Public Class RadF_AllergieSelecteur
         Dim EnumeratorSubstanceListe As IEnumerator = SubstanceListe.GetEnumerator()
         While EnumeratorSubstanceListe.MoveNext()
             Dim SubstanceId As Long = EnumeratorSubstanceListe.Current
-            Dim SubstanceDenomination As String = theriaqueDao.GetSubstanceDenominationById(SubstanceId)
             Dim allergieSubstance As New Allergie
+
             allergieSubstance.PatientId = SelectedPatient.patientId
             allergieSubstance.SubstanceId = SubstanceId
-            allergieSubstance.DenominationSubstance = SubstanceDenomination
+            Dim substance As Substance = theriaqueDao.GetSubstanceById(SubstanceId)
+
+            'Dénomination
+            allergieSubstance.DenominationSubstance = substance.SubstanceDenomination
+
+            'Substance père
+            allergieSubstance.SubstancePereId = substance.SubstancePereId
+
+            'Dénomination substance père
+            allergieSubstance.DenominationSubstancePere = ""
 
             If allergieDao.CreationAllergie(allergieSubstance) = True Then
                 NombreCICreation += 1

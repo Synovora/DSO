@@ -239,6 +239,7 @@
     <Compile Include="Bean\Theriaque\SpecialiteAllergique.vb" />
     <Compile Include="Bean\Theriaque\SpecialiteContreIndique.vb" />
     <Compile Include="Bean\Theriaque\SpecialiteTheriaque.vb" />
+    <Compile Include="Bean\Theriaque\Substance.vb" />
     <Compile Include="Bean\Traitement\TraitementCourrier.vb" />
     <Compile Include="Dao\Antecedent\AntecedentAffectationDao.vb" />
     <Compile Include="Bean\LigneDeVie\LigneDeVie.vb" />

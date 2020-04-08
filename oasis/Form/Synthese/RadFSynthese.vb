@@ -12,7 +12,7 @@ Public Class RadFSynthese
     Private privateUtilisateurConnecte As Utilisateur
     Private _rendezVousId As Long
     Private _IsRendezVousCloture As Boolean
-    Private _origineAppel As enumOrigineAppel
+    Private _ecranPrecedent As EnumAccesEcranPrecedent
 
     Public Property SelectedPatient As Patient
         Get
@@ -50,12 +50,12 @@ Public Class RadFSynthese
         End Set
     End Property
 
-    Public Property OrigineAppel As enumOrigineAppel
+    Friend Property EcranPrecedent As EnumAccesEcranPrecedent
         Get
-            Return _origineAppel
+            Return _ecranPrecedent
         End Get
-        Set(value As enumOrigineAppel)
-            _origineAppel = value
+        Set(value As EnumAccesEcranPrecedent)
+            _ecranPrecedent = value
         End Set
     End Property
 
@@ -129,7 +129,9 @@ Public Class RadFSynthese
         Dim BtnColor As New Color
         BtnColor = RadBtnEpisode.BackColor
 
-        If OrigineAppel = enumOrigineAppel.EPISODE Then
+        If EcranPrecedent = EnumAccesEcranPrecedent.EPISODE OrElse
+            EcranPrecedent = EnumAccesEcranPrecedent.EPISODE_ET_SYNTHESE OrElse
+            EcranPrecedent = EnumAccesEcranPrecedent.LIGNE_DE_VIE_ET_EPISODE Then
             RadBtnEpisode.Hide()
         Else
             If episode.Id <> 0 Then
@@ -338,8 +340,8 @@ Public Class RadFSynthese
                 End If
             End If
 
-            Dim longueurString As Integer
-            Dim longueurMax As Integer = 100
+            'Dim longueurString As Integer
+            'Dim longueurMax As Integer = 200
             Dim antecedentDescription As String
 
             '===== Affichage antécédent
@@ -348,11 +350,11 @@ Public Class RadFSynthese
             Else
                 antecedentDescription = antecedentDataTable.Rows(i)("oa_antecedent_description")
                 antecedentDescription = Replace(antecedentDescription, vbCrLf, " ")
-                longueurString = antecedentDescription.Length
-                If longueurString > longueurMax Then
-                    longueurString = longueurMax
-                End If
-                antecedentDescription = antecedentDescription.Substring(0, longueurString)
+                'longueurString = antecedentDescription.Length
+                'If longueurString > longueurMax Then
+                'longueurString = longueurMax
+                'End If
+                'antecedentDescription = antecedentDescription.Substring(0, longueurString)
                 RadAntecedentDataGridView.Rows(iGrid).Cells("antecedentDescription").Value = antecedentDataTable.Rows(i)("oa_antecedent_description")
             End If
 

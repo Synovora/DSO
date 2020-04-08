@@ -4,6 +4,16 @@ Imports Oasis_Common
 
 Module Environnement
 
+    Public Enum EnumAccesEcranPrecedent
+        SANS
+        LIGNE_DE_VIE
+        LIGNE_DE_VIE_ET_SYNTHESE
+        LIGNE_DE_VIE_ET_EPISODE
+        EPISODE
+        EPISODE_ET_SYNTHESE
+        SYNTHESE
+    End Enum
+
     Public Enum EnumResultat
         CreationOK
         ModificationOK
@@ -62,6 +72,14 @@ Module Environnement
         Droite = 0
         Gauche = 1
     End Enum
+
+    '=========================================================================
+    '================== Contrôle d'accès pour les principaux écrans (Synthèse, Episode et Ligne de vie
+    '=========================================================================
+
+    Friend Function GetControleAcces()
+
+    End Function
 
     '=========================================================================
     '================== Données persistante de session =======================

@@ -780,11 +780,20 @@ Public Class RadF_CI_ATC_Selecteur
         Dim EnumeratorSubstanceListe As IEnumerator = SubstanceListe.GetEnumerator()
         While EnumeratorSubstanceListe.MoveNext()
             Dim SubstanceId As Long = EnumeratorSubstanceListe.Current
-            Dim SubstanceDenomination As String = theriaqueDao.GetSubstanceDenominationById(SubstanceId)
             Dim contreIndicationSubstance As New ContreIndicationSubstance
+
             contreIndicationSubstance.PatientId = SelectedPatient.patientId
             contreIndicationSubstance.SubstanceId = SubstanceId
-            contreIndicationSubstance.DenominationSubstance = SubstanceDenomination
+            Dim substance As Substance = theriaqueDao.GetSubstanceById(SubstanceId)
+
+            'Dénomination
+            contreIndicationSubstance.DenominationSubstance = substance.SubstanceDenomination
+
+            'Substance père
+            contreIndicationSubstance.SubstancePereId = substance.SubstancePereId
+
+            'Dénomination substance père
+            contreIndicationSubstance.DenominationSubstancePere = ""
 
             If contreIndicationSubstanceDao.CreationContreIndicationSubstance(contreIndicationSubstance) = True Then
                 NombreCICreation += 1
