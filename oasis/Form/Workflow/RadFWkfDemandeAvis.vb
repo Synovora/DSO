@@ -124,7 +124,7 @@ Public Class RadFWkfDemandeAvis
                 " à " &
                 Date.Now().ToString("HH.mm")
             LblLabelTypeTache.Text = "Création demande d'avis"
-            RadPanelEmetteur.Hide()
+            'RadPanelEmetteur.Hide()
             LblVersDestinataire.Hide()
 
             CheckBox1.Hide()
@@ -172,7 +172,7 @@ Public Class RadFWkfDemandeAvis
                 LblDestinataireLocalisation.Text = GetLocalisation(fonction)
             End If
 
-            LblDestinataireNom.Text = "Destinataire de la demande d'avis :"
+            'LblDestinataireNom.Text = "Destinataire de la demande d'avis :"
 
             RadioBtnAsynchrone.Checked = True
         Else
@@ -204,34 +204,47 @@ Public Class RadFWkfDemandeAvis
             'Chargement de l'émetteur
             '===========================================================================================================
             'L'émetteur est l'utilisateur qui a émis la tâche : emetteur_user_id de la table Tâche
-            Dim userEmetteur As Utilisateur
-            userEmetteur = userDao.getUserById(tache.EmetteurUserId)
-            LblEmetteurNom.Text = userEmetteur.UtilisateurPrenom.Trim() & " " & userEmetteur.UtilisateurNom.Trim()
-            fonction = fonctionDao.getFonctionById(tache.EmetteurFonctionId)
-            LblEmetteurFonction.Text = fonction.Designation
+            'Dim userEmetteur As Utilisateur
+            'userEmetteur = userDao.getUserById(tache.EmetteurUserId)
+            'LblEmetteurNom.Text = userEmetteur.UtilisateurPrenom.Trim() & " " & userEmetteur.UtilisateurNom.Trim()
+            'fonction = fonctionDao.getFonctionById(tache.EmetteurFonctionId)
+            'LblEmetteurFonction.Text = fonction.Designation
 
             'Déterminer la localisation de l'émetteur selon sa fonction (médecin ou sage-femme : fonction libellé, IDE : site)
-            LblEmetteurLocalisation.Text = GetLocalisation(fonction)
+            'LblEmetteurLocalisation.Text = GetLocalisation(fonction)
 
             'Commentaire émetteur
-            ToolTip.SetToolTip(RadPanelEmetteur, tache.EmetteurCommentaire)
+            'ToolTip.SetToolTip(RadPanelEmetteur, tache.EmetteurCommentaire)
 
             '===========================================================================================================
             'Chargement du destinataire
             '===========================================================================================================
+            'LblEmetteurNom.Text = userEmetteur.UtilisateurPrenom.Trim() & " " & userEmetteur.UtilisateurNom.Trim()
+            'LblDestinataireNom.Text = ""
+            fonction = fonctionDao.getFonctionById(tache.EmetteurFonctionId)
+            LblDestinataireFonction.Text = fonction.Designation
+            CbxDestinataireFonction.Hide()
+            LblDestinataireFonction.Location = New Point(11, 13)
+
+            'Déterminer la localisation du destinataire selon sa fonction (médecin ou sage-femme : fonction libellé, IDE : site)
+            LblDestinataireLocalisation.Text = GetLocalisation(fonction)
+
+            'Commentaire émetteur
+            ToolTip.SetToolTip(RadPanelDestinataire, tache.EmetteurCommentaire)
+
             'Nom du destinataire (celui qui traite la tâche)
-            Dim userDestinataire As Utilisateur
-            userDestinataire = userDao.getUserById(tache.TraiteUserId)
-            LblDestinataireNom.Text = userDestinataire.UtilisateurPrenom.Trim() & " " & userDestinataire.UtilisateurNom.Trim()
+            'Dim userDestinataire As Utilisateur
+            'userDestinataire = userDao.getUserById(tache.TraiteUserId)
+            'LblDestinataireNom.Text = userDestinataire.UtilisateurPrenom.Trim() & " " & userDestinataire.UtilisateurNom.Trim()
 
             'Fonction du destinataire
-            fonction = fonctionDao.getFonctionById(tache.DestinataireFonctionId)
-            CbxDestinataireFonction.Hide()
-            LblDestinataireFonction.Location = New Point(365, 13)
-            LblDestinataireFonction.Text = fonction.Designation
+            'fonction = fonctionDao.getFonctionById(tache.DestinataireFonctionId)
+            'CbxDestinataireFonction.Hide()
+            'LblDestinataireFonction.Location = New Point(365, 13)
+            'LblDestinataireFonction.Text = fonction.Designation
 
             'Localisation du destinataire selon sa fonction (médecin ou sage-femme : fonction libellé, IDE : site)
-            LblDestinataireLocalisation.Text = GetLocalisation(fonction)
+            'LblDestinataireLocalisation.Text = GetLocalisation(fonction)
 
             '===========================================================================================================
             ' Priorité du Workflow
