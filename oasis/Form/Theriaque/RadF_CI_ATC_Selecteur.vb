@@ -175,7 +175,7 @@ Public Class RadF_CI_ATC_Selecteur
                         ChargementSpecialite(dt, True)
                     End If
                 Else
-                    LblOccurrencesLues.Text = "0 occurrence correspondant aux critères de recherche"
+                    LblOccurrencesLues.Text = "Aucune occurrence ne correspond aux critères de recherche"
                 End If
             End If
         End If

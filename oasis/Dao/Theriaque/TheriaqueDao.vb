@@ -43,7 +43,7 @@ Public Class TheriaqueDao
         Dim dt As DataTable
 
         Try
-            dt = getSpecialiteByArgument(SpecialiteId, EnumGetSpecialite.ID_THERIAQUE, 1)
+            dt = getSpecialiteByArgument(SpecialiteId, EnumGetSpecialite.ID_THERIAQUE, TheriaqueDao.EnumMonoVir.NULL)
             Dim rowCount As Integer = dt.Rows.Count
             If dt.Rows.Count > 0 Then
                 specialite = BuildBean(dt)
@@ -110,7 +110,6 @@ Public Class TheriaqueDao
                 Dim command As New SqlCommand("theriaque.GET_THE_ATC_ATC", con)
                 command.CommandType = CommandType.StoredProcedure
                 command.Connection.ChangeDatabase("Theriak")
-                'command.CommandText = "theriaque.GET_THE_ATC_ATC"
                 command.Parameters.AddWithValue("@codeId", CodeATC)
 
                 Dim da As New SqlDataAdapter(command)
@@ -169,14 +168,9 @@ Public Class TheriaqueDao
                 Dim command As New SqlCommand("theriaque.GET_THE_SPECIALITE", con)
                 command.CommandType = CommandType.StoredProcedure
                 command.Connection.ChangeDatabase("Theriak")
-                'command.CommandText = "theriaque.GET_THE_SPECIALITE"
                 command.Parameters.AddWithValue("@codeId", CodeId)
                 command.Parameters.AddWithValue("@VarTyp", VarTyp)
-                If Monovir = TheriaqueDao.EnumMonoVir.NULL Then
-                    command.Parameters.AddWithValue("@MonoVir", DBNull.Value)
-                Else
-                    command.Parameters.AddWithValue("@MonoVir", Monovir)
-                End If
+                command.Parameters.AddWithValue("@MonoVir", If(Monovir = TheriaqueDao.EnumMonoVir.NULL, DBNull.Value, Monovir))
 
                 Dim da As New SqlDataAdapter(command)
                 da.Fill(dt)
@@ -200,10 +194,10 @@ Public Class TheriaqueDao
                 Dim command As New SqlCommand("theriaque.GET_THE_SPECIALITE", con)
                 command.CommandType = CommandType.StoredProcedure
                 command.Connection.ChangeDatabase("Theriak")
-                'command.CommandText = "theriaque.GET_THE_SPECIALITE"
                 command.Parameters.AddWithValue("@codeId", CodeId)
                 command.Parameters.AddWithValue("@VarTyp", EnumGetSpecialite.ID_THERIAQUE)
-                command.Parameters.AddWithValue("@MonoVir", EnumMonoVir.VIRTUEL)
+                'command.Parameters.AddWithValue("@MonoVir", EnumMonoVir.VIRTUEL)
+                command.Parameters.AddWithValue("@MonoVir", DBNull.Value)
 
                 Dim da As New SqlDataAdapter(command)
                 da.Fill(dt)
@@ -231,10 +225,10 @@ Public Class TheriaqueDao
                 Dim command As New SqlCommand("theriaque.GET_THE_SPECIALITE", con)
                 command.CommandType = CommandType.StoredProcedure
                 command.Connection.ChangeDatabase("Theriak")
-                'command.CommandText = "theriaque.GET_THE_SPECIALITE"
                 command.Parameters.AddWithValue("@codeId", CodeId)
                 command.Parameters.AddWithValue("@VarTyp", EnumGetSpecialite.ID_THERIAQUE)
-                command.Parameters.AddWithValue("@MonoVir", EnumMonoVir.VIRTUEL)
+                'command.Parameters.AddWithValue("@MonoVir", EnumMonoVir.VIRTUEL)
+                command.Parameters.AddWithValue("@MonoVir", DBNull.Value)
 
                 Dim da As New SqlDataAdapter(command)
                 da.Fill(dt)

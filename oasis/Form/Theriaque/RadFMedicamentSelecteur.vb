@@ -105,19 +105,19 @@ Public Class RadFMedicamentSelecteur
             If dt.Rows.Count > 0 Then
                 ChargementSpecialite(dt, True)
             Else
-                '2 - Recherche spécialités classiques en nom complet
+                '2 - Recherche spécialités classiques en nom complet -> un espace est positionné entre la chaîne de caractère saisie et le caractère joker, par exemple 'ASPIRIN %'
                 NomSpecialite = RadTxtSpecialite.Text & " %"
                 dt = GetSpecialiteByNomSpecialite(NomSpecialite, TheriaqueDao.EnumMonoVir.CLASSIQUE)
                 If dt.Rows.Count > 0 Then
                     ChargementSpecialite(dt, True)
                 Else
-                    '3 - Recherche spécialités classiques en nom partiel
+                    '3 - Si la recherche n'a pas aboutie, on recherche les spécialités classiques en nom partiel, par exemple 'ASPIRIN%'
                     NomSpecialite = RadTxtSpecialite.Text & "%"
                     dt = GetSpecialiteByNomSpecialite(NomSpecialite, TheriaqueDao.EnumMonoVir.CLASSIQUE)
                     RadGridViewSpe.Rows.Clear()
                     RadGridViewSpe.FilterDescriptors.Clear()
                     If dt.Rows.Count > 0 Then
-                        'Récupération des ATC des spécialités classiques en nom partiel
+                        'Puis on récupére les ATC des spécialités classiques obtenues en nom partiel
                         Dim ResultatOk As Boolean = False
                         Dim ListATC As New StringCollection
                         Dim rowCount As Integer = dt.Rows.Count - 1
@@ -131,6 +131,7 @@ Public Class RadFMedicamentSelecteur
                         Dim iGrid As Integer = -1
                         While EnumeratorATC.MoveNext()
                             Dim CodeATC As String = EnumeratorATC.Current.ToString
+                            ' Recherche des spécialités virtuelles correspondant aux ATC des spécialités classiques obtenues précédemment
                             dt = theriaqueDao.getSpecialiteByArgument(CodeATC, TheriaqueDao.EnumGetSpecialite.CLASSE_ATC, TheriaqueDao.EnumMonoVir.VIRTUEL)
                             If dt.Rows.Count > 0 Then
                                 ResultatOk = True
@@ -140,14 +141,14 @@ Public Class RadFMedicamentSelecteur
                             iGrid += dt.Rows.Count
                         End While
 
-                        'Si pas de correspondance ATC entre Virtuel et classique en nom pariel, on affiche les classiques en nom partiel
+                        'Si aucune spécialité Virtuelle a été retrouvée à partir des ATC obtenues des spécialités classiques en nom pariel, on affiche les spécialités classiques en nom partiel
                         If ResultatOk = False Then
                             NomSpecialite = RadTxtSpecialite.Text & "%"
                             dt = GetSpecialiteByNomSpecialite(NomSpecialite, TheriaqueDao.EnumMonoVir.CLASSIQUE)
                             ChargementSpecialite(dt, True)
                         End If
                     Else
-                        LblOccurrencesLues.Text = "0 occurrence correspondant aux critères de recherche"
+                        LblOccurrencesLues.Text = "Aucune occurrence ne correspond aux critères de recherche"
                     End If
                 End If
             End If
