@@ -549,6 +549,7 @@ Public Class RadF_CI_ATC_Selecteur
     End Sub
 
     Private Sub AfficheATC(CodeATC As String)
+        Cursor.Current = Cursors.WaitCursor
         Dim codeATC1, codeATC2, codeATC3, codeATC4, codeATC5 As String
         codeATC1 = CodeATC.Substring(0, 1)
         ChargementATC1(codeATC1)
@@ -582,6 +583,7 @@ Public Class RadF_CI_ATC_Selecteur
             RadGridViewATC4.Rows.Clear()
             RadGridViewATC5.Rows.Clear()
         End If
+        Cursor.Current = Cursors.Default
     End Sub
 
     'Récupération de la valeur des boutons radio (virtuel / classique)

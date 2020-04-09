@@ -2,6 +2,7 @@
     Private _traitementId As Integer
     Private _patientId As Integer
     Private _medicamentCis As Integer
+    Private _medicamentMonographie As Integer
     Private _medicamentDci As String
     Private _denomination_longue As String
     Private _userCreation As Integer
@@ -347,6 +348,15 @@
         End Get
         Set(value As String)
             _denomination_longue = value
+        End Set
+    End Property
+
+    Public Property MedicamentMonographie As Integer
+        Get
+            Return _medicamentMonographie
+        End Get
+        Set(value As Integer)
+            _medicamentMonographie = value
         End Set
     End Property
 

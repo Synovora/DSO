@@ -78,6 +78,7 @@ Public Class ContreIndicationSubstanceDao
         Dim da As SqlDataAdapter = New SqlDataAdapter()
         Dim codeRetour As Boolean = True
         Dim n As Integer 'Pour récupérer le nombre d'occurences enregistrées
+        Dim theriaqueDao As New TheriaqueDao
 
         Dim SQLstring As String = "IF NOT EXISTS" &
             " (SELECT 1 FROM oasis.oa_patient_contre_indication_substance" &
@@ -100,7 +101,7 @@ Public Class ContreIndicationSubstanceDao
             SQLstring += SqlStringCond2
             contreIndication.SubstanceId = 0
             contreIndication.DenominationSubstance = ""
-            'TODO: récupérer la dénomination de la substance père
+            contreIndication.DenominationSubstancePere = theriaqueDao.getSubstancePereDenominationById(contreIndication.SubstancePereId)
         End If
 
         SQLstring += SqlStringFin

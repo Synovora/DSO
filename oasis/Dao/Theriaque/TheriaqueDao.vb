@@ -364,6 +364,39 @@ Public Class TheriaqueDao
     End Function
 
     '=============================================================================================
+    '   Substance père
+    '=============================================================================================
+    Friend Function getSubstancePereDenominationById(substancePereId As Integer) As String
+        Dim SubstancePereDenomination As String = ""
+        Dim con As SqlConnection
+
+        con = GetConnection()
+
+        Try
+            Dim command As SqlCommand = con.CreateCommand()
+
+            command.CommandText =
+                "SELECT * FROM theriaque.GSAC_PERE_SUBACT WHERE GSAC_CODE_SQ_PK = @id"
+
+            command.Connection.ChangeDatabase("Theriak")
+            command.Parameters.AddWithValue("@id", substancePereId)
+            Using reader As SqlDataReader = command.ExecuteReader()
+                If reader.Read() Then
+                    SubstancePereDenomination = Coalesce(reader("GSAC_NOM"), "")
+                Else
+                    Throw New ArgumentException("Substance père inexistante !")
+                End If
+            End Using
+        Catch ex As Exception
+            Throw ex
+        Finally
+            con.Close()
+        End Try
+
+        Return SubstancePereDenomination
+    End Function
+
+    '=============================================================================================
     '   Substance
     '=============================================================================================
     Friend Function GetSubstanceById(CodeId As String) As Substance
@@ -506,6 +539,39 @@ Public Class TheriaqueDao
         Return ATCCodeList
     End Function
 
+    Public Function getSubstanceActiveBySubstancePereId(SubstancePereId As Integer) As DataTable
+        Dim SQLString As String
+        SQLString = "SELECT * FROM theriaque.SAC_SUBACTIVE" &
+                    " WHERE SAC_GSAC_CODE_FK = @substancePereId"
+
+        Dim dt As DataTable = New DataTable()
+
+        Using con As SqlConnection = GetConnection()
+            Dim da As SqlDataAdapter = New SqlDataAdapter()
+            Using da
+                da.SelectCommand = New SqlCommand(SQLString, con)
+                da.SelectCommand.Connection.ChangeDatabase("Theriak")
+                da.SelectCommand.Parameters.AddWithValue("@substancePereId", SubstancePereId)
+
+                Dim tacheDataTable As DataTable = New DataTable()
+                Using tacheDataTable
+                    Try
+                        da.Fill(tacheDataTable)
+                    Catch ex As Exception
+                        Throw ex
+                    End Try
+                    Return tacheDataTable
+                End Using
+            End Using
+        End Using
+
+        Return dt
+    End Function
+
+
+    '=============================================================================================
+    '=== Contrôle contre-indication
+    '=============================================================================================
     Friend Function IsSpecialiteContreIndique(patient As Patient, specialiteId As Long) As SpecialiteContreIndique
         Dim specialiteContreIndique As New SpecialiteContreIndique
         specialiteContreIndique.ContreIndication = False
@@ -514,9 +580,7 @@ Public Class TheriaqueDao
         Dim specialite As SpecialiteTheriaque
         specialite = GetSpecialiteById(specialiteId)
 
-        '===============================================================================================
         'Contrôle contre-indication (ATC)
-        '===============================================================================================
         Dim contreIndicationATCDao As New ContreIndicationATCDao
         Dim dt As DataTable
 
@@ -544,9 +608,7 @@ Public Class TheriaqueDao
             End If
         Next
 
-        '===============================================================================================
         'Contrôle contre-indication (Substance)
-        '===============================================================================================
         '--> Liste des substances du médicament
         Dim SubstanceListe As List(Of Integer)
         SubstanceListe = GetSubstanceCodeListBySpecialite(specialiteId)
@@ -557,26 +619,57 @@ Public Class TheriaqueDao
         rowCount = dt.Rows.Count - 1
         For i = 0 To rowCount Step 1
             Dim codeSubstanceCI As Long = dt.Rows(i)("substance_id")
-            Dim EnumeratorSubstanceListe As IEnumerator = SubstanceListe.GetEnumerator()
-            While EnumeratorSubstanceListe.MoveNext()
-                Dim CodeSubstanceSpecialite As Integer = EnumeratorSubstanceListe.Current
-                If codeSubstanceCI = CodeSubstanceSpecialite Then
-                    Dim SubstanceDenomination As String = GetSubstanceDenominationById(CodeSubstanceSpecialite)
-                    If specialiteContreIndique.ContreIndication = True Then
-                        specialiteContreIndique.MessageContreIndication += vbCrLf
-                    Else
-                        specialiteContreIndique.ContreIndication = True
+            If codeSubstanceCI <> 0 Then
+                Dim EnumeratorSubstanceListe As IEnumerator = SubstanceListe.GetEnumerator()
+                While EnumeratorSubstanceListe.MoveNext()
+                    Dim CodeSubstanceSpecialite As Integer = EnumeratorSubstanceListe.Current
+                    If codeSubstanceCI = CodeSubstanceSpecialite Then
+                        Dim SubstanceDenomination As String = GetSubstanceDenominationById(CodeSubstanceSpecialite)
+                        If specialiteContreIndique.ContreIndication = True Then
+                            specialiteContreIndique.MessageContreIndication += vbCrLf
+                        Else
+                            specialiteContreIndique.ContreIndication = True
+                        End If
+                        specialiteContreIndique.MessageContreIndication += "Attention, le médicament (" & specialite.Dci & ") comporte une substance (" &
+                                          SubstanceDenomination &
+                                          "), contre-indiquée pour ce patient !"
                     End If
-                    specialiteContreIndique.MessageContreIndication += "Attention, le médicament (" & specialite.Dci & ") comporte une substance (" &
-                                      SubstanceDenomination &
-                                      "), contre-indiquée pour ce patient !"
+                End While
+            Else
+                Dim codeSubstancePereCI As Long = dt.Rows(i)("substance_pere_id")
+                If codeSubstancePereCI <> 0 Then
+                    dt = getSubstanceActiveBySubstancePereId(codeSubstancePereCI)
+                    rowCount = dt.Rows.Count - 1
+                    For j = 0 To rowCount Step 1
+                        Dim codeSubstanceId As Long = dt.Rows(j)("SAC_CODE_SQ_PK")
+                        Dim EnumeratorSubstanceListe As IEnumerator = SubstanceListe.GetEnumerator()
+                        While EnumeratorSubstanceListe.MoveNext()
+                            Dim CodeSubstanceSpecialite As Integer = EnumeratorSubstanceListe.Current
+                            If codeSubstanceId = CodeSubstanceSpecialite Then
+                                Dim SubstanceDenomination As String = GetSubstanceDenominationById(CodeSubstanceSpecialite)
+                                If specialiteContreIndique.ContreIndication = True Then
+                                    specialiteContreIndique.MessageContreIndication += vbCrLf
+                                Else
+                                    specialiteContreIndique.ContreIndication = True
+                                End If
+                                specialiteContreIndique.MessageContreIndication += "Attention, le médicament (" & specialite.Dci & ") comporte une substance (" &
+                                                  SubstanceDenomination &
+                                                  "), contre-indiquée pour ce patient !"
+                            End If
+                        End While
+                    Next
                 End If
-            End While
+            End If
+
         Next
 
         Return specialiteContreIndique
     End Function
 
+
+    '=============================================================================================
+    '=== Contrôle allergie
+    '=============================================================================================
     Friend Function IsSpecialiteAllergique(patient As Patient, specialiteId As Long) As SpecialiteAllergique
         Dim specialiteAllergique As New SpecialiteAllergique
         specialiteAllergique.Allergie = False
@@ -600,17 +693,39 @@ Public Class TheriaqueDao
         Dim rowCount As Integer = dt.Rows.Count - 1
         For i = 0 To rowCount Step 1
             Dim codeSubstanceAllergie As Long = dt.Rows(i)("substance_id")
-            Dim EnumeratorSubstanceListe As IEnumerator = SubstanceListe.GetEnumerator()
-            While EnumeratorSubstanceListe.MoveNext()
-                Dim CodeSubstanceSpecialite As Integer = EnumeratorSubstanceListe.Current
-                If codeSubstanceAllergie = CodeSubstanceSpecialite Then
-                    Dim SubstanceDenomination As String = GetSubstanceDenominationById(CodeSubstanceSpecialite)
-                    specialiteAllergique.Allergie = True
-                    specialiteAllergique.MessageAllergie += "Attention, le médicament (" & specialite.Dci & ") comporte une substance (" &
-                                      SubstanceDenomination &
-                                      "), déclarée allergique pour ce patient !"
+            If codeSubstanceAllergie <> 0 Then
+                Dim EnumeratorSubstanceListe As IEnumerator = SubstanceListe.GetEnumerator()
+                While EnumeratorSubstanceListe.MoveNext()
+                    Dim CodeSubstanceSpecialite As Integer = EnumeratorSubstanceListe.Current
+                    If codeSubstanceAllergie = CodeSubstanceSpecialite Then
+                        Dim SubstanceDenomination As String = GetSubstanceDenominationById(CodeSubstanceSpecialite)
+                        specialiteAllergique.Allergie = True
+                        specialiteAllergique.MessageAllergie += "Attention, le médicament (" & specialite.Dci & ") comporte une substance (" &
+                                          SubstanceDenomination &
+                                          "), déclarée allergique pour ce patient !"
+                    End If
+                End While
+            Else
+                Dim codeSubstancePereAllergie As Long = dt.Rows(i)("substance_pere_id")
+                If codeSubstancePereAllergie <> 0 Then
+                    dt = getSubstanceActiveBySubstancePereId(codeSubstancePereAllergie)
+                    rowCount = dt.Rows.Count - 1
+                    For j = 0 To rowCount Step 1
+                        Dim codeSubstanceId As Long = dt.Rows(j)("SAC_CODE_SQ_PK")
+                        Dim EnumeratorSubstanceListe As IEnumerator = SubstanceListe.GetEnumerator()
+                        While EnumeratorSubstanceListe.MoveNext()
+                            Dim CodeSubstanceSpecialite As Integer = EnumeratorSubstanceListe.Current
+                            If codeSubstanceId = CodeSubstanceSpecialite Then
+                                Dim SubstanceDenomination As String = GetSubstanceDenominationById(CodeSubstanceSpecialite)
+                                specialiteAllergique.Allergie = True
+                                specialiteAllergique.MessageAllergie += "Attention, le médicament (" & specialite.Dci & ") comporte une substance (" &
+                                          SubstanceDenomination &
+                                          "), déclarée allergique pour ce patient !"
+                            End If
+                        End While
+                    Next
                 End If
-            End While
+            End If
         Next
 
         Return specialiteAllergique

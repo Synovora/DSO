@@ -450,6 +450,7 @@ Public Class RadFMedicamentSelecteur
     End Sub
 
     Private Sub AfficheATC(CodeATC As String)
+        Cursor.Current = Cursors.WaitCursor
         Dim codeATC1, codeATC2, codeATC3, codeATC4 As String
         codeATC1 = CodeATC.Substring(0, 1)
         ChargementATC1(codeATC1)
@@ -474,6 +475,7 @@ Public Class RadFMedicamentSelecteur
             RadGridViewATC3.Rows.Clear()
             RadGridViewATC4.Rows.Clear()
         End If
+        Cursor.Current = Cursors.Default
     End Sub
 
     'Affichage popup détail grid spécialité
@@ -587,9 +589,11 @@ Public Class RadFMedicamentSelecteur
         If RadGridViewSpe.CurrentRow IsNot Nothing Then
             Dim aRow As Integer = Me.RadGridViewSpe.Rows.IndexOf(Me.RadGridViewSpe.CurrentRow)
             If aRow >= 0 Then
+                Cursor.Current = Cursors.WaitCursor
                 Dim SpecialiteId As Long = RadGridViewSpe.Rows(aRow).Cells("SP_CODE_SQ_PK").Value
                 Dim SpecialiteATCId As String = RadGridViewSpe.Rows(aRow).Cells("SP_CATC_CODE_FK").Value
                 Dim messageAlerte As String
+
 
                 '===============================================================================================
                 'Contrôle allergie
@@ -615,6 +619,7 @@ Public Class RadFMedicamentSelecteur
                     End If
                 End If
 
+                Cursor.Current = Cursors.WaitCursor
                 SelectedSpecialiteId = SpecialiteId
                 Close()
             End If

@@ -465,7 +465,16 @@ Module PatientDao
                 StringContreIndication += "Substance :" & vbCrLf
                 PremierPassage = False
             End If
-            StringContreIndication += dt.Rows(i)("substance_id") & " : " & dt.Rows(i)("denomination_substance") & vbCrLf
+            Dim substanceId As Integer = dt.Rows(i)("substance_id")
+            If substanceId <> 0 Then
+                StringContreIndication += dt.Rows(i)("substance_id") & " : " & dt.Rows(i)("denomination_substance") & vbCrLf
+            Else
+                Dim substancePereId As Integer = dt.Rows(i)("substance_pere_id")
+                If substancePereId <> 0 Then
+                    StringContreIndication += dt.Rows(i)("substance_pere_id") & " : " & dt.Rows(i)("denomination_substance_pere") & vbCrLf
+                End If
+            End If
+
         Next
 
         Return StringContreIndication

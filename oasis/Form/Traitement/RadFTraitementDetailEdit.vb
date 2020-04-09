@@ -103,6 +103,7 @@ Public Class RadFTraitementDetailEdit
     Dim conxn As New SqlConnection(getConnectionString())
     Dim SQLString As String
     Dim medicament_selecteur_cis As Integer
+    Dim medicamentMonographie As Integer
     Private utilisateurCreation As Integer
     Private dateCreationTraitement As Date
     Private traitementArrete As Boolean = False
@@ -122,98 +123,12 @@ Public Class RadFTraitementDetailEdit
         DroitAcces()
         ChargementEtatCivil()
 
-        'Allergie
-        If Allergie = True Then
-            '    LblAllergie.Show()
-        Else
-            '    LblAllergie.Hide()
-        End If
-
-        'Contre-indication
-        If ContreIndication = True Then
-            '    lblContreIndication.Show()
-        Else
-            '    lblContreIndication.Hide()
-        End If
-
         'Si allergie, affichage des substances allergiques
         If Allergie = True Then
-            'LblAllergie.Visible = True
-            'Dim premierPassage As Boolean = True
-            'Dim LongueurChaine, LongueurSub As Integer
-            'Dim AllergieTooltip As String = ""
-            'Dim LongueurMax As Integer = 10
-
-            'Chargement du TextBox
-            'Dim allergieString As String
-            'Dim SubstancesAllergiques As New StringCollection()
-            'SubstancesAllergiques = MedocDao.ListeSubstancesAllergiques(SelectedPatient.PatientAllergieCis)
-            'Dim allergieEnumerator As StringEnumerator = SubstancesAllergiques.GetEnumerator()
-            'While allergieEnumerator.MoveNext()
-            'If premierPassage = True Then
-            'allergieString = allergieEnumerator.Current.ToString
-            'LongueurChaine = allergieString.Length
-            'If LongueurChaine < LongueurMax Then
-            'LongueurSub = LongueurChaine - 1
-            'Else
-            'LongueurSub = LongueurMax
-            'End If
-            'AllergieTooltip = allergieString
-            'premierPassage = False
-            'Else
-            'allergieString = allergieEnumerator.Current.ToString
-            'LongueurChaine = allergieString.Length
-            'If LongueurChaine < LongueurMax Then
-            'LongueurSub = LongueurChaine - 1
-            'Else
-            'LongueurSub = LongueurMax
-            'End If
-            'AllergieTooltip = AllergieTooltip + vbCrLf + allergieString
-            'End If
-            'End While
-            'ToolTip.SetToolTip(LblAllergie, AllergieTooltip)
-            'Chargement des médicaments génériques associés aux médicaments allergiques déclarés
-            'TraitementAllergies(Me.SelectedPatient)
         End If
 
         If ContreIndication = True Then
             lblContreIndication.Show()
-            'Chargement des médicaments génériques associés aux médicaments contre-indiqués déclarés
-            'Dim premierPassage As Boolean = True
-            'Dim LongueurChaine, LongueurSub As Integer
-            'Dim CITooltip As String = ""
-            'Dim LongueurMax As Integer = 10
-
-            'Chargement du TextBox
-            'Dim CIString As String
-            'Dim SubstancesCI As New StringCollection()
-            'SubstancesCI = MedocDao.ListeSubstancesCI(SelectedPatient.PatientContreIndicationCis)
-            'Dim CIEnumerator As StringEnumerator = SubstancesCI.GetEnumerator()
-            'While CIEnumerator.MoveNext()
-            'If premierPassage = True Then
-            'CIString = CIEnumerator.Current.ToString
-            'LongueurChaine = CIString.Length
-            'If LongueurChaine < LongueurMax Then
-            'LongueurSub = LongueurChaine - 1
-            'Else
-            'LongueurSub = LongueurMax
-            'End If
-            'CITooltip = CIString
-            'premierPassage = False
-            'Else
-            'CIString = CIEnumerator.Current.ToString
-            'LongueurChaine = CIString.Length
-            'If LongueurChaine < LongueurMax Then
-            'LongueurSub = LongueurChaine - 1
-            'Else
-            'LongueurSub = LongueurMax
-            'End If
-            'CITooltip = CITooltip + vbCrLf + CIString
-            'End If
-            'End While
-            'ToolTip.SetToolTip(lblContreIndication, CITooltip)
-            'Chargement des médicaments génériques associés aux médicaments allergiques déclarés
-            'TraitementAllergies(Me.SelectedPatient)
         End If
 
         'Chargement de l'écran
@@ -666,12 +581,19 @@ Public Class RadFTraitementDetailEdit
             LblMedicamentDenominationLongue.Text = LblMedicamentDenominationLongue.Text.Replace("(MEDICAMENT VIRTUEL)", "")
             Dim ATCDenomination As String = TheriaqueDao.GetATCDenominationById(Coalesce(dt.Rows(0)("SP_CATC_CODE_FK"), ""))
             LblATC.Text = Coalesce(dt.Rows(0)("SP_CATC_CODE_FK"), "") & " - " & ATCDenomination
+            Dim monographie As Boolean = Coalesce(dt.Rows(0)("MONO_VIR"), 0)
+            If monographie = True Then
+                medicamentMonographie = 1
+            Else
+                medicamentMonographie = 0
+            End If
         Else
             LblMedicamentDCI.Text = ""
             LblMedicamentDenominationLongue.Text = ""
             LblMedicamentAdministration.Text = ""
             LblMedicamentTitulaire.Text = ""
             LblATC.Text = ""
+            medicamentMonographie = 0
         End If
     End Sub
 
@@ -987,6 +909,7 @@ Public Class RadFTraitementDetailEdit
         traitementaCreer.Commentaire = TxtTraitementCommentaire.Text
         traitementaCreer.DateDebut = DteTraitementDateDebut.Value
         traitementaCreer.DateFin = DteTraitementDateFin.Value
+        traitementaCreer.MedicamentMonographie = medicamentMonographie
 
         codeRetour = traitementDao.CreationTraitement(traitementaCreer, TraitementHistoACreer)
         If codeRetour = True Then

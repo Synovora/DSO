@@ -3,6 +3,11 @@ Imports Oasis_Common
 Public Class TraitementDao
     Inherits StandardDao
 
+    Public Enum EnumMonographie
+        CLASSIQUE = 0
+        VIRTUEL = 1
+    End Enum
+
     Public Structure EnumBaseCode
         Const JOURNALIER = "J"
         Const HEBDOMADAIRE = "H"
@@ -424,13 +429,13 @@ Public Class TraitementDao
         " oa_traitement_posologie_matin, oa_traitement_posologie_midi, oa_traitement_posologie_apres_midi, oa_traitement_posologie_soir," &
         " oa_traitement_fraction_matin,oa_traitement_fraction_midi, oa_traitement_fraction_apres_midi, oa_traitement_fraction_soir," &
         " oa_traitement_date_creation, oa_traitement_posologie_commentaire, oa_traitement_commentaire," &
-        " oa_traitement_date_debut, oa_traitement_date_fin)" &
+        " oa_traitement_date_debut, oa_traitement_date_fin, oa_traitement_medicament_monographie)" &
         " VALUES (@patientId, @cis, @dci, @denominationLongue, @allergie," &
         " @contreIndication, @utilisateurCreation, @utilisateurModification," &
         " @ordreAffichage, @posologieBase, @posologierythme," &
         " @PosologieMatin, @PosologieMidi, @PosologieApresMidi, @PosologieSoir," &
         " @FractionMatin, @FractionMidi, @FractionApresMidi, @FractionSoir," &
-        " @dateCreation, @posologieCommentaire, @traitementCommentaire, @dateDebut, @dateFin)"
+        " @dateCreation, @posologieCommentaire, @traitementCommentaire, @dateDebut, @dateFin, @monographie)"
 
         Dim con As SqlConnection = GetConnection()
         Dim cmd As New SqlCommand(SQLstring, con)
@@ -460,6 +465,7 @@ Public Class TraitementDao
             .AddWithValue("@traitementCommentaire", traitement.Commentaire)
             .AddWithValue("@dateDebut", traitement.DateDebut)
             .AddWithValue("@dateFin", traitement.DateFin)
+            .AddWithValue("@monographie", traitement.MedicamentMonographie)
         End With
 
         Try

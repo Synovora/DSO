@@ -70,9 +70,17 @@ Public Class RadFPatientContreIndicationListe
         For i = 0 To rowCount Step 1
             iGrid += 1
             RadCISubstancePatientDataGridView.Rows.Add(iGrid)
-            RadCISubstancePatientDataGridView.Rows(iGrid).Cells("substance_id").Value = dt.Rows(i)("substance_id")
-            RadCISubstancePatientDataGridView.Rows(iGrid).Cells("denomination_substance").Value = dt.Rows(i)("denomination_substance")
             RadCISubstancePatientDataGridView.Rows(iGrid).Cells("contre_indication_id").Value = dt.Rows(i)("contre_indication_id")
+            Dim substancePereId As Integer = Coalesce(dt.Rows(i)("substance_pere_id"), 0)
+            If substancePereId <> 0 Then
+                RadCISubstancePatientDataGridView.Rows(iGrid).Cells("substance_id").Value = dt.Rows(i)("substance_pere_id")
+                RadCISubstancePatientDataGridView.Rows(iGrid).Cells("substance_id").Style.ForeColor = Color.DarkBlue
+                RadCISubstancePatientDataGridView.Rows(iGrid).Cells("denomination_substance").Value = dt.Rows(i)("denomination_substance_pere")
+                RadCISubstancePatientDataGridView.Rows(iGrid).Cells("denomination_substance").Style.ForeColor = Color.DarkBlue
+            Else
+                RadCISubstancePatientDataGridView.Rows(iGrid).Cells("substance_id").Value = dt.Rows(i)("substance_id")
+                RadCISubstancePatientDataGridView.Rows(iGrid).Cells("denomination_substance").Value = dt.Rows(i)("denomination_substance")
+            End If
         Next
 
         'Positionnement du grid sur la première occurrence
