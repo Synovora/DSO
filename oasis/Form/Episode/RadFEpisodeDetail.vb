@@ -2229,6 +2229,7 @@ Public Class RadFEpisodeDetail
         InitParametre()
         ChargementParametres()
         ChargementSousEpisode()
+        refreshButtonSousEpisodeProperties()
         ChargementObservationSpecifique()
         ChargementObservationLibre()
         ChargementConclusion()
@@ -5001,6 +5002,8 @@ Public Class RadFEpisodeDetail
             Using frm = New FrmSousEpisodeListe(episode, SelectedPatient)
                 frm.ShowDialog()
             End Using
+            ChargementSousEpisode()
+            refreshButtonSousEpisodeProperties()
         Catch err As Exception
             MsgBox(err.Message())
         Finally
