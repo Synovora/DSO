@@ -632,10 +632,11 @@ Public Class TheriaqueDao
             Else
                 Dim codeSubstancePereCI As Long = dt.Rows(i)("substance_pere_id")
                 If codeSubstancePereCI <> 0 Then
-                    dt = getSubstanceActiveBySubstancePereId(codeSubstancePereCI)
-                    rowCount = dt.Rows.Count - 1
+                    Dim dt2 As DataTable
+                    dt2 = getSubstanceActiveBySubstancePereId(codeSubstancePereCI)
+                    rowCount = dt2.Rows.Count - 1
                     For j = 0 To rowCount Step 1
-                        Dim codeSubstanceId As Long = dt.Rows(j)("SAC_CODE_SQ_PK")
+                        Dim codeSubstanceId As Long = dt2.Rows(j)("SAC_CODE_SQ_PK")
                         Dim EnumeratorSubstanceListe As IEnumerator = SubstanceListe.GetEnumerator()
                         While EnumeratorSubstanceListe.MoveNext()
                             Dim CodeSubstanceSpecialite As Integer = EnumeratorSubstanceListe.Current
@@ -702,10 +703,11 @@ Public Class TheriaqueDao
             Else
                 Dim codeSubstancePereAllergie As Long = dt.Rows(i)("substance_pere_id")
                 If codeSubstancePereAllergie <> 0 Then
-                    dt = getSubstanceActiveBySubstancePereId(codeSubstancePereAllergie)
-                    rowCount = dt.Rows.Count - 1
+                    Dim dt2 As DataTable
+                    dt2 = getSubstanceActiveBySubstancePereId(codeSubstancePereAllergie)
+                    rowCount = dt2.Rows.Count - 1
                     For j = 0 To rowCount Step 1
-                        Dim codeSubstanceId As Long = dt.Rows(j)("SAC_CODE_SQ_PK")
+                        Dim codeSubstanceId As Long = dt2.Rows(j)("SAC_CODE_SQ_PK")
                         Dim EnumeratorSubstanceListe As IEnumerator = SubstanceListe.GetEnumerator()
                         While EnumeratorSubstanceListe.MoveNext()
                             Dim CodeSubstanceSpecialite As Integer = EnumeratorSubstanceListe.Current
