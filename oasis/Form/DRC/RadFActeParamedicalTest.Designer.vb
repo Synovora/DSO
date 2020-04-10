@@ -22,8 +22,8 @@ Partial Class RadFActeParamedicalTest
     'Do not modify it using the code editor.
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
-        Dim GridViewTextBoxColumn2 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
-        Dim TableViewDefinition2 As Telerik.WinControls.UI.TableViewDefinition = New Telerik.WinControls.UI.TableViewDefinition()
+        Dim GridViewTextBoxColumn1 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
+        Dim TableViewDefinition1 As Telerik.WinControls.UI.TableViewDefinition = New Telerik.WinControls.UI.TableViewDefinition()
         Me.RadGridViewActePara = New Telerik.WinControls.UI.RadGridView()
         Me.RadBtnAbandon = New Telerik.WinControls.UI.RadButton()
         Me.CbxActiviteEpisode = New System.Windows.Forms.ComboBox()
@@ -50,13 +50,13 @@ Partial Class RadFActeParamedicalTest
         Me.RadGridViewActePara.MasterTemplate.AllowAddNewRow = False
         Me.RadGridViewActePara.MasterTemplate.AllowDeleteRow = False
         Me.RadGridViewActePara.MasterTemplate.AllowEditRow = False
-        GridViewTextBoxColumn2.EnableExpressionEditor = False
-        GridViewTextBoxColumn2.HeaderText = "DRC"
-        GridViewTextBoxColumn2.HeaderTextAlignment = System.Drawing.ContentAlignment.MiddleLeft
-        GridViewTextBoxColumn2.Name = "drc"
-        GridViewTextBoxColumn2.Width = 350
-        Me.RadGridViewActePara.MasterTemplate.Columns.AddRange(New Telerik.WinControls.UI.GridViewDataColumn() {GridViewTextBoxColumn2})
-        Me.RadGridViewActePara.MasterTemplate.ViewDefinition = TableViewDefinition2
+        GridViewTextBoxColumn1.EnableExpressionEditor = False
+        GridViewTextBoxColumn1.HeaderText = "DRC"
+        GridViewTextBoxColumn1.HeaderTextAlignment = System.Drawing.ContentAlignment.MiddleLeft
+        GridViewTextBoxColumn1.Name = "drc"
+        GridViewTextBoxColumn1.Width = 350
+        Me.RadGridViewActePara.MasterTemplate.Columns.AddRange(New Telerik.WinControls.UI.GridViewDataColumn() {GridViewTextBoxColumn1})
+        Me.RadGridViewActePara.MasterTemplate.ViewDefinition = TableViewDefinition1
         Me.RadGridViewActePara.Name = "RadGridViewActePara"
         Me.RadGridViewActePara.ReadOnly = True
         Me.RadGridViewActePara.RightToLeft = System.Windows.Forms.RightToLeft.No
@@ -67,11 +67,11 @@ Partial Class RadFActeParamedicalTest
         'RadBtnAbandon
         '
         Me.RadBtnAbandon.DialogResult = System.Windows.Forms.DialogResult.Cancel
-        Me.RadBtnAbandon.Location = New System.Drawing.Point(299, 404)
+        Me.RadBtnAbandon.Image = Global.Oasis_WF.My.Resources.Resources._exit
+        Me.RadBtnAbandon.Location = New System.Drawing.Point(385, 404)
         Me.RadBtnAbandon.Name = "RadBtnAbandon"
-        Me.RadBtnAbandon.Size = New System.Drawing.Size(110, 24)
+        Me.RadBtnAbandon.Size = New System.Drawing.Size(24, 24)
         Me.RadBtnAbandon.TabIndex = 1
-        Me.RadBtnAbandon.Text = "Abandon"
         '
         'CbxActiviteEpisode
         '
@@ -92,7 +92,8 @@ Partial Class RadFActeParamedicalTest
         '
         'RadBtnValidation
         '
-        Me.RadBtnValidation.Location = New System.Drawing.Point(183, 404)
+        Me.RadBtnValidation.Image = Global.Oasis_WF.My.Resources.Resources.validation
+        Me.RadBtnValidation.Location = New System.Drawing.Point(12, 404)
         Me.RadBtnValidation.Name = "RadBtnValidation"
         Me.RadBtnValidation.Size = New System.Drawing.Size(110, 24)
         Me.RadBtnValidation.TabIndex = 2

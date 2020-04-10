@@ -1466,6 +1466,14 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Resources\Aha-Soft-People-User-group.ico" />
+    <None Include="Resources\rechercher.png" />
+    <None Include="Resources\supprimer.png" />
+    <None Include="Resources\selection.png" />
+    <None Include="Resources\validation.png" />
+    <None Include="Resources\mail.png" />
+    <None Include="Resources\print.png" />
+    <None Include="Resources\reload.png" />
+    <None Include="Resources\exit.png" />
     <Resource Include="Resources\RichTextBoxStrings.xml" />
     <None Include="Resources\Keys-icon.png" />
   </ItemGroup>

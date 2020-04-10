@@ -449,11 +449,12 @@ Partial Class RadFDRCSelecteur
         'RadBtnAbandon
         '
         Me.RadBtnAbandon.DialogResult = System.Windows.Forms.DialogResult.Cancel
-        Me.RadBtnAbandon.Location = New System.Drawing.Point(229, 343)
+        Me.RadBtnAbandon.Image = Global.Oasis_WF.My.Resources.Resources._exit
+        Me.RadBtnAbandon.ImageAlignment = System.Drawing.ContentAlignment.MiddleCenter
+        Me.RadBtnAbandon.Location = New System.Drawing.Point(314, 343)
         Me.RadBtnAbandon.Name = "RadBtnAbandon"
-        Me.RadBtnAbandon.Size = New System.Drawing.Size(110, 24)
+        Me.RadBtnAbandon.Size = New System.Drawing.Size(24, 24)
         Me.RadBtnAbandon.TabIndex = 21
-        Me.RadBtnAbandon.Text = "Abandon"
         Me.RadBtnAbandon.Visible = False
         '
         'TxtAldDescription
@@ -492,6 +493,7 @@ Partial Class RadFDRCSelecteur
         '
         'RadBtnSelection
         '
+        Me.RadBtnSelection.Image = Global.Oasis_WF.My.Resources.Resources.selection
         Me.RadBtnSelection.Location = New System.Drawing.Point(12, 261)
         Me.RadBtnSelection.Name = "RadBtnSelection"
         Me.RadBtnSelection.Size = New System.Drawing.Size(110, 24)

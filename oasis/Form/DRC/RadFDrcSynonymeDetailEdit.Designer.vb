@@ -84,7 +84,9 @@ Partial Class RadFDrcSynonymeDetailEdit
         '
         'RadBtnAnnuler
         '
-        Me.RadBtnAnnuler.Location = New System.Drawing.Point(15, 89)
+        Me.RadBtnAnnuler.ForeColor = System.Drawing.Color.Black
+        Me.RadBtnAnnuler.Image = Global.Oasis_WF.My.Resources.Resources.supprimer
+        Me.RadBtnAnnuler.Location = New System.Drawing.Point(124, 88)
         Me.RadBtnAnnuler.Name = "RadBtnAnnuler"
         Me.RadBtnAnnuler.Size = New System.Drawing.Size(110, 24)
         Me.RadBtnAnnuler.TabIndex = 58
@@ -92,7 +94,9 @@ Partial Class RadFDrcSynonymeDetailEdit
         '
         'RadBtnValidation
         '
-        Me.RadBtnValidation.Location = New System.Drawing.Point(262, 89)
+        Me.RadBtnValidation.ForeColor = System.Drawing.Color.Black
+        Me.RadBtnValidation.Image = Global.Oasis_WF.My.Resources.Resources.validation
+        Me.RadBtnValidation.Location = New System.Drawing.Point(8, 89)
         Me.RadBtnValidation.Name = "RadBtnValidation"
         Me.RadBtnValidation.Size = New System.Drawing.Size(110, 24)
         Me.RadBtnValidation.TabIndex = 59
@@ -101,11 +105,12 @@ Partial Class RadFDrcSynonymeDetailEdit
         'RadBtnAbandonner
         '
         Me.RadBtnAbandonner.DialogResult = System.Windows.Forms.DialogResult.Cancel
-        Me.RadBtnAbandonner.Location = New System.Drawing.Point(378, 89)
+        Me.RadBtnAbandonner.Image = Global.Oasis_WF.My.Resources.Resources._exit
+        Me.RadBtnAbandonner.ImageAlignment = System.Drawing.ContentAlignment.MiddleCenter
+        Me.RadBtnAbandonner.Location = New System.Drawing.Point(486, 89)
         Me.RadBtnAbandonner.Name = "RadBtnAbandonner"
-        Me.RadBtnAbandonner.Size = New System.Drawing.Size(110, 24)
+        Me.RadBtnAbandonner.Size = New System.Drawing.Size(24, 24)
         Me.RadBtnAbandonner.TabIndex = 60
-        Me.RadBtnAbandonner.Text = "Abandonner"
         '
         'RadFDrcSynonymeDetailEdit
         '

@@ -96,11 +96,12 @@ Partial Class RadFDrcStandardTypeActiviteListe
         'RadBtnAbandon
         '
         Me.RadBtnAbandon.DialogResult = System.Windows.Forms.DialogResult.Cancel
-        Me.RadBtnAbandon.Location = New System.Drawing.Point(588, 441)
+        Me.RadBtnAbandon.Image = Global.Oasis_WF.My.Resources.Resources._exit
+        Me.RadBtnAbandon.ImageAlignment = System.Drawing.ContentAlignment.MiddleCenter
+        Me.RadBtnAbandon.Location = New System.Drawing.Point(1011, 441)
         Me.RadBtnAbandon.Name = "RadBtnAbandon"
-        Me.RadBtnAbandon.Size = New System.Drawing.Size(110, 24)
+        Me.RadBtnAbandon.Size = New System.Drawing.Size(24, 24)
         Me.RadBtnAbandon.TabIndex = 4
-        Me.RadBtnAbandon.Text = "Abandon"
         '
         'RadBtnSelectParm
         '
@@ -190,7 +191,8 @@ Partial Class RadFDrcStandardTypeActiviteListe
         '
         'RadBtnSupprimer
         '
-        Me.RadBtnSupprimer.Location = New System.Drawing.Point(472, 441)
+        Me.RadBtnSupprimer.Image = Global.Oasis_WF.My.Resources.Resources.supprimer
+        Me.RadBtnSupprimer.Location = New System.Drawing.Point(12, 441)
         Me.RadBtnSupprimer.Name = "RadBtnSupprimer"
         Me.RadBtnSupprimer.Size = New System.Drawing.Size(110, 24)
         Me.RadBtnSupprimer.TabIndex = 4
@@ -206,7 +208,7 @@ Partial Class RadFDrcStandardTypeActiviteListe
         '
         'RadBtnModifier
         '
-        Me.RadBtnModifier.Location = New System.Drawing.Point(348, 441)
+        Me.RadBtnModifier.Location = New System.Drawing.Point(297, 441)
         Me.RadBtnModifier.Name = "RadBtnModifier"
         Me.RadBtnModifier.Size = New System.Drawing.Size(118, 24)
         Me.RadBtnModifier.TabIndex = 2

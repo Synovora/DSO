@@ -86,10 +86,10 @@ Partial Class RadFContextedetailEdit
         Me.RadBtnSupprimer = New Telerik.WinControls.UI.RadButton()
         Me.RadBtnTransformer = New Telerik.WinControls.UI.RadButton()
         Me.RadGroupBox1 = New Telerik.WinControls.UI.RadGroupBox()
+        Me.ChkOcculteTransformation = New System.Windows.Forms.CheckBox()
         Me.ChkCacheTransformation = New System.Windows.Forms.CheckBox()
         Me.ChkPublieTransformation = New System.Windows.Forms.CheckBox()
         Me.Label16 = New System.Windows.Forms.Label()
-        Me.ChkOcculteTransformation = New System.Windows.Forms.CheckBox()
         CType(Me.RadGroupBoxEtatCivil, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.RadGroupBoxEtatCivil.SuspendLayout()
         CType(Me.GbxPrincipal, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -710,15 +710,17 @@ Partial Class RadFContextedetailEdit
         'RadDtnAbandon
         '
         Me.RadDtnAbandon.DialogResult = System.Windows.Forms.DialogResult.Cancel
-        Me.RadDtnAbandon.Location = New System.Drawing.Point(850, 526)
+        Me.RadDtnAbandon.Image = Global.Oasis_WF.My.Resources.Resources._exit
+        Me.RadDtnAbandon.Location = New System.Drawing.Point(936, 526)
         Me.RadDtnAbandon.Name = "RadDtnAbandon"
-        Me.RadDtnAbandon.Size = New System.Drawing.Size(110, 24)
+        Me.RadDtnAbandon.Size = New System.Drawing.Size(24, 24)
         Me.RadDtnAbandon.TabIndex = 94
-        Me.RadDtnAbandon.Text = "Abandonner"
         '
         'RadValidation
         '
-        Me.RadValidation.Location = New System.Drawing.Point(734, 526)
+        Me.RadValidation.ForeColor = System.Drawing.Color.Black
+        Me.RadValidation.Image = Global.Oasis_WF.My.Resources.Resources.validation
+        Me.RadValidation.Location = New System.Drawing.Point(12, 526)
         Me.RadValidation.Name = "RadValidation"
         Me.RadValidation.Size = New System.Drawing.Size(110, 24)
         Me.RadValidation.TabIndex = 95
@@ -726,15 +728,18 @@ Partial Class RadFContextedetailEdit
         '
         'RadBtnSupprimer
         '
-        Me.RadBtnSupprimer.Location = New System.Drawing.Point(8, 526)
+        Me.RadBtnSupprimer.ForeColor = System.Drawing.Color.Black
+        Me.RadBtnSupprimer.Image = Global.Oasis_WF.My.Resources.Resources.supprimer
+        Me.RadBtnSupprimer.Location = New System.Drawing.Point(128, 526)
         Me.RadBtnSupprimer.Name = "RadBtnSupprimer"
-        Me.RadBtnSupprimer.Size = New System.Drawing.Size(134, 24)
+        Me.RadBtnSupprimer.Size = New System.Drawing.Size(156, 24)
         Me.RadBtnSupprimer.TabIndex = 99
         Me.RadBtnSupprimer.Text = "Supprimer le contexte"
         '
         'RadBtnTransformer
         '
-        Me.RadBtnTransformer.Location = New System.Drawing.Point(148, 526)
+        Me.RadBtnTransformer.ForeColor = System.Drawing.Color.Black
+        Me.RadBtnTransformer.Location = New System.Drawing.Point(290, 526)
         Me.RadBtnTransformer.Name = "RadBtnTransformer"
         Me.RadBtnTransformer.Size = New System.Drawing.Size(151, 24)
         Me.RadBtnTransformer.TabIndex = 100
@@ -757,6 +762,16 @@ Partial Class RadFContextedetailEdit
         CType(Me.RadGroupBox1.GetChildAt(0).GetChildAt(1), Telerik.WinControls.UI.GroupBoxHeader).GroupBoxStyle = Telerik.WinControls.UI.RadGroupBoxStyle.Office
         CType(Me.RadGroupBox1.GetChildAt(0).GetChildAt(1).GetChildAt(0), Telerik.WinControls.Primitives.FillPrimitive).BackColor = System.Drawing.SystemColors.ActiveCaption
         CType(Me.RadGroupBox1.GetChildAt(0).GetChildAt(1).GetChildAt(0), Telerik.WinControls.Primitives.FillPrimitive).SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.None
+        '
+        'ChkOcculteTransformation
+        '
+        Me.ChkOcculteTransformation.AutoSize = True
+        Me.ChkOcculteTransformation.Location = New System.Drawing.Point(377, 30)
+        Me.ChkOcculteTransformation.Name = "ChkOcculteTransformation"
+        Me.ChkOcculteTransformation.Size = New System.Drawing.Size(65, 17)
+        Me.ChkOcculteTransformation.TabIndex = 75
+        Me.ChkOcculteTransformation.Text = "Occulté"
+        Me.ChkOcculteTransformation.UseVisualStyleBackColor = True
         '
         'ChkCacheTransformation
         '
@@ -788,23 +803,13 @@ Partial Class RadFContextedetailEdit
         Me.Label16.TabIndex = 70
         Me.Label16.Text = "Statut affichage"
         '
-        'ChkOcculteTransformation
-        '
-        Me.ChkOcculteTransformation.AutoSize = True
-        Me.ChkOcculteTransformation.Location = New System.Drawing.Point(377, 30)
-        Me.ChkOcculteTransformation.Name = "ChkOcculteTransformation"
-        Me.ChkOcculteTransformation.Size = New System.Drawing.Size(65, 17)
-        Me.ChkOcculteTransformation.TabIndex = 75
-        Me.ChkOcculteTransformation.Text = "Occulté"
-        Me.ChkOcculteTransformation.UseVisualStyleBackColor = True
-        '
         'RadFContextedetailEdit
         '
         Me.AcceptButton = Me.RadValidation
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.CancelButton = Me.RadDtnAbandon
-        Me.ClientSize = New System.Drawing.Size(972, 576)
+        Me.ClientSize = New System.Drawing.Size(972, 556)
         Me.Controls.Add(Me.RadGroupBox1)
         Me.Controls.Add(Me.RadBtnTransformer)
         Me.Controls.Add(Me.RadBtnSupprimer)

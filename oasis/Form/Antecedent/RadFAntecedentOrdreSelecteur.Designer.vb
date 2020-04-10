@@ -331,11 +331,11 @@ Partial Class RadFAntecedentOrdreSelecteur
         'RadBtnAbandonner
         '
         Me.RadBtnAbandonner.DialogResult = System.Windows.Forms.DialogResult.Cancel
-        Me.RadBtnAbandonner.Location = New System.Drawing.Point(821, 4)
+        Me.RadBtnAbandonner.Image = Global.Oasis_WF.My.Resources.Resources._exit
+        Me.RadBtnAbandonner.Location = New System.Drawing.Point(907, 3)
         Me.RadBtnAbandonner.Name = "RadBtnAbandonner"
-        Me.RadBtnAbandonner.Size = New System.Drawing.Size(110, 24)
+        Me.RadBtnAbandonner.Size = New System.Drawing.Size(24, 24)
         Me.RadBtnAbandonner.TabIndex = 0
-        Me.RadBtnAbandonner.Text = "Abandonner"
         '
         'RadPanel4
         '
@@ -390,6 +390,7 @@ Partial Class RadFAntecedentOrdreSelecteur
         '
         'RadBtnConfirmerAvant
         '
+        Me.RadBtnConfirmerAvant.ForeColor = System.Drawing.Color.Black
         Me.RadBtnConfirmerAvant.Location = New System.Drawing.Point(752, 181)
         Me.RadBtnConfirmerAvant.Name = "RadBtnConfirmerAvant"
         Me.RadBtnConfirmerAvant.Size = New System.Drawing.Size(110, 24)
@@ -398,6 +399,7 @@ Partial Class RadFAntecedentOrdreSelecteur
         '
         'RadBtnConfirmerApres
         '
+        Me.RadBtnConfirmerApres.ForeColor = System.Drawing.Color.Black
         Me.RadBtnConfirmerApres.Location = New System.Drawing.Point(752, 239)
         Me.RadBtnConfirmerApres.Name = "RadBtnConfirmerApres"
         Me.RadBtnConfirmerApres.Size = New System.Drawing.Size(110, 24)
