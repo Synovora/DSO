@@ -1446,15 +1446,34 @@ Public Class RadFEpisodeDetail
     'Affichage Workflow
     Private Sub ChargementAffichageBlocWorkflow()
         'Identifier si Workflow en cours
+        LblPriorité.Hide()
         tache = tacheDao.GetDemandeEnCoursByEpisode(SelectedEpisodeId)
         If tache.Id <> 0 Then
+            Select Case tache.Priorite
+                Case 100
+                    LblPriorité.Text = "-- Urgent --"
+                    LblPriorité.ForeColor = Color.Red
+                    LblPriorité.Font = New Font(LblPriorité.Font, FontStyle.Bold)
+                Case 200
+                    LblPriorité.Text = "- Synchrone -"
+                    LblPriorité.ForeColor = Color.DarkBlue
+                    LblPriorité.Font = New Font(LblPriorité.Font, FontStyle.Bold)
+                Case 300
+                    LblPriorité.Text = "Asynchrone"
+                    LblPriorité.ForeColor = Color.Black
+                    LblPriorité.Font = New Font(LblPriorité.Font, FontStyle.Regular)
+                Case Else
+                    LblPriorité.Text = ""
+                    LblPriorité.ForeColor = Color.Black
+                    LblPriorité.Font = New Font(LblPriorité.Font, FontStyle.Regular)
+            End Select
+            LblPriorité.Show()
             ControleWorkflowEnCoursExistant = True
             OptionWorkflow = TacheDao.EnumOptionWorkflow.NULL
             Dim fonctionDestinataire As Fonction
             fonctionDestinataire = fonctionDao.getFonctionById(tache.DestinataireFonctionId)
             Select Case fonctionDestinataire.Type
                 Case ProfilDao.EnumProfilType.PARAMEDICAL.ToString
-                    'RadBtnWorkflowIde.Text = "Traiter"
                     RadBtnWorkflowIde.Show()
                     RadBtnWorkflowIde.Enabled = True
                     RadBtnWorkflowIde.ForeColor = Color.Red
@@ -1483,6 +1502,9 @@ Public Class RadFEpisodeDetail
                     RadBtnWorkflowMed.Font = New Font(RadBtnWorkflowMed.Font, FontStyle.Regular)
                     LblWorkFlow.Text = "<-----------------------------------"
                     LblWorkFlow.Show()
+                    TextBoxIDECommentaireWorkflow.Hide()
+                    TextBoxMedCommentaireWorkflow.Text = tache.EmetteurCommentaire
+                    TextBoxMedCommentaireWorkflow.Show()
                 Case ProfilDao.EnumProfilType.MEDICAL.ToString
                     'RadBtnWorkflowMed.Text = "Traiter"
                     RadBtnWorkflowMed.Show()
@@ -1513,6 +1535,9 @@ Public Class RadFEpisodeDetail
                     RadBtnWorkflowIde.Font = New Font(RadBtnWorkflowIde.Font, FontStyle.Regular)
                     LblWorkFlow.Text = "----------------------------------->"
                     LblWorkFlow.Show()
+                    TextBoxMedCommentaireWorkflow.Hide()
+                    TextBoxIDECommentaireWorkflow.Text = tache.EmetteurCommentaire
+                    TextBoxIDECommentaireWorkflow.Show()
             End Select
             Select Case userLog.TypeProfil
                 Case ProfilDao.EnumProfilType.PARAMEDICAL.ToString

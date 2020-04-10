@@ -440,7 +440,7 @@ Public Class EpisodeDao
         SQLString = "SELECT E.episode_id, E.patient_id, E.[type], type_activite, type_profil, commentaire, user_creation, date_creation," &
                     " U.oa_utilisateur_prenom, U.oa_utilisateur_nom, P.oa_patient_site_id, P.oa_patient_nom," &
                     " P.oa_patient_prenom, P.oa_patient_date_naissance, TACHE.nature, TACHE.destinataire_fonction_id, TACHE.etat, TACHE.oa_r_fonction_designation," &
-                    " TACHE.oa_utilisateur_prenom, TACHE.oa_utilisateur_nom, TACHE.oa_r_fonction_type" &
+                    " TACHE.oa_utilisateur_prenom, TACHE.oa_utilisateur_nom, TACHE.oa_r_fonction_type, TACHE.emetteur_commentaire, TACHE.priorite" &
                     " FROM oasis.oa_episode E" &
                     " LEFT JOIN oasis.oa_patient P ON P.oa_patient_id = E.patient_id" &
                     " LEFT JOIN oasis.oa_utilisateur U ON U.oa_utilisateur_id = user_creation" &

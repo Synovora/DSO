@@ -86,6 +86,24 @@ Public Class RadFEpisodeEnCoursListe
                             'RadBtnWorkflowIde.Text = "Demande de précision"
                     End Select
             End Select
+
+            RadGridViewEpisode.Rows(iGrid).Cells("workflowCommentaire").Value = Coalesce(episodeDataTable.Rows(i)("emetteur_commentaire"), "")
+            Dim PrioriteValeur As Integer = Coalesce(episodeDataTable.Rows(i)("priorite"), 0)
+            Select Case PrioriteValeur
+                Case 100
+                    RadGridViewEpisode.Rows(iGrid).Cells("workflowPriorite").Value = "-- Urgent --"
+                    RadGridViewEpisode.Rows(iGrid).Cells("workflowPriorite").Style.ForeColor = Color.Red
+                Case 200
+                    RadGridViewEpisode.Rows(iGrid).Cells("workflowPriorite").Value = "- Synchrone -"
+                    RadGridViewEpisode.Rows(iGrid).Cells("workflowPriorite").Style.ForeColor = Color.DarkBlue
+                Case 300
+                    RadGridViewEpisode.Rows(iGrid).Cells("workflowPriorite").Value = "Asynchrone"
+                    RadGridViewEpisode.Rows(iGrid).Cells("workflowPriorite").Style.ForeColor = Color.Black
+                Case Else
+                    RadGridViewEpisode.Rows(iGrid).Cells("workflowPriorite").Value = ""
+                    RadGridViewEpisode.Rows(iGrid).Cells("workflowPriorite").Style.ForeColor = Color.Black
+            End Select
+
             'Workflow --------------
 
             Dim utilisateurId As Long = Coalesce(episodeDataTable.Rows(i)("user_creation"), 0)
@@ -169,7 +187,7 @@ Public Class RadFEpisodeEnCoursListe
     Private Sub MasterTemplate_CellFormatting(sender As Object, e As Telerik.WinControls.UI.CellFormattingEventArgs) Handles RadGridViewEpisode.CellFormatting
         If TypeOf e.Row Is GridViewDataRowInfo Then
             Try
-                If e.Row.Tag <> Nothing Then e.CellElement.ToolTipText = e.Row.Tag
+                e.CellElement.ToolTipText = e.CellElement.Text
             Catch ex As Exception
 
             End Try
