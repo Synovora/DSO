@@ -2,7 +2,7 @@
     Private _traitementId As Integer
     Private _patientId As Integer
     Private _medicamentCis As Integer
-    Private _medicamentMonographie As Integer
+    Private _medicamentMonographie As Boolean
     Private _medicamentDci As String
     Private _denomination_longue As String
     Private _userCreation As Integer
@@ -351,11 +351,11 @@
         End Set
     End Property
 
-    Public Property MedicamentMonographie As Integer
+    Public Property MedicamentMonographie As Boolean
         Get
             Return _medicamentMonographie
         End Get
-        Set(value As Integer)
+        Set(value As Boolean)
             _medicamentMonographie = value
         End Set
     End Property
