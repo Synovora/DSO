@@ -317,11 +317,12 @@ Partial Class RadFParcoursConsigneDetailEdit
         'RadBtnAbandon
         '
         Me.RadBtnAbandon.DialogResult = System.Windows.Forms.DialogResult.Cancel
-        Me.RadBtnAbandon.Location = New System.Drawing.Point(874, 335)
+        Me.RadBtnAbandon.Image = Global.Oasis_WF.My.Resources.Resources._exit
+        Me.RadBtnAbandon.ImageAlignment = System.Drawing.ContentAlignment.MiddleCenter
+        Me.RadBtnAbandon.Location = New System.Drawing.Point(960, 335)
         Me.RadBtnAbandon.Name = "RadBtnAbandon"
-        Me.RadBtnAbandon.Size = New System.Drawing.Size(110, 24)
+        Me.RadBtnAbandon.Size = New System.Drawing.Size(24, 24)
         Me.RadBtnAbandon.TabIndex = 4
-        Me.RadBtnAbandon.Text = "Abandonner"
         '
         'TxtDrcDescription
         '
@@ -518,7 +519,8 @@ Partial Class RadFParcoursConsigneDetailEdit
         '
         'RadBtnValidation
         '
-        Me.RadBtnValidation.Location = New System.Drawing.Point(758, 335)
+        Me.RadBtnValidation.Image = Global.Oasis_WF.My.Resources.Resources.validation
+        Me.RadBtnValidation.Location = New System.Drawing.Point(12, 335)
         Me.RadBtnValidation.Name = "RadBtnValidation"
         Me.RadBtnValidation.Size = New System.Drawing.Size(110, 24)
         Me.RadBtnValidation.TabIndex = 7
@@ -526,7 +528,8 @@ Partial Class RadFParcoursConsigneDetailEdit
         '
         'RadBtnAnnulation
         '
-        Me.RadBtnAnnulation.Location = New System.Drawing.Point(525, 335)
+        Me.RadBtnAnnulation.Image = Global.Oasis_WF.My.Resources.Resources.supprimer
+        Me.RadBtnAnnulation.Location = New System.Drawing.Point(128, 335)
         Me.RadBtnAnnulation.Name = "RadBtnAnnulation"
         Me.RadBtnAnnulation.Size = New System.Drawing.Size(110, 24)
         Me.RadBtnAnnulation.TabIndex = 8
@@ -534,7 +537,7 @@ Partial Class RadFParcoursConsigneDetailEdit
         '
         'RadBtnDRCDetail
         '
-        Me.RadBtnDRCDetail.Location = New System.Drawing.Point(12, 335)
+        Me.RadBtnDRCDetail.Location = New System.Drawing.Point(244, 335)
         Me.RadBtnDRCDetail.Name = "RadBtnDRCDetail"
         Me.RadBtnDRCDetail.Size = New System.Drawing.Size(110, 24)
         Me.RadBtnDRCDetail.TabIndex = 8

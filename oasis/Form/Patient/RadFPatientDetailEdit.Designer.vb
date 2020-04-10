@@ -177,15 +177,17 @@ Partial Class RadFPatientDetailEdit
         'RadBtnAbandonner
         '
         Me.RadBtnAbandonner.DialogResult = System.Windows.Forms.DialogResult.Cancel
-        Me.RadBtnAbandonner.Location = New System.Drawing.Point(501, 749)
+        Me.RadBtnAbandonner.Image = Global.Oasis_WF.My.Resources.Resources._exit
+        Me.RadBtnAbandonner.ImageAlignment = System.Drawing.ContentAlignment.MiddleCenter
+        Me.RadBtnAbandonner.Location = New System.Drawing.Point(582, 749)
         Me.RadBtnAbandonner.Name = "RadBtnAbandonner"
-        Me.RadBtnAbandonner.Size = New System.Drawing.Size(110, 24)
+        Me.RadBtnAbandonner.Size = New System.Drawing.Size(24, 24)
         Me.RadBtnAbandonner.TabIndex = 364
-        Me.RadBtnAbandonner.Text = "Abandonner"
         '
         'RadBtnValider
         '
-        Me.RadBtnValider.Location = New System.Drawing.Point(385, 749)
+        Me.RadBtnValider.Image = Global.Oasis_WF.My.Resources.Resources.validation
+        Me.RadBtnValider.Location = New System.Drawing.Point(15, 749)
         Me.RadBtnValider.Name = "RadBtnValider"
         Me.RadBtnValider.Size = New System.Drawing.Size(110, 24)
         Me.RadBtnValider.TabIndex = 363
@@ -193,7 +195,7 @@ Partial Class RadFPatientDetailEdit
         '
         'RadBtnSortieOasis
         '
-        Me.RadBtnSortieOasis.Location = New System.Drawing.Point(142, 749)
+        Me.RadBtnSortieOasis.Location = New System.Drawing.Point(247, 749)
         Me.RadBtnSortieOasis.Name = "RadBtnSortieOasis"
         Me.RadBtnSortieOasis.Size = New System.Drawing.Size(121, 24)
         Me.RadBtnSortieOasis.TabIndex = 362
@@ -201,7 +203,7 @@ Partial Class RadFPatientDetailEdit
         '
         'RadBtnModifier
         '
-        Me.RadBtnModifier.Location = New System.Drawing.Point(26, 749)
+        Me.RadBtnModifier.Location = New System.Drawing.Point(131, 749)
         Me.RadBtnModifier.Name = "RadBtnModifier"
         Me.RadBtnModifier.Size = New System.Drawing.Size(110, 24)
         Me.RadBtnModifier.TabIndex = 361
@@ -229,9 +231,10 @@ Partial Class RadFPatientDetailEdit
         '
         'RadBtnValidationSortie
         '
+        Me.RadBtnValidationSortie.Image = Global.Oasis_WF.My.Resources.Resources.validation
         Me.RadBtnValidationSortie.Location = New System.Drawing.Point(118, 112)
         Me.RadBtnValidationSortie.Name = "RadBtnValidationSortie"
-        Me.RadBtnValidationSortie.Size = New System.Drawing.Size(110, 24)
+        Me.RadBtnValidationSortie.Size = New System.Drawing.Size(148, 24)
         Me.RadBtnValidationSortie.TabIndex = 361
         Me.RadBtnValidationSortie.Text = "Validation sortie"
         '
@@ -335,7 +338,7 @@ Partial Class RadFPatientDetailEdit
         '
         'RadBtnRDV
         '
-        Me.RadBtnRDV.Location = New System.Drawing.Point(269, 749)
+        Me.RadBtnRDV.Location = New System.Drawing.Point(374, 749)
         Me.RadBtnRDV.Name = "RadBtnRDV"
         Me.RadBtnRDV.Size = New System.Drawing.Size(110, 24)
         Me.RadBtnRDV.TabIndex = 364

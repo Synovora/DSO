@@ -110,15 +110,16 @@ Partial Class RadFEpisodeLigneDeVie
         'RadBtnAbandon
         '
         Me.RadBtnAbandon.DialogResult = System.Windows.Forms.DialogResult.Cancel
-        Me.RadBtnAbandon.Location = New System.Drawing.Point(1424, 696)
+        Me.RadBtnAbandon.Image = Global.Oasis_WF.My.Resources.Resources._exit
+        Me.RadBtnAbandon.ImageAlignment = System.Drawing.ContentAlignment.MiddleCenter
+        Me.RadBtnAbandon.Location = New System.Drawing.Point(1510, 712)
         Me.RadBtnAbandon.Name = "RadBtnAbandon"
-        Me.RadBtnAbandon.Size = New System.Drawing.Size(110, 24)
+        Me.RadBtnAbandon.Size = New System.Drawing.Size(24, 24)
         Me.RadBtnAbandon.TabIndex = 0
-        Me.RadBtnAbandon.Text = "Abandonner"
         '
         'RadBtnEpisode
         '
-        Me.RadBtnEpisode.Location = New System.Drawing.Point(1308, 696)
+        Me.RadBtnEpisode.Location = New System.Drawing.Point(1394, 712)
         Me.RadBtnEpisode.Name = "RadBtnEpisode"
         Me.RadBtnEpisode.Size = New System.Drawing.Size(110, 24)
         Me.RadBtnEpisode.TabIndex = 1
@@ -271,7 +272,7 @@ Partial Class RadFEpisodeLigneDeVie
         Me.RadGridViewEpisode.Font = New System.Drawing.Font("Segoe UI", 8.25!)
         Me.RadGridViewEpisode.ForeColor = System.Drawing.Color.Black
         Me.RadGridViewEpisode.ImeMode = System.Windows.Forms.ImeMode.NoControl
-        Me.RadGridViewEpisode.Location = New System.Drawing.Point(12, 268)
+        Me.RadGridViewEpisode.Location = New System.Drawing.Point(12, 289)
         '
         '
         '
@@ -356,7 +357,7 @@ Partial Class RadFEpisodeLigneDeVie
         Me.RadGridViewEpisode.Name = "RadGridViewEpisode"
         Me.RadGridViewEpisode.RightToLeft = System.Windows.Forms.RightToLeft.No
         Me.RadGridViewEpisode.ShowGroupPanel = False
-        Me.RadGridViewEpisode.Size = New System.Drawing.Size(1522, 422)
+        Me.RadGridViewEpisode.Size = New System.Drawing.Size(1522, 417)
         Me.RadGridViewEpisode.TabIndex = 3
         '
         'ContextMenuStrip1
@@ -660,7 +661,7 @@ Partial Class RadFEpisodeLigneDeVie
         '
         'RadBtnChart
         '
-        Me.RadBtnChart.Location = New System.Drawing.Point(962, 696)
+        Me.RadBtnChart.Location = New System.Drawing.Point(1278, 712)
         Me.RadBtnChart.Name = "RadBtnChart"
         Me.RadBtnChart.Size = New System.Drawing.Size(110, 24)
         Me.RadBtnChart.TabIndex = 25
@@ -677,18 +678,19 @@ Partial Class RadFEpisodeLigneDeVie
         '
         'RadBtnCreationEpisodeParametre
         '
-        Me.RadBtnCreationEpisodeParametre.Location = New System.Drawing.Point(1131, 696)
+        Me.RadBtnCreationEpisodeParametre.ForeColor = System.Drawing.Color.Black
+        Me.RadBtnCreationEpisodeParametre.Location = New System.Drawing.Point(12, 259)
         Me.RadBtnCreationEpisodeParametre.Name = "RadBtnCreationEpisodeParametre"
-        Me.RadBtnCreationEpisodeParametre.Size = New System.Drawing.Size(171, 24)
+        Me.RadBtnCreationEpisodeParametre.Size = New System.Drawing.Size(144, 24)
         Me.RadBtnCreationEpisodeParametre.TabIndex = 27
-        Me.RadBtnCreationEpisodeParametre.Text = "Création épisode de paramètres"
+        Me.RadBtnCreationEpisodeParametre.Text = "+ Episode de paramètres"
         '
         'RadFEpisodeLigneDeVie
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.CancelButton = Me.RadBtnAbandon
-        Me.ClientSize = New System.Drawing.Size(1546, 730)
+        Me.ClientSize = New System.Drawing.Size(1546, 740)
         Me.Controls.Add(Me.RadBtnCreationEpisodeParametre)
         Me.Controls.Add(Me.RadBtnConfiguration)
         Me.Controls.Add(Me.RadBtnChart)

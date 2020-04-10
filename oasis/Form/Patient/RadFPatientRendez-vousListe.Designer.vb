@@ -37,6 +37,7 @@ Partial Class RadFPatientRendez_vousListe
         Dim TableViewDefinition1 As Telerik.WinControls.UI.TableViewDefinition = New Telerik.WinControls.UI.TableViewDefinition()
         Me.RadGridViewRDV = New Telerik.WinControls.UI.RadGridView()
         Me.RadGroupBoxEtatCivil = New Telerik.WinControls.UI.RadGroupBox()
+        Me.LblDateNaissance = New System.Windows.Forms.Label()
         Me.LblALD = New System.Windows.Forms.Label()
         Me.Label13 = New System.Windows.Forms.Label()
         Me.LblPatientDateMaj = New System.Windows.Forms.Label()
@@ -64,7 +65,6 @@ Partial Class RadFPatientRendez_vousListe
         Me.RadDesktopAlert1 = New Telerik.WinControls.UI.RadDesktopAlert(Me.components)
         Me.RadBtnClotureRDV = New Telerik.WinControls.UI.RadButton()
         Me.RadBtnModifierRDV = New Telerik.WinControls.UI.RadButton()
-        Me.LblDateNaissance = New System.Windows.Forms.Label()
         CType(Me.RadGridViewRDV, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.RadGridViewRDV.MasterTemplate, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.RadGroupBoxEtatCivil, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -196,6 +196,15 @@ Partial Class RadFPatientRendez_vousListe
         Me.RadGroupBoxEtatCivil.Size = New System.Drawing.Size(1152, 87)
         Me.RadGroupBoxEtatCivil.TabIndex = 3
         Me.RadGroupBoxEtatCivil.Text = "Etat civil"
+        '
+        'LblDateNaissance
+        '
+        Me.LblDateNaissance.AutoSize = True
+        Me.LblDateNaissance.Location = New System.Drawing.Point(429, 20)
+        Me.LblDateNaissance.Name = "LblDateNaissance"
+        Me.LblDateNaissance.Size = New System.Drawing.Size(63, 13)
+        Me.LblDateNaissance.TabIndex = 46
+        Me.LblDateNaissance.Text = "25-04-2018"
         '
         'LblALD
         '
@@ -397,15 +406,16 @@ Partial Class RadFPatientRendez_vousListe
         'RadBtnAbandonner
         '
         Me.RadBtnAbandonner.DialogResult = System.Windows.Forms.DialogResult.Cancel
-        Me.RadBtnAbandonner.Location = New System.Drawing.Point(1054, 405)
+        Me.RadBtnAbandonner.Image = Global.Oasis_WF.My.Resources.Resources._exit
+        Me.RadBtnAbandonner.ImageAlignment = System.Drawing.ContentAlignment.MiddleCenter
+        Me.RadBtnAbandonner.Location = New System.Drawing.Point(1140, 405)
         Me.RadBtnAbandonner.Name = "RadBtnAbandonner"
-        Me.RadBtnAbandonner.Size = New System.Drawing.Size(110, 24)
+        Me.RadBtnAbandonner.Size = New System.Drawing.Size(24, 24)
         Me.RadBtnAbandonner.TabIndex = 5
-        Me.RadBtnAbandonner.Text = "Abandonner"
         '
         'RadBtnModifRDV
         '
-        Me.RadBtnModifRDV.Location = New System.Drawing.Point(851, 405)
+        Me.RadBtnModifRDV.Location = New System.Drawing.Point(909, 405)
         Me.RadBtnModifRDV.Name = "RadBtnModifRDV"
         Me.RadBtnModifRDV.Size = New System.Drawing.Size(197, 24)
         Me.RadBtnModifRDV.TabIndex = 6
@@ -421,7 +431,7 @@ Partial Class RadFPatientRendez_vousListe
         '
         'RadBtnClotureRDV
         '
-        Me.RadBtnClotureRDV.Location = New System.Drawing.Point(588, 405)
+        Me.RadBtnClotureRDV.Location = New System.Drawing.Point(646, 405)
         Me.RadBtnClotureRDV.Name = "RadBtnClotureRDV"
         Me.RadBtnClotureRDV.Size = New System.Drawing.Size(131, 24)
         Me.RadBtnClotureRDV.TabIndex = 9
@@ -429,20 +439,11 @@ Partial Class RadFPatientRendez_vousListe
         '
         'RadBtnModifierRDV
         '
-        Me.RadBtnModifierRDV.Location = New System.Drawing.Point(725, 405)
+        Me.RadBtnModifierRDV.Location = New System.Drawing.Point(783, 405)
         Me.RadBtnModifierRDV.Name = "RadBtnModifierRDV"
         Me.RadBtnModifierRDV.Size = New System.Drawing.Size(120, 24)
         Me.RadBtnModifierRDV.TabIndex = 7
         Me.RadBtnModifierRDV.Text = "Modifier rendez-vous"
-        '
-        'LblDateNaissance
-        '
-        Me.LblDateNaissance.AutoSize = True
-        Me.LblDateNaissance.Location = New System.Drawing.Point(429, 20)
-        Me.LblDateNaissance.Name = "LblDateNaissance"
-        Me.LblDateNaissance.Size = New System.Drawing.Size(63, 13)
-        Me.LblDateNaissance.TabIndex = 46
-        Me.LblDateNaissance.Text = "25-04-2018"
         '
         'RadFPatientRendez_vousListe
         '

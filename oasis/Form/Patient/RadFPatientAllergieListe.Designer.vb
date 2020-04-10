@@ -22,10 +22,10 @@ Partial Class RadFPatientAllergieListe
     'Do not modify it using the code editor.
     <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
-        Dim GridViewTextBoxColumn4 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
-        Dim GridViewTextBoxColumn5 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
-        Dim GridViewTextBoxColumn6 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
-        Dim TableViewDefinition2 As Telerik.WinControls.UI.TableViewDefinition = New Telerik.WinControls.UI.TableViewDefinition()
+        Dim GridViewTextBoxColumn1 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
+        Dim GridViewTextBoxColumn2 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
+        Dim GridViewTextBoxColumn3 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
+        Dim TableViewDefinition1 As Telerik.WinControls.UI.TableViewDefinition = New Telerik.WinControls.UI.TableViewDefinition()
         Me.RadBtnAbandon = New Telerik.WinControls.UI.RadButton()
         Me.RadGroupBox1 = New Telerik.WinControls.UI.RadGroupBox()
         Me.Label13 = New System.Windows.Forms.Label()
@@ -72,11 +72,12 @@ Partial Class RadFPatientAllergieListe
         'RadBtnAbandon
         '
         Me.RadBtnAbandon.DialogResult = System.Windows.Forms.DialogResult.Cancel
-        Me.RadBtnAbandon.Location = New System.Drawing.Point(525, 6)
+        Me.RadBtnAbandon.Image = Global.Oasis_WF.My.Resources.Resources._exit
+        Me.RadBtnAbandon.ImageAlignment = System.Drawing.ContentAlignment.MiddleCenter
+        Me.RadBtnAbandon.Location = New System.Drawing.Point(649, 6)
         Me.RadBtnAbandon.Name = "RadBtnAbandon"
-        Me.RadBtnAbandon.Size = New System.Drawing.Size(110, 24)
+        Me.RadBtnAbandon.Size = New System.Drawing.Size(24, 24)
         Me.RadBtnAbandon.TabIndex = 0
-        Me.RadBtnAbandon.Text = "Abandon"
         '
         'RadGroupBox1
         '
@@ -106,7 +107,7 @@ Partial Class RadFPatientAllergieListe
         Me.RadGroupBox1.HeaderText = "Etat civil"
         Me.RadGroupBox1.Location = New System.Drawing.Point(0, 0)
         Me.RadGroupBox1.Name = "RadGroupBox1"
-        Me.RadGroupBox1.Size = New System.Drawing.Size(658, 84)
+        Me.RadGroupBox1.Size = New System.Drawing.Size(685, 84)
         Me.RadGroupBox1.TabIndex = 1
         Me.RadGroupBox1.Text = "Etat civil"
         '
@@ -133,7 +134,7 @@ Partial Class RadFPatientAllergieListe
         '
         Me.Label5.AutoSize = True
         Me.Label5.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label5.Location = New System.Drawing.Point(665, 27)
+        Me.Label5.Location = New System.Drawing.Point(689, 27)
         Me.Label5.Name = "Label5"
         Me.Label5.Size = New System.Drawing.Size(128, 13)
         Me.Label5.TabIndex = 60
@@ -152,7 +153,7 @@ Partial Class RadFPatientAllergieListe
         '
         Me.Label6.AutoSize = True
         Me.Label6.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label6.Location = New System.Drawing.Point(665, 60)
+        Me.Label6.Location = New System.Drawing.Point(689, 60)
         Me.Label6.Name = "Label6"
         Me.Label6.Size = New System.Drawing.Size(175, 13)
         Me.Label6.TabIndex = 58
@@ -171,7 +172,7 @@ Partial Class RadFPatientAllergieListe
         '
         Me.Label4.AutoSize = True
         Me.Label4.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label4.Location = New System.Drawing.Point(665, 44)
+        Me.Label4.Location = New System.Drawing.Point(689, 44)
         Me.Label4.Name = "Label4"
         Me.Label4.Size = New System.Drawing.Size(37, 13)
         Me.Label4.TabIndex = 56
@@ -302,7 +303,7 @@ Partial Class RadFPatientAllergieListe
         Me.RadPanel2.Dock = System.Windows.Forms.DockStyle.Bottom
         Me.RadPanel2.Location = New System.Drawing.Point(0, 347)
         Me.RadPanel2.Name = "RadPanel2"
-        Me.RadPanel2.Size = New System.Drawing.Size(658, 40)
+        Me.RadPanel2.Size = New System.Drawing.Size(685, 40)
         Me.RadPanel2.TabIndex = 2
         '
         'RadPanel3
@@ -311,7 +312,7 @@ Partial Class RadFPatientAllergieListe
         Me.RadPanel3.Dock = System.Windows.Forms.DockStyle.Top
         Me.RadPanel3.Location = New System.Drawing.Point(0, 0)
         Me.RadPanel3.Name = "RadPanel3"
-        Me.RadPanel3.Size = New System.Drawing.Size(658, 84)
+        Me.RadPanel3.Size = New System.Drawing.Size(685, 84)
         Me.RadPanel3.TabIndex = 3
         '
         'RadPanel1
@@ -322,14 +323,15 @@ Partial Class RadFPatientAllergieListe
         Me.RadPanel1.Dock = System.Windows.Forms.DockStyle.Fill
         Me.RadPanel1.Location = New System.Drawing.Point(0, 84)
         Me.RadPanel1.Name = "RadPanel1"
-        Me.RadPanel1.Size = New System.Drawing.Size(658, 263)
+        Me.RadPanel1.Size = New System.Drawing.Size(685, 263)
         Me.RadPanel1.TabIndex = 4
         '
         'RadBtnAnnulerSubstance
         '
+        Me.RadBtnAnnulerSubstance.Image = Global.Oasis_WF.My.Resources.Resources.supprimer
         Me.RadBtnAnnulerSubstance.Location = New System.Drawing.Point(525, 61)
         Me.RadBtnAnnulerSubstance.Name = "RadBtnAnnulerSubstance"
-        Me.RadBtnAnnulerSubstance.Size = New System.Drawing.Size(110, 24)
+        Me.RadBtnAnnulerSubstance.Size = New System.Drawing.Size(148, 24)
         Me.RadBtnAnnulerSubstance.TabIndex = 8
         Me.RadBtnAnnulerSubstance.Text = "Annuler Substance"
         '
@@ -357,21 +359,21 @@ Partial Class RadFPatientAllergieListe
         Me.RadCISubstancePatientDataGridView.MasterTemplate.AllowAddNewRow = False
         Me.RadCISubstancePatientDataGridView.MasterTemplate.AllowDeleteRow = False
         Me.RadCISubstancePatientDataGridView.MasterTemplate.AllowEditRow = False
-        GridViewTextBoxColumn4.EnableExpressionEditor = False
-        GridViewTextBoxColumn4.HeaderText = "Code"
-        GridViewTextBoxColumn4.Name = "substance_id"
-        GridViewTextBoxColumn4.Width = 70
-        GridViewTextBoxColumn5.EnableExpressionEditor = False
-        GridViewTextBoxColumn5.HeaderText = "Dénomination"
-        GridViewTextBoxColumn5.Name = "denomination_substance"
-        GridViewTextBoxColumn5.Width = 400
-        GridViewTextBoxColumn6.EnableExpressionEditor = False
-        GridViewTextBoxColumn6.HeaderText = "allergie_id"
-        GridViewTextBoxColumn6.IsVisible = False
-        GridViewTextBoxColumn6.Name = "allergie_id"
-        Me.RadCISubstancePatientDataGridView.MasterTemplate.Columns.AddRange(New Telerik.WinControls.UI.GridViewDataColumn() {GridViewTextBoxColumn4, GridViewTextBoxColumn5, GridViewTextBoxColumn6})
+        GridViewTextBoxColumn1.EnableExpressionEditor = False
+        GridViewTextBoxColumn1.HeaderText = "Code"
+        GridViewTextBoxColumn1.Name = "substance_id"
+        GridViewTextBoxColumn1.Width = 70
+        GridViewTextBoxColumn2.EnableExpressionEditor = False
+        GridViewTextBoxColumn2.HeaderText = "Dénomination"
+        GridViewTextBoxColumn2.Name = "denomination_substance"
+        GridViewTextBoxColumn2.Width = 400
+        GridViewTextBoxColumn3.EnableExpressionEditor = False
+        GridViewTextBoxColumn3.HeaderText = "allergie_id"
+        GridViewTextBoxColumn3.IsVisible = False
+        GridViewTextBoxColumn3.Name = "allergie_id"
+        Me.RadCISubstancePatientDataGridView.MasterTemplate.Columns.AddRange(New Telerik.WinControls.UI.GridViewDataColumn() {GridViewTextBoxColumn1, GridViewTextBoxColumn2, GridViewTextBoxColumn3})
         Me.RadCISubstancePatientDataGridView.MasterTemplate.ShowFilteringRow = False
-        Me.RadCISubstancePatientDataGridView.MasterTemplate.ViewDefinition = TableViewDefinition2
+        Me.RadCISubstancePatientDataGridView.MasterTemplate.ViewDefinition = TableViewDefinition1
         Me.RadCISubstancePatientDataGridView.Name = "RadCISubstancePatientDataGridView"
         Me.RadCISubstancePatientDataGridView.RightToLeft = System.Windows.Forms.RightToLeft.No
         Me.RadCISubstancePatientDataGridView.ShowGroupPanel = False
@@ -383,7 +385,7 @@ Partial Class RadFPatientAllergieListe
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.CancelButton = Me.RadBtnAbandon
-        Me.ClientSize = New System.Drawing.Size(658, 387)
+        Me.ClientSize = New System.Drawing.Size(685, 387)
         Me.Controls.Add(Me.RadPanel1)
         Me.Controls.Add(Me.RadPanel3)
         Me.Controls.Add(Me.RadPanel2)

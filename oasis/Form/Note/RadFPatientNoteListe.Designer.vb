@@ -310,11 +310,12 @@ Partial Class RadFPatientNoteListe
         'RadBtnAbandonner
         '
         Me.RadBtnAbandonner.DialogResult = System.Windows.Forms.DialogResult.Cancel
-        Me.RadBtnAbandonner.Location = New System.Drawing.Point(891, 602)
+        Me.RadBtnAbandonner.Image = Global.Oasis_WF.My.Resources.Resources._exit
+        Me.RadBtnAbandonner.ImageAlignment = System.Drawing.ContentAlignment.MiddleCenter
+        Me.RadBtnAbandonner.Location = New System.Drawing.Point(977, 602)
         Me.RadBtnAbandonner.Name = "RadBtnAbandonner"
-        Me.RadBtnAbandonner.Size = New System.Drawing.Size(110, 24)
+        Me.RadBtnAbandonner.Size = New System.Drawing.Size(24, 24)
         Me.RadBtnAbandonner.TabIndex = 4
-        Me.RadBtnAbandonner.Text = "Abandonner"
         '
         'RadNotePatientDataGridView
         '
@@ -366,9 +367,9 @@ Partial Class RadFPatientNoteListe
         '
         Me.RadBtnCreation.Location = New System.Drawing.Point(12, 109)
         Me.RadBtnCreation.Name = "RadBtnCreation"
-        Me.RadBtnCreation.Size = New System.Drawing.Size(74, 24)
+        Me.RadBtnCreation.Size = New System.Drawing.Size(24, 24)
         Me.RadBtnCreation.TabIndex = 6
-        Me.RadBtnCreation.Text = "+ Création"
+        Me.RadBtnCreation.Text = "+"
         '
         'RadFPatientNoteListe
         '

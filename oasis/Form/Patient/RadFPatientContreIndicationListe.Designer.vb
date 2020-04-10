@@ -22,14 +22,14 @@ Partial Class RadFPatientContreIndicationListe
     'Do not modify it using the code editor.
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
-        Dim GridViewTextBoxColumn1 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
-        Dim GridViewTextBoxColumn2 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
-        Dim GridViewTextBoxColumn3 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
-        Dim TableViewDefinition1 As Telerik.WinControls.UI.TableViewDefinition = New Telerik.WinControls.UI.TableViewDefinition()
-        Dim GridViewTextBoxColumn4 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
-        Dim GridViewTextBoxColumn5 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
-        Dim GridViewTextBoxColumn6 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
-        Dim TableViewDefinition2 As Telerik.WinControls.UI.TableViewDefinition = New Telerik.WinControls.UI.TableViewDefinition()
+        Dim GridViewTextBoxColumn7 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
+        Dim GridViewTextBoxColumn8 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
+        Dim GridViewTextBoxColumn9 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
+        Dim TableViewDefinition3 As Telerik.WinControls.UI.TableViewDefinition = New Telerik.WinControls.UI.TableViewDefinition()
+        Dim GridViewTextBoxColumn10 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
+        Dim GridViewTextBoxColumn11 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
+        Dim GridViewTextBoxColumn12 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
+        Dim TableViewDefinition4 As Telerik.WinControls.UI.TableViewDefinition = New Telerik.WinControls.UI.TableViewDefinition()
         Me.RadPanel1 = New Telerik.WinControls.UI.RadPanel()
         Me.RadGroupBox1 = New Telerik.WinControls.UI.RadGroupBox()
         Me.Label13 = New System.Windows.Forms.Label()
@@ -85,7 +85,7 @@ Partial Class RadFPatientContreIndicationListe
         Me.RadPanel1.Dock = System.Windows.Forms.DockStyle.Top
         Me.RadPanel1.Location = New System.Drawing.Point(0, 0)
         Me.RadPanel1.Name = "RadPanel1"
-        Me.RadPanel1.Size = New System.Drawing.Size(660, 83)
+        Me.RadPanel1.Size = New System.Drawing.Size(682, 83)
         Me.RadPanel1.TabIndex = 0
         '
         'RadGroupBox1
@@ -116,7 +116,7 @@ Partial Class RadFPatientContreIndicationListe
         Me.RadGroupBox1.HeaderText = "Etat civil"
         Me.RadGroupBox1.Location = New System.Drawing.Point(0, 0)
         Me.RadGroupBox1.Name = "RadGroupBox1"
-        Me.RadGroupBox1.Size = New System.Drawing.Size(660, 83)
+        Me.RadGroupBox1.Size = New System.Drawing.Size(682, 83)
         Me.RadGroupBox1.TabIndex = 2
         Me.RadGroupBox1.Text = "Etat civil"
         '
@@ -143,7 +143,7 @@ Partial Class RadFPatientContreIndicationListe
         '
         Me.Label5.AutoSize = True
         Me.Label5.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label5.Location = New System.Drawing.Point(665, 27)
+        Me.Label5.Location = New System.Drawing.Point(690, 27)
         Me.Label5.Name = "Label5"
         Me.Label5.Size = New System.Drawing.Size(128, 13)
         Me.Label5.TabIndex = 60
@@ -162,7 +162,7 @@ Partial Class RadFPatientContreIndicationListe
         '
         Me.Label6.AutoSize = True
         Me.Label6.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label6.Location = New System.Drawing.Point(665, 60)
+        Me.Label6.Location = New System.Drawing.Point(690, 60)
         Me.Label6.Name = "Label6"
         Me.Label6.Size = New System.Drawing.Size(175, 13)
         Me.Label6.TabIndex = 58
@@ -181,7 +181,7 @@ Partial Class RadFPatientContreIndicationListe
         '
         Me.Label4.AutoSize = True
         Me.Label4.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label4.Location = New System.Drawing.Point(665, 44)
+        Me.Label4.Location = New System.Drawing.Point(690, 44)
         Me.Label4.Name = "Label4"
         Me.Label4.Size = New System.Drawing.Size(37, 13)
         Me.Label4.TabIndex = 56
@@ -317,22 +317,24 @@ Partial Class RadFPatientContreIndicationListe
         Me.RadPanel2.Dock = System.Windows.Forms.DockStyle.Fill
         Me.RadPanel2.Location = New System.Drawing.Point(0, 83)
         Me.RadPanel2.Name = "RadPanel2"
-        Me.RadPanel2.Size = New System.Drawing.Size(660, 489)
+        Me.RadPanel2.Size = New System.Drawing.Size(682, 489)
         Me.RadPanel2.TabIndex = 1
         '
         'RadBtnAnnulerSubstance
         '
+        Me.RadBtnAnnulerSubstance.Image = Global.Oasis_WF.My.Resources.Resources.supprimer
         Me.RadBtnAnnulerSubstance.Location = New System.Drawing.Point(534, 272)
         Me.RadBtnAnnulerSubstance.Name = "RadBtnAnnulerSubstance"
-        Me.RadBtnAnnulerSubstance.Size = New System.Drawing.Size(110, 24)
+        Me.RadBtnAnnulerSubstance.Size = New System.Drawing.Size(136, 24)
         Me.RadBtnAnnulerSubstance.TabIndex = 5
         Me.RadBtnAnnulerSubstance.Text = "Annuler Substance"
         '
         'RadBtnAnnulerATC
         '
+        Me.RadBtnAnnulerATC.Image = Global.Oasis_WF.My.Resources.Resources.supprimer
         Me.RadBtnAnnulerATC.Location = New System.Drawing.Point(534, 62)
         Me.RadBtnAnnulerATC.Name = "RadBtnAnnulerATC"
-        Me.RadBtnAnnulerATC.Size = New System.Drawing.Size(110, 24)
+        Me.RadBtnAnnulerATC.Size = New System.Drawing.Size(136, 24)
         Me.RadBtnAnnulerATC.TabIndex = 4
         Me.RadBtnAnnulerATC.Text = "Annuler ATC"
         '
@@ -370,21 +372,21 @@ Partial Class RadFPatientContreIndicationListe
         Me.RadCISubstancePatientDataGridView.MasterTemplate.AllowAddNewRow = False
         Me.RadCISubstancePatientDataGridView.MasterTemplate.AllowDeleteRow = False
         Me.RadCISubstancePatientDataGridView.MasterTemplate.AllowEditRow = False
-        GridViewTextBoxColumn1.EnableExpressionEditor = False
-        GridViewTextBoxColumn1.HeaderText = "Code"
-        GridViewTextBoxColumn1.Name = "substance_id"
-        GridViewTextBoxColumn1.Width = 70
-        GridViewTextBoxColumn2.EnableExpressionEditor = False
-        GridViewTextBoxColumn2.HeaderText = "Dénomination"
-        GridViewTextBoxColumn2.Name = "denomination_substance"
-        GridViewTextBoxColumn2.Width = 400
-        GridViewTextBoxColumn3.EnableExpressionEditor = False
-        GridViewTextBoxColumn3.HeaderText = "contre_indication_id"
-        GridViewTextBoxColumn3.IsVisible = False
-        GridViewTextBoxColumn3.Name = "contre_indication_id"
-        Me.RadCISubstancePatientDataGridView.MasterTemplate.Columns.AddRange(New Telerik.WinControls.UI.GridViewDataColumn() {GridViewTextBoxColumn1, GridViewTextBoxColumn2, GridViewTextBoxColumn3})
+        GridViewTextBoxColumn7.EnableExpressionEditor = False
+        GridViewTextBoxColumn7.HeaderText = "Code"
+        GridViewTextBoxColumn7.Name = "substance_id"
+        GridViewTextBoxColumn7.Width = 70
+        GridViewTextBoxColumn8.EnableExpressionEditor = False
+        GridViewTextBoxColumn8.HeaderText = "Dénomination"
+        GridViewTextBoxColumn8.Name = "denomination_substance"
+        GridViewTextBoxColumn8.Width = 400
+        GridViewTextBoxColumn9.EnableExpressionEditor = False
+        GridViewTextBoxColumn9.HeaderText = "contre_indication_id"
+        GridViewTextBoxColumn9.IsVisible = False
+        GridViewTextBoxColumn9.Name = "contre_indication_id"
+        Me.RadCISubstancePatientDataGridView.MasterTemplate.Columns.AddRange(New Telerik.WinControls.UI.GridViewDataColumn() {GridViewTextBoxColumn7, GridViewTextBoxColumn8, GridViewTextBoxColumn9})
         Me.RadCISubstancePatientDataGridView.MasterTemplate.ShowFilteringRow = False
-        Me.RadCISubstancePatientDataGridView.MasterTemplate.ViewDefinition = TableViewDefinition1
+        Me.RadCISubstancePatientDataGridView.MasterTemplate.ViewDefinition = TableViewDefinition3
         Me.RadCISubstancePatientDataGridView.Name = "RadCISubstancePatientDataGridView"
         Me.RadCISubstancePatientDataGridView.RightToLeft = System.Windows.Forms.RightToLeft.No
         Me.RadCISubstancePatientDataGridView.ShowGroupPanel = False
@@ -404,23 +406,23 @@ Partial Class RadFPatientContreIndicationListe
         '
         Me.RadCIATCPatientDataGridView.MasterTemplate.AllowAddNewRow = False
         Me.RadCIATCPatientDataGridView.MasterTemplate.AllowDragToGroup = False
-        GridViewTextBoxColumn4.EnableExpressionEditor = False
-        GridViewTextBoxColumn4.FieldName = "allergie"
-        GridViewTextBoxColumn4.HeaderText = "Code"
-        GridViewTextBoxColumn4.HeaderTextAlignment = System.Drawing.ContentAlignment.MiddleLeft
-        GridViewTextBoxColumn4.Name = "code_atc"
-        GridViewTextBoxColumn4.Width = 70
-        GridViewTextBoxColumn5.EnableExpressionEditor = False
-        GridViewTextBoxColumn5.HeaderText = "Dénomination"
-        GridViewTextBoxColumn5.HeaderTextAlignment = System.Drawing.ContentAlignment.MiddleLeft
-        GridViewTextBoxColumn5.Name = "denomination_atc"
-        GridViewTextBoxColumn5.Width = 400
-        GridViewTextBoxColumn6.EnableExpressionEditor = False
-        GridViewTextBoxColumn6.HeaderText = "contre_indication_id"
-        GridViewTextBoxColumn6.IsVisible = False
-        GridViewTextBoxColumn6.Name = "contre_indication_id"
-        Me.RadCIATCPatientDataGridView.MasterTemplate.Columns.AddRange(New Telerik.WinControls.UI.GridViewDataColumn() {GridViewTextBoxColumn4, GridViewTextBoxColumn5, GridViewTextBoxColumn6})
-        Me.RadCIATCPatientDataGridView.MasterTemplate.ViewDefinition = TableViewDefinition2
+        GridViewTextBoxColumn10.EnableExpressionEditor = False
+        GridViewTextBoxColumn10.FieldName = "allergie"
+        GridViewTextBoxColumn10.HeaderText = "Code"
+        GridViewTextBoxColumn10.HeaderTextAlignment = System.Drawing.ContentAlignment.MiddleLeft
+        GridViewTextBoxColumn10.Name = "code_atc"
+        GridViewTextBoxColumn10.Width = 70
+        GridViewTextBoxColumn11.EnableExpressionEditor = False
+        GridViewTextBoxColumn11.HeaderText = "Dénomination"
+        GridViewTextBoxColumn11.HeaderTextAlignment = System.Drawing.ContentAlignment.MiddleLeft
+        GridViewTextBoxColumn11.Name = "denomination_atc"
+        GridViewTextBoxColumn11.Width = 400
+        GridViewTextBoxColumn12.EnableExpressionEditor = False
+        GridViewTextBoxColumn12.HeaderText = "contre_indication_id"
+        GridViewTextBoxColumn12.IsVisible = False
+        GridViewTextBoxColumn12.Name = "contre_indication_id"
+        Me.RadCIATCPatientDataGridView.MasterTemplate.Columns.AddRange(New Telerik.WinControls.UI.GridViewDataColumn() {GridViewTextBoxColumn10, GridViewTextBoxColumn11, GridViewTextBoxColumn12})
+        Me.RadCIATCPatientDataGridView.MasterTemplate.ViewDefinition = TableViewDefinition4
         Me.RadCIATCPatientDataGridView.Name = "RadCIATCPatientDataGridView"
         Me.RadCIATCPatientDataGridView.ReadOnly = True
         Me.RadCIATCPatientDataGridView.RightToLeft = System.Windows.Forms.RightToLeft.No
@@ -434,24 +436,25 @@ Partial Class RadFPatientContreIndicationListe
         Me.RadPanel3.Dock = System.Windows.Forms.DockStyle.Bottom
         Me.RadPanel3.Location = New System.Drawing.Point(0, 531)
         Me.RadPanel3.Name = "RadPanel3"
-        Me.RadPanel3.Size = New System.Drawing.Size(660, 41)
+        Me.RadPanel3.Size = New System.Drawing.Size(682, 41)
         Me.RadPanel3.TabIndex = 2
         '
         'RadBtnAbandonner
         '
         Me.RadBtnAbandonner.DialogResult = System.Windows.Forms.DialogResult.Cancel
-        Me.RadBtnAbandonner.Location = New System.Drawing.Point(534, 7)
+        Me.RadBtnAbandonner.Image = Global.Oasis_WF.My.Resources.Resources._exit
+        Me.RadBtnAbandonner.ImageAlignment = System.Drawing.ContentAlignment.MiddleCenter
+        Me.RadBtnAbandonner.Location = New System.Drawing.Point(646, 5)
         Me.RadBtnAbandonner.Name = "RadBtnAbandonner"
-        Me.RadBtnAbandonner.Size = New System.Drawing.Size(110, 24)
+        Me.RadBtnAbandonner.Size = New System.Drawing.Size(24, 24)
         Me.RadBtnAbandonner.TabIndex = 2
-        Me.RadBtnAbandonner.Text = "Abandon"
         '
         'RadFPatientContreIndicationListe
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.CancelButton = Me.RadBtnAbandonner
-        Me.ClientSize = New System.Drawing.Size(660, 572)
+        Me.ClientSize = New System.Drawing.Size(682, 572)
         Me.Controls.Add(Me.RadPanel3)
         Me.Controls.Add(Me.RadPanel2)
         Me.Controls.Add(Me.RadPanel1)

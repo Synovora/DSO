@@ -191,6 +191,12 @@ Public Class RadFPatientListe
 
             If aldDao.IsPatientALD(TxtIdSelected.Text) Then
                 LblPatientALD.Show()
+                Dim StringTooltip As String
+                Dim aldDao As New AldDao
+                StringTooltip = aldDao.DateFinALD(TxtIdSelected.Text)
+                If StringTooltip <> "" Then
+                    ToolTip.SetToolTip(LblPatientALD, StringTooltip)
+                End If
             Else
                 LblPatientALD.Hide()
             End If

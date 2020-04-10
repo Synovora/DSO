@@ -173,6 +173,8 @@ Public Class RadFEpisodeDetail
         SplitPanelObservation.SizeInfo.SizeMode = SplitPanelSizeMode.Absolute
         SplitPanelObservation.SizeInfo.AbsoluteSize = New Size(0, 450)
 
+        SplitPanelSyntheseBouton.SizeInfo.SizeMode = SplitPanelSizeMode.Absolute
+        SplitPanelSyntheseBouton.SizeInfo.AbsoluteSize = New Size(0, 40)
 
         RadBtnWorkflowIde.Hide()
         RadBtnWorkflowMed.Hide()
@@ -4745,6 +4747,10 @@ Public Class RadFEpisodeDetail
             drcIdConclusionIde = 128001
             CreateLog("Paramètre application 'drcIdConclusionIde' non trouvé !", "Episode", LogDao.EnumTypeLog.ERREUR.ToString)
         End If
+    End Sub
+
+    Private Sub RadPanel12_Paint(sender As Object, e As PaintEventArgs) Handles RadPanel12.Paint
+
     End Sub
 
 
