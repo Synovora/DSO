@@ -32,6 +32,7 @@ Partial Class RadFWkfDemandeAvisHisto
         Dim GridViewTextBoxColumn7 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
         Dim TableViewDefinition1 As Telerik.WinControls.UI.TableViewDefinition = New Telerik.WinControls.UI.TableViewDefinition()
         Me.RadGroupBoxEtatCivil = New Telerik.WinControls.UI.RadGroupBox()
+        Me.RadBtnAbandon = New Telerik.WinControls.UI.RadButton()
         Me.LblALD = New System.Windows.Forms.Label()
         Me.Label13 = New System.Windows.Forms.Label()
         Me.LblPatientDateMaj = New System.Windows.Forms.Label()
@@ -56,17 +57,16 @@ Partial Class RadFWkfDemandeAvisHisto
         Me.RadPanel1 = New Telerik.WinControls.UI.RadPanel()
         Me.RadPanel2 = New Telerik.WinControls.UI.RadPanel()
         Me.RadHistoDataGridView = New Telerik.WinControls.UI.RadGridView()
-        Me.RadBtnAbandon = New Telerik.WinControls.UI.RadButton()
         Me.ToolTip = New System.Windows.Forms.ToolTip(Me.components)
         CType(Me.RadGroupBoxEtatCivil, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.RadGroupBoxEtatCivil.SuspendLayout()
+        CType(Me.RadBtnAbandon, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.RadPanel1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.RadPanel1.SuspendLayout()
         CType(Me.RadPanel2, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.RadPanel2.SuspendLayout()
         CType(Me.RadHistoDataGridView, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.RadHistoDataGridView.MasterTemplate, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.RadBtnAbandon, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
@@ -107,6 +107,17 @@ Partial Class RadFWkfDemandeAvisHisto
         CType(Me.RadGroupBoxEtatCivil.GetChildAt(0).GetChildAt(1), Telerik.WinControls.UI.GroupBoxHeader).GroupBoxStyle = Telerik.WinControls.UI.RadGroupBoxStyle.Office
         CType(Me.RadGroupBoxEtatCivil.GetChildAt(0).GetChildAt(1).GetChildAt(0), Telerik.WinControls.Primitives.FillPrimitive).BackColor = System.Drawing.SystemColors.ActiveCaption
         CType(Me.RadGroupBoxEtatCivil.GetChildAt(0).GetChildAt(1).GetChildAt(0), Telerik.WinControls.Primitives.FillPrimitive).SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.None
+        '
+        'RadBtnAbandon
+        '
+        Me.RadBtnAbandon.DialogResult = System.Windows.Forms.DialogResult.Cancel
+        Me.RadBtnAbandon.Image = Global.Oasis_WF.My.Resources.Resources._exit
+        Me.RadBtnAbandon.ImageAlignment = System.Drawing.ContentAlignment.MiddleCenter
+        Me.RadBtnAbandon.Location = New System.Drawing.Point(1396, 33)
+        Me.RadBtnAbandon.Name = "RadBtnAbandon"
+        Me.RadBtnAbandon.Size = New System.Drawing.Size(24, 24)
+        Me.RadBtnAbandon.TabIndex = 44
+        Me.RadBtnAbandon.Visible = False
         '
         'LblALD
         '
@@ -389,16 +400,6 @@ Partial Class RadFWkfDemandeAvisHisto
         Me.RadHistoDataGridView.Size = New System.Drawing.Size(1432, 416)
         Me.RadHistoDataGridView.TabIndex = 0
         '
-        'RadBtnAbandon
-        '
-        Me.RadBtnAbandon.DialogResult = System.Windows.Forms.DialogResult.Cancel
-        Me.RadBtnAbandon.Location = New System.Drawing.Point(1065, 32)
-        Me.RadBtnAbandon.Name = "RadBtnAbandon"
-        Me.RadBtnAbandon.Size = New System.Drawing.Size(110, 24)
-        Me.RadBtnAbandon.TabIndex = 44
-        Me.RadBtnAbandon.Text = "Abandonner"
-        Me.RadBtnAbandon.Visible = False
-        '
         'RadFWkfDemandeAvisHisto
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -418,13 +419,13 @@ Partial Class RadFWkfDemandeAvisHisto
         CType(Me.RadGroupBoxEtatCivil, System.ComponentModel.ISupportInitialize).EndInit()
         Me.RadGroupBoxEtatCivil.ResumeLayout(False)
         Me.RadGroupBoxEtatCivil.PerformLayout()
+        CType(Me.RadBtnAbandon, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.RadPanel1, System.ComponentModel.ISupportInitialize).EndInit()
         Me.RadPanel1.ResumeLayout(False)
         CType(Me.RadPanel2, System.ComponentModel.ISupportInitialize).EndInit()
         Me.RadPanel2.ResumeLayout(False)
         CType(Me.RadHistoDataGridView.MasterTemplate, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.RadHistoDataGridView, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.RadBtnAbandon, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
 

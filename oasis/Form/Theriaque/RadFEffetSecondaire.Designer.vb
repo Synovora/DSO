@@ -23,43 +23,43 @@ Partial Class RadFEffetSecondaire
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
         Me.RadPanel1 = New Telerik.WinControls.UI.RadPanel()
+        Me.TextBoxMedicament = New System.Windows.Forms.TextBox()
         Me.RadPanel2 = New Telerik.WinControls.UI.RadPanel()
+        Me.RadBtnAbandon = New Telerik.WinControls.UI.RadButton()
         Me.RadSplitContainer1 = New Telerik.WinControls.UI.RadSplitContainer()
         Me.SplitPanel1 = New Telerik.WinControls.UI.SplitPanel()
-        Me.SplitPanel2 = New Telerik.WinControls.UI.SplitPanel()
-        Me.SplitPanel3 = New Telerik.WinControls.UI.SplitPanel()
-        Me.SplitPanel4 = New Telerik.WinControls.UI.SplitPanel()
-        Me.RadBtnAbandon = New Telerik.WinControls.UI.RadButton()
         Me.RadGroupBox1 = New Telerik.WinControls.UI.RadGroupBox()
-        Me.RadGroupBox2 = New Telerik.WinControls.UI.RadGroupBox()
-        Me.RadGroupBox3 = New Telerik.WinControls.UI.RadGroupBox()
-        Me.RadGroupBox4 = New Telerik.WinControls.UI.RadGroupBox()
         Me.TextBoxClinique = New System.Windows.Forms.TextBox()
+        Me.SplitPanel2 = New Telerik.WinControls.UI.SplitPanel()
+        Me.RadGroupBox2 = New Telerik.WinControls.UI.RadGroupBox()
         Me.TextBoxParaclinique = New System.Windows.Forms.TextBox()
+        Me.SplitPanel3 = New Telerik.WinControls.UI.SplitPanel()
+        Me.RadGroupBox3 = New Telerik.WinControls.UI.RadGroupBox()
         Me.TextBoxCliniqueSurdosage = New System.Windows.Forms.TextBox()
+        Me.SplitPanel4 = New Telerik.WinControls.UI.SplitPanel()
+        Me.RadGroupBox4 = New Telerik.WinControls.UI.RadGroupBox()
         Me.TextBoxParacliniqueSurdosage = New System.Windows.Forms.TextBox()
-        Me.TextBoxMedicament = New System.Windows.Forms.TextBox()
         CType(Me.RadPanel1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.RadPanel1.SuspendLayout()
         CType(Me.RadPanel2, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.RadPanel2.SuspendLayout()
+        CType(Me.RadBtnAbandon, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.RadSplitContainer1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.RadSplitContainer1.SuspendLayout()
         CType(Me.SplitPanel1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SplitPanel1.SuspendLayout()
-        CType(Me.SplitPanel2, System.ComponentModel.ISupportInitialize).BeginInit()
-        Me.SplitPanel2.SuspendLayout()
-        CType(Me.SplitPanel3, System.ComponentModel.ISupportInitialize).BeginInit()
-        Me.SplitPanel3.SuspendLayout()
-        CType(Me.SplitPanel4, System.ComponentModel.ISupportInitialize).BeginInit()
-        Me.SplitPanel4.SuspendLayout()
-        CType(Me.RadBtnAbandon, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.RadGroupBox1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.RadGroupBox1.SuspendLayout()
+        CType(Me.SplitPanel2, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.SplitPanel2.SuspendLayout()
         CType(Me.RadGroupBox2, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.RadGroupBox2.SuspendLayout()
+        CType(Me.SplitPanel3, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.SplitPanel3.SuspendLayout()
         CType(Me.RadGroupBox3, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.RadGroupBox3.SuspendLayout()
+        CType(Me.SplitPanel4, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.SplitPanel4.SuspendLayout()
         CType(Me.RadGroupBox4, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.RadGroupBox4.SuspendLayout()
         CType(Me, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -74,6 +74,14 @@ Partial Class RadFEffetSecondaire
         Me.RadPanel1.Size = New System.Drawing.Size(694, 52)
         Me.RadPanel1.TabIndex = 0
         '
+        'TextBoxMedicament
+        '
+        Me.TextBoxMedicament.Location = New System.Drawing.Point(12, 12)
+        Me.TextBoxMedicament.Name = "TextBoxMedicament"
+        Me.TextBoxMedicament.ReadOnly = True
+        Me.TextBoxMedicament.Size = New System.Drawing.Size(672, 20)
+        Me.TextBoxMedicament.TabIndex = 0
+        '
         'RadPanel2
         '
         Me.RadPanel2.Controls.Add(Me.RadBtnAbandon)
@@ -82,6 +90,16 @@ Partial Class RadFEffetSecondaire
         Me.RadPanel2.Name = "RadPanel2"
         Me.RadPanel2.Size = New System.Drawing.Size(694, 38)
         Me.RadPanel2.TabIndex = 1
+        '
+        'RadBtnAbandon
+        '
+        Me.RadBtnAbandon.DialogResult = System.Windows.Forms.DialogResult.Cancel
+        Me.RadBtnAbandon.Image = Global.Oasis_WF.My.Resources.Resources._exit
+        Me.RadBtnAbandon.ImageAlignment = System.Drawing.ContentAlignment.MiddleCenter
+        Me.RadBtnAbandon.Location = New System.Drawing.Point(667, 6)
+        Me.RadBtnAbandon.Name = "RadBtnAbandon"
+        Me.RadBtnAbandon.Size = New System.Drawing.Size(24, 24)
+        Me.RadBtnAbandon.TabIndex = 0
         '
         'RadSplitContainer1
         '
@@ -115,6 +133,31 @@ Partial Class RadFEffetSecondaire
         Me.SplitPanel1.TabStop = False
         Me.SplitPanel1.Text = "SplitPanel1"
         '
+        'RadGroupBox1
+        '
+        Me.RadGroupBox1.AccessibleRole = System.Windows.Forms.AccessibleRole.Grouping
+        Me.RadGroupBox1.Controls.Add(Me.TextBoxClinique)
+        Me.RadGroupBox1.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.RadGroupBox1.GroupBoxStyle = Telerik.WinControls.UI.RadGroupBoxStyle.Office
+        Me.RadGroupBox1.HeaderText = "Clinique"
+        Me.RadGroupBox1.Location = New System.Drawing.Point(0, 0)
+        Me.RadGroupBox1.Name = "RadGroupBox1"
+        Me.RadGroupBox1.Size = New System.Drawing.Size(694, 127)
+        Me.RadGroupBox1.TabIndex = 0
+        Me.RadGroupBox1.Text = "Clinique"
+        '
+        'TextBoxClinique
+        '
+        Me.TextBoxClinique.AcceptsReturn = True
+        Me.TextBoxClinique.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.TextBoxClinique.Location = New System.Drawing.Point(2, 18)
+        Me.TextBoxClinique.Multiline = True
+        Me.TextBoxClinique.Name = "TextBoxClinique"
+        Me.TextBoxClinique.ReadOnly = True
+        Me.TextBoxClinique.ScrollBars = System.Windows.Forms.ScrollBars.Vertical
+        Me.TextBoxClinique.Size = New System.Drawing.Size(690, 107)
+        Me.TextBoxClinique.TabIndex = 0
+        '
         'SplitPanel2
         '
         Me.SplitPanel2.Controls.Add(Me.RadGroupBox2)
@@ -128,6 +171,31 @@ Partial Class RadFEffetSecondaire
         Me.SplitPanel2.TabIndex = 1
         Me.SplitPanel2.TabStop = False
         Me.SplitPanel2.Text = "SplitPanel2"
+        '
+        'RadGroupBox2
+        '
+        Me.RadGroupBox2.AccessibleRole = System.Windows.Forms.AccessibleRole.Grouping
+        Me.RadGroupBox2.Controls.Add(Me.TextBoxParaclinique)
+        Me.RadGroupBox2.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.RadGroupBox2.GroupBoxStyle = Telerik.WinControls.UI.RadGroupBoxStyle.Office
+        Me.RadGroupBox2.HeaderText = "Paraclinique"
+        Me.RadGroupBox2.Location = New System.Drawing.Point(0, 0)
+        Me.RadGroupBox2.Name = "RadGroupBox2"
+        Me.RadGroupBox2.Size = New System.Drawing.Size(694, 127)
+        Me.RadGroupBox2.TabIndex = 0
+        Me.RadGroupBox2.Text = "Paraclinique"
+        '
+        'TextBoxParaclinique
+        '
+        Me.TextBoxParaclinique.AcceptsReturn = True
+        Me.TextBoxParaclinique.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.TextBoxParaclinique.Location = New System.Drawing.Point(2, 18)
+        Me.TextBoxParaclinique.Multiline = True
+        Me.TextBoxParaclinique.Name = "TextBoxParaclinique"
+        Me.TextBoxParaclinique.ReadOnly = True
+        Me.TextBoxParaclinique.ScrollBars = System.Windows.Forms.ScrollBars.Vertical
+        Me.TextBoxParaclinique.Size = New System.Drawing.Size(690, 107)
+        Me.TextBoxParaclinique.TabIndex = 0
         '
         'SplitPanel3
         '
@@ -143,6 +211,31 @@ Partial Class RadFEffetSecondaire
         Me.SplitPanel3.TabStop = False
         Me.SplitPanel3.Text = "SplitPanel3"
         '
+        'RadGroupBox3
+        '
+        Me.RadGroupBox3.AccessibleRole = System.Windows.Forms.AccessibleRole.Grouping
+        Me.RadGroupBox3.Controls.Add(Me.TextBoxCliniqueSurdosage)
+        Me.RadGroupBox3.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.RadGroupBox3.GroupBoxStyle = Telerik.WinControls.UI.RadGroupBoxStyle.Office
+        Me.RadGroupBox3.HeaderText = "Clinique en cas de surdosage"
+        Me.RadGroupBox3.Location = New System.Drawing.Point(0, 0)
+        Me.RadGroupBox3.Name = "RadGroupBox3"
+        Me.RadGroupBox3.Size = New System.Drawing.Size(694, 127)
+        Me.RadGroupBox3.TabIndex = 0
+        Me.RadGroupBox3.Text = "Clinique en cas de surdosage"
+        '
+        'TextBoxCliniqueSurdosage
+        '
+        Me.TextBoxCliniqueSurdosage.AcceptsReturn = True
+        Me.TextBoxCliniqueSurdosage.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.TextBoxCliniqueSurdosage.Location = New System.Drawing.Point(2, 18)
+        Me.TextBoxCliniqueSurdosage.Multiline = True
+        Me.TextBoxCliniqueSurdosage.Name = "TextBoxCliniqueSurdosage"
+        Me.TextBoxCliniqueSurdosage.ReadOnly = True
+        Me.TextBoxCliniqueSurdosage.ScrollBars = System.Windows.Forms.ScrollBars.Vertical
+        Me.TextBoxCliniqueSurdosage.Size = New System.Drawing.Size(690, 107)
+        Me.TextBoxCliniqueSurdosage.TabIndex = 0
+        '
         'SplitPanel4
         '
         Me.SplitPanel4.Controls.Add(Me.RadGroupBox4)
@@ -157,54 +250,6 @@ Partial Class RadFEffetSecondaire
         Me.SplitPanel4.TabStop = False
         Me.SplitPanel4.Text = "SplitPanel4"
         '
-        'RadBtnAbandon
-        '
-        Me.RadBtnAbandon.DialogResult = System.Windows.Forms.DialogResult.Cancel
-        Me.RadBtnAbandon.Location = New System.Drawing.Point(574, 6)
-        Me.RadBtnAbandon.Name = "RadBtnAbandon"
-        Me.RadBtnAbandon.Size = New System.Drawing.Size(110, 24)
-        Me.RadBtnAbandon.TabIndex = 0
-        Me.RadBtnAbandon.Text = "Abandon"
-        '
-        'RadGroupBox1
-        '
-        Me.RadGroupBox1.AccessibleRole = System.Windows.Forms.AccessibleRole.Grouping
-        Me.RadGroupBox1.Controls.Add(Me.TextBoxClinique)
-        Me.RadGroupBox1.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.RadGroupBox1.GroupBoxStyle = Telerik.WinControls.UI.RadGroupBoxStyle.Office
-        Me.RadGroupBox1.HeaderText = "Clinique"
-        Me.RadGroupBox1.Location = New System.Drawing.Point(0, 0)
-        Me.RadGroupBox1.Name = "RadGroupBox1"
-        Me.RadGroupBox1.Size = New System.Drawing.Size(694, 127)
-        Me.RadGroupBox1.TabIndex = 0
-        Me.RadGroupBox1.Text = "Clinique"
-        '
-        'RadGroupBox2
-        '
-        Me.RadGroupBox2.AccessibleRole = System.Windows.Forms.AccessibleRole.Grouping
-        Me.RadGroupBox2.Controls.Add(Me.TextBoxParaclinique)
-        Me.RadGroupBox2.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.RadGroupBox2.GroupBoxStyle = Telerik.WinControls.UI.RadGroupBoxStyle.Office
-        Me.RadGroupBox2.HeaderText = "Paraclinique"
-        Me.RadGroupBox2.Location = New System.Drawing.Point(0, 0)
-        Me.RadGroupBox2.Name = "RadGroupBox2"
-        Me.RadGroupBox2.Size = New System.Drawing.Size(694, 127)
-        Me.RadGroupBox2.TabIndex = 0
-        Me.RadGroupBox2.Text = "Paraclinique"
-        '
-        'RadGroupBox3
-        '
-        Me.RadGroupBox3.AccessibleRole = System.Windows.Forms.AccessibleRole.Grouping
-        Me.RadGroupBox3.Controls.Add(Me.TextBoxCliniqueSurdosage)
-        Me.RadGroupBox3.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.RadGroupBox3.GroupBoxStyle = Telerik.WinControls.UI.RadGroupBoxStyle.Office
-        Me.RadGroupBox3.HeaderText = "Clinique en cas de surdosage"
-        Me.RadGroupBox3.Location = New System.Drawing.Point(0, 0)
-        Me.RadGroupBox3.Name = "RadGroupBox3"
-        Me.RadGroupBox3.Size = New System.Drawing.Size(694, 127)
-        Me.RadGroupBox3.TabIndex = 0
-        Me.RadGroupBox3.Text = "Clinique en cas de surdosage"
-        '
         'RadGroupBox4
         '
         Me.RadGroupBox4.AccessibleRole = System.Windows.Forms.AccessibleRole.Grouping
@@ -218,42 +263,6 @@ Partial Class RadFEffetSecondaire
         Me.RadGroupBox4.TabIndex = 0
         Me.RadGroupBox4.Text = "Paraclinique en cas de surdosage"
         '
-        'TextBoxClinique
-        '
-        Me.TextBoxClinique.AcceptsReturn = True
-        Me.TextBoxClinique.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.TextBoxClinique.Location = New System.Drawing.Point(2, 18)
-        Me.TextBoxClinique.Multiline = True
-        Me.TextBoxClinique.Name = "TextBoxClinique"
-        Me.TextBoxClinique.ReadOnly = True
-        Me.TextBoxClinique.ScrollBars = System.Windows.Forms.ScrollBars.Vertical
-        Me.TextBoxClinique.Size = New System.Drawing.Size(690, 107)
-        Me.TextBoxClinique.TabIndex = 0
-        '
-        'TextBoxParaclinique
-        '
-        Me.TextBoxParaclinique.AcceptsReturn = True
-        Me.TextBoxParaclinique.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.TextBoxParaclinique.Location = New System.Drawing.Point(2, 18)
-        Me.TextBoxParaclinique.Multiline = True
-        Me.TextBoxParaclinique.Name = "TextBoxParaclinique"
-        Me.TextBoxParaclinique.ReadOnly = True
-        Me.TextBoxParaclinique.ScrollBars = System.Windows.Forms.ScrollBars.Vertical
-        Me.TextBoxParaclinique.Size = New System.Drawing.Size(690, 107)
-        Me.TextBoxParaclinique.TabIndex = 0
-        '
-        'TextBoxCliniqueSurdosage
-        '
-        Me.TextBoxCliniqueSurdosage.AcceptsReturn = True
-        Me.TextBoxCliniqueSurdosage.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.TextBoxCliniqueSurdosage.Location = New System.Drawing.Point(2, 18)
-        Me.TextBoxCliniqueSurdosage.Multiline = True
-        Me.TextBoxCliniqueSurdosage.Name = "TextBoxCliniqueSurdosage"
-        Me.TextBoxCliniqueSurdosage.ReadOnly = True
-        Me.TextBoxCliniqueSurdosage.ScrollBars = System.Windows.Forms.ScrollBars.Vertical
-        Me.TextBoxCliniqueSurdosage.Size = New System.Drawing.Size(690, 107)
-        Me.TextBoxCliniqueSurdosage.TabIndex = 0
-        '
         'TextBoxParacliniqueSurdosage
         '
         Me.TextBoxParacliniqueSurdosage.AcceptsReturn = True
@@ -265,14 +274,6 @@ Partial Class RadFEffetSecondaire
         Me.TextBoxParacliniqueSurdosage.ScrollBars = System.Windows.Forms.ScrollBars.Vertical
         Me.TextBoxParacliniqueSurdosage.Size = New System.Drawing.Size(690, 108)
         Me.TextBoxParacliniqueSurdosage.TabIndex = 0
-        '
-        'TextBoxMedicament
-        '
-        Me.TextBoxMedicament.Location = New System.Drawing.Point(12, 12)
-        Me.TextBoxMedicament.Name = "TextBoxMedicament"
-        Me.TextBoxMedicament.ReadOnly = True
-        Me.TextBoxMedicament.Size = New System.Drawing.Size(672, 20)
-        Me.TextBoxMedicament.TabIndex = 0
         '
         'RadFEffetSecondaire
         '
@@ -295,26 +296,26 @@ Partial Class RadFEffetSecondaire
         Me.RadPanel1.PerformLayout()
         CType(Me.RadPanel2, System.ComponentModel.ISupportInitialize).EndInit()
         Me.RadPanel2.ResumeLayout(False)
+        CType(Me.RadBtnAbandon, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.RadSplitContainer1, System.ComponentModel.ISupportInitialize).EndInit()
         Me.RadSplitContainer1.ResumeLayout(False)
         CType(Me.SplitPanel1, System.ComponentModel.ISupportInitialize).EndInit()
         Me.SplitPanel1.ResumeLayout(False)
-        CType(Me.SplitPanel2, System.ComponentModel.ISupportInitialize).EndInit()
-        Me.SplitPanel2.ResumeLayout(False)
-        CType(Me.SplitPanel3, System.ComponentModel.ISupportInitialize).EndInit()
-        Me.SplitPanel3.ResumeLayout(False)
-        CType(Me.SplitPanel4, System.ComponentModel.ISupportInitialize).EndInit()
-        Me.SplitPanel4.ResumeLayout(False)
-        CType(Me.RadBtnAbandon, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.RadGroupBox1, System.ComponentModel.ISupportInitialize).EndInit()
         Me.RadGroupBox1.ResumeLayout(False)
         Me.RadGroupBox1.PerformLayout()
+        CType(Me.SplitPanel2, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.SplitPanel2.ResumeLayout(False)
         CType(Me.RadGroupBox2, System.ComponentModel.ISupportInitialize).EndInit()
         Me.RadGroupBox2.ResumeLayout(False)
         Me.RadGroupBox2.PerformLayout()
+        CType(Me.SplitPanel3, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.SplitPanel3.ResumeLayout(False)
         CType(Me.RadGroupBox3, System.ComponentModel.ISupportInitialize).EndInit()
         Me.RadGroupBox3.ResumeLayout(False)
         Me.RadGroupBox3.PerformLayout()
+        CType(Me.SplitPanel4, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.SplitPanel4.ResumeLayout(False)
         CType(Me.RadGroupBox4, System.ComponentModel.ISupportInitialize).EndInit()
         Me.RadGroupBox4.ResumeLayout(False)
         Me.RadGroupBox4.PerformLayout()

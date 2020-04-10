@@ -120,11 +120,12 @@ Partial Class RadFTraitementHistoListe
         'RadBtnAbandonner
         '
         Me.RadBtnAbandonner.DialogResult = System.Windows.Forms.DialogResult.Cancel
-        Me.RadBtnAbandonner.Location = New System.Drawing.Point(1450, 25)
+        Me.RadBtnAbandonner.Image = Global.Oasis_WF.My.Resources.Resources._exit
+        Me.RadBtnAbandonner.ImageAlignment = System.Drawing.ContentAlignment.MiddleCenter
+        Me.RadBtnAbandonner.Location = New System.Drawing.Point(1536, 25)
         Me.RadBtnAbandonner.Name = "RadBtnAbandonner"
-        Me.RadBtnAbandonner.Size = New System.Drawing.Size(110, 24)
+        Me.RadBtnAbandonner.Size = New System.Drawing.Size(24, 24)
         Me.RadBtnAbandonner.TabIndex = 44
-        Me.RadBtnAbandonner.Text = "Abandonner"
         Me.RadBtnAbandonner.Visible = False
         '
         'LblALD

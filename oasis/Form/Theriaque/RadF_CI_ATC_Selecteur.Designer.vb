@@ -419,11 +419,12 @@ Partial Class RadF_CI_ATC_Selecteur
         'RadBtnAbandon
         '
         Me.RadBtnAbandon.DialogResult = System.Windows.Forms.DialogResult.Cancel
-        Me.RadBtnAbandon.Location = New System.Drawing.Point(1771, 825)
+        Me.RadBtnAbandon.Image = Global.Oasis_WF.My.Resources.Resources._exit
+        Me.RadBtnAbandon.ImageAlignment = System.Drawing.ContentAlignment.MiddleCenter
+        Me.RadBtnAbandon.Location = New System.Drawing.Point(1857, 817)
         Me.RadBtnAbandon.Name = "RadBtnAbandon"
-        Me.RadBtnAbandon.Size = New System.Drawing.Size(110, 24)
+        Me.RadBtnAbandon.Size = New System.Drawing.Size(24, 24)
         Me.RadBtnAbandon.TabIndex = 18
-        Me.RadBtnAbandon.Text = "Abandon"
         '
         'RadGridViewATC2
         '
@@ -570,9 +571,10 @@ Partial Class RadF_CI_ATC_Selecteur
         'RadBtnSelectionCI
         '
         Me.RadBtnSelectionCI.ForeColor = System.Drawing.Color.Red
-        Me.RadBtnSelectionCI.Location = New System.Drawing.Point(1344, 130)
+        Me.RadBtnSelectionCI.Image = Global.Oasis_WF.My.Resources.Resources.validation
+        Me.RadBtnSelectionCI.Location = New System.Drawing.Point(1324, 118)
         Me.RadBtnSelectionCI.Name = "RadBtnSelectionCI"
-        Me.RadBtnSelectionCI.Size = New System.Drawing.Size(110, 24)
+        Me.RadBtnSelectionCI.Size = New System.Drawing.Size(149, 24)
         Me.RadBtnSelectionCI.TabIndex = 41
         Me.RadBtnSelectionCI.Text = "Validation sélection"
         '
@@ -967,9 +969,10 @@ Partial Class RadF_CI_ATC_Selecteur
         'RadBtnSelectionSubstance
         '
         Me.RadBtnSelectionSubstance.ForeColor = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(0, Byte), Integer), CType(CType(0, Byte), Integer))
+        Me.RadBtnSelectionSubstance.Image = Global.Oasis_WF.My.Resources.Resources.selection
         Me.RadBtnSelectionSubstance.Location = New System.Drawing.Point(754, 290)
         Me.RadBtnSelectionSubstance.Name = "RadBtnSelectionSubstance"
-        Me.RadBtnSelectionSubstance.Size = New System.Drawing.Size(110, 24)
+        Me.RadBtnSelectionSubstance.Size = New System.Drawing.Size(145, 24)
         Me.RadBtnSelectionSubstance.TabIndex = 53
         Me.RadBtnSelectionSubstance.Text = "Sélection substance"
         '
@@ -978,7 +981,7 @@ Partial Class RadF_CI_ATC_Selecteur
         Me.Label8.AutoSize = True
         Me.Label8.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.Label8.ForeColor = System.Drawing.Color.DarkRed
-        Me.Label8.Location = New System.Drawing.Point(1307, 105)
+        Me.Label8.Location = New System.Drawing.Point(1307, 98)
         Me.Label8.Name = "Label8"
         Me.Label8.Size = New System.Drawing.Size(178, 15)
         Me.Label8.TabIndex = 54

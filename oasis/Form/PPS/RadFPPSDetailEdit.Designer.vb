@@ -46,6 +46,7 @@ Partial Class RadFPPSDetailEdit
         Me.Label2 = New System.Windows.Forms.Label()
         Me.LblPatientAdresse1 = New System.Windows.Forms.Label()
         Me.RadGroupBox1 = New Telerik.WinControls.UI.RadGroupBox()
+        Me.RadBtnRecupereDrc = New Telerik.WinControls.UI.RadButton()
         Me.CbxTypeStrategie = New System.Windows.Forms.ComboBox()
         Me.LblTypeStrategie = New System.Windows.Forms.Label()
         Me.RadBtnDrcSelecteur = New Telerik.WinControls.UI.RadButton()
@@ -73,11 +74,11 @@ Partial Class RadFPPSDetailEdit
         Me.RadBtnConfirmationAnnulation = New Telerik.WinControls.UI.RadButton()
         Me.RadBtnValidation = New Telerik.WinControls.UI.RadButton()
         Me.RadBtnAbandonner = New Telerik.WinControls.UI.RadButton()
-        Me.RadBtnRecupereDrc = New Telerik.WinControls.UI.RadButton()
         CType(Me.RadGroupBoxEtatCivil, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.RadGroupBoxEtatCivil.SuspendLayout()
         CType(Me.RadGroupBox1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.RadGroupBox1.SuspendLayout()
+        CType(Me.RadBtnRecupereDrc, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.RadBtnDrcSelecteur, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.NumPriorite, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.RadGbxAnnulation, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -86,7 +87,6 @@ Partial Class RadFPPSDetailEdit
         CType(Me.RadBtnConfirmationAnnulation, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.RadBtnValidation, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.RadBtnAbandonner, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.RadBtnRecupereDrc, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
@@ -348,6 +348,14 @@ Partial Class RadFPPSDetailEdit
         CType(Me.RadGroupBox1.GetChildAt(0).GetChildAt(1).GetChildAt(0), Telerik.WinControls.Primitives.FillPrimitive).BackColor = System.Drawing.SystemColors.ActiveCaption
         CType(Me.RadGroupBox1.GetChildAt(0).GetChildAt(1).GetChildAt(0), Telerik.WinControls.Primitives.FillPrimitive).SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.None
         '
+        'RadBtnRecupereDrc
+        '
+        Me.RadBtnRecupereDrc.Location = New System.Drawing.Point(213, 147)
+        Me.RadBtnRecupereDrc.Name = "RadBtnRecupereDrc"
+        Me.RadBtnRecupereDrc.Size = New System.Drawing.Size(141, 24)
+        Me.RadBtnRecupereDrc.TabIndex = 97
+        Me.RadBtnRecupereDrc.Text = "Copier la dénomination"
+        '
         'CbxTypeStrategie
         '
         Me.CbxTypeStrategie.FormattingEnabled = True
@@ -557,7 +565,8 @@ Partial Class RadFPPSDetailEdit
         '
         'RadBtnAnnulation
         '
-        Me.RadBtnAnnulation.Location = New System.Drawing.Point(12, 422)
+        Me.RadBtnAnnulation.Image = Global.Oasis_WF.My.Resources.Resources.supprimer
+        Me.RadBtnAnnulation.Location = New System.Drawing.Point(128, 422)
         Me.RadBtnAnnulation.Name = "RadBtnAnnulation"
         Me.RadBtnAnnulation.Size = New System.Drawing.Size(110, 24)
         Me.RadBtnAnnulation.TabIndex = 93
@@ -565,7 +574,7 @@ Partial Class RadFPPSDetailEdit
         '
         'RadBtnConfirmationAnnulation
         '
-        Me.RadBtnConfirmationAnnulation.Location = New System.Drawing.Point(128, 422)
+        Me.RadBtnConfirmationAnnulation.Location = New System.Drawing.Point(244, 422)
         Me.RadBtnConfirmationAnnulation.Name = "RadBtnConfirmationAnnulation"
         Me.RadBtnConfirmationAnnulation.Size = New System.Drawing.Size(171, 24)
         Me.RadBtnConfirmationAnnulation.TabIndex = 94
@@ -573,7 +582,8 @@ Partial Class RadFPPSDetailEdit
         '
         'RadBtnValidation
         '
-        Me.RadBtnValidation.Location = New System.Drawing.Point(790, 422)
+        Me.RadBtnValidation.Image = Global.Oasis_WF.My.Resources.Resources.validation
+        Me.RadBtnValidation.Location = New System.Drawing.Point(12, 422)
         Me.RadBtnValidation.Name = "RadBtnValidation"
         Me.RadBtnValidation.Size = New System.Drawing.Size(110, 24)
         Me.RadBtnValidation.TabIndex = 95
@@ -582,19 +592,12 @@ Partial Class RadFPPSDetailEdit
         'RadBtnAbandonner
         '
         Me.RadBtnAbandonner.DialogResult = System.Windows.Forms.DialogResult.Cancel
-        Me.RadBtnAbandonner.Location = New System.Drawing.Point(906, 422)
+        Me.RadBtnAbandonner.Image = Global.Oasis_WF.My.Resources.Resources._exit
+        Me.RadBtnAbandonner.ImageAlignment = System.Drawing.ContentAlignment.MiddleCenter
+        Me.RadBtnAbandonner.Location = New System.Drawing.Point(1003, 422)
         Me.RadBtnAbandonner.Name = "RadBtnAbandonner"
-        Me.RadBtnAbandonner.Size = New System.Drawing.Size(110, 24)
+        Me.RadBtnAbandonner.Size = New System.Drawing.Size(24, 24)
         Me.RadBtnAbandonner.TabIndex = 96
-        Me.RadBtnAbandonner.Text = "Abandonner"
-        '
-        'RadBtnRecupereDrc
-        '
-        Me.RadBtnRecupereDrc.Location = New System.Drawing.Point(213, 147)
-        Me.RadBtnRecupereDrc.Name = "RadBtnRecupereDrc"
-        Me.RadBtnRecupereDrc.Size = New System.Drawing.Size(141, 24)
-        Me.RadBtnRecupereDrc.TabIndex = 97
-        Me.RadBtnRecupereDrc.Text = "Copier la dénomination"
         '
         'RadFPPSDetailEdit
         '
@@ -633,6 +636,7 @@ Partial Class RadFPPSDetailEdit
         CType(Me.RadGroupBox1, System.ComponentModel.ISupportInitialize).EndInit()
         Me.RadGroupBox1.ResumeLayout(False)
         Me.RadGroupBox1.PerformLayout()
+        CType(Me.RadBtnRecupereDrc, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.RadBtnDrcSelecteur, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.NumPriorite, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.RadGbxAnnulation, System.ComponentModel.ISupportInitialize).EndInit()
@@ -642,7 +646,6 @@ Partial Class RadFPPSDetailEdit
         CType(Me.RadBtnConfirmationAnnulation, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.RadBtnValidation, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.RadBtnAbandonner, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.RadBtnRecupereDrc, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
         Me.PerformLayout()

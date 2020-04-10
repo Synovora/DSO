@@ -164,11 +164,12 @@ Partial Class RadFPPSListeParcours
         'RadBtnAbandon
         '
         Me.RadBtnAbandon.DialogResult = System.Windows.Forms.DialogResult.Cancel
-        Me.RadBtnAbandon.Location = New System.Drawing.Point(420, 289)
+        Me.RadBtnAbandon.Image = Global.Oasis_WF.My.Resources.Resources._exit
+        Me.RadBtnAbandon.ImageAlignment = System.Drawing.ContentAlignment.MiddleCenter
+        Me.RadBtnAbandon.Location = New System.Drawing.Point(487, 289)
         Me.RadBtnAbandon.Name = "RadBtnAbandon"
-        Me.RadBtnAbandon.Size = New System.Drawing.Size(91, 24)
+        Me.RadBtnAbandon.Size = New System.Drawing.Size(24, 24)
         Me.RadBtnAbandon.TabIndex = 43
-        Me.RadBtnAbandon.Text = "Abandonner"
         '
         'RadFPPSListeParcours
         '

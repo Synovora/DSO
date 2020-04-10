@@ -74,11 +74,12 @@ Partial Class RadFWkfCommentaire
         'RadBtnAbandon
         '
         Me.RadBtnAbandon.DialogResult = System.Windows.Forms.DialogResult.Cancel
-        Me.RadBtnAbandon.Location = New System.Drawing.Point(742, 168)
+        Me.RadBtnAbandon.Image = Global.Oasis_WF.My.Resources.Resources._exit
+        Me.RadBtnAbandon.ImageAlignment = System.Drawing.ContentAlignment.MiddleCenter
+        Me.RadBtnAbandon.Location = New System.Drawing.Point(828, 168)
         Me.RadBtnAbandon.Name = "RadBtnAbandon"
-        Me.RadBtnAbandon.Size = New System.Drawing.Size(110, 24)
+        Me.RadBtnAbandon.Size = New System.Drawing.Size(24, 24)
         Me.RadBtnAbandon.TabIndex = 1
-        Me.RadBtnAbandon.Text = "Abandon"
         '
         'RadFWkfCommentaire
         '

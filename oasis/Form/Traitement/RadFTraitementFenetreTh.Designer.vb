@@ -819,7 +819,7 @@ Partial Class RadFTraitementFenetreTh
         '
         'RadBtnMedoc
         '
-        Me.RadBtnMedoc.Location = New System.Drawing.Point(12, 765)
+        Me.RadBtnMedoc.Location = New System.Drawing.Point(370, 765)
         Me.RadBtnMedoc.Name = "RadBtnMedoc"
         Me.RadBtnMedoc.Size = New System.Drawing.Size(110, 24)
         Me.RadBtnMedoc.TabIndex = 51
@@ -827,7 +827,9 @@ Partial Class RadFTraitementFenetreTh
         '
         'RadBtnValidationFenetre
         '
-        Me.RadBtnValidationFenetre.Location = New System.Drawing.Point(131, 765)
+        Me.RadBtnValidationFenetre.ForeColor = System.Drawing.Color.Black
+        Me.RadBtnValidationFenetre.Image = Global.Oasis_WF.My.Resources.Resources.validation
+        Me.RadBtnValidationFenetre.Location = New System.Drawing.Point(12, 765)
         Me.RadBtnValidationFenetre.Name = "RadBtnValidationFenetre"
         Me.RadBtnValidationFenetre.Size = New System.Drawing.Size(110, 24)
         Me.RadBtnValidationFenetre.TabIndex = 52
@@ -835,20 +837,23 @@ Partial Class RadFTraitementFenetreTh
         '
         'RadBtnSupprimerFenetre
         '
-        Me.RadBtnSupprimerFenetre.Location = New System.Drawing.Point(247, 765)
+        Me.RadBtnSupprimerFenetre.ForeColor = System.Drawing.Color.Black
+        Me.RadBtnSupprimerFenetre.Image = Global.Oasis_WF.My.Resources.Resources.supprimer
+        Me.RadBtnSupprimerFenetre.Location = New System.Drawing.Point(128, 765)
         Me.RadBtnSupprimerFenetre.Name = "RadBtnSupprimerFenetre"
-        Me.RadBtnSupprimerFenetre.Size = New System.Drawing.Size(191, 24)
+        Me.RadBtnSupprimerFenetre.Size = New System.Drawing.Size(236, 24)
         Me.RadBtnSupprimerFenetre.TabIndex = 53
         Me.RadBtnSupprimerFenetre.Text = "Supprimer la fenêtre thérapeutique"
         '
         'RadBtnRetour
         '
         Me.RadBtnRetour.DialogResult = System.Windows.Forms.DialogResult.Cancel
-        Me.RadBtnRetour.Location = New System.Drawing.Point(831, 765)
+        Me.RadBtnRetour.Image = Global.Oasis_WF.My.Resources.Resources._exit
+        Me.RadBtnRetour.ImageAlignment = System.Drawing.ContentAlignment.MiddleCenter
+        Me.RadBtnRetour.Location = New System.Drawing.Point(917, 765)
         Me.RadBtnRetour.Name = "RadBtnRetour"
-        Me.RadBtnRetour.Size = New System.Drawing.Size(110, 24)
+        Me.RadBtnRetour.Size = New System.Drawing.Size(24, 24)
         Me.RadBtnRetour.TabIndex = 54
-        Me.RadBtnRetour.Text = "Abandonner"
         '
         'LblLabelTraitementParModification
         '
