@@ -56,8 +56,8 @@ Public Class FrenchRadGridViewLocalizationProvider
                 Case RadGridStringId.FilterOperatorBetween
                     Return "Entre"
                 Case RadGridStringId.FilterOperatorContains
-                    Return "Contient"
-                Case RadGridStringId.FilterOperatorDoesNotContain
+                Return "Rechercher"  'Chaîne initiale : "Contient"
+            Case RadGridStringId.FilterOperatorDoesNotContain
                     Return "Ne contient pas"
                 Case RadGridStringId.FilterOperatorEndsWith
                     Return "Se termine par"
