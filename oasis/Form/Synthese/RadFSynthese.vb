@@ -202,6 +202,7 @@ Public Class RadFSynthese
         Else
             PatientAllergie = True
             LblAllergie.Show()
+            ToolTip.SetToolTip(LblAllergie, StringAllergieToolTip)
             LblSubstance.Show()
             LblSubstance.Text = StringAllergieToolTip.Replace(vbCrLf, " ")
             ListeDesMédicamentsDéclarésAllergiquesToolStripMenuItem.Enabled = True

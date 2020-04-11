@@ -447,7 +447,7 @@ Partial Class RadFAntecedentDetailEdit
         '
         Me.DteDateDebut.Location = New System.Drawing.Point(134, 105)
         Me.DteDateDebut.Name = "DteDateDebut"
-        Me.DteDateDebut.Size = New System.Drawing.Size(200, 20)
+        Me.DteDateDebut.Size = New System.Drawing.Size(200, 22)
         Me.DteDateDebut.TabIndex = 20
         '
         'Label8
@@ -494,7 +494,7 @@ Partial Class RadFAntecedentDetailEdit
         Me.TxtDrcId.Location = New System.Drawing.Point(203, 24)
         Me.TxtDrcId.Name = "TxtDrcId"
         Me.TxtDrcId.ReadOnly = True
-        Me.TxtDrcId.Size = New System.Drawing.Size(53, 20)
+        Me.TxtDrcId.Size = New System.Drawing.Size(53, 22)
         Me.TxtDrcId.TabIndex = 5
         '
         'GbxStatutAffichage
@@ -658,7 +658,7 @@ Partial Class RadFAntecedentDetailEdit
         Me.TxtAldCode.Location = New System.Drawing.Point(134, 21)
         Me.TxtAldCode.Name = "TxtAldCode"
         Me.TxtAldCode.ReadOnly = True
-        Me.TxtAldCode.Size = New System.Drawing.Size(59, 20)
+        Me.TxtAldCode.Size = New System.Drawing.Size(59, 22)
         Me.TxtAldCode.TabIndex = 74
         Me.ToolTip1.SetToolTip(Me.TxtAldCode, "Double clic pour afficher le sélecteur des ALD")
         '
@@ -667,7 +667,7 @@ Partial Class RadFAntecedentDetailEdit
         Me.TxtAldCim10Code.Location = New System.Drawing.Point(134, 51)
         Me.TxtAldCim10Code.Name = "TxtAldCim10Code"
         Me.TxtAldCim10Code.ReadOnly = True
-        Me.TxtAldCim10Code.Size = New System.Drawing.Size(59, 20)
+        Me.TxtAldCim10Code.Size = New System.Drawing.Size(59, 22)
         Me.TxtAldCim10Code.TabIndex = 91
         Me.ToolTip1.SetToolTip(Me.TxtAldCim10Code, "Double clic pour afficher le sélecteur des compléments de codification CIM10 de l" &
         "'ALD")
@@ -725,7 +725,7 @@ Partial Class RadFAntecedentDetailEdit
         '
         Me.DteAldDateDemande.Location = New System.Drawing.Point(247, 107)
         Me.DteAldDateDemande.Name = "DteAldDateDemande"
-        Me.DteAldDateDemande.Size = New System.Drawing.Size(200, 20)
+        Me.DteAldDateDemande.Size = New System.Drawing.Size(200, 22)
         Me.DteAldDateDemande.TabIndex = 107
         '
         'LblLabelAldDemandeEnCours
@@ -784,14 +784,14 @@ Partial Class RadFAntecedentDetailEdit
         '
         Me.DteALDDateFin.Location = New System.Drawing.Point(561, 78)
         Me.DteALDDateFin.Name = "DteALDDateFin"
-        Me.DteALDDateFin.Size = New System.Drawing.Size(200, 20)
+        Me.DteALDDateFin.Size = New System.Drawing.Size(200, 22)
         Me.DteALDDateFin.TabIndex = 100
         '
         'DteALDDateDebut
         '
         Me.DteALDDateDebut.Location = New System.Drawing.Point(247, 78)
         Me.DteALDDateDebut.Name = "DteALDDateDebut"
-        Me.DteALDDateDebut.Size = New System.Drawing.Size(200, 20)
+        Me.DteALDDateDebut.Size = New System.Drawing.Size(200, 22)
         Me.DteALDDateDebut.TabIndex = 99
         '
         'RadBtnSelectionAldCim10
@@ -833,7 +833,7 @@ Partial Class RadFAntecedentDetailEdit
         'RadBtnValidation
         '
         Me.RadBtnValidation.ForeColor = System.Drawing.Color.Black
-        Me.RadBtnValidation.Image = Global.Oasis_WF.My.Resources.Resources.validation
+        Me.RadBtnValidation.Image = Global.Oasis_WF.My.Resources.Resources.validation2
         Me.RadBtnValidation.Location = New System.Drawing.Point(14, 562)
         Me.RadBtnValidation.Name = "RadBtnValidation"
         Me.RadBtnValidation.Size = New System.Drawing.Size(110, 24)
@@ -852,7 +852,7 @@ Partial Class RadFAntecedentDetailEdit
         'RadBtnSupprimer
         '
         Me.RadBtnSupprimer.ForeColor = System.Drawing.Color.Black
-        Me.RadBtnSupprimer.Image = Global.Oasis_WF.My.Resources.Resources.supprimer
+        Me.RadBtnSupprimer.Image = Global.Oasis_WF.My.Resources.Resources.supprimer1
         Me.RadBtnSupprimer.Location = New System.Drawing.Point(130, 562)
         Me.RadBtnSupprimer.Name = "RadBtnSupprimer"
         Me.RadBtnSupprimer.Size = New System.Drawing.Size(162, 24)

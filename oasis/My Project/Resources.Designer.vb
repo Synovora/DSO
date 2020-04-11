@@ -143,9 +143,29 @@ Namespace My.Resources
         '''<summary>
         '''  Recherche une ressource localisée de type System.Drawing.Bitmap.
         '''</summary>
+        Friend ReadOnly Property supprimer1() As System.Drawing.Bitmap
+            Get
+                Dim obj As Object = ResourceManager.GetObject("supprimer1", resourceCulture)
+                Return CType(obj,System.Drawing.Bitmap)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Recherche une ressource localisée de type System.Drawing.Bitmap.
+        '''</summary>
         Friend ReadOnly Property validation() As System.Drawing.Bitmap
             Get
                 Dim obj As Object = ResourceManager.GetObject("validation", resourceCulture)
+                Return CType(obj,System.Drawing.Bitmap)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Recherche une ressource localisée de type System.Drawing.Bitmap.
+        '''</summary>
+        Friend ReadOnly Property validation2() As System.Drawing.Bitmap
+            Get
+                Dim obj As Object = ResourceManager.GetObject("validation2", resourceCulture)
                 Return CType(obj,System.Drawing.Bitmap)
             End Get
         End Property

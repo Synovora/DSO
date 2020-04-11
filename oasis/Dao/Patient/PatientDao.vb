@@ -427,26 +427,41 @@ Module PatientDao
         Dim dt As DataTable
         Dim StringContreIndication As String = ""
         Dim PremierPassage As Boolean = True
+        Dim rowCount As Integer
+
         dt = contreIndicationATCDao.getAllContreIndicationATCbyPatient(patientId)
-        Dim rowCount As Integer = dt.Rows.Count - 1
-        For i = 0 To rowCount Step 1
-            If PremierPassage = True Then
-                StringContreIndication += "ATC :" & vbCrLf
-                PremierPassage = False
-            End If
-            StringContreIndication += dt.Rows(i)("code_atc") & " : " & dt.Rows(i)("Denomination_atc") & vbCrLf
-        Next
+        If dt.Rows.Count > 0 Then
+            rowCount = dt.Rows.Count - 1
+            For i = 0 To rowCount Step 1
+                If PremierPassage = True Then
+                    StringContreIndication += "ATC :" & vbCrLf
+                    PremierPassage = False
+                End If
+                StringContreIndication += dt.Rows(i)("code_atc") & " : " & dt.Rows(i)("Denomination_atc") & vbCrLf
+            Next
+        End If
 
         dt = contreIndicationSubstanceDao.getAllContreIndicationSubstancebyPatient(patientId)
-        rowCount = dt.Rows.Count - 1
-        PremierPassage = True
-        For i = 0 To rowCount Step 1
-            If PremierPassage = True Then
-                StringContreIndication += "Substance :" & vbCrLf
-                PremierPassage = False
-            End If
-            StringContreIndication += dt.Rows(i)("substance_id") & " : " & dt.Rows(i)("denomination_substance") & vbCrLf
-        Next
+        If dt.Rows.Count > 0 Then
+            rowCount = dt.Rows.Count - 1
+            PremierPassage = True
+            For i = 0 To rowCount Step 1
+                If PremierPassage = True Then
+                    StringContreIndication += "Substance :" & vbCrLf
+                    PremierPassage = False
+                End If
+                Dim substanceId As Integer = dt.Rows(i)("substance_id")
+                If substanceId <> 0 Then
+                    StringContreIndication += dt.Rows(i)("substance_id") & " : " & dt.Rows(i)("denomination_substance") & vbCrLf
+                Else
+                    Dim substancePereId As Integer = dt.Rows(i)("substance_pere_id")
+                    If substancePereId <> 0 Then
+                        StringContreIndication += dt.Rows(i)("substance_pere_id") & " : " & dt.Rows(i)("denomination_substance_pere") & vbCrLf
+                    End If
+                End If
+
+            Next
+        End If
 
         Return StringContreIndication
     End Function

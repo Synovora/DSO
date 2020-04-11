@@ -719,7 +719,7 @@ Partial Class RadFContextedetailEdit
         'RadValidation
         '
         Me.RadValidation.ForeColor = System.Drawing.Color.Black
-        Me.RadValidation.Image = Global.Oasis_WF.My.Resources.Resources.validation
+        Me.RadValidation.Image = Global.Oasis_WF.My.Resources.Resources.validation2
         Me.RadValidation.Location = New System.Drawing.Point(12, 526)
         Me.RadValidation.Name = "RadValidation"
         Me.RadValidation.Size = New System.Drawing.Size(110, 24)
@@ -729,7 +729,7 @@ Partial Class RadFContextedetailEdit
         'RadBtnSupprimer
         '
         Me.RadBtnSupprimer.ForeColor = System.Drawing.Color.Black
-        Me.RadBtnSupprimer.Image = Global.Oasis_WF.My.Resources.Resources.supprimer
+        Me.RadBtnSupprimer.Image = Global.Oasis_WF.My.Resources.Resources.supprimer1
         Me.RadBtnSupprimer.Location = New System.Drawing.Point(128, 526)
         Me.RadBtnSupprimer.Name = "RadBtnSupprimer"
         Me.RadBtnSupprimer.Size = New System.Drawing.Size(156, 24)

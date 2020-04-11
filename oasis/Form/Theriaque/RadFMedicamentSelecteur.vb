@@ -602,8 +602,8 @@ Public Class RadFMedicamentSelecteur
                 Dim specialiteAllergie As SpecialiteAllergique = theriaqueDao.IsSpecialiteAllergique(SelectedPatient, SpecialiteId)
                 If specialiteAllergie.Allergie = True Then
                     messageAlerte = specialiteAllergie.MessageAllergie
-                    messageAlerte += vbCrLf & "Ce médicament ne peut pas être prescrit pour ce patient !"
-                    MessageBox.Show(messageAlerte)
+                    messageAlerte += vbCrLf & vbCrLf & "Ce médicament ne peut pas être prescrit pour ce patient !"
+                    MessageBox.Show(messageAlerte, "Alerte", MessageBoxButtons.OK, MessageBoxIcon.Error)
                     Exit Sub
                 End If
 
@@ -614,8 +614,8 @@ Public Class RadFMedicamentSelecteur
                 Dim specialiteContreIndique As SpecialiteContreIndique = theriaqueDao.IsSpecialiteContreIndique(SelectedPatient, SpecialiteId)
                 If specialiteContreIndique.ContreIndication = True Then
                     messageAlerte = specialiteContreIndique.MessageContreIndication
-                    messageAlerte += vbCrLf & "Confirmez-vous la sélection du médicament ?"
-                    If MsgBox(messageAlerte, MsgBoxStyle.YesNo Or MsgBoxStyle.Critical, "") <> MsgBoxResult.Yes Then
+                    messageAlerte += vbCrLf & vbCrLf & "Confirmez-vous la sélection du médicament ?"
+                    If MsgBox(messageAlerte, MsgBoxStyle.YesNo Or MsgBoxStyle.Exclamation, "Avertissement") <> MsgBoxResult.Yes Then
                         Exit Sub
                     End If
                 End If

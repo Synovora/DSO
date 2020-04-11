@@ -22,7 +22,6 @@ Partial Class RadFEpisodeDetailCreation
     'Do not modify it using the code editor.
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
-        Me.CbxTypeEpisode = New System.Windows.Forms.ComboBox()
         Me.CbxEpisodeActivite = New System.Windows.Forms.ComboBox()
         Me.Label1 = New System.Windows.Forms.Label()
         Me.Label2 = New System.Windows.Forms.Label()
@@ -43,21 +42,14 @@ Partial Class RadFEpisodeDetailCreation
         Me.Label6 = New System.Windows.Forms.Label()
         Me.RadBtnAbandon = New Telerik.WinControls.UI.RadButton()
         Me.RadBtnValidation = New Telerik.WinControls.UI.RadButton()
+        Me.RadioBtnConsultation = New System.Windows.Forms.RadioButton()
+        Me.RadioBtnVirtuel = New System.Windows.Forms.RadioButton()
         CType(Me.RadGroupBoxEtatCivil, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.RadGroupBoxEtatCivil.SuspendLayout()
         CType(Me.RadBtnAbandon, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.RadBtnValidation, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
-        '
-        'CbxTypeEpisode
-        '
-        Me.CbxTypeEpisode.FormattingEnabled = True
-        Me.CbxTypeEpisode.Items.AddRange(New Object() {"CONSULTATION", "VIRTUEL"})
-        Me.CbxTypeEpisode.Location = New System.Drawing.Point(147, 69)
-        Me.CbxTypeEpisode.Name = "CbxTypeEpisode"
-        Me.CbxTypeEpisode.Size = New System.Drawing.Size(139, 21)
-        Me.CbxTypeEpisode.TabIndex = 0
         '
         'CbxEpisodeActivite
         '
@@ -240,19 +232,43 @@ Partial Class RadFEpisodeDetailCreation
         'RadBtnAbandon
         '
         Me.RadBtnAbandon.DialogResult = System.Windows.Forms.DialogResult.Cancel
-        Me.RadBtnAbandon.Location = New System.Drawing.Point(724, 220)
+        Me.RadBtnAbandon.Image = Global.Oasis_WF.My.Resources.Resources._exit
+        Me.RadBtnAbandon.ImageAlignment = System.Drawing.ContentAlignment.MiddleCenter
+        Me.RadBtnAbandon.Location = New System.Drawing.Point(810, 220)
         Me.RadBtnAbandon.Name = "RadBtnAbandon"
-        Me.RadBtnAbandon.Size = New System.Drawing.Size(110, 24)
+        Me.RadBtnAbandon.Size = New System.Drawing.Size(24, 24)
         Me.RadBtnAbandon.TabIndex = 9
-        Me.RadBtnAbandon.Text = "Abandon"
         '
         'RadBtnValidation
         '
-        Me.RadBtnValidation.Location = New System.Drawing.Point(608, 220)
+        Me.RadBtnValidation.Image = Global.Oasis_WF.My.Resources.Resources.validation
+        Me.RadBtnValidation.Location = New System.Drawing.Point(12, 220)
         Me.RadBtnValidation.Name = "RadBtnValidation"
         Me.RadBtnValidation.Size = New System.Drawing.Size(110, 24)
         Me.RadBtnValidation.TabIndex = 10
         Me.RadBtnValidation.Text = "Validation"
+        '
+        'RadioBtnConsultation
+        '
+        Me.RadioBtnConsultation.AutoSize = True
+        Me.RadioBtnConsultation.Location = New System.Drawing.Point(147, 70)
+        Me.RadioBtnConsultation.Name = "RadioBtnConsultation"
+        Me.RadioBtnConsultation.Size = New System.Drawing.Size(92, 17)
+        Me.RadioBtnConsultation.TabIndex = 11
+        Me.RadioBtnConsultation.TabStop = True
+        Me.RadioBtnConsultation.Text = "Consultation"
+        Me.RadioBtnConsultation.UseVisualStyleBackColor = True
+        '
+        'RadioBtnVirtuel
+        '
+        Me.RadioBtnVirtuel.AutoSize = True
+        Me.RadioBtnVirtuel.Location = New System.Drawing.Point(257, 70)
+        Me.RadioBtnVirtuel.Name = "RadioBtnVirtuel"
+        Me.RadioBtnVirtuel.Size = New System.Drawing.Size(59, 17)
+        Me.RadioBtnVirtuel.TabIndex = 12
+        Me.RadioBtnVirtuel.TabStop = True
+        Me.RadioBtnVirtuel.Text = "Virtuel"
+        Me.RadioBtnVirtuel.UseVisualStyleBackColor = True
         '
         'RadFEpisodeDetailCreation
         '
@@ -260,6 +276,8 @@ Partial Class RadFEpisodeDetailCreation
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.CancelButton = Me.RadBtnAbandon
         Me.ClientSize = New System.Drawing.Size(840, 251)
+        Me.Controls.Add(Me.RadioBtnVirtuel)
+        Me.Controls.Add(Me.RadioBtnConsultation)
         Me.Controls.Add(Me.RadBtnValidation)
         Me.Controls.Add(Me.RadBtnAbandon)
         Me.Controls.Add(Me.Label6)
@@ -270,7 +288,6 @@ Partial Class RadFEpisodeDetailCreation
         Me.Controls.Add(Me.Label2)
         Me.Controls.Add(Me.Label1)
         Me.Controls.Add(Me.CbxEpisodeActivite)
-        Me.Controls.Add(Me.CbxTypeEpisode)
         Me.MaximizeBox = False
         Me.MinimizeBox = False
         Me.Name = "RadFEpisodeDetailCreation"
@@ -291,8 +308,6 @@ Partial Class RadFEpisodeDetailCreation
         Me.PerformLayout()
 
     End Sub
-
-    Friend WithEvents CbxTypeEpisode As ComboBox
     Friend WithEvents CbxEpisodeActivite As ComboBox
     Friend WithEvents Label1 As Label
     Friend WithEvents Label2 As Label
@@ -313,5 +328,7 @@ Partial Class RadFEpisodeDetailCreation
     Friend WithEvents Label6 As Label
     Friend WithEvents RadBtnAbandon As Telerik.WinControls.UI.RadButton
     Friend WithEvents RadBtnValidation As Telerik.WinControls.UI.RadButton
+    Friend WithEvents RadioBtnConsultation As RadioButton
+    Friend WithEvents RadioBtnVirtuel As RadioButton
 End Class
 

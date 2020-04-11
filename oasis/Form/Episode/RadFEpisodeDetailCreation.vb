@@ -83,12 +83,10 @@ Public Class RadFEpisodeDetailCreation
                 listActivite.Add(TypeActiviteEpisode)
             End If
         Next
+
         CbxEpisodeActivite.DataSource = listActivite
 
-        CbxTypeEpisode.Items.Clear()
-        CbxTypeEpisode.Items.Add(EpisodeDao.EnumTypeEpisode.CONSULTATION.ToString)
-        CbxTypeEpisode.Items.Add(EpisodeDao.EnumTypeEpisode.VIRTUEL.ToString)
-        CbxTypeEpisode.Text = CbxTypeEpisode.Items(0)
+        RadioBtnConsultation.Checked = True
 
         Me.CodeRetour = False
         ChargementEtatCivil()
@@ -112,7 +110,11 @@ Public Class RadFEpisodeDetailCreation
         Dim episode As New Episode
         episode.Commentaire = TxtCommentaire.Text
         episode.DescriptionActivite = TxtDescriptionActivite.Text
-        episode.Type = CbxTypeEpisode.Text
+        If RadioBtnConsultation.Checked = True Then
+            episode.Type = EpisodeDao.EnumTypeEpisode.CONSULTATION.ToString
+        Else
+            episode.Type = EpisodeDao.EnumTypeEpisode.VIRTUEL.ToString
+        End If
         episode.TypeActivite = CbxEpisodeActivite.Text
         episode.TypeActivite = episodeDao.GetCodeTypeActiviteByItem(CbxEpisodeActivite.Text)
         If episode.TypeActivite <> "" Or episode.Type = EpisodeDao.EnumTypeEpisode.VIRTUEL.ToString Then
@@ -173,19 +175,13 @@ Public Class RadFEpisodeDetailCreation
         Close()
     End Sub
 
-    Private Sub CbxTypeEpisode_TextChanged(sender As Object, e As EventArgs) Handles CbxTypeEpisode.TextChanged
-        If CbxTypeEpisode.Text = EpisodeDao.EnumTypeEpisode.VIRTUEL.ToString Then
-            CbxEpisodeActivite.Text = ""
-            CbxEpisodeActivite.Hide()
-        End If
+    Private Sub RadioBtnConsultation_CheckedChanged(sender As Object, e As EventArgs) Handles RadioBtnConsultation.CheckedChanged
+        CbxEpisodeActivite.Text = CbxEpisodeActivite.Items(0)
+        CbxEpisodeActivite.Show()
+    End Sub
 
-        Select Case CbxTypeEpisode.Text
-            Case EpisodeDao.EnumTypeEpisode.VIRTUEL.ToString
-                CbxEpisodeActivite.Text = ""
-                CbxEpisodeActivite.Hide()
-            Case EpisodeDao.EnumTypeEpisode.CONSULTATION.ToString
-                CbxTypeEpisode.Text = CbxTypeEpisode.Items(0)
-                CbxEpisodeActivite.Show()
-        End Select
+    Private Sub RadioBtnVirtuel_CheckedChanged(sender As Object, e As EventArgs) Handles RadioBtnVirtuel.CheckedChanged
+        CbxEpisodeActivite.Text = ""
+        CbxEpisodeActivite.Hide()
     End Sub
 End Class

@@ -333,7 +333,7 @@ Partial Class RadFDrcDetailEdit
         'RadBtnAnnuler
         '
         Me.RadBtnAnnuler.ForeColor = System.Drawing.Color.Black
-        Me.RadBtnAnnuler.Image = Global.Oasis_WF.My.Resources.Resources.supprimer
+        Me.RadBtnAnnuler.Image = Global.Oasis_WF.My.Resources.Resources.supprimer1
         Me.RadBtnAnnuler.Location = New System.Drawing.Point(128, 484)
         Me.RadBtnAnnuler.Name = "RadBtnAnnuler"
         Me.RadBtnAnnuler.Size = New System.Drawing.Size(122, 24)
@@ -351,7 +351,7 @@ Partial Class RadFDrcDetailEdit
         'RadBtnValidation
         '
         Me.RadBtnValidation.ForeColor = System.Drawing.Color.Black
-        Me.RadBtnValidation.Image = Global.Oasis_WF.My.Resources.Resources.validation
+        Me.RadBtnValidation.Image = Global.Oasis_WF.My.Resources.Resources.validation2
         Me.RadBtnValidation.Location = New System.Drawing.Point(12, 484)
         Me.RadBtnValidation.Name = "RadBtnValidation"
         Me.RadBtnValidation.Size = New System.Drawing.Size(110, 24)

@@ -328,7 +328,7 @@ Partial Class RadFPatientAllergieListe
         '
         'RadBtnAnnulerSubstance
         '
-        Me.RadBtnAnnulerSubstance.Image = Global.Oasis_WF.My.Resources.Resources.supprimer
+        Me.RadBtnAnnulerSubstance.Image = Global.Oasis_WF.My.Resources.Resources.supprimer1
         Me.RadBtnAnnulerSubstance.Location = New System.Drawing.Point(525, 61)
         Me.RadBtnAnnulerSubstance.Name = "RadBtnAnnulerSubstance"
         Me.RadBtnAnnulerSubstance.Size = New System.Drawing.Size(148, 24)

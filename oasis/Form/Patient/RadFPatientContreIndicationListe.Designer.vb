@@ -22,14 +22,14 @@ Partial Class RadFPatientContreIndicationListe
     'Do not modify it using the code editor.
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
-        Dim GridViewTextBoxColumn7 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
-        Dim GridViewTextBoxColumn8 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
-        Dim GridViewTextBoxColumn9 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
-        Dim TableViewDefinition3 As Telerik.WinControls.UI.TableViewDefinition = New Telerik.WinControls.UI.TableViewDefinition()
-        Dim GridViewTextBoxColumn10 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
-        Dim GridViewTextBoxColumn11 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
-        Dim GridViewTextBoxColumn12 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
-        Dim TableViewDefinition4 As Telerik.WinControls.UI.TableViewDefinition = New Telerik.WinControls.UI.TableViewDefinition()
+        Dim GridViewTextBoxColumn1 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
+        Dim GridViewTextBoxColumn2 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
+        Dim GridViewTextBoxColumn3 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
+        Dim TableViewDefinition1 As Telerik.WinControls.UI.TableViewDefinition = New Telerik.WinControls.UI.TableViewDefinition()
+        Dim GridViewTextBoxColumn4 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
+        Dim GridViewTextBoxColumn5 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
+        Dim GridViewTextBoxColumn6 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
+        Dim TableViewDefinition2 As Telerik.WinControls.UI.TableViewDefinition = New Telerik.WinControls.UI.TableViewDefinition()
         Me.RadPanel1 = New Telerik.WinControls.UI.RadPanel()
         Me.RadGroupBox1 = New Telerik.WinControls.UI.RadGroupBox()
         Me.Label13 = New System.Windows.Forms.Label()
@@ -322,7 +322,7 @@ Partial Class RadFPatientContreIndicationListe
         '
         'RadBtnAnnulerSubstance
         '
-        Me.RadBtnAnnulerSubstance.Image = Global.Oasis_WF.My.Resources.Resources.supprimer
+        Me.RadBtnAnnulerSubstance.Image = Global.Oasis_WF.My.Resources.Resources.supprimer1
         Me.RadBtnAnnulerSubstance.Location = New System.Drawing.Point(534, 272)
         Me.RadBtnAnnulerSubstance.Name = "RadBtnAnnulerSubstance"
         Me.RadBtnAnnulerSubstance.Size = New System.Drawing.Size(136, 24)
@@ -331,7 +331,7 @@ Partial Class RadFPatientContreIndicationListe
         '
         'RadBtnAnnulerATC
         '
-        Me.RadBtnAnnulerATC.Image = Global.Oasis_WF.My.Resources.Resources.supprimer
+        Me.RadBtnAnnulerATC.Image = Global.Oasis_WF.My.Resources.Resources.supprimer1
         Me.RadBtnAnnulerATC.Location = New System.Drawing.Point(534, 62)
         Me.RadBtnAnnulerATC.Name = "RadBtnAnnulerATC"
         Me.RadBtnAnnulerATC.Size = New System.Drawing.Size(136, 24)
@@ -372,21 +372,21 @@ Partial Class RadFPatientContreIndicationListe
         Me.RadCISubstancePatientDataGridView.MasterTemplate.AllowAddNewRow = False
         Me.RadCISubstancePatientDataGridView.MasterTemplate.AllowDeleteRow = False
         Me.RadCISubstancePatientDataGridView.MasterTemplate.AllowEditRow = False
-        GridViewTextBoxColumn7.EnableExpressionEditor = False
-        GridViewTextBoxColumn7.HeaderText = "Code"
-        GridViewTextBoxColumn7.Name = "substance_id"
-        GridViewTextBoxColumn7.Width = 70
-        GridViewTextBoxColumn8.EnableExpressionEditor = False
-        GridViewTextBoxColumn8.HeaderText = "Dénomination"
-        GridViewTextBoxColumn8.Name = "denomination_substance"
-        GridViewTextBoxColumn8.Width = 400
-        GridViewTextBoxColumn9.EnableExpressionEditor = False
-        GridViewTextBoxColumn9.HeaderText = "contre_indication_id"
-        GridViewTextBoxColumn9.IsVisible = False
-        GridViewTextBoxColumn9.Name = "contre_indication_id"
-        Me.RadCISubstancePatientDataGridView.MasterTemplate.Columns.AddRange(New Telerik.WinControls.UI.GridViewDataColumn() {GridViewTextBoxColumn7, GridViewTextBoxColumn8, GridViewTextBoxColumn9})
+        GridViewTextBoxColumn1.EnableExpressionEditor = False
+        GridViewTextBoxColumn1.HeaderText = "Code"
+        GridViewTextBoxColumn1.Name = "substance_id"
+        GridViewTextBoxColumn1.Width = 70
+        GridViewTextBoxColumn2.EnableExpressionEditor = False
+        GridViewTextBoxColumn2.HeaderText = "Dénomination"
+        GridViewTextBoxColumn2.Name = "denomination_substance"
+        GridViewTextBoxColumn2.Width = 400
+        GridViewTextBoxColumn3.EnableExpressionEditor = False
+        GridViewTextBoxColumn3.HeaderText = "contre_indication_id"
+        GridViewTextBoxColumn3.IsVisible = False
+        GridViewTextBoxColumn3.Name = "contre_indication_id"
+        Me.RadCISubstancePatientDataGridView.MasterTemplate.Columns.AddRange(New Telerik.WinControls.UI.GridViewDataColumn() {GridViewTextBoxColumn1, GridViewTextBoxColumn2, GridViewTextBoxColumn3})
         Me.RadCISubstancePatientDataGridView.MasterTemplate.ShowFilteringRow = False
-        Me.RadCISubstancePatientDataGridView.MasterTemplate.ViewDefinition = TableViewDefinition3
+        Me.RadCISubstancePatientDataGridView.MasterTemplate.ViewDefinition = TableViewDefinition1
         Me.RadCISubstancePatientDataGridView.Name = "RadCISubstancePatientDataGridView"
         Me.RadCISubstancePatientDataGridView.RightToLeft = System.Windows.Forms.RightToLeft.No
         Me.RadCISubstancePatientDataGridView.ShowGroupPanel = False
@@ -406,23 +406,23 @@ Partial Class RadFPatientContreIndicationListe
         '
         Me.RadCIATCPatientDataGridView.MasterTemplate.AllowAddNewRow = False
         Me.RadCIATCPatientDataGridView.MasterTemplate.AllowDragToGroup = False
-        GridViewTextBoxColumn10.EnableExpressionEditor = False
-        GridViewTextBoxColumn10.FieldName = "allergie"
-        GridViewTextBoxColumn10.HeaderText = "Code"
-        GridViewTextBoxColumn10.HeaderTextAlignment = System.Drawing.ContentAlignment.MiddleLeft
-        GridViewTextBoxColumn10.Name = "code_atc"
-        GridViewTextBoxColumn10.Width = 70
-        GridViewTextBoxColumn11.EnableExpressionEditor = False
-        GridViewTextBoxColumn11.HeaderText = "Dénomination"
-        GridViewTextBoxColumn11.HeaderTextAlignment = System.Drawing.ContentAlignment.MiddleLeft
-        GridViewTextBoxColumn11.Name = "denomination_atc"
-        GridViewTextBoxColumn11.Width = 400
-        GridViewTextBoxColumn12.EnableExpressionEditor = False
-        GridViewTextBoxColumn12.HeaderText = "contre_indication_id"
-        GridViewTextBoxColumn12.IsVisible = False
-        GridViewTextBoxColumn12.Name = "contre_indication_id"
-        Me.RadCIATCPatientDataGridView.MasterTemplate.Columns.AddRange(New Telerik.WinControls.UI.GridViewDataColumn() {GridViewTextBoxColumn10, GridViewTextBoxColumn11, GridViewTextBoxColumn12})
-        Me.RadCIATCPatientDataGridView.MasterTemplate.ViewDefinition = TableViewDefinition4
+        GridViewTextBoxColumn4.EnableExpressionEditor = False
+        GridViewTextBoxColumn4.FieldName = "allergie"
+        GridViewTextBoxColumn4.HeaderText = "Code"
+        GridViewTextBoxColumn4.HeaderTextAlignment = System.Drawing.ContentAlignment.MiddleLeft
+        GridViewTextBoxColumn4.Name = "code_atc"
+        GridViewTextBoxColumn4.Width = 70
+        GridViewTextBoxColumn5.EnableExpressionEditor = False
+        GridViewTextBoxColumn5.HeaderText = "Dénomination"
+        GridViewTextBoxColumn5.HeaderTextAlignment = System.Drawing.ContentAlignment.MiddleLeft
+        GridViewTextBoxColumn5.Name = "denomination_atc"
+        GridViewTextBoxColumn5.Width = 400
+        GridViewTextBoxColumn6.EnableExpressionEditor = False
+        GridViewTextBoxColumn6.HeaderText = "contre_indication_id"
+        GridViewTextBoxColumn6.IsVisible = False
+        GridViewTextBoxColumn6.Name = "contre_indication_id"
+        Me.RadCIATCPatientDataGridView.MasterTemplate.Columns.AddRange(New Telerik.WinControls.UI.GridViewDataColumn() {GridViewTextBoxColumn4, GridViewTextBoxColumn5, GridViewTextBoxColumn6})
+        Me.RadCIATCPatientDataGridView.MasterTemplate.ViewDefinition = TableViewDefinition2
         Me.RadCIATCPatientDataGridView.Name = "RadCIATCPatientDataGridView"
         Me.RadCIATCPatientDataGridView.ReadOnly = True
         Me.RadCIATCPatientDataGridView.RightToLeft = System.Windows.Forms.RightToLeft.No

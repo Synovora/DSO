@@ -166,10 +166,6 @@ Public Class RadFEpisodeDetail
         RadGridViewObsIde.TableElement.RowHeight = 35
         RadGridViewObsMed.TableElement.RowHeight = 35
 
-        'Me.RadSplitContainer1.SplitPanels("SplitPanelTop").SizeInfo.SizeMode = Telerik.WinControls.UI.Docking.SplitPanelSizeMode.Absolute; 
-        'SplitPanelTop.SizeInfo.SizeMode = SplitPanelSizeMode.Absolute
-        'SplitPanelTop.Height = 122
-
         SplitPanelObservation.SizeInfo.SizeMode = SplitPanelSizeMode.Absolute
         SplitPanelObservation.SizeInfo.AbsoluteSize = New Size(0, 450)
 
@@ -418,18 +414,36 @@ Public Class RadFEpisodeDetail
         dt = ordonnaceDao.getOrdonnanceValidebyPatient(SelectedPatient.patientId, SelectedEpisodeId)
         If dt.Rows.Count > 0 Then
             OrdonnanceToolStripMenuItem.ForeColor = Color.Red
+            'RadPageView1.Pages(1).Item.ForeColor = Color.Orange
+            RadPageView1.Pages(1).Item.DrawFill = True
+            RadPageView1.Pages(1).Item.BackColor = Color.LightSalmon
+            RadPageView1.Pages(1).Item.GradientStyle = GradientStyles.Solid
+            RadBtnOrdonnance.BackColor = Color.LightSalmon
+            ToolTip.SetToolTip(RadBtnOrdonnance, "Ordonnance existante en attente de validation médicale")
             If dt.Rows.Count > 0 Then
                 ControleOrdonnanceExiste = True
                 DateValidationOrdonnance = Coalesce(dt.Rows(0)("oa_ordonnance_date_validation"), Nothing)
                 DateCreationOrdonnance = Coalesce(dt.Rows(0)("oa_ordonnance_date_creation"), Nothing)
                 If DateValidationOrdonnance <> Nothing Then
                     ControleOrdonnanceValide = True
+                    'RadPageView1.Pages(1).Item.ForeColor = Color.Red
+                    RadPageView1.Pages(1).Item.DrawFill = True
+                    RadPageView1.Pages(1).Item.BackColor = Color.LightGreen
+                    RadPageView1.Pages(1).Item.GradientStyle = GradientStyles.Solid
+                    RadBtnOrdonnance.BackColor = Color.LightGreen
+                    ToolTip.SetToolTip(RadBtnOrdonnance, "Ordonnance existante et valide (signature médicale)")
                 Else
                     ControleOrdonnanceValide = False
                 End If
             End If
         Else
             OrdonnanceToolStripMenuItem.ForeColor = Color.Black
+            'RadPageView1.Pages(1).Item.ForeColor = Color.Black
+            RadPageView1.Pages(1).Item.DrawFill = True
+            RadPageView1.Pages(1).Item.BackColor = Color.FromArgb(191, 219, 255)
+            RadPageView1.Pages(1).Item.GradientStyle = GradientStyles.Solid
+            RadBtnOrdonnance.BackColor = Color.FromArgb(233, 240, 249)
+            ToolTip.SetToolTip(RadBtnOrdonnance, "Création ordonnance")
             ControleOrdonnanceExiste = False
             ControleOrdonnanceValide = False
         End If
@@ -3580,7 +3594,16 @@ Public Class RadFEpisodeDetail
         End If
     End Sub
 
+    'Ordonnance
+    Private Sub RadBtnOrdonnance_Click(sender As Object, e As EventArgs) Handles RadBtnOrdonnance.Click
+        GetOrdonnance()
+    End Sub
+
     Private Sub OrdonnanceToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles OrdonnanceToolStripMenuItem.Click
+        GetOrdonnance()
+    End Sub
+
+    Private Sub GetOrdonnance()
         Me.Enabled = False
         Cursor.Current = Cursors.WaitCursor
         Dim OrdonnanceId As Long
