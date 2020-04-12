@@ -88,7 +88,7 @@ Public Class RadFEpisodeLigneDeVie
     Private Sub GetParametresEtFiltres()
         ConfigurationParametreExiste = True
         Try
-            patientParametreLdv = patientParametreLdvDao.GetEpisodeByPatientId(SelectedPatient.patientId)
+            patientParametreLdv = patientParametreLdvDao.GetParametreByPatientId(SelectedPatient.patientId)
         Catch ex As Exception
             Dim messageErreur As String = ex.Message
             If messageErreur.StartsWith("RNF") Then
@@ -297,18 +297,18 @@ Public Class RadFEpisodeLigneDeVie
         ligneDeVie.ParametreId4 = 0
         ligneDeVie.ParametreId5 = 0
 
-        Dim nombreParametre As Integer = listeParametreaAfficher.Count()
-        If nombreParametre >= 5 Then
-            RadBtnParametre.Hide()
-        Else
-            RadBtnParametre.Show()
-        End If
+        'Dim nombreParametre As Integer = listeParametreaAfficher.Count()
+        'If nombreParametre >= 5 Then
+        'RadBtnParametre.Hide()
+        'Else
+        'RadBtnParametre.Show()
+        'End If
 
-        If nombreParametre > 0 Then
-            LblLabelParametre.Show()
-        Else
-            LblLabelParametre.Hide()
-        End If
+        'If nombreParametre > 0 Then
+        'LblLabelParametre.Show()
+        'Else
+        'LblLabelParametre.Hide()
+        'End If
 
         Dim i As Integer = 0
         Dim ParametreEnumerator As List(Of Long).Enumerator = listeParametreaAfficher.GetEnumerator()
@@ -673,14 +673,12 @@ Public Class RadFEpisodeLigneDeVie
     End Sub
 
     Private Sub RadBtnParametre_Click(sender As Object, e As EventArgs) Handles RadBtnParametre.Click
-        Me.Enabled = False
-        Using form As New RadFParametreSelecteur
-            form.ListeParametreExistant = listeParametreaAfficher
+        'Me.Enabled = False
+        Using form As New RadFLigneDeVieParametreSelecteur
+            form.ListeParametreaAfficher = listeParametreaAfficher
             form.ShowDialog()
-            If form.IsSelected = True Then
-                listeParametreaAfficher.Add(form.SelectedParametre.Id)
-                AfficheParametres()
-            End If
+            listeParametreaAfficher = form.ListeParametreaAfficher
+            AfficheParametres()
         End Using
         Me.Enabled = True
     End Sub

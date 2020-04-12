@@ -462,6 +462,12 @@
     <Compile Include="Form\LigneDeVie\RadFLigneDeVieGraphe.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="Form\LigneDeVie\RadFLigneDeVieParametreSelecteur.Designer.vb">
+      <DependentUpon>RadFLigneDeVieParametreSelecteur.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Form\LigneDeVie\RadFLigneDeVieParametreSelecteur.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Form\PPS\RadFPPSListeParcours.Designer.vb">
       <DependentUpon>RadFPPSListeParcours.vb</DependentUpon>
     </Compile>
@@ -1065,6 +1071,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Form\LigneDeVie\RadFLigneDeVieGraphe.resx">
       <DependentUpon>RadFLigneDeVieGraphe.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form\LigneDeVie\RadFLigneDeVieParametreSelecteur.resx">
+      <DependentUpon>RadFLigneDeVieParametreSelecteur.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Form\PPS\RadFPPSListeParcours.resx">
       <DependentUpon>RadFPPSListeParcours.vb</DependentUpon>

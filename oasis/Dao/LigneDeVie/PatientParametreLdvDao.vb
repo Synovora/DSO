@@ -3,7 +3,7 @@ Imports Oasis_Common
 Public Class PatientParametreLdvDao
     Inherits StandardDao
 
-    Friend Function GetEpisodeByPatientId(patientId As Integer) As PatientParametreLdv
+    Friend Function GetParametreByPatientId(patientId As Integer) As PatientParametreLdv
         Dim patientParametreLdv As PatientParametreLdv
         Dim con As SqlConnection
 
@@ -28,7 +28,7 @@ Public Class PatientParametreLdvDao
             con.Close()
         End Try
 
-        Return PatientParametreLdv
+        Return patientParametreLdv
     End Function
 
     Private Function BuildBean(reader As SqlDataReader) As PatientParametreLdv
