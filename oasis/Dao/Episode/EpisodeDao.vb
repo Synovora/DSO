@@ -710,7 +710,7 @@ Public Class EpisodeDao
             End Using
         End If
 
-        Return IsRendezVousCloture
+            Return IsRendezVousCloture
     End Function
 
     Friend Function MajEpisodeConclusionMedicale(episodeId As Long) As Boolean

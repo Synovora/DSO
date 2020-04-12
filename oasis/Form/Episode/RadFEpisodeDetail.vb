@@ -137,14 +137,27 @@ Public Class RadFEpisodeDetail
     'Saisie observations spécifiques
     Dim ObsRowCount As Integer
 
+    'Contrôle accès épisode
+    Dim RemoveEpisode As Boolean
+
     Private Sub RadFEpisodeDetail_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         'Contrôle d'accès aux écran Synthèse, épisode et ligne de vie
-        Environnement.ControleAcces.addFormToControl(EnumForm.EPISODE.ToString)
-        If Environnement.ControleAcces.IsAccessToFormOK(EnumForm.LIGNE_DE_VIE.ToString) = False Then
+        Environnement.ControleAccesForm.addFormToControl(EnumForm.EPISODE.ToString)
+        If Environnement.ControleAccesForm.IsAccessToFormOK(EnumForm.LIGNE_DE_VIE.ToString) = False Then
             RadBtnLigneDeVie.Hide()
         End If
-        If Environnement.ControleAcces.IsAccessToFormOK(EnumForm.SYNTHESE.ToString) = False Then
+        If Environnement.ControleAccesForm.IsAccessToFormOK(EnumForm.SYNTHESE.ToString) = False Then
             RadBtnSynthèse.Hide()
+        End If
+
+        'Contrôle d'accès épisode
+        If Environnement.ControleAccesEpisode.IsAccessToEpisodeOK(SelectedEpisodeId) Then
+            Environnement.ControleAccesEpisode.AddEpisodeToControl(SelectedEpisodeId)
+            RemoveEpisode = True
+        Else
+            MessageBox.Show("Accès interdit, cet épisode est déjà ouvert !", "Alerte", MessageBoxButtons.OK, MessageBoxIcon.Error)
+            RemoveEpisode = False
+            Close()
         End If
 
         Me.RadDesktopAlert1.Popup.AlertElement.CaptionElement.TextAndButtonsElement.TextElement.ForeColor = Color.Red
@@ -1747,7 +1760,10 @@ Public Class RadFEpisodeDetail
         'Mise à jour base de données si bouton radio type conclusion médicale modifiée
         ModificationRadioTypeConclusionIDE()
 
-        Environnement.ControleAcces.removeFormToControl(EnumForm.EPISODE.ToString)
+        Environnement.ControleAccesForm.RemoveFormToControl(EnumForm.EPISODE.ToString)
+        If RemoveEpisode = True Then
+            Environnement.ControleAccesEpisode.RemoveEpisodeToControl(SelectedEpisodeId)
+        End If
     End Sub
 
 

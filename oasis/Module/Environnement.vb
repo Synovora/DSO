@@ -83,14 +83,14 @@ Module Environnement
     '================== Contrôle d'accès pour les principaux écrans (Synthèse, Episode et Ligne de vie
     '=========================================================================
 
-    Public Class ControleAcces
-        Private Shared instance As ControleAcces = Nothing
+    Public Class ControleAccesForm
+        Private Shared instance As ControleAccesForm = Nothing
         Private ReadOnly form_acces As New List(Of String)()
 
         Public Shared Function IsAccessToFormOK(formAcces As String) As Boolean
             ' Création de l'instance si elle n'existe pas
             If instance Is Nothing Then
-                instance = New ControleAcces
+                instance = New ControleAccesForm
             End If
 
             If instance.form_acces.Contains(formAcces) = True Then
@@ -100,10 +100,10 @@ Module Environnement
             End If
         End Function
 
-        Public Shared Sub addFormToControl(formAcces As String)
+        Public Shared Sub AddFormToControl(formAcces As String)
             ' Création de l'instance si elle n'existe pas
             If instance Is Nothing Then
-                instance = New ControleAcces
+                instance = New ControleAccesForm
             End If
 
             If instance.form_acces.Contains(formAcces) = False Then
@@ -111,10 +111,10 @@ Module Environnement
             End If
         End Sub
 
-        Public Shared Sub removeFormToControl(formAcces As String)
+        Public Shared Sub RemoveFormToControl(formAcces As String)
             ' Création de l'instance si elle n'existe pas
             If instance Is Nothing Then
-                instance = New ControleAcces
+                instance = New ControleAccesForm
             End If
 
             If instance.form_acces.Contains(formAcces) = True Then
@@ -124,6 +124,47 @@ Module Environnement
 
     End Class
 
+    'Contrôle d'accès aux épisodes
+    Public Class ControleAccesEpisode
+        Private Shared instance As ControleAccesEpisode = Nothing
+        Private ReadOnly episode_acces As New List(Of Long)()
+
+        Public Shared Function IsAccessToEpisodeOK(episodeAcces As Long) As Boolean
+            ' Création de l'instance si elle n'existe pas
+            If instance Is Nothing Then
+                instance = New ControleAccesEpisode
+            End If
+
+            If instance.episode_acces.Contains(episodeAcces) = True Then
+                Return False
+            Else
+                Return True
+            End If
+        End Function
+
+        Public Shared Sub AddEpisodeToControl(episodeAcces As Long)
+            ' Création de l'instance si elle n'existe pas
+            If instance Is Nothing Then
+                instance = New ControleAccesEpisode
+            End If
+
+            If instance.episode_acces.Contains(episodeAcces) = False Then
+                instance.episode_acces.Add(episodeAcces)
+            End If
+        End Sub
+
+        Public Shared Sub RemoveEpisodeToControl(episodeAcces As String)
+            ' Création de l'instance si elle n'existe pas
+            If instance Is Nothing Then
+                instance = New ControleAccesEpisode
+            End If
+
+            If instance.episode_acces.Contains(episodeAcces) = True Then
+                instance.episode_acces.Remove(episodeAcces)
+            End If
+        End Sub
+
+    End Class
 
     '=========================================================================
     '================== Données persistante de session =======================
