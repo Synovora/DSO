@@ -138,6 +138,15 @@ Public Class RadFEpisodeDetail
     Dim ObsRowCount As Integer
 
     Private Sub RadFEpisodeDetail_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        'Contrôle d'accès aux écran Synthèse, épisode et ligne de vie
+        Environnement.ControleAcces.addFormToControl(EnumForm.EPISODE.ToString)
+        If Environnement.ControleAcces.IsAccessToFormOK(EnumForm.LIGNE_DE_VIE.ToString) = False Then
+            RadBtnLigneDeVie.Hide()
+        End If
+        If Environnement.ControleAcces.IsAccessToFormOK(EnumForm.SYNTHESE.ToString) = False Then
+            RadBtnSynthèse.Hide()
+        End If
+
         Me.RadDesktopAlert1.Popup.AlertElement.CaptionElement.TextAndButtonsElement.TextElement.ForeColor = Color.Red
         Me.RadDesktopAlert1.Popup.AlertElement.CaptionElement.CaptionGrip.BackColor = Color.DarkBlue
         Me.RadDesktopAlert1.Popup.AlertElement.CaptionElement.CaptionGrip.GradientStyle = GradientStyles.Solid
@@ -1737,6 +1746,8 @@ Public Class RadFEpisodeDetail
 
         'Mise à jour base de données si bouton radio type conclusion médicale modifiée
         ModificationRadioTypeConclusionIDE()
+
+        Environnement.ControleAcces.removeFormToControl(EnumForm.EPISODE.ToString)
     End Sub
 
 

@@ -67,6 +67,12 @@ Public Class RadFEpisodeLigneDeVie
     Dim ConfigurationParametreExiste As Boolean
 
     Private Sub RadFEpisodeListe_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        'Contrôle d'accès aux écran Synthèse, épisode et ligne de vie
+        Environnement.ControleAcces.addFormToControl(EnumForm.LIGNE_DE_VIE.ToString)
+        If Environnement.ControleAcces.IsAccessToFormOK(EnumForm.EPISODE.ToString) = False Then
+            RadBtnEpisode.Hide()
+        End If
+
         afficheTitleForm(Me, "Ligne de vie du patient")
         If userLog.TypeProfil = ProfilDao.EnumProfilType.MEDICAL.ToString OrElse userLog.TypeProfil = ProfilDao.EnumProfilType.PARAMEDICAL.ToString Then
         Else
@@ -703,6 +709,10 @@ Public Class RadFEpisodeLigneDeVie
                 Me.Cursor = Cursors.Default
             End Try
         End If
+    End Sub
+
+    Private Sub RadFEpisodeLigneDeVie_FormClosed(sender As Object, e As FormClosedEventArgs) Handles MyBase.FormClosed
+        Environnement.ControleAcces.removeFormToControl(EnumForm.LIGNE_DE_VIE.ToString)
     End Sub
 
     Private Sub LblParametre4_Click(sender As Object, e As EventArgs) Handles LblParametre4.Click

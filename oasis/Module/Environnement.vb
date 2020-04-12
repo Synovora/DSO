@@ -73,13 +73,57 @@ Module Environnement
         Gauche = 1
     End Enum
 
+    Public Enum EnumForm
+        SYNTHESE
+        EPISODE
+        LIGNE_DE_VIE
+    End Enum
+
     '=========================================================================
     '================== Contrôle d'accès pour les principaux écrans (Synthèse, Episode et Ligne de vie
     '=========================================================================
 
-    Friend Function GetControleAcces()
+    Public Class ControleAcces
+        Private Shared instance As ControleAcces = Nothing
+        Private ReadOnly form_acces As New List(Of String)()
 
-    End Function
+        Public Shared Function IsAccessToFormOK(formAcces As String) As Boolean
+            ' Création de l'instance si elle n'existe pas
+            If instance Is Nothing Then
+                instance = New ControleAcces
+            End If
+
+            If instance.form_acces.Contains(formAcces) = True Then
+                Return False
+            Else
+                Return True
+            End If
+        End Function
+
+        Public Shared Sub addFormToControl(formAcces As String)
+            ' Création de l'instance si elle n'existe pas
+            If instance Is Nothing Then
+                instance = New ControleAcces
+            End If
+
+            If instance.form_acces.Contains(formAcces) = False Then
+                instance.form_acces.Add(formAcces)
+            End If
+        End Sub
+
+        Public Shared Sub removeFormToControl(formAcces As String)
+            ' Création de l'instance si elle n'existe pas
+            If instance Is Nothing Then
+                instance = New ControleAcces
+            End If
+
+            If instance.form_acces.Contains(formAcces) = True Then
+                instance.form_acces.Remove(formAcces)
+            End If
+        End Sub
+
+    End Class
+
 
     '=========================================================================
     '================== Données persistante de session =======================

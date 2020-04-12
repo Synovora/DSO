@@ -82,6 +82,15 @@ Public Class RadFSynthese
     Dim antecedentIdADeplacer, IndexAntecedentADeplacer As Integer
 
     Private Sub RadFSynthese_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        'Contrôle d'accès aux écran Synthèse, épisode et ligne de vie
+        Environnement.ControleAcces.addFormToControl(EnumForm.SYNTHESE.ToString)
+        If Environnement.ControleAcces.IsAccessToFormOK(EnumForm.LIGNE_DE_VIE.ToString) = False Then
+            RadBtnLigneDeVie.Hide()
+        End If
+        If Environnement.ControleAcces.IsAccessToFormOK(EnumForm.EPISODE.ToString) = False Then
+            RadBtnEpisode.Hide()
+        End If
+
         RadBtnUp.Text = Char.ConvertFromUtf32(8593)
         RadBtnDown.Text = Char.ConvertFromUtf32(8595)
         RadBtnRight.Text = Char.ConvertFromUtf32(8594)
@@ -2792,6 +2801,10 @@ Public Class RadFSynthese
             CréerUneStratégieContextuelleToolStripMenuItem.Enabled = False
             CréerUnSuiviToolStripMenuItem.Enabled = False
         End If
+    End Sub
+
+    Private Sub RadFSynthese_FormClosed(sender As Object, e As FormClosedEventArgs) Handles MyBase.FormClosed
+        Environnement.ControleAcces.removeFormToControl(EnumForm.SYNTHESE.ToString)
     End Sub
 
     Private Sub RadBtnSocial_Click(sender As Object, e As EventArgs) Handles RadBtnSocial.Click
