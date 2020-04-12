@@ -46,6 +46,9 @@ Public Class RadFEpisodeParametreDetailEdit
     Dim AgeAdulteHomme As Integer
     Dim AgeAdulteFemme As Integer
 
+    'Dim ParmRowIndex As Integer
+    Dim ParmRowCount As Integer
+
     Private Sub RadFParametreDetailEdit_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         Me.RadDesktopAlert1.Popup.AlertElement.CaptionElement.TextAndButtonsElement.TextElement.ForeColor = Color.Red
         Me.RadDesktopAlert1.Popup.AlertElement.CaptionElement.CaptionGrip.BackColor = Color.DarkBlue
@@ -91,7 +94,7 @@ Public Class RadFEpisodeParametreDetailEdit
         End If
     End Sub
 
-    Private Sub ChargementParametres()
+    Private Sub ChargementParametres(Optional Index As Integer = -1)
         FinChargementParametres = False
         RadGridViewParm.Rows.Clear()
 
@@ -103,14 +106,16 @@ Public Class RadFEpisodeParametreDetailEdit
         Dim ValeurString, definition As String
         Dim ParametreAjoute As Boolean
         Dim iGrid As Integer = -1 'Indice pour alimenter la Grid qui peut comporter moins d'occurrences que le DataTable
-        Dim rowCount As Integer = parmDataTable.Rows.Count - 1
+        ParmRowCount = parmDataTable.Rows.Count - 1
+        Dim RowCount As Integer = parmDataTable.Rows.Count - 1
         'Parcours du DataTable pour alimenter le DataGridView
-        For i = 0 To rowCount Step 1
+        For i = 0 To RowCount Step 1
             Dim parametreId As Long = parmDataTable.Rows(i)("parametre_id")
             If listeParametreEpisode.Contains(parametreId) = False Then
                 listeParametreEpisode.Add(parametreId)
             End If
             If parametreId = 3 Or parametreId = 8 Then   'IMC ou PAM qui sont des paramètres calculés
+                ParmRowCount -= 1
                 Continue For
             End If
             'Ajout d'une ligne au DataGridView
@@ -207,8 +212,17 @@ Public Class RadFEpisodeParametreDetailEdit
         Next
 
         'Positionnement du grid sur la première occurrence
-        If RadGridViewParm.Rows.Count > 0 Then
-            Me.RadGridViewParm.CurrentRow = RadGridViewParm.ChildRows(0)
+        If Index <> -1 Then
+            If Index < RadGridViewParm.Rows.Count Then
+                Me.RadGridViewParm.CurrentRow = RadGridViewParm.ChildRows(Index)
+                Me.RadGridViewParm.Rows(Index).IsCurrent = True
+                Me.RadGridViewParm.Columns(5).IsCurrent = True
+                Me.RadGridViewParm.BeginEdit()
+            End If
+        Else
+            If RadGridViewParm.Rows.Count > 0 Then
+                Me.RadGridViewParm.CurrentRow = RadGridViewParm.ChildRows(0)
+            End If
         End If
 
         ToolTip.SetToolTip(RadBtnSupprimer, "Seuls les paramètres ajoutés peuvent être supprimés")
@@ -291,6 +305,7 @@ Public Class RadFEpisodeParametreDetailEdit
 
     Private Sub Validation()
         Dim MiseAJour As Boolean = False
+        Dim ParmRowIndex As Integer = 0
 
         For Each rowInfo As GridViewRowInfo In RadGridViewParm.Rows
             Dim valeurInput As Decimal = 0
@@ -348,6 +363,11 @@ Public Class RadFEpisodeParametreDetailEdit
                     End Select
                 End If
                 MiseAJour = True
+                If rowInfo.Index() >= ParmRowCount Then
+                    ParmRowIndex = 0
+                Else
+                    ParmRowIndex = rowInfo.Index() + 1
+                End If
             End If
         Next
 
@@ -355,8 +375,9 @@ Public Class RadFEpisodeParametreDetailEdit
             Me.RadDesktopAlert1.CaptionText = "Notification saisie paramètres patient"
             Me.RadDesktopAlert1.ContentText = "Paramètres de l'épisode mis à jour"
             Me.RadDesktopAlert1.Show()
+
             'Rechargement grid
-            ChargementParametres()
+            ChargementParametres(ParmRowIndex)
             CodeRetour = True
         End If
     End Sub

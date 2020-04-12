@@ -134,7 +134,19 @@ Public Class RadFEpisodeDetail
     Dim NiveauAntecedentAOrdonner As Integer
     Dim antecedentIdADeplacer, IndexAntecedentADeplacer As Integer
 
+    'Saisie observations spécifiques
+    Dim ObsRowCount As Integer
+
     Private Sub RadFEpisodeDetail_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        Me.RadDesktopAlert1.Popup.AlertElement.CaptionElement.TextAndButtonsElement.TextElement.ForeColor = Color.Red
+        Me.RadDesktopAlert1.Popup.AlertElement.CaptionElement.CaptionGrip.BackColor = Color.DarkBlue
+        Me.RadDesktopAlert1.Popup.AlertElement.CaptionElement.CaptionGrip.GradientStyle = GradientStyles.Solid
+        Me.RadDesktopAlert1.Popup.AlertElement.ContentElement.Font = New Font("Arial", 8.0F, FontStyle.Italic)
+        Me.RadDesktopAlert1.Popup.AlertElement.ContentElement.TextImageRelation = TextImageRelation.TextBeforeImage
+        Me.RadDesktopAlert1.Popup.AlertElement.BackColor = Color.MistyRose
+        Me.RadDesktopAlert1.Popup.AlertElement.GradientStyle = GradientStyles.Solid
+        Me.RadDesktopAlert1.Popup.AlertElement.BorderColor = Color.DarkBlue
+
         Dim actiondao As New ActionDao
         Dim action As New Action
         action.UtilisateurId = userLog.UtilisateurId
@@ -931,7 +943,7 @@ Public Class RadFEpisodeDetail
     '=== Observations spécifiques (paramédical)
     '=========================================================
     'Chargement des actes paramédicaux associés à l'épisode
-    Private Sub ChargementEpisodeActesParamedicauxParamedical()
+    Private Sub ChargementEpisodeActesParamedicauxParamedical(Optional Index As Integer = -1)
         FinChargementActesParamedicauxParamedical = False
         Dim acteParamedicalDataTable As DataTable
         acteParamedicalDataTable = episodeActeParamedicalDao.getAllEpisodeActeParamedicalByEpisodeId(SelectedEpisodeId, ProfilDao.EnumProfilType.PARAMEDICAL.ToString)
@@ -939,11 +951,11 @@ Public Class RadFEpisodeDetail
         RadObsSpeIdeDataGridView.Rows.Clear()
 
         Dim iGrid As Integer = -1
-        Dim rowCount As Integer = acteParamedicalDataTable.Rows.Count - 1
+        ObsRowCount = acteParamedicalDataTable.Rows.Count - 1
         If acteParamedicalDataTable.Rows.Count > 0 Then
             ControleActeParamedicalExiste = True
         End If
-        For i = 0 To rowCount Step 1
+        For i = 0 To ObsRowCount Step 1
             iGrid += 1
             'Ajout d'une ligne au DataGridView
             RadObsSpeIdeDataGridView.Rows.Add(iGrid)
@@ -962,9 +974,22 @@ Public Class RadFEpisodeDetail
         Next
 
         'Positionnement du grid sur la première occurrence
+        If Index <> -1 Then
+            If Index < RadObsSpeIdeDataGridView.Rows.Count Then
+                Me.RadObsSpeIdeDataGridView.CurrentRow = RadObsSpeIdeDataGridView.ChildRows(Index)
+                Me.RadObsSpeIdeDataGridView.Rows(Index).IsCurrent = True
+                Me.RadObsSpeIdeDataGridView.Columns(5).IsCurrent = True
+                Me.RadObsSpeIdeDataGridView.BeginEdit()
+            End If
+        Else
+            If RadObsSpeIdeDataGridView.Rows.Count > 0 Then
+                Me.RadObsSpeIdeDataGridView.CurrentRow = RadObsSpeIdeDataGridView.ChildRows(0)
+            End If
+        End If
+
         If RadObsSpeIdeDataGridView.Rows.Count > 0 Then
-            RadObsSpeIdeDataGridView.CurrentRow = RadObsSpeIdeDataGridView.ChildRows(0)
-            RadObsSpeIdeDataGridView.TableElement.VScrollBar.Value = 0
+            'RadObsSpeIdeDataGridView.CurrentRow = RadObsSpeIdeDataGridView.ChildRows(0)
+            'RadObsSpeIdeDataGridView.TableElement.VScrollBar.Value = 0
         End If
 
         If userLog.TypeProfil <> ProfilDao.EnumProfilType.PARAMEDICAL.ToString Then
@@ -982,6 +1007,7 @@ Public Class RadFEpisodeDetail
 
     Private Sub ValidationSaisieObservationParamedicale()
         Dim MiseAJour As Boolean = False
+        Dim ObsRowIndex As Integer = 0
 
         For Each rowInfo As GridViewRowInfo In RadObsSpeIdeDataGridView.Rows
             Dim observationInput As String = ""
@@ -1015,16 +1041,24 @@ Public Class RadFEpisodeDetail
                 Console.WriteLine("Id : " & id.ToString & " Observation saisie : " & observationInput & " observation initiale : " & observation)
                 episodeActeParamedicalDao.ModificationEpisodeActeParamedicalObservation(id, observationInput)
                 MiseAJour = True
+                If rowInfo.Index() >= ObsRowCount Then
+                    ObsRowIndex = 0
+                Else
+                    ObsRowIndex = rowInfo.Index() + 1
+                End If
             End If
         Next
 
         If MiseAJour = True Then
-            Dim form As New RadFNotification()
-            form.Titre = "Notification saisie observation spécifique patient"
-            form.Message = "Observation spécifique mise à jour"
-            form.Show()
+            Me.RadDesktopAlert1.CaptionText = "Notification saisie observation spécifique patient"
+            Me.RadDesktopAlert1.ContentText = "Observation spécifique mise à jour"
+            Me.RadDesktopAlert1.Show()
+            'Dim form As New RadFNotification()
+            'Form.Titre = "Notification saisie observation spécifique patient"
+            'Form.Message = "Observation spécifique mise à jour"
+            'Form.Show()
             'Rechargement grid
-            ChargementEpisodeActesParamedicauxParamedical()
+            ChargementEpisodeActesParamedicauxParamedical(ObsRowIndex)
         End If
     End Sub
 
