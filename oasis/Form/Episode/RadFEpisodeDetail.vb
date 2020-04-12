@@ -889,7 +889,7 @@ Public Class RadFEpisodeDetail
     End Sub
 
     'Détail sous-épisode
-    Private Sub RadGridViewSousEpisode_DoubleClick(sender As Object, e As EventArgs) Handles RadGridViewSousEpisode.DoubleClick
+    Private Sub RadGridViewSousEpisode_CellDoubleClick(sender As Object, e As GridViewCellEventArgs) Handles RadGridViewSousEpisode.CellDoubleClick
         If Me.RadGridViewSousEpisode.Rows.Count = 0 OrElse Me.RadGridViewSousEpisode.CurrentRow.IsSelected = False Then Return
 
         Dim sousEpisode As SousEpisode

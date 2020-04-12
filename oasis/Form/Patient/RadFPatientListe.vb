@@ -528,6 +528,15 @@ Public Class RadFPatientListe
         Me.Enabled = True
     End Sub
 
+    Private Sub RadButton1_Click(sender As Object, e As EventArgs) Handles RadButton1.Click
+        Cursor.Current = Cursors.WaitCursor
+        Me.Enabled = False
+        Using form As New RadFEpisodeEnAttenteValidation
+            form.ShowDialog()
+        End Using
+        Me.Enabled = True
+    End Sub
+
     Private Sub RadBtnEpisodeEnCours_Click(sender As Object, e As EventArgs) Handles RadBtnEpisodeEnCours.Click
         Cursor.Current = Cursors.WaitCursor
         Me.Enabled = False

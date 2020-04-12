@@ -65,11 +65,12 @@ Partial Class RadFPatientListe
         Me.RadPanel2 = New Telerik.WinControls.UI.RadPanel()
         Me.RadBtnListeAction = New Telerik.WinControls.UI.RadButton()
         Me.RadBtnEpisodeEnCours = New Telerik.WinControls.UI.RadButton()
+        Me.RadButtonAbandon = New Telerik.WinControls.UI.RadButton()
         Me.RadPanel3 = New Telerik.WinControls.UI.RadPanel()
         Me.RadPanel4 = New Telerik.WinControls.UI.RadPanel()
         Me.ToolTip = New System.Windows.Forms.ToolTip(Me.components)
         Me.RadDesktopAlert1 = New Telerik.WinControls.UI.RadDesktopAlert(Me.components)
-        Me.RadButtonAbandon = New Telerik.WinControls.UI.RadButton()
+        Me.RadButton1 = New Telerik.WinControls.UI.RadButton()
         CType(Me.RadPnlSelectedPatient, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.RadPnlSelectedPatient.SuspendLayout()
         CType(Me.RadBtnLigneDeVie, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -91,11 +92,12 @@ Partial Class RadFPatientListe
         Me.RadPanel2.SuspendLayout()
         CType(Me.RadBtnListeAction, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.RadBtnEpisodeEnCours, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.RadButtonAbandon, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.RadPanel3, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.RadPanel3.SuspendLayout()
         CType(Me.RadPanel4, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.RadPanel4.SuspendLayout()
-        CType(Me.RadButtonAbandon, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.RadButton1, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
@@ -290,7 +292,7 @@ Partial Class RadFPatientListe
         '
         'RadBtnAdmin
         '
-        Me.RadBtnAdmin.Location = New System.Drawing.Point(283, 17)
+        Me.RadBtnAdmin.Location = New System.Drawing.Point(528, 17)
         Me.RadBtnAdmin.Name = "RadBtnAdmin"
         Me.RadBtnAdmin.Size = New System.Drawing.Size(124, 24)
         Me.RadBtnAdmin.TabIndex = 42
@@ -441,6 +443,7 @@ Partial Class RadFPatientListe
         '
         'RadPanel2
         '
+        Me.RadPanel2.Controls.Add(Me.RadButton1)
         Me.RadPanel2.Controls.Add(Me.RadBtnListeAction)
         Me.RadPanel2.Controls.Add(Me.RadBtnEpisodeEnCours)
         Me.RadPanel2.Controls.Add(Me.RadButtonAbandon)
@@ -453,7 +456,7 @@ Partial Class RadFPatientListe
         '
         'RadBtnListeAction
         '
-        Me.RadBtnListeAction.Location = New System.Drawing.Point(167, 17)
+        Me.RadBtnListeAction.Location = New System.Drawing.Point(412, 17)
         Me.RadBtnListeAction.Name = "RadBtnListeAction"
         Me.RadBtnListeAction.Size = New System.Drawing.Size(110, 24)
         Me.RadBtnListeAction.TabIndex = 43
@@ -466,6 +469,17 @@ Partial Class RadFPatientListe
         Me.RadBtnEpisodeEnCours.Size = New System.Drawing.Size(149, 24)
         Me.RadBtnEpisodeEnCours.TabIndex = 43
         Me.RadBtnEpisodeEnCours.Text = "Liste des épisodes en cours"
+        '
+        'RadButtonAbandon
+        '
+        Me.RadButtonAbandon.DialogResult = System.Windows.Forms.DialogResult.Cancel
+        Me.RadButtonAbandon.ForeColor = System.Drawing.Color.Black
+        Me.RadButtonAbandon.Image = CType(resources.GetObject("RadButtonAbandon.Image"), System.Drawing.Image)
+        Me.RadButtonAbandon.ImageAlignment = System.Drawing.ContentAlignment.MiddleCenter
+        Me.RadButtonAbandon.Location = New System.Drawing.Point(1413, 17)
+        Me.RadButtonAbandon.Name = "RadButtonAbandon"
+        Me.RadButtonAbandon.Size = New System.Drawing.Size(31, 24)
+        Me.RadButtonAbandon.TabIndex = 43
         '
         'RadPanel3
         '
@@ -493,16 +507,13 @@ Partial Class RadFPatientListe
         Me.RadDesktopAlert1.ScreenPosition = Telerik.WinControls.UI.AlertScreenPosition.TopCenter
         Me.RadDesktopAlert1.ThemeName = ""
         '
-        'RadButtonAbandon
+        'RadButton1
         '
-        Me.RadButtonAbandon.DialogResult = System.Windows.Forms.DialogResult.Cancel
-        Me.RadButtonAbandon.ForeColor = System.Drawing.Color.Black
-        Me.RadButtonAbandon.Image = CType(resources.GetObject("RadButtonAbandon.Image"), System.Drawing.Image)
-        Me.RadButtonAbandon.ImageAlignment = System.Drawing.ContentAlignment.MiddleCenter
-        Me.RadButtonAbandon.Location = New System.Drawing.Point(1413, 17)
-        Me.RadButtonAbandon.Name = "RadButtonAbandon"
-        Me.RadButtonAbandon.Size = New System.Drawing.Size(31, 24)
-        Me.RadButtonAbandon.TabIndex = 43
+        Me.RadButton1.Location = New System.Drawing.Point(167, 17)
+        Me.RadButton1.Name = "RadButton1"
+        Me.RadButton1.Size = New System.Drawing.Size(239, 24)
+        Me.RadButton1.TabIndex = 44
+        Me.RadButton1.Text = "Episodes en attente de validation médicale"
         '
         'RadFPatientListe
         '
@@ -546,11 +557,12 @@ Partial Class RadFPatientListe
         Me.RadPanel2.ResumeLayout(False)
         CType(Me.RadBtnListeAction, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.RadBtnEpisodeEnCours, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.RadButtonAbandon, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.RadPanel3, System.ComponentModel.ISupportInitialize).EndInit()
         Me.RadPanel3.ResumeLayout(False)
         CType(Me.RadPanel4, System.ComponentModel.ISupportInitialize).EndInit()
         Me.RadPanel4.ResumeLayout(False)
-        CType(Me.RadButtonAbandon, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.RadButton1, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
 
@@ -590,5 +602,6 @@ Partial Class RadFPatientListe
     Friend WithEvents RadBtnListeAction As Telerik.WinControls.UI.RadButton
     Friend WithEvents LblPatientALD As Label
     Friend WithEvents RadBtnLigneDeVie As Telerik.WinControls.UI.RadButton
+    Friend WithEvents RadButton1 As Telerik.WinControls.UI.RadButton
 End Class
 

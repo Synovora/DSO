@@ -168,14 +168,16 @@ Partial Class RadFEpisodeDetail
         Me.RadBtnAnnulerEpisode = New Telerik.WinControls.UI.RadButton()
         Me.RadPanel12 = New Telerik.WinControls.UI.RadPanel()
         Me.RadBtnSynthèse = New Telerik.WinControls.UI.RadButton()
-        Me.RadBtnSocial = New Telerik.WinControls.UI.RadButton()
         Me.RadBtnLigneDeVie = New Telerik.WinControls.UI.RadButton()
-        Me.RadBtnVaccins = New Telerik.WinControls.UI.RadButton()
-        Me.RadBtnDirectives = New Telerik.WinControls.UI.RadButton()
-        Me.RadBtnNotesMedicales = New Telerik.WinControls.UI.RadButton()
+        Me.RadBtnAbandon = New Telerik.WinControls.UI.RadButton()
+        Me.RadBtnRefresh = New Telerik.WinControls.UI.RadButton()
         Me.RadBtnGenProtocole = New Telerik.WinControls.UI.RadButton()
         Me.RadBtnHistoWorkflow = New Telerik.WinControls.UI.RadButton()
         Me.RadBtnCloture = New Telerik.WinControls.UI.RadButton()
+        Me.RadBtnSocial = New Telerik.WinControls.UI.RadButton()
+        Me.RadBtnVaccins = New Telerik.WinControls.UI.RadButton()
+        Me.RadBtnDirectives = New Telerik.WinControls.UI.RadButton()
+        Me.RadBtnNotesMedicales = New Telerik.WinControls.UI.RadButton()
         Me.RadBtnSousEpisode = New Telerik.WinControls.UI.RadButton()
         Me.RadPanelPrincipal = New Telerik.WinControls.UI.RadPanel()
         Me.RadSplitContainerCorpsPrincipal = New Telerik.WinControls.UI.RadSplitContainer()
@@ -250,6 +252,8 @@ Partial Class RadFEpisodeDetail
         Me.RadBtnConclusion = New Telerik.WinControls.UI.RadButton()
         Me.RadGridViewContexteEpisode = New Telerik.WinControls.UI.RadGridView()
         Me.SplitPanelSynthese = New Telerik.WinControls.UI.SplitPanel()
+        Me.RadSplitContainer6 = New Telerik.WinControls.UI.RadSplitContainer()
+        Me.SplitPanelSyntheseDetail = New Telerik.WinControls.UI.SplitPanel()
         Me.RadPageView1 = New Telerik.WinControls.UI.RadPageView()
         Me.PgvAntecedent = New Telerik.WinControls.UI.RadPageViewPage()
         Me.RadPanel5 = New Telerik.WinControls.UI.RadPanel()
@@ -296,6 +300,7 @@ Partial Class RadFEpisodeDetail
         Me.ToolStripSeparator6 = New System.Windows.Forms.ToolStripSeparator()
         Me.RafraichirLécranToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.RadPanel6 = New Telerik.WinControls.UI.RadPanel()
+        Me.RadBtnOrdonnance = New Telerik.WinControls.UI.RadButton()
         Me.RadBtnCreationTraitement = New Telerik.WinControls.UI.RadButton()
         Me.LblTraitementArret = New System.Windows.Forms.Label()
         Me.LblSubstance = New System.Windows.Forms.Label()
@@ -342,6 +347,7 @@ Partial Class RadFEpisodeDetail
         Me.RadBtnCreationPPSStrategie = New Telerik.WinControls.UI.RadButton()
         Me.RadBtnCreationPPSMesure = New Telerik.WinControls.UI.RadButton()
         Me.RadBtnCreationPPSObjectif = New Telerik.WinControls.UI.RadButton()
+        Me.SplitPanelSyntheseBouton = New Telerik.WinControls.UI.SplitPanel()
         Me.TLMContextMenuStrip = New System.Windows.Forms.ContextMenuStrip(Me.components)
         Me.CréerUneObservationToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.ToolTip = New System.Windows.Forms.ToolTip(Me.components)
@@ -353,12 +359,6 @@ Partial Class RadFEpisodeDetail
         Me.SplitPanelTop = New Telerik.WinControls.UI.SplitPanel()
         Me.SplitPanelBody = New Telerik.WinControls.UI.SplitPanel()
         Me.SplitPanelBottom = New Telerik.WinControls.UI.SplitPanel()
-        Me.RadSplitContainer6 = New Telerik.WinControls.UI.RadSplitContainer()
-        Me.SplitPanelSyntheseDetail = New Telerik.WinControls.UI.SplitPanel()
-        Me.SplitPanelSyntheseBouton = New Telerik.WinControls.UI.SplitPanel()
-        Me.RadBtnAbandon = New Telerik.WinControls.UI.RadButton()
-        Me.RadBtnRefresh = New Telerik.WinControls.UI.RadButton()
-        Me.RadBtnOrdonnance = New Telerik.WinControls.UI.RadButton()
         CType(Me.RadPanelEtatCivil, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.RadPanelEtatCivil.SuspendLayout()
         CType(Me.RadGbxParametre, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -374,14 +374,16 @@ Partial Class RadFEpisodeDetail
         CType(Me.RadPanel12, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.RadPanel12.SuspendLayout()
         CType(Me.RadBtnSynthèse, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.RadBtnSocial, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.RadBtnLigneDeVie, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.RadBtnVaccins, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.RadBtnDirectives, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.RadBtnNotesMedicales, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.RadBtnAbandon, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.RadBtnRefresh, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.RadBtnGenProtocole, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.RadBtnHistoWorkflow, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.RadBtnCloture, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.RadBtnSocial, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.RadBtnVaccins, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.RadBtnDirectives, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.RadBtnNotesMedicales, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.RadBtnSousEpisode, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.RadPanelPrincipal, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.RadPanelPrincipal.SuspendLayout()
@@ -483,6 +485,10 @@ Partial Class RadFEpisodeDetail
         CType(Me.RadGridViewContexteEpisode.MasterTemplate, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.SplitPanelSynthese, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SplitPanelSynthese.SuspendLayout()
+        CType(Me.RadSplitContainer6, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.RadSplitContainer6.SuspendLayout()
+        CType(Me.SplitPanelSyntheseDetail, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.SplitPanelSyntheseDetail.SuspendLayout()
         CType(Me.RadPageView1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.RadPageView1.SuspendLayout()
         Me.PgvAntecedent.SuspendLayout()
@@ -512,6 +518,7 @@ Partial Class RadFEpisodeDetail
         Me.TraitementContextMenuStrip.SuspendLayout()
         CType(Me.RadPanel6, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.RadPanel6.SuspendLayout()
+        CType(Me.RadBtnOrdonnance, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.RadBtnCreationTraitement, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.PgvParcours.SuspendLayout()
         CType(Me.RadParcoursDataGridView, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -545,6 +552,8 @@ Partial Class RadFEpisodeDetail
         CType(Me.RadBtnCreationPPSStrategie, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.RadBtnCreationPPSMesure, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.RadBtnCreationPPSObjectif, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.SplitPanelSyntheseBouton, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.SplitPanelSyntheseBouton.SuspendLayout()
         Me.TLMContextMenuStrip.SuspendLayout()
         Me.EtatCivilContextMenuStrip.SuspendLayout()
         CType(Me.RadSplitContainer1, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -555,15 +564,6 @@ Partial Class RadFEpisodeDetail
         Me.SplitPanelBody.SuspendLayout()
         CType(Me.SplitPanelBottom, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SplitPanelBottom.SuspendLayout()
-        CType(Me.RadSplitContainer6, System.ComponentModel.ISupportInitialize).BeginInit()
-        Me.RadSplitContainer6.SuspendLayout()
-        CType(Me.SplitPanelSyntheseDetail, System.ComponentModel.ISupportInitialize).BeginInit()
-        Me.SplitPanelSyntheseDetail.SuspendLayout()
-        CType(Me.SplitPanelSyntheseBouton, System.ComponentModel.ISupportInitialize).BeginInit()
-        Me.SplitPanelSyntheseBouton.SuspendLayout()
-        CType(Me.RadBtnAbandon, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.RadBtnRefresh, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.RadBtnOrdonnance, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
@@ -1207,6 +1207,58 @@ Partial Class RadFEpisodeDetail
         Me.RadBtnSynthèse.TabIndex = 41
         Me.RadBtnSynthèse.Text = "Synthèse"
         '
+        'RadBtnLigneDeVie
+        '
+        Me.RadBtnLigneDeVie.Location = New System.Drawing.Point(375, 6)
+        Me.RadBtnLigneDeVie.Name = "RadBtnLigneDeVie"
+        Me.RadBtnLigneDeVie.Size = New System.Drawing.Size(85, 24)
+        Me.RadBtnLigneDeVie.TabIndex = 39
+        Me.RadBtnLigneDeVie.Text = "Ligne de vie"
+        '
+        'RadBtnAbandon
+        '
+        Me.RadBtnAbandon.DialogResult = System.Windows.Forms.DialogResult.Cancel
+        Me.RadBtnAbandon.Image = Global.Oasis_WF.My.Resources.Resources._exit
+        Me.RadBtnAbandon.Location = New System.Drawing.Point(576, 6)
+        Me.RadBtnAbandon.Name = "RadBtnAbandon"
+        Me.RadBtnAbandon.Size = New System.Drawing.Size(24, 24)
+        Me.RadBtnAbandon.TabIndex = 0
+        '
+        'RadBtnRefresh
+        '
+        Me.RadBtnRefresh.Image = Global.Oasis_WF.My.Resources.Resources.reload
+        Me.RadBtnRefresh.ImageAlignment = System.Drawing.ContentAlignment.MiddleCenter
+        Me.RadBtnRefresh.Location = New System.Drawing.Point(546, 6)
+        Me.RadBtnRefresh.Name = "RadBtnRefresh"
+        Me.RadBtnRefresh.Size = New System.Drawing.Size(24, 24)
+        Me.RadBtnRefresh.TabIndex = 41
+        Me.ToolTip.SetToolTip(Me.RadBtnRefresh, "Recharger l'épisode de soin")
+        '
+        'RadBtnGenProtocole
+        '
+        Me.RadBtnGenProtocole.Location = New System.Drawing.Point(235, 6)
+        Me.RadBtnGenProtocole.Name = "RadBtnGenProtocole"
+        Me.RadBtnGenProtocole.Size = New System.Drawing.Size(198, 24)
+        Me.RadBtnGenProtocole.TabIndex = 44
+        Me.RadBtnGenProtocole.Text = "Re-générer paramètres et protocoles"
+        '
+        'RadBtnHistoWorkflow
+        '
+        Me.RadBtnHistoWorkflow.Anchor = System.Windows.Forms.AnchorStyles.Top
+        Me.RadBtnHistoWorkflow.Location = New System.Drawing.Point(439, 6)
+        Me.RadBtnHistoWorkflow.Name = "RadBtnHistoWorkflow"
+        Me.RadBtnHistoWorkflow.Size = New System.Drawing.Size(125, 24)
+        Me.RadBtnHistoWorkflow.TabIndex = 42
+        Me.RadBtnHistoWorkflow.Text = "Historique Workflow"
+        '
+        'RadBtnCloture
+        '
+        Me.RadBtnCloture.Location = New System.Drawing.Point(3, 6)
+        Me.RadBtnCloture.Name = "RadBtnCloture"
+        Me.RadBtnCloture.Size = New System.Drawing.Size(110, 24)
+        Me.RadBtnCloture.TabIndex = 1
+        Me.RadBtnCloture.Text = "Cloture épisode"
+        '
         'RadBtnSocial
         '
         Me.RadBtnSocial.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
@@ -1215,14 +1267,6 @@ Partial Class RadFEpisodeDetail
         Me.RadBtnSocial.Size = New System.Drawing.Size(85, 24)
         Me.RadBtnSocial.TabIndex = 36
         Me.RadBtnSocial.Text = "Social"
-        '
-        'RadBtnLigneDeVie
-        '
-        Me.RadBtnLigneDeVie.Location = New System.Drawing.Point(375, 6)
-        Me.RadBtnLigneDeVie.Name = "RadBtnLigneDeVie"
-        Me.RadBtnLigneDeVie.Size = New System.Drawing.Size(85, 24)
-        Me.RadBtnLigneDeVie.TabIndex = 39
-        Me.RadBtnLigneDeVie.Text = "Ligne de vie"
         '
         'RadBtnVaccins
         '
@@ -1250,31 +1294,6 @@ Partial Class RadFEpisodeDetail
         Me.RadBtnNotesMedicales.Size = New System.Drawing.Size(85, 24)
         Me.RadBtnNotesMedicales.TabIndex = 38
         Me.RadBtnNotesMedicales.Text = "Notes"
-        '
-        'RadBtnGenProtocole
-        '
-        Me.RadBtnGenProtocole.Location = New System.Drawing.Point(235, 6)
-        Me.RadBtnGenProtocole.Name = "RadBtnGenProtocole"
-        Me.RadBtnGenProtocole.Size = New System.Drawing.Size(198, 24)
-        Me.RadBtnGenProtocole.TabIndex = 44
-        Me.RadBtnGenProtocole.Text = "Re-générer paramètres et protocoles"
-        '
-        'RadBtnHistoWorkflow
-        '
-        Me.RadBtnHistoWorkflow.Anchor = System.Windows.Forms.AnchorStyles.Top
-        Me.RadBtnHistoWorkflow.Location = New System.Drawing.Point(439, 6)
-        Me.RadBtnHistoWorkflow.Name = "RadBtnHistoWorkflow"
-        Me.RadBtnHistoWorkflow.Size = New System.Drawing.Size(125, 24)
-        Me.RadBtnHistoWorkflow.TabIndex = 42
-        Me.RadBtnHistoWorkflow.Text = "Historique Workflow"
-        '
-        'RadBtnCloture
-        '
-        Me.RadBtnCloture.Location = New System.Drawing.Point(3, 6)
-        Me.RadBtnCloture.Name = "RadBtnCloture"
-        Me.RadBtnCloture.Size = New System.Drawing.Size(110, 24)
-        Me.RadBtnCloture.TabIndex = 1
-        Me.RadBtnCloture.Text = "Cloture épisode"
         '
         'RadBtnSousEpisode
         '
@@ -1528,13 +1547,13 @@ Partial Class RadFEpisodeDetail
         GridViewTextBoxColumn3.HeaderTextAlignment = System.Drawing.ContentAlignment.MiddleLeft
         GridViewTextBoxColumn3.Name = "drcDescription"
         GridViewTextBoxColumn3.ReadOnly = True
-        GridViewTextBoxColumn3.Width = 188
+        GridViewTextBoxColumn3.Width = 189
         GridViewTextBoxColumn4.EnableExpressionEditor = False
         GridViewTextBoxColumn4.FieldName = "observationInput"
         GridViewTextBoxColumn4.HeaderText = "Observation"
         GridViewTextBoxColumn4.HeaderTextAlignment = System.Drawing.ContentAlignment.MiddleLeft
         GridViewTextBoxColumn4.Name = "observationInput"
-        GridViewTextBoxColumn4.Width = 300
+        GridViewTextBoxColumn4.Width = 301
         GridViewTextBoxColumn5.EnableExpressionEditor = False
         GridViewTextBoxColumn5.FieldName = "dateDebut"
         GridViewTextBoxColumn5.HeaderText = "dateDebut"
@@ -1652,7 +1671,7 @@ Partial Class RadFEpisodeDetail
         GridViewTextBoxColumn11.HeaderText = "observation"
         GridViewTextBoxColumn11.HeaderTextAlignment = System.Drawing.ContentAlignment.MiddleLeft
         GridViewTextBoxColumn11.Name = "observation"
-        GridViewTextBoxColumn11.Width = 393
+        GridViewTextBoxColumn11.Width = 395
         GridViewTextBoxColumn12.EnableExpressionEditor = False
         GridViewTextBoxColumn12.FieldName = "observationId"
         GridViewTextBoxColumn12.HeaderText = "observationId"
@@ -1783,13 +1802,13 @@ Partial Class RadFEpisodeDetail
         GridViewTextBoxColumn15.HeaderTextAlignment = System.Drawing.ContentAlignment.MiddleLeft
         GridViewTextBoxColumn15.Name = "drcDescription"
         GridViewTextBoxColumn15.ReadOnly = True
-        GridViewTextBoxColumn15.Width = 190
+        GridViewTextBoxColumn15.Width = 191
         GridViewTextBoxColumn16.EnableExpressionEditor = False
         GridViewTextBoxColumn16.FieldName = "observationInput"
         GridViewTextBoxColumn16.HeaderText = "Observation"
         GridViewTextBoxColumn16.HeaderTextAlignment = System.Drawing.ContentAlignment.MiddleLeft
         GridViewTextBoxColumn16.Name = "observationInput"
-        GridViewTextBoxColumn16.Width = 304
+        GridViewTextBoxColumn16.Width = 305
         GridViewTextBoxColumn17.EnableExpressionEditor = False
         GridViewTextBoxColumn17.FieldName = "dateDebut"
         GridViewTextBoxColumn17.HeaderText = "dateDebut"
@@ -1906,7 +1925,7 @@ Partial Class RadFEpisodeDetail
         GridViewTextBoxColumn23.HeaderText = "observation"
         GridViewTextBoxColumn23.HeaderTextAlignment = System.Drawing.ContentAlignment.MiddleLeft
         GridViewTextBoxColumn23.Name = "observation"
-        GridViewTextBoxColumn23.Width = 393
+        GridViewTextBoxColumn23.Width = 395
         GridViewTextBoxColumn24.EnableExpressionEditor = False
         GridViewTextBoxColumn24.FieldName = "observationId"
         GridViewTextBoxColumn24.HeaderText = "observationId"
@@ -2109,7 +2128,7 @@ Partial Class RadFEpisodeDetail
         GridViewTextBoxColumn26.HeaderText = "column1"
         GridViewTextBoxColumn26.HeaderTextAlignment = System.Drawing.ContentAlignment.MiddleLeft
         GridViewTextBoxColumn26.Name = "sousType"
-        GridViewTextBoxColumn26.Width = 348
+        GridViewTextBoxColumn26.Width = 351
         GridViewTextBoxColumn27.EnableExpressionEditor = False
         GridViewTextBoxColumn27.HeaderText = "CreateUser"
         GridViewTextBoxColumn27.IsVisible = False
@@ -2468,7 +2487,7 @@ Partial Class RadFEpisodeDetail
         GridViewTextBoxColumn30.HeaderText = "Conclusion"
         GridViewTextBoxColumn30.HeaderTextAlignment = System.Drawing.ContentAlignment.MiddleLeft
         GridViewTextBoxColumn30.Name = "contexte"
-        GridViewTextBoxColumn30.Width = 411
+        GridViewTextBoxColumn30.Width = 412
         GridViewTextBoxColumn31.EnableExpressionEditor = False
         GridViewTextBoxColumn31.HeaderText = "episode_contexte_id"
         GridViewTextBoxColumn31.IsVisible = False
@@ -2503,6 +2522,38 @@ Partial Class RadFEpisodeDetail
         Me.SplitPanelSynthese.TabStop = False
         Me.SplitPanelSynthese.Text = "SplitPanelSynthese"
         '
+        'RadSplitContainer6
+        '
+        Me.RadSplitContainer6.Controls.Add(Me.SplitPanelSyntheseDetail)
+        Me.RadSplitContainer6.Controls.Add(Me.SplitPanelSyntheseBouton)
+        Me.RadSplitContainer6.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.RadSplitContainer6.Location = New System.Drawing.Point(0, 0)
+        Me.RadSplitContainer6.Name = "RadSplitContainer6"
+        Me.RadSplitContainer6.Orientation = System.Windows.Forms.Orientation.Horizontal
+        '
+        '
+        '
+        Me.RadSplitContainer6.RootElement.MinSize = New System.Drawing.Size(25, 25)
+        Me.RadSplitContainer6.Size = New System.Drawing.Size(465, 513)
+        Me.RadSplitContainer6.TabIndex = 1
+        Me.RadSplitContainer6.TabStop = False
+        '
+        'SplitPanelSyntheseDetail
+        '
+        Me.SplitPanelSyntheseDetail.Controls.Add(Me.RadPageView1)
+        Me.SplitPanelSyntheseDetail.Location = New System.Drawing.Point(0, 0)
+        Me.SplitPanelSyntheseDetail.Name = "SplitPanelSyntheseDetail"
+        '
+        '
+        '
+        Me.SplitPanelSyntheseDetail.RootElement.MinSize = New System.Drawing.Size(25, 25)
+        Me.SplitPanelSyntheseDetail.Size = New System.Drawing.Size(465, 472)
+        Me.SplitPanelSyntheseDetail.SizeInfo.AutoSizeScale = New System.Drawing.SizeF(0!, 0.4273084!)
+        Me.SplitPanelSyntheseDetail.SizeInfo.SplitterCorrection = New System.Drawing.Size(0, 218)
+        Me.SplitPanelSyntheseDetail.TabIndex = 0
+        Me.SplitPanelSyntheseDetail.TabStop = False
+        Me.SplitPanelSyntheseDetail.Text = "SplitPanel12"
+        '
         'RadPageView1
         '
         Me.RadPageView1.Controls.Add(Me.PgvAntecedent)
@@ -2514,7 +2565,7 @@ Partial Class RadFEpisodeDetail
         Me.RadPageView1.Dock = System.Windows.Forms.DockStyle.Fill
         Me.RadPageView1.Location = New System.Drawing.Point(0, 0)
         Me.RadPageView1.Name = "RadPageView1"
-        Me.RadPageView1.SelectedPage = Me.PgvPPS
+        Me.RadPageView1.SelectedPage = Me.PgvAntecedent
         Me.RadPageView1.Size = New System.Drawing.Size(465, 472)
         Me.RadPageView1.TabIndex = 0
         Me.RadPageView1.TabStop = False
@@ -2527,10 +2578,10 @@ Partial Class RadFEpisodeDetail
         '
         Me.PgvAntecedent.Controls.Add(Me.RadPanel5)
         Me.PgvAntecedent.Controls.Add(Me.RadPanel4)
-        Me.PgvAntecedent.ItemSize = New System.Drawing.SizeF(70.0!, 24.0!)
-        Me.PgvAntecedent.Location = New System.Drawing.Point(10, 33)
+        Me.PgvAntecedent.ItemSize = New System.Drawing.SizeF(74.0!, 28.0!)
+        Me.PgvAntecedent.Location = New System.Drawing.Point(10, 37)
         Me.PgvAntecedent.Name = "PgvAntecedent"
-        Me.PgvAntecedent.Size = New System.Drawing.Size(444, 428)
+        Me.PgvAntecedent.Size = New System.Drawing.Size(444, 424)
         Me.PgvAntecedent.Text = "Antecedent"
         '
         'RadPanel5
@@ -2539,7 +2590,7 @@ Partial Class RadFEpisodeDetail
         Me.RadPanel5.Dock = System.Windows.Forms.DockStyle.Fill
         Me.RadPanel5.Location = New System.Drawing.Point(0, 28)
         Me.RadPanel5.Name = "RadPanel5"
-        Me.RadPanel5.Size = New System.Drawing.Size(444, 400)
+        Me.RadPanel5.Size = New System.Drawing.Size(444, 396)
         Me.RadPanel5.TabIndex = 1
         '
         'RadAntecedentDataGridView
@@ -2571,7 +2622,7 @@ Partial Class RadFEpisodeDetail
         GridViewTextBoxColumn33.HeaderText = "antecedent"
         GridViewTextBoxColumn33.HeaderTextAlignment = System.Drawing.ContentAlignment.BottomLeft
         GridViewTextBoxColumn33.Name = "antecedent"
-        GridViewTextBoxColumn33.Width = 442
+        GridViewTextBoxColumn33.Width = 443
         GridViewTextBoxColumn34.EnableExpressionEditor = False
         GridViewTextBoxColumn34.FieldName = "antecedentDescription"
         GridViewTextBoxColumn34.HeaderText = "Description"
@@ -2635,7 +2686,7 @@ Partial Class RadFEpisodeDetail
         Me.RadAntecedentDataGridView.RightToLeft = System.Windows.Forms.RightToLeft.No
         Me.RadAntecedentDataGridView.ShowGroupPanel = False
         Me.RadAntecedentDataGridView.ShowGroupPanelScrollbars = False
-        Me.RadAntecedentDataGridView.Size = New System.Drawing.Size(444, 400)
+        Me.RadAntecedentDataGridView.Size = New System.Drawing.Size(444, 396)
         Me.RadAntecedentDataGridView.TabIndex = 0
         '
         'AntecedentContextMenuStrip
@@ -2807,7 +2858,7 @@ Partial Class RadFEpisodeDetail
         Me.PgvTraitement.Controls.Add(Me.RadPanel7)
         Me.PgvTraitement.Controls.Add(Me.RadPanel6)
         Me.PgvTraitement.ForeColor = System.Drawing.Color.Black
-        Me.PgvTraitement.ItemSize = New System.Drawing.SizeF(66.0!, 24.0!)
+        Me.PgvTraitement.ItemSize = New System.Drawing.SizeF(70.0!, 28.0!)
         Me.PgvTraitement.Location = New System.Drawing.Point(10, 33)
         Me.PgvTraitement.Name = "PgvTraitement"
         Me.PgvTraitement.Size = New System.Drawing.Size(444, 428)
@@ -3012,6 +3063,15 @@ Partial Class RadFEpisodeDetail
         Me.RadPanel6.Size = New System.Drawing.Size(444, 34)
         Me.RadPanel6.TabIndex = 0
         '
+        'RadBtnOrdonnance
+        '
+        Me.RadBtnOrdonnance.Location = New System.Drawing.Point(29, 9)
+        Me.RadBtnOrdonnance.Name = "RadBtnOrdonnance"
+        Me.RadBtnOrdonnance.Size = New System.Drawing.Size(15, 15)
+        Me.RadBtnOrdonnance.TabIndex = 43
+        Me.RadBtnOrdonnance.Text = ">"
+        Me.ToolTip.SetToolTip(Me.RadBtnOrdonnance, "Ordonnance")
+        '
         'RadBtnCreationTraitement
         '
         Me.RadBtnCreationTraitement.Font = New System.Drawing.Font("Segoe UI", 11.0!)
@@ -3071,7 +3131,7 @@ Partial Class RadFEpisodeDetail
         '
         Me.PgvParcours.Controls.Add(Me.RadParcoursDataGridView)
         Me.PgvParcours.Controls.Add(Me.RadGroupBox2)
-        Me.PgvParcours.ItemSize = New System.Drawing.SizeF(95.0!, 24.0!)
+        Me.PgvParcours.ItemSize = New System.Drawing.SizeF(99.0!, 28.0!)
         Me.PgvParcours.Location = New System.Drawing.Point(10, 33)
         Me.PgvParcours.Name = "PgvParcours"
         Me.PgvParcours.Size = New System.Drawing.Size(444, 428)
@@ -3220,7 +3280,7 @@ Partial Class RadFEpisodeDetail
         '
         Me.PgvContexte.Controls.Add(Me.RadPanel9)
         Me.PgvContexte.Controls.Add(Me.RadPanel8)
-        Me.PgvContexte.ItemSize = New System.Drawing.SizeF(57.0!, 24.0!)
+        Me.PgvContexte.ItemSize = New System.Drawing.SizeF(61.0!, 28.0!)
         Me.PgvContexte.Location = New System.Drawing.Point(10, 33)
         Me.PgvContexte.Name = "PgvContexte"
         Me.PgvContexte.Size = New System.Drawing.Size(444, 428)
@@ -3362,7 +3422,7 @@ Partial Class RadFEpisodeDetail
         '
         Me.PgvPPS.Controls.Add(Me.RadPanel11)
         Me.PgvPPS.Controls.Add(Me.RadPanel10)
-        Me.PgvPPS.ItemSize = New System.Drawing.SizeF(31.0!, 24.0!)
+        Me.PgvPPS.ItemSize = New System.Drawing.SizeF(35.0!, 28.0!)
         Me.PgvPPS.Location = New System.Drawing.Point(10, 33)
         Me.PgvPPS.Name = "PgvPPS"
         Me.PgvPPS.Size = New System.Drawing.Size(444, 428)
@@ -3536,6 +3596,25 @@ Partial Class RadFEpisodeDetail
         Me.RadBtnCreationPPSObjectif.Text = "+ Objectif de santé"
         Me.ToolTip.SetToolTip(Me.RadBtnCreationPPSObjectif, "Ajout objectif de santé")
         '
+        'SplitPanelSyntheseBouton
+        '
+        Me.SplitPanelSyntheseBouton.Controls.Add(Me.RadBtnSocial)
+        Me.SplitPanelSyntheseBouton.Controls.Add(Me.RadBtnVaccins)
+        Me.SplitPanelSyntheseBouton.Controls.Add(Me.RadBtnDirectives)
+        Me.SplitPanelSyntheseBouton.Controls.Add(Me.RadBtnNotesMedicales)
+        Me.SplitPanelSyntheseBouton.Location = New System.Drawing.Point(0, 476)
+        Me.SplitPanelSyntheseBouton.Name = "SplitPanelSyntheseBouton"
+        '
+        '
+        '
+        Me.SplitPanelSyntheseBouton.RootElement.MinSize = New System.Drawing.Size(25, 25)
+        Me.SplitPanelSyntheseBouton.Size = New System.Drawing.Size(465, 37)
+        Me.SplitPanelSyntheseBouton.SizeInfo.AutoSizeScale = New System.Drawing.SizeF(0!, -0.4273084!)
+        Me.SplitPanelSyntheseBouton.SizeInfo.SplitterCorrection = New System.Drawing.Size(0, -218)
+        Me.SplitPanelSyntheseBouton.TabIndex = 1
+        Me.SplitPanelSyntheseBouton.TabStop = False
+        Me.SplitPanelSyntheseBouton.Text = "SplitPanel13"
+        '
         'TLMContextMenuStrip
         '
         Me.TLMContextMenuStrip.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.CréerUneObservationToolStripMenuItem})
@@ -3643,85 +3722,6 @@ Partial Class RadFEpisodeDetail
         Me.SplitPanelBottom.TabStop = False
         Me.SplitPanelBottom.Text = "SplitPanel4"
         '
-        'RadSplitContainer6
-        '
-        Me.RadSplitContainer6.Controls.Add(Me.SplitPanelSyntheseDetail)
-        Me.RadSplitContainer6.Controls.Add(Me.SplitPanelSyntheseBouton)
-        Me.RadSplitContainer6.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.RadSplitContainer6.Location = New System.Drawing.Point(0, 0)
-        Me.RadSplitContainer6.Name = "RadSplitContainer6"
-        Me.RadSplitContainer6.Orientation = System.Windows.Forms.Orientation.Horizontal
-        '
-        '
-        '
-        Me.RadSplitContainer6.RootElement.MinSize = New System.Drawing.Size(25, 25)
-        Me.RadSplitContainer6.Size = New System.Drawing.Size(465, 513)
-        Me.RadSplitContainer6.TabIndex = 1
-        Me.RadSplitContainer6.TabStop = False
-        '
-        'SplitPanelSyntheseDetail
-        '
-        Me.SplitPanelSyntheseDetail.Controls.Add(Me.RadPageView1)
-        Me.SplitPanelSyntheseDetail.Location = New System.Drawing.Point(0, 0)
-        Me.SplitPanelSyntheseDetail.Name = "SplitPanelSyntheseDetail"
-        '
-        '
-        '
-        Me.SplitPanelSyntheseDetail.RootElement.MinSize = New System.Drawing.Size(25, 25)
-        Me.SplitPanelSyntheseDetail.Size = New System.Drawing.Size(465, 472)
-        Me.SplitPanelSyntheseDetail.SizeInfo.AutoSizeScale = New System.Drawing.SizeF(0!, 0.4273084!)
-        Me.SplitPanelSyntheseDetail.SizeInfo.SplitterCorrection = New System.Drawing.Size(0, 218)
-        Me.SplitPanelSyntheseDetail.TabIndex = 0
-        Me.SplitPanelSyntheseDetail.TabStop = False
-        Me.SplitPanelSyntheseDetail.Text = "SplitPanel12"
-        '
-        'SplitPanelSyntheseBouton
-        '
-        Me.SplitPanelSyntheseBouton.Controls.Add(Me.RadBtnSocial)
-        Me.SplitPanelSyntheseBouton.Controls.Add(Me.RadBtnVaccins)
-        Me.SplitPanelSyntheseBouton.Controls.Add(Me.RadBtnDirectives)
-        Me.SplitPanelSyntheseBouton.Controls.Add(Me.RadBtnNotesMedicales)
-        Me.SplitPanelSyntheseBouton.Location = New System.Drawing.Point(0, 476)
-        Me.SplitPanelSyntheseBouton.Name = "SplitPanelSyntheseBouton"
-        '
-        '
-        '
-        Me.SplitPanelSyntheseBouton.RootElement.MinSize = New System.Drawing.Size(25, 25)
-        Me.SplitPanelSyntheseBouton.Size = New System.Drawing.Size(465, 37)
-        Me.SplitPanelSyntheseBouton.SizeInfo.AutoSizeScale = New System.Drawing.SizeF(0!, -0.4273084!)
-        Me.SplitPanelSyntheseBouton.SizeInfo.SplitterCorrection = New System.Drawing.Size(0, -218)
-        Me.SplitPanelSyntheseBouton.TabIndex = 1
-        Me.SplitPanelSyntheseBouton.TabStop = False
-        Me.SplitPanelSyntheseBouton.Text = "SplitPanel13"
-        '
-        'RadBtnAbandon
-        '
-        Me.RadBtnAbandon.DialogResult = System.Windows.Forms.DialogResult.Cancel
-        Me.RadBtnAbandon.Image = Global.Oasis_WF.My.Resources.Resources._exit
-        Me.RadBtnAbandon.Location = New System.Drawing.Point(576, 6)
-        Me.RadBtnAbandon.Name = "RadBtnAbandon"
-        Me.RadBtnAbandon.Size = New System.Drawing.Size(24, 24)
-        Me.RadBtnAbandon.TabIndex = 0
-        '
-        'RadBtnRefresh
-        '
-        Me.RadBtnRefresh.Image = Global.Oasis_WF.My.Resources.Resources.reload
-        Me.RadBtnRefresh.ImageAlignment = System.Drawing.ContentAlignment.MiddleCenter
-        Me.RadBtnRefresh.Location = New System.Drawing.Point(546, 6)
-        Me.RadBtnRefresh.Name = "RadBtnRefresh"
-        Me.RadBtnRefresh.Size = New System.Drawing.Size(24, 24)
-        Me.RadBtnRefresh.TabIndex = 41
-        Me.ToolTip.SetToolTip(Me.RadBtnRefresh, "Recharger l'épisode de soin")
-        '
-        'RadBtnOrdonnance
-        '
-        Me.RadBtnOrdonnance.Location = New System.Drawing.Point(29, 9)
-        Me.RadBtnOrdonnance.Name = "RadBtnOrdonnance"
-        Me.RadBtnOrdonnance.Size = New System.Drawing.Size(15, 15)
-        Me.RadBtnOrdonnance.TabIndex = 43
-        Me.RadBtnOrdonnance.Text = ">"
-        Me.ToolTip.SetToolTip(Me.RadBtnOrdonnance, "Ordonnance")
-        '
         'RadFEpisodeDetail
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -3757,14 +3757,16 @@ Partial Class RadFEpisodeDetail
         CType(Me.RadPanel12, System.ComponentModel.ISupportInitialize).EndInit()
         Me.RadPanel12.ResumeLayout(False)
         CType(Me.RadBtnSynthèse, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.RadBtnSocial, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.RadBtnLigneDeVie, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.RadBtnVaccins, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.RadBtnDirectives, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.RadBtnNotesMedicales, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.RadBtnAbandon, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.RadBtnRefresh, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.RadBtnGenProtocole, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.RadBtnHistoWorkflow, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.RadBtnCloture, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.RadBtnSocial, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.RadBtnVaccins, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.RadBtnDirectives, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.RadBtnNotesMedicales, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.RadBtnSousEpisode, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.RadPanelPrincipal, System.ComponentModel.ISupportInitialize).EndInit()
         Me.RadPanelPrincipal.ResumeLayout(False)
@@ -3873,6 +3875,10 @@ Partial Class RadFEpisodeDetail
         CType(Me.RadGridViewContexteEpisode, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.SplitPanelSynthese, System.ComponentModel.ISupportInitialize).EndInit()
         Me.SplitPanelSynthese.ResumeLayout(False)
+        CType(Me.RadSplitContainer6, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.RadSplitContainer6.ResumeLayout(False)
+        CType(Me.SplitPanelSyntheseDetail, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.SplitPanelSyntheseDetail.ResumeLayout(False)
         CType(Me.RadPageView1, System.ComponentModel.ISupportInitialize).EndInit()
         Me.RadPageView1.ResumeLayout(False)
         Me.PgvAntecedent.ResumeLayout(False)
@@ -3904,6 +3910,7 @@ Partial Class RadFEpisodeDetail
         CType(Me.RadPanel6, System.ComponentModel.ISupportInitialize).EndInit()
         Me.RadPanel6.ResumeLayout(False)
         Me.RadPanel6.PerformLayout()
+        CType(Me.RadBtnOrdonnance, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.RadBtnCreationTraitement, System.ComponentModel.ISupportInitialize).EndInit()
         Me.PgvParcours.ResumeLayout(False)
         CType(Me.RadParcoursDataGridView.MasterTemplate, System.ComponentModel.ISupportInitialize).EndInit()
@@ -3939,6 +3946,8 @@ Partial Class RadFEpisodeDetail
         CType(Me.RadBtnCreationPPSStrategie, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.RadBtnCreationPPSMesure, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.RadBtnCreationPPSObjectif, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.SplitPanelSyntheseBouton, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.SplitPanelSyntheseBouton.ResumeLayout(False)
         Me.TLMContextMenuStrip.ResumeLayout(False)
         Me.EtatCivilContextMenuStrip.ResumeLayout(False)
         CType(Me.RadSplitContainer1, System.ComponentModel.ISupportInitialize).EndInit()
@@ -3949,15 +3958,6 @@ Partial Class RadFEpisodeDetail
         Me.SplitPanelBody.ResumeLayout(False)
         CType(Me.SplitPanelBottom, System.ComponentModel.ISupportInitialize).EndInit()
         Me.SplitPanelBottom.ResumeLayout(False)
-        CType(Me.RadSplitContainer6, System.ComponentModel.ISupportInitialize).EndInit()
-        Me.RadSplitContainer6.ResumeLayout(False)
-        CType(Me.SplitPanelSyntheseDetail, System.ComponentModel.ISupportInitialize).EndInit()
-        Me.SplitPanelSyntheseDetail.ResumeLayout(False)
-        CType(Me.SplitPanelSyntheseBouton, System.ComponentModel.ISupportInitialize).EndInit()
-        Me.SplitPanelSyntheseBouton.ResumeLayout(False)
-        CType(Me.RadBtnAbandon, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.RadBtnRefresh, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.RadBtnOrdonnance, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
 

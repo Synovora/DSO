@@ -476,6 +476,48 @@ Public Class EpisodeDao
         Return ParcoursDataTable
     End Function
 
+    Friend Function GetAllEpisodeEnAttenteValidation() As DataTable
+        Dim SQLString As String
+        SQLString = "SELECT E.episode_id, E.patient_id, E.[type], type_activite, date_creation," &
+                    " P.oa_patient_site_id, S.oa_site_description, P.oa_patient_nom, P.oa_patient_prenom, P.oa_patient_date_naissance," &
+                    " ORDO.oa_ordonnance_id, SSP.TotalSSP" &
+                    " FROM oasis.oa_episode E" &
+                    " LEFT JOIN oasis.oa_patient P ON P.oa_patient_id = E.patient_id" &
+                    " LEFT JOIN oasis.oa_site S ON P.oa_patient_site_id = S.oa_site_id" &
+                    " OUTER APPLY (Select TOP (1) * FROM oasis.oasis.oa_patient_ordonnance" &
+                        " WHERE oa_ordonnance_episode_id = E.episode_id" &
+                        " AND (oa_ordonnance_inactif = 'False' OR oa_ordonnance_inactif is NULL)" &
+                        " AND oa_ordonnance_date_validation is NULL) AS ORDO" &
+                    " OUTER APPLY (Select COUNT(*) FROM oasis.oasis.oa_sous_episode SP" &
+                        " WHERE SP.episode_id = E.episode_id" &
+                        " AND is_inactif = 'False'" &
+                        " AND horodate_validate is NULL) AS SSP(TotalSSP)" &
+                    " WHERE (E.etat = '" & EnumEtatEpisode.EN_COURS.ToString & "' OR E.etat = '" & EnumEtatEpisode.CLOTURE.ToString & "')" &
+                    " AND (E.[type] = '" & EnumTypeEpisode.CONSULTATION.ToString & "' OR E.[type] = '" & EnumTypeEpisode.VIRTUEL.ToString & "')" &
+                    " AND (inactif = 'False' OR inactif is Null)" &
+                    " AND (ORDO.oa_ordonnance_id is not NULL OR SSP.TotalSSP > 0)" &
+                    " ORDER BY date_creation"
+
+        Dim ParcoursDataTable As DataTable = New DataTable()
+
+        Using con As SqlConnection = GetConnection()
+            Dim ParcoursDataAdapter As SqlDataAdapter = New SqlDataAdapter()
+            Using ParcoursDataAdapter
+                ParcoursDataAdapter.SelectCommand = New SqlCommand(SQLString, con)
+                Try
+                    ParcoursDataAdapter.Fill(ParcoursDataTable)
+                    Dim command As SqlCommand = con.CreateCommand()
+                Catch ex As Exception
+                    Throw ex
+                Finally
+                    con.Close()
+                End Try
+            End Using
+        End Using
+
+        Return ParcoursDataTable
+    End Function
+
     Friend Function CreateEpisode(episode As Episode) As Integer
         Dim nbcreate As Integer
         Dim da As SqlDataAdapter = New SqlDataAdapter()
