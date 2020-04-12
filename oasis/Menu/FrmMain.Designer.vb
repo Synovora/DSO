@@ -214,6 +214,7 @@ Partial Class FrmMain
         Me.RadTileDRCNouveau.Name = "RadTileDRCNouveau"
         Me.RadTileDRCNouveau.Row = 3
         Me.RadTileDRCNouveau.Text = "A définir"
+        Me.RadTileDRCNouveau.Visibility = Telerik.WinControls.ElementVisibility.Hidden
         '
         'RadTileMedicament
         '
@@ -221,6 +222,7 @@ Partial Class FrmMain
         Me.RadTileMedicament.Name = "RadTileMedicament"
         Me.RadTileMedicament.Row = 4
         Me.RadTileMedicament.Text = "Médicament"
+        Me.RadTileMedicament.Visibility = Telerik.WinControls.ElementVisibility.Hidden
         '
         'TileGroupOrganisation
         '

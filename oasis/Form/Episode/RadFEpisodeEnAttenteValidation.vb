@@ -105,6 +105,7 @@ Public Class RadFEpisodeEnAttenteValidation
             Dim element As RadCheckBoxEditorElement = TryCast(editor.EditorElement, RadCheckBoxEditorElement)
             element.Checkmark.Border.Visibility = ElementVisibility.Collapsed
             element.Checkmark.Fill.Visibility = ElementVisibility.Collapsed
+            element.Checkmark.CheckElement.ForeColor = Color.Red
         End If
     End Sub
 

@@ -416,11 +416,21 @@ Public Class RadFEpisodeDetail
     'Caractéristiques épisode
     Private Sub ChargementCaracteristiquesEpisode()
         episode = episodeDao.GetEpisodeById(Me.SelectedEpisodeId)
-        If episode.DescriptionActivite = "" Then
-            LblTypeEpisode.Text = episode.Type.Trim & " / " & episode.TypeActivite
+
+        If episode.Type = EpisodeDao.EnumTypeEpisode.VIRTUEL.ToString Then
+            If episode.DescriptionActivite = "" Then
+                LblTypeEpisode.Text = episode.Type.Trim
+            Else
+                LblTypeEpisode.Text = episode.Type.Trim & " / " & episode.DescriptionActivite
+            End If
         Else
-            LblTypeEpisode.Text = episode.Type.Trim & " / " & episode.TypeActivite & " / " & episode.DescriptionActivite
+            If episode.DescriptionActivite = "" Then
+                LblTypeEpisode.Text = episode.Type.Trim & " / " & episode.TypeActivite
+            Else
+                LblTypeEpisode.Text = episode.Type.Trim & " / " & episode.TypeActivite & " / " & episode.DescriptionActivite
+            End If
         End If
+
         TypeEpisode = episode.Type
         typeActiviteEpisode = episode.TypeActivite
         DescriptionActiviteEpisode = episode.DescriptionActivite

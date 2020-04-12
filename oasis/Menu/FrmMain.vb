@@ -66,7 +66,7 @@ Public Class FrmMain
         Me.Cursor = Cursors.WaitCursor
         Me.Enabled = False
         Try
-            Using frm As New FMedocListe
+            Using frm As New RadFMedicamentSelecteur
                 frm.ShowDialog()
             End Using
         Catch err As Exception
