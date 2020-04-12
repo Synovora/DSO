@@ -1,5 +1,6 @@
 ﻿Imports System.Configuration
 Imports Oasis_Common
+Imports Telerik.WinControls
 Imports Telerik.WinControls.UI
 
 Public Class RadFEpisodeLigneDeVie
@@ -505,11 +506,27 @@ Public Class RadFEpisodeLigneDeVie
             RadGridViewEpisode.Rows(iGrid).Cells("periode").Value = periode
             DatePrecedente = dateCreation
 
+            Dim OrdonnanceId = Coalesce(dt.Rows(i)("oa_ordonnance_id"), 0)
+            If OrdonnanceId <> 0 Then
+                RadGridViewEpisode.Rows(iGrid).Cells("ordonnance").Value = True
+            Else
+                RadGridViewEpisode.Rows(iGrid).Cells("ordonnance").Value = False
+            End If
+
             etatCode = Coalesce(dt.Rows(i)("etat"), "")
             Select Case etatCode
                 Case EpisodeDao.EnumEtatEpisode.EN_COURS.ToString
                     RadGridViewEpisode.Rows(iGrid).Cells("etat").Value = "En cours"
                     RadGridViewEpisode.Rows(iGrid).Cells("etat").Style.ForeColor = Color.Red
+                    RadGridViewEpisode.Rows(iGrid).Cells("date_creation").Style.ForeColor = Color.Red
+                    RadGridViewEpisode.Rows(iGrid).Cells("type_activite").Style.ForeColor = Color.Red
+                    RadGridViewEpisode.Rows(iGrid).Cells("type_profil").Style.ForeColor = Color.Red
+                    RadGridViewEpisode.Rows(iGrid).Cells("conclusion").Style.ForeColor = Color.Red
+                    RadGridViewEpisode.Rows(iGrid).Cells("parametre1").Style.ForeColor = Color.Red
+                    RadGridViewEpisode.Rows(iGrid).Cells("parametre2").Style.ForeColor = Color.Red
+                    RadGridViewEpisode.Rows(iGrid).Cells("parametre3").Style.ForeColor = Color.Red
+                    RadGridViewEpisode.Rows(iGrid).Cells("parametre4").Style.ForeColor = Color.Red
+                    RadGridViewEpisode.Rows(iGrid).Cells("parametre5").Style.ForeColor = Color.Red
                 Case EpisodeDao.EnumEtatEpisode.CLOTURE.ToString
                     RadGridViewEpisode.Rows(iGrid).Cells("etat").Value = "Clôturé"
                 Case Else
@@ -713,6 +730,17 @@ Public Class RadFEpisodeLigneDeVie
 
     Private Sub RadFEpisodeLigneDeVie_FormClosed(sender As Object, e As FormClosedEventArgs) Handles MyBase.FormClosed
         Environnement.ControleAcces.removeFormToControl(EnumForm.LIGNE_DE_VIE.ToString)
+    End Sub
+
+    Private Sub MasterTemplate_CellFormatting(sender As Object, e As CellFormattingEventArgs) Handles RadGridViewEpisode.CellFormatting
+        ' --- suppression du carre des checkbox
+        Dim checkBoxCell As GridCheckBoxCellElement = TryCast(e.CellElement, GridCheckBoxCellElement)
+        If checkBoxCell IsNot Nothing Then
+            Dim editor As RadCheckBoxEditor = TryCast(checkBoxCell.Editor, RadCheckBoxEditor)
+            Dim element As RadCheckBoxEditorElement = TryCast(editor.EditorElement, RadCheckBoxEditorElement)
+            element.Checkmark.Border.Visibility = ElementVisibility.Collapsed
+            element.Checkmark.Fill.Visibility = ElementVisibility.Collapsed
+        End If
     End Sub
 
     Private Sub LblParametre4_Click(sender As Object, e As EventArgs) Handles LblParametre4.Click

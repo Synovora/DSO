@@ -223,7 +223,7 @@ Public Class EpisodeDao
 
 
         SQLString = "SELECT E.episode_id, patient_id, type, type_activite, description_activite, type_profil," & vbCrLf &
-                    " commentaire, date_creation, observation_paramedical, observation_medical, etat" & vbCrLf
+                    " commentaire, date_creation, observation_paramedical, observation_medical, etat, ORDO.oa_ordonnance_id, ORDO.oa_ordonnance_date_validation" & vbCrLf
 
         Parametre1String = ""
         If ligneDeVie.ParametreId1 <> 0 Then
@@ -255,8 +255,12 @@ Public Class EpisodeDao
                                 " AND PE.episode_id = E.episode_id) as ValeurParam5" & vbCrLf
         End If
 
+
         'Début Claude WHERE
         ClauseWhereString = " FROM oasis.oa_episode E" & vbCrLf &
+                    " OUTER APPLY (Select TOP (1) * FROM oasis.oasis.oa_patient_ordonnance" &
+                        " WHERE oa_ordonnance_episode_id = E.episode_id" &
+                        " AND (oa_ordonnance_inactif = 'False' OR oa_ordonnance_inactif is NULL)) AS ORDO" &
                     " WHERE patient_id = " & patientId.ToString & vbCrLf &
                     " AND (inactif = 'False' OR inactif is Null)" & vbCrLf &
                     " AND date_creation <= '" & dateDebutRecherche.ToString("yyyy-MM-dd") & "'" & vbCrLf &

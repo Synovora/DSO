@@ -29,6 +29,7 @@ Partial Class RadFEpisodeLigneDeVie
         Dim GridViewTextBoxColumn4 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
         Dim GridViewTextBoxColumn5 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
         Dim GridViewTextBoxColumn6 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
+        Dim GridViewCheckBoxColumn1 As Telerik.WinControls.UI.GridViewCheckBoxColumn = New Telerik.WinControls.UI.GridViewCheckBoxColumn()
         Dim GridViewTextBoxColumn7 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
         Dim GridViewTextBoxColumn8 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
         Dim GridViewTextBoxColumn9 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
@@ -299,6 +300,7 @@ Partial Class RadFEpisodeLigneDeVie
         GridViewTextBoxColumn3.Width = 170
         GridViewTextBoxColumn4.EnableExpressionEditor = False
         GridViewTextBoxColumn4.HeaderText = "Nature"
+        GridViewTextBoxColumn4.IsVisible = False
         GridViewTextBoxColumn4.Name = "type_profil"
         GridViewTextBoxColumn4.ReadOnly = True
         GridViewTextBoxColumn4.Width = 95
@@ -313,6 +315,12 @@ Partial Class RadFEpisodeLigneDeVie
         GridViewTextBoxColumn6.HeaderTextAlignment = System.Drawing.ContentAlignment.MiddleLeft
         GridViewTextBoxColumn6.Name = "conclusion"
         GridViewTextBoxColumn6.Width = 300
+        GridViewCheckBoxColumn1.EnableExpressionEditor = False
+        GridViewCheckBoxColumn1.HeaderText = "Ordonnance"
+        GridViewCheckBoxColumn1.MinWidth = 20
+        GridViewCheckBoxColumn1.Name = "ordonnance"
+        GridViewCheckBoxColumn1.TextAlignment = System.Drawing.ContentAlignment.MiddleCenter
+        GridViewCheckBoxColumn1.Width = 70
         GridViewTextBoxColumn7.EnableExpressionEditor = False
         GridViewTextBoxColumn7.HeaderText = "parametre 1"
         GridViewTextBoxColumn7.Name = "parametre1"
@@ -340,6 +348,7 @@ Partial Class RadFEpisodeLigneDeVie
         GridViewTextBoxColumn11.Width = 110
         GridViewTextBoxColumn12.EnableExpressionEditor = False
         GridViewTextBoxColumn12.HeaderText = "Etat"
+        GridViewTextBoxColumn12.IsVisible = False
         GridViewTextBoxColumn12.Name = "etat"
         GridViewTextBoxColumn12.TextAlignment = System.Drawing.ContentAlignment.MiddleCenter
         GridViewTextBoxColumn12.Width = 70
@@ -349,10 +358,11 @@ Partial Class RadFEpisodeLigneDeVie
         GridViewTextBoxColumn13.Name = "episode_id"
         GridViewTextBoxColumn14.EnableExpressionEditor = False
         GridViewTextBoxColumn14.HeaderText = "Période"
+        GridViewTextBoxColumn14.IsVisible = False
         GridViewTextBoxColumn14.Name = "periode"
         GridViewTextBoxColumn14.TextAlignment = System.Drawing.ContentAlignment.MiddleCenter
         GridViewTextBoxColumn14.Width = 120
-        Me.RadGridViewEpisode.MasterTemplate.Columns.AddRange(New Telerik.WinControls.UI.GridViewDataColumn() {GridViewTextBoxColumn1, GridViewTextBoxColumn2, GridViewTextBoxColumn3, GridViewTextBoxColumn4, GridViewTextBoxColumn5, GridViewTextBoxColumn6, GridViewTextBoxColumn7, GridViewTextBoxColumn8, GridViewTextBoxColumn9, GridViewTextBoxColumn10, GridViewTextBoxColumn11, GridViewTextBoxColumn12, GridViewTextBoxColumn13, GridViewTextBoxColumn14})
+        Me.RadGridViewEpisode.MasterTemplate.Columns.AddRange(New Telerik.WinControls.UI.GridViewDataColumn() {GridViewTextBoxColumn1, GridViewTextBoxColumn2, GridViewTextBoxColumn3, GridViewTextBoxColumn4, GridViewTextBoxColumn5, GridViewTextBoxColumn6, GridViewCheckBoxColumn1, GridViewTextBoxColumn7, GridViewTextBoxColumn8, GridViewTextBoxColumn9, GridViewTextBoxColumn10, GridViewTextBoxColumn11, GridViewTextBoxColumn12, GridViewTextBoxColumn13, GridViewTextBoxColumn14})
         Me.RadGridViewEpisode.MasterTemplate.ViewDefinition = TableViewDefinition1
         Me.RadGridViewEpisode.Name = "RadGridViewEpisode"
         Me.RadGridViewEpisode.RightToLeft = System.Windows.Forms.RightToLeft.No
