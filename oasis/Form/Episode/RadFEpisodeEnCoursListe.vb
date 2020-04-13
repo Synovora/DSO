@@ -8,14 +8,29 @@ Public Class RadFEpisodeEnCoursListe
 
     Dim patient As New Patient
 
+    Dim InitForm As Boolean
+    Dim Filtre As enumFiltre
+
+    Private Enum enumFiltre
+        TOUS
+        WORKFLOW_EN_ATTENTE
+        WORKFLOW_EN_ATTENTE_FONCTION
+    End Enum
+
     Private Sub RadFEpisodeEnCoursListe_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         afficheTitleForm(Me, "Liste des épisodes patient en cours")
+
+        InitForm = True
+        RadioBtnTous.Checked = True
+        Filtre = enumFiltre.TOUS
+
         ChargementEpisode()
     End Sub
 
     Private Sub ChargementEpisode()
         Cursor.Current = Cursors.WaitCursor
         RadGridViewEpisode.Rows.Clear()
+        Dim FonctionDestinataireType As String
 
         Dim episodeDataTable As DataTable
         episodeDataTable = episodeDao.GetAllEpisodeEnCours()
@@ -23,6 +38,28 @@ Public Class RadFEpisodeEnCoursListe
         Dim iGrid As Integer = -1
         Dim rowCount As Integer = episodeDataTable.Rows.Count - 1
         For i = 0 To rowCount Step 1
+            Select Case Filtre
+                Case enumFiltre.WORKFLOW_EN_ATTENTE
+                    If Coalesce(episodeDataTable.Rows(i)("nature"), "") = "" Then
+                        Continue For
+                    End If
+                Case enumFiltre.WORKFLOW_EN_ATTENTE_FONCTION
+                    If Coalesce(episodeDataTable.Rows(i)("nature"), "") = "" Then
+                        Continue For
+                    End If
+                    FonctionDestinataireType = Coalesce(episodeDataTable.Rows(i)("oa_r_fonction_type"), "")
+                    Select Case FonctionDestinataireType
+                        Case ProfilDao.EnumProfilType.PARAMEDICAL.ToString
+                            If userLog.TypeProfil <> ProfilDao.EnumProfilType.PARAMEDICAL.ToString Then
+                                Continue For
+                            End If
+                        Case ProfilDao.EnumProfilType.MEDICAL.ToString
+                            If userLog.TypeProfil <> ProfilDao.EnumProfilType.MEDICAL.ToString Then
+                                Continue For
+                            End If
+                    End Select
+            End Select
+
             iGrid += 1
             'Ajout d'une ligne au DataGridView
             RadGridViewEpisode.Rows.Add(iGrid)
@@ -58,7 +95,7 @@ Public Class RadFEpisodeEnCoursListe
             End If
 
             Dim TacheNature As String = Coalesce(episodeDataTable.Rows(i)("nature"), "")
-            Dim FonctionDestinataireType As String = Coalesce(episodeDataTable.Rows(i)("oa_r_fonction_type"), "")
+            FonctionDestinataireType = Coalesce(episodeDataTable.Rows(i)("oa_r_fonction_type"), "")
 
             Select Case FonctionDestinataireType
                 Case ProfilDao.EnumProfilType.PARAMEDICAL.ToString
@@ -211,4 +248,22 @@ Public Class RadFEpisodeEnCoursListe
         ChargementEpisode()
     End Sub
 
+    Private Sub RadioBtnTous_CheckedChanged(sender As Object, e As EventArgs) Handles RadioBtnTous.CheckedChanged
+        If InitForm = True Then
+            InitForm = False
+        Else
+            Filtre = enumFiltre.TOUS
+            ChargementEpisode()
+        End If
+    End Sub
+
+    Private Sub RadioBtnWorkflowEnAttente_CheckedChanged(sender As Object, e As EventArgs) Handles RadioBtnWorkflowEnAttente.CheckedChanged
+        Filtre = enumFiltre.WORKFLOW_EN_ATTENTE
+        ChargementEpisode()
+    End Sub
+
+    Private Sub RadioBtnWorkflowPourSaFonction_CheckedChanged(sender As Object, e As EventArgs) Handles RadioBtnWorkflowPourSaFonction.CheckedChanged
+        Filtre = enumFiltre.WORKFLOW_EN_ATTENTE_FONCTION
+        ChargementEpisode()
+    End Sub
 End Class
