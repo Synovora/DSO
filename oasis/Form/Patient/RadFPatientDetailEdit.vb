@@ -603,6 +603,12 @@ Public Class RadFPatientDetailEdit
         End Try
 
         If codeRetour = True Then
+            'Contrôle si existence des intervenants Oasis par défaut
+            If DteDateEntree.Value <> DteDateEntree.MaxDate And DteDateSortie.Value = DteDateSortie.MaxDate Then
+                Dim parcoursDao As New ParcoursDao
+                parcoursDao.CreateIntervenantOasisByPatient(SelectedPatient.patientId)
+            End If
+
             'Mise à jour des données modifiées dans l'instance de la classe Historisation traitement
 
             'Rechargement du Bean Patient
@@ -675,6 +681,7 @@ Public Class RadFPatientDetailEdit
     Private Function CreationPatient() As Boolean
         'Dim da As MySqlDataAdapter = New MySqlDataAdapter()
         Dim da As SqlDataAdapter = New SqlDataAdapter()
+        Dim patientId As Long
         Dim codeRetour As Boolean = True
         Dim GenreId As String
         Dim SiteId, UniteSanitaireId, Modulo As Integer
@@ -688,7 +695,7 @@ Public Class RadFPatientDetailEdit
         " oa_patient_date_deces, oa_patient_site_id, oa_patient_unite_sanitaire_id, oa_patient_couverture_internet, oa_patient_profession, oa_patient_pharmacie_id, oa_patient_siege_id)" &
         " VALUES (@nir, @nirModulo, @prenom, @nom, @nomMarital, @dateNaissance," &
         " @genreId, @adresse1, @adresse2, @codePostal, @ville, @tel1," &
-        " @tel2, @email, @dateEntree, @dateSortie, @commentaireSortie, @dateDeces, @siteId, @uniteSanitaireId, @internet, @profession, @pharmacienId, @siegeId)"
+        " @tel2, @email, @dateEntree, @dateSortie, @commentaireSortie, @dateDeces, @siteId, @uniteSanitaireId, @internet, @profession, @pharmacienId, @siegeId) ; SELECT SCOPE_IDENTITY()"
 
 
         Dim cmd As New SqlCommand(SQLstring, conxn)
@@ -768,7 +775,7 @@ Public Class RadFPatientDetailEdit
         Try
             conxn.Open()
             da.InsertCommand = cmd
-            da.InsertCommand.ExecuteNonQuery()
+            patientId = da.InsertCommand.ExecuteScalar()
             MessageBox.Show("Patient créé")
         Catch ex As Exception
             MessageBox.Show(ex.Message)
@@ -776,6 +783,13 @@ Public Class RadFPatientDetailEdit
         Finally
             conxn.Close()
         End Try
+
+        If DteDateEntree.Value <> DteDateEntree.MaxDate Then
+            If patientId <> 0 Then
+                Dim parcoursDao As New ParcoursDao
+                parcoursDao.CreateIntervenantOasisByPatient(patientId)
+            End If
+        End If
 
         'Traitement historisation patient créé
         'If codeRetour = True Then

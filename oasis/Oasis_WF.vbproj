@@ -304,7 +304,7 @@
     <Compile Include="Bean\Parcours\ParcoursClass.vb" />
     <Compile Include="Bean\Parcours\ParcoursConsigneClass.vb" />
     <Compile Include="Bean\Parcours\ParcoursHistoClass.vb" />
-    <Compile Include="Bean\Patient\PatientNoteClass.vb" />
+    <Compile Include="Bean\Patient\PatientNote.vb" />
     <Compile Include="Bean\PPS\PpsClass.vb" />
     <Compile Include="Bean\ROR\RorClass.vb" />
     <Compile Include="Bean\Parcours\SpecialiteClass.vb" />
@@ -988,7 +988,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>UniteSanitaireDataSet.xsd</DependentUpon>
     </Compile>
-    <Compile Include="Bean\Patient\PatientClass.vb" />
+    <Compile Include="Bean\Patient\Patient.vb" />
     <Compile Include="Menu\FAuthentification.Designer.vb">
       <DependentUpon>FAuthentification.vb</DependentUpon>
     </Compile>
