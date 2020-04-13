@@ -242,7 +242,7 @@ Public Class RadFPPSDetailEdit
             LblUtilisateurModification.Text = Me.UtilisateurHisto.UtilisateurPrenom & " " & Me.UtilisateurHisto.UtilisateurNom
         End If
 
-        RadBtnValidation.Hide()
+        RadBtnValidation.Enabled = False
     End Sub
 
     Private Sub TxtDrcId_DoubleClick(sender As Object, e As EventArgs) Handles TxtDrcId.DoubleClick
@@ -289,7 +289,7 @@ Public Class RadFPPSDetailEdit
                     Close()
                 End If
             End If
-            RadBtnValidation.Hide()
+            RadBtnValidation.Enabled = False
         End If
     End Sub
 
@@ -568,7 +568,7 @@ Public Class RadFPPSDetailEdit
         LblLabelCommentaireArret.Show()
         RadBtnConfirmationAnnulation.Show()
         RadBtnAnnulation.Hide()
-        RadBtnValidation.Hide()
+        RadBtnValidation.Enabled = False
         TxtDrcId.Enabled = False
         TxtCommentaire.Enabled = False
         NumPriorite.Enabled = False
@@ -591,19 +591,19 @@ Public Class RadFPPSDetailEdit
     End Sub
 
     Private Sub NumPriorite_ValueChanged(sender As Object, e As EventArgs) Handles NumPriorite.ValueChanged
-        RadBtnValidation.Show()
+        RadBtnValidation.Enabled = True
     End Sub
 
     Private Sub TxtDrcId_TextChanged(sender As Object, e As EventArgs) Handles TxtDrcId.TextChanged
-        RadBtnValidation.Show()
+        RadBtnValidation.Enabled = True
     End Sub
 
     Private Sub TxtCommentaire_TextChanged(sender As Object, e As EventArgs) Handles TxtCommentaire.TextChanged
-        RadBtnValidation.Show()
+        RadBtnValidation.Enabled = True
     End Sub
 
     Private Sub CbxTypeStrategie_SelectedIndexChanged(sender As Object, e As EventArgs) Handles CbxTypeStrategie.SelectedIndexChanged
-        RadBtnValidation.Show()
+        RadBtnValidation.Enabled = True
     End Sub
 
     Private Sub LblId_MouseHover(sender As Object, e As EventArgs) Handles LblId.MouseHover
