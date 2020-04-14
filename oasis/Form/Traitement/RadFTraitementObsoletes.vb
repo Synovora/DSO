@@ -173,9 +173,7 @@ Public Class RadFTraitementObsoletes
 
             'Ne pas afficher les traitements qui n'ont pas fait l'objet d'un arrêt et d'une annulation et dont la date de fin est supérieure ou égale à aujourd'hui
             If TraitementArret = False And TraitementAnnule = False Then
-                Dim dateJouraComparer As New Date(Date.Now.Year, Date.Now.Month, Date.Now.Day, 0, 0, 0)
-                Dim dateFinaComparer As New Date(dateFin.Year, dateFin.Month, dateFin.Day, 0, 0, 0)
-                If (dateFinaComparer >= dateJouraComparer) Then
+                If (dateFin.Date >= Date.Now.Date) Then
                     Continue For
                 End If
             End If
