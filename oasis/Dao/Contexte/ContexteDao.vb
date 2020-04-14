@@ -81,10 +81,7 @@ Public Class ContexteDao
         Return IsExist
     End Function
 
-    Friend Function TransformationEnAntecedent(contexteId As Integer, ContexteHistoACreer As AntecedentHisto, Description As String, Publication As String) As Boolean
-        Dim user As New Utilisateur
-        user.UtilisateurId = 1
-
+    Friend Function TransformationEnAntecedent(contexteId As Integer, ContexteHistoACreer As AntecedentHisto, Description As String, Publication As String, user As Utilisateur) As Boolean
         Dim da As SqlDataAdapter = New SqlDataAdapter()
         Dim codeRetour As Boolean = True
 
@@ -117,7 +114,7 @@ Public Class ContexteDao
             .AddWithValue("@dateFin", New Date(2999, 12, 31, 0, 0, 0).ToString("yyyy-MM-dd HH:mm:ss"))
             .AddWithValue("@nature", "")
             .AddWithValue("@priorite", 0)
-            .AddWithValue("@publication", publication)
+            .AddWithValue("@publication", Publication)
             .AddWithValue("@niveau", 1)
             .AddWithValue("@idNiveau1", 0)
             .AddWithValue("@idNiveau2", 0)
@@ -141,7 +138,7 @@ Public Class ContexteDao
             'Mise à jour des données modifiées dans l'instance de la classe Historisation antecedent
             ContexteHistoACreer.HistorisationDate = Date.Now()
             ContexteHistoACreer.Type = "A"
-            ContexteHistoACreer.UtilisateurId = 1
+            ContexteHistoACreer.UtilisateurId = user.UtilisateurId
             ContexteHistoACreer.Etat = AntecedentHistoCreationDao.EnumEtatAntecedentHisto.ReactivationAntecedent
             ContexteHistoACreer.Nature = ""
             ContexteHistoACreer.Niveau = 1

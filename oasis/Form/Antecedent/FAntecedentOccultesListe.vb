@@ -79,6 +79,8 @@ Public Class FAntecedentOccultesListe
             AntecedentDataGridView.Rows.Insert(iGrid)
 
             'Alimentation du DataGridView
+            AntecedentDataGridView("oa_antecedent_date_modification", iGrid).Value = dateDateModification.ToString("dd/MM/yyyy")
+
             If antecedentDataTable.Rows(i)("oa_antecedent_description") Is DBNull.Value Or antecedentDataTable.Rows(i)("oa_antecedent_description") = "" Then
                 'Récupération du libellé de la DRC/ORC
                 Dim Drc As Drc = New Drc(antecedentDataTable.Rows(i)("oa_antecedent_drc_id"))

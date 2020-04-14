@@ -1,4 +1,5 @@
-﻿Imports System.Data.SqlClient
+﻿Imports System.Configuration
+Imports System.Data.SqlClient
 Imports Oasis_Common
 Public Class ParametreOasisDao
     Inherits StandardDao
@@ -161,7 +162,20 @@ Public Class ParametreOasisDao
                 AntecedentHistoaCreer.AldDateDemande = Coalesce(ContexteObsoleteDataTable.Rows(i)("oa_antecedent_ald_demande_date"), Date.MaxValue)
                 Dim contexteId As Integer = ContexteObsoleteDataTable.Rows(i)("oa_antecedent_id")
                 Dim Description As String = AntecedentHistoaCreer.Description & " (" & AntecedentHistoaCreer.DateDebut.ToString("MM.yyyy") & ")"
-                ContexteDao.TransformationEnAntecedent(contexteId, AntecedentHistoaCreer, Description, Coalesce(ContexteObsoleteDataTable.Rows(i)("oa_antecedent_statut_affichage_transformation"), ""))
+
+                'Récupération de l'utilisateur par défaut dans les paramètres de l'application
+                Dim IdUserAutoString As String = ConfigurationManager.AppSettings("IdUserAuto")
+                Dim IdUserAuto As Long
+                If IsNumeric(IdUserAutoString) Then
+                    IdUserAuto = CInt(IdUserAutoString)
+                Else
+                    CreateLog("Paramètre application 'IdUserAuto' non trouvé !", "ParametreOasisDao", LogDao.EnumTypeLog.ERREUR.ToString)
+                    IdUserAuto = 1
+                End If
+                Dim userdao As New UserDao
+                Dim user As Utilisateur = userdao.getUserById(IdUserAuto)
+
+                ContexteDao.TransformationEnAntecedent(contexteId, AntecedentHistoaCreer, Description, Coalesce(ContexteObsoleteDataTable.Rows(i)("oa_antecedent_statut_affichage_transformation"), ""), user)
             Next
         End If
 
