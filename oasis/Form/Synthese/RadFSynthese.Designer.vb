@@ -138,6 +138,11 @@ Partial Class RadFSynthese
         Me.ToolTip = New System.Windows.Forms.ToolTip(Me.components)
         Me.LblContreIndication = New System.Windows.Forms.Label()
         Me.LblAllergie = New System.Windows.Forms.Label()
+        Me.RadBtnCreationTraitement = New Telerik.WinControls.UI.RadButton()
+        Me.RadBtnCreationAntecedent = New Telerik.WinControls.UI.RadButton()
+        Me.RadBtnCreationPPSMesure = New Telerik.WinControls.UI.RadButton()
+        Me.RadBtnRefresh = New Telerik.WinControls.UI.RadButton()
+        Me.RadBtnImprimer = New Telerik.WinControls.UI.RadButton()
         Me.RadChkPublie = New Telerik.WinControls.UI.RadCheckBox()
         Me.RadChkParChronologie = New Telerik.WinControls.UI.RadCheckBox()
         Me.RadBtnSocial = New Telerik.WinControls.UI.RadButton()
@@ -152,9 +157,6 @@ Partial Class RadFSynthese
         Me.RadChkParcoursNonCache = New Telerik.WinControls.UI.RadCheckBox()
         Me.RadChkParcoursTous = New Telerik.WinControls.UI.RadCheckBox()
         Me.RadChkMesureMax = New Telerik.WinControls.UI.RadCheckBox()
-        Me.RadBtnCreationTraitement = New Telerik.WinControls.UI.RadButton()
-        Me.RadBtnCreationAntecedent = New Telerik.WinControls.UI.RadButton()
-        Me.RadBtnCreationPPSMesure = New Telerik.WinControls.UI.RadButton()
         Me.RadBtnUp = New Telerik.WinControls.UI.RadButton()
         Me.RadBtnDown = New Telerik.WinControls.UI.RadButton()
         Me.RadBtnRight = New Telerik.WinControls.UI.RadButton()
@@ -162,8 +164,6 @@ Partial Class RadFSynthese
         Me.Panel1 = New System.Windows.Forms.Panel()
         Me.Panel2 = New System.Windows.Forms.Panel()
         Me.RadButtonAbandon = New Telerik.WinControls.UI.RadButton()
-        Me.RadBtnRefresh = New Telerik.WinControls.UI.RadButton()
-        Me.RadBtnImprimer = New Telerik.WinControls.UI.RadButton()
         CType(Me.RadGroupBoxEtatCivil, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.RadGroupBoxEtatCivil.SuspendLayout()
         Me.EtatCivilContextMenuStrip.SuspendLayout()
@@ -200,6 +200,11 @@ Partial Class RadFSynthese
         CType(Me.RadBtnCreationPPSObjectif, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.RadPPSDataGridView, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.RadPPSDataGridView.MasterTemplate, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.RadBtnCreationTraitement, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.RadBtnCreationAntecedent, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.RadBtnCreationPPSMesure, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.RadBtnRefresh, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.RadBtnImprimer, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.RadChkPublie, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.RadChkParChronologie, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.RadBtnSocial, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -214,16 +219,11 @@ Partial Class RadFSynthese
         CType(Me.RadChkParcoursNonCache, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.RadChkParcoursTous, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.RadChkMesureMax, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.RadBtnCreationTraitement, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.RadBtnCreationAntecedent, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.RadBtnCreationPPSMesure, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.RadBtnUp, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.RadBtnDown, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.RadBtnRight, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.RadBtnLeft, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.RadButtonAbandon, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.RadBtnRefresh, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.RadBtnImprimer, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
@@ -278,7 +278,7 @@ Partial Class RadFSynthese
         Me.LblDateNaissance.AutoSize = True
         Me.LblDateNaissance.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.LblDateNaissance.ForeColor = System.Drawing.Color.Red
-        Me.LblDateNaissance.Location = New System.Drawing.Point(339, 4)
+        Me.LblDateNaissance.Location = New System.Drawing.Point(339, 2)
         Me.LblDateNaissance.Name = "LblDateNaissance"
         Me.LblDateNaissance.Size = New System.Drawing.Size(65, 15)
         Me.LblDateNaissance.TabIndex = 45
@@ -300,7 +300,7 @@ Partial Class RadFSynthese
         Me.LblALD.AutoSize = True
         Me.LblALD.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.LblALD.ForeColor = System.Drawing.Color.OrangeRed
-        Me.LblALD.Location = New System.Drawing.Point(947, 4)
+        Me.LblALD.Location = New System.Drawing.Point(947, 2)
         Me.LblALD.Name = "LblALD"
         Me.LblALD.Size = New System.Drawing.Size(31, 13)
         Me.LblALD.TabIndex = 43
@@ -310,7 +310,7 @@ Partial Class RadFSynthese
         '
         Me.Label13.AutoSize = True
         Me.Label13.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label13.Location = New System.Drawing.Point(588, 4)
+        Me.Label13.Location = New System.Drawing.Point(588, 2)
         Me.Label13.Name = "Label13"
         Me.Label13.Size = New System.Drawing.Size(37, 13)
         Me.Label13.TabIndex = 42
@@ -319,7 +319,7 @@ Partial Class RadFSynthese
         'LblPatientDateMaj
         '
         Me.LblPatientDateMaj.AutoSize = True
-        Me.LblPatientDateMaj.Location = New System.Drawing.Point(879, 4)
+        Me.LblPatientDateMaj.Location = New System.Drawing.Point(879, 2)
         Me.LblPatientDateMaj.Name = "LblPatientDateMaj"
         Me.LblPatientDateMaj.Size = New System.Drawing.Size(63, 13)
         Me.LblPatientDateMaj.TabIndex = 41
@@ -329,7 +329,7 @@ Partial Class RadFSynthese
         '
         Me.Label5.AutoSize = True
         Me.Label5.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label5.Location = New System.Drawing.Point(745, 4)
+        Me.Label5.Location = New System.Drawing.Point(745, 2)
         Me.Label5.Name = "Label5"
         Me.Label5.Size = New System.Drawing.Size(128, 13)
         Me.Label5.TabIndex = 40
@@ -359,7 +359,7 @@ Partial Class RadFSynthese
         Me.LblPatientPrenom.AutoSize = True
         Me.LblPatientPrenom.Font = New System.Drawing.Font("Segoe UI", 9.5!)
         Me.LblPatientPrenom.ForeColor = System.Drawing.Color.Red
-        Me.LblPatientPrenom.Location = New System.Drawing.Point(11, 4)
+        Me.LblPatientPrenom.Location = New System.Drawing.Point(10, 2)
         Me.LblPatientPrenom.Name = "LblPatientPrenom"
         Me.LblPatientPrenom.Size = New System.Drawing.Size(73, 17)
         Me.LblPatientPrenom.TabIndex = 23
@@ -370,7 +370,7 @@ Partial Class RadFSynthese
         Me.LblPatientNom.AutoSize = True
         Me.LblPatientNom.Font = New System.Drawing.Font("Segoe UI", 9.5!)
         Me.LblPatientNom.ForeColor = System.Drawing.Color.Red
-        Me.LblPatientNom.Location = New System.Drawing.Point(133, 4)
+        Me.LblPatientNom.Location = New System.Drawing.Point(136, 2)
         Me.LblPatientNom.Name = "LblPatientNom"
         Me.LblPatientNom.Size = New System.Drawing.Size(51, 17)
         Me.LblPatientNom.TabIndex = 24
@@ -381,7 +381,7 @@ Partial Class RadFSynthese
         Me.LblPatientAge.AutoSize = True
         Me.LblPatientAge.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.LblPatientAge.ForeColor = System.Drawing.Color.DarkRed
-        Me.LblPatientAge.Location = New System.Drawing.Point(412, 4)
+        Me.LblPatientAge.Location = New System.Drawing.Point(412, 2)
         Me.LblPatientAge.Name = "LblPatientAge"
         Me.LblPatientAge.Size = New System.Drawing.Size(40, 15)
         Me.LblPatientAge.TabIndex = 25
@@ -392,7 +392,7 @@ Partial Class RadFSynthese
         Me.LblPatientGenre.AutoSize = True
         Me.LblPatientGenre.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.LblPatientGenre.ForeColor = System.Drawing.Color.DarkRed
-        Me.LblPatientGenre.Location = New System.Drawing.Point(505, 4)
+        Me.LblPatientGenre.Location = New System.Drawing.Point(505, 2)
         Me.LblPatientGenre.Name = "LblPatientGenre"
         Me.LblPatientGenre.Size = New System.Drawing.Size(55, 15)
         Me.LblPatientGenre.TabIndex = 26
@@ -401,7 +401,7 @@ Partial Class RadFSynthese
         'LblPatientNIR
         '
         Me.LblPatientNIR.AutoSize = True
-        Me.LblPatientNIR.Location = New System.Drawing.Point(639, 4)
+        Me.LblPatientNIR.Location = New System.Drawing.Point(639, 2)
         Me.LblPatientNIR.Name = "LblPatientNIR"
         Me.LblPatientNIR.Size = New System.Drawing.Size(85, 13)
         Me.LblPatientNIR.TabIndex = 27
@@ -1204,6 +1204,57 @@ Partial Class RadFSynthese
         Me.LblAllergie.Text = "Allergie(s) "
         Me.ToolTip.SetToolTip(Me.LblAllergie, resources.GetString("LblAllergie.ToolTip"))
         '
+        'RadBtnCreationTraitement
+        '
+        Me.RadBtnCreationTraitement.Font = New System.Drawing.Font("Segoe UI", 11.0!)
+        Me.RadBtnCreationTraitement.Location = New System.Drawing.Point(77, 226)
+        Me.RadBtnCreationTraitement.Name = "RadBtnCreationTraitement"
+        Me.RadBtnCreationTraitement.Size = New System.Drawing.Size(15, 15)
+        Me.RadBtnCreationTraitement.TabIndex = 41
+        Me.RadBtnCreationTraitement.Text = "+"
+        Me.ToolTip.SetToolTip(Me.RadBtnCreationTraitement, "Ajout traitement")
+        '
+        'RadBtnCreationAntecedent
+        '
+        Me.RadBtnCreationAntecedent.Font = New System.Drawing.Font("Segoe UI", 11.0!)
+        Me.RadBtnCreationAntecedent.Location = New System.Drawing.Point(80, 45)
+        Me.RadBtnCreationAntecedent.Name = "RadBtnCreationAntecedent"
+        Me.RadBtnCreationAntecedent.Size = New System.Drawing.Size(15, 15)
+        Me.RadBtnCreationAntecedent.TabIndex = 41
+        Me.RadBtnCreationAntecedent.Text = "+"
+        Me.ToolTip.SetToolTip(Me.RadBtnCreationAntecedent, "Ajout antécédent")
+        '
+        'RadBtnCreationPPSMesure
+        '
+        Me.RadBtnCreationPPSMesure.Font = New System.Drawing.Font("Segoe UI", 8.0!)
+        Me.RadBtnCreationPPSMesure.Location = New System.Drawing.Point(278, 741)
+        Me.RadBtnCreationPPSMesure.Name = "RadBtnCreationPPSMesure"
+        Me.RadBtnCreationPPSMesure.Size = New System.Drawing.Size(115, 14)
+        Me.RadBtnCreationPPSMesure.TabIndex = 40
+        Me.RadBtnCreationPPSMesure.Text = "+ Mesure préventive"
+        Me.ToolTip.SetToolTip(Me.RadBtnCreationPPSMesure, "Ajout mesure préventive")
+        '
+        'RadBtnRefresh
+        '
+        Me.RadBtnRefresh.Image = CType(resources.GetObject("RadBtnRefresh.Image"), System.Drawing.Image)
+        Me.RadBtnRefresh.ImageAlignment = System.Drawing.ContentAlignment.MiddleCenter
+        Me.RadBtnRefresh.Location = New System.Drawing.Point(942, 911)
+        Me.RadBtnRefresh.Name = "RadBtnRefresh"
+        Me.RadBtnRefresh.Size = New System.Drawing.Size(24, 24)
+        Me.RadBtnRefresh.TabIndex = 38
+        Me.ToolTip.SetToolTip(Me.RadBtnRefresh, "Recharger la synthèse")
+        '
+        'RadBtnImprimer
+        '
+        Me.RadBtnImprimer.ForeColor = System.Drawing.Color.Black
+        Me.RadBtnImprimer.Image = CType(resources.GetObject("RadBtnImprimer.Image"), System.Drawing.Image)
+        Me.RadBtnImprimer.ImageAlignment = System.Drawing.ContentAlignment.MiddleCenter
+        Me.RadBtnImprimer.Location = New System.Drawing.Point(912, 911)
+        Me.RadBtnImprimer.Name = "RadBtnImprimer"
+        Me.RadBtnImprimer.Size = New System.Drawing.Size(24, 24)
+        Me.RadBtnImprimer.TabIndex = 35
+        Me.ToolTip.SetToolTip(Me.RadBtnImprimer, "Imprimer la synthèse du patient")
+        '
         'RadChkPublie
         '
         Me.RadChkPublie.Location = New System.Drawing.Point(238, 44)
@@ -1316,36 +1367,6 @@ Partial Class RadFSynthese
         Me.RadChkMesureMax.TabIndex = 1
         Me.RadChkMesureMax.Text = "Afficher toutes les mesures préventives"
         '
-        'RadBtnCreationTraitement
-        '
-        Me.RadBtnCreationTraitement.Font = New System.Drawing.Font("Segoe UI", 11.0!)
-        Me.RadBtnCreationTraitement.Location = New System.Drawing.Point(77, 226)
-        Me.RadBtnCreationTraitement.Name = "RadBtnCreationTraitement"
-        Me.RadBtnCreationTraitement.Size = New System.Drawing.Size(15, 15)
-        Me.RadBtnCreationTraitement.TabIndex = 41
-        Me.RadBtnCreationTraitement.Text = "+"
-        Me.ToolTip.SetToolTip(Me.RadBtnCreationTraitement, "Ajout traitement")
-        '
-        'RadBtnCreationAntecedent
-        '
-        Me.RadBtnCreationAntecedent.Font = New System.Drawing.Font("Segoe UI", 11.0!)
-        Me.RadBtnCreationAntecedent.Location = New System.Drawing.Point(80, 45)
-        Me.RadBtnCreationAntecedent.Name = "RadBtnCreationAntecedent"
-        Me.RadBtnCreationAntecedent.Size = New System.Drawing.Size(15, 15)
-        Me.RadBtnCreationAntecedent.TabIndex = 41
-        Me.RadBtnCreationAntecedent.Text = "+"
-        Me.ToolTip.SetToolTip(Me.RadBtnCreationAntecedent, "Ajout antécédent")
-        '
-        'RadBtnCreationPPSMesure
-        '
-        Me.RadBtnCreationPPSMesure.Font = New System.Drawing.Font("Segoe UI", 8.0!)
-        Me.RadBtnCreationPPSMesure.Location = New System.Drawing.Point(278, 741)
-        Me.RadBtnCreationPPSMesure.Name = "RadBtnCreationPPSMesure"
-        Me.RadBtnCreationPPSMesure.Size = New System.Drawing.Size(115, 14)
-        Me.RadBtnCreationPPSMesure.TabIndex = 40
-        Me.RadBtnCreationPPSMesure.Text = "+ Mesure préventive"
-        Me.ToolTip.SetToolTip(Me.RadBtnCreationPPSMesure, "Ajout mesure préventive")
-        '
         'RadBtnUp
         '
         Me.RadBtnUp.Font = New System.Drawing.Font("Segoe UI", 11.0!, System.Drawing.FontStyle.Bold)
@@ -1408,27 +1429,6 @@ Partial Class RadFSynthese
         Me.RadButtonAbandon.Name = "RadButtonAbandon"
         Me.RadButtonAbandon.Size = New System.Drawing.Size(24, 24)
         Me.RadButtonAbandon.TabIndex = 34
-        '
-        'RadBtnRefresh
-        '
-        Me.RadBtnRefresh.Image = CType(resources.GetObject("RadBtnRefresh.Image"), System.Drawing.Image)
-        Me.RadBtnRefresh.ImageAlignment = System.Drawing.ContentAlignment.MiddleCenter
-        Me.RadBtnRefresh.Location = New System.Drawing.Point(942, 911)
-        Me.RadBtnRefresh.Name = "RadBtnRefresh"
-        Me.RadBtnRefresh.Size = New System.Drawing.Size(24, 24)
-        Me.RadBtnRefresh.TabIndex = 38
-        Me.ToolTip.SetToolTip(Me.RadBtnRefresh, "Recharger la synthèse")
-        '
-        'RadBtnImprimer
-        '
-        Me.RadBtnImprimer.ForeColor = System.Drawing.Color.Black
-        Me.RadBtnImprimer.Image = CType(resources.GetObject("RadBtnImprimer.Image"), System.Drawing.Image)
-        Me.RadBtnImprimer.ImageAlignment = System.Drawing.ContentAlignment.MiddleCenter
-        Me.RadBtnImprimer.Location = New System.Drawing.Point(912, 911)
-        Me.RadBtnImprimer.Name = "RadBtnImprimer"
-        Me.RadBtnImprimer.Size = New System.Drawing.Size(24, 24)
-        Me.RadBtnImprimer.TabIndex = 35
-        Me.ToolTip.SetToolTip(Me.RadBtnImprimer, "Imprimer la synthèse du patient")
         '
         'RadFSynthese
         '
@@ -1518,6 +1518,11 @@ Partial Class RadFSynthese
         CType(Me.RadBtnCreationPPSObjectif, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.RadPPSDataGridView.MasterTemplate, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.RadPPSDataGridView, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.RadBtnCreationTraitement, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.RadBtnCreationAntecedent, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.RadBtnCreationPPSMesure, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.RadBtnRefresh, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.RadBtnImprimer, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.RadChkPublie, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.RadChkParChronologie, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.RadBtnSocial, System.ComponentModel.ISupportInitialize).EndInit()
@@ -1532,16 +1537,11 @@ Partial Class RadFSynthese
         CType(Me.RadChkParcoursNonCache, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.RadChkParcoursTous, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.RadChkMesureMax, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.RadBtnCreationTraitement, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.RadBtnCreationAntecedent, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.RadBtnCreationPPSMesure, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.RadBtnUp, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.RadBtnDown, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.RadBtnRight, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.RadBtnLeft, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.RadButtonAbandon, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.RadBtnRefresh, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.RadBtnImprimer, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
         Me.PerformLayout()

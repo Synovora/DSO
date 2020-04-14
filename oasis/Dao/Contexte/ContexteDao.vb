@@ -161,6 +161,7 @@ Public Class ContexteDao
     Friend Function CreationContexte(contexte As Antecedent, contexteHistoACreer As AntecedentHisto, Optional conclusionEpisode As Boolean = False, Optional episode As Episode = Nothing) As Boolean
         Dim da As SqlDataAdapter = New SqlDataAdapter()
         Dim codeRetour As Boolean = True
+        Dim contexteId As Long
 
         Dim SQLstring As String = "INSERT INTO oasis.oa_antecedent" &
         " (oa_antecedent_patient_id, oa_antecedent_type, oa_antecedent_drc_id, oa_antecedent_description, oa_antecedent_date_creation," &
@@ -171,7 +172,7 @@ Public Class ContexteDao
         " VALUES (@patientId, @type, @drcId, @description, @dateCreation," &
         " @dateModification, @utilisateurCreation, @utilisateurModification," &
         " @dateDebut, @niveau, @nature, @publication, @publicationTransformation, @inactif," &
-        " @ordreAffichage1, @ordreAffichage2, @ordreAffichage3, @categorieContexte, @dateFin, @diagnostic, @episodeId)"
+        " @ordreAffichage1, @ordreAffichage2, @ordreAffichage3, @categorieContexte, @dateFin, @diagnostic, @episodeId); SELECT SCOPE_IDENTITY()"
 
         Dim con As SqlConnection = GetConnection()
         Dim cmd As New SqlCommand(SQLstring, con)
@@ -201,9 +202,10 @@ Public Class ContexteDao
         End With
 
         Try
-            Dim n As Integer 'Pour récupérer le nombre d'occurences enregistrées
+            'Dim n As Integer 'Pour récupérer le nombre d'occurences enregistrées
             da.InsertCommand = cmd
-            n = da.InsertCommand.ExecuteNonQuery()
+            'n = da.InsertCommand.ExecuteNonQuery()
+            contexteId = da.InsertCommand.ExecuteScalar()
         Catch ex As Exception
             MessageBox.Show(ex.Message)
             codeRetour = False
@@ -215,6 +217,7 @@ Public Class ContexteDao
 
         If codeRetour = True Then
             'Mise à jour des données dans l'instance de la classe Historisation antecedent
+            contexteHistoACreer.AntecedentId = contexteId 'Récupération du contexte créé
             contexteHistoACreer.HistorisationDate = DateTime.Now()
             contexteHistoACreer.UtilisateurId = userLog.UtilisateurId
             contexteHistoACreer.Etat = AntecedentHistoCreationDao.EnumEtatAntecedentHisto.CreationAntecedent
@@ -234,21 +237,21 @@ Public Class ContexteDao
             contexteHistoACreer.Diagnostic = contexte.Diagnostic
 
             'Récupération de l'identifiant du contexte créé
-            Dim contexteLastDataReader As SqlDataReader
-            SQLstring = "select max(oa_antecedent_id) from oasis.oa_antecedent where oa_antecedent_patient_id = " & contexte.PatientId & ";"
-            Dim contexteLastCommand As New SqlCommand(SQLstring, con)
-            con.Open()
-            contexteLastDataReader = contexteLastCommand.ExecuteReader()
-            If contexteLastDataReader.HasRows Then
-                contexteLastDataReader.Read()
-                'Récupération de la clé de l'enregistrement créé
-                contexteHistoACreer.AntecedentId = contexteLastDataReader(0)
-                ContexteConclusionEpisodeId = contexteLastDataReader(0)
+            'Dim contexteLastDataReader As SqlDataReader
+            'SQLstring = "select max(oa_antecedent_id) from oasis.oa_antecedent where oa_antecedent_patient_id = " & contexte.PatientId & ";"
+            'Dim contexteLastCommand As New SqlCommand(SQLstring, con)
+            'con.Open()
+            'contexteLastDataReader = contexteLastCommand.ExecuteReader()
+            'If contexteLastDataReader.HasRows Then
+            'contexteLastDataReader.Read()
+            'Récupération de la clé de l'enregistrement créé
+            'contexteHistoACreer.AntecedentId = contexteLastDataReader(0)
+            'ContexteConclusionEpisodeId = contexteLastDataReader(0)
 
-                'Libération des ressources d'accès aux données
-                con.Close()
-                contexteLastCommand.Dispose()
-            End If
+            'Libération des ressources d'accès aux données
+            'con.Close()
+            'contexteLastCommand.Dispose()
+            'End If
 
             'Ajout contexte créé si conclusion médicale de l'épisode
             If conclusionEpisode = True Then

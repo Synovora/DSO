@@ -1063,6 +1063,7 @@ Public Class RadFAntecedentDetailEdit
     Private Function CreationAntecedent() As Boolean
         Dim da As SqlDataAdapter = New SqlDataAdapter()
         Dim codeRetour As Boolean = True
+        Dim antecedentId As Long
 
         'Définition publication
         Dim Publication As String
@@ -1086,7 +1087,7 @@ Public Class RadFAntecedentDetailEdit
         " oa_antecedent_ald_date_fin, oa_antecedent_ald_demande_en_cours, oa_antecedent_ald_demande_date)" &
         " VALUES (@patientId, @type, @drcId, @description, @dateCreation, @utilisateurCreation," &
         " @utilisateurModification, @dateDebut, @niveau, @nature, @publication, @inactif, @ordreAffichage1, @ordreAffichage2, @ordreAffichage3, @diagnostic," &
-        " @aldId, @aldCim10Id, @aldValide, @aldDateDebut, @aldDateFin, @aldDemandeEnCours, @aldDateDemande)"
+        " @aldId, @aldCim10Id, @aldValide, @aldDateDebut, @aldDateFin, @aldDemandeEnCours, @aldDateDemande); SELECT SCOPE_IDENTITY()"
 
         Dim cmd As New SqlCommand(SQLstring, conxn)
 
@@ -1146,14 +1147,12 @@ Public Class RadFAntecedentDetailEdit
 
         Try
             conxn.Open()
-            Dim n As Integer 'Pour récupérer le nombre d'occurences enregistrées
             da.InsertCommand = cmd
-            n = da.InsertCommand.ExecuteNonQuery()
+            antecedentId = da.InsertCommand.ExecuteScalar()
             Dim form As New RadFNotification()
             form.Message = "Antecedent patient créé"
             form.Show()
         Catch ex As Exception
-            'PgbMiseAJour.Hide()
             MessageBox.Show(ex.Message)
             codeRetour = False
         Finally
@@ -1162,6 +1161,7 @@ Public Class RadFAntecedentDetailEdit
 
         If codeRetour = True Then
             'Mise à jour des données dans l'instance de la classe Historisation antecedent
+            AntecedentHistoACreer.AntecedentId = antecedentId 'Récupération de l'id créé
             AntecedentHistoACreer.HistorisationDate = DateTime.Now()
             AntecedentHistoACreer.UtilisateurId = UtilisateurConnecte.UtilisateurId
             AntecedentHistoACreer.Etat = AntecedentHistoCreationDao.EnumEtatAntecedentHisto.CreationAntecedent
@@ -1186,20 +1186,20 @@ Public Class RadFAntecedentDetailEdit
             AntecedentHistoACreer.AldDateDemande = antecedentUpdate.AldDateDemande
 
             'Récupération de l'identifiant du antecedent créé
-            Dim antecedentLastDataReader As SqlDataReader
-            SQLstring = "select max(oa_antecedent_id) from oasis.oa_antecedent where oa_antecedent_patient_id = " & SelectedPatient.patientId & ";"
-            Dim antecedentLastCommand As New SqlCommand(SQLstring, conxn)
-            conxn.Open()
-            antecedentLastDataReader = antecedentLastCommand.ExecuteReader()
-            If antecedentLastDataReader.HasRows Then
-                antecedentLastDataReader.Read()
-                'Récupération de la clé de l'enregistrement créé
-                AntecedentHistoACreer.AntecedentId = antecedentLastDataReader(0)
+            'Dim antecedentLastDataReader As SqlDataReader
+            'SQLstring = "select max(oa_antecedent_id) from oasis.oa_antecedent where oa_antecedent_patient_id = " & SelectedPatient.patientId & ";"
+            'Dim antecedentLastCommand As New SqlCommand(SQLstring, conxn)
+            'conxn.Open()
+            'antecedentLastDataReader = antecedentLastCommand.ExecuteReader()
+            'If antecedentLastDataReader.HasRows Then
+            'antecedentLastDataReader.Read()
+            'Récupération de la clé de l'enregistrement créé
+            'AntecedentHistoACreer.AntecedentId = antecedentLastDataReader(0)
 
-                'Libération des ressources d'accès aux données
-                conxn.Close()
-                antecedentLastCommand.Dispose()
-            End If
+            'Libération des ressources d'accès aux données
+            'conxn.Close()
+            'antecedentLastCommand.Dispose()
+            'End If
 
             'Lecture de l'antecedent créé avec toutes ses données pour communiquer le DataReader à la fonction dédiée
             Dim antecedentCreeDataReader As SqlDataReader

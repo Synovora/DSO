@@ -343,11 +343,13 @@ Public Class RadFPPSDetailEdit
     Private Function CreationPPS() As Boolean
         Dim da As SqlDataAdapter = New SqlDataAdapter()
         Dim codeRetour As Boolean = True
+        Dim ppsId As Long
 
         Dim SQLstring As String = "insert into oasis.oa_patient_pps" &
         " (oa_pps_patient_id, oa_pps_categorie, oa_pps_sous_categorie, oa_pps_priorite, oa_pps_drc_id, oa_pps_commentaire," &
         " oa_pps_utilisateur_creation, oa_pps_date_creation, oa_pps_affichage_synthese)" &
-        " VALUES (@patientId, @categorie, @sousCategorie, @priorite, @drcId, @commentaire, @utilisateurCreation, @dateCreation, @affichageSynthese)"
+        " VALUES (@patientId, @categorie, @sousCategorie, @priorite, @drcId, @commentaire, @utilisateurCreation, @dateCreation, @affichageSynthese); SELECT SCOPE_IDENTITY()"
+
         Dim cmd As New SqlCommand(SQLstring, conxn)
 
         If CategoriePPS = EnumCategoriePPS.Strategie Then
@@ -368,9 +370,8 @@ Public Class RadFPPSDetailEdit
 
         Try
             conxn.Open()
-            Dim n As Integer 'Pour récupérer le nombre d'occurences enregistrées
             da.InsertCommand = cmd
-            n = da.InsertCommand.ExecuteNonQuery()
+            ppsId = da.InsertCommand.ExecuteScalar()
             MessageBox.Show(PPSDesignation & " créée")
         Catch ex As Exception
             MessageBox.Show(ex.Message)
@@ -381,6 +382,7 @@ Public Class RadFPPSDetailEdit
 
         If codeRetour = True Then
             'Mise à jour des données dans l'instance de la classe Historisation antecedent
+            PPSHistoACreer.PpsId = ppsId 'Récupération de l'id de l'occurrence créée
             PPSHistoACreer.HistorisationDate = DateTime.Now()
             PPSHistoACreer.HistorisationUtilisateurId = UtilisateurConnecte.UtilisateurId
             PPSHistoACreer.HistorisationEtat = EnumEtatPPSHisto.Creation
@@ -392,22 +394,6 @@ Public Class RadFPPSDetailEdit
             PPSHistoACreer.Commentaire = TxtCommentaire.Text
             PPSHistoACreer.Inactif = 0
             PPSHistoACreer.AffichageSynthese = 1
-
-            'Récupération de l'identifiant du antecedent créé
-            Dim PPSLastDataReader As SqlDataReader
-            SQLstring = "select max(oa_pps_id) from oasis.oa_patient_pps where oa_pps_patient_id = " & SelectedPatient.patientId & ";"
-            Dim PPSLastCommand As New SqlCommand(SQLstring, conxn)
-            conxn.Open()
-            PPSLastDataReader = PPSLastCommand.ExecuteReader()
-            If PPSLastDataReader.HasRows Then
-                PPSLastDataReader.Read()
-                'Récupération de la clé de l'enregistrement créé
-                PPSHistoACreer.PpsId = PPSLastDataReader(0)
-
-                'Libération des ressources d'accès aux données
-                conxn.Close()
-                PPSLastCommand.Dispose()
-            End If
 
             'Lecture de l'antecedent créé avec toutes ses données pour communiquer le DataReader à la fonction dédiée
             Dim PPSCreeDataReader As SqlDataReader

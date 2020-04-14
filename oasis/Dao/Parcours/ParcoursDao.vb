@@ -317,6 +317,7 @@ Public Class ParcoursDao
     Friend Function CreateIntervenantParcours(parcours As Parcours) As Boolean
         Dim da As SqlDataAdapter = New SqlDataAdapter()
         Dim codeRetour As Boolean = True
+        Dim parcoursId As Long
         Dim con As SqlConnection
         con = GetConnection()
 
@@ -328,7 +329,7 @@ Public Class ParcoursDao
         " oa_parcours_cacher, oa_parcours_inactif, oa_parcours_utilisateur_creation, oa_parcours_date_creation)" &
         " VALUES (@patientId, @specialite, @categorieId, @sousCategorieId, @intervenantOasis," &
         " @intervenantId, @commentaire, @base, @rythme," &
-        " @cacher, @inactif, @userCreation, @dateCreation)"
+        " @cacher, @inactif, @userCreation, @dateCreation); SELECT SCOPE_IDENTITY()"
 
         Dim cmd As New SqlCommand(SQLstring, con)
         With cmd.Parameters
@@ -349,7 +350,7 @@ Public Class ParcoursDao
 
         Try
             da.InsertCommand = cmd
-            da.InsertCommand.ExecuteNonQuery()
+            parcoursId = da.InsertCommand.ExecuteScalar()
         Catch ex As Exception
             MessageBox.Show(ex.Message)
             codeRetour = False
@@ -361,6 +362,7 @@ Public Class ParcoursDao
             Dim parcoursHistoDao As New ParcoursHistoDao
             Dim ParcoursHistoACreer As New ParcoursHisto
             'Mise à jour des données dans l'instance de la classe d'historisation du parcours
+            ParcoursHistoACreer.Id = parcoursId  'Récupération de l'id du parcours créé
             ParcoursHistoACreer.HistorisationDate = parcours.DateCreation
             ParcoursHistoACreer.HistorisationUtilisateurId = parcours.UserCreation
             ParcoursHistoACreer.HistorisationEtat = ParcoursHistoDao.EnumEtatParcoursHisto.Creation
@@ -375,23 +377,6 @@ Public Class ParcoursDao
             ParcoursHistoACreer.Rythme = parcours.Rythme
             ParcoursHistoACreer.Cacher = parcours.Cacher
             ParcoursHistoACreer.Inactif = parcours.Inactif
-
-
-            'Récupération de l'identifiant du antecedent créé
-            Dim ParcoursLastDataReader As SqlDataReader
-            SQLstring = "select max(oa_parcours_id) from oasis.oasis.oa_patient_parcours where oa_parcours_patient_id = " & parcours.PatientId & ";"
-            Dim ParcoursLastCommand As New SqlCommand(SQLstring, con)
-            con.Open()
-            ParcoursLastDataReader = ParcoursLastCommand.ExecuteReader()
-            If ParcoursLastDataReader.HasRows Then
-                ParcoursLastDataReader.Read()
-                'Récupération de la clé de l'enregistrement créé
-                ParcoursHistoACreer.Id = ParcoursLastDataReader(0)
-
-                'Libération des ressources d'accès aux données
-                con.Close()
-                ParcoursLastCommand.Dispose()
-            End If
 
             'Création dans l'historique des PPS du PPS créé
             parcoursHistoDao.CreationParcoursHisto(ParcoursHistoACreer, userLog, ParcoursHistoDao.EnumEtatParcoursHisto.Creation)

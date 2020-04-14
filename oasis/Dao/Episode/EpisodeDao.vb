@@ -523,7 +523,7 @@ Public Class EpisodeDao
     End Function
 
     Friend Function CreateEpisode(episode As Episode) As Integer
-        Dim nbcreate As Integer
+        'Dim nbcreate As Integer
         Dim da As SqlDataAdapter = New SqlDataAdapter()
         Dim episodeIdCree As Integer = 0
         Dim CodeRetour As Boolean = True
@@ -538,14 +538,14 @@ Public Class EpisodeDao
             " (patient_id, type, type_activite, type_profil, description_activite, commentaire," &
             " user_creation, date_creation, date_modification, etat)" &
             " VALUES (@patientId, @type, @typeActivite, @typeProfil, @descriptionActivite, @commentaire," &
-            " @userCreation, '" & episode.DateCreation.ToString("yyyy-MM-dd HH:mm:ss") & "',  @dateModification, '" & EpisodeDao.EnumEtatEpisode.CLOTURE.ToString & "')"
+            " @userCreation, '" & episode.DateCreation.ToString("yyyy-MM-dd HH:mm:ss") & "',  @dateModification, '" & EpisodeDao.EnumEtatEpisode.CLOTURE.ToString & "'); SELECT SCOPE_IDENTITY()"
         Else
             SQLstring = "IF Not EXISTS (SELECT 1 FROM oasis.oa_episode WHERE patient_id = @patientId And etat = @etat)" &
             " INSERT INTO oasis.oa_episode" &
             " (patient_id, type, type_activite, type_profil, description_activite, commentaire," &
             " user_creation, date_creation, etat)" &
             " VALUES (@patientId, @type, @typeActivite, @typeProfil, @descriptionActivite, @commentaire," &
-            " @userCreation, @dateCreation, @etat)"
+            " @userCreation, @dateCreation, @etat); SELECT SCOPE_IDENTITY()"
         End If
 
         Dim cmd As New SqlCommand(SQLstring, con)
@@ -564,8 +564,8 @@ Public Class EpisodeDao
 
         Try
             da.InsertCommand = cmd
-            nbcreate = da.InsertCommand.ExecuteNonQuery()
-            If nbcreate <= 0 Then
+            episodeIdCree = Coalesce(da.InsertCommand.ExecuteScalar(), 0)
+            If episodeIdCree <= 0 Then
                 Throw New Exception("Collision: Un épisode en cours existe déjà pour ce patient")
             End If
         Catch ex As Exception
@@ -574,23 +574,6 @@ Public Class EpisodeDao
         Finally
             con.Close()
         End Try
-
-        If CodeRetour = True Then
-            'Récupération de l'identifiant de l'épisode créé
-            Dim EpisodeLastDataReader As SqlDataReader
-            SQLstring = "SELECT MAX(episode_id) FROM oasis.oasis.oa_episode WHERE patient_id = " & episode.PatientId & ";"
-            Dim EpisodeLastCommand As New SqlCommand(SQLstring, con)
-            con.Open()
-            EpisodeLastDataReader = EpisodeLastCommand.ExecuteReader()
-            If EpisodeLastDataReader.HasRows Then
-                EpisodeLastDataReader.Read()
-                'Récupération de la clé de l'enregistrement créé
-                episodeIdCree = EpisodeLastDataReader(0)
-                'Libération des ressources d'accès aux données
-                con.Close()
-                EpisodeLastCommand.Dispose()
-            End If
-        End If
 
         Return episodeIdCree
     End Function

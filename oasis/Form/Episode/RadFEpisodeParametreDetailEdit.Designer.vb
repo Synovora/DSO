@@ -78,7 +78,7 @@ Partial Class RadFEpisodeParametreDetailEdit
         Me.RadGridViewParm.Font = New System.Drawing.Font("Segoe UI", 8.25!)
         Me.RadGridViewParm.ForeColor = System.Drawing.Color.Black
         Me.RadGridViewParm.ImeMode = System.Windows.Forms.ImeMode.NoControl
-        Me.RadGridViewParm.Location = New System.Drawing.Point(12, 12)
+        Me.RadGridViewParm.Location = New System.Drawing.Point(12, 34)
         '
         '
         '
@@ -153,13 +153,13 @@ Partial Class RadFEpisodeParametreDetailEdit
         Me.RadGridViewParm.Name = "RadGridViewParm"
         Me.RadGridViewParm.RightToLeft = System.Windows.Forms.RightToLeft.No
         Me.RadGridViewParm.ShowGroupPanel = False
-        Me.RadGridViewParm.Size = New System.Drawing.Size(459, 518)
+        Me.RadGridViewParm.Size = New System.Drawing.Size(459, 496)
         Me.RadGridViewParm.TabIndex = 5
         '
         'RadBtnAjouter
         '
         Me.RadBtnAjouter.ForeColor = System.Drawing.Color.Black
-        Me.RadBtnAjouter.Location = New System.Drawing.Point(12, 536)
+        Me.RadBtnAjouter.Location = New System.Drawing.Point(12, 4)
         Me.RadBtnAjouter.Name = "RadBtnAjouter"
         Me.RadBtnAjouter.Size = New System.Drawing.Size(24, 24)
         Me.RadBtnAjouter.TabIndex = 97
@@ -177,7 +177,7 @@ Partial Class RadFEpisodeParametreDetailEdit
         'RadBtnSupprimer
         '
         Me.RadBtnSupprimer.Image = Global.Oasis_WF.My.Resources.Resources.supprimer1
-        Me.RadBtnSupprimer.Location = New System.Drawing.Point(42, 536)
+        Me.RadBtnSupprimer.Location = New System.Drawing.Point(42, 4)
         Me.RadBtnSupprimer.Name = "RadBtnSupprimer"
         Me.RadBtnSupprimer.Size = New System.Drawing.Size(110, 24)
         Me.RadBtnSupprimer.TabIndex = 97
@@ -208,7 +208,7 @@ Partial Class RadFEpisodeParametreDetailEdit
         Me.RadGridView1.Font = New System.Drawing.Font("Segoe UI", 8.25!)
         Me.RadGridView1.ForeColor = System.Drawing.Color.Black
         Me.RadGridView1.ImeMode = System.Windows.Forms.ImeMode.NoControl
-        Me.RadGridView1.Location = New System.Drawing.Point(595, 12)
+        Me.RadGridView1.Location = New System.Drawing.Point(595, 34)
         '
         '
         '
@@ -237,7 +237,7 @@ Partial Class RadFEpisodeParametreDetailEdit
         Me.RadGridView1.Name = "RadGridView1"
         Me.RadGridView1.RightToLeft = System.Windows.Forms.RightToLeft.No
         Me.RadGridView1.ShowGroupPanel = False
-        Me.RadGridView1.Size = New System.Drawing.Size(309, 518)
+        Me.RadGridView1.Size = New System.Drawing.Size(309, 496)
         Me.RadGridView1.TabIndex = 100
         '
         'RadBtnCacher

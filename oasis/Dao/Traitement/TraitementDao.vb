@@ -421,6 +421,7 @@ Public Class TraitementDao
     Friend Function CreationTraitement(traitement As Traitement, traitementHistoACreer As TraitementHisto) As Boolean
         Dim da As SqlDataAdapter = New SqlDataAdapter()
         Dim codeRetour As Boolean = True
+        Dim traitementId As Long
 
         Dim SQLstring As String = "INSERT INTO oasis.oa_traitement" &
         " (oa_traitement_patient_id, oa_traitement_medicament_cis, oa_traitement_medicament_dci, oa_traitement_denomination_longue, oa_traitement_allergie," &
@@ -435,7 +436,7 @@ Public Class TraitementDao
         " @ordreAffichage, @posologieBase, @posologierythme," &
         " @PosologieMatin, @PosologieMidi, @PosologieApresMidi, @PosologieSoir," &
         " @FractionMatin, @FractionMidi, @FractionApresMidi, @FractionSoir," &
-        " @dateCreation, @posologieCommentaire, @traitementCommentaire, @dateDebut, @dateFin, @monographie)"
+        " @dateCreation, @posologieCommentaire, @traitementCommentaire, @dateDebut, @dateFin, @monographie); SELECT SCOPE_IDENTITY()"
 
         Dim con As SqlConnection = GetConnection()
         Dim cmd As New SqlCommand(SQLstring, con)
@@ -469,9 +470,8 @@ Public Class TraitementDao
         End With
 
         Try
-            Dim n As Integer 'Pour récupérer le nombre d'occurences enregistrées
             da.InsertCommand = cmd
-            n = da.InsertCommand.ExecuteNonQuery()
+            traitementId = da.InsertCommand.ExecuteScalar()
         Catch ex As Exception
             MessageBox.Show(ex.Message)
             codeRetour = False
@@ -481,6 +481,7 @@ Public Class TraitementDao
 
         If codeRetour = True Then
             'Mise à jour des données dans l'instance de la classe Historisation traitement
+            traitementHistoACreer.HistorisationTraitementId = traitementId 'Récupération du traitement créé
             traitementHistoACreer.HistorisationDate = DateTime.Now()
             traitementHistoACreer.HistorisationUtilisateurId = userLog.UtilisateurId
             traitementHistoACreer.HistorisationEtat = EnumEtatTraitementHisto.CreationTraitement
@@ -501,22 +502,6 @@ Public Class TraitementDao
             traitementHistoACreer.HistorisationDateFin = traitement.DateFin
             traitementHistoACreer.HistorisationAllergie = False
             traitementHistoACreer.HistorisationContreIndication = False
-
-            'Récupération de l'identifiant du traitement créé
-            Dim traitementLastDataReader As SqlDataReader
-            SQLstring = "SELECT MAX(oa_traitement_id) FROM oasis.oa_traitement WHERE oa_traitement_patient_id = " & traitement.PatientId & ";"
-            Dim traitementLastCommand As New SqlCommand(SQLstring, con)
-            con.Open()
-            traitementLastDataReader = traitementLastCommand.ExecuteReader()
-            If traitementLastDataReader.HasRows Then
-                traitementLastDataReader.Read()
-                'Récupération de la clé de l'enregistrement créé
-                traitementHistoACreer.HistorisationTraitementId = traitementLastDataReader(0)
-
-                'Libération des ressources d'accès aux données
-                con.Close()
-                traitementLastCommand.Dispose()
-            End If
 
             Dim traitementDao As TraitementDao = New TraitementDao
             Dim traitementCree As Traitement

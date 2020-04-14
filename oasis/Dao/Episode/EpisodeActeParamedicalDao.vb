@@ -114,7 +114,6 @@ Public Class EpisodeActeParamedicalDao
 
 
     Friend Function CreateEpisodeActeParamedical(episodeActeParamedical As EpisodeActeParamedical) As Long
-        Dim nbcreate As Integer
         Dim episodeActeParamedicalIdCree As Integer = 0
         Dim da As SqlDataAdapter = New SqlDataAdapter()
         Dim codeRetour As Boolean = True
@@ -125,7 +124,7 @@ Public Class EpisodeActeParamedicalDao
         "IF NOT EXISTS (SELECT 1 FROM oasis.oa_episode_acte_paramedical WHERE episode_id = @episodeId AND drc_id = @drcId AND (inactif = Null OR inactif = '0'))" &
         "INSERT INTO oasis.oa_episode_acte_paramedical" &
         " (drc_id, episode_id, patient_id, observation, type_observation, inactif)" &
-        " VALUES (@drcId, @episodeId, @patientId, @observation, @typeObservation, @inactif)"
+        " VALUES (@drcId, @episodeId, @patientId, @observation, @typeObservation, @inactif); SELECT SCOPE_IDENTITY()"
 
         Dim cmd As New SqlCommand(SQLstring, con)
         With cmd.Parameters
@@ -140,33 +139,15 @@ Public Class EpisodeActeParamedicalDao
 
         Try
             da.InsertCommand = cmd
-            nbcreate = da.InsertCommand.ExecuteNonQuery()
-            If nbcreate <= 0 Then
+            episodeActeParamedicalIdCree = Coalesce(da.InsertCommand.ExecuteScalar(), 0)
+            If episodeActeParamedicalIdCree <= 0 Then
                 Throw New Exception("Collision: L'acte paramédical existe déjà pour cet épisode")
             End If
         Catch ex As Exception
-            MessageBox.Show(ex.Message)
             codeRetour = False
         Finally
             con.Close()
         End Try
-
-        If codeRetour = True Then
-            'Récupération de l'identifiant de l'épisode créé
-            Dim dt As SqlDataReader
-            SQLstring = "SELECT MAX(oa_episode_acte_paramedical_id) FROM oasis.oasis.oa_episode_acte_paramedical WHERE patient_id = " & episodeActeParamedical.PatientId & ";"
-            Dim EpisodeLastCommand As New SqlCommand(SQLstring, con)
-            con.Open()
-            dt = EpisodeLastCommand.ExecuteReader()
-            If dt.HasRows Then
-                dt.Read()
-                'Récupération de la clé de l'enregistrement créé
-                episodeActeParamedicalIdCree = dt(0)
-                'Libération des ressources d'accès aux données
-                con.Close()
-                EpisodeLastCommand.Dispose()
-            End If
-        End If
 
         Return episodeActeParamedicalIdCree
     End Function

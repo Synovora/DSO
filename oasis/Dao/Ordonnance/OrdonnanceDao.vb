@@ -101,7 +101,6 @@ Public Class OrdonnanceDao
 
     Friend Function CreateOrdonnance(patientId As Integer, episodeId As Integer) As Integer
         Dim da As SqlDataAdapter = New SqlDataAdapter()
-        Dim codeRetour As Boolean = True
         Dim OrdonnanceId As Integer = 0
         Dim con As SqlConnection
         con = GetConnection()
@@ -112,7 +111,7 @@ Public Class OrdonnanceDao
                                 " (oa_ordonnance_patient_id, oa_ordonnance_utilisateur_creation, oa_ordonnance_date_creation," &
                                 " oa_ordonnance_episode_id, oa_ordonnance_commentaire, oa_ordonnance_renouvellement)" &
                                 " VALUES (@patientId, @userCreation, @dateCreation," &
-                                " @episodeid, @commentaire, @renouvellement)"
+                                " @episodeid, @commentaire, @renouvellement); SELECT SCOPE_IDENTITY()"
 
         Dim cmd As New SqlCommand(SQLstring, con)
         With cmd.Parameters
@@ -126,37 +125,13 @@ Public Class OrdonnanceDao
 
         Try
             da.InsertCommand = cmd
-            da.InsertCommand.ExecuteNonQuery()
+            OrdonnanceId = da.InsertCommand.ExecuteScalar()
         Catch ex As Exception
             MessageBox.Show(ex.Message)
-            codeRetour = False
+            OrdonnanceId = 0
         Finally
             con.Close()
         End Try
-
-        If codeRetour = True Then
-            'Récupération de l'identifiant du traitement créé
-            Dim ordonnanceLastDataReader As SqlDataReader
-            SQLstring = "SELECT MAX(oa_ordonnance_id) FROM oasis.oa_patient_ordonnance" &
-                        " WHERE oa_ordonnance_patient_id = " & patientId &
-                        " AND oa_ordonnance_episode_id = " & episodeId.ToString
-
-            Dim traitementLastCommand As New SqlCommand(SQLstring, con)
-            Try
-                con.Open()
-                ordonnanceLastDataReader = traitementLastCommand.ExecuteReader()
-                If ordonnanceLastDataReader.HasRows Then
-                    ordonnanceLastDataReader.Read()
-                    'Récupération de la clé de l'enregistrement créé
-                    OrdonnanceId = ordonnanceLastDataReader(0)
-                End If
-            Catch ex As Exception
-                MessageBox.Show(ex.Message)
-            Finally
-                con.Close()
-                traitementLastCommand.Dispose()
-            End Try
-        End If
 
         Return OrdonnanceId
     End Function
