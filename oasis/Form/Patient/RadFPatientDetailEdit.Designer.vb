@@ -203,6 +203,7 @@ Partial Class RadFPatientDetailEdit
         '
         'RadBtnModifier
         '
+        Me.RadBtnModifier.Image = Global.Oasis_WF.My.Resources.Resources.modifier
         Me.RadBtnModifier.Location = New System.Drawing.Point(131, 749)
         Me.RadBtnModifier.Name = "RadBtnModifier"
         Me.RadBtnModifier.Size = New System.Drawing.Size(110, 24)

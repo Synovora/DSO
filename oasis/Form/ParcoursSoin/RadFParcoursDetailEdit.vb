@@ -389,7 +389,7 @@ Public Class RadFParcoursDetailEdit
         If dateLast <> Nothing Then
             LblDateDernierRendezVous.Text = outils.FormatageDateAffichage(dateLast, True)
         Else
-            LblDateDernierRendezVous.Text = "Pas de rendez-vous existant"
+            LblDateDernierRendezVous.Text = "Pas de rendez-vous précédent"
         End If
 
         'Recherche prochain rendez-vous
@@ -1043,7 +1043,7 @@ Public Class RadFParcoursDetailEdit
             tache = tacheDao.GetProchainRendezVousByPatientIdEtParcours(SelectedPatient.patientId, SelectedParcoursId)
             If tache.Id <> 0 AndAlso (tache.Nature = TacheDao.EnumNatureTacheCode.RDV Or tache.Nature = TacheDao.EnumNatureTacheCode.RDV_SPECIALISTE) Then
                 If tache.Etat = TacheDao.EtatTache.EN_ATTENTE.ToString OrElse
-                    (tache.Etat = TacheDao.EtatTache.EN_COURS.ToString And userLog.UtilisateurId <> tache.TraiteUserId) Then
+                    (tache.Etat = TacheDao.EtatTache.EN_COURS.ToString And userLog.UtilisateurId = tache.TraiteUserId) Then
                     Cursor.Current = Cursors.WaitCursor
                     Me.Enabled = False
                     Using form As New RadFTacheModificationRendezVous

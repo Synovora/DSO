@@ -504,10 +504,10 @@
     <Compile Include="Form\Theriaque\RadFMedicamentSelecteur.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Form\Patient\RadFPatientRendez-vousListe.Designer.vb">
+    <Compile Include="Form\RendezVous\RadFPatientRendez-vousListe.Designer.vb">
       <DependentUpon>RadFPatientRendez-vousListe.vb</DependentUpon>
     </Compile>
-    <Compile Include="Form\Patient\RadFPatientRendez-vousListe.vb">
+    <Compile Include="Form\RendezVous\RadFPatientRendez-vousListe.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Form\SousEpisode\FrmSousEpisode.Designer.vb">
@@ -618,16 +618,16 @@
     <Compile Include="Form\Workflow\RadFWkfDemandeAvis.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Form\tache\RadFTacheModificationDemandeRendezVous.Designer.vb">
+    <Compile Include="Form\RendezVous\RadFTacheModificationDemandeRendezVous.Designer.vb">
       <DependentUpon>RadFTacheModificationDemandeRendezVous.vb</DependentUpon>
     </Compile>
-    <Compile Include="Form\tache\RadFTacheModificationDemandeRendezVous.vb">
+    <Compile Include="Form\RendezVous\RadFTacheModificationDemandeRendezVous.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Form\tache\RadFTacheModificationRendezVous.Designer.vb">
+    <Compile Include="Form\RendezVous\RadFTacheModificationRendezVous.Designer.vb">
       <DependentUpon>RadFTacheModificationRendezVous.vb</DependentUpon>
     </Compile>
-    <Compile Include="Form\tache\RadFTacheModificationRendezVous.vb">
+    <Compile Include="Form\RendezVous\RadFTacheModificationRendezVous.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Form\utilisateur\FrmLogin.Designer.vb">
@@ -1093,7 +1093,7 @@
     <EmbeddedResource Include="Form\Theriaque\RadFMedicamentSelecteur.resx">
       <DependentUpon>RadFMedicamentSelecteur.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Form\Patient\RadFPatientRendez-vousListe.resx">
+    <EmbeddedResource Include="Form\RendezVous\RadFPatientRendez-vousListe.resx">
       <DependentUpon>RadFPatientRendez-vousListe.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Form\SousEpisode\FrmSousEpisode.resx">
@@ -1150,10 +1150,10 @@
     <EmbeddedResource Include="Form\Workflow\RadFWkfDemandeAvis.resx">
       <DependentUpon>RadFWkfDemandeAvis.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Form\tache\RadFTacheModificationDemandeRendezVous.resx">
+    <EmbeddedResource Include="Form\RendezVous\RadFTacheModificationDemandeRendezVous.resx">
       <DependentUpon>RadFTacheModificationDemandeRendezVous.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Form\tache\RadFTacheModificationRendezVous.resx">
+    <EmbeddedResource Include="Form\RendezVous\RadFTacheModificationRendezVous.resx">
       <DependentUpon>RadFTacheModificationRendezVous.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Form\utilisateur\FrmLogin.resx">

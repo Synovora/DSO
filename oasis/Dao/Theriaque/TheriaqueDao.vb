@@ -101,7 +101,7 @@ Public Class TheriaqueDao
         Return dt
     End Function
 
-    Friend Function getATCListeByATCPere(CodeATC As String) As DataTable
+    Friend Function GetATCListeByATCPere(CodeATC As String) As DataTable
         Dim dt As New DataTable
         Dim ds As New DataSet
 
@@ -159,7 +159,7 @@ Public Class TheriaqueDao
     '=============================================================================================
     '   Spécialité
     '=============================================================================================
-    Friend Function getSpecialiteByArgument(CodeId As String, VarTyp As EnumGetSpecialite, Monovir As Integer) As DataTable
+    Friend Function GetSpecialiteByArgument(CodeId As String, VarTyp As EnumGetSpecialite, Monovir As Integer) As DataTable
         Dim dt As New DataTable
         Dim ds As New DataSet
 
@@ -184,7 +184,7 @@ Public Class TheriaqueDao
         Return dt
     End Function
 
-    Friend Function getSpecialiteDenominationById(CodeId As String) As String
+    Friend Function GetSpecialiteDenominationById(CodeId As String) As String
         Dim dt As New DataTable
         Dim ds As New DataSet
         Dim Denomination As String = ""
@@ -215,7 +215,7 @@ Public Class TheriaqueDao
         Return Denomination
     End Function
 
-    Friend Function getCodeAtcBySpecialiteId(CodeId As String) As String
+    Friend Function GetCodeAtcBySpecialiteId(CodeId As String) As String
         Dim dt As New DataTable
         Dim ds As New DataSet
         Dim CodeATC As String = ""
@@ -360,7 +360,7 @@ Public Class TheriaqueDao
     '=============================================================================================
     '   Substance père
     '=============================================================================================
-    Friend Function getSubstancePereDenominationById(substancePereId As Integer) As String
+    Friend Function GetSubstancePereDenominationById(substancePereId As Integer) As String
         Dim SubstancePereDenomination As String = ""
         Dim con As SqlConnection
 
@@ -397,8 +397,6 @@ Public Class TheriaqueDao
         Dim dt As New DataTable
         Dim ds As New DataSet
         Dim substance As New Substance
-        Dim SubstanceDenomination As String = ""
-
 
         Using con As SqlConnection = GetConnection()
             Try
@@ -533,7 +531,7 @@ Public Class TheriaqueDao
         Return ATCCodeList
     End Function
 
-    Public Function getSubstanceActiveBySubstancePereId(SubstancePereId As Integer) As DataTable
+    Public Function GetSubstanceActiveBySubstancePereId(SubstancePereId As Integer) As DataTable
         Dim SQLString As String
         SQLString = "SELECT * FROM theriaque.SAC_SUBACTIVE" &
                     " WHERE SAC_GSAC_CODE_FK = @substancePereId"

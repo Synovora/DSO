@@ -76,7 +76,7 @@ Public Class TacheDao
         Const REUNION_STAFF = "REUNION_STAFF"
     End Structure
 
-    Public Enum typeDemandeRendezVous
+    Public Enum TypeDemandeRendezVous
         ANNEEMOIS
         ANNEE
     End Enum
@@ -89,7 +89,7 @@ Public Class TacheDao
         NULL
     End Enum
 
-    Friend Function getCodeNatureTacheByItem(item As String) As String
+    Friend Function GetCodeNatureTacheByItem(item As String) As String
         Dim CodeNatureTache As String
 
         Select Case item
@@ -116,7 +116,7 @@ Public Class TacheDao
         Return CodeNatureTache
     End Function
 
-    Friend Function getItemNatureTacheByCode(code As String) As String
+    Friend Function GetItemNatureTacheByCode(code As String) As String
         Dim ItemNatureTache As String
 
         Select Case code
@@ -143,7 +143,7 @@ Public Class TacheDao
         Return ItemNatureTache
     End Function
 
-    Public Shared Function getTypeTacheIndex(inputString As String) As Integer
+    Public Shared Function GetTypeTacheIndex(inputString As String) As Integer
         Dim a As TypeTache
         Try
             a = TypeTache.Parse(GetType(TypeTache), inputString)
@@ -153,7 +153,7 @@ Public Class TacheDao
         Return CInt(a)
     End Function
 
-    Public Function getAllTacheATraiterChk(lstFonction As List(Of Fonction), filtreTache As FiltreTache) As Integer
+    Public Function GetAllTacheATraiterChk(lstFonction As List(Of Fonction), filtreTache As FiltreTache) As Integer
         Dim SQLString As String
 
         'Console.WriteLine("         .. Appel allTacheAtraiter CHK")
@@ -198,7 +198,7 @@ Public Class TacheDao
     ''' <param name="lstFonction"></param>
     ''' <param name="filtreTache"></param>
     ''' <returns></returns>
-    Public Function getAllTacheATraiter(lstFonction As List(Of Fonction), filtreTache As FiltreTache) As DataTable
+    Public Function GetAllTacheATraiter(lstFonction As List(Of Fonction), filtreTache As FiltreTache) As DataTable
         Dim SQLString As String
         'Console.WriteLine("         .. Appel allTacheAtraiter data")
 
@@ -253,7 +253,7 @@ Public Class TacheDao
         End Using
     End Function
 
-    Private Function addFiltreAllTacheATraiter(lstFonction As List(Of Fonction), filtreTache As FiltreTache) As String
+    Private Function AddFiltreAllTacheATraiter(lstFonction As List(Of Fonction), filtreTache As FiltreTache) As String
         Dim SQLString As String = ""
         ' -- filtre fonctions
         If (lstFonction.Count < 1) Then
@@ -279,7 +279,7 @@ Public Class TacheDao
     ''' </summary>
     ''' <param name="isMyTache"></param>
     ''' <returns></returns>
-    Friend Function getAllTacheEnCours(isMyTache As Boolean, lstFonctionChoisie As List(Of Fonction), filtre As FiltreTache, isWithNonAttribue As Boolean) As DataTable
+    Friend Function GetAllTacheEnCours(isMyTache As Boolean, lstFonctionChoisie As List(Of Fonction), filtre As FiltreTache, isWithNonAttribue As Boolean) As DataTable
         Dim SQLString As String
         'Console.WriteLine("----------> getAllTacheEnCours")
         SQLString =
@@ -357,7 +357,7 @@ Public Class TacheDao
     End Function
 
 
-    Friend Function getAgendaMyRDV(dateDebut As Date, dateFin As Date, isMyTache As Boolean, lstFonctionChoisie As List(Of Fonction), filtre As FiltreTache, isWithNonAttribue As Boolean) As DataTable
+    Friend Function GetAgendaMyRDV(dateDebut As Date, dateFin As Date, isMyTache As Boolean, lstFonctionChoisie As List(Of Fonction), filtre As FiltreTache, isWithNonAttribue As Boolean) As DataTable
         Dim SQLString As String
 
         SQLString =
@@ -441,7 +441,7 @@ Public Class TacheDao
     ''' </summary>
     ''' <param name="isNotFinal"></param>
     ''' <returns></returns>
-    Friend Function getAllTacheEmise(isNotFinal As Boolean) As DataTable
+    Friend Function GetAllTacheEmise(isNotFinal As Boolean) As DataTable
         Dim SQLString As String
 
         SQLString =
@@ -574,10 +574,13 @@ Public Class TacheDao
             "	  COALESCE(PA.oa_parcours_ror_id,0) as ror_id, " & vbCrLf &
             "	  COALESCE(RO.oa_ror_nom,'') as oa_ror_nom, " & vbCrLf &
             "     COALESCE(RO.oa_ror_specialite_id,0) as oa_ror_specialite_id, " & vbCrLf &
-            "	  COALESCE(RO.oa_ror_structure_nom,'') as oa_ror_structure_nom " & vbCrLf &
+            "	  COALESCE(RO.oa_ror_structure_nom,'') as oa_ror_structure_nom, " & vbCrLf &
+            "	  COALESCE(US.oa_utilisateur_prenom,'') as oa_utilisateur_prenom, " & vbCrLf &
+            "	  COALESCE(US.oa_utilisateur_nom,'') as oa_utilisateur_nom " & vbCrLf &
             "FROM oasis.oa_tache T " & vbCrLf &
             "LEFT OUTER JOIN  oasis.oa_patient_parcours PA ON PA.oa_parcours_id = T.parcours_id " & vbCrLf &
             "LEFT OUTER JOIN  oasis.oa_ror RO ON RO.oa_ror_id = PA.oa_parcours_ror_id " & vbCrLf &
+            "LEFT OUTER JOIN  oasis.oa_utilisateur US ON US.oa_utilisateur_id = T.traite_user_id " & vbCrLf &
             "WHERE T.patient_id = @patientId " & vbCrLf &
             "AND (T.type = @type1 OR T.type = @type2 OR T.type = @type3 OR T.type = @type4) " & vbCrLf &
             "AND T.categorie = @categorie " & vbCrLf &
@@ -669,7 +672,7 @@ Public Class TacheDao
     ''' <param name="id"></param>
     ''' <param name="isWithAnnule"></param>
     ''' <returns></returns>
-    Public Function getTacheById(id As Integer, Optional ByVal isWithAnnule As Boolean = False) As Tache
+    Public Function GetTacheById(id As Integer, Optional ByVal isWithAnnule As Boolean = False) As Tache
         Dim tache As Tache
         Dim con As SqlConnection
         Dim isWhere As Boolean = False
@@ -859,7 +862,7 @@ Public Class TacheDao
         Return tache
     End Function
 
-    Friend Function attribueTacheToUserLog(idTache As Long) As Boolean
+    Friend Function AttribueTacheToUserLog(idTache As Long) As Boolean
         Dim da As SqlDataAdapter = New SqlDataAdapter()
         Dim isOK As Boolean = True
         Dim con As SqlConnection = Nothing
@@ -872,7 +875,7 @@ Public Class TacheDao
             " etat = @etat, traite_user_id = @traiteUserId, horodate_attrib = @dateAttrib" &
             " WHERE id = @Id" &
             " AND etat = @etatWhere" &
-            " AND traite_user_id Is null"
+            " AND (traite_user_id Is null OR traite_user_id = 0)"
 
             Dim cmd As New SqlCommand(SQLstring, con)
             With cmd.Parameters
@@ -902,7 +905,7 @@ Public Class TacheDao
         Return isOK
 
     End Function
-    Friend Function desattribueTache(idTache As Long) As Boolean
+    Friend Function DesattribueTache(idTache As Long) As Boolean
         Dim da As SqlDataAdapter = New SqlDataAdapter()
         Dim isOK As Boolean = True
         Dim con As SqlConnection = Nothing
@@ -944,7 +947,7 @@ Public Class TacheDao
 
     End Function
 
-    Private Function buildBean(reader As SqlDataReader) As Tache
+    Private Function BuildBean(reader As SqlDataReader) As Tache
         Dim tache As New Tache
         tache.Id = reader("id")
         tache.ParentId = Coalesce(reader("parent_id"), 0)
@@ -1156,7 +1159,7 @@ Public Class TacheDao
 
         Return codeRetour
     End Function
-    Friend Sub closTache(con As SqlConnection, idTache As Long, etatFinal As EtatTache, cloture As Boolean, Optional transaction As SqlTransaction = Nothing)
+    Friend Sub ClosTache(con As SqlConnection, idTache As Long, etatFinal As EtatTache, cloture As Boolean, Optional transaction As SqlTransaction = Nothing)
         Dim da As SqlDataAdapter = New SqlDataAdapter()
         Dim codeRetour As Boolean = True
         Dim nbUpdate As Integer
@@ -1214,7 +1217,7 @@ Public Class TacheDao
     ''' </summary>
     ''' <param name="tache"></param>
     ''' <returns></returns>
-    Public Function getTacheBeanAssocie(tache As Tache) As TacheBeanAssocie
+    Public Function GetTacheBeanAssocie(tache As Tache) As TacheBeanAssocie
         Dim userDao As New UserDao
         Dim fonctionDao As New FonctionDao
         Dim uniteSanitaireDao As New UniteSanitaireDao
@@ -1338,7 +1341,7 @@ Public Class TacheDao
     ''' <param name="patient"></param>
     ''' <param name="parcours"></param>
     ''' <param name="tacheParent"></param>
-    Public Sub createRendezVous(patient As Patient, parcours As Parcours, typeTache As TypeTache, dateRDV As Date, duree As Integer, commentaire As String, Optional tacheParent As Tache = Nothing)
+    Public Sub CreateRendezVous(patient As Patient, parcours As Parcours, typeTache As TypeTache, dateRDV As Date, duree As Integer, commentaire As String, Optional tacheParent As Tache = Nothing)
         Dim tache As Tache = New Tache()
 
         If typeTache <> TypeTache.RDV_MISSION AndAlso typeTache <> TypeTache.RDV AndAlso typeTache <> TypeTache.RDV_SPECIALISTE Then
@@ -1402,7 +1405,7 @@ Public Class TacheDao
                 .AddWithValue("@typeDemandeRendezVous", tache.TypedemandeRendezVous)
                 .AddWithValue("@dateRendezVous", tache.DateRendezVous)
                 .AddWithValue("@commentaire", tache.EmetteurCommentaire)
-                .AddWithValue("@etat", TacheDao.EtatTache.EN_ATTENTE.ToString)
+                .AddWithValue("@etat", TacheDao.EtatTache.EN_COURS.ToString)
             End With
 
             da.UpdateCommand = cmd
@@ -1517,7 +1520,36 @@ Public Class TacheDao
 
     End Sub
 
-    Public Function testMultipleSelect() As List(Of DataTable)
+    Friend Function GetLastDemandeRendezVousByPatient(patientId As Long) As Long
+        Dim da As SqlDataAdapter = New SqlDataAdapter()
+        Dim LastDrcId As Integer = 0
+        Dim SQLstring As String
+        Dim con As SqlConnection
+        con = GetConnection()
+
+        'Récupération de l'identifiant de la dernière DRC créée
+        Dim dr As SqlDataReader
+        SQLstring = "SELECT MAX(id) FROM oasis.oasis.oa_tache WHERE patient_id = @patientId AND ([type] = @type)"
+        Dim cmd As New SqlCommand(SQLstring, con)
+        With cmd.Parameters
+            .AddWithValue("@patientId", patientId)
+            .AddWithValue("@type", TacheDao.TypeTache.RDV_DEMANDE.ToString)
+        End With
+
+        dr = cmd.ExecuteReader()
+        If dr.HasRows Then
+            dr.Read()
+            'Récupération de la clé de l'enregistrement créé
+            LastDrcId = dr(0)
+            'Libération des ressources d'accès aux données
+            con.Close()
+            cmd.Dispose()
+        End If
+
+        Return LastDrcId
+    End Function
+
+    Public Function TestMultipleSelect() As List(Of DataTable)
 
         Dim requete = "SELECT TOP 100 oa_patient_nir " &
                       "FROM oasis.oa_patient; " &
