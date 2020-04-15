@@ -496,8 +496,8 @@ Public Class RadFPatientListe
             Dim patientId As Integer = CInt(TxtIdSelected.Text)
             Cursor.Current = Cursors.WaitCursor
             Me.Enabled = False
-            Using form As New RadFPatientRendez_vousListe
-                'PatientDao.SetPatient(Me.SelectedPatient, patientId)
+            Using form As New RadFPatientRendezVousListe
+                PatientDao.SetPatient(Me.SelectedPatient, patientId)
                 Me.SelectedPatient = PatientDao.getPatientById(patientId)
                 form.SelectedPatient = Me.SelectedPatient
                 form.ShowDialog() 'Modal

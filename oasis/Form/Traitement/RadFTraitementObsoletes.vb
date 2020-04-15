@@ -308,7 +308,7 @@ Public Class RadFTraitementObsoletes
     '===========================================================
 
     'Initialisation de l'écran
-    Private Sub initZones()
+    Private Sub InitZones()
         'Etat civil
         LblPatientNIR.Text = ""
         LblPatientPrenom.Text = ""

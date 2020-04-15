@@ -1132,7 +1132,7 @@ Public Class RadFPatientDetailEdit
     Private Sub RadBtnRDV_Click(sender As Object, e As EventArgs) Handles RadBtnRDV.Click
         Cursor.Current = Cursors.WaitCursor
         Me.Enabled = False
-        Using form As New RadFPatientRendez_vousListe
+        Using form As New RadFPatientRendezVousListe
             form.SelectedPatient = Me.SelectedPatient
             form.ShowDialog()
         End Using

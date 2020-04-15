@@ -876,7 +876,7 @@ Public Class RadF_CI_ATC_Selecteur
         RadGridViewSubstanceSelected.Rows.Clear()
     End Sub
 
-    Private Sub lblContreIndication_Click(sender As Object, e As EventArgs) Handles lblContreIndication.Click
+    Private Sub LblContreIndication_Click(sender As Object, e As EventArgs) Handles lblContreIndication.Click
         Me.Enabled = False
         Cursor.Current = Cursors.WaitCursor
         Using vFPatientContreIndicationListe As New RadFPatientContreIndicationListe
