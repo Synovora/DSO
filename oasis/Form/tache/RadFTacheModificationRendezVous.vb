@@ -2,6 +2,7 @@
     Private _selectedTacheId As Long
     Private _selectedPatient As Patient
     Private _codeRetour As Boolean
+    Public Property RDVisTransforme As Boolean = False
 
     Public Property SelectedTacheId As Long
         Get
@@ -163,5 +164,45 @@
 
     Private Sub RadBtnValidation_Click(sender As Object, e As EventArgs) Handles RadBtnValidation.Click
         Validation()
+    End Sub
+
+    Private Sub RadBtnTransformerEnPrevisionnel_Click(sender As Object, e As EventArgs) Handles RadBtnTransformerEnPrevisionnel.Click
+        If MsgBox("Confirmation de la transformation du rendez-vous planifié en prévisionnel", MsgBoxStyle.YesNo, "") = MsgBoxResult.Yes Then
+            Dim tacheInit As Tache = tacheDao.GetTacheById(SelectedTacheId)
+            If tacheDao.AnnulationTache(SelectedTacheId) = True Then
+                Dim tache As New Tache
+                tache.ParentId = SelectedTacheId
+                tache.EmetteurUserId = tacheInit.EmetteurUserId
+                tache.UniteSanitaireId = tacheInit.UniteSanitaireId
+                tache.SiteId = tacheInit.SiteId
+                tache.PatientId = tacheInit.PatientId
+                tache.ParcoursId = tacheInit.ParcoursId
+                tache.TraiteFonctionId = tacheInit.TraiteFonctionId
+                tache.DestinataireFonctionId = tacheInit.DestinataireFonctionId
+                tache.Priorite = tacheInit.Priorite
+                tache.OrdreAffichage = tacheInit.OrdreAffichage
+                tache.Categorie = tacheInit.Categorie
+                tache.Type = TacheDao.TypeTache.RDV_DEMANDE.ToString
+                tache.Nature = TacheDao.NatureTache.RDV_DEMANDE.ToString
+                tache.Duree = tacheInit.Duree
+                tache.EmetteurCommentaire = tacheInit.EmetteurCommentaire
+                tache.HorodatageCreation = Date.Now()
+                tache.TypedemandeRendezVous = TacheDao.TypeDemandeRendezVous.ANNEE.ToString
+                tache.DateRendezVous = New Date(tacheInit.DateRendezVous.Year, tacheInit.DateRendezVous.Month, 1, 0, 0, 0)
+                tache.Etat = TacheDao.EtatTache.EN_ATTENTE.ToString
+                If tacheDao.CreateTache(tache) = True Then
+                    Dim tacheId As Long = tacheDao.GetLastDemandeRendezVousByPatient(SelectedPatient.patientId)
+                    tacheDao.AttribueTacheToUserLog(tacheId)
+                    Using form As New RadFTacheModificationDemandeRendezVous
+                        form.SelectedPatient = Me.SelectedPatient
+                        form.SelectedTacheId = tacheId
+                        form.ShowDialog()
+                    End Using
+                    tacheDao.DesattribueTache(tacheId)
+                    RDVisTransforme = True
+                    Close()
+                End If
+            End If
+        End If
     End Sub
 End Class

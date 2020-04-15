@@ -59,6 +59,7 @@ Partial Class RadFTacheModificationRendezVous
         Me.NumheureRV = New System.Windows.Forms.NumericUpDown()
         Me.LblLabelDateRV = New System.Windows.Forms.Label()
         Me.NumDateRV = New System.Windows.Forms.DateTimePicker()
+        Me.RadBtnTransformerEnPrevisionnel = New Telerik.WinControls.UI.RadButton()
         CType(Me.RadGroupBoxEtatCivil, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.RadGroupBoxEtatCivil.SuspendLayout()
         CType(Me.RadBtnValidation, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -66,6 +67,7 @@ Partial Class RadFTacheModificationRendezVous
         CType(Me.GbxIntervention, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.GbxIntervention.SuspendLayout()
         CType(Me.NumheureRV, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.RadBtnTransformerEnPrevisionnel, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
@@ -301,7 +303,7 @@ Partial Class RadFTacheModificationRendezVous
         '
         'RadBtnValidation
         '
-        Me.RadBtnValidation.Location = New System.Drawing.Point(738, 209)
+        Me.RadBtnValidation.Location = New System.Drawing.Point(12, 209)
         Me.RadBtnValidation.Name = "RadBtnValidation"
         Me.RadBtnValidation.Size = New System.Drawing.Size(110, 24)
         Me.RadBtnValidation.TabIndex = 14
@@ -435,12 +437,21 @@ Partial Class RadFTacheModificationRendezVous
         Me.NumDateRV.Size = New System.Drawing.Size(200, 20)
         Me.NumDateRV.TabIndex = 11
         '
+        'RadBtnTransformerEnPrevisionnel
+        '
+        Me.RadBtnTransformerEnPrevisionnel.Location = New System.Drawing.Point(128, 209)
+        Me.RadBtnTransformerEnPrevisionnel.Name = "RadBtnTransformerEnPrevisionnel"
+        Me.RadBtnTransformerEnPrevisionnel.Size = New System.Drawing.Size(163, 24)
+        Me.RadBtnTransformerEnPrevisionnel.TabIndex = 17
+        Me.RadBtnTransformerEnPrevisionnel.Text = "Transformer en prévisionnel"
+        '
         'RadFTacheModificationRendezVous
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.CancelButton = Me.RadBtnAbandon
         Me.ClientSize = New System.Drawing.Size(975, 239)
+        Me.Controls.Add(Me.RadBtnTransformerEnPrevisionnel)
         Me.Controls.Add(Me.GbxIntervention)
         Me.Controls.Add(Me.RadBtnValidation)
         Me.Controls.Add(Me.RadBtnAbandon)
@@ -464,6 +475,7 @@ Partial Class RadFTacheModificationRendezVous
         Me.GbxIntervention.ResumeLayout(False)
         Me.GbxIntervention.PerformLayout()
         CType(Me.NumheureRV, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.RadBtnTransformerEnPrevisionnel, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
 
@@ -505,5 +517,6 @@ Partial Class RadFTacheModificationRendezVous
     Friend WithEvents NumheureRV As NumericUpDown
     Friend WithEvents LblLabelDateRV As Label
     Friend WithEvents NumDateRV As DateTimePicker
+    Friend WithEvents RadBtnTransformerEnPrevisionnel As Telerik.WinControls.UI.RadButton
 End Class
 
