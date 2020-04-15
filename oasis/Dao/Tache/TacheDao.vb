@@ -1044,7 +1044,6 @@ Public Class TacheDao
     End Function
 
     Friend Function CreateRendezVous(tache As Tache) As Boolean
-        Dim da As SqlDataAdapter = New SqlDataAdapter()
         Dim codeRetour As Boolean = True
         Dim con As SqlConnection
         con = GetConnection()
@@ -1141,7 +1140,6 @@ Public Class TacheDao
     End Function
 
     Friend Function AnnulationTache(idTache As Long) As Boolean
-        Dim da As SqlDataAdapter = New SqlDataAdapter()
         Dim codeRetour As Boolean = True
         Dim con As SqlConnection
 
@@ -1192,7 +1190,6 @@ Public Class TacheDao
 
 
     Friend Function ClotureTache(idTache As Long, cloture As Boolean) As Boolean
-        Dim da As SqlDataAdapter = New SqlDataAdapter()
         Dim codeRetour As Boolean = True
         Dim con As SqlConnection
 
@@ -1344,7 +1341,7 @@ Public Class TacheDao
     Public Sub createRendezVous(patient As Patient, parcours As Parcours, typeTache As TypeTache, dateRDV As Date, duree As Integer, commentaire As String, Optional tacheParent As Tache = Nothing)
         Dim tache As Tache = New Tache()
 
-        If typeTache <> TypeTache.RDV_MISSION AndAlso typeTache <> TypeTache.RDV Then
+        If typeTache <> TypeTache.RDV_MISSION AndAlso typeTache <> TypeTache.RDV AndAlso typeTache <> TypeTache.RDV_SPECIALISTE Then
             Throw New Exception("Pas de rendez-vous possible sur ce type de tache !")
         End If
 
