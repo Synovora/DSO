@@ -18,7 +18,7 @@ Public Class ContexteDao
         NOTION_DE = 3
     End Enum
 
-    Friend Function getContexteObsolete() As DataTable
+    Friend Function GetContexteObsolete() As DataTable
         Dim SQLString As String
 
         SQLString = "SELECT * FROM oasis.oa_antecedent" &
