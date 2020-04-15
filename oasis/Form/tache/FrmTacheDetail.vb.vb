@@ -26,9 +26,9 @@ Public Class FrmTacheDetail_vb
         End Set
     End Property
 
-    Private Sub initControls(idTache As Long)
+    Private Sub InitControls(idTache As Long)
         ' -- recupération de la tache
-        tache = tacheDao.getTacheById(idTache, True)
+        tache = tacheDao.GetTacheById(idTache, True)
 
         ' --- centrage et chgt de style du titre du formulaire
         afficheTitleForm(Me, tache.Type.ToString & If(tache.Nature.ToString <> tache.Type.ToString, "/" + tache.Nature.ToString, "") &
@@ -36,7 +36,7 @@ Public Class FrmTacheDetail_vb
             " - Etat : " & tache.Etat.ToString)
 
         ' -- recherche beans associes à la tache et init des controls
-        tacheBeanAssocie = tacheDao.getTacheBeanAssocie(tache)
+        tacheBeanAssocie = tacheDao.GetTacheBeanAssocie(tache)
         With tacheBeanAssocie
             Me.TxtUtilisateur.Text = .UserEmetteur.UtilisateurPrenom + " " + .UserEmetteur.UtilisateurNom
             If Not IsNothing(.FonctionEmetteur) Then Me.TxtFonction.Text = .FonctionEmetteur.Designation
@@ -58,9 +58,9 @@ Public Class FrmTacheDetail_vb
                     If Coalesce(tache.TypedemandeRendezVous, "").ToString().Length > 0 Then
                         metEnExergue(Me.LblTypeRDV, Me.TxtTypeRDV)
                         Select Case tache.TypedemandeRendezVous
-                            Case TacheDao.typeDemandeRendezVous.ANNEE.ToString
+                            Case TacheDao.TypeDemandeRendezVous.ANNEE.ToString
                                 Me.TxtTypeRDV.Text = "dans l'année " & tache.DateRendezVous.Year & " - Durée " & tache.Duree & " mn"
-                            Case TacheDao.typeDemandeRendezVous.ANNEEMOIS.ToString
+                            Case TacheDao.TypeDemandeRendezVous.ANNEEMOIS.ToString
                                 Me.TxtTypeRDV.Text = "dans le courant de " & tache.DateRendezVous.Month.ToString("00") & "/" & tache.DateRendezVous.Year &
                                     " - Durée " & tache.Duree & " mn"
                         End Select
