@@ -47,7 +47,7 @@ Public Class DrcStandardDao
         Return drcStandard
     End Function
 
-    Public Function getAllDrcByTypeActivite(TypeActivite As String) As DataTable
+    Public Function GetAllDrcByTypeActivite(TypeActivite As String) As DataTable
         Dim SQLString As String
         SQLString =
             "SELECT * FROM oasis.oa_drc_standard" &

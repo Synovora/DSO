@@ -49,7 +49,7 @@ Public Class ContreIndicationSubstanceDao
         Return contreIndication
     End Function
 
-    Public Function getAllContreIndicationSubstancebyPatient(patientId As Integer) As DataTable
+    Public Function GetAllContreIndicationSubstancebyPatient(patientId As Integer) As DataTable
         Dim SQLString As String = "SELECT * " &
         " FROM oasis.oa_patient_contre_indication_substance" &
         " WHERE (inactif Is Null OR inactif = 'False')" &

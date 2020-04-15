@@ -36,7 +36,7 @@ Module PatientDao
         Return CodeRetour
     End Function
 
-    Public Function getPatientById(id As Long)
+    Public Function GetPatientById(id As Long)
         Dim patient As Patient = New Patient
         If SetPatient(patient, id) = False Then
             Throw New ArgumentException("Patient non retrouvé !")
@@ -44,7 +44,7 @@ Module PatientDao
         Return patient
     End Function
 
-    Private Sub setPatientProperties(instancePatient As Patient, patientDataReader As SqlDataReader)
+    Private Sub SetPatientProperties(instancePatient As Patient, patientDataReader As SqlDataReader)
         If patientDataReader.Read() Then
             instancePatient.patientId = Convert.ToInt64(patientDataReader("oa_patient_id"))
 

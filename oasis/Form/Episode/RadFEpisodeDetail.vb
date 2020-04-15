@@ -936,11 +936,11 @@ Public Class RadFEpisodeDetail
         End Try
 
         With RadGridViewSousEpisode.CurrentRow
-            ficheSousEpisode(sousEpisode, .Cells("CreateUser").Value, .Cells("LastUpdateUser").Value, .Cells("ValidateUser").Value)
+            FicheSousEpisode(sousEpisode, .Cells("CreateUser").Value, .Cells("LastUpdateUser").Value, .Cells("ValidateUser").Value)
         End With
     End Sub
 
-    Private Sub ficheSousEpisode(sousEpisode As SousEpisode, userCreateNom As String, userUpdateNom As String, userValidateNom As String)
+    Private Sub FicheSousEpisode(sousEpisode As SousEpisode, userCreateNom As String, userUpdateNom As String, userValidateNom As String)
         Try
             Me.Cursor = Cursors.WaitCursor
             Me.Enabled = False
@@ -2596,14 +2596,14 @@ Public Class RadFEpisodeDetail
 
     'Appel de la modification d'un antécédent
     Private Sub MasterTemplate_CellDoubleClick(sender As Object, e As Telerik.WinControls.UI.GridViewCellEventArgs) Handles RadAntecedentDataGridView.CellDoubleClick
-        modificationAntecedent()
+        ModificationAntecedent()
     End Sub
 
     Private Sub ModifierUnAntécédentToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ModifierUnAntécédentToolStripMenuItem.Click
-        modificationAntecedent()
+        ModificationAntecedent()
     End Sub
 
-    Private Sub modificationAntecedent()
+    Private Sub ModificationAntecedent()
         If RadAntecedentDataGridView.CurrentRow IsNot Nothing Then
             Dim aRow, antecedentId As Integer
             aRow = Me.RadAntecedentDataGridView.Rows.IndexOf(Me.RadAntecedentDataGridView.CurrentRow)
@@ -4789,7 +4789,7 @@ Public Class RadFEpisodeDetail
     '===========================================================
     '======================= Généralités =======================
     '===========================================================
-    Private Sub initZones()
+    Private Sub InitZones()
         LblParametre1.Text = ""
         LblParametre2.Text = ""
         LblParametre3.Text = ""
@@ -5155,7 +5155,7 @@ Public Class RadFEpisodeDetail
         Close()
     End Sub
 
-    Private Sub refreshButtonSousEpisodeProperties()
+    Private Sub RefreshButtonSousEpisodeProperties()
         Dim sousEpisodeDao As SousEpisodeDao = New SousEpisodeDao
         Dim i = sousEpisodeDao.CountSousEpisode(SelectedEpisodeId)
         If i > 0 Then

@@ -72,7 +72,7 @@ Public Class TraitementDao
     End Function
 
 
-    Public Function getAllTraitementCIbyPatient(patientId As Integer) As DataTable
+    Public Function GetAllTraitementCIbyPatient(patientId As Integer) As DataTable
         Dim SQLString As String = "SELECT oa_traitement_id, oa_traitement_medicament_dci, oa_traitement_arret, oa_traitement_posologie_base," &
         " oa_traitement_posologie_rythme, oa_traitement_posologie_matin, oa_traitement_posologie_midi, oa_traitement_posologie_apres_midi," &
         " oa_traitement_posologie_soir, oa_traitement_posologie_commentaire, oa_traitement_ordre_affichage, oa_traitement_date_debut," &
@@ -165,7 +165,7 @@ Public Class TraitementDao
         End Using
     End Function
 
-    Public Function getTraitementEnCoursbyPatient(patientId As Integer) As DataTable
+    Public Function GetTraitementEnCoursbyPatient(patientId As Integer) As DataTable
         Dim SQLString As String = "SELECT oa_traitement_id, oa_traitement_medicament_cis, oa_traitement_medicament_dci," &
         " oa_traitement_posologie_base, oa_traitement_posologie_rythme, oa_traitement_posologie_matin, oa_traitement_posologie_midi," &
         " oa_traitement_posologie_apres_midi, oa_traitement_posologie_soir," &
@@ -201,7 +201,7 @@ Public Class TraitementDao
     End Function
 
     'Version sauvegardée de la précédente version utilisée (remplacée par getTraitementEnCoursbyPatient) ===> A supprimer
-    Public Function getTraitementNotCancelledbyPatient(patientId As Integer) As DataTable
+    Public Function GetTraitementNotCancelledbyPatient(patientId As Integer) As DataTable
         Dim SQLString As String = "SELECT oa_traitement_id, oa_traitement_medicament_cis, oa_traitement_medicament_dci," &
         " oa_traitement_posologie_base, oa_traitement_posologie_rythme, oa_traitement_posologie_matin, oa_traitement_posologie_midi," &
         " oa_traitement_posologie_apres_midi, oa_traitement_posologie_soir," &
@@ -233,7 +233,7 @@ Public Class TraitementDao
         End Using
     End Function
 
-    Public Function getAllTraitementArreteByPatient(patientId As Integer) As DataTable
+    Public Function GetAllTraitementArreteByPatient(patientId As Integer) As DataTable
         Dim SQLString As String =
             "SELECT oa_traitement_medicament_dci, oa_traitement_arret_commentaire, oa_traitement_date_modification" &
             " FROM oasis.oa_traitement" &
@@ -259,7 +259,7 @@ Public Class TraitementDao
         End Using
     End Function
 
-    Friend Function getTraitementById(traitementId As Integer) As Traitement
+    Friend Function GetTraitementById(traitementId As Integer) As Traitement
         Dim traitement As Traitement
         Dim con As SqlConnection
 
@@ -288,7 +288,7 @@ Public Class TraitementDao
         Return traitement
     End Function
 
-    Private Function buildBean(reader As SqlDataReader) As Traitement
+    Private Function BuildBean(reader As SqlDataReader) As Traitement
         Dim traitement As New Traitement
 
         traitement.TraitementId = reader("oa_traitement_id")

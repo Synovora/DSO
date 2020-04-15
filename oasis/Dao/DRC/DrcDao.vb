@@ -83,7 +83,7 @@ Public Class DrcDao
         End If
     End Sub
 
-    Friend Function getDrcById(DrcId As Long) As Drc
+    Friend Function GetDrcById(DrcId As Long) As Drc
         Dim drc As Drc
         Dim con As SqlConnection
         con = GetConnection()

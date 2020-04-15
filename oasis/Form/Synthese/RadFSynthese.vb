@@ -59,7 +59,7 @@ Public Class RadFSynthese
         End Set
     End Property
 
-    Public Enum enumOrigineAppel
+    Public Enum EnumOrigineAppel
         AUTRE = 0
         EPISODE = 2
     End Enum
@@ -447,14 +447,14 @@ Public Class RadFSynthese
 
     'Appel de la modification d'un antécédent
     Private Sub MasterTemplate_CellDoubleClick(sender As Object, e As Telerik.WinControls.UI.GridViewCellEventArgs) Handles RadAntecedentDataGridView.CellDoubleClick
-        modificationAntecedent()
+        ModificationAntecedent()
     End Sub
 
     Private Sub ModifierUnAntécédentToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ModifierUnAntécédentToolStripMenuItem.Click
-        modificationAntecedent()
+        ModificationAntecedent()
     End Sub
 
-    Private Sub modificationAntecedent()
+    Private Sub ModificationAntecedent()
         If RadAntecedentDataGridView.CurrentRow IsNot Nothing Then
             Dim aRow, antecedentId As Integer
             aRow = Me.RadAntecedentDataGridView.Rows.IndexOf(Me.RadAntecedentDataGridView.CurrentRow)
@@ -2724,7 +2724,7 @@ Public Class RadFSynthese
     '===========================================================
 
     'Initialisation de l'écran
-    Private Sub initZones()
+    Private Sub InitZones()
         'Etat civil
         LblPatientNIR.Text = ""
         LblPatientPrenom.Text = ""

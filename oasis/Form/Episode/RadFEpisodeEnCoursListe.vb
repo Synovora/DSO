@@ -9,9 +9,9 @@ Public Class RadFEpisodeEnCoursListe
     Dim patient As New Patient
 
     Dim InitForm As Boolean
-    Dim Filtre As enumFiltre
+    Dim Filtre As EnumFiltre
 
-    Private Enum enumFiltre
+    Private Enum EnumFiltre
         TOUS
         WORKFLOW_EN_ATTENTE
         WORKFLOW_EN_ATTENTE_FONCTION
@@ -22,7 +22,7 @@ Public Class RadFEpisodeEnCoursListe
 
         InitForm = True
         RadioBtnTous.Checked = True
-        Filtre = enumFiltre.TOUS
+        Filtre = EnumFiltre.TOUS
 
         ChargementEpisode()
     End Sub

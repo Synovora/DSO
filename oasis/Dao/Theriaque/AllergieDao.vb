@@ -49,7 +49,7 @@ Public Class AllergieDao
         Return allergie
     End Function
 
-    Public Function getAllAllergiebyPatient(patientId As Integer) As DataTable
+    Public Function GetAllAllergiebyPatient(patientId As Integer) As DataTable
         Dim SQLString As String = "SELECT * " &
         " FROM oasis.oa_patient_allergie" &
         " WHERE (inactif Is Null OR inactif = 'False')" &

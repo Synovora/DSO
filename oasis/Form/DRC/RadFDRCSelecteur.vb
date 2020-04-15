@@ -169,11 +169,11 @@ Public Class RadFDRCSelecteur
     End Sub
 
 
-    Private Function getSQLStringDRCSynonyme(drcId As Integer) As String
+    Private Function GetSQLStringDRCSynonyme(drcId As Integer) As String
         Dim SQLString As String
         SQLString = "SELECT oa_drc_synonyme_libelle FROM oasis.oa_drc_synonyme WHERE oa_drc_id = " + drcId.ToString + " order by oa_drc_synonyme_id;"
 
-        getSQLStringDRCSynonyme = SQLString
+        GetSQLStringDRCSynonyme = SQLString
     End Function
 
     Private Sub ChargementEtatCivil()
