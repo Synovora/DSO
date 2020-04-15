@@ -468,6 +468,12 @@
     <Compile Include="Form\LigneDeVie\RadFLigneDeVieParametreSelecteur.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="Form\Patient\RadFPatientRendezVousListe.Designer.vb">
+      <DependentUpon>RadFPatientRendezVousListe.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Form\Patient\RadFPatientRendezVousListe.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Form\PPS\RadFPPSListeParcours.Designer.vb">
       <DependentUpon>RadFPPSListeParcours.vb</DependentUpon>
     </Compile>
@@ -484,6 +490,18 @@
       <DependentUpon>FrmAdminTemplateDocx.vb</DependentUpon>
     </Compile>
     <Compile Include="Form\SousEpisode\FrmAdminTemplateDocx.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form\tache\RadFTacheModificationDemandeRendezVous.Designer.vb">
+      <DependentUpon>RadFTacheModificationDemandeRendezVous.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Form\tache\RadFTacheModificationDemandeRendezVous.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form\tache\RadFTacheModificationRendezVous.Designer.vb">
+      <DependentUpon>RadFTacheModificationRendezVous.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Form\tache\RadFTacheModificationRendezVous.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Form\Test\RadFTestMethodes.Designer.vb">
@@ -504,7 +522,6 @@
     <Compile Include="Form\Theriaque\RadFMedicamentSelecteur.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Form\Patient\RadFPatientRendez-vousListe.vb" />
     <Compile Include="Form\SousEpisode\FrmSousEpisode.Designer.vb">
       <DependentUpon>FrmSousEpisode.vb</DependentUpon>
     </Compile>
@@ -611,18 +628,6 @@
       <DependentUpon>RadFWkfDemandeAvis.vb</DependentUpon>
     </Compile>
     <Compile Include="Form\Workflow\RadFWkfDemandeAvis.vb">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Form\tache\RadFTacheModificationDemandeRendezVous.Designer.vb">
-      <DependentUpon>RadFTacheModificationDemandeRendezVous.vb</DependentUpon>
-    </Compile>
-    <Compile Include="Form\tache\RadFTacheModificationDemandeRendezVous.vb">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Form\tache\RadFTacheModificationRendezVous.Designer.vb">
-      <DependentUpon>RadFTacheModificationRendezVous.vb</DependentUpon>
-    </Compile>
-    <Compile Include="Form\tache\RadFTacheModificationRendezVous.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Form\utilisateur\FrmLogin.Designer.vb">
@@ -1070,6 +1075,9 @@
     <EmbeddedResource Include="Form\LigneDeVie\RadFLigneDeVieParametreSelecteur.resx">
       <DependentUpon>RadFLigneDeVieParametreSelecteur.vb</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Form\Patient\RadFPatientRendezVousListe.resx">
+      <DependentUpon>RadFPatientRendezVousListe.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Form\PPS\RadFPPSListeParcours.resx">
       <DependentUpon>RadFPPSListeParcours.vb</DependentUpon>
     </EmbeddedResource>
@@ -1079,6 +1087,12 @@
     <EmbeddedResource Include="Form\SousEpisode\FrmAdminTemplateDocx.resx">
       <DependentUpon>FrmAdminTemplateDocx.vb</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Form\tache\RadFTacheModificationDemandeRendezVous.resx">
+      <DependentUpon>RadFTacheModificationDemandeRendezVous.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form\tache\RadFTacheModificationRendezVous.resx">
+      <DependentUpon>RadFTacheModificationRendezVous.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Form\Test\RadFTestMethodes.resx">
       <DependentUpon>RadFTestMethodes.vb</DependentUpon>
     </EmbeddedResource>
@@ -1087,10 +1101,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Form\Theriaque\RadFMedicamentSelecteur.resx">
       <DependentUpon>RadFMedicamentSelecteur.vb</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Form\Patient\RadFPatientRendez-vousListe.resx">
-      <DependentUpon>RadFPatientRendez-vousListe.vb</DependentUpon>
-      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Form\SousEpisode\FrmSousEpisode.resx">
       <DependentUpon>FrmSousEpisode.vb</DependentUpon>
@@ -1145,12 +1155,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Form\Workflow\RadFWkfDemandeAvis.resx">
       <DependentUpon>RadFWkfDemandeAvis.vb</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Form\tache\RadFTacheModificationDemandeRendezVous.resx">
-      <DependentUpon>RadFTacheModificationDemandeRendezVous.vb</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Form\tache\RadFTacheModificationRendezVous.resx">
-      <DependentUpon>RadFTacheModificationRendezVous.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Form\utilisateur\FrmLogin.resx">
       <DependentUpon>FrmLogin.vb</DependentUpon>
