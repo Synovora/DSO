@@ -1742,7 +1742,15 @@ Public Class RadFEpisodeDetail
     End Sub
 
     'Liste des workflows de l'épisode
-    Private Sub RadBtnHistoWorkflow_Click(sender As Object, e As EventArgs) Handles RadBtnHistoWorkflow.Click
+    Private Sub RadBtnHistoWorkflow_Click(sender As Object, e As EventArgs) Handles RadBtnHistoWorkflowMed.Click
+        HistoWorkflow()
+    End Sub
+
+    Private Sub RadBtnHistoriqueAvisIde_Click(sender As Object, e As EventArgs) Handles RadBtnHistoriqueAvisIde.Click
+        HistoWorkflow()
+    End Sub
+
+    Private Sub HistoWorkflow()
         Cursor.Current = Cursors.WaitCursor
         Me.Enabled = False
         Using vRadFWkfDemandeAvishisto As New RadFWkfDemandeAvisHisto
@@ -1752,6 +1760,7 @@ Public Class RadFEpisodeDetail
         End Using
         Me.Enabled = True
     End Sub
+
 
     'Avant la fermeture de l'écran : si un utilisateur s'est attribué le traitement de demande d'avis (Workflow) et qu'il sort de l'épisode sans l'avoir traité, on lui désattibue le tâche
     Private Sub RadFEpisodeDetail_FormClosed(sender As Object, e As FormClosedEventArgs) Handles MyBase.FormClosed
@@ -4845,7 +4854,6 @@ Public Class RadFEpisodeDetail
     Private Sub RadPanel12_Paint(sender As Object, e As PaintEventArgs) Handles RadPanel12.Paint
 
     End Sub
-
 
     '===========================================================
     '======================= Droits d'accès ====================

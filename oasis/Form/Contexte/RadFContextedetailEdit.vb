@@ -806,4 +806,19 @@ Public Class RadFContextedetailEdit
         End If
     End Sub
 
+    Private Sub RadBtnHistorique_Click(sender As Object, e As EventArgs) Handles RadBtnHistorique.Click
+        Me.Enabled = False
+        Cursor.Current = Cursors.WaitCursor
+        Try
+            Using Form As New RadFAntecedentHistoListe
+                Form.SelectedAntecedentId = SelectedContexteId
+                Form.SelectedPatient = Me.SelectedPatient
+                Form.UtilisateurConnecte = Me.UtilisateurConnecte
+                Form.ShowDialog()
+            End Using
+        Catch ex As Exception
+            MsgBox(ex.Message())
+        End Try
+        Me.Enabled = True
+    End Sub
 End Class

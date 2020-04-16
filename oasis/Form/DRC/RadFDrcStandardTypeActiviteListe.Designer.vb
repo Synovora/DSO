@@ -22,6 +22,7 @@ Partial Class RadFDrcStandardTypeActiviteListe
     'Do not modify it using the code editor.
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
+        Me.components = New System.ComponentModel.Container()
         Dim GridViewTextBoxColumn1 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
         Dim GridViewTextBoxColumn2 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
         Dim GridViewTextBoxColumn3 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
@@ -43,6 +44,7 @@ Partial Class RadFDrcStandardTypeActiviteListe
         Me.RadBtnModifier = New Telerik.WinControls.UI.RadButton()
         Me.RadBtnMesurePreventive = New Telerik.WinControls.UI.RadButton()
         Me.RadBtnPathologieAigue = New Telerik.WinControls.UI.RadButton()
+        Me.ToolTip = New System.Windows.Forms.ToolTip(Me.components)
         CType(Me.RadBtnSuiviGrossesse, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.RadBtnSuiviGynecologique, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.RadBtnSuiviEnfantPreScolaire, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -105,19 +107,23 @@ Partial Class RadFDrcStandardTypeActiviteListe
         '
         'RadBtnSelectParm
         '
+        Me.RadBtnSelectParm.Image = Global.Oasis_WF.My.Resources.Resources._select
         Me.RadBtnSelectParm.Location = New System.Drawing.Point(871, 172)
         Me.RadBtnSelectParm.Name = "RadBtnSelectParm"
         Me.RadBtnSelectParm.Size = New System.Drawing.Size(164, 24)
         Me.RadBtnSelectParm.TabIndex = 5
-        Me.RadBtnSelectParm.Text = "Sélection groupe paramètres"
+        Me.RadBtnSelectParm.Text = "Groupe paramètres"
+        Me.ToolTip.SetToolTip(Me.RadBtnSelectParm, "Sélectionner")
         '
         'RadBtnActePM
         '
+        Me.RadBtnActePM.Image = Global.Oasis_WF.My.Resources.Resources._select
         Me.RadBtnActePM.Location = New System.Drawing.Point(871, 112)
         Me.RadBtnActePM.Name = "RadBtnActePM"
         Me.RadBtnActePM.Size = New System.Drawing.Size(164, 24)
         Me.RadBtnActePM.TabIndex = 6
-        Me.RadBtnActePM.Text = "Sélection Acte paramédical"
+        Me.RadBtnActePM.Text = "Acte paramédical"
+        Me.ToolTip.SetToolTip(Me.RadBtnActePM, "Sélectionner")
         '
         'RadGridViewDrcAsso
         '
@@ -183,32 +189,35 @@ Partial Class RadFDrcStandardTypeActiviteListe
         '
         'RadBtnSlectProtocole
         '
+        Me.RadBtnSlectProtocole.Image = Global.Oasis_WF.My.Resources.Resources._select
         Me.RadBtnSlectProtocole.Location = New System.Drawing.Point(871, 142)
         Me.RadBtnSlectProtocole.Name = "RadBtnSlectProtocole"
         Me.RadBtnSlectProtocole.Size = New System.Drawing.Size(164, 24)
         Me.RadBtnSlectProtocole.TabIndex = 7
-        Me.RadBtnSlectProtocole.Text = "Sélection Protocole collaboratif"
+        Me.RadBtnSlectProtocole.Text = "Protocole collaboratif"
+        Me.ToolTip.SetToolTip(Me.RadBtnSlectProtocole, "Sélectionner")
         '
         'RadBtnSupprimer
         '
         Me.RadBtnSupprimer.Image = Global.Oasis_WF.My.Resources.Resources.supprimer
+        Me.RadBtnSupprimer.ImageAlignment = System.Drawing.ContentAlignment.MiddleCenter
         Me.RadBtnSupprimer.Location = New System.Drawing.Point(12, 441)
         Me.RadBtnSupprimer.Name = "RadBtnSupprimer"
-        Me.RadBtnSupprimer.Size = New System.Drawing.Size(110, 24)
+        Me.RadBtnSupprimer.Size = New System.Drawing.Size(24, 24)
         Me.RadBtnSupprimer.TabIndex = 4
-        Me.RadBtnSupprimer.Text = "Supprimer"
+        Me.ToolTip.SetToolTip(Me.RadBtnSupprimer, "Supprimer")
         '
         'RadBtnDRCDetail
         '
-        Me.RadBtnDRCDetail.Location = New System.Drawing.Point(181, 441)
+        Me.RadBtnDRCDetail.Location = New System.Drawing.Point(42, 441)
         Me.RadBtnDRCDetail.Name = "RadBtnDRCDetail"
         Me.RadBtnDRCDetail.Size = New System.Drawing.Size(110, 24)
         Me.RadBtnDRCDetail.TabIndex = 1
-        Me.RadBtnDRCDetail.Text = "DRC Détail"
+        Me.RadBtnDRCDetail.Text = "Détail"
         '
         'RadBtnModifier
         '
-        Me.RadBtnModifier.Location = New System.Drawing.Point(297, 441)
+        Me.RadBtnModifier.Location = New System.Drawing.Point(158, 441)
         Me.RadBtnModifier.Name = "RadBtnModifier"
         Me.RadBtnModifier.Size = New System.Drawing.Size(118, 24)
         Me.RadBtnModifier.TabIndex = 2
@@ -216,11 +225,13 @@ Partial Class RadFDrcStandardTypeActiviteListe
         '
         'RadBtnMesurePreventive
         '
+        Me.RadBtnMesurePreventive.Image = Global.Oasis_WF.My.Resources.Resources._select
         Me.RadBtnMesurePreventive.Location = New System.Drawing.Point(871, 202)
         Me.RadBtnMesurePreventive.Name = "RadBtnMesurePreventive"
         Me.RadBtnMesurePreventive.Size = New System.Drawing.Size(164, 24)
         Me.RadBtnMesurePreventive.TabIndex = 12
-        Me.RadBtnMesurePreventive.Text = "Sélection mesure préventive"
+        Me.RadBtnMesurePreventive.Text = "Mesure préventive"
+        Me.ToolTip.SetToolTip(Me.RadBtnMesurePreventive, "Sélectionner")
         '
         'RadBtnPathologieAigue
         '
@@ -293,5 +304,6 @@ Partial Class RadFDrcStandardTypeActiviteListe
     Friend WithEvents RadBtnModifier As Telerik.WinControls.UI.RadButton
     Friend WithEvents RadBtnMesurePreventive As Telerik.WinControls.UI.RadButton
     Friend WithEvents RadBtnPathologieAigue As Telerik.WinControls.UI.RadButton
+    Friend WithEvents ToolTip As ToolTip
 End Class
 

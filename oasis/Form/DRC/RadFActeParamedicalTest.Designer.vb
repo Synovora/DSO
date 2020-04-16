@@ -22,13 +22,15 @@ Partial Class RadFActeParamedicalTest
     'Do not modify it using the code editor.
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
-        Dim GridViewTextBoxColumn1 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
-        Dim TableViewDefinition1 As Telerik.WinControls.UI.TableViewDefinition = New Telerik.WinControls.UI.TableViewDefinition()
+        Me.components = New System.ComponentModel.Container()
+        Dim GridViewTextBoxColumn2 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
+        Dim TableViewDefinition2 As Telerik.WinControls.UI.TableViewDefinition = New Telerik.WinControls.UI.TableViewDefinition()
         Me.RadGridViewActePara = New Telerik.WinControls.UI.RadGridView()
         Me.RadBtnAbandon = New Telerik.WinControls.UI.RadButton()
         Me.CbxActiviteEpisode = New System.Windows.Forms.ComboBox()
         Me.Label1 = New System.Windows.Forms.Label()
         Me.RadBtnValidation = New Telerik.WinControls.UI.RadButton()
+        Me.ToolTip1 = New System.Windows.Forms.ToolTip(Me.components)
         CType(Me.RadGridViewActePara, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.RadGridViewActePara.MasterTemplate, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.RadBtnAbandon, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -50,13 +52,13 @@ Partial Class RadFActeParamedicalTest
         Me.RadGridViewActePara.MasterTemplate.AllowAddNewRow = False
         Me.RadGridViewActePara.MasterTemplate.AllowDeleteRow = False
         Me.RadGridViewActePara.MasterTemplate.AllowEditRow = False
-        GridViewTextBoxColumn1.EnableExpressionEditor = False
-        GridViewTextBoxColumn1.HeaderText = "DRC"
-        GridViewTextBoxColumn1.HeaderTextAlignment = System.Drawing.ContentAlignment.MiddleLeft
-        GridViewTextBoxColumn1.Name = "drc"
-        GridViewTextBoxColumn1.Width = 350
-        Me.RadGridViewActePara.MasterTemplate.Columns.AddRange(New Telerik.WinControls.UI.GridViewDataColumn() {GridViewTextBoxColumn1})
-        Me.RadGridViewActePara.MasterTemplate.ViewDefinition = TableViewDefinition1
+        GridViewTextBoxColumn2.EnableExpressionEditor = False
+        GridViewTextBoxColumn2.HeaderText = "DRC"
+        GridViewTextBoxColumn2.HeaderTextAlignment = System.Drawing.ContentAlignment.MiddleLeft
+        GridViewTextBoxColumn2.Name = "drc"
+        GridViewTextBoxColumn2.Width = 350
+        Me.RadGridViewActePara.MasterTemplate.Columns.AddRange(New Telerik.WinControls.UI.GridViewDataColumn() {GridViewTextBoxColumn2})
+        Me.RadGridViewActePara.MasterTemplate.ViewDefinition = TableViewDefinition2
         Me.RadGridViewActePara.Name = "RadGridViewActePara"
         Me.RadGridViewActePara.ReadOnly = True
         Me.RadGridViewActePara.RightToLeft = System.Windows.Forms.RightToLeft.No
@@ -92,12 +94,13 @@ Partial Class RadFActeParamedicalTest
         '
         'RadBtnValidation
         '
-        Me.RadBtnValidation.Image = Global.Oasis_WF.My.Resources.Resources.validation
+        Me.RadBtnValidation.Image = Global.Oasis_WF.My.Resources.Resources.validation2
+        Me.RadBtnValidation.ImageAlignment = System.Drawing.ContentAlignment.MiddleCenter
         Me.RadBtnValidation.Location = New System.Drawing.Point(12, 404)
         Me.RadBtnValidation.Name = "RadBtnValidation"
-        Me.RadBtnValidation.Size = New System.Drawing.Size(110, 24)
+        Me.RadBtnValidation.Size = New System.Drawing.Size(24, 24)
         Me.RadBtnValidation.TabIndex = 2
-        Me.RadBtnValidation.Text = "Validation"
+        Me.ToolTip1.SetToolTip(Me.RadBtnValidation, "Lancement du test")
         '
         'RadFActeParamedicalTest
         '
@@ -136,5 +139,6 @@ Partial Class RadFActeParamedicalTest
     Friend WithEvents CbxActiviteEpisode As ComboBox
     Friend WithEvents Label1 As Label
     Friend WithEvents RadBtnValidation As Telerik.WinControls.UI.RadButton
+    Friend WithEvents ToolTip1 As ToolTip
 End Class
 

@@ -1447,6 +1447,23 @@ Public Class RadFAntecedentDetailEdit
         Return codeRetour
     End Function
 
+    Private Sub RadBtnHistorique_Click(sender As Object, e As EventArgs) Handles RadBtnHistorique.Click
+        Me.Enabled = False
+        Cursor.Current = Cursors.WaitCursor
+        Try
+            Using vFAntecedenttHistoListe As New RadFAntecedentHistoListe
+                vFAntecedenttHistoListe.SelectedAntecedentId = SelectedAntecedentId
+                vFAntecedenttHistoListe.SelectedPatient = Me.SelectedPatient
+                vFAntecedenttHistoListe.UtilisateurConnecte = userLog
+                vFAntecedenttHistoListe.ShowDialog()
+            End Using
+        Catch ex As Exception
+            MsgBox(ex.Message())
+        End Try
+        Me.Enabled = True
+    End Sub
+
+
     'Modification de la publication d'un antécédent en base de données
     Private Function ModificationPublicationAntecedent(antecedentId As Integer, publication As String) As Boolean
         Dim da As SqlDataAdapter = New SqlDataAdapter()

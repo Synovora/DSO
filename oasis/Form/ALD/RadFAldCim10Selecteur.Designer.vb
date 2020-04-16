@@ -130,12 +130,12 @@ Partial Class RadFAldCim10Selecteur
         'RadBtnSelection
         '
         Me.RadBtnSelection.ForeColor = System.Drawing.Color.Black
-        Me.RadBtnSelection.Image = Global.Oasis_WF.My.Resources.Resources.selection
+        Me.RadBtnSelection.Image = Global.Oasis_WF.My.Resources.Resources._select
+        Me.RadBtnSelection.ImageAlignment = System.Drawing.ContentAlignment.MiddleCenter
         Me.RadBtnSelection.Location = New System.Drawing.Point(19, 87)
         Me.RadBtnSelection.Name = "RadBtnSelection"
-        Me.RadBtnSelection.Size = New System.Drawing.Size(110, 24)
+        Me.RadBtnSelection.Size = New System.Drawing.Size(24, 24)
         Me.RadBtnSelection.TabIndex = 5
-        Me.RadBtnSelection.Text = "Sélectionner"
         '
         'RadFAldCim10Selecteur
         '

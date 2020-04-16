@@ -22,6 +22,7 @@ Partial Class RadFEpisodeConsigneIdeDetail
     'Do not modify it using the code editor.
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
+        Me.components = New System.ComponentModel.Container()
         Me.TxtDénominationDrc = New System.Windows.Forms.TextBox()
         Me.TxtDenominationConsigneIde = New System.Windows.Forms.TextBox()
         Me.RadBtnAbandon = New Telerik.WinControls.UI.RadButton()
@@ -29,6 +30,7 @@ Partial Class RadFEpisodeConsigneIdeDetail
         Me.Label2 = New System.Windows.Forms.Label()
         Me.RadBtnCopierDenomination = New Telerik.WinControls.UI.RadButton()
         Me.RadBtnValidation = New Telerik.WinControls.UI.RadButton()
+        Me.ToolTip = New System.Windows.Forms.ToolTip(Me.components)
         CType(Me.RadBtnAbandon, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.RadBtnCopierDenomination, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.RadBtnValidation, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -53,11 +55,13 @@ Partial Class RadFEpisodeConsigneIdeDetail
         '
         'RadBtnAbandon
         '
-        Me.RadBtnAbandon.Location = New System.Drawing.Point(767, 146)
+        Me.RadBtnAbandon.Image = Global.Oasis_WF.My.Resources.Resources._exit
+        Me.RadBtnAbandon.ImageAlignment = System.Drawing.ContentAlignment.MiddleCenter
+        Me.RadBtnAbandon.Location = New System.Drawing.Point(853, 146)
         Me.RadBtnAbandon.Name = "RadBtnAbandon"
-        Me.RadBtnAbandon.Size = New System.Drawing.Size(110, 24)
+        Me.RadBtnAbandon.Size = New System.Drawing.Size(24, 24)
         Me.RadBtnAbandon.TabIndex = 2
-        Me.RadBtnAbandon.Text = "Sortie"
+        Me.ToolTip.SetToolTip(Me.RadBtnAbandon, "Abandon")
         '
         'Label1
         '
@@ -79,7 +83,7 @@ Partial Class RadFEpisodeConsigneIdeDetail
         '
         'RadBtnCopierDenomination
         '
-        Me.RadBtnCopierDenomination.Location = New System.Drawing.Point(505, 146)
+        Me.RadBtnCopierDenomination.Location = New System.Drawing.Point(138, 146)
         Me.RadBtnCopierDenomination.Name = "RadBtnCopierDenomination"
         Me.RadBtnCopierDenomination.Size = New System.Drawing.Size(140, 24)
         Me.RadBtnCopierDenomination.TabIndex = 5
@@ -87,11 +91,13 @@ Partial Class RadFEpisodeConsigneIdeDetail
         '
         'RadBtnValidation
         '
-        Me.RadBtnValidation.Location = New System.Drawing.Point(651, 146)
+        Me.RadBtnValidation.Image = Global.Oasis_WF.My.Resources.Resources.validation2
+        Me.RadBtnValidation.ImageAlignment = System.Drawing.ContentAlignment.MiddleCenter
+        Me.RadBtnValidation.Location = New System.Drawing.Point(108, 146)
         Me.RadBtnValidation.Name = "RadBtnValidation"
-        Me.RadBtnValidation.Size = New System.Drawing.Size(110, 24)
+        Me.RadBtnValidation.Size = New System.Drawing.Size(24, 24)
         Me.RadBtnValidation.TabIndex = 6
-        Me.RadBtnValidation.Text = "Validation"
+        Me.ToolTip.SetToolTip(Me.RadBtnValidation, "Valider")
         '
         'RadFEpisodeConsigneIdeDetail
         '
@@ -127,5 +133,6 @@ Partial Class RadFEpisodeConsigneIdeDetail
     Friend WithEvents Label2 As Label
     Friend WithEvents RadBtnCopierDenomination As Telerik.WinControls.UI.RadButton
     Friend WithEvents RadBtnValidation As Telerik.WinControls.UI.RadButton
+    Friend WithEvents ToolTip As ToolTip
 End Class
 

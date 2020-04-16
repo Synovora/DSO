@@ -23,23 +23,23 @@ Partial Class RadFDrcListe
     <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
         Me.components = New System.ComponentModel.Container()
-        Dim GridViewTextBoxColumn16 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
-        Dim GridViewTextBoxColumn17 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
-        Dim GridViewTextBoxColumn18 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
-        Dim GridViewTextBoxColumn19 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
-        Dim GridViewTextBoxColumn20 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
-        Dim GridViewTextBoxColumn21 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
-        Dim GridViewTextBoxColumn22 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
-        Dim GridViewTextBoxColumn23 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
-        Dim GridViewTextBoxColumn24 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
-        Dim GridViewTextBoxColumn25 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
-        Dim GridViewTextBoxColumn26 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
-        Dim GridViewTextBoxColumn27 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
-        Dim GridViewTextBoxColumn28 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
-        Dim TableViewDefinition3 As Telerik.WinControls.UI.TableViewDefinition = New Telerik.WinControls.UI.TableViewDefinition()
-        Dim GridViewTextBoxColumn29 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
-        Dim GridViewTextBoxColumn30 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
-        Dim TableViewDefinition4 As Telerik.WinControls.UI.TableViewDefinition = New Telerik.WinControls.UI.TableViewDefinition()
+        Dim GridViewTextBoxColumn31 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
+        Dim GridViewTextBoxColumn32 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
+        Dim GridViewTextBoxColumn33 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
+        Dim GridViewTextBoxColumn34 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
+        Dim GridViewTextBoxColumn35 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
+        Dim GridViewTextBoxColumn36 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
+        Dim GridViewTextBoxColumn37 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
+        Dim GridViewTextBoxColumn38 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
+        Dim GridViewTextBoxColumn39 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
+        Dim GridViewTextBoxColumn40 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
+        Dim GridViewTextBoxColumn41 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
+        Dim GridViewTextBoxColumn42 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
+        Dim GridViewTextBoxColumn43 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
+        Dim TableViewDefinition5 As Telerik.WinControls.UI.TableViewDefinition = New Telerik.WinControls.UI.TableViewDefinition()
+        Dim GridViewTextBoxColumn44 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
+        Dim GridViewTextBoxColumn45 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
+        Dim TableViewDefinition6 As Telerik.WinControls.UI.TableViewDefinition = New Telerik.WinControls.UI.TableViewDefinition()
         Me.DrcDataGridView = New Telerik.WinControls.UI.RadGridView()
         Me.RadDrcDSynonymeDataGridView = New Telerik.WinControls.UI.RadGridView()
         Me.RadBtnAbandonner = New Telerik.WinControls.UI.RadButton()
@@ -54,6 +54,7 @@ Partial Class RadFDrcListe
         Me.CbxCategorieOasis = New System.Windows.Forms.ComboBox()
         Me.Label2 = New System.Windows.Forms.Label()
         Me.RadBtnFiltrer = New Telerik.WinControls.UI.RadButton()
+        Me.ToolTip = New System.Windows.Forms.ToolTip(Me.components)
         CType(Me.DrcDataGridView, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.DrcDataGridView.MasterTemplate, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.RadDrcDSynonymeDataGridView, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -84,82 +85,82 @@ Partial Class RadFDrcListe
         Me.DrcDataGridView.MasterTemplate.AllowCellContextMenu = False
         Me.DrcDataGridView.MasterTemplate.AllowDeleteRow = False
         Me.DrcDataGridView.MasterTemplate.AllowEditRow = False
-        GridViewTextBoxColumn16.EnableExpressionEditor = False
-        GridViewTextBoxColumn16.FieldName = "drcId"
-        GridViewTextBoxColumn16.HeaderText = "Id"
-        GridViewTextBoxColumn16.Name = "drcId"
-        GridViewTextBoxColumn16.TextAlignment = System.Drawing.ContentAlignment.MiddleCenter
-        GridViewTextBoxColumn17.EnableExpressionEditor = False
-        GridViewTextBoxColumn17.FieldName = "drcDescription"
-        GridViewTextBoxColumn17.HeaderText = "Dénomination"
-        GridViewTextBoxColumn17.HeaderTextAlignment = System.Drawing.ContentAlignment.MiddleLeft
-        GridViewTextBoxColumn17.Name = "drcDescription"
-        GridViewTextBoxColumn17.Width = 300
-        GridViewTextBoxColumn18.EnableExpressionEditor = False
-        GridViewTextBoxColumn18.FieldName = "categorieOasis"
-        GridViewTextBoxColumn18.HeaderText = "Catégorie Oasis"
-        GridViewTextBoxColumn18.HeaderTextAlignment = System.Drawing.ContentAlignment.MiddleLeft
-        GridViewTextBoxColumn18.Name = "categorieOasis"
-        GridViewTextBoxColumn18.Width = 120
-        GridViewTextBoxColumn19.EnableExpressionEditor = False
-        GridViewTextBoxColumn19.FieldName = "categorieMajeure"
-        GridViewTextBoxColumn19.HeaderText = "Catégorie majeure"
-        GridViewTextBoxColumn19.HeaderTextAlignment = System.Drawing.ContentAlignment.MiddleLeft
-        GridViewTextBoxColumn19.Name = "categorieMajeure"
-        GridViewTextBoxColumn19.Width = 250
-        GridViewTextBoxColumn20.EnableExpressionEditor = False
-        GridViewTextBoxColumn20.FieldName = "oa_ald_description"
-        GridViewTextBoxColumn20.HeaderText = "ALD"
-        GridViewTextBoxColumn20.HeaderTextAlignment = System.Drawing.ContentAlignment.MiddleLeft
-        GridViewTextBoxColumn20.Name = "oa_ald_description"
-        GridViewTextBoxColumn20.Width = 250
-        GridViewTextBoxColumn21.EnableExpressionEditor = False
-        GridViewTextBoxColumn21.FieldName = "drcOasis"
-        GridViewTextBoxColumn21.HeaderText = " DRC Oasis"
-        GridViewTextBoxColumn21.Name = "drcOasis"
-        GridViewTextBoxColumn21.TextAlignment = System.Drawing.ContentAlignment.MiddleCenter
-        GridViewTextBoxColumn21.Width = 100
-        GridViewTextBoxColumn22.EnableExpressionEditor = False
-        GridViewTextBoxColumn22.FieldName = "oa_drc_sexe"
-        GridViewTextBoxColumn22.HeaderText = "column1"
-        GridViewTextBoxColumn22.IsVisible = False
-        GridViewTextBoxColumn22.Name = "oa_drc_sexe"
-        GridViewTextBoxColumn23.EnableExpressionEditor = False
-        GridViewTextBoxColumn23.FieldName = "contexte"
-        GridViewTextBoxColumn23.HeaderText = "contexte"
-        GridViewTextBoxColumn23.IsVisible = False
-        GridViewTextBoxColumn23.Name = "contexte"
-        GridViewTextBoxColumn24.EnableExpressionEditor = False
-        GridViewTextBoxColumn24.FieldName = "oa_drc_age_min"
-        GridViewTextBoxColumn24.HeaderText = "oa_drc_age_min"
-        GridViewTextBoxColumn24.IsVisible = False
-        GridViewTextBoxColumn24.Name = "oa_drc_age_min"
-        GridViewTextBoxColumn25.EnableExpressionEditor = False
-        GridViewTextBoxColumn25.FieldName = "oa_drc_age_max"
-        GridViewTextBoxColumn25.HeaderText = "oa_drc_age_max"
-        GridViewTextBoxColumn25.IsVisible = False
-        GridViewTextBoxColumn25.Name = "oa_drc_age_max"
-        GridViewTextBoxColumn26.EnableExpressionEditor = False
-        GridViewTextBoxColumn26.FieldName = "oa_drc_ald_id"
-        GridViewTextBoxColumn26.HeaderText = "oa_drc_ald_id"
-        GridViewTextBoxColumn26.IsVisible = False
-        GridViewTextBoxColumn26.Name = "oa_drc_ald_id"
-        GridViewTextBoxColumn27.EnableExpressionEditor = False
-        GridViewTextBoxColumn27.FieldName = "oa_drc_ald_code"
-        GridViewTextBoxColumn27.HeaderText = "ALD"
-        GridViewTextBoxColumn27.IsVisible = False
-        GridViewTextBoxColumn27.Name = "oa_drc_ald_code"
-        GridViewTextBoxColumn27.TextAlignment = System.Drawing.ContentAlignment.MiddleCenter
-        GridViewTextBoxColumn27.Width = 70
-        GridViewTextBoxColumn28.EnableExpressionEditor = False
-        GridViewTextBoxColumn28.FieldName = "oa_drc_categorie_majeure_id"
-        GridViewTextBoxColumn28.HeaderText = "oa_drc_categorie_majeure_id"
-        GridViewTextBoxColumn28.IsVisible = False
-        GridViewTextBoxColumn28.Name = "oa_drc_categorie_majeure_id"
-        Me.DrcDataGridView.MasterTemplate.Columns.AddRange(New Telerik.WinControls.UI.GridViewDataColumn() {GridViewTextBoxColumn16, GridViewTextBoxColumn17, GridViewTextBoxColumn18, GridViewTextBoxColumn19, GridViewTextBoxColumn20, GridViewTextBoxColumn21, GridViewTextBoxColumn22, GridViewTextBoxColumn23, GridViewTextBoxColumn24, GridViewTextBoxColumn25, GridViewTextBoxColumn26, GridViewTextBoxColumn27, GridViewTextBoxColumn28})
+        GridViewTextBoxColumn31.EnableExpressionEditor = False
+        GridViewTextBoxColumn31.FieldName = "drcId"
+        GridViewTextBoxColumn31.HeaderText = "Id"
+        GridViewTextBoxColumn31.Name = "drcId"
+        GridViewTextBoxColumn31.TextAlignment = System.Drawing.ContentAlignment.MiddleCenter
+        GridViewTextBoxColumn32.EnableExpressionEditor = False
+        GridViewTextBoxColumn32.FieldName = "drcDescription"
+        GridViewTextBoxColumn32.HeaderText = "Dénomination"
+        GridViewTextBoxColumn32.HeaderTextAlignment = System.Drawing.ContentAlignment.MiddleLeft
+        GridViewTextBoxColumn32.Name = "drcDescription"
+        GridViewTextBoxColumn32.Width = 300
+        GridViewTextBoxColumn33.EnableExpressionEditor = False
+        GridViewTextBoxColumn33.FieldName = "categorieOasis"
+        GridViewTextBoxColumn33.HeaderText = "Catégorie Oasis"
+        GridViewTextBoxColumn33.HeaderTextAlignment = System.Drawing.ContentAlignment.MiddleLeft
+        GridViewTextBoxColumn33.Name = "categorieOasis"
+        GridViewTextBoxColumn33.Width = 120
+        GridViewTextBoxColumn34.EnableExpressionEditor = False
+        GridViewTextBoxColumn34.FieldName = "categorieMajeure"
+        GridViewTextBoxColumn34.HeaderText = "Catégorie majeure"
+        GridViewTextBoxColumn34.HeaderTextAlignment = System.Drawing.ContentAlignment.MiddleLeft
+        GridViewTextBoxColumn34.Name = "categorieMajeure"
+        GridViewTextBoxColumn34.Width = 250
+        GridViewTextBoxColumn35.EnableExpressionEditor = False
+        GridViewTextBoxColumn35.FieldName = "oa_ald_description"
+        GridViewTextBoxColumn35.HeaderText = "ALD"
+        GridViewTextBoxColumn35.HeaderTextAlignment = System.Drawing.ContentAlignment.MiddleLeft
+        GridViewTextBoxColumn35.Name = "oa_ald_description"
+        GridViewTextBoxColumn35.Width = 250
+        GridViewTextBoxColumn36.EnableExpressionEditor = False
+        GridViewTextBoxColumn36.FieldName = "drcOasis"
+        GridViewTextBoxColumn36.HeaderText = " DRC Oasis"
+        GridViewTextBoxColumn36.Name = "drcOasis"
+        GridViewTextBoxColumn36.TextAlignment = System.Drawing.ContentAlignment.MiddleCenter
+        GridViewTextBoxColumn36.Width = 100
+        GridViewTextBoxColumn37.EnableExpressionEditor = False
+        GridViewTextBoxColumn37.FieldName = "oa_drc_sexe"
+        GridViewTextBoxColumn37.HeaderText = "column1"
+        GridViewTextBoxColumn37.IsVisible = False
+        GridViewTextBoxColumn37.Name = "oa_drc_sexe"
+        GridViewTextBoxColumn38.EnableExpressionEditor = False
+        GridViewTextBoxColumn38.FieldName = "contexte"
+        GridViewTextBoxColumn38.HeaderText = "contexte"
+        GridViewTextBoxColumn38.IsVisible = False
+        GridViewTextBoxColumn38.Name = "contexte"
+        GridViewTextBoxColumn39.EnableExpressionEditor = False
+        GridViewTextBoxColumn39.FieldName = "oa_drc_age_min"
+        GridViewTextBoxColumn39.HeaderText = "oa_drc_age_min"
+        GridViewTextBoxColumn39.IsVisible = False
+        GridViewTextBoxColumn39.Name = "oa_drc_age_min"
+        GridViewTextBoxColumn40.EnableExpressionEditor = False
+        GridViewTextBoxColumn40.FieldName = "oa_drc_age_max"
+        GridViewTextBoxColumn40.HeaderText = "oa_drc_age_max"
+        GridViewTextBoxColumn40.IsVisible = False
+        GridViewTextBoxColumn40.Name = "oa_drc_age_max"
+        GridViewTextBoxColumn41.EnableExpressionEditor = False
+        GridViewTextBoxColumn41.FieldName = "oa_drc_ald_id"
+        GridViewTextBoxColumn41.HeaderText = "oa_drc_ald_id"
+        GridViewTextBoxColumn41.IsVisible = False
+        GridViewTextBoxColumn41.Name = "oa_drc_ald_id"
+        GridViewTextBoxColumn42.EnableExpressionEditor = False
+        GridViewTextBoxColumn42.FieldName = "oa_drc_ald_code"
+        GridViewTextBoxColumn42.HeaderText = "ALD"
+        GridViewTextBoxColumn42.IsVisible = False
+        GridViewTextBoxColumn42.Name = "oa_drc_ald_code"
+        GridViewTextBoxColumn42.TextAlignment = System.Drawing.ContentAlignment.MiddleCenter
+        GridViewTextBoxColumn42.Width = 70
+        GridViewTextBoxColumn43.EnableExpressionEditor = False
+        GridViewTextBoxColumn43.FieldName = "oa_drc_categorie_majeure_id"
+        GridViewTextBoxColumn43.HeaderText = "oa_drc_categorie_majeure_id"
+        GridViewTextBoxColumn43.IsVisible = False
+        GridViewTextBoxColumn43.Name = "oa_drc_categorie_majeure_id"
+        Me.DrcDataGridView.MasterTemplate.Columns.AddRange(New Telerik.WinControls.UI.GridViewDataColumn() {GridViewTextBoxColumn31, GridViewTextBoxColumn32, GridViewTextBoxColumn33, GridViewTextBoxColumn34, GridViewTextBoxColumn35, GridViewTextBoxColumn36, GridViewTextBoxColumn37, GridViewTextBoxColumn38, GridViewTextBoxColumn39, GridViewTextBoxColumn40, GridViewTextBoxColumn41, GridViewTextBoxColumn42, GridViewTextBoxColumn43})
         Me.DrcDataGridView.MasterTemplate.EnableFiltering = True
         Me.DrcDataGridView.MasterTemplate.ShowRowHeaderColumn = False
-        Me.DrcDataGridView.MasterTemplate.ViewDefinition = TableViewDefinition3
+        Me.DrcDataGridView.MasterTemplate.ViewDefinition = TableViewDefinition5
         Me.DrcDataGridView.Name = "DrcDataGridView"
         Me.DrcDataGridView.RightToLeft = System.Windows.Forms.RightToLeft.No
         Me.DrcDataGridView.Size = New System.Drawing.Size(1098, 465)
@@ -179,21 +180,21 @@ Partial Class RadFDrcListe
         Me.RadDrcDSynonymeDataGridView.MasterTemplate.AllowAddNewRow = False
         Me.RadDrcDSynonymeDataGridView.MasterTemplate.AllowDeleteRow = False
         Me.RadDrcDSynonymeDataGridView.MasterTemplate.AllowEditRow = False
-        GridViewTextBoxColumn29.EnableExpressionEditor = False
-        GridViewTextBoxColumn29.FieldName = "oa_drc_synonyme_id"
-        GridViewTextBoxColumn29.HeaderText = "oa_drc_synonyme_id"
-        GridViewTextBoxColumn29.IsVisible = False
-        GridViewTextBoxColumn29.Name = "oa_drc_synonyme_id"
-        GridViewTextBoxColumn29.ReadOnly = True
-        GridViewTextBoxColumn30.EnableExpressionEditor = False
-        GridViewTextBoxColumn30.FieldName = "oa_drc_synonyme_libelle"
-        GridViewTextBoxColumn30.HeaderText = "Synonyme(s)"
-        GridViewTextBoxColumn30.Name = "oa_drc_synonyme_libelle"
-        GridViewTextBoxColumn30.ReadOnly = True
-        GridViewTextBoxColumn30.Width = 400
-        Me.RadDrcDSynonymeDataGridView.MasterTemplate.Columns.AddRange(New Telerik.WinControls.UI.GridViewDataColumn() {GridViewTextBoxColumn29, GridViewTextBoxColumn30})
+        GridViewTextBoxColumn44.EnableExpressionEditor = False
+        GridViewTextBoxColumn44.FieldName = "oa_drc_synonyme_id"
+        GridViewTextBoxColumn44.HeaderText = "oa_drc_synonyme_id"
+        GridViewTextBoxColumn44.IsVisible = False
+        GridViewTextBoxColumn44.Name = "oa_drc_synonyme_id"
+        GridViewTextBoxColumn44.ReadOnly = True
+        GridViewTextBoxColumn45.EnableExpressionEditor = False
+        GridViewTextBoxColumn45.FieldName = "oa_drc_synonyme_libelle"
+        GridViewTextBoxColumn45.HeaderText = "Synonyme(s)"
+        GridViewTextBoxColumn45.Name = "oa_drc_synonyme_libelle"
+        GridViewTextBoxColumn45.ReadOnly = True
+        GridViewTextBoxColumn45.Width = 400
+        Me.RadDrcDSynonymeDataGridView.MasterTemplate.Columns.AddRange(New Telerik.WinControls.UI.GridViewDataColumn() {GridViewTextBoxColumn44, GridViewTextBoxColumn45})
         Me.RadDrcDSynonymeDataGridView.MasterTemplate.EnableGrouping = False
-        Me.RadDrcDSynonymeDataGridView.MasterTemplate.ViewDefinition = TableViewDefinition4
+        Me.RadDrcDSynonymeDataGridView.MasterTemplate.ViewDefinition = TableViewDefinition6
         Me.RadDrcDSynonymeDataGridView.Name = "RadDrcDSynonymeDataGridView"
         Me.RadDrcDSynonymeDataGridView.RightToLeft = System.Windows.Forms.RightToLeft.No
         Me.RadDrcDSynonymeDataGridView.Size = New System.Drawing.Size(312, 465)
@@ -290,11 +291,12 @@ Partial Class RadFDrcListe
         'RadBtnFiltrer
         '
         Me.RadBtnFiltrer.Image = Global.Oasis_WF.My.Resources.Resources.rechercher
-        Me.RadBtnFiltrer.Location = New System.Drawing.Point(943, 15)
+        Me.RadBtnFiltrer.ImageAlignment = System.Drawing.ContentAlignment.MiddleCenter
+        Me.RadBtnFiltrer.Location = New System.Drawing.Point(917, 15)
         Me.RadBtnFiltrer.Name = "RadBtnFiltrer"
-        Me.RadBtnFiltrer.Size = New System.Drawing.Size(110, 24)
+        Me.RadBtnFiltrer.Size = New System.Drawing.Size(24, 24)
         Me.RadBtnFiltrer.TabIndex = 40
-        Me.RadBtnFiltrer.Text = "Filtrer"
+        Me.ToolTip.SetToolTip(Me.RadBtnFiltrer, "Filtrer l'affichage")
         '
         'RadFDrcListe
         '
@@ -355,5 +357,6 @@ Partial Class RadFDrcListe
     Friend WithEvents CbxCategorieOasis As ComboBox
     Friend WithEvents Label2 As Label
     Friend WithEvents RadBtnFiltrer As Telerik.WinControls.UI.RadButton
+    Friend WithEvents ToolTip As ToolTip
 End Class
 

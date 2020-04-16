@@ -49,11 +49,13 @@ Partial Class RadFEpisodeObservationDetailEdit
         'RadBtnAbandon
         '
         Me.RadBtnAbandon.DialogResult = System.Windows.Forms.DialogResult.Cancel
-        Me.RadBtnAbandon.Location = New System.Drawing.Point(846, 182)
+        Me.RadBtnAbandon.Image = Global.Oasis_WF.My.Resources.Resources._exit
+        Me.RadBtnAbandon.ImageAlignment = System.Drawing.ContentAlignment.MiddleCenter
+        Me.RadBtnAbandon.Location = New System.Drawing.Point(932, 204)
         Me.RadBtnAbandon.Name = "RadBtnAbandon"
-        Me.RadBtnAbandon.Size = New System.Drawing.Size(110, 24)
+        Me.RadBtnAbandon.Size = New System.Drawing.Size(24, 24)
         Me.RadBtnAbandon.TabIndex = 44
-        Me.RadBtnAbandon.Text = "Abandonner"
+        Me.ToolTip.SetToolTip(Me.RadBtnAbandon, "Abandon")
         '
         'LblModificationObs
         '
@@ -115,11 +117,13 @@ Partial Class RadFEpisodeObservationDetailEdit
         'RadBtnValidation
         '
         Me.RadBtnValidation.DialogResult = System.Windows.Forms.DialogResult.Cancel
-        Me.RadBtnValidation.Location = New System.Drawing.Point(730, 182)
+        Me.RadBtnValidation.Image = Global.Oasis_WF.My.Resources.Resources.validation2
+        Me.RadBtnValidation.ImageAlignment = System.Drawing.ContentAlignment.MiddleCenter
+        Me.RadBtnValidation.Location = New System.Drawing.Point(4, 204)
         Me.RadBtnValidation.Name = "RadBtnValidation"
-        Me.RadBtnValidation.Size = New System.Drawing.Size(110, 24)
+        Me.RadBtnValidation.Size = New System.Drawing.Size(24, 24)
         Me.RadBtnValidation.TabIndex = 45
-        Me.RadBtnValidation.Text = "Validation"
+        Me.ToolTip.SetToolTip(Me.RadBtnValidation, "Valider")
         '
         'RadGroupBox2
         '
@@ -200,7 +204,7 @@ Partial Class RadFEpisodeObservationDetailEdit
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.CancelButton = Me.RadBtnAbandon
-        Me.ClientSize = New System.Drawing.Size(959, 210)
+        Me.ClientSize = New System.Drawing.Size(959, 240)
         Me.Controls.Add(Me.LblObsHeureCreation)
         Me.Controls.Add(Me.LblCreationObs3)
         Me.Controls.Add(Me.RadGroupBox2)

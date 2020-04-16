@@ -165,6 +165,7 @@ Partial Class RadFEpisodeParametreDetailEdit
         Me.RadBtnAjouter.TabIndex = 97
         Me.RadBtnAjouter.TabStop = False
         Me.RadBtnAjouter.Text = "+"
+        Me.ToolTip.SetToolTip(Me.RadBtnAjouter, "Ajouter des paramètres")
         '
         'RadDesktopAlert1
         '
@@ -177,11 +178,12 @@ Partial Class RadFEpisodeParametreDetailEdit
         'RadBtnSupprimer
         '
         Me.RadBtnSupprimer.Image = Global.Oasis_WF.My.Resources.Resources.supprimer1
+        Me.RadBtnSupprimer.ImageAlignment = System.Drawing.ContentAlignment.MiddleCenter
         Me.RadBtnSupprimer.Location = New System.Drawing.Point(42, 4)
         Me.RadBtnSupprimer.Name = "RadBtnSupprimer"
-        Me.RadBtnSupprimer.Size = New System.Drawing.Size(110, 24)
+        Me.RadBtnSupprimer.Size = New System.Drawing.Size(24, 24)
         Me.RadBtnSupprimer.TabIndex = 97
-        Me.RadBtnSupprimer.Text = "Supprimer"
+        Me.ToolTip.SetToolTip(Me.RadBtnSupprimer, "Supprimer")
         '
         'RadBtnSuppprimer
         '

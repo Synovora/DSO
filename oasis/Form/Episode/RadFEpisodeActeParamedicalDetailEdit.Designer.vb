@@ -22,9 +22,11 @@ Partial Class RadFEpisodeActeParamedicalDetailEdit
     'Do not modify it using the code editor.
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
+        Me.components = New System.ComponentModel.Container()
         Me.TxtObservation = New System.Windows.Forms.TextBox()
         Me.RadBtnAbandon = New Telerik.WinControls.UI.RadButton()
         Me.RadBtnValidation = New Telerik.WinControls.UI.RadButton()
+        Me.ToolTip = New System.Windows.Forms.ToolTip(Me.components)
         CType(Me.RadBtnAbandon, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.RadBtnValidation, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -41,19 +43,23 @@ Partial Class RadFEpisodeActeParamedicalDetailEdit
         'RadBtnAbandon
         '
         Me.RadBtnAbandon.DialogResult = System.Windows.Forms.DialogResult.Cancel
-        Me.RadBtnAbandon.Location = New System.Drawing.Point(564, 154)
+        Me.RadBtnAbandon.Image = Global.Oasis_WF.My.Resources.Resources._exit
+        Me.RadBtnAbandon.ImageAlignment = System.Drawing.ContentAlignment.MiddleCenter
+        Me.RadBtnAbandon.Location = New System.Drawing.Point(650, 154)
         Me.RadBtnAbandon.Name = "RadBtnAbandon"
-        Me.RadBtnAbandon.Size = New System.Drawing.Size(110, 24)
+        Me.RadBtnAbandon.Size = New System.Drawing.Size(24, 24)
         Me.RadBtnAbandon.TabIndex = 1
-        Me.RadBtnAbandon.Text = "Abandon"
+        Me.ToolTip.SetToolTip(Me.RadBtnAbandon, "Abandon")
         '
         'RadBtnValidation
         '
-        Me.RadBtnValidation.Location = New System.Drawing.Point(448, 154)
+        Me.RadBtnValidation.Image = Global.Oasis_WF.My.Resources.Resources.validation2
+        Me.RadBtnValidation.ImageAlignment = System.Drawing.ContentAlignment.MiddleCenter
+        Me.RadBtnValidation.Location = New System.Drawing.Point(12, 154)
         Me.RadBtnValidation.Name = "RadBtnValidation"
-        Me.RadBtnValidation.Size = New System.Drawing.Size(110, 24)
+        Me.RadBtnValidation.Size = New System.Drawing.Size(24, 24)
         Me.RadBtnValidation.TabIndex = 2
-        Me.RadBtnValidation.Text = "Validation"
+        Me.ToolTip.SetToolTip(Me.RadBtnValidation, "Valider")
         '
         'RadFEpisodeActeParamedicalDetailEdit
         '
@@ -84,5 +90,6 @@ Partial Class RadFEpisodeActeParamedicalDetailEdit
     Friend WithEvents TxtObservation As TextBox
     Friend WithEvents RadBtnAbandon As Telerik.WinControls.UI.RadButton
     Friend WithEvents RadBtnValidation As Telerik.WinControls.UI.RadButton
+    Friend WithEvents ToolTip As ToolTip
 End Class
 

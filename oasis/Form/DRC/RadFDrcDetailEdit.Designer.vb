@@ -22,6 +22,7 @@ Partial Class RadFDrcDetailEdit
     'Do not modify it using the code editor.
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
+        Me.components = New System.ComponentModel.Container()
         Me.LblALDDescription = New System.Windows.Forms.Label()
         Me.Label10 = New System.Windows.Forms.Label()
         Me.TxtAld = New System.Windows.Forms.TextBox()
@@ -63,6 +64,7 @@ Partial Class RadFDrcDetailEdit
         Me.RadBtnProtocole = New Telerik.WinControls.UI.RadButton()
         Me.TxtReponseCommentee = New System.Windows.Forms.TextBox()
         Me.RadGbxReponse = New Telerik.WinControls.UI.RadGroupBox()
+        Me.ToolTip = New System.Windows.Forms.ToolTip(Me.components)
         CType(Me.NumAgeMax, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.NumAgeMin, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.RadBtnAnnuler, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -334,15 +336,16 @@ Partial Class RadFDrcDetailEdit
         '
         Me.RadBtnAnnuler.ForeColor = System.Drawing.Color.Black
         Me.RadBtnAnnuler.Image = Global.Oasis_WF.My.Resources.Resources.supprimer1
-        Me.RadBtnAnnuler.Location = New System.Drawing.Point(128, 484)
+        Me.RadBtnAnnuler.ImageAlignment = System.Drawing.ContentAlignment.MiddleCenter
+        Me.RadBtnAnnuler.Location = New System.Drawing.Point(42, 484)
         Me.RadBtnAnnuler.Name = "RadBtnAnnuler"
-        Me.RadBtnAnnuler.Size = New System.Drawing.Size(122, 24)
+        Me.RadBtnAnnuler.Size = New System.Drawing.Size(24, 24)
         Me.RadBtnAnnuler.TabIndex = 164
-        Me.RadBtnAnnuler.Text = "Annuler la DRC"
+        Me.ToolTip.SetToolTip(Me.RadBtnAnnuler, "Annulation de la DORC")
         '
         'RadBtnTransformer
         '
-        Me.RadBtnTransformer.Location = New System.Drawing.Point(259, 484)
+        Me.RadBtnTransformer.Location = New System.Drawing.Point(72, 484)
         Me.RadBtnTransformer.Name = "RadBtnTransformer"
         Me.RadBtnTransformer.Size = New System.Drawing.Size(149, 24)
         Me.RadBtnTransformer.TabIndex = 165
@@ -352,11 +355,12 @@ Partial Class RadFDrcDetailEdit
         '
         Me.RadBtnValidation.ForeColor = System.Drawing.Color.Black
         Me.RadBtnValidation.Image = Global.Oasis_WF.My.Resources.Resources.validation2
+        Me.RadBtnValidation.ImageAlignment = System.Drawing.ContentAlignment.MiddleCenter
         Me.RadBtnValidation.Location = New System.Drawing.Point(12, 484)
         Me.RadBtnValidation.Name = "RadBtnValidation"
-        Me.RadBtnValidation.Size = New System.Drawing.Size(110, 24)
+        Me.RadBtnValidation.Size = New System.Drawing.Size(24, 24)
         Me.RadBtnValidation.TabIndex = 166
-        Me.RadBtnValidation.Text = "Validation"
+        Me.ToolTip.SetToolTip(Me.RadBtnValidation, "Validation des données saisies")
         '
         'RadBtnAbandonner
         '
@@ -369,7 +373,7 @@ Partial Class RadFDrcDetailEdit
         '
         'RadBtnParametre
         '
-        Me.RadBtnParametre.Location = New System.Drawing.Point(414, 484)
+        Me.RadBtnParametre.Location = New System.Drawing.Point(227, 484)
         Me.RadBtnParametre.Name = "RadBtnParametre"
         Me.RadBtnParametre.Size = New System.Drawing.Size(110, 24)
         Me.RadBtnParametre.TabIndex = 168
@@ -442,7 +446,7 @@ Partial Class RadFDrcDetailEdit
         '
         'RadBtnProtocole
         '
-        Me.RadBtnProtocole.Location = New System.Drawing.Point(530, 484)
+        Me.RadBtnProtocole.Location = New System.Drawing.Point(343, 484)
         Me.RadBtnProtocole.Name = "RadBtnProtocole"
         Me.RadBtnProtocole.Size = New System.Drawing.Size(146, 24)
         Me.RadBtnProtocole.TabIndex = 171
@@ -564,5 +568,6 @@ Partial Class RadFDrcDetailEdit
     Friend WithEvents TxtReponseCommentee As TextBox
     Friend WithEvents RadGbxReponse As Telerik.WinControls.UI.RadGroupBox
     Friend WithEvents Label1 As Label
+    Friend WithEvents ToolTip As ToolTip
 End Class
 

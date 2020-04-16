@@ -23,6 +23,7 @@ Partial Class RadFAntecedentDetailEdit
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
         Me.components = New System.ComponentModel.Container()
+        Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(RadFAntecedentDetailEdit))
         Me.RadGroupBoxEtatCivil = New Telerik.WinControls.UI.RadGroupBox()
         Me.LblALD = New System.Windows.Forms.Label()
         Me.Label13 = New System.Windows.Forms.Label()
@@ -77,6 +78,10 @@ Partial Class RadFAntecedentDetailEdit
         Me.ToolTip1 = New System.Windows.Forms.ToolTip(Me.components)
         Me.TxtAldCode = New System.Windows.Forms.TextBox()
         Me.TxtAldCim10Code = New System.Windows.Forms.TextBox()
+        Me.RadBtnValidation = New Telerik.WinControls.UI.RadButton()
+        Me.RadBtnAbandon = New Telerik.WinControls.UI.RadButton()
+        Me.RadBtnSupprimer = New Telerik.WinControls.UI.RadButton()
+        Me.RadBtnHistorique = New Telerik.WinControls.UI.RadButton()
         Me.RadGbxAld = New Telerik.WinControls.UI.RadGroupBox()
         Me.RadBtnCopierALD = New Telerik.WinControls.UI.RadButton()
         Me.LblAldDateDemandeEnCours = New System.Windows.Forms.Label()
@@ -93,9 +98,6 @@ Partial Class RadFAntecedentDetailEdit
         Me.Lblcim10Description = New System.Windows.Forms.Label()
         Me.LblAldDescription = New System.Windows.Forms.Label()
         Me.Label11 = New System.Windows.Forms.Label()
-        Me.RadBtnValidation = New Telerik.WinControls.UI.RadButton()
-        Me.RadBtnAbandon = New Telerik.WinControls.UI.RadButton()
-        Me.RadBtnSupprimer = New Telerik.WinControls.UI.RadButton()
         CType(Me.RadGroupBoxEtatCivil, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.RadGroupBoxEtatCivil.SuspendLayout()
         CType(Me.GbxPrincipal, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -104,15 +106,16 @@ Partial Class RadFAntecedentDetailEdit
         CType(Me.RadBtnDrcSelect, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.GbxStatutAffichage, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.GbxStatutAffichage.SuspendLayout()
+        CType(Me.RadBtnValidation, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.RadBtnAbandon, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.RadBtnSupprimer, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.RadBtnHistorique, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.RadGbxAld, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.RadGbxAld.SuspendLayout()
         CType(Me.RadBtnCopierALD, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.RadChkAldDemandeEnCours, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.RadChkAldValide, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.RadBtnSelectionAldCim10, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.RadBtnValidation, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.RadBtnAbandon, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.RadBtnSupprimer, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
@@ -447,7 +450,7 @@ Partial Class RadFAntecedentDetailEdit
         '
         Me.DteDateDebut.Location = New System.Drawing.Point(134, 105)
         Me.DteDateDebut.Name = "DteDateDebut"
-        Me.DteDateDebut.Size = New System.Drawing.Size(200, 22)
+        Me.DteDateDebut.Size = New System.Drawing.Size(200, 20)
         Me.DteDateDebut.TabIndex = 20
         '
         'Label8
@@ -494,7 +497,7 @@ Partial Class RadFAntecedentDetailEdit
         Me.TxtDrcId.Location = New System.Drawing.Point(203, 24)
         Me.TxtDrcId.Name = "TxtDrcId"
         Me.TxtDrcId.ReadOnly = True
-        Me.TxtDrcId.Size = New System.Drawing.Size(53, 22)
+        Me.TxtDrcId.Size = New System.Drawing.Size(53, 20)
         Me.TxtDrcId.TabIndex = 5
         '
         'GbxStatutAffichage
@@ -658,7 +661,7 @@ Partial Class RadFAntecedentDetailEdit
         Me.TxtAldCode.Location = New System.Drawing.Point(134, 21)
         Me.TxtAldCode.Name = "TxtAldCode"
         Me.TxtAldCode.ReadOnly = True
-        Me.TxtAldCode.Size = New System.Drawing.Size(59, 22)
+        Me.TxtAldCode.Size = New System.Drawing.Size(59, 20)
         Me.TxtAldCode.TabIndex = 74
         Me.ToolTip1.SetToolTip(Me.TxtAldCode, "Double clic pour afficher le sélecteur des ALD")
         '
@@ -667,10 +670,52 @@ Partial Class RadFAntecedentDetailEdit
         Me.TxtAldCim10Code.Location = New System.Drawing.Point(134, 51)
         Me.TxtAldCim10Code.Name = "TxtAldCim10Code"
         Me.TxtAldCim10Code.ReadOnly = True
-        Me.TxtAldCim10Code.Size = New System.Drawing.Size(59, 22)
+        Me.TxtAldCim10Code.Size = New System.Drawing.Size(59, 20)
         Me.TxtAldCim10Code.TabIndex = 91
         Me.ToolTip1.SetToolTip(Me.TxtAldCim10Code, "Double clic pour afficher le sélecteur des compléments de codification CIM10 de l" &
         "'ALD")
+        '
+        'RadBtnValidation
+        '
+        Me.RadBtnValidation.ForeColor = System.Drawing.Color.Black
+        Me.RadBtnValidation.Image = Global.Oasis_WF.My.Resources.Resources.validation2
+        Me.RadBtnValidation.ImageAlignment = System.Drawing.ContentAlignment.MiddleCenter
+        Me.RadBtnValidation.Location = New System.Drawing.Point(14, 562)
+        Me.RadBtnValidation.Name = "RadBtnValidation"
+        Me.RadBtnValidation.Size = New System.Drawing.Size(24, 24)
+        Me.RadBtnValidation.TabIndex = 80
+        Me.ToolTip1.SetToolTip(Me.RadBtnValidation, "Valider les informations saisies")
+        '
+        'RadBtnAbandon
+        '
+        Me.RadBtnAbandon.DialogResult = System.Windows.Forms.DialogResult.Cancel
+        Me.RadBtnAbandon.Image = Global.Oasis_WF.My.Resources.Resources._exit
+        Me.RadBtnAbandon.Location = New System.Drawing.Point(940, 562)
+        Me.RadBtnAbandon.Name = "RadBtnAbandon"
+        Me.RadBtnAbandon.Size = New System.Drawing.Size(24, 24)
+        Me.RadBtnAbandon.TabIndex = 90
+        Me.ToolTip1.SetToolTip(Me.RadBtnAbandon, "Sortir de l'écran")
+        '
+        'RadBtnSupprimer
+        '
+        Me.RadBtnSupprimer.ForeColor = System.Drawing.Color.Black
+        Me.RadBtnSupprimer.Image = Global.Oasis_WF.My.Resources.Resources.supprimer1
+        Me.RadBtnSupprimer.ImageAlignment = System.Drawing.ContentAlignment.MiddleCenter
+        Me.RadBtnSupprimer.Location = New System.Drawing.Point(44, 562)
+        Me.RadBtnSupprimer.Name = "RadBtnSupprimer"
+        Me.RadBtnSupprimer.Size = New System.Drawing.Size(24, 24)
+        Me.RadBtnSupprimer.TabIndex = 75
+        Me.ToolTip1.SetToolTip(Me.RadBtnSupprimer, "Supprimer l'antécédent")
+        '
+        'RadBtnHistorique
+        '
+        Me.RadBtnHistorique.Image = CType(resources.GetObject("RadBtnHistorique.Image"), System.Drawing.Image)
+        Me.RadBtnHistorique.ImageAlignment = System.Drawing.ContentAlignment.MiddleCenter
+        Me.RadBtnHistorique.Location = New System.Drawing.Point(74, 562)
+        Me.RadBtnHistorique.Name = "RadBtnHistorique"
+        Me.RadBtnHistorique.Size = New System.Drawing.Size(24, 24)
+        Me.RadBtnHistorique.TabIndex = 92
+        Me.ToolTip1.SetToolTip(Me.RadBtnHistorique, "Afficher l'historique de l'antécédent")
         '
         'RadGbxAld
         '
@@ -725,7 +770,7 @@ Partial Class RadFAntecedentDetailEdit
         '
         Me.DteAldDateDemande.Location = New System.Drawing.Point(247, 107)
         Me.DteAldDateDemande.Name = "DteAldDateDemande"
-        Me.DteAldDateDemande.Size = New System.Drawing.Size(200, 22)
+        Me.DteAldDateDemande.Size = New System.Drawing.Size(200, 20)
         Me.DteAldDateDemande.TabIndex = 107
         '
         'LblLabelAldDemandeEnCours
@@ -784,14 +829,14 @@ Partial Class RadFAntecedentDetailEdit
         '
         Me.DteALDDateFin.Location = New System.Drawing.Point(561, 78)
         Me.DteALDDateFin.Name = "DteALDDateFin"
-        Me.DteALDDateFin.Size = New System.Drawing.Size(200, 22)
+        Me.DteALDDateFin.Size = New System.Drawing.Size(200, 20)
         Me.DteALDDateFin.TabIndex = 100
         '
         'DteALDDateDebut
         '
         Me.DteALDDateDebut.Location = New System.Drawing.Point(247, 78)
         Me.DteALDDateDebut.Name = "DteALDDateDebut"
-        Me.DteALDDateDebut.Size = New System.Drawing.Size(200, 22)
+        Me.DteALDDateDebut.Size = New System.Drawing.Size(200, 20)
         Me.DteALDDateDebut.TabIndex = 99
         '
         'RadBtnSelectionAldCim10
@@ -830,35 +875,6 @@ Partial Class RadFAntecedentDetailEdit
         Me.Label11.TabIndex = 76
         Me.Label11.Text = "ALD (DRC)"
         '
-        'RadBtnValidation
-        '
-        Me.RadBtnValidation.ForeColor = System.Drawing.Color.Black
-        Me.RadBtnValidation.Image = Global.Oasis_WF.My.Resources.Resources.validation2
-        Me.RadBtnValidation.Location = New System.Drawing.Point(14, 562)
-        Me.RadBtnValidation.Name = "RadBtnValidation"
-        Me.RadBtnValidation.Size = New System.Drawing.Size(110, 24)
-        Me.RadBtnValidation.TabIndex = 80
-        Me.RadBtnValidation.Text = "Validation"
-        '
-        'RadBtnAbandon
-        '
-        Me.RadBtnAbandon.DialogResult = System.Windows.Forms.DialogResult.Cancel
-        Me.RadBtnAbandon.Image = Global.Oasis_WF.My.Resources.Resources._exit
-        Me.RadBtnAbandon.Location = New System.Drawing.Point(940, 562)
-        Me.RadBtnAbandon.Name = "RadBtnAbandon"
-        Me.RadBtnAbandon.Size = New System.Drawing.Size(24, 24)
-        Me.RadBtnAbandon.TabIndex = 90
-        '
-        'RadBtnSupprimer
-        '
-        Me.RadBtnSupprimer.ForeColor = System.Drawing.Color.Black
-        Me.RadBtnSupprimer.Image = Global.Oasis_WF.My.Resources.Resources.supprimer1
-        Me.RadBtnSupprimer.Location = New System.Drawing.Point(130, 562)
-        Me.RadBtnSupprimer.Name = "RadBtnSupprimer"
-        Me.RadBtnSupprimer.Size = New System.Drawing.Size(162, 24)
-        Me.RadBtnSupprimer.TabIndex = 75
-        Me.RadBtnSupprimer.Text = "Supprimer l'antécédent"
-        '
         'RadFAntecedentDetailEdit
         '
         Me.AcceptButton = Me.RadBtnValidation
@@ -866,6 +882,7 @@ Partial Class RadFAntecedentDetailEdit
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.CancelButton = Me.RadBtnAbandon
         Me.ClientSize = New System.Drawing.Size(976, 601)
+        Me.Controls.Add(Me.RadBtnHistorique)
         Me.Controls.Add(Me.RadGbxAld)
         Me.Controls.Add(Me.LblId)
         Me.Controls.Add(Me.LblModificationAntecedent1)
@@ -902,6 +919,10 @@ Partial Class RadFAntecedentDetailEdit
         CType(Me.GbxStatutAffichage, System.ComponentModel.ISupportInitialize).EndInit()
         Me.GbxStatutAffichage.ResumeLayout(False)
         Me.GbxStatutAffichage.PerformLayout()
+        CType(Me.RadBtnValidation, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.RadBtnAbandon, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.RadBtnSupprimer, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.RadBtnHistorique, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.RadGbxAld, System.ComponentModel.ISupportInitialize).EndInit()
         Me.RadGbxAld.ResumeLayout(False)
         Me.RadGbxAld.PerformLayout()
@@ -909,9 +930,6 @@ Partial Class RadFAntecedentDetailEdit
         CType(Me.RadChkAldDemandeEnCours, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.RadChkAldValide, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.RadBtnSelectionAldCim10, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.RadBtnValidation, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.RadBtnAbandon, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.RadBtnSupprimer, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
         Me.PerformLayout()
@@ -991,5 +1009,6 @@ Partial Class RadFAntecedentDetailEdit
     Friend WithEvents DteALDDateFin As DateTimePicker
     Friend WithEvents DteALDDateDebut As DateTimePicker
     Friend WithEvents RadBtnCopierALD As Telerik.WinControls.UI.RadButton
+    Friend WithEvents RadBtnHistorique As Telerik.WinControls.UI.RadButton
 End Class
 

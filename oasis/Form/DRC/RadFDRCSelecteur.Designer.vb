@@ -445,6 +445,7 @@ Partial Class RadFDRCSelecteur
         Me.RadPnlSelection.Size = New System.Drawing.Size(351, 379)
         Me.RadPnlSelection.TabIndex = 0
         Me.RadPnlSelection.Text = "DRC/ORC Sélectionnée"
+        Me.ToolTip.SetToolTip(Me.RadPnlSelection, "Sélectionner l'occurrence")
         '
         'RadBtnAbandon
         '
@@ -493,12 +494,12 @@ Partial Class RadFDRCSelecteur
         '
         'RadBtnSelection
         '
-        Me.RadBtnSelection.Image = Global.Oasis_WF.My.Resources.Resources.selection
+        Me.RadBtnSelection.Image = Global.Oasis_WF.My.Resources.Resources._select
+        Me.RadBtnSelection.ImageAlignment = System.Drawing.ContentAlignment.MiddleCenter
         Me.RadBtnSelection.Location = New System.Drawing.Point(12, 261)
         Me.RadBtnSelection.Name = "RadBtnSelection"
-        Me.RadBtnSelection.Size = New System.Drawing.Size(110, 24)
+        Me.RadBtnSelection.Size = New System.Drawing.Size(24, 24)
         Me.RadBtnSelection.TabIndex = 16
-        Me.RadBtnSelection.Text = "Sélection"
         '
         'LblAgeMinLbl
         '

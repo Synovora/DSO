@@ -22,6 +22,7 @@ Partial Class RadFParametreTest
     'Do not modify it using the code editor.
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
+        Me.components = New System.ComponentModel.Container()
         Dim GridViewTextBoxColumn1 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
         Dim TableViewDefinition1 As Telerik.WinControls.UI.TableViewDefinition = New Telerik.WinControls.UI.TableViewDefinition()
         Me.RadBtnValidation = New Telerik.WinControls.UI.RadButton()
@@ -29,6 +30,7 @@ Partial Class RadFParametreTest
         Me.CbxActiviteEpisode = New System.Windows.Forms.ComboBox()
         Me.RadBtnAbandon = New Telerik.WinControls.UI.RadButton()
         Me.RadGridViewParametre = New Telerik.WinControls.UI.RadGridView()
+        Me.ToolTip = New System.Windows.Forms.ToolTip(Me.components)
         CType(Me.RadBtnValidation, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.RadBtnAbandon, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.RadGridViewParametre, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -39,12 +41,13 @@ Partial Class RadFParametreTest
         'RadBtnValidation
         '
         Me.RadBtnValidation.ForeColor = System.Drawing.Color.Black
-        Me.RadBtnValidation.Image = Global.Oasis_WF.My.Resources.Resources.validation
+        Me.RadBtnValidation.Image = Global.Oasis_WF.My.Resources.Resources.validation2
+        Me.RadBtnValidation.ImageAlignment = System.Drawing.ContentAlignment.MiddleCenter
         Me.RadBtnValidation.Location = New System.Drawing.Point(12, 387)
         Me.RadBtnValidation.Name = "RadBtnValidation"
-        Me.RadBtnValidation.Size = New System.Drawing.Size(110, 24)
+        Me.RadBtnValidation.Size = New System.Drawing.Size(24, 24)
         Me.RadBtnValidation.TabIndex = 6
-        Me.RadBtnValidation.Text = "Validation"
+        Me.ToolTip.SetToolTip(Me.RadBtnValidation, "Valider le test")
         '
         'Label1
         '
@@ -138,5 +141,6 @@ Partial Class RadFParametreTest
     Friend WithEvents CbxActiviteEpisode As ComboBox
     Friend WithEvents RadBtnAbandon As Telerik.WinControls.UI.RadButton
     Friend WithEvents RadGridViewParametre As Telerik.WinControls.UI.RadGridView
+    Friend WithEvents ToolTip As ToolTip
 End Class
 

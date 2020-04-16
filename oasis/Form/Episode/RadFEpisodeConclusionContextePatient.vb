@@ -270,11 +270,11 @@ Public Class RadFEpisodeConclusionContextePatient
     End Sub
 
     'Créer un contexte
-    Private Sub RadBtnCreation_MouseCaptureChanged(sender As Object, e As EventArgs) Handles RadBtnCreation.MouseCaptureChanged
+    Private Sub CréerUnContexteToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles CréerUnContexteToolStripMenuItem.Click
         CreationContexte()
     End Sub
 
-    Private Sub CréerUnContexteToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles CréerUnContexteToolStripMenuItem.Click
+    Private Sub RadBtnCreation_Click(sender As Object, e As EventArgs) Handles RadBtnCreation.Click
         CreationContexte()
     End Sub
 
@@ -358,4 +358,5 @@ Public Class RadFEpisodeConclusionContextePatient
     Private Sub RadFEpisodeConclusionContextePatient_FormClosed(sender As Object, e As FormClosedEventArgs) Handles MyBase.FormClosed
         episodeDao.MajEpisodeConclusionMedicale(SelectedEpisode.Id)
     End Sub
+
 End Class

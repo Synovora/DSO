@@ -1484,6 +1484,8 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Resources\Aha-Soft-People-User-group.ico" />
+    <None Include="Resources\historique.png" />
+    <None Include="Resources\select.png" />
     <None Include="Resources\modifier2.png" />
     <None Include="Resources\modifier1.png" />
     <None Include="Resources\modifier.png" />

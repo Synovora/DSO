@@ -81,15 +81,16 @@ Partial Class RadFContextedetailEdit
         Me.LblContexteDateCreation = New System.Windows.Forms.Label()
         Me.LblContexteDateModification = New System.Windows.Forms.Label()
         Me.ToolTip1 = New System.Windows.Forms.ToolTip(Me.components)
-        Me.RadDtnAbandon = New Telerik.WinControls.UI.RadButton()
-        Me.RadValidation = New Telerik.WinControls.UI.RadButton()
-        Me.RadBtnSupprimer = New Telerik.WinControls.UI.RadButton()
         Me.RadBtnTransformer = New Telerik.WinControls.UI.RadButton()
         Me.RadGroupBox1 = New Telerik.WinControls.UI.RadGroupBox()
         Me.ChkOcculteTransformation = New System.Windows.Forms.CheckBox()
         Me.ChkCacheTransformation = New System.Windows.Forms.CheckBox()
         Me.ChkPublieTransformation = New System.Windows.Forms.CheckBox()
         Me.Label16 = New System.Windows.Forms.Label()
+        Me.RadValidation = New Telerik.WinControls.UI.RadButton()
+        Me.RadDtnAbandon = New Telerik.WinControls.UI.RadButton()
+        Me.RadBtnHistorique = New Telerik.WinControls.UI.RadButton()
+        Me.RadBtnSupprimer = New Telerik.WinControls.UI.RadButton()
         CType(Me.RadGroupBoxEtatCivil, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.RadGroupBoxEtatCivil.SuspendLayout()
         CType(Me.GbxPrincipal, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -99,12 +100,13 @@ Partial Class RadFContextedetailEdit
         CType(Me.NumOrdreAffichage, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.GbxStatutAffichage, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.GbxStatutAffichage.SuspendLayout()
-        CType(Me.RadDtnAbandon, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.RadValidation, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.RadBtnSupprimer, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.RadBtnTransformer, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.RadGroupBox1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.RadGroupBox1.SuspendLayout()
+        CType(Me.RadValidation, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.RadDtnAbandon, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.RadBtnHistorique, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.RadBtnSupprimer, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
@@ -479,7 +481,7 @@ Partial Class RadFContextedetailEdit
         Me.NumOrdreAffichage.Location = New System.Drawing.Point(754, 189)
         Me.NumOrdreAffichage.Maximum = New Decimal(New Integer() {1000, 0, 0, 0})
         Me.NumOrdreAffichage.Name = "NumOrdreAffichage"
-        Me.NumOrdreAffichage.Size = New System.Drawing.Size(75, 20)
+        Me.NumOrdreAffichage.Size = New System.Drawing.Size(75, 22)
         Me.NumOrdreAffichage.TabIndex = 69
         Me.NumOrdreAffichage.Visible = False
         '
@@ -497,7 +499,7 @@ Partial Class RadFContextedetailEdit
         '
         Me.DteDateFin.Location = New System.Drawing.Point(139, 157)
         Me.DteDateFin.Name = "DteDateFin"
-        Me.DteDateFin.Size = New System.Drawing.Size(200, 20)
+        Me.DteDateFin.Size = New System.Drawing.Size(200, 22)
         Me.DteDateFin.TabIndex = 67
         '
         'Label7
@@ -514,7 +516,7 @@ Partial Class RadFContextedetailEdit
         '
         Me.DteDateDebut.Location = New System.Drawing.Point(139, 131)
         Me.DteDateDebut.Name = "DteDateDebut"
-        Me.DteDateDebut.Size = New System.Drawing.Size(200, 20)
+        Me.DteDateDebut.Size = New System.Drawing.Size(200, 22)
         Me.DteDateDebut.TabIndex = 63
         '
         'Label8
@@ -560,7 +562,7 @@ Partial Class RadFContextedetailEdit
         Me.TxtDrcId.Location = New System.Drawing.Point(209, 54)
         Me.TxtDrcId.Name = "TxtDrcId"
         Me.TxtDrcId.ReadOnly = True
-        Me.TxtDrcId.Size = New System.Drawing.Size(53, 20)
+        Me.TxtDrcId.Size = New System.Drawing.Size(53, 22)
         Me.TxtDrcId.TabIndex = 58
         '
         'GbxStatutAffichage
@@ -707,39 +709,10 @@ Partial Class RadFContextedetailEdit
         Me.LblContexteDateModification.TabIndex = 81
         Me.LblContexteDateModification.Text = "02.10.2019"
         '
-        'RadDtnAbandon
-        '
-        Me.RadDtnAbandon.DialogResult = System.Windows.Forms.DialogResult.Cancel
-        Me.RadDtnAbandon.Image = Global.Oasis_WF.My.Resources.Resources._exit
-        Me.RadDtnAbandon.Location = New System.Drawing.Point(936, 526)
-        Me.RadDtnAbandon.Name = "RadDtnAbandon"
-        Me.RadDtnAbandon.Size = New System.Drawing.Size(24, 24)
-        Me.RadDtnAbandon.TabIndex = 94
-        '
-        'RadValidation
-        '
-        Me.RadValidation.ForeColor = System.Drawing.Color.Black
-        Me.RadValidation.Image = Global.Oasis_WF.My.Resources.Resources.validation2
-        Me.RadValidation.Location = New System.Drawing.Point(12, 526)
-        Me.RadValidation.Name = "RadValidation"
-        Me.RadValidation.Size = New System.Drawing.Size(110, 24)
-        Me.RadValidation.TabIndex = 95
-        Me.RadValidation.Text = "Validation"
-        '
-        'RadBtnSupprimer
-        '
-        Me.RadBtnSupprimer.ForeColor = System.Drawing.Color.Black
-        Me.RadBtnSupprimer.Image = Global.Oasis_WF.My.Resources.Resources.supprimer1
-        Me.RadBtnSupprimer.Location = New System.Drawing.Point(128, 526)
-        Me.RadBtnSupprimer.Name = "RadBtnSupprimer"
-        Me.RadBtnSupprimer.Size = New System.Drawing.Size(156, 24)
-        Me.RadBtnSupprimer.TabIndex = 99
-        Me.RadBtnSupprimer.Text = "Supprimer le contexte"
-        '
         'RadBtnTransformer
         '
         Me.RadBtnTransformer.ForeColor = System.Drawing.Color.Black
-        Me.RadBtnTransformer.Location = New System.Drawing.Point(290, 526)
+        Me.RadBtnTransformer.Location = New System.Drawing.Point(102, 526)
         Me.RadBtnTransformer.Name = "RadBtnTransformer"
         Me.RadBtnTransformer.Size = New System.Drawing.Size(151, 24)
         Me.RadBtnTransformer.TabIndex = 100
@@ -803,6 +776,47 @@ Partial Class RadFContextedetailEdit
         Me.Label16.TabIndex = 70
         Me.Label16.Text = "Statut affichage"
         '
+        'RadValidation
+        '
+        Me.RadValidation.ForeColor = System.Drawing.Color.Black
+        Me.RadValidation.Image = Global.Oasis_WF.My.Resources.Resources.validation2
+        Me.RadValidation.ImageAlignment = System.Drawing.ContentAlignment.MiddleCenter
+        Me.RadValidation.Location = New System.Drawing.Point(12, 526)
+        Me.RadValidation.Name = "RadValidation"
+        Me.RadValidation.Size = New System.Drawing.Size(24, 24)
+        Me.RadValidation.TabIndex = 95
+        Me.ToolTip1.SetToolTip(Me.RadValidation, "Validation des données saisies")
+        '
+        'RadDtnAbandon
+        '
+        Me.RadDtnAbandon.DialogResult = System.Windows.Forms.DialogResult.Cancel
+        Me.RadDtnAbandon.Image = Global.Oasis_WF.My.Resources.Resources._exit
+        Me.RadDtnAbandon.Location = New System.Drawing.Point(936, 526)
+        Me.RadDtnAbandon.Name = "RadDtnAbandon"
+        Me.RadDtnAbandon.Size = New System.Drawing.Size(24, 24)
+        Me.RadDtnAbandon.TabIndex = 94
+        '
+        'RadBtnHistorique
+        '
+        Me.RadBtnHistorique.Image = Global.Oasis_WF.My.Resources.Resources.historique
+        Me.RadBtnHistorique.ImageAlignment = System.Drawing.ContentAlignment.MiddleCenter
+        Me.RadBtnHistorique.Location = New System.Drawing.Point(72, 526)
+        Me.RadBtnHistorique.Name = "RadBtnHistorique"
+        Me.RadBtnHistorique.Size = New System.Drawing.Size(24, 24)
+        Me.RadBtnHistorique.TabIndex = 101
+        Me.ToolTip1.SetToolTip(Me.RadBtnHistorique, "Historique")
+        '
+        'RadBtnSupprimer
+        '
+        Me.RadBtnSupprimer.ForeColor = System.Drawing.Color.Black
+        Me.RadBtnSupprimer.Image = Global.Oasis_WF.My.Resources.Resources.supprimer1
+        Me.RadBtnSupprimer.ImageAlignment = System.Drawing.ContentAlignment.MiddleCenter
+        Me.RadBtnSupprimer.Location = New System.Drawing.Point(42, 526)
+        Me.RadBtnSupprimer.Name = "RadBtnSupprimer"
+        Me.RadBtnSupprimer.Size = New System.Drawing.Size(24, 24)
+        Me.RadBtnSupprimer.TabIndex = 99
+        Me.ToolTip1.SetToolTip(Me.RadBtnSupprimer, "Supprimer le contexte")
+        '
         'RadFContextedetailEdit
         '
         Me.AcceptButton = Me.RadValidation
@@ -810,6 +824,7 @@ Partial Class RadFContextedetailEdit
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.CancelButton = Me.RadDtnAbandon
         Me.ClientSize = New System.Drawing.Size(972, 556)
+        Me.Controls.Add(Me.RadBtnHistorique)
         Me.Controls.Add(Me.RadGroupBox1)
         Me.Controls.Add(Me.RadBtnTransformer)
         Me.Controls.Add(Me.RadBtnSupprimer)
@@ -847,13 +862,14 @@ Partial Class RadFContextedetailEdit
         CType(Me.GbxStatutAffichage, System.ComponentModel.ISupportInitialize).EndInit()
         Me.GbxStatutAffichage.ResumeLayout(False)
         Me.GbxStatutAffichage.PerformLayout()
-        CType(Me.RadDtnAbandon, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.RadValidation, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.RadBtnSupprimer, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.RadBtnTransformer, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.RadGroupBox1, System.ComponentModel.ISupportInitialize).EndInit()
         Me.RadGroupBox1.ResumeLayout(False)
         Me.RadGroupBox1.PerformLayout()
+        CType(Me.RadValidation, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.RadDtnAbandon, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.RadBtnHistorique, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.RadBtnSupprimer, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
         Me.PerformLayout()
@@ -927,5 +943,6 @@ Partial Class RadFContextedetailEdit
     Friend WithEvents ChkPublieTransformation As CheckBox
     Friend WithEvents Label16 As Label
     Friend WithEvents ChkOcculteTransformation As CheckBox
+    Friend WithEvents RadBtnHistorique As Telerik.WinControls.UI.RadButton
 End Class
 

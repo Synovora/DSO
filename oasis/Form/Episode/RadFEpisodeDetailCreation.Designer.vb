@@ -22,6 +22,7 @@ Partial Class RadFEpisodeDetailCreation
     'Do not modify it using the code editor.
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
+        Me.components = New System.ComponentModel.Container()
         Me.CbxEpisodeActivite = New System.Windows.Forms.ComboBox()
         Me.Label1 = New System.Windows.Forms.Label()
         Me.Label2 = New System.Windows.Forms.Label()
@@ -44,6 +45,7 @@ Partial Class RadFEpisodeDetailCreation
         Me.RadBtnValidation = New Telerik.WinControls.UI.RadButton()
         Me.RadioBtnConsultation = New System.Windows.Forms.RadioButton()
         Me.RadioBtnVirtuel = New System.Windows.Forms.RadioButton()
+        Me.ToolTip = New System.Windows.Forms.ToolTip(Me.components)
         CType(Me.RadGroupBoxEtatCivil, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.RadGroupBoxEtatCivil.SuspendLayout()
         CType(Me.RadBtnAbandon, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -238,15 +240,17 @@ Partial Class RadFEpisodeDetailCreation
         Me.RadBtnAbandon.Name = "RadBtnAbandon"
         Me.RadBtnAbandon.Size = New System.Drawing.Size(24, 24)
         Me.RadBtnAbandon.TabIndex = 9
+        Me.ToolTip.SetToolTip(Me.RadBtnAbandon, "Abandon")
         '
         'RadBtnValidation
         '
-        Me.RadBtnValidation.Image = Global.Oasis_WF.My.Resources.Resources.validation
+        Me.RadBtnValidation.Image = Global.Oasis_WF.My.Resources.Resources.validation2
+        Me.RadBtnValidation.ImageAlignment = System.Drawing.ContentAlignment.MiddleCenter
         Me.RadBtnValidation.Location = New System.Drawing.Point(12, 220)
         Me.RadBtnValidation.Name = "RadBtnValidation"
-        Me.RadBtnValidation.Size = New System.Drawing.Size(110, 24)
+        Me.RadBtnValidation.Size = New System.Drawing.Size(24, 24)
         Me.RadBtnValidation.TabIndex = 10
-        Me.RadBtnValidation.Text = "Validation"
+        Me.ToolTip.SetToolTip(Me.RadBtnValidation, "Valider")
         '
         'RadioBtnConsultation
         '
@@ -330,5 +334,6 @@ Partial Class RadFEpisodeDetailCreation
     Friend WithEvents RadBtnValidation As Telerik.WinControls.UI.RadButton
     Friend WithEvents RadioBtnConsultation As RadioButton
     Friend WithEvents RadioBtnVirtuel As RadioButton
+    Friend WithEvents ToolTip As ToolTip
 End Class
 

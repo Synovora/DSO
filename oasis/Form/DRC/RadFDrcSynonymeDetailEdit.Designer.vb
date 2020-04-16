@@ -22,6 +22,7 @@ Partial Class RadFDrcSynonymeDetailEdit
     'Do not modify it using the code editor.
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
+        Me.components = New System.ComponentModel.Container()
         Me.LblDrcDescription = New System.Windows.Forms.Label()
         Me.LblDrcId = New System.Windows.Forms.Label()
         Me.Label2 = New System.Windows.Forms.Label()
@@ -30,6 +31,7 @@ Partial Class RadFDrcSynonymeDetailEdit
         Me.RadBtnAnnuler = New Telerik.WinControls.UI.RadButton()
         Me.RadBtnValidation = New Telerik.WinControls.UI.RadButton()
         Me.RadBtnAbandonner = New Telerik.WinControls.UI.RadButton()
+        Me.ToolTip = New System.Windows.Forms.ToolTip(Me.components)
         CType(Me.RadBtnAnnuler, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.RadBtnValidation, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.RadBtnAbandonner, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -86,21 +88,23 @@ Partial Class RadFDrcSynonymeDetailEdit
         '
         Me.RadBtnAnnuler.ForeColor = System.Drawing.Color.Black
         Me.RadBtnAnnuler.Image = Global.Oasis_WF.My.Resources.Resources.supprimer1
-        Me.RadBtnAnnuler.Location = New System.Drawing.Point(124, 88)
+        Me.RadBtnAnnuler.ImageAlignment = System.Drawing.ContentAlignment.MiddleCenter
+        Me.RadBtnAnnuler.Location = New System.Drawing.Point(38, 89)
         Me.RadBtnAnnuler.Name = "RadBtnAnnuler"
-        Me.RadBtnAnnuler.Size = New System.Drawing.Size(110, 24)
+        Me.RadBtnAnnuler.Size = New System.Drawing.Size(24, 24)
         Me.RadBtnAnnuler.TabIndex = 58
-        Me.RadBtnAnnuler.Text = "Supprimer"
+        Me.ToolTip.SetToolTip(Me.RadBtnAnnuler, "Supprimer")
         '
         'RadBtnValidation
         '
         Me.RadBtnValidation.ForeColor = System.Drawing.Color.Black
         Me.RadBtnValidation.Image = Global.Oasis_WF.My.Resources.Resources.validation2
+        Me.RadBtnValidation.ImageAlignment = System.Drawing.ContentAlignment.MiddleCenter
         Me.RadBtnValidation.Location = New System.Drawing.Point(8, 89)
         Me.RadBtnValidation.Name = "RadBtnValidation"
-        Me.RadBtnValidation.Size = New System.Drawing.Size(110, 24)
+        Me.RadBtnValidation.Size = New System.Drawing.Size(24, 24)
         Me.RadBtnValidation.TabIndex = 59
-        Me.RadBtnValidation.Text = "Valider"
+        Me.ToolTip.SetToolTip(Me.RadBtnValidation, "Valider")
         '
         'RadBtnAbandonner
         '
@@ -154,5 +158,6 @@ Partial Class RadFDrcSynonymeDetailEdit
     Friend WithEvents RadBtnAnnuler As Telerik.WinControls.UI.RadButton
     Friend WithEvents RadBtnValidation As Telerik.WinControls.UI.RadButton
     Friend WithEvents RadBtnAbandonner As Telerik.WinControls.UI.RadButton
+    Friend WithEvents ToolTip As ToolTip
 End Class
 
