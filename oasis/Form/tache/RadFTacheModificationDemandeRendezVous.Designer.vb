@@ -375,15 +375,17 @@ Partial Class RadFTacheModificationDemandeRendezVous
         'RadBtnAbandon
         '
         Me.RadBtnAbandon.DialogResult = System.Windows.Forms.DialogResult.Cancel
-        Me.RadBtnAbandon.Location = New System.Drawing.Point(853, 202)
+        Me.RadBtnAbandon.Image = Global.Oasis_WF.My.Resources.Resources._exit
+        Me.RadBtnAbandon.ImageAlignment = System.Drawing.ContentAlignment.MiddleCenter
+        Me.RadBtnAbandon.Location = New System.Drawing.Point(940, 197)
         Me.RadBtnAbandon.Name = "RadBtnAbandon"
-        Me.RadBtnAbandon.Size = New System.Drawing.Size(110, 24)
+        Me.RadBtnAbandon.Size = New System.Drawing.Size(24, 24)
         Me.RadBtnAbandon.TabIndex = 13
-        Me.RadBtnAbandon.Text = "Abandonner"
         '
         'RadBtnValidation
         '
-        Me.RadBtnValidation.Location = New System.Drawing.Point(737, 202)
+        Me.RadBtnValidation.Image = Global.Oasis_WF.My.Resources.Resources.validation
+        Me.RadBtnValidation.Location = New System.Drawing.Point(12, 197)
         Me.RadBtnValidation.Name = "RadBtnValidation"
         Me.RadBtnValidation.Size = New System.Drawing.Size(110, 24)
         Me.RadBtnValidation.TabIndex = 11
@@ -395,7 +397,7 @@ Partial Class RadFTacheModificationDemandeRendezVous
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.CancelButton = Me.RadBtnAbandon
-        Me.ClientSize = New System.Drawing.Size(975, 233)
+        Me.ClientSize = New System.Drawing.Size(975, 224)
         Me.Controls.Add(Me.RadBtnValidation)
         Me.Controls.Add(Me.RadBtnAbandon)
         Me.Controls.Add(Me.GbxIntervention)

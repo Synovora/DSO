@@ -1,9 +1,9 @@
-﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()>
-Partial Class RadFTacheModificationRendezVous
+﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
+Partial Class RadFPatientRendezVousListe
     Inherits Telerik.WinControls.UI.RadForm
 
     'Form overrides dispose to clean up the component list.
-    <System.Diagnostics.DebuggerNonUserCode()>
+    <System.Diagnostics.DebuggerNonUserCode()> _
     Protected Overrides Sub Dispose(ByVal disposing As Boolean)
         Try
             If disposing AndAlso components IsNot Nothing Then
@@ -20,9 +20,24 @@ Partial Class RadFTacheModificationRendezVous
     'NOTE: The following procedure is required by the Windows Form Designer
     'It can be modified using the Windows Form Designer.  
     'Do not modify it using the code editor.
-    <System.Diagnostics.DebuggerStepThrough()>
+    <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
         Me.components = New System.ComponentModel.Container()
+        Dim GridViewTextBoxColumn1 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
+        Dim GridViewTextBoxColumn2 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
+        Dim GridViewTextBoxColumn3 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
+        Dim GridViewTextBoxColumn4 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
+        Dim GridViewTextBoxColumn5 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
+        Dim GridViewTextBoxColumn6 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
+        Dim GridViewTextBoxColumn7 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
+        Dim GridViewTextBoxColumn8 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
+        Dim GridViewTextBoxColumn9 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
+        Dim GridViewTextBoxColumn10 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
+        Dim GridViewTextBoxColumn11 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
+        Dim GridViewTextBoxColumn12 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
+        Dim TableViewDefinition1 As Telerik.WinControls.UI.TableViewDefinition = New Telerik.WinControls.UI.TableViewDefinition()
+        Me.RadDesktopAlert1 = New Telerik.WinControls.UI.RadDesktopAlert(Me.components)
+        Me.RadGridViewRDV = New Telerik.WinControls.UI.RadGridView()
         Me.RadGroupBoxEtatCivil = New Telerik.WinControls.UI.RadGroupBox()
         Me.LblALD = New System.Windows.Forms.Label()
         Me.Label13 = New System.Windows.Forms.Label()
@@ -45,31 +60,102 @@ Partial Class RadFTacheModificationRendezVous
         Me.LblPatientAdresse2 = New System.Windows.Forms.Label()
         Me.Label2 = New System.Windows.Forms.Label()
         Me.LblPatientAdresse1 = New System.Windows.Forms.Label()
-        Me.RadBtnValidation = New Telerik.WinControls.UI.RadButton()
+        Me.ToolTip = New System.Windows.Forms.ToolTip(Me.components)
+        Me.RadBtnModifRDV = New Telerik.WinControls.UI.RadButton()
+        Me.RadBtnAnnulation = New Telerik.WinControls.UI.RadButton()
+        Me.RadBtnRefresh = New Telerik.WinControls.UI.RadButton()
         Me.RadBtnAbandon = New Telerik.WinControls.UI.RadButton()
-        Me.ToolTip1 = New System.Windows.Forms.ToolTip(Me.components)
-        Me.GbxIntervention = New Telerik.WinControls.UI.RadGroupBox()
-        Me.RadioBtn45 = New System.Windows.Forms.RadioButton()
-        Me.RadioBtn30 = New System.Windows.Forms.RadioButton()
-        Me.RadioBtn15 = New System.Windows.Forms.RadioButton()
-        Me.RadioBtn0 = New System.Windows.Forms.RadioButton()
-        Me.Label16 = New System.Windows.Forms.Label()
-        Me.TxtRDVCommentaire = New System.Windows.Forms.TextBox()
-        Me.LblLabelHeureRV = New System.Windows.Forms.Label()
-        Me.NumheureRV = New System.Windows.Forms.NumericUpDown()
-        Me.LblLabelDateRV = New System.Windows.Forms.Label()
-        Me.NumDateRV = New System.Windows.Forms.DateTimePicker()
-        Me.RadBtnTransformerEnPrevisionnel = New Telerik.WinControls.UI.RadButton()
+        Me.RadBtnCloture = New Telerik.WinControls.UI.RadButton()
+        CType(Me.RadGridViewRDV, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.RadGridViewRDV.MasterTemplate, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.RadGroupBoxEtatCivil, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.RadGroupBoxEtatCivil.SuspendLayout()
-        CType(Me.RadBtnValidation, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.RadBtnModifRDV, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.RadBtnAnnulation, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.RadBtnRefresh, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.RadBtnAbandon, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.GbxIntervention, System.ComponentModel.ISupportInitialize).BeginInit()
-        Me.GbxIntervention.SuspendLayout()
-        CType(Me.NumheureRV, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.RadBtnTransformerEnPrevisionnel, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.RadBtnCloture, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
+        '
+        'RadGridViewRDV
+        '
+        Me.RadGridViewRDV.BackColor = System.Drawing.Color.FromArgb(CType(CType(191, Byte), Integer), CType(CType(219, Byte), Integer), CType(CType(255, Byte), Integer))
+        Me.RadGridViewRDV.Cursor = System.Windows.Forms.Cursors.Default
+        Me.RadGridViewRDV.Font = New System.Drawing.Font("Segoe UI", 8.25!)
+        Me.RadGridViewRDV.ForeColor = System.Drawing.Color.Black
+        Me.RadGridViewRDV.ImeMode = System.Windows.Forms.ImeMode.NoControl
+        Me.RadGridViewRDV.Location = New System.Drawing.Point(12, 88)
+        '
+        '
+        '
+        Me.RadGridViewRDV.MasterTemplate.AllowAddNewRow = False
+        Me.RadGridViewRDV.MasterTemplate.AllowDeleteRow = False
+        Me.RadGridViewRDV.MasterTemplate.AllowEditRow = False
+        GridViewTextBoxColumn1.EnableExpressionEditor = False
+        GridViewTextBoxColumn1.HeaderText = "column1"
+        GridViewTextBoxColumn1.IsVisible = False
+        GridViewTextBoxColumn1.Name = "id"
+        GridViewTextBoxColumn2.EnableExpressionEditor = False
+        GridViewTextBoxColumn2.HeaderText = "Nom intervenant"
+        GridViewTextBoxColumn2.HeaderTextAlignment = System.Drawing.ContentAlignment.MiddleLeft
+        GridViewTextBoxColumn2.Name = "oa_ror_nom"
+        GridViewTextBoxColumn2.Width = 270
+        GridViewTextBoxColumn3.EnableExpressionEditor = False
+        GridViewTextBoxColumn3.HeaderText = "Spécialité"
+        GridViewTextBoxColumn3.HeaderTextAlignment = System.Drawing.ContentAlignment.MiddleLeft
+        GridViewTextBoxColumn3.Name = "specialite"
+        GridViewTextBoxColumn3.Width = 180
+        GridViewTextBoxColumn4.EnableExpressionEditor = False
+        GridViewTextBoxColumn4.HeaderText = "Structure"
+        GridViewTextBoxColumn4.HeaderTextAlignment = System.Drawing.ContentAlignment.MiddleLeft
+        GridViewTextBoxColumn4.Name = "oa_ror_structure_nom"
+        GridViewTextBoxColumn4.Width = 250
+        GridViewTextBoxColumn5.EnableExpressionEditor = False
+        GridViewTextBoxColumn5.HeaderText = "Nature"
+        GridViewTextBoxColumn5.HeaderTextAlignment = System.Drawing.ContentAlignment.MiddleLeft
+        GridViewTextBoxColumn5.Name = "nature"
+        GridViewTextBoxColumn5.Width = 140
+        GridViewTextBoxColumn6.EnableExpressionEditor = False
+        GridViewTextBoxColumn6.HeaderText = "Précédent"
+        GridViewTextBoxColumn6.Name = "dernierRendezVous"
+        GridViewTextBoxColumn6.TextAlignment = System.Drawing.ContentAlignment.MiddleCenter
+        GridViewTextBoxColumn6.Width = 80
+        GridViewTextBoxColumn7.EnableExpressionEditor = False
+        GridViewTextBoxColumn7.HeaderText = "Rendez vous"
+        GridViewTextBoxColumn7.Name = "dateRendezVous"
+        GridViewTextBoxColumn7.TextAlignment = System.Drawing.ContentAlignment.MiddleCenter
+        GridViewTextBoxColumn7.Width = 80
+        GridViewTextBoxColumn8.EnableExpressionEditor = False
+        GridViewTextBoxColumn8.HeaderText = "Heure"
+        GridViewTextBoxColumn8.Name = "heureRendezVous"
+        GridViewTextBoxColumn8.TextAlignment = System.Drawing.ContentAlignment.MiddleCenter
+        GridViewTextBoxColumn8.Width = 60
+        GridViewTextBoxColumn9.EnableExpressionEditor = False
+        GridViewTextBoxColumn9.HeaderText = "Etat"
+        GridViewTextBoxColumn9.Name = "etat"
+        GridViewTextBoxColumn9.TextAlignment = System.Drawing.ContentAlignment.MiddleCenter
+        GridViewTextBoxColumn9.Width = 80
+        GridViewTextBoxColumn10.EnableExpressionEditor = False
+        GridViewTextBoxColumn10.HeaderText = "Attribution"
+        GridViewTextBoxColumn10.HeaderTextAlignment = System.Drawing.ContentAlignment.MiddleLeft
+        GridViewTextBoxColumn10.Name = "traitePar"
+        GridViewTextBoxColumn10.Width = 150
+        GridViewTextBoxColumn11.EnableExpressionEditor = False
+        GridViewTextBoxColumn11.HeaderText = "parcours_id"
+        GridViewTextBoxColumn11.IsVisible = False
+        GridViewTextBoxColumn11.Name = "parcours_id"
+        GridViewTextBoxColumn12.EnableExpressionEditor = False
+        GridViewTextBoxColumn12.HeaderText = "ror_id"
+        GridViewTextBoxColumn12.IsVisible = False
+        GridViewTextBoxColumn12.Name = "ror_id"
+        Me.RadGridViewRDV.MasterTemplate.Columns.AddRange(New Telerik.WinControls.UI.GridViewDataColumn() {GridViewTextBoxColumn1, GridViewTextBoxColumn2, GridViewTextBoxColumn3, GridViewTextBoxColumn4, GridViewTextBoxColumn5, GridViewTextBoxColumn6, GridViewTextBoxColumn7, GridViewTextBoxColumn8, GridViewTextBoxColumn9, GridViewTextBoxColumn10, GridViewTextBoxColumn11, GridViewTextBoxColumn12})
+        Me.RadGridViewRDV.MasterTemplate.ViewDefinition = TableViewDefinition1
+        Me.RadGridViewRDV.Name = "RadGridViewRDV"
+        Me.RadGridViewRDV.RightToLeft = System.Windows.Forms.RightToLeft.No
+        Me.RadGridViewRDV.ShowGroupPanel = False
+        Me.RadGridViewRDV.Size = New System.Drawing.Size(1326, 389)
+        Me.RadGridViewRDV.TabIndex = 0
         '
         'RadGroupBoxEtatCivil
         '
@@ -98,10 +184,10 @@ Partial Class RadFTacheModificationRendezVous
         Me.RadGroupBoxEtatCivil.Controls.Add(Me.LblPatientAdresse1)
         Me.RadGroupBoxEtatCivil.GroupBoxStyle = Telerik.WinControls.UI.RadGroupBoxStyle.Office
         Me.RadGroupBoxEtatCivil.HeaderText = "Etat civil"
-        Me.RadGroupBoxEtatCivil.Location = New System.Drawing.Point(12, 12)
+        Me.RadGroupBoxEtatCivil.Location = New System.Drawing.Point(12, 8)
         Me.RadGroupBoxEtatCivil.Name = "RadGroupBoxEtatCivil"
-        Me.RadGroupBoxEtatCivil.Size = New System.Drawing.Size(952, 71)
-        Me.RadGroupBoxEtatCivil.TabIndex = 4
+        Me.RadGroupBoxEtatCivil.Size = New System.Drawing.Size(1326, 71)
+        Me.RadGroupBoxEtatCivil.TabIndex = 3
         Me.RadGroupBoxEtatCivil.Text = "Etat civil"
         '
         'LblALD
@@ -301,188 +387,92 @@ Partial Class RadFTacheModificationRendezVous
         Me.LblPatientAdresse1.TabIndex = 29
         Me.LblPatientAdresse1.Text = "3 rue de la république"
         '
-        'RadBtnValidation
+        'RadBtnModifRDV
         '
-        Me.RadBtnValidation.Image = Global.Oasis_WF.My.Resources.Resources.validation
-        Me.RadBtnValidation.Location = New System.Drawing.Point(12, 203)
-        Me.RadBtnValidation.Name = "RadBtnValidation"
-        Me.RadBtnValidation.Size = New System.Drawing.Size(110, 24)
-        Me.RadBtnValidation.TabIndex = 14
-        Me.RadBtnValidation.Text = "Valider"
+        Me.RadBtnModifRDV.Image = Global.Oasis_WF.My.Resources.Resources.modifier
+        Me.RadBtnModifRDV.Location = New System.Drawing.Point(12, 483)
+        Me.RadBtnModifRDV.Name = "RadBtnModifRDV"
+        Me.RadBtnModifRDV.Size = New System.Drawing.Size(110, 24)
+        Me.RadBtnModifRDV.TabIndex = 4
+        Me.RadBtnModifRDV.Text = "Modification"
+        '
+        'RadBtnAnnulation
+        '
+        Me.RadBtnAnnulation.Image = Global.Oasis_WF.My.Resources.Resources.supprimer1
+        Me.RadBtnAnnulation.Location = New System.Drawing.Point(128, 483)
+        Me.RadBtnAnnulation.Name = "RadBtnAnnulation"
+        Me.RadBtnAnnulation.Size = New System.Drawing.Size(110, 24)
+        Me.RadBtnAnnulation.TabIndex = 5
+        Me.RadBtnAnnulation.Text = "Annuler"
+        '
+        'RadBtnRefresh
+        '
+        Me.RadBtnRefresh.Image = Global.Oasis_WF.My.Resources.Resources.reload
+        Me.RadBtnRefresh.ImageAlignment = System.Drawing.ContentAlignment.MiddleCenter
+        Me.RadBtnRefresh.Location = New System.Drawing.Point(1282, 483)
+        Me.RadBtnRefresh.Name = "RadBtnRefresh"
+        Me.RadBtnRefresh.Size = New System.Drawing.Size(24, 24)
+        Me.RadBtnRefresh.TabIndex = 6
         '
         'RadBtnAbandon
         '
         Me.RadBtnAbandon.DialogResult = System.Windows.Forms.DialogResult.Cancel
         Me.RadBtnAbandon.Image = Global.Oasis_WF.My.Resources.Resources._exit
         Me.RadBtnAbandon.ImageAlignment = System.Drawing.ContentAlignment.MiddleCenter
-        Me.RadBtnAbandon.Location = New System.Drawing.Point(940, 203)
+        Me.RadBtnAbandon.Location = New System.Drawing.Point(1312, 483)
         Me.RadBtnAbandon.Name = "RadBtnAbandon"
         Me.RadBtnAbandon.Size = New System.Drawing.Size(24, 24)
-        Me.RadBtnAbandon.TabIndex = 15
+        Me.RadBtnAbandon.TabIndex = 7
         '
-        'GbxIntervention
+        'RadBtnCloture
         '
-        Me.GbxIntervention.AccessibleRole = System.Windows.Forms.AccessibleRole.Grouping
-        Me.GbxIntervention.Controls.Add(Me.RadioBtn45)
-        Me.GbxIntervention.Controls.Add(Me.RadioBtn30)
-        Me.GbxIntervention.Controls.Add(Me.RadioBtn15)
-        Me.GbxIntervention.Controls.Add(Me.RadioBtn0)
-        Me.GbxIntervention.Controls.Add(Me.Label16)
-        Me.GbxIntervention.Controls.Add(Me.TxtRDVCommentaire)
-        Me.GbxIntervention.Controls.Add(Me.LblLabelHeureRV)
-        Me.GbxIntervention.Controls.Add(Me.NumheureRV)
-        Me.GbxIntervention.Controls.Add(Me.LblLabelDateRV)
-        Me.GbxIntervention.Controls.Add(Me.NumDateRV)
-        Me.GbxIntervention.GroupBoxStyle = Telerik.WinControls.UI.RadGroupBoxStyle.Office
-        Me.GbxIntervention.HeaderText = "Gérer un rendez-vous"
-        Me.GbxIntervention.Location = New System.Drawing.Point(12, 89)
-        Me.GbxIntervention.Name = "GbxIntervention"
-        Me.GbxIntervention.Size = New System.Drawing.Size(952, 109)
-        Me.GbxIntervention.TabIndex = 16
-        Me.GbxIntervention.Text = "Gérer un rendez-vous"
-        CType(Me.GbxIntervention.GetChildAt(0).GetChildAt(1), Telerik.WinControls.UI.GroupBoxHeader).GroupBoxStyle = Telerik.WinControls.UI.RadGroupBoxStyle.Office
-        CType(Me.GbxIntervention.GetChildAt(0).GetChildAt(1).GetChildAt(0), Telerik.WinControls.Primitives.FillPrimitive).BackColor = System.Drawing.SystemColors.ActiveCaption
-        CType(Me.GbxIntervention.GetChildAt(0).GetChildAt(1).GetChildAt(0), Telerik.WinControls.Primitives.FillPrimitive).SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.None
+        Me.RadBtnCloture.Location = New System.Drawing.Point(244, 483)
+        Me.RadBtnCloture.Name = "RadBtnCloture"
+        Me.RadBtnCloture.Size = New System.Drawing.Size(177, 24)
+        Me.RadBtnCloture.TabIndex = 8
+        Me.RadBtnCloture.Text = "Déclaration rendez-vous honoré"
         '
-        'RadioBtn45
-        '
-        Me.RadioBtn45.AutoSize = True
-        Me.RadioBtn45.Location = New System.Drawing.Point(755, 30)
-        Me.RadioBtn45.Name = "RadioBtn45"
-        Me.RadioBtn45.Size = New System.Drawing.Size(81, 17)
-        Me.RadioBtn45.TabIndex = 21
-        Me.RadioBtn45.TabStop = True
-        Me.RadioBtn45.Text = "45 minutes"
-        Me.RadioBtn45.UseVisualStyleBackColor = True
-        '
-        'RadioBtn30
-        '
-        Me.RadioBtn30.AutoSize = True
-        Me.RadioBtn30.Location = New System.Drawing.Point(652, 30)
-        Me.RadioBtn30.Name = "RadioBtn30"
-        Me.RadioBtn30.Size = New System.Drawing.Size(81, 17)
-        Me.RadioBtn30.TabIndex = 20
-        Me.RadioBtn30.TabStop = True
-        Me.RadioBtn30.Text = "30 minutes"
-        Me.RadioBtn30.UseVisualStyleBackColor = True
-        '
-        'RadioBtn15
-        '
-        Me.RadioBtn15.AutoSize = True
-        Me.RadioBtn15.Location = New System.Drawing.Point(549, 30)
-        Me.RadioBtn15.Name = "RadioBtn15"
-        Me.RadioBtn15.Size = New System.Drawing.Size(81, 17)
-        Me.RadioBtn15.TabIndex = 19
-        Me.RadioBtn15.TabStop = True
-        Me.RadioBtn15.Text = "15 minutes"
-        Me.RadioBtn15.UseVisualStyleBackColor = True
-        '
-        'RadioBtn0
-        '
-        Me.RadioBtn0.AutoSize = True
-        Me.RadioBtn0.Location = New System.Drawing.Point(450, 30)
-        Me.RadioBtn0.Name = "RadioBtn0"
-        Me.RadioBtn0.Size = New System.Drawing.Size(73, 17)
-        Me.RadioBtn0.TabIndex = 18
-        Me.RadioBtn0.TabStop = True
-        Me.RadioBtn0.Text = "O minute"
-        Me.RadioBtn0.UseVisualStyleBackColor = True
-        '
-        'Label16
-        '
-        Me.Label16.AutoSize = True
-        Me.Label16.Location = New System.Drawing.Point(11, 58)
-        Me.Label16.Name = "Label16"
-        Me.Label16.Size = New System.Drawing.Size(75, 13)
-        Me.Label16.TabIndex = 16
-        Me.Label16.Text = "Commentaire"
-        '
-        'TxtRDVCommentaire
-        '
-        Me.TxtRDVCommentaire.Location = New System.Drawing.Point(128, 55)
-        Me.TxtRDVCommentaire.MaxLength = 200
-        Me.TxtRDVCommentaire.Multiline = True
-        Me.TxtRDVCommentaire.Name = "TxtRDVCommentaire"
-        Me.TxtRDVCommentaire.Size = New System.Drawing.Size(817, 44)
-        Me.TxtRDVCommentaire.TabIndex = 15
-        '
-        'LblLabelHeureRV
-        '
-        Me.LblLabelHeureRV.AutoSize = True
-        Me.LblLabelHeureRV.Location = New System.Drawing.Point(351, 29)
-        Me.LblLabelHeureRV.Name = "LblLabelHeureRV"
-        Me.LblLabelHeureRV.Size = New System.Drawing.Size(38, 13)
-        Me.LblLabelHeureRV.TabIndex = 14
-        Me.LblLabelHeureRV.Text = "Heure"
-        '
-        'NumheureRV
-        '
-        Me.NumheureRV.Location = New System.Drawing.Point(395, 27)
-        Me.NumheureRV.Maximum = New Decimal(New Integer() {24, 0, 0, 0})
-        Me.NumheureRV.Name = "NumheureRV"
-        Me.NumheureRV.Size = New System.Drawing.Size(48, 20)
-        Me.NumheureRV.TabIndex = 13
-        '
-        'LblLabelDateRV
-        '
-        Me.LblLabelDateRV.AutoSize = True
-        Me.LblLabelDateRV.Location = New System.Drawing.Point(11, 32)
-        Me.LblLabelDateRV.Name = "LblLabelDateRV"
-        Me.LblLabelDateRV.Size = New System.Drawing.Size(73, 13)
-        Me.LblLabelDateRV.TabIndex = 12
-        Me.LblLabelDateRV.Text = "Rendez-vous"
-        '
-        'NumDateRV
-        '
-        Me.NumDateRV.Location = New System.Drawing.Point(128, 28)
-        Me.NumDateRV.Name = "NumDateRV"
-        Me.NumDateRV.Size = New System.Drawing.Size(200, 20)
-        Me.NumDateRV.TabIndex = 11
-        '
-        'RadBtnTransformerEnPrevisionnel
-        '
-        Me.RadBtnTransformerEnPrevisionnel.Location = New System.Drawing.Point(128, 204)
-        Me.RadBtnTransformerEnPrevisionnel.Name = "RadBtnTransformerEnPrevisionnel"
-        Me.RadBtnTransformerEnPrevisionnel.Size = New System.Drawing.Size(163, 24)
-        Me.RadBtnTransformerEnPrevisionnel.TabIndex = 17
-        Me.RadBtnTransformerEnPrevisionnel.Text = "Transformer en prévisionnel"
-        '
-        'RadFTacheModificationRendezVous
+        'RadFPatientRendezVousListe
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.CancelButton = Me.RadBtnAbandon
-        Me.ClientSize = New System.Drawing.Size(975, 232)
-        Me.Controls.Add(Me.RadBtnTransformerEnPrevisionnel)
-        Me.Controls.Add(Me.GbxIntervention)
-        Me.Controls.Add(Me.RadBtnValidation)
+        Me.ClientSize = New System.Drawing.Size(1348, 513)
+        Me.Controls.Add(Me.RadBtnCloture)
         Me.Controls.Add(Me.RadBtnAbandon)
+        Me.Controls.Add(Me.RadBtnRefresh)
+        Me.Controls.Add(Me.RadBtnAnnulation)
+        Me.Controls.Add(Me.RadBtnModifRDV)
         Me.Controls.Add(Me.RadGroupBoxEtatCivil)
+        Me.Controls.Add(Me.RadGridViewRDV)
         Me.MaximizeBox = False
         Me.MinimizeBox = False
-        Me.Name = "RadFTacheModificationRendezVous"
+        Me.Name = "RadFPatientRendezVousListe"
         '
         '
         '
         Me.RootElement.ApplyShapeToControl = True
+        Me.ShowIcon = False
         Me.ShowInTaskbar = False
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent
-        Me.Text = "RadFTacheModificationRendezVous"
+        Me.Text = "Liste des rendez vous du patient"
+        CType(Me.RadGridViewRDV.MasterTemplate, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.RadGridViewRDV, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.RadGroupBoxEtatCivil, System.ComponentModel.ISupportInitialize).EndInit()
         Me.RadGroupBoxEtatCivil.ResumeLayout(False)
         Me.RadGroupBoxEtatCivil.PerformLayout()
-        CType(Me.RadBtnValidation, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.RadBtnModifRDV, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.RadBtnAnnulation, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.RadBtnRefresh, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.RadBtnAbandon, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.GbxIntervention, System.ComponentModel.ISupportInitialize).EndInit()
-        Me.GbxIntervention.ResumeLayout(False)
-        Me.GbxIntervention.PerformLayout()
-        CType(Me.NumheureRV, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.RadBtnTransformerEnPrevisionnel, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.RadBtnCloture, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
 
     End Sub
 
+    Friend WithEvents RadDesktopAlert1 As Telerik.WinControls.UI.RadDesktopAlert
+    Friend WithEvents RadGridViewRDV As Telerik.WinControls.UI.RadGridView
     Friend WithEvents RadGroupBoxEtatCivil As Telerik.WinControls.UI.RadGroupBox
     Friend WithEvents LblALD As Label
     Friend WithEvents Label13 As Label
@@ -505,20 +495,11 @@ Partial Class RadFTacheModificationRendezVous
     Friend WithEvents LblPatientAdresse2 As Label
     Friend WithEvents Label2 As Label
     Friend WithEvents LblPatientAdresse1 As Label
-    Friend WithEvents RadBtnValidation As Telerik.WinControls.UI.RadButton
+    Friend WithEvents ToolTip As ToolTip
+    Friend WithEvents RadBtnModifRDV As Telerik.WinControls.UI.RadButton
+    Friend WithEvents RadBtnAnnulation As Telerik.WinControls.UI.RadButton
+    Friend WithEvents RadBtnRefresh As Telerik.WinControls.UI.RadButton
     Friend WithEvents RadBtnAbandon As Telerik.WinControls.UI.RadButton
-    Friend WithEvents ToolTip1 As ToolTip
-    Friend WithEvents GbxIntervention As Telerik.WinControls.UI.RadGroupBox
-    Friend WithEvents RadioBtn45 As RadioButton
-    Friend WithEvents RadioBtn30 As RadioButton
-    Friend WithEvents RadioBtn15 As RadioButton
-    Friend WithEvents RadioBtn0 As RadioButton
-    Friend WithEvents Label16 As Label
-    Friend WithEvents TxtRDVCommentaire As TextBox
-    Friend WithEvents LblLabelHeureRV As Label
-    Friend WithEvents NumheureRV As NumericUpDown
-    Friend WithEvents LblLabelDateRV As Label
-    Friend WithEvents NumDateRV As DateTimePicker
-    Friend WithEvents RadBtnTransformerEnPrevisionnel As Telerik.WinControls.UI.RadButton
+    Friend WithEvents RadBtnCloture As Telerik.WinControls.UI.RadButton
 End Class
 
