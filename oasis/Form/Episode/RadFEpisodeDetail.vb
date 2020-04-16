@@ -3729,6 +3729,8 @@ Public Class RadFEpisodeDetail
 
     'Chargement de la Grid
     Private Sub ChargementParcoursDeSoin()
+        RadParcoursDataGridView.Rows.Clear()
+
         Dim ParcoursDataTable As DataTable
         Dim parcoursDao As New ParcoursDao
         Dim tacheDao As New TacheDao
@@ -3737,8 +3739,6 @@ Public Class RadFEpisodeDetail
 
         Cursor.Current = Cursors.WaitCursor
         ParcoursDataTable = parcoursDao.getAllParcoursbyPatient(SelectedPatient.patientId)
-
-        RadParcoursDataGridView.Rows.Clear()
 
         Dim iGrid As Integer = -1 'Indice pour alimenter la Grid qui peut comporter moins d'occurrences que le DataTable
         Dim rowCount As Integer = ParcoursDataTable.Rows.Count - 1
@@ -3803,7 +3803,6 @@ Public Class RadFEpisodeDetail
 
             RadParcoursDataGridView.Rows(iGrid).Cells("consultationLast").Value = "-"
             dateLast = Coalesce(ParcoursDataTable.Rows(i)("LastRendezVous"), Nothing)
-            'If tache.DateRendezVous <> Nothing Then
             If dateLast <> Nothing Then
                 RadParcoursDataGridView.Rows(iGrid).Cells("consultationLast").Value = outils.FormatageDateAffichage(dateLast, True)
             End If
@@ -3821,9 +3820,9 @@ Public Class RadFEpisodeDetail
                     'Rendez-vous prévisionnel, demande en cours
                     TypeDemandeRdv = Coalesce(ParcoursDataTable.Rows(i)("TypeDemandeRdv"), "")
                     Select Case TypeDemandeRdv
-                        Case TacheDao.typeDemandeRendezVous.ANNEE.ToString
+                        Case TacheDao.TypeDemandeRendezVous.ANNEE.ToString
                             RadParcoursDataGridView.Rows(iGrid).Cells("consultationNext").Value = dateNext.ToString("yyyy")
-                        Case TacheDao.typeDemandeRendezVous.ANNEEMOIS.ToString
+                        Case TacheDao.TypeDemandeRendezVous.ANNEEMOIS.ToString
                             RadParcoursDataGridView.Rows(iGrid).Cells("consultationNext").Value = dateNext.ToString("MM.yyyy")
                         Case Else
                             RadParcoursDataGridView.Rows(iGrid).Cells("consultationNext").Value = outils.FormatageDateAffichage(dateNext, True)
@@ -3946,19 +3945,23 @@ Public Class RadFEpisodeDetail
             Dim aRow As Integer = Me.RadParcoursDataGridView.Rows.IndexOf(Me.RadParcoursDataGridView.CurrentRow)
             If aRow >= 0 Then
                 Dim ParcoursId As Integer = RadParcoursDataGridView.Rows(aRow).Cells("parcoursId").Value
-                Cursor.Current = Cursors.WaitCursor
                 Me.Enabled = False
-                Using vFParcoursDetailEdit As New RadFParcoursDetailEdit
-                    vFParcoursDetailEdit.SelectedParcoursId = ParcoursId
-                    vFParcoursDetailEdit.SelectedPatient = Me.SelectedPatient
-                    vFParcoursDetailEdit.UtilisateurConnecte = Me.UtilisateurConnecte
-                    vFParcoursDetailEdit.PositionGaucheDroite = EnumPosition.Gauche
-                    vFParcoursDetailEdit.ShowDialog() 'Modal
-                    If vFParcoursDetailEdit.CodeRetour = True Then
-                        ChargementParcoursDeSoin()
-                        ChargementPPS()
-                    End If
-                End Using
+                Cursor.Current = Cursors.WaitCursor
+                Try
+                    Using vFParcoursDetailEdit As New RadFParcoursDetailEdit
+                        vFParcoursDetailEdit.SelectedParcoursId = ParcoursId
+                        vFParcoursDetailEdit.SelectedPatient = Me.SelectedPatient
+                        vFParcoursDetailEdit.UtilisateurConnecte = Me.UtilisateurConnecte
+                        vFParcoursDetailEdit.PositionGaucheDroite = EnumPosition.Gauche
+                        vFParcoursDetailEdit.ShowDialog() 'Modal
+                        If vFParcoursDetailEdit.CodeRetour = True Then
+                            ChargementParcoursDeSoin()
+                            ChargementPPS()
+                        End If
+                    End Using
+                Catch ex As Exception
+                    MsgBox(ex.Message())
+                End Try
                 Me.Enabled = True
             End If
         End If

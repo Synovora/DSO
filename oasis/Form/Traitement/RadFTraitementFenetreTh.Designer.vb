@@ -87,7 +87,6 @@ Partial Class RadFTraitementFenetreTh
         Me.Label18 = New System.Windows.Forms.Label()
         Me.DteFenetreTherapeutiqueDateFin = New System.Windows.Forms.DateTimePicker()
         Me.DteFenetreTherapeutiqueDateDebut = New System.Windows.Forms.DateTimePicker()
-        Me.RadBtnMedoc = New Telerik.WinControls.UI.RadButton()
         Me.RadBtnValidationFenetre = New Telerik.WinControls.UI.RadButton()
         Me.RadBtnSupprimerFenetre = New Telerik.WinControls.UI.RadButton()
         Me.RadBtnRetour = New Telerik.WinControls.UI.RadButton()
@@ -99,6 +98,10 @@ Partial Class RadFTraitementFenetreTh
         Me.LblTraitementDateCreation = New System.Windows.Forms.Label()
         Me.LblLabelTraitementDateModification = New System.Windows.Forms.Label()
         Me.LblTraitementDateModification = New System.Windows.Forms.Label()
+        Me.RadBtnSubstance = New Telerik.WinControls.UI.RadButton()
+        Me.RadBtnEffetIndesirable = New Telerik.WinControls.UI.RadButton()
+        Me.RadBtnParmacodynamique = New Telerik.WinControls.UI.RadButton()
+        Me.RadBtnPharmacocinetique = New Telerik.WinControls.UI.RadButton()
         CType(Me.RadGroupBox1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.RadGroupBox1.SuspendLayout()
         CType(Me.RadGroupBox2, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -112,10 +115,13 @@ Partial Class RadFTraitementFenetreTh
         CType(Me.RadGroupBox5, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.RadGroupBox5.SuspendLayout()
         Me.GbxFenetreTherapeutiqueExistante.SuspendLayout()
-        CType(Me.RadBtnMedoc, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.RadBtnValidationFenetre, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.RadBtnSupprimerFenetre, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.RadBtnRetour, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.RadBtnSubstance, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.RadBtnEffetIndesirable, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.RadBtnParmacodynamique, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.RadBtnPharmacocinetique, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
@@ -362,59 +368,65 @@ Partial Class RadFTraitementFenetreTh
         'LblMedicamentTitulaire
         '
         Me.LblMedicamentTitulaire.AutoSize = True
-        Me.LblMedicamentTitulaire.Location = New System.Drawing.Point(107, 92)
+        Me.LblMedicamentTitulaire.Location = New System.Drawing.Point(700, 63)
         Me.LblMedicamentTitulaire.Name = "LblMedicamentTitulaire"
         Me.LblMedicamentTitulaire.Size = New System.Drawing.Size(164, 13)
         Me.LblMedicamentTitulaire.TabIndex = 67
         Me.LblMedicamentTitulaire.Text = "ACCORD HEALTHCARE FRANCE"
+        Me.LblMedicamentTitulaire.Visible = False
         '
         'LblMedicamentAdministration
         '
         Me.LblMedicamentAdministration.AutoSize = True
-        Me.LblMedicamentAdministration.Location = New System.Drawing.Point(432, 71)
+        Me.LblMedicamentAdministration.Location = New System.Drawing.Point(795, 50)
         Me.LblMedicamentAdministration.Name = "LblMedicamentAdministration"
         Me.LblMedicamentAdministration.Size = New System.Drawing.Size(33, 13)
         Me.LblMedicamentAdministration.TabIndex = 66
         Me.LblMedicamentAdministration.Text = "orale"
+        Me.LblMedicamentAdministration.Visible = False
         '
         'LblMedicamentForme
         '
         Me.LblMedicamentForme.AutoSize = True
-        Me.LblMedicamentForme.Location = New System.Drawing.Point(107, 71)
+        Me.LblMedicamentForme.Location = New System.Drawing.Point(791, 29)
         Me.LblMedicamentForme.Name = "LblMedicamentForme"
         Me.LblMedicamentForme.Size = New System.Drawing.Size(103, 13)
         Me.LblMedicamentForme.TabIndex = 65
         Me.LblMedicamentForme.Text = "comprime pellicule"
+        Me.LblMedicamentForme.Visible = False
         '
         'Label15
         '
         Me.Label15.AutoSize = True
         Me.Label15.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label15.Location = New System.Drawing.Point(11, 92)
+        Me.Label15.Location = New System.Drawing.Point(695, 73)
         Me.Label15.Name = "Label15"
         Me.Label15.Size = New System.Drawing.Size(61, 13)
         Me.Label15.TabIndex = 64
         Me.Label15.Text = "Titulaire :"
+        Me.Label15.Visible = False
         '
         'Label16
         '
         Me.Label16.AutoSize = True
         Me.Label16.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label16.Location = New System.Drawing.Point(332, 72)
+        Me.Label16.Location = New System.Drawing.Point(695, 50)
         Me.Label16.Name = "Label16"
         Me.Label16.Size = New System.Drawing.Size(94, 13)
         Me.Label16.TabIndex = 63
         Me.Label16.Text = "Administration :"
+        Me.Label16.Visible = False
         '
         'Label17
         '
         Me.Label17.AutoSize = True
         Me.Label17.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label17.Location = New System.Drawing.Point(11, 71)
+        Me.Label17.Location = New System.Drawing.Point(695, 29)
         Me.Label17.Name = "Label17"
         Me.Label17.Size = New System.Drawing.Size(49, 13)
         Me.Label17.TabIndex = 62
         Me.Label17.Text = "Forme :"
+        Me.Label17.Visible = False
         '
         'Label10
         '
@@ -422,9 +434,9 @@ Partial Class RadFTraitementFenetreTh
         Me.Label10.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label10.Location = New System.Drawing.Point(11, 29)
         Me.Label10.Name = "Label10"
-        Me.Label10.Size = New System.Drawing.Size(35, 13)
+        Me.Label10.Size = New System.Drawing.Size(91, 13)
         Me.Label10.TabIndex = 60
-        Me.Label10.Text = "CIS :"
+        Me.Label10.Text = "Id. Thériaque :"
         '
         'Label1
         '
@@ -432,9 +444,9 @@ Partial Class RadFTraitementFenetreTh
         Me.Label1.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label1.Location = New System.Drawing.Point(11, 50)
         Me.Label1.Name = "Label1"
-        Me.Label1.Size = New System.Drawing.Size(36, 13)
+        Me.Label1.Size = New System.Drawing.Size(92, 13)
         Me.Label1.TabIndex = 58
-        Me.Label1.Text = "DCI :"
+        Me.Label1.Text = "Dénomination :"
         '
         'LblMedicamentDCI
         '
@@ -817,14 +829,6 @@ Partial Class RadFTraitementFenetreTh
         Me.DteFenetreTherapeutiqueDateDebut.Size = New System.Drawing.Size(200, 20)
         Me.DteFenetreTherapeutiqueDateDebut.TabIndex = 8
         '
-        'RadBtnMedoc
-        '
-        Me.RadBtnMedoc.Location = New System.Drawing.Point(370, 765)
-        Me.RadBtnMedoc.Name = "RadBtnMedoc"
-        Me.RadBtnMedoc.Size = New System.Drawing.Size(110, 24)
-        Me.RadBtnMedoc.TabIndex = 51
-        Me.RadBtnMedoc.Text = "Détail médicament"
-        '
         'RadBtnValidationFenetre
         '
         Me.RadBtnValidationFenetre.ForeColor = System.Drawing.Color.Black
@@ -931,12 +935,48 @@ Partial Class RadFTraitementFenetreTh
         Me.LblTraitementDateModification.TabIndex = 78
         Me.LblTraitementDateModification.Text = "02.10.2019"
         '
+        'RadBtnSubstance
+        '
+        Me.RadBtnSubstance.Location = New System.Drawing.Point(760, 765)
+        Me.RadBtnSubstance.Name = "RadBtnSubstance"
+        Me.RadBtnSubstance.Size = New System.Drawing.Size(110, 24)
+        Me.RadBtnSubstance.TabIndex = 120
+        Me.RadBtnSubstance.Text = "Substance"
+        '
+        'RadBtnEffetIndesirable
+        '
+        Me.RadBtnEffetIndesirable.Location = New System.Drawing.Point(630, 765)
+        Me.RadBtnEffetIndesirable.Name = "RadBtnEffetIndesirable"
+        Me.RadBtnEffetIndesirable.Size = New System.Drawing.Size(124, 24)
+        Me.RadBtnEffetIndesirable.TabIndex = 119
+        Me.RadBtnEffetIndesirable.Text = "Effet indésirable"
+        '
+        'RadBtnParmacodynamique
+        '
+        Me.RadBtnParmacodynamique.Location = New System.Drawing.Point(500, 765)
+        Me.RadBtnParmacodynamique.Name = "RadBtnParmacodynamique"
+        Me.RadBtnParmacodynamique.Size = New System.Drawing.Size(124, 24)
+        Me.RadBtnParmacodynamique.TabIndex = 118
+        Me.RadBtnParmacodynamique.Text = "Pharmacodynamie"
+        '
+        'RadBtnPharmacocinetique
+        '
+        Me.RadBtnPharmacocinetique.Location = New System.Drawing.Point(370, 765)
+        Me.RadBtnPharmacocinetique.Name = "RadBtnPharmacocinetique"
+        Me.RadBtnPharmacocinetique.Size = New System.Drawing.Size(124, 24)
+        Me.RadBtnPharmacocinetique.TabIndex = 117
+        Me.RadBtnPharmacocinetique.Text = "Pharmacocinétique"
+        '
         'RadFTraitementFenetreTh
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.CancelButton = Me.RadBtnRetour
         Me.ClientSize = New System.Drawing.Size(953, 801)
+        Me.Controls.Add(Me.RadBtnSubstance)
+        Me.Controls.Add(Me.RadBtnEffetIndesirable)
+        Me.Controls.Add(Me.RadBtnParmacodynamique)
+        Me.Controls.Add(Me.RadBtnPharmacocinetique)
         Me.Controls.Add(Me.LblLabelTraitementParModification)
         Me.Controls.Add(Me.LblLabelTraitementParCreation)
         Me.Controls.Add(Me.LblUtilisateurModification)
@@ -948,7 +988,6 @@ Partial Class RadFTraitementFenetreTh
         Me.Controls.Add(Me.RadBtnRetour)
         Me.Controls.Add(Me.RadBtnSupprimerFenetre)
         Me.Controls.Add(Me.RadBtnValidationFenetre)
-        Me.Controls.Add(Me.RadBtnMedoc)
         Me.Controls.Add(Me.RadGroupBox5)
         Me.Controls.Add(Me.RadGroupBox4)
         Me.Controls.Add(Me.RadGroupBox3)
@@ -981,10 +1020,13 @@ Partial Class RadFTraitementFenetreTh
         Me.RadGroupBox5.PerformLayout()
         Me.GbxFenetreTherapeutiqueExistante.ResumeLayout(False)
         Me.GbxFenetreTherapeutiqueExistante.PerformLayout()
-        CType(Me.RadBtnMedoc, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.RadBtnValidationFenetre, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.RadBtnSupprimerFenetre, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.RadBtnRetour, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.RadBtnSubstance, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.RadBtnEffetIndesirable, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.RadBtnParmacodynamique, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.RadBtnPharmacocinetique, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
         Me.PerformLayout()
@@ -1056,7 +1098,6 @@ Partial Class RadFTraitementFenetreTh
     Friend WithEvents Label18 As Label
     Friend WithEvents DteFenetreTherapeutiqueDateFin As DateTimePicker
     Friend WithEvents DteFenetreTherapeutiqueDateDebut As DateTimePicker
-    Friend WithEvents RadBtnMedoc As Telerik.WinControls.UI.RadButton
     Friend WithEvents RadBtnValidationFenetre As Telerik.WinControls.UI.RadButton
     Friend WithEvents RadBtnSupprimerFenetre As Telerik.WinControls.UI.RadButton
     Friend WithEvents RadBtnRetour As Telerik.WinControls.UI.RadButton
@@ -1068,5 +1109,9 @@ Partial Class RadFTraitementFenetreTh
     Friend WithEvents LblTraitementDateCreation As Label
     Friend WithEvents LblLabelTraitementDateModification As Label
     Friend WithEvents LblTraitementDateModification As Label
+    Friend WithEvents RadBtnSubstance As Telerik.WinControls.UI.RadButton
+    Friend WithEvents RadBtnEffetIndesirable As Telerik.WinControls.UI.RadButton
+    Friend WithEvents RadBtnParmacodynamique As Telerik.WinControls.UI.RadButton
+    Friend WithEvents RadBtnPharmacocinetique As Telerik.WinControls.UI.RadButton
 End Class
 

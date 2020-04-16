@@ -53,6 +53,8 @@ Public Class RadFTraitementFenetreTh
         End Set
     End Property
 
+    Dim theriaqueDao As New TheriaqueDao
+
     'Déclaration des variables de travail
     Dim EditMode As Char = ""
     Dim conxn As New SqlConnection(getConnectionString())
@@ -120,13 +122,6 @@ Public Class RadFTraitementFenetreTh
                             vbCrLf & vbCrLf &
                             "=> Solution : arrêter le traitement ou demander l'aide d'un Admin")
         End If
-    End Sub
-
-    Private Sub RadBtnMedoc_Click(sender As Object, e As EventArgs) Handles RadBtnMedoc.Click
-        Using vFMedocDetail As New RadFMedocDetail
-            vFMedocDetail.MedicamentCis = LblTraitementMedicamentCIS.Text
-            vFMedocDetail.ShowDialog() 'Modal
-        End Using
     End Sub
 
     'Retour sur la Form appelante
@@ -849,5 +844,45 @@ Public Class RadFTraitementFenetreTh
         End If
         Return Posologie
     End Function
+
+    Private Sub RadBtnPharmacocinetique_Click(sender As Object, e As EventArgs) Handles RadBtnPharmacocinetique.Click
+        Dim PharmacoCinetique As String = theriaqueDao.GetPharmacoCinetiqueBySpecialite(medicament_selecteur_cis)
+        Me.Enabled = False
+        Using form As New RadFAffichaeInfo
+            form.InfoToDisplay = PharmacoCinetique
+            form.Titre = "Information Pharmacocinétique"
+            form.ShowDialog()
+        End Using
+        Me.Enabled = True
+    End Sub
+
+    Private Sub RadBtnParmacodynamique_Click(sender As Object, e As EventArgs) Handles RadBtnParmacodynamique.Click
+        Dim PharmacoCinetique As String = theriaqueDao.GetPharmacoDynamiqueBySpecialite(medicament_selecteur_cis)
+        Me.Enabled = False
+        Using form As New RadFAffichaeInfo
+            form.InfoToDisplay = PharmacoCinetique
+            form.Titre = "Information Pharmacodynamique"
+            form.ShowDialog()
+        End Using
+        Me.Enabled = True
+    End Sub
+
+    Private Sub RadBtnEffetIndesirable_Click(sender As Object, e As EventArgs) Handles RadBtnEffetIndesirable.Click
+        Me.Enabled = False
+        Using form As New RadFEffetSecondaire
+            form.MedicamentId = medicament_selecteur_cis
+            form.ShowDialog()
+        End Using
+        Me.Enabled = True
+    End Sub
+
+    Private Sub RadBtnSubstance_Click(sender As Object, e As EventArgs) Handles RadBtnSubstance.Click
+        Me.Enabled = False
+        Using form As New RadFSubstancesListe
+            form.SelectedSpecialite = medicament_selecteur_cis
+            form.ShowDialog()
+        End Using
+        Me.Enabled = True
+    End Sub
 
 End Class

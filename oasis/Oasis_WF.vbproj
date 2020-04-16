@@ -748,10 +748,10 @@
     <Compile Include="Form\LigneDeVie\RadFEpisodeLigneDeVie.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Form\Medicament\RadFMedocDetail.Designer.vb">
+    <Compile Include="Form\Obsolete\RadFMedocDetail.Designer.vb">
       <DependentUpon>RadFMedocDetail.vb</DependentUpon>
     </Compile>
-    <Compile Include="Form\Medicament\RadFMedocDetail.vb">
+    <Compile Include="Form\Obsolete\RadFMedocDetail.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Form\Note\RadFPatientNoteListe.Designer.vb">
@@ -887,10 +887,10 @@
     <Compile Include="Form\Antecedent\RadFAntecedentDetailEdit.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Form\Medicament\RadFMedocSelecteur.Designer.vb">
+    <Compile Include="Form\Obsolete\RadFMedocSelecteur.Designer.vb">
       <DependentUpon>RadFMedocSelecteur.vb</DependentUpon>
     </Compile>
-    <Compile Include="Form\Medicament\RadFMedocSelecteur.vb">
+    <Compile Include="Form\Obsolete\RadFMedocSelecteur.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Dao\Traitement\MedocDao.vb" />
@@ -959,10 +959,10 @@
     <Compile Include="Form\Antecedent\FAntecedentOccultesListe.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Form\Medicament\FMedocListe.Designer.vb">
+    <Compile Include="Form\Obsolete\FMedocListe.Designer.vb">
       <DependentUpon>FMedocListe.vb</DependentUpon>
     </Compile>
-    <Compile Include="Form\Medicament\FMedocListe.vb">
+    <Compile Include="Form\Obsolete\FMedocListe.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Form\General\FmUniteSanitaire.Designer.vb">
@@ -1204,7 +1204,7 @@
     <EmbeddedResource Include="Form\LigneDeVie\RadFEpisodeLigneDeVie.resx">
       <DependentUpon>RadFEpisodeLigneDeVie.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Form\Medicament\RadFMedocDetail.resx">
+    <EmbeddedResource Include="Form\Obsolete\RadFMedocDetail.resx">
       <DependentUpon>RadFMedocDetail.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Form\Note\RadFPatientNoteListe.resx">
@@ -1271,7 +1271,7 @@
     <EmbeddedResource Include="Form\Antecedent\RadFAntecedentDetailEdit.resx">
       <DependentUpon>RadFAntecedentDetailEdit.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Form\Medicament\RadFMedocSelecteur.resx">
+    <EmbeddedResource Include="Form\Obsolete\RadFMedocSelecteur.resx">
       <DependentUpon>RadFMedocSelecteur.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Menu\FAuthentification.resx">
@@ -1307,7 +1307,7 @@
     <EmbeddedResource Include="Form\Antecedent\FAntecedentOccultesListe.resx">
       <DependentUpon>FAntecedentOccultesListe.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Form\Medicament\FMedocListe.resx">
+    <EmbeddedResource Include="Form\Obsolete\FMedocListe.resx">
       <DependentUpon>FMedocListe.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Form\General\FmUniteSanitaire.resx">
@@ -1503,7 +1503,7 @@
   <ItemGroup>
     <Folder Include="Bean\Utilisateur\" />
     <Folder Include="Dao\Utilisateur\" />
-    <Folder Include="Form\Obsolete\" />
+    <Folder Include="Form\Medicament\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Oasis_Common\Oasis_Common.vbproj">
