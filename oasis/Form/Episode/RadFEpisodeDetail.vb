@@ -3927,11 +3927,9 @@ Public Class RadFEpisodeDetail
                             vFParcoursDetailEdit.RythmeObligatoire = False
                             vFParcoursDetailEdit.PositionGaucheDroite = EnumPosition.Gauche
                             vFParcoursDetailEdit.ShowDialog()   'Gestion de l'intervenant
-                            If vFParcoursDetailEdit.CodeRetour = True Then
-                                ChargementParcoursDeSoin()
-                                ChargementPPS()
-                            End If
                         End Using
+                        ChargementParcoursDeSoin()
+                        ChargementPPS()
                     End If
                 End Using
             End If
