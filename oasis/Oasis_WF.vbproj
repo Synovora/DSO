@@ -468,10 +468,10 @@
     <Compile Include="Form\LigneDeVie\RadFLigneDeVieParametreSelecteur.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Form\Patient\RadFPatientRendezVousListe.Designer.vb">
+    <Compile Include="Form\RendezVous\RadFPatientRendezVousListe.Designer.vb">
       <DependentUpon>RadFPatientRendezVousListe.vb</DependentUpon>
     </Compile>
-    <Compile Include="Form\Patient\RadFPatientRendezVousListe.vb">
+    <Compile Include="Form\RendezVous\RadFPatientRendezVousListe.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Form\PPS\RadFPPSListeParcours.Designer.vb">
@@ -492,16 +492,16 @@
     <Compile Include="Form\SousEpisode\FrmAdminTemplateDocx.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Form\tache\RadFTacheModificationDemandeRendezVous.Designer.vb">
+    <Compile Include="Form\RendezVous\RadFTacheModificationDemandeRendezVous.Designer.vb">
       <DependentUpon>RadFTacheModificationDemandeRendezVous.vb</DependentUpon>
     </Compile>
-    <Compile Include="Form\tache\RadFTacheModificationDemandeRendezVous.vb">
+    <Compile Include="Form\RendezVous\RadFTacheModificationDemandeRendezVous.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Form\tache\RadFTacheModificationRendezVous.Designer.vb">
+    <Compile Include="Form\RendezVous\RadFTacheModificationRendezVous.Designer.vb">
       <DependentUpon>RadFTacheModificationRendezVous.vb</DependentUpon>
     </Compile>
-    <Compile Include="Form\tache\RadFTacheModificationRendezVous.vb">
+    <Compile Include="Form\RendezVous\RadFTacheModificationRendezVous.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Form\Test\RadFTestMethodes.Designer.vb">
@@ -1075,7 +1075,7 @@
     <EmbeddedResource Include="Form\LigneDeVie\RadFLigneDeVieParametreSelecteur.resx">
       <DependentUpon>RadFLigneDeVieParametreSelecteur.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Form\Patient\RadFPatientRendezVousListe.resx">
+    <EmbeddedResource Include="Form\RendezVous\RadFPatientRendezVousListe.resx">
       <DependentUpon>RadFPatientRendezVousListe.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Form\PPS\RadFPPSListeParcours.resx">
@@ -1087,10 +1087,10 @@
     <EmbeddedResource Include="Form\SousEpisode\FrmAdminTemplateDocx.resx">
       <DependentUpon>FrmAdminTemplateDocx.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Form\tache\RadFTacheModificationDemandeRendezVous.resx">
+    <EmbeddedResource Include="Form\RendezVous\RadFTacheModificationDemandeRendezVous.resx">
       <DependentUpon>RadFTacheModificationDemandeRendezVous.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Form\tache\RadFTacheModificationRendezVous.resx">
+    <EmbeddedResource Include="Form\RendezVous\RadFTacheModificationRendezVous.resx">
       <DependentUpon>RadFTacheModificationRendezVous.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Form\Test\RadFTestMethodes.resx">
@@ -1504,7 +1504,6 @@
     <Folder Include="Bean\Utilisateur\" />
     <Folder Include="Dao\Utilisateur\" />
     <Folder Include="Form\Obsolete\" />
-    <Folder Include="Form\RendezVous\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Oasis_Common\Oasis_Common.vbproj">
