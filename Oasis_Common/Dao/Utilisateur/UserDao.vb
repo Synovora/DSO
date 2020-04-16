@@ -123,6 +123,59 @@ Public Class UserDao
     End Sub
 
 
+    Public Function GetTableUtilisateurForGrid(Optional isWithInactif As Boolean = False) As DataTable
+        Dim SQLString As String
+        'Console.WriteLine("----------> getTableSousEpisode")
+        SQLString =
+            "SELECT " & vbCrLf &
+            "	  oa_utilisateur_id, " & vbCrLf &
+            "     oa_utilisateur_profil_id, " & vbCrLf &
+            "     oa_utilisateur_prenom, " & vbCrLf &
+            "     oa_utilisateur_nom, " & vbCrLf &
+            "     oa_utilisateur_login, " & vbCrLf &
+            "     oa_utilisateur_date_entree, " & vbCrLf &
+            "     oa_utilisateur_date_sortie, " & vbCrLf &
+            "     oa_utilisateur_etat, " & vbCrLf &
+            "	  oa_utilisateur_admin " & vbCrLf &
+            "	 ,oa_r_profil_designation " & vbCrLf &
+            "    ,oa_r_profil_designation " & vbCrLf &
+            "    ,oa_siege_description " & vbCrLf &
+            "    ,oa_unite_sanitaire_description " & vbCrLf &
+            "    ,oa_site_description " & vbCrLf
+
+
+        SQLString += "FROM oasis.oa_utilisateur U " & vbCrLf &
+                     "LEFT JOIN oasis.oa_r_profil P ON P.oa_r_profil_id = U.oa_utilisateur_profil_id " & vbCrLf &
+                     "LEFT JOIN oasis.oa_siege S ON S.oa_siege_id = U.oa_utilisateur_siege_id " & vbCrLf &
+                     "LEFT JOIN oasis.oa_unite_sanitaire US ON US.oa_unite_sanitaire_id = U.oa_utilisateur_unite_sanitaire_id " & vbCrLf &
+                     "LEFT JOIN oasis.oa_site SI ON SI.oa_site_id = U.oa_utilisateur_site_id " & vbCrLf
+
+        If isWithInactif = False Then
+            SQLString += "AND U.oa_utilisateur_etat= @is_inactif " & vbCrLf
+        End If
+
+        SQLString += "ORDER by U.oa_utilisateur_nom"
+
+        'Console.WriteLine(SQLString)
+
+        Using con As SqlConnection = GetConnection()
+
+            Dim tacheDataAdapter As SqlDataAdapter = New SqlDataAdapter()
+            Using tacheDataAdapter
+                tacheDataAdapter.SelectCommand = New SqlCommand(SQLString, con)
+                If isWithInactif = False Then tacheDataAdapter.SelectCommand.Parameters.AddWithValue("@is_inactif", "A")
+                Dim tacheDataTable As DataTable = New DataTable()
+                Using tacheDataTable
+                    Try
+                        tacheDataAdapter.Fill(tacheDataTable)
+                    Catch ex As Exception
+                        Throw ex
+                    End Try
+                    Return tacheDataTable
+                End Using
+            End Using
+        End Using
+    End Function
 
 
 End Class

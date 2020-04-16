@@ -1,159 +1,31 @@
 ﻿Imports System.Security.Cryptography
 
 Public Class Utilisateur
-    Private privateUtilisateurId As Integer
-    Private privateUtilisateurNom As String
-    Private privateUtilisateurPrenom As String
-    Private privateUtilisateurProfilId As String
-    Private privateUtilisateurPosteId As String
-    Private privateUtilisateurAdmin As Boolean
-    Private privateUtilisateurLogin As String
-    Private privateUtilisateurSiteId As Integer
-    Private privateUtilisateurUniteSanitaireId As Integer
-    Private privateUtilisateurNiveauAcces As Integer
-    Private _typeProfil As String
-    Private _FonctionParDefautId As Long
-    Private _password As String
-    Private _lstFonction As List(Of Fonction)
+    Public Property UtilisateurId As Integer
+    Public Property UtilisateurNom As String
+    Public Property UtilisateurPrenom As String
+    Public Property UtilisateurProfilId As String
+    Public Property UtilisateurAdmin As Boolean
+    Public Property UtilisateurLogin As String
+    Public Property UtilisateurSiteId As Integer
+    Public Property UtilisateurUniteSanitaireId As Integer
+    Public Property UtilisateurNiveauAcces As Integer
+    Public Property Password As String
+    Public Property LstFonction As List(Of Fonction)
+    Public Property TypeProfil As String
+    Public Property FonctionParDefautId As Long
 
     Public Sub New()
         Me.UtilisateurId = 0
-        Me.UtilisateurNom = ""
-        Me.UtilisateurPrenom = ""
-        Me.UtilisateurProfilId = ""
-        Me.UtilisateurPosteId = ""
-        Me.UtilisateurAdmin = False
-        Me.UtilisateurLogin = ""
         Me.UtilisateurSiteId = 0
         Me.UtilisateurUniteSanitaireId = 0
         Me.UtilisateurNiveauAcces = 0
+        Me.UtilisateurNom = ""
+        Me.UtilisateurPrenom = ""
+        Me.UtilisateurProfilId = ""
+        Me.UtilisateurAdmin = False
+        Me.UtilisateurLogin = ""
     End Sub
-    Public Property UtilisateurId As Integer
-        Get
-            Return privateUtilisateurId
-        End Get
-        Set(value As Integer)
-            privateUtilisateurId = value
-        End Set
-    End Property
-
-    Public Property UtilisateurNom As String
-        Get
-            Return privateUtilisateurNom
-        End Get
-        Set(value As String)
-            privateUtilisateurNom = value
-        End Set
-    End Property
-
-    Public Property UtilisateurPrenom As String
-        Get
-            Return privateUtilisateurPrenom
-        End Get
-        Set(value As String)
-            privateUtilisateurPrenom = value
-        End Set
-    End Property
-
-    Public Property UtilisateurProfilId As String
-        Get
-            Return privateUtilisateurProfilId
-        End Get
-        Set(value As String)
-            privateUtilisateurProfilId = value
-        End Set
-    End Property
-
-    Public Property UtilisateurPosteId As String
-        Get
-            Return privateUtilisateurPosteId
-        End Get
-        Set(value As String)
-            privateUtilisateurPosteId = value
-        End Set
-    End Property
-
-    Public Property UtilisateurAdmin As Boolean
-        Get
-            Return privateUtilisateurAdmin
-        End Get
-        Set(value As Boolean)
-            privateUtilisateurAdmin = value
-        End Set
-    End Property
-
-    Public Property UtilisateurLogin As String
-        Get
-            Return privateUtilisateurLogin
-        End Get
-        Set(value As String)
-            privateUtilisateurLogin = value
-        End Set
-    End Property
-
-    Public Property UtilisateurSiteId As Integer
-        Get
-            Return privateUtilisateurSiteId
-        End Get
-        Set(value As Integer)
-            privateUtilisateurSiteId = value
-        End Set
-    End Property
-
-    Public Property UtilisateurUniteSanitaireId As Integer
-        Get
-            Return privateUtilisateurUniteSanitaireId
-        End Get
-        Set(value As Integer)
-            privateUtilisateurUniteSanitaireId = value
-        End Set
-    End Property
-
-    Public Property UtilisateurNiveauAcces As Integer
-        Get
-            Return privateUtilisateurNiveauAcces
-        End Get
-        Set(value As Integer)
-            privateUtilisateurNiveauAcces = value
-        End Set
-    End Property
-
-
-    Public Property Password As String
-        Get
-            Return _password
-        End Get
-        Set(value As String)
-            _password = value
-        End Set
-    End Property
-
-    Public Property LstFonction As List(Of Fonction)
-        Get
-            Return _lstFonction
-        End Get
-        Set(value As List(Of Fonction))
-            _lstFonction = value
-        End Set
-    End Property
-
-    Public Property TypeProfil As String
-        Get
-            Return _typeProfil
-        End Get
-        Set(value As String)
-            _typeProfil = value
-        End Set
-    End Property
-
-    Public Property FonctionParDefautId As Long
-        Get
-            Return _FonctionParDefautId
-        End Get
-        Set(value As Long)
-            _FonctionParDefautId = value
-        End Set
-    End Property
 
     ''' <summary>
     ''' 
@@ -174,7 +46,7 @@ Public Class Utilisateur
     ''' </summary>
     ''' <returns></returns>
     Public Function cryptePwd() As String
-        Me.Password = cryptePwd(privateUtilisateurLogin, Password)
+        Me.Password = cryptePwd(UtilisateurLogin, Password)
         Return Password
     End Function
 
