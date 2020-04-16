@@ -1822,10 +1822,8 @@ Public Class RadFSynthese
                         vFParcoursDetailEdit.RythmeObligatoire = False
                         vFParcoursDetailEdit.PositionGaucheDroite = EnumPosition.Droite
                         vFParcoursDetailEdit.ShowDialog() 'Modal
-                        If vFParcoursDetailEdit.CodeRetour = True Then
-                            ChargementParcoursDeSoin()
-                            ChargementPPS()
-                        End If
+                        ChargementParcoursDeSoin()
+                        ChargementPPS()
                     End Using
                 Catch ex As Exception
                     MsgBox(ex.Message())

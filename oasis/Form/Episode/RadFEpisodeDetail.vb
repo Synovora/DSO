@@ -3952,11 +3952,9 @@ Public Class RadFEpisodeDetail
                         vFParcoursDetailEdit.UtilisateurConnecte = Me.UtilisateurConnecte
                         vFParcoursDetailEdit.PositionGaucheDroite = EnumPosition.Gauche
                         vFParcoursDetailEdit.ShowDialog() 'Modal
-                        If vFParcoursDetailEdit.CodeRetour = True Then
-                            ChargementParcoursDeSoin()
-                            ChargementPPS()
-                        End If
                     End Using
+                    ChargementParcoursDeSoin()
+                    ChargementPPS()
                 Catch ex As Exception
                     MsgBox(ex.Message())
                 End Try
