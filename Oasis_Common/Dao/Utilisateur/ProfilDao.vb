@@ -46,6 +46,44 @@ Public Class ProfilDao
     ''' <summary>
     ''' 
     ''' </summary>
+    ''' <returns></returns>
+    Public Function getListProfil() As List(Of Profil)
+        Dim profil As Profil
+        Dim con As SqlClient.SqlConnection
+        Dim lst As New List(Of Profil)
+
+        con = GetConnection()
+
+        Try
+
+            Dim command As SqlCommand = con.CreateCommand()
+
+            command.CommandText =
+               "SELECT * " &
+               "FROM oasis.oa_r_profil " &
+               ""
+            Using reader As SqlDataReader = command.ExecuteReader()
+                Do While reader.Read()
+                    profil = buildBean(con, reader)
+                    lst.Add(profil)
+                Loop
+            End Using
+
+        Catch ex As Exception
+            Throw ex
+        Finally
+            con.Close()
+        End Try
+
+
+        Return lst
+    End Function
+
+
+
+    ''' <summary>
+    ''' 
+    ''' </summary>
     ''' <param name="con"></param>
     ''' <param name="reader"></param>
     ''' <returns></returns>
