@@ -2,6 +2,7 @@
 Imports System.IO
 Imports Oasis_Common
 Imports Oasis_WF.My.Resources
+Imports Telerik.WinControls.UI.Localization
 Imports Telerik.WinForms.RichTextEditor
 
 Public Class FAuthentificattion
@@ -147,6 +148,8 @@ Public Class FAuthentificattion
 
         '  --- init internationnalisation du richTextBoxEditor
         RichTextBoxLocalizationProvider.CurrentProvider = RichTextBoxLocalizationProvider.FromStream(New MemoryStream(New System.Text.UTF8Encoding().GetBytes(FrenchRichTextBoxStrings.RichTextBoxStrings)))
+        '  --- init internationnalisation du radgridview
+        RadGridLocalizationProvider.CurrentProvider = New FrenchRadGridViewLocalizationProvider()
 
     End Sub
 
@@ -170,8 +173,10 @@ Public Class FAuthentificattion
 
     Private Sub BtnTheriaque_Click(sender As Object, e As EventArgs) Handles BtnTheriaque.Click
         InitAppelForm()
-        Dim form As New RadFTestMethodes()
-        form.ShowDialog()
+        Using form As New RadFTestMethodes()
+            form.ShowDialog()
+        End Using
+
     End Sub
 
     Private Sub BtnTemplateSsEpisode_Click(sender As Object, e As EventArgs) Handles BtnTemplateSsEpisode.Click
@@ -188,5 +193,11 @@ Public Class FAuthentificattion
             Me.Cursor = Cursors.Default
             Me.Enabled = True
         End Try
+    End Sub
+
+    Private Sub BtnLogin_Click(sender As Object, e As EventArgs) Handles BtnLogin.Click
+        Using frmLogin As New FrmLogin
+            frmLogin.ShowDialog()
+        End Using
     End Sub
 End Class

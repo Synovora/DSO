@@ -103,7 +103,7 @@ Public Class FrmTacheDetail_vb
         ' ---- 
         BtnFixeRDV.Visible = tache.isRendezVousAFixer()
         ' ---
-        BtnEpidode.Visible = ((tache.Type = TacheDao.TypeTache.AVIS_EPISODE.ToString AndAlso tache.EpisodeId <> 0) OrElse (tache.isUnRdv())) AndAlso userLog.isFonctionIdPossible(tache.TraiteFonctionId)
+        BtnEpidode.Visible = ((tache.Type = TacheDao.TypeTache.AVIS_EPISODE.ToString AndAlso tache.EpisodeId <> 0) OrElse (tache.isUnRdv())) AndAlso userLog.IsFonctionIdPossible(tache.TraiteFonctionId)
         If tache.EpisodeId <> 0 Then
             BtnEpidode.ForeColor = Color.Red
             BtnEpidode.Font = New Font(BtnEpidode.Font, FontStyle.Bold)

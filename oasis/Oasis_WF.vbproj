@@ -564,6 +564,12 @@
     <Compile Include="Form\Traitement\RadFDeclarationAllergieEtCIDetail.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="Form\utilisateur\FrmUtilisateur.Designer.vb">
+      <DependentUpon>FrmUtilisateur.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Form\utilisateur\FrmUtilisateur.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Form\Workflow\RadFWkfCommentaire.Designer.vb">
       <DependentUpon>RadFWkfCommentaire.vb</DependentUpon>
     </Compile>
@@ -1122,6 +1128,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Form\Traitement\RadFDeclarationAllergieEtCIDetail.resx">
       <DependentUpon>RadFDeclarationAllergieEtCIDetail.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form\utilisateur\FrmUtilisateur.resx">
+      <DependentUpon>FrmUtilisateur.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Form\Workflow\RadFWkfCommentaire.resx">
       <DependentUpon>RadFWkfCommentaire.vb</DependentUpon>

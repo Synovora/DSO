@@ -33,7 +33,7 @@ Public Class Utilisateur
     ''' <param name="login"></param>
     ''' <param name="pwd"></param>
     ''' <returns></returns>
-    Public Shared Function cryptePwd(login As String, pwd As String) As String
+    Public Shared Function CryptePwd(login As String, pwd As String) As String
         Dim UniEnc As New System.Text.UnicodeEncoding
         Dim bitPass() As Byte = UniEnc.GetBytes("U23cGt'r8c" + login + pwd)
         Using sha As New SHA1CryptoServiceProvider
@@ -45,8 +45,8 @@ Public Class Utilisateur
     ''' 
     ''' </summary>
     ''' <returns></returns>
-    Public Function cryptePwd() As String
-        Me.Password = cryptePwd(UtilisateurLogin, Password)
+    Public Function CryptePwd() As String
+        Me.Password = CryptePwd(UtilisateurLogin, Password)
         Return Password
     End Function
 
@@ -55,7 +55,7 @@ Public Class Utilisateur
         Return newInstance
     End Function
 
-    Public Function isFonctionIdPossible(idFonction As Long) As Boolean
+    Public Function IsFonctionIdPossible(idFonction As Long) As Boolean
         If IsNothing(LstFonction) Then Return False
         For Each fonction In LstFonction
             If fonction.Id = idFonction Then Return True

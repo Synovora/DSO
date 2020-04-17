@@ -35,6 +35,7 @@ Partial Class FAuthentificattion
         Me.RadDesktopAlert1 = New Telerik.WinControls.UI.RadDesktopAlert(Me.components)
         Me.BtnTheriaque = New System.Windows.Forms.Button()
         Me.BtnTemplateSsEpisode = New System.Windows.Forms.Button()
+        Me.BtnLogin = New System.Windows.Forms.Button()
         Me.GroupBox1.SuspendLayout()
         Me.SuspendLayout()
         '
@@ -148,12 +149,22 @@ Partial Class FAuthentificattion
         Me.BtnTemplateSsEpisode.Text = "TemplateSousEpisode"
         Me.BtnTemplateSsEpisode.UseVisualStyleBackColor = True
         '
+        'BtnLogin
+        '
+        Me.BtnLogin.Location = New System.Drawing.Point(20, 206)
+        Me.BtnLogin.Name = "BtnLogin"
+        Me.BtnLogin.Size = New System.Drawing.Size(117, 23)
+        Me.BtnLogin.TabIndex = 18
+        Me.BtnLogin.Text = "Login"
+        Me.BtnLogin.UseVisualStyleBackColor = True
+        '
         'FAuthentificattion
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.CancelButton = Me.BtnAbandon
         Me.ClientSize = New System.Drawing.Size(372, 310)
+        Me.Controls.Add(Me.BtnLogin)
         Me.Controls.Add(Me.BtnTemplateSsEpisode)
         Me.Controls.Add(Me.BtnTheriaque)
         Me.Controls.Add(Me.BtnAdmin)
@@ -187,4 +198,5 @@ Partial Class FAuthentificattion
     Friend WithEvents RadDesktopAlert1 As Telerik.WinControls.UI.RadDesktopAlert
     Friend WithEvents BtnTheriaque As Button
     Friend WithEvents BtnTemplateSsEpisode As Button
+    Friend WithEvents BtnLogin As Button
 End Class

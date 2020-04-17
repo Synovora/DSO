@@ -2,10 +2,22 @@
 Imports System.IO
 Imports Oasis_Common
 Imports Oasis_WF.My.Resources
+Imports Telerik.WinControls.UI.Localization
 Imports Telerik.WinForms.RichTextEditor
 
 Public Class FrmLogin
 
+    Public Sub New()
+
+        ' Cet appel est requis par le concepteur.
+        InitializeComponent()
+
+        '  --- init internationnalisation du richTextBoxEditor ( 1 shot)
+        RichTextBoxLocalizationProvider.CurrentProvider = RichTextBoxLocalizationProvider.FromStream(New MemoryStream(New System.Text.UTF8Encoding().GetBytes(FrenchRichTextBoxStrings.RichTextBoxStrings)))
+        '  --- init internationnalisation du radgridview
+        RadGridLocalizationProvider.CurrentProvider = New FrenchRadGridViewLocalizationProvider()
+
+    End Sub
     ''' <summary>
     ''' 
     ''' </summary>
@@ -110,8 +122,4 @@ Public Class FrmLogin
 
     End Sub
 
-    Private Sub FrmLogin_Load(sender As Object, e As EventArgs) Handles Me.Load
-        '  --- init internationnalisation du richTextBoxEditor ( 1 shot)
-        RichTextBoxLocalizationProvider.CurrentProvider = RichTextBoxLocalizationProvider.FromStream(New MemoryStream(New System.Text.UTF8Encoding().GetBytes(FrenchRichTextBoxStrings.RichTextBoxStrings)))
-    End Sub
 End Class

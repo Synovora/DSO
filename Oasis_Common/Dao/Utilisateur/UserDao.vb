@@ -104,6 +104,10 @@ Public Class UserDao
         Return user
     End Function
 
+    ''' <summary>
+    ''' 
+    ''' </summary>
+    ''' <param name="user"></param>
     Public Sub addFonctions(user As Utilisateur)
         Dim fonctionDao As New FonctionDao
         user.LstFonction = fonctionDao.getList(False, user.UtilisateurProfilId)
@@ -115,15 +119,19 @@ Public Class UserDao
     ''' <param name="user"></param>
     ''' <param name="password"></param>
     Private Sub controlPassword(user As Utilisateur, password As String)
-        If user.Password = Utilisateur.cryptePwd(user.UtilisateurLogin, password) Then
+        If user.Password = Utilisateur.CryptePwd(user.UtilisateurLogin, password) Then
             user.Password = password   ' on ne garde que le pasword crypté
             Return
         End If
         Throw New ArgumentException("Identifiant et/ou mot de passe erroné !")
     End Sub
 
-
-    Public Function GetTableUtilisateurForGrid(Optional isWithInactif As Boolean = False) As DataTable
+    ''' <summary>
+    ''' 
+    ''' </summary>
+    ''' <param name="isInactif"></param>
+    ''' <returns></returns>
+    Public Function GetTableUtilisateurForGrid(Optional isInactif As Boolean = False) As DataTable
         Dim SQLString As String
         'Console.WriteLine("----------> getTableSousEpisode")
         SQLString =
@@ -148,13 +156,11 @@ Public Class UserDao
                      "LEFT JOIN oasis.oa_r_profil P ON P.oa_r_profil_id = U.oa_utilisateur_profil_id " & vbCrLf &
                      "LEFT JOIN oasis.oa_siege S ON S.oa_siege_id = U.oa_utilisateur_siege_id " & vbCrLf &
                      "LEFT JOIN oasis.oa_unite_sanitaire US ON US.oa_unite_sanitaire_id = U.oa_utilisateur_unite_sanitaire_id " & vbCrLf &
-                     "LEFT JOIN oasis.oa_site SI ON SI.oa_site_id = U.oa_utilisateur_site_id " & vbCrLf
+                     "LEFT JOIN oasis.oa_site SI ON SI.oa_site_id = U.oa_utilisateur_site_id " & vbCrLf &
+                     "WHERE 1=1 " & vbCrLf &
+                     "AND U.oa_utilisateur_etat <> @etat " & vbCrLf &
+                     "ORDER by U.oa_utilisateur_nom"
 
-        If isWithInactif = False Then
-            SQLString += "AND U.oa_utilisateur_etat= @is_inactif " & vbCrLf
-        End If
-
-        SQLString += "ORDER by U.oa_utilisateur_nom"
 
         'Console.WriteLine(SQLString)
 
@@ -163,7 +169,7 @@ Public Class UserDao
             Dim tacheDataAdapter As SqlDataAdapter = New SqlDataAdapter()
             Using tacheDataAdapter
                 tacheDataAdapter.SelectCommand = New SqlCommand(SQLString, con)
-                If isWithInactif = False Then tacheDataAdapter.SelectCommand.Parameters.AddWithValue("@is_inactif", "A")
+                tacheDataAdapter.SelectCommand.Parameters.AddWithValue("@etat", If(isInactif, "I", "A"))
                 Dim tacheDataTable As DataTable = New DataTable()
                 Using tacheDataTable
                     Try
@@ -177,5 +183,35 @@ Public Class UserDao
         End Using
     End Function
 
+    ''' <summary>
+    ''' 
+    ''' </summary>
+    ''' <param name="idUser"></param>
+    ''' <param name="isInactivation"></param>
+    Public Sub ActivationOuDesactivation(idUser As Integer, isInactivation As Boolean)
+        Dim da As SqlDataAdapter = New SqlDataAdapter()
+        Dim codeRetour As Boolean = True
+        Dim nbUpdate As Integer
 
+        Dim SQLstring As String = "UPDATE oasis.oa_utilisateur SET" &
+            " oa_utilisateur_etat = @etat" &
+            " WHERE oa_utilisateur_id = @Id AND oa_utilisateur_etat<> @etat2"
+
+        Using con As SqlConnection = GetConnection()
+            Dim cmd As SqlCommand
+            cmd = New SqlCommand(SQLstring, con)
+            With cmd.Parameters
+                .AddWithValue("@etat", If(isInactivation, "I", "A"))
+                .AddWithValue("@Id", idUser)
+                .AddWithValue("@etat2", If(isInactivation, "I", "A"))
+            End With
+
+            da.UpdateCommand = cmd
+            nbUpdate = da.UpdateCommand.ExecuteNonQuery()
+            If nbUpdate <= 0 Then
+                Throw New Exception("Collision , Etat Utilisateur déjà modifié par un autre utilisateur !")
+            End If
+        End Using
+
+    End Sub
 End Class

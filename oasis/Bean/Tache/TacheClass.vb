@@ -322,7 +322,7 @@ Public Class Tache
     End Function
 
     Public Function isAttribuable() As Boolean
-        Return isAttribue() = False AndAlso userLog.isFonctionIdPossible(TraiteFonctionId) AndAlso isStatutFinal() = False
+        Return isAttribue() = False AndAlso userLog.IsFonctionIdPossible(TraiteFonctionId) AndAlso isStatutFinal() = False
     End Function
 
     Public Function isDesattribuable() As Boolean
@@ -351,7 +351,7 @@ Public Class Tache
 
 
     Public Function isFonctionPossiblePourUser(user As Utilisateur) As Boolean
-        Return user.isFonctionIdPossible(TraiteFonctionId)
+        Return user.IsFonctionIdPossible(TraiteFonctionId)
     End Function
     Public Function isFonctionPossiblePourUserLog() As Boolean
         Return isFonctionPossiblePourUser(userLog)

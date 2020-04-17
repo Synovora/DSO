@@ -3,6 +3,8 @@ Imports Telerik.WinControls.UI
 Imports Telerik.WinControls.UI.Localization
 
 Public Class FrmUtilisateurListe
+    Dim isInactifs As Boolean = False
+    Dim userDao As UserDao = New UserDao
 
     Public Sub New()
 
@@ -16,23 +18,30 @@ Public Class FrmUtilisateurListe
     End Sub
 
     Private Sub initCtrl()
+        Me.RadGroupBoxFiltre.Dock = DockStyle.Top
+        Me.RadGridView1.Dock = DockStyle.Fill
+        Me.RadioActif.CheckState = CheckState.Checked
 
-        refreshGrid()
     End Sub
 
-    Private Sub refreshGrid()
-        Dim exId As Long, index As Integer = -1, exPosit = 0, userDao = New UserDao
+    Private Sub refreshGrid(isInactifParam As Boolean)
+        Dim exId As Long, index As Integer = -1, exPosit = 0
 
         Me.Cursor = Cursors.WaitCursor
         Try
-            Dim data As DataTable = userDao.GetTableUtilisateurForGrid()
+            Dim data As DataTable = userDao.GetTableUtilisateurForGrid(isInactifParam)
 
             Dim numRowGrid As Integer = 0
 
             ' -- recup eventuelle precedente selectionnée
-            If RadGridView1.Rows.Count > 0 AndAlso Not IsNothing(Me.RadGridView1.CurrentRow) Then
+            If RadGridView1.Rows.Count > 0 AndAlso Not IsNothing(Me.RadGridView1.CurrentRow) AndAlso Me.isInactifs = isInactifParam Then
                 exId = Me.RadGridView1.CurrentRow.Cells("Id").Value
                 exPosit = Me.RadGridView1.CurrentRow.Index
+            End If
+
+            If Me.isInactifs <> isInactifParam Then
+                Me.isInactifs = isInactifParam
+                Me.BtnActiverDesactiver.Text = If(isInactifParam, "Désactiver", "Activer")
             End If
             RadGridView1.Rows.Clear()
 
@@ -84,6 +93,49 @@ Public Class FrmUtilisateurListe
             Me.Cursor = Cursors.Default
         End Try
 
+
+    End Sub
+
+    Private Sub RadioActif_ToggleStateChanged(sender As Object, args As StateChangedEventArgs) Handles RadioActif.ToggleStateChanged
+        refreshGrid(sender.IsChecked)
+    End Sub
+
+    Private Sub BtnActiverDesactiver_Click(sender As Object, e As EventArgs) Handles BtnActiverDesactiver.Click
+        If Me.RadGridView1.Rows.Count = 0 OrElse Me.RadGridView1.CurrentRow.IsSelected = False Then Return
+
+        Interaction.Beep()
+        If MsgBox("Etes-vous sur de vouloir " & If(isInactifs, "dés", "") & "activer cet utilisateur ?", MsgBoxStyle.YesNo Or MsgBoxStyle.DefaultButton2 Or MsgBoxStyle.Critical, If(isInactifs, "Désa", "A") & "ctivation Utilisateur") = MsgBoxResult.Yes Then
+            Try
+                userDao.ActivationOuDesactivation(Me.RadGridView1.CurrentRow.Cells("Id").Value, Me.isInactifs)
+                refreshGrid(Me.isInactifs)
+            Catch Err As Exception
+                MsgBox(Err.Message)
+                Return
+            End Try
+        End If
+
+    End Sub
+
+    Private Sub BtnNouveau_Click(sender As Object, e As EventArgs) Handles BtnNouveau.Click
+        ficheUser(New Utilisateur())
+    End Sub
+
+    Private Sub ficheUser(user As Utilisateur)
+
+        Try
+            Me.Cursor = Cursors.WaitCursor
+            Me.Enabled = False
+            Using frm = New FrmUtilisateur(user)
+                frm.ShowDialog()
+                frm.Dispose()
+            End Using
+            refreshGrid(isInactifs)
+        Catch err As Exception
+            MsgBox(err.Message())
+        Finally
+            Me.Enabled = True
+            Me.Cursor = Cursors.Default
+        End Try
 
     End Sub
 

@@ -99,7 +99,7 @@ Partial Class FrmTacheDetail_vb
         Me.GbxSortieOasis.HeaderText = "Emetteur Tâche"
         Me.GbxSortieOasis.Location = New System.Drawing.Point(0, 135)
         Me.GbxSortieOasis.Name = "GbxSortieOasis"
-        Me.GbxSortieOasis.Size = New System.Drawing.Size(724, 117)
+        Me.GbxSortieOasis.Size = New System.Drawing.Size(726, 117)
         Me.GbxSortieOasis.TabIndex = 2
         Me.GbxSortieOasis.Text = "Emetteur Tâche"
         Me.GbxSortieOasis.ThemeName = "ControlDefault"
@@ -133,7 +133,7 @@ Partial Class FrmTacheDetail_vb
         Me.TxtCommentaire.Name = "TxtCommentaire"
         Me.TxtCommentaire.ReadOnly = True
         Me.TxtCommentaire.ScrollBars = System.Windows.Forms.ScrollBars.Both
-        Me.TxtCommentaire.Size = New System.Drawing.Size(596, 57)
+        Me.TxtCommentaire.Size = New System.Drawing.Size(600, 57)
         Me.TxtCommentaire.TabIndex = 3
         '
         'Label12
@@ -152,7 +152,7 @@ Partial Class FrmTacheDetail_vb
         Me.TxtFonction.Location = New System.Drawing.Point(433, 25)
         Me.TxtFonction.Name = "TxtFonction"
         Me.TxtFonction.ReadOnly = True
-        Me.TxtFonction.Size = New System.Drawing.Size(279, 25)
+        Me.TxtFonction.Size = New System.Drawing.Size(285, 25)
         Me.TxtFonction.TabIndex = 2
         '
         'RadGroupBox1
@@ -168,7 +168,7 @@ Partial Class FrmTacheDetail_vb
         Me.RadGroupBox1.HeaderText = "Localisation"
         Me.RadGroupBox1.Location = New System.Drawing.Point(0, 252)
         Me.RadGroupBox1.Name = "RadGroupBox1"
-        Me.RadGroupBox1.Size = New System.Drawing.Size(724, 55)
+        Me.RadGroupBox1.Size = New System.Drawing.Size(726, 55)
         Me.RadGroupBox1.TabIndex = 2
         Me.RadGroupBox1.Text = "Localisation"
         CType(Me.RadGroupBox1.GetChildAt(0).GetChildAt(1), Telerik.WinControls.UI.GroupBoxHeader).GroupBoxStyle = Telerik.WinControls.UI.RadGroupBoxStyle.Office
@@ -222,7 +222,7 @@ Partial Class FrmTacheDetail_vb
         Me.RadGroupBox2.HeaderText = "Patient"
         Me.RadGroupBox2.Location = New System.Drawing.Point(0, 0)
         Me.RadGroupBox2.Name = "RadGroupBox2"
-        Me.RadGroupBox2.Size = New System.Drawing.Size(724, 81)
+        Me.RadGroupBox2.Size = New System.Drawing.Size(726, 81)
         Me.RadGroupBox2.TabIndex = 3
         Me.RadGroupBox2.Text = "Patient"
         CType(Me.RadGroupBox2.GetChildAt(0).GetChildAt(1), Telerik.WinControls.UI.GroupBoxHeader).GroupBoxStyle = Telerik.WinControls.UI.RadGroupBoxStyle.Office
@@ -324,7 +324,7 @@ Partial Class FrmTacheDetail_vb
         Me.RadGroupParcours.HeaderText = "Parcours"
         Me.RadGroupParcours.Location = New System.Drawing.Point(0, 81)
         Me.RadGroupParcours.Name = "RadGroupParcours"
-        Me.RadGroupParcours.Size = New System.Drawing.Size(724, 54)
+        Me.RadGroupParcours.Size = New System.Drawing.Size(726, 54)
         Me.RadGroupParcours.TabIndex = 4
         Me.RadGroupParcours.Text = "Parcours"
         CType(Me.RadGroupParcours.GetChildAt(0).GetChildAt(1), Telerik.WinControls.UI.GroupBoxHeader).GroupBoxStyle = Telerik.WinControls.UI.RadGroupBoxStyle.Office
@@ -381,7 +381,7 @@ Partial Class FrmTacheDetail_vb
         '
         '
         Me.RadPanel1.RootElement.BorderHighlightThickness = 1
-        Me.RadPanel1.Size = New System.Drawing.Size(724, 45)
+        Me.RadPanel1.Size = New System.Drawing.Size(726, 45)
         Me.RadPanel1.TabIndex = 5
         CType(Me.RadPanel1.GetChildAt(0).GetChildAt(1), Telerik.WinControls.Primitives.BorderPrimitive).Visibility = Telerik.WinControls.ElementVisibility.Collapsed
         '
@@ -450,7 +450,7 @@ Partial Class FrmTacheDetail_vb
         Me.RadGroupCible.HeaderText = "Traitée par"
         Me.RadGroupCible.Location = New System.Drawing.Point(0, 307)
         Me.RadGroupCible.Name = "RadGroupCible"
-        Me.RadGroupCible.Size = New System.Drawing.Size(724, 55)
+        Me.RadGroupCible.Size = New System.Drawing.Size(726, 55)
         Me.RadGroupCible.TabIndex = 3
         Me.RadGroupCible.Text = "Traitée par"
         CType(Me.RadGroupCible.GetChildAt(0).GetChildAt(1), Telerik.WinControls.UI.GroupBoxHeader).GroupBoxStyle = Telerik.WinControls.UI.RadGroupBoxStyle.Office
@@ -490,7 +490,7 @@ Partial Class FrmTacheDetail_vb
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.CancelButton = Me.RadButtonAbandon
-        Me.ClientSize = New System.Drawing.Size(724, 410)
+        Me.ClientSize = New System.Drawing.Size(726, 410)
         Me.Controls.Add(Me.RadGroupCible)
         Me.Controls.Add(Me.RadPanorama1)
         Me.Controls.Add(Me.RadPanel1)
