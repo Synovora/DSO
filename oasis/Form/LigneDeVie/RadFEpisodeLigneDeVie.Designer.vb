@@ -555,11 +555,12 @@ Partial Class RadFEpisodeLigneDeVie
         '
         'RadBtnParametre
         '
+        Me.RadBtnParametre.Image = Global.Oasis_WF.My.Resources.Resources._select
         Me.RadBtnParametre.Location = New System.Drawing.Point(5, 21)
         Me.RadBtnParametre.Name = "RadBtnParametre"
-        Me.RadBtnParametre.Size = New System.Drawing.Size(123, 24)
+        Me.RadBtnParametre.Size = New System.Drawing.Size(114, 24)
         Me.RadBtnParametre.TabIndex = 21
-        Me.RadBtnParametre.Text = "Sélection paramètres"
+        Me.RadBtnParametre.Text = "Paramètres"
         '
         'RadGbxFiltre
         '

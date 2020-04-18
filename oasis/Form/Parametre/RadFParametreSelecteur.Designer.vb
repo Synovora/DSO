@@ -22,6 +22,7 @@ Partial Class RadFParametreSelecteur
     'Do not modify it using the code editor.
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
+        Me.components = New System.ComponentModel.Container()
         Dim GridViewTextBoxColumn1 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
         Dim GridViewTextBoxColumn2 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
         Dim GridViewTextBoxColumn3 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
@@ -32,6 +33,7 @@ Partial Class RadFParametreSelecteur
         Me.RadBtnSelection = New Telerik.WinControls.UI.RadButton()
         Me.TbxUnite = New System.Windows.Forms.TextBox()
         Me.TbxDescription = New System.Windows.Forms.TextBox()
+        Me.ToolTip = New System.Windows.Forms.ToolTip(Me.components)
         CType(Me.RadGridViewParm, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.RadGridViewParm.MasterTemplate, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.RadBtnAbandon, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -101,18 +103,19 @@ Partial Class RadFParametreSelecteur
         Me.RadGbxSelection.HeaderText = "Paramètre sélectionné"
         Me.RadGbxSelection.Location = New System.Drawing.Point(327, 185)
         Me.RadGbxSelection.Name = "RadGbxSelection"
-        Me.RadGbxSelection.Size = New System.Drawing.Size(358, 141)
+        Me.RadGbxSelection.Size = New System.Drawing.Size(358, 118)
         Me.RadGbxSelection.TabIndex = 2
         Me.RadGbxSelection.Text = "Paramètre sélectionné"
         '
         'RadBtnSelection
         '
-        Me.RadBtnSelection.Image = Global.Oasis_WF.My.Resources.Resources.selection
-        Me.RadBtnSelection.Location = New System.Drawing.Point(111, 99)
+        Me.RadBtnSelection.Image = Global.Oasis_WF.My.Resources.Resources._select
+        Me.RadBtnSelection.ImageAlignment = System.Drawing.ContentAlignment.MiddleCenter
+        Me.RadBtnSelection.Location = New System.Drawing.Point(5, 84)
         Me.RadBtnSelection.Name = "RadBtnSelection"
-        Me.RadBtnSelection.Size = New System.Drawing.Size(110, 24)
+        Me.RadBtnSelection.Size = New System.Drawing.Size(24, 24)
         Me.RadBtnSelection.TabIndex = 2
-        Me.RadBtnSelection.Text = "Sélection"
+        Me.ToolTip.SetToolTip(Me.RadBtnSelection, "Valider la sélection")
         '
         'TbxUnite
         '
@@ -169,5 +172,6 @@ Partial Class RadFParametreSelecteur
     Friend WithEvents RadBtnSelection As Telerik.WinControls.UI.RadButton
     Friend WithEvents TbxUnite As TextBox
     Friend WithEvents TbxDescription As TextBox
+    Friend WithEvents ToolTip As ToolTip
 End Class
 

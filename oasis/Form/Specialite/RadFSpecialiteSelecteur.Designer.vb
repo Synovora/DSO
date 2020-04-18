@@ -43,6 +43,7 @@ Partial Class RadFSpecialiteSelecteur
         Me.LblNature = New System.Windows.Forms.Label()
         Me.LblSpecialite = New System.Windows.Forms.Label()
         Me.Oa_r_specialiteTableAdapter = New Oasis_WF.DS_SpecialiteTableAdapters.oa_r_specialiteTableAdapter()
+        Me.ToolTip = New System.Windows.Forms.ToolTip(Me.components)
         CType(Me.RadSpecialiteDataGridView, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.RadSpecialiteDataGridView.MasterTemplate, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.OarspecialiteBindingSource, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -176,11 +177,13 @@ Partial Class RadFSpecialiteSelecteur
         '
         'RadBtnSelection
         '
+        Me.RadBtnSelection.Image = Global.Oasis_WF.My.Resources.Resources._select
+        Me.RadBtnSelection.ImageAlignment = System.Drawing.ContentAlignment.MiddleCenter
         Me.RadBtnSelection.Location = New System.Drawing.Point(21, 123)
         Me.RadBtnSelection.Name = "RadBtnSelection"
-        Me.RadBtnSelection.Size = New System.Drawing.Size(110, 24)
+        Me.RadBtnSelection.Size = New System.Drawing.Size(24, 24)
         Me.RadBtnSelection.TabIndex = 2
-        Me.RadBtnSelection.Text = "Selection"
+        Me.ToolTip.SetToolTip(Me.RadBtnSelection, "Valider la sélection")
         '
         'RadGbxSelect
         '
@@ -261,5 +264,6 @@ Partial Class RadFSpecialiteSelecteur
     Friend WithEvents Oa_r_specialiteTableAdapter As DS_SpecialiteTableAdapters.oa_r_specialiteTableAdapter
     Friend WithEvents LblNature As Label
     Friend WithEvents LblSpecialite As Label
+    Friend WithEvents ToolTip As ToolTip
 End Class
 

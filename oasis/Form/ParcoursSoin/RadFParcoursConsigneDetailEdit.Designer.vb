@@ -519,25 +519,27 @@ Partial Class RadFParcoursConsigneDetailEdit
         '
         'RadBtnValidation
         '
-        Me.RadBtnValidation.Image = Global.Oasis_WF.My.Resources.Resources.validation
+        Me.RadBtnValidation.Image = Global.Oasis_WF.My.Resources.Resources.validation2
+        Me.RadBtnValidation.ImageAlignment = System.Drawing.ContentAlignment.MiddleCenter
         Me.RadBtnValidation.Location = New System.Drawing.Point(12, 335)
         Me.RadBtnValidation.Name = "RadBtnValidation"
-        Me.RadBtnValidation.Size = New System.Drawing.Size(110, 24)
+        Me.RadBtnValidation.Size = New System.Drawing.Size(24, 24)
         Me.RadBtnValidation.TabIndex = 7
-        Me.RadBtnValidation.Text = "Validation"
+        Me.ToolTip1.SetToolTip(Me.RadBtnValidation, "Valider")
         '
         'RadBtnAnnulation
         '
         Me.RadBtnAnnulation.Image = Global.Oasis_WF.My.Resources.Resources.supprimer
-        Me.RadBtnAnnulation.Location = New System.Drawing.Point(128, 335)
+        Me.RadBtnAnnulation.ImageAlignment = System.Drawing.ContentAlignment.MiddleCenter
+        Me.RadBtnAnnulation.Location = New System.Drawing.Point(42, 335)
         Me.RadBtnAnnulation.Name = "RadBtnAnnulation"
-        Me.RadBtnAnnulation.Size = New System.Drawing.Size(110, 24)
+        Me.RadBtnAnnulation.Size = New System.Drawing.Size(24, 24)
         Me.RadBtnAnnulation.TabIndex = 8
-        Me.RadBtnAnnulation.Text = "Supprimer"
+        Me.ToolTip1.SetToolTip(Me.RadBtnAnnulation, "Supprimer")
         '
         'RadBtnDRCDetail
         '
-        Me.RadBtnDRCDetail.Location = New System.Drawing.Point(244, 335)
+        Me.RadBtnDRCDetail.Location = New System.Drawing.Point(72, 335)
         Me.RadBtnDRCDetail.Name = "RadBtnDRCDetail"
         Me.RadBtnDRCDetail.Size = New System.Drawing.Size(110, 24)
         Me.RadBtnDRCDetail.TabIndex = 8

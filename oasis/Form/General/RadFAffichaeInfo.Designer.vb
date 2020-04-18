@@ -22,10 +22,12 @@ Partial Class RadFAffichaeInfo
     'Do not modify it using the code editor.
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
+        Me.components = New System.ComponentModel.Container()
         Me.TextBoxInfo = New System.Windows.Forms.TextBox()
         Me.RadBtnAbandon = New Telerik.WinControls.UI.RadButton()
         Me.RadPanel1 = New Telerik.WinControls.UI.RadPanel()
         Me.RadPanel2 = New Telerik.WinControls.UI.RadPanel()
+        Me.ToolTip = New System.Windows.Forms.ToolTip(Me.components)
         CType(Me.RadBtnAbandon, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.RadPanel1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.RadPanel1.SuspendLayout()
@@ -50,11 +52,13 @@ Partial Class RadFAffichaeInfo
         'RadBtnAbandon
         '
         Me.RadBtnAbandon.DialogResult = System.Windows.Forms.DialogResult.Cancel
-        Me.RadBtnAbandon.Location = New System.Drawing.Point(879, 3)
+        Me.RadBtnAbandon.Image = Global.Oasis_WF.My.Resources.Resources._exit
+        Me.RadBtnAbandon.ImageAlignment = System.Drawing.ContentAlignment.MiddleCenter
+        Me.RadBtnAbandon.Location = New System.Drawing.Point(974, 3)
         Me.RadBtnAbandon.Name = "RadBtnAbandon"
-        Me.RadBtnAbandon.Size = New System.Drawing.Size(110, 24)
+        Me.RadBtnAbandon.Size = New System.Drawing.Size(24, 24)
         Me.RadBtnAbandon.TabIndex = 1
-        Me.RadBtnAbandon.Text = "Abandon"
+        Me.ToolTip.SetToolTip(Me.RadBtnAbandon, "Abandon")
         '
         'RadPanel1
         '
@@ -106,5 +110,6 @@ Partial Class RadFAffichaeInfo
     Friend WithEvents RadBtnAbandon As Telerik.WinControls.UI.RadButton
     Friend WithEvents RadPanel1 As Telerik.WinControls.UI.RadPanel
     Friend WithEvents RadPanel2 As Telerik.WinControls.UI.RadPanel
+    Friend WithEvents ToolTip As ToolTip
 End Class
 

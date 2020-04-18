@@ -48,11 +48,12 @@ Partial Class RadFListeActions
         'RadBtnAbandon
         '
         Me.RadBtnAbandon.DialogResult = System.Windows.Forms.DialogResult.Cancel
-        Me.RadBtnAbandon.Location = New System.Drawing.Point(939, 578)
+        Me.RadBtnAbandon.Image = Global.Oasis_WF.My.Resources.Resources._exit
+        Me.RadBtnAbandon.ImageAlignment = System.Drawing.ContentAlignment.MiddleCenter
+        Me.RadBtnAbandon.Location = New System.Drawing.Point(1025, 578)
         Me.RadBtnAbandon.Name = "RadBtnAbandon"
-        Me.RadBtnAbandon.Size = New System.Drawing.Size(110, 24)
+        Me.RadBtnAbandon.Size = New System.Drawing.Size(24, 24)
         Me.RadBtnAbandon.TabIndex = 14
-        Me.RadBtnAbandon.Text = "Abandonner"
         '
         'LblNomUtilisateur
         '
@@ -135,7 +136,7 @@ Partial Class RadFListeActions
         Me.RadBtnAvant.Name = "RadBtnAvant"
         Me.RadBtnAvant.Size = New System.Drawing.Size(110, 24)
         Me.RadBtnAvant.TabIndex = 18
-        Me.RadBtnAvant.Text = "Avant"
+        Me.RadBtnAvant.Text = "< Avant"
         '
         'RadBtnApres
         '
@@ -143,7 +144,7 @@ Partial Class RadFListeActions
         Me.RadBtnApres.Name = "RadBtnApres"
         Me.RadBtnApres.Size = New System.Drawing.Size(110, 24)
         Me.RadBtnApres.TabIndex = 19
-        Me.RadBtnApres.Text = "Après"
+        Me.RadBtnApres.Text = "Après >"
         '
         'RadFListeActions
         '
