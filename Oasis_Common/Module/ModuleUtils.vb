@@ -81,5 +81,14 @@ Public Module ModuleUtils
 
     End Sub
 
+    Public Function IsValidEmail(email As String) As Boolean
+        Try
+            Dim addr = New System.Net.Mail.MailAddress(email)
+            If email.LastIndexOf(".") < email.LastIndexOf("@") OrElse email.LastIndexOf(".") = email.Length - 1 Then Return False
+            Return True
+        Catch
+            Return False
+        End Try
+    End Function
 
 End Module

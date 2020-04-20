@@ -96,6 +96,44 @@ Public Class FrmUtilisateurListe
 
     End Sub
 
+    Private Sub editUser()
+        If Me.RadGridView1.Rows.Count = 0 OrElse Me.RadGridView1.CurrentRow.IsSelected = False Then Return
+
+        Dim user As Utilisateur
+        Try
+            Me.Cursor = Cursors.WaitCursor
+            user = userDao.getUserById(Me.RadGridView1.CurrentRow.Cells("Id").Value)
+        Catch err As Exception
+            MsgBox(err.Message())
+            Return
+        Finally
+            Me.Cursor = Cursors.Default
+        End Try
+        ' -- si selection = subgrid => on prend le parent
+        With Me.RadGridView1.CurrentRow
+            ficheUser(user)
+        End With
+
+    End Sub
+    Private Sub ficheUser(user As Utilisateur)
+
+        Try
+            Me.Cursor = Cursors.WaitCursor
+            Me.Enabled = False
+            Using frm = New FrmUtilisateur(user)
+                frm.ShowDialog()
+                frm.Dispose()
+            End Using
+            refreshGrid(isInactifs)
+        Catch err As Exception
+            MsgBox(err.Message())
+        Finally
+            Me.Enabled = True
+            Me.Cursor = Cursors.Default
+        End Try
+
+    End Sub
+
     Private Sub RadioActif_ToggleStateChanged(sender As Object, args As StateChangedEventArgs) Handles RadioActif.ToggleStateChanged
         refreshGrid(sender.IsChecked)
     End Sub
@@ -120,23 +158,13 @@ Public Class FrmUtilisateurListe
         ficheUser(New Utilisateur())
     End Sub
 
-    Private Sub ficheUser(user As Utilisateur)
-
-        Try
-            Me.Cursor = Cursors.WaitCursor
-            Me.Enabled = False
-            Using frm = New FrmUtilisateur(user)
-                frm.ShowDialog()
-                frm.Dispose()
-            End Using
-            refreshGrid(isInactifs)
-        Catch err As Exception
-            MsgBox(err.Message())
-        Finally
-            Me.Enabled = True
-            Me.Cursor = Cursors.Default
-        End Try
-
+    Private Sub BtnUpdate_Click(sender As Object, e As EventArgs) Handles BtnUpdate.Click
+        editUser()
     End Sub
+
+    Private Sub RadGridView1_DoubleClick(sender As Object, e As EventArgs) Handles RadGridView1.DoubleClick
+        editUser()
+    End Sub
+
 
 End Class

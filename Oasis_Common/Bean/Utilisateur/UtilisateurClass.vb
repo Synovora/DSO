@@ -14,6 +14,10 @@ Public Class Utilisateur
     Public Property LstFonction As List(Of Fonction)
     Public Property TypeProfil As String
     Public Property FonctionParDefautId As Long
+    Public Property UtilisateurTelephone As String
+    Public Property UtilisateurFax As String
+    Public Property UtilisateurMail As String
+
 
     Public Sub New()
         Me.UtilisateurId = 0
@@ -25,6 +29,9 @@ Public Class Utilisateur
         Me.UtilisateurProfilId = ""
         Me.UtilisateurAdmin = False
         Me.UtilisateurLogin = ""
+        Me.UtilisateurTelephone = ""
+        Me.UtilisateurFax = ""
+        Me.UtilisateurMail = ""
     End Sub
 
     ''' <summary>

@@ -87,6 +87,9 @@ Public Class UserDao
         user.UtilisateurId = reader("oa_utilisateur_id")
         user.UtilisateurNom = Coalesce(reader("oa_utilisateur_nom"), "")
         user.UtilisateurPrenom = Coalesce(reader("oa_utilisateur_prenom"), "")
+        user.UtilisateurTelephone = Coalesce(reader("oa_utilisateur_telephone"), "")
+        user.UtilisateurFax = Coalesce(reader("oa_utilisateur_fax"), "")
+        user.UtilisateurMail = Coalesce(reader("oa_utilisateur_mail"), "")
         user.UtilisateurProfilId = Coalesce(reader("oa_utilisateur_profil_id"))
         user.UtilisateurAdmin = Coalesce(reader("oa_utilisateur_admin"), False)
         user.UtilisateurLogin = Coalesce(reader("oa_utilisateur_login"), "")
@@ -146,7 +149,6 @@ Public Class UserDao
             "     oa_utilisateur_etat, " & vbCrLf &
             "	  oa_utilisateur_admin " & vbCrLf &
             "	 ,oa_r_profil_designation " & vbCrLf &
-            "    ,oa_r_profil_designation " & vbCrLf &
             "    ,oa_siege_description " & vbCrLf &
             "    ,oa_unite_sanitaire_description " & vbCrLf &
             "    ,oa_site_description " & vbCrLf
