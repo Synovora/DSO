@@ -566,9 +566,9 @@ Partial Class RadFPPSDetailEdit
         'RadBtnAnnulation
         '
         Me.RadBtnAnnulation.Image = Global.Oasis_WF.My.Resources.Resources.supprimer
-        Me.RadBtnAnnulation.Location = New System.Drawing.Point(128, 422)
+        Me.RadBtnAnnulation.Location = New System.Drawing.Point(42, 422)
         Me.RadBtnAnnulation.Name = "RadBtnAnnulation"
-        Me.RadBtnAnnulation.Size = New System.Drawing.Size(110, 24)
+        Me.RadBtnAnnulation.Size = New System.Drawing.Size(24, 24)
         Me.RadBtnAnnulation.TabIndex = 93
         Me.RadBtnAnnulation.Text = "Annulation"
         '
@@ -582,12 +582,13 @@ Partial Class RadFPPSDetailEdit
         '
         'RadBtnValidation
         '
-        Me.RadBtnValidation.Image = Global.Oasis_WF.My.Resources.Resources.validation
+        Me.RadBtnValidation.Image = Global.Oasis_WF.My.Resources.Resources.validation2
+        Me.RadBtnValidation.ImageAlignment = System.Drawing.ContentAlignment.MiddleCenter
         Me.RadBtnValidation.Location = New System.Drawing.Point(12, 422)
         Me.RadBtnValidation.Name = "RadBtnValidation"
-        Me.RadBtnValidation.Size = New System.Drawing.Size(110, 24)
+        Me.RadBtnValidation.Size = New System.Drawing.Size(24, 24)
         Me.RadBtnValidation.TabIndex = 95
-        Me.RadBtnValidation.Text = "Validation"
+        Me.ToolTipPPS.SetToolTip(Me.RadBtnValidation, "Valider")
         '
         'RadBtnAbandonner
         '

@@ -1,4 +1,5 @@
-﻿Imports System.Data.SqlClient
+﻿Imports System.Configuration
+Imports System.Data.SqlClient
 Imports Oasis_Common
 Public Class OrdonnanceDao
     Inherits StandardDao
@@ -273,7 +274,7 @@ Public Class OrdonnanceDao
 
         PatientAld = alddao.IsPatientALD(patientId)
 
-        TraitementDataTable = TraitementDao.getTraitementEnCoursbyPatient(patientId)
+        TraitementDataTable = TraitementDao.GetTraitementEnCoursbyPatient(patientId)
 
         Dim i As Integer
         Dim rowCount As Integer = TraitementDataTable.Rows.Count - 1
@@ -479,6 +480,17 @@ Public Class OrdonnanceDao
                 End If
             End If
 
+            'Récupération de la période de non délivrance dans les paramètres de l'application
+            Dim PeriodeNonDelivranceStringAllergieString As String = ConfigurationManager.AppSettings("PeriodeNonDelivrance")
+            Dim PeriodeNonDelivrance As Integer
+            If IsNumeric(PeriodeNonDelivranceStringAllergieString) Then
+                PeriodeNonDelivrance = CInt(PeriodeNonDelivranceStringAllergieString)
+            Else
+                CreateLog("Paramètre application 'PeriodeNonDelivrance' non trouvé !", "OrdonnanceDao", LogDao.EnumTypeLog.ERREUR.ToString)
+                PeriodeNonDelivrance = 15
+            End If
+            PeriodeNonDelivrance = PeriodeNonDelivrance * -1
+
             'Détermination de la délivrance des traitements prescrits
             ordonnanceDetail.ADelivrer = True
             Select Case episode.TypeActivite
@@ -493,16 +505,20 @@ Public Class OrdonnanceDao
                          EpisodeDao.EnumTypeActiviteEpisodeCode.PREVENTION_ENFANT_SCOLAIRE,
                          EpisodeDao.EnumTypeActiviteEpisodeCode.PREVENTION_ENFANT_PRE_SCOLAIRE,
                          EpisodeDao.EnumTypeActiviteEpisodeCode.PREVENTION_AUTRE
-                    If DateDebut >= Date.Now.AddDays(-15) Then
-                        ordonnanceDetail.ADelivrer = False
+                    If DateDebut.Date <> Date.Now.Date Then
+                        If DateDebut >= Date.Now.AddDays(PeriodeNonDelivrance) Then
+                            ordonnanceDetail.ADelivrer = False
+                        End If
                     End If
                 Case Else
                     ordonnanceDetail.ADelivrer = False
             End Select
+
             'A ne pas délivrer si traitement conditionnel quel que soit le type d'épisode
             If TraitementDataTable.Rows(i)("oa_traitement_posologie_base") = TraitementDao.EnumBaseCode.CONDITIONNEL Then
                 ordonnanceDetail.ADelivrer = False
             End If
+
             'A ne pas délivrer si fenêtre thérapeutique en cours quel que soit le type d'épisode
             If FenetreTherapeutiqueEnCours = True Then
                 ordonnanceDetail.ADelivrer = False
@@ -510,12 +526,24 @@ Public Class OrdonnanceDao
 
             'Détermination si traitement ALD / Non ALD
             If PatientAld = True Then
-                If DateDebut >= Date.Now.AddDays(-15) Then
-                    ordonnanceDetail.Ald = False
-                Else
-                    ordonnanceDetail.Ald = True
+                ordonnanceDetail.Ald = True
+                If episode.TypeActivite = EpisodeDao.EnumTypeActiviteEpisodeCode.SUIVI_CHRONIQUE Then
                     If TraitementDataTable.Rows(i)("oa_traitement_posologie_base") = TraitementDao.EnumBaseCode.CONDITIONNEL Then
                         ordonnanceDetail.Ald = False
+                    Else
+                        If DateDebut.Date <> Date.Now.Date Then
+                            If DateDebut >= Date.Now.AddDays(PeriodeNonDelivrance) Then
+                                ordonnanceDetail.Ald = False
+                            End If
+                        End If
+                    End If
+                Else
+                    If DateDebut >= Date.Now.AddDays(PeriodeNonDelivrance) Then
+                        ordonnanceDetail.Ald = False
+                    Else
+                        If TraitementDataTable.Rows(i)("oa_traitement_posologie_base") = TraitementDao.EnumBaseCode.CONDITIONNEL Then
+                            ordonnanceDetail.Ald = False
+                        End If
                     End If
                 End If
             Else

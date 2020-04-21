@@ -721,7 +721,7 @@ Public Class RadFDrcDetailEdit
     End Sub
 
     Private Sub TxtAld_DoubleClick(sender As Object, e As EventArgs) Handles TxtAld.DoubleClick
-        Dim vFAldSelecteur As New FAldSelecteur
+        Dim vFAldSelecteur As New RadFSelecteurALD
         vFAldSelecteur.UtilisateurConnecte = userLog
         vFAldSelecteur.ShowDialog() 'Modal
 

@@ -262,6 +262,12 @@
     <Compile Include="Dao\Theriaque\ContreIndicationATCDao.vb" />
     <Compile Include="Dao\Theriaque\ContreIndicationSubstanceDao.vb" />
     <Compile Include="Dao\Theriaque\TheriaqueDao.vb" />
+    <Compile Include="Form\ALD\RadFSelecteurALD.Designer.vb">
+      <DependentUpon>RadFSelecteurALD.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Form\ALD\RadFSelecteurALD.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Form\DRC\RadFActeParamedicalTest.Designer.vb">
       <DependentUpon>RadFActeParamedicalTest.vb</DependentUpon>
     </Compile>
@@ -883,10 +889,10 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>RORDS.xsd</DependentUpon>
     </Compile>
-    <Compile Include="Form\ALD\FAldSelecteur.Designer.vb">
+    <Compile Include="Form\Obsolete\FAldSelecteur.Designer.vb">
       <DependentUpon>FAldSelecteur.vb</DependentUpon>
     </Compile>
-    <Compile Include="Form\ALD\FAldSelecteur.vb">
+    <Compile Include="Form\Obsolete\FAldSelecteur.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Form\Antecedent\RadFAntecedentDetailEdit.Designer.vb">
@@ -1023,6 +1029,9 @@
     <Compile Include="Settings.vb" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Form\ALD\RadFSelecteurALD.resx">
+      <DependentUpon>RadFSelecteurALD.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Form\DRC\RadFActeParamedicalTest.resx">
       <DependentUpon>RadFActeParamedicalTest.vb</DependentUpon>
     </EmbeddedResource>
@@ -1276,7 +1285,7 @@
       <DependentUpon>FrmEditDocxSousEpisode.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="My Project\licenses.licx" />
-    <EmbeddedResource Include="Form\ALD\FAldSelecteur.resx">
+    <EmbeddedResource Include="Form\Obsolete\FAldSelecteur.resx">
       <DependentUpon>FAldSelecteur.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Form\Antecedent\RadFAntecedentDetailEdit.resx">
