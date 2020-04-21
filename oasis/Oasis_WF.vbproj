@@ -889,12 +889,6 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>RORDS.xsd</DependentUpon>
     </Compile>
-    <Compile Include="Form\ALD\FAldSelecteur.Designer.vb">
-      <DependentUpon>FAldSelecteur.vb</DependentUpon>
-    </Compile>
-    <Compile Include="Form\ALD\FAldSelecteur.vb">
-      <SubType>Form</SubType>
-    </Compile>
     <Compile Include="Form\Antecedent\RadFAntecedentDetailEdit.Designer.vb">
       <DependentUpon>RadFAntecedentDetailEdit.vb</DependentUpon>
     </Compile>
@@ -1285,9 +1279,6 @@
       <DependentUpon>FrmEditDocxSousEpisode.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="My Project\licenses.licx" />
-    <EmbeddedResource Include="Form\ALD\FAldSelecteur.resx">
-      <DependentUpon>FAldSelecteur.vb</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="Form\Antecedent\RadFAntecedentDetailEdit.resx">
       <DependentUpon>RadFAntecedentDetailEdit.vb</DependentUpon>
     </EmbeddedResource>
