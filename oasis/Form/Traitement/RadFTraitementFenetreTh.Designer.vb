@@ -22,6 +22,7 @@ Partial Class RadFTraitementFenetreTh
     'Do not modify it using the code editor.
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
+        Me.components = New System.ComponentModel.Container()
         Me.RadGroupBox1 = New Telerik.WinControls.UI.RadGroupBox()
         Me.Label13 = New System.Windows.Forms.Label()
         Me.LblPatientDateMaj = New System.Windows.Forms.Label()
@@ -102,6 +103,7 @@ Partial Class RadFTraitementFenetreTh
         Me.RadBtnEffetIndesirable = New Telerik.WinControls.UI.RadButton()
         Me.RadBtnParmacodynamique = New Telerik.WinControls.UI.RadButton()
         Me.RadBtnPharmacocinetique = New Telerik.WinControls.UI.RadButton()
+        Me.ToolTip = New System.Windows.Forms.ToolTip(Me.components)
         CType(Me.RadGroupBox1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.RadGroupBox1.SuspendLayout()
         CType(Me.RadGroupBox2, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -361,7 +363,7 @@ Partial Class RadFTraitementFenetreTh
         Me.RadGroupBox2.HeaderText = "Médicament"
         Me.RadGroupBox2.Location = New System.Drawing.Point(12, 118)
         Me.RadGroupBox2.Name = "RadGroupBox2"
-        Me.RadGroupBox2.Size = New System.Drawing.Size(929, 116)
+        Me.RadGroupBox2.Size = New System.Drawing.Size(929, 84)
         Me.RadGroupBox2.TabIndex = 1
         Me.RadGroupBox2.Text = "Médicament"
         '
@@ -484,7 +486,7 @@ Partial Class RadFTraitementFenetreTh
         Me.RadGroupBox3.Controls.Add(Me.LblTraitementPosologie)
         Me.RadGroupBox3.GroupBoxStyle = Telerik.WinControls.UI.RadGroupBoxStyle.Office
         Me.RadGroupBox3.HeaderText = "Posologie"
-        Me.RadGroupBox3.Location = New System.Drawing.Point(12, 240)
+        Me.RadGroupBox3.Location = New System.Drawing.Point(12, 208)
         Me.RadGroupBox3.Name = "RadGroupBox3"
         Me.RadGroupBox3.Size = New System.Drawing.Size(929, 165)
         Me.RadGroupBox3.TabIndex = 2
@@ -632,7 +634,7 @@ Partial Class RadFTraitementFenetreTh
         Me.RadGroupBox4.Controls.Add(Me.Label11)
         Me.RadGroupBox4.GroupBoxStyle = Telerik.WinControls.UI.RadGroupBoxStyle.Office
         Me.RadGroupBox4.HeaderText = "Traitement"
-        Me.RadGroupBox4.Location = New System.Drawing.Point(12, 411)
+        Me.RadGroupBox4.Location = New System.Drawing.Point(12, 379)
         Me.RadGroupBox4.Name = "RadGroupBox4"
         Me.RadGroupBox4.Size = New System.Drawing.Size(929, 144)
         Me.RadGroupBox4.TabIndex = 3
@@ -750,7 +752,7 @@ Partial Class RadFTraitementFenetreTh
         Me.RadGroupBox5.Controls.Add(Me.DteFenetreTherapeutiqueDateDebut)
         Me.RadGroupBox5.GroupBoxStyle = Telerik.WinControls.UI.RadGroupBoxStyle.Office
         Me.RadGroupBox5.HeaderText = "Fenêtre thérapeutique"
-        Me.RadGroupBox5.Location = New System.Drawing.Point(12, 561)
+        Me.RadGroupBox5.Location = New System.Drawing.Point(12, 529)
         Me.RadGroupBox5.Name = "RadGroupBox5"
         Me.RadGroupBox5.Size = New System.Drawing.Size(929, 141)
         Me.RadGroupBox5.TabIndex = 4
@@ -832,29 +834,31 @@ Partial Class RadFTraitementFenetreTh
         'RadBtnValidationFenetre
         '
         Me.RadBtnValidationFenetre.ForeColor = System.Drawing.Color.Black
-        Me.RadBtnValidationFenetre.Image = Global.Oasis_WF.My.Resources.Resources.validation
-        Me.RadBtnValidationFenetre.Location = New System.Drawing.Point(12, 765)
+        Me.RadBtnValidationFenetre.Image = Global.Oasis_WF.My.Resources.Resources.validation2
+        Me.RadBtnValidationFenetre.ImageAlignment = System.Drawing.ContentAlignment.MiddleCenter
+        Me.RadBtnValidationFenetre.Location = New System.Drawing.Point(12, 722)
         Me.RadBtnValidationFenetre.Name = "RadBtnValidationFenetre"
-        Me.RadBtnValidationFenetre.Size = New System.Drawing.Size(110, 24)
+        Me.RadBtnValidationFenetre.Size = New System.Drawing.Size(24, 24)
         Me.RadBtnValidationFenetre.TabIndex = 52
-        Me.RadBtnValidationFenetre.Text = "Validation"
+        Me.ToolTip.SetToolTip(Me.RadBtnValidationFenetre, "Valider")
         '
         'RadBtnSupprimerFenetre
         '
         Me.RadBtnSupprimerFenetre.ForeColor = System.Drawing.Color.Black
         Me.RadBtnSupprimerFenetre.Image = Global.Oasis_WF.My.Resources.Resources.supprimer
-        Me.RadBtnSupprimerFenetre.Location = New System.Drawing.Point(128, 765)
+        Me.RadBtnSupprimerFenetre.ImageAlignment = System.Drawing.ContentAlignment.MiddleCenter
+        Me.RadBtnSupprimerFenetre.Location = New System.Drawing.Point(42, 722)
         Me.RadBtnSupprimerFenetre.Name = "RadBtnSupprimerFenetre"
-        Me.RadBtnSupprimerFenetre.Size = New System.Drawing.Size(236, 24)
+        Me.RadBtnSupprimerFenetre.Size = New System.Drawing.Size(24, 24)
         Me.RadBtnSupprimerFenetre.TabIndex = 53
-        Me.RadBtnSupprimerFenetre.Text = "Supprimer la fenêtre thérapeutique"
+        Me.ToolTip.SetToolTip(Me.RadBtnSupprimerFenetre, "Supprimer la fenêtre thérapeutique")
         '
         'RadBtnRetour
         '
         Me.RadBtnRetour.DialogResult = System.Windows.Forms.DialogResult.Cancel
         Me.RadBtnRetour.Image = Global.Oasis_WF.My.Resources.Resources._exit
         Me.RadBtnRetour.ImageAlignment = System.Drawing.ContentAlignment.MiddleCenter
-        Me.RadBtnRetour.Location = New System.Drawing.Point(917, 765)
+        Me.RadBtnRetour.Location = New System.Drawing.Point(917, 722)
         Me.RadBtnRetour.Name = "RadBtnRetour"
         Me.RadBtnRetour.Size = New System.Drawing.Size(24, 24)
         Me.RadBtnRetour.TabIndex = 54
@@ -863,7 +867,7 @@ Partial Class RadFTraitementFenetreTh
         '
         Me.LblLabelTraitementParModification.AutoSize = True
         Me.LblLabelTraitementParModification.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.LblLabelTraitementParModification.Location = New System.Drawing.Point(527, 723)
+        Me.LblLabelTraitementParModification.Location = New System.Drawing.Point(527, 680)
         Me.LblLabelTraitementParModification.Name = "LblLabelTraitementParModification"
         Me.LblLabelTraitementParModification.Size = New System.Drawing.Size(25, 13)
         Me.LblLabelTraitementParModification.TabIndex = 82
@@ -873,7 +877,7 @@ Partial Class RadFTraitementFenetreTh
         '
         Me.LblLabelTraitementParCreation.AutoSize = True
         Me.LblLabelTraitementParCreation.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.LblLabelTraitementParCreation.Location = New System.Drawing.Point(140, 723)
+        Me.LblLabelTraitementParCreation.Location = New System.Drawing.Point(140, 680)
         Me.LblLabelTraitementParCreation.Name = "LblLabelTraitementParCreation"
         Me.LblLabelTraitementParCreation.Size = New System.Drawing.Size(25, 13)
         Me.LblLabelTraitementParCreation.TabIndex = 81
@@ -882,7 +886,7 @@ Partial Class RadFTraitementFenetreTh
         'LblUtilisateurModification
         '
         Me.LblUtilisateurModification.AutoSize = True
-        Me.LblUtilisateurModification.Location = New System.Drawing.Point(558, 723)
+        Me.LblUtilisateurModification.Location = New System.Drawing.Point(558, 680)
         Me.LblUtilisateurModification.Name = "LblUtilisateurModification"
         Me.LblUtilisateurModification.Size = New System.Drawing.Size(144, 13)
         Me.LblUtilisateurModification.TabIndex = 80
@@ -891,7 +895,7 @@ Partial Class RadFTraitementFenetreTh
         'LblUtilisateurCreation
         '
         Me.LblUtilisateurCreation.AutoSize = True
-        Me.LblUtilisateurCreation.Location = New System.Drawing.Point(171, 723)
+        Me.LblUtilisateurCreation.Location = New System.Drawing.Point(171, 680)
         Me.LblUtilisateurCreation.Name = "LblUtilisateurCreation"
         Me.LblUtilisateurCreation.Size = New System.Drawing.Size(121, 13)
         Me.LblUtilisateurCreation.TabIndex = 79
@@ -901,7 +905,7 @@ Partial Class RadFTraitementFenetreTh
         '
         Me.LblLabelTraitementDateCreation.AutoSize = True
         Me.LblLabelTraitementDateCreation.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.LblLabelTraitementDateCreation.Location = New System.Drawing.Point(12, 723)
+        Me.LblLabelTraitementDateCreation.Location = New System.Drawing.Point(12, 680)
         Me.LblLabelTraitementDateCreation.Name = "LblLabelTraitementDateCreation"
         Me.LblLabelTraitementDateCreation.Size = New System.Drawing.Size(55, 13)
         Me.LblLabelTraitementDateCreation.TabIndex = 75
@@ -910,7 +914,7 @@ Partial Class RadFTraitementFenetreTh
         'LblTraitementDateCreation
         '
         Me.LblTraitementDateCreation.AutoSize = True
-        Me.LblTraitementDateCreation.Location = New System.Drawing.Point(73, 723)
+        Me.LblTraitementDateCreation.Location = New System.Drawing.Point(73, 680)
         Me.LblTraitementDateCreation.Name = "LblTraitementDateCreation"
         Me.LblTraitementDateCreation.Size = New System.Drawing.Size(61, 13)
         Me.LblTraitementDateCreation.TabIndex = 76
@@ -920,7 +924,7 @@ Partial Class RadFTraitementFenetreTh
         '
         Me.LblLabelTraitementDateModification.AutoSize = True
         Me.LblLabelTraitementDateModification.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.LblLabelTraitementDateModification.Location = New System.Drawing.Point(384, 723)
+        Me.LblLabelTraitementDateModification.Location = New System.Drawing.Point(384, 680)
         Me.LblLabelTraitementDateModification.Name = "LblLabelTraitementDateModification"
         Me.LblLabelTraitementDateModification.Size = New System.Drawing.Size(70, 13)
         Me.LblLabelTraitementDateModification.TabIndex = 77
@@ -929,7 +933,7 @@ Partial Class RadFTraitementFenetreTh
         'LblTraitementDateModification
         '
         Me.LblTraitementDateModification.AutoSize = True
-        Me.LblTraitementDateModification.Location = New System.Drawing.Point(460, 723)
+        Me.LblTraitementDateModification.Location = New System.Drawing.Point(460, 680)
         Me.LblTraitementDateModification.Name = "LblTraitementDateModification"
         Me.LblTraitementDateModification.Size = New System.Drawing.Size(61, 13)
         Me.LblTraitementDateModification.TabIndex = 78
@@ -937,7 +941,7 @@ Partial Class RadFTraitementFenetreTh
         '
         'RadBtnSubstance
         '
-        Me.RadBtnSubstance.Location = New System.Drawing.Point(760, 765)
+        Me.RadBtnSubstance.Location = New System.Drawing.Point(466, 722)
         Me.RadBtnSubstance.Name = "RadBtnSubstance"
         Me.RadBtnSubstance.Size = New System.Drawing.Size(110, 24)
         Me.RadBtnSubstance.TabIndex = 120
@@ -945,7 +949,7 @@ Partial Class RadFTraitementFenetreTh
         '
         'RadBtnEffetIndesirable
         '
-        Me.RadBtnEffetIndesirable.Location = New System.Drawing.Point(630, 765)
+        Me.RadBtnEffetIndesirable.Location = New System.Drawing.Point(336, 722)
         Me.RadBtnEffetIndesirable.Name = "RadBtnEffetIndesirable"
         Me.RadBtnEffetIndesirable.Size = New System.Drawing.Size(124, 24)
         Me.RadBtnEffetIndesirable.TabIndex = 119
@@ -953,7 +957,7 @@ Partial Class RadFTraitementFenetreTh
         '
         'RadBtnParmacodynamique
         '
-        Me.RadBtnParmacodynamique.Location = New System.Drawing.Point(500, 765)
+        Me.RadBtnParmacodynamique.Location = New System.Drawing.Point(206, 722)
         Me.RadBtnParmacodynamique.Name = "RadBtnParmacodynamique"
         Me.RadBtnParmacodynamique.Size = New System.Drawing.Size(124, 24)
         Me.RadBtnParmacodynamique.TabIndex = 118
@@ -961,7 +965,7 @@ Partial Class RadFTraitementFenetreTh
         '
         'RadBtnPharmacocinetique
         '
-        Me.RadBtnPharmacocinetique.Location = New System.Drawing.Point(370, 765)
+        Me.RadBtnPharmacocinetique.Location = New System.Drawing.Point(76, 722)
         Me.RadBtnPharmacocinetique.Name = "RadBtnPharmacocinetique"
         Me.RadBtnPharmacocinetique.Size = New System.Drawing.Size(124, 24)
         Me.RadBtnPharmacocinetique.TabIndex = 117
@@ -972,7 +976,7 @@ Partial Class RadFTraitementFenetreTh
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.CancelButton = Me.RadBtnRetour
-        Me.ClientSize = New System.Drawing.Size(953, 801)
+        Me.ClientSize = New System.Drawing.Size(953, 752)
         Me.Controls.Add(Me.RadBtnSubstance)
         Me.Controls.Add(Me.RadBtnEffetIndesirable)
         Me.Controls.Add(Me.RadBtnParmacodynamique)
@@ -1113,5 +1117,6 @@ Partial Class RadFTraitementFenetreTh
     Friend WithEvents RadBtnEffetIndesirable As Telerik.WinControls.UI.RadButton
     Friend WithEvents RadBtnParmacodynamique As Telerik.WinControls.UI.RadButton
     Friend WithEvents RadBtnPharmacocinetique As Telerik.WinControls.UI.RadButton
+    Friend WithEvents ToolTip As ToolTip
 End Class
 

@@ -27,6 +27,10 @@ Public Class RadFPatientRendezVousListe
         Me.RadDesktopAlert1.Popup.AlertElement.GradientStyle = GradientStyles.Solid
         Me.RadDesktopAlert1.Popup.AlertElement.BorderColor = Color.DarkBlue
 
+        If userLog.TypeProfil <> ProfilDao.EnumProfilType.MEDICAL.ToString Then
+            RadBtnAnnulation.Hide()
+        End If
+
         ChargementPatient()
         ChargementListeRendezvous()
     End Sub
