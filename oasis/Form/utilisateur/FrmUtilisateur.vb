@@ -47,6 +47,7 @@ Public Class FrmUtilisateur
         Me.TxtTelephone.Text = utilisateur.UtilisateurTelephone
         Me.TxtMail.Text = utilisateur.UtilisateurMail
         Me.ChkAdmin.Checked = utilisateur.UtilisateurAdmin
+        Me.TxtRPPS.Text = utilisateur.UtilisateurRPPS
 
         ' -- Profil ----------------------------------------------------------
         Me.DropDownProfil.Items.Clear()
@@ -149,8 +150,8 @@ Public Class FrmUtilisateur
         ' -- gestion ctrl pwd
         isNoChangePassword = (isCreation = False AndAlso TxtPassword1.Text.Trim() = "" AndAlso TxtPassword2.Text.Trim() = "")
         If isNoChangePassword = False Then
-            If TxtPassword1.Text.Trim().Length < 8 Then
-                message += ". Le mot de passe doit faire au moins 8 caractères" & vbCrLf
+            If isValidePassword(TxtPassword1.Text.Trim()) = False Then
+                message += ". Le mot de passe doit faire au moins 8 caractères et comprendre au moins une majuscule, une minuscule, un chiffre et un caractère spécial" & vbCrLf
             End If
             If TxtPassword1.Text.Trim() <> TxtPassword2.Text.Trim() Then
                 message += ". Le mot de passe saisie est différent de la reSaisie " & vbCrLf
