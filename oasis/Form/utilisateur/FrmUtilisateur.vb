@@ -13,6 +13,7 @@ Public Class FrmUtilisateur
 
     Dim isNoChangePassword As Boolean
     Dim userDao As UserDao = New UserDao
+    ReadOnly messageFormatPassword As String = "Au moins 8 caractères, une majuscule, une minuscule, un chiffre et un caractère spécial"
 
     Public Sub New(utilisateur As Utilisateur)
 
@@ -78,6 +79,11 @@ Public Class FrmUtilisateur
         End If
         Me.DropDownSiege.DefaultItemsCountInDropDown = DropDownSiege.Items.Count
 
+        'Dim tooltipPassword1 As System.Windows.Forms.ToolTip = New System.Windows.Forms.ToolTip()
+        'tooltipPassword1.SetToolTip(Me.TxtPassword1, messageFormatPassword)
+        'Dim tooltipPassword2 As System.Windows.Forms.ToolTip = New System.Windows.Forms.ToolTip()
+        'tooltipPassword2.SetToolTip(Me.TxtPassword2, messageFormatPassword)
+        LblMessagePassword.Text = messageFormatPassword
     End Sub
 
     Private Sub initUniteSanitaire(siegeId As Long)
@@ -151,7 +157,7 @@ Public Class FrmUtilisateur
         isNoChangePassword = (isCreation = False AndAlso TxtPassword1.Text.Trim() = "" AndAlso TxtPassword2.Text.Trim() = "")
         If isNoChangePassword = False Then
             If isValidePassword(TxtPassword1.Text.Trim()) = False Then
-                message += ". Le mot de passe doit faire au moins 8 caractères et comprendre au moins une majuscule, une minuscule, un chiffre et un caractère spécial" & vbCrLf
+                message += ". Le mot de passe doit faire " & messageFormatPassword.ToLower & vbCrLf
             End If
             If TxtPassword1.Text.Trim() <> TxtPassword2.Text.Trim() Then
                 message += ". Le mot de passe saisie est différent de la reSaisie " & vbCrLf

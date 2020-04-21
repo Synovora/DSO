@@ -224,6 +224,8 @@ Public Class UserDao
         user.FonctionParDefautId = Coalesce(reader("oa_r_profil_fonction_id_defaut"), 0)
         user.UtilisateurNiveauAcces = Coalesce(reader("oa_r_profil_niveau_acces"), 3)
         user.TypeProfil = Coalesce(reader("oa_r_profil_type"), "")
+        user.UtilisateurRPPS = Coalesce(reader("oa_utilisateur_rpps"), "")
+        user.IsPasswordUniqueUsage = Coalesce(reader("oa_utilisateur_password_is_unique_usage"), False)
 
         ' --- recuperation des fonctions correspondant au profil de l'utilisateur
         addFonctions(user)

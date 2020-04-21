@@ -53,6 +53,7 @@ Partial Class FrmUtilisateur
         Me.TxtPassword1 = New System.Windows.Forms.TextBox()
         Me.LblPassword2 = New System.Windows.Forms.Label()
         Me.lblPassword = New System.Windows.Forms.Label()
+        Me.LblMessagePassword = New System.Windows.Forms.Label()
         CType(Me.PnlBoutons, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.PnlBoutons.SuspendLayout()
         CType(Me.BtnAbandon, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -75,7 +76,7 @@ Partial Class FrmUtilisateur
         Me.PnlBoutons.Controls.Add(Me.BtnAbandon)
         Me.PnlBoutons.Controls.Add(Me.BtnValider)
         Me.PnlBoutons.Dock = System.Windows.Forms.DockStyle.Bottom
-        Me.PnlBoutons.Location = New System.Drawing.Point(0, 385)
+        Me.PnlBoutons.Location = New System.Drawing.Point(0, 404)
         Me.PnlBoutons.Name = "PnlBoutons"
         Me.PnlBoutons.Size = New System.Drawing.Size(644, 57)
         Me.PnlBoutons.TabIndex = 2
@@ -351,6 +352,7 @@ Partial Class FrmUtilisateur
         '
         Me.RadGroupPassword.AccessibleRole = System.Windows.Forms.AccessibleRole.Grouping
         Me.RadGroupPassword.BackColor = System.Drawing.SystemColors.GradientInactiveCaption
+        Me.RadGroupPassword.Controls.Add(Me.LblMessagePassword)
         Me.RadGroupPassword.Controls.Add(Me.TxtPassword2)
         Me.RadGroupPassword.Controls.Add(Me.TxtPassword1)
         Me.RadGroupPassword.Controls.Add(Me.LblPassword2)
@@ -361,7 +363,7 @@ Partial Class FrmUtilisateur
         Me.RadGroupPassword.HeaderText = "Mot de Passe"
         Me.RadGroupPassword.Location = New System.Drawing.Point(0, 298)
         Me.RadGroupPassword.Name = "RadGroupPassword"
-        Me.RadGroupPassword.Size = New System.Drawing.Size(644, 85)
+        Me.RadGroupPassword.Size = New System.Drawing.Size(644, 100)
         Me.RadGroupPassword.TabIndex = 3
         Me.RadGroupPassword.Text = "Mot de Passe"
         CType(Me.RadGroupPassword.GetChildAt(0).GetChildAt(1), Telerik.WinControls.UI.GroupBoxHeader).GroupBoxStyle = Telerik.WinControls.UI.RadGroupBoxStyle.Office
@@ -406,12 +408,22 @@ Partial Class FrmUtilisateur
         Me.lblPassword.TabIndex = 0
         Me.lblPassword.Text = "Saisie"
         '
+        'LblMessagePassword
+        '
+        Me.LblMessagePassword.AutoSize = True
+        Me.LblMessagePassword.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.LblMessagePassword.Location = New System.Drawing.Point(123, 82)
+        Me.LblMessagePassword.Name = "LblMessagePassword"
+        Me.LblMessagePassword.Size = New System.Drawing.Size(167, 13)
+        Me.LblMessagePassword.TabIndex = 6
+        Me.LblMessagePassword.Text = "variable messageFormatPassword"
+        '
         'FrmUtilisateur
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.CancelButton = Me.BtnAbandon
-        Me.ClientSize = New System.Drawing.Size(644, 442)
+        Me.ClientSize = New System.Drawing.Size(644, 461)
         Me.Controls.Add(Me.RadGroupPassword)
         Me.Controls.Add(Me.RadGroupLocalisation)
         Me.Controls.Add(Me.RadGroupIdentite)
@@ -479,5 +491,6 @@ Partial Class FrmUtilisateur
     Friend WithEvents ChkAdmin As Telerik.WinControls.UI.RadCheckBox
     Friend WithEvents TxtRPPS As TextBox
     Friend WithEvents Label1 As Label
+    Friend WithEvents LblMessagePassword As Label
 End Class
 
