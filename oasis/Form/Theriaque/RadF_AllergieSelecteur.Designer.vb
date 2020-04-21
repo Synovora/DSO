@@ -143,7 +143,7 @@ Partial Class RadF_AllergieSelecteur
         'RadBtnSelectionSubstance
         '
         Me.RadBtnSelectionSubstance.ForeColor = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(0, Byte), Integer), CType(CType(0, Byte), Integer))
-        Me.RadBtnSelectionSubstance.Image = Global.Oasis_WF.My.Resources.Resources.selection
+        Me.RadBtnSelectionSubstance.Image = Global.Oasis_WF.My.Resources.Resources._select
         Me.RadBtnSelectionSubstance.Location = New System.Drawing.Point(750, 296)
         Me.RadBtnSelectionSubstance.Name = "RadBtnSelectionSubstance"
         Me.RadBtnSelectionSubstance.Size = New System.Drawing.Size(148, 24)
@@ -517,7 +517,7 @@ Partial Class RadF_AllergieSelecteur
         'RadBtnSelectionCI
         '
         Me.RadBtnSelectionCI.ForeColor = System.Drawing.Color.Red
-        Me.RadBtnSelectionCI.Image = Global.Oasis_WF.My.Resources.Resources.validation
+        Me.RadBtnSelectionCI.Image = Global.Oasis_WF.My.Resources.Resources.validation2
         Me.RadBtnSelectionCI.Location = New System.Drawing.Point(1335, 248)
         Me.RadBtnSelectionCI.Name = "RadBtnSelectionCI"
         Me.RadBtnSelectionCI.Size = New System.Drawing.Size(162, 24)

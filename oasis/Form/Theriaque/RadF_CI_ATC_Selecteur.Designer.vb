@@ -181,9 +181,10 @@ Partial Class RadF_CI_ATC_Selecteur
         'RadBtnSelectionATC5
         '
         Me.RadBtnSelectionATC5.ForeColor = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(0, Byte), Integer), CType(CType(0, Byte), Integer))
-        Me.RadBtnSelectionATC5.Location = New System.Drawing.Point(1538, 792)
+        Me.RadBtnSelectionATC5.Image = Global.Oasis_WF.My.Resources.Resources._select
+        Me.RadBtnSelectionATC5.Location = New System.Drawing.Point(1519, 792)
         Me.RadBtnSelectionATC5.Name = "RadBtnSelectionATC5"
-        Me.RadBtnSelectionATC5.Size = New System.Drawing.Size(124, 24)
+        Me.RadBtnSelectionATC5.Size = New System.Drawing.Size(143, 24)
         Me.RadBtnSelectionATC5.TabIndex = 31
         Me.RadBtnSelectionATC5.Text = " Sélection classe N5"
         '
@@ -500,27 +501,30 @@ Partial Class RadF_CI_ATC_Selecteur
         'RadBtnSelectionATC2
         '
         Me.RadBtnSelectionATC2.ForeColor = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(0, Byte), Integer), CType(CType(0, Byte), Integer))
-        Me.RadBtnSelectionATC2.Location = New System.Drawing.Point(349, 792)
+        Me.RadBtnSelectionATC2.Image = Global.Oasis_WF.My.Resources.Resources._select
+        Me.RadBtnSelectionATC2.Location = New System.Drawing.Point(330, 792)
         Me.RadBtnSelectionATC2.Name = "RadBtnSelectionATC2"
-        Me.RadBtnSelectionATC2.Size = New System.Drawing.Size(124, 24)
+        Me.RadBtnSelectionATC2.Size = New System.Drawing.Size(143, 24)
         Me.RadBtnSelectionATC2.TabIndex = 35
         Me.RadBtnSelectionATC2.Text = " Sélection classe N2"
         '
         'RadBtnSelectionATC3
         '
         Me.RadBtnSelectionATC3.ForeColor = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(0, Byte), Integer), CType(CType(0, Byte), Integer))
-        Me.RadBtnSelectionATC3.Location = New System.Drawing.Point(746, 792)
+        Me.RadBtnSelectionATC3.Image = Global.Oasis_WF.My.Resources.Resources._select
+        Me.RadBtnSelectionATC3.Location = New System.Drawing.Point(727, 792)
         Me.RadBtnSelectionATC3.Name = "RadBtnSelectionATC3"
-        Me.RadBtnSelectionATC3.Size = New System.Drawing.Size(124, 24)
+        Me.RadBtnSelectionATC3.Size = New System.Drawing.Size(143, 24)
         Me.RadBtnSelectionATC3.TabIndex = 32
         Me.RadBtnSelectionATC3.Text = " Sélection classe N3"
         '
         'RadBtnSelectionATC4
         '
         Me.RadBtnSelectionATC4.ForeColor = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(0, Byte), Integer), CType(CType(0, Byte), Integer))
-        Me.RadBtnSelectionATC4.Location = New System.Drawing.Point(1142, 792)
+        Me.RadBtnSelectionATC4.Image = Global.Oasis_WF.My.Resources.Resources._select
+        Me.RadBtnSelectionATC4.Location = New System.Drawing.Point(1123, 792)
         Me.RadBtnSelectionATC4.Name = "RadBtnSelectionATC4"
-        Me.RadBtnSelectionATC4.Size = New System.Drawing.Size(124, 24)
+        Me.RadBtnSelectionATC4.Size = New System.Drawing.Size(143, 24)
         Me.RadBtnSelectionATC4.TabIndex = 32
         Me.RadBtnSelectionATC4.Text = " Sélection classe N4"
         '
@@ -571,7 +575,7 @@ Partial Class RadF_CI_ATC_Selecteur
         'RadBtnSelectionCI
         '
         Me.RadBtnSelectionCI.ForeColor = System.Drawing.Color.Red
-        Me.RadBtnSelectionCI.Image = Global.Oasis_WF.My.Resources.Resources.validation
+        Me.RadBtnSelectionCI.Image = Global.Oasis_WF.My.Resources.Resources.validation2
         Me.RadBtnSelectionCI.Location = New System.Drawing.Point(1324, 118)
         Me.RadBtnSelectionCI.Name = "RadBtnSelectionCI"
         Me.RadBtnSelectionCI.Size = New System.Drawing.Size(149, 24)
@@ -969,7 +973,7 @@ Partial Class RadF_CI_ATC_Selecteur
         'RadBtnSelectionSubstance
         '
         Me.RadBtnSelectionSubstance.ForeColor = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(0, Byte), Integer), CType(CType(0, Byte), Integer))
-        Me.RadBtnSelectionSubstance.Image = Global.Oasis_WF.My.Resources.Resources.selection
+        Me.RadBtnSelectionSubstance.Image = Global.Oasis_WF.My.Resources.Resources._select
         Me.RadBtnSelectionSubstance.Location = New System.Drawing.Point(754, 290)
         Me.RadBtnSelectionSubstance.Name = "RadBtnSelectionSubstance"
         Me.RadBtnSelectionSubstance.Size = New System.Drawing.Size(145, 24)

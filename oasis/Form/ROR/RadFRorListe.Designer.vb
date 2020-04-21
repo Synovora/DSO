@@ -42,6 +42,7 @@ Partial Class RadFRorListe
         Me.RadGridView1 = New Telerik.WinControls.UI.RadGridView()
         Me.ContextMenuStrip1 = New System.Windows.Forms.ContextMenuStrip(Me.components)
         Me.CréationNouvelIntervenantToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.ModificationIntervenantToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.VrorBindingSource = New System.Windows.Forms.BindingSource(Me.components)
         Me.RORDS = New Oasis_WF.RORDS()
         Me.RadBtnCreation = New Telerik.WinControls.UI.RadButton()
@@ -53,7 +54,6 @@ Partial Class RadFRorListe
         Me.RadBtnSelection = New Telerik.WinControls.UI.RadButton()
         Me.RadBtnAbandon = New Telerik.WinControls.UI.RadButton()
         Me.V_rorTableAdapter = New Oasis_WF.RORDSTableAdapters.v_rorTableAdapter()
-        Me.ModificationIntervenantToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         CType(Me.RadPanel1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.RadPanel1.SuspendLayout()
         CType(Me.RadPanel2, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -236,13 +236,19 @@ Partial Class RadFRorListe
         '
         Me.ContextMenuStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.CréationNouvelIntervenantToolStripMenuItem, Me.ModificationIntervenantToolStripMenuItem})
         Me.ContextMenuStrip1.Name = "ContextMenuStrip1"
-        Me.ContextMenuStrip1.Size = New System.Drawing.Size(222, 70)
+        Me.ContextMenuStrip1.Size = New System.Drawing.Size(222, 48)
         '
         'CréationNouvelIntervenantToolStripMenuItem
         '
         Me.CréationNouvelIntervenantToolStripMenuItem.Name = "CréationNouvelIntervenantToolStripMenuItem"
         Me.CréationNouvelIntervenantToolStripMenuItem.Size = New System.Drawing.Size(221, 22)
         Me.CréationNouvelIntervenantToolStripMenuItem.Text = "Création nouvel intervenant"
+        '
+        'ModificationIntervenantToolStripMenuItem
+        '
+        Me.ModificationIntervenantToolStripMenuItem.Name = "ModificationIntervenantToolStripMenuItem"
+        Me.ModificationIntervenantToolStripMenuItem.Size = New System.Drawing.Size(221, 22)
+        Me.ModificationIntervenantToolStripMenuItem.Text = "Modification intervenant"
         '
         'VrorBindingSource
         '
@@ -275,7 +281,8 @@ Partial Class RadFRorListe
         '
         'RadBtnModification
         '
-        Me.RadBtnModification.Location = New System.Drawing.Point(857, 51)
+        Me.RadBtnModification.Image = Global.Oasis_WF.My.Resources.Resources.modifier
+        Me.RadBtnModification.Location = New System.Drawing.Point(705, 51)
         Me.RadBtnModification.Name = "RadBtnModification"
         Me.RadBtnModification.Size = New System.Drawing.Size(110, 24)
         Me.RadBtnModification.TabIndex = 3
@@ -318,7 +325,8 @@ Partial Class RadFRorListe
         '
         'RadBtnSelection
         '
-        Me.RadBtnSelection.Location = New System.Drawing.Point(517, 48)
+        Me.RadBtnSelection.Image = Global.Oasis_WF.My.Resources.Resources._select
+        Me.RadBtnSelection.Location = New System.Drawing.Point(508, 41)
         Me.RadBtnSelection.Name = "RadBtnSelection"
         Me.RadBtnSelection.Size = New System.Drawing.Size(110, 24)
         Me.RadBtnSelection.TabIndex = 0
@@ -327,21 +335,16 @@ Partial Class RadFRorListe
         'RadBtnAbandon
         '
         Me.RadBtnAbandon.DialogResult = System.Windows.Forms.DialogResult.Cancel
-        Me.RadBtnAbandon.Location = New System.Drawing.Point(973, 51)
+        Me.RadBtnAbandon.Image = Global.Oasis_WF.My.Resources.Resources._exit
+        Me.RadBtnAbandon.ImageAlignment = System.Drawing.ContentAlignment.MiddleCenter
+        Me.RadBtnAbandon.Location = New System.Drawing.Point(1061, 51)
         Me.RadBtnAbandon.Name = "RadBtnAbandon"
-        Me.RadBtnAbandon.Size = New System.Drawing.Size(110, 24)
+        Me.RadBtnAbandon.Size = New System.Drawing.Size(24, 24)
         Me.RadBtnAbandon.TabIndex = 0
-        Me.RadBtnAbandon.Text = "Abandonner"
         '
         'V_rorTableAdapter
         '
         Me.V_rorTableAdapter.ClearBeforeFill = True
-        '
-        'ModificationIntervenantToolStripMenuItem
-        '
-        Me.ModificationIntervenantToolStripMenuItem.Name = "ModificationIntervenantToolStripMenuItem"
-        Me.ModificationIntervenantToolStripMenuItem.Size = New System.Drawing.Size(221, 22)
-        Me.ModificationIntervenantToolStripMenuItem.Text = "Modification intervenant"
         '
         'RadFRorListe
         '

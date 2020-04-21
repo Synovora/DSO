@@ -186,7 +186,7 @@ Partial Class RadFPatientDetailEdit
         '
         'RadBtnValider
         '
-        Me.RadBtnValider.Image = Global.Oasis_WF.My.Resources.Resources.validation
+        Me.RadBtnValider.Image = Global.Oasis_WF.My.Resources.Resources.validation2
         Me.RadBtnValider.Location = New System.Drawing.Point(15, 749)
         Me.RadBtnValider.Name = "RadBtnValider"
         Me.RadBtnValider.Size = New System.Drawing.Size(110, 24)
@@ -232,7 +232,7 @@ Partial Class RadFPatientDetailEdit
         '
         'RadBtnValidationSortie
         '
-        Me.RadBtnValidationSortie.Image = Global.Oasis_WF.My.Resources.Resources.validation
+        Me.RadBtnValidationSortie.Image = Global.Oasis_WF.My.Resources.Resources.validation2
         Me.RadBtnValidationSortie.Location = New System.Drawing.Point(118, 112)
         Me.RadBtnValidationSortie.Name = "RadBtnValidationSortie"
         Me.RadBtnValidationSortie.Size = New System.Drawing.Size(148, 24)

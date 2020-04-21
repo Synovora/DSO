@@ -22,12 +22,12 @@ Partial Class RadFTraitementAllergieEtCI
     'Do not modify it using the code editor.
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
-        Dim GridViewTextBoxColumn6 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
-        Dim GridViewTextBoxColumn7 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
-        Dim GridViewTextBoxColumn8 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
-        Dim GridViewTextBoxColumn9 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
-        Dim GridViewTextBoxColumn10 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
-        Dim TableViewDefinition2 As Telerik.WinControls.UI.TableViewDefinition = New Telerik.WinControls.UI.TableViewDefinition()
+        Dim GridViewTextBoxColumn1 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
+        Dim GridViewTextBoxColumn2 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
+        Dim GridViewTextBoxColumn3 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
+        Dim GridViewTextBoxColumn4 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
+        Dim GridViewTextBoxColumn5 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
+        Dim TableViewDefinition1 As Telerik.WinControls.UI.TableViewDefinition = New Telerik.WinControls.UI.TableViewDefinition()
         Me.RadPanel1 = New Telerik.WinControls.UI.RadPanel()
         Me.RadGroupBox1 = New Telerik.WinControls.UI.RadGroupBox()
         Me.Label13 = New System.Windows.Forms.Label()
@@ -321,42 +321,42 @@ Partial Class RadFTraitementAllergieEtCI
         Me.RadTraitementDataGridView.MasterTemplate.AllowAddNewRow = False
         Me.RadTraitementDataGridView.MasterTemplate.AllowDeleteRow = False
         Me.RadTraitementDataGridView.MasterTemplate.AllowEditRow = False
-        GridViewTextBoxColumn6.EnableExpressionEditor = False
-        GridViewTextBoxColumn6.FieldName = "traitementId"
-        GridViewTextBoxColumn6.HeaderText = "column1"
-        GridViewTextBoxColumn6.IsVisible = False
-        GridViewTextBoxColumn6.Name = "traitementId"
-        GridViewTextBoxColumn6.ReadOnly = True
-        GridViewTextBoxColumn7.EnableExpressionEditor = False
-        GridViewTextBoxColumn7.FieldName = "dci"
-        GridViewTextBoxColumn7.HeaderText = "Dénomination"
-        GridViewTextBoxColumn7.HeaderTextAlignment = System.Drawing.ContentAlignment.MiddleLeft
-        GridViewTextBoxColumn7.Name = "dci"
-        GridViewTextBoxColumn7.ReadOnly = True
-        GridViewTextBoxColumn7.Width = 380
-        GridViewTextBoxColumn8.EnableExpressionEditor = False
-        GridViewTextBoxColumn8.FieldName = "dateArret"
-        GridViewTextBoxColumn8.HeaderText = "Date d'arrêt"
-        GridViewTextBoxColumn8.Name = "dateArret"
-        GridViewTextBoxColumn8.TextAlignment = System.Drawing.ContentAlignment.MiddleCenter
-        GridViewTextBoxColumn8.Width = 140
-        GridViewTextBoxColumn9.EnableExpressionEditor = False
-        GridViewTextBoxColumn9.FieldName = "commentaireArret"
-        GridViewTextBoxColumn9.HeaderText = "Commentaire d'arrêt"
-        GridViewTextBoxColumn9.HeaderTextAlignment = System.Drawing.ContentAlignment.MiddleLeft
-        GridViewTextBoxColumn9.Name = "commentaireArret"
-        GridViewTextBoxColumn9.ReadOnly = True
-        GridViewTextBoxColumn9.Width = 400
-        GridViewTextBoxColumn10.EnableExpressionEditor = False
-        GridViewTextBoxColumn10.FieldName = "remarque"
-        GridViewTextBoxColumn10.HeaderText = "Remarque"
-        GridViewTextBoxColumn10.HeaderTextAlignment = System.Drawing.ContentAlignment.MiddleLeft
-        GridViewTextBoxColumn10.Name = "remarque"
-        GridViewTextBoxColumn10.ReadOnly = True
-        GridViewTextBoxColumn10.Width = 250
-        Me.RadTraitementDataGridView.MasterTemplate.Columns.AddRange(New Telerik.WinControls.UI.GridViewDataColumn() {GridViewTextBoxColumn6, GridViewTextBoxColumn7, GridViewTextBoxColumn8, GridViewTextBoxColumn9, GridViewTextBoxColumn10})
+        GridViewTextBoxColumn1.EnableExpressionEditor = False
+        GridViewTextBoxColumn1.FieldName = "traitementId"
+        GridViewTextBoxColumn1.HeaderText = "column1"
+        GridViewTextBoxColumn1.IsVisible = False
+        GridViewTextBoxColumn1.Name = "traitementId"
+        GridViewTextBoxColumn1.ReadOnly = True
+        GridViewTextBoxColumn2.EnableExpressionEditor = False
+        GridViewTextBoxColumn2.FieldName = "dci"
+        GridViewTextBoxColumn2.HeaderText = "Dénomination"
+        GridViewTextBoxColumn2.HeaderTextAlignment = System.Drawing.ContentAlignment.MiddleLeft
+        GridViewTextBoxColumn2.Name = "dci"
+        GridViewTextBoxColumn2.ReadOnly = True
+        GridViewTextBoxColumn2.Width = 380
+        GridViewTextBoxColumn3.EnableExpressionEditor = False
+        GridViewTextBoxColumn3.FieldName = "dateArret"
+        GridViewTextBoxColumn3.HeaderText = "Date d'arrêt"
+        GridViewTextBoxColumn3.Name = "dateArret"
+        GridViewTextBoxColumn3.TextAlignment = System.Drawing.ContentAlignment.MiddleCenter
+        GridViewTextBoxColumn3.Width = 140
+        GridViewTextBoxColumn4.EnableExpressionEditor = False
+        GridViewTextBoxColumn4.FieldName = "commentaireArret"
+        GridViewTextBoxColumn4.HeaderText = "Commentaire d'arrêt"
+        GridViewTextBoxColumn4.HeaderTextAlignment = System.Drawing.ContentAlignment.MiddleLeft
+        GridViewTextBoxColumn4.Name = "commentaireArret"
+        GridViewTextBoxColumn4.ReadOnly = True
+        GridViewTextBoxColumn4.Width = 400
+        GridViewTextBoxColumn5.EnableExpressionEditor = False
+        GridViewTextBoxColumn5.FieldName = "remarque"
+        GridViewTextBoxColumn5.HeaderText = "Remarque"
+        GridViewTextBoxColumn5.HeaderTextAlignment = System.Drawing.ContentAlignment.MiddleLeft
+        GridViewTextBoxColumn5.Name = "remarque"
+        GridViewTextBoxColumn5.ReadOnly = True
+        GridViewTextBoxColumn5.Width = 250
+        Me.RadTraitementDataGridView.MasterTemplate.Columns.AddRange(New Telerik.WinControls.UI.GridViewDataColumn() {GridViewTextBoxColumn1, GridViewTextBoxColumn2, GridViewTextBoxColumn3, GridViewTextBoxColumn4, GridViewTextBoxColumn5})
         Me.RadTraitementDataGridView.MasterTemplate.EnableGrouping = False
-        Me.RadTraitementDataGridView.MasterTemplate.ViewDefinition = TableViewDefinition2
+        Me.RadTraitementDataGridView.MasterTemplate.ViewDefinition = TableViewDefinition1
         Me.RadTraitementDataGridView.Name = "RadTraitementDataGridView"
         Me.RadTraitementDataGridView.RightToLeft = System.Windows.Forms.RightToLeft.No
         Me.RadTraitementDataGridView.ShowGroupPanel = False
@@ -375,20 +375,22 @@ Partial Class RadFTraitementAllergieEtCI
         '
         'RadBtnAnnuler
         '
-        Me.RadBtnAnnuler.Location = New System.Drawing.Point(886, 7)
+        Me.RadBtnAnnuler.Image = Global.Oasis_WF.My.Resources.Resources.supprimer1
+        Me.RadBtnAnnuler.Location = New System.Drawing.Point(12, 7)
         Me.RadBtnAnnuler.Name = "RadBtnAnnuler"
-        Me.RadBtnAnnuler.Size = New System.Drawing.Size(147, 24)
+        Me.RadBtnAnnuler.Size = New System.Drawing.Size(168, 24)
         Me.RadBtnAnnuler.TabIndex = 1
         Me.RadBtnAnnuler.Text = "Annuler la déclaration"
         '
         'RadBtnAbandonner
         '
         Me.RadBtnAbandonner.DialogResult = System.Windows.Forms.DialogResult.Cancel
-        Me.RadBtnAbandonner.Location = New System.Drawing.Point(1039, 7)
+        Me.RadBtnAbandonner.Image = Global.Oasis_WF.My.Resources.Resources._exit
+        Me.RadBtnAbandonner.ImageAlignment = System.Drawing.ContentAlignment.MiddleCenter
+        Me.RadBtnAbandonner.Location = New System.Drawing.Point(1131, 7)
         Me.RadBtnAbandonner.Name = "RadBtnAbandonner"
-        Me.RadBtnAbandonner.Size = New System.Drawing.Size(110, 24)
+        Me.RadBtnAbandonner.Size = New System.Drawing.Size(24, 24)
         Me.RadBtnAbandonner.TabIndex = 0
-        Me.RadBtnAbandonner.Text = "Sortie"
         '
         'RadFTraitementAllergieEtCI
         '

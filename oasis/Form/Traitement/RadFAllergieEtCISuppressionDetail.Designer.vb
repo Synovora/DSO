@@ -103,6 +103,7 @@ Partial Class RadFAllergieEtCISuppressionDetail
         Me.RadGroupBox1.Size = New System.Drawing.Size(947, 86)
         Me.RadGroupBox1.TabIndex = 4
         Me.RadGroupBox1.Text = "Etat civil"
+        CType(Me.RadGroupBox1.GetChildAt(0).GetChildAt(1), Telerik.WinControls.UI.GroupBoxHeader).GroupBoxStyle = Telerik.WinControls.UI.RadGroupBoxStyle.Office
         CType(Me.RadGroupBox1.GetChildAt(0).GetChildAt(1).GetChildAt(0), Telerik.WinControls.Primitives.FillPrimitive).BackColor = System.Drawing.SystemColors.ActiveCaption
         CType(Me.RadGroupBox1.GetChildAt(0).GetChildAt(1).GetChildAt(0), Telerik.WinControls.Primitives.FillPrimitive).SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.None
         '
@@ -475,17 +476,19 @@ Partial Class RadFAllergieEtCISuppressionDetail
         '
         'RadBtnAbandon
         '
-        Me.RadBtnAbandon.Location = New System.Drawing.Point(839, 318)
+        Me.RadBtnAbandon.Image = Global.Oasis_WF.My.Resources.Resources._exit
+        Me.RadBtnAbandon.ImageAlignment = System.Drawing.ContentAlignment.MiddleCenter
+        Me.RadBtnAbandon.Location = New System.Drawing.Point(925, 318)
         Me.RadBtnAbandon.Name = "RadBtnAbandon"
-        Me.RadBtnAbandon.Size = New System.Drawing.Size(110, 24)
+        Me.RadBtnAbandon.Size = New System.Drawing.Size(24, 24)
         Me.RadBtnAbandon.TabIndex = 8
-        Me.RadBtnAbandon.Text = "Abandon"
         '
         'RadBtnAnnuler
         '
-        Me.RadBtnAnnuler.Location = New System.Drawing.Point(696, 318)
+        Me.RadBtnAnnuler.Image = Global.Oasis_WF.My.Resources.Resources.supprimer1
+        Me.RadBtnAnnuler.Location = New System.Drawing.Point(2, 318)
         Me.RadBtnAnnuler.Name = "RadBtnAnnuler"
-        Me.RadBtnAnnuler.Size = New System.Drawing.Size(137, 24)
+        Me.RadBtnAnnuler.Size = New System.Drawing.Size(164, 24)
         Me.RadBtnAnnuler.TabIndex = 9
         Me.RadBtnAnnuler.Text = "Annuler la déclaration"
         '

@@ -595,7 +595,7 @@ Partial Class RadFMedicamentSelecteur
         'RadBtnSelection
         '
         Me.RadBtnSelection.ForeColor = System.Drawing.Color.Black
-        Me.RadBtnSelection.Image = Global.Oasis_WF.My.Resources.Resources.selection
+        Me.RadBtnSelection.Image = Global.Oasis_WF.My.Resources.Resources._select
         Me.RadBtnSelection.Location = New System.Drawing.Point(1119, 357)
         Me.RadBtnSelection.Name = "RadBtnSelection"
         Me.RadBtnSelection.Size = New System.Drawing.Size(124, 24)

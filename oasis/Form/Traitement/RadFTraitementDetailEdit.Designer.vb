@@ -1151,7 +1151,7 @@ Partial Class RadFTraitementDetailEdit
         'RadBtnValidation
         '
         Me.RadBtnValidation.ForeColor = System.Drawing.Color.Black
-        Me.RadBtnValidation.Image = Global.Oasis_WF.My.Resources.Resources.validation
+        Me.RadBtnValidation.Image = Global.Oasis_WF.My.Resources.Resources.validation2
         Me.RadBtnValidation.Location = New System.Drawing.Point(12, 912)
         Me.RadBtnValidation.Name = "RadBtnValidation"
         Me.RadBtnValidation.Size = New System.Drawing.Size(110, 24)

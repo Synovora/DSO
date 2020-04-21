@@ -518,15 +518,17 @@ Partial Class RadFDeclarationAllergieEtCIDetail
         'RadBtnRetour
         '
         Me.RadBtnRetour.DialogResult = System.Windows.Forms.DialogResult.Cancel
-        Me.RadBtnRetour.Location = New System.Drawing.Point(1056, 341)
+        Me.RadBtnRetour.Image = Global.Oasis_WF.My.Resources.Resources._exit
+        Me.RadBtnRetour.ImageAlignment = System.Drawing.ContentAlignment.MiddleCenter
+        Me.RadBtnRetour.Location = New System.Drawing.Point(1142, 341)
         Me.RadBtnRetour.Name = "RadBtnRetour"
-        Me.RadBtnRetour.Size = New System.Drawing.Size(110, 24)
+        Me.RadBtnRetour.Size = New System.Drawing.Size(24, 24)
         Me.RadBtnRetour.TabIndex = 86
-        Me.RadBtnRetour.Text = "Abandon"
         '
         'RadBtnValidation
         '
-        Me.RadBtnValidation.Location = New System.Drawing.Point(940, 341)
+        Me.RadBtnValidation.Image = Global.Oasis_WF.My.Resources.Resources.validation2
+        Me.RadBtnValidation.Location = New System.Drawing.Point(7, 341)
         Me.RadBtnValidation.Name = "RadBtnValidation"
         Me.RadBtnValidation.Size = New System.Drawing.Size(110, 24)
         Me.RadBtnValidation.TabIndex = 87

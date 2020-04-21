@@ -232,15 +232,17 @@ Partial Class RadFRorDetailEdit
         'RadBtnAbandon
         '
         Me.RadBtnAbandon.DialogResult = System.Windows.Forms.DialogResult.Cancel
-        Me.RadBtnAbandon.Location = New System.Drawing.Point(759, 501)
+        Me.RadBtnAbandon.Image = Global.Oasis_WF.My.Resources.Resources._exit
+        Me.RadBtnAbandon.ImageAlignment = System.Drawing.ContentAlignment.MiddleCenter
+        Me.RadBtnAbandon.Location = New System.Drawing.Point(827, 501)
         Me.RadBtnAbandon.Name = "RadBtnAbandon"
-        Me.RadBtnAbandon.Size = New System.Drawing.Size(110, 24)
+        Me.RadBtnAbandon.Size = New System.Drawing.Size(24, 24)
         Me.RadBtnAbandon.TabIndex = 22
-        Me.RadBtnAbandon.Text = "Abandonner"
         '
         'RadBtnValider
         '
-        Me.RadBtnValider.Location = New System.Drawing.Point(643, 501)
+        Me.RadBtnValider.Image = Global.Oasis_WF.My.Resources.Resources.validation2
+        Me.RadBtnValider.Location = New System.Drawing.Point(16, 501)
         Me.RadBtnValider.Name = "RadBtnValider"
         Me.RadBtnValider.Size = New System.Drawing.Size(110, 24)
         Me.RadBtnValider.TabIndex = 23
@@ -248,9 +250,10 @@ Partial Class RadFRorDetailEdit
         '
         'RadBtnAnnuler
         '
-        Me.RadBtnAnnuler.Location = New System.Drawing.Point(199, 501)
+        Me.RadBtnAnnuler.Image = Global.Oasis_WF.My.Resources.Resources.supprimer1
+        Me.RadBtnAnnuler.Location = New System.Drawing.Point(132, 501)
         Me.RadBtnAnnuler.Name = "RadBtnAnnuler"
-        Me.RadBtnAnnuler.Size = New System.Drawing.Size(175, 24)
+        Me.RadBtnAnnuler.Size = New System.Drawing.Size(201, 24)
         Me.RadBtnAnnuler.TabIndex = 24
         Me.RadBtnAnnuler.Text = "Annuler l'intervenant/structure"
         '
