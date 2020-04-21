@@ -5,6 +5,7 @@ Imports Telerik.WinControls.UI.Localization
 Public Class FrmUtilisateurListe
     Dim isInactifs As Boolean = False
     Dim userDao As UserDao = New UserDao
+    Dim idNewUser As Long
 
     Public Sub New()
 
@@ -38,6 +39,8 @@ Public Class FrmUtilisateurListe
                 exId = Me.RadGridView1.CurrentRow.Cells("Id").Value
                 exPosit = Me.RadGridView1.CurrentRow.Index
             End If
+            ' --- gestion du positionnement au retour de creation
+            If idNewUser <> 0 Then exId = idNewUser : idNewUser = 0
 
             If Me.isInactifs <> isInactifParam Then
                 Me.isInactifs = isInactifParam
@@ -122,6 +125,9 @@ Public Class FrmUtilisateurListe
             Me.Enabled = False
             Using frm = New FrmUtilisateur(user)
                 frm.ShowDialog()
+                If Not frm.Tag Is Nothing Then
+                    idNewUser = frm.Tag
+                End If
                 frm.Dispose()
             End Using
             refreshGrid(isInactifs)

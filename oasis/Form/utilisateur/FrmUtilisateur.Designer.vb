@@ -26,6 +26,9 @@ Partial Class FrmUtilisateur
         Me.BtnAbandon = New Telerik.WinControls.UI.RadButton()
         Me.BtnValider = New System.Windows.Forms.Button()
         Me.RadGroupIdentite = New Telerik.WinControls.UI.RadGroupBox()
+        Me.TxtRPPS = New System.Windows.Forms.TextBox()
+        Me.Label1 = New System.Windows.Forms.Label()
+        Me.ChkAdmin = New Telerik.WinControls.UI.RadCheckBox()
         Me.TxtMail = New System.Windows.Forms.TextBox()
         Me.Label7 = New System.Windows.Forms.Label()
         Me.TxtTelephone = New System.Windows.Forms.TextBox()
@@ -38,14 +41,14 @@ Partial Class FrmUtilisateur
         Me.LblNom = New System.Windows.Forms.Label()
         Me.TxtIdentifiant = New System.Windows.Forms.TextBox()
         Me.LblIdentifiant = New System.Windows.Forms.Label()
-        Me.RadGroupProfil = New Telerik.WinControls.UI.RadGroupBox()
+        Me.RadGroupLocalisation = New Telerik.WinControls.UI.RadGroupBox()
         Me.DropDownSite = New Telerik.WinControls.UI.RadDropDownList()
         Me.DropDownUS = New Telerik.WinControls.UI.RadDropDownList()
         Me.DropDownSiege = New Telerik.WinControls.UI.RadDropDownList()
         Me.Label2 = New System.Windows.Forms.Label()
         Me.Label3 = New System.Windows.Forms.Label()
         Me.Label4 = New System.Windows.Forms.Label()
-        Me.RadGroupBox1 = New Telerik.WinControls.UI.RadGroupBox()
+        Me.RadGroupPassword = New Telerik.WinControls.UI.RadGroupBox()
         Me.TxtPassword2 = New System.Windows.Forms.TextBox()
         Me.TxtPassword1 = New System.Windows.Forms.TextBox()
         Me.LblPassword2 = New System.Windows.Forms.Label()
@@ -55,14 +58,15 @@ Partial Class FrmUtilisateur
         CType(Me.BtnAbandon, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.RadGroupIdentite, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.RadGroupIdentite.SuspendLayout()
+        CType(Me.ChkAdmin, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.DropDownProfil, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.RadGroupProfil, System.ComponentModel.ISupportInitialize).BeginInit()
-        Me.RadGroupProfil.SuspendLayout()
+        CType(Me.RadGroupLocalisation, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.RadGroupLocalisation.SuspendLayout()
         CType(Me.DropDownSite, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.DropDownUS, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.DropDownSiege, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.RadGroupBox1, System.ComponentModel.ISupportInitialize).BeginInit()
-        Me.RadGroupBox1.SuspendLayout()
+        CType(Me.RadGroupPassword, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.RadGroupPassword.SuspendLayout()
         CType(Me, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
@@ -71,7 +75,7 @@ Partial Class FrmUtilisateur
         Me.PnlBoutons.Controls.Add(Me.BtnAbandon)
         Me.PnlBoutons.Controls.Add(Me.BtnValider)
         Me.PnlBoutons.Dock = System.Windows.Forms.DockStyle.Bottom
-        Me.PnlBoutons.Location = New System.Drawing.Point(0, 368)
+        Me.PnlBoutons.Location = New System.Drawing.Point(0, 385)
         Me.PnlBoutons.Name = "PnlBoutons"
         Me.PnlBoutons.Size = New System.Drawing.Size(644, 57)
         Me.PnlBoutons.TabIndex = 2
@@ -101,6 +105,9 @@ Partial Class FrmUtilisateur
         '
         Me.RadGroupIdentite.AccessibleRole = System.Windows.Forms.AccessibleRole.Grouping
         Me.RadGroupIdentite.BackColor = System.Drawing.SystemColors.GradientInactiveCaption
+        Me.RadGroupIdentite.Controls.Add(Me.TxtRPPS)
+        Me.RadGroupIdentite.Controls.Add(Me.Label1)
+        Me.RadGroupIdentite.Controls.Add(Me.ChkAdmin)
         Me.RadGroupIdentite.Controls.Add(Me.TxtMail)
         Me.RadGroupIdentite.Controls.Add(Me.Label7)
         Me.RadGroupIdentite.Controls.Add(Me.TxtTelephone)
@@ -119,12 +126,39 @@ Partial Class FrmUtilisateur
         Me.RadGroupIdentite.HeaderText = "Identité"
         Me.RadGroupIdentite.Location = New System.Drawing.Point(0, 0)
         Me.RadGroupIdentite.Name = "RadGroupIdentite"
-        Me.RadGroupIdentite.Size = New System.Drawing.Size(644, 183)
+        Me.RadGroupIdentite.Size = New System.Drawing.Size(644, 200)
         Me.RadGroupIdentite.TabIndex = 0
         Me.RadGroupIdentite.Text = "Identité"
         CType(Me.RadGroupIdentite.GetChildAt(0).GetChildAt(1), Telerik.WinControls.UI.GroupBoxHeader).GroupBoxStyle = Telerik.WinControls.UI.RadGroupBoxStyle.Office
         CType(Me.RadGroupIdentite.GetChildAt(0).GetChildAt(1).GetChildAt(0), Telerik.WinControls.Primitives.FillPrimitive).BackColor = System.Drawing.SystemColors.ActiveCaption
         CType(Me.RadGroupIdentite.GetChildAt(0).GetChildAt(1).GetChildAt(0), Telerik.WinControls.Primitives.FillPrimitive).SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.None
+        '
+        'TxtRPPS
+        '
+        Me.TxtRPPS.BackColor = System.Drawing.SystemColors.Window
+        Me.TxtRPPS.Location = New System.Drawing.Point(118, 168)
+        Me.TxtRPPS.MaxLength = 11
+        Me.TxtRPPS.Name = "TxtRPPS"
+        Me.TxtRPPS.Size = New System.Drawing.Size(93, 25)
+        Me.TxtRPPS.TabIndex = 14
+        '
+        'Label1
+        '
+        Me.Label1.AutoSize = True
+        Me.Label1.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label1.Location = New System.Drawing.Point(10, 172)
+        Me.Label1.Name = "Label1"
+        Me.Label1.Size = New System.Drawing.Size(40, 13)
+        Me.Label1.TabIndex = 13
+        Me.Label1.Text = "RPPS"
+        '
+        'ChkAdmin
+        '
+        Me.ChkAdmin.Location = New System.Drawing.Point(536, 147)
+        Me.ChkAdmin.Name = "ChkAdmin"
+        Me.ChkAdmin.Size = New System.Drawing.Size(94, 18)
+        Me.ChkAdmin.TabIndex = 12
+        Me.ChkAdmin.Text = "Administrateur"
         '
         'TxtMail
         '
@@ -165,7 +199,7 @@ Partial Class FrmUtilisateur
         '
         Me.DropDownProfil.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend
         Me.DropDownProfil.DropDownStyle = Telerik.WinControls.RadDropDownStyle.DropDownList
-        Me.DropDownProfil.Location = New System.Drawing.Point(118, 155)
+        Me.DropDownProfil.Location = New System.Drawing.Point(118, 147)
         Me.DropDownProfil.Name = "DropDownProfil"
         Me.DropDownProfil.Size = New System.Drawing.Size(387, 20)
         Me.DropDownProfil.TabIndex = 11
@@ -174,7 +208,7 @@ Partial Class FrmUtilisateur
         '
         Me.Label5.AutoSize = True
         Me.Label5.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label5.Location = New System.Drawing.Point(10, 159)
+        Me.Label5.Location = New System.Drawing.Point(10, 151)
         Me.Label5.Name = "Label5"
         Me.Label5.Size = New System.Drawing.Size(36, 13)
         Me.Label5.TabIndex = 10
@@ -233,28 +267,28 @@ Partial Class FrmUtilisateur
         Me.LblIdentifiant.TabIndex = 0
         Me.LblIdentifiant.Text = "Identifiant"
         '
-        'RadGroupProfil
+        'RadGroupLocalisation
         '
-        Me.RadGroupProfil.AccessibleRole = System.Windows.Forms.AccessibleRole.Grouping
-        Me.RadGroupProfil.BackColor = System.Drawing.SystemColors.GradientInactiveCaption
-        Me.RadGroupProfil.Controls.Add(Me.DropDownSite)
-        Me.RadGroupProfil.Controls.Add(Me.DropDownUS)
-        Me.RadGroupProfil.Controls.Add(Me.DropDownSiege)
-        Me.RadGroupProfil.Controls.Add(Me.Label2)
-        Me.RadGroupProfil.Controls.Add(Me.Label3)
-        Me.RadGroupProfil.Controls.Add(Me.Label4)
-        Me.RadGroupProfil.Dock = System.Windows.Forms.DockStyle.Top
-        Me.RadGroupProfil.Font = New System.Drawing.Font("Segoe UI", 10.0!)
-        Me.RadGroupProfil.GroupBoxStyle = Telerik.WinControls.UI.RadGroupBoxStyle.Office
-        Me.RadGroupProfil.HeaderText = "Localisation"
-        Me.RadGroupProfil.Location = New System.Drawing.Point(0, 183)
-        Me.RadGroupProfil.Name = "RadGroupProfil"
-        Me.RadGroupProfil.Size = New System.Drawing.Size(644, 98)
-        Me.RadGroupProfil.TabIndex = 1
-        Me.RadGroupProfil.Text = "Localisation"
-        CType(Me.RadGroupProfil.GetChildAt(0).GetChildAt(1), Telerik.WinControls.UI.GroupBoxHeader).GroupBoxStyle = Telerik.WinControls.UI.RadGroupBoxStyle.Office
-        CType(Me.RadGroupProfil.GetChildAt(0).GetChildAt(1).GetChildAt(0), Telerik.WinControls.Primitives.FillPrimitive).BackColor = System.Drawing.SystemColors.ActiveCaption
-        CType(Me.RadGroupProfil.GetChildAt(0).GetChildAt(1).GetChildAt(0), Telerik.WinControls.Primitives.FillPrimitive).SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.None
+        Me.RadGroupLocalisation.AccessibleRole = System.Windows.Forms.AccessibleRole.Grouping
+        Me.RadGroupLocalisation.BackColor = System.Drawing.SystemColors.GradientInactiveCaption
+        Me.RadGroupLocalisation.Controls.Add(Me.DropDownSite)
+        Me.RadGroupLocalisation.Controls.Add(Me.DropDownUS)
+        Me.RadGroupLocalisation.Controls.Add(Me.DropDownSiege)
+        Me.RadGroupLocalisation.Controls.Add(Me.Label2)
+        Me.RadGroupLocalisation.Controls.Add(Me.Label3)
+        Me.RadGroupLocalisation.Controls.Add(Me.Label4)
+        Me.RadGroupLocalisation.Dock = System.Windows.Forms.DockStyle.Top
+        Me.RadGroupLocalisation.Font = New System.Drawing.Font("Segoe UI", 10.0!)
+        Me.RadGroupLocalisation.GroupBoxStyle = Telerik.WinControls.UI.RadGroupBoxStyle.Office
+        Me.RadGroupLocalisation.HeaderText = "Localisation"
+        Me.RadGroupLocalisation.Location = New System.Drawing.Point(0, 200)
+        Me.RadGroupLocalisation.Name = "RadGroupLocalisation"
+        Me.RadGroupLocalisation.Size = New System.Drawing.Size(644, 98)
+        Me.RadGroupLocalisation.TabIndex = 1
+        Me.RadGroupLocalisation.Text = "Localisation"
+        CType(Me.RadGroupLocalisation.GetChildAt(0).GetChildAt(1), Telerik.WinControls.UI.GroupBoxHeader).GroupBoxStyle = Telerik.WinControls.UI.RadGroupBoxStyle.Office
+        CType(Me.RadGroupLocalisation.GetChildAt(0).GetChildAt(1).GetChildAt(0), Telerik.WinControls.Primitives.FillPrimitive).BackColor = System.Drawing.SystemColors.ActiveCaption
+        CType(Me.RadGroupLocalisation.GetChildAt(0).GetChildAt(1).GetChildAt(0), Telerik.WinControls.Primitives.FillPrimitive).SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.None
         '
         'DropDownSite
         '
@@ -313,26 +347,26 @@ Partial Class FrmUtilisateur
         Me.Label4.TabIndex = 0
         Me.Label4.Text = "Siège"
         '
-        'RadGroupBox1
+        'RadGroupPassword
         '
-        Me.RadGroupBox1.AccessibleRole = System.Windows.Forms.AccessibleRole.Grouping
-        Me.RadGroupBox1.BackColor = System.Drawing.SystemColors.GradientInactiveCaption
-        Me.RadGroupBox1.Controls.Add(Me.TxtPassword2)
-        Me.RadGroupBox1.Controls.Add(Me.TxtPassword1)
-        Me.RadGroupBox1.Controls.Add(Me.LblPassword2)
-        Me.RadGroupBox1.Controls.Add(Me.lblPassword)
-        Me.RadGroupBox1.Dock = System.Windows.Forms.DockStyle.Top
-        Me.RadGroupBox1.Font = New System.Drawing.Font("Segoe UI", 10.0!)
-        Me.RadGroupBox1.GroupBoxStyle = Telerik.WinControls.UI.RadGroupBoxStyle.Office
-        Me.RadGroupBox1.HeaderText = "Mot de Passe"
-        Me.RadGroupBox1.Location = New System.Drawing.Point(0, 281)
-        Me.RadGroupBox1.Name = "RadGroupBox1"
-        Me.RadGroupBox1.Size = New System.Drawing.Size(644, 85)
-        Me.RadGroupBox1.TabIndex = 3
-        Me.RadGroupBox1.Text = "Mot de Passe"
-        CType(Me.RadGroupBox1.GetChildAt(0).GetChildAt(1), Telerik.WinControls.UI.GroupBoxHeader).GroupBoxStyle = Telerik.WinControls.UI.RadGroupBoxStyle.Office
-        CType(Me.RadGroupBox1.GetChildAt(0).GetChildAt(1).GetChildAt(0), Telerik.WinControls.Primitives.FillPrimitive).BackColor = System.Drawing.SystemColors.ActiveCaption
-        CType(Me.RadGroupBox1.GetChildAt(0).GetChildAt(1).GetChildAt(0), Telerik.WinControls.Primitives.FillPrimitive).SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.None
+        Me.RadGroupPassword.AccessibleRole = System.Windows.Forms.AccessibleRole.Grouping
+        Me.RadGroupPassword.BackColor = System.Drawing.SystemColors.GradientInactiveCaption
+        Me.RadGroupPassword.Controls.Add(Me.TxtPassword2)
+        Me.RadGroupPassword.Controls.Add(Me.TxtPassword1)
+        Me.RadGroupPassword.Controls.Add(Me.LblPassword2)
+        Me.RadGroupPassword.Controls.Add(Me.lblPassword)
+        Me.RadGroupPassword.Dock = System.Windows.Forms.DockStyle.Top
+        Me.RadGroupPassword.Font = New System.Drawing.Font("Segoe UI", 10.0!)
+        Me.RadGroupPassword.GroupBoxStyle = Telerik.WinControls.UI.RadGroupBoxStyle.Office
+        Me.RadGroupPassword.HeaderText = "Mot de Passe"
+        Me.RadGroupPassword.Location = New System.Drawing.Point(0, 298)
+        Me.RadGroupPassword.Name = "RadGroupPassword"
+        Me.RadGroupPassword.Size = New System.Drawing.Size(644, 85)
+        Me.RadGroupPassword.TabIndex = 3
+        Me.RadGroupPassword.Text = "Mot de Passe"
+        CType(Me.RadGroupPassword.GetChildAt(0).GetChildAt(1), Telerik.WinControls.UI.GroupBoxHeader).GroupBoxStyle = Telerik.WinControls.UI.RadGroupBoxStyle.Office
+        CType(Me.RadGroupPassword.GetChildAt(0).GetChildAt(1).GetChildAt(0), Telerik.WinControls.Primitives.FillPrimitive).BackColor = System.Drawing.SystemColors.ActiveCaption
+        CType(Me.RadGroupPassword.GetChildAt(0).GetChildAt(1).GetChildAt(0), Telerik.WinControls.Primitives.FillPrimitive).SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.None
         '
         'TxtPassword2
         '
@@ -377,9 +411,9 @@ Partial Class FrmUtilisateur
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.CancelButton = Me.BtnAbandon
-        Me.ClientSize = New System.Drawing.Size(644, 425)
-        Me.Controls.Add(Me.RadGroupBox1)
-        Me.Controls.Add(Me.RadGroupProfil)
+        Me.ClientSize = New System.Drawing.Size(644, 442)
+        Me.Controls.Add(Me.RadGroupPassword)
+        Me.Controls.Add(Me.RadGroupLocalisation)
         Me.Controls.Add(Me.RadGroupIdentite)
         Me.Controls.Add(Me.PnlBoutons)
         Me.MinimizeBox = False
@@ -398,16 +432,17 @@ Partial Class FrmUtilisateur
         CType(Me.RadGroupIdentite, System.ComponentModel.ISupportInitialize).EndInit()
         Me.RadGroupIdentite.ResumeLayout(False)
         Me.RadGroupIdentite.PerformLayout()
+        CType(Me.ChkAdmin, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.DropDownProfil, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.RadGroupProfil, System.ComponentModel.ISupportInitialize).EndInit()
-        Me.RadGroupProfil.ResumeLayout(False)
-        Me.RadGroupProfil.PerformLayout()
+        CType(Me.RadGroupLocalisation, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.RadGroupLocalisation.ResumeLayout(False)
+        Me.RadGroupLocalisation.PerformLayout()
         CType(Me.DropDownSite, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.DropDownUS, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.DropDownSiege, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.RadGroupBox1, System.ComponentModel.ISupportInitialize).EndInit()
-        Me.RadGroupBox1.ResumeLayout(False)
-        Me.RadGroupBox1.PerformLayout()
+        CType(Me.RadGroupPassword, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.RadGroupPassword.ResumeLayout(False)
+        Me.RadGroupPassword.PerformLayout()
         CType(Me, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
 
@@ -423,7 +458,7 @@ Partial Class FrmUtilisateur
     Friend WithEvents LblIdentifiant As Label
     Friend WithEvents TxtPrenom As TextBox
     Friend WithEvents LblPrenom As Label
-    Friend WithEvents RadGroupProfil As Telerik.WinControls.UI.RadGroupBox
+    Friend WithEvents RadGroupLocalisation As Telerik.WinControls.UI.RadGroupBox
     Friend WithEvents Label2 As Label
     Friend WithEvents Label3 As Label
     Friend WithEvents Label4 As Label
@@ -436,10 +471,13 @@ Partial Class FrmUtilisateur
     Friend WithEvents Label7 As Label
     Friend WithEvents TxtTelephone As TextBox
     Friend WithEvents LblTelephone As Label
-    Friend WithEvents RadGroupBox1 As Telerik.WinControls.UI.RadGroupBox
+    Friend WithEvents RadGroupPassword As Telerik.WinControls.UI.RadGroupBox
     Friend WithEvents TxtPassword2 As TextBox
     Friend WithEvents TxtPassword1 As TextBox
     Friend WithEvents LblPassword2 As Label
     Friend WithEvents lblPassword As Label
+    Friend WithEvents ChkAdmin As Telerik.WinControls.UI.RadCheckBox
+    Friend WithEvents TxtRPPS As TextBox
+    Friend WithEvents Label1 As Label
 End Class
 

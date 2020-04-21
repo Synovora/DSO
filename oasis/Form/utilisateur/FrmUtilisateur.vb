@@ -11,6 +11,9 @@ Public Class FrmUtilisateur
     Dim isCreation As Boolean
     Dim idSiegeDefaut As Integer = 0
 
+    Dim isNoChangePassword As Boolean
+    Dim userDao As UserDao = New UserDao
+
     Public Sub New(utilisateur As Utilisateur)
 
         ' Cet appel est requis par le concepteur.
@@ -31,15 +34,19 @@ Public Class FrmUtilisateur
         lstSiege = (New SiegeDao).getLstSiege(Not isCreation)
 
         ' -- si mode modif => on recherche le siege
-        If isCreation = False AndAlso utilisateur.UtilisateurUniteSanitaireId <> 0 Then
-            Dim uniteS = (New UniteSanitaireDao()).getUniteSanitaireById(utilisateur.UtilisateurUniteSanitaireId, True)
-            idSiegeDefaut = uniteS.Oa_unite_sanitaire_siege_id
+        If isCreation = False Then
+            If utilisateur.UtilisateurUniteSanitaireId <> 0 Then
+                Dim uniteS = (New UniteSanitaireDao()).getUniteSanitaireById(utilisateur.UtilisateurUniteSanitaireId, True)
+                idSiegeDefaut = uniteS.Oa_unite_sanitaire_siege_id
+            End If
+            Me.RadGroupPassword.Text += " (laisser les zones de saisie vides si vous ne souhaitez pas les changer)"
         End If
         Me.TxtIdentifiant.Text = utilisateur.UtilisateurLogin
         Me.TxtNom.Text = utilisateur.UtilisateurNom
         Me.TxtPrenom.Text = utilisateur.UtilisateurPrenom
         Me.TxtTelephone.Text = utilisateur.UtilisateurTelephone
         Me.TxtMail.Text = utilisateur.UtilisateurMail
+        Me.ChkAdmin.Checked = utilisateur.UtilisateurAdmin
 
         ' -- Profil ----------------------------------------------------------
         Me.DropDownProfil.Items.Clear()
@@ -65,8 +72,8 @@ Public Class FrmUtilisateur
                 radListItem.Selected = True
             End If
         Next
-        If isCreation AndAlso Me.DropDownSiege.Items.Count > 0 Then
-            Me.DropDownSiege.SelectedItem = Me.DropDownSiege.Items(0)
+        If isCreation OrElse Me.DropDownSiege.SelectedItem Is Nothing Then
+            If DropDownSiege.Items.Count > 0 Then Me.DropDownSiege.SelectedItem = Me.DropDownSiege.Items(0)
         End If
         Me.DropDownSiege.DefaultItemsCountInDropDown = DropDownSiege.Items.Count
 
@@ -85,7 +92,7 @@ Public Class FrmUtilisateur
                 radListItem.Selected = True
             End If
         Next
-        If isCreation AndAlso Me.DropDownUS.Items.Count > 0 Then
+        If isCreation OrElse Me.DropDownUS.SelectedItem Is Nothing Then
             Me.DropDownUS.SelectedItem = Me.DropDownUS.Items(0)
         End If
         Me.DropDownUS.DefaultItemsCountInDropDown = DropDownUS.Items.Count
@@ -105,7 +112,7 @@ Public Class FrmUtilisateur
                 radListItem.Selected = True
             End If
         Next
-        If isCreation AndAlso Me.DropDownSite.Items.Count > 0 Then
+        If isCreation OrElse Me.DropDownSite.SelectedItem Is Nothing Then
             Me.DropDownSite.SelectedItem = Me.DropDownSite.Items(0)
         End If
         Me.DropDownSite.DefaultItemsCountInDropDown = DropDownSite.Items.Count
@@ -115,7 +122,7 @@ Public Class FrmUtilisateur
     Private Function ctrlFields() As String
         Dim message = ""
         If TxtIdentifiant.Text.Length < 5 Then
-            message += ". L'identifiant doit faire au moins 5 caracetères" & vbCrLf
+            message += ". L'identifiant doit faire au moins 5 caractères" & vbCrLf
         End If
         If TxtNom.Text.Trim() = "" Then
             message += ". Le Nom est obligatoire" & vbCrLf
@@ -131,14 +138,34 @@ Public Class FrmUtilisateur
         ElseIf IsValidEmail(TxtMail.Text) = False Then
             message += ". L'adresse Email est incorrecte" & vbCrLf
         End If
-        If TxtPassword1.Text.Trim().Length < 8 Then
-            message += ". Le mot de passe doit faire au moins 8 caractères" & vbCrLf
+        ' -- si profil medical ou paramedical => no RPPS oblgatoire
+        If isProfilMedicalOrParamedical() Then
+            If TxtRPPS.Text.Trim() = "" Then
+                message += ". Le No RPPS est obligatoire" & vbCrLf
+            ElseIf TxtRPPS.Text.Length <> 11 Then
+                message += ". Le No RPPS doit avoir 11 chiffres" & vbCrLf
+            End If
         End If
-        If TxtPassword1.Text.Trim() <> TxtPassword2.Text.Trim() Then
-            message += ". Le mot de passe saisie est différent de la reSaisie " & vbCrLf
+        ' -- gestion ctrl pwd
+        isNoChangePassword = (isCreation = False AndAlso TxtPassword1.Text.Trim() = "" AndAlso TxtPassword2.Text.Trim() = "")
+        If isNoChangePassword = False Then
+            If TxtPassword1.Text.Trim().Length < 8 Then
+                message += ". Le mot de passe doit faire au moins 8 caractères" & vbCrLf
+            End If
+            If TxtPassword1.Text.Trim() <> TxtPassword2.Text.Trim() Then
+                message += ". Le mot de passe saisie est différent de la reSaisie " & vbCrLf
+            End If
         End If
 
         Return message
+    End Function
+
+    Private Function isProfilMedicalOrParamedical() As Boolean
+        Return isProfilMedicalOrParamedical(DirectCast(DropDownProfil.SelectedItem.Value, Profil).Type)
+    End Function
+
+    Private Function isProfilMedicalOrParamedical(userProfilType As String) As Boolean
+        Return (userProfilType = ProfilDao.EnumProfilType.MEDICAL.ToString OrElse userProfilType = ProfilDao.EnumProfilType.PARAMEDICAL.ToString)
     End Function
 
     Private Sub DropDownSiege_SelectedIndexChanged(sender As Object, e As Data.PositionChangedEventArgs) Handles DropDownSiege.SelectedIndexChanged
@@ -157,12 +184,56 @@ Public Class FrmUtilisateur
     End Sub
 
     Private Sub BtnValider_Click(sender As Object, e As EventArgs) Handles BtnValider.Click
+        ' -- controle des champs de saisie
         Dim message = ctrlFields()
         If message <> "" Then
             MsgBox(message, MsgBoxStyle.OkOnly Or MsgBoxStyle.Exclamation, "Formulaire incorrectement renseigné")
-
             Exit Sub
+        End If
+        ' --- fill du bean
+        With utilisateur
+            .UtilisateurAdmin = ChkAdmin.Checked
+            .UtilisateurLogin = TxtIdentifiant.Text.Trim()
+            .UtilisateurNom = TxtNom.Text.Trim()
+            .UtilisateurPrenom = TxtPrenom.Text.Trim()
+            .UtilisateurMail = TxtMail.Text.Trim().ToLower
+            .UtilisateurTelephone = TxtTelephone.Text.Trim()
+            .UtilisateurRPPS = TxtRPPS.Text.Trim()
+            .UtilisateurProfilId = DirectCast(Me.DropDownProfil.SelectedItem.Value, Profil).Id
+            .UtilisateurSiteId = DirectCast(Me.DropDownSite.SelectedItem.Value, Site).Oa_site_id
+            .UtilisateurUniteSanitaireId = DirectCast(Me.DropDownUS.SelectedItem.Value, UniteSanitaire).Oa_unite_sanitaire_id
+            .UtilisateurSiegeId = DirectCast(Me.DropDownSiege.SelectedItem.Value, Siege).SiegeId
+            .FonctionParDefautId = DirectCast(Me.DropDownProfil.SelectedItem.Value, Profil).FonctionParDefautId
+            If isNoChangePassword = False Then
+                .Password = Utilisateur.CryptePwd(.UtilisateurLogin, TxtPassword1.Text.Trim)
+                .IsPasswordUniqueUsage = True
             End If
+            .UtilisateurRPPS = If(isProfilMedicalOrParamedical(), TxtRPPS.Text, "")
+        End With
+        ' --- enregistrement
+        If isCreation Then
+            If userDao.Create(utilisateur) Then
+                Notification.show("Création Utilisateur", "Utilisateur créé avec succès !", 1)
+                Me.Tag = utilisateur.UtilisateurId
+                Close()
+            End If
+        Else
+            If userDao.UpdateSansChangerEtatEtDates(utilisateur) Then
+                Notification.show("Modification Utilisateur", "Utilisateur modifié avec succès !", 1)
+                Me.Tag = utilisateur.UtilisateurId
+                Close()
+            End If
+        End If
+    End Sub
+
+    Private Sub TxtRPPS_KeyPress(sender As Object, e As KeyPressEventArgs) Handles TxtRPPS.KeyPress
+        If e.KeyChar <> Chr(8) AndAlso (e.KeyChar < Chr(48) OrElse e.KeyChar > Chr(57)) Then
+            e.KeyChar = Chr(0)
+        End If
+    End Sub
+
+    Private Sub DropDownProfil_SelectedIndexChanged(sender As Object, e As Data.PositionChangedEventArgs) Handles DropDownProfil.SelectedIndexChanged
+        Me.TxtRPPS.Visible = isProfilMedicalOrParamedical()
     End Sub
 End Class
 

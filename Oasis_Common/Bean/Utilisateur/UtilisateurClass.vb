@@ -5,12 +5,15 @@ Public Class Utilisateur
     Public Property UtilisateurNom As String
     Public Property UtilisateurPrenom As String
     Public Property UtilisateurProfilId As String
+    Public Property UtilisateurRPPS As String
     Public Property UtilisateurAdmin As Boolean
     Public Property UtilisateurLogin As String
+    Public Property UtilisateurSiegeId As Integer
     Public Property UtilisateurSiteId As Integer
     Public Property UtilisateurUniteSanitaireId As Integer
     Public Property UtilisateurNiveauAcces As Integer
     Public Property Password As String
+    Public Property IsPasswordUniqueUsage As Boolean
     Public Property LstFonction As List(Of Fonction)
     Public Property TypeProfil As String
     Public Property FonctionParDefautId As Long

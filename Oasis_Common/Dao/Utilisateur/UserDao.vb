@@ -6,6 +6,129 @@ Public Class UserDao
     ''' <summary>
     ''' 
     ''' </summary>
+    ''' <param name="utilisateur"></param>
+    ''' <returns></returns>
+    Public Function Create(utilisateur As Utilisateur) As Boolean
+        Dim da As SqlDataAdapter = New SqlDataAdapter()
+        Dim codeRetour As Boolean = True
+        Dim con As SqlConnection
+
+        con = GetConnection()
+        Dim transaction As SqlClient.SqlTransaction = con.BeginTransaction
+
+        Try
+            Dim SQLstring As String = "INSERT INTO oasis.oa_utilisateur (" & vbCrLf &
+                                     " oa_utilisateur_prenom, oa_utilisateur_nom, oa_utilisateur_profil_id, oa_utilisateur_login,oa_utilisateur_siege_id " &
+                                     ",oa_utilisateur_unite_sanitaire_id, oa_utilisateur_site_id, oa_utilisateur_date_entree, oa_utilisateur_date_sortie " &
+                                     ",oa_utilisateur_etat, oa_password, oa_utilisateur_admin, oa_utilisateur_telephone, oa_utilisateur_fax " &
+                                     ",oa_utilisateur_mail, oa_utilisateur_rpps, oa_utilisateur_password_is_unique_usage)" & vbCrLf &
+                                     " VALUES (" & vbCrLf &
+                                     " @oa_utilisateur_prenom, @oa_utilisateur_nom, @oa_utilisateur_profil_id, @oa_utilisateur_login,@oa_utilisateur_siege_id " &
+                                     ",@oa_utilisateur_unite_sanitaire_id, @oa_utilisateur_site_id, @oa_utilisateur_date_entree, @oa_utilisateur_date_sortie " &
+                                     ",@oa_utilisateur_etat, @oa_password, @oa_utilisateur_admin, @oa_utilisateur_telephone, @oa_utilisateur_fax " &
+                                     ",@oa_utilisateur_mail, @oa_utilisateur_rpps, @oa_utilisateur_password_is_unique_usage);" & vbCrLf &
+                                     "SELECT SCOPE_IDENTITY()"
+
+            Dim cmd As New SqlCommand(SQLstring, con, transaction)
+            With cmd.Parameters
+                .AddWithValue("@oa_utilisateur_prenom", utilisateur.UtilisateurPrenom)
+                .AddWithValue("@oa_utilisateur_nom", utilisateur.UtilisateurNom)
+                .AddWithValue("@oa_utilisateur_profil_id", utilisateur.UtilisateurProfilId)
+                .AddWithValue("@oa_utilisateur_login", utilisateur.UtilisateurLogin)
+                .AddWithValue("@oa_utilisateur_siege_id", If(utilisateur.UtilisateurSiegeId = 0, DBNull.Value, utilisateur.UtilisateurSiegeId))
+                .AddWithValue("@oa_utilisateur_unite_sanitaire_id", If(utilisateur.UtilisateurUniteSanitaireId = 0, DBNull.Value, utilisateur.UtilisateurUniteSanitaireId))
+                .AddWithValue("@oa_utilisateur_site_id", If(utilisateur.UtilisateurSiteId = 0, DBNull.Value, utilisateur.UtilisateurSiteId))
+                .AddWithValue("@oa_utilisateur_date_entree", Date.Now)
+                .AddWithValue("@oa_utilisateur_date_sortie", New Date(2999, 12, 31, 0, 0, 0))
+                .AddWithValue("@oa_utilisateur_etat", "A")
+                .AddWithValue("@oa_password", utilisateur.Password)
+                .AddWithValue("@oa_utilisateur_admin", utilisateur.UtilisateurAdmin)
+                .AddWithValue("@oa_utilisateur_telephone", utilisateur.UtilisateurTelephone)
+                .AddWithValue("@oa_utilisateur_fax", utilisateur.UtilisateurFax)
+                .AddWithValue("@oa_utilisateur_mail", utilisateur.UtilisateurMail)
+                .AddWithValue("@oa_utilisateur_rpps", utilisateur.UtilisateurRPPS)
+                .AddWithValue("@oa_utilisateur_password_is_unique_usage", utilisateur.IsPasswordUniqueUsage)
+            End With
+
+            da.InsertCommand = cmd
+            utilisateur.UtilisateurId = da.InsertCommand.ExecuteScalar()
+
+            transaction.Commit()
+
+        Catch ex As Exception
+            transaction.Rollback()
+            Windows.Forms.MessageBox.Show(ex.Message)
+            codeRetour = False
+        Finally
+            transaction.Dispose()
+            con.Close()
+        End Try
+
+        Return codeRetour
+    End Function
+
+    Public Function UpdateSansChangerEtatEtDates(utilisateur As Utilisateur) As Boolean
+        Dim da As SqlDataAdapter = New SqlDataAdapter()
+        Dim codeRetour As Boolean = True
+        Dim con As SqlConnection
+
+        con = GetConnection()
+        Dim transaction As SqlClient.SqlTransaction = con.BeginTransaction
+
+        Try
+            Dim SQLstring As String = "UPDATE oasis.oa_utilisateur SET " & vbCrLf &
+                                     " oa_utilisateur_prenom=@oa_utilisateur_prenom, oa_utilisateur_nom=@oa_utilisateur_nom " & vbCrLf &
+                                     ",oa_utilisateur_profil_id=@oa_utilisateur_profil_id, oa_utilisateur_login=@oa_utilisateur_login" & vbCrLf &
+                                     ",oa_utilisateur_siege_id=@oa_utilisateur_siege_id, oa_utilisateur_unite_sanitaire_id=@oa_utilisateur_unite_sanitaire_id" & vbCrLf &
+                                     ", oa_utilisateur_site_id=@oa_utilisateur_site_id" & vbCrLf &
+                                     ", oa_utilisateur_admin=@oa_utilisateur_admin, oa_utilisateur_telephone=@oa_utilisateur_telephone" & vbCrLf &
+                                     ", oa_utilisateur_fax=oa_utilisateur_fax, oa_utilisateur_mail=@oa_utilisateur_mail, oa_utilisateur_rpps=@oa_utilisateur_rpps" & vbCrLf &
+                                     ", oa_password=@oa_password, oa_utilisateur_password_is_unique_usage=@oa_utilisateur_password_is_unique_usage" & vbCrLf &
+                                     "WHERE oa_utilisateur_id = @oa_utilisateur_id "
+
+            Dim cmd As New SqlCommand(SQLstring, con, transaction)
+            With cmd.Parameters
+                .AddWithValue("@oa_utilisateur_prenom", utilisateur.UtilisateurPrenom)
+                .AddWithValue("@oa_utilisateur_nom", utilisateur.UtilisateurNom)
+                .AddWithValue("@oa_utilisateur_profil_id", utilisateur.UtilisateurProfilId)
+                .AddWithValue("@oa_utilisateur_login", utilisateur.UtilisateurLogin)
+                .AddWithValue("@oa_utilisateur_siege_id", If(utilisateur.UtilisateurSiegeId = 0, DBNull.Value, utilisateur.UtilisateurSiegeId))
+                .AddWithValue("@oa_utilisateur_unite_sanitaire_id", If(utilisateur.UtilisateurUniteSanitaireId = 0, DBNull.Value, utilisateur.UtilisateurUniteSanitaireId))
+                .AddWithValue("@oa_utilisateur_site_id", If(utilisateur.UtilisateurSiteId = 0, DBNull.Value, utilisateur.UtilisateurSiteId))
+                .AddWithValue("@oa_utilisateur_admin", utilisateur.UtilisateurAdmin)
+                .AddWithValue("@oa_utilisateur_telephone", utilisateur.UtilisateurTelephone)
+                .AddWithValue("@oa_utilisateur_fax", utilisateur.UtilisateurFax)
+                .AddWithValue("@oa_utilisateur_mail", utilisateur.UtilisateurMail)
+                .AddWithValue("@oa_utilisateur_rpps", utilisateur.UtilisateurRPPS)
+                .AddWithValue("@oa_password", utilisateur.Password)
+                .AddWithValue("@oa_utilisateur_password_is_unique_usage", utilisateur.IsPasswordUniqueUsage)
+                ' -- pour le where
+                .AddWithValue("@oa_utilisateur_id", utilisateur.UtilisateurId)
+            End With
+
+            da.InsertCommand = cmd
+            Dim nb As Integer = da.InsertCommand.ExecuteNonQuery()
+            If (nb <> 1) Then
+                Throw New Exception("Validation échouée (" & nb & ")")
+            End If
+
+            transaction.Commit()
+
+        Catch ex As Exception
+            transaction.Rollback()
+            Windows.Forms.MessageBox.Show(ex.Message)
+            codeRetour = False
+        Finally
+            transaction.Dispose()
+            con.Close()
+        End Try
+
+        Return codeRetour
+    End Function
+
+    ''' <summary>
+    ''' 
+    ''' </summary>
     ''' <param name="login"></param>
     ''' <param name="password"></param>
     ''' <returns></returns>
@@ -18,7 +141,7 @@ Public Class UserDao
                 command.CommandText =
                    "select U.*, p.* " &
                    "from oasis.oa_utilisateur u " &
-                   "inner join oasis.oa_r_profil p on p.oa_r_profil_id = oa_utilisateur_profil_id AND COALESCE(oa_r_profil_inactif,'false')='false' " &
+                   "inner join oasis.oa_r_profil p on p.oa_r_profil_id = oa_utilisateur_profil_id And COALESCE(oa_r_profil_inactif,'false')='false' " &
                    "where oa_utilisateur_login = @login AND oa_utilisateur_etat='A'"
                 command.Parameters.AddWithValue("@login", login)
                 Using reader As SqlDataReader = command.ExecuteReader()
@@ -95,6 +218,7 @@ Public Class UserDao
         user.UtilisateurLogin = Coalesce(reader("oa_utilisateur_login"), "")
         user.UtilisateurSiteId = Coalesce(reader("oa_utilisateur_site_id"), 0)
         user.UtilisateurUniteSanitaireId = Coalesce(reader("oa_utilisateur_unite_sanitaire_id"), 0)
+        user.UtilisateurSiegeId = Coalesce(reader("oa_utilisateur_siege_id"), 0)
         user.Password = Trim(Coalesce(reader("oa_password"), ""))
         user.UtilisateurProfilId = Coalesce(reader("oa_r_profil_id"), "ADMINISTRATIF")
         user.FonctionParDefautId = Coalesce(reader("oa_r_profil_fonction_id_defaut"), 0)
