@@ -135,13 +135,6 @@ Public Class FrmMain
 
     Private Sub RadTileElementTemplateSE_Click(sender As Object, e As EventArgs) Handles RadTileElementTemplateSE.Click
         Try
-            ' --- TODO : pour phase Dev -> a virer des que les users sont finis
-            If IsNothing(loginRequestLog) Then
-                loginRequestLog = New LoginRequest() With {
-                .login = "Bertrand.Gambet",
-                .password = "a"
-            }
-            End If
             Me.Cursor = Cursors.WaitCursor
             Me.Enabled = False
             Using formT As New FrmAdminTemplateSousEpisode()

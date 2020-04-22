@@ -2,11 +2,12 @@
 Imports System.IO
 Imports Oasis_Common
 Imports Oasis_WF.My.Resources
+Imports Telerik.WinControls.UI
 Imports Telerik.WinControls.UI.Localization
 Imports Telerik.WinForms.RichTextEditor
 
 Public Class FrmLogin
-
+    Dim nbTry As Integer = 0
     Public Sub New()
 
         ' Cet appel est requis par le concepteur.
@@ -16,6 +17,9 @@ Public Class FrmLogin
         RichTextBoxLocalizationProvider.CurrentProvider = RichTextBoxLocalizationProvider.FromStream(New MemoryStream(New System.Text.UTF8Encoding().GetBytes(FrenchRichTextBoxStrings.RichTextBoxStrings)))
         '  --- init internationnalisation du radgridview
         RadGridLocalizationProvider.CurrentProvider = New FrenchRadGridViewLocalizationProvider()
+
+        Dim contactAdmin = ConfigurationManager.AppSettings("ContactAdministrateur")
+        LblContactAdmin.Text = contactAdmin
 
     End Sub
     ''' <summary>
@@ -33,39 +37,38 @@ Public Class FrmLogin
     ''' <param name="sender"></param>
     ''' <param name="e"></param>
     Private Sub BtnValidate_Click(sender As Object, e As EventArgs) Handles BtnValidate.Click
+        ' -- permet de voir si on vient du label "Changer mon mot de passe" ou du bouton "Valider"
+        Dim isChgtVolontaire = Not TryCast(sender, RadLabel) Is Nothing
+
+        If isChgtVolontaire AndAlso Me.TxtPassword.Text = "*" Then
+            Dim frm As New FAuthentificattion
+            frm.ShowDialog()
+            Return
+        End If
+
+        ' objet global pour APIs
+        loginRequestLog = New LoginRequest() With {
+                .login = Me.TxtLogin.Text,
+                .password = Me.TxtPassword.Text
+            }
 
         ' --- recherche chaine de connextion / api rest
         If StandardDao.isConnectionStringFixed() = False Then
             Me.Cursor = Cursors.WaitCursor
-            Dim loginRequest = New LoginRequest() With {
-                .login = Me.TxtLogin.Text,
-                .password = Me.TxtPassword.Text
-            }
             Try
                 Using apiOasis As New ApiOasis()
-                    StandardDao.fixConnectionString(apiOasis.loginRest(loginRequest))
+                    StandardDao.fixConnectionString(apiOasis.loginRest(loginRequestLog))
                 End Using
-                loginRequestLog = loginRequest '   pour acces api upload et download ultérieure
-
-                ' -- @@test : test upload
-                'Using apiOasis As New ApiOasis()
-                'ApiOasis.uploadFileRest(loginRequest.login, loginRequest.password, "webdette.csv", File.ReadAllBytes("C:\db\lore\conciliation\\webdette.csv"))
-                'End Using
-
-                ' -- @@test : test download
-                'Using apiOasis As New ApiOasis()
-                '    Dim downloadRequest As New DownloadRequest With {
-                '       .LoginRequest = loginRequest,
-                '       .FileName = "webdette.csv"
-                '       }
-                'File.WriteAllBytes("c:\db\oasis\download\" & downloadRequest.FileName, apiOasis.downloadFileRest(downloadRequest))
-                'End Using
-
 
             Catch ex As Exception
+                nbTry += 1
+                If nbTry = 5 Then
+
+                End If
                 If MsgBox("" & ex.Message & vbCrLf & "Réessayer ?", MsgBoxStyle.YesNo Or MessageBoxIcon.Error, "Authentification Api") = MsgBoxResult.Yes Then
                     Return
                 Else
+                    If isChgtVolontaire Then Return
                     Close()
                     End
                 End If
@@ -75,21 +78,36 @@ Public Class FrmLogin
         End If
 
         Dim userDao As UserDao = New UserDao
+        Me.Cursor = Cursors.WaitCursor
         Try
             userLog = userDao.getUserByLoginPassword(Me.TxtLogin.Text, Me.TxtPassword.Text)
         Catch ex As Exception
+            Me.Cursor = Cursors.Default
             Dim unused = MessageBox.Show("" & ex.Message, "Authentification", MessageBoxButtons.OK, MessageBoxIcon.Error)
             Return
+        Finally
+            Me.Cursor = Cursors.Default
         End Try
 
+        ' --- test si changement de mot de passe imposé
+        If userLog.IsPasswordUniqueUsage OrElse isChgtVolontaire Then
+            If ChgtPassword() = False Then Return
+        End If
+
         Me.Cursor = Cursors.WaitCursor
-        Using vFPatientListe As New FrmTacheMain
-            'Using vFPatientListe As New RadFPatientListe
-            'vFPatientListe.UtilisateurConnecte = userLog
-            Me.Hide()
-            vFPatientListe.ShowDialog()
-        End Using
-        Me.Cursor = Cursors.Default
+        Try
+            nbTry = 0
+            Using form As New FrmTacheMain
+                'Using form As New RadFPatientListe
+                'form.UtilisateurConnecte = userLog
+                Me.Hide()
+                form.ShowDialog()
+            End Using
+        Catch err As Exception
+            MsgBox(err.Message())
+        Finally
+            Me.Cursor = Cursors.Default
+        End Try
 
         TxtLogin.Text = ""
         TxtPassword.Text = ""
@@ -98,28 +116,26 @@ Public Class FrmLogin
 
     End Sub
 
-    Private Sub BtnValidateOld_Click(sender As Object, e As EventArgs) ' Handles BtnValidate.Click
-        Dim userDao As UserDao = New UserDao
-
+    Private Function ChgtPassword() As Boolean
         Try
-            userLog = userDao.getUserByLoginPassword(Me.TxtLogin.Text, Me.TxtPassword.Text)
-        Catch ex As Exception
-            Dim unused = MessageBox.Show("Authentification : " & ex.Message, "Problème", MessageBoxButtons.OK, MessageBoxIcon.Error)
-            Return
+            Me.Cursor = Cursors.WaitCursor
+            Me.Enabled = False
+            Using frm As New FrmChangePassword
+                frm.ShowDialog()
+                Return frm.Tag
+            End Using
+        Catch err As Exception
+            MsgBox(err.Message())
+        Finally
+            Me.Enabled = True
+            Me.Cursor = Cursors.Default
         End Try
-        Me.Cursor = Cursors.WaitCursor
-        Using vFPatientListe As New RadFPatientListe
-            vFPatientListe.UtilisateurConnecte = userLog
-            Me.Hide()
-            vFPatientListe.ShowDialog()
-        End Using
-        Me.Cursor = Cursors.Default
+        Return False
 
-        TxtLogin.Text = ""
-        TxtPassword.Text = ""
-        Me.Show()
-        TxtLogin.Focus()
+    End Function
 
+    Private Sub LblChangePassword_Click(sender As Object, e As EventArgs) Handles LblChangePassword.Click
+        BtnValidate_Click(sender, e)
     End Sub
 
 End Class

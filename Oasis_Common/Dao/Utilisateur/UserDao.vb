@@ -323,6 +323,7 @@ Public Class UserDao
 
         Dim SQLstring As String = "UPDATE oasis.oa_utilisateur SET" &
             " oa_utilisateur_etat = @etat" &
+            ",oa_utilisateur_date_sortie = @oa_utilisateur_date_sortie" &
             " WHERE oa_utilisateur_id = @Id AND oa_utilisateur_etat<> @etat2"
 
         Using con As SqlConnection = GetConnection()
@@ -330,6 +331,7 @@ Public Class UserDao
             cmd = New SqlCommand(SQLstring, con)
             With cmd.Parameters
                 .AddWithValue("@etat", If(isInactivation, "I", "A"))
+                .AddWithValue("@oa_utilisateur_date_sortie", If(isInactivation, Date.Now, New Date(2999, 12, 31, 0, 0, 0)))
                 .AddWithValue("@Id", idUser)
                 .AddWithValue("@etat2", If(isInactivation, "I", "A"))
             End With

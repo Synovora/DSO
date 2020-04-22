@@ -30,6 +30,10 @@ Partial Class FrmLogin
         Me.Label2 = New System.Windows.Forms.Label()
         Me.Label1 = New System.Windows.Forms.Label()
         Me.Panel1 = New System.Windows.Forms.Panel()
+        Me.LblChangePassword = New Telerik.WinControls.UI.RadLabel()
+        Me.LblContactAdmin = New Telerik.WinControls.UI.RadLabel()
+        CType(Me.LblChangePassword, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.LblContactAdmin, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
@@ -66,7 +70,6 @@ Partial Class FrmLogin
         Me.TxtPassword.PasswordChar = Global.Microsoft.VisualBasic.ChrW(42)
         Me.TxtPassword.Size = New System.Drawing.Size(230, 25)
         Me.TxtPassword.TabIndex = 9
-        Me.TxtPassword.Text = "a"
         Me.TxtPassword.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
         Me.TxtPassword.UseSystemPasswordChar = True
         '
@@ -79,7 +82,6 @@ Partial Class FrmLogin
         Me.TxtLogin.Name = "TxtLogin"
         Me.TxtLogin.Size = New System.Drawing.Size(230, 25)
         Me.TxtLogin.TabIndex = 8
-        Me.TxtLogin.Text = "Bertrand.Gambet"
         '
         'Label2
         '
@@ -107,13 +109,39 @@ Partial Class FrmLogin
         Me.Panel1.Size = New System.Drawing.Size(124, 135)
         Me.Panel1.TabIndex = 12
         '
+        'LblChangePassword
+        '
+        Me.LblChangePassword.Cursor = System.Windows.Forms.Cursors.Hand
+        Me.LblChangePassword.ForeColor = System.Drawing.Color.MediumBlue
+        Me.LblChangePassword.Location = New System.Drawing.Point(328, 175)
+        Me.LblChangePassword.Name = "LblChangePassword"
+        Me.LblChangePassword.Size = New System.Drawing.Size(144, 18)
+        Me.LblChangePassword.TabIndex = 13
+        Me.LblChangePassword.Text = "Changer mon Mot de Passe"
+        '
+        'LblContactAdmin
+        '
+        Me.LblContactAdmin.AutoSize = False
+        Me.LblContactAdmin.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None
+        Me.LblContactAdmin.Dock = System.Windows.Forms.DockStyle.Bottom
+        Me.LblContactAdmin.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Italic)
+        Me.LblContactAdmin.Location = New System.Drawing.Point(0, 200)
+        Me.LblContactAdmin.Name = "LblContactAdmin"
+        Me.LblContactAdmin.Size = New System.Drawing.Size(509, 18)
+        Me.LblContactAdmin.TabIndex = 14
+        Me.LblContactAdmin.Text = "En cas de problème contactez ... etc. : variable 'ContactAdministrateur' de App.c" &
+    "onfig"
+        Me.LblContactAdmin.TextAlignment = System.Drawing.ContentAlignment.MiddleCenter
+        '
         'FrmLogin
         '
         Me.AcceptButton = Me.BtnValidate
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.CancelButton = Me.BtnCancel
-        Me.ClientSize = New System.Drawing.Size(509, 198)
+        Me.ClientSize = New System.Drawing.Size(509, 218)
+        Me.Controls.Add(Me.LblContactAdmin)
+        Me.Controls.Add(Me.LblChangePassword)
         Me.Controls.Add(Me.Panel1)
         Me.Controls.Add(Me.BtnValidate)
         Me.Controls.Add(Me.BtnCancel)
@@ -132,6 +160,8 @@ Partial Class FrmLogin
         Me.RootElement.ApplyShapeToControl = True
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
         Me.Text = "OASIS - Authentification"
+        CType(Me.LblChangePassword, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.LblContactAdmin, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
         Me.PerformLayout()
@@ -145,4 +175,6 @@ Partial Class FrmLogin
     Friend WithEvents Label2 As Label
     Friend WithEvents Label1 As Label
     Friend WithEvents Panel1 As Panel
+    Friend WithEvents LblChangePassword As Telerik.WinControls.UI.RadLabel
+    Friend WithEvents LblContactAdmin As Telerik.WinControls.UI.RadLabel
 End Class

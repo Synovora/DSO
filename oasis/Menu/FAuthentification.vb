@@ -31,7 +31,6 @@ Public Class FAuthentificattion
         InitializeComponent()
 
         ' Ajoutez une initialisation quelconque après l'appel InitializeComponent().
-        StandardDao.fixConnectionString("Data Source=ns3119889.ip-51-38-181.eu;Initial Catalog=oasis;persist security info=True;user id=sa;password=Oasis-689;encrypt=true;trustServerCertificate=true;MultipleActiveResultSets=True")
     End Sub
 
     Private Sub FAuthentificattion_Load(sender As Object, e As EventArgs) Handles MyBase.Load
@@ -58,8 +57,10 @@ Public Class FAuthentificattion
     End Sub
 
     Private Sub BtnValidation_Click(sender As Object, e As EventArgs) Handles BtnValidation.Click
-        Cursor.Current = Cursors.WaitCursor
+
         InitAppelForm()
+        Application.DoEvents()
+        Cursor.Current = Cursors.WaitCursor
         Try
             Me.Enabled = False
 
@@ -76,8 +77,9 @@ Public Class FAuthentificattion
     End Sub
 
     Private Sub BtnListePatient_Click(sender As Object, e As EventArgs) Handles BtnListePatient.Click
-        Cursor.Current = Cursors.WaitCursor
         InitAppelForm()
+        Application.DoEvents()
+        Cursor.Current = Cursors.WaitCursor
         Using form As New RadFPatientListe 'FrmAgendaMedecin
             form.UtilisateurConnecte = userLog
             form.ShowDialog()
@@ -87,6 +89,7 @@ Public Class FAuthentificattion
 
     Private Sub BtnAdmin_Click(sender As Object, e As EventArgs) Handles BtnAdmin.Click
         InitAppelForm()
+        Application.DoEvents()
         Me.Cursor = Cursors.WaitCursor
         Me.Enabled = False
         Using vFMenuAdmin As New FrmMain
@@ -135,21 +138,46 @@ Public Class FAuthentificattion
             Admin = False
         End If
 
-        Dim UtilisateurConnecte As New Utilisateur()
-        UtilisateurConnecte = userdao.getUserById(UtilisateurId)
-        UtilisateurConnecte.UtilisateurAdmin = Admin
-        userLog = UtilisateurConnecte
-
         ' -- pour test api rest
         loginRequestLog = New LoginRequest() With {
                 .login = "Bertrand.Gambet",
                 .password = "a"
         }
 
-        '  --- init internationnalisation du richTextBoxEditor
-        RichTextBoxLocalizationProvider.CurrentProvider = RichTextBoxLocalizationProvider.FromStream(New MemoryStream(New System.Text.UTF8Encoding().GetBytes(FrenchRichTextBoxStrings.RichTextBoxStrings)))
-        '  --- init internationnalisation du radgridview
-        RadGridLocalizationProvider.CurrentProvider = New FrenchRadGridViewLocalizationProvider()
+        If StandardDao.isConnectionStringFixed() = False Then
+            Me.Cursor = Cursors.WaitCursor
+            Try
+                Using apiOasis As New ApiOasis()
+                    StandardDao.fixConnectionString(apiOasis.loginRest(loginRequestLog))
+                End Using
+
+            Catch ex As Exception
+                If MsgBox("" & ex.Message & vbCrLf & "Réessayer ?", MsgBoxStyle.YesNo Or MessageBoxIcon.Error, "Authentification Api") = MsgBoxResult.Yes Then
+                    Return
+                Else
+                    Close()
+                    End
+                End If
+            Finally
+                Me.Cursor = Cursors.Default
+            End Try
+        End If
+
+        Me.Cursor = Cursors.WaitCursor
+        Dim UtilisateurConnecte As New Utilisateur()
+        Try
+            UtilisateurConnecte = userdao.getUserById(UtilisateurId)
+            UtilisateurConnecte.UtilisateurAdmin = Admin
+            userLog = UtilisateurConnecte
+            '  --- init internationnalisation du richTextBoxEditor
+            RichTextBoxLocalizationProvider.CurrentProvider = RichTextBoxLocalizationProvider.FromStream(New MemoryStream(New System.Text.UTF8Encoding().GetBytes(FrenchRichTextBoxStrings.RichTextBoxStrings)))
+            '  --- init internationnalisation du radgridview
+            RadGridLocalizationProvider.CurrentProvider = New FrenchRadGridViewLocalizationProvider()
+        Finally
+            Me.Cursor = Cursors.Default
+        End Try
+
+
 
     End Sub
 
@@ -182,6 +210,7 @@ Public Class FAuthentificattion
     Private Sub BtnTemplateSsEpisode_Click(sender As Object, e As EventArgs) Handles BtnTemplateSsEpisode.Click
         Try
             InitAppelForm()
+            Application.DoEvents()
             Me.Cursor = Cursors.WaitCursor
             Me.Enabled = False
             Using formT As New FrmAdminTemplateSousEpisode()
@@ -196,8 +225,14 @@ Public Class FAuthentificattion
     End Sub
 
     Private Sub BtnLogin_Click(sender As Object, e As EventArgs) Handles BtnLogin.Click
-        Using frmLogin As New FrmLogin
-            frmLogin.ShowDialog()
-        End Using
+        Me.Cursor = Cursors.WaitCursor
+        Try
+            Using frmLogin As New FrmLogin
+                frmLogin.ShowDialog()
+            End Using
+        Finally
+            Me.Cursor = Cursors.Default
+        End Try
+
     End Sub
 End Class

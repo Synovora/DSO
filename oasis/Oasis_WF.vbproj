@@ -572,6 +572,12 @@
     <Compile Include="Form\Traitement\RadFDeclarationAllergieEtCIDetail.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="Form\utilisateur\FrmChangePassword.Designer.vb">
+      <DependentUpon>FrmChangePassword.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Form\utilisateur\FrmChangePassword.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Form\utilisateur\FrmUtilisateur.Designer.vb">
       <DependentUpon>FrmUtilisateur.vb</DependentUpon>
     </Compile>
@@ -1009,6 +1015,7 @@
     <Compile Include="My Project\Application.Designer.vb">
       <AutoGen>True</AutoGen>
       <DependentUpon>Application.myapp</DependentUpon>
+      <DesignTime>True</DesignTime>
     </Compile>
     <Compile Include="My Project\Resources.Designer.vb">
       <AutoGen>True</AutoGen>
@@ -1133,6 +1140,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Form\Traitement\RadFDeclarationAllergieEtCIDetail.resx">
       <DependentUpon>RadFDeclarationAllergieEtCIDetail.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form\utilisateur\FrmChangePassword.resx">
+      <DependentUpon>FrmChangePassword.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Form\utilisateur\FrmUtilisateur.resx">
       <DependentUpon>FrmUtilisateur.vb</DependentUpon>

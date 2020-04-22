@@ -8,6 +8,7 @@ Public Module ModuleUtils
     Private Const chaineMystere As String = "mAisOuEstDoncOrNic@r!421"
     Private ReadOnly SALT As Byte() = New Byte() {&H26, &HDC, &HFF, &H0, &HAD, &HED, &H7A, &HEE, &HC5, &HFE, &H7, &HAF, &H4D, &H8, &H22, &H3C}
     Private Const chaineStartCrypt As String = "#PE#"
+    Public ReadOnly messageFormatPassword As String = "Au moins 8 caractères, une majuscule, une minuscule, un chiffre et un caractère spécial"
 
     ''' <summary>
     ''' 

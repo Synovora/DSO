@@ -46,6 +46,7 @@ Public Class FrmUtilisateurListe
                 Me.isInactifs = isInactifParam
                 Me.BtnActiverDesactiver.Text = If(isInactifParam, "Désactiver", "Activer")
             End If
+            RadGridView1.Columns("date_sortie").IsVisible = Not Me.isInactifs
             RadGridView1.Rows.Clear()
 
             For Each row In data.Rows

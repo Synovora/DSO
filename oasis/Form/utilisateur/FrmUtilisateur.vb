@@ -13,7 +13,6 @@ Public Class FrmUtilisateur
 
     Dim isNoChangePassword As Boolean
     Dim userDao As UserDao = New UserDao
-    ReadOnly messageFormatPassword As String = "Au moins 8 caractères, une majuscule, une minuscule, un chiffre et un caractère spécial"
 
     Public Sub New(utilisateur As Utilisateur)
 
@@ -40,7 +39,7 @@ Public Class FrmUtilisateur
                 Dim uniteS = (New UniteSanitaireDao()).getUniteSanitaireById(utilisateur.UtilisateurUniteSanitaireId, True)
                 idSiegeDefaut = uniteS.Oa_unite_sanitaire_siege_id
             End If
-            Me.RadGroupPassword.Text += " (laisser les zones de saisie vides si vous ne souhaitez pas les changer)"
+            Me.RadGroupPassword.Text += " (laisser les zones de saisie vides si vous ne souhaitez pas le changer)"
         End If
         Me.TxtIdentifiant.Text = utilisateur.UtilisateurLogin
         Me.TxtNom.Text = utilisateur.UtilisateurNom
