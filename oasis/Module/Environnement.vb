@@ -497,6 +497,7 @@ Module Environnement
         Private specialite_oasis(indice) As Boolean
         Private specialite_ageMin(indice) As Integer
         Private specialite_ageMax(indice) As Integer
+        Private specialite_delaiPriseEnCharge(indice) As Integer
 
         Private Sub New()
             'Déclaration des données de connexion
@@ -525,6 +526,7 @@ Module Environnement
             ReDim specialite_oasis(rowCount + 1)
             ReDim specialite_ageMin(rowCount + 1)
             ReDim specialite_ageMax(rowCount + 1)
+            ReDim specialite_delaipriseEnCharge(rowCount + 1)
 
             'Alimentation du tableau
             For i = 0 To rowCount Step 1
@@ -537,6 +539,7 @@ Module Environnement
                 specialite_oasis(i) = Coalesce(specialiteDataTable.Rows(i)("oa_r_oasis"), False)
                 specialite_ageMin(i) = Coalesce(specialiteDataTable.Rows(i)("oa_r_specialite_age_min"), 0)
                 specialite_ageMax(i) = Coalesce(specialiteDataTable.Rows(i)("oa_r_specialite_age_max"), 0)
+                specialite_delaiPriseEnCharge(i) = Coalesce(specialiteDataTable.Rows(i)("oa_r_delaiPriseEnCharge"), 0)
             Next
 
             conxn.Close()
@@ -569,6 +572,7 @@ Module Environnement
             specialite.Oasis = False
             specialite.AgeMin = 0
             specialite.AgeMax = 0
+            specialite.DelaiPriseEnCharge = 0
             ' Création de l'instance si elle n'existe pas
             If instance Is Nothing Then
                 instance = New Table_specialite
@@ -584,6 +588,7 @@ Module Environnement
                     specialite.Oasis = instance.specialite_oasis(i)
                     specialite.AgeMin = instance.specialite_ageMin(i)
                     specialite.AgeMax = instance.specialite_ageMax(i)
+                    specialite.DelaiPriseEnCharge = instance.specialite_delaiPriseEnCharge(i)
                 End If
             Next
             Return specialite

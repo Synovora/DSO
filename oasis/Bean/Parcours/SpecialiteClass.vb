@@ -8,6 +8,7 @@
     Private _genre As String
     Private _ageMin As Integer
     Private _ageMax As Integer
+    Private _delaiPriseEnCharge As Integer
 
     Public Property SpecialiteId As Long
         Get
@@ -87,6 +88,15 @@
         End Get
         Set(value As Integer)
             _ageMax = value
+        End Set
+    End Property
+
+    Public Property DelaiPriseEnCharge As Integer
+        Get
+            Return _delaiPriseEnCharge
+        End Get
+        Set(value As Integer)
+            _delaiPriseEnCharge = value
         End Set
     End Property
 End Class
