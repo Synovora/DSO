@@ -66,15 +66,18 @@ Public Class RadFDRCSelecteur
     Private Sub RadFDRCSelecteur_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         RadGridLocalizationProvider.CurrentProvider = New FrenchRadGridViewLocalizationProvider()
 
+        ChargementEtatCivil()
+
         'Chargement du label affichant la catégorie Oasis en restriction dans l'affichage en entête
         If CategorieOasis <> 0 Then
             LblCategorieOasis.Text = drcdao.GetItemCategorieOasisByCode(CategorieOasis)
+            If CategorieOasis <> DrcDao.EnumCategorieOasisCode.Contexte Then
+                ChargementDrc()
+            End If
         Else
             LblCategorieOasis.Text = ""
         End If
 
-        ChargementEtatCivil()
-        ChargementDrc()
         InitAffichageLabel()
         Cursor.Current = Cursors.Default
     End Sub
@@ -94,26 +97,26 @@ Public Class RadFDRCSelecteur
         End If
 
         If SelectedPatient IsNot Nothing Then
-            drcDataTable = drcdao.GetAllDrcByCategorie(TxtDrc.Text, 0, CategorieOasis, SelectAld, SelectedPatient.PatientGenreId)
+            drcDataTable = drcdao.GetAllDrcByCategorieAndGenre(TxtDrc.Text, 0, CategorieOasis, SelectAld, SelectedPatient.PatientGenreId)
         Else
-            drcDataTable = drcdao.GetAllDrcByCategorie(TxtDrc.Text, 0, CategorieOasis, SelectAld, "")
+            drcDataTable = drcdao.GetAllDrcByCategorieAndGenre(TxtDrc.Text, 0, CategorieOasis, SelectAld, "")
         End If
 
         Dim i As Integer
         Dim iGrid As Integer = -1 'Indice pour alimenter la Grid qui peut comporter moins d'occurrences que le DataTable
         Dim rowCount As Integer = drcDataTable.Rows.Count - 1
-        Dim drcIdPrecedent, drcIdEnCours As Integer
+        'Dim drcIdPrecedent, drcIdEnCours As Integer
 
         'Parcours du DataTable pour alimenter les colonnes du DataGridView
-        drcIdPrecedent = 0
+        'drcIdPrecedent = 0
         For i = 0 To rowCount Step 1
             'Ne pas traiter les doublons liées à la requête (JOIN LEFT)
-            drcIdEnCours = CInt(drcDataTable.Rows(i)("oa_drc_id"))
-            If drcIdEnCours = drcIdPrecedent Then
-                Continue For
-            Else
-                drcIdPrecedent = drcIdEnCours
-            End If
+            'drcIdEnCours = CInt(drcDataTable.Rows(i)("oa_drc_id"))
+            'If drcIdEnCours = drcIdPrecedent Then
+            'Continue For
+            'Else
+            'drcIdPrecedent = drcIdEnCours
+            'End If
 
             iGrid += 1
             'Ajout d'une ligne au DataGridView
@@ -326,11 +329,16 @@ Public Class RadFDRCSelecteur
         If TxtDrc.Text.Trim <> "" Then
             If Len(TxtDrc.Text) > 2 Then
                 ChargementDrc()
-
             End If
         Else
-            Application.DoEvents()
-            ChargementDrc()
+            If CategorieOasis = DrcDao.EnumCategorieOasisCode.Contexte Then
+                drcSynonymeDataTable.Rows.Clear()
+                DrcDataGridView.Rows.Clear()
+            Else
+                ChargementDrc()
+            End If
+            'Application.DoEvents()
+            'ChargementDrc()
         End If
     End Sub
 

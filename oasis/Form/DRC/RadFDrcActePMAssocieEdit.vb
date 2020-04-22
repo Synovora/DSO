@@ -63,7 +63,7 @@ Public Class RadFDrcActePMAssocieEdit
         Dim drcDataTable As DataTable
         Dim CategorieOasis As Integer = DrcDao.EnumCategorieOasisCode.ActeParamedical
         Dim SelectAld As Boolean = False
-        drcDataTable = drcdao.GetAllDrcByCategorie("", 0, CategorieOasis, SelectAld, "")
+        drcDataTable = drcdao.GetAllDrcByCategorieAndGenre("", 0, CategorieOasis, SelectAld, "")
 
         Dim i As Integer
         Dim iGrid As Integer = -1 'Indice pour alimenter la Grid qui peut comporter moins d'occurrences que le DataTable
@@ -71,15 +71,15 @@ Public Class RadFDrcActePMAssocieEdit
         Dim drcIdPrecedent, drcIdEnCours, Sexe As Integer
 
         'Parcours du DataTable pour alimenter les colonnes du DataGridView
-        drcIdPrecedent = 0
+        'drcIdPrecedent = 0
         For i = 0 To rowCount Step 1
             'Ne pas traiter les doublons liées à la requête (JOIN LEFT)
             drcIdEnCours = CInt(drcDataTable.Rows(i)("oa_drc_id"))
-            If drcIdEnCours = drcIdPrecedent Then
-                Continue For
-            Else
-                drcIdPrecedent = drcIdEnCours
-            End If
+            'If drcIdEnCours = drcIdPrecedent Then
+            'Continue For
+            'Else
+            'drcIdPrecedent = drcIdEnCours
+            'End If
 
             If ListDrcAssocie.Contains(drcIdEnCours) = True Then
                 Continue For

@@ -58,23 +58,23 @@ Public Class RadFDrcListe
             CategorieOasis = drcdao.GetCodeCategorieOasisByItem(CbxCategorieOasis.Text)
         End If
 
-        drcDataTable = drcdao.GetAllDrcByCategorie(TxtFiltreDescription.Text, 0, CategorieOasis, SelectAld, "")
+        drcDataTable = drcdao.GetAllDrcByCategorieAndGenre(TxtFiltreDescription.Text, 0, CategorieOasis, SelectAld, "")
 
         Dim i As Integer
         Dim iGrid As Integer = -1 'Indice pour alimenter la Grid qui peut comporter moins d'occurrences que le DataTable
         Dim rowCount As Integer = drcDataTable.Rows.Count - 1
-        Dim drcIdPrecedent, drcIdEnCours As Integer
+        'Dim drcIdPrecedent, drcIdEnCours As Integer
 
         'Parcours du DataTable pour alimenter les colonnes du DataGridView
-        drcIdPrecedent = 0
+        'drcIdPrecedent = 0
         For i = 0 To rowCount Step 1
             'Ne pas traiter les doublons liées à la requête (JOIN LEFT)
-            drcIdEnCours = CInt(drcDataTable.Rows(i)("oa_drc_id"))
-            If drcIdEnCours = drcIdPrecedent Then
-                Continue For
-            Else
-                drcIdPrecedent = drcIdEnCours
-            End If
+            'drcIdEnCours = CInt(drcDataTable.Rows(i)("oa_drc_id"))
+            'If drcIdEnCours = drcIdPrecedent Then
+            'Continue For
+            'Else
+            'drcIdPrecedent = drcIdEnCours
+            'End If
 
             iGrid += 1
             'Ajout d'une ligne au DataGridView

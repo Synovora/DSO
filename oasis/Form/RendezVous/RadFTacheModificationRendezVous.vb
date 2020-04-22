@@ -171,7 +171,8 @@
             Dim tacheInit As Tache = tacheDao.GetTacheById(SelectedTacheId)
             If tacheDao.AnnulationTache(SelectedTacheId) = True Then
                 Dim tache As New Tache
-                tache.ParentId = SelectedTacheId
+                'tache.ParentId = SelectedTacheId
+                tache.ParentId = 0
                 tache.EmetteurUserId = tacheInit.EmetteurUserId
                 tache.UniteSanitaireId = tacheInit.UniteSanitaireId
                 tache.SiteId = tacheInit.SiteId
