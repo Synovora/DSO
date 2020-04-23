@@ -8,6 +8,10 @@ Imports Telerik.WinForms.RichTextEditor
 
 Public Class FrmLogin
     Dim nbTry As Integer = 0
+
+    ''' <summary>
+    ''' 
+    ''' </summary>
     Public Sub New()
 
         ' Cet appel est requis par le concepteur.
@@ -22,6 +26,30 @@ Public Class FrmLogin
         LblContactAdmin.Text = contactAdmin
 
     End Sub
+
+    ''' <summary>
+    ''' 
+    ''' </summary>
+    ''' <returns></returns>
+    Private Function ChgtPassword() As Boolean
+        Try
+            Me.Cursor = Cursors.WaitCursor
+            Me.Enabled = False
+            Using frm As New FrmChangePassword
+                frm.ShowDialog()
+                Return frm.Tag
+            End Using
+        Catch err As Exception
+            MsgBox(err.Message())
+        Finally
+            Me.Enabled = True
+            Me.Cursor = Cursors.Default
+        End Try
+        Return False
+
+    End Function
+
+
     ''' <summary>
     ''' 
     ''' </summary>
@@ -40,7 +68,7 @@ Public Class FrmLogin
         ' -- permet de voir si on vient du label "Changer mon mot de passe" ou du bouton "Valider"
         Dim isChgtVolontaire = Not TryCast(sender, RadLabel) Is Nothing
 
-        If isChgtVolontaire AndAlso Me.TxtPassword.Text = "*" Then
+        If isChgtVolontaire AndAlso Me.TxtPassword.Text = "*" AndAlso Me.TxtLogin.Text = "" Then
             Dim frm As New FAuthentificattion
             frm.ShowDialog()
             Return
@@ -116,24 +144,11 @@ Public Class FrmLogin
 
     End Sub
 
-    Private Function ChgtPassword() As Boolean
-        Try
-            Me.Cursor = Cursors.WaitCursor
-            Me.Enabled = False
-            Using frm As New FrmChangePassword
-                frm.ShowDialog()
-                Return frm.Tag
-            End Using
-        Catch err As Exception
-            MsgBox(err.Message())
-        Finally
-            Me.Enabled = True
-            Me.Cursor = Cursors.Default
-        End Try
-        Return False
-
-    End Function
-
+    ''' <summary>
+    ''' 
+    ''' </summary>
+    ''' <param name="sender"></param>
+    ''' <param name="e"></param>
     Private Sub LblChangePassword_Click(sender As Object, e As EventArgs) Handles LblChangePassword.Click
         BtnValidate_Click(sender, e)
     End Sub
