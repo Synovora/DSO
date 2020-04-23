@@ -343,7 +343,9 @@ Public Class RadFTraitementHistoListe
 
             'Utilisateur
             Dim UtilisateurId As Integer = traitementDataTable.Rows(i)("oa_traitement_histo_utilisateur_historisation")
-            SetUtilisateur(UtilisateurHisto, UtilisateurId)
+            Dim userDao As New UserDao
+            UtilisateurHisto = userDao.getUserById(UtilisateurId)
+            'SetUtilisateur(UtilisateurHisto, UtilisateurId)
             TraitementDataGridView.Rows(iGrid).Cells("histoUtilisateur").Value = Me.UtilisateurHisto.UtilisateurPrenom & " " & Me.UtilisateurHisto.UtilisateurNom
 
             'Nature de l'action

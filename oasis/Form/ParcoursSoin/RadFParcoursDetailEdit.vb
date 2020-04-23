@@ -5,7 +5,7 @@ Imports Telerik.WinControls.UI
 Imports Oasis_Common
 Public Class RadFParcoursDetailEdit
     Private _SelectedPatient As Patient
-    Private _UtilisateurConnecte As Utilisateur
+    'Private _UtilisateurConnecte As Utilisateur
     Private _SelectedParcoursId As Integer
     Private _SelectedSpecialiteId As Integer
     Private _SelectedRorId As Integer
@@ -22,14 +22,14 @@ Public Class RadFParcoursDetailEdit
         End Set
     End Property
 
-    Public Property UtilisateurConnecte As Utilisateur
-        Get
-            Return _UtilisateurConnecte
-        End Get
-        Set(value As Utilisateur)
-            _UtilisateurConnecte = value
-        End Set
-    End Property
+    'Public Property UtilisateurConnecte As Utilisateur
+    'Get
+    'Return _UtilisateurConnecte
+    'End Get
+    'Set(value As Utilisateur)
+ _ 'UtilisateurConnecte = value
+    'Set
+    'End Property
 
     Public Property SelectedParcoursId As Integer
         Get
@@ -194,6 +194,7 @@ Public Class RadFParcoursDetailEdit
             RadBtnRorDetail.Hide()
             RadBtnAnnuler.Hide()
             RadGbxConsultationEnCours.Hide()
+            RadBtnHistorique.Hide()
 
             'Cacher les éléments de création et modification de l'occurrence
             LblLabelDateModification.Hide()
@@ -356,7 +357,9 @@ Public Class RadFParcoursDetailEdit
         LblUtilisateurCreation.Text = ""
 
         If ParcoursUpdate.UserCreation <> 0 Then
-            SetUtilisateur(UtilisateurHisto, ParcoursUpdate.UserCreation)
+            Dim userDao As New UserDao
+            UtilisateurHisto = userDao.getUserById(ParcoursUpdate.UserCreation)
+            'SetUtilisateur(UtilisateurHisto, ParcoursUpdate.UserCreation)
             LblUtilisateurCreation.Text = Me.UtilisateurHisto.UtilisateurPrenom & " " & Me.UtilisateurHisto.UtilisateurNom
         End If
 
@@ -371,7 +374,9 @@ Public Class RadFParcoursDetailEdit
 
         LblUtilisateurModification.Text = ""
         If ParcoursUpdate.UserModification <> 0 Then
-            SetUtilisateur(UtilisateurHisto, ParcoursUpdate.UserModification)
+            Dim userDao As New UserDao
+            UtilisateurHisto = userDao.getUserById(ParcoursUpdate.UserModification)
+            'SetUtilisateur(UtilisateurHisto, ParcoursUpdate.UserModification)
             LblUtilisateurModification.Text = Me.UtilisateurHisto.UtilisateurPrenom & " " & Me.UtilisateurHisto.UtilisateurNom
         End If
     End Sub
@@ -688,8 +693,10 @@ Public Class RadFParcoursDetailEdit
                 'Création intervenant
                 If ValidationDonneeSaisie() = True Then
                     If ParcoursDao.CreateIntervenantParcours(ParcoursUpdate) = True Then
-                        MessageBox.Show("Intervenant du parcours de soin créé")
                         Me.CodeRetour = True
+                        Dim form As New RadFNotification()
+                        form.Message = "Intervenant du parcours de soin créé"
+                        form.Show()
                         Close()
                     End If
                     RadBtnRORSelect.Hide()
@@ -703,7 +710,10 @@ Public Class RadFParcoursDetailEdit
                     'Appel modification
                     If ValidationDonneeSaisie() = True Then
                         If ParcoursDao.ModificationIntervenantParcours(ParcoursUpdate) = True Then
-                            MessageBox.Show("Intervenant du parcours de soin modifié")
+                            Dim form As New RadFNotification()
+                            form.Message = "Intervenant du parcours de soin modifié"
+                            form.Show()
+                            'MessageBox.Show("Intervenant du parcours de soin modifié")
                             Me.CodeRetour = True
                             If ParcoursUpdate.Cacher = True Then
                                 Close()
@@ -719,12 +729,12 @@ Public Class RadFParcoursDetailEdit
                     tache = tacheDao.GetProchainRendezVousByPatientIdEtParcours(SelectedPatient.patientId, SelectedParcoursId)
                     If tache.DateRendezVous <> Nothing Then
                         RendezVousPossible = False
-                        MessageBox.Show("Un rendez-vous est déjà planifié pour cet intervenant, opération impossible")
+                        MessageBox.Show("Un rendez-vous est déjà planifié pour cet intervenant, opération impossible", "Alerte", MessageBoxButtons.OK, MessageBoxIcon.Error)
                     Else
                         tache = tacheDao.GetProchaineDemandeRendezVousByPatientId(SelectedPatient.patientId, SelectedParcoursId)
                         If tache.DateRendezVous <> Nothing Then
                             RendezVousPossible = False
-                            MessageBox.Show("Une demande de rendez-vous est déjà planifiée pour cet intervenant, opération impossible")
+                            MessageBox.Show("Une demande de rendez-vous est déjà planifiée pour cet intervenant, opération impossible", "Alerte", MessageBoxButtons.OK, MessageBoxIcon.Error)
                         End If
                     End If
                     If RendezVousPossible = True Then
@@ -744,13 +754,16 @@ Public Class RadFParcoursDetailEdit
             If tache.DateRendezVous <> Nothing Then
                 'Si un rendez-vous existe et que la tache est déjà attribuée > annulation impossible
                 If tache.Etat = TacheDao.EtatTache.EN_COURS.ToString Then
-                    MessageBox.Show("Rendez-vous déjà attribué, annulation impossible")
+                    MessageBox.Show("Rendez-vous déjà attribué, annulation impossible", "Alerte", MessageBoxButtons.OK, MessageBoxIcon.Warning)
                     AnnulationIntervevant = False
                 Else
                     If MsgBox("Un rendez-vous est planifié pour cet intervenant, confirmation de l'annulation", MsgBoxStyle.YesNo, "") = MsgBoxResult.Yes Then
                         Try
                             If tacheDao.AnnulationTache(tache) = True Then
-                                MessageBox.Show("Rendez-vous annulé")
+                                Dim form As New RadFNotification()
+                                form.Message = "Rendez-vous annulé"
+                                form.Show()
+                                'MessageBox.Show("Rendez-vous annulé")
                             Else
                                 MessageBox.Show("Problème de suppression du prochain rendez-vous, annulation impossible")
                                 AnnulationIntervevant = False
@@ -767,13 +780,15 @@ Public Class RadFParcoursDetailEdit
                 If tache.DateRendezVous <> Nothing Then
                     'si la tache est attribuée annulation impossible
                     If tache.Etat = TacheDao.EtatTache.EN_COURS.ToString Then
-                        MessageBox.Show("Demande de rendez-vous déjà attribuée, annulation impossible")
+                        MessageBox.Show("Demande de rendez-vous déjà attribuée, annulation impossible", "Alerte", MessageBoxButtons.OK, MessageBoxIcon.Warning)
                         AnnulationIntervevant = False
                     Else
-                        If MsgBox("Une demande de rendez-vous est planifiée pour cet intervenant, confirmation de l'annulation ", MsgBoxStyle.YesNo, "") = MsgBoxResult.Yes Then
+                        If MsgBox("Une demande de rendez-vous est planifiée pour cet intervenant, confirmation de l'annulation ", MsgBoxStyle.YesNo Or MsgBoxStyle.Exclamation, "Confirmation") = MsgBoxResult.Yes Then
                             'Suppression demande de rendez-vous
                             If tacheDao.AnnulationTache(tache) = True Then
-                                MessageBox.Show("Demande de rendez-vous annulée")
+                                Dim form As New RadFNotification()
+                                form.Message = "Demande de rendez-vous annulée"
+                                form.Show()
                             Else
                                 MessageBox.Show("Problème de suppression de la demande de rendez-vous, annulation impossible")
                                 AnnulationIntervevant = False
@@ -788,8 +803,11 @@ Public Class RadFParcoursDetailEdit
             If AnnulationIntervevant = True Then
                 'Annulation de l'intervenant (inactif = True)
                 If ParcoursDao.AnnulationIntervenantParcours(ParcoursUpdate) = True Then
-                    MessageBox.Show("Intervenant annulé pour le parcours de soin du patient")
                     Me.CodeRetour = True
+                    Dim form As New RadFNotification()
+                    form.Message = "Intervenant annulé pour le parcours de soin du patient"
+                    form.Show()
+                    'MessageBox.Show("Intervenant annulé pour le parcours de soin du patient")
                     Close()
                 End If
             End If
@@ -849,7 +867,7 @@ Public Class RadFParcoursDetailEdit
             End If
 
             MessageErreur = MessageErreur & vbCrLf & "/!\ données incorrectes"
-            MessageBox.Show(MessageErreur)
+            MessageBox.Show(MessageErreur, "Erreur", MessageBoxButtons.OK, MessageBoxIcon.Error)
         End If
 
         Return Valide
@@ -876,7 +894,7 @@ Public Class RadFParcoursDetailEdit
                 'Clôture du rendez-vous
                 If CreationRendezVous(dateRendezVous, TacheDao.EtatTache.TERMINEE.ToString) = True Then
                     Dim tache As Tache = tacheDao.GetProchainRendezVousByPatientIdEtParcours(SelectedPatient.patientId, SelectedParcoursId)
-                    MessageBox.Show("Rendez-vous programmé et clôturé pour le " & NumDateRV.Value.ToString("dd.MM.yyyy"))
+                    MessageBox.Show("Rendez-vous programmé et clôturé pour le " & NumDateRV.Value.ToString("dd.MM.yyyy"), "Information", MessageBoxButtons.OK, MessageBoxIcon.Information)
                     'Si l'intervenant est masqué, il faut l'afficher par défaut
                     If ParcoursUpdate.Cacher = True Then
                         ParcoursUpdate.Cacher = False
@@ -888,7 +906,7 @@ Public Class RadFParcoursDetailEdit
             Else
                 If CreationRendezVous(dateRendezVous, TacheDao.EtatTache.EN_ATTENTE.ToString) = True Then
                     Dim tache As Tache = tacheDao.GetProchainRendezVousByPatientIdEtParcours(SelectedPatient.patientId, SelectedParcoursId)
-                    MessageBox.Show("Rendez-vous programmé pour le " & NumDateRV.Value.ToString("dd.MM.yyyy"))
+                    MessageBox.Show("Rendez-vous programmé pour le " & NumDateRV.Value.ToString("dd.MM.yyyy"), "Information", MessageBoxButtons.OK, MessageBoxIcon.Information)
                     'Si l'intervenant est masqué, il faut l'afficher par défaut
                     If ParcoursUpdate.Cacher = True Then
                         ParcoursUpdate.Cacher = False
@@ -901,24 +919,24 @@ Public Class RadFParcoursDetailEdit
         Else
             If RbtInterventionPrevisionnel.IsChecked = True Then
                 If NumAn.Value < Date.Now().Year Then
-                    MessageBox.Show("Erreur : l'année de la demande de rendez-vous à créer : " & NumAn.Value.ToString & " est inférieure à l'année en cours")
+                    MessageBox.Show("Erreur : l'année de la demande de rendez-vous à créer : " & NumAn.Value.ToString & " est inférieure à l'année en cours", "Erreur", MessageBoxButtons.OK, MessageBoxIcon.Error)
                 Else
                     If RadChkDRVAnneeSeulement.Checked = True Then
                         'Création demande de rendez-vous pour une année donnée (AAAA)
                         Dim dateRendezVous As New DateTime(NumAn.Value, 1, 1, 0, 0, 0)
                         If CreationDemandeRendezVous(dateRendezVous, TacheDao.typeDemandeRendezVous.ANNEE.ToString) = True Then
-                            MessageBox.Show("demande de rendez-vous créée pour " & NumAn.Value.ToString)
+                            MessageBox.Show("demande de rendez-vous créée pour " & NumAn.Value.ToString, "Information", MessageBoxButtons.OK, MessageBoxIcon.Information)
                             Me.CodeRetour = True
                             Close()
                         End If
                     Else
                         If NumAn.Value = Date.Now().Year And NumMois.Value < Date.Now().Month Then
-                            MessageBox.Show("Erreur : la période demandée (" & NumMois.Value.ToString & "/" & NumAn.Value.ToString & ") est inférieure à la période en cours")
+                            MessageBox.Show("Erreur : la période demandée (" & NumMois.Value.ToString & "/" & NumAn.Value.ToString & ") est inférieure à la période en cours", "Erreur", MessageBoxButtons.OK, MessageBoxIcon.Error)
                         Else
                             'Création demande de rendez-vous pour une période donnée (MM/AAAA)
                             Dim dateRendezVous As New DateTime(NumAn.Value, NumMois.Value, 1, 0, 0, 0)
                             If CreationDemandeRendezVous(dateRendezVous, TacheDao.typeDemandeRendezVous.ANNEEMOIS.ToString) = True Then
-                                MessageBox.Show("Demande de rendez-vous créée pour " & NumMois.Value.ToString & "/" & NumAn.Value.ToString)
+                                MessageBox.Show("Demande de rendez-vous créée pour " & NumMois.Value.ToString & "/" & NumAn.Value.ToString, "Information", MessageBoxButtons.OK, MessageBoxIcon.Information)
                                 Me.CodeRetour = True
                                 Close()
                             End If
@@ -1060,7 +1078,7 @@ Public Class RadFParcoursDetailEdit
                     End Using
                     Me.Enabled = True
                 Else
-                    MessageBox.Show("Le rendez-vous n'est pas modifiable, il est en cours de traitement par : " & userLog.UtilisateurPrenom & " " & userLog.UtilisateurNom)
+                    MessageBox.Show("Le rendez-vous n'est pas modifiable, il est en cours de traitement par : " & userLog.UtilisateurPrenom & " " & userLog.UtilisateurNom, "Alerte", MessageBoxButtons.OK, MessageBoxIcon.Warning)
                 End If
             End If
         End If
@@ -1085,7 +1103,7 @@ Public Class RadFParcoursDetailEdit
                     End Using
                     Me.Enabled = True
                 Else
-                    MessageBox.Show("Le rendez-vous n'est pas modifiable, il est en cours de traitement par : " & userLog.UtilisateurPrenom & " " & userLog.UtilisateurNom)
+                    MessageBox.Show("Le rendez-vous n'est pas modifiable, il est en cours de traitement par : " & userLog.UtilisateurPrenom & " " & userLog.UtilisateurNom, "Alerte", MessageBoxButtons.OK, MessageBoxIcon.Warning)
                 End If
             End If
         End If
@@ -1170,7 +1188,7 @@ Public Class RadFParcoursDetailEdit
                 Cursor.Current = Cursors.WaitCursor
                 Using vRadFParcoursConsigneDetailEdit As New RadFParcoursConsigneDetailEdit
                     vRadFParcoursConsigneDetailEdit.SelectedPatient = Me.SelectedPatient
-                    vRadFParcoursConsigneDetailEdit.UtilisateurConnecte = Me.UtilisateurConnecte
+                    vRadFParcoursConsigneDetailEdit.UtilisateurConnecte = userLog
                     vRadFParcoursConsigneDetailEdit.SelectedParcoursId = SelectedParcoursId
                     vRadFParcoursConsigneDetailEdit.SelectedDrcId = SelectedDrcId
                     vRadFParcoursConsigneDetailEdit.SelectedConsigneId = 0
@@ -1194,7 +1212,7 @@ Public Class RadFParcoursDetailEdit
                 Cursor.Current = Cursors.WaitCursor
                 Using vRadFParcoursConsigneDetailEdit As New RadFParcoursConsigneDetailEdit
                     vRadFParcoursConsigneDetailEdit.SelectedPatient = Me.SelectedPatient
-                    vRadFParcoursConsigneDetailEdit.UtilisateurConnecte = Me.UtilisateurConnecte
+                    'vRadFParcoursConsigneDetailEdit.UtilisateurConnecte = Me.UtilisateurConnecte
                     vRadFParcoursConsigneDetailEdit.SelectedParcoursId = SelectedParcoursId
                     vRadFParcoursConsigneDetailEdit.SelectedConsigneId = ConsigneId
                     vRadFParcoursConsigneDetailEdit.ShowDialog()
@@ -1343,5 +1361,21 @@ Public Class RadFParcoursDetailEdit
             ChkMasquerIntervenant.Enabled = False
             CbxOasisExterne.Enabled = False
         End If
+    End Sub
+
+    Private Sub RadBtnHistorique_Click(sender As Object, e As EventArgs) Handles RadBtnHistorique.Click
+        Me.Enabled = False
+        Cursor.Current = Cursors.WaitCursor
+        Try
+            Using vRadFParcoursHistoListe As New RadFParcoursHistoListe
+                vRadFParcoursHistoListe.SelectedParcoursId = SelectedParcoursId
+                vRadFParcoursHistoListe.SelectedPatient = Me.SelectedPatient
+                vRadFParcoursHistoListe.UtilisateurConnecte = userLog
+                vRadFParcoursHistoListe.ShowDialog()
+            End Using
+        Catch ex As Exception
+            MsgBox(ex.Message())
+        End Try
+        Me.Enabled = True
     End Sub
 End Class

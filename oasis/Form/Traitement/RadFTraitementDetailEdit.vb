@@ -6,7 +6,7 @@ Imports Oasis_Common
 
 Public Class RadFTraitementDetailEdit
     Private privateSelectedPatient As Patient
-    Private privateUtilisateurConnecte As Utilisateur
+    'Private privateUtilisateurConnecte As Utilisateur
     Private privateSelectedMedicamentId As Integer
     Private privateSelectedTraitementId As Integer
     Private privateAllergie As Boolean
@@ -23,14 +23,14 @@ Public Class RadFTraitementDetailEdit
         End Set
     End Property
 
-    Public Property UtilisateurConnecte As Utilisateur
-        Get
-            Return privateUtilisateurConnecte
-        End Get
-        Set(value As Utilisateur)
-            privateUtilisateurConnecte = value
-        End Set
-    End Property
+    'Public Property UtilisateurConnecte As Utilisateur
+    'Get
+    'Return privateUtilisateurConnecte
+    'End Get
+    'Set(value As Utilisateur)
+    'privateUtilisateurConnecte = value
+    'Set
+    'End Property
 
     Public Property SelectedMedicamentId As Integer
         Get
@@ -174,6 +174,7 @@ Public Class RadFTraitementDetailEdit
             RadBtnAnnulerTraitement.Hide()
             RadBtnArretTraitement.Hide()
             RadBtnSupprimerTraitement.Hide()
+            RadBtnHistorique.Hide()
             ActionEnCours = EnumAction.Creation
         Else
             EditMode = "M" 'Modification
@@ -537,7 +538,9 @@ Public Class RadFTraitementDetailEdit
             LblUtilisateurCreation.Text = ""
 
             If traitement.UserCreation <> 0 Then
-                SetUtilisateur(UtilisateurHisto, traitement.UserCreation)
+                Dim userDao As New UserDao
+                UtilisateurHisto = userDao.getUserById(traitement.UserCreation)
+                'SetUtilisateur(UtilisateurHisto, traitement.UserCreation)
                 LblUtilisateurCreation.Text = Me.UtilisateurHisto.UtilisateurPrenom & " " & Me.UtilisateurHisto.UtilisateurNom
             End If
 
@@ -559,12 +562,14 @@ Public Class RadFTraitementDetailEdit
 
         LblUtilisateurModification.Text = ""
         If traitement.UserModification <> 0 Then
-            SetUtilisateur(UtilisateurHisto, traitement.UserModification)
+            Dim userDao As New UserDao
+            UtilisateurHisto = userDao.getUserById(traitement.UserModification)
+            'SetUtilisateur(UtilisateurHisto, traitement.UserModification)
             LblUtilisateurModification.Text = Me.UtilisateurHisto.UtilisateurPrenom & " " & Me.UtilisateurHisto.UtilisateurNom
         End If
 
         'Initialisation classe Historisation traitement 
-        InitClasseTraitementHistorisation(traitement, UtilisateurConnecte, TraitementHistoACreer)
+        InitClasseTraitementHistorisation(traitement, userLog, TraitementHistoACreer)
     End Sub
 
     Private Sub ChargementMedoc()
@@ -823,7 +828,7 @@ Public Class RadFTraitementDetailEdit
 
             messageErreur = messageErreur + vbCrLf + vbCrLf + "/!\ Validation impossible, des données sont incorrectes"
 
-            MessageBox.Show(messageErreur)
+            MessageBox.Show(messageErreur, "Erreur", MessageBoxButtons.OK, MessageBoxIcon.Error)
         End If
 
         'Contrôler qu'une données a au moins été modifiée
@@ -903,7 +908,7 @@ Public Class RadFTraitementDetailEdit
         traitementaCreer.FractionSoir = CbxFractionSoir.Text
         traitementaCreer.DateModification = Date.Now.Date
         traitementaCreer.OrdreAffichage = NumNumeroOrdre.Value
-        traitementaCreer.UserCreation = UtilisateurConnecte.UtilisateurId
+        traitementaCreer.UserCreation = userLog.UtilisateurId
         traitementaCreer.DateCreation = Date.Now()
         traitementaCreer.PosologieCommentaire = TxtTraitementPosologieCommentaire.Text
         traitementaCreer.Commentaire = TxtTraitementCommentaire.Text
@@ -947,7 +952,7 @@ Public Class RadFTraitementDetailEdit
         traitementaModifier.FractionSoir = CbxFractionSoir.Text
         traitementaModifier.DateModification = Date.Now.Date
         traitementaModifier.OrdreAffichage = NumNumeroOrdre.Value
-        traitementaModifier.UserModification = UtilisateurConnecte.UtilisateurId
+        traitementaModifier.UserModification = userLog.UtilisateurId
         traitementaModifier.DateModification = Date.Now()
         traitementaModifier.PosologieCommentaire = TxtTraitementPosologieCommentaire.Text
         traitementaModifier.Commentaire = TxtTraitementCommentaire.Text
@@ -989,7 +994,7 @@ Public Class RadFTraitementDetailEdit
         traitementaArreter.TraitementId = SelectedTraitementId
         traitementaArreter.PatientId = SelectedPatient.patientId
         traitementaArreter.DateModification = Date.Now.Date
-        traitementaArreter.UserModification = UtilisateurConnecte.UtilisateurId
+        traitementaArreter.UserModification = userLog.UtilisateurId
         traitementaArreter.DateModification = Date.Now()
         traitementaArreter.ArretCommentaire = TxtCommentaireArret.Text
         traitementaArreter.DateFin = DteTraitementDateFin.Value
@@ -1036,7 +1041,7 @@ Public Class RadFTraitementDetailEdit
         traitementaAnnuler.TraitementId = SelectedTraitementId
         traitementaAnnuler.PatientId = SelectedPatient.patientId
         traitementaAnnuler.DateModification = Date.Now.Date
-        traitementaAnnuler.UserModification = UtilisateurConnecte.UtilisateurId
+        traitementaAnnuler.UserModification = userLog.UtilisateurId
         traitementaAnnuler.DateModification = Date.Now()
         traitementaAnnuler.AnnulationCommentaire = TxtCommentaireAnnulation.Text
         traitementaAnnuler.DateFin = DteTraitementDateFin.Value
@@ -1061,7 +1066,7 @@ Public Class RadFTraitementDetailEdit
         Dim traitementaAnnuler As New Traitement
         traitementaAnnuler.TraitementId = SelectedTraitementId
         traitementaAnnuler.PatientId = SelectedPatient.patientId
-        traitementaAnnuler.UserModification = UtilisateurConnecte.UtilisateurId
+        traitementaAnnuler.UserModification = userLog.UtilisateurId
 
         codeRetour = traitementDao.SuppressionTraitement(traitementaAnnuler, TraitementHistoACreer)
         If codeRetour = True Then
@@ -1579,6 +1584,22 @@ Public Class RadFTraitementDetailEdit
             form.SelectedSpecialite = SelectedMedicamentId
             form.ShowDialog()
         End Using
+        Me.Enabled = True
+    End Sub
+
+    Private Sub RadBtnHistorique_Click(sender As Object, e As EventArgs) Handles RadBtnHistorique.Click
+        Me.Enabled = False
+        Try
+            Using vFTraitementHistoListe As New RadFTraitementHistoListe
+                vFTraitementHistoListe.SelectedTraitementId = SelectedTraitementId
+                vFTraitementHistoListe.SelectedPatient = Me.SelectedPatient
+                vFTraitementHistoListe.UtilisateurConnecte = userLog
+                vFTraitementHistoListe.MedicamentDenomination = LblMedicamentDCI.Text
+                vFTraitementHistoListe.ShowDialog() 'Modal
+            End Using
+        Catch ex As Exception
+            MsgBox(ex.Message())
+        End Try
         Me.Enabled = True
     End Sub
 End Class

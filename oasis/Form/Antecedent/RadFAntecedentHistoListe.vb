@@ -248,7 +248,9 @@ Public Class RadFAntecedentHistoListe
 
             'Utilisateur
             Dim UtilisateurId As Integer = antecedentHistoDataTable.Rows(i)("oa_antecedent_histo_utilisateur_historisation")
-            SetUtilisateur(UtilisateurHisto, UtilisateurId)
+            Dim userDao As New UserDao
+            UtilisateurHisto = userDao.getUserById(UtilisateurId)
+            'SetUtilisateur(UtilisateurHisto, UtilisateurId)
             RadAntecedentDataGridView.Rows(iGrid).Cells("histoUtilisateur").Value = Me.UtilisateurHisto.UtilisateurPrenom & " " & Me.UtilisateurHisto.UtilisateurNom
 
             'Action

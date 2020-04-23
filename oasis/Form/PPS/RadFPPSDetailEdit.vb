@@ -130,7 +130,8 @@ Public Class RadFPPSDetailEdit
             LblStrategieDateCreation.Hide()
             LblLabelStrategieParCreation.Hide()
             LblUtilisateurCreation.Hide()
-            'Cacher les boutons d'action relatifs à l'annulation
+            'Cacher les boutons d'action
+            RadBtnHistorique.Hide()
         End If
         CodeRetour = False
 
@@ -223,7 +224,9 @@ Public Class RadFPPSDetailEdit
 
         LblUtilisateurCreation.Text = ""
         If pps.UserCreation <> 0 Then
-            SetUtilisateur(UtilisateurHisto, pps.UserCreation)
+            Dim userDao As New UserDao
+            UtilisateurHisto = userDao.getUserById(pps.UserCreation)
+            'SetUtilisateur(UtilisateurHisto, pps.UserCreation)
             LblUtilisateurCreation.Text = Me.UtilisateurHisto.UtilisateurPrenom & " " & Me.UtilisateurHisto.UtilisateurNom
         End If
 
@@ -238,7 +241,9 @@ Public Class RadFPPSDetailEdit
 
         LblUtilisateurModification.Text = ""
         If pps.UserModification <> 0 Then
-            SetUtilisateur(UtilisateurHisto, pps.UserModification)
+            Dim userDao As New UserDao
+            UtilisateurHisto = userDao.getUserById(pps.UserModification)
+            'SetUtilisateur(UtilisateurHisto, pps.UserModification)
             LblUtilisateurModification.Text = Me.UtilisateurHisto.UtilisateurPrenom & " " & Me.UtilisateurHisto.UtilisateurNom
         End If
 
@@ -335,7 +340,7 @@ Public Class RadFPPSDetailEdit
             End If
 
             MessageErreur = MessageErreur & vbCrLf & "/!\ Création " & PPSDesignation & " impossible, des données sont incorrectes"
-            MessageBox.Show(MessageErreur)
+            MessageBox.Show(MessageErreur, "Erreur", MessageBoxButtons.OK, MessageBoxIcon.Error)
         End If
 
         Return ValidationDonnees
@@ -372,7 +377,10 @@ Public Class RadFPPSDetailEdit
             conxn.Open()
             da.InsertCommand = cmd
             ppsId = da.InsertCommand.ExecuteScalar()
-            MessageBox.Show(PPSDesignation & " créée")
+            'MessageBox.Show(PPSDesignation & " créée")
+            Dim form As New RadFNotification()
+            form.Message = PPSDesignation & " créée"
+            form.Show()
         Catch ex As Exception
             MessageBox.Show(ex.Message)
             codeRetour = False
@@ -450,7 +458,10 @@ Public Class RadFPPSDetailEdit
             conxn.Open()
             da.UpdateCommand = cmd
             da.UpdateCommand.ExecuteNonQuery()
-            MessageBox.Show(PPSDesignation & " modifiée")
+            'MessageBox.Show(PPSDesignation & " modifiée")
+            Dim form As New RadFNotification()
+            form.Message = PPSDesignation & " modifiée"
+            form.Show()
         Catch ex As Exception
             MessageBox.Show(ex.Message)
             codeRetour = False
@@ -509,7 +520,10 @@ Public Class RadFPPSDetailEdit
             conxn.Open()
             da.UpdateCommand = cmd
             da.UpdateCommand.ExecuteNonQuery()
-            MessageBox.Show(PPSDesignation & " annulée")
+            'MessageBox.Show(PPSDesignation & " annulée")
+            Dim form As New RadFNotification()
+            form.Message = PPSDesignation & " annulée"
+            form.Show()
         Catch ex As Exception
             'PgbMiseAJour.Hide()
             MessageBox.Show(ex.Message)
@@ -643,4 +657,18 @@ Public Class RadFPPSDetailEdit
         End If
     End Sub
 
+    Private Sub RadBtnHistorique_Click(sender As Object, e As EventArgs) Handles RadBtnHistorique.Click
+        Cursor.Current = Cursors.WaitCursor
+        Try
+            Using vFPPSHistoListe As New RadFPPSHistoListe
+                vFPPSHistoListe.SelectedPPSId = PPSId
+                vFPPSHistoListe.SelectedPatient = Me.SelectedPatient
+                vFPPSHistoListe.UtilisateurConnecte = userLog
+                vFPPSHistoListe.ShowDialog()
+            End Using
+        Catch ex As Exception
+            MsgBox(ex.Message())
+        End Try
+        Me.Enabled = True
+    End Sub
 End Class

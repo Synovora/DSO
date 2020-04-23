@@ -142,7 +142,9 @@ Public Class RadFParcoursHistoListe
 
             'Utilisateur
             Dim UtilisateurId As Integer = parcoursHistoDataTable.Rows(i)("oa_parcours_histo_user_historisation")
-            SetUtilisateur(UtilisateurHisto, UtilisateurId)
+            Dim userDao As New UserDao
+            UtilisateurHisto = userDao.getUserById(UtilisateurId)
+            'SetUtilisateur(UtilisateurHisto, UtilisateurId)
             RadParcoursDataGridView.Rows(iGrid).Cells("histoUtilisateur").Value = Me.UtilisateurHisto.UtilisateurPrenom & " " & Me.UtilisateurHisto.UtilisateurNom
 
             'Action

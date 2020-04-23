@@ -219,6 +219,7 @@ Public Class RadFContextedetailEdit
             'Inhiber les boutons d'action de mise à jour
             RadBtnTransformer.Hide()
             RadBtnSupprimer.Hide()
+            RadBtnHistorique.Hide()
             LblCreationContexte1.Hide()
             LblCreationContexte2.Hide()
             LblContexteDateCreation.Hide()
@@ -376,7 +377,9 @@ Public Class RadFContextedetailEdit
 
         LblUtilisateurCreation.Text = ""
         If contexteRead.UserCreation <> 0 Then
-            SetUtilisateur(utilisateurHisto, contexteRead.UserCreation)
+            Dim userDao As New UserDao
+            utilisateurHisto = userDao.getUserById(contexteRead.UserCreation)
+            'SetUtilisateur(utilisateurHisto, contexteRead.UserCreation)
             LblUtilisateurCreation.Text = Me.utilisateurHisto.UtilisateurPrenom & " " & Me.utilisateurHisto.UtilisateurNom
         Else
             LblCreationContexte2.Hide()
@@ -394,7 +397,9 @@ Public Class RadFContextedetailEdit
 
         LblUtilisateurModification.Text = ""
         If contexteRead.UserModification <> 0 Then
-            SetUtilisateur(utilisateurHisto, contexteRead.UserModification)
+            Dim userDao As New UserDao
+            utilisateurHisto = userDao.getUserById(contexteRead.UserModification)
+            'SetUtilisateur(utilisateurHisto, contexteRead.UserModification)
             LblUtilisateurModification.Text = Me.utilisateurHisto.UtilisateurPrenom & " " & Me.utilisateurHisto.UtilisateurNom
         Else
             LblModificationContexte2.Hide()
@@ -534,7 +539,7 @@ Public Class RadFContextedetailEdit
                     Case EnumTraitement.Modification
                         MessageErreur = MessageErreur & vbCrLf & "/!\ Modification du contexte impossible, des données sont incorrectes"
                 End Select
-                MessageBox.Show(MessageErreur)
+                MessageBox.Show(MessageErreur, "Erreur", MessageBoxButtons.OK, MessageBoxIcon.Error)
             End If
         End If
 

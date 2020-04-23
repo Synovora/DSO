@@ -75,8 +75,10 @@ Public Class RadFOrdonnanceListe
 
             AuteurNom = ""
             If AuteurId <> 0 Then
-                Dim auteur As New Utilisateur
-                UtilisateurDao.SetUtilisateur(auteur, AuteurId)
+                Dim auteur As Utilisateur
+                Dim userDao As New UserDao
+                auteur = userDao.getUserById(AuteurId)
+                'UtilisateurDao.SetUtilisateur(auteur, AuteurId)
                 AuteurNom = auteur.UtilisateurPrenom & " " & auteur.UtilisateurNom
             End If
             RadOrdonnanceDataGridView.Rows(iGrid).Cells("auteur").Value = AuteurNom

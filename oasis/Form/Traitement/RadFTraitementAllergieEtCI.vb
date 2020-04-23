@@ -191,7 +191,7 @@ Public Class RadFTraitementAllergieEtCI
                 Using vFTraitementDetailEdit As New RadFTraitementDetailEdit
                     vFTraitementDetailEdit.SelectedTraitementId = TraitementId
                     vFTraitementDetailEdit.SelectedPatient = Me.SelectedPatient
-                    vFTraitementDetailEdit.UtilisateurConnecte = Me.UtilisateurConnecte
+                    'vFTraitementDetailEdit.UtilisateurConnecte = Me.UtilisateurConnecte
                     vFTraitementDetailEdit.ShowDialog()
                 End Using
             End If

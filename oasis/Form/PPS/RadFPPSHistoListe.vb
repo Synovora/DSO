@@ -100,7 +100,9 @@ Public Class RadFPPSHistoListe
             RadPPSDataGridView.Rows(iGrid).Cells("oa_pps_histo_date_historisation").Value = dateHisto.ToString("dd.MM.yyyy HH:mm:ss")
             'Utilisateur
             Dim UtilisateurId As Integer = ppsHistoDataTable.Rows(i)("oa_pps_histo_utilisateur_historisation")
-            SetUtilisateur(UtilisateurHisto, UtilisateurId)
+            Dim userDao As New UserDao
+            UtilisateurHisto = userDao.getUserById(UtilisateurId)
+            'SetUtilisateur(UtilisateurHisto, UtilisateurId)
             RadPPSDataGridView.Rows(iGrid).Cells("oa_pps_histo_utilisateur_historisation").Value = Me.UtilisateurHisto.UtilisateurPrenom & " " & Me.UtilisateurHisto.UtilisateurNom
             'Action
             RadPPSDataGridView.Rows(iGrid).Cells("oa_pps_histo_etat_historisation").Value = ActionHistoString

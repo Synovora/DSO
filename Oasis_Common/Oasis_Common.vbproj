@@ -85,7 +85,7 @@
     <Compile Include="Dao\Utilisateur\FonctionDao.vb" />
     <Compile Include="Dao\Utilisateur\ProfilDao.vb" />
     <Compile Include="Dao\Utilisateur\UserDao.vb" />
-    <Compile Include="Dao\Utilisateur\UtilisateurDao.vb" />
+    <Compile Include="Dao\Obsolete\UtilisateurDao.vb" />
     <Compile Include="Module\ModuleUtils.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">

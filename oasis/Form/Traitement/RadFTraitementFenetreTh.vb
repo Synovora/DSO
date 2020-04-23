@@ -581,11 +581,11 @@ Public Class RadFTraitementFenetreTh
 
             LblUtilisateurCreation.Text = ""
             If traitementDataReader("oa_traitement_identifiant_creation") IsNot DBNull.Value Then
-                SetUtilisateur(UtilisateurHisto, traitementDataReader("oa_traitement_identifiant_creation"))
+                Dim userDao As New UserDao
+                UtilisateurHisto = userDao.getUserById(traitementDataReader("oa_traitement_identifiant_creation"))
+                'SetUtilisateur(UtilisateurHisto, traitementDataReader("oa_traitement_identifiant_creation"))
                 LblUtilisateurCreation.Text = Me.UtilisateurHisto.UtilisateurPrenom & " " & Me.UtilisateurHisto.UtilisateurNom
             End If
-
-
 
             If traitementDataReader("oa_traitement_date_modification") IsNot DBNull.Value Then
                 dateModification = traitementDataReader("oa_traitement_date_modification")
@@ -597,16 +597,15 @@ Public Class RadFTraitementFenetreTh
             End If
 
             LblUtilisateurModification.Text = ""
-            If traitementDataReader("oa_traitement_identifiant_creation") IsNot DBNull.Value Then
-                SetUtilisateur(UtilisateurHisto, traitementDataReader("oa_traitement_identifiant_creation"))
-                LblUtilisateurModification.Text = Me.UtilisateurHisto.UtilisateurPrenom & " " & Me.UtilisateurHisto.UtilisateurNom
+            If traitementDataReader("oa_traitement_identifiant_modification") IsNot DBNull.Value Then
+                If traitementDataReader("oa_traitement_identifiant_modification") <> 0 Then
+                    Dim userDao As New UserDao
+                    UtilisateurHisto = userDao.getUserById(traitementDataReader("oa_traitement_identifiant_modification"))
+                    'SetUtilisateur(UtilisateurHisto, traitementDataReader("oa_traitement_identifiant_modification"))
+                    LblUtilisateurModification.Text = Me.UtilisateurHisto.UtilisateurPrenom & " " & Me.UtilisateurHisto.UtilisateurNom
+                End If
             End If
-
         End If
-
-        'Initialisation classe Historisation traitement 
-        'Inhibé pour changement de stratégie==================================================
-        'InitClasseTraitementHistorisation(traitementDataReader, UtilisateurConnecte, TraitementHistoACreer)
 
         'Libération des ressources d'accès aux données
         conxn.Close()

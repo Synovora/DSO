@@ -129,6 +129,7 @@ Public Class RadFAntecedentDetailEdit
             'Création
             EditMode = EnumEditMode.Creation
             EditAction = EnumAction.Creation
+            RadBtnHistorique.Hide()
             'Dénomination DRC
             TxtDrcId.Text = Me.SelectedDrcId
             If Me.SelectedDrcId <> 0 Then
@@ -310,7 +311,9 @@ Public Class RadFAntecedentDetailEdit
 
         LblUtilisateurCreation.Text = ""
         If antecedentRead.UserCreation <> 0 Then
-            SetUtilisateur(utilisateurHisto, antecedentRead.UserCreation)
+            Dim userDao As New UserDao
+            utilisateurHisto = userDao.getUserById(antecedentRead.UserCreation)
+            'SetUtilisateur(utilisateurHisto, antecedentRead.UserCreation)
             LblUtilisateurCreation.Text = Me.utilisateurHisto.UtilisateurPrenom & " " & Me.utilisateurHisto.UtilisateurNom
         Else
             LblCreationAntecedent2.Hide()
@@ -329,7 +332,9 @@ Public Class RadFAntecedentDetailEdit
 
         LblUtilisateurModification.Text = ""
         If antecedentRead.UserModification <> 0 Then
-            SetUtilisateur(utilisateurHisto, antecedentRead.UserModification)
+            Dim userDao As New UserDao
+            utilisateurHisto = userDao.getUserById(antecedentRead.UserModification)
+            'SetUtilisateur(utilisateurHisto, antecedentRead.UserModification)
             LblUtilisateurModification.Text = Me.utilisateurHisto.UtilisateurPrenom & " " & Me.utilisateurHisto.UtilisateurNom
         Else
             LblCreationAntecedent2.Hide()
@@ -434,7 +439,7 @@ Public Class RadFAntecedentDetailEdit
                 If ControleSaisie() = True Then
                     Dim Valide As Boolean = True
                     If Publication() = "O" Then
-                        If MsgBox("Attention, un antécédent occulté ne sera plus accessible, confirmez-vous l'action d'occulter cet antécédent", MsgBoxStyle.YesNo, "") = MsgBoxResult.No Then
+                        If MsgBox("Attention, un antécédent occulté ne sera plus accessible, confirmez-vous l'action d'occulter cet antécédent", MsgBoxStyle.YesNo Or MsgBoxStyle.Exclamation, "Avertissement") = MsgBoxResult.No Then
                             Valide = False
                         End If
                     End If
@@ -526,7 +531,7 @@ Public Class RadFAntecedentDetailEdit
             Else
                 MessageErreur = MessageErreur & vbCrLf & "/!\ Mise à jour de l'antécédent impossible, des données sont incorrectes"
             End If
-            MessageBox.Show(MessageErreur)
+            MessageBox.Show(MessageErreur, "Erreur", MessageBoxButtons.OK, MessageBoxIcon.Error)
         End If
 
         Return CodeRetour

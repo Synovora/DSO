@@ -438,13 +438,16 @@ Public Class RadFEpisodeDetail
         LblTypeProfil.Text = episode.TypeProfil
         CommentaireEpisode = episode.Commentaire
 
-        UtilisateurDao.SetUtilisateur(user, episode.UserCreation)
+        Dim userDao As New UserDao
+        user = userDao.getUserById(episode.UserCreation)
+        'UtilisateurDao.SetUtilisateur(user, episode.UserCreation)
         UserCreation = user.UtilisateurPrenom.Trim & " " & user.UtilisateurNom.Trim
         DateCreation = episode.DateCreation.ToString("dd/MM/yyyy HH:mm")
         DateModification = episode.DateModification.ToString("dd/MM/yyyy HH:mm")
 
         If episode.UserModification <> 0 Then
-            UtilisateurDao.SetUtilisateur(user, episode.UserModification)
+            user = userDao.getUserById(episode.UserModification)
+            'UtilisateurDao.SetUtilisateur(user, episode.UserModification)
             UserModification = user.UtilisateurPrenom.Trim & " " & user.UtilisateurNom.Trim
         End If
 
@@ -1393,8 +1396,10 @@ Public Class RadFEpisodeDetail
             'Utilisateur creation
             Auteur = ""
             If Coalesce(ObservationSpe.Rows(i)("user_id"), 0) <> 0 Then
-                Dim UtilisateurCreation = New Utilisateur()
-                SetUtilisateur(UtilisateurCreation, ObservationSpe.Rows(i)("user_id"))
+                Dim UtilisateurCreation As Utilisateur
+                Dim userDao As New UserDao
+                UtilisateurCreation = userDao.getUserById(ObservationSpe.Rows(i)("user_id"))
+                'SetUtilisateur(UtilisateurCreation, ObservationSpe.Rows(i)("user_id"))
                 Auteur = UtilisateurCreation.UtilisateurPrenom & " " & UtilisateurCreation.UtilisateurNom
             End If
 
@@ -3438,7 +3443,7 @@ Public Class RadFEpisodeDetail
             If SelectedMedicamentCis <> 0 Then
                 Using vFTraitementDetailEdit As New RadFTraitementDetailEdit
                     vFTraitementDetailEdit.SelectedPatient = Me.SelectedPatient
-                    vFTraitementDetailEdit.UtilisateurConnecte = Me.UtilisateurConnecte
+                    'vFTraitementDetailEdit.UtilisateurConnecte = Me.UtilisateurConnecte
                     vFTraitementDetailEdit.SelectedMedicamentId = SelectedMedicamentCis
                     vFTraitementDetailEdit.Allergie = Me.PatientAllergie
                     vFTraitementDetailEdit.ContreIndication = Me.PatientContreIndication
@@ -3469,7 +3474,7 @@ Public Class RadFEpisodeDetail
                 Using vFTraitementDetailEdit As New RadFTraitementDetailEdit
                     vFTraitementDetailEdit.SelectedTraitementId = TraitementId
                     vFTraitementDetailEdit.SelectedPatient = Me.SelectedPatient
-                    vFTraitementDetailEdit.UtilisateurConnecte = Me.UtilisateurConnecte
+                    'vFTraitementDetailEdit.UtilisateurConnecte = Me.UtilisateurConnecte
                     vFTraitementDetailEdit.SelectedMedicamentId = SelectedMedicamentCis
                     vFTraitementDetailEdit.Allergie = Me.PatientAllergie
                     vFTraitementDetailEdit.ContreIndication = Me.PatientContreIndication
@@ -3932,7 +3937,7 @@ Public Class RadFEpisodeDetail
                             vFParcoursDetailEdit.SelectedRorId = vRadFRorListe.SelectedRorId
                             vFParcoursDetailEdit.SelectedSpecialiteId = vFSpecialiteSelecteur.SelectedSpecialiteId
                             vFParcoursDetailEdit.SelectedPatient = Me.SelectedPatient
-                            vFParcoursDetailEdit.UtilisateurConnecte = Me.UtilisateurConnecte
+                            'vFParcoursDetailEdit.UtilisateurConnecte = Me.UtilisateurConnecte
                             vFParcoursDetailEdit.RythmeObligatoire = False
                             vFParcoursDetailEdit.PositionGaucheDroite = EnumPosition.Gauche
                             vFParcoursDetailEdit.ShowDialog()   'Gestion de l'intervenant
@@ -3958,7 +3963,7 @@ Public Class RadFEpisodeDetail
                     Using vFParcoursDetailEdit As New RadFParcoursDetailEdit
                         vFParcoursDetailEdit.SelectedParcoursId = ParcoursId
                         vFParcoursDetailEdit.SelectedPatient = Me.SelectedPatient
-                        vFParcoursDetailEdit.UtilisateurConnecte = Me.UtilisateurConnecte
+                        'vFParcoursDetailEdit.UtilisateurConnecte = Me.UtilisateurConnecte
                         vFParcoursDetailEdit.PositionGaucheDroite = EnumPosition.Gauche
                         vFParcoursDetailEdit.ShowDialog() 'Modal
                     End Using
@@ -4564,7 +4569,7 @@ Public Class RadFEpisodeDetail
                         Using vFParcoursDetailEdit As New RadFParcoursDetailEdit
                             vFParcoursDetailEdit.SelectedParcoursId = ParcoursId
                             vFParcoursDetailEdit.SelectedPatient = Me.SelectedPatient
-                            vFParcoursDetailEdit.UtilisateurConnecte = Me.UtilisateurConnecte
+                            'vFParcoursDetailEdit.UtilisateurConnecte = Me.UtilisateurConnecte
                             vFParcoursDetailEdit.RythmeObligatoire = False
                             vFParcoursDetailEdit.PositionGaucheDroite = EnumPosition.Gauche
                             vFParcoursDetailEdit.ShowDialog() 'Modal
@@ -4719,40 +4724,6 @@ Public Class RadFEpisodeDetail
 
         Cursor.Current = Cursors.Default
         Me.Enabled = True
-
-        'Obsolète=====================>
-        Exit Sub
-        Using vFSpecialiteSelecteur As New RadFSpecialiteSelecteur
-            vFSpecialiteSelecteur.ListProfilOasis = ParcoursListProfilsOasis
-            vFSpecialiteSelecteur.ShowDialog()                  'Sélection de spécialité
-            If vFSpecialiteSelecteur.SelectedSpecialiteId <> 0 Then
-                Using vRadFRorListe As New RadFRorListe
-                    vRadFRorListe.Selecteur = True
-                    vRadFRorListe.PatientId = Me.SelectedPatient.patientId
-                    vRadFRorListe.SpecialiteId = vFSpecialiteSelecteur.SelectedSpecialiteId
-                    vRadFRorListe.TypeRor = "Intervenant"
-                    vRadFRorListe.ShowDialog()                  'Sélection d'un professionnel de santé
-                    If vRadFRorListe.CodeRetour = True Then
-                        Using vFParcoursDetailEdit As New RadFParcoursDetailEdit
-                            vFParcoursDetailEdit.SelectedParcoursId = 0
-                            vFParcoursDetailEdit.SelectedRorId = vRadFRorListe.SelectedRorId
-                            vFParcoursDetailEdit.SelectedSpecialiteId = vFSpecialiteSelecteur.SelectedSpecialiteId
-                            vFParcoursDetailEdit.SelectedPatient = Me.SelectedPatient
-                            vFParcoursDetailEdit.UtilisateurConnecte = Me.UtilisateurConnecte
-                            vFParcoursDetailEdit.RythmeObligatoire = True
-                            vFParcoursDetailEdit.PositionGaucheDroite = EnumPosition.Gauche
-                            vFParcoursDetailEdit.ShowDialog()   'Gestion de l'intervenant
-                            If vFParcoursDetailEdit.CodeRetour = True Then
-                                ChargementParcoursDeSoin()
-                                ChargementPPS()
-                            End If
-                        End Using
-                    End If
-                End Using
-            End If
-        End Using
-        Me.Enabled = True
-        'Obsolète=====================>
     End Sub
 
     Private Sub HistoriqueDesModificationsToolStripMenuItem3_Click(sender As Object, e As EventArgs) Handles HistoriqueDesModificationsToolStripMenuItem3.Click

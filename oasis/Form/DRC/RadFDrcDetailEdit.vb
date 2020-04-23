@@ -157,7 +157,9 @@ Public Class RadFDrcDetailEdit
         End If
         LblUtilisateurCreation.Text = ""
         If drc.UserCreation <> 0 Then
-            SetUtilisateur(utilisateurHisto, drc.UserCreation)
+            Dim userDao As New UserDao
+            utilisateurHisto = userDao.getUserById(drc.UserCreation)
+            'SetUtilisateur(utilisateurHisto, drc.UserCreation)
             LblUtilisateurCreation.Text = Me.utilisateurHisto.UtilisateurPrenom & " " & Me.utilisateurHisto.UtilisateurNom
         Else
             LblUtilisateurCreation.Hide()
@@ -175,7 +177,9 @@ Public Class RadFDrcDetailEdit
         End If
         LblUtilisateurModification.Text = ""
         If drc.UserModification <> 0 Then
-            SetUtilisateur(utilisateurHisto, drc.UserModification)
+            Dim userDao As New UserDao
+            utilisateurHisto = userDao.getUserById(drc.UserModification)
+            'SetUtilisateur(utilisateurHisto, drc.UserModification)
             LblUtilisateurModification.Text = Me.utilisateurHisto.UtilisateurPrenom & " " & Me.utilisateurHisto.UtilisateurNom
         Else
             LblUtilisateurModification.Hide()

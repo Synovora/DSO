@@ -74,6 +74,7 @@ Partial Class RadFPPSDetailEdit
         Me.RadBtnAnnulation = New Telerik.WinControls.UI.RadButton()
         Me.RadBtnConfirmationAnnulation = New Telerik.WinControls.UI.RadButton()
         Me.RadBtnAbandonner = New Telerik.WinControls.UI.RadButton()
+        Me.RadBtnHistorique = New Telerik.WinControls.UI.RadButton()
         CType(Me.RadGroupBoxEtatCivil, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.RadGroupBoxEtatCivil.SuspendLayout()
         CType(Me.RadGroupBox1, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -87,6 +88,7 @@ Partial Class RadFPPSDetailEdit
         CType(Me.RadBtnAnnulation, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.RadBtnConfirmationAnnulation, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.RadBtnAbandonner, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.RadBtnHistorique, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
@@ -576,15 +578,16 @@ Partial Class RadFPPSDetailEdit
         'RadBtnAnnulation
         '
         Me.RadBtnAnnulation.Image = Global.Oasis_WF.My.Resources.Resources.supprimer
-        Me.RadBtnAnnulation.Location = New System.Drawing.Point(42, 422)
+        Me.RadBtnAnnulation.Location = New System.Drawing.Point(72, 422)
         Me.RadBtnAnnulation.Name = "RadBtnAnnulation"
         Me.RadBtnAnnulation.Size = New System.Drawing.Size(24, 24)
         Me.RadBtnAnnulation.TabIndex = 93
         Me.RadBtnAnnulation.Text = "Annulation"
+        Me.ToolTipPPS.SetToolTip(Me.RadBtnAnnulation, "Suppression")
         '
         'RadBtnConfirmationAnnulation
         '
-        Me.RadBtnConfirmationAnnulation.Location = New System.Drawing.Point(72, 422)
+        Me.RadBtnConfirmationAnnulation.Location = New System.Drawing.Point(102, 422)
         Me.RadBtnConfirmationAnnulation.Name = "RadBtnConfirmationAnnulation"
         Me.RadBtnConfirmationAnnulation.Size = New System.Drawing.Size(171, 24)
         Me.RadBtnConfirmationAnnulation.TabIndex = 94
@@ -600,6 +603,16 @@ Partial Class RadFPPSDetailEdit
         Me.RadBtnAbandonner.Size = New System.Drawing.Size(24, 24)
         Me.RadBtnAbandonner.TabIndex = 96
         '
+        'RadBtnHistorique
+        '
+        Me.RadBtnHistorique.Image = Global.Oasis_WF.My.Resources.Resources.historique
+        Me.RadBtnHistorique.ImageAlignment = System.Drawing.ContentAlignment.MiddleCenter
+        Me.RadBtnHistorique.Location = New System.Drawing.Point(42, 422)
+        Me.RadBtnHistorique.Name = "RadBtnHistorique"
+        Me.RadBtnHistorique.Size = New System.Drawing.Size(24, 24)
+        Me.RadBtnHistorique.TabIndex = 102
+        Me.ToolTipPPS.SetToolTip(Me.RadBtnHistorique, "Historique")
+        '
         'RadFPPSDetailEdit
         '
         Me.AcceptButton = Me.RadBtnValidation
@@ -607,6 +620,7 @@ Partial Class RadFPPSDetailEdit
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.CancelButton = Me.RadBtnAbandonner
         Me.ClientSize = New System.Drawing.Size(1031, 455)
+        Me.Controls.Add(Me.RadBtnHistorique)
         Me.Controls.Add(Me.RadBtnAbandonner)
         Me.Controls.Add(Me.RadBtnValidation)
         Me.Controls.Add(Me.RadBtnConfirmationAnnulation)
@@ -647,6 +661,7 @@ Partial Class RadFPPSDetailEdit
         CType(Me.RadBtnAnnulation, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.RadBtnConfirmationAnnulation, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.RadBtnAbandonner, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.RadBtnHistorique, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
         Me.PerformLayout()
@@ -704,5 +719,6 @@ Partial Class RadFPPSDetailEdit
     Friend WithEvents CbxTypeStrategie As ComboBox
     Friend WithEvents LblTypeStrategie As Label
     Friend WithEvents RadBtnRecupereDrc As Telerik.WinControls.UI.RadButton
+    Friend WithEvents RadBtnHistorique As Telerik.WinControls.UI.RadButton
 End Class
 

@@ -140,7 +140,9 @@ Public Class RadFPatientNoteDetailEdit
         End If
 
         If patientNote.UserCreation <> 0 Then
-            SetUtilisateur(utilisateurHisto, patientNote.UserCreation)
+            Dim userDao As New UserDao
+            utilisateurHisto = userDao.getUserById(patientNote.UserCreation)
+            'SetUtilisateur(utilisateurHisto, patientNote.UserCreation)
             LblUtilisateurCreation.Text = Me.utilisateurHisto.UtilisateurPrenom & " " & Me.utilisateurHisto.UtilisateurNom
         Else
             LblUtilisateurCreation.Hide()
@@ -156,7 +158,9 @@ Public Class RadFPatientNoteDetailEdit
         End If
 
         If patientNote.UserModification <> 0 Then
-            SetUtilisateur(utilisateurHisto, patientNote.UserModification)
+            Dim userDao As New UserDao
+            utilisateurHisto = userDao.getUserById(patientNote.UserModification)
+            'SetUtilisateur(utilisateurHisto, patientNote.UserModification)
             LblUtilisateurModification.Text = Me.utilisateurHisto.UtilisateurPrenom & " " & Me.utilisateurHisto.UtilisateurNom
         Else
             LblUtilisateurModification.Hide()
@@ -190,7 +194,10 @@ Public Class RadFPatientNoteDetailEdit
                 patientNoteModification.UserModification = UtilisateurConnecte.UtilisateurId
                 patientNoteModification.PatientNote = TxtNote.Text
                 If patientNoteMedicaleDao.ModificationNote(patientNoteModification) = True Then
-                    MessageBox.Show("Note patient modifiée")
+                    'MessageBox.Show("Note patient modifiée")
+                    Dim form As New RadFNotification()
+                    form.Message = "Note médicale patient modifiée"
+                    form.Show()
                 Else
                     codeRetour = False
                 End If
@@ -201,7 +208,10 @@ Public Class RadFPatientNoteDetailEdit
                 patientNoteModification.UserModification = UtilisateurConnecte.UtilisateurId
                 patientNoteModification.PatientNote = TxtNote.Text
                 If patientNoteVaccinDao.ModificationNote(patientNoteModification) = True Then
-                    MessageBox.Show("Note patient modifiée")
+                    'MessageBox.Show("Note patient modifiée")
+                    Dim form As New RadFNotification()
+                    form.Message = "Note vaccin patient modifiée"
+                    form.Show()
                 Else
                     codeRetour = False
                 End If
@@ -212,7 +222,10 @@ Public Class RadFPatientNoteDetailEdit
                 patientNoteModification.UserModification = UtilisateurConnecte.UtilisateurId
                 patientNoteModification.PatientNote = TxtNote.Text
                 If patientNoteSocialeDao.ModificationNote(patientNoteModification) = True Then
-                    MessageBox.Show("Note patient modifiée")
+                    'MessageBox.Show("Note patient modifiée")
+                    Dim form As New RadFNotification()
+                    form.Message = "Note sociale patient modifiée"
+                    form.Show()
                 Else
                     codeRetour = False
                 End If
@@ -223,7 +236,10 @@ Public Class RadFPatientNoteDetailEdit
                 patientNoteModification.UserModification = UtilisateurConnecte.UtilisateurId
                 patientNoteModification.PatientNote = TxtNote.Text
                 If patientNoteDao.ModificationNote(patientNoteModification) = True Then
-                    MessageBox.Show("Note patient modifiée")
+                    'MessageBox.Show("Note patient modifiée")
+                    Dim form As New RadFNotification()
+                    form.Message = "Note administrative patient modifiée"
+                    form.Show()
                 Else
                     CodeRetour = False
                 End If
@@ -234,7 +250,10 @@ Public Class RadFPatientNoteDetailEdit
                 patientNoteModification.UserModification = UtilisateurConnecte.UtilisateurId
                 patientNoteModification.PatientNote = TxtNote.Text
                 If patientNotedirectiveDao.ModificationNote(patientNoteModification) = True Then
-                    MessageBox.Show("Directive anticipée modifiée")
+                    'MessageBox.Show("Directive anticipée modifiée")
+                    Dim form As New RadFNotification()
+                    form.Message = "Directive anticipée patient modifiée"
+                    form.Show()
                 Else
                     codeRetour = False
                 End If
@@ -257,7 +276,10 @@ Public Class RadFPatientNoteDetailEdit
                 patientNoteCreation.PatientNote = TxtNote.Text
 
                 If patientNoteMedicaleDao.CreationNote(patientNoteCreation) = True Then
-                    MessageBox.Show("Note patient créée")
+                    'MessageBox.Show("Note patient créée")
+                    Dim form As New RadFNotification()
+                    form.Message = "Note médicale patient créée"
+                    form.Show()
                 Else
                     codeRetour = False
                 End If
@@ -269,7 +291,10 @@ Public Class RadFPatientNoteDetailEdit
                 patientNoteCreation.PatientNote = TxtNote.Text
 
                 If patientNoteVaccinDao.CreationNote(patientNoteCreation) = True Then
-                    MessageBox.Show("Note patient créée")
+                    'MessageBox.Show("Note patient créée")
+                    Dim form As New RadFNotification()
+                    form.Message = "Note vaccin patient créée"
+                    form.Show()
                 Else
                     codeRetour = False
                 End If
@@ -281,7 +306,10 @@ Public Class RadFPatientNoteDetailEdit
                 patientNoteCreation.PatientNote = TxtNote.Text
 
                 If patientNoteSocialeDao.CreationNote(patientNoteCreation) = True Then
-                    MessageBox.Show("Note patient créée")
+                    'MessageBox.Show("Note patient créée")
+                    Dim form As New RadFNotification()
+                    form.Message = "Note sociale patient créée"
+                    form.Show()
                 Else
                     codeRetour = False
                 End If
@@ -293,7 +321,10 @@ Public Class RadFPatientNoteDetailEdit
                 patientNoteCreation.PatientNote = TxtNote.Text
 
                 If patientNoteDao.CreationNote(patientNoteCreation) = True Then
-                    MessageBox.Show("Note patient créée")
+                    'MessageBox.Show("Note patient créée")
+                    Dim form As New RadFNotification()
+                    form.Message = "Note administrative patient créée"
+                    form.Show()
                 Else
                     codeRetour = False
                 End If
@@ -305,7 +336,10 @@ Public Class RadFPatientNoteDetailEdit
                 patientNoteCreation.PatientNote = TxtNote.Text
 
                 If patientNotedirectiveDao.CreationNote(patientNoteCreation) = True Then
-                    MessageBox.Show("Directive anticipée patient créée")
+                    'MessageBox.Show("Directive anticipée patient créée")
+                    Dim form As New RadFNotification()
+                    form.Message = "Directive anticipée patient créée"
+                    form.Show()
                 Else
                     codeRetour = False
                 End If
@@ -325,7 +359,10 @@ Public Class RadFPatientNoteDetailEdit
                 patientNoteSuppression.NoteId = SelectedNoteId
                 patientNoteSuppression.UserModification = UtilisateurConnecte.UtilisateurId
                 If patientNoteMedicaleDao.AnnulationNote(patientNoteSuppression) = True Then
-                    MessageBox.Show("Note patient supprimée")
+                    'MessageBox.Show("Note patient supprimée")
+                    Dim form As New RadFNotification()
+                    form.Message = "Note médicale patient supprimée"
+                    form.Show()
                 Else
                     codeRetour = False
                 End If
@@ -335,7 +372,10 @@ Public Class RadFPatientNoteDetailEdit
                 patientNoteSuppression.NoteId = SelectedNoteId
                 patientNoteSuppression.UserModification = UtilisateurConnecte.UtilisateurId
                 If patientNoteVaccinDao.AnnulationNote(patientNoteSuppression) = True Then
-                    MessageBox.Show("Note patient supprimée")
+                    'MessageBox.Show("Note patient supprimée")
+                    Dim form As New RadFNotification()
+                    form.Message = "Note vaccin patient supprimée"
+                    form.Show()
                 Else
                     codeRetour = False
                 End If
@@ -345,7 +385,10 @@ Public Class RadFPatientNoteDetailEdit
                 patientNoteSuppression.NoteId = SelectedNoteId
                 patientNoteSuppression.UserModification = UtilisateurConnecte.UtilisateurId
                 If patientNoteSocialeDao.AnnulationNote(patientNoteSuppression) = True Then
-                    MessageBox.Show("Note patient supprimée")
+                    'MessageBox.Show("Note patient supprimée")
+                    Dim form As New RadFNotification()
+                    form.Message = "Note sociale patient supprimée"
+                    form.Show()
                 Else
                     codeRetour = False
                 End If
@@ -355,7 +398,10 @@ Public Class RadFPatientNoteDetailEdit
                 patientNoteSuppression.NoteId = SelectedNoteId
                 patientNoteSuppression.UserModification = UtilisateurConnecte.UtilisateurId
                 If patientNoteDao.AnnulationNote(patientNoteSuppression) = True Then
-                    MessageBox.Show("Note patient supprimée")
+                    'MessageBox.Show("Note patient supprimée")
+                    Dim form As New RadFNotification()
+                    form.Message = "Note administrative patient supprimée"
+                    form.Show()
                 Else
                     codeRetour = False
                 End If
@@ -365,7 +411,10 @@ Public Class RadFPatientNoteDetailEdit
                 patientNoteSuppression.NoteId = SelectedNoteId
                 patientNoteSuppression.UserModification = UtilisateurConnecte.UtilisateurId
                 If patientNotedirectiveDao.AnnulationNote(patientNoteSuppression) = True Then
-                    MessageBox.Show("Directive anticipée patient supprimée")
+                    'MessageBox.Show("Directive anticipée patient supprimée")
+                    Dim form As New RadFNotification()
+                    form.Message = "Directive anticipée patient supprimée"
+                    form.Show()
                 Else
                     codeRetour = False
                 End If
@@ -409,7 +458,7 @@ Public Class RadFPatientNoteDetailEdit
     End Sub
 
     Private Sub RadBtnAnnuler_Click(sender As Object, e As EventArgs) Handles RadBtnAnnuler.Click
-        If MsgBox("confirmation de la suppression de la note", MsgBoxStyle.YesNo, "") = MsgBoxResult.Yes Then
+        If MsgBox("confirmation de la suppression de la note", MsgBoxStyle.YesNo Or MsgBoxStyle.Exclamation, "Confirmation") = MsgBoxResult.Yes Then
             'Annulation note patient
             If AnnulationNote() = True Then
                 Me.CodeRetour = True

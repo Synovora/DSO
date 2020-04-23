@@ -1314,7 +1314,7 @@ Public Class RadFSynthese
                     Try
                         Using vFTraitementDetailEdit As New RadFTraitementDetailEdit
                             vFTraitementDetailEdit.SelectedPatient = Me.SelectedPatient
-                            vFTraitementDetailEdit.UtilisateurConnecte = Me.UtilisateurConnecte
+                            'vFTraitementDetailEdit.UtilisateurConnecte = Me.UtilisateurConnecte
                             vFTraitementDetailEdit.SelectedMedicamentId = SelectedMedicamentId
                             vFTraitementDetailEdit.Allergie = Me.PatientAllergie
                             vFTraitementDetailEdit.ContreIndication = Me.PatientContreIndication
@@ -1352,7 +1352,7 @@ Public Class RadFSynthese
                     Using vFTraitementDetailEdit As New RadFTraitementDetailEdit
                         vFTraitementDetailEdit.SelectedTraitementId = TraitementId
                         vFTraitementDetailEdit.SelectedPatient = Me.SelectedPatient
-                        vFTraitementDetailEdit.UtilisateurConnecte = Me.UtilisateurConnecte
+                        'vFTraitementDetailEdit.UtilisateurConnecte = Me.UtilisateurConnecte
                         vFTraitementDetailEdit.SelectedMedicamentId = SelectedMedicamentCis
                         vFTraitementDetailEdit.Allergie = Me.PatientAllergie
                         vFTraitementDetailEdit.ContreIndication = Me.PatientContreIndication
@@ -1788,7 +1788,7 @@ Public Class RadFSynthese
                                 vFParcoursDetailEdit.SelectedRorId = vRadFRorListe.SelectedRorId
                                 vFParcoursDetailEdit.SelectedSpecialiteId = vFSpecialiteSelecteur.SelectedSpecialiteId
                                 vFParcoursDetailEdit.SelectedPatient = Me.SelectedPatient
-                                vFParcoursDetailEdit.UtilisateurConnecte = Me.UtilisateurConnecte
+                                'vFParcoursDetailEdit.UtilisateurConnecte = Me.UtilisateurConnecte
                                 vFParcoursDetailEdit.RythmeObligatoire = False
                                 vFParcoursDetailEdit.PositionGaucheDroite = EnumPosition.Droite
                                 vFParcoursDetailEdit.ShowDialog()   'Gestion de l'intervenant
@@ -1818,7 +1818,7 @@ Public Class RadFSynthese
                     Using vFParcoursDetailEdit As New RadFParcoursDetailEdit
                         vFParcoursDetailEdit.SelectedParcoursId = ParcoursId
                         vFParcoursDetailEdit.SelectedPatient = Me.SelectedPatient
-                        vFParcoursDetailEdit.UtilisateurConnecte = Me.UtilisateurConnecte
+                        'vFParcoursDetailEdit.UtilisateurConnecte = Me.UtilisateurConnecte
                         vFParcoursDetailEdit.RythmeObligatoire = False
                         vFParcoursDetailEdit.PositionGaucheDroite = EnumPosition.Droite
                         vFParcoursDetailEdit.ShowDialog() 'Modal
@@ -2449,7 +2449,7 @@ Public Class RadFSynthese
                             Using vFParcoursDetailEdit As New RadFParcoursDetailEdit
                                 vFParcoursDetailEdit.SelectedParcoursId = ParcoursId
                                 vFParcoursDetailEdit.SelectedPatient = Me.SelectedPatient
-                                vFParcoursDetailEdit.UtilisateurConnecte = Me.UtilisateurConnecte
+                                'vFParcoursDetailEdit.UtilisateurConnecte = Me.UtilisateurConnecte
                                 vFParcoursDetailEdit.PositionGaucheDroite = EnumPosition.Droite
                                 vFParcoursDetailEdit.ShowDialog() 'Modal
                                 If vFParcoursDetailEdit.CodeRetour = True Then
@@ -2647,7 +2647,7 @@ Public Class RadFSynthese
                                 vFParcoursDetailEdit.SelectedRorId = vRadFRorListe.SelectedRorId
                                 vFParcoursDetailEdit.SelectedSpecialiteId = vFSpecialiteSelecteur.SelectedSpecialiteId
                                 vFParcoursDetailEdit.SelectedPatient = Me.SelectedPatient
-                                vFParcoursDetailEdit.UtilisateurConnecte = Me.UtilisateurConnecte
+                                'vFParcoursDetailEdit.UtilisateurConnecte = Me.UtilisateurConnecte
                                 vFParcoursDetailEdit.RythmeObligatoire = True
                                 vFParcoursDetailEdit.PositionGaucheDroite = EnumPosition.Droite
                                 vFParcoursDetailEdit.ShowDialog()   'Gestion de l'intervenant

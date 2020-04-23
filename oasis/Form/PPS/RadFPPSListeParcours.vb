@@ -216,7 +216,7 @@ Public Class RadFPPSListeParcours
                                 vFParcoursDetailEdit.SelectedRorId = vRadFRorListe.SelectedRorId
                                 vFParcoursDetailEdit.SelectedSpecialiteId = vFSpecialiteSelecteur.SelectedSpecialiteId
                                 vFParcoursDetailEdit.SelectedPatient = Me.SelectedPatient
-                                vFParcoursDetailEdit.UtilisateurConnecte = userLog
+                                'vFParcoursDetailEdit.UtilisateurConnecte = userLog
                                 vFParcoursDetailEdit.RythmeObligatoire = False
                                 vFParcoursDetailEdit.PositionGaucheDroite = EnumPosition.Droite
                                 vFParcoursDetailEdit.ShowDialog()   'Gestion de l'intervenant
@@ -246,7 +246,7 @@ Public Class RadFPPSListeParcours
                     Using vFParcoursDetailEdit As New RadFParcoursDetailEdit
                         vFParcoursDetailEdit.SelectedParcoursId = ParcoursId
                         vFParcoursDetailEdit.SelectedPatient = Me.SelectedPatient
-                        vFParcoursDetailEdit.UtilisateurConnecte = userLog
+                        'vFParcoursDetailEdit.UtilisateurConnecte = userLog
                         vFParcoursDetailEdit.RythmeObligatoire = False
                         vFParcoursDetailEdit.PositionGaucheDroite = EnumPosition.Droite
                         vFParcoursDetailEdit.ShowDialog() 'Modal

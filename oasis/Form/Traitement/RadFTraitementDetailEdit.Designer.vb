@@ -23,6 +23,7 @@ Partial Class RadFTraitementDetailEdit
     <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
         Me.components = New System.ComponentModel.Container()
+        Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(RadFTraitementDetailEdit))
         Me.RadGroupBox1 = New Telerik.WinControls.UI.RadGroupBox()
         Me.lblContreIndication = New System.Windows.Forms.Label()
         Me.LblALD = New System.Windows.Forms.Label()
@@ -61,6 +62,9 @@ Partial Class RadFTraitementDetailEdit
         Me.LblMedicamentDCI = New System.Windows.Forms.Label()
         Me.LblTraitementMedicamentId = New System.Windows.Forms.Label()
         Me.ToolTip = New System.Windows.Forms.ToolTip(Me.components)
+        Me.RadBtnValidation = New Telerik.WinControls.UI.RadButton()
+        Me.RadBtnSupprimerTraitement = New Telerik.WinControls.UI.RadButton()
+        Me.RadBtnHistorique = New Telerik.WinControls.UI.RadButton()
         Me.RadGroupBox3 = New Telerik.WinControls.UI.RadGroupBox()
         Me.Label18 = New System.Windows.Forms.Label()
         Me.CbxFractionMidi = New System.Windows.Forms.ComboBox()
@@ -117,10 +121,8 @@ Partial Class RadFTraitementDetailEdit
         Me.LblFenetreDateDebut = New System.Windows.Forms.Label()
         Me.LblFenetreTherapeutiqueAu = New System.Windows.Forms.Label()
         Me.LblFenetreDateFin = New System.Windows.Forms.Label()
-        Me.RadBtnValidation = New Telerik.WinControls.UI.RadButton()
         Me.RadBtnRetour = New Telerik.WinControls.UI.RadButton()
         Me.RadBtnArretTraitement = New Telerik.WinControls.UI.RadButton()
-        Me.RadBtnSupprimerTraitement = New Telerik.WinControls.UI.RadButton()
         Me.RadBtnAnnulerTraitement = New Telerik.WinControls.UI.RadButton()
         Me.RadGbxFenetreTherapeutique = New Telerik.WinControls.UI.RadGroupBox()
         Me.RadPnlStatutTraitement = New Telerik.WinControls.UI.RadGroupBox()
@@ -132,6 +134,9 @@ Partial Class RadFTraitementDetailEdit
         Me.RadGroupBox1.SuspendLayout()
         CType(Me.RadGroupBox2, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.RadGroupBox2.SuspendLayout()
+        CType(Me.RadBtnValidation, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.RadBtnSupprimerTraitement, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.RadBtnHistorique, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.RadGroupBox3, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.RadGroupBox3.SuspendLayout()
         CType(Me.NumRythmeSoir, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -146,10 +151,8 @@ Partial Class RadFTraitementDetailEdit
         Me.GbxArretTraitement.SuspendLayout()
         CType(Me.GbxAnnulationTraitement, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.GbxAnnulationTraitement.SuspendLayout()
-        CType(Me.RadBtnValidation, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.RadBtnRetour, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.RadBtnArretTraitement, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.RadBtnSupprimerTraitement, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.RadBtnAnnulerTraitement, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.RadGbxFenetreTherapeutique, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.RadGbxFenetreTherapeutique.SuspendLayout()
@@ -563,6 +566,37 @@ Partial Class RadFTraitementDetailEdit
         Me.LblTraitementMedicamentId.Size = New System.Drawing.Size(55, 13)
         Me.LblTraitementMedicamentId.TabIndex = 61
         Me.LblTraitementMedicamentId.Text = "12345678"
+        '
+        'RadBtnValidation
+        '
+        Me.RadBtnValidation.ForeColor = System.Drawing.Color.Black
+        Me.RadBtnValidation.Image = Global.Oasis_WF.My.Resources.Resources.validation2
+        Me.RadBtnValidation.Location = New System.Drawing.Point(12, 912)
+        Me.RadBtnValidation.Name = "RadBtnValidation"
+        Me.RadBtnValidation.Size = New System.Drawing.Size(24, 24)
+        Me.RadBtnValidation.TabIndex = 80
+        Me.ToolTip.SetToolTip(Me.RadBtnValidation, "Valider")
+        '
+        'RadBtnSupprimerTraitement
+        '
+        Me.RadBtnSupprimerTraitement.ForeColor = System.Drawing.Color.Black
+        Me.RadBtnSupprimerTraitement.Image = Global.Oasis_WF.My.Resources.Resources.supprimer
+        Me.RadBtnSupprimerTraitement.ImageAlignment = System.Drawing.ContentAlignment.MiddleCenter
+        Me.RadBtnSupprimerTraitement.Location = New System.Drawing.Point(72, 912)
+        Me.RadBtnSupprimerTraitement.Name = "RadBtnSupprimerTraitement"
+        Me.RadBtnSupprimerTraitement.Size = New System.Drawing.Size(24, 24)
+        Me.RadBtnSupprimerTraitement.TabIndex = 110
+        Me.ToolTip.SetToolTip(Me.RadBtnSupprimerTraitement, "Supprimer le traitement")
+        '
+        'RadBtnHistorique
+        '
+        Me.RadBtnHistorique.Image = CType(resources.GetObject("RadBtnHistorique.Image"), System.Drawing.Image)
+        Me.RadBtnHistorique.ImageAlignment = System.Drawing.ContentAlignment.MiddleCenter
+        Me.RadBtnHistorique.Location = New System.Drawing.Point(42, 912)
+        Me.RadBtnHistorique.Name = "RadBtnHistorique"
+        Me.RadBtnHistorique.Size = New System.Drawing.Size(24, 24)
+        Me.RadBtnHistorique.TabIndex = 117
+        Me.ToolTip.SetToolTip(Me.RadBtnHistorique, "Historique du traitement")
         '
         'RadGroupBox3
         '
@@ -1148,16 +1182,6 @@ Partial Class RadFTraitementDetailEdit
         Me.LblFenetreDateFin.TabIndex = 30
         Me.LblFenetreDateFin.Text = "31.01.2019"
         '
-        'RadBtnValidation
-        '
-        Me.RadBtnValidation.ForeColor = System.Drawing.Color.Black
-        Me.RadBtnValidation.Image = Global.Oasis_WF.My.Resources.Resources.validation2
-        Me.RadBtnValidation.Location = New System.Drawing.Point(12, 912)
-        Me.RadBtnValidation.Name = "RadBtnValidation"
-        Me.RadBtnValidation.Size = New System.Drawing.Size(110, 24)
-        Me.RadBtnValidation.TabIndex = 80
-        Me.RadBtnValidation.Text = "Valider"
-        '
         'RadBtnRetour
         '
         Me.RadBtnRetour.DialogResult = System.Windows.Forms.DialogResult.Cancel
@@ -1171,26 +1195,16 @@ Partial Class RadFTraitementDetailEdit
         'RadBtnArretTraitement
         '
         Me.RadBtnArretTraitement.ForeColor = System.Drawing.Color.Black
-        Me.RadBtnArretTraitement.Location = New System.Drawing.Point(128, 912)
+        Me.RadBtnArretTraitement.Location = New System.Drawing.Point(231, 912)
         Me.RadBtnArretTraitement.Name = "RadBtnArretTraitement"
         Me.RadBtnArretTraitement.Size = New System.Drawing.Size(132, 24)
         Me.RadBtnArretTraitement.TabIndex = 95
         Me.RadBtnArretTraitement.Text = "Arrêter le traitement"
         '
-        'RadBtnSupprimerTraitement
-        '
-        Me.RadBtnSupprimerTraitement.ForeColor = System.Drawing.Color.Black
-        Me.RadBtnSupprimerTraitement.Image = Global.Oasis_WF.My.Resources.Resources.supprimer
-        Me.RadBtnSupprimerTraitement.Location = New System.Drawing.Point(395, 912)
-        Me.RadBtnSupprimerTraitement.Name = "RadBtnSupprimerTraitement"
-        Me.RadBtnSupprimerTraitement.Size = New System.Drawing.Size(166, 24)
-        Me.RadBtnSupprimerTraitement.TabIndex = 110
-        Me.RadBtnSupprimerTraitement.Text = "Supprimer le traitement"
-        '
         'RadBtnAnnulerTraitement
         '
         Me.RadBtnAnnulerTraitement.ForeColor = System.Drawing.Color.Black
-        Me.RadBtnAnnulerTraitement.Location = New System.Drawing.Point(266, 912)
+        Me.RadBtnAnnulerTraitement.Location = New System.Drawing.Point(102, 912)
         Me.RadBtnAnnulerTraitement.Name = "RadBtnAnnulerTraitement"
         Me.RadBtnAnnulerTraitement.Size = New System.Drawing.Size(123, 24)
         Me.RadBtnAnnulerTraitement.TabIndex = 100
@@ -1228,7 +1242,7 @@ Partial Class RadFTraitementDetailEdit
         '
         'RadBtnPharmacocinetique
         '
-        Me.RadBtnPharmacocinetique.Location = New System.Drawing.Point(600, 912)
+        Me.RadBtnPharmacocinetique.Location = New System.Drawing.Point(498, 912)
         Me.RadBtnPharmacocinetique.Name = "RadBtnPharmacocinetique"
         Me.RadBtnPharmacocinetique.Size = New System.Drawing.Size(124, 24)
         Me.RadBtnPharmacocinetique.TabIndex = 113
@@ -1236,7 +1250,7 @@ Partial Class RadFTraitementDetailEdit
         '
         'RadBtnParmacodynamique
         '
-        Me.RadBtnParmacodynamique.Location = New System.Drawing.Point(730, 912)
+        Me.RadBtnParmacodynamique.Location = New System.Drawing.Point(628, 912)
         Me.RadBtnParmacodynamique.Name = "RadBtnParmacodynamique"
         Me.RadBtnParmacodynamique.Size = New System.Drawing.Size(124, 24)
         Me.RadBtnParmacodynamique.TabIndex = 114
@@ -1244,7 +1258,7 @@ Partial Class RadFTraitementDetailEdit
         '
         'RadBtnEffetIndesirable
         '
-        Me.RadBtnEffetIndesirable.Location = New System.Drawing.Point(860, 912)
+        Me.RadBtnEffetIndesirable.Location = New System.Drawing.Point(758, 912)
         Me.RadBtnEffetIndesirable.Name = "RadBtnEffetIndesirable"
         Me.RadBtnEffetIndesirable.Size = New System.Drawing.Size(124, 24)
         Me.RadBtnEffetIndesirable.TabIndex = 115
@@ -1252,7 +1266,7 @@ Partial Class RadFTraitementDetailEdit
         '
         'RadBtnSubstance
         '
-        Me.RadBtnSubstance.Location = New System.Drawing.Point(990, 912)
+        Me.RadBtnSubstance.Location = New System.Drawing.Point(888, 912)
         Me.RadBtnSubstance.Name = "RadBtnSubstance"
         Me.RadBtnSubstance.Size = New System.Drawing.Size(110, 24)
         Me.RadBtnSubstance.TabIndex = 116
@@ -1265,6 +1279,7 @@ Partial Class RadFTraitementDetailEdit
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.CancelButton = Me.RadBtnRetour
         Me.ClientSize = New System.Drawing.Size(1174, 943)
+        Me.Controls.Add(Me.RadBtnHistorique)
         Me.Controls.Add(Me.RadBtnSubstance)
         Me.Controls.Add(Me.RadBtnEffetIndesirable)
         Me.Controls.Add(Me.RadBtnParmacodynamique)
@@ -1309,6 +1324,9 @@ Partial Class RadFTraitementDetailEdit
         CType(Me.RadGroupBox2, System.ComponentModel.ISupportInitialize).EndInit()
         Me.RadGroupBox2.ResumeLayout(False)
         Me.RadGroupBox2.PerformLayout()
+        CType(Me.RadBtnValidation, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.RadBtnSupprimerTraitement, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.RadBtnHistorique, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.RadGroupBox3, System.ComponentModel.ISupportInitialize).EndInit()
         Me.RadGroupBox3.ResumeLayout(False)
         Me.RadGroupBox3.PerformLayout()
@@ -1327,10 +1345,8 @@ Partial Class RadFTraitementDetailEdit
         CType(Me.GbxAnnulationTraitement, System.ComponentModel.ISupportInitialize).EndInit()
         Me.GbxAnnulationTraitement.ResumeLayout(False)
         Me.GbxAnnulationTraitement.PerformLayout()
-        CType(Me.RadBtnValidation, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.RadBtnRetour, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.RadBtnArretTraitement, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.RadBtnSupprimerTraitement, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.RadBtnAnnulerTraitement, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.RadGbxFenetreTherapeutique, System.ComponentModel.ISupportInitialize).EndInit()
         Me.RadGbxFenetreTherapeutique.ResumeLayout(False)
@@ -1453,5 +1469,6 @@ Partial Class RadFTraitementDetailEdit
     Friend WithEvents LblATC As Label
     Friend WithEvents Label19 As Label
     Friend WithEvents RadBtnSubstance As Telerik.WinControls.UI.RadButton
+    Friend WithEvents RadBtnHistorique As Telerik.WinControls.UI.RadButton
 End Class
 
