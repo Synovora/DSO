@@ -125,9 +125,9 @@ Public Class FrmLogin
         Me.Cursor = Cursors.WaitCursor
         Try
             nbTry = 0
-            Using form As New FrmTacheMain
-                'Using form As New RadFPatientListe
-                'form.UtilisateurConnecte = userLog
+            'Using form As New FrmTacheMain
+            Using form As New RadFPatientListe
+                form.UtilisateurConnecte = userLog
                 Me.Hide()
                 form.ShowDialog()
             End Using
