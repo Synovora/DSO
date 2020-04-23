@@ -23,6 +23,7 @@ Partial Class RadFParcoursDetailEdit
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
         Me.components = New System.ComponentModel.Container()
+        Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(RadFParcoursDetailEdit))
         Dim GridViewTextBoxColumn1 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
         Dim GridViewTextBoxColumn2 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
         Dim GridViewTextBoxColumn3 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
@@ -31,7 +32,6 @@ Partial Class RadFParcoursDetailEdit
         Dim GridViewTextBoxColumn6 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
         Dim GridViewTextBoxColumn7 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
         Dim TableViewDefinition1 As Telerik.WinControls.UI.TableViewDefinition = New Telerik.WinControls.UI.TableViewDefinition()
-        Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(RadFParcoursDetailEdit))
         Me.RadGroupBoxEtatCivil = New Telerik.WinControls.UI.RadGroupBox()
         Me.LblALD = New System.Windows.Forms.Label()
         Me.Label13 = New System.Windows.Forms.Label()
@@ -58,6 +58,7 @@ Partial Class RadFParcoursDetailEdit
         Me.RadBtnAnnuler = New Telerik.WinControls.UI.RadButton()
         Me.RadBtnValidation = New Telerik.WinControls.UI.RadButton()
         Me.RadBtnModifRDV = New Telerik.WinControls.UI.RadButton()
+        Me.RadBtnHistorique = New Telerik.WinControls.UI.RadButton()
         Me.RadBtnAbandon = New Telerik.WinControls.UI.RadButton()
         Me.Label7 = New System.Windows.Forms.Label()
         Me.GbxIntervenant = New Telerik.WinControls.UI.RadGroupBox()
@@ -126,12 +127,13 @@ Partial Class RadFParcoursDetailEdit
         Me.RadBtnMesurePreventive = New Telerik.WinControls.UI.RadButton()
         Me.RadBtnTestActePara = New Telerik.WinControls.UI.RadButton()
         Me.RadBtnTestParametre = New Telerik.WinControls.UI.RadButton()
-        Me.RadBtnHistorique = New Telerik.WinControls.UI.RadButton()
+        Me.RadBtnHistoRDV = New Telerik.WinControls.UI.RadButton()
         CType(Me.RadGroupBoxEtatCivil, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.RadGroupBoxEtatCivil.SuspendLayout()
         CType(Me.RadBtnAnnuler, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.RadBtnValidation, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.RadBtnModifRDV, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.RadBtnHistorique, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.RadBtnAbandon, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.GbxIntervenant, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.GbxIntervenant.SuspendLayout()
@@ -159,7 +161,7 @@ Partial Class RadFParcoursDetailEdit
         CType(Me.RadBtnMesurePreventive, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.RadBtnTestActePara, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.RadBtnTestParametre, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.RadBtnHistorique, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.RadBtnHistoRDV, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
@@ -422,6 +424,16 @@ Partial Class RadFParcoursDetailEdit
         Me.RadBtnModifRDV.Size = New System.Drawing.Size(24, 24)
         Me.RadBtnModifRDV.TabIndex = 7
         Me.ToolTip1.SetToolTip(Me.RadBtnModifRDV, "Modifier")
+        '
+        'RadBtnHistorique
+        '
+        Me.RadBtnHistorique.Image = CType(resources.GetObject("RadBtnHistorique.Image"), System.Drawing.Image)
+        Me.RadBtnHistorique.ImageAlignment = System.Drawing.ContentAlignment.MiddleCenter
+        Me.RadBtnHistorique.Location = New System.Drawing.Point(42, 591)
+        Me.RadBtnHistorique.Name = "RadBtnHistorique"
+        Me.RadBtnHistorique.Size = New System.Drawing.Size(24, 24)
+        Me.RadBtnHistorique.TabIndex = 118
+        Me.ToolTip1.SetToolTip(Me.RadBtnHistorique, "Historique")
         '
         'RadBtnAbandon
         '
@@ -906,6 +918,7 @@ Partial Class RadFParcoursDetailEdit
         '
         Me.RadGbxConsultationEnCours.AccessibleRole = System.Windows.Forms.AccessibleRole.Grouping
         Me.RadGbxConsultationEnCours.BackColor = System.Drawing.SystemColors.GradientInactiveCaption
+        Me.RadGbxConsultationEnCours.Controls.Add(Me.RadBtnHistoRDV)
         Me.RadGbxConsultationEnCours.Controls.Add(Me.RadBtnClotureRDV)
         Me.RadGbxConsultationEnCours.Controls.Add(Me.RadBtnModifRDV)
         Me.RadGbxConsultationEnCours.Controls.Add(Me.LblDateDernierRendezVous)
@@ -1131,15 +1144,15 @@ Partial Class RadFParcoursDetailEdit
         Me.RadBtnTestParametre.TabIndex = 110
         Me.RadBtnTestParametre.Text = "Test génération paramètres"
         '
-        'RadBtnHistorique
+        'RadBtnHistoRDV
         '
-        Me.RadBtnHistorique.Image = CType(resources.GetObject("RadBtnHistorique.Image"), System.Drawing.Image)
-        Me.RadBtnHistorique.ImageAlignment = System.Drawing.ContentAlignment.MiddleCenter
-        Me.RadBtnHistorique.Location = New System.Drawing.Point(42, 591)
-        Me.RadBtnHistorique.Name = "RadBtnHistorique"
-        Me.RadBtnHistorique.Size = New System.Drawing.Size(24, 24)
-        Me.RadBtnHistorique.TabIndex = 118
-        Me.ToolTip1.SetToolTip(Me.RadBtnHistorique, "Historique")
+        Me.RadBtnHistoRDV.Image = CType(resources.GetObject("RadBtnHistoRDV.Image"), System.Drawing.Image)
+        Me.RadBtnHistoRDV.ImageAlignment = System.Drawing.ContentAlignment.MiddleCenter
+        Me.RadBtnHistoRDV.Location = New System.Drawing.Point(909, 17)
+        Me.RadBtnHistoRDV.Name = "RadBtnHistoRDV"
+        Me.RadBtnHistoRDV.Size = New System.Drawing.Size(24, 24)
+        Me.RadBtnHistoRDV.TabIndex = 119
+        Me.ToolTip1.SetToolTip(Me.RadBtnHistoRDV, "Historique des rendez-vous")
         '
         'RadFParcoursDetailEdit
         '
@@ -1193,6 +1206,7 @@ Partial Class RadFParcoursDetailEdit
         CType(Me.RadBtnAnnuler, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.RadBtnValidation, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.RadBtnModifRDV, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.RadBtnHistorique, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.RadBtnAbandon, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.GbxIntervenant, System.ComponentModel.ISupportInitialize).EndInit()
         Me.GbxIntervenant.ResumeLayout(False)
@@ -1223,7 +1237,7 @@ Partial Class RadFParcoursDetailEdit
         CType(Me.RadBtnMesurePreventive, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.RadBtnTestActePara, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.RadBtnTestParametre, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.RadBtnHistorique, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.RadBtnHistoRDV, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
         Me.PerformLayout()
@@ -1325,5 +1339,6 @@ Partial Class RadFParcoursDetailEdit
     Friend WithEvents RadBtnTestParametre As Telerik.WinControls.UI.RadButton
     Friend WithEvents RadBtnClotureRDV As Telerik.WinControls.UI.RadButton
     Friend WithEvents RadBtnHistorique As Telerik.WinControls.UI.RadButton
+    Friend WithEvents RadBtnHistoRDV As Telerik.WinControls.UI.RadButton
 End Class
 

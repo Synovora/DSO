@@ -476,6 +476,12 @@
     <Compile Include="Form\LigneDeVie\RadFLigneDeVieParametreSelecteur.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="Form\RendezVous\RadFHistoriqueRDVPatient.Designer.vb">
+      <DependentUpon>RadFHistoriqueRDVPatient.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Form\RendezVous\RadFHistoriqueRDVPatient.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Form\RendezVous\RadFPatientRendezVousListe.Designer.vb">
       <DependentUpon>RadFPatientRendezVousListe.vb</DependentUpon>
     </Compile>
@@ -1092,6 +1098,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Form\LigneDeVie\RadFLigneDeVieParametreSelecteur.resx">
       <DependentUpon>RadFLigneDeVieParametreSelecteur.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form\RendezVous\RadFHistoriqueRDVPatient.resx">
+      <DependentUpon>RadFHistoriqueRDVPatient.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Form\RendezVous\RadFPatientRendezVousListe.resx">
       <DependentUpon>RadFPatientRendezVousListe.vb</DependentUpon>

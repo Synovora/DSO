@@ -618,6 +618,48 @@ Public Class TacheDao
         End Using
     End Function
 
+    Friend Function GetRDVHistoriqueByPatient(patientId As Long, parcoursId As Long) As DataTable
+        Dim SQLString As String
+
+        SQLString =
+            "SELECT " & vbCrLf &
+            "     T.date_rendez_vous" & vbCrLf &
+            " FROM oasis.oa_tache T" & vbCrLf &
+            " WHERE patient_id = @patientId" & vbCrLf &
+            " AND T.parcours_id = @parcoursId" &
+            " AND (T.type = @type1 OR T.type = @type2)" & vbCrLf &
+            " AND T.categorie = @categorie" & vbCrLf &
+            " AND (T.etat = @etat)" &
+            "AND T.cloture = 'True'" & vbCrLf
+        ' -- filtre fonctions
+
+        SQLString += " ORDER BY T.date_rendez_vous DESC"
+        'Console.WriteLine(SQLString)
+
+        Using con As SqlConnection = GetConnection()
+
+            Dim tacheDataAdapter As SqlDataAdapter = New SqlDataAdapter()
+            Using tacheDataAdapter
+                tacheDataAdapter.SelectCommand = New SqlCommand(SQLString, con)
+                tacheDataAdapter.SelectCommand.Parameters.AddWithValue("@patientId", patientId)
+                tacheDataAdapter.SelectCommand.Parameters.AddWithValue("@parcoursId", parcoursId)
+                tacheDataAdapter.SelectCommand.Parameters.AddWithValue("@type1", TacheDao.TypeTache.RDV_SPECIALISTE.ToString)
+                tacheDataAdapter.SelectCommand.Parameters.AddWithValue("@type2", TacheDao.TypeTache.RDV.ToString)
+                tacheDataAdapter.SelectCommand.Parameters.AddWithValue("@categorie", TacheDao.CategorieTache.SOIN.ToString)
+                tacheDataAdapter.SelectCommand.Parameters.AddWithValue("@etat", TacheDao.EtatTache.TERMINEE.ToString)
+                Dim tacheDataTable As DataTable = New DataTable()
+                Using tacheDataTable
+                    Try
+                        tacheDataAdapter.Fill(tacheDataTable)
+                    Catch ex As Exception
+                        Throw ex
+                    End Try
+                    Return tacheDataTable
+                End Using
+            End Using
+        End Using
+    End Function
+
     Friend Function GetDernierRenezVousByPatientId(patientId As Long, parcoursId As Long) As Tache
         Dim con As SqlConnection
         Dim tache As New Tache

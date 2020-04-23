@@ -1378,4 +1378,19 @@ Public Class RadFParcoursDetailEdit
         End Try
         Me.Enabled = True
     End Sub
+
+    Private Sub RadBtnHistoRDV_Click(sender As Object, e As EventArgs) Handles RadBtnHistoRDV.Click
+        Me.Enabled = False
+        Cursor.Current = Cursors.WaitCursor
+        Try
+            Using form As New RadFHistoriqueRDVPatient
+                form.SelectedParcoursId = SelectedParcoursId
+                form.SelectedPatient = Me.SelectedPatient
+                form.ShowDialog()
+            End Using
+        Catch ex As Exception
+            MsgBox(ex.Message())
+        End Try
+        Me.Enabled = True
+    End Sub
 End Class
