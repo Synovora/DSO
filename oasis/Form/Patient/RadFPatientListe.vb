@@ -542,6 +542,21 @@ Public Class RadFPatientListe
         Me.Enabled = True
     End Sub
 
+    Private Sub RadBtnTache_Click(sender As Object, e As EventArgs) Handles RadBtnTache.Click
+        Cursor.Current = Cursors.WaitCursor
+        Try
+            Me.Enabled = False
+            Using form As New FrmTacheMain
+                form.ShowDialog()
+            End Using
+        Catch err As Exception
+            MsgBox(err.Message)
+        Finally
+            Me.Enabled = True
+            Me.Cursor = Cursors.Default
+        End Try
+    End Sub
+
     Private Sub RadBtnEpisodeEnCours_Click(sender As Object, e As EventArgs) Handles RadBtnEpisodeEnCours.Click
         Cursor.Current = Cursors.WaitCursor
         Me.Enabled = False

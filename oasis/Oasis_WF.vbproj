@@ -891,6 +891,9 @@
     <Compile Include="Dao\Traitement\TraitementDao.vb" />
     <Compile Include="Pdf\PdfOrdonnance.vb" />
     <Compile Include="Pdf\PdfSynthese.vb" />
+    <Compile Include="Pdf\PrintOrdonnance.vb">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Resources\FrenchRichTextBoxStrings.Designer.vb">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -993,12 +996,6 @@
     </Compile>
     <Compile Include="UtilsUI\Notification.vb" />
     <Compile Include="UtilsUI\RadInputBox.vb" />
-    <Compile Include="Version old\SChkContexteValide.Designer.vb">
-      <DependentUpon>SChkContexteValide.vb</DependentUpon>
-    </Compile>
-    <Compile Include="Version old\SChkContexteValide.vb">
-      <SubType>Component</SubType>
-    </Compile>
     <Compile Include="Bean\Traitement\TraitementHistoClass.vb" />
     <Compile Include="Dao\Traitement\MedicamentGeneriqueDao.vb" />
     <Compile Include="Dao\Patient\PatientDao.vb" />
@@ -1348,9 +1345,6 @@
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>FrenchRichTextBoxStrings.Designer.vb</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Include="Version old\SChkContexteValide.resx">
-      <DependentUpon>SChkContexteValide.vb</DependentUpon>
-    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
     <None Include=".editorconfig" />
@@ -1535,7 +1529,6 @@
   <ItemGroup>
     <Folder Include="Bean\Utilisateur\" />
     <Folder Include="Dao\Utilisateur\" />
-    <Folder Include="Form\Medicament\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Oasis_Common\Oasis_Common.vbproj">

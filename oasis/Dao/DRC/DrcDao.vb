@@ -33,8 +33,8 @@ Public Class DrcDao
         Const Objectif = "Objectif"
         Const ActeParamedical = "Acte paramédical"
         Const GroupeParametres = "Groupe de paramètres"
-        Const ProtocoleCollaboratif = "Protocole collaboratif"
-        Const ProtocoleAigu = "Protocole pathologie aigüe"
+        Const ProtocoleCollaboratif = "Procédure collaborative"
+        Const ProtocoleAigu = "Procédure pathologie aigüe"
     End Structure
 
     Public Function GetDrc(instanceDrc As Drc, DrcId As Integer) As Boolean

@@ -201,9 +201,17 @@ Public Class FAuthentificattion
 
     Private Sub BtnTheriaque_Click(sender As Object, e As EventArgs) Handles BtnTheriaque.Click
         InitAppelForm()
-        Using form As New RadFTestMethodes()
-            form.ShowDialog()
-        End Using
+        Cursor.Current = Cursors.WaitCursor
+        Try
+            Dim print As New PdfOrdonnance
+            Dim selectedPatient As Patient = PatientDao.GetPatientById(1)
+            print.SelectedPatient = selectedPatient
+            print.SelectedOrdonnanceId = 29
+            print.ImprimeOrdonnance()
+        Catch ex As Exception
+            MsgBox(ex.Message())
+        End Try
+        Cursor.Current = Cursors.Default
 
     End Sub
 
