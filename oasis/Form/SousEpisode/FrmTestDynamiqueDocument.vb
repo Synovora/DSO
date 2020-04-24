@@ -48,7 +48,6 @@ Public Class FrmTestDynamiqueDocument
             .insertFragmentToEditor(document)
 
             ' --- appe! de la construction d'un tableau et ajout du fragment généré
-            document = AjouteElementsPlusComplexes()
             .insertFragmentToEditor(AjouteElementsPlusComplexes())
 
             .printPreview()
