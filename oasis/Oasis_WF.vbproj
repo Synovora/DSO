@@ -891,9 +891,7 @@
     <Compile Include="Dao\Traitement\TraitementDao.vb" />
     <Compile Include="Pdf\PdfOrdonnance.vb" />
     <Compile Include="Pdf\PdfSynthese.vb" />
-    <Compile Include="Pdf\PrintOrdonnance.vb">
-      <SubType>Component</SubType>
-    </Compile>
+    <Compile Include="Pdf\PrintOrdonnance.vb" />
     <Compile Include="Resources\FrenchRichTextBoxStrings.Designer.vb">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
