@@ -518,6 +518,12 @@
     <Compile Include="Form\RendezVous\RadFTacheModificationRendezVous.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="Form\SousEpisode\FrmTestDynamiqueDocument.Designer.vb">
+      <DependentUpon>FrmTestDynamiqueDocument.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Form\SousEpisode\FrmTestDynamiqueDocument.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Form\Test\RadFTestMethodes.Designer.vb">
       <DependentUpon>RadFTestMethodes.vb</DependentUpon>
     </Compile>
@@ -993,6 +999,7 @@
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="UtilsUI\Notification.vb" />
+    <Compile Include="UtilsUI\OasisTextTools.vb" />
     <Compile Include="UtilsUI\RadInputBox.vb" />
     <Compile Include="Bean\Traitement\TraitementHistoClass.vb" />
     <Compile Include="Dao\Traitement\MedicamentGeneriqueDao.vb" />
@@ -1114,6 +1121,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Form\RendezVous\RadFTacheModificationRendezVous.resx">
       <DependentUpon>RadFTacheModificationRendezVous.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form\SousEpisode\FrmTestDynamiqueDocument.resx">
+      <DependentUpon>FrmTestDynamiqueDocument.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Form\Test\RadFTestMethodes.resx">
       <DependentUpon>RadFTestMethodes.vb</DependentUpon>
