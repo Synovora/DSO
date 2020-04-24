@@ -115,6 +115,12 @@ Public Class OasisTextTools
         Me.paragraphe.Inlines.Add(New Break(BreakType.LineBreak))
     End Sub
 
+    Public Sub addNewPage(Optional paragraphe As Paragraph = Nothing)
+        If paragraphe Is Nothing Then recupParagraphe()
+
+        Me.paragraphe.Inlines.Add(New Break(BreakType.PageBreak))
+    End Sub
+
     Public Sub SaveAsPdfToFile(ByVal pathFile As String)
         SaveAsPdfToFile(editor.Document, pathFile)
     End Sub
