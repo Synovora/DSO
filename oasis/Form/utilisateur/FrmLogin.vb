@@ -123,6 +123,7 @@ Public Class FrmLogin
         End If
 
         Me.Cursor = Cursors.WaitCursor
+        Application.DoEvents()
         Try
             nbTry = 0
             'Using form As New FrmTacheMain

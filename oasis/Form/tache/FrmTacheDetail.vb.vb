@@ -205,6 +205,13 @@ Public Class FrmTacheDetail_vb
 
                 End Using
             End If
+            ' -- si passage de la tache à l'etat final => on sort du formulaire
+            Dim exEtat = tache.Etat
+            tache = tacheDao.GetTacheById(tache.Id, True)
+            If tache.Etat <> exEtat And tache.isStatutFinal Then
+                _isActionEffectuee1 = True
+                Me.Close()
+            End If
         Catch err As Exception
             MsgBox(err.Message)
         Finally

@@ -396,11 +396,13 @@ Partial Class FrmTacheDetail_vb
         'RadButtonAbandon
         '
         Me.RadButtonAbandon.DialogResult = System.Windows.Forms.DialogResult.Cancel
-        Me.RadButtonAbandon.Location = New System.Drawing.Point(602, 6)
+        Me.RadButtonAbandon.DisplayStyle = Telerik.WinControls.DisplayStyle.Image
+        Me.RadButtonAbandon.Image = Global.Oasis_WF.My.Resources.Resources._exit
+        Me.RadButtonAbandon.ImageAlignment = System.Drawing.ContentAlignment.MiddleCenter
+        Me.RadButtonAbandon.Location = New System.Drawing.Point(661, 6)
         Me.RadButtonAbandon.Name = "RadButtonAbandon"
-        Me.RadButtonAbandon.Size = New System.Drawing.Size(110, 34)
+        Me.RadButtonAbandon.Size = New System.Drawing.Size(51, 34)
         Me.RadButtonAbandon.TabIndex = 0
-        Me.RadButtonAbandon.Text = "Abandonner"
         '
         'BtnFixeRDV
         '
