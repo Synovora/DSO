@@ -875,10 +875,10 @@ Public Class RadFOrdonnanceListeDetail
     Private Sub RadBtnImprimer_Click(sender As Object, e As EventArgs) Handles RadBtnImprimer.Click
         Cursor.Current = Cursors.WaitCursor
         Try
-            Dim printPdf As New PdfOrdonnance
+            Dim printPdf As New PrtOrdonnance
             printPdf.SelectedPatient = SelectedPatient
             printPdf.SelectedOrdonnanceId = SelectedOrdonnanceId
-            printPdf.ImprimeOrdonnance()
+            printPdf.PrintDocument()
         Catch ex As Exception
             MsgBox(ex.Message())
         End Try

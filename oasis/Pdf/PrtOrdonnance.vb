@@ -12,39 +12,63 @@ Public Class PrtOrdonnance
     ReadOnly ordonnanceDao As New OrdonnanceDao
     ReadOnly ordonnanceDetailDao As New OrdonnanceDetailDao
     ReadOnly episodeParametreDao As New EpisodeParametreDao
+    ReadOnly traitementDao As New TraitementDao
     ReadOnly userDao As New UserDao
+    ReadOnly siteDao As New SiteDao
+    ReadOnly uniteSanitaireDao As New UniteSanitaireDao
+    ReadOnly siegeDao As New SiegeDao
     ReadOnly profilDao As New ProfilDao
     ReadOnly theriaqueDao As New TheriaqueDao
+    ReadOnly aldDao As New AldDao
 
     Dim ordonnance As Ordonnance
 
+    Dim PatientIsAld As Boolean = False
+
     Public Sub PrintDocument()
         ordonnance = ordonnanceDao.getOrdonnaceById(SelectedOrdonnanceId)
+        If aldDao.IsPatientALD(SelectedPatient.patientId) Then
+            PatientIsAld = True
+        End If
 
-        With EditTools
-            Dim section = .CreateSection()
-            Dim document = .AddSectionIntoDocument(Nothing, section)
+        Dim section = EditTools.CreateSection()
+        Dim document = EditTools.AddSectionIntoDocument(Nothing, section)
 
-            PrintEntete(section)
-            PrintEtatCivil(section)
-            PrintOrdonnanceDetail(section)
-            PrintBasPage(section)
+        PrintEntete(section)
+        PrintEtatCivil(section)
+        PrintEnteteALD(section)
+        EditTools.insertFragmentToEditor(document)
+        EditTools.insertFragmentToEditor(PrintOrdonnanceDetail(True))
 
-            ' --- Insertion du fragment generé
-            .insertFragmentToEditor(document)
-            .printPreview()
-        End With
+        Dim sectionALD = EditTools.CreateSection()
+        Dim documentALD = EditTools.AddSectionIntoDocument(Nothing, sectionALD)
+        PrintEnteteNonALD(sectionALD)
+        EditTools.insertFragmentToEditor(documentALD)
+        EditTools.insertFragmentToEditor(PrintOrdonnanceDetail(False))
+
+        Dim sectionFin = EditTools.CreateSection()
+        Dim documentFin = EditTools.AddSectionIntoDocument(Nothing, sectionFin)
+        PrintBasPage(sectionFin)
+        EditTools.insertFragmentToEditor(documentFin)
+
+        EditTools.printPreview()
+
     End Sub
 
     Private Sub PrintEntete(section As Section)
-
+        Dim site As Site
+        site = siteDao.getSiteById(SelectedPatient.PatientSiteId)
+        Dim uniteSanitaire As UniteSanitaire
+        uniteSanitaire = uniteSanitaireDao.getUniteSanitaireById(site.Oa_site_unite_sanitaire_id)
+        Dim siege As Siege
+        siege = siegeDao.getSiegeById(uniteSanitaire.Oa_unite_sanitaire_siege_id)
         With EditTools
             .CreateParagraphIntoSection(section, 15, RadTextAlignment.Center)
             .AddTexte("Ordonnance", 16, FontWeights.Bold)
             .AddNewLigne()
             .AddTexteLine("Service Oasis Santé", 14)
-            .AddTexteLine("Tel : xxxxxxxxxx   Fax : xxxxxxxxxx")
-            .AddTexteLine("Mail : xxxxxxxxxx@xxxxxxx.xx")
+            .AddTexteLine("Tel : " & siege.SiegeTelephone & " Fax : " & siege.SiegeFax)
+            .AddTexteLine("Mail : " & siege.SiegeMail)
         End With
     End Sub
 
@@ -54,8 +78,8 @@ Public Class PrtOrdonnance
             .AddTexteLine(SelectedPatient.PatientNom & " " & SelectedPatient.PatientPrenom)
 
             Dim DateNaissancePatient As Date = SelectedPatient.PatientDateNaissance
-            .AddTexteLine(DateNaissancePatient.ToString("dd.MM.yyyy"))
-            .AddTexteLine(SelectedPatient.PatientNir)
+            .AddTexteLine("Date de naissance : " & DateNaissancePatient.ToString("dd.MM.yyyy"))
+            .AddTexteLine("Immatriculation CPAM : " & SelectedPatient.PatientNir)
             .AddNewLigne()
 
             Dim Poids As Double = episodeParametreDao.GetPoidsByEpisodeIdOrLastKnow(0, SelectedPatient.patientId)
@@ -71,29 +95,188 @@ Public Class PrtOrdonnance
         End With
     End Sub
 
-    Private Sub PrintOrdonnanceDetail(section As Section)
-        EditTools.CreateParagraphIntoSection(section,, RadTextAlignment.Left)
+    Private Sub PrintEnteteALD(section As Section)
+        If PatientIsAld = False Then
+            Return
+        End If
+
+        With EditTools
+            .CreateParagraphIntoSection(section, 12, RadTextAlignment.Center)
+            .AddTexteLine("-------------------------------------------------------------------------------------------------------------------")
+            Dim enteteAld As String = "Prescriptions relatives au traitement de l'affection longue durée reconnue (liste ou hors liste)"
+            .AddTexteLine(enteteAld, 11, FontWeights.Bold)
+            .AddTexteLine("AFFECTION EXONERANTE", 14)
+            .AddTexteLine("-------------------------------------------------------------------------------------------------------------------")
+        End With
+    End Sub
+
+    Private Sub PrintEnteteNonALD(section As Section)
+        If PatientIsAld = False Then
+            Return
+        End If
+
+        With EditTools
+            .CreateParagraphIntoSection(section, 12, RadTextAlignment.Center)
+            .AddTexteLine("-------------------------------------------------------------------------------------------------------------------")
+            Dim enteteAld As String = "Prescriptions sans rapport avec l'affection longue durée"
+            .AddTexteLine(enteteAld, 11, FontWeights.Bold)
+            .AddTexteLine("MALADIES INTERCURRENTES", 14)
+            .AddTexteLine("-------------------------------------------------------------------------------------------------------------------")
+        End With
+    End Sub
+
+    Private Function PrintOrdonnanceDetail(SelectionALD As Boolean) As RadDocument
+        Dim document As New RadDocument()
+        If PatientIsAld = False AndAlso SelectionALD = True Then
+            Return document
+        End If
+
+        Const LargeurCol1 As Integer = 500
+        Const LargeurCol2 As Integer = 70
+        Const LargeurCol3 As Integer = 90
+
+
+        Dim section As New Section()
+        Dim table As New Table()
+        table.LayoutMode = TableLayoutMode.Fixed
+        table.StyleName = RadDocumentDefaultStyles.DefaultTableGridStyleName
+
         Dim dt As DataTable
         dt = ordonnanceDetailDao.getAllOrdonnanceLigneByOrdonnanceId(SelectedOrdonnanceId)
 
         Dim i As Integer
         Dim rowCount As Integer = dt.Rows.Count - 1
 
-        For i = 0 To rowCount Step 1
-            Dim Posologie As String = dt.Rows(i)("oa_traitement_posologie")
-            Dim specialite As SpecialiteTheriaque = theriaqueDao.GetSpecialiteById(dt.Rows(i)("oa_traitement_medicament_cis"))
-            Dim duree As Integer = Coalesce(dt.Rows(i)("oa_traitement_duree"), 0)
-            Dim MedicamentAld As Boolean = Coalesce(dt.Rows(i)("oa_traitement_ald"), False)
-            Dim MedicamentADelivrer As Boolean = Coalesce(dt.Rows(i)("oa_traitement_a_delivrer"), False)
-            With EditTools
-                .AddTexteLine(specialite.DciLongue & " " & duree)
-                .AddTexteLine(Posologie)
-                If MedicamentADelivrer = False Then
-                    .AddTexteLine("Ne pas delivrer")
+        If dt.Rows.Count > 0 Then
+            Dim row0 As New TableRow()
+
+            Dim celleTitre1 As New TableCell()
+            celleTitre1.PreferredWidth = New TableWidthUnit(TableWidthUnitType.Fixed, LargeurCol1)
+            Dim spanTitre1 As New Span()
+            spanTitre1.FontSize = 10
+            spanTitre1.FontWeight = Telerik.WinControls.RichTextEditor.UI.FontWeights.Bold
+            Dim paragrapheTitre1 As New Paragraph()
+            spanTitre1.Text = "Spécialité"
+            paragrapheTitre1.Inlines.Add(spanTitre1)
+            celleTitre1.Blocks.Add(paragrapheTitre1)
+            row0.Cells.Add(celleTitre1)
+
+            Dim cellTitre2 As New TableCell()
+            cellTitre2.PreferredWidth = New TableWidthUnit(TableWidthUnitType.Fixed, LargeurCol2)
+            Dim spanTitre2 As New Span()
+            spanTitre2.FontSize = 10
+            spanTitre2.FontWeight = Telerik.WinControls.RichTextEditor.UI.FontWeights.Normal
+            Dim paragrapheTitre2 As New Paragraph()
+            spanTitre2.Text = "Durée"
+            paragrapheTitre2.TextAlignment = RadTextAlignment.Center
+            paragrapheTitre2.Inlines.Add(spanTitre2)
+            cellTitre2.Blocks.Add(paragrapheTitre2)
+            row0.Cells.Add(cellTitre2)
+
+            Dim cellTitre3 As New TableCell()
+            cellTitre3.PreferredWidth = New TableWidthUnit(TableWidthUnitType.Fixed, LargeurCol3)
+            Dim spanTitre3 As New Span()
+            spanTitre3.FontSize = 10
+            spanTitre2.FontWeight = Telerik.WinControls.RichTextEditor.UI.FontWeights.Normal
+            Dim paragrapheTitre3 As New Paragraph()
+            spanTitre3.Text = "Délivrance"
+            paragrapheTitre3.Inlines.Add(spanTitre3)
+            cellTitre3.Blocks.Add(paragrapheTitre3)
+            row0.Cells.Add(cellTitre3)
+
+            table.Rows.Add(row0)
+
+            For i = 0 To rowCount Step 1
+                Dim traitementALD As Boolean = Coalesce(dt.Rows(i)("oa_traitement_ald"), False)
+                If SelectionALD = True Then
+                    If traitementALD = False Then
+                        Continue For
+                    End If
+                Else
+                    If traitementALD = True Then
+                        Continue For
+                    End If
                 End If
-            End With
-        Next
-    End Sub
+
+                Dim Posologie As String = dt.Rows(i)("oa_traitement_posologie")
+                Dim traitementId As Long = Coalesce(dt.Rows(i)("oa_traitement_id"), 0)
+                Dim traitement As Traitement = traitementDao.GetTraitementById(traitementId)
+                Dim duree As Integer = Coalesce(dt.Rows(i)("oa_traitement_duree"), 0)
+                Dim MedicamentAld As Boolean = Coalesce(dt.Rows(i)("oa_traitement_ald"), False)
+                Dim MedicamentADelivrer As Boolean = Coalesce(dt.Rows(i)("oa_traitement_a_delivrer"), False)
+
+                Dim row As New TableRow()
+
+                Dim cellDetail1 As New TableCell()
+                cellDetail1.PreferredWidth = New TableWidthUnit(TableWidthUnitType.Fixed, LargeurCol1)
+                Dim spanDetail11 As New Span()
+                spanDetail11.FontSize = 10
+                spanDetail11.FontWeight = Telerik.WinControls.RichTextEditor.UI.FontWeights.Bold
+                Dim paragrapheDetail1 As New Paragraph()
+
+                spanDetail11.Text = traitement.DenominationLongue
+                If spanDetail11.Text <> "" Then
+                    paragrapheDetail1.Inlines.Add(spanDetail11)
+                End If
+
+                Dim spanDetail12 As New Span()
+                spanDetail12.FontSize = 10
+                spanDetail12.FontWeight = Telerik.WinControls.RichTextEditor.UI.FontWeights.Normal
+
+                Dim PosologieBase As String = ""
+                If Coalesce(dt.Rows(i)("oa_traitement_posologie_base"), "") = "J" Then
+                    PosologieBase = " / jour"
+                End If
+
+
+                spanDetail12.Text = vbCrLf & "Posologie " & Posologie & PosologieBase & Coalesce(dt.Rows(i)("oa_traitement_posologie_commentaire"), "")
+                If spanDetail12.Text <> "" Then
+                    paragrapheDetail1.Inlines.Add(spanDetail12)
+                End If
+
+                cellDetail1.Blocks.Add(paragrapheDetail1)
+                row.Cells.Add(cellDetail1)
+
+                Dim cellDetail2 As New TableCell()
+                cellDetail2.PreferredWidth = New TableWidthUnit(TableWidthUnitType.Fixed, LargeurCol2)
+                Dim spanDetail2 As New Span()
+                spanDetail2.FontSize = 10
+                Dim paragrapheDetail2 As New Paragraph()
+                paragrapheDetail2.TextAlignment = TextAlignment.Center
+                spanDetail2.Text = duree & " jour(s)"
+                If spanDetail2.Text <> "" Then
+                    paragrapheDetail2.Inlines.Add(spanDetail2)
+                End If
+                cellDetail2.Blocks.Add(paragrapheDetail2)
+                row.Cells.Add(cellDetail2)
+
+                Dim Delivrance As String = ""
+                If MedicamentADelivrer = False Then
+                    Delivrance = "Ne pas delivrer"
+                End If
+                Dim cellDetail3 As New TableCell()
+                cellDetail3.PreferredWidth = New TableWidthUnit(TableWidthUnitType.Fixed, LargeurCol3)
+                Dim spanDetail3 As New Span()
+                spanDetail3.FontSize = 9
+                Dim paragrapheDetail3 As New Paragraph()
+                spanDetail3.Text = Delivrance
+                If spanDetail3.Text <> "" Then
+                    paragrapheDetail3.Inlines.Add(spanDetail3)
+                End If
+                cellDetail3.Blocks.Add(paragrapheDetail3)
+                row.Cells.Add(cellDetail3)
+
+                table.Rows.Add(row)
+            Next
+
+            section.Blocks.Add(table)
+            section.Blocks.Add(New Paragraph())
+            document.Sections.Add(section)
+        End If
+
+
+        Return document
+    End Function
 
     Private Sub PrintBasPage(section As Section)
         With EditTools
