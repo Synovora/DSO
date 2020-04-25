@@ -16,7 +16,7 @@ Public Class FrmLogin
 
         ' Cet appel est requis par le concepteur.
         InitializeComponent()
-
+        afficheTitleForm(Me, Me.Text)
         '  --- init internationnalisation du richTextBoxEditor ( 1 shot)
         RichTextBoxLocalizationProvider.CurrentProvider = RichTextBoxLocalizationProvider.FromStream(New MemoryStream(New System.Text.UTF8Encoding().GetBytes(FrenchRichTextBoxStrings.RichTextBoxStrings)))
         '  --- init internationnalisation du radgridview

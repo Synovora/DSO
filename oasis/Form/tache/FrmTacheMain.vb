@@ -669,24 +669,6 @@ Public Class FrmTacheMain
 
     End Sub
 
-    Private Sub MnuPatients_Click(sender As Object, e As EventArgs) Handles MnuPatients.Click
-        ' -- on part sur le formulaire detail de tache pour la tache choisie
-        Me.Cursor = Cursors.WaitCursor
-        Try
-            Me.Enabled = False
-            Using vFPatientListe As New RadFPatientListe
-                vFPatientListe.UtilisateurConnecte = userLog
-                vFPatientListe.ShowDialog() 'Modal
-            End Using
-        Catch err As Exception
-            MsgBox(err.Message)
-        Finally
-            Me.Enabled = True
-            Me.Cursor = Cursors.Default
-        End Try
-
-    End Sub
-
     Private Sub RadTacheToTreatGrid_CellPaint(sender As Object, e As GridViewCellPaintEventArgs) Handles RadTacheToTreatGrid.CellPaint
         traceTriangle(sender, e)
     End Sub

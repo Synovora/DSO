@@ -54,8 +54,6 @@ Partial Class FrmTacheMain
         Dim TableViewDefinition3 As Telerik.WinControls.UI.TableViewDefinition = New Telerik.WinControls.UI.TableViewDefinition()
         Dim SchedulerDailyPrintStyle1 As Telerik.WinControls.UI.SchedulerDailyPrintStyle = New Telerik.WinControls.UI.SchedulerDailyPrintStyle()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(FrmTacheMain))
-        Me.RadMenu3 = New Telerik.WinControls.UI.RadMenu()
-        Me.MnuPatients = New Telerik.WinControls.UI.RadMenuItem()
         Me.RadPanelMain = New Telerik.WinControls.UI.RadPanel()
         Me.SplitContainerMain = New Telerik.WinControls.UI.RadSplitContainer()
         Me.SplitPanelGauche = New Telerik.WinControls.UI.SplitPanel()
@@ -96,7 +94,6 @@ Partial Class FrmTacheMain
         Me.MnuItemDetailTacheATraiter = New Telerik.WinControls.UI.RadMenuItem()
         Me.TimerRefreshTaches = New System.Windows.Forms.Timer(Me.components)
         Me.ImageList1 = New System.Windows.Forms.ImageList(Me.components)
-        CType(Me.RadMenu3, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.RadPanelMain, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.RadPanelMain.SuspendLayout()
         CType(Me.SplitContainerMain, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -153,26 +150,13 @@ Partial Class FrmTacheMain
         CType(Me, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
-        'RadMenu3
-        '
-        Me.RadMenu3.Items.AddRange(New Telerik.WinControls.RadItem() {Me.MnuPatients})
-        Me.RadMenu3.Location = New System.Drawing.Point(0, 0)
-        Me.RadMenu3.Name = "RadMenu3"
-        Me.RadMenu3.Size = New System.Drawing.Size(1198, 20)
-        Me.RadMenu3.TabIndex = 1
-        '
-        'MnuPatients
-        '
-        Me.MnuPatients.Name = "MnuPatients"
-        Me.MnuPatients.Text = "Patients"
-        '
         'RadPanelMain
         '
         Me.RadPanelMain.Controls.Add(Me.SplitContainerMain)
         Me.RadPanelMain.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.RadPanelMain.Location = New System.Drawing.Point(0, 20)
+        Me.RadPanelMain.Location = New System.Drawing.Point(0, 0)
         Me.RadPanelMain.Name = "RadPanelMain"
-        Me.RadPanelMain.Size = New System.Drawing.Size(1198, 623)
+        Me.RadPanelMain.Size = New System.Drawing.Size(1198, 643)
         Me.RadPanelMain.TabIndex = 2
         '
         'SplitContainerMain
@@ -809,7 +793,6 @@ Partial Class FrmTacheMain
         Me.CancelButton = Me.BtnCancel
         Me.ClientSize = New System.Drawing.Size(1198, 643)
         Me.Controls.Add(Me.RadPanelMain)
-        Me.Controls.Add(Me.RadMenu3)
         Me.MinimizeBox = False
         Me.Name = "FrmTacheMain"
         '
@@ -819,7 +802,6 @@ Partial Class FrmTacheMain
         Me.ShowIcon = False
         Me.Text = "Tâches et Agenda"
         Me.WindowState = System.Windows.Forms.FormWindowState.Maximized
-        CType(Me.RadMenu3, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.RadPanelMain, System.ComponentModel.ISupportInitialize).EndInit()
         Me.RadPanelMain.ResumeLayout(False)
         CType(Me.SplitContainerMain, System.ComponentModel.ISupportInitialize).EndInit()
@@ -878,11 +860,8 @@ Partial Class FrmTacheMain
         CType(Me.RadSchedulerNavigator1, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
-        Me.PerformLayout()
 
     End Sub
-    Friend WithEvents RadMenu3 As Telerik.WinControls.UI.RadMenu
-    Friend WithEvents MnuPatients As Telerik.WinControls.UI.RadMenuItem
     Friend WithEvents RadPanelMain As Telerik.WinControls.UI.RadPanel
     Friend WithEvents SplitContainerMain As Telerik.WinControls.UI.RadSplitContainer
     Friend WithEvents SplitPanelGauche As Telerik.WinControls.UI.SplitPanel

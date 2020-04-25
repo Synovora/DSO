@@ -177,6 +177,7 @@ Partial Class FAuthentificattion
         Me.MinimizeBox = False
         Me.Name = "FAuthentificattion"
         Me.ShowIcon = False
+        Me.ShowInTaskbar = False
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
         Me.Text = "Authentification"
         Me.GroupBox1.ResumeLayout(False)

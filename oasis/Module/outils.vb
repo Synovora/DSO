@@ -28,10 +28,10 @@ Friend Module outils
     End Sub
 
     Public Function GetProfilUserString() As String
-        Return " (" & userLog.UtilisateurPrenom.Trim &
+        Return If(userLog Is Nothing, "", " (" & userLog.UtilisateurPrenom.Trim &
                 " " & userLog.UtilisateurNom.Trim &
                 " -  " & userLog.UtilisateurProfilId.ToLower.Trim.Replace("_", " ") &
-                " / " & userLog.TypeProfil.ToLower.Trim & ")"
+                " / " & userLog.TypeProfil.ToLower.Trim & ")")
     End Function
 
     Public Sub afficheTitleForm(form As RadForm, titre As String)

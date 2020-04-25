@@ -200,6 +200,10 @@ Public Class FAuthentificattion
     End Sub
 
     Private Sub BtnTheriaque_Click(sender As Object, e As EventArgs) Handles BtnTheriaque.Click
+        Using form As New FrmTestDynamiqueDocument
+            form.ShowDialog()
+        End Using
+        Return
         InitAppelForm()
         Cursor.Current = Cursors.WaitCursor
         Try

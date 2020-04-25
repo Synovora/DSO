@@ -543,7 +543,6 @@ Partial Class RadFPatientListe
         '
         '
         Me.RootElement.ApplyShapeToControl = True
-        Me.ShowInTaskbar = False
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
         Me.Text = "Liste des patients"
         CType(Me.RadPnlSelectedPatient, System.ComponentModel.ISupportInitialize).EndInit()
