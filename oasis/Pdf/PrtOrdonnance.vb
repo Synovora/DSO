@@ -42,10 +42,17 @@ Public Class PrtOrdonnance
         EditTools.insertFragmentToEditor(PrintOrdonnanceDetail(True))
 
         'Si au moins un traitement ALD existe, il faut présenter la signature du praticien qui a validé l'ordonnance
+        Dim sectionAld = EditTools.CreateSection()
+        Dim documentAld = EditTools.AddSectionIntoDocument(Nothing, sectionAld)
         If TraitementAldExiste = True Then
-            Dim sectionAld = EditTools.CreateSection()
-            Dim documentAld = EditTools.AddSectionIntoDocument(Nothing, sectionAld)
             PrintBasPage(sectionAld)
+            EditTools.insertFragmentToEditor(documentAld)
+        Else
+            EditTools.CreateParagraphIntoSection(sectionAld)
+            EditTools.AddNewLigne()
+            EditTools.AddNewLigne()
+            EditTools.AddNewLigne()
+            EditTools.AddNewLigne()
             EditTools.insertFragmentToEditor(documentAld)
         End If
 
@@ -89,7 +96,7 @@ Public Class PrtOrdonnance
             Dim DateNaissancePatient As Date = SelectedPatient.PatientDateNaissance
             .AddTexteLine("Date de naissance : " & DateNaissancePatient.ToString("dd.MM.yyyy"))
             .AddTexteLine("Immatriculation CPAM : " & SelectedPatient.PatientNir)
-
+            .AddNewLigne()
             Dim Poids As Double = episodeParametreDao.GetPoidsByEpisodeIdOrLastKnow(0, SelectedPatient.patientId)
             If Poids > 0 Then
                 .AddTexteLine("Poids : " & Poids & " Kg")
@@ -139,9 +146,9 @@ Public Class PrtOrdonnance
             Return document
         End If
 
-        Const LargeurCol1 As Integer = 500
+        Const LargeurCol1 As Integer = 475
         Const LargeurCol2 As Integer = 70
-        Const LargeurCol3 As Integer = 90
+        Const LargeurCol3 As Integer = 85
 
 
         Dim section As New Section()
@@ -285,7 +292,6 @@ Public Class PrtOrdonnance
             section.Blocks.Add(New Paragraph())
             document.Sections.Add(section)
         End If
-
 
         Return document
     End Function
