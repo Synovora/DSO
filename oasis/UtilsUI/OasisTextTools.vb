@@ -6,6 +6,7 @@ Imports Telerik.WinForms.Documents.Layout
 Imports Telerik.WinForms.Documents.Model
 
 Public Class OasisTextTools
+    Implements IDisposable
     Public Property editor As RadRichTextEditor
 
     Dim paragraphe As Paragraph  ' paragraphe en cours
@@ -42,7 +43,7 @@ Public Class OasisTextTools
 
         'editeur.ChangeSectionPageMargin(New Telerik.WinForms.Documents.Layout.Padding(40, 40, 30, 30))
 
-        section.PageOrientation = PageOrientation.Portrait
+        section.PageOrientation = orientation
         section.PageSize = PaperTypeConverter.ToSize(PaperTypes.A4)
 
         Return section
@@ -97,7 +98,7 @@ Public Class OasisTextTools
                                                      ) As Span
         Dim span = AddTexte(texte, fontSize, fontWeight, paragraphe)
         If paragraph Is Nothing Then recupParagraphe()
-        addNewLigne(paragraph)
+        AddNewLigne(paragraph)
         Return span
 
     End Function
@@ -106,7 +107,7 @@ Public Class OasisTextTools
                                         Optional fontSize As Double = 12,
                                         Optional fontWeight As Telerik.WinControls.RichTextEditor.UI.FontWeight = Nothing, Optional paragraphe As Paragraph = Nothing
                                         ) As Span
-        addNewLigne(paragraphe)
+        AddNewLigne(paragraphe)
         Return AddTexte(texte, fontSize, fontWeight, paragraphe)
     End Function
 
@@ -155,6 +156,10 @@ Public Class OasisTextTools
     Public Sub print()
         editor.LoadElementTree()
         editor.Print()
+    End Sub
+
+    Public Sub Dispose() Implements IDisposable.Dispose
+        editor.Dispose()
     End Sub
 
 End Class

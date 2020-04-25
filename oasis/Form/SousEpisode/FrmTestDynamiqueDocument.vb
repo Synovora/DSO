@@ -24,35 +24,36 @@ Public Class FrmTestDynamiqueDocument
     End Sub
 
     Private Sub makedoc()
-        Dim editTools = New OasisTextTools
-        With editTools
+        Using editTools As New OasisTextTools
+            With editTools
 
-            Dim section = .CreateSection()
-            Dim document = .AddSectionIntoDocument(Nothing, section)
+                Dim section = .CreateSection()
+                Dim document = .AddSectionIntoDocument(Nothing, section)
 
-            .CreateParagraphIntoSection(section, 15, RadTextAlignment.Center)
-            .AddTexte("Test de texte sans saut de ligne)",, Telerik.WinControls.RichTextEditor.UI.FontWeights.Bold)
-            .AddTexteLine("Une suite ajoutée ", 25)
-            .AddTexte("Trés gros", 50, Telerik.WinControls.RichTextEditor.UI.FontWeights.Normal)
-            .AddTexteLine("Test de texte suite", 12, Telerik.WinControls.RichTextEditor.UI.FontWeights.Normal)
-            .addTexteAfterANewLine("Une deuxieme ligne ajoutée après un saut de ligne", 5)
+                .CreateParagraphIntoSection(section, 15, RadTextAlignment.Center)
+                .AddTexte("Test de texte sans saut de ligne)",, Telerik.WinControls.RichTextEditor.UI.FontWeights.Bold)
+                .AddTexteLine("Une suite ajoutée ", 25)
+                .AddTexte("Trés gros", 50, Telerik.WinControls.RichTextEditor.UI.FontWeights.Normal)
+                .AddTexteLine("Test de texte suite", 12, Telerik.WinControls.RichTextEditor.UI.FontWeights.Normal)
+                .addTexteAfterANewLine("Une deuxieme ligne ajoutée après un saut de ligne", 5)
 
-            .CreateParagraphIntoSection(Section, 25, RadTextAlignment.Left)
-            .AddTexte("Test de texte align left ",, Telerik.WinControls.RichTextEditor.UI.FontWeights.Bold)
-            .AddTexteLine("Une suite ajoutée ")
-            .AddTexte("En gros", 50, Telerik.WinControls.RichTextEditor.UI.FontWeights.Normal)
-            .AddTexteLine("Test de texte suite", 12, Telerik.WinControls.RichTextEditor.UI.FontWeights.Normal)
-            .addTexteAfterANewLine("Une deuxieme ligne ajoutée après un saut de ligne")
+                .CreateParagraphIntoSection(Section, 25, RadTextAlignment.Left)
+                .AddTexte("Test de texte align left ",, Telerik.WinControls.RichTextEditor.UI.FontWeights.Bold)
+                .AddTexteLine("Une suite ajoutée ")
+                .AddTexte("En gros", 50, Telerik.WinControls.RichTextEditor.UI.FontWeights.Normal)
+                .AddTexteLine("Test de texte suite", 12, Telerik.WinControls.RichTextEditor.UI.FontWeights.Normal)
+                .addTexteAfterANewLine("Une deuxieme ligne ajoutée après un saut de ligne")
 
-            ' --- Insertion du fragment generé
-            .insertFragmentToEditor(document)
+                ' --- Insertion du fragment generé
+                .insertFragmentToEditor(document)
 
-            ' --- appe! de la construction d'un tableau et ajout du fragment généré
-            .insertFragmentToEditor(AjouteElementsPlusComplexes())
+                ' --- appe! de la construction d'un tableau et ajout du fragment généré
+                .insertFragmentToEditor(AjouteElementsPlusComplexes())
 
-            .printPreview()
+                .printPreview()
 
-        End With
+            End With
+        End Using
     End Sub
 
 

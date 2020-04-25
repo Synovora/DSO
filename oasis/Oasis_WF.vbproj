@@ -708,6 +708,12 @@
     <Compile Include="Form\SousEpisode\FrmEditDocxSousEpisode.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="Menu\SplashForm.Designer.vb">
+      <DependentUpon>SplashForm.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Menu\SplashForm.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Module\CacheGlobal.vb" />
     <Compile Include="Dao\Antecedent\AntecedentDao.vb" />
     <Compile Include="DS_Ordonnance.Designer.vb">
@@ -1302,6 +1308,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Form\SousEpisode\FrmEditDocxSousEpisode.resx">
       <DependentUpon>FrmEditDocxSousEpisode.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Menu\SplashForm.resx">
+      <DependentUpon>SplashForm.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="My Project\licenses.licx" />
     <EmbeddedResource Include="Form\Antecedent\RadFAntecedentDetailEdit.resx">

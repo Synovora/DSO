@@ -24,7 +24,7 @@ Public Class FrmLogin
 
         Dim contactAdmin = ConfigurationManager.AppSettings("ContactAdministrateur")
         LblContactAdmin.Text = contactAdmin
-
+        System.Threading.Thread.Sleep(2000)
     End Sub
 
     ''' <summary>
