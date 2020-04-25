@@ -24,6 +24,7 @@ Public Class PrtOrdonnance
     Dim ordonnance As Ordonnance
 
     Dim PatientIsAld As Boolean = False
+    Dim TraitementAldExiste As Boolean = False
 
     Public Sub PrintDocument()
         ordonnance = ordonnanceDao.getOrdonnaceById(SelectedOrdonnanceId)
@@ -40,10 +41,18 @@ Public Class PrtOrdonnance
         EditTools.insertFragmentToEditor(document)
         EditTools.insertFragmentToEditor(PrintOrdonnanceDetail(True))
 
-        Dim sectionALD = EditTools.CreateSection()
-        Dim documentALD = EditTools.AddSectionIntoDocument(Nothing, sectionALD)
-        PrintEnteteNonALD(sectionALD)
-        EditTools.insertFragmentToEditor(documentALD)
+        'Si au moins un traitement ALD existe, il faut présenter la signature du praticien qui a validé l'ordonnance
+        If TraitementAldExiste = True Then
+            Dim sectionAld = EditTools.CreateSection()
+            Dim documentAld = EditTools.AddSectionIntoDocument(Nothing, sectionAld)
+            PrintBasPage(sectionAld)
+            EditTools.insertFragmentToEditor(documentAld)
+        End If
+
+        Dim sectionNonALD = EditTools.CreateSection()
+        Dim documentNonALD = EditTools.AddSectionIntoDocument(Nothing, sectionNonALD)
+        PrintEnteteNonALD(sectionNonALD)
+        EditTools.insertFragmentToEditor(documentNonALD)
         EditTools.insertFragmentToEditor(PrintOrdonnanceDetail(False))
 
         Dim sectionFin = EditTools.CreateSection()
@@ -68,7 +77,7 @@ Public Class PrtOrdonnance
             .AddNewLigne()
             .AddTexteLine("Service Oasis Santé", 14)
             .AddTexteLine("Tel : " & siege.SiegeTelephone & " Fax : " & siege.SiegeFax)
-            .AddTexteLine("Mail : " & siege.SiegeMail)
+            .AddTexte("Mail : " & siege.SiegeMail)
         End With
     End Sub
 
@@ -80,7 +89,6 @@ Public Class PrtOrdonnance
             Dim DateNaissancePatient As Date = SelectedPatient.PatientDateNaissance
             .AddTexteLine("Date de naissance : " & DateNaissancePatient.ToString("dd.MM.yyyy"))
             .AddTexteLine("Immatriculation CPAM : " & SelectedPatient.PatientNir)
-            .AddNewLigne()
 
             Dim Poids As Double = episodeParametreDao.GetPoidsByEpisodeIdOrLastKnow(0, SelectedPatient.patientId)
             If Poids > 0 Then
@@ -106,7 +114,7 @@ Public Class PrtOrdonnance
             Dim enteteAld As String = "Prescriptions relatives au traitement de l'affection longue durée reconnue (liste ou hors liste)"
             .AddTexteLine(enteteAld, 11, FontWeights.Bold)
             .AddTexteLine("AFFECTION EXONERANTE", 14)
-            .AddTexteLine("-------------------------------------------------------------------------------------------------------------------")
+            .AddTexte("-------------------------------------------------------------------------------------------------------------------")
         End With
     End Sub
 
@@ -121,7 +129,7 @@ Public Class PrtOrdonnance
             Dim enteteAld As String = "Prescriptions sans rapport avec l'affection longue durée"
             .AddTexteLine(enteteAld, 11, FontWeights.Bold)
             .AddTexteLine("MALADIES INTERCURRENTES", 14)
-            .AddTexteLine("-------------------------------------------------------------------------------------------------------------------")
+            .AddTexte("-------------------------------------------------------------------------------------------------------------------")
         End With
     End Sub
 
@@ -142,7 +150,7 @@ Public Class PrtOrdonnance
         table.StyleName = RadDocumentDefaultStyles.DefaultTableGridStyleName
 
         Dim dt As DataTable
-        dt = ordonnanceDetailDao.getAllOrdonnanceLigneByOrdonnanceId(SelectedOrdonnanceId)
+        dt = ordonnanceDetailDao.getAllOrdonnanceLigneSelectAldByOrdonnanceId(SelectedOrdonnanceId, SelectionALD)
 
         Dim i As Integer
         Dim rowCount As Integer = dt.Rows.Count - 1
@@ -196,6 +204,10 @@ Public Class PrtOrdonnance
                     If traitementALD = True Then
                         Continue For
                     End If
+                End If
+
+                If SelectionALD = True AndAlso TraitementAldExiste = False Then
+                    TraitementAldExiste = True
                 End If
 
                 Dim Posologie As String = dt.Rows(i)("oa_traitement_posologie")

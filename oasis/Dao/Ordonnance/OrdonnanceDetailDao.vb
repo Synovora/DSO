@@ -93,6 +93,30 @@ Public Class OrdonnanceDetailDao
         End Using
     End Function
 
+    Friend Function getAllOrdonnanceLigneSelectAldByOrdonnanceId(ordonnanceId As Integer, traitementAld As Boolean) As DataTable
+        Dim SQLString As String
+        SQLString = "SELECT * FROM oasis.oa_patient_ordonnance_detail" &
+                    " WHERE oa_ordonnance_id = " & ordonnanceId.ToString &
+                    " AND oa_traitement_ald = '" & traitementAld & "'" &
+                    " ORDER BY oa_traitement_ordre_affichage, oa_ordonnance_ligne_id"
+
+        Using con As SqlConnection = GetConnection()
+            Dim OrdonnanceDataAdapter As SqlDataAdapter = New SqlDataAdapter()
+            Using OrdonnanceDataAdapter
+                OrdonnanceDataAdapter.SelectCommand = New SqlCommand(SQLString, con)
+                Dim OrdonnanceDataTable As DataTable = New DataTable()
+                Using OrdonnanceDataTable
+                    Try
+                        OrdonnanceDataAdapter.Fill(OrdonnanceDataTable)
+                        Dim command As SqlCommand = con.CreateCommand()
+                    Catch ex As Exception
+                        Throw ex
+                    End Try
+                    Return OrdonnanceDataTable
+                End Using
+            End Using
+        End Using
+    End Function
     Friend Function CreationOrdonnanceDetail(ordonnanceDetail As OrdonnanceDetail) As Boolean
         Dim da As SqlDataAdapter = New SqlDataAdapter()
         Dim codeRetour As Boolean = True
