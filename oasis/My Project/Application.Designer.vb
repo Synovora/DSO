@@ -32,7 +32,7 @@ Namespace My
         
         <Global.System.Diagnostics.DebuggerStepThroughAttribute()>  _
         Protected Overrides Sub OnCreateMainForm()
-            Me.MainForm = Global.Oasis_WF.FrmTestDynamiqueDocument
+            Me.MainForm = Global.Oasis_WF.FrmLogin
         End Sub
     End Class
 End Namespace

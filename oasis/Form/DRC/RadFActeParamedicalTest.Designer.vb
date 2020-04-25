@@ -23,8 +23,8 @@ Partial Class RadFActeParamedicalTest
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
         Me.components = New System.ComponentModel.Container()
-        Dim GridViewTextBoxColumn2 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
-        Dim TableViewDefinition2 As Telerik.WinControls.UI.TableViewDefinition = New Telerik.WinControls.UI.TableViewDefinition()
+        Dim GridViewTextBoxColumn1 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
+        Dim TableViewDefinition1 As Telerik.WinControls.UI.TableViewDefinition = New Telerik.WinControls.UI.TableViewDefinition()
         Me.RadGridViewActePara = New Telerik.WinControls.UI.RadGridView()
         Me.RadBtnAbandon = New Telerik.WinControls.UI.RadButton()
         Me.CbxActiviteEpisode = New System.Windows.Forms.ComboBox()
@@ -52,13 +52,13 @@ Partial Class RadFActeParamedicalTest
         Me.RadGridViewActePara.MasterTemplate.AllowAddNewRow = False
         Me.RadGridViewActePara.MasterTemplate.AllowDeleteRow = False
         Me.RadGridViewActePara.MasterTemplate.AllowEditRow = False
-        GridViewTextBoxColumn2.EnableExpressionEditor = False
-        GridViewTextBoxColumn2.HeaderText = "DRC"
-        GridViewTextBoxColumn2.HeaderTextAlignment = System.Drawing.ContentAlignment.MiddleLeft
-        GridViewTextBoxColumn2.Name = "drc"
-        GridViewTextBoxColumn2.Width = 350
-        Me.RadGridViewActePara.MasterTemplate.Columns.AddRange(New Telerik.WinControls.UI.GridViewDataColumn() {GridViewTextBoxColumn2})
-        Me.RadGridViewActePara.MasterTemplate.ViewDefinition = TableViewDefinition2
+        GridViewTextBoxColumn1.EnableExpressionEditor = False
+        GridViewTextBoxColumn1.HeaderText = "DRC"
+        GridViewTextBoxColumn1.HeaderTextAlignment = System.Drawing.ContentAlignment.MiddleLeft
+        GridViewTextBoxColumn1.Name = "drc"
+        GridViewTextBoxColumn1.Width = 350
+        Me.RadGridViewActePara.MasterTemplate.Columns.AddRange(New Telerik.WinControls.UI.GridViewDataColumn() {GridViewTextBoxColumn1})
+        Me.RadGridViewActePara.MasterTemplate.ViewDefinition = TableViewDefinition1
         Me.RadGridViewActePara.Name = "RadGridViewActePara"
         Me.RadGridViewActePara.ReadOnly = True
         Me.RadGridViewActePara.RightToLeft = System.Windows.Forms.RightToLeft.No
@@ -121,6 +121,7 @@ Partial Class RadFActeParamedicalTest
         '
         '
         Me.RootElement.ApplyShapeToControl = True
+        Me.ShowIcon = False
         Me.ShowInTaskbar = False
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent
         Me.Text = "RadFActeParamedicalTest"

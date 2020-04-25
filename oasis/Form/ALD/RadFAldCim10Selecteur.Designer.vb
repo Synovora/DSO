@@ -28,17 +28,17 @@ Partial Class RadFAldCim10Selecteur
         Dim GridViewTextBoxColumn4 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
         Dim TableViewDefinition1 As Telerik.WinControls.UI.TableViewDefinition = New Telerik.WinControls.UI.TableViewDefinition()
         Me.PnlSelection = New Telerik.WinControls.UI.RadGroupBox()
+        Me.RadBtnSelection = New Telerik.WinControls.UI.RadButton()
         Me.LblCim10Code = New System.Windows.Forms.Label()
         Me.LblCim10Description = New System.Windows.Forms.Label()
         Me.RadAldDataGridView = New Telerik.WinControls.UI.RadGridView()
         Me.RadBtnAbandonner = New Telerik.WinControls.UI.RadButton()
-        Me.RadBtnSelection = New Telerik.WinControls.UI.RadButton()
         CType(Me.PnlSelection, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.PnlSelection.SuspendLayout()
+        CType(Me.RadBtnSelection, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.RadAldDataGridView, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.RadAldDataGridView.MasterTemplate, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.RadBtnAbandonner, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.RadBtnSelection, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
@@ -54,6 +54,16 @@ Partial Class RadFAldCim10Selecteur
         Me.PnlSelection.Size = New System.Drawing.Size(431, 135)
         Me.PnlSelection.TabIndex = 0
         Me.PnlSelection.Text = "Code CIM10 sélectionné"
+        '
+        'RadBtnSelection
+        '
+        Me.RadBtnSelection.ForeColor = System.Drawing.Color.Black
+        Me.RadBtnSelection.Image = Global.Oasis_WF.My.Resources.Resources._select
+        Me.RadBtnSelection.ImageAlignment = System.Drawing.ContentAlignment.MiddleCenter
+        Me.RadBtnSelection.Location = New System.Drawing.Point(19, 87)
+        Me.RadBtnSelection.Name = "RadBtnSelection"
+        Me.RadBtnSelection.Size = New System.Drawing.Size(24, 24)
+        Me.RadBtnSelection.TabIndex = 5
         '
         'LblCim10Code
         '
@@ -127,16 +137,6 @@ Partial Class RadFAldCim10Selecteur
         Me.RadBtnAbandonner.Size = New System.Drawing.Size(24, 24)
         Me.RadBtnAbandonner.TabIndex = 2
         '
-        'RadBtnSelection
-        '
-        Me.RadBtnSelection.ForeColor = System.Drawing.Color.Black
-        Me.RadBtnSelection.Image = Global.Oasis_WF.My.Resources.Resources._select
-        Me.RadBtnSelection.ImageAlignment = System.Drawing.ContentAlignment.MiddleCenter
-        Me.RadBtnSelection.Location = New System.Drawing.Point(19, 87)
-        Me.RadBtnSelection.Name = "RadBtnSelection"
-        Me.RadBtnSelection.Size = New System.Drawing.Size(24, 24)
-        Me.RadBtnSelection.TabIndex = 5
-        '
         'RadFAldCim10Selecteur
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -151,16 +151,17 @@ Partial Class RadFAldCim10Selecteur
         '
         '
         Me.RootElement.ApplyShapeToControl = True
+        Me.ShowIcon = False
         Me.ShowInTaskbar = False
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
         Me.Text = "Sélecteur code CIM10 ALD"
         CType(Me.PnlSelection, System.ComponentModel.ISupportInitialize).EndInit()
         Me.PnlSelection.ResumeLayout(False)
         Me.PnlSelection.PerformLayout()
+        CType(Me.RadBtnSelection, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.RadAldDataGridView.MasterTemplate, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.RadAldDataGridView, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.RadBtnAbandonner, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.RadBtnSelection, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
 

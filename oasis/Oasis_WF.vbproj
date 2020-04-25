@@ -898,6 +898,7 @@
     <Compile Include="Pdf\PdfOrdonnance.vb" />
     <Compile Include="Pdf\PdfSynthese.vb" />
     <Compile Include="Pdf\PrintOrdonnance.vb" />
+    <Compile Include="Pdf\PrtOrdonnance.vb" />
     <Compile Include="Resources\FrenchRichTextBoxStrings.Designer.vb">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -1525,7 +1526,6 @@
     <None Include="Resources\validation2.png" />
     <None Include="Resources\rechercher.png" />
     <None Include="Resources\supprimer.png" />
-    <None Include="Resources\selection.png" />
     <None Include="Resources\validation.png" />
     <None Include="Resources\mail.png" />
     <None Include="Resources\print.png" />

@@ -31,6 +31,7 @@ Partial Class RadFListeActions
         Dim GridViewTextBoxColumn7 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
         Dim GridViewTextBoxColumn8 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
         Dim TableViewDefinition1 As Telerik.WinControls.UI.TableViewDefinition = New Telerik.WinControls.UI.TableViewDefinition()
+        Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(RadFListeActions))
         Me.RadBtnAbandon = New Telerik.WinControls.UI.RadButton()
         Me.LblNomUtilisateur = New System.Windows.Forms.Label()
         Me.RadGridViewAction = New Telerik.WinControls.UI.RadGridView()
@@ -158,6 +159,7 @@ Partial Class RadFListeActions
         Me.Controls.Add(Me.RadGridViewAction)
         Me.Controls.Add(Me.LblNomUtilisateur)
         Me.Controls.Add(Me.RadBtnAbandon)
+        Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
         Me.MaximizeBox = False
         Me.MinimizeBox = False
         Me.Name = "RadFListeActions"

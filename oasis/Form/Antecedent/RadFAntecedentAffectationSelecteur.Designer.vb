@@ -428,6 +428,7 @@ Partial Class RadFAntecedentAffectationSelecteur
         '
         '
         Me.RootElement.ApplyShapeToControl = True
+        Me.ShowIcon = False
         Me.ShowInTaskbar = False
         Me.StartPosition = System.Windows.Forms.FormStartPosition.Manual
         Me.Text = "Changement d'affectation d'un antécédent"

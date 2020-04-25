@@ -8,7 +8,7 @@ Imports Telerik.WinForms.Documents.Model
 Public Class OasisTextTools
     Public Property editor As RadRichTextEditor
 
-    Dim paragraphe As Paragraph  ' para en cours
+    Dim paragraphe As Paragraph  ' paragraphe en cours
 
     Public Sub New()
         init()
@@ -35,7 +35,7 @@ Public Class OasisTextTools
     ''' </summary>
     ''' <returns></returns>
     Public Function CreateSection(Optional orientation As PageOrientation = PageOrientation.Portrait) As Section
-        ' caracteristiqe section
+        ' caracteristique section
         Dim section As New Section()
         'section.PageMargin = New Padding(40, 40, 30, 30)
         'ex When the section has already been added to the document
@@ -89,6 +89,7 @@ Public Class OasisTextTools
         If Me.paragraphe Is Nothing Then Me.paragraphe = New Paragraph()
 
     End Sub
+
     Public Function AddTexteLine(texte As String,
                                                      Optional fontSize As Double = 12,
                                                      Optional fontWeight As Telerik.WinControls.RichTextEditor.UI.FontWeight = Nothing,
@@ -101,7 +102,7 @@ Public Class OasisTextTools
 
     End Function
 
-    Public Function addTexteAfterANewLine(texte As String,
+    Public Function AddTexteAfterANewLine(texte As String,
                                         Optional fontSize As Double = 12,
                                         Optional fontWeight As Telerik.WinControls.RichTextEditor.UI.FontWeight = Nothing, Optional paragraphe As Paragraph = Nothing
                                         ) As Span
@@ -109,13 +110,13 @@ Public Class OasisTextTools
         Return AddTexte(texte, fontSize, fontWeight, paragraphe)
     End Function
 
-    Public Sub addNewLigne(Optional paragraphe As Paragraph = Nothing)
+    Public Sub AddNewLigne(Optional paragraphe As Paragraph = Nothing)
         If paragraphe Is Nothing Then recupParagraphe()
 
         Me.paragraphe.Inlines.Add(New Break(BreakType.LineBreak))
     End Sub
 
-    Public Sub addNewPage(Optional paragraphe As Paragraph = Nothing)
+    Public Sub AddNewPage(Optional paragraphe As Paragraph = Nothing)
         If paragraphe Is Nothing Then recupParagraphe()
 
         Me.paragraphe.Inlines.Add(New Break(BreakType.PageBreak))

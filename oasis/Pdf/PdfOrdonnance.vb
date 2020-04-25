@@ -1,8 +1,10 @@
 ﻿Imports System.IO
 Imports iText.IO.Font.Constants
+Imports iText.IO.Font.Otf
 Imports iText.Kernel.Font
 Imports iText.Kernel.Geom
 Imports iText.Kernel.Pdf
+Imports iText.Kernel.Pdf.Canvas.Parser.Listener
 Imports iText.Layout
 Imports iText.Layout.Element
 Imports iText.Layout.Properties
@@ -46,6 +48,8 @@ Public Class PdfOrdonnance
         CreatePdf()
     End Sub
 
+    Dim font As PdfFont
+
     Private Sub CreatePdf()
         Try
             Dim writer As PdfWriter = New PdfWriter(DEST)
@@ -64,7 +68,7 @@ Public Class PdfOrdonnance
     Private Sub GenerationPdf(writer As PdfWriter)
         Dim pdf As PdfDocument = New PdfDocument(writer)
         Dim document As Document = New Document(pdf, PageSize.A4)
-        Dim font As PdfFont = PdfFontFactory.CreateFont(StandardFonts.TIMES_ROMAN)
+        font = PdfFontFactory.CreateFont(StandardFonts.TIMES_ROMAN)
 
         PrintEntete(document)
         PrintEtatCivil(document)
@@ -75,15 +79,29 @@ Public Class PdfOrdonnance
     End Sub
 
     Private Sub PrintEntete(document As Document)
-        Dim TextPage As New Text("")
         PageNumero += 1
-        TextPage.SetText("         -          Document généré le " & DateGeneration.ToString("dd.MM.yyyy") &
-                         " à " & DateGeneration.ToString("HH:mm:ss") & "          -          Page " & PageNumero)
-        TextPage.SetFontSize(10)
 
-        document.Add(New Paragraph("         Ordonnance patient").SetFontSize(14).Add(TextPage))
+        Dim TextPage1 As New Text("")
+        TextPage1.SetText("test textpage 1 - page" & PageNumero)
+        TextPage1.SetFontSize(10)
+        Dim p1 As New Paragraph("test paragraphe 1")
+        p1.SetFont(font)
+        p1.SetFixedLeading(20)
+        'p1.SetFixedPosition(10, 10, 30)
+        document.Add(p1).Add(TextPage1)
+
+
+        document.Add(New Paragraph("Ordonnance").SetFontSize(14).Add(TextPage1).SetVerticalAlignment(TextAlignment.CENTER))
+
+        Dim TextPage2 As New Text("")
+        TextPage2.SetText("                               Service Oasis santé")
+        TextPage2.SetFontSize(12)
+        document.Add(New Paragraph("").SetFontSize(12).Add(TextPage2))
+        document.Add(New Paragraph("Adresse").SetFontSize(10))
+        document.Add(New Paragraph("Téléphone : xxxxxxx  Fax : xxxxxxxx").SetFontSize(10))
 
     End Sub
+
 
     Private Sub PrintEtatCivil(document As Document)
         document.Add(New Paragraph("--- Etat civil").SetFontSize(11))
@@ -95,14 +113,10 @@ Public Class PdfOrdonnance
         Dim ALD As String = AldDao.DateFinALD(Me.SelectedPatient.patientId)
         ALD = ALD.Replace(vbCrLf, " ")
 
-        ligne1 = "Prénom / Nom : " &
-            SelectedPatient.PatientPrenom & " " &
-            SelectedPatient.PatientNom.ToUpper() &
-            "       NIR : " & SelectedPatient.PatientNir.ToString &
-            "          " & SelectedPatient.PatientGenre & vbCrLf &
-            "   Date de naissance : " & SelectedPatient.PatientDateNaissance.ToString("dd.MM.yyyy") & "   -   âge : " & outils.CalculAgeEnAnneeEtMoisString(SelectedPatient.PatientDateNaissance) & vbCrLf &
-            "   Rattachement au site Oasis de " & Environnement.Table_site.GetSiteDescription(SelectedPatient.PatientSiteId) &
-            "   -  Dernière mise à jour de la synthèse : " & FormatageDateAffichage(SelectedPatient.PatientSyntheseDateMaj, True)
+        ligne1 =
+            "                            " & SelectedPatient.PatientNom & " " & SelectedPatient.PatientPrenom.ToUpper() &
+            "       Date de naissance : " & SelectedPatient.PatientDateNaissance.ToString("dd.MM.yyyy") & "   Site " & Environnement.Table_site.GetSiteDescription(SelectedPatient.PatientSiteId) &
+            "   ,le " & SelectedPatient.PatientSyntheseDateMaj.ToString("dd.MM.yyyy")
 
 
         TextEtatCivil.SetText("  " & vbCrLf & ALD)
@@ -116,23 +130,22 @@ Public Class PdfOrdonnance
     Private Sub PrintTraitement(document As Document)
         Dim p As New Paragraph
         Dim table As New Table(3)
-        Dim traitementDataTable As DataTable
+        Dim dt As DataTable
         Dim traitementDao As TraitementDao = New TraitementDao
-        traitementDataTable = traitementDao.getTraitementEnCoursbyPatient(Me.SelectedPatient.patientId)
+        Dim ordonnanceDetailDao As New OrdonnanceDetailDao
+        dt = ordonnanceDetailDao.getAllOrdonnanceLigneByOrdonnanceId(SelectedOrdonnanceId)
 
         'Ajout d'une colonne 'oa_traitement_posologie' dans le DataTable de traitement
-        traitementDataTable.Columns.Add("oa_traitement_posologie", Type.GetType("System.String"))
-
         Dim i As Integer
-        Dim rowCount As Integer = traitementDataTable.Rows.Count - 1
+        Dim rowCount As Integer = dt.Rows.Count - 1
 
-        Comptage += traitementDataTable.Rows.Count
+        Comptage += dt.Rows.Count
         GestionSautDePage(document)
         document.Add(New Paragraph(vbCrLf & "--- Traitement").SetFontSize(11))
 
         Dim Base As String
         Dim Posologie As String
-        Dim dateFin, dateDebut, dateModification, dateCreation As Date
+        Dim dateFin, dateDebut, dateModification As Date
         Dim posologieMatin, posologieMidi, posologieApresMidi, posologieSoir As Integer
         Dim Rythme As Integer
         Dim FenetreTherapeutiqueEnCours As Boolean
@@ -145,76 +158,32 @@ Public Class PdfOrdonnance
 
         'Parcours du DataTable pour alimenter les colonnes du DataGridView
         For i = 0 To rowCount Step 1
-            'Récupération des médicaments déclarés 'allergique' et exclusion de l'affichage
-            If traitementDataTable.Rows(i)("oa_traitement_allergie") IsNot DBNull.Value Then
-                If traitementDataTable.Rows(i)("oa_traitement_allergie") = "1" Then
-                    Continue For
-                End If
-            End If
-
-            'Récupération des médicaments déclarés 'contre-indiqué' et exclusion de l'affichage
-            If traitementDataTable.Rows(i)("oa_traitement_contre_indication") IsNot DBNull.Value Then
-                If traitementDataTable.Rows(i)("oa_traitement_contre_indication") = "1" Then
-                    Continue For
-                End If
-            End If
-
-            'Exclusion de l'affichage des traitements déclarés 'arrêté'
-            'Cette condition est traitée en exclusion (et non dans la requête SQL) pour stocker les allergies et les contre-indications arrêtés dans la StringCollection
-            If traitementDataTable.Rows(i)("oa_traitement_arret") IsNot DBNull.Value Then
-                If traitementDataTable.Rows(i)("oa_traitement_arret") = "A" Then
-                    Continue For
-                End If
-            End If
-
             'Date de fin
-            If traitementDataTable.Rows(i)("oa_traitement_date_fin") IsNot DBNull.Value Then
-                dateFin = traitementDataTable.Rows(i)("oa_traitement_date_fin")
+            If dt.Rows(i)("oa_traitement_date_fin") IsNot DBNull.Value Then
+                dateFin = dt.Rows(i)("oa_traitement_date_fin")
             Else
                 dateFin = "31/12/2999"
             End If
 
             'Date début
-            If traitementDataTable.Rows(i)("oa_traitement_date_debut") IsNot DBNull.Value Then
-                dateDebut = traitementDataTable.Rows(i)("oa_traitement_date_debut")
+            If dt.Rows(i)("oa_traitement_date_debut") IsNot DBNull.Value Then
+                dateDebut = dt.Rows(i)("oa_traitement_date_debut")
             Else
                 dateDebut = "01/01/1900"
-            End If
-
-            'Date création
-            If traitementDataTable.Rows(i)("oa_traitement_date_creation") IsNot DBNull.Value Then
-                dateCreation = traitementDataTable.Rows(i)("oa_traitement_date_creation")
-            Else
-                dateCreation = "01/01/1900"
-            End If
-
-            'Date modification
-            If traitementDataTable.Rows(i)("oa_traitement_date_modification") IsNot DBNull.Value Then
-                dateModification = traitementDataTable.Rows(i)("oa_traitement_date_modification")
-            Else
-                dateModification = dateCreation
-            End If
-
-            'Exclusion de l'affichage des traitements dont la date de fin est < à la date du jour
-            'Cette condition est traitée en exclusion (et non dans la requête SQL) pour stocker les allergies et les contre-indications dans la StringCollection quel que soit leur date de fin
-            Dim dateJouraComparer As New Date(Date.Now.Year, Date.Now.Month, Date.Now.Day, 0, 0, 0)
-            Dim dateFinaComparer As New Date(dateFin.Year, dateFin.Month, dateFin.Day, 0, 0, 0)
-            If (dateFinaComparer < dateJouraComparer) Then
-                Continue For
             End If
 
             'Vérification de l'existence d'une fenêtre thérapeutique active et à venir
             FenetreTherapeutiqueEnCours = False
             FenetreTherapeutiqueAVenir = False
 
-            If traitementDataTable.Rows(i)("oa_traitement_fenetre_date_debut") IsNot DBNull.Value Then
-                FenetreDateDebut = traitementDataTable.Rows(i)("oa_traitement_fenetre_date_debut")
+            If dt.Rows(i)("oa_traitement_fenetre_date_debut") IsNot DBNull.Value Then
+                FenetreDateDebut = dt.Rows(i)("oa_traitement_fenetre_date_debut")
             Else
                 FenetreDateDebut = "31/12/2999"
             End If
 
-            If traitementDataTable.Rows(i)("oa_traitement_fenetre_date_fin") IsNot DBNull.Value Then
-                FenetreDateFin = traitementDataTable.Rows(i)("oa_traitement_fenetre_date_fin")
+            If dt.Rows(i)("oa_traitement_fenetre_date_fin") IsNot DBNull.Value Then
+                FenetreDateFin = dt.Rows(i)("oa_traitement_fenetre_date_fin")
             Else
                 FenetreDateFin = "01/01/1900"
             End If
@@ -223,41 +192,43 @@ Public Class PdfOrdonnance
 
             'Existence d'une fenêtre thérapeutique
             Dim FenetreTherapeutiqueExiste As Boolean = False
-            Dim dateDebutFenetreaComparer As New Date(FenetreDateDebut.Year, FenetreDateDebut.Month, FenetreDateDebut.Day, 0, 0, 0)
-            Dim dateFinFenetreaComparer As New Date(FenetreDateFin.Year, FenetreDateFin.Month, FenetreDateFin.Day, 0, 0, 0)
-            If traitementDataTable.Rows(i)("oa_traitement_fenetre") IsNot DBNull.Value Then
-                If traitementDataTable.Rows(i)("oa_traitement_fenetre") = "1" Then
+            If dt.Rows(i)("oa_traitement_fenetre") IsNot DBNull.Value Then
+                If dt.Rows(i)("oa_traitement_fenetre") = "1" Then
                     'Fenêtre thérapeutique en cours, à venir ou obsolète
                     FenetreTherapeutiqueExiste = True
-                    If FenetreDateDebut <= dateJouraComparer And FenetreDateFin >= dateJouraComparer Then
+                    If FenetreDateDebut.Date <= Date.Now.Date And FenetreDateFin >= Date.Now.Date Then
                         'Fenêtre thérapeutique en cours
                         FenetreTherapeutiqueEnCours = True
                         Posologie = "Fenêtre Th."
                     Else
-                        If FenetreDateDebut > dateJouraComparer Then
+                        If FenetreDateDebut.Date > Date.Now.Date Then
                             FenetreTherapeutiqueAVenir = True
                         End If
                     End If
                 End If
             End If
 
-            'Formatage de la posologie
             If FenetreTherapeutiqueEnCours = False Then
+                Posologie = Coalesce(dt.Rows(i)("oa_traitement_posologie"), "")
+            End If
+
+            'Formatage de la posologie
+            If True = False Then
                 Dim PosologieMatinString, PosologieMidiString, PosologieApresMidiString, PosologieSoirString As String
                 Dim FractionMatin, FractionMidi, FractionApresMidi, FractionSoir As String
                 Dim PosologieBase As String
 
-                FractionMatin = Coalesce(traitementDataTable.Rows(i)("oa_traitement_fraction_matin"), TraitementDao.EnumFraction.Non)
-                FractionMidi = Coalesce(traitementDataTable.Rows(i)("oa_traitement_fraction_midi"), TraitementDao.EnumFraction.Non)
-                FractionApresMidi = Coalesce(traitementDataTable.Rows(i)("oa_traitement_fraction_apres_midi"), TraitementDao.EnumFraction.Non)
-                FractionSoir = Coalesce(traitementDataTable.Rows(i)("oa_traitement_fraction_soir"), TraitementDao.EnumFraction.Non)
+                FractionMatin = Coalesce(dt.Rows(i)("oa_traitement_fraction_matin"), TraitementDao.EnumFraction.Non)
+                FractionMidi = Coalesce(dt.Rows(i)("oa_traitement_fraction_midi"), TraitementDao.EnumFraction.Non)
+                FractionApresMidi = Coalesce(dt.Rows(i)("oa_traitement_fraction_apres_midi"), TraitementDao.EnumFraction.Non)
+                FractionSoir = Coalesce(dt.Rows(i)("oa_traitement_fraction_soir"), TraitementDao.EnumFraction.Non)
 
-                posologieMatin = Coalesce(traitementDataTable.Rows(i)("oa_traitement_Posologie_matin"), 0)
-                posologieMidi = Coalesce(traitementDataTable.Rows(i)("oa_traitement_Posologie_midi"), 0)
-                posologieApresMidi = Coalesce(traitementDataTable.Rows(i)("oa_traitement_Posologie_apres_midi"), 0)
-                posologieSoir = Coalesce(traitementDataTable.Rows(i)("oa_traitement_Posologie_soir"), 0)
+                posologieMatin = Coalesce(dt.Rows(i)("oa_traitement_Posologie_matin"), 0)
+                posologieMidi = Coalesce(dt.Rows(i)("oa_traitement_Posologie_midi"), 0)
+                posologieApresMidi = Coalesce(dt.Rows(i)("oa_traitement_Posologie_apres_midi"), 0)
+                posologieSoir = Coalesce(dt.Rows(i)("oa_traitement_Posologie_soir"), 0)
 
-                PosologieBase = Coalesce(traitementDataTable.Rows(i)("oa_traitement_Posologie_base"), "")
+                PosologieBase = Coalesce(dt.Rows(i)("oa_traitement_Posologie_base"), "")
 
                 If FractionMatin <> "" AndAlso FractionMatin <> TraitementDao.EnumFraction.Non Then
                     If posologieMatin <> 0 Then
@@ -313,8 +284,8 @@ Public Class PdfOrdonnance
                         PosologieSoirString = "0"
                     End If
                 End If
-                If traitementDataTable.Rows(i)("oa_traitement_posologie_base") IsNot DBNull.Value Then
-                    Rythme = traitementDataTable.Rows(i)("oa_traitement_posologie_rythme")
+                If dt.Rows(i)("oa_traitement_posologie_base") IsNot DBNull.Value Then
+                    Rythme = dt.Rows(i)("oa_traitement_posologie_rythme")
                     Select Case PosologieBase
                         Case TraitementDao.EnumBaseCode.JOURNALIER
                             Base = ""
@@ -336,7 +307,7 @@ Public Class PdfOrdonnance
                                     RythmeString = Rythme.ToString
                                 End If
                             End If
-                            Select Case traitementDataTable.Rows(i)("oa_traitement_posologie_base")
+                            Select Case dt.Rows(i)("oa_traitement_posologie_base")
                                 Case TraitementDao.EnumBaseCode.CONDITIONNEL
                                     Base = "Conditionnel : "
                                 Case TraitementDao.EnumBaseCode.HEBDOMADAIRE
@@ -353,13 +324,13 @@ Public Class PdfOrdonnance
                 End If
             End If
 
-            Dim commentaire As String = Coalesce(traitementDataTable.Rows(i)("oa_traitement_commentaire"), "")
-            Dim commentairePosologie As String = Coalesce(traitementDataTable.Rows(i)("oa_traitement_posologie_commentaire"), "")
+            Dim commentaire As String = Coalesce(dt.Rows(i)("oa_traitement_commentaire"), "")
+            Dim commentairePosologie As String = Coalesce(dt.Rows(i)("oa_traitement_posologie_commentaire"), "")
 
             'Stockage des médicaments prescrits (pour contrôle lors de la selection d'un médicament dans le cadre d'un nouveau traitement
-            SelectedPatient.PatientMedicamentsPrescritsCis.Add(traitementDataTable.Rows(i)("oa_traitement_medicament_cis"))
+            SelectedPatient.PatientMedicamentsPrescritsCis.Add(dt.Rows(i)("oa_traitement_medicament_cis"))
 
-            Dim TextMedicamentDci As New Text(traitementDataTable.Rows(i)("oa_traitement_medicament_dci"))
+            Dim TextMedicamentDci As New Text(dt.Rows(i)("oa_traitement_medicament_dci"))
             TextMedicamentDci.SetFontSize(8)
             'Posologie
             Dim TextPosologie As New Text(Posologie)
@@ -389,7 +360,7 @@ Public Class PdfOrdonnance
             If PremierPassage = True Then
                 table.AddCell(New Cell().Add(New Paragraph("Traitement").SetFontSize(8).SetBold))
                 table.AddCell(New Cell().Add(New Paragraph("Posologie").SetFontSize(8).SetBold))
-                table.AddCell(New Cell().Add(New Paragraph("Date maj").SetFontSize(8).SetBold))
+                table.AddCell(New Cell().Add(New Paragraph("Délivrance").SetFontSize(8).SetBold))
                 PremierPassage = False
             End If
 

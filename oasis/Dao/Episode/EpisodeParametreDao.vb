@@ -115,7 +115,7 @@ Public Class EpisodeParametreDao
     ''' <param name="sousEpisodeFusion"></param>
     ''' <param name="idEpisode"></param>
     ''' <param name="idPatient"></param>
-    Friend Sub alimenteFusionDocumentParametres(sousEpisodeFusion As SousEpisodeFusion, idEpisode As Long, idPatient As Long)
+    Friend Sub AlimenteFusionDocumentParametres(sousEpisodeFusion As SousEpisodeFusion, idEpisode As Long, idPatient As Long)
 
         Using con As SqlConnection = GetConnection()
             Dim valeur As Double
@@ -153,7 +153,7 @@ Public Class EpisodeParametreDao
 
     End Sub
 
-    Friend Function getPoidsByEpisodeIdOrLastKnow(idEpisode As Long, idPatient As Long) As Double
+    Friend Function GetPoidsByEpisodeIdOrLastKnow(idEpisode As Long, idPatient As Long) As Double
         Dim SQLString As String
 
         SQLString = "SELECT TOP 1 COALESCE(EP1.valeur, " & vbCrLf &
