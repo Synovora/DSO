@@ -1,4 +1,5 @@
 ﻿Imports System.Collections.Specialized
+Imports System.Configuration
 Imports System.Data.SqlClient
 Imports Oasis_Common
 
@@ -499,6 +500,8 @@ Module Environnement
         Private specialite_ageMax(indice) As Integer
         Private specialite_delaiPriseEnCharge(indice) As Integer
 
+        Private Shared Delai As Integer
+
         Private Sub New()
             'Déclaration des données de connexion
             Dim conxn As New SqlConnection(getConnectionString())
@@ -526,7 +529,7 @@ Module Environnement
             ReDim specialite_oasis(rowCount + 1)
             ReDim specialite_ageMin(rowCount + 1)
             ReDim specialite_ageMax(rowCount + 1)
-            ReDim specialite_delaipriseEnCharge(rowCount + 1)
+            ReDim specialite_delaiPriseEnCharge(rowCount + 1)
 
             'Alimentation du tableau
             For i = 0 To rowCount Step 1
@@ -544,6 +547,15 @@ Module Environnement
 
             conxn.Close()
             specialiteDataAdapter.Dispose()
+
+            Dim DelaiString As String = ConfigurationManager.AppSettings("SpecialiteDelaiPriseEnCharge")
+            If IsNumeric(DelaiString) Then
+                Delai = CInt(DelaiString)
+            Else
+                CreateLog("Paramètre application 'SpecialiteDelaiPriseEnCharge' non trouvé !", "Environnement.Table_specialite.New()", LogDao.EnumTypeLog.ERREUR.ToString)
+                Delai = 30
+            End If
+
         End Sub
 
         Public Shared Function GetSpecialiteDescription(pSpecialite_id As Integer) As String
@@ -563,6 +575,7 @@ Module Environnement
         End Function
         Public Shared Function GetSpecialiteById(pSpecialite_id As Integer) As Specialite
             Dim specialite As New Specialite
+
             specialite.SpecialiteId = pSpecialite_id
             specialite.Code = ""
             specialite.Description = ""
@@ -588,7 +601,11 @@ Module Environnement
                     specialite.Oasis = instance.specialite_oasis(i)
                     specialite.AgeMin = instance.specialite_ageMin(i)
                     specialite.AgeMax = instance.specialite_ageMax(i)
-                    specialite.DelaiPriseEnCharge = instance.specialite_delaiPriseEnCharge(i)
+                    If instance.specialite_delaiPriseEnCharge(i) <> 0 Then
+                        specialite.DelaiPriseEnCharge = instance.specialite_delaiPriseEnCharge(i)
+                    Else
+                        specialite.DelaiPriseEnCharge = delai
+                    End If
                 End If
             Next
             Return specialite
