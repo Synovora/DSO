@@ -4,6 +4,7 @@ Imports Telerik.WinControls.UI
 Imports Telerik.WinForms.Documents.FormatProviders.Pdf
 Imports Telerik.WinForms.Documents.Layout
 Imports Telerik.WinForms.Documents.Model
+Imports Telerik.WinControls.RichTextEditor.UI
 
 Public Class OasisTextTools
     Implements IDisposable
@@ -160,6 +161,28 @@ Public Class OasisTextTools
 
     Public Sub Dispose() Implements IDisposable.Dispose
         editor.Dispose()
+    End Sub
+
+    Public Sub SetCell(Cell As TableCell, Texte As String, Optional FontSize As Double = 12, Optional color As Color = Nothing, Optional FontWeight As FontWeight = Nothing)
+        Dim span As New Span()
+        Dim paragraphe As New Paragraph()
+        'paragraphe.TextAlignment = TextAlignment.Justify
+        span.Text = Texte
+        If span.Text <> "" Then
+            paragraphe.Inlines.Add(span)
+            span.FontSize = FontSize
+            If color = Nothing Then
+                span.ForeColor = Colors.Black
+            Else
+                span.ForeColor = color
+            End If
+            If FontWeight = Nothing Then
+                span.FontWeight = Telerik.WinControls.RichTextEditor.UI.FontWeights.Normal
+            Else
+                span.FontWeight = FontWeight
+            End If
+        End If
+        Cell.Blocks.Add(paragraphe)
     End Sub
 
 End Class

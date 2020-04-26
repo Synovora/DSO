@@ -2875,9 +2875,9 @@ Public Class RadFSynthese
     Private Sub RadBtnImprimer_Click(sender As Object, e As EventArgs) Handles RadBtnImprimer.Click
         Cursor.Current = Cursors.WaitCursor
         Try
-            Dim pdfSynthese As New PdfSynthese
-            pdfSynthese.SelectedPatient = SelectedPatient
-            pdfSynthese.ImprimeSynthese()
+            Dim print As New PrtSynthese
+            print.SelectedPatient = SelectedPatient
+            print.PrintDocument()
         Catch ex As Exception
             MsgBox(ex.Message())
         End Try

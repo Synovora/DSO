@@ -166,7 +166,7 @@ Public Class TraitementDao
     End Function
 
     Public Function GetTraitementEnCoursbyPatient(patientId As Integer) As DataTable
-        Dim SQLString As String = "SELECT oa_traitement_id, oa_traitement_medicament_cis, oa_traitement_medicament_dci," &
+        Dim SQLString As String = "SELECT oa_traitement_id, oa_traitement_medicament_cis, oa_traitement_medicament_dci, oa_traitement_denomination_longue," &
         " oa_traitement_posologie_base, oa_traitement_posologie_rythme, oa_traitement_posologie_matin, oa_traitement_posologie_midi," &
         " oa_traitement_posologie_apres_midi, oa_traitement_posologie_soir," &
         " oa_traitement_fraction_matin, oa_traitement_fraction_midi, oa_traitement_fraction_apres_midi, oa_traitement_fraction_soir," &

@@ -17,19 +17,19 @@ Public Class PrtSynthese
         PrintEtatCivil(section)
         EditTools.insertFragmentToEditor(document)
 
-        EditTools.insertFragmentToEditor(PrintTitre("--- Antécédent ---"))
+        'EditTools.insertFragmentToEditor(PrintTitre("--- Antécédent ---"))
         PrintAntecedent()
 
-        EditTools.insertFragmentToEditor(PrintTitre("--- Traitement ---"))
+        'EditTools.insertFragmentToEditor(PrintTitre("--- Traitement ---"))
         PrintTraitement()
 
-        EditTools.insertFragmentToEditor(PrintTitre("--- Parcours de soin ---"))
+        'EditTools.insertFragmentToEditor(PrintTitre("--- Parcours de soin ---"))
         PrintParcours()
 
-        EditTools.insertFragmentToEditor(PrintTitre("--- Contexte ---"))
+        'EditTools.insertFragmentToEditor(PrintTitre("--- Contexte ---"))
         PrintContexte()
 
-        EditTools.insertFragmentToEditor(PrintTitre("--- Plan personnalisé de soin ---"))
+        'EditTools.insertFragmentToEditor(PrintTitre("--- PPS ---"))
         PrintPPS()
 
         EditTools.printPreview()
@@ -94,6 +94,8 @@ Public Class PrtSynthese
 
         Dim PrintLegendeALDValide As Boolean = False
         Dim PrintLegendeALDDemande As Boolean = False
+
+        Dim PremierPassage As Boolean = True
 
         Dim antecedentDataTable As DataTable
         Dim antecedentDao As AntecedentDao = New AntecedentDao
@@ -168,8 +170,6 @@ Public Class PrtSynthese
                 End If
             End If
 
-            Dim longueurString As Integer
-            Dim longueurMax As Integer = 100
             Dim antecedentDescription As String
 
             '===== Affichage antécédent
@@ -178,11 +178,6 @@ Public Class PrtSynthese
             Else
                 antecedentDescription = antecedentDataTable.Rows(i)("oa_antecedent_description")
                 antecedentDescription = Replace(antecedentDescription, vbCrLf, " ")
-                longueurString = antecedentDescription.Length
-                If longueurString > longueurMax Then
-                    longueurString = longueurMax
-                End If
-                antecedentDescription = antecedentDescription.Substring(0, longueurString)
             End If
 
             Dim DescriptionDrcAld As String = ""
@@ -194,32 +189,37 @@ Public Class PrtSynthese
             TextAntecedent = indentation & diagnostic & DescriptionDrcAld & " " & antecedentDescription
             '==========
 
+            If PremierPassage = True Then
+                Dim rowTitre As New TableRow()
+
+                Dim cellTitreAntecedent As New TableCell()
+                cellTitreAntecedent.PreferredWidth = New TableWidthUnit(TableWidthUnitType.Fixed, LargeurCol1)
+                EditTools.SetCell(cellTitreAntecedent, "Antécédent", 10,, Telerik.WinControls.RichTextEditor.UI.FontWeights.Bold)
+                rowTitre.Cells.Add(cellTitreAntecedent)
+
+                table.Rows.Add(rowTitre)
+                PremierPassage = False
+            End If
+
             Dim row As New TableRow()
 
             Dim cellAntecedent As New TableCell()
             cellAntecedent.PreferredWidth = New TableWidthUnit(TableWidthUnitType.Fixed, LargeurCol1)
-            Dim spanAntecedent As New Span()
-            spanAntecedent.FontSize = 10
+            Dim AntecedentColors As Color = Colors.Black
             If antecedentCache = True Then
-                spanAntecedent.ForeColor = Colors.Blue
+                AntecedentColors = Colors.Blue
             Else
                 If AldValideOK = True Then
-                    spanAntecedent.ForeColor = Colors.Red
+                    AntecedentColors = Colors.Red
                     PrintLegendeALDValide = True
                 Else
                     If AldDemandeEnCours = True Then
-                        spanAntecedent.ForeColor = Colors.Orange
+                        AntecedentColors = Colors.Orange
                         PrintLegendeALDDemande = True
                     End If
                 End If
             End If
-            Dim paragrapheAntecedent As New Paragraph()
-            paragrapheAntecedent.TextAlignment = TextAlignment.Left
-            spanAntecedent.Text = TextAntecedent
-            If spanAntecedent.Text <> "" Then
-                paragrapheAntecedent.Inlines.Add(spanAntecedent)
-            End If
-            cellAntecedent.Blocks.Add(paragrapheAntecedent)
+            EditTools.SetCell(cellAntecedent, TextAntecedent, 10, AntecedentColors)
             row.Cells.Add(cellAntecedent)
 
             table.Rows.Add(row)
@@ -248,9 +248,8 @@ Public Class PrtSynthese
     Private Sub PrintTraitement()
         Dim document As New RadDocument()
 
-        Const LargeurCol1 As Integer = 475
-        Const LargeurCol2 As Integer = 70
-        Const LargeurCol3 As Integer = 85
+        Const LargeurCol1 As Integer = 450
+        Const LargeurCol2 As Integer = 180
 
         Dim section As New Section()
         Dim table As New Table()
@@ -479,7 +478,8 @@ Public Class PrtSynthese
                             End If
                             Select Case traitementDataTable.Rows(i)("oa_traitement_posologie_base")
                                 Case TraitementDao.EnumBaseCode.CONDITIONNEL
-                                    Base = "Conditionnel : "
+                                    'Base = "Conditionnel : "
+                                    Base = ""
                                 Case TraitementDao.EnumBaseCode.HEBDOMADAIRE
                                     Base = "Hebdo : "
                                 Case TraitementDao.EnumBaseCode.MENSUEL
@@ -492,15 +492,18 @@ Public Class PrtSynthese
                             Posologie = Base + RythmeString
                     End Select
                 End If
+                If PosologieBase = TraitementDao.EnumBaseCode.CONDITIONNEL Then
+                    Dim commentairePosologie As String = Coalesce(traitementDataTable.Rows(i)("oa_traitement_posologie_commentaire"), "")
+                    Posologie &= " " & commentairePosologie
+                End If
             End If
 
-            Dim commentaire As String = Coalesce(traitementDataTable.Rows(i)("oa_traitement_commentaire"), "")
-            Dim commentairePosologie As String = Coalesce(traitementDataTable.Rows(i)("oa_traitement_posologie_commentaire"), "")
+            'Dim commentaire As String = Coalesce(traitementDataTable.Rows(i)("oa_traitement_commentaire"), "")
+            'Dim commentairePosologie As String = Coalesce(traitementDataTable.Rows(i)("oa_traitement_posologie_commentaire"), "")
 
-            'Stockage des médicaments prescrits (pour contrôle lors de la selection d'un médicament dans le cadre d'un nouveau traitement
-            SelectedPatient.PatientMedicamentsPrescritsCis.Add(traitementDataTable.Rows(i)("oa_traitement_medicament_cis"))
 
-            Dim TextMedicamentDci As String = traitementDataTable.Rows(i)("oa_traitement_medicament_dci")
+            'Dim TextMedicamentDci As String = traitementDataTable.Rows(i)("oa_traitement_medicament_dci")
+            Dim TextMedicamentDci As String = traitementDataTable.Rows(i)("oa_traitement_denomination_longue")
 
             'Posologie
             Dim TextPosologie As String = Posologie
@@ -519,39 +522,13 @@ Public Class PrtSynthese
 
                 Dim cellTitreDci As New TableCell()
                 cellTitreDci.PreferredWidth = New TableWidthUnit(TableWidthUnitType.Fixed, LargeurCol1)
-                Dim spanTitreDci As New Span()
-                spanTitreDci.FontSize = 10
-                spanTitreDci.FontWeight = Telerik.WinControls.RichTextEditor.UI.FontWeights.Bold
-                Dim paragrapheTitreDci As New Paragraph()
-                paragrapheTitreDci.TextAlignment = TextAlignment.Left
-                spanTitreDci.Text = "Traitement"
-                paragrapheTitreDci.Inlines.Add(spanTitreDci)
-                cellTitreDci.Blocks.Add(paragrapheTitreDci)
+                EditTools.SetCell(cellTitreDci, "Traitement", 10,, Telerik.WinControls.RichTextEditor.UI.FontWeights.Bold)
                 rowTitre.Cells.Add(cellTitreDci)
 
                 Dim cellTitrePosologie As New TableCell()
                 cellTitrePosologie.PreferredWidth = New TableWidthUnit(TableWidthUnitType.Fixed, LargeurCol2)
-                Dim spanTitrePosologie As New Span()
-                spanTitrePosologie.FontSize = 10
-                spanTitrePosologie.FontWeight = Telerik.WinControls.RichTextEditor.UI.FontWeights.Bold
-                Dim paragrapheTitrePosologie As New Paragraph()
-                paragrapheTitrePosologie.TextAlignment = TextAlignment.Left
-                spanTitrePosologie.Text = "Posologie"
-                paragrapheTitrePosologie.Inlines.Add(spanTitrePosologie)
-                cellTitrePosologie.Blocks.Add(paragrapheTitrePosologie)
+                EditTools.SetCell(cellTitrePosologie, "Posologie", 10,, Telerik.WinControls.RichTextEditor.UI.FontWeights.Bold)
                 rowTitre.Cells.Add(cellTitrePosologie)
-
-                Dim cellTitreDateModification As New TableCell()
-                cellTitreDateModification.PreferredWidth = New TableWidthUnit(TableWidthUnitType.Fixed, LargeurCol3)
-                Dim spanTitreDateModification As New Span()
-                spanTitreDateModification.FontSize = 10
-                spanTitreDateModification.FontWeight = Telerik.WinControls.RichTextEditor.UI.FontWeights.Bold
-                Dim paragrapheTitreDateModification As New Paragraph()
-                paragrapheTitreDateModification.TextAlignment = TextAlignment.Justify
-                spanTitreDateModification.Text = "Mise à jour"
-                paragrapheTitreDateModification.Inlines.Add(spanTitreDateModification)
-                cellTitreDateModification.Blocks.Add(paragrapheTitreDateModification)
-                rowTitre.Cells.Add(cellTitreDateModification)
 
                 table.Rows.Add(rowTitre)
                 PremierPassage = False
@@ -561,42 +538,13 @@ Public Class PrtSynthese
 
             Dim cellDci As New TableCell()
             cellDci.PreferredWidth = New TableWidthUnit(TableWidthUnitType.Fixed, LargeurCol1)
-            Dim spanDci As New Span()
-            spanDci.FontSize = 10
-            Dim paragrapheDci As New Paragraph()
-            paragrapheDci.TextAlignment = TextAlignment.Left
-            spanDci.Text = TextMedicamentDci
-            If spanDci.Text <> "" Then
-                paragrapheDci.Inlines.Add(spanDci)
-            End If
-            cellDci.Blocks.Add(paragrapheDci)
+            EditTools.SetCell(cellDci, TextMedicamentDci, 10)
             row.Cells.Add(cellDci)
 
             Dim cellPosologie As New TableCell()
             cellPosologie.PreferredWidth = New TableWidthUnit(TableWidthUnitType.Fixed, LargeurCol2)
-            Dim spanPosologie As New Span()
-            spanPosologie.FontSize = 10
-            Dim paragraphePosologie As New Paragraph()
-            paragraphePosologie.TextAlignment = TextAlignment.Left
-            spanPosologie.Text = TextPosologie
-            If spanPosologie.Text <> "" Then
-                paragraphePosologie.Inlines.Add(spanPosologie)
-            End If
-            cellPosologie.Blocks.Add(paragraphePosologie)
+            EditTools.SetCell(cellPosologie, TextPosologie, 10)
             row.Cells.Add(cellPosologie)
-
-            Dim cellDateModification As New TableCell()
-            cellDateModification.PreferredWidth = New TableWidthUnit(TableWidthUnitType.Fixed, LargeurCol3)
-            Dim spanDateModification As New Span()
-            spanDateModification.FontSize = 10
-            Dim paragrapheDateModification As New Paragraph()
-            paragrapheDateModification.TextAlignment = TextAlignment.Justify
-            spanDateModification.Text = TextDateModification
-            If spanDateModification.Text <> "" Then
-                paragrapheDateModification.Inlines.Add(spanDateModification)
-            End If
-            cellDateModification.Blocks.Add(paragrapheDateModification)
-            row.Cells.Add(cellDateModification)
 
             table.Rows.Add(row)
         Next
@@ -611,12 +559,12 @@ Public Class PrtSynthese
     Private Sub PrintParcours()
         Dim document As New RadDocument()
 
-        Const LargeurCol1 As Integer = 100
+        Const LargeurCol1 As Integer = 110
         Const LargeurCol2 As Integer = 120
-        Const LargeurCol3 As Integer = 160
-        Const LargeurCol4 As Integer = 75
-        Const LargeurCol5 As Integer = 75
-        Const LargeurCol6 As Integer = 100
+        Const LargeurCol3 As Integer = 150
+        Const LargeurCol4 As Integer = 70
+        Const LargeurCol5 As Integer = 70
+        Const LargeurCol6 As Integer = 110
 
         Dim section As New Section()
         Dim table As New Table()
@@ -744,74 +692,32 @@ Public Class PrtSynthese
 
                 Dim cellTitreIntervenant As New TableCell()
                 cellTitreIntervenant.PreferredWidth = New TableWidthUnit(TableWidthUnitType.Fixed, LargeurCol1)
-                Dim spanTitreIntervenant As New Span()
-                spanTitreIntervenant.FontSize = 10
-                spanTitreIntervenant.FontWeight = Telerik.WinControls.RichTextEditor.UI.FontWeights.Bold
-                Dim paragrapheTitreIntervenant As New Paragraph()
-                paragrapheTitreIntervenant.TextAlignment = TextAlignment.Left
-                spanTitreIntervenant.Text = "Intervenant"
-                paragrapheTitreIntervenant.Inlines.Add(spanTitreIntervenant)
-                cellTitreIntervenant.Blocks.Add(paragrapheTitreIntervenant)
+                EditTools.SetCell(cellTitreIntervenant, "Parcours", 10,, Telerik.WinControls.RichTextEditor.UI.FontWeights.Bold)
                 rowTitre.Cells.Add(cellTitreIntervenant)
 
                 Dim cellTitreNom As New TableCell()
                 cellTitreNom.PreferredWidth = New TableWidthUnit(TableWidthUnitType.Fixed, LargeurCol2)
-                Dim spanTitreNom As New Span()
-                spanTitreNom.FontSize = 10
-                spanTitreNom.FontWeight = Telerik.WinControls.RichTextEditor.UI.FontWeights.Bold
-                Dim paragrapheTitreNom As New Paragraph()
-                paragrapheTitreNom.TextAlignment = TextAlignment.Left
-                spanTitreNom.Text = "Nom"
-                paragrapheTitreNom.Inlines.Add(spanTitreNom)
-                cellTitreNom.Blocks.Add(paragrapheTitreNom)
+                EditTools.SetCell(cellTitreNom, "Nom", 10,, Telerik.WinControls.RichTextEditor.UI.FontWeights.Bold)
                 rowTitre.Cells.Add(cellTitreNom)
 
                 Dim cellTitreStructure As New TableCell()
                 cellTitreStructure.PreferredWidth = New TableWidthUnit(TableWidthUnitType.Fixed, LargeurCol3)
-                Dim spanTitreStructure As New Span()
-                spanTitreStructure.FontSize = 10
-                spanTitreStructure.FontWeight = Telerik.WinControls.RichTextEditor.UI.FontWeights.Bold
-                Dim paragrapheTitreStructure As New Paragraph()
-                paragrapheTitreStructure.TextAlignment = TextAlignment.Justify
-                spanTitreStructure.Text = "Structure"
-                paragrapheTitreStructure.Inlines.Add(spanTitreStructure)
-                cellTitreStructure.Blocks.Add(paragrapheTitreStructure)
+                EditTools.SetCell(cellTitreStructure, "Structure", 10,, Telerik.WinControls.RichTextEditor.UI.FontWeights.Bold)
                 rowTitre.Cells.Add(cellTitreStructure)
 
                 Dim cellTitreLastRdv As New TableCell()
                 cellTitreLastRdv.PreferredWidth = New TableWidthUnit(TableWidthUnitType.Fixed, LargeurCol4)
-                Dim spanTitreLstRdv As New Span()
-                spanTitreLstRdv.FontSize = 10
-                spanTitreLstRdv.FontWeight = Telerik.WinControls.RichTextEditor.UI.FontWeights.Bold
-                Dim paragrapheTitreLastRdv As New Paragraph()
-                paragrapheTitreLastRdv.TextAlignment = TextAlignment.Left
-                spanTitreLstRdv.Text = "Dern. Consult."
-                paragrapheTitreLastRdv.Inlines.Add(spanTitreLstRdv)
-                cellTitreLastRdv.Blocks.Add(paragrapheTitreLastRdv)
+                EditTools.SetCell(cellTitreLastRdv, "Dern. Consult.", 10,, Telerik.WinControls.RichTextEditor.UI.FontWeights.Bold)
                 rowTitre.Cells.Add(cellTitreLastRdv)
 
                 Dim cellTitreNextRdv As New TableCell()
                 cellTitreNextRdv.PreferredWidth = New TableWidthUnit(TableWidthUnitType.Fixed, LargeurCol5)
-                Dim spanTitreNextRdv As New Span()
-                spanTitreNextRdv.FontSize = 10
-                spanTitreNextRdv.FontWeight = Telerik.WinControls.RichTextEditor.UI.FontWeights.Bold
-                Dim paragrapheTitreNextRdv As New Paragraph()
-                paragrapheTitreNextRdv.TextAlignment = TextAlignment.Left
-                spanTitreNextRdv.Text = "Proch. Consult."
-                paragrapheTitreNextRdv.Inlines.Add(spanTitreNextRdv)
-                cellTitreNextRdv.Blocks.Add(paragrapheTitreNextRdv)
+                EditTools.SetCell(cellTitreNextRdv, "Proch. Consult.", 10,, Telerik.WinControls.RichTextEditor.UI.FontWeights.Bold)
                 rowTitre.Cells.Add(cellTitreNextRdv)
 
                 Dim cellTitreRemarque As New TableCell()
                 cellTitreRemarque.PreferredWidth = New TableWidthUnit(TableWidthUnitType.Fixed, LargeurCol6)
-                Dim spanTitreRemarque As New Span()
-                spanTitreRemarque.FontSize = 10
-                spanTitreRemarque.FontWeight = Telerik.WinControls.RichTextEditor.UI.FontWeights.Bold
-                Dim paragrapheTitreRemarque As New Paragraph()
-                paragrapheTitreRemarque.TextAlignment = TextAlignment.Justify
-                spanTitreRemarque.Text = "Remarque"
-                paragrapheTitreRemarque.Inlines.Add(spanTitreRemarque)
-                cellTitreRemarque.Blocks.Add(paragrapheTitreRemarque)
+                EditTools.SetCell(cellTitreRemarque, "Remarque", 10,, Telerik.WinControls.RichTextEditor.UI.FontWeights.Bold)
                 rowTitre.Cells.Add(cellTitreRemarque)
 
                 table.Rows.Add(rowTitre)
@@ -822,80 +728,32 @@ Public Class PrtSynthese
 
             Dim cellIntervenant As New TableCell()
             cellIntervenant.PreferredWidth = New TableWidthUnit(TableWidthUnitType.Fixed, LargeurCol1)
-            Dim spanIntervenant As New Span()
-            spanIntervenant.FontSize = 10
-            Dim paragrapheIntervenant As New Paragraph()
-            paragrapheIntervenant.TextAlignment = TextAlignment.Left
-            spanIntervenant.Text = TextSpecialite
-            If spanIntervenant.Text <> "" Then
-                paragrapheIntervenant.Inlines.Add(spanIntervenant)
-            End If
-            cellIntervenant.Blocks.Add(paragrapheIntervenant)
+            EditTools.SetCell(cellIntervenant, TextSpecialite, 10)
             row.Cells.Add(cellIntervenant)
 
             Dim cellNom As New TableCell()
             cellNom.PreferredWidth = New TableWidthUnit(TableWidthUnitType.Fixed, LargeurCol2)
-            Dim spanNom As New Span()
-            spanNom.FontSize = 10
-            Dim paragrapheNom As New Paragraph()
-            paragrapheNom.TextAlignment = TextAlignment.Left
-            spanNom.Text = TextNomIntervenant
-            If spanNom.Text <> "" Then
-                paragrapheNom.Inlines.Add(spanNom)
-            End If
-            cellNom.Blocks.Add(paragrapheNom)
+            EditTools.SetCell(cellNom, TextNomIntervenant, 10)
             row.Cells.Add(cellNom)
 
             Dim cellStructure As New TableCell()
             cellStructure.PreferredWidth = New TableWidthUnit(TableWidthUnitType.Fixed, LargeurCol3)
-            Dim spanStructure As New Span()
-            spanStructure.FontSize = 10
-            Dim paragrapheStructure As New Paragraph()
-            paragrapheStructure.TextAlignment = TextAlignment.Justify
-            spanStructure.Text = TextNomStructure
-            If spanStructure.Text <> "" Then
-                paragrapheStructure.Inlines.Add(spanStructure)
-            End If
-            cellStructure.Blocks.Add(paragrapheStructure)
+            EditTools.SetCell(cellStructure, TextNomStructure, 10)
             row.Cells.Add(cellStructure)
 
             Dim cellLastRdv As New TableCell()
             cellLastRdv.PreferredWidth = New TableWidthUnit(TableWidthUnitType.Fixed, LargeurCol4)
-            Dim spanLastRdv As New Span()
-            spanLastRdv.FontSize = 10
-            Dim paragrapheLastRdv As New Paragraph()
-            paragrapheLastRdv.TextAlignment = TextAlignment.Left
-            spanLastRdv.Text = TextConsultationLast
-            If spanLastRdv.Text <> "" Then
-                paragrapheLastRdv.Inlines.Add(spanLastRdv)
-            End If
-            cellLastRdv.Blocks.Add(paragrapheLastRdv)
+            EditTools.SetCell(cellLastRdv, TextConsultationLast, 10)
             row.Cells.Add(cellLastRdv)
 
             Dim cellNextRdv As New TableCell()
             cellNextRdv.PreferredWidth = New TableWidthUnit(TableWidthUnitType.Fixed, LargeurCol5)
-            Dim spanNextRdv As New Span()
-            spanNextRdv.FontSize = 10
-            Dim paragrapheNextRdv As New Paragraph()
-            paragrapheNextRdv.TextAlignment = TextAlignment.Left
-            spanNextRdv.Text = TextConsultationNext
-            If spanNextRdv.Text <> "" Then
-                paragrapheNextRdv.Inlines.Add(spanNextRdv)
-            End If
-            cellNextRdv.Blocks.Add(paragrapheNextRdv)
+            EditTools.SetCell(cellNextRdv, TextConsultationNext, 10)
             row.Cells.Add(cellNextRdv)
 
             Dim cellRemarque As New TableCell()
             cellRemarque.PreferredWidth = New TableWidthUnit(TableWidthUnitType.Fixed, LargeurCol6)
-            Dim spanRemarque As New Span()
-            spanRemarque.FontSize = 10
-            Dim paragrapheRemarque As New Paragraph()
-            paragrapheRemarque.TextAlignment = TextAlignment.Justify
-            spanRemarque.Text = TextCommentaire
-            If spanRemarque.Text <> "" Then
-                paragrapheRemarque.Inlines.Add(spanRemarque)
-            End If
-            cellRemarque.Blocks.Add(paragrapheRemarque)
+            EditTools.SetCell(cellRemarque, TextCommentaire, 10)
             row.Cells.Add(cellRemarque)
 
             table.Rows.Add(row)
@@ -920,6 +778,9 @@ Public Class PrtSynthese
 
         Dim contexteDataTable As DataTable
         Dim antecedentDao As AntecedentDao = New AntecedentDao
+
+        Dim PremierPassage As Boolean = True
+
         contexteDataTable = antecedentDao.GetContextebyPatient(SelectedPatient.patientId, True)
 
         'Déclaration des variables pour réaliser le parcours du DataTable pour alimenter le DataGridView
@@ -999,34 +860,26 @@ Public Class PrtSynthese
             End If
 
             'Affichage contexte ==========================
-            Dim longueurString As Integer
-            Dim longueurMax As Integer = 150
             Dim contexteDescription As String
             contexteDescription = Coalesce(contexteDataTable.Rows(i)("oa_antecedent_description"), "")
-            If contexteDescription <> "" Then
-                contexteDescription = Replace(contexteDescription, vbCrLf, " ")
-                longueurString = contexteDescription.Length
-                If longueurString > longueurMax Then
-                    longueurString = longueurMax
-                End If
-                contexteDescription.Substring(0, longueurString)
+
+            If PremierPassage = True Then
+                Dim rowTitre As New TableRow()
+
+                Dim cellTitreContexte As New TableCell()
+                cellTitreContexte.PreferredWidth = New TableWidthUnit(TableWidthUnitType.Fixed, LargeurCol1)
+                EditTools.SetCell(cellTitreContexte, "Contexte", 10,, Telerik.WinControls.RichTextEditor.UI.FontWeights.Bold)
+                rowTitre.Cells.Add(cellTitreContexte)
+
+                table.Rows.Add(rowTitre)
+                PremierPassage = False
             End If
 
             Dim row As New TableRow()
-
-            Dim cellRemarque As New TableCell()
-            cellRemarque.PreferredWidth = New TableWidthUnit(TableWidthUnitType.Fixed, LargeurCol1)
-            Dim spanRemarque As New Span()
-            spanRemarque.FontSize = 10
-            Dim paragrapheRemarque As New Paragraph()
-            paragrapheRemarque.TextAlignment = TextAlignment.Justify
-            spanRemarque.Text = contexteDescription
-            If spanRemarque.Text <> "" Then
-                paragrapheRemarque.Inlines.Add(spanRemarque)
-            End If
-            cellRemarque.Blocks.Add(paragrapheRemarque)
-            row.Cells.Add(cellRemarque)
-
+            Dim cellContexte As New TableCell()
+            cellContexte.PreferredWidth = New TableWidthUnit(TableWidthUnitType.Fixed, LargeurCol1)
+            EditTools.SetCell(cellContexte, contexteDescription, 10)
+            row.Cells.Add(cellContexte)
             table.Rows.Add(row)
         Next
 
@@ -1046,6 +899,8 @@ Public Class PrtSynthese
         Dim table As New Table()
         table.LayoutMode = TableLayoutMode.Fixed
         table.StyleName = RadDocumentDefaultStyles.DefaultTableGridStyleName
+
+        Dim PremierPassage As Boolean = True
 
         Dim PPSDataTable As DataTable
         Dim PPSDao As PpsDao = New PpsDao
@@ -1221,31 +1076,27 @@ Public Class PrtSynthese
             AffichePPS = Replace(AffichePPS, vbTab, " ")
             AffichePPS = Replace(AffichePPS, vbCrLf, " ")
 
-            'Ajout d'une ligne au DataGridView
-            'Dim TextPps As String
-            'TextPps = AffichePPS
+            If PremierPassage = True Then
+                Dim rowTitre As New TableRow()
 
+                Dim cellTitrePPS As New TableCell()
+                cellTitrePPS.PreferredWidth = New TableWidthUnit(TableWidthUnitType.Fixed, LargeurCol1)
+                EditTools.SetCell(cellTitrePPS, "PPS", 10,, Telerik.WinControls.RichTextEditor.UI.FontWeights.Bold)
+                rowTitre.Cells.Add(cellTitrePPS)
 
-            'table.AddCell(New Cell().Add(New Paragraph(TextPps).SetFixedLeading(10)))
+                table.Rows.Add(rowTitre)
+                PremierPassage = False
+            End If
 
             Dim row As New TableRow()
-
-            Dim cellRemarque As New TableCell()
-            cellRemarque.PreferredWidth = New TableWidthUnit(TableWidthUnitType.Fixed, LargeurCol1)
-            Dim spanRemarque As New Span()
-            spanRemarque.FontSize = 10
-            Dim paragrapheRemarque As New Paragraph()
-            paragrapheRemarque.TextAlignment = TextAlignment.Justify
-            spanRemarque.Text = AffichePPS
+            Dim cellPPS As New TableCell()
+            cellPPS.PreferredWidth = New TableWidthUnit(TableWidthUnitType.Fixed, LargeurCol1)
             If ppsArret = True Then
-                spanRemarque.ForeColor = Colors.Red
+                EditTools.SetCell(cellPPS, AffichePPS, 10, Colors.Red)
+            Else
+                EditTools.SetCell(cellPPS, AffichePPS, 10)
             End If
-            If spanRemarque.Text <> "" Then
-                paragrapheRemarque.Inlines.Add(spanRemarque)
-            End If
-            cellRemarque.Blocks.Add(paragrapheRemarque)
-            row.Cells.Add(cellRemarque)
-
+            row.Cells.Add(cellPPS)
             table.Rows.Add(row)
         Next
 
