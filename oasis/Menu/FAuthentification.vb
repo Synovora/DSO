@@ -207,10 +207,9 @@ Public Class FAuthentificattion
         InitAppelForm()
         Cursor.Current = Cursors.WaitCursor
         Try
-            Dim print As New PrtOrdonnance
+            Dim print As New PrtSynthese
             Dim selectedPatient As Patient = PatientDao.GetPatientById(1)
             print.SelectedPatient = selectedPatient
-            print.SelectedOrdonnanceId = 26
             print.printDocument()
         Catch ex As Exception
             MsgBox(ex.Message())
