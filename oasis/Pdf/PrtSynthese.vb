@@ -13,26 +13,32 @@ Public Class PrtSynthese
         Dim section = EditTools.CreateSection()
         Dim document = EditTools.AddSectionIntoDocument(Nothing, section)
 
-        PrintEntete(section)
-        PrintEtatCivil(section)
-        EditTools.insertFragmentToEditor(document)
+        Try
+            PrintEntete(section)
+            PrintEtatCivil(section)
+            EditTools.insertFragmentToEditor(document)
 
-        'EditTools.insertFragmentToEditor(PrintTitre("--- Antécédent ---"))
-        PrintAntecedent()
+            'EditTools.insertFragmentToEditor(PrintTitre("--- Antécédent ---"))
+            PrintAntecedent()
 
-        'EditTools.insertFragmentToEditor(PrintTitre("--- Traitement ---"))
-        PrintTraitement()
+            'EditTools.insertFragmentToEditor(PrintTitre("--- Traitement ---"))
+            PrintTraitement()
 
-        'EditTools.insertFragmentToEditor(PrintTitre("--- Parcours de soin ---"))
-        PrintParcours()
+            'EditTools.insertFragmentToEditor(PrintTitre("--- Parcours de soin ---"))
+            PrintParcours()
 
-        'EditTools.insertFragmentToEditor(PrintTitre("--- Contexte ---"))
-        PrintContexte()
+            'EditTools.insertFragmentToEditor(PrintTitre("--- Contexte ---"))
+            PrintContexte()
 
-        'EditTools.insertFragmentToEditor(PrintTitre("--- PPS ---"))
-        PrintPPS()
+            'EditTools.insertFragmentToEditor(PrintTitre("--- PPS ---"))
+            PrintPPS()
 
-        EditTools.printPreview()
+            EditTools.printPreview()
+        Catch ex As Exception
+            MsgBox(ex.Message())
+        Finally
+            EditTools.Dispose()
+        End Try
     End Sub
 
     Private Sub PrintEntete(section As Section)
@@ -196,7 +202,6 @@ Public Class PrtSynthese
                 cellTitreAntecedent.PreferredWidth = New TableWidthUnit(TableWidthUnitType.Fixed, LargeurCol1)
                 EditTools.SetCell(cellTitreAntecedent, "Antécédent", 10,, Telerik.WinControls.RichTextEditor.UI.FontWeights.Bold)
                 rowTitre.Cells.Add(cellTitreAntecedent)
-
                 table.Rows.Add(rowTitre)
                 PremierPassage = False
             End If
@@ -225,20 +230,49 @@ Public Class PrtSynthese
             table.Rows.Add(row)
         Next
 
+        If PrintLegendeALDValide = True OrElse PrintLegendeALDDemande = True Then
+            Dim rowTitre As New TableRow()
+            Dim cellVide As New TableCell()
+            cellVide.PreferredWidth = New TableWidthUnit(TableWidthUnitType.Fixed, LargeurCol1)
+            EditTools.SetCell(cellVide, "-", 8)
+            rowTitre.Cells.Add(cellVide)
+            table.Rows.Add(rowTitre)
+
+            If PrintLegendeALDValide = True Then
+                Dim rowAldValide As New TableRow()
+                Dim cellAldValide As New TableCell()
+                cellAldValide.PreferredWidth = New TableWidthUnit(TableWidthUnitType.Fixed, LargeurCol1)
+                EditTools.SetCell(cellAldValide, "Antécédent rouge : ALD valde", 8, Colors.Red)
+                rowAldValide.Cells.Add(cellAldValide)
+                table.Rows.Add(rowAldValide)
+            End If
+
+            If PrintLegendeALDDemande = True Then
+                Dim rowAldDemande As New TableRow()
+                Dim cellAldDemande As New TableCell()
+                cellAldDemande.PreferredWidth = New TableWidthUnit(TableWidthUnitType.Fixed, LargeurCol1)
+                EditTools.SetCell(cellAldDemande, "Antécédent orange : demande ALD en cours", 8, Colors.Orange)
+                rowAldDemande.Cells.Add(cellAldDemande)
+                table.Rows.Add(rowAldDemande)
+            End If
+        End If
+
         section.Blocks.Add(table)
         section.Blocks.Add(New Paragraph())
         document.Sections.Add(section)
 
         If PrintLegendeALDValide = True Then
-            Dim TextLegendeALDValide As String = "Antécédent rouge -> ALD Valide"
-            EditTools.CreateParagraphIntoSection(section, 10)
-            EditTools.AddTexte(TextLegendeALDValide)
+            'Dim TextLegendeALDValide As String = "Antécédent rouge -> ALD Valide"
+            'EditTools.CreateParagraphIntoSection(section, 10)
+            'EditTools.AddTexte(TextLegendeALDValide)
             'TextLegendeALDValide.SetFontColor(iText.Kernel.Colors.ColorConstants.RED).SetFontSize(8)
+
         End If
+
         If PrintLegendeALDDemande = True Then
-            Dim TextLegendeALDDemande As String = "Antécédent orange -> Demande ALD en cours"
-            EditTools.CreateParagraphIntoSection(section, 10)
-            EditTools.AddTexte(TextLegendeALDDemande)
+            'Dim TextLegendeALDDemande As String = "Antécédent orange -> Demande ALD en cours"
+            'EditTools.CreateParagraphIntoSection(section, 10)
+            'EditTools.AddTexte(TextLegendeALDDemande)
             'TextLegendeALDDemande.SetFontColor(iText.Kernel.Colors.ColorConstants.ORANGE).SetFontSize(8)
         End If
 
