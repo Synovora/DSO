@@ -10,10 +10,11 @@ Public Class PrtSynthese
     Dim aldDao As New AldDao
 
     Public Sub PrintDocument()
+        EditTools = New OasisTextTools
+
         Dim section = EditTools.CreateSection()
         Dim document = EditTools.AddSectionIntoDocument(Nothing, section)
 
-        EditTools = New OasisTextTools
         Try
             PrintEntete(section)
             PrintEtatCivil(section)
