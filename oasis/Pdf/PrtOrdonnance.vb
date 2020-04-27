@@ -224,7 +224,12 @@ Public Class PrtOrdonnance
 
                 Dim Posologie As String = dt.Rows(i)("oa_traitement_posologie")
                 Dim traitementId As Long = Coalesce(dt.Rows(i)("oa_traitement_id"), 0)
-                Dim traitement As Traitement = traitementDao.GetTraitementById(traitementId)
+
+                Dim traitement As New Traitement
+                If traitementId <> 0 Then
+                    traitement = traitementDao.GetTraitementById(traitementId)
+                End If
+
                 Dim duree As Integer = Coalesce(dt.Rows(i)("oa_traitement_duree"), 0)
                 Dim MedicamentAld As Boolean = Coalesce(dt.Rows(i)("oa_traitement_ald"), False)
                 Dim MedicamentADelivrer As Boolean = Coalesce(dt.Rows(i)("oa_traitement_a_delivrer"), False)
@@ -238,7 +243,12 @@ Public Class PrtOrdonnance
                 spanDetail11.FontWeight = Telerik.WinControls.RichTextEditor.UI.FontWeights.Bold
                 Dim paragrapheDetail1 As New Paragraph()
 
-                spanDetail11.Text = traitement.DenominationLongue
+                If traitementId <> 0 Then
+                    spanDetail11.Text = traitement.DenominationLongue
+                Else
+                    spanDetail11.Text = Coalesce(dt.Rows(i)("oa_traitement_posologie_commentaire"), "")
+                End If
+
                 If spanDetail11.Text <> "" Then
                     paragrapheDetail1.Inlines.Add(spanDetail11)
                 End If
@@ -252,10 +262,11 @@ Public Class PrtOrdonnance
                     PosologieBase = " / jour"
                 End If
 
-
-                spanDetail12.Text = vbCrLf & "Posologie " & Posologie & PosologieBase & Coalesce(dt.Rows(i)("oa_traitement_posologie_commentaire"), "")
-                If spanDetail12.Text <> "" Then
-                    paragrapheDetail1.Inlines.Add(spanDetail12)
+                If traitementId <> 0 Then
+                    spanDetail12.Text = vbCrLf & "Posologie " & Posologie & PosologieBase & Coalesce(dt.Rows(i)("oa_traitement_posologie_commentaire"), "")
+                    If spanDetail12.Text <> "" Then
+                        paragrapheDetail1.Inlines.Add(spanDetail12)
+                    End If
                 End If
 
                 cellDetail1.Blocks.Add(paragrapheDetail1)

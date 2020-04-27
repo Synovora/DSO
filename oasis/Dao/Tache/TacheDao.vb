@@ -1,6 +1,8 @@
 ﻿Imports System.Data.SqlClient
 Imports Oasis_WF
 Imports Oasis_Common
+Imports System.Configuration
+
 Public Class TacheDao
     Inherits StandardDao
 
@@ -163,7 +165,7 @@ Public Class TacheDao
             "WHERE etat = @etat And type<> @typeSpecialiste AND (type NOT IN (@typeRdv, @typeRdvMission) OR (type IN (@typeRdv, @typeRdvMission) AND CONVERT(date, date_rendez_vous) <= CONVERT(date, @dateRdv))) " & vbCrLf
 
         ' --- ajout des filtre
-        SQLString += addFiltreAllTacheATraiter(lstFonction, filtreTache)
+        SQLString += AddFiltreAllTacheATraiter(lstFonction, filtreTache)
 
         'Console.WriteLine(SQLString)
 
@@ -225,7 +227,7 @@ Public Class TacheDao
             "WHERE etat = @etat And type<> @typeSpecialiste AND (type NOT IN (@typeRdv,@typeRdvMission) OR (type IN (@typeRdv,@typeRdvMission) AND CONVERT(date,date_rendez_vous) <= CONVERT(date, @daterdv))) " & vbCrLf
 
         ' --- ajout des filtre
-        SQLString += addFiltreAllTacheATraiter(lstFonction, filtreTache)
+        SQLString += AddFiltreAllTacheATraiter(lstFonction, filtreTache)
 
         SQLString += "ORDER BY priorite,ordre_affichage, COALESCE(date_rendez_vous, horodate_creation) "
         'Console.WriteLine(SQLString)
@@ -691,7 +693,7 @@ Public Class TacheDao
 
             Using reader As SqlDataReader = command.ExecuteReader()
                 If reader.Read() Then
-                    tache = buildBean(reader)
+                    tache = BuildBean(reader)
                 Else
                     tache.Id = 0
                     tache.DateRendezVous = Nothing
@@ -738,7 +740,7 @@ Public Class TacheDao
             If isWithAnnule = False Then command.Parameters.AddWithValue("@etat", EtatTache.ANNULEE.ToString)
             Using reader As SqlDataReader = command.ExecuteReader()
                 If reader.Read() Then
-                    tache = buildBean(reader)
+                    tache = BuildBean(reader)
                 Else
                     Throw New ArgumentException("Tâche non retrouvée !")
                 End If
@@ -787,7 +789,7 @@ Public Class TacheDao
 
             Using reader As SqlDataReader = command.ExecuteReader()
                 If reader.Read() Then
-                    tache = buildBean(reader)
+                    tache = BuildBean(reader)
                 Else
                     tache.Id = 0
                     tache.DateRendezVous = Nothing
@@ -839,7 +841,7 @@ Public Class TacheDao
 
             Using reader As SqlDataReader = command.ExecuteReader()
                 If reader.Read() Then
-                    tache = buildBean(reader)
+                    tache = BuildBean(reader)
                 Else
                     tache.Id = 0
                     tache.DateRendezVous = Nothing
@@ -886,7 +888,7 @@ Public Class TacheDao
 
             Using reader As SqlDataReader = command.ExecuteReader()
                 If reader.Read() Then
-                    tache = buildBean(reader)
+                    tache = BuildBean(reader)
                 Else
                     tache.Id = 0
                     tache.DateRendezVous = Nothing
@@ -1018,6 +1020,7 @@ Public Class TacheDao
         tache.Cloture = Coalesce(reader("cloture"), False)
         tache.TypedemandeRendezVous = Coalesce(reader("type_demande_rendez_vous"), "")
         tache.DateRendezVous = Coalesce(reader("date_rendez_vous"), Nothing)
+        tache.DateTraitementDemandeRendezVous = Coalesce(reader("date_traitement_demande_rendez_vous"), Nothing)
         Return tache
     End Function
 
@@ -1032,16 +1035,16 @@ Public Class TacheDao
         Try
             ' --- test si update tache parent todo
             If tache.ParentId <> 0 Then
-                closTache(con, tache.ParentId, EtatTache.TERMINEE, False, transaction)
+                ClosTache(con, tache.ParentId, EtatTache.TERMINEE, False, transaction)
             End If
 
             Dim SQLstring As String = "INSERT INTO oasis.oa_tache " &
                     "(parent_id, emetteur_user_id, emetteur_fonction_id, unite_sanitaire_id, site_id, patient_id, parcours_id, episode_id," &
                     " sous_episode_id, traite_user_id, traite_fonction_id, destinataire_fonction_id, priorite, ordre_affichage, categorie, type," &
-                    " nature, duree_mn, emetteur_commentaire, horodate_creation, etat, cloture, type_demande_rendez_vous, date_rendez_vous)" &
+                    " nature, duree_mn, emetteur_commentaire, horodate_creation, etat, cloture, type_demande_rendez_vous, date_rendez_vous, date_traitement_demande_rendez_vous)" &
             " VALUES (@parentId, @emetteurId, @emetteurFonctionId, @uniteSanitaireId, @siteId, @patientId, @parcoursId, @episodeId," &
                     " @sousEpisodeId, @traiteUserId, @traiteFonctionId, @destinataireFonctionId, @priorite, @ordreAffichage, @categorie, @type," &
-                    " @nature, @duree, @commentaire, @dateCreation, @etat, @cloture, @typedemandeRendezVous, @dateRendezVous)"
+                    " @nature, @duree, @commentaire, @dateCreation, @etat, @cloture, @typedemandeRendezVous, @dateRendezVous, @dateTraitementDemandeRendezVous)"
 
             Dim cmd As New SqlCommand(SQLstring, con, transaction)
             With cmd.Parameters
@@ -1069,6 +1072,7 @@ Public Class TacheDao
                 .AddWithValue("@cloture", tache.Cloture)
                 .AddWithValue("@typeDemandeRendezVous", If(tache.TypedemandeRendezVous = "", DBNull.Value, tache.TypedemandeRendezVous))
                 .AddWithValue("@dateRendezVous", If(tache.DateRendezVous = Nothing, DBNull.Value, tache.DateRendezVous))
+                .AddWithValue("@dateTraitementDemandeRendezVous", If(tache.DateTraitementDemandeRendezVous = Nothing, DBNull.Value, tache.DateTraitementDemandeRendezVous))
             End With
 
             da.InsertCommand = cmd
@@ -1109,6 +1113,186 @@ Public Class TacheDao
         Catch ex As Exception
             MsgBox(ex.Message)
             codeRetour = False
+        End Try
+
+        Return codeRetour
+    End Function
+
+    Friend Function CreationAutomatiqueDeDemandeRendezVous(Patient As Patient, parcours As Parcours, dateDebut As Date) As Boolean
+        'Calcul de la période (année, mois) du rendez-vous demandé
+        Dim Commentaire As String = ""
+        Dim Rythme As Integer = parcours.Rythme
+        Dim Base As String = parcours.Base
+
+        'Si le rythme n'est pas renseigné dans ce cas on ne peut pas générer automatiquement la demande de rendez-vous
+        If Rythme = 0 Then
+            Return False
+        End If
+
+        Dim Jour As Integer
+        Select Case Base
+            Case ParcoursDao.EnumParcoursBaseCode.Quotidien
+                Jour = 1
+            Case ParcoursDao.EnumParcoursBaseCode.Hebdomadaire
+                Jour = 7
+            Case ParcoursDao.EnumParcoursBaseCode.ParMois
+                Jour = 30
+            Case ParcoursDao.EnumParcoursBaseCode.ParAn
+                Jour = 365
+            Case ParcoursDao.EnumParcoursBaseCode.TousLes2Ans
+                Jour = 730
+            Case ParcoursDao.EnumParcoursBaseCode.TousLes3Ans
+                Jour = 1095
+            Case ParcoursDao.EnumParcoursBaseCode.TousLes4Ans
+                Jour = 1460
+            Case ParcoursDao.EnumParcoursBaseCode.TousLes5Ans
+                Jour = 1825
+            Case Else
+                CreateLog("Base de calcul des demandes de rendez-vous inconnue pour le parcours " & parcours.Id & " du patient " & Patient.patientId, "TacheDao.CreateDemandeRendezVous", LogDao.EnumTypeLog.ERREUR.ToString)
+                MessageBox.Show("Base de calcul de la demande de rendez-vous inconnue pour l'intervenant, la demande de rendez-vous a été créée avec un délai par défaut de 30 jours !")
+                Commentaire = "Base de calcul de la demande de rendez-vous inconnue pour l'intervenant, la demande de rendez-vous a été créée avec un délai par défaut de 30 jours !"
+                Jour = 30
+        End Select
+
+        'Récupérer la spécialité pour obtenir le délai de prise en charge de la spécialité
+        Dim specialite As Specialite = Environnement.Table_specialite.GetSpecialiteById(parcours.SpecialiteId)
+        Dim DelaiPriseEnCharge As Integer = specialite.DelaiPriseEnCharge
+
+        Dim DateRendezVousCalcul As Date
+        DateRendezVousCalcul = Date.Now().AddDays(Jour)
+
+        'Convertir la date en année et mois
+        Dim DateRendezVous As New Date(DateRendezVousCalcul.Year, DateRendezVousCalcul.Month, 1, 0, 0, 0)
+
+        'Récupération de l'utilisateur 'AUTO' qui sera déclaré comme utilisateur émetteur
+        Dim UserAutoId As Long
+        Dim UserAutoIdString As String = ConfigurationManager.AppSettings("IdUserAuto")
+        If IsNumeric(UserAutoIdString) Then
+            UserAutoId = CInt(UserAutoIdString)
+        Else
+            CreateLog("Paramètre application 'IdUserAuto' non trouvé !", "TacheDao.CreateDemandeRendezVous", LogDao.EnumTypeLog.ERREUR.ToString)
+            UserAutoId = 1
+        End If
+
+        'Récupération de la fonction emetteur par défaut
+        Dim FonctionEmetteurAutoId As Long
+        Dim FonctionEmetteurAutoIdString As String = ConfigurationManager.AppSettings("FonctionEmetteurAutoId")
+        If IsNumeric(FonctionEmetteurAutoIdString) Then
+            FonctionEmetteurAutoId = CInt(FonctionEmetteurAutoIdString)
+        Else
+            CreateLog("Paramètre application 'FonctionEmetteurAutoId' non trouvé !", "TacheDao.CreateDemandeRendezVous", LogDao.EnumTypeLog.ERREUR.ToString)
+            FonctionEmetteurAutoId = 14
+        End If
+
+        'Récupération de la duréee par défaut
+        Dim DureeRendezVousParDefaut As Integer
+        Dim DureeRendezVousParDefautString As String = ConfigurationManager.AppSettings("DureeRendezVousParDefaut")
+        If IsNumeric(DureeRendezVousParDefautString) Then
+            DureeRendezVousParDefaut = CInt(DureeRendezVousParDefautString)
+        Else
+            CreateLog("Paramètre application 'DureeRendezVousParDefaut' non trouvé !", "TacheDao.CreateDemandeRendezVous", LogDao.EnumTypeLog.ERREUR.ToString)
+            DureeRendezVousParDefaut = 15
+        End If
+
+        'Déterminer la fonction destinataire et la fonction qui doit traiter
+        Dim DestinataireFonctionId As Long
+        Dim TraiteFonctionId As Long
+        Select Case parcours.SousCategorieId
+            Case EnumSousCategoriePPS.medecinReferent
+                DestinataireFonctionId = FonctionDao.enumFonction.MEDECIN
+                TraiteFonctionId = FonctionDao.enumFonction.MEDECIN
+            Case EnumSousCategoriePPS.IDE
+                DestinataireFonctionId = FonctionDao.enumFonction.IDE
+                TraiteFonctionId = FonctionDao.enumFonction.IDE
+            Case EnumSousCategoriePPS.sageFemme
+                If parcours.SpecialiteId = EnumSpecialiteOasis.sageFemmeOasis Then
+                    DestinataireFonctionId = FonctionDao.enumFonction.SAGE_FEMME
+                    TraiteFonctionId = FonctionDao.enumFonction.SAGE_FEMME
+                Else
+                    DestinataireFonctionId = FonctionDao.enumFonction.SPECIALISTE_NON_OASIS
+                    TraiteFonctionId = FonctionDao.enumFonction.IDE
+                End If
+            Case EnumSousCategoriePPS.specialiste
+                DestinataireFonctionId = FonctionDao.enumFonction.SPECIALISTE_NON_OASIS
+                TraiteFonctionId = FonctionDao.enumFonction.IDE
+            Case Else
+                DestinataireFonctionId = FonctionDao.enumFonction.INCONNU
+                TraiteFonctionId = FonctionDao.enumFonction.IDE
+        End Select
+
+        'Alimentation du bean Tache
+        Dim tache As New Tache
+        tache.ParentId = 0
+        tache.EmetteurUserId = UserAutoId 'auto
+        tache.EmetteurFonctionId = FonctionEmetteurAutoId
+        tache.UniteSanitaireId = Patient.PatientUniteSanitaireId
+        tache.SiteId = Patient.PatientSiteId
+        tache.PatientId = Patient.patientId
+        tache.ParcoursId = parcours.Id
+        tache.EpisodeId = 0
+        tache.SousEpisodeId = 0
+        tache.TraiteUserId = 0
+        tache.TraiteFonctionId = TraiteFonctionId
+        tache.DestinataireFonctionId = DestinataireFonctionId
+        tache.Priorite = TacheDao.Priorite.BASSE
+        tache.OrdreAffichage = 20
+        tache.Categorie = TacheDao.CategorieTache.SOIN.ToString
+        tache.Type = TacheDao.TypeTache.RDV_DEMANDE.ToString()
+        tache.Nature = TacheDao.NatureTache.RDV_DEMANDE.ToString
+        tache.Duree = DureeRendezVousParDefaut
+        tache.EmetteurCommentaire = Commentaire
+        tache.HorodatageCreation = Date.Now()
+        tache.Etat = TacheDao.EtatTache.EN_ATTENTE.ToString
+        tache.TypedemandeRendezVous = TacheDao.TypeDemandeRendezVous.ANNEEMOIS.ToString
+        tache.DateRendezVous = DateRendezVous
+        tache.DateTraitementDemandeRendezVous = DateRendezVous.AddDays(-DelaiPriseEnCharge)
+
+        Dim codeRetour As Boolean = True
+        Dim con As SqlConnection
+        con = GetConnection()
+
+        'Contrôler qu'une demande de rendez-vous n'existe pas déjà avant de la créer
+        Try
+            Dim command As SqlCommand = con.CreateCommand()
+
+            command.CommandText =
+                "SELECT 1 FROM oasis.oa_tache" & vbCrLf &
+                " WHERE patient_id = " & tache.PatientId & vbCrLf &
+                " AND parcours_id = " & tache.ParcoursId & vbCrLf &
+                " AND type = '" & TypeTache.RDV_DEMANDE.ToString & "'" & vbCrLf &
+                " AND (etat = '" & EtatTache.EN_COURS.ToString & "' OR etat = '" & EtatTache.EN_ATTENTE.ToString & "')"
+
+            'Console.WriteLine(SQLstring)
+
+            With command.Parameters
+                '.AddWithValue("@patientId", Patient.patientId)
+                '.AddWithValue("@parcoursId", parcoursId)
+                '.AddWithValue("@etat", EtatTache.TERMINEE.ToString)
+                '.AddWithValue("@categorie", CategorieTache.SOIN.ToString)
+                '.AddWithValue("@type", TypeTache.RDV.ToString)
+                '.AddWithValue("@type2", TypeTache.RDV_SPECIALISTE.ToString)
+                '.AddWithValue("@nature", NatureTache.RDV.ToString)
+                '.AddWithValue("@nature2", NatureTache.RDV_SPECIALISTE.ToString)
+            End With
+
+            Using reader As SqlDataReader = command.ExecuteReader()
+                If reader.Read() Then
+                    codeRetour = False
+                Else
+                    Try
+                        If CreateTache(tache) = True Then
+                            codeRetour = True
+                        End If
+                    Catch ex As Exception
+                        MsgBox(ex.Message)
+                        codeRetour = False
+                    End Try
+                End If
+            End Using
+        Catch ex As Exception
+            Throw ex
+        Finally
+            con.Close()
         End Try
 
         Return codeRetour
@@ -1190,7 +1374,7 @@ Public Class TacheDao
 
         con = GetConnection()
         Try
-            closTache(con, idTache, EtatTache.ANNULEE, True)
+            ClosTache(con, idTache, EtatTache.ANNULEE, True)
 
         Catch ex As Exception
             MessageBox.Show(ex.Message)
@@ -1240,7 +1424,7 @@ Public Class TacheDao
 
         con = GetConnection()
         Try
-            closTache(con, idTache, EtatTache.TERMINEE, cloture)
+            ClosTache(con, idTache, EtatTache.TERMINEE, cloture)
             codeRetour = True
         Catch ex As Exception
             MessageBox.Show(ex.Message)
@@ -1273,7 +1457,7 @@ Public Class TacheDao
         If tache.EmetteurFonctionId <> 0 Then tacheBeanAssocie.FonctionEmetteur = fonctionDao.getFonctionById(tache.EmetteurFonctionId)
         tacheBeanAssocie.UniteSanitaire = uniteSanitaireDao.getUniteSanitaireById(tache.UniteSanitaireId, True)
         tacheBeanAssocie.Site = siteDao.getSiteById(tache.SiteId, True)
-        tacheBeanAssocie.Patient = PatientDao.getPatientById(tache.PatientId)
+        tacheBeanAssocie.Patient = PatientDao.GetPatientById(tache.PatientId)
         If tache.ParcoursId <> 0 Then
             tacheBeanAssocie.Parcours = parcoursDao.getParcoursById(tache.ParcoursId)
             If tacheBeanAssocie.Parcours.SpecialiteId <> 0 Then
@@ -1315,7 +1499,7 @@ Public Class TacheDao
 
             Using reader As SqlDataReader = command.ExecuteReader()
                 If reader.Read() Then
-                    tache = buildBean(reader)
+                    tache = BuildBean(reader)
                 Else
                     tache.Id = 0
                     tache.DateRendezVous = Nothing

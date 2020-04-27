@@ -27,6 +27,7 @@ Public Class Tache
     Private _etat As String
     Private _Cloture As Boolean
     Private _typedemandeRendezVous As String
+    Private _dateTraitementDemandeRendezVous As DateTime
     Private _dateRendezVous As Date
 
     Public Property Id As Long
@@ -269,6 +270,15 @@ Public Class Tache
         End Get
         Set(value As Boolean)
             _Cloture = value
+        End Set
+    End Property
+
+    Public Property DateTraitementDemandeRendezVous As Date
+        Get
+            Return _dateTraitementDemandeRendezVous
+        End Get
+        Set(value As Date)
+            _dateTraitementDemandeRendezVous = value
         End Set
     End Property
 

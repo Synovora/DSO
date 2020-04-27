@@ -283,6 +283,17 @@ Public Class RadFPatientRendezVousListe
                                     Me.RadDesktopAlert1.ContentText = "Rendez-vous clôturé"
                                     Me.RadDesktopAlert1.Show()
 
+                                    'Généreration d'une demande de rendez-vous suite à la cloture du rendez-vous en cours
+                                    Dim parcoursId As Long = RadGridViewRDV.Rows(aRow).Cells("parcours_id").Value
+                                    Dim parcoursDao As New ParcoursDao
+                                    Dim parcours As Parcours = parcoursDao.getParcoursById(parcoursId)
+                                    If parcours.Rythme <> 0 Then
+                                        If tacheDao.CreationAutomatiqueDeDemandeRendezVous(SelectedPatient, parcours, tache.DateRendezVous.Date) = True Then
+                                            Me.RadDesktopAlert1.CaptionText = "Notification demande de rendez-vous"
+                                            Me.RadDesktopAlert1.ContentText = "Une demande de rendez-vous a été automatiquement générée pour cet intervenant"
+                                            Me.RadDesktopAlert1.Show()
+                                        End If
+                                    End If
                                     ChargementListeRendezvous()
                                 End If
                             Else
