@@ -5,7 +5,7 @@ Imports Oasis_Common
 Public Class PrtSynthese
     Public Property SelectedPatient As Patient
 
-    ReadOnly EditTools As New OasisTextTools
+    Dim EditTools As OasisTextTools
 
     Dim aldDao As New AldDao
 
@@ -13,6 +13,7 @@ Public Class PrtSynthese
         Dim section = EditTools.CreateSection()
         Dim document = EditTools.AddSectionIntoDocument(Nothing, section)
 
+        EditTools = New OasisTextTools
         Try
             PrintEntete(section)
             PrintEtatCivil(section)
