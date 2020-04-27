@@ -15,6 +15,7 @@ Public Class FrmAdministrateur
             MsgBox("Mot de passe admin incorrect")
             Return
         End If
+        ResetPermission()
         MsgBox("Poste débloqué")
         afficheTry()
 
