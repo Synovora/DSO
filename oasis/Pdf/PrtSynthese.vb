@@ -900,6 +900,9 @@ Public Class PrtSynthese
             'Affichage contexte ==========================
             Dim contexteDescription As String
             contexteDescription = Coalesce(contexteDataTable.Rows(i)("oa_antecedent_description"), "")
+            If contexteDescription <> "" Then
+                contexteDescription = Replace(contexteDescription, vbCrLf, " ")
+            End If
 
             If PremierPassage = True Then
                 Dim rowTitre As New TableRow()
@@ -916,7 +919,7 @@ Public Class PrtSynthese
             Dim row As New TableRow()
             Dim cellContexte As New TableCell()
             cellContexte.PreferredWidth = New TableWidthUnit(TableWidthUnitType.Fixed, LargeurCol1)
-            EditTools.SetCell(cellContexte, contexteDescription, 10)
+            EditTools.SetCell(cellContexte, AfficheDateModification & diagnostic & " " & contexteDescription, 10)
             row.Cells.Add(cellContexte)
             table.Rows.Add(row)
         Next

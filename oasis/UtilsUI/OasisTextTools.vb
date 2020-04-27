@@ -43,7 +43,7 @@ Public Class OasisTextTools
         'ex When the section has already been added to the document
 
         'editeur.ChangeSectionPageMargin(New Telerik.WinForms.Documents.Layout.Padding(40, 40, 30, 30))
-
+        'editor.ChangeFontFamily(New FontFamily("Times New Roman"))
         section.PageOrientation = orientation
         section.PageSize = PaperTypeConverter.ToSize(PaperTypes.A4)
 

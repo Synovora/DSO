@@ -4149,17 +4149,17 @@ Public Class RadFEpisodeDetail
             End If
 
             'Préparation de l'affichage du contexte
-            Dim longueurString As Integer
-            Dim longueurMax As Integer = 150
+            'Dim longueurString As Integer
+            'Dim longueurMax As Integer = 150
             Dim contexteDescription As String
             contexteDescription = Coalesce(contexteDataTable.Rows(i)("oa_antecedent_description"), "")
             If contexteDescription <> "" Then
                 contexteDescription = Replace(contexteDescription, vbCrLf, " ")
-                longueurString = contexteDescription.Length
-                If longueurString > longueurMax Then
-                    longueurString = longueurMax
-                End If
-                contexteDescription.Substring(0, longueurString)
+                'longueurString = contexteDescription.Length
+                'If longueurString > longueurMax Then
+                'longueurString = longueurMax
+                'End If
+                'contexteDescription.Substring(0, longueurString)
             End If
 
             RadContexteDataGridView.Rows(iGrid).Cells("contexte").Value = AfficheDateModification & diagnostic & " " & contexteDescription
