@@ -281,6 +281,8 @@ Public Class RadFEpisodeDetail
                 Try
                     If tacheDao.ClotureTache(RendezVousId, True) = True Then
                         Me.IsRendezVousCloture = True
+                        'Généreration automatique d'une demande de rendez-vous suite à la cloture du rendez-vous en cours
+                        GenerationDemandeRendezVous(tacheRendezVous)
                     End If
                 Catch ex As Exception
                     If ex.ToString.StartsWith("Collision") Then
@@ -333,6 +335,23 @@ Public Class RadFEpisodeDetail
                     Exit Sub
                 End If
                 ClotureRendezVous(tacheRendezVous)
+                'Généreration automatique d'une demande de rendez-vous suite à la cloture du rendez-vous en cours
+                GenerationDemandeRendezVous(tacheRendezVous)
+            End If
+        End If
+    End Sub
+
+    Private Sub GenerationDemandeRendezVous(tacheRendezVous As Tache)
+        Dim parcoursId As Long = tacheRendezVous.ParcoursId
+        If parcoursId <> 0 Then
+            Dim parcoursDao As New ParcoursDao
+            Dim parcours As Parcours = parcoursDao.getParcoursById(tacheRendezVous.ParcoursId)
+            If parcours.Rythme <> 0 Then
+                If tacheDao.CreationAutomatiqueDeDemandeRendezVous(SelectedPatient, parcours, tacheRendezVous.DateRendezVous.Date) = True Then
+                    Me.RadDesktopAlert1.CaptionText = "Notification demande de rendez-vous"
+                    Me.RadDesktopAlert1.ContentText = "Une demande de rendez-vous a été automatiquement générée pour cet intervenant"
+                    Me.RadDesktopAlert1.Show()
+                End If
             End If
         End If
     End Sub

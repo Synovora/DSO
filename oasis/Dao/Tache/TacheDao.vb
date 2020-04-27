@@ -549,7 +549,7 @@ Public Class TacheDao
                     Try
                         tacheDataAdapter.Fill(tacheDataTable)
                     Catch ex As Exception
-                        Throw ex
+                        MessageBox.Show(ex.Message)
                     End Try
                     Return tacheDataTable
                 End Using
@@ -612,7 +612,7 @@ Public Class TacheDao
                     Try
                         tacheDataAdapter.Fill(tacheDataTable)
                     Catch ex As Exception
-                        Throw ex
+                        MessageBox.Show(ex.Message)
                     End Try
                     Return tacheDataTable
                 End Using
@@ -654,7 +654,7 @@ Public Class TacheDao
                     Try
                         tacheDataAdapter.Fill(tacheDataTable)
                     Catch ex As Exception
-                        Throw ex
+                        MessageBox.Show(ex.Message)
                     End Try
                     Return tacheDataTable
                 End Using
@@ -702,7 +702,7 @@ Public Class TacheDao
                 End If
             End Using
         Catch ex As Exception
-            Throw ex
+            MessageBox.Show(ex.Message)
         Finally
             con.Close()
         End Try
@@ -798,7 +798,7 @@ Public Class TacheDao
                 End If
             End Using
         Catch ex As Exception
-            Throw ex
+            MessageBox.Show(ex.Message)
         Finally
             con.Close()
         End Try
@@ -892,7 +892,7 @@ Public Class TacheDao
                 End If
             End Using
         Catch ex As Exception
-            Throw ex
+            MessageBox.Show(ex.Message)
         Finally
             con.Close()
         End Try
@@ -1285,7 +1285,7 @@ Public Class TacheDao
                 End If
             End Using
         Catch ex As Exception
-            Throw ex
+            MessageBox.Show(ex.Message)
         Finally
             con.Close()
         End Try
@@ -1405,11 +1405,16 @@ Public Class TacheDao
             .AddWithValue("@etat2", etatFinal.ToString)
         End With
 
-        da.UpdateCommand = cmd
-        nbUpdate = da.UpdateCommand.ExecuteNonQuery()
-        If nbUpdate <= 0 Then
-            Throw New Exception("Collision , Tâche déjà traitée par un autre utilisateur !")
-        End If
+        Try
+            da.UpdateCommand = cmd
+            nbUpdate = da.UpdateCommand.ExecuteNonQuery()
+            If nbUpdate <= 0 Then
+                Throw New Exception("Collision , Tâche déjà traitée par un autre utilisateur !")
+            End If
+        Catch ex As Exception
+            MessageBox.Show(ex.Message)
+        End Try
+
     End Sub
 
 
@@ -1504,7 +1509,7 @@ Public Class TacheDao
                 End If
             End Using
         Catch ex As Exception
-            Throw ex
+            MessageBox.Show(ex.Message)
         Finally
             con.Close()
         End Try
@@ -1548,7 +1553,7 @@ Public Class TacheDao
                 End If
             End Using
         Catch ex As Exception
-            Throw ex
+            MessageBox.Show(ex.Message)
         Finally
             con.Close()
         End Try
