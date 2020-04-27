@@ -286,9 +286,12 @@ Public Class PrtOrdonnance
                 row.Cells.Add(cellDetail2)
 
                 Dim Delivrance As String = ""
-                If MedicamentADelivrer = False Then
-                    Delivrance = "Ne pas delivrer"
+                If traitementId <> 0 Then
+                    If MedicamentADelivrer = False Then
+                        Delivrance = "Ne pas delivrer"
+                    End If
                 End If
+
                 Dim cellDetail3 As New TableCell()
                 cellDetail3.PreferredWidth = New TableWidthUnit(TableWidthUnitType.Fixed, LargeurCol3)
                 Dim spanDetail3 As New Span()

@@ -261,7 +261,7 @@ Public Class RadFOrdonnanceListeDetail
                 RadAldGridView.Rows(iGridALD).Cells("posologie").Style.ForeColor = Color.Red
             End If
             If ordonnanceDetailGrid.ADelivrer = True Then
-                RadAldGridView.Rows(iGridALD).Cells("delivrance").Value = "" 'OrdonnanceDetailDao.EnumDelivrance.A_DELIVRER
+                RadAldGridView.Rows(iGridALD).Cells("delivrance").Value = ""
             Else
                 RadAldGridView.Rows(iGridALD).Cells("delivrance").Value = OrdonnanceDetailDao.EnumDelivrance.NE_PAS_DELIVRER
             End If
