@@ -74,7 +74,9 @@ Public Class PrtSynthese
             .AddTexteLine(Ligne1)
             .AddTexteLine(ligne2)
             .AddTexteLine(ligne3)
-            .AddTexteLine(ALD)
+            If ALD <> "" Then
+                .AddTexteLine(ALD)
+            End If
         End With
     End Sub
 
@@ -538,8 +540,8 @@ Public Class PrtSynthese
             'Dim commentairePosologie As String = Coalesce(traitementDataTable.Rows(i)("oa_traitement_posologie_commentaire"), "")
 
 
-            'Dim TextMedicamentDci As String = traitementDataTable.Rows(i)("oa_traitement_medicament_dci")
-            Dim TextMedicamentDci As String = traitementDataTable.Rows(i)("oa_traitement_denomination_longue")
+            Dim TextMedicamentDci As String = traitementDataTable.Rows(i)("oa_traitement_medicament_dci")
+            'Dim TextMedicamentDci As String = traitementDataTable.Rows(i)("oa_traitement_denomination_longue")
 
             'Posologie
             Dim TextPosologie As String = Posologie

@@ -816,12 +816,7 @@ Public Class TacheDao
             Dim command As SqlCommand = con.CreateCommand()
 
             command.CommandText =
-                "SELECT TOP (1) " &
-                " [id], [parent_id], [emetteur_user_id], [emetteur_fonction_id], [unite_sanitaire_id], [site_id], [patient_id]," &
-                " [parcours_id], [episode_id], [sous_episode_id], [traite_user_id], [traite_fonction_id], [destinataire_fonction_id]," &
-                " [priorite], [ordre_affichage], [categorie], [type], [nature], [duree_mn], [emetteur_commentaire], [horodate_creation]," &
-                " [horodate_attrib], [horodate_cloture], [etat], [cloture], [type_demande_rendez_vous], [date_rendez_vous]," &
-                " F.oa_r_fonction_id, F.oa_r_fonction_type" &
+                "SELECT TOP (1) * " &
                 " FROM oasis.oasis.oa_tache" &
                 " LEFT JOIN oasis.oa_r_fonction F on F.oa_r_fonction_id = destinataire_fonction_id" &
                 " WHERE patient_Id = @patientId" &
@@ -850,7 +845,7 @@ Public Class TacheDao
                 End If
             End Using
         Catch ex As Exception
-            Throw ex
+            MessageBox.Show(ex.Message)
         Finally
             con.Close()
         End Try
