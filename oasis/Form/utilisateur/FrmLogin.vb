@@ -7,7 +7,6 @@ Imports Telerik.WinControls.UI.Localization
 Imports Telerik.WinForms.RichTextEditor
 
 Public Class FrmLogin
-    Dim nbTry As Integer = 0
 
     ''' <summary>
     ''' 
@@ -74,6 +73,9 @@ Public Class FrmLogin
             Return
         End If
 
+        If IsPermission() = False Then PasLeDroitLala()
+
+
         ' objet global pour APIs
         loginRequestLog = New LoginRequest() With {
                 .login = Me.TxtLogin.Text,
@@ -87,12 +89,8 @@ Public Class FrmLogin
                 Using apiOasis As New ApiOasis()
                     StandardDao.fixConnectionString(apiOasis.loginRest(loginRequestLog))
                 End Using
-
             Catch ex As Exception
-                nbTry += 1
-                If nbTry = 5 Then
-
-                End If
+                If ex.Message = "Identifiant et/ou mot de passe erroné !" AndAlso IsPermission(True) = False Then PasLeDroitLala()
                 If MsgBox("" & ex.Message & vbCrLf & "Réessayer ?", MsgBoxStyle.YesNo Or MessageBoxIcon.Error, "Authentification Api") = MsgBoxResult.Yes Then
                     Return
                 Else
@@ -111,11 +109,14 @@ Public Class FrmLogin
             userLog = userDao.getUserByLoginPassword(Me.TxtLogin.Text, Me.TxtPassword.Text)
         Catch ex As Exception
             Me.Cursor = Cursors.Default
+            If ex.Message = "Identifiant et/ou mot de passe erroné !" AndAlso IsPermission(True) = False Then PasLeDroitLala()
             Dim unused = MessageBox.Show("" & ex.Message, "Authentification", MessageBoxButtons.OK, MessageBoxIcon.Error)
             Return
         Finally
             Me.Cursor = Cursors.Default
         End Try
+
+        ResetPermission()
 
         ' --- test si changement de mot de passe imposé
         If userLog.IsPasswordUniqueUsage OrElse isChgtVolontaire Then
@@ -125,7 +126,6 @@ Public Class FrmLogin
         Me.Cursor = Cursors.WaitCursor
         Application.DoEvents()
         Try
-            nbTry = 0
             'Using form As New FrmTacheMain
             Using form As New RadFPatientListe
                 form.UtilisateurConnecte = userLog
@@ -143,6 +143,12 @@ Public Class FrmLogin
         Me.Show()
         TxtLogin.Focus()
 
+    End Sub
+
+    Private Sub PasLeDroitLala()
+        MsgBox("SECURITÉ - POSTE BLOQUÉ" & vbCrLf & "Contactez votre administrateur !", MsgBoxStyle.OkOnly Or MessageBoxIcon.Stop, "Contrôle de Sécurité")
+        Close()
+        End
     End Sub
 
     ''' <summary>

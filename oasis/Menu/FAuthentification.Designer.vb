@@ -36,6 +36,8 @@ Partial Class FAuthentificattion
         Me.BtnTheriaque = New System.Windows.Forms.Button()
         Me.BtnTemplateSsEpisode = New System.Windows.Forms.Button()
         Me.BtnLogin = New System.Windows.Forms.Button()
+        Me.BtnDebloque = New System.Windows.Forms.Button()
+        Me.LblNbTry = New System.Windows.Forms.Label()
         Me.GroupBox1.SuspendLayout()
         Me.SuspendLayout()
         '
@@ -158,12 +160,32 @@ Partial Class FAuthentificattion
         Me.BtnLogin.Text = "Login"
         Me.BtnLogin.UseVisualStyleBackColor = True
         '
+        'BtnDebloque
+        '
+        Me.BtnDebloque.Location = New System.Drawing.Point(219, 174)
+        Me.BtnDebloque.Name = "BtnDebloque"
+        Me.BtnDebloque.Size = New System.Drawing.Size(117, 23)
+        Me.BtnDebloque.TabIndex = 19
+        Me.BtnDebloque.Text = "Débloque Poste"
+        Me.BtnDebloque.UseVisualStyleBackColor = True
+        '
+        'LblNbTry
+        '
+        Me.LblNbTry.AutoSize = True
+        Me.LblNbTry.Location = New System.Drawing.Point(222, 153)
+        Me.LblNbTry.Name = "LblNbTry"
+        Me.LblNbTry.Size = New System.Drawing.Size(39, 13)
+        Me.LblNbTry.TabIndex = 20
+        Me.LblNbTry.Text = "Label1"
+        '
         'FAuthentificattion
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.CancelButton = Me.BtnAbandon
         Me.ClientSize = New System.Drawing.Size(372, 310)
+        Me.Controls.Add(Me.LblNbTry)
+        Me.Controls.Add(Me.BtnDebloque)
         Me.Controls.Add(Me.BtnLogin)
         Me.Controls.Add(Me.BtnTemplateSsEpisode)
         Me.Controls.Add(Me.BtnTheriaque)
@@ -200,4 +222,6 @@ Partial Class FAuthentificattion
     Friend WithEvents BtnTheriaque As Button
     Friend WithEvents BtnTemplateSsEpisode As Button
     Friend WithEvents BtnLogin As Button
+    Friend WithEvents BtnDebloque As Button
+    Friend WithEvents LblNbTry As Label
 End Class

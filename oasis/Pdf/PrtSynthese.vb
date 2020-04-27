@@ -64,7 +64,7 @@ Public Class PrtSynthese
             "   Rattachement au site Oasis de " & Environnement.Table_site.GetSiteDescription(SelectedPatient.PatientSiteId) &
             "   -  Dernière mise à jour de la synthèse : " & FormatageDateAffichage(SelectedPatient.PatientSyntheseDateMaj, True)
 
-        Dim ALD As String = AldDao.DateFinALD(Me.SelectedPatient.patientId)
+        Dim ALD As String = aldDao.DateFinALD(Me.SelectedPatient.patientId)
         ALD = ALD.Replace(vbCrLf, " ")
 
         With EditTools

@@ -76,12 +76,12 @@ Partial Class SplashForm
         Me.RadLabel1.AutoSize = False
         Me.RadLabel1.Dock = System.Windows.Forms.DockStyle.Bottom
         Me.RadLabel1.ForeColor = System.Drawing.Color.White
-        Me.RadLabel1.Location = New System.Drawing.Point(0, 400)
+        Me.RadLabel1.Location = New System.Drawing.Point(0, 396)
         Me.RadLabel1.Name = "RadLabel1"
-        Me.RadLabel1.Size = New System.Drawing.Size(590, 18)
+        Me.RadLabel1.Size = New System.Drawing.Size(590, 22)
         Me.RadLabel1.TabIndex = 2
-        Me.RadLabel1.Text = "(C) Synovora France 2020"
-        Me.RadLabel1.TextAlignment = System.Drawing.ContentAlignment.MiddleCenter
+        Me.RadLabel1.Text = "(C) Synovora France 2019/2020"
+        Me.RadLabel1.TextAlignment = System.Drawing.ContentAlignment.TopCenter
         '
         'SplashForm
         '

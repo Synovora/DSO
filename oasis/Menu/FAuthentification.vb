@@ -31,6 +31,7 @@ Public Class FAuthentificattion
         InitializeComponent()
 
         ' Ajoutez une initialisation quelconque après l'appel InitializeComponent().
+        afficheTry()
     End Sub
 
     Private Sub FAuthentificattion_Load(sender As Object, e As EventArgs) Handles MyBase.Load
@@ -245,5 +246,18 @@ Public Class FAuthentificattion
             Me.Cursor = Cursors.Default
         End Try
 
+    End Sub
+
+    Private Sub BtnDebloque_Click(sender As Object, e As EventArgs) Handles BtnDebloque.Click
+        ResetPermission()
+        afficheTry()
+        MsgBox("Poste débloqué")
+
+    End Sub
+
+    Private Sub afficheTry()
+        Dim nb = ReadPermTry()
+        LblNbTry.Text = "Nbre essai(s) en cours : " & nb & "/" & MAX_TRY
+        LblNbTry.ForeColor = If(nb >= MAX_TRY, Color.Red, Color.Black)
     End Sub
 End Class

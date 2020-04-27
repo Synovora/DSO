@@ -2,6 +2,7 @@
 Imports System.IO
 Imports System.Security.Cryptography
 Imports System.Text
+Imports Microsoft.Win32
 
 Public Module ModuleUtils
 
@@ -9,6 +10,7 @@ Public Module ModuleUtils
     Private ReadOnly SALT As Byte() = New Byte() {&H26, &HDC, &HFF, &H0, &HAD, &HED, &H7A, &HEE, &HC5, &HFE, &H7, &HAF, &H4D, &H8, &H22, &H3C}
     Private Const chaineStartCrypt As String = "#PE#"
     Public ReadOnly messageFormatPassword As String = "Au moins 8 caractères, une majuscule, une minuscule, un chiffre et un caractère spécial"
+    Public ReadOnly MAX_TRY As Integer = 5
 
     ''' <summary>
     ''' 
@@ -115,5 +117,53 @@ Public Module ModuleUtils
         ' Passed all checks.
         Return True
     End Function
+
+
+    ''' <summary>
+    ''' 
+    ''' </summary>
+    ''' <returns></returns>
+    Public Function IsPermission(Optional incremente As Boolean = False) As Boolean
+        Dim ret = ReadPermTry()
+        If incremente Then
+            ret += 1
+            WritePermTry(ret)
+        End If
+        Return ret <= MAX_TRY
+    End Function
+
+    ''' <summary>
+    ''' 
+    ''' </summary>
+    Public Sub ResetPermission()
+        WritePermTry(0)
+    End Sub
+
+    ''' <summary>
+    ''' 
+    ''' </summary>
+    ''' <returns></returns>
+    Public Function ReadPermTry() As Integer
+        '-- cration eventuelle de la clé
+        Using uediSurveyKey = Registry.CurrentUser.CreateSubKey("Software\USYNSurvey")
+        End Using
+        Dim readValue = "" & My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Software\USYNSurvey", "USS", EncryptString("" & 0))
+        Dim ret As New Integer
+        If Integer.TryParse(DecryptString(readValue), ret) = False Then
+            ret = Integer.MaxValue - 1 ' -- on n'arrive pas à decoder => le pirate a trafiqué la valeur à la main ds la base de registre et là : je mets le nbre d'essais au MAX !
+        End If
+        Return ret
+    End Function
+
+    ''' <summary>
+    ''' 
+    ''' </summary>
+    ''' <param name="value"></param>
+    Private Sub WritePermTry(value As Integer)
+        Using uediSurveyKey = Registry.CurrentUser.CreateSubKey("Software\USYNSurvey")
+            uediSurveyKey.SetValue("USS", EncryptString("" & value))
+        End Using
+    End Sub
+
 
 End Module
