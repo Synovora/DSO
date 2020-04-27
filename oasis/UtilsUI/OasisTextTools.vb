@@ -10,7 +10,7 @@ Public Class OasisTextTools
     Implements IDisposable
     Public Property editor As RadRichTextEditor
 
-    Dim paragraphe As Paragraph  ' paragraphe en cours
+    Dim paragrapheEnCours As Paragraph  ' paragraphe en cours
 
     Public Sub New()
         init()
@@ -65,63 +65,62 @@ Public Class OasisTextTools
         paragraphe.TextAlignment = textAlignment
         section.Blocks.Add(paragraphe)    '--- ajout paragraphe à la section
 
-        Me.paragraphe = paragraphe
+        Me.paragrapheEnCours = paragraphe
         Return paragraphe
 
     End Function
 
-    Public Function AddTexte(text As String,
+    Public Sub AddTexte(text As String,
                              Optional fontSize As Double = 12,
                              Optional fontWeight As Telerik.WinControls.RichTextEditor.UI.FontWeight = Nothing,
-                             Optional paragraph As Paragraph = Nothing
-                             ) As Span
+                             Optional fontForeColor As Color = Nothing
+                             )
+        If paragrapheEnCours Is Nothing Then Throw New Exception("Pas de paragraphe en cours")
         Dim span = New Span()
-        span.FontSize = If(IsNothing(fontSize), paragraphe.FontSize, fontSize)
+        span.FontSize = If(IsNothing(fontSize), paragrapheEnCours.FontSize, fontSize)
         If IsNothing(fontWeight) = False Then span.FontWeight = fontWeight   ' ex : Telerik.WinControls.RichTextEditor.UI.FontWeights.Bold
 
+        If fontForeColor.ToString <> "#00000000" Then
+            span.ForeColor = fontForeColor
+        End If
+        'span.ForeColor = If(IsNothing(fontForeColor), Colors.Black, fontForeColor)
         span.Text = text
-        If paragraph Is Nothing Then recupParagraphe()
 
-        Me.paragraphe.Inlines.Add(span)
-        Return span
-
-    End Function
-
-    Private Sub recupParagraphe()
-        If Me.paragraphe Is Nothing Then Me.paragraphe = New Paragraph()
+        Me.paragrapheEnCours.Inlines.Add(span)
+        Return
 
     End Sub
 
-    Public Function AddTexteLine(texte As String,
+    Public Sub AddTexteLine(texte As String,
                                                      Optional fontSize As Double = 12,
                                                      Optional fontWeight As Telerik.WinControls.RichTextEditor.UI.FontWeight = Nothing,
-                                                     Optional paragraph As Paragraph = Nothing
-                                                     ) As Span
-        Dim span = AddTexte(texte, fontSize, fontWeight, paragraphe)
-        If paragraph Is Nothing Then recupParagraphe()
-        AddNewLigne(paragraph)
-        Return span
+                                                     Optional fontForeColor As Color = Nothing
+                                                     )
+        If paragrapheEnCours Is Nothing Then Throw New Exception("Pas de paragraphe en cours")
+        AddTexte(texte, fontSize, fontWeight, fontForeColor)
+        AddNewLigne()
+        Return
 
-    End Function
+    End Sub
 
     Public Function AddTexteAfterANewLine(texte As String,
                                         Optional fontSize As Double = 12,
-                                        Optional fontWeight As Telerik.WinControls.RichTextEditor.UI.FontWeight = Nothing, Optional paragraphe As Paragraph = Nothing
-                                        ) As Span
-        AddNewLigne(paragraphe)
-        Return AddTexte(texte, fontSize, fontWeight, paragraphe)
+                                        Optional fontWeight As Telerik.WinControls.RichTextEditor.UI.FontWeight = Nothing, Optional paragraphe As Paragraph = Nothing,
+                                        Optional fontForeColor As Color = Nothing
+                                        )
+        If paragrapheEnCours Is Nothing Then Throw New Exception("Pas de paragraphe en cours")
+        AddNewLigne()
+        AddTexte(texte, fontSize, fontWeight, fontForeColor)
     End Function
 
-    Public Sub AddNewLigne(Optional paragraphe As Paragraph = Nothing)
-        If paragraphe Is Nothing Then recupParagraphe()
-
-        Me.paragraphe.Inlines.Add(New Break(BreakType.LineBreak))
+    Public Sub AddNewLigne()
+        If paragrapheEnCours Is Nothing Then Throw New Exception("Pas de paragraphe en cours")
+        Me.paragrapheEnCours.Inlines.Add(New Break(BreakType.LineBreak))
     End Sub
 
-    Public Sub AddNewPage(Optional paragraphe As Paragraph = Nothing)
-        If paragraphe Is Nothing Then recupParagraphe()
-
-        Me.paragraphe.Inlines.Add(New Break(BreakType.PageBreak))
+    Public Sub AddNewPage()
+        If paragrapheEnCours Is Nothing Then Throw New Exception("Pas de paragraphe en cours")
+        Me.paragrapheEnCours.Inlines.Add(New Break(BreakType.PageBreak))
     End Sub
 
     Public Sub SaveAsPdfToFile(ByVal pathFile As String)
