@@ -824,6 +824,7 @@ Public Class TacheDao
                 " AND categorie = @categorie" &
                 " AND [type] = @type" &
                 " AND nature = @nature" &
+                " AND oa_r_fonction_type = @typeProfil" &
                 " ORDER BY date_rendez_vous DESC"
 
             With command.Parameters
@@ -832,6 +833,7 @@ Public Class TacheDao
                 .AddWithValue("@categorie", CategorieTache.SOIN.ToString)
                 .AddWithValue("@type", TypeTache.RDV.ToString)
                 .AddWithValue("@nature", NatureTache.RDV.ToString)
+                .AddWithValue("@typeProfil", typeProfil)
             End With
 
             Using reader As SqlDataReader = command.ExecuteReader()

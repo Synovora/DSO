@@ -1,4 +1,5 @@
 ﻿Imports System.Data.SqlClient
+Imports System.Windows.Forms
 
 Public Class FonctionDao
     Inherits StandardDao
@@ -34,7 +35,7 @@ Public Class FonctionDao
         Dim strRequete As String
         Dim isWhere As Boolean = False
 
-        Using con As SqlConnection = getConnection()
+        Using con As SqlConnection = GetConnection()
             Dim command As SqlCommand = con.CreateCommand()
             Try
                 strRequete =
@@ -99,7 +100,7 @@ Public Class FonctionDao
             End Using
 
         Catch ex As Exception
-            Throw ex
+            MessageBox.Show(ex.Message)
         Finally
             con.Close()
         End Try
