@@ -508,9 +508,9 @@ Public Class OrdonnanceDao
             End Select
 
             'A ne pas délivrer si traitement conditionnel quel que soit le type d'épisode
-            If TraitementDataTable.Rows(i)("oa_traitement_posologie_base") = TraitementDao.EnumBaseCode.CONDITIONNEL Then
-                ordonnanceDetail.ADelivrer = False
-            End If
+            'If TraitementDataTable.Rows(i)("oa_traitement_posologie_base") = TraitementDao.EnumBaseCode.CONDITIONNEL Then
+            'ordonnanceDetail.ADelivrer = False
+            'End If
 
             'A ne pas délivrer si fenêtre thérapeutique en cours quel que soit le type d'épisode
             If FenetreTherapeutiqueEnCours = True Then

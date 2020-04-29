@@ -115,14 +115,22 @@
 
     Private Function ModificationDemandeRendezVous(dateRendezVous As DateTime, typedemandeRendezVous As String) As Boolean
         Dim CodeRetour As Boolean = False
-        tache = tacheDao.getTacheById(SelectedTacheId)
-        tache.DateRendezVous = dateRendezVous
-        tache.TypedemandeRendezVous = typedemandeRendezVous
-        tache.EmetteurCommentaire = TxtRDVCommentaire.Text
+        tache = tacheDao.GetTacheById(SelectedTacheId)
         Try
-            If tacheDao.ModificationDemandeRendezVous(tache) = True Then
-                CodeRetour = True
-                Close()
+            If tacheDao.AttribueTacheToUserLog(SelectedTacheId) = True Then
+                tache.DateRendezVous = dateRendezVous
+                tache.TypedemandeRendezVous = typedemandeRendezVous
+                tache.EmetteurCommentaire = TxtRDVCommentaire.Text
+                Try
+                    If tacheDao.ModificationDemandeRendezVous(tache) = True Then
+                        CodeRetour = True
+                        Close()
+                    End If
+                Catch ex As Exception
+                    MessageBox.Show(ex.ToString)
+                End Try
+            Else
+                MessageBox.Show("l'attribution de la tâche n'a pas aboutie, modification impossible !")
             End If
         Catch ex As Exception
             MessageBox.Show(ex.ToString)

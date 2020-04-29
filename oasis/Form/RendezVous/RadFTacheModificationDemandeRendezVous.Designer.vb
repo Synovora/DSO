@@ -385,11 +385,11 @@ Partial Class RadFTacheModificationDemandeRendezVous
         'RadBtnValidation
         '
         Me.RadBtnValidation.Image = Global.Oasis_WF.My.Resources.Resources.validation2
-        Me.RadBtnValidation.ImageAlignment = System.Drawing.ContentAlignment.MiddleCenter
         Me.RadBtnValidation.Location = New System.Drawing.Point(12, 197)
         Me.RadBtnValidation.Name = "RadBtnValidation"
-        Me.RadBtnValidation.Size = New System.Drawing.Size(24, 24)
+        Me.RadBtnValidation.Size = New System.Drawing.Size(106, 24)
         Me.RadBtnValidation.TabIndex = 11
+        Me.RadBtnValidation.Text = "Validation"
         Me.ToolTip1.SetToolTip(Me.RadBtnValidation, "Valider la modification")
         '
         'RadFTacheModificationDemandeRendezVous
