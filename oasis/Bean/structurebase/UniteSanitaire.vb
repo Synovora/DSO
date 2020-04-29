@@ -14,6 +14,7 @@ Public Class UniteSanitaire
     Private _telephone As String
     Private _mail As String
     Private _fax As String
+    Private _numeroStructure As Long
     ' liste des sites associés (uniquement rempli dans le filtre tache)
     Private _lstSite As List(Of Site)
 
@@ -122,6 +123,15 @@ Public Class UniteSanitaire
         End Get
         Set(value As String)
             _fax = value
+        End Set
+    End Property
+
+    Public Property NumeroStructure As Long
+        Get
+            Return _numeroStructure
+        End Get
+        Set(value As Long)
+            _numeroStructure = value
         End Set
     End Property
 

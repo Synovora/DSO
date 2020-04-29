@@ -174,7 +174,9 @@ Module Environnement
     'Singletons : Genre, Site, Unité sanitaire, Spécialité médicale, Catégorie majeure, ALD
 
 
+    '=======================================================================================================================
     'Singleton : Genres
+    '=======================================================================================================================
     Public Class Table_genre
         ' Variable locale pour stocker une référence vers l'instance
         Private Shared instance As Table_genre = Nothing
@@ -229,7 +231,10 @@ Module Environnement
         End Function
     End Class
 
+
+    '=======================================================================================================================
     'Singleton : Sites
+    '=======================================================================================================================
     Public Class Table_site
         Private ReadOnly SiteDico As New Dictionary(Of Integer, String)()
         Private ReadOnly SiteDicoParUniteSanitaire As New Dictionary(Of Integer, String)()
@@ -370,7 +375,9 @@ Module Environnement
     End Class
 
 
+    '=======================================================================================================================
     'Singleton : Unités sanitaires
+    '=======================================================================================================================
     Public Class Table_unite_sanitaire
         Dim indice As Integer = 10
         ' Variable locale pour stocker une référence vers l'instance
@@ -383,6 +390,7 @@ Module Environnement
         Private unite_sanitaire_adresse2(indice) As String
         Private unite_sanitaire_ville(indice) As String
         Private unite_sanitaire_code_postal(indice) As String
+        Private unite_sanitaire_numero_structure(indice) As Long
 
         ' Le constructeur est Private
         Private Sub New()
@@ -409,6 +417,7 @@ Module Environnement
             ReDim unite_sanitaire_adresse2(rowCount + 1)
             ReDim unite_sanitaire_ville(rowCount + 1)
             ReDim unite_sanitaire_code_postal(rowCount + 1)
+            ReDim unite_sanitaire_numero_structure(rowCount + 1)
 
             'Alimentation du tableau
             For i = 0 To rowCount Step 1
@@ -450,6 +459,7 @@ Module Environnement
                 Else
                     unite_sanitaire_code_postal(i) = unite_sanitaireDataTable.Rows(i)("oa_unite_sanitaire_code_postal")
                 End If
+                unite_sanitaire_numero_structure(i) = Coalesce(unite_sanitaireDataTable.Rows(i)("numero_structure"), 0)
             Next
 
             conxn.Close()
@@ -473,7 +483,6 @@ Module Environnement
 
         End Function
 
-
         Public Shared Function GetUniteSanitaireListe() As Dictionary(Of Integer, String)
             If instance Is Nothing Then
                 instance = New Table_unite_sanitaire
@@ -484,7 +493,9 @@ Module Environnement
     End Class
 
 
+    '=======================================================================================================================
     'Singleton : Spécialités médicales
+    '=======================================================================================================================
     Public Class Table_specialite
         Dim indice As Integer = 60
         ' Variable locale pour stocker une référence vers l'instance
@@ -614,8 +625,9 @@ Module Environnement
     End Class
 
 
-
+    '=======================================================================================================================
     'Singleton : Catégories majeures
+    '=======================================================================================================================
     Public Class Table_categorie_majeure
         Dim indice As Integer = 10
         ' Variable locale pour stocker une référence vers l'instance
@@ -686,7 +698,6 @@ Module Environnement
 
         End Function
 
-
         Public Shared Function GetCategorieMajeureListe() As Dictionary(Of Integer, String)
             If instance Is Nothing Then
                 instance = New Table_categorie_majeure
@@ -697,8 +708,9 @@ Module Environnement
     End Class
 
 
-
+    '=======================================================================================================================
     'Singleton : ALD
+    '=======================================================================================================================
     Public Class Table_ald
         Dim indice As Integer = 10
         ' Variable locale pour stocker une référence vers l'instance

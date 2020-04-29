@@ -112,6 +112,7 @@ Public Class UniteSanitaireDao
         bean.Mail = Coalesce(reader("mail"), "")
         bean.Fax = Coalesce(reader("fax"), "")
         bean.Oa_unite_sanitaire_inactif = Coalesce(reader("oa_unite_sanitaire_inactif"), False)
+        bean.NumeroStructure = Coalesce(reader("numero_structure"), 0)
 
         Return bean
     End Function

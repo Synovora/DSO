@@ -298,7 +298,7 @@ Public Class RadFEpisodeDetail
         Else
             'Si le rendez-vous n'a pas été communiqué à l'épisode, on recherche si un rendez-vous en attente existe pour la fonction de l'utilisateur avec une date <= date du jour
             Dim tacheRendezVous As Tache
-            tacheRendezVous = tacheDao.GetProchainRendezVousOasisByPatientIdEtEpisode(SelectedPatient.patientId, userLog.TypeProfil)
+            tacheRendezVous = tacheDao.GetProchainRendezVousOasisByPatientIdEtFonctionId(SelectedPatient.patientId, userLog.FonctionParDefautId)
             'Si RDV Oasis existe et que la date du DRV est <= date du jour
             If tacheRendezVous.Id <> 0 AndAlso tacheRendezVous.DateRendezVous.Date <= Date.Now.Date Then
                 If tacheRendezVous.isAttribuable Then

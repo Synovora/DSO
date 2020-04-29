@@ -89,7 +89,8 @@ Public Class PrtOrdonnance
             .AddNewLigne()
             .AddTexteLine("Service Oasis Santé", 14)
             .AddTexteLine("Tel : " & siege.SiegeTelephone & " Fax : " & siege.SiegeFax)
-            .AddTexte("Mail : " & siege.SiegeMail)
+            .AddTexteLine("Mail : " & siege.SiegeMail)
+            .AddTexte("Numéro structure : " & uniteSanitaire.NumeroStructure)
         End With
     End Sub
 

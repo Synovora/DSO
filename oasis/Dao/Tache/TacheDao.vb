@@ -806,7 +806,7 @@ Public Class TacheDao
         Return tache
     End Function
 
-    Friend Function GetProchainRendezVousOasisByPatientIdEtEpisode(patientId As Long, typeProfil As String) As Tache
+    Friend Function GetProchainRendezVousOasisByPatientIdEtFonctionId(patientId As Long, fonctionId As Long) As Tache
         Dim dateRendezVous As Date = Nothing
         Dim tache As New Tache
         Dim con As SqlConnection
@@ -824,7 +824,7 @@ Public Class TacheDao
                 " AND categorie = @categorie" &
                 " AND [type] = @type" &
                 " AND nature = @nature" &
-                " AND oa_r_fonction_type = @typeProfil" &
+                " AND destinataire_fonction_id = @fonctionId" &
                 " ORDER BY date_rendez_vous DESC"
 
             With command.Parameters
@@ -833,7 +833,7 @@ Public Class TacheDao
                 .AddWithValue("@categorie", CategorieTache.SOIN.ToString)
                 .AddWithValue("@type", TypeTache.RDV.ToString)
                 .AddWithValue("@nature", NatureTache.RDV.ToString)
-                .AddWithValue("@typeProfil", typeProfil)
+                .AddWithValue("@fonctionId", fonctionId)
             End With
 
             Using reader As SqlDataReader = command.ExecuteReader()

@@ -282,10 +282,16 @@ Public Class ParcoursDao
             parcours.Inactif = False
             parcours.UserCreation = userLog.UtilisateurId
             parcours.DateCreation = Date.Now()
-            If CreateIntervenantParcours(parcours) = True Then
+
+            parcours.Id = CreateIntervenantParcours(parcours)
+            If parcours.Id <> 0 Then
                 If afficheMessage = True Then
                     MessageBox.Show("Intervenant médecin référent du parcours de soin créé")
                 End If
+                'Création automatique de la première demande de rendez-vous
+                Dim patient As Patient = PatientDao.GetPatientById(PatientId)
+                Dim tacheDao As New TacheDao
+                tacheDao.CreationAutomatiqueDeDemandeRendezVous(patient, parcours, Date.Now())
             End If
         End If
 
@@ -304,20 +310,25 @@ Public Class ParcoursDao
             parcours.Inactif = False
             parcours.UserCreation = userLog.UtilisateurId
             parcours.DateCreation = Date.Now()
-            If CreateIntervenantParcours(parcours) = True Then
+
+            parcours.Id = CreateIntervenantParcours(parcours)
+            If parcours.Id <> 0 Then
                 If afficheMessage = True Then
                     MessageBox.Show("Intervenant IDE sur site du parcours de soin créé")
                 End If
+                'Création automatique de la première demande de rendez-vous
+                Dim patient As Patient = PatientDao.GetPatientById(PatientId)
+                Dim tacheDao As New TacheDao
+                tacheDao.CreationAutomatiqueDeDemandeRendezVous(patient, parcours, Date.Now())
             End If
         End If
 
         Return True
     End Function
 
-    Friend Function CreateIntervenantParcours(parcours As Parcours) As Boolean
+    Friend Function CreateIntervenantParcours(parcours As Parcours) As Long
         Dim da As SqlDataAdapter = New SqlDataAdapter()
-        Dim codeRetour As Boolean = True
-        Dim parcoursId As Long
+        Dim parcoursId As Long = 0
         Dim con As SqlConnection
         con = GetConnection()
 
@@ -353,12 +364,12 @@ Public Class ParcoursDao
             parcoursId = da.InsertCommand.ExecuteScalar()
         Catch ex As Exception
             MessageBox.Show(ex.Message)
-            codeRetour = False
+            Return 0
         Finally
             con.Close()
         End Try
 
-        If codeRetour = True Then
+        If parcoursId <> 0 Then
             Dim parcoursHistoDao As New ParcoursHistoDao
             Dim ParcoursHistoACreer As New ParcoursHisto
             'Mise à jour des données dans l'instance de la classe d'historisation du parcours
@@ -386,7 +397,7 @@ Public Class ParcoursDao
         End If
 
 
-        Return codeRetour
+        Return parcoursId
     End Function
 
     Friend Function ModificationIntervenantParcours(parcours As Parcours) As Boolean

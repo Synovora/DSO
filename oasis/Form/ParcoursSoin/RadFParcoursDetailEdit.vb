@@ -692,11 +692,19 @@ Public Class RadFParcoursDetailEdit
             Case EnumEditMode.Creation
                 'Création intervenant
                 If ValidationDonneeSaisie() = True Then
-                    If ParcoursDao.CreateIntervenantParcours(ParcoursUpdate) = True Then
+                    ParcoursUpdate.Id = ParcoursDao.CreateIntervenantParcours(ParcoursUpdate)
+                    If ParcoursUpdate.Id <> 0 Then
                         Me.CodeRetour = True
                         Dim form As New RadFNotification()
                         form.Message = "Intervenant du parcours de soin créé"
                         form.Show()
+                        'Création automatique de demande de rendez-vous
+                        If ParcoursUpdate.Rythme <> 0 AndAlso ParcoursUpdate.Base.Trim() <> "" Then
+                            'Appel création demande de rendez-vous
+                            Dim tacheDao As New TacheDao
+                            tacheDao.CreationAutomatiqueDeDemandeRendezVous(SelectedPatient, ParcoursUpdate, Date.Now())
+                        End If
+                        'Fermeture de l'écran en création après validation
                         Close()
                     End If
                     RadBtnRORSelect.Hide()
@@ -713,7 +721,15 @@ Public Class RadFParcoursDetailEdit
                             Dim form As New RadFNotification()
                             form.Message = "Intervenant du parcours de soin modifié"
                             form.Show()
-                            'MessageBox.Show("Intervenant du parcours de soin modifié")
+                            'Création automatique de demande de rendez-vous
+                            If parcoursRead.Rythme = 0 AndAlso parcoursRead.Base.Trim() = "" Then
+                                If ParcoursUpdate.Rythme <> 0 AndAlso ParcoursUpdate.Base.Trim() <> "" Then
+                                    'Appel création demande de rendez-vous
+                                    If tacheDao.CreationAutomatiqueDeDemandeRendezVous(SelectedPatient, ParcoursUpdate, Date.Now()) = True Then
+                                        ChargementhistoriqueConsultation()
+                                    End If
+                                End If
+                            End If
                             Me.CodeRetour = True
                             If ParcoursUpdate.Cacher = True Then
                                 Close()
