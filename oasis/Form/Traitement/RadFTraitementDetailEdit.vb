@@ -1523,19 +1523,7 @@ Public Class RadFTraitementDetailEdit
                         End If
                     End If
 
-                    Select Case BaseSelection
-                        Case TraitementDao.EnumBaseCode.CONDITIONNEL
-                            Base = "Conditionnel : "
-                        Case TraitementDao.EnumBaseCode.HEBDOMADAIRE
-                            Base = "Hebdo : "
-                        Case TraitementDao.EnumBaseCode.MENSUEL
-                            Base = "Mensuel : "
-                        Case TraitementDao.EnumBaseCode.ANNUEL
-                            Base = "Annuel : "
-                        Case Else
-                            Base = "Base inconnue ! "
-                    End Select
-
+                    Base = traitementDao.GetBaseDescription(BaseSelection)
                     Posologie = Base + RythmeString
                 End If
         End Select

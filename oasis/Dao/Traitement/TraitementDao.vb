@@ -876,18 +876,8 @@ Public Class TraitementDao
                                     RythmeString = Rythme.ToString
                                 End If
                             End If
-                            Select Case dt.Rows(i)("oa_traitement_posologie_base")
-                                Case TraitementDao.EnumBaseCode.CONDITIONNEL
-                                    Base = "Conditionnel : "
-                                Case TraitementDao.EnumBaseCode.HEBDOMADAIRE
-                                    Base = "Hebdo : "
-                                Case TraitementDao.EnumBaseCode.MENSUEL
-                                    Base = "Mensuel : "
-                                Case TraitementDao.EnumBaseCode.ANNUEL
-                                    Base = "Annuel : "
-                                Case Else
-                                    Base = "Base inconnue ! "
-                            End Select
+
+                            Base = GetBaseDescription(dt.Rows(i)("oa_traitement_posologie_base"))
                             Posologie = Base + RythmeString
                     End Select
                 End If
@@ -899,6 +889,24 @@ Public Class TraitementDao
         Next
 
         Return ListTraitement
+    End Function
+
+    Public Function GetBaseDescription(base As String) As String
+        Dim baseString As String
+        Select Case base
+            Case TraitementDao.EnumBaseCode.CONDITIONNEL
+                baseString = "Conditionnel : "
+            Case TraitementDao.EnumBaseCode.HEBDOMADAIRE
+                baseString = "Hebdo : "
+            Case TraitementDao.EnumBaseCode.MENSUEL
+                baseString = "Mensuel : "
+            Case TraitementDao.EnumBaseCode.ANNUEL
+                baseString = "Annuel : "
+            Case Else
+                baseString = "Base inconnue ! "
+        End Select
+
+        Return baseString
     End Function
 
 End Class

@@ -43,7 +43,7 @@ Public Class RadFTraitementHistoListe
         End Set
     End Property
 
-
+    Dim traitementdao As New TraitementDao
     Dim UtilisateurHisto As Utilisateur = New Utilisateur()
     Private Sub RadFTraitementHistoListe_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         initZones()
@@ -263,18 +263,8 @@ Public Class RadFTraitementHistoListe
                                 RythmeString = Rythme.ToString
                             End If
                         End If
-                        Select Case traitementDataTable.Rows(i)("oa_traitement_posologie_base")
-                            Case TraitementDao.EnumBaseCode.CONDITIONNEL
-                                Base = "Conditionnel : "
-                            Case TraitementDao.EnumBaseCode.HEBDOMADAIRE
-                                Base = "Hebdo : "
-                            Case TraitementDao.EnumBaseCode.MENSUEL
-                                Base = "Mensuel : "
-                            Case TraitementDao.EnumBaseCode.ANNUEL
-                                Base = "Annuel : "
-                            Case Else
-                                Base = "Base inconnue ! "
-                        End Select
+
+                        Base = TraitementDao.GetBaseDescription(traitementDataTable.Rows(i)("oa_traitement_posologie_base"))
                         Posologie = Base + RythmeString
                 End Select
             End If

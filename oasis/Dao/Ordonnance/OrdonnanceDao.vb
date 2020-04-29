@@ -425,18 +425,11 @@ Public Class OrdonnanceDao
                                 RythmeString = Rythme.ToString
                             End If
                         End If
-                        Select Case TraitementDataTable.Rows(i)("oa_traitement_posologie_base")
-                            Case TraitementDao.EnumBaseCode.CONDITIONNEL
-                                Base = ""
-                            Case TraitementDao.EnumBaseCode.HEBDOMADAIRE
-                                Base = "Hebdo : "
-                            Case TraitementDao.EnumBaseCode.MENSUEL
-                                Base = "Mensuel : "
-                            Case TraitementDao.EnumBaseCode.ANNUEL
-                                Base = "Annuel : "
-                            Case Else
-                                Base = "Base inconnue ! "
-                        End Select
+
+                        Base = TraitementDao.GetBaseDescription(TraitementDataTable.Rows(i)("oa_traitement_posologie_base"))
+                        If Base = "Conditionnel : " Then
+                            Base = ""
+                        End If
                         Posologie = Base + RythmeString
                 End Select
             End If
