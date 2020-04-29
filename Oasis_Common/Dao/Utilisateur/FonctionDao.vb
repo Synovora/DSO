@@ -77,7 +77,7 @@ Public Class FonctionDao
     ''' <param name="id"></param>
     ''' <returns></returns>
     Public Function getFonctionById(id As Long) As Fonction
-        Dim user As Fonction
+        Dim fonction As Fonction
         Dim con As SqlConnection
 
         con = GetConnection()
@@ -93,7 +93,7 @@ Public Class FonctionDao
             command.Parameters.AddWithValue("@id", id)
             Using reader As SqlDataReader = command.ExecuteReader()
                 If reader.Read() Then
-                    user = buildBean(con, reader)
+                    fonction = buildBean(con, reader)
                 Else
                     Throw New ArgumentException("fonction non retrouvée !")
                 End If
@@ -106,7 +106,7 @@ Public Class FonctionDao
         End Try
 
 
-        Return user
+        Return fonction
     End Function
 
     ''' <summary>
