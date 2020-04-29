@@ -103,7 +103,7 @@ Public Class OasisTextTools
 
     End Sub
 
-    Public Function AddTexteAfterANewLine(texte As String,
+    Public Sub AddTexteAfterANewLine(texte As String,
                                         Optional fontSize As Double = 12,
                                         Optional fontWeight As Telerik.WinControls.RichTextEditor.UI.FontWeight = Nothing, Optional paragraphe As Paragraph = Nothing,
                                         Optional fontForeColor As Color = Nothing
@@ -111,7 +111,7 @@ Public Class OasisTextTools
         If paragrapheEnCours Is Nothing Then Throw New Exception("Pas de paragraphe en cours")
         AddNewLigne()
         AddTexte(texte, fontSize, fontWeight, fontForeColor)
-    End Function
+    End Sub
 
     Public Sub AddNewLigne()
         If paragrapheEnCours Is Nothing Then Throw New Exception("Pas de paragraphe en cours")
