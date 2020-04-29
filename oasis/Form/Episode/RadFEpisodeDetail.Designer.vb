@@ -2691,7 +2691,7 @@ Partial Class RadFEpisodeDetail
         Me.RadPageView1.Dock = System.Windows.Forms.DockStyle.Fill
         Me.RadPageView1.Location = New System.Drawing.Point(0, 0)
         Me.RadPageView1.Name = "RadPageView1"
-        Me.RadPageView1.SelectedPage = Me.PgvAntecedent
+        Me.RadPageView1.SelectedPage = Me.PgvTraitement
         Me.RadPageView1.Size = New System.Drawing.Size(465, 472)
         Me.RadPageView1.TabIndex = 0
         Me.RadPageView1.TabStop = False
@@ -2985,9 +2985,9 @@ Partial Class RadFEpisodeDetail
         Me.PgvTraitement.Controls.Add(Me.RadPanel6)
         Me.PgvTraitement.ForeColor = System.Drawing.Color.Black
         Me.PgvTraitement.ItemSize = New System.Drawing.SizeF(70.0!, 28.0!)
-        Me.PgvTraitement.Location = New System.Drawing.Point(10, 33)
+        Me.PgvTraitement.Location = New System.Drawing.Point(10, 37)
         Me.PgvTraitement.Name = "PgvTraitement"
-        Me.PgvTraitement.Size = New System.Drawing.Size(444, 428)
+        Me.PgvTraitement.Size = New System.Drawing.Size(444, 424)
         Me.PgvTraitement.Text = "Traitement"
         '
         'RadPanel7
@@ -2996,7 +2996,7 @@ Partial Class RadFEpisodeDetail
         Me.RadPanel7.Dock = System.Windows.Forms.DockStyle.Fill
         Me.RadPanel7.Location = New System.Drawing.Point(0, 34)
         Me.RadPanel7.Name = "RadPanel7"
-        Me.RadPanel7.Size = New System.Drawing.Size(444, 394)
+        Me.RadPanel7.Size = New System.Drawing.Size(444, 390)
         Me.RadPanel7.TabIndex = 1
         '
         'RadTraitementDataGridView
@@ -3076,7 +3076,7 @@ Partial Class RadFEpisodeDetail
         Me.RadTraitementDataGridView.ShowGroupPanel = False
         Me.RadTraitementDataGridView.ShowGroupPanelScrollbars = False
         Me.RadTraitementDataGridView.ShowHeaderCellButtons = True
-        Me.RadTraitementDataGridView.Size = New System.Drawing.Size(444, 394)
+        Me.RadTraitementDataGridView.Size = New System.Drawing.Size(444, 390)
         Me.RadTraitementDataGridView.TabIndex = 0
         '
         'TraitementContextMenuStrip

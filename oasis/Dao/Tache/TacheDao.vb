@@ -1131,11 +1131,72 @@ Public Class TacheDao
             Case ParcoursDao.EnumParcoursBaseCode.Quotidien
                 Jour = 1
             Case ParcoursDao.EnumParcoursBaseCode.Hebdomadaire
-                Jour = 7
+                Select Case Rythme
+                    Case 1
+                        Jour = 7
+                    Case 2
+                        Jour = 3
+                    Case 3
+                        Jour = 2
+                    Case 4
+                        Jour = 2
+                    Case Else
+                        Jour = 2
+                End Select
             Case ParcoursDao.EnumParcoursBaseCode.ParMois
-                Jour = 30
+                Select Case Rythme
+                    Case 1
+                        Jour = 30
+                    Case 2
+                        Jour = 15
+                    Case 3
+                        Jour = 10
+                    Case 4
+                        Jour = 8
+                    Case 5
+                        Jour = 6
+                    Case 6
+                        Jour = 5
+                    Case 7
+                        Jour = 4
+                    Case 8
+                        Jour = 4
+                    Case 9
+                        Jour = 3
+                    Case Else
+                        Jour = 3
+                End Select
             Case ParcoursDao.EnumParcoursBaseCode.ParAn
-                Jour = 365
+                Select Case Rythme
+                    Case 1
+                        Jour = 365
+                    Case 2
+                        Jour = 182
+                    Case 3
+                        Jour = 121
+                    Case 4
+                        Jour = 91
+                    Case 5
+                        Jour = 73
+                    Case 6
+                        Jour = 61
+                    Case 7
+                        Jour = 52
+                    Case 8
+                        Jour = 45
+                    Case 9
+                        Jour = 40
+                    Case 10
+                        Jour = 36
+                    Case 11
+                        Jour = 33
+                    Case 12
+                        Jour = 30
+                    Case 13
+                        Jour = 30
+                    Case Else
+                        Jour = 30
+                End Select
             Case ParcoursDao.EnumParcoursBaseCode.TousLes2Ans
                 Jour = 730
             Case ParcoursDao.EnumParcoursBaseCode.TousLes3Ans
