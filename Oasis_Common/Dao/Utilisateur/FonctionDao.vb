@@ -4,14 +4,14 @@ Imports System.Windows.Forms
 Public Class FonctionDao
     Inherits StandardDao
 
-    Public Enum enumTypeFonction
+    Public Enum EnumTypeFonction
         MEDICAL
         PARAMEDICAL
         GESTION
     End Enum
 
 
-    Public Enum enumFonction
+    Public Enum EnumFonction
         IDE = 4
         IDE_REMPLACANT = 4
         MEDECIN = 1
@@ -30,7 +30,7 @@ Public Class FonctionDao
     ''' <param name="isWithInactif"></param>
     ''' <param name="profilId"></param>
     ''' <returns></returns>
-    Public Function getList(isWithInactif As Boolean, Optional ByVal profilId As String = "") As List(Of Fonction)
+    Public Function GetList(isWithInactif As Boolean, Optional ByVal profilId As String = "") As List(Of Fonction)
         Dim lstFonction As List(Of Fonction) = New List(Of Fonction)
         Dim strRequete As String
         Dim isWhere As Boolean = False
@@ -59,7 +59,7 @@ Public Class FonctionDao
                 If profilId <> "" Then command.Parameters.AddWithValue("@profil_id", profilId)
                 Using reader As SqlDataReader = command.ExecuteReader()
                     Do While reader.Read()
-                        lstFonction.Add(buildBean(con, reader))
+                        lstFonction.Add(BuildBean(reader))
                     Loop
                 End Using
             Catch ex As Exception
@@ -76,8 +76,8 @@ Public Class FonctionDao
     ''' </summary>
     ''' <param name="id"></param>
     ''' <returns></returns>
-    Public Function getFonctionById(id As Long) As Fonction
-        Dim fonction As Fonction
+    Public Function GetFonctionById(id As Long) As Fonction
+        Dim fonction As Fonction = Nothing
         Dim con As SqlConnection
 
         con = GetConnection()
@@ -93,7 +93,7 @@ Public Class FonctionDao
             command.Parameters.AddWithValue("@id", id)
             Using reader As SqlDataReader = command.ExecuteReader()
                 If reader.Read() Then
-                    fonction = buildBean(con, reader)
+                    fonction = BuildBean(reader)
                 Else
                     Throw New ArgumentException("fonction non retrouvée !")
                 End If
@@ -112,23 +112,22 @@ Public Class FonctionDao
     ''' <summary>
     ''' 
     ''' </summary>
-    ''' <param name="con"></param>
     ''' <param name="reader"></param>
     ''' <returns></returns>
-    Public Function buildBean(con As SqlConnection, reader As SqlDataReader) As Fonction
-        Dim fonction As New Fonction
-
-        fonction.Id = reader("oa_r_fonction_id")
-        fonction.Designation = Coalesce(reader("oa_r_fonction_designation"), "")
-        fonction.Libelle = Coalesce(reader("oa_r_fonction_libelle"), "")
-        fonction.Type = Coalesce(reader("oa_r_fonction_type"), "")
-        fonction.RorId = Coalesce(reader("oa_r_fonction_ror_id"), 0)
-        fonction.IsInactif = Coalesce(reader("oa_r_fonction_inactif"), False)
+    Public Function BuildBean(reader As SqlDataReader) As Fonction
+        Dim fonction As New Fonction With {
+            .Id = reader("oa_r_fonction_id"),
+            .Designation = Coalesce(reader("oa_r_fonction_designation"), ""),
+            .Libelle = Coalesce(reader("oa_r_fonction_libelle"), ""),
+            .Type = Coalesce(reader("oa_r_fonction_type"), ""),
+            .RorId = Coalesce(reader("oa_r_fonction_ror_id"), 0),
+            .IsInactif = Coalesce(reader("oa_r_fonction_inactif"), False)
+        }
         Return fonction
     End Function
 
 
-    Public Function getFonctionByRorId(RorId As Long) As Fonction
+    Public Function GetFonctionByRorId(RorId As Long) As Fonction
         Dim fonction As Fonction
         Dim con As SqlConnection
 
@@ -143,7 +142,7 @@ Public Class FonctionDao
             command.Parameters.AddWithValue("@RorId", RorId)
             Using reader As SqlDataReader = command.ExecuteReader()
                 If reader.Read() Then
-                    fonction = buildBean(con, reader)
+                    fonction = BuildBean(reader)
                 Else
                     Throw New ArgumentException("fonction non retrouvée !")
                 End If

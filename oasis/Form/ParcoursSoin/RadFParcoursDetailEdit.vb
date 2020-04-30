@@ -1269,44 +1269,44 @@ Public Class RadFParcoursDetailEdit
     Private Sub SetEmetteurId()
         Select Case userLog.UtilisateurProfilId.Trim()
             Case "IDE"
-                EmetteurFonctionId = FonctionDao.enumFonction.IDE
+                EmetteurFonctionId = FonctionDao.EnumFonction.IDE
             Case "IDE_REMPLACANT"
-                EmetteurFonctionId = FonctionDao.enumFonction.IDE_REMPLACANT
+                EmetteurFonctionId = FonctionDao.EnumFonction.IDE_REMPLACANT
             Case "MEDECIN"
-                EmetteurFonctionId = FonctionDao.enumFonction.MEDECIN
+                EmetteurFonctionId = FonctionDao.EnumFonction.MEDECIN
             Case "SAGE_FEMME"
-                EmetteurFonctionId = FonctionDao.enumFonction.SAGE_FEMME
+                EmetteurFonctionId = FonctionDao.EnumFonction.SAGE_FEMME
             Case "CADRE_SANTE"
-                EmetteurFonctionId = FonctionDao.enumFonction.CADRE_SANTE
+                EmetteurFonctionId = FonctionDao.EnumFonction.CADRE_SANTE
             Case "SECRETAIRE_MEDICALE"
-                EmetteurFonctionId = FonctionDao.enumFonction.SECRETAIRE_MEDICALE
+                EmetteurFonctionId = FonctionDao.EnumFonction.SECRETAIRE_MEDICALE
             Case "ADMINISTRATIF"
-                EmetteurFonctionId = FonctionDao.enumFonction.ADMINISTRATIF
+                EmetteurFonctionId = FonctionDao.EnumFonction.ADMINISTRATIF
             Case Else
-                EmetteurFonctionId = FonctionDao.enumFonction.INCONNU
+                EmetteurFonctionId = FonctionDao.EnumFonction.INCONNU
         End Select
 
         Select Case ParcoursUpdate.SousCategorieId
             Case EnumSousCategoriePPS.medecinReferent
-                DestinataireFonctionId = FonctionDao.enumFonction.MEDECIN
-                TraiteFonctionId = FonctionDao.enumFonction.MEDECIN
+                DestinataireFonctionId = FonctionDao.EnumFonction.MEDECIN
+                TraiteFonctionId = FonctionDao.EnumFonction.MEDECIN
             Case EnumSousCategoriePPS.IDE
-                DestinataireFonctionId = FonctionDao.enumFonction.IDE
-                TraiteFonctionId = FonctionDao.enumFonction.IDE
+                DestinataireFonctionId = FonctionDao.EnumFonction.IDE
+                TraiteFonctionId = FonctionDao.EnumFonction.IDE
             Case EnumSousCategoriePPS.sageFemme
                 If ParcoursUpdate.SpecialiteId = EnumSpecialiteOasis.sageFemmeOasis Then
-                    DestinataireFonctionId = FonctionDao.enumFonction.SAGE_FEMME
-                    TraiteFonctionId = FonctionDao.enumFonction.SAGE_FEMME
+                    DestinataireFonctionId = FonctionDao.EnumFonction.SAGE_FEMME
+                    TraiteFonctionId = FonctionDao.EnumFonction.SAGE_FEMME
                 Else
-                    DestinataireFonctionId = FonctionDao.enumFonction.SPECIALISTE_NON_OASIS
-                    TraiteFonctionId = FonctionDao.enumFonction.IDE
+                    DestinataireFonctionId = FonctionDao.EnumFonction.SPECIALISTE_NON_OASIS
+                    TraiteFonctionId = FonctionDao.EnumFonction.IDE
                 End If
             Case EnumSousCategoriePPS.specialiste
-                DestinataireFonctionId = FonctionDao.enumFonction.SPECIALISTE_NON_OASIS
-                TraiteFonctionId = FonctionDao.enumFonction.IDE
+                DestinataireFonctionId = FonctionDao.EnumFonction.SPECIALISTE_NON_OASIS
+                TraiteFonctionId = FonctionDao.EnumFonction.IDE
             Case Else
-                DestinataireFonctionId = FonctionDao.enumFonction.INCONNU
-                TraiteFonctionId = FonctionDao.enumFonction.IDE
+                DestinataireFonctionId = FonctionDao.EnumFonction.INCONNU
+                TraiteFonctionId = FonctionDao.EnumFonction.IDE
         End Select
     End Sub
 

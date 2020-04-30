@@ -8,16 +8,16 @@ Imports Telerik.WinControls.RichTextEditor.UI
 
 Public Class OasisTextTools
     Implements IDisposable
-    Public Property editor As RadRichTextEditor
+    Public Property Editor As RadRichTextEditor
 
     Dim paragrapheEnCours As Paragraph  ' paragraphe en cours
 
     Public Sub New()
-        init()
+        Init()
     End Sub
 
-    Private Sub init()
-        editor = New RadRichTextEditor()
+    Private Sub Init()
+        Editor = New RadRichTextEditor()
     End Sub
 
     ''' <summary>
@@ -105,7 +105,7 @@ Public Class OasisTextTools
 
     Public Sub AddTexteAfterANewLine(texte As String,
                                         Optional fontSize As Double = 12,
-                                        Optional fontWeight As Telerik.WinControls.RichTextEditor.UI.FontWeight = Nothing, Optional paragraphe As Paragraph = Nothing,
+                                        Optional fontWeight As Telerik.WinControls.RichTextEditor.UI.FontWeight = Nothing,
                                         Optional fontForeColor As Color = Nothing
                                         )
         If paragrapheEnCours Is Nothing Then Throw New Exception("Pas de paragraphe en cours")
@@ -124,11 +124,11 @@ Public Class OasisTextTools
     End Sub
 
     Public Sub SaveAsPdfToFile(ByVal pathFile As String)
-        SaveAsPdfToFile(editor.Document, pathFile)
+        SaveAsPdfToFile(Editor.Document, pathFile)
     End Sub
 
     Public Function SaveAsPdfToBytes() As Byte()
-        Return SaveAsPdfToBytes(editor.Document)
+        Return SaveAsPdfToBytes(Editor.Document)
     End Function
 
     Private Sub SaveAsPdfToFile(ByVal document As RadDocument, ByVal pathFile As String)
@@ -144,22 +144,22 @@ Public Class OasisTextTools
         Return provider.Export(document)
     End Function
 
-    Public Sub insertFragmentToEditor(document As RadDocument)
-        editor.InsertFragment(New DocumentFragment(document))
+    Public Sub InsertFragmentToEditor(document As RadDocument)
+        Editor.InsertFragment(New DocumentFragment(document))
     End Sub
 
-    Public Sub printPreview()
-        editor.LoadElementTree()
-        editor.PrintPreview()
+    Public Sub PrintPreview()
+        Editor.LoadElementTree()
+        Editor.PrintPreview()
     End Sub
 
-    Public Sub print()
-        editor.LoadElementTree()
-        editor.Print()
+    Public Sub Print()
+        Editor.LoadElementTree()
+        Editor.Print()
     End Sub
 
     Public Sub Dispose() Implements IDisposable.Dispose
-        editor.Dispose()
+        Editor.Dispose()
     End Sub
 
     Public Sub SetCell(Cell As TableCell, Texte As String, Optional FontSize As Double = 12, Optional color As Color = Nothing, Optional FontWeight As FontWeight = Nothing)

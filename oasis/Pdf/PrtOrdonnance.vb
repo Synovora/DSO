@@ -39,36 +39,36 @@ Public Class PrtOrdonnance
             PrintEntete(section)
             PrintEtatCivil(section)
             PrintEnteteALD(section)
-            EditTools.insertFragmentToEditor(document)
-            EditTools.insertFragmentToEditor(PrintOrdonnanceDetail(True))
+            EditTools.InsertFragmentToEditor(document)
+            EditTools.InsertFragmentToEditor(PrintOrdonnanceDetail(True))
 
             'Si au moins un traitement ALD existe, il faut présenter la signature du praticien qui a validé l'ordonnance
             Dim sectionAld = EditTools.CreateSection()
             Dim documentAld = EditTools.AddSectionIntoDocument(Nothing, sectionAld)
             If TraitementAldExiste = True Then
                 PrintBasPage(sectionAld)
-                EditTools.insertFragmentToEditor(documentAld)
+                EditTools.InsertFragmentToEditor(documentAld)
             Else
                 EditTools.CreateParagraphIntoSection(sectionAld)
                 EditTools.AddNewLigne()
                 EditTools.AddNewLigne()
                 EditTools.AddNewLigne()
                 EditTools.AddNewLigne()
-                EditTools.insertFragmentToEditor(documentAld)
+                EditTools.InsertFragmentToEditor(documentAld)
             End If
 
             Dim sectionNonALD = EditTools.CreateSection()
             Dim documentNonALD = EditTools.AddSectionIntoDocument(Nothing, sectionNonALD)
             PrintEnteteNonALD(sectionNonALD)
-            EditTools.insertFragmentToEditor(documentNonALD)
-            EditTools.insertFragmentToEditor(PrintOrdonnanceDetail(False))
+            EditTools.InsertFragmentToEditor(documentNonALD)
+            EditTools.InsertFragmentToEditor(PrintOrdonnanceDetail(False))
 
             Dim sectionFin = EditTools.CreateSection()
             Dim documentFin = EditTools.AddSectionIntoDocument(Nothing, sectionFin)
             PrintBasPage(sectionFin)
-            EditTools.insertFragmentToEditor(documentFin)
+            EditTools.InsertFragmentToEditor(documentFin)
 
-            EditTools.printPreview()
+            EditTools.PrintPreview()
         Catch ex As Exception
             MsgBox(ex.Message())
         Finally

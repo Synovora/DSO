@@ -239,7 +239,7 @@ Public Class UserDao
     ''' <param name="user"></param>
     Public Sub addFonctions(user As Utilisateur)
         Dim fonctionDao As New FonctionDao
-        user.LstFonction = fonctionDao.getList(False, user.UtilisateurProfilId)
+        user.LstFonction = fonctionDao.GetList(False, user.UtilisateurProfilId)
     End Sub
 
     ''' <summary>

@@ -792,7 +792,7 @@ Public Class RadFOrdonnanceListeDetail
     End Sub
 
     Private Sub RadBtnValidation_Click(sender As Object, e As EventArgs) Handles RadBtnValidation.Click
-        If userLog.TypeProfil = FonctionDao.enumTypeFonction.MEDICAL.ToString Then
+        If userLog.TypeProfil = FonctionDao.EnumTypeFonction.MEDICAL.ToString Then
             If ordonnanceDao.ValidationOrdonnance(SelectedOrdonnanceId) = True Then
                 ordonnance = ordonnanceDao.getOrdonnaceById(SelectedOrdonnanceId)
                 GestionAccesBoutonAction()
@@ -838,7 +838,7 @@ Public Class RadFOrdonnanceListeDetail
                 LblOrdonnanceValide2.Hide()
                 LblDateSignature.Hide()
                 RadBtnImprimer.Enabled = False
-                If userLog.TypeProfil <> FonctionDao.enumTypeFonction.MEDICAL.ToString Then
+                If userLog.TypeProfil <> FonctionDao.EnumTypeFonction.MEDICAL.ToString Then
                     RadBtnValidation.Enabled = False
                 End If
             End If

@@ -143,7 +143,7 @@ Public Class RadFWkfDemandeAvis
             indice = -1
             For i = 0 To rowCount Step 1
                 Dim RorId As Integer = Coalesce(parcoursDT.Rows(i)("oa_parcours_ror_id"), 0)
-                fonction = fonctionDao.getFonctionByRorId(RorId)
+                fonction = fonctionDao.GetFonctionByRorId(RorId)
                 If fonction.Id <> userLog.FonctionParDefautId Then
                     indice += 1
                     FonctionDescription(indice) = fonction.Designation
@@ -168,7 +168,7 @@ Public Class RadFWkfDemandeAvis
                     CbxDestinataireFonction.Items.Add(FonctionDescription(i))
                 Next
                 CbxDestinataireFonction.Text = FonctionDescription(0)
-                fonction = fonctionDao.getFonctionById(FonctionId(0))
+                fonction = fonctionDao.GetFonctionById(FonctionId(0))
                 LblDestinataireLocalisation.Text = GetLocalisation(fonction)
             End If
 
@@ -221,7 +221,7 @@ Public Class RadFWkfDemandeAvis
             '===========================================================================================================
             'LblEmetteurNom.Text = userEmetteur.UtilisateurPrenom.Trim() & " " & userEmetteur.UtilisateurNom.Trim()
             'LblDestinataireNom.Text = ""
-            fonction = fonctionDao.getFonctionById(tache.EmetteurFonctionId)
+            fonction = fonctionDao.GetFonctionById(tache.EmetteurFonctionId)
             LblDestinataireFonction.Text = fonction.Designation
             CbxDestinataireFonction.Hide()
             LblDestinataireFonction.Location = New Point(11, 13)
@@ -281,9 +281,9 @@ Public Class RadFWkfDemandeAvis
         Dim DestinataireLocalisation As String
 
         Select Case fonction.Type
-            Case FonctionDao.enumTypeFonction.PARAMEDICAL.ToString
+            Case FonctionDao.EnumTypeFonction.PARAMEDICAL.ToString
                 DestinataireLocalisation = Environnement.Table_site.GetSiteDescription(SelectedPatient.PatientSiteId)
-            Case FonctionDao.enumTypeFonction.MEDICAL.ToString
+            Case FonctionDao.EnumTypeFonction.MEDICAL.ToString
                 DestinataireLocalisation = "TLM"
             Case Else
                 DestinataireLocalisation = ""
@@ -294,7 +294,7 @@ Public Class RadFWkfDemandeAvis
 
     'Sélection destinataire (en création)
     Private Sub CbxDestinataireFonction_SelectedIndexChanged(sender As Object, e As EventArgs) Handles CbxDestinataireFonction.SelectedIndexChanged
-        fonction = fonctionDao.getFonctionById(FonctionId(CbxDestinataireFonction.SelectedIndex))
+        fonction = fonctionDao.GetFonctionById(FonctionId(CbxDestinataireFonction.SelectedIndex))
         LblDestinataireLocalisation.Text = GetLocalisation(fonction)
     End Sub
 

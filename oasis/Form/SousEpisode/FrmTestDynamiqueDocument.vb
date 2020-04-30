@@ -45,12 +45,12 @@ Public Class FrmTestDynamiqueDocument
                 .addTexteAfterANewLine("Une deuxieme ligne ajoutée après un saut de ligne")
 
                 ' --- Insertion du fragment generé
-                .insertFragmentToEditor(document)
+                .InsertFragmentToEditor(document)
 
                 ' --- appe! de la construction d'un tableau et ajout du fragment généré
-                .insertFragmentToEditor(AjouteElementsPlusComplexes())
+                .InsertFragmentToEditor(AjouteElementsPlusComplexes())
 
-                .printPreview()
+                .PrintPreview()
 
             End With
         End Using

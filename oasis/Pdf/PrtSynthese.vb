@@ -18,7 +18,7 @@ Public Class PrtSynthese
         Try
             PrintEntete(section)
             PrintEtatCivil(section)
-            EditTools.insertFragmentToEditor(document)
+            EditTools.InsertFragmentToEditor(document)
 
             'EditTools.insertFragmentToEditor(PrintTitre("--- Antécédent ---"))
             PrintAntecedent()
@@ -35,7 +35,7 @@ Public Class PrtSynthese
             'EditTools.insertFragmentToEditor(PrintTitre("--- PPS ---"))
             PrintPPS()
 
-            EditTools.printPreview()
+            EditTools.PrintPreview()
         Catch ex As Exception
             MsgBox(ex.Message())
         Finally
@@ -280,7 +280,7 @@ Public Class PrtSynthese
             'TextLegendeALDDemande.SetFontColor(iText.Kernel.Colors.ColorConstants.ORANGE).SetFontSize(8)
         End If
 
-        EditTools.insertFragmentToEditor(document)
+        EditTools.InsertFragmentToEditor(document)
     End Sub
 
     Private Sub PrintTraitement()
@@ -584,7 +584,7 @@ Public Class PrtSynthese
         section.Blocks.Add(New Paragraph())
         document.Sections.Add(section)
 
-        EditTools.insertFragmentToEditor(document)
+        EditTools.InsertFragmentToEditor(document)
     End Sub
 
     Private Sub PrintParcours()
@@ -794,7 +794,7 @@ Public Class PrtSynthese
         section.Blocks.Add(New Paragraph())
         document.Sections.Add(section)
 
-        EditTools.insertFragmentToEditor(document)
+        EditTools.InsertFragmentToEditor(document)
     End Sub
 
     Private Sub PrintContexte()
@@ -921,7 +921,7 @@ Public Class PrtSynthese
         section.Blocks.Add(New Paragraph())
         document.Sections.Add(section)
 
-        EditTools.insertFragmentToEditor(document)
+        EditTools.InsertFragmentToEditor(document)
     End Sub
 
     Private Sub PrintPPS()
@@ -1138,7 +1138,7 @@ Public Class PrtSynthese
         section.Blocks.Add(New Paragraph())
         document.Sections.Add(section)
 
-        EditTools.insertFragmentToEditor(document)
+        EditTools.InsertFragmentToEditor(document)
     End Sub
 
 End Class

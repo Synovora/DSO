@@ -16,7 +16,7 @@ Public Partial Class FrmAbout
         '  Change assembly information settings for your application through either:
         '  - Project->Properties->Application->Assembly Information
         '  - AssemblyInfo.cs
-        Me.Text = String.Format("About {0}", AssemblyTitle)
+        Me.Text = String.Format("A Propos de {0}", AssemblyTitle)
         Me.radLabelProductName.Text = AssemblyProduct
         Me.radLabelVersion.Text = String.Format("Version {0}", AssemblyVersion)
         Me.radLabelCopyright.Text = AssemblyCopyright

@@ -304,7 +304,7 @@ Public Class RadFEpisodeDetail
                 If tacheRendezVous.isAttribuable Then
                     Dim fonctiondao As New FonctionDao
                     Dim fonction As Fonction
-                    fonction = fonctiondao.getFonctionById(tacheRendezVous.DestinataireFonctionId)
+                    fonction = fonctiondao.GetFonctionById(tacheRendezVous.DestinataireFonctionId)
                     'Tâche non encore attribuée et l'utilisateur n'est pas encore propriétaire du rendez-vous, proposition d'attribution de la tâche à l'utilisateur
                     Dim message As String = "Un rendez-vous de type '" & userLog.TypeProfil & ", destiné à la fonction " & fonction.Designation &
                         "', a été programmé pour le " & tacheRendezVous.DateRendezVous.ToString("dd.MM.yyyy") &
@@ -1201,7 +1201,7 @@ Public Class RadFEpisodeDetail
                 episodeActeParamedical.DrcId = SelectedDrcId
                 episodeActeParamedical.EpisodeId = SelectedEpisodeId
                 episodeActeParamedical.PatientId = SelectedPatient.patientId
-                episodeActeParamedical.TypeObservation = FonctionDao.enumTypeFonction.PARAMEDICAL.ToString
+                episodeActeParamedical.TypeObservation = FonctionDao.EnumTypeFonction.PARAMEDICAL.ToString
                 episodeActeParamedical.Observation = ""
                 episodeActeParamedical.UserId = userLog.UtilisateurId
                 episodeActeParamedical.Inactif = False
@@ -1577,7 +1577,7 @@ Public Class RadFEpisodeDetail
             ControleWorkflowEnCoursExistant = True
             OptionWorkflow = TacheDao.EnumOptionWorkflow.NULL
             Dim fonctionDestinataire As Fonction
-            fonctionDestinataire = fonctionDao.getFonctionById(tache.DestinataireFonctionId)
+            fonctionDestinataire = fonctionDao.GetFonctionById(tache.DestinataireFonctionId)
             Select Case fonctionDestinataire.Type
                 Case ProfilDao.EnumProfilType.PARAMEDICAL.ToString
                     RadBtnWorkflowIde.Show()

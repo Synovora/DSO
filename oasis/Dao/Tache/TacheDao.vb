@@ -719,7 +719,7 @@ Public Class TacheDao
     Public Function GetTacheById(id As Integer, Optional ByVal isWithAnnule As Boolean = False) As Tache
         Dim tache As Tache
         Dim con As SqlConnection
-        Dim isWhere As Boolean = False
+        Dim isWhere As Boolean
 
         con = GetConnection()
 
@@ -1257,25 +1257,25 @@ Public Class TacheDao
         Dim TraiteFonctionId As Long
         Select Case parcours.SousCategorieId
             Case EnumSousCategoriePPS.medecinReferent
-                DestinataireFonctionId = FonctionDao.enumFonction.MEDECIN
-                TraiteFonctionId = FonctionDao.enumFonction.MEDECIN
+                DestinataireFonctionId = FonctionDao.EnumFonction.MEDECIN
+                TraiteFonctionId = FonctionDao.EnumFonction.MEDECIN
             Case EnumSousCategoriePPS.IDE
-                DestinataireFonctionId = FonctionDao.enumFonction.IDE
-                TraiteFonctionId = FonctionDao.enumFonction.IDE
+                DestinataireFonctionId = FonctionDao.EnumFonction.IDE
+                TraiteFonctionId = FonctionDao.EnumFonction.IDE
             Case EnumSousCategoriePPS.sageFemme
                 If parcours.SpecialiteId = EnumSpecialiteOasis.sageFemmeOasis Then
-                    DestinataireFonctionId = FonctionDao.enumFonction.SAGE_FEMME
-                    TraiteFonctionId = FonctionDao.enumFonction.SAGE_FEMME
+                    DestinataireFonctionId = FonctionDao.EnumFonction.SAGE_FEMME
+                    TraiteFonctionId = FonctionDao.EnumFonction.SAGE_FEMME
                 Else
-                    DestinataireFonctionId = FonctionDao.enumFonction.SPECIALISTE_NON_OASIS
-                    TraiteFonctionId = FonctionDao.enumFonction.IDE
+                    DestinataireFonctionId = FonctionDao.EnumFonction.SPECIALISTE_NON_OASIS
+                    TraiteFonctionId = FonctionDao.EnumFonction.IDE
                 End If
             Case EnumSousCategoriePPS.specialiste
-                DestinataireFonctionId = FonctionDao.enumFonction.SPECIALISTE_NON_OASIS
-                TraiteFonctionId = FonctionDao.enumFonction.IDE
+                DestinataireFonctionId = FonctionDao.EnumFonction.SPECIALISTE_NON_OASIS
+                TraiteFonctionId = FonctionDao.EnumFonction.IDE
             Case Else
-                DestinataireFonctionId = FonctionDao.enumFonction.INCONNU
-                TraiteFonctionId = FonctionDao.enumFonction.IDE
+                DestinataireFonctionId = FonctionDao.EnumFonction.INCONNU
+                TraiteFonctionId = FonctionDao.EnumFonction.IDE
         End Select
 
         'Alimentation du bean Tache
@@ -1517,7 +1517,7 @@ Public Class TacheDao
 
         Dim tacheBeanAssocie = New TacheBeanAssocie
         tacheBeanAssocie.UserEmetteur = userDao.getUserById(tache.EmetteurUserId)
-        If tache.EmetteurFonctionId <> 0 Then tacheBeanAssocie.FonctionEmetteur = fonctionDao.getFonctionById(tache.EmetteurFonctionId)
+        If tache.EmetteurFonctionId <> 0 Then tacheBeanAssocie.FonctionEmetteur = fonctionDao.GetFonctionById(tache.EmetteurFonctionId)
         tacheBeanAssocie.UniteSanitaire = uniteSanitaireDao.getUniteSanitaireById(tache.UniteSanitaireId, True)
         tacheBeanAssocie.Site = siteDao.getSiteById(tache.SiteId, True)
         tacheBeanAssocie.Patient = PatientDao.GetPatientById(tache.PatientId)
@@ -1532,7 +1532,7 @@ Public Class TacheDao
                 End If
             End If
         End If
-        If tache.TraiteFonctionId Then tacheBeanAssocie.FonctionTraiteur = fonctionDao.getFonctionById(tache.TraiteFonctionId)
+        If tache.TraiteFonctionId Then tacheBeanAssocie.FonctionTraiteur = fonctionDao.GetFonctionById(tache.TraiteFonctionId)
         If tache.TraiteUserId <> 0 Then
             tacheBeanAssocie.UserTraiteur = userDao.getUserById(tache.TraiteUserId)
         End If
@@ -1765,45 +1765,45 @@ Public Class TacheDao
             ' -- emetteur fonction
             Select Case userLog.UtilisateurProfilId.Trim()
                 Case "IDE"
-                    .EmetteurFonctionId = FonctionDao.enumFonction.IDE
+                    .EmetteurFonctionId = FonctionDao.EnumFonction.IDE
                 Case "IDE_REMPLACANT"
-                    .EmetteurFonctionId = FonctionDao.enumFonction.IDE_REMPLACANT
+                    .EmetteurFonctionId = FonctionDao.EnumFonction.IDE_REMPLACANT
                 Case "MEDECIN"
-                    .EmetteurFonctionId = FonctionDao.enumFonction.MEDECIN
+                    .EmetteurFonctionId = FonctionDao.EnumFonction.MEDECIN
                 Case "SAGE_FEMME"
-                    .EmetteurFonctionId = FonctionDao.enumFonction.SAGE_FEMME
+                    .EmetteurFonctionId = FonctionDao.EnumFonction.SAGE_FEMME
                 Case "CADRE_SANTE"
-                    .EmetteurFonctionId = FonctionDao.enumFonction.CADRE_SANTE
+                    .EmetteurFonctionId = FonctionDao.EnumFonction.CADRE_SANTE
                 Case "SECRETAIRE_MEDICALE"
-                    .EmetteurFonctionId = FonctionDao.enumFonction.SECRETAIRE_MEDICALE
+                    .EmetteurFonctionId = FonctionDao.EnumFonction.SECRETAIRE_MEDICALE
                 Case "ADMINISTRATIF"
-                    .EmetteurFonctionId = FonctionDao.enumFonction.ADMINISTRATIF
+                    .EmetteurFonctionId = FonctionDao.EnumFonction.ADMINISTRATIF
                 Case Else
-                    .EmetteurFonctionId = FonctionDao.enumFonction.INCONNU
+                    .EmetteurFonctionId = FonctionDao.EnumFonction.INCONNU
             End Select
 
             ' --- parcours
             Select Case parcours.SousCategorieId
                 Case EnumSousCategoriePPS.medecinReferent
-                    .DestinataireFonctionId = FonctionDao.enumFonction.MEDECIN
-                    .TraiteFonctionId = FonctionDao.enumFonction.MEDECIN
+                    .DestinataireFonctionId = FonctionDao.EnumFonction.MEDECIN
+                    .TraiteFonctionId = FonctionDao.EnumFonction.MEDECIN
                 Case EnumSousCategoriePPS.IDE
-                    .DestinataireFonctionId = FonctionDao.enumFonction.IDE
-                    .TraiteFonctionId = FonctionDao.enumFonction.IDE
+                    .DestinataireFonctionId = FonctionDao.EnumFonction.IDE
+                    .TraiteFonctionId = FonctionDao.EnumFonction.IDE
                 Case EnumSousCategoriePPS.sageFemme
                     If parcours.SpecialiteId = EnumSpecialiteOasis.sageFemmeOasis Then
-                        .DestinataireFonctionId = FonctionDao.enumFonction.SAGE_FEMME
-                        .TraiteFonctionId = FonctionDao.enumFonction.SAGE_FEMME
+                        .DestinataireFonctionId = FonctionDao.EnumFonction.SAGE_FEMME
+                        .TraiteFonctionId = FonctionDao.EnumFonction.SAGE_FEMME
                     Else
-                        .DestinataireFonctionId = FonctionDao.enumFonction.SPECIALISTE_NON_OASIS
-                        .TraiteFonctionId = FonctionDao.enumFonction.IDE
+                        .DestinataireFonctionId = FonctionDao.EnumFonction.SPECIALISTE_NON_OASIS
+                        .TraiteFonctionId = FonctionDao.EnumFonction.IDE
                     End If
                 Case EnumSousCategoriePPS.specialiste
-                    .DestinataireFonctionId = FonctionDao.enumFonction.SPECIALISTE_NON_OASIS
-                    .TraiteFonctionId = FonctionDao.enumFonction.IDE
+                    .DestinataireFonctionId = FonctionDao.EnumFonction.SPECIALISTE_NON_OASIS
+                    .TraiteFonctionId = FonctionDao.EnumFonction.IDE
                 Case Else
-                    .DestinataireFonctionId = FonctionDao.enumFonction.INCONNU
-                    .TraiteFonctionId = FonctionDao.enumFonction.IDE
+                    .DestinataireFonctionId = FonctionDao.EnumFonction.INCONNU
+                    .TraiteFonctionId = FonctionDao.EnumFonction.IDE
             End Select
         End With
 
@@ -1844,7 +1844,7 @@ Public Class TacheDao
                       "FROM oasis.oa_patient; " &
                       "SELECT TOP 100 oa_utilisateur_nom, oa_utilisateur_prenom " &
                       "FROM oasis.oa_utilisateur "
-        Dim indexRequete As Integer = 0
+        'Dim indexRequete As Integer
         Dim listTablesLues As New List(Of DataTable)
 
         Using con As SqlConnection = GetConnection()

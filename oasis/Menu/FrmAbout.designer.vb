@@ -48,8 +48,8 @@ Public Partial Class FrmAbout
         '
         Me.tableLayoutPanel.BackColor = System.Drawing.Color.Transparent
         Me.tableLayoutPanel.ColumnCount = 2
-        Me.tableLayoutPanel.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.0!))
-        Me.tableLayoutPanel.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 67.0!))
+        Me.tableLayoutPanel.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 43.22034!))
+        Me.tableLayoutPanel.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 56.77966!))
         Me.tableLayoutPanel.Controls.Add(Me.logoPictureBox, 0, 0)
         Me.tableLayoutPanel.Controls.Add(Me.radLabelProductName, 1, 0)
         Me.tableLayoutPanel.Controls.Add(Me.radLabelVersion, 1, 1)
@@ -67,7 +67,7 @@ Public Partial Class FrmAbout
         Me.tableLayoutPanel.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 10.0!))
         Me.tableLayoutPanel.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50.0!))
         Me.tableLayoutPanel.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 10.0!))
-        Me.tableLayoutPanel.Size = New System.Drawing.Size(388, 265)
+        Me.tableLayoutPanel.Size = New System.Drawing.Size(638, 265)
         Me.tableLayoutPanel.TabIndex = 0
         '
         'logoPictureBox
@@ -77,7 +77,7 @@ Public Partial Class FrmAbout
         Me.logoPictureBox.Location = New System.Drawing.Point(3, 3)
         Me.logoPictureBox.Name = "logoPictureBox"
         Me.tableLayoutPanel.SetRowSpan(Me.logoPictureBox, 6)
-        Me.logoPictureBox.Size = New System.Drawing.Size(122, 259)
+        Me.logoPictureBox.Size = New System.Drawing.Size(269, 259)
         Me.logoPictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage
         Me.logoPictureBox.TabIndex = 12
         Me.logoPictureBox.TabStop = False
@@ -85,7 +85,7 @@ Public Partial Class FrmAbout
         'radLabelProductName
         '
         Me.radLabelProductName.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.radLabelProductName.Location = New System.Drawing.Point(134, 0)
+        Me.radLabelProductName.Location = New System.Drawing.Point(281, 0)
         Me.radLabelProductName.Margin = New System.Windows.Forms.Padding(6, 0, 3, 0)
         Me.radLabelProductName.MaximumSize = New System.Drawing.Size(0, 17)
         Me.radLabelProductName.Name = "radLabelProductName"
@@ -100,7 +100,7 @@ Public Partial Class FrmAbout
         'radLabelVersion
         '
         Me.radLabelVersion.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.radLabelVersion.Location = New System.Drawing.Point(134, 26)
+        Me.radLabelVersion.Location = New System.Drawing.Point(281, 26)
         Me.radLabelVersion.Margin = New System.Windows.Forms.Padding(6, 0, 3, 0)
         Me.radLabelVersion.MaximumSize = New System.Drawing.Size(0, 17)
         Me.radLabelVersion.Name = "radLabelVersion"
@@ -115,7 +115,7 @@ Public Partial Class FrmAbout
         'radLabelCopyright
         '
         Me.radLabelCopyright.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.radLabelCopyright.Location = New System.Drawing.Point(134, 52)
+        Me.radLabelCopyright.Location = New System.Drawing.Point(281, 52)
         Me.radLabelCopyright.Margin = New System.Windows.Forms.Padding(6, 0, 3, 0)
         Me.radLabelCopyright.MaximumSize = New System.Drawing.Size(0, 17)
         Me.radLabelCopyright.Name = "radLabelCopyright"
@@ -130,7 +130,7 @@ Public Partial Class FrmAbout
         'radLabelCompanyName
         '
         Me.radLabelCompanyName.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.radLabelCompanyName.Location = New System.Drawing.Point(134, 78)
+        Me.radLabelCompanyName.Location = New System.Drawing.Point(281, 78)
         Me.radLabelCompanyName.Margin = New System.Windows.Forms.Padding(6, 0, 3, 0)
         Me.radLabelCompanyName.MaximumSize = New System.Drawing.Size(0, 17)
         Me.radLabelCompanyName.Name = "radLabelCompanyName"
@@ -145,7 +145,7 @@ Public Partial Class FrmAbout
         'radTextBoxDescription
         '
         Me.radTextBoxDescription.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.radTextBoxDescription.Location = New System.Drawing.Point(134, 107)
+        Me.radTextBoxDescription.Location = New System.Drawing.Point(281, 107)
         Me.radTextBoxDescription.Margin = New System.Windows.Forms.Padding(6, 3, 3, 3)
         Me.radTextBoxDescription.Multiline = True
         Me.radTextBoxDescription.Name = "radTextBoxDescription"
@@ -155,7 +155,7 @@ Public Partial Class FrmAbout
         '
         Me.radTextBoxDescription.RootElement.StretchVertically = True
         Me.radTextBoxDescription.ScrollBars = System.Windows.Forms.ScrollBars.Both
-        Me.radTextBoxDescription.Size = New System.Drawing.Size(251, 126)
+        Me.radTextBoxDescription.Size = New System.Drawing.Size(354, 126)
         Me.radTextBoxDescription.TabIndex = 23
         Me.radTextBoxDescription.TabStop = False
         Me.radTextBoxDescription.Text = "Description"
@@ -164,7 +164,7 @@ Public Partial Class FrmAbout
         '
         Me.okRadButton.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.okRadButton.DialogResult = System.Windows.Forms.DialogResult.Cancel
-        Me.okRadButton.Location = New System.Drawing.Point(310, 239)
+        Me.okRadButton.Location = New System.Drawing.Point(560, 239)
         Me.okRadButton.Name = "okRadButton"
         Me.okRadButton.Size = New System.Drawing.Size(75, 23)
         Me.okRadButton.TabIndex = 24
@@ -175,7 +175,7 @@ Public Partial Class FrmAbout
         Me.AcceptButton = Me.okRadButton
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(406, 283)
+        Me.ClientSize = New System.Drawing.Size(656, 283)
         Me.Controls.Add(Me.tableLayoutPanel)
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog
         Me.MaximizeBox = False

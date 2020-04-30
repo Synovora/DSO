@@ -11,9 +11,9 @@ Imports System.Runtime.InteropServices
 
 <Assembly: AssemblyTitle("Oasis_WF")>
 <Assembly: AssemblyDescription("Dossier Patient Informatisé")>
-<Assembly: AssemblyCompany("Synovora")>
+<Assembly: AssemblyCompany("Synovora France")>
 <Assembly: AssemblyProduct("Oasis_WF")>
-<Assembly: AssemblyCopyright("Copyright ©  2019")>
+<Assembly: AssemblyCopyright("Copyright ©  2019/2020")>
 <Assembly: AssemblyTrademark("Synovora")>
 
 <Assembly: ComVisible(False)>

@@ -7,7 +7,7 @@ Public Class FrmAdministrateur
         InitializeComponent()
 
         ' Ajoutez une initialisation quelconque après l'appel InitializeComponent().
-        afficheTry()
+        AfficheTry()
     End Sub
 
     Private Sub BtnDebloque_Click(sender As Object, e As EventArgs) Handles BtnDebloque.Click
@@ -17,11 +17,11 @@ Public Class FrmAdministrateur
         End If
         ResetPermission()
         MsgBox("Poste débloqué")
-        afficheTry()
+        AfficheTry()
 
     End Sub
 
-    Private Sub afficheTry()
+    Private Sub AfficheTry()
         Dim nb = ReadPermTry()
         LblNbTry.Text = "Nbre essai(s) en cours : " & nb & "/" & MAX_TRY
         LblNbTry.ForeColor = If(nb >= MAX_TRY, Color.LightSalmon, Color.White)
