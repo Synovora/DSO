@@ -55,6 +55,7 @@ Partial Class RadFTacheModificationDemandeRendezVous
         Me.RadBtnAbandon = New Telerik.WinControls.UI.RadButton()
         Me.RadBtnValidation = New Telerik.WinControls.UI.RadButton()
         Me.ToolTip1 = New System.Windows.Forms.ToolTip(Me.components)
+        Me.RadBtnPlanifierRdv = New Telerik.WinControls.UI.RadButton()
         CType(Me.RadGroupBoxEtatCivil, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.RadGroupBoxEtatCivil.SuspendLayout()
         CType(Me.GbxIntervention, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -64,6 +65,7 @@ Partial Class RadFTacheModificationDemandeRendezVous
         CType(Me.NumMois, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.RadBtnAbandon, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.RadBtnValidation, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.RadBtnPlanifierRdv, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
@@ -392,6 +394,14 @@ Partial Class RadFTacheModificationDemandeRendezVous
         Me.RadBtnValidation.Text = "Validation"
         Me.ToolTip1.SetToolTip(Me.RadBtnValidation, "Valider la modification")
         '
+        'RadBtnPlanifierRdv
+        '
+        Me.RadBtnPlanifierRdv.Location = New System.Drawing.Point(127, 197)
+        Me.RadBtnPlanifierRdv.Name = "RadBtnPlanifierRdv"
+        Me.RadBtnPlanifierRdv.Size = New System.Drawing.Size(134, 24)
+        Me.RadBtnPlanifierRdv.TabIndex = 14
+        Me.RadBtnPlanifierRdv.Text = "Planifier le rendez-vous"
+        '
         'RadFTacheModificationDemandeRendezVous
         '
         Me.AcceptButton = Me.RadBtnValidation
@@ -399,6 +409,7 @@ Partial Class RadFTacheModificationDemandeRendezVous
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.CancelButton = Me.RadBtnAbandon
         Me.ClientSize = New System.Drawing.Size(975, 224)
+        Me.Controls.Add(Me.RadBtnPlanifierRdv)
         Me.Controls.Add(Me.RadBtnValidation)
         Me.Controls.Add(Me.RadBtnAbandon)
         Me.Controls.Add(Me.GbxIntervention)
@@ -424,6 +435,7 @@ Partial Class RadFTacheModificationDemandeRendezVous
         CType(Me.NumMois, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.RadBtnAbandon, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.RadBtnValidation, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.RadBtnPlanifierRdv, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
 
@@ -461,5 +473,6 @@ Partial Class RadFTacheModificationDemandeRendezVous
     Friend WithEvents RadBtnAbandon As Telerik.WinControls.UI.RadButton
     Friend WithEvents RadBtnValidation As Telerik.WinControls.UI.RadButton
     Friend WithEvents ToolTip1 As ToolTip
+    Friend WithEvents RadBtnPlanifierRdv As Telerik.WinControls.UI.RadButton
 End Class
 

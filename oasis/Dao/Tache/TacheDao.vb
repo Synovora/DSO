@@ -974,7 +974,7 @@ Public Class TacheDao
                 Throw New Exception("Collision , Tâche déjà traitée par un autre utilisateur !")
             End If
         Catch ex As Exception
-            MessageBox.Show(ex.Message)
+            'MessageBox.Show(ex.Message)
             isOK = False
         Finally
             If IsNothing(con) = False Then
@@ -1450,7 +1450,7 @@ Public Class TacheDao
 
         Dim SQLstring As String = "UPDATE oasis.oa_tache SET" &
             " etat = @etat, traite_user_id = @traiteUserId, horodate_cloture = @dateCloture, cloture = @Cloture " &
-            " WHERE id = @Id AND (traite_user_id is null OR traite_user_id = @traiteUserId2) AND etat<> @etat2"
+            " WHERE id = @Id AND (traite_user_id is null OR traite_user_id = @traiteUserId2) AND etat <> @etat2"
 
         Dim cmd As SqlCommand
         If transaction Is Nothing Then
@@ -1869,6 +1869,57 @@ Public Class TacheDao
         End Using
 
         Return listTablesLues
+    End Function
+
+    Public Function SetTacheEmetteurEtDestinatiareBySpecialiteEtSousCategorie(SpecialiteId As Long, SousCategorieId As Long) As TacheEmetteurEtDestinataire
+        Dim tacheEmetteurEtDestinataire As New TacheEmetteurEtDestinataire
+        tacheEmetteurEtDestinataire.DestinataireFonctionId = 0
+        tacheEmetteurEtDestinataire.EmetteurFonctionId = 0
+        tacheEmetteurEtDestinataire.TraiteFonctionId = 0
+
+        Select Case userLog.UtilisateurProfilId.Trim()
+            Case "IDE"
+                tacheEmetteurEtDestinataire.EmetteurFonctionId = FonctionDao.enumFonction.IDE
+            Case "IDE_REMPLACANT"
+                tacheEmetteurEtDestinataire.EmetteurFonctionId = FonctionDao.enumFonction.IDE_REMPLACANT
+            Case "MEDECIN"
+                tacheEmetteurEtDestinataire.EmetteurFonctionId = FonctionDao.enumFonction.MEDECIN
+            Case "SAGE_FEMME"
+                tacheEmetteurEtDestinataire.EmetteurFonctionId = FonctionDao.enumFonction.SAGE_FEMME
+            Case "CADRE_SANTE"
+                tacheEmetteurEtDestinataire.EmetteurFonctionId = FonctionDao.enumFonction.CADRE_SANTE
+            Case "SECRETAIRE_MEDICALE"
+                tacheEmetteurEtDestinataire.EmetteurFonctionId = FonctionDao.enumFonction.SECRETAIRE_MEDICALE
+            Case "ADMINISTRATIF"
+                tacheEmetteurEtDestinataire.EmetteurFonctionId = FonctionDao.enumFonction.ADMINISTRATIF
+            Case Else
+                tacheEmetteurEtDestinataire.EmetteurFonctionId = FonctionDao.enumFonction.INCONNU
+        End Select
+
+        Select Case SousCategorieId
+            Case EnumSousCategoriePPS.medecinReferent
+                tacheEmetteurEtDestinataire.DestinataireFonctionId = FonctionDao.enumFonction.MEDECIN
+                tacheEmetteurEtDestinataire.TraiteFonctionId = FonctionDao.enumFonction.MEDECIN
+            Case EnumSousCategoriePPS.IDE
+                tacheEmetteurEtDestinataire.DestinataireFonctionId = FonctionDao.enumFonction.IDE
+                tacheEmetteurEtDestinataire.TraiteFonctionId = FonctionDao.enumFonction.IDE
+            Case EnumSousCategoriePPS.sageFemme
+                If SpecialiteId = EnumSpecialiteOasis.sageFemmeOasis Then
+                    tacheEmetteurEtDestinataire.DestinataireFonctionId = FonctionDao.enumFonction.SAGE_FEMME
+                    tacheEmetteurEtDestinataire.TraiteFonctionId = FonctionDao.enumFonction.SAGE_FEMME
+                Else
+                    tacheEmetteurEtDestinataire.DestinataireFonctionId = FonctionDao.enumFonction.SPECIALISTE_NON_OASIS
+                    tacheEmetteurEtDestinataire.TraiteFonctionId = FonctionDao.enumFonction.IDE
+                End If
+            Case EnumSousCategoriePPS.specialiste
+                tacheEmetteurEtDestinataire.DestinataireFonctionId = FonctionDao.enumFonction.SPECIALISTE_NON_OASIS
+                tacheEmetteurEtDestinataire.TraiteFonctionId = FonctionDao.enumFonction.IDE
+            Case Else
+                tacheEmetteurEtDestinataire.DestinataireFonctionId = FonctionDao.enumFonction.INCONNU
+                tacheEmetteurEtDestinataire.TraiteFonctionId = FonctionDao.enumFonction.IDE
+        End Select
+
+        Return tacheEmetteurEtDestinataire
     End Function
 
 End Class

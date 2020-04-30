@@ -1,6 +1,9 @@
-﻿Public Class RadFTacheModificationRendezVous
+﻿Imports System.Configuration
+
+Public Class RadFTacheModificationRendezVous
     Private _selectedTacheId As Long
     Private _selectedPatient As Patient
+    Private _tacheDemandeRdv As Tache
     Private _codeRetour As Boolean
     Public Property RDVisTransforme As Boolean = False
 
@@ -31,45 +34,222 @@
         End Set
     End Property
 
+    Public Property TacheDemandeRdv As Tache
+        Get
+            Return _tacheDemandeRdv
+        End Get
+        Set(value As Tache)
+            _tacheDemandeRdv = value
+        End Set
+    End Property
+
     Dim tache As Tache
     Dim tacheDao As New TacheDao
+    Dim parcoursDao As New ParcoursDao
 
     Private Sub RadFTacheModificationRendezVous_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         afficheTitleForm(Me, "Modification rendez-vous")
         ChargementEtatCivil()
-        tache = tacheDao.getTacheById(SelectedTacheId)
-        TxtRDVCommentaire.Text = tache.EmetteurCommentaire
-        NumDateRV.Value = tache.DateRendezVous.ToString("dd.MM.yyyy")
-        NumheureRV.Value = tache.DateRendezVous.ToString("HH")
-        Dim Minute As Integer = tache.DateRendezVous.ToString("mm")
-        Select Case Minute
-            Case 0
-                RadioBtn0.Checked = True
-            Case 15
-                RadioBtn15.Checked = True
-            Case 30
-                RadioBtn30.Checked = True
-            Case 45
-                RadioBtn45.Checked = True
-            Case Else
-                RadioBtn0.Checked = True
-        End Select
+
+        If SelectedTacheId <> 0 Then    '===> Modification de rendez-vous
+            tache = tacheDao.GetTacheById(SelectedTacheId)
+            TxtRDVCommentaire.Text = tache.EmetteurCommentaire
+            NumDateRV.Value = tache.DateRendezVous.ToString("dd.MM.yyyy")
+            NumheureRV.Value = tache.DateRendezVous.ToString("HH")
+            Dim Minute As Integer = tache.DateRendezVous.ToString("mm")
+            Select Case Minute
+                Case 0
+                    RadioBtn0.Checked = True
+                Case 15
+                    RadioBtn15.Checked = True
+                Case 30
+                    RadioBtn30.Checked = True
+                Case 45
+                    RadioBtn45.Checked = True
+                Case Else
+                    RadioBtn0.Checked = True
+            End Select
+        Else                            '===> Création de rendez-vous
+            '--- Le bouton d'action pour transformer un rendez-vous prévisionnel est inhibé (le rendez-vous n'existe pas encore)
+            RadBtnTransformerEnPrevisionnel.Hide()
+
+            '--- Initialisation de la date de rendez-vous à créer en fonction de la demande
+            Select Case TacheDemandeRdv.TypedemandeRendezVous
+                Case TacheDao.TypeDemandeRendezVous.ANNEE.ToString
+                    If Date.Now.Year = TacheDemandeRdv.DateRendezVous.Year Then
+                        NumDateRV.Value = Date.Now.ToString("dd.MM.yyyy")
+                    Else
+                        If Date.Now.Year < TacheDemandeRdv.DateRendezVous.Year Then
+                            Dim dateRendezVous As New Date(TacheDemandeRdv.DateRendezVous.Year, 1, 1, 0, 0, 0)
+                            NumDateRV.Value = dateRendezVous.ToString("dd.MM.yyyy")
+                        Else
+                            NumDateRV.Value = Date.Now.ToString("dd.MM.yyyy")
+                        End If
+                    End If
+                Case TacheDao.TypeDemandeRendezVous.ANNEEMOIS.ToString
+                    If Date.Now.Year = TacheDemandeRdv.DateRendezVous.Year Then
+                        If Date.Now.Month >= TacheDemandeRdv.DateRendezVous.Month Then
+                            NumDateRV.Value = Date.Now.ToString("dd.MM.yyyy")
+                        Else
+                            NumDateRV.Value = New Date(Date.Now.Year, TacheDemandeRdv.DateRendezVous.Month, 1, 0, 0, 0)
+                        End If
+                    Else
+                        If Date.Now.Year < TacheDemandeRdv.DateRendezVous.Year Then
+                            Dim dateRendezVous As New Date(TacheDemandeRdv.DateRendezVous.Year, TacheDemandeRdv.DateRendezVous.Month, 1, 0, 0, 0)
+                            NumDateRV.Value = dateRendezVous.ToString("dd.MM.yyyy")
+                        Else
+                            NumDateRV.Value = Date.Now.ToString("dd.MM.yyyy")
+                        End If
+                    End If
+            End Select
+
+            '--- Initialisation des minutes à 0
+            RadioBtn0.Checked = True
+        End If
+
     End Sub
 
     Private Function Validation() As Boolean
         Me.CodeRetour = False
+        If SelectedTacheId <> 0 Then    '===> Modification rendez-vous
+            If ValidationModificationrendezVous() = True Then
+                CodeRetour = True
+                Close()
+            End If
+        Else                            '===> Création rendez-vous
+            If ValidationCreationRendezVous() = True Then
+                CodeRetour = True
+                Close()
+            End If
+        End If
+
+
+        Return CodeRetour
+    End Function
+
+    Private Function ValidationCreationRendezVous() As Boolean
+        Dim CodeRetour As Boolean = False
+
         If NumDateRV.Value.Date < Date.Now().Date Then
             Dim message As String = "Attention, La date de rendez-vous à programmer (" &
                 NumDateRV.Value.ToString("dd.MM.yyyy") &
                 "), est antérieure à la date du jour (" &
                 Date.Now().ToString("dd.MM.yyyy") &
-                "), après modification, le rendez-vous sera automatiquement clôturé." & vbCrLf &
+                "), après validation, le rendez-vous sera automatiquement clôturé." & vbCrLf &
                 "Confirmation de la date du rendez-vous ?"
-            If MsgBox(message, MsgBoxStyle.YesNo, "") = MsgBoxResult.No Then
+            If MsgBox(message, MsgBoxStyle.YesNo Or MsgBoxStyle.Exclamation, "Avertissement") = MsgBoxResult.No Then
                 Return False
                 Exit Function
             End If
         End If
+
+        Dim parcours As Parcours
+        parcours = parcoursDao.getParcoursById(TacheDemandeRdv.ParcoursId)
+
+        Dim minutesRV As Integer = CalculMinutes()
+        Dim ClotureTache As Boolean
+        Dim dateRendezVous As New DateTime(NumDateRV.Value.Year, NumDateRV.Value.Month, NumDateRV.Value.Day, NumheureRV.Value, minutesRV, 0)
+        If NumDateRV.Value.Date < Date.Now().Date Then
+            'Clôture du rendez-vous
+            ClotureTache = True
+            If CreationRendezVous(parcours, dateRendezVous, ClotureTache) = True Then
+                MessageBox.Show("Rendez-vous programmé et clôturé pour le " & NumDateRV.Value.ToString("dd.MM.yyyy"))
+                CodeRetour = True
+                '--- Création automatique d'une demande de rendez-vous car le rendez-vous créé est clôturé du fait qu'il est antérieur à la date du jour
+                tacheDao.CreationAutomatiqueDeDemandeRendezVous(SelectedPatient, parcours, Date.Now())
+            End If
+        Else
+            ClotureTache = False
+            If CreationRendezVous(parcours, dateRendezVous, ClotureTache) = True Then
+                MessageBox.Show("Rendez-vous programmé pour le " & NumDateRV.Value.ToString("dd.MM.yyyy"))
+                CodeRetour = True
+            End If
+        End If
+
+        Return CodeRetour
+    End Function
+
+    Private Function CreationRendezVous(parcours As Parcours, dateRendezVous As Date, ClotureTache As Boolean) As Boolean
+        CodeRetour = False
+
+        Dim tacheEmetteurEtDestinataire As TacheEmetteurEtDestinataire
+        tacheEmetteurEtDestinataire = tacheDao.SetTacheEmetteurEtDestinatiareBySpecialiteEtSousCategorie(parcours.SpecialiteId, parcours.SousCategorieId)
+
+        Dim TacheCreation As New Tache
+
+        TacheCreation.ParentId = 0
+        TacheCreation.EmetteurUserId = userLog.UtilisateurId
+        TacheCreation.EmetteurFonctionId = tacheEmetteurEtDestinataire.EmetteurFonctionId
+        TacheCreation.UniteSanitaireId = SelectedPatient.PatientUniteSanitaireId
+        TacheCreation.SiteId = SelectedPatient.PatientSiteId
+        TacheCreation.PatientId = SelectedPatient.patientId
+        TacheCreation.ParcoursId = parcours.Id
+        TacheCreation.EpisodeId = 0
+        TacheCreation.SousEpisodeId = 0
+        TacheCreation.TraiteUserId = 0
+        TacheCreation.TraiteFonctionId = tacheEmetteurEtDestinataire.TraiteFonctionId
+        TacheCreation.DestinataireFonctionId = tacheEmetteurEtDestinataire.DestinataireFonctionId
+        TacheCreation.Priorite = TacheDao.Priorite.BASSE
+        TacheCreation.OrdreAffichage = 30
+        TacheCreation.Categorie = TacheDao.CategorieTache.SOIN.ToString
+        'Si le destinataire du rendez-vous n'est pas Oasis, on déclare un rendez-vous de type Spécialiste
+        If parcours.SousCategorieId = EnumSousCategoriePPS.IDE Or
+           parcours.SousCategorieId = EnumSousCategoriePPS.medecinReferent Or
+           parcours.SousCategorieId = EnumSousCategoriePPS.sageFemme Then
+            TacheCreation.Type = TacheDao.TypeTache.RDV.ToString
+            TacheCreation.Nature = TacheDao.NatureTache.RDV.ToString
+        Else
+            TacheCreation.Type = TacheDao.TypeTache.RDV_SPECIALISTE.ToString()
+            TacheCreation.Nature = TacheDao.NatureTache.RDV_SPECIALISTE.ToString
+        End If
+
+        Dim DureeRendezVous As Integer = 15
+        Try
+            If IsNumeric(ConfigurationManager.AppSettings("dureeRendezVous")) Then
+                DureeRendezVous = ConfigurationManager.AppSettings("dureeRendezVous")
+            End If
+        Catch ex As Exception
+            MessageBox.Show(ex.ToString)
+        End Try
+
+        TacheCreation.Duree = DureeRendezVous
+        TacheCreation.EmetteurCommentaire = TxtRDVCommentaire.Text
+        TacheCreation.HorodatageCreation = Date.Now()
+        If ClotureTache = True Then
+            TacheCreation.Etat = TacheDao.EtatTache.TERMINEE.ToString
+            TacheCreation.Cloture = True
+        Else
+            TacheCreation.Etat = TacheDao.EtatTache.EN_ATTENTE.ToString
+            TacheCreation.Cloture = False
+        End If
+
+        TacheCreation.TypedemandeRendezVous = ""
+        TacheCreation.DateRendezVous = dateRendezVous
+
+        If tacheDao.CreateTache(TacheCreation) = True Then
+            CodeRetour = True
+        End If
+
+        Return CodeRetour
+    End Function
+
+
+    Private Function ValidationModificationrendezVous() As Boolean
+        Me.CodeRetour = False
+
+        If NumDateRV.Value.Date < Date.Now().Date Then
+            Dim message As String = "Attention, La date de rendez-vous à reprogrammer (" &
+                NumDateRV.Value.ToString("dd.MM.yyyy") &
+                "), est antérieure à la date du jour (" &
+                Date.Now().ToString("dd.MM.yyyy") &
+                "), après modification, le rendez-vous sera automatiquement clôturé." & vbCrLf &
+                "Confirmation de la date du rendez-vous ?"
+            If MsgBox(message, MsgBoxStyle.YesNo Or MsgBoxStyle.Exclamation, "Avertissement") = MsgBoxResult.No Then
+                Return False
+                Exit Function
+            End If
+        End If
+
         Dim minutesRV As Integer = CalculMinutes()
         Dim ClotureTache As Boolean
         Dim dateRendezVous As New DateTime(NumDateRV.Value.Year, NumDateRV.Value.Month, NumDateRV.Value.Day, NumheureRV.Value, minutesRV, 0)
@@ -78,15 +258,19 @@
             ClotureTache = True
             If ModificationRendezVous(dateRendezVous, ClotureTache) = True Then
                 MessageBox.Show("Rendez-vous programmé et clôturé pour le " & NumDateRV.Value.ToString("dd.MM.yyyy"))
-                Me.CodeRetour = True
-                Close()
+                CodeRetour = True
+
+                '--- Création automatique d'une demande de rendez-vous car le rendez-vous modifié est clôturé du fait qu'il est antérieur à la date du jour
+                Dim Tache As Tache = tacheDao.GetTacheById(SelectedTacheId)
+                Dim parcours As Parcours
+                parcours = parcoursDao.getParcoursById(Tache.ParcoursId)
+                tacheDao.CreationAutomatiqueDeDemandeRendezVous(SelectedPatient, Parcours, Date.Now())
             End If
         Else
             ClotureTache = False
             If ModificationRendezVous(dateRendezVous, ClotureTache) = True Then
                 MessageBox.Show("Rendez-vous programmé pour le " & NumDateRV.Value.ToString("dd.MM.yyyy"))
-                Me.CodeRetour = True
-                Close()
+                CodeRetour = True
             End If
         End If
 

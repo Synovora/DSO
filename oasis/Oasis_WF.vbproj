@@ -210,6 +210,7 @@
     <Compile Include="Bean\SousEpisode\SousEpisode.vb" />
     <Compile Include="Bean\SousEpisode\SousEpisodeType.vb" />
     <Compile Include="Bean\structurebase\Siege.vb" />
+    <Compile Include="Bean\Tache\TacheEmetteurEtDestinataire.vb" />
     <Compile Include="Bean\Theriaque\Allergie.vb" />
     <Compile Include="Bean\Theriaque\ContreIndicationATC.vb" />
     <Compile Include="Bean\Theriaque\ContreIndicationSubstance.vb" />

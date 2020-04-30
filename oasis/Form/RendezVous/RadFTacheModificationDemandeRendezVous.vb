@@ -116,21 +116,14 @@
     Private Function ModificationDemandeRendezVous(dateRendezVous As DateTime, typedemandeRendezVous As String) As Boolean
         Dim CodeRetour As Boolean = False
         tache = tacheDao.GetTacheById(SelectedTacheId)
+
+        tache.DateRendezVous = dateRendezVous
+        tache.TypedemandeRendezVous = typedemandeRendezVous
+        tache.EmetteurCommentaire = TxtRDVCommentaire.Text
         Try
-            If tacheDao.AttribueTacheToUserLog(SelectedTacheId) = True Then
-                tache.DateRendezVous = dateRendezVous
-                tache.TypedemandeRendezVous = typedemandeRendezVous
-                tache.EmetteurCommentaire = TxtRDVCommentaire.Text
-                Try
-                    If tacheDao.ModificationDemandeRendezVous(tache) = True Then
-                        CodeRetour = True
-                        Close()
-                    End If
-                Catch ex As Exception
-                    MessageBox.Show(ex.ToString)
-                End Try
-            Else
-                MessageBox.Show("l'attribution de la tâche n'a pas aboutie, modification impossible !")
+            If tacheDao.ModificationDemandeRendezVous(tache) = True Then
+                CodeRetour = True
+                Close()
             End If
         Catch ex As Exception
             MessageBox.Show(ex.ToString)
@@ -153,5 +146,25 @@
 
     Private Sub RadBtnAbandon_Click(sender As Object, e As EventArgs) Handles RadBtnAbandon.Click
         Close()
+    End Sub
+
+    Private Sub RadBtnPlanifierRdv_Click(sender As Object, e As EventArgs) Handles RadBtnPlanifierRdv.Click
+        Me.Enabled = False
+        'Appeler l'écran de création du rendez-vous
+        Using form As New RadFTacheModificationRendezVous
+            form.SelectedPatient = Me.SelectedPatient
+            form.TacheDemandeRdv = tache
+            form.SelectedTacheId = 0
+            form.ShowDialog()
+            If form.CodeRetour = True Then
+                'Cloturer la tache de demande de rendez-vous
+                tacheDao.ClotureTache(SelectedTacheId, True)
+                Me.CodeRetour = True
+            End If
+        End Using
+        If Me.CodeRetour = True Then
+            Close()
+        End If
+        Me.Enabled = True
     End Sub
 End Class

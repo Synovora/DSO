@@ -986,11 +986,13 @@ Public Class RadFParcoursDetailEdit
         Dim tache As New Tache
         Dim tacheDao As New TacheDao
 
-        SetEmetteurId()
+        'SetEmetteurId()
+        Dim tacheEmetteurEtDestinataire As TacheEmetteurEtDestinataire
+        tacheEmetteurEtDestinataire = tacheDao.SetTacheEmetteurEtDestinatiareBySpecialiteEtSousCategorie(ParcoursUpdate.SpecialiteId, ParcoursUpdate.SousCategorieId)
 
         tache.ParentId = 0
         tache.EmetteurUserId = userLog.UtilisateurId
-        tache.EmetteurFonctionId = EmetteurFonctionId
+        tache.EmetteurFonctionId = tacheEmetteurEtDestinataire.EmetteurFonctionId
         tache.UniteSanitaireId = SelectedPatient.PatientUniteSanitaireId
         tache.SiteId = SelectedPatient.PatientSiteId
         tache.PatientId = SelectedPatient.patientId
@@ -998,8 +1000,8 @@ Public Class RadFParcoursDetailEdit
         tache.EpisodeId = 0
         tache.SousEpisodeId = 0
         tache.TraiteUserId = 0
-        tache.TraiteFonctionId = TraiteFonctionId
-        tache.DestinataireFonctionId = DestinataireFonctionId
+        tache.TraiteFonctionId = tacheEmetteurEtDestinataire.TraiteFonctionId
+        tache.DestinataireFonctionId = tacheEmetteurEtDestinataire.DestinataireFonctionId
         tache.Priorite = TacheDao.Priorite.BASSE
         tache.OrdreAffichage = 30
         tache.Categorie = TacheDao.CategorieTache.SOIN.ToString
@@ -1035,11 +1037,13 @@ Public Class RadFParcoursDetailEdit
         Dim tache As New Tache
         Dim tacheDao As New TacheDao
 
-        SetEmetteurId()
+        'SetEmetteurId()
+        Dim tacheEmetteurEtDestinataire As TacheEmetteurEtDestinataire
+        tacheEmetteurEtDestinataire = tacheDao.SetTacheEmetteurEtDestinatiareBySpecialiteEtSousCategorie(ParcoursUpdate.SpecialiteId, ParcoursUpdate.SousCategorieId)
 
         tache.ParentId = 0
         tache.EmetteurUserId = userLog.UtilisateurId
-        tache.EmetteurFonctionId = EmetteurFonctionId
+        tache.EmetteurFonctionId = tacheEmetteurEtDestinataire.EmetteurFonctionId
         tache.UniteSanitaireId = SelectedPatient.PatientUniteSanitaireId
         tache.SiteId = SelectedPatient.PatientSiteId
         tache.PatientId = SelectedPatient.patientId
@@ -1047,8 +1051,8 @@ Public Class RadFParcoursDetailEdit
         tache.EpisodeId = 0
         tache.SousEpisodeId = 0
         tache.TraiteUserId = 0
-        tache.TraiteFonctionId = TraiteFonctionId
-        tache.DestinataireFonctionId = DestinataireFonctionId
+        tache.TraiteFonctionId = tacheEmetteurEtDestinataire.TraiteFonctionId
+        tache.DestinataireFonctionId = tacheEmetteurEtDestinataire.DestinataireFonctionId
         tache.Priorite = TacheDao.Priorite.BASSE
         tache.OrdreAffichage = 20
         tache.Categorie = TacheDao.CategorieTache.SOIN.ToString
@@ -1266,6 +1270,8 @@ Public Class RadFParcoursDetailEdit
     '============================================================================================================
     '============== Général
     '============================================================================================================
+
+    'Fonction remplacée par l'appel de la fonction dans tachedao  ===> Fonction à supprimer !!!!!!!!
     Private Sub SetEmetteurId()
         Select Case userLog.UtilisateurProfilId.Trim()
             Case "IDE"

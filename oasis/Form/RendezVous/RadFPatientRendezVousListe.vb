@@ -198,7 +198,9 @@ Public Class RadFPatientRendezVousListe
 
                 If TacheALiberer = True Then
                     'Si la tâche était initialement disponible, On libére la tâche
-                    tacheDao.DesattribueTache(tache.Id)
+                    If tacheDao.DesattribueTache(tache.Id) = False Then
+                        'Erreur
+                    End If
                 End If
 
                 Me.Enabled = True

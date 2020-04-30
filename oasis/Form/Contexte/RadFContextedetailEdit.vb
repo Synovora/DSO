@@ -169,9 +169,12 @@ Public Class RadFContextedetailEdit
             contexteUpdate.Nature = "Patient"
             contexteUpdate.Inactif = False
             RadValidation.Show()
+
             'Catégorie
-            CbxCategorieContexte.Text = ContexteDao.EnumParcoursBaseItem.Medical
+            'CbxCategorieContexte.Text = ContexteDao.EnumParcoursBaseItem.Medical
             contexteUpdate.CategorieContexte = ContexteDao.EnumParcoursBaseCode.Medical
+            RadioBtnMedical.Checked = True
+
             'Dénomination DRC
             contexteUpdate.DrcId = SelectedDrcId
             TxtDrcId.Text = SelectedDrcId
@@ -257,12 +260,15 @@ Public Class RadFContextedetailEdit
 
         Select Case contexteRead.CategorieContexte
             Case ContexteDao.EnumParcoursBaseCode.Medical
-                CbxCategorieContexte.Text = ContexteDao.EnumParcoursBaseItem.Medical
+                'CbxCategorieContexte.Text = ContexteDao.EnumParcoursBaseItem.Medical
+                RadioBtnMedical.Checked = True
             Case ContexteDao.EnumParcoursBaseCode.BioEnvironnemental
-                CbxCategorieContexte.Text = ContexteDao.EnumParcoursBaseItem.BioEnvironnemental
+                'CbxCategorieContexte.Text = ContexteDao.EnumParcoursBaseItem.BioEnvironnemental
+                RadioBtnBioEnvironnemental.Checked = True
             Case Else
-                CbxCategorieContexte.Text = ContexteDao.EnumParcoursBaseItem.Medical
+                'CbxCategorieContexte.Text = ContexteDao.EnumParcoursBaseItem.Medical
                 contexteUpdate.CategorieContexte = ContexteDao.EnumParcoursBaseCode.Medical
+                RadioBtnMedical.Checked = True
         End Select
 
         If contexteRead.DrcId = 0 Then
@@ -581,9 +587,9 @@ Public Class RadFContextedetailEdit
 
     'Initialisation des zones de saisie
     Private Sub InitZone()
-        CbxCategorieContexte.Items.Clear()
-        CbxCategorieContexte.Items.Add(ContexteDao.EnumParcoursBaseItem.Medical)
-        CbxCategorieContexte.Items.Add(ContexteDao.EnumParcoursBaseItem.BioEnvironnemental)
+        'CbxCategorieContexte.Items.Clear()
+        'CbxCategorieContexte.Items.Add(ContexteDao.EnumParcoursBaseItem.Medical)
+        'CbxCategorieContexte.Items.Add(ContexteDao.EnumParcoursBaseItem.BioEnvironnemental)
 
         Me.ContexteTransformeEnAntecedent = False
         TxtDrcId.Text = ""
@@ -597,7 +603,9 @@ Public Class RadFContextedetailEdit
 
     'Inhiber les zones de saisie
     Private Sub InhiberZonesDeSaisie()
-        CbxCategorieContexte.Enabled = False
+        'CbxCategorieContexte.Enabled = False
+        RadioBtnMedical.Enabled = False
+        RadioBtnBioEnvironnemental.Enabled = False
         TxtDrcId.Enabled = False
         TxtContexteDescription.Enabled = False
         DteDateDebut.Enabled = False
@@ -641,13 +649,24 @@ Public Class RadFContextedetailEdit
     '   Gestion des zones de saisie modifiées
     '======================================================
 
-    Private Sub CbxCategorieContexte_SelectedIndexChanged(sender As Object, e As EventArgs) Handles CbxCategorieContexte.SelectedIndexChanged
-        Select Case CbxCategorieContexte.Text
-            Case ContexteDao.EnumParcoursBaseItem.Medical
-                contexteUpdate.CategorieContexte = ContexteDao.EnumParcoursBaseCode.Medical
-            Case ContexteDao.EnumParcoursBaseItem.BioEnvironnemental
-                contexteUpdate.CategorieContexte = ContexteDao.EnumParcoursBaseCode.BioEnvironnemental
-        End Select
+    'Private Sub CbxCategorieContexte_SelectedIndexChanged(sender As Object, e As EventArgs)
+    'Select Case CbxCategorieContexte.Text
+    'Case ContexteDao.EnumParcoursBaseItem.Medical
+    'contexteUpdate.CategorieContexte = ContexteDao.EnumParcoursBaseCode.Medical
+    'Case ContexteDao.EnumParcoursBaseItem.BioEnvironnemental
+    'contexteUpdate.CategorieContexte = ContexteDao.EnumParcoursBaseCode.BioEnvironnemental
+    'End Select
+    'GestionAffichageBoutonValidation()
+    'End Sub
+
+
+    Private Sub RadioBtnMedical_CheckedChanged(sender As Object, e As EventArgs) Handles RadioBtnMedical.CheckedChanged
+        contexteUpdate.CategorieContexte = ContexteDao.EnumParcoursBaseCode.Medical
+        GestionAffichageBoutonValidation()
+    End Sub
+
+    Private Sub RadioBtnBioEnvironnemental_CheckedChanged(sender As Object, e As EventArgs) Handles RadioBtnBioEnvironnemental.CheckedChanged
+        contexteUpdate.CategorieContexte = ContexteDao.EnumParcoursBaseCode.BioEnvironnemental
         GestionAffichageBoutonValidation()
     End Sub
 
@@ -796,7 +815,9 @@ Public Class RadFContextedetailEdit
             RadBtnRecupereDrc.Hide()
             RadBtnSupprimer.Hide()
             RadBtnTransformer.Hide()
-            CbxCategorieContexte.Enabled = False
+            'CbxCategorieContexte.Enabled = False
+            RadioBtnMedical.Enabled = False
+            RadioBtnBioEnvironnemental.Enabled = False
             TxtContexteDescription.Enabled = False
             DteDateDebut.Enabled = False
             DteDateFin.Enabled = False
@@ -826,4 +847,5 @@ Public Class RadFContextedetailEdit
         End Try
         Me.Enabled = True
     End Sub
+
 End Class

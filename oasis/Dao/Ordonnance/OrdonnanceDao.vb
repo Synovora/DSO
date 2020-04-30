@@ -507,6 +507,7 @@ Public Class OrdonnanceDao
                     ordonnanceDetail.ADelivrer = False
             End Select
 
+            '====> Enlevé sur demande de Francis le 29/04/2020
             'A ne pas délivrer si traitement conditionnel quel que soit le type d'épisode
             'If TraitementDataTable.Rows(i)("oa_traitement_posologie_base") = TraitementDao.EnumBaseCode.CONDITIONNEL Then
             'ordonnanceDetail.ADelivrer = False
