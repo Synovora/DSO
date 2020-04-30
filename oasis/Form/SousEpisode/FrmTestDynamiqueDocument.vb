@@ -1,5 +1,4 @@
 ﻿Imports System.IO
-Imports iText.Layout
 Imports Telerik.WinControls.UI
 Imports Telerik.WinForms.Documents
 Imports Telerik.WinForms.Documents.FormatProviders.Pdf
@@ -7,7 +6,7 @@ Imports Telerik.WinForms.Documents.Layout
 Imports Telerik.WinForms.Documents.Model
 
 Public Class FrmTestDynamiqueDocument
-    Dim editeur As RadRichTextEditor
+    ReadOnly editeur As RadRichTextEditor
 
     Public Sub New()
 
@@ -20,10 +19,10 @@ Public Class FrmTestDynamiqueDocument
 
     Private Sub RadButton1_Click(sender As Object, e As EventArgs) Handles RadButton1.Click
         'editeur = makeDoc()
-        makedoc()
+        Makedoc()
     End Sub
 
-    Private Sub makedoc()
+    Private Sub Makedoc()
         Using editTools As New OasisTextTools
             With editTools
 
@@ -35,14 +34,14 @@ Public Class FrmTestDynamiqueDocument
                 .AddTexteLine("Une suite ajoutée ", 25)
                 .AddTexte("Trés gros", 50, Telerik.WinControls.RichTextEditor.UI.FontWeights.Normal)
                 .AddTexteLine("Test de texte suite", 12, Telerik.WinControls.RichTextEditor.UI.FontWeights.Normal)
-                .addTexteAfterANewLine("Une deuxieme ligne ajoutée après un saut de ligne", 5)
+                .AddTexteAfterANewLine("Une deuxieme ligne ajoutée après un saut de ligne", 5)
 
-                .CreateParagraphIntoSection(Section, 25, RadTextAlignment.Left)
+                .CreateParagraphIntoSection(section, 25, RadTextAlignment.Left)
                 .AddTexte("Test de texte align left ",, Telerik.WinControls.RichTextEditor.UI.FontWeights.Bold)
                 .AddTexteLine("Une suite ajoutée ")
                 .AddTexte("En gros", 50, Telerik.WinControls.RichTextEditor.UI.FontWeights.Normal)
                 .AddTexteLine("Test de texte suite", 12, Telerik.WinControls.RichTextEditor.UI.FontWeights.Normal)
-                .addTexteAfterANewLine("Une deuxieme ligne ajoutée après un saut de ligne")
+                .AddTexteAfterANewLine("Une deuxieme ligne ajoutée après un saut de ligne")
 
                 ' --- Insertion du fragment generé
                 .InsertFragmentToEditor(document)
