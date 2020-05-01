@@ -368,7 +368,7 @@ Public Class RadFPPSDetailEdit
             .AddWithValue("@priorite", NumPriorite.Value.ToString)
             .AddWithValue("@drcId", TxtDrcId.Text)
             .AddWithValue("@commentaire", TxtCommentaire.Text)
-            .AddWithValue("@utilisateurCreation", UtilisateurConnecte.UtilisateurId.ToString)
+            .AddWithValue("@utilisateurCreation", userLog.UtilisateurId.ToString)
             .AddWithValue("@dateCreation", Date.Now.ToString("yyyy-MM-dd HH:mm:ss"))
             .AddWithValue("@affichageSynthese", 1)
         End With
@@ -392,7 +392,7 @@ Public Class RadFPPSDetailEdit
             'Mise à jour des données dans l'instance de la classe Historisation antecedent
             PPSHistoACreer.PpsId = ppsId 'Récupération de l'id de l'occurrence créée
             PPSHistoACreer.HistorisationDate = DateTime.Now()
-            PPSHistoACreer.HistorisationUtilisateurId = UtilisateurConnecte.UtilisateurId
+            PPSHistoACreer.HistorisationUtilisateurId = userLog.UtilisateurId
             PPSHistoACreer.HistorisationEtat = EnumEtatPPSHisto.Creation
             PPSHistoACreer.PatientId = SelectedPatient.patientId.ToString
             PPSHistoACreer.Categorie = CategoriePPS
@@ -411,7 +411,7 @@ Public Class RadFPPSDetailEdit
             PPSCreeDataReader = antecedentCreeCommand.ExecuteReader()
             If PPSCreeDataReader.Read() Then
                 'Initialisation classe Historisation PPS
-                InitClassePPStHistorisation(PPSCreeDataReader, UtilisateurConnecte, PPSHistoACreer)
+                InitClassePPStHistorisation(PPSCreeDataReader, userLog, PPSHistoACreer)
 
                 'Libération des ressources d'accès aux données
                 conxn.Close()
@@ -419,7 +419,7 @@ Public Class RadFPPSDetailEdit
             End If
 
             'Création dans l'historique des PPS du PPS créé
-            CreationPPSHisto(PPSHistoACreer, UtilisateurConnecte, PPSHistoCreationDao.EnumEtatPPSHisto.Creation)
+            CreationPPSHisto(PPSHistoACreer, userLog, PPSHistoCreationDao.EnumEtatPPSHisto.Creation)
 
             'Mise à jour de la date de mise à jour de la synthèse (table patient)
             PatientDao.ModificationDateMajSynthesePatient(SelectedPatient.patientId)
@@ -445,7 +445,7 @@ Public Class RadFPPSDetailEdit
         End If
 
         With cmd.Parameters
-            .AddWithValue("@utilisateurModification", UtilisateurConnecte.UtilisateurId.ToString)
+            .AddWithValue("@utilisateurModification", userLog.UtilisateurId.ToString)
             .AddWithValue("@sousCategorie", SousCategoriePPs)
             .AddWithValue("@dateModification", DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss"))
             .AddWithValue("@priorite", NumPriorite.Value.ToString)
@@ -472,7 +472,7 @@ Public Class RadFPPSDetailEdit
         If codeRetour = True Then
             'Mise à jour des données modifiées dans l'instance de la classe Historisation antecedent
             PPSHistoACreer.HistorisationDate = Date.Now()
-            PPSHistoACreer.HistorisationUtilisateurId = UtilisateurConnecte.UtilisateurId
+            PPSHistoACreer.HistorisationUtilisateurId = userLog.UtilisateurId
             PPSHistoACreer.HistorisationEtat = EnumEtatPPSHisto.Modification
             PPSHistoACreer.Categorie = CategoriePPS
             PPSHistoACreer.SousCategorie = SousCategoriePPs
@@ -485,7 +485,7 @@ Public Class RadFPPSDetailEdit
             PPSHistoACreer.DrcId = TxtDrcId.Text
 
             'Création dans l'historique des modifications de l'antecedent
-            CreationPPSHisto(PPSHistoACreer, UtilisateurConnecte, EnumEtatPPSHisto.Modification)
+            CreationPPSHisto(PPSHistoACreer, userLog, EnumEtatPPSHisto.Modification)
 
             'Mise à jour de la date de mise à jour de la synthèse (table patient)
             PatientDao.ModificationDateMajSynthesePatient(SelectedPatient.patientId)
@@ -508,7 +508,7 @@ Public Class RadFPPSDetailEdit
         Dim cmd As New SqlCommand(SQLstring, conxn)
 
         With cmd.Parameters
-            .AddWithValue("@utilisateurModification", UtilisateurConnecte.UtilisateurId.ToString)
+            .AddWithValue("@utilisateurModification", userLog.UtilisateurId.ToString)
             .AddWithValue("@dateModification", DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss"))
             .AddWithValue("@inactif", 1)
             .AddWithValue("@ppsId", PPSId.ToString)
@@ -539,7 +539,7 @@ Public Class RadFPPSDetailEdit
         If codeRetour = True Then
             'Mise à jour des données modifiées dans l'instance de la classe Historisation antecedent
             PPSHistoACreer.HistorisationDate = Date.Now()
-            PPSHistoACreer.HistorisationUtilisateurId = UtilisateurConnecte.UtilisateurId
+            PPSHistoACreer.HistorisationUtilisateurId = userLog.UtilisateurId
             PPSHistoACreer.HistorisationEtat = EnumEtatPPSHisto.Annulation
             PPSHistoACreer.Categorie = CategoriePPS
             PPSHistoACreer.SousCategorie = SousCategoriePPs
@@ -553,7 +553,7 @@ Public Class RadFPPSDetailEdit
             PPSHistoACreer.DrcId = TxtDrcId.Text
 
             'Création dans l'historique des modifications de l'antecedent
-            CreationPPSHisto(PPSHistoACreer, UtilisateurConnecte, EnumEtatPPSHisto.Annulation)
+            CreationPPSHisto(PPSHistoACreer, userLog, EnumEtatPPSHisto.Annulation)
 
             'Mise à jour de la date de mise à jour de la synthèse (table patient)
             PatientDao.ModificationDateMajSynthesePatient(SelectedPatient.patientId)

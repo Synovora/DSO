@@ -397,7 +397,7 @@ Public Class RadFAntecedentDetailEdit
         GestionAffichageAldDemande()
 
         'Initialisation classe Historisation antecedent 
-        AntecedentHistoCreationDao.InitAntecedentHistorisation(antecedentRead, UtilisateurConnecte, AntecedentHistoACreer)
+        AntecedentHistoCreationDao.InitAntecedentHistorisation(antecedentRead, userLog, AntecedentHistoACreer)
     End Sub
 
     'Suppression (annulation) de l'antécédent
@@ -601,7 +601,7 @@ Public Class RadFAntecedentDetailEdit
 
     Private Sub SelectionAldCim10()
         Using vFAldCim10Selecteur As New RadFAldCim10Selecteur
-            vFAldCim10Selecteur.UtilisateurConnecte = Me.UtilisateurConnecte
+            vFAldCim10Selecteur.UtilisateurConnecte = userLog
             vFAldCim10Selecteur.SelectedAldId = antecedentUpdate.AldId
             vFAldCim10Selecteur.ShowDialog() 'Modal
             'Si un code ALD CIM10 a été sélectionné
@@ -958,7 +958,7 @@ Public Class RadFAntecedentDetailEdit
         End If
 
         With cmd.Parameters
-            .AddWithValue("@utilisateurModification", UtilisateurConnecte.UtilisateurId.ToString)
+            .AddWithValue("@utilisateurModification", userLog.UtilisateurId.ToString)
             .AddWithValue("@dateModification", DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss"))
             .AddWithValue("@drcId", TxtDrcId.Text)
             .AddWithValue("@description", TxtAntecedentDescription.Text)
@@ -993,7 +993,7 @@ Public Class RadFAntecedentDetailEdit
         If codeRetour = True Then
             'Mise à jour des données modifiées dans l'instance de la classe Historisation antecedent
             AntecedentHistoACreer.HistorisationDate = Date.Now()
-            AntecedentHistoACreer.UtilisateurId = UtilisateurConnecte.UtilisateurId
+            AntecedentHistoACreer.UtilisateurId = userLog.UtilisateurId
             AntecedentHistoACreer.Etat = AntecedentHistoCreationDao.EnumEtatAntecedentHisto.ModificationAntecedent
             AntecedentHistoACreer.DrcId = TxtDrcId.Text
             AntecedentHistoACreer.Description = TxtAntecedentDescription.Text
@@ -1008,7 +1008,7 @@ Public Class RadFAntecedentDetailEdit
             AntecedentHistoACreer.AldDateDemande = antecedentUpdate.AldDateDemande
 
             'Création dans l'historique des modifications de l'antecedent
-            AntecedentHistoCreationDao.CreationAntecedentHisto(AntecedentHistoACreer, UtilisateurConnecte, AntecedentHistoCreationDao.EnumEtatAntecedentHisto.ModificationAntecedent)
+            AntecedentHistoCreationDao.CreationAntecedentHisto(AntecedentHistoACreer, userLog, AntecedentHistoCreationDao.EnumEtatAntecedentHisto.ModificationAntecedent)
 
             'Mise à jour de la date de mise à jour de la synthèse (table patient)
             PatientDao.ModificationDateMajSynthesePatient(SelectedPatient.patientId)
@@ -1030,7 +1030,7 @@ Public Class RadFAntecedentDetailEdit
         Dim cmd As New SqlCommand(SQLstring, conxn)
 
         With cmd.Parameters
-            .AddWithValue("@utilisateurModification", UtilisateurConnecte.UtilisateurId.ToString)
+            .AddWithValue("@utilisateurModification", userLog.UtilisateurId.ToString)
             .AddWithValue("@dateModification", DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss"))
             .AddWithValue("@inactif", "1")
             .AddWithValue("@antecedentId", SelectedAntecedentId.ToString)
@@ -1050,12 +1050,12 @@ Public Class RadFAntecedentDetailEdit
         If codeRetour = True Then
             'Mise à jour des données modifiées dans l'instance de la classe Historisation antecedent
             AntecedentHistoACreer.HistorisationDate = Date.Now()
-            AntecedentHistoACreer.UtilisateurId = UtilisateurConnecte.UtilisateurId
+            AntecedentHistoACreer.UtilisateurId = userLog.UtilisateurId
             AntecedentHistoACreer.Etat = AntecedentHistoCreationDao.EnumEtatAntecedentHisto.AnnulationAntecedent
             AntecedentHistoACreer.Inactif = True
 
             'Création dans l'historique des modifications de l'antecedent
-            AntecedentHistoCreationDao.CreationAntecedentHisto(AntecedentHistoACreer, UtilisateurConnecte, AntecedentHistoCreationDao.EnumEtatAntecedentHisto.AnnulationAntecedent)
+            AntecedentHistoCreationDao.CreationAntecedentHisto(AntecedentHistoACreer, userLog, AntecedentHistoCreationDao.EnumEtatAntecedentHisto.AnnulationAntecedent)
 
             'Mise à jour de la date de mise à jour de la synthèse (table patient)
             PatientDao.ModificationDateMajSynthesePatient(SelectedPatient.patientId)
@@ -1130,7 +1130,7 @@ Public Class RadFAntecedentDetailEdit
             .AddWithValue("@drcId", TxtDrcId.Text)
             .AddWithValue("@description", TxtAntecedentDescription.Text)
             .AddWithValue("@dateCreation", DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss"))
-            .AddWithValue("@utilisateurCreation", UtilisateurConnecte.UtilisateurId.ToString)
+            .AddWithValue("@utilisateurCreation", userLog.UtilisateurId.ToString)
             .AddWithValue("@utilisateurModification", 0)
             .AddWithValue("@dateDebut", DteDateDebut.Value.ToString("yyyy-MM-dd"))
             .AddWithValue("@niveau", 1)
@@ -1168,7 +1168,7 @@ Public Class RadFAntecedentDetailEdit
             'Mise à jour des données dans l'instance de la classe Historisation antecedent
             AntecedentHistoACreer.AntecedentId = antecedentId 'Récupération de l'id créé
             AntecedentHistoACreer.HistorisationDate = DateTime.Now()
-            AntecedentHistoACreer.UtilisateurId = UtilisateurConnecte.UtilisateurId
+            AntecedentHistoACreer.UtilisateurId = userLog.UtilisateurId
             AntecedentHistoACreer.Etat = AntecedentHistoCreationDao.EnumEtatAntecedentHisto.CreationAntecedent
             AntecedentHistoACreer.PatientId = SelectedPatient.patientId.ToString
             AntecedentHistoACreer.Type = "A"
@@ -1214,7 +1214,7 @@ Public Class RadFAntecedentDetailEdit
             antecedentCreeDataReader = antecedentCreeCommand.ExecuteReader()
             If antecedentCreeDataReader.Read() Then
                 'Initialisation classe Historisation antecedent 
-                AntecedentHistoCreationDao.InitClasseAntecedentHistorisation(antecedentCreeDataReader, UtilisateurConnecte, AntecedentHistoACreer)
+                AntecedentHistoCreationDao.InitClasseAntecedentHistorisation(antecedentCreeDataReader, userLog, AntecedentHistoACreer)
 
                 'Libération des ressources d'accès aux données
                 conxn.Close()
@@ -1222,7 +1222,7 @@ Public Class RadFAntecedentDetailEdit
             End If
 
             'Création dans l'historique des antecedents du antecedent créé
-            AntecedentHistoCreationDao.CreationAntecedentHisto(AntecedentHistoACreer, UtilisateurConnecte, AntecedentHistoCreationDao.EnumEtatAntecedentHisto.CreationAntecedent)
+            AntecedentHistoCreationDao.CreationAntecedentHisto(AntecedentHistoACreer, userLog, AntecedentHistoCreationDao.EnumEtatAntecedentHisto.CreationAntecedent)
 
             'Mise à jour de la date de mise à jour de la synthèse (table patient)
             PatientDao.ModificationDateMajSynthesePatient(SelectedPatient.patientId)
@@ -1403,7 +1403,7 @@ Public Class RadFAntecedentDetailEdit
         Dim cmd As New SqlCommand(SQLstring, conxn)
 
         With cmd.Parameters
-            .AddWithValue("@utilisateurModification", UtilisateurConnecte.UtilisateurId.ToString)
+            .AddWithValue("@utilisateurModification", userLog.UtilisateurId.ToString)
             .AddWithValue("@dateModification", DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss"))
             .AddWithValue("@dateFin", New Date(2999, 12, 31, 0, 0, 0).ToString("yyyy-MM-dd HH:mm:ss"))
             .AddWithValue("@nature", "")
@@ -1432,7 +1432,7 @@ Public Class RadFAntecedentDetailEdit
             'Mise à jour des données modifiées dans l'instance de la classe Historisation antecedent
             AntecedentHistoACreer.HistorisationDate = Date.Now()
             AntecedentHistoACreer.Type = "C"
-            AntecedentHistoACreer.UtilisateurId = UtilisateurConnecte.UtilisateurId
+            AntecedentHistoACreer.UtilisateurId = userLog.UtilisateurId
             AntecedentHistoACreer.Etat = AntecedentHistoCreationDao.EnumEtatAntecedentHisto.ReactivationAntecedent
             AntecedentHistoACreer.Nature = ""
             AntecedentHistoACreer.Niveau = 1
@@ -1443,7 +1443,7 @@ Public Class RadFAntecedentDetailEdit
             AntecedentHistoACreer.Ordre3 = 0
 
             'Création dans l'historique des modifications de l'antecedent
-            AntecedentHistoCreationDao.CreationAntecedentHisto(AntecedentHistoACreer, UtilisateurConnecte, AntecedentHistoCreationDao.EnumEtatAntecedentHisto.ReactivationAntecedent)
+            AntecedentHistoCreationDao.CreationAntecedentHisto(AntecedentHistoACreer, userLog, AntecedentHistoCreationDao.EnumEtatAntecedentHisto.ReactivationAntecedent)
 
             'Mise à jour de la date de mise à jour de la synthèse (table patient)
             PatientDao.ModificationDateMajSynthesePatient(SelectedPatient.patientId)
@@ -1483,7 +1483,7 @@ Public Class RadFAntecedentDetailEdit
         Dim cmd As New SqlCommand(SQLstring, conxn)
 
         With cmd.Parameters
-            .AddWithValue("@utilisateurModification", UtilisateurConnecte.UtilisateurId.ToString)
+            .AddWithValue("@utilisateurModification", userLog.UtilisateurId.ToString)
             .AddWithValue("@dateModification", DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss"))
             .AddWithValue("@publication", publication)
             .AddWithValue("@antecedentId", antecedentId.ToString)
@@ -1503,12 +1503,12 @@ Public Class RadFAntecedentDetailEdit
         If codeRetour = True Then
             'Mise à jour des données modifiées dans l'instance de la classe Historisation antecedent
             AntecedentHistoACreer.HistorisationDate = Date.Now()
-            AntecedentHistoACreer.UtilisateurId = UtilisateurConnecte.UtilisateurId
+            AntecedentHistoACreer.UtilisateurId = userLog.UtilisateurId
             AntecedentHistoACreer.Etat = AntecedentHistoCreationDao.EnumEtatAntecedentHisto.ModificationAntecedent
             AntecedentHistoACreer.StatutAffichage = publication
 
             'Création dans l'historique des modifications de l'antecedent
-            AntecedentHistoCreationDao.CreationAntecedentHisto(AntecedentHistoACreer, UtilisateurConnecte, AntecedentHistoCreationDao.EnumEtatAntecedentHisto.ModificationAntecedent)
+            AntecedentHistoCreationDao.CreationAntecedentHisto(AntecedentHistoACreer, userLog, AntecedentHistoCreationDao.EnumEtatAntecedentHisto.ModificationAntecedent)
 
             'Mise à jour de la date de mise à jour de la synthèse (table patient)
             PatientDao.ModificationDateMajSynthesePatient(SelectedPatient.patientId)

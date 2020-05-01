@@ -412,7 +412,7 @@ Public Class RadFContextedetailEdit
         End If
 
         'Initialisation classe Historisation contexte 
-        AntecedentHistoCreationDao.InitAntecedentHistorisation(contexteRead, UtilisateurConnecte, ContexteHistoACreer)
+        AntecedentHistoCreationDao.InitAntecedentHistorisation(contexteRead, userLog, ContexteHistoACreer)
     End Sub
 
     'Suppression (annulation) du contexte
@@ -839,7 +839,7 @@ Public Class RadFContextedetailEdit
             Using Form As New RadFAntecedentHistoListe
                 Form.SelectedAntecedentId = SelectedContexteId
                 Form.SelectedPatient = Me.SelectedPatient
-                Form.UtilisateurConnecte = Me.UtilisateurConnecte
+                Form.UtilisateurConnecte = userLog
                 Form.ShowDialog()
             End Using
         Catch ex As Exception
