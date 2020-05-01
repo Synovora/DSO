@@ -68,7 +68,7 @@ Public Class RadFDrcActePMAssocieEdit
         Dim i As Integer
         Dim iGrid As Integer = -1 'Indice pour alimenter la Grid qui peut comporter moins d'occurrences que le DataTable
         Dim rowCount As Integer = drcDataTable.Rows.Count - 1
-        Dim drcIdPrecedent, drcIdEnCours, Sexe As Integer
+        Dim drcIdEnCours, Sexe As Integer
 
         'Parcours du DataTable pour alimenter les colonnes du DataGridView
         'drcIdPrecedent = 0

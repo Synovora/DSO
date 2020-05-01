@@ -70,9 +70,9 @@ Public Class RadFWkfDemandeAvis
     End Enum
 
     Dim tacheDao As New TacheDao
-    Dim episodeDao As New EpisodeDao
+    'Dim episodeDao As New EpisodeDao
     Dim fonctionDao As New FonctionDao
-    Dim userDao As New UserDao
+    'Dim userDao As New UserDao
 
     Dim tache As Tache
     Dim episode As Episode

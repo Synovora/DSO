@@ -120,7 +120,7 @@ Public Class RadFContextedetailEdit
     Dim Drc As New Drc()
     Dim drcdao As New DrcDao
     Dim ContexteHistoACreer As New AntecedentHisto
-    Dim conxn As New SqlConnection(getConnectionString())
+    'Dim conxn As New SqlConnection(getConnectionString())
     Dim ControleAutorisationModification As Boolean = True
 
     Dim contexteReadDao As New AntecedentDao

@@ -34,7 +34,7 @@ Friend Module outils
                 " / " & userLog.TypeProfil.ToLower.Trim & ")")
     End Function
 
-    Public Sub afficheTitleForm(form As RadForm, titre As String)
+    Public Sub AfficheTitleForm(form As RadForm, titre As String)
         ' --- centrage et chgt de style du titre du formulaire
         With form
             .Text = titre & " -" & GetProfilUserString() & " - " & String.Format("Version {0}", AssemblyVersion) & "   Date : " & Date.Now.ToString("dd.MM.yyyy")
@@ -146,7 +146,7 @@ Friend Module outils
 
         Return Jour
     End Function
-    Public Function getConnectionString() As String
+    Public Function GetConnectionString() As String
         Dim SqlConnection As String
         SqlConnection = ConfigurationManager.ConnectionStrings("Oasis_WF.My.MySettings.oasisConnection").ConnectionString
         Return SqlConnection
@@ -208,13 +208,13 @@ Friend Module outils
         lMois = CalculAgeEnmois(DateNaissance)
         If lMois > 35 Then
             PatientMoisRestant = lMois Mod 12
-            lMois = lMois - PatientMoisRestant
+            lMois -= PatientMoisRestant
             PatientAn = lMois / 12
         Else
             Dim lJour = CalculAgeEnJour(DateNaissance)
             lJour += JoursAAjouterPourCalculAgePreScolaire
             Dim lJourRestant = lJour Mod 30.4375
-            lJour = lJour - lJourRestant
+            lJour -= lJourRestant
             lMois = lJour \ 30.4375
         End If
         Select Case lMois
@@ -240,11 +240,11 @@ Friend Module outils
         age = CInt(Now.Year - dateNaissance.Year)
 
         If dateNaissance.Month > Now.Month Then
-            age = age - 1
+            age -= 1
         End If
 
         If ((dateNaissance.Month = Now.Month) And (dateNaissance.Day > Now.Day)) Then
-            age = age - 1
+            age -= 1
         End If
 
         Return age
@@ -466,7 +466,7 @@ Friend Module outils
         Private Const MAPI_DIALOG As Integer = &H8
         Private Const maxAttachments As Integer = 20
 
-        Enum howTo
+        Enum HowTo
             MAPI_ORIG = 0
             MAPI_TO
             MAPI_CC

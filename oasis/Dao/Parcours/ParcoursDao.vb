@@ -26,7 +26,7 @@ Public Class ParcoursDao
         Const TousLes5Ans = "TOUS_LES_5_ANS"
     End Structure
 
-    Friend Function getParcoursById(parcoursId As Integer) As Parcours
+    Friend Function GetParcoursById(parcoursId As Integer) As Parcours
         Dim parcours As Parcours
         Dim con As SqlConnection
 
@@ -40,7 +40,7 @@ Public Class ParcoursDao
             command.Parameters.AddWithValue("@id", parcoursId)
             Using reader As SqlDataReader = command.ExecuteReader()
                 If reader.Read() Then
-                    parcours = buildBean(reader)
+                    parcours = BuildBean(reader)
                 Else
                     Throw New ArgumentException("parcours inexistant !")
                 End If
@@ -54,7 +54,7 @@ Public Class ParcoursDao
         Return parcours
     End Function
 
-    Private Function buildBean(reader As SqlDataReader) As Parcours
+    Private Function BuildBean(reader As SqlDataReader) As Parcours
         Dim parcours As New Parcours
 
         parcours.Id = reader("oa_parcours_id")
@@ -76,7 +76,7 @@ Public Class ParcoursDao
         Return parcours
     End Function
 
-    Public Function getAllParcoursbyPatient(patientId As Integer) As DataTable
+    Public Function GetAllParcoursbyPatient(patientId As Integer) As DataTable
         Dim SQLString As String
         SQLString =
             "SELECT oa_parcours_id, oa_parcours_patient_id, oa_parcours_specialite, oa_parcours_categorie_id, oa_parcours_sous_categorie_id," &
@@ -123,7 +123,7 @@ Public Class ParcoursDao
         Return ParcoursDataTable
     End Function
 
-    Public Function getParcoursIDEbyPatient(patientId As Integer) As Parcours
+    Public Function GetParcoursIDEbyPatient(patientId As Integer) As Parcours
         Dim parcours As Parcours
         Dim con As SqlConnection
 

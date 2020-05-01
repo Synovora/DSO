@@ -23,7 +23,7 @@ Public Class FAuthentificattion
     Dim UtilisateurConnecte As Utilisateur
     Dim UtilisateurId As Integer
     Dim Admin As Boolean
-    Dim NiveauAcces As Integer
+    'Dim NiveauAcces As Integer
 
     Public Sub New()
 
@@ -255,7 +255,7 @@ Public Class FAuthentificattion
 
     End Sub
 
-    Private Sub afficheTry()
+    Private Sub AfficheTry()
         Dim nb = ReadPermTry()
         LblNbTry.Text = "Nbre essai(s) en cours : " & nb & "/" & MAX_TRY
         LblNbTry.ForeColor = If(nb >= MAX_TRY, Color.Red, Color.Black)

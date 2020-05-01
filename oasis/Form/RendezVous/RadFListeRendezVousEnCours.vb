@@ -13,7 +13,7 @@ Public Class RadFListeRendezVousEnCours
 
         RadGridView1.Rows.Clear()
 
-        dt = TacheDao.GetAllTachesEnTraitement()
+        dt = TacheDao.GetAllRendezVousEnCours()
         Dim iGrid As Integer = -1 'Indice pour alimenter la Grid qui peut comporter moins d'occurrences que le DataTable
         Dim rowCount As Integer = dt.Rows.Count - 1
 

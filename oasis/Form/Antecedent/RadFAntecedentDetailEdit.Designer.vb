@@ -833,7 +833,7 @@ Partial Class RadFAntecedentDetailEdit
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.CancelButton = Me.RadBtnAbandon
-        Me.ClientSize = New System.Drawing.Size(977, 601)
+        Me.ClientSize = New System.Drawing.Size(977, 594)
         Me.Controls.Add(Me.GbxStatutAffichage)
         Me.Controls.Add(Me.RadGroupBox1)
         Me.Controls.Add(Me.TxtAntecedentDescription)

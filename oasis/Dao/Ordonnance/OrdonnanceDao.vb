@@ -4,7 +4,7 @@ Imports Oasis_Common
 Public Class OrdonnanceDao
     Inherits StandardDao
 
-    Friend Function getOrdonnaceById(OrdonnanceId As Integer) As Ordonnance
+    Friend Function GetOrdonnaceById(OrdonnanceId As Integer) As Ordonnance
         Dim ordonnance As Ordonnance
         Dim con As SqlConnection
         con = GetConnection()
@@ -17,7 +17,7 @@ Public Class OrdonnanceDao
             command.Parameters.AddWithValue("@ordonnanceId", OrdonnanceId)
             Using reader As SqlDataReader = command.ExecuteReader()
                 If reader.Read() Then
-                    ordonnance = buildBean(reader)
+                    ordonnance = BuildBean(reader)
                 Else
                     Throw New ArgumentException("Ordonnance inexistante !")
                 End If
@@ -32,7 +32,7 @@ Public Class OrdonnanceDao
         Return ordonnance
     End Function
 
-    Private Function buildBean(reader As SqlDataReader) As Ordonnance
+    Private Function BuildBean(reader As SqlDataReader) As Ordonnance
         Dim ordonnance As New Ordonnance
         ordonnance.Id = reader("oa_ordonnance_id")
         ordonnance.PatientId = Coalesce(reader("oa_ordonnance_patient_id"), 0)
@@ -48,7 +48,7 @@ Public Class OrdonnanceDao
         Return ordonnance
     End Function
 
-    Friend Function getAllOrdonnancebyPatient(patientId As Integer) As DataTable
+    Friend Function GetAllOrdonnancebyPatient(patientId As Integer) As DataTable
         Dim SQLString As String
         SQLString = "SELECT * FROM oasis.oa_patient_ordonnance" &
                     " WHERE oa_ordonnance_patient_id = " & patientId.ToString &
@@ -72,7 +72,7 @@ Public Class OrdonnanceDao
         End Using
     End Function
 
-    Friend Function getOrdonnanceValidebyPatient(patientId As Integer, episodeId As Long) As DataTable
+    Friend Function GetOrdonnanceValidebyPatient(patientId As Integer, episodeId As Long) As DataTable
         Dim SQLString As String
         SQLString = "SELECT * FROM oasis.oa_patient_ordonnance" &
                     " WHERE oa_ordonnance_patient_id = " & patientId.ToString &
@@ -482,7 +482,7 @@ Public Class OrdonnanceDao
                 CreateLog("Paramètre application 'PeriodeNonDelivrance' non trouvé !", "OrdonnanceDao", LogDao.EnumTypeLog.ERREUR.ToString)
                 PeriodeNonDelivrance = 15
             End If
-            PeriodeNonDelivrance = PeriodeNonDelivrance * -1
+            PeriodeNonDelivrance *= -1
 
             'Détermination de la délivrance des traitements prescrits
             ordonnanceDetail.ADelivrer = True

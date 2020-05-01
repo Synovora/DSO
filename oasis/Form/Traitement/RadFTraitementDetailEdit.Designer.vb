@@ -573,29 +573,30 @@ Partial Class RadFTraitementDetailEdit
         Me.RadBtnValidation.Image = Global.Oasis_WF.My.Resources.Resources.validation2
         Me.RadBtnValidation.Location = New System.Drawing.Point(12, 912)
         Me.RadBtnValidation.Name = "RadBtnValidation"
-        Me.RadBtnValidation.Size = New System.Drawing.Size(24, 24)
+        Me.RadBtnValidation.Size = New System.Drawing.Size(100, 24)
         Me.RadBtnValidation.TabIndex = 80
+        Me.RadBtnValidation.Text = "Valider"
         Me.ToolTip.SetToolTip(Me.RadBtnValidation, "Valider")
         '
         'RadBtnSupprimerTraitement
         '
         Me.RadBtnSupprimerTraitement.ForeColor = System.Drawing.Color.Black
         Me.RadBtnSupprimerTraitement.Image = Global.Oasis_WF.My.Resources.Resources.supprimer
-        Me.RadBtnSupprimerTraitement.ImageAlignment = System.Drawing.ContentAlignment.MiddleCenter
-        Me.RadBtnSupprimerTraitement.Location = New System.Drawing.Point(72, 912)
+        Me.RadBtnSupprimerTraitement.Location = New System.Drawing.Point(224, 912)
         Me.RadBtnSupprimerTraitement.Name = "RadBtnSupprimerTraitement"
-        Me.RadBtnSupprimerTraitement.Size = New System.Drawing.Size(24, 24)
+        Me.RadBtnSupprimerTraitement.Size = New System.Drawing.Size(100, 24)
         Me.RadBtnSupprimerTraitement.TabIndex = 110
+        Me.RadBtnSupprimerTraitement.Text = "Annuler"
         Me.ToolTip.SetToolTip(Me.RadBtnSupprimerTraitement, "Supprimer le traitement")
         '
         'RadBtnHistorique
         '
         Me.RadBtnHistorique.Image = CType(resources.GetObject("RadBtnHistorique.Image"), System.Drawing.Image)
-        Me.RadBtnHistorique.ImageAlignment = System.Drawing.ContentAlignment.MiddleCenter
-        Me.RadBtnHistorique.Location = New System.Drawing.Point(42, 912)
+        Me.RadBtnHistorique.Location = New System.Drawing.Point(118, 912)
         Me.RadBtnHistorique.Name = "RadBtnHistorique"
-        Me.RadBtnHistorique.Size = New System.Drawing.Size(24, 24)
+        Me.RadBtnHistorique.Size = New System.Drawing.Size(100, 24)
         Me.RadBtnHistorique.TabIndex = 117
+        Me.RadBtnHistorique.Text = "Historique"
         Me.ToolTip.SetToolTip(Me.RadBtnHistorique, "Historique du traitement")
         '
         'RadGroupBox3
@@ -1195,7 +1196,7 @@ Partial Class RadFTraitementDetailEdit
         'RadBtnArretTraitement
         '
         Me.RadBtnArretTraitement.ForeColor = System.Drawing.Color.Black
-        Me.RadBtnArretTraitement.Location = New System.Drawing.Point(231, 912)
+        Me.RadBtnArretTraitement.Location = New System.Drawing.Point(475, 912)
         Me.RadBtnArretTraitement.Name = "RadBtnArretTraitement"
         Me.RadBtnArretTraitement.Size = New System.Drawing.Size(132, 24)
         Me.RadBtnArretTraitement.TabIndex = 95
@@ -1204,7 +1205,7 @@ Partial Class RadFTraitementDetailEdit
         'RadBtnAnnulerTraitement
         '
         Me.RadBtnAnnulerTraitement.ForeColor = System.Drawing.Color.Black
-        Me.RadBtnAnnulerTraitement.Location = New System.Drawing.Point(102, 912)
+        Me.RadBtnAnnulerTraitement.Location = New System.Drawing.Point(346, 912)
         Me.RadBtnAnnulerTraitement.Name = "RadBtnAnnulerTraitement"
         Me.RadBtnAnnulerTraitement.Size = New System.Drawing.Size(123, 24)
         Me.RadBtnAnnulerTraitement.TabIndex = 100
@@ -1242,7 +1243,7 @@ Partial Class RadFTraitementDetailEdit
         '
         'RadBtnPharmacocinetique
         '
-        Me.RadBtnPharmacocinetique.Location = New System.Drawing.Point(498, 912)
+        Me.RadBtnPharmacocinetique.Location = New System.Drawing.Point(629, 912)
         Me.RadBtnPharmacocinetique.Name = "RadBtnPharmacocinetique"
         Me.RadBtnPharmacocinetique.Size = New System.Drawing.Size(124, 24)
         Me.RadBtnPharmacocinetique.TabIndex = 113
@@ -1250,7 +1251,7 @@ Partial Class RadFTraitementDetailEdit
         '
         'RadBtnParmacodynamique
         '
-        Me.RadBtnParmacodynamique.Location = New System.Drawing.Point(628, 912)
+        Me.RadBtnParmacodynamique.Location = New System.Drawing.Point(759, 912)
         Me.RadBtnParmacodynamique.Name = "RadBtnParmacodynamique"
         Me.RadBtnParmacodynamique.Size = New System.Drawing.Size(124, 24)
         Me.RadBtnParmacodynamique.TabIndex = 114
@@ -1258,7 +1259,7 @@ Partial Class RadFTraitementDetailEdit
         '
         'RadBtnEffetIndesirable
         '
-        Me.RadBtnEffetIndesirable.Location = New System.Drawing.Point(758, 912)
+        Me.RadBtnEffetIndesirable.Location = New System.Drawing.Point(889, 912)
         Me.RadBtnEffetIndesirable.Name = "RadBtnEffetIndesirable"
         Me.RadBtnEffetIndesirable.Size = New System.Drawing.Size(124, 24)
         Me.RadBtnEffetIndesirable.TabIndex = 115
@@ -1266,7 +1267,7 @@ Partial Class RadFTraitementDetailEdit
         '
         'RadBtnSubstance
         '
-        Me.RadBtnSubstance.Location = New System.Drawing.Point(888, 912)
+        Me.RadBtnSubstance.Location = New System.Drawing.Point(1019, 912)
         Me.RadBtnSubstance.Name = "RadBtnSubstance"
         Me.RadBtnSubstance.Size = New System.Drawing.Size(110, 24)
         Me.RadBtnSubstance.TabIndex = 116

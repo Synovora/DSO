@@ -360,7 +360,7 @@ Public Class TacheDao
 
 
     'Liste de toutes les tâches attribuées (en cours)
-    Friend Function GetAllTachesEnTraitement() As DataTable
+    Friend Function GetAllRendezVousEnCours() As DataTable
         Dim SQLString As String
 
         'Console.WriteLine("----------> GetAllTachesEnTraitement")
