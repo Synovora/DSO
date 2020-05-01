@@ -1143,6 +1143,8 @@ Public Class RadFParcoursDetailEdit
                             Me.RadDesktopAlert1.CaptionText = "Notification rendez-vous"
                             Me.RadDesktopAlert1.ContentText = "Rendez-vous clôturé"
                             Me.RadDesktopAlert1.Show()
+                            Dim tacheDao As New TacheDao
+                            tacheDao.CreationAutomatiqueDeDemandeRendezVous(SelectedPatient, ParcoursUpdate, Date.Now())
                             ChargementhistoriqueConsultation()
                             Me.CodeRetour = True
                         End If
