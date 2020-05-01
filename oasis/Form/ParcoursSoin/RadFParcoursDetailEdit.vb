@@ -911,6 +911,8 @@ Public Class RadFParcoursDetailEdit
                 If CreationRendezVous(dateRendezVous, TacheDao.EtatTache.TERMINEE.ToString) = True Then
                     Dim tache As Tache = tacheDao.GetProchainRendezVousByPatientIdEtParcours(SelectedPatient.patientId, SelectedParcoursId)
                     MessageBox.Show("Rendez-vous programmé et clôturé pour le " & NumDateRV.Value.ToString("dd.MM.yyyy"), "Information", MessageBoxButtons.OK, MessageBoxIcon.Information)
+                    'La clôture du rendez-vous génère automatiquement une demande de rendez-vous
+                    tacheDao.CreationAutomatiqueDeDemandeRendezVous(SelectedPatient, ParcoursUpdate, Date.Now())
                     'Si l'intervenant est masqué, il faut l'afficher par défaut
                     If ParcoursUpdate.Cacher = True Then
                         ParcoursUpdate.Cacher = False
