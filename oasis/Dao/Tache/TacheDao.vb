@@ -1309,7 +1309,8 @@ Public Class TacheDao
         Dim con As SqlConnection
         con = GetConnection()
 
-        'Contrôler qu'une demande de rendez-vous n'existe pas déjà avant de la créer
+        'A un instant donné, il ne peut y avoir qu'une demande de rendez-vous ou qu'un rendez-vous en cours ou en attente, pour un patient et un intervenant donné
+        '--- Contrôler qu'il n'existe pas de demande de rendez-vous ou de rendez-vous en cours ou en attente, avant de créer la nouvelle demande de rendez-vous
         Try
             Dim command As SqlCommand = con.CreateCommand()
 
@@ -1317,7 +1318,7 @@ Public Class TacheDao
                 "SELECT 1 FROM oasis.oa_tache" & vbCrLf &
                 " WHERE patient_id = " & tache.PatientId & vbCrLf &
                 " AND parcours_id = " & tache.ParcoursId & vbCrLf &
-                " AND type = '" & TypeTache.RDV_DEMANDE.ToString & "'" & vbCrLf &
+                " AND (type = '" & TypeTache.RDV_DEMANDE.ToString & "' OR type = '" & TypeTache.RDV_SPECIALISTE.ToString & "' OR type = '" & TypeTache.RDV.ToString & "')" & vbCrLf &
                 " AND (etat = '" & EtatTache.EN_COURS.ToString & "' OR etat = '" & EtatTache.EN_ATTENTE.ToString & "')"
 
             'Console.WriteLine(SQLstring)
