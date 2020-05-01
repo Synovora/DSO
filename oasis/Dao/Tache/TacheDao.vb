@@ -359,6 +359,62 @@ Public Class TacheDao
     End Function
 
 
+    'Liste de toutes les tâches attribuées (en cours)
+    Friend Function GetAllTachesEnTraitement() As DataTable
+        Dim SQLString As String
+
+        'Console.WriteLine("----------> GetAllTachesEnTraitement")
+        SQLString =
+            "SELECT " & vbCrLf &
+            "	  T.id, " & vbCrLf &
+            "	  T.etat, " & vbCrLf &
+            "     S.oa_site_description as site_description, " & vbCrLf &
+            "     P.oa_patient_nom as patient_nom, " & vbCrLf &
+            "     P.oa_patient_prenom as patient_prenom, " & vbCrLf &
+            "     T.type , " & vbCrLf &
+            "     T.nature, " & vbCrLf &
+            "     T.emetteur_commentaire, " & vbCrLf &
+            "     T.horodate_creation, " & vbCrLf &
+            "     T.priorite, " & vbCrLf &
+           "	  coalesce(U.oa_utilisateur_nom,'') as user_traiteur_nom, " & vbCrLf &
+            "	  coalesce(U.oa_utilisateur_prenom,'') as user_traiteur_prenom, " & vbCrLf &
+           "	  coalesce(F.oa_r_fonction_designation,'') as emetteur_fonction, " & vbCrLf &
+           "	  coalesce(F2.oa_r_fonction_designation,'') as traite_fonction, " & vbCrLf &
+            "	  T.date_rendez_vous " & vbCrLf &
+            " FROM [oasis].[oa_tache] T " & vbCrLf &
+            " LEFT JOIN  oasis.oa_utilisateur U ON U.oa_utilisateur_id = T.traite_user_id " & vbCrLf &
+            " LEFT JOIN  oasis.oa_site S ON S.oa_site_id = T.site_id " & vbCrLf &
+            " LEFT JOIN  oasis.oa_r_fonction F ON F.oa_r_fonction_id = T.emetteur_fonction_id " & vbCrLf &
+            " LEFT JOIN  oasis.oa_r_fonction F2 ON F2.oa_r_fonction_id = T.traite_fonction_id " & vbCrLf &
+            " LEFT JOIN  oasis.oa_patient P ON P.oa_patient_id = T.patient_id " & vbCrLf &
+            " WHERE etat = @etat" & vbCrLf &
+            " AND (type = @type1 OR type = @type2 OR type = @type3)" &
+            " ORDER BY priorite,ordre_affichage, COALESCE(date_rendez_vous, horodate_creation) "
+        'Console.WriteLine(SQLString)
+
+        Using con As SqlConnection = GetConnection()
+
+            Dim tacheDataAdapter As SqlDataAdapter = New SqlDataAdapter()
+            Using tacheDataAdapter
+                tacheDataAdapter.SelectCommand = New SqlCommand(SQLString, con)
+                tacheDataAdapter.SelectCommand.Parameters.AddWithValue("@etat", EtatTache.EN_COURS.ToString)
+                tacheDataAdapter.SelectCommand.Parameters.AddWithValue("@type1", TypeTache.RDV.ToString)
+                tacheDataAdapter.SelectCommand.Parameters.AddWithValue("@type2", TypeTache.RDV_SPECIALISTE.ToString)
+                tacheDataAdapter.SelectCommand.Parameters.AddWithValue("@type3", TypeTache.RDV_DEMANDE.ToString)
+
+                Dim tacheDataTable As DataTable = New DataTable()
+                Using tacheDataTable
+                    Try
+                        tacheDataAdapter.Fill(tacheDataTable)
+                    Catch ex As Exception
+                        Throw ex
+                    End Try
+                    Return tacheDataTable
+                End Using
+            End Using
+        End Using
+    End Function
+
     Friend Function GetAgendaMyRDV(dateDebut As Date, dateFin As Date, isMyTache As Boolean, lstFonctionChoisie As List(Of Fonction), filtre As FiltreTache, isWithNonAttribue As Boolean) As DataTable
         Dim SQLString As String
 
