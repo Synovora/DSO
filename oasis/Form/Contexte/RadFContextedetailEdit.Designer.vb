@@ -346,15 +346,16 @@ Partial Class RadFContextedetailEdit
         Me.GbxPrincipal.AccessibleRole = System.Windows.Forms.AccessibleRole.Grouping
         Me.GbxPrincipal.Controls.Add(Me.RadioBtnBioEnvironnemental)
         Me.GbxPrincipal.Controls.Add(Me.RadioBtnMedical)
-        Me.GbxPrincipal.Controls.Add(Me.RadGroupBox2)
         Me.GbxPrincipal.Controls.Add(Me.LblEtatContexte)
         Me.GbxPrincipal.Controls.Add(Me.Label1)
+        Me.GbxPrincipal.Controls.Add(Me.RadGroupBox1)
         Me.GbxPrincipal.Controls.Add(Me.DteDateFin)
+        Me.GbxPrincipal.Controls.Add(Me.GbxStatutAffichage)
         Me.GbxPrincipal.GroupBoxStyle = Telerik.WinControls.UI.RadGroupBoxStyle.Office
         Me.GbxPrincipal.HeaderText = "Gestion contexte"
-        Me.GbxPrincipal.Location = New System.Drawing.Point(619, 125)
+        Me.GbxPrincipal.Location = New System.Drawing.Point(324, 135)
         Me.GbxPrincipal.Name = "GbxPrincipal"
-        Me.GbxPrincipal.Size = New System.Drawing.Size(341, 225)
+        Me.GbxPrincipal.Size = New System.Drawing.Size(636, 207)
         Me.GbxPrincipal.TabIndex = 3
         Me.GbxPrincipal.Text = "Gestion contexte"
         CType(Me.GbxPrincipal.GetChildAt(0).GetChildAt(1), Telerik.WinControls.UI.GroupBoxHeader).GroupBoxStyle = Telerik.WinControls.UI.RadGroupBoxStyle.Office
@@ -366,7 +367,7 @@ Partial Class RadFContextedetailEdit
         Me.LblEtatContexte.AutoSize = True
         Me.LblEtatContexte.Font = New System.Drawing.Font("Segoe UI", 10.0!, System.Drawing.FontStyle.Bold)
         Me.LblEtatContexte.ForeColor = System.Drawing.Color.Red
-        Me.LblEtatContexte.Location = New System.Drawing.Point(13, 203)
+        Me.LblEtatContexte.Location = New System.Drawing.Point(311, 176)
         Me.LblEtatContexte.Name = "LblEtatContexte"
         Me.LblEtatContexte.Size = New System.Drawing.Size(96, 19)
         Me.LblEtatContexte.TabIndex = 101
@@ -382,7 +383,7 @@ Partial Class RadFContextedetailEdit
         '
         'RadBtnRecupereDrc
         '
-        Me.RadBtnRecupereDrc.Location = New System.Drawing.Point(88, 326)
+        Me.RadBtnRecupereDrc.Location = New System.Drawing.Point(88, 345)
         Me.RadBtnRecupereDrc.Name = "RadBtnRecupereDrc"
         Me.RadBtnRecupereDrc.Size = New System.Drawing.Size(141, 24)
         Me.RadBtnRecupereDrc.TabIndex = 77
@@ -421,7 +422,7 @@ Partial Class RadFContextedetailEdit
         'NumOrdreAffichage
         '
         Me.NumOrdreAffichage.Increment = New Decimal(New Integer() {10, 0, 0, 0})
-        Me.NumOrdreAffichage.Location = New System.Drawing.Point(827, 423)
+        Me.NumOrdreAffichage.Location = New System.Drawing.Point(827, 431)
         Me.NumOrdreAffichage.Maximum = New Decimal(New Integer() {1000, 0, 0, 0})
         Me.NumOrdreAffichage.Name = "NumOrdreAffichage"
         Me.NumOrdreAffichage.Size = New System.Drawing.Size(75, 20)
@@ -432,7 +433,7 @@ Partial Class RadFContextedetailEdit
         '
         Me.Label1.AutoSize = True
         Me.Label1.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label1.Location = New System.Drawing.Point(14, 170)
+        Me.Label1.Location = New System.Drawing.Point(17, 182)
         Me.Label1.Name = "Label1"
         Me.Label1.Size = New System.Drawing.Size(70, 13)
         Me.Label1.TabIndex = 68
@@ -440,7 +441,7 @@ Partial Class RadFContextedetailEdit
         '
         'DteDateFin
         '
-        Me.DteDateFin.Location = New System.Drawing.Point(100, 163)
+        Me.DteDateFin.Location = New System.Drawing.Point(93, 176)
         Me.DteDateFin.Name = "DteDateFin"
         Me.DteDateFin.Size = New System.Drawing.Size(200, 20)
         Me.DteDateFin.TabIndex = 67
@@ -449,7 +450,7 @@ Partial Class RadFContextedetailEdit
         '
         Me.Label7.AutoSize = True
         Me.Label7.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label7.Location = New System.Drawing.Point(12, 288)
+        Me.Label7.Location = New System.Drawing.Point(11, 317)
         Me.Label7.Name = "Label7"
         Me.Label7.Size = New System.Drawing.Size(70, 13)
         Me.Label7.TabIndex = 64
@@ -457,7 +458,7 @@ Partial Class RadFContextedetailEdit
         '
         'DteDateDebut
         '
-        Me.DteDateDebut.Location = New System.Drawing.Point(88, 282)
+        Me.DteDateDebut.Location = New System.Drawing.Point(88, 311)
         Me.DteDateDebut.Name = "DteDateDebut"
         Me.DteDateDebut.Size = New System.Drawing.Size(200, 20)
         Me.DteDateDebut.TabIndex = 63
@@ -466,7 +467,7 @@ Partial Class RadFContextedetailEdit
         '
         Me.Label8.AutoSize = True
         Me.Label8.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label8.Location = New System.Drawing.Point(11, 368)
+        Me.Label8.Location = New System.Drawing.Point(11, 387)
         Me.Label8.Name = "Label8"
         Me.Label8.Size = New System.Drawing.Size(71, 13)
         Me.Label8.TabIndex = 62
@@ -474,7 +475,7 @@ Partial Class RadFContextedetailEdit
         '
         'TxtContexteDescription
         '
-        Me.TxtContexteDescription.Location = New System.Drawing.Point(88, 356)
+        Me.TxtContexteDescription.Location = New System.Drawing.Point(88, 375)
         Me.TxtContexteDescription.MaxLength = 2000
         Me.TxtContexteDescription.Multiline = True
         Me.TxtContexteDescription.Name = "TxtContexteDescription"
@@ -505,7 +506,7 @@ Partial Class RadFContextedetailEdit
         Me.GbxStatutAffichage.Controls.Add(Me.ChkCache)
         Me.GbxStatutAffichage.Controls.Add(Me.ChkPublie)
         Me.GbxStatutAffichage.HeaderText = "Statut affichage"
-        Me.GbxStatutAffichage.Location = New System.Drawing.Point(12, 148)
+        Me.GbxStatutAffichage.Location = New System.Drawing.Point(19, 61)
         Me.GbxStatutAffichage.Name = "GbxStatutAffichage"
         Me.GbxStatutAffichage.Size = New System.Drawing.Size(143, 106)
         Me.GbxStatutAffichage.TabIndex = 4
@@ -548,7 +549,7 @@ Partial Class RadFContextedetailEdit
         'LblId
         '
         Me.LblId.AutoSize = True
-        Me.LblId.Location = New System.Drawing.Point(948, 430)
+        Me.LblId.Location = New System.Drawing.Point(948, 438)
         Me.LblId.Name = "LblId"
         Me.LblId.Size = New System.Drawing.Size(12, 13)
         Me.LblId.TabIndex = 93
@@ -558,7 +559,7 @@ Partial Class RadFContextedetailEdit
         '
         Me.LblModificationContexte1.AutoSize = True
         Me.LblModificationContexte1.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.LblModificationContexte1.Location = New System.Drawing.Point(332, 430)
+        Me.LblModificationContexte1.Location = New System.Drawing.Point(332, 438)
         Me.LblModificationContexte1.Name = "LblModificationContexte1"
         Me.LblModificationContexte1.Size = New System.Drawing.Size(70, 13)
         Me.LblModificationContexte1.TabIndex = 91
@@ -568,7 +569,7 @@ Partial Class RadFContextedetailEdit
         '
         Me.LblModificationContexte2.AutoSize = True
         Me.LblModificationContexte2.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.LblModificationContexte2.Location = New System.Drawing.Point(468, 430)
+        Me.LblModificationContexte2.Location = New System.Drawing.Point(468, 438)
         Me.LblModificationContexte2.Name = "LblModificationContexte2"
         Me.LblModificationContexte2.Size = New System.Drawing.Size(25, 13)
         Me.LblModificationContexte2.TabIndex = 85
@@ -578,7 +579,7 @@ Partial Class RadFContextedetailEdit
         '
         Me.LblCreationContexte2.AutoSize = True
         Me.LblCreationContexte2.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.LblCreationContexte2.Location = New System.Drawing.Point(148, 430)
+        Me.LblCreationContexte2.Location = New System.Drawing.Point(148, 438)
         Me.LblCreationContexte2.Name = "LblCreationContexte2"
         Me.LblCreationContexte2.Size = New System.Drawing.Size(25, 13)
         Me.LblCreationContexte2.TabIndex = 84
@@ -587,7 +588,7 @@ Partial Class RadFContextedetailEdit
         'LblUtilisateurModification
         '
         Me.LblUtilisateurModification.AutoSize = True
-        Me.LblUtilisateurModification.Location = New System.Drawing.Point(499, 430)
+        Me.LblUtilisateurModification.Location = New System.Drawing.Point(499, 438)
         Me.LblUtilisateurModification.Name = "LblUtilisateurModification"
         Me.LblUtilisateurModification.Size = New System.Drawing.Size(144, 13)
         Me.LblUtilisateurModification.TabIndex = 83
@@ -596,7 +597,7 @@ Partial Class RadFContextedetailEdit
         'LblUtilisateurCreation
         '
         Me.LblUtilisateurCreation.AutoSize = True
-        Me.LblUtilisateurCreation.Location = New System.Drawing.Point(179, 430)
+        Me.LblUtilisateurCreation.Location = New System.Drawing.Point(179, 438)
         Me.LblUtilisateurCreation.Name = "LblUtilisateurCreation"
         Me.LblUtilisateurCreation.Size = New System.Drawing.Size(121, 13)
         Me.LblUtilisateurCreation.TabIndex = 82
@@ -606,7 +607,7 @@ Partial Class RadFContextedetailEdit
         '
         Me.LblCreationContexte1.AutoSize = True
         Me.LblCreationContexte1.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.LblCreationContexte1.Location = New System.Drawing.Point(19, 430)
+        Me.LblCreationContexte1.Location = New System.Drawing.Point(19, 438)
         Me.LblCreationContexte1.Name = "LblCreationContexte1"
         Me.LblCreationContexte1.Size = New System.Drawing.Size(55, 13)
         Me.LblCreationContexte1.TabIndex = 79
@@ -615,7 +616,7 @@ Partial Class RadFContextedetailEdit
         'LblContexteDateCreation
         '
         Me.LblContexteDateCreation.AutoSize = True
-        Me.LblContexteDateCreation.Location = New System.Drawing.Point(81, 430)
+        Me.LblContexteDateCreation.Location = New System.Drawing.Point(81, 438)
         Me.LblContexteDateCreation.Name = "LblContexteDateCreation"
         Me.LblContexteDateCreation.Size = New System.Drawing.Size(61, 13)
         Me.LblContexteDateCreation.TabIndex = 80
@@ -624,7 +625,7 @@ Partial Class RadFContextedetailEdit
         'LblContexteDateModification
         '
         Me.LblContexteDateModification.AutoSize = True
-        Me.LblContexteDateModification.Location = New System.Drawing.Point(401, 430)
+        Me.LblContexteDateModification.Location = New System.Drawing.Point(401, 438)
         Me.LblContexteDateModification.Name = "LblContexteDateModification"
         Me.LblContexteDateModification.Size = New System.Drawing.Size(61, 13)
         Me.LblContexteDateModification.TabIndex = 81
@@ -634,7 +635,7 @@ Partial Class RadFContextedetailEdit
         '
         Me.RadValidation.ForeColor = System.Drawing.Color.Black
         Me.RadValidation.Image = Global.Oasis_WF.My.Resources.Resources.validation2
-        Me.RadValidation.Location = New System.Drawing.Point(12, 465)
+        Me.RadValidation.Location = New System.Drawing.Point(12, 473)
         Me.RadValidation.Name = "RadValidation"
         Me.RadValidation.Size = New System.Drawing.Size(110, 24)
         Me.RadValidation.TabIndex = 95
@@ -644,7 +645,7 @@ Partial Class RadFContextedetailEdit
         'RadBtnHistorique
         '
         Me.RadBtnHistorique.Image = Global.Oasis_WF.My.Resources.Resources.historique
-        Me.RadBtnHistorique.Location = New System.Drawing.Point(244, 465)
+        Me.RadBtnHistorique.Location = New System.Drawing.Point(244, 473)
         Me.RadBtnHistorique.Name = "RadBtnHistorique"
         Me.RadBtnHistorique.Size = New System.Drawing.Size(110, 24)
         Me.RadBtnHistorique.TabIndex = 101
@@ -655,7 +656,7 @@ Partial Class RadFContextedetailEdit
         '
         Me.RadBtnSupprimer.ForeColor = System.Drawing.Color.Black
         Me.RadBtnSupprimer.Image = Global.Oasis_WF.My.Resources.Resources.supprimer1
-        Me.RadBtnSupprimer.Location = New System.Drawing.Point(128, 465)
+        Me.RadBtnSupprimer.Location = New System.Drawing.Point(128, 473)
         Me.RadBtnSupprimer.Name = "RadBtnSupprimer"
         Me.RadBtnSupprimer.Size = New System.Drawing.Size(110, 24)
         Me.RadBtnSupprimer.TabIndex = 99
@@ -665,7 +666,7 @@ Partial Class RadFContextedetailEdit
         'RadBtnTransformer
         '
         Me.RadBtnTransformer.ForeColor = System.Drawing.Color.Black
-        Me.RadBtnTransformer.Location = New System.Drawing.Point(360, 465)
+        Me.RadBtnTransformer.Location = New System.Drawing.Point(360, 473)
         Me.RadBtnTransformer.Name = "RadBtnTransformer"
         Me.RadBtnTransformer.Size = New System.Drawing.Size(151, 24)
         Me.RadBtnTransformer.TabIndex = 100
@@ -678,7 +679,7 @@ Partial Class RadFContextedetailEdit
         Me.RadGroupBox1.Controls.Add(Me.ChkCacheTransformation)
         Me.RadGroupBox1.Controls.Add(Me.ChkPublieTransformation)
         Me.RadGroupBox1.HeaderText = "Statut affichage de l'antécédent résultant de la transformation du contexte"
-        Me.RadGroupBox1.Location = New System.Drawing.Point(162, 148)
+        Me.RadGroupBox1.Location = New System.Drawing.Point(209, 61)
         Me.RadGroupBox1.Name = "RadGroupBox1"
         Me.RadGroupBox1.Size = New System.Drawing.Size(393, 106)
         Me.RadGroupBox1.TabIndex = 75
@@ -721,7 +722,7 @@ Partial Class RadFContextedetailEdit
         '
         Me.RadDtnAbandon.DialogResult = System.Windows.Forms.DialogResult.Cancel
         Me.RadDtnAbandon.Image = Global.Oasis_WF.My.Resources.Resources._exit
-        Me.RadDtnAbandon.Location = New System.Drawing.Point(936, 465)
+        Me.RadDtnAbandon.Location = New System.Drawing.Point(936, 473)
         Me.RadDtnAbandon.Name = "RadDtnAbandon"
         Me.RadDtnAbandon.Size = New System.Drawing.Size(24, 24)
         Me.RadDtnAbandon.TabIndex = 94
@@ -733,7 +734,7 @@ Partial Class RadFContextedetailEdit
         Me.RadGroupBox2.Controls.Add(Me.ChkDiagnosticSuspecte)
         Me.RadGroupBox2.Controls.Add(Me.ChkDiagnosticNotion)
         Me.RadGroupBox2.HeaderText = "Diagnostic"
-        Me.RadGroupBox2.Location = New System.Drawing.Point(16, 53)
+        Me.RadGroupBox2.Location = New System.Drawing.Point(8, 155)
         Me.RadGroupBox2.Name = "RadGroupBox2"
         Me.RadGroupBox2.Size = New System.Drawing.Size(100, 98)
         Me.RadGroupBox2.TabIndex = 75
@@ -745,7 +746,7 @@ Partial Class RadFContextedetailEdit
         'RadioBtnMedical
         '
         Me.RadioBtnMedical.AutoSize = True
-        Me.RadioBtnMedical.Location = New System.Drawing.Point(19, 27)
+        Me.RadioBtnMedical.Location = New System.Drawing.Point(19, 38)
         Me.RadioBtnMedical.Name = "RadioBtnMedical"
         Me.RadioBtnMedical.Size = New System.Drawing.Size(65, 17)
         Me.RadioBtnMedical.TabIndex = 102
@@ -756,7 +757,7 @@ Partial Class RadFContextedetailEdit
         'RadioBtnBioEnvironnemental
         '
         Me.RadioBtnBioEnvironnemental.AutoSize = True
-        Me.RadioBtnBioEnvironnemental.Location = New System.Drawing.Point(93, 27)
+        Me.RadioBtnBioEnvironnemental.Location = New System.Drawing.Point(93, 38)
         Me.RadioBtnBioEnvironnemental.Name = "RadioBtnBioEnvironnemental"
         Me.RadioBtnBioEnvironnemental.Size = New System.Drawing.Size(133, 17)
         Me.RadioBtnBioEnvironnemental.TabIndex = 103
@@ -770,11 +771,11 @@ Partial Class RadFContextedetailEdit
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.CancelButton = Me.RadDtnAbandon
-        Me.ClientSize = New System.Drawing.Size(969, 498)
+        Me.ClientSize = New System.Drawing.Size(968, 506)
         Me.Controls.Add(Me.RadBtnHistorique)
         Me.Controls.Add(Me.RadBtnRecupereDrc)
+        Me.Controls.Add(Me.RadGroupBox2)
         Me.Controls.Add(Me.RadBtnDrcSelect)
-        Me.Controls.Add(Me.RadGroupBox1)
         Me.Controls.Add(Me.NumOrdreAffichage)
         Me.Controls.Add(Me.RadBtnTransformer)
         Me.Controls.Add(Me.RadBtnSupprimer)
@@ -794,7 +795,6 @@ Partial Class RadFContextedetailEdit
         Me.Controls.Add(Me.LblContexteDateCreation)
         Me.Controls.Add(Me.LblContexteDateModification)
         Me.Controls.Add(Me.LblDrcDenomination)
-        Me.Controls.Add(Me.GbxStatutAffichage)
         Me.Controls.Add(Me.GbxPrincipal)
         Me.Controls.Add(Me.TxtDrcId)
         Me.Controls.Add(Me.RadGroupBoxEtatCivil)
