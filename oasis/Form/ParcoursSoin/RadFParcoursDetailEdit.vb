@@ -102,6 +102,7 @@ Public Class RadFParcoursDetailEdit
     Dim ParcoursUpdate As New Parcours
     Dim parcoursRead As New Parcours
     Dim parcoursConsigneDao As New ParcoursConsigneDao
+    Dim userDao As New UserDao
 
     Dim rordao As New RorDao
     Dim tacheDao As New TacheDao
@@ -1078,7 +1079,7 @@ Public Class RadFParcoursDetailEdit
     'Modifier un RDV ou une Demande de RDV
     Private Sub RadBtnModifRDV_Click(sender As Object, e As EventArgs) Handles RadBtnModifRDV.Click
         Dim tache As Tache
-
+        Dim TacheALiberer As Boolean = False
         If RendezVousPlanifie = True Then
             tache = tacheDao.GetProchainRendezVousByPatientIdEtParcours(SelectedPatient.patientId, SelectedParcoursId)
             If tache.Id <> 0 AndAlso (tache.Nature = TacheDao.EnumNatureTacheCode.RDV Or tache.Nature = TacheDao.EnumNatureTacheCode.RDV_SPECIALISTE) Then
@@ -1086,10 +1087,20 @@ Public Class RadFParcoursDetailEdit
                     (tache.Etat = TacheDao.EtatTache.EN_COURS.ToString And userLog.UtilisateurId = tache.TraiteUserId) Then
                     Cursor.Current = Cursors.WaitCursor
                     Me.Enabled = False
+
+                    '--- Si la tâche est en attente on attribue la tâche à l'utilisateur
+                    If tache.Etat = TacheDao.EtatTache.EN_ATTENTE.ToString Then
+                        TacheALiberer = True
+                        tacheDao.AttribueTacheToUserLog(tache.Id)
+                    End If
+
+                    Dim RDVisTranforme As Boolean = False
+
                     Using form As New RadFTacheModificationRendezVous
                         form.SelectedPatient = Me.SelectedPatient
                         form.SelectedTacheId = tache.Id
                         form.ShowDialog()
+                        RDVisTranforme = form.RDVisTransforme
                         If form.CodeRetour = True Then
                             Me.RadDesktopAlert1.CaptionText = "Notification rendez-vous"
                             Me.RadDesktopAlert1.ContentText = "Rendez-vous modifié"
@@ -1098,9 +1109,16 @@ Public Class RadFParcoursDetailEdit
                             Me.CodeRetour = True
                         End If
                     End Using
+
+                    If (TacheALiberer = True AndAlso RDVisTranforme = False) Then
+                        'Si la tâche était initialement disponible, On libére la tâche
+                        tacheDao.DesattribueTache(tache.Id)
+                    End If
+
                     Me.Enabled = True
                 Else
-                    MessageBox.Show("Le rendez-vous n'est pas modifiable, il est en cours de traitement par : " & userLog.UtilisateurPrenom & " " & userLog.UtilisateurNom, "Alerte", MessageBoxButtons.OK, MessageBoxIcon.Warning)
+                    Dim user As Utilisateur = userDao.getUserById(tache.TraiteUserId)
+                    MessageBox.Show("Le rendez-vous n'est pas modifiable, il est en cours de traitement par : " & user.UtilisateurPrenom & " " & user.UtilisateurNom, "Alerte", MessageBoxButtons.OK, MessageBoxIcon.Warning)
                 End If
             End If
         End If
@@ -1108,9 +1126,17 @@ Public Class RadFParcoursDetailEdit
         If DemandeRendezVous = True Then
             tache = tacheDao.GetProchaineDemandeRendezVousByPatientId(SelectedPatient.patientId, SelectedParcoursId)
             If tache.Id <> 0 AndAlso tache.Nature = TacheDao.EnumNatureTacheCode.RDV_DEMANDE Then
-                If tache.Etat = TacheDao.EtatTache.EN_ATTENTE.ToString Then
+                If tache.Etat = TacheDao.EtatTache.EN_ATTENTE.ToString OrElse
+                    (tache.Etat = TacheDao.EtatTache.EN_COURS.ToString And userLog.UtilisateurId = tache.TraiteUserId) Then
                     Cursor.Current = Cursors.WaitCursor
                     Me.Enabled = False
+
+                    'Si la tâche est en attente on attribue la tâche à l'utilisateur
+                    If tache.Etat = TacheDao.EtatTache.EN_ATTENTE.ToString Then
+                        TacheALiberer = True
+                        tacheDao.AttribueTacheToUserLog(tache.Id)
+                    End If
+
                     Using form As New RadFTacheModificationDemandeRendezVous
                         form.SelectedPatient = Me.SelectedPatient
                         form.SelectedTacheId = tache.Id
@@ -1119,12 +1145,22 @@ Public Class RadFParcoursDetailEdit
                             Me.RadDesktopAlert1.CaptionText = "Notification demande de rendez-vous"
                             Me.RadDesktopAlert1.ContentText = "Demande de rendez-vous modifiée"
                             Me.RadDesktopAlert1.Show()
+
                             ChargementhistoriqueConsultation()
                             Me.CodeRetour = True
                         End If
                     End Using
+
+                    If TacheALiberer = True Then
+                        'Si la tâche était initialement disponible, On libére la tâche
+                        If tacheDao.DesattribueTache(tache.Id) = False Then
+                            'Erreur
+                        End If
+                    End If
+
                     Me.Enabled = True
                 Else
+                    Dim user As Utilisateur = userDao.getUserById(tache.TraiteUserId)
                     MessageBox.Show("Le rendez-vous n'est pas modifiable, il est en cours de traitement par : " & userLog.UtilisateurPrenom & " " & userLog.UtilisateurNom, "Alerte", MessageBoxButtons.OK, MessageBoxIcon.Warning)
                 End If
             End If
