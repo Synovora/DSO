@@ -295,6 +295,7 @@ Public Class RadFPatientListe
         'Accès au menu Admin si l'utilisateur est autorisé
         If UtilisateurConnecte.UtilisateurAdmin = False Then
             RadBtnAdmin.Hide()
+            RadBtnRdvEnCours.Hide()
         End If
 
         'Gestion des habilitations
@@ -555,6 +556,15 @@ Public Class RadFPatientListe
             Me.Enabled = True
             Me.Cursor = Cursors.Default
         End Try
+    End Sub
+
+    Private Sub RadBtnTacheEnCours_Click(sender As Object, e As EventArgs) Handles RadBtnRdvEnCours.Click
+        Cursor.Current = Cursors.WaitCursor
+        Me.Enabled = False
+        Using form As New RadFListeRendezVousEnCours
+            form.ShowDialog()
+        End Using
+        Me.Enabled = True
     End Sub
 
     Private Sub RadBtnEpisodeEnCours_Click(sender As Object, e As EventArgs) Handles RadBtnEpisodeEnCours.Click

@@ -376,10 +376,11 @@ Public Class TacheDao
             "     T.emetteur_commentaire, " & vbCrLf &
             "     T.horodate_creation, " & vbCrLf &
             "     T.priorite, " & vbCrLf &
-           "	  coalesce(U.oa_utilisateur_nom,'') as user_traiteur_nom, " & vbCrLf &
+            "     T.type_demande_rendez_vous," & vbCrLf &
+            "	  coalesce(U.oa_utilisateur_nom,'') as user_traiteur_nom, " & vbCrLf &
             "	  coalesce(U.oa_utilisateur_prenom,'') as user_traiteur_prenom, " & vbCrLf &
-           "	  coalesce(F.oa_r_fonction_designation,'') as emetteur_fonction, " & vbCrLf &
-           "	  coalesce(F2.oa_r_fonction_designation,'') as traite_fonction, " & vbCrLf &
+            "	  coalesce(F.oa_r_fonction_designation,'') as emetteur_fonction, " & vbCrLf &
+            "	  coalesce(F2.oa_r_fonction_designation,'') as traite_fonction, " & vbCrLf &
             "	  T.date_rendez_vous " & vbCrLf &
             " FROM [oasis].[oa_tache] T " & vbCrLf &
             " LEFT JOIN  oasis.oa_utilisateur U ON U.oa_utilisateur_id = T.traite_user_id " & vbCrLf &
@@ -389,7 +390,7 @@ Public Class TacheDao
             " LEFT JOIN  oasis.oa_patient P ON P.oa_patient_id = T.patient_id " & vbCrLf &
             " WHERE etat = @etat" & vbCrLf &
             " AND (type = @type1 OR type = @type2 OR type = @type3)" &
-            " ORDER BY priorite,ordre_affichage, COALESCE(date_rendez_vous, horodate_creation) "
+            " ORDER BY date_rendez_vous "
         'Console.WriteLine(SQLString)
 
         Using con As SqlConnection = GetConnection()
