@@ -335,6 +335,9 @@ Public Class TraitementDao
         Dim codeRetour As Boolean = True
 
         Dim SQLstring As String = "UPDATE oasis.oa_traitement SET" &
+        " oa_traitement_medicament_cis = @cis," &
+        " oa_traitement_medicament_dci = @dci," &
+        " oa_traitement_denomination_longue = @denominationLongue," &
         " oa_traitement_identifiant_modification = @utilisateurModification," &
         " oa_traitement_ordre_affichage = @ordreAffichage," &
         " oa_traitement_posologie_base = @posologieBase," &
@@ -358,6 +361,9 @@ Public Class TraitementDao
         Dim cmd As New SqlCommand(SQLstring, con)
 
         With cmd.Parameters
+            .AddWithValue("@cis", traitement.MedicamentId.ToString)
+            .AddWithValue("@dci", traitement.MedicamentDci)
+            .AddWithValue("@denominationLongue", traitement.DenominationLongue)
             .AddWithValue("@utilisateurModification", traitement.UserModification.ToString)
             .AddWithValue("@ordreAffichage", traitement.OrdreAffichage.ToString)
             .AddWithValue("@posologieBase", traitement.PosologieBase)
@@ -393,6 +399,9 @@ Public Class TraitementDao
             traitementHistoACreer.HistorisationDate = Date.Now()
             traitementHistoACreer.HistorisationUtilisateurId = traitement.UserModification
             traitementHistoACreer.HistorisationEtat = EnumEtatTraitementHisto.ModificationTraitement
+            traitementHistoACreer.HistorisationMedicamentId = traitement.MedicamentId
+            traitementHistoACreer.HistorisationMedicamentDci = traitement.MedicamentDci
+            traitementHistoACreer.HistorisationOrdreAffichage = traitement.OrdreAffichage
             traitementHistoACreer.HistorisationOrdreAffichage = traitement.OrdreAffichage
             traitementHistoACreer.HistorisationPosologieBase = traitement.PosologieBase
             traitementHistoACreer.HistorisationPosologieRythme = traitement.PosologieRythme
@@ -486,6 +495,8 @@ Public Class TraitementDao
             traitementHistoACreer.HistorisationTraitementId = traitementId 'Récupération du traitement créé
             traitementHistoACreer.HistorisationDate = DateTime.Now()
             traitementHistoACreer.HistorisationUtilisateurId = userLog.UtilisateurId
+            traitementHistoACreer.HistorisationMedicamentId = traitement.MedicamentId
+            traitementHistoACreer.HistorisationMedicamentDci = traitement.MedicamentDci
             traitementHistoACreer.HistorisationEtat = EnumEtatTraitementHisto.CreationTraitement
             traitementHistoACreer.HistorisationOrdreAffichage = traitement.OrdreAffichage
             traitementHistoACreer.HistorisationPosologieBase = traitement.PosologieBase

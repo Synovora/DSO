@@ -946,6 +946,7 @@ Public Class RadFTraitementDetailEdit
         traitementaModifier.TraitementId = SelectedTraitementId
         traitementaModifier.MedicamentId = medicament_selecteur_cis
         traitementaModifier.MedicamentDci = LblMedicamentDCI.Text
+        traitementaModifier.DenominationLongue = LblMedicamentDenominationLongue.Text
         traitementaModifier.PatientId = SelectedPatient.patientId
         traitementaModifier.PosologieBase = traitementDao.GetBaseCodeByItem(CbxTraitementBase.Text)
         traitementaModifier.PosologieRythme = NumRythmeMatin.Value
@@ -1596,5 +1597,20 @@ Public Class RadFTraitementDetailEdit
             MsgBox(ex.Message())
         End Try
         Me.Enabled = True
+    End Sub
+
+    Private Sub RadBtnModifierMedicament_Click(sender As Object, e As EventArgs) Handles RadBtnModifierMedicament.Click
+        Using form As New RadFMedicamentSelecteur
+            form.SelectedPatient = SelectedPatient
+            form.SelectedClasseAtc = classeAtc
+            form.ShowDialog() 'Modal
+            medicament_selecteur_cis = form.SelectedSpecialiteId
+            'Si un médicament a été sélectionné
+            If medicament_selecteur_cis <> 0 Then
+                SelectedMedicamentId = medicament_selecteur_cis
+                LblTraitementMedicamentId.Text = medicament_selecteur_cis
+                ChargementMedoc()
+            End If
+        End Using
     End Sub
 End Class

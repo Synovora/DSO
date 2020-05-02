@@ -32,7 +32,7 @@ Imports System.Runtime.InteropServices
 ' en utilisant '*', comme indiqué ci-dessous :
 ' <Assembly: AssemblyVersion("1.0.*")>
 
-<Assembly: AssemblyVersion("1.0.1.175")>
+<Assembly: AssemblyVersion("1.0.1.176")>
 <Assembly: AssemblyFileVersion("1.0.0.0")>
 <Assembly: NeutralResourcesLanguage("fr-FR")>
 <Assembly: DebuggerDisplay("{ToString}", Target:=GetType(Date))>

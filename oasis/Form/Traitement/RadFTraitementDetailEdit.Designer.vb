@@ -130,6 +130,7 @@ Partial Class RadFTraitementDetailEdit
         Me.RadBtnParmacodynamique = New Telerik.WinControls.UI.RadButton()
         Me.RadBtnEffetIndesirable = New Telerik.WinControls.UI.RadButton()
         Me.RadBtnSubstance = New Telerik.WinControls.UI.RadButton()
+        Me.RadBtnModifierMedicament = New Telerik.WinControls.UI.RadButton()
         CType(Me.RadGroupBox1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.RadGroupBox1.SuspendLayout()
         CType(Me.RadGroupBox2, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -162,6 +163,7 @@ Partial Class RadFTraitementDetailEdit
         CType(Me.RadBtnParmacodynamique, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.RadBtnEffetIndesirable, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.RadBtnSubstance, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.RadBtnModifierMedicament, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
@@ -426,6 +428,7 @@ Partial Class RadFTraitementDetailEdit
         '
         Me.RadGroupBox2.AccessibleRole = System.Windows.Forms.AccessibleRole.Grouping
         Me.RadGroupBox2.BackColor = System.Drawing.SystemColors.GradientInactiveCaption
+        Me.RadGroupBox2.Controls.Add(Me.RadBtnModifierMedicament)
         Me.RadGroupBox2.Controls.Add(Me.LblATC)
         Me.RadGroupBox2.Controls.Add(Me.Label19)
         Me.RadGroupBox2.Controls.Add(Me.LblMedicamentTitulaire)
@@ -471,7 +474,7 @@ Partial Class RadFTraitementDetailEdit
         'LblMedicamentTitulaire
         '
         Me.LblMedicamentTitulaire.AutoSize = True
-        Me.LblMedicamentTitulaire.Location = New System.Drawing.Point(776, 18)
+        Me.LblMedicamentTitulaire.Location = New System.Drawing.Point(967, 72)
         Me.LblMedicamentTitulaire.Name = "LblMedicamentTitulaire"
         Me.LblMedicamentTitulaire.Size = New System.Drawing.Size(164, 13)
         Me.LblMedicamentTitulaire.TabIndex = 67
@@ -481,7 +484,7 @@ Partial Class RadFTraitementDetailEdit
         'LblMedicamentAdministration
         '
         Me.LblMedicamentAdministration.AutoSize = True
-        Me.LblMedicamentAdministration.Location = New System.Drawing.Point(1098, 18)
+        Me.LblMedicamentAdministration.Location = New System.Drawing.Point(1098, 51)
         Me.LblMedicamentAdministration.Name = "LblMedicamentAdministration"
         Me.LblMedicamentAdministration.Size = New System.Drawing.Size(33, 13)
         Me.LblMedicamentAdministration.TabIndex = 66
@@ -501,7 +504,7 @@ Partial Class RadFTraitementDetailEdit
         '
         Me.Label15.AutoSize = True
         Me.Label15.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label15.Location = New System.Drawing.Point(687, 18)
+        Me.Label15.Location = New System.Drawing.Point(967, 93)
         Me.Label15.Name = "Label15"
         Me.Label15.Size = New System.Drawing.Size(61, 13)
         Me.Label15.TabIndex = 64
@@ -512,7 +515,7 @@ Partial Class RadFTraitementDetailEdit
         '
         Me.Label16.AutoSize = True
         Me.Label16.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label16.Location = New System.Drawing.Point(962, 18)
+        Me.Label16.Location = New System.Drawing.Point(962, 51)
         Me.Label16.Name = "Label16"
         Me.Label16.Size = New System.Drawing.Size(94, 13)
         Me.Label16.TabIndex = 63
@@ -1273,6 +1276,14 @@ Partial Class RadFTraitementDetailEdit
         Me.RadBtnSubstance.TabIndex = 116
         Me.RadBtnSubstance.Text = "Substance"
         '
+        'RadBtnModifierMedicament
+        '
+        Me.RadBtnModifierMedicament.Location = New System.Drawing.Point(1036, 21)
+        Me.RadBtnModifierMedicament.Name = "RadBtnModifierMedicament"
+        Me.RadBtnModifierMedicament.Size = New System.Drawing.Size(110, 24)
+        Me.RadBtnModifierMedicament.TabIndex = 70
+        Me.RadBtnModifierMedicament.Text = "Modifier"
+        '
         'RadFTraitementDetailEdit
         '
         Me.AcceptButton = Me.RadBtnValidation
@@ -1359,6 +1370,7 @@ Partial Class RadFTraitementDetailEdit
         CType(Me.RadBtnParmacodynamique, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.RadBtnEffetIndesirable, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.RadBtnSubstance, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.RadBtnModifierMedicament, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
         Me.PerformLayout()
@@ -1471,5 +1483,6 @@ Partial Class RadFTraitementDetailEdit
     Friend WithEvents Label19 As Label
     Friend WithEvents RadBtnSubstance As Telerik.WinControls.UI.RadButton
     Friend WithEvents RadBtnHistorique As Telerik.WinControls.UI.RadButton
+    Friend WithEvents RadBtnModifierMedicament As Telerik.WinControls.UI.RadButton
 End Class
 

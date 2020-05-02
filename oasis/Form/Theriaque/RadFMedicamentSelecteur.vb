@@ -4,6 +4,7 @@ Imports Telerik.WinControls.UI
 Public Class RadFMedicamentSelecteur
     Private _SelectedSpecialiteId As Long
     Private _SelectedPatient As Patient
+    Private _selectedClasseAtc As String
 
     Public Property SelectedSpecialiteId As Long
         Get
@@ -23,15 +24,41 @@ Public Class RadFMedicamentSelecteur
         End Set
     End Property
 
+    Public Property SelectedClasseAtc As String
+        Get
+            Return _selectedClasseAtc
+        End Get
+        Set(value As String)
+            _selectedClasseAtc = value
+        End Set
+    End Property
+
     Dim theriaqueDao As New TheriaqueDao
 
     Dim RowCountATC1 As Integer
+    Dim PremierPassage As Boolean = False
 
     Private Sub RadFATCListe_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         afficheTitleForm(Me, "Thériaque - Recherche médicament")
         RadioBtnVirtuel.Checked = True
         ChargementEtatCivil()
         ChargementATC1()
+
+        If SelectedClasseAtc <> "" Then
+            '-- Si le sélecteur ATC est alimentée, cela signifie que l'on veut modifier la spécialité d'un traitement existant 
+            '-- ceci induit de n'afficher que les spécialités de la même classe ATC
+            RadTxtSpecialite.Hide()
+            RadBtnFiltreSpecialite.Hide()
+            RadBtnSpec2.Hide()
+            RadBtnSpec3.Hide()
+            RadBtnSpec4.Hide()
+            RadGridViewATC1.Enabled = False
+            RadGridViewATC2.Enabled = False
+            RadGridViewATC3.Enabled = False
+            RadGridViewATC4.Enabled = False
+            ChargementMedicamentByAtc()
+        End If
+
         LblOccurrencesLues.Text = ""
     End Sub
 
@@ -92,6 +119,24 @@ Public Class RadFMedicamentSelecteur
             ToolTip.SetToolTip(LblAllergie, StringAllergieToolTip)
         End If
     End Sub
+
+    'Liste des médicaments par classe ATC
+    Private Sub ChargementMedicamentByAtc()
+        Dim MonoVir As Integer = TheriaqueDao.EnumMonoVir.VIRTUEL
+        If RadioBtnClassique.Checked = True Then
+            MonoVir = TheriaqueDao.EnumMonoVir.CLASSIQUE
+        End If
+
+        Dim dt As DataTable
+
+        Cursor.Current = Cursors.WaitCursor
+        dt = theriaqueDao.GetSpecialiteByArgument(SelectedClasseAtc, TheriaqueDao.EnumGetSpecialite.CLASSE_ATC, MonoVir)
+        If dt.Rows.Count > 0 Then
+            ChargementSpecialite(dt, True)
+        End If
+        Cursor.Current = Cursors.Default
+    End Sub
+
 
     'Liste des médicaments par dénomination
     Private Sub RadBtnFiltre_Click(sender As Object, e As EventArgs) Handles RadBtnFiltreSpecialite.Click
@@ -696,4 +741,23 @@ Public Class RadFMedicamentSelecteur
         End If
     End Sub
 
+    Private Sub RadioBtnClassique_CheckedChanged(sender As Object, e As EventArgs) Handles RadioBtnClassique.CheckedChanged
+        If SelectedClasseAtc <> "" Then
+            If PremierPassage = False Then
+                PremierPassage = True
+            Else
+                ChargementMedicamentByAtc()
+            End If
+        End If
+    End Sub
+
+    Private Sub RadioBtnVirtuel_CheckedChanged(sender As Object, e As EventArgs) Handles RadioBtnVirtuel.CheckedChanged
+        If SelectedClasseAtc <> "" Then
+            If PremierPassage = False Then
+                PremierPassage = True
+            Else
+                ChargementMedicamentByAtc()
+            End If
+        End If
+    End Sub
 End Class
