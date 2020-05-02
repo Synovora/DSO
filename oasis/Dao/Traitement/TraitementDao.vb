@@ -172,7 +172,7 @@ Public Class TraitementDao
         " oa_traitement_fraction_matin, oa_traitement_fraction_midi, oa_traitement_fraction_apres_midi, oa_traitement_fraction_soir," &
         " oa_traitement_posologie_commentaire, oa_traitement_ordre_affichage, oa_traitement_date_creation," &
         " oa_traitement_commentaire, oa_traitement_date_modification, oa_traitement_date_debut, oa_traitement_date_fin, oa_traitement_fenetre," &
-        " oa_traitement_fenetre_date_debut, oa_traitement_fenetre_date_fin, oa_traitement_arret, oa_traitement_allergie," &
+        " oa_traitement_fenetre_date_debut, oa_traitement_fenetre_date_fin, oa_traitement_arret, oa_traitement_allergie, oa_traitement_classe_atc," &
         " oa_traitement_contre_indication FROM oasis.oa_traitement" &
         " WHERE (oa_traitement_annulation Is Null Or oa_traitement_annulation = '')" &
         " AND (oa_traitement_date_fin >= CONVERT(DATE, GETDATE()))" &
@@ -295,6 +295,7 @@ Public Class TraitementDao
         traitement.PatientId = Coalesce(reader("oa_traitement_patient_id"), "")
         traitement.MedicamentId = Coalesce(reader("oa_traitement_medicament_cis"), "")
         traitement.MedicamentDci = Coalesce(reader("oa_traitement_medicament_dci"), "")
+        traitement.ClasseAtc = Coalesce(reader("oa_traitement_classe_atc"), "")
         traitement.DenominationLongue = Coalesce(reader("oa_traitement_denomination_longue"), "")
         traitement.UserCreation = Coalesce(reader("oa_traitement_identifiant_creation"), 0)
         traitement.DateCreation = Coalesce(reader("oa_traitement_date_creation"), Nothing)
@@ -430,13 +431,13 @@ Public Class TraitementDao
         " oa_traitement_posologie_matin, oa_traitement_posologie_midi, oa_traitement_posologie_apres_midi, oa_traitement_posologie_soir," &
         " oa_traitement_fraction_matin,oa_traitement_fraction_midi, oa_traitement_fraction_apres_midi, oa_traitement_fraction_soir," &
         " oa_traitement_date_creation, oa_traitement_posologie_commentaire, oa_traitement_commentaire," &
-        " oa_traitement_date_debut, oa_traitement_date_fin, oa_traitement_medicament_monographie)" &
+        " oa_traitement_date_debut, oa_traitement_date_fin, oa_traitement_medicament_monographie, oa_traitement_classe_atc)" &
         " VALUES (@patientId, @cis, @dci, @denominationLongue, @allergie," &
         " @contreIndication, @utilisateurCreation, @utilisateurModification," &
         " @ordreAffichage, @posologieBase, @posologierythme," &
         " @PosologieMatin, @PosologieMidi, @PosologieApresMidi, @PosologieSoir," &
         " @FractionMatin, @FractionMidi, @FractionApresMidi, @FractionSoir," &
-        " @dateCreation, @posologieCommentaire, @traitementCommentaire, @dateDebut, @dateFin, @monographie); SELECT SCOPE_IDENTITY()"
+        " @dateCreation, @posologieCommentaire, @traitementCommentaire, @dateDebut, @dateFin, @monographie, @classeAtc); SELECT SCOPE_IDENTITY()"
 
         Dim con As SqlConnection = GetConnection()
         Dim cmd As New SqlCommand(SQLstring, con)
@@ -467,6 +468,7 @@ Public Class TraitementDao
             .AddWithValue("@dateDebut", traitement.DateDebut)
             .AddWithValue("@dateFin", traitement.DateFin)
             .AddWithValue("@monographie", traitement.MedicamentMonographie)
+            .AddWithValue("@classeAtc", traitement.ClasseAtc)
         End With
 
         Try

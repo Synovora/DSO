@@ -71,7 +71,7 @@ Module TraitementHistoDao
         " oa_traitement_posologie_commentaire, oa_traitement_fenetre, oa_traitement_fenetre_date_debut," &
         " oa_traitement_fenetre_date_fin, oa_traitement_fenetre_commentaire, oa_traitement_commentaire," &
         " oa_traitement_arret_commentaire, oa_traitement_declaratif_hors_traitement, oa_traitement_allergie," &
-        " oa_traitement_contre_indication, oa_traitement_annulation_commentaire, oa_traitement_annulation, oa_traitement_arret)" &
+        " oa_traitement_contre_indication, oa_traitement_annulation_commentaire, oa_traitement_annulation, oa_traitement_arret, oa_traitement_medicament_cis, oa_traitement_medicament_dci)" &
         " VALUES (@dateHistorisation, @utilisateurCreation, @etatHistorisation," &
         " @patientId, @traitementId, @dateDebut, @dateFin," &
         " @ordreAffichage, @posologieBase, @posologieRythme," &
@@ -80,7 +80,7 @@ Module TraitementHistoDao
         " @posologieCommentaire, @fenetre, @fenetreDateDebut," &
         " @fenetreDateFin, @fenetreCommentaire, @commentaire," &
         " @arretCommentaire, @declaratif, @allergie," &
-        " @contreIndication, @annulationCommentaire, @annulation, @arret);"
+        " @contreIndication, @annulationCommentaire, @annulation, @arret, @cis, @dci);"
 
         Dim cmd As New SqlCommand(SQLstring, conxn)
 
@@ -116,6 +116,8 @@ Module TraitementHistoDao
             .AddWithValue("@contreIndication", contreIndication.ToString)
             .AddWithValue("@annulation", TraitementHistoACreer.HistorisationAnnulation.ToString)
             .AddWithValue("@annulationCommentaire", TraitementHistoACreer.HistorisationAnnulationCommentaire.ToString)
+            .AddWithValue("@cis", TraitementHistoACreer.HistorisationMedicamentId)
+            .AddWithValue("@dci", TraitementHistoACreer.HistorisationMedicamentDci)
         End With
 
         Try
@@ -139,6 +141,8 @@ Module TraitementHistoDao
         TraitementHistoACreer.HistorisationEtat = 0
         TraitementHistoACreer.HistorisationPatientId = traitement.PatientId
         TraitementHistoACreer.HistorisationTraitementId = traitement.TraitementId
+        TraitementHistoACreer.HistorisationMedicamentId = traitement.MedicamentId
+        TraitementHistoACreer.HistorisationMedicamentDci = traitement.MedicamentDci
         TraitementHistoACreer.HistorisationDateDebut = traitement.DateDebut
         TraitementHistoACreer.HistorisationDateFin = traitement.DateFin
         TraitementHistoACreer.HistorisationCommentaire = traitement.Commentaire
@@ -176,6 +180,8 @@ Module TraitementHistoDao
         TraitementHistoACreer.HistorisationTraitementId = traitementDataReader("oa_traitement_id")
         TraitementHistoACreer.HistorisationDateDebut = traitementDataReader("oa_traitement_date_debut")
         TraitementHistoACreer.HistorisationDateFin = traitementDataReader("oa_traitement_date_fin")
+        TraitementHistoACreer.HistorisationMedicamentId = Coalesce(traitementDataReader("oa_traitement_medicament_cis"), "")
+        TraitementHistoACreer.HistorisationMedicamentDci = Coalesce(traitementDataReader("oa_traitement_medicament_dci"), "")
         TraitementHistoACreer.HistorisationCommentaire = Coalesce(traitementDataReader("oa_traitement_commentaire"), "")
         TraitementHistoACreer.HistorisationOrdreAffichage = Coalesce(traitementDataReader("oa_traitement_ordre_affichage"), 0)
         TraitementHistoACreer.HistorisationPosologieBase = Coalesce(traitementDataReader("oa_traitement_posologie_base"), "")

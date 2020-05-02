@@ -2744,7 +2744,7 @@ Public Class RadFSynthese
 
     Private Sub GestionDroitsAcces()
         'Accès à la création d'un traitement via le TraitementContexteMenuStrip selon les droits de l'utilisateur connecté
-        If UtilisateurConnecte.UtilisateurNiveauAcces = 1 Or UtilisateurConnecte.UtilisateurAdmin = True Then
+        If userLog.UtilisateurNiveauAcces = 1 Or userLog.UtilisateurAdmin = True Then
             CréerUnTraitementToolStripMenuItem1.Enabled = True
         Else
             CréerUnTraitementToolStripMenuItem1.Enabled = False

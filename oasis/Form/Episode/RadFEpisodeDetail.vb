@@ -2051,7 +2051,7 @@ Public Class RadFEpisodeDetail
                     Using vFContexteDetailEdit As New RadFContextedetailEdit
                         vFContexteDetailEdit.SelectedContexteId = ContexteId
                         vFContexteDetailEdit.SelectedPatient = Me.SelectedPatient
-                        vFContexteDetailEdit.UtilisateurConnecte = Me.UtilisateurConnecte
+                        vFContexteDetailEdit.UtilisateurConnecte = userLog
                         vFContexteDetailEdit.SelectedDrcId = 0
                         vFContexteDetailEdit.PositionGaucheDroite = EnumPosition.Gauche
                         vFContexteDetailEdit.ShowDialog()
@@ -2647,7 +2647,7 @@ Public Class RadFEpisodeDetail
                 Using vFAntecedentDetailEdit As New RadFAntecedentDetailEdit
                     vFAntecedentDetailEdit.SelectedAntecedentId = antecedentId
                     vFAntecedentDetailEdit.SelectedPatient = Me.SelectedPatient
-                    vFAntecedentDetailEdit.UtilisateurConnecte = Me.UtilisateurConnecte
+                    vFAntecedentDetailEdit.UtilisateurConnecte = userLog
                     vFAntecedentDetailEdit.SelectedDrcId = 0
                     vFAntecedentDetailEdit.PositionGaucheDroite = EnumPosition.Gauche
                     vFAntecedentDetailEdit.ShowDialog() 'Modal
@@ -2691,7 +2691,7 @@ Public Class RadFEpisodeDetail
             If SelectedDrcId <> 0 Then
                 Using vFAntecedentDetailEdit As New RadFAntecedentDetailEdit
                     vFAntecedentDetailEdit.SelectedPatient = Me.SelectedPatient
-                    vFAntecedentDetailEdit.UtilisateurConnecte = Me.UtilisateurConnecte
+                    vFAntecedentDetailEdit.UtilisateurConnecte = userLog
                     vFAntecedentDetailEdit.SelectedDrcId = SelectedDrcId
                     vFAntecedentDetailEdit.SelectedDrc = vFDrcSelecteur.SelectedDrc
                     vFAntecedentDetailEdit.SelectedAntecedentId = 0
@@ -2719,7 +2719,7 @@ Public Class RadFEpisodeDetail
                 Using vFAntecedenttHistoListe As New RadFAntecedentHistoListe
                     vFAntecedenttHistoListe.SelectedAntecedentId = AntecedentId
                     vFAntecedenttHistoListe.SelectedPatient = Me.SelectedPatient
-                    vFAntecedenttHistoListe.UtilisateurConnecte = Me.UtilisateurConnecte
+                    vFAntecedenttHistoListe.UtilisateurConnecte = userLog
                     vFAntecedenttHistoListe.ShowDialog() 'Modal
                 End Using
                 Me.Enabled = True
@@ -2847,7 +2847,7 @@ Public Class RadFEpisodeDetail
                 Cursor.Current = Cursors.WaitCursor
                 Using vFAntecedentOrdreSelecteur As New RadFAntecedentOrdreSelecteur
                     vFAntecedentOrdreSelecteur.SelectedPatient = Me.SelectedPatient
-                    vFAntecedentOrdreSelecteur.UtilisateurConnecte = Me.UtilisateurConnecte
+                    vFAntecedentOrdreSelecteur.UtilisateurConnecte = userLog
                     vFAntecedentOrdreSelecteur.AntecedentIdaOrdonner = AntecedentId
                     vFAntecedentOrdreSelecteur.AntecedentDescriptionAOrdonner = RadAntecedentDataGridView.Rows(aRow).Cells("antecedentDescription").Value
                     vFAntecedentOrdreSelecteur.NiveauAntecedentAOrdonner = RadAntecedentDataGridView.Rows(aRow).Cells("antecedentNiveau").Value
@@ -3505,7 +3505,7 @@ Public Class RadFEpisodeDetail
         Cursor.Current = Cursors.WaitCursor
         Using vFTraitementObsoletes As New RadFTraitementObsoletes
             vFTraitementObsoletes.SelectedPatient = Me.SelectedPatient
-            vFTraitementObsoletes.UtilisateurConnecte = Me.UtilisateurConnecte
+            vFTraitementObsoletes.UtilisateurConnecte = userLog
             vFTraitementObsoletes.ShowDialog() 'Modal
         End Using
         Me.Enabled = True
@@ -3646,7 +3646,7 @@ Public Class RadFEpisodeDetail
                 Using vFTraitementHistoListe As New RadFTraitementHistoListe
                     vFTraitementHistoListe.SelectedTraitementId = TraitementId
                     vFTraitementHistoListe.SelectedPatient = Me.SelectedPatient
-                    vFTraitementHistoListe.UtilisateurConnecte = Me.UtilisateurConnecte
+                    vFTraitementHistoListe.UtilisateurConnecte = userLog
                     vFTraitementHistoListe.MedicamentDenomination = RadTraitementDataGridView.Rows(aRow).Cells("medicamentDci").Value
                     vFTraitementHistoListe.ShowDialog() 'Modal
                 End Using
@@ -3669,7 +3669,7 @@ Public Class RadFEpisodeDetail
                 Cursor.Current = Cursors.WaitCursor
                 Using vFTraitementFenetreTh As New RadFTraitementFenetreTh
                     vFTraitementFenetreTh.SelectedPatient = Me.SelectedPatient
-                    vFTraitementFenetreTh.UtilisateurConnecte = Me.UtilisateurConnecte
+                    vFTraitementFenetreTh.UtilisateurConnecte = userLog
                     vFTraitementFenetreTh.SelectedTraitementId = SelectedTraitementId
                     Dim fenetreTherapeutiqueExiste As Char = RadTraitementDataGridView.Rows(aRow).Cells("fenetreTherapeutique").Value
                     If fenetreTherapeutiqueExiste = "O" Then

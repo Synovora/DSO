@@ -5,6 +5,7 @@
     Private _medicamentMonographie As Boolean
     Private _medicamentDci As String
     Private _denomination_longue As String
+    Private _classeAtc As String
     Private _userCreation As Integer
     Private _dateCreation As Date
     Private _userModification As Integer
@@ -357,6 +358,15 @@
         End Get
         Set(value As Boolean)
             _medicamentMonographie = value
+        End Set
+    End Property
+
+    Public Property ClasseAtc As String
+        Get
+            Return _classeAtc
+        End Get
+        Set(value As String)
+            _classeAtc = value
         End Set
     End Property
 

@@ -110,6 +110,8 @@ Public Class RadFTraitementDetailEdit
     Dim TraitementHistoACreer As New TraitementHisto
     Dim UtilisateurHisto As Utilisateur = New Utilisateur()
 
+    Dim classeAtc As String
+
     Private Sub RadFTraitementDetailEdit_Load(sender As Object, e As EventArgs) Handles MyBase.Load
 
         RadGridLocalizationProvider.CurrentProvider = New FrenchRadGridViewLocalizationProvider()
@@ -592,6 +594,7 @@ Public Class RadFTraitementDetailEdit
             Else
                 medicamentMonographie = 0
             End If
+            classeAtc = dt.Rows(0)("SP_CATC_CODE_FK")
         Else
             LblMedicamentDCI.Text = ""
             LblMedicamentDenominationLongue.Text = ""
@@ -599,6 +602,7 @@ Public Class RadFTraitementDetailEdit
             LblMedicamentTitulaire.Text = ""
             LblATC.Text = ""
             medicamentMonographie = 0
+            classeAtc = ""
         End If
     End Sub
 
@@ -915,6 +919,7 @@ Public Class RadFTraitementDetailEdit
         traitementaCreer.DateDebut = DteTraitementDateDebut.Value
         traitementaCreer.DateFin = DteTraitementDateFin.Value
         traitementaCreer.MedicamentMonographie = medicamentMonographie
+        traitementaCreer.ClasseAtc = classeAtc
 
         codeRetour = traitementDao.CreationTraitement(traitementaCreer, TraitementHistoACreer)
         If codeRetour = True Then
@@ -939,6 +944,8 @@ Public Class RadFTraitementDetailEdit
 
         Dim traitementaModifier As New Traitement
         traitementaModifier.TraitementId = SelectedTraitementId
+        traitementaModifier.MedicamentId = medicament_selecteur_cis
+        traitementaModifier.MedicamentDci = LblMedicamentDCI.Text
         traitementaModifier.PatientId = SelectedPatient.patientId
         traitementaModifier.PosologieBase = traitementDao.GetBaseCodeByItem(CbxTraitementBase.Text)
         traitementaModifier.PosologieRythme = NumRythmeMatin.Value

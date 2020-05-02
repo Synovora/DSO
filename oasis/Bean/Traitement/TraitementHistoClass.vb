@@ -4,6 +4,8 @@
     Private PrivateHistorisationEtat As Integer
     Private privateHistorisationPatientId As Integer
     Private PrivateHistorisationTraitementId As Integer
+    Private _HistorisationMedicamentCis As Integer
+    Private _HistorisationMedicamentDci As String
     Private PrivateHistorisationDateDebut As Date
     Private PrivateHistorisationDateFin As Date
     Private PrivateHistorisationCommentaire As String
@@ -42,6 +44,8 @@
         Me.HistorisationEtat = 0
         Me.HistorisationPatientId = 0
         Me.HistorisationTraitementId = 0
+        Me.HistorisationMedicamentId = 0
+        Me.HistorisationMedicamentDci = ""
         Me.HistorisationDateDebut = Nothing
         Me.HistorisationDateFin = Nothing
         Me.HistorisationCommentaire = ""
@@ -346,6 +350,24 @@
         End Get
         Set(value As Integer)
             _HistorisationPosologieSoir = value
+        End Set
+    End Property
+
+    Public Property HistorisationMedicamentId As Integer
+        Get
+            Return _HistorisationMedicamentCis
+        End Get
+        Set(value As Integer)
+            _HistorisationMedicamentCis = value
+        End Set
+    End Property
+
+    Public Property HistorisationMedicamentDci As String
+        Get
+            Return _HistorisationMedicamentDci
+        End Get
+        Set(value As String)
+            _HistorisationMedicamentDci = value
         End Set
     End Property
 End Class
