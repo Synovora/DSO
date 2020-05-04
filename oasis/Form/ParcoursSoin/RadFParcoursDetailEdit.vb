@@ -457,6 +457,10 @@ Public Class RadFParcoursDetailEdit
                             LblDateProchainRendezVous.Text = "(Rendez-vous à venir non calculable)"
                         End If
                     End If
+                    '-- Ajout pour indiquer qu'il n'y a pas de rdv ou de demande de rdv (rend obsolète le bloc ci-dessus !
+                    LblDateNextType.Text = "(Pas de rendez-vous ou de demande de rendez-vous existante)"
+                    LblDateNextType.ForeColor = Color.Red
+                    LblDateProchainRendezVous.Text = ""
                 Else
                     LblDateNextType.Text = ""
                     LblDateProchainRendezVous.Text = "(pas de rendez-vous à venir pour cet intervenant)"
