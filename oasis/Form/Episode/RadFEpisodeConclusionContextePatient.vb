@@ -239,31 +239,37 @@ Public Class RadFEpisodeConclusionContextePatient
                 Dim ContexteId As Integer = RadContexteDataGridView.Rows(aRow).Cells("ContexteId").Value
                 Cursor.Current = Cursors.WaitCursor
                 Me.Enabled = False
-                Using vFContexteDetailEdit As New RadFContextedetailEdit
-                    vFContexteDetailEdit.SelectedContexteId = ContexteId
-                    vFContexteDetailEdit.SelectedPatient = SelectedPatient
-                    vFContexteDetailEdit.UtilisateurConnecte = userLog
-                    vFContexteDetailEdit.SelectedDrcId = 0
-                    vFContexteDetailEdit.PositionGaucheDroite = EnumPosition.Droite
-                    vFContexteDetailEdit.ShowDialog() 'Modal
-                    If vFContexteDetailEdit.CodeRetour = True Then
-                        CodeRetour = True
-                        Select Case vFContexteDetailEdit.CodeResultat
-                            Case EnumResultat.AnnulationOK
-                                Dim form As New RadFNotification()
-                                form.Titre = "Notification contexte patient"
-                                form.Message = "Contexte patient annulé"
-                                form.Show()
-                            Case EnumResultat.ModificationOK
-                                Dim form As New RadFNotification()
-                                form.Titre = "Notification contexte patient"
-                                form.Message = "Contexte patient modifié"
-                                form.Show()
-                        End Select
-                        ChargementConclusion()
-                        ChargementContexte()
-                    End If
-                End Using
+
+                Try
+                    Using vFContexteDetailEdit As New RadFContextedetailEdit
+                        vFContexteDetailEdit.SelectedContexteId = ContexteId
+                        vFContexteDetailEdit.SelectedPatient = SelectedPatient
+                        vFContexteDetailEdit.UtilisateurConnecte = userLog
+                        vFContexteDetailEdit.SelectedDrcId = 0
+                        vFContexteDetailEdit.PositionGaucheDroite = EnumPosition.Droite
+                        vFContexteDetailEdit.ShowDialog() 'Modal
+                        If vFContexteDetailEdit.CodeRetour = True Then
+                            CodeRetour = True
+                            Select Case vFContexteDetailEdit.CodeResultat
+                                Case EnumResultat.AnnulationOK
+                                    Dim form As New RadFNotification()
+                                    form.Titre = "Notification contexte patient"
+                                    form.Message = "Contexte patient annulé"
+                                    form.Show()
+                                Case EnumResultat.ModificationOK
+                                    Dim form As New RadFNotification()
+                                    form.Titre = "Notification contexte patient"
+                                    form.Message = "Contexte patient modifié"
+                                    form.Show()
+                            End Select
+                            ChargementConclusion()
+                            ChargementContexte()
+                        End If
+                    End Using
+                Catch ex As Exception
+                    MessageBox.Show(ex.Message)
+                End Try
+
                 Me.Enabled = True
             End If
         End If
@@ -282,33 +288,43 @@ Public Class RadFEpisodeConclusionContextePatient
         Dim SelectedDrcId As Integer
         Me.Enabled = False
         Cursor.Current = Cursors.WaitCursor
-        Using vFDrcSelecteur As New RadFDRCSelecteur
-            vFDrcSelecteur.SelectedPatient = Me.SelectedPatient
-            vFDrcSelecteur.CategorieOasis = DrcDao.EnumCategorieOasisCode.Contexte
-            vFDrcSelecteur.ShowDialog()
-            SelectedDrcId = vFDrcSelecteur.SelectedDrcId
-            'Si un médicament a été sélectionné, on appelle le Formulaire de création
-            If SelectedDrcId <> 0 Then
-                Using vFContexteDetailEdit As New RadFContextedetailEdit
-                    vFContexteDetailEdit.SelectedPatient = SelectedPatient
-                    vFContexteDetailEdit.UtilisateurConnecte = userLog
-                    vFContexteDetailEdit.SelectedDrcId = SelectedDrcId
-                    vFContexteDetailEdit.SelectedContexteId = 0
-                    vFContexteDetailEdit.PositionGaucheDroite = EnumPosition.Droite
-                    vFContexteDetailEdit.ShowDialog()
-                    'Si le traitement a été créé, on recharge la grid
-                    If vFContexteDetailEdit.CodeRetour = True Then
-                        CodeRetour = True
-                        Dim form As New RadFNotification()
-                        form.Titre = "Notification contexte patient"
-                        form.Message = "Contexte patient créé"
-                        form.Show()
-                        ChargementConclusion()
-                        ChargementContexte()
-                    End If
-                End Using
-            End If
-        End Using
+
+        Try
+            Using vFDrcSelecteur As New RadFDRCSelecteur
+                vFDrcSelecteur.SelectedPatient = Me.SelectedPatient
+                vFDrcSelecteur.CategorieOasis = DrcDao.EnumCategorieOasisCode.Contexte
+                vFDrcSelecteur.ShowDialog()
+                SelectedDrcId = vFDrcSelecteur.SelectedDrcId
+                'Si un médicament a été sélectionné, on appelle le Formulaire de création
+                If SelectedDrcId <> 0 Then
+                    Try
+                        Using vFContexteDetailEdit As New RadFContextedetailEdit
+                            vFContexteDetailEdit.SelectedPatient = SelectedPatient
+                            vFContexteDetailEdit.UtilisateurConnecte = userLog
+                            vFContexteDetailEdit.SelectedDrcId = SelectedDrcId
+                            vFContexteDetailEdit.SelectedContexteId = 0
+                            vFContexteDetailEdit.PositionGaucheDroite = EnumPosition.Droite
+                            vFContexteDetailEdit.ShowDialog()
+                            'Si le traitement a été créé, on recharge la grid
+                            If vFContexteDetailEdit.CodeRetour = True Then
+                                CodeRetour = True
+                                Dim form As New RadFNotification()
+                                form.Titre = "Notification contexte patient"
+                                form.Message = "Contexte patient créé"
+                                form.Show()
+                                ChargementConclusion()
+                                ChargementContexte()
+                            End If
+                        End Using
+                    Catch ex As Exception
+                        MessageBox.Show(ex.Message)
+                    End Try
+                End If
+            End Using
+        Catch ex As Exception
+            MessageBox.Show(ex.Message)
+        End Try
+
         Me.Enabled = True
     End Sub
 
@@ -326,7 +342,6 @@ Public Class RadFEpisodeConclusionContextePatient
                 episodeContexte.UserCreation = userLog.UtilisateurId
                 episodeContexte.DateCreation = Date.Now()
                 episodeContexteDao.CreateEpisodeContexte(episodeContexte)
-                'episodeDao.MajEpisodeConclusionMedicale(SelectedEpisode.Id)
                 ChargementConclusion()
                 ChargementContexte()
                 CodeRetour = True
@@ -343,7 +358,6 @@ Public Class RadFEpisodeConclusionContextePatient
                 Cursor.Current = Cursors.WaitCursor
                 episodeContexteId = RadConclusionGridView.Rows(aRow).Cells("episode_contexte_id").Value
                 EpisodeContexteDao.SuppressionEpisodeContexteById(episodeContexteId)
-                'episodeDao.MajEpisodeConclusionMedicale(SelectedEpisode.Id)
                 ChargementConclusion()
                 ChargementContexte()
                 CodeRetour = True

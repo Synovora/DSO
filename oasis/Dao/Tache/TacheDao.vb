@@ -1172,15 +1172,21 @@ Public Class TacheDao
         Return codeRetour
     End Function
 
-    Friend Function CreationAutomatiqueDeDemandeRendezVous(Patient As Patient, parcours As Parcours, dateDebut As Date) As Boolean
+    Friend Function CreationAutomatiqueDeDemandeRendezVous(Patient As Patient, parcours As Parcours, dateDebut As Date, Optional PremierRDV As Boolean = False) As Boolean
         'Calcul de la période (année, mois) du rendez-vous demandé
         Dim Commentaire As String = ""
         Dim Rythme As Integer = parcours.Rythme
         Dim Base As String = parcours.Base
 
         'Si le rythme n'est pas renseigné dans ce cas on ne peut pas générer automatiquement la demande de rendez-vous
-        If Rythme = 0 Then
-            Return False
+        If Base = ParcoursDao.EnumParcoursBaseCode.TousLes2Ans Or
+                Base = ParcoursDao.EnumParcoursBaseCode.TousLes3Ans Or
+                Base = ParcoursDao.EnumParcoursBaseCode.TousLes4Ans Or
+                Base = ParcoursDao.EnumParcoursBaseCode.TousLes5Ans Then
+        Else
+            If Rythme = 0 Then
+                Return False
+            End If
         End If
 
         Dim Jour As Integer
@@ -1273,11 +1279,23 @@ Public Class TacheDao
         Dim specialite As Specialite = Environnement.Table_specialite.GetSpecialiteById(parcours.SpecialiteId)
         Dim DelaiPriseEnCharge As Integer = specialite.DelaiPriseEnCharge
 
+        'Si la date du dernier rendez-vous est < date du jour, prendre la date du dernier rendez-vous, sinon prendre la date du jour
         Dim DateRendezVousCalcul As Date
-        DateRendezVousCalcul = Date.Now().AddDays(Jour)
+        If PremierRDV = False Then
+            DateRendezVousCalcul = dateDebut.AddDays(Jour)
+        Else
+            DateRendezVousCalcul = Date.Now().AddDays(30)
+        End If
 
         'Convertir la date en année et mois
         Dim DateRendezVous As New Date(DateRendezVousCalcul.Year, DateRendezVousCalcul.Month, 1, 0, 0, 0)
+
+        'Date traitement de la demande de rendez-vous
+        Dim DateTraitementDemandeRendezVous As Date
+        DateTraitementDemandeRendezVous = DateRendezVous.AddDays(-DelaiPriseEnCharge)
+        If DateTraitementDemandeRendezVous.Date < Date.Now.Date Then
+            DateTraitementDemandeRendezVous = Date.Now
+        End If
 
         'Récupération de l'utilisateur 'AUTO' qui sera déclaré comme utilisateur émetteur
         Dim UserAutoId As Long
@@ -1360,7 +1378,7 @@ Public Class TacheDao
         tache.Etat = TacheDao.EtatTache.EN_ATTENTE.ToString
         tache.TypedemandeRendezVous = TacheDao.TypeDemandeRendezVous.ANNEEMOIS.ToString
         tache.DateRendezVous = DateRendezVous
-        tache.DateTraitementDemandeRendezVous = DateRendezVous.AddDays(-DelaiPriseEnCharge)
+        tache.DateTraitementDemandeRendezVous = DateTraitementDemandeRendezVous
 
         Dim codeRetour As Boolean = True
         Dim con As SqlConnection

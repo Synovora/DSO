@@ -326,17 +326,24 @@ Public Class RadFPatientRendezVousListe
         aRow = Me.RadGridViewRDV.Rows.IndexOf(Me.RadGridViewRDV.CurrentRow)
         maxRow = RadGridViewRDV.Rows.Count - 1
         If aRow <= maxRow And aRow > -1 Then
-            If RadGridViewRDV.Rows(aRow).Cells("nature").Value = TacheDao.EnumNatureTacheItem.RDV OrElse
+            Dim TacheId As Long = RadGridViewRDV.Rows(aRow).Cells("id").Value
+            tache = tacheDao.GetTacheById(TacheId)
+            Dim parcoursDao As New ParcoursDao
+            Dim parcours As Parcours = parcoursDao.GetParcoursById(tache.ParcoursId)
+            If parcours.Rythme = 0 Or Not (parcours.Base = ParcoursDao.EnumParcoursBaseCode.TousLes2Ans Or
+                parcours.Base = ParcoursDao.EnumParcoursBaseCode.TousLes3Ans Or
+                parcours.Base = ParcoursDao.EnumParcoursBaseCode.TousLes4Ans Or
+                parcours.Base = ParcoursDao.EnumParcoursBaseCode.TousLes5Ans) Then
+                If RadGridViewRDV.Rows(aRow).Cells("nature").Value = TacheDao.EnumNatureTacheItem.RDV OrElse
                 RadGridViewRDV.Rows(aRow).Cells("nature").Value = TacheDao.EnumNatureTacheItem.RDV_SPECIALISTE Then
-                Dim TacheId As Long = RadGridViewRDV.Rows(aRow).Cells("id").Value
-                tache = tacheDao.GetTacheById(TacheId)
-                AnnulationRendezVous(tache)
-            Else
-                If RadGridViewRDV.Rows(aRow).Cells("nature").Value = TacheDao.EnumNatureTacheItem.RDV_DEMANDE Then
-                    Dim TacheId As Long = RadGridViewRDV.Rows(aRow).Cells("id").Value
-                    tache = tacheDao.GetTacheById(TacheId)
-                    AnnulationdemandeRendezVous(tache)
+                    AnnulationRendezVous(tache)
+                Else
+                    If RadGridViewRDV.Rows(aRow).Cells("nature").Value = TacheDao.EnumNatureTacheItem.RDV_DEMANDE Then
+                        AnnulationdemandeRendezVous(tache)
+                    End If
                 End If
+            Else
+                MessageBox.Show("Cet intervenant a un rythme de rendez-vous de renseigné, la suppression d'un rendez-vous ou d'une demande de rendez-vous est interdite", "Alerte", MessageBoxButtons.OK, MessageBoxIcon.Exclamation)
             End If
         End If
     End Sub
@@ -371,7 +378,7 @@ Public Class RadFPatientRendezVousListe
         Else
             Dim user As Utilisateur
             user = UserDao.getUserById(tache.TraiteUserId)
-            MessageBox.Show("Le rendez-vous n'est pas disponible, il est attribué à : " & user.UtilisateurPrenom & " " & user.UtilisateurNom)
+            MessageBox.Show("Le rendez-vous n'est pas disponible, il est attribué à : " & user.UtilisateurPrenom & " " & user.UtilisateurNom, "Information", MessageBoxButtons.OK, MessageBoxIcon.Information)
         End If
     End Sub
 

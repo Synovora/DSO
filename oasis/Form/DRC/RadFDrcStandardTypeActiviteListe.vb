@@ -130,41 +130,48 @@ Public Class RadFDrcStandardTypeActiviteListe
     Private Sub selectDrc(CategorieOasis As String)
         Dim SelectedDrcId As Integer
         Cursor.Current = Cursors.WaitCursor
-        Using vFDrcSelecteur As New RadFDRCSelecteur
-            vFDrcSelecteur.SelectedPatient = Nothing
-            vFDrcSelecteur.CategorieOasis = CategorieOasis
-            vFDrcSelecteur.ShowDialog()
-            SelectedDrcId = vFDrcSelecteur.SelectedDrcId
-            If SelectedDrcId <> 0 Then
-                'Ajout de l'occurrence choisie (contrôle que cette DORC n'est pas déjà associée)
-                Dim drcStandard As DrcStandard = New DrcStandard
-                drcStandard.TypeActivite = TypeActivite
-                drcStandard.DrcId = SelectedDrcId
-                Dim drcSelected As Drc = New Drc
-                drcdao.GetDrc(drcSelected, SelectedDrcId)
-                drcStandard.CategorieOasis = drcSelected.CategorieOasisId
-                Try
-                    If drcStandardDao.CreationDrcStandard(drcStandard) = True Then
-                        If TypeActivite = EpisodeDao.EnumTypeActiviteEpisodeCode.PREVENTION_ENFANT_PRE_SCOLAIRE Or
-                            TypeActivite = EpisodeDao.EnumTypeActiviteEpisodeCode.PREVENTION_ENFANT_SCOLAIRE Then
-                            'Récupérer le dernier DRC standard créé
-                            Dim DrcStandardIdCreated As Integer = drcStandardDao.GetDrcStandardCreated(drcStandard)
-                            Using vRadFDrcStandardTypeActiviteDetail As New RadFDrcStandardTypeActiviteDetail
-                                vRadFDrcStandardTypeActiviteDetail.SelectedDrcStandardId = DrcStandardIdCreated
-                                vRadFDrcStandardTypeActiviteDetail.ShowDialog()
-                            End Using
+
+        Try
+            Using vFDrcSelecteur As New RadFDRCSelecteur
+                vFDrcSelecteur.SelectedPatient = Nothing
+                vFDrcSelecteur.CategorieOasis = CategorieOasis
+                vFDrcSelecteur.ShowDialog()
+                SelectedDrcId = vFDrcSelecteur.SelectedDrcId
+                If SelectedDrcId <> 0 Then
+                    'Ajout de l'occurrence choisie (contrôle que cette DORC n'est pas déjà associée)
+                    Dim drcStandard As DrcStandard = New DrcStandard
+                    drcStandard.TypeActivite = TypeActivite
+                    drcStandard.DrcId = SelectedDrcId
+                    Dim drcSelected As Drc = New Drc
+                    drcdao.GetDrc(drcSelected, SelectedDrcId)
+                    drcStandard.CategorieOasis = drcSelected.CategorieOasisId
+                    Try
+                        If drcStandardDao.CreationDrcStandard(drcStandard) = True Then
+                            If TypeActivite = EpisodeDao.EnumTypeActiviteEpisodeCode.PREVENTION_ENFANT_PRE_SCOLAIRE Or
+                                TypeActivite = EpisodeDao.EnumTypeActiviteEpisodeCode.PREVENTION_ENFANT_SCOLAIRE Then
+                                'Récupérer le dernier DRC standard créé
+                                Dim DrcStandardIdCreated As Integer = drcStandardDao.GetDrcStandardCreated(drcStandard)
+                                Using vRadFDrcStandardTypeActiviteDetail As New RadFDrcStandardTypeActiviteDetail
+                                    vRadFDrcStandardTypeActiviteDetail.SelectedDrcStandardId = DrcStandardIdCreated
+                                    vRadFDrcStandardTypeActiviteDetail.ShowDialog()
+                                End Using
+                            End If
+                            RadGridViewDrcAsso.Rows.Clear()
+                            ChargementDrc()
                         End If
-                        RadGridViewDrcAsso.Rows.Clear()
-                        ChargementDrc()
-                    End If
-                Catch ex As Exception
-                    CreateLog(ex.ToString, Me.Name, LogDao.EnumTypeLog.ERREUR.ToString)
-                    If ex.Message.StartsWith("Collision") = True Then
-                        MessageBox.Show("La DRC sélectionnée existe déjà pour le type d'activité d'épisode")
-                    End If
-                End Try
-            End If
-        End Using
+                    Catch ex As Exception
+                        CreateLog(ex.ToString, Me.Name, LogDao.EnumTypeLog.ERREUR.ToString)
+                        If ex.Message.StartsWith("Collision") = True Then
+                            MessageBox.Show("La DRC sélectionnée existe déjà pour le type d'activité d'épisode")
+                        End If
+                    End Try
+                End If
+            End Using
+        Catch ex As Exception
+            MessageBox.Show(ex.Message)
+        End Try
+
+        Cursor.Current = Cursors.Default
     End Sub
 
     Private Sub RadBtnSuiviGrossesse_Click(sender As Object, e As EventArgs) Handles RadBtnSuiviGrossesse.Click
@@ -257,14 +264,20 @@ Public Class RadFDrcStandardTypeActiviteListe
             If aRow >= 0 Then
                 Dim DrcStandarddId As Integer = RadGridViewDrcAsso.Rows(aRow).Cells("Id").Value
                 Cursor.Current = Cursors.WaitCursor
-                Using vRadFDrcStandardTypeActiviteDetail As New RadFDrcStandardTypeActiviteDetail
-                    vRadFDrcStandardTypeActiviteDetail.SelectedDrcStandardId = DrcStandarddId
-                    vRadFDrcStandardTypeActiviteDetail.ShowDialog()
-                    If vRadFDrcStandardTypeActiviteDetail.CodeRetour = True Then
-                        RadGridViewDrcAsso.Rows.Clear()
-                        ChargementDrc()
-                    End If
-                End Using
+
+                Try
+                    Using vRadFDrcStandardTypeActiviteDetail As New RadFDrcStandardTypeActiviteDetail
+                        vRadFDrcStandardTypeActiviteDetail.SelectedDrcStandardId = DrcStandarddId
+                        vRadFDrcStandardTypeActiviteDetail.ShowDialog()
+                        If vRadFDrcStandardTypeActiviteDetail.CodeRetour = True Then
+                            RadGridViewDrcAsso.Rows.Clear()
+                            ChargementDrc()
+                        End If
+                    End Using
+                Catch ex As Exception
+                    MessageBox.Show(ex.Message)
+                End Try
+
             End If
         End If
     End Sub
@@ -277,15 +290,21 @@ Public Class RadFDrcStandardTypeActiviteListe
                 Dim DrcdId As Integer = RadGridViewDrcAsso.Rows(aRow).Cells("drcId").Value
                 'Suppression de l'association de la DRC
                 Cursor.Current = Cursors.WaitCursor
-                Using vRadFDrcDetailEdit As New RadFDrcDetailEdit
-                    vRadFDrcDetailEdit.SelectedDRCId = DrcdId
-                    vRadFDrcDetailEdit.UtilisateurConnecte = userLog
-                    vRadFDrcDetailEdit.ShowDialog()
-                    If vRadFDrcDetailEdit.CodeRetour = True Then
-                        RadGridViewDrcAsso.Rows.Clear()
-                        ChargementDrc()
-                    End If
-                End Using
+
+                Try
+                    Using vRadFDrcDetailEdit As New RadFDrcDetailEdit
+                        vRadFDrcDetailEdit.SelectedDRCId = DrcdId
+                        vRadFDrcDetailEdit.UtilisateurConnecte = userLog
+                        vRadFDrcDetailEdit.ShowDialog()
+                        If vRadFDrcDetailEdit.CodeRetour = True Then
+                            RadGridViewDrcAsso.Rows.Clear()
+                            ChargementDrc()
+                        End If
+                    End Using
+                Catch ex As Exception
+                    MessageBox.Show(ex.Message)
+                End Try
+
             End If
         End If
     End Sub

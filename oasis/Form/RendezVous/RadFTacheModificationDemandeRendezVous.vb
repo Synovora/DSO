@@ -155,10 +155,26 @@
             form.SelectedPatient = Me.SelectedPatient
             form.TacheDemandeRdv = tache
             form.SelectedTacheId = 0
+            form.DemanderendezVousOrigine = True  'On doit fournir cette information quand on vient de cet écran pour traiter les cas de RDV antérieur à la date du jour
             form.ShowDialog()
             If form.CodeRetour = True Then
                 'Cloturer la tache de demande de rendez-vous
                 tacheDao.ClotureTache(SelectedTacheId, True)
+                '--> Quand on vient d'une demande de rendez-vous pour laquelle on planifie le rendez-vous
+                '--- Si le RDV est antérieur à la date du jour, la création automatique de la demande de rendez-vous doit se faire après la clôture de la demande de rendez-vous initiale
+                '--- car on ne peut pas créer une demande de rendez-vous si une autre existe
+                If form.DemandeRendezVousCreation = True Then
+                    Dim parcoursDao As New ParcoursDao
+                    Dim parcours As Parcours
+                    parcours = parcoursDao.GetParcoursById(tache.ParcoursId)
+                    Dim DateDemandeDrv As Date
+                    If form.DemandeRendezVousDate <> Nothing Then
+                        DateDemandeDrv = form.DemandeRendezVousDate
+                    Else
+                        DateDemandeDrv = Date.Now()
+                    End If
+                    tacheDao.CreationAutomatiqueDeDemandeRendezVous(SelectedPatient, parcours, DateDemandeDrv)
+                End If
                 Me.CodeRetour = True
             End If
         End Using

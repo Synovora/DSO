@@ -227,6 +227,12 @@
     <Compile Include="Dao\Episode\EpisodeContexteDao.vb" />
     <Compile Include="Dao\LigneDeVie\PatientParametreLdvDao.vb" />
     <Compile Include="Dao\Medicament\MedicamentDao.vb" />
+    <Compile Include="Dao\Parcours\RadFListeIntervenantSansRDV.Designer.vb">
+      <DependentUpon>RadFListeIntervenantSansRDV.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Dao\Parcours\RadFListeIntervenantSansRDV.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Dao\SousEpisode\SousEpisodeDao.vb" />
     <Compile Include="Dao\SousEpisode\SousEpisodeDetailSousTypeDao.vb" />
     <Compile Include="Dao\SousEpisode\SousEpisodeReponseDao.vb" />
@@ -1026,6 +1032,9 @@
     <Compile Include="Settings.vb" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Dao\Parcours\RadFListeIntervenantSansRDV.resx">
+      <DependentUpon>RadFListeIntervenantSansRDV.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Form\ALD\RadFSelecteurALD.resx">
       <DependentUpon>RadFSelecteurALD.vb</DependentUpon>
     </EmbeddedResource>

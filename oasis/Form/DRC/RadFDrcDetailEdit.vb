@@ -787,20 +787,28 @@ Public Class RadFDrcDetailEdit
     Private Sub RadBtnParametre_Click(sender As Object, e As EventArgs) Handles RadBtnParametre.Click
         Dim DrcId As Integer = CreationDrcAvantAction()
         If DrcId <> 0 Then
-            Using vRadFDrcParametresEdit As New RadFDrcParametresEdit
-                vRadFDrcParametresEdit.DrcId = DrcId
-                vRadFDrcParametresEdit.ShowDialog()
-            End Using
+            Try
+                Using vRadFDrcParametresEdit As New RadFDrcParametresEdit
+                    vRadFDrcParametresEdit.DrcId = DrcId
+                    vRadFDrcParametresEdit.ShowDialog()
+                End Using
+            Catch ex As Exception
+                MessageBox.Show(ex.Message)
+            End Try
         End If
     End Sub
 
     Private Sub RadBtnProtocole_Click(sender As Object, e As EventArgs) Handles RadBtnProtocole.Click
         Dim DrcId As Integer = CreationDrcAvantAction()
         If DrcId <> 0 Then
-            Using vRadFDrcActePMAssocieEdit As New RadFDrcActePMAssocieEdit
-                vRadFDrcActePMAssocieEdit.ProtocoleCollaboratifDrcId = DrcId
-                vRadFDrcActePMAssocieEdit.ShowDialog()
-            End Using
+            Try
+                Using vRadFDrcActePMAssocieEdit As New RadFDrcActePMAssocieEdit
+                    vRadFDrcActePMAssocieEdit.ProtocoleCollaboratifDrcId = DrcId
+                    vRadFDrcActePMAssocieEdit.ShowDialog()
+                End Using
+            Catch ex As Exception
+                MessageBox.Show(ex.Message)
+            End Try
         End If
     End Sub
 

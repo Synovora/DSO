@@ -141,14 +141,20 @@ Public Class RadFDrcListe
                 Dim drcId As Integer = DrcDataGridView.Rows(aRow).Cells("drcId").Value
                 Me.Enabled = False
                 Cursor.Current = Cursors.WaitCursor
-                Using vFDRCDetailEdit As New RadFDrcDetailEdit
-                    vFDRCDetailEdit.SelectedDRCId = drcId
-                    vFDRCDetailEdit.UtilisateurConnecte = Me.UtilisateurConnecte
-                    vFDRCDetailEdit.ShowDialog() 'Modal
-                    If vFDRCDetailEdit.CodeRetour = True Then
-                        ChargementDrc()
-                    End If
-                End Using
+
+                Try
+                    Using vFDRCDetailEdit As New RadFDrcDetailEdit
+                        vFDRCDetailEdit.SelectedDRCId = drcId
+                        vFDRCDetailEdit.UtilisateurConnecte = Me.UtilisateurConnecte
+                        vFDRCDetailEdit.ShowDialog() 'Modal
+                        If vFDRCDetailEdit.CodeRetour = True Then
+                            ChargementDrc()
+                        End If
+                    End Using
+                Catch ex As Exception
+                    MessageBox.Show(ex.Message)
+                End Try
+
                 Me.Enabled = True
             End If
         End If
@@ -157,14 +163,20 @@ Public Class RadFDrcListe
     Private Sub RadBtnCreationORC_Click(sender As Object, e As EventArgs) Handles RadBtnCreationORC.Click
         Me.Enabled = False
         Cursor.Current = Cursors.WaitCursor
-        Using vFDRCDetailEdit As New RadFDrcDetailEdit
-            vFDRCDetailEdit.SelectedDRCId = 0
-            vFDRCDetailEdit.UtilisateurConnecte = Me.UtilisateurConnecte
-            vFDRCDetailEdit.ShowDialog() 'Modal
-            If vFDRCDetailEdit.CodeRetour = True Then
-                ChargementDrc()
-            End If
-        End Using
+
+        Try
+            Using vFDRCDetailEdit As New RadFDrcDetailEdit
+                vFDRCDetailEdit.SelectedDRCId = 0
+                vFDRCDetailEdit.UtilisateurConnecte = Me.UtilisateurConnecte
+                vFDRCDetailEdit.ShowDialog() 'Modal
+                If vFDRCDetailEdit.CodeRetour = True Then
+                    ChargementDrc()
+                End If
+            End Using
+        Catch ex As Exception
+            MessageBox.Show(ex.Message)
+        End Try
+
         Me.Enabled = True
     End Sub
 
@@ -174,18 +186,24 @@ Public Class RadFDrcListe
             If aRow >= 0 Then
                 Me.Enabled = False
                 Cursor.Current = Cursors.WaitCursor
-                Using vFDRCSynonymeDetailEdit As New RadFDrcSynonymeDetailEdit
-                    vFDRCSynonymeDetailEdit.SelectedDrcId = selectedDrcId
-                    vFDRCSynonymeDetailEdit.SelectedDrcLibelle = selectedDrcLibelle
-                    Dim drcSynonymeId As Integer = RadDrcDSynonymeDataGridView.Rows(aRow).Cells("oa_drc_synonyme_id").Value
-                    vFDRCSynonymeDetailEdit.SelectedDrcSynonymeId = drcSynonymeId
-                    vFDRCSynonymeDetailEdit.SelectedDrcSynonyme = RadDrcDSynonymeDataGridView.Rows(aRow).Cells("oa_drc_synonyme_libelle").Value
-                    vFDRCSynonymeDetailEdit.UtilisateurConnecte = Me.UtilisateurConnecte
-                    vFDRCSynonymeDetailEdit.ShowDialog() 'Modal
-                    If vFDRCSynonymeDetailEdit.CodeRetour = True Then
-                        ChargementDrcSynonyme(selectedDrcId)
-                    End If
-                End Using
+
+                Try
+                    Using vFDRCSynonymeDetailEdit As New RadFDrcSynonymeDetailEdit
+                        vFDRCSynonymeDetailEdit.SelectedDrcId = selectedDrcId
+                        vFDRCSynonymeDetailEdit.SelectedDrcLibelle = selectedDrcLibelle
+                        Dim drcSynonymeId As Integer = RadDrcDSynonymeDataGridView.Rows(aRow).Cells("oa_drc_synonyme_id").Value
+                        vFDRCSynonymeDetailEdit.SelectedDrcSynonymeId = drcSynonymeId
+                        vFDRCSynonymeDetailEdit.SelectedDrcSynonyme = RadDrcDSynonymeDataGridView.Rows(aRow).Cells("oa_drc_synonyme_libelle").Value
+                        vFDRCSynonymeDetailEdit.UtilisateurConnecte = Me.UtilisateurConnecte
+                        vFDRCSynonymeDetailEdit.ShowDialog() 'Modal
+                        If vFDRCSynonymeDetailEdit.CodeRetour = True Then
+                            ChargementDrcSynonyme(selectedDrcId)
+                        End If
+                    End Using
+                Catch ex As Exception
+                    MessageBox.Show(ex.Message)
+                End Try
+
                 Me.Enabled = True
             End If
         End If
@@ -200,17 +218,23 @@ Public Class RadFDrcListe
         If selectedDrcId <> 0 Then
             Me.Enabled = False
             Cursor.Current = Cursors.WaitCursor
-            Using vFDRCSynonymeDetailEdit As New RadFDrcSynonymeDetailEdit
-                vFDRCSynonymeDetailEdit.SelectedDrcId = selectedDrcId
-                vFDRCSynonymeDetailEdit.SelectedDrcLibelle = selectedDrcLibelle
-                vFDRCSynonymeDetailEdit.SelectedDrcSynonymeId = 0
-                vFDRCSynonymeDetailEdit.SelectedDrcSynonyme = ""
-                vFDRCSynonymeDetailEdit.UtilisateurConnecte = Me.UtilisateurConnecte
-                vFDRCSynonymeDetailEdit.ShowDialog() 'Modal
-                If vFDRCSynonymeDetailEdit.CodeRetour = True Then
-                    ChargementDrcSynonyme(selectedDrcId)
-                End If
-            End Using
+
+            Try
+                Using vFDRCSynonymeDetailEdit As New RadFDrcSynonymeDetailEdit
+                    vFDRCSynonymeDetailEdit.SelectedDrcId = selectedDrcId
+                    vFDRCSynonymeDetailEdit.SelectedDrcLibelle = selectedDrcLibelle
+                    vFDRCSynonymeDetailEdit.SelectedDrcSynonymeId = 0
+                    vFDRCSynonymeDetailEdit.SelectedDrcSynonyme = ""
+                    vFDRCSynonymeDetailEdit.UtilisateurConnecte = Me.UtilisateurConnecte
+                    vFDRCSynonymeDetailEdit.ShowDialog() 'Modal
+                    If vFDRCSynonymeDetailEdit.CodeRetour = True Then
+                        ChargementDrcSynonyme(selectedDrcId)
+                    End If
+                End Using
+            Catch ex As Exception
+                MessageBox.Show(ex.Message)
+            End Try
+
             Me.Enabled = True
         Else
             MessageBox.Show("Vous devez sélectionner une DRC pour créer un synonyme")
@@ -236,9 +260,15 @@ Public Class RadFDrcListe
     Private Sub RadBtnDrcStandard_Click(sender As Object, e As EventArgs) Handles RadBtnDrcStandard.Click
         Me.Enabled = False
         Cursor.Current = Cursors.WaitCursor
-        Using vRadFDrcStandardTypeActiviteActivite As New RadFDrcStandardTypeActiviteListe
-            vRadFDrcStandardTypeActiviteActivite.ShowDialog()
-        End Using
+
+        Try
+            Using vRadFDrcStandardTypeActiviteActivite As New RadFDrcStandardTypeActiviteListe
+                vRadFDrcStandardTypeActiviteActivite.ShowDialog()
+            End Using
+        Catch ex As Exception
+            MessageBox.Show(ex.Message)
+        End Try
+
         Me.Enabled = True
     End Sub
 

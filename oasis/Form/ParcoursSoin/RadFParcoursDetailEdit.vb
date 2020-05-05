@@ -115,8 +115,8 @@ Public Class RadFParcoursDetailEdit
     Dim TraiteFonctionId As Long
     Dim DestinataireFonctionId As Long
 
-    Dim RendezVousPlanifie As Boolean = False
-    Dim DemandeRendezVous As Boolean = False
+    Dim RendezVousPlanifieEnCours As Boolean = False
+    Dim DemandeRendezVousEnCours As Boolean = False
 
     Dim DateRendezVous As Date
     Dim RendezVousPlanifieExiste As Boolean = False
@@ -216,7 +216,7 @@ Public Class RadFParcoursDetailEdit
     End Sub
 
     Private Sub Init()
-        afficheTitleForm(Me, "Parcours de soin")
+        AfficheTitleForm(Me, "Parcours de soin")
         Me.Width = 980
         Me.Height = 650
         DureeRendezVous = 15
@@ -285,7 +285,7 @@ Public Class RadFParcoursDetailEdit
 
     Private Sub ChargementParcours()
         Dim dateCreation, dateModification As Date
-        parcoursRead = ParcoursDao.getParcoursById(SelectedParcoursId)
+        parcoursRead = ParcoursDao.GetParcoursById(SelectedParcoursId)
         ParcoursUpdate = ParcoursDao.CloneParcours(parcoursRead)
 
         'Cacher le bouton d'annulation de l'intervenant pour le Médecin référent et l'IDE sur site
@@ -415,16 +415,17 @@ Public Class RadFParcoursDetailEdit
                     RadBtnClotureRDV.Show()
                 End If
             End If
-            RendezVousPlanifie = True
+            RendezVousPlanifieEnCours = True
+            DemandeRendezVousEnCours = False
         Else
             'Recherche si existe demande de rendez-vous
             tache = tacheDao.GetProchaineDemandeRendezVousByPatientId(SelectedPatient.patientId, SelectedParcoursId)
             dateNext = tache.DateRendezVous
             If dateNext <> Nothing Then
                 Select Case tache.TypedemandeRendezVous
-                    Case TacheDao.typeDemandeRendezVous.ANNEE.ToString
+                    Case TacheDao.TypeDemandeRendezVous.ANNEE.ToString
                         LblDateProchainRendezVous.Text = dateNext.ToString("yyyy")
-                    Case TacheDao.typeDemandeRendezVous.ANNEEMOIS.ToString
+                    Case TacheDao.TypeDemandeRendezVous.ANNEEMOIS.ToString
                         LblDateProchainRendezVous.Text = dateNext.ToString("MM.yyyy")
                     Case Else
                         LblDateProchainRendezVous.Text = outils.FormatageDateAffichage(dateNext)
@@ -435,7 +436,8 @@ Public Class RadFParcoursDetailEdit
                     Case TacheDao.EtatTache.EN_ATTENTE.ToString
                         LblDateNextType.Text = "(Rendez-vous prévisionnel, demande en attente de traitement)"
                         RadBtnModifRDV.Show()
-                        DemandeRendezVous = True
+                        DemandeRendezVousEnCours = True
+                        RendezVousPlanifieEnCours = False
                     Case Else
                         LblDateNextType.Text = "(Rendez-vous prévisionnel, demande en : " & tache.Etat & ")"
                 End Select
@@ -707,7 +709,7 @@ Public Class RadFParcoursDetailEdit
                         If ParcoursUpdate.Rythme <> 0 AndAlso ParcoursUpdate.Base.Trim() <> "" Then
                             'Appel création demande de rendez-vous
                             Dim tacheDao As New TacheDao
-                            tacheDao.CreationAutomatiqueDeDemandeRendezVous(SelectedPatient, ParcoursUpdate, Date.Now())
+                            tacheDao.CreationAutomatiqueDeDemandeRendezVous(SelectedPatient, ParcoursUpdate, Date.Now(), True)
                         End If
                         'Fermeture de l'écran en création après validation
                         Close()
@@ -730,7 +732,7 @@ Public Class RadFParcoursDetailEdit
                             If parcoursRead.Rythme = 0 AndAlso parcoursRead.Base.Trim() = "" Then
                                 If ParcoursUpdate.Rythme <> 0 AndAlso ParcoursUpdate.Base.Trim() <> "" Then
                                     'Appel création demande de rendez-vous
-                                    If tacheDao.CreationAutomatiqueDeDemandeRendezVous(SelectedPatient, ParcoursUpdate, Date.Now()) = True Then
+                                    If tacheDao.CreationAutomatiqueDeDemandeRendezVous(SelectedPatient, ParcoursUpdate, Date.Now(), True) = True Then
                                         ChargementhistoriqueConsultation()
                                     End If
                                 End If
@@ -917,7 +919,7 @@ Public Class RadFParcoursDetailEdit
                     Dim tache As Tache = tacheDao.GetProchainRendezVousByPatientIdEtParcours(SelectedPatient.patientId, SelectedParcoursId)
                     MessageBox.Show("Rendez-vous programmé et clôturé pour le " & NumDateRV.Value.ToString("dd.MM.yyyy"), "Information", MessageBoxButtons.OK, MessageBoxIcon.Information)
                     'La clôture du rendez-vous génère automatiquement une demande de rendez-vous
-                    tacheDao.CreationAutomatiqueDeDemandeRendezVous(SelectedPatient, ParcoursUpdate, Date.Now())
+                    tacheDao.CreationAutomatiqueDeDemandeRendezVous(SelectedPatient, ParcoursUpdate, NumDateRV.Value)
                     'Si l'intervenant est masqué, il faut l'afficher par défaut
                     If ParcoursUpdate.Cacher = True Then
                         ParcoursUpdate.Cacher = False
@@ -947,7 +949,7 @@ Public Class RadFParcoursDetailEdit
                     If RadChkDRVAnneeSeulement.Checked = True Then
                         'Création demande de rendez-vous pour une année donnée (AAAA)
                         Dim dateRendezVous As New DateTime(NumAn.Value, 1, 1, 0, 0, 0)
-                        If CreationDemandeRendezVous(dateRendezVous, TacheDao.typeDemandeRendezVous.ANNEE.ToString) = True Then
+                        If CreationDemandeRendezVous(dateRendezVous, TacheDao.TypeDemandeRendezVous.ANNEE.ToString) = True Then
                             MessageBox.Show("demande de rendez-vous créée pour " & NumAn.Value.ToString, "Information", MessageBoxButtons.OK, MessageBoxIcon.Information)
                             Me.CodeRetour = True
                             Close()
@@ -958,7 +960,7 @@ Public Class RadFParcoursDetailEdit
                         Else
                             'Création demande de rendez-vous pour une période donnée (MM/AAAA)
                             Dim dateRendezVous As New DateTime(NumAn.Value, NumMois.Value, 1, 0, 0, 0)
-                            If CreationDemandeRendezVous(dateRendezVous, TacheDao.typeDemandeRendezVous.ANNEEMOIS.ToString) = True Then
+                            If CreationDemandeRendezVous(dateRendezVous, TacheDao.TypeDemandeRendezVous.ANNEEMOIS.ToString) = True Then
                                 MessageBox.Show("Demande de rendez-vous créée pour " & NumMois.Value.ToString & "/" & NumAn.Value.ToString, "Information", MessageBoxButtons.OK, MessageBoxIcon.Information)
                                 Me.CodeRetour = True
                                 Close()
@@ -1082,9 +1084,11 @@ Public Class RadFParcoursDetailEdit
 
     'Modifier un RDV ou une Demande de RDV
     Private Sub RadBtnModifRDV_Click(sender As Object, e As EventArgs) Handles RadBtnModifRDV.Click
+        Dim byPassDemandeRendezVous As Boolean = False
+
         Dim tache As Tache
         Dim TacheALiberer As Boolean = False
-        If RendezVousPlanifie = True Then
+        If RendezVousPlanifieEnCours = True Then
             tache = tacheDao.GetProchainRendezVousByPatientIdEtParcours(SelectedPatient.patientId, SelectedParcoursId)
             If tache.Id <> 0 AndAlso (tache.Nature = TacheDao.EnumNatureTacheCode.RDV Or tache.Nature = TacheDao.EnumNatureTacheCode.RDV_SPECIALISTE) Then
                 If tache.Etat = TacheDao.EtatTache.EN_ATTENTE.ToString OrElse
@@ -1110,6 +1114,7 @@ Public Class RadFParcoursDetailEdit
                             Me.RadDesktopAlert1.ContentText = "Rendez-vous modifié"
                             Me.RadDesktopAlert1.Show()
                             ChargementhistoriqueConsultation()
+                            byPassDemandeRendezVous = True
                             Me.CodeRetour = True
                         End If
                     End Using
@@ -1127,7 +1132,13 @@ Public Class RadFParcoursDetailEdit
             End If
         End If
 
-        If DemandeRendezVous = True Then
+        If DemandeRendezVousEnCours = True Then
+            If byPassDemandeRendezVous = True Then
+                '-- Si on vient de l'écran de modification de rendez-vous et que celui-ci a été clôturé et généré une demande de rendez-vous
+                '--- Alors on bypass l'écran de saisie de modification de demande de rendez-vous
+                Exit Sub
+            End If
+
             tache = tacheDao.GetProchaineDemandeRendezVousByPatientId(SelectedPatient.patientId, SelectedParcoursId)
             If tache.Id <> 0 AndAlso tache.Nature = TacheDao.EnumNatureTacheCode.RDV_DEMANDE Then
                 If tache.Etat = TacheDao.EtatTache.EN_ATTENTE.ToString OrElse
@@ -1175,7 +1186,7 @@ Public Class RadFParcoursDetailEdit
 
     'Clôturer un rendez-vous spécialiste
     Private Sub RadBtnClotureRDV_Click(sender As Object, e As EventArgs) Handles RadBtnClotureRDV.Click
-        If RendezVousPlanifie = True Then
+        If RendezVousPlanifieEnCours = True Then
             Dim tache As Tache
             tache = tacheDao.GetProchainRendezVousByPatientIdEtParcours(SelectedPatient.patientId, SelectedParcoursId)
             If tache.DateRendezVous.Date <= Date.Now.Date() Then
@@ -1186,7 +1197,7 @@ Public Class RadFParcoursDetailEdit
                             Me.RadDesktopAlert1.ContentText = "Rendez-vous clôturé"
                             Me.RadDesktopAlert1.Show()
                             Dim tacheDao As New TacheDao
-                            tacheDao.CreationAutomatiqueDeDemandeRendezVous(SelectedPatient, ParcoursUpdate, Date.Now())
+                            tacheDao.CreationAutomatiqueDeDemandeRendezVous(SelectedPatient, ParcoursUpdate, tache.DateRendezVous.Date)
                             ChargementhistoriqueConsultation()
                             Me.CodeRetour = True
                         End If

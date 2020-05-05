@@ -5,6 +5,9 @@ Public Class RadFTacheModificationRendezVous
     Private _selectedPatient As Patient
     Private _tacheDemandeRdv As Tache
     Private _codeRetour As Boolean
+    Private _CreationDemandeRendezVous As Boolean
+    Private _OrigineDemanderendezVous As Boolean
+    Private _DemandeRendezVousDate As Date
     Public Property RDVisTransforme As Boolean = False
 
     Public Property SelectedTacheId As Long
@@ -43,13 +46,42 @@ Public Class RadFTacheModificationRendezVous
         End Set
     End Property
 
+    Public Property DemandeRendezVousCreation As Boolean
+        Get
+            Return _CreationDemandeRendezVous
+        End Get
+        Set(value As Boolean)
+            _CreationDemandeRendezVous = value
+        End Set
+    End Property
+
+    Public Property DemanderendezVousOrigine As Boolean
+        Get
+            Return _OrigineDemanderendezVous
+        End Get
+        Set(value As Boolean)
+            _OrigineDemanderendezVous = value
+        End Set
+    End Property
+
+    Public Property DemandeRendezVousDate As Date
+        Get
+            Return _DemandeRendezVousDate
+        End Get
+        Set(value As Date)
+            _DemandeRendezVousDate = value
+        End Set
+    End Property
+
     Dim tache As Tache
     Dim tacheDao As New TacheDao
     Dim parcoursDao As New ParcoursDao
 
     Private Sub RadFTacheModificationRendezVous_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-        afficheTitleForm(Me, "Modification rendez-vous")
+        AfficheTitleForm(Me, "Modification rendez-vous")
         ChargementEtatCivil()
+        DemandeRendezVousCreation = False
+        DemandeRendezVousDate = Nothing
 
         If SelectedTacheId <> 0 Then    '===> Modification de rendez-vous
             tache = tacheDao.GetTacheById(SelectedTacheId)
@@ -144,7 +176,7 @@ Public Class RadFTacheModificationRendezVous
         End If
 
         Dim parcours As Parcours
-        parcours = parcoursDao.getParcoursById(TacheDemandeRdv.ParcoursId)
+        parcours = parcoursDao.GetParcoursById(TacheDemandeRdv.ParcoursId)
 
         Dim minutesRV As Integer = CalculMinutes()
         Dim ClotureTache As Boolean
@@ -156,7 +188,14 @@ Public Class RadFTacheModificationRendezVous
                 MessageBox.Show("Rendez-vous programmé et clôturé pour le " & NumDateRV.Value.ToString("dd.MM.yyyy"))
                 CodeRetour = True
                 '--- Création automatique d'une demande de rendez-vous car le rendez-vous créé est clôturé du fait qu'il est antérieur à la date du jour
-                tacheDao.CreationAutomatiqueDeDemandeRendezVous(SelectedPatient, parcours, Date.Now())
+                If DemanderendezVousOrigine = False Then
+                    tacheDao.CreationAutomatiqueDeDemandeRendezVous(SelectedPatient, parcours, NumDateRV.Value.Date)
+                Else
+                    '-- La création automatique de la demande de rendez-vous doit se faire après la clôture de la demande initiale quand on vient planifier
+                    '-- un rendez-vous depuis une demande de rendez-vous
+                    DemandeRendezVousCreation = True
+                    DemandeRendezVousDate = NumDateRV.Value.Date
+                End If
             End If
         Else
             ClotureTache = False
@@ -264,7 +303,7 @@ Public Class RadFTacheModificationRendezVous
                 Dim Tache As Tache = tacheDao.GetTacheById(SelectedTacheId)
                 Dim parcours As Parcours
                 parcours = parcoursDao.getParcoursById(Tache.ParcoursId)
-                tacheDao.CreationAutomatiqueDeDemandeRendezVous(SelectedPatient, Parcours, Date.Now())
+                tacheDao.CreationAutomatiqueDeDemandeRendezVous(SelectedPatient, parcours, NumDateRV.Value.Date)
             End If
         Else
             ClotureTache = False

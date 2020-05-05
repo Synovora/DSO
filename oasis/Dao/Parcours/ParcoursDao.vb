@@ -291,7 +291,7 @@ Public Class ParcoursDao
                 'Création automatique de la première demande de rendez-vous
                 Dim patient As Patient = PatientDao.GetPatientById(PatientId)
                 Dim tacheDao As New TacheDao
-                tacheDao.CreationAutomatiqueDeDemandeRendezVous(patient, parcours, Date.Now())
+                tacheDao.CreationAutomatiqueDeDemandeRendezVous(patient, parcours, Date.Now(), True)
             End If
         End If
 
@@ -319,7 +319,7 @@ Public Class ParcoursDao
                 'Création automatique de la première demande de rendez-vous
                 Dim patient As Patient = PatientDao.GetPatientById(PatientId)
                 Dim tacheDao As New TacheDao
-                tacheDao.CreationAutomatiqueDeDemandeRendezVous(patient, parcours, Date.Now())
+                tacheDao.CreationAutomatiqueDeDemandeRendezVous(patient, parcours, Date.Now(), True)
             End If
         End If
 
@@ -532,6 +532,32 @@ Public Class ParcoursDao
         End If
 
         Return codeRetour
+    End Function
+
+    Public Function GetAllIntervenantSansRendezVous() As DataTable
+        Dim SQLString As String
+        SQLString = "SELECT * FROM oasis.v_intervenant_sans_rdv" &
+                    " WHERE DATE_RDV IS NULL" &
+                    " ORDER BY [oa_parcours_patient_id], [oa_parcours_ror_id]"
+
+        Dim dt As DataTable = New DataTable()
+
+        Using con As SqlConnection = GetConnection()
+            Dim da As SqlDataAdapter = New SqlDataAdapter()
+            Using da
+                da.SelectCommand = New SqlCommand(SQLString, con)
+                Try
+                    da.Fill(dt)
+                    Dim command As SqlCommand = con.CreateCommand()
+                Catch ex As Exception
+                    Throw ex
+                Finally
+                    con.Close()
+                End Try
+            End Using
+        End Using
+
+        Return dt
     End Function
 
     Friend Function CloneParcours(Source As Parcours) As Parcours

@@ -421,12 +421,16 @@ Public Class RadFContextedetailEdit
             'Annulation contexte
             If contexteDao.AnnulationContexte(contexteUpdate, ContexteHistoACreer) = True Then
                 CodeResultat = EnumResultat.AnnulationOK
-                Dim form As New RadFNotification()
-                form.Titre = "Notification contexte patient"
-                form.Message = "Contexte patient annulé"
-                form.Show()
-                Me.CodeRetour = True
-                Close()
+                Try
+                    Dim form As New RadFNotification()
+                    form.Titre = "Notification contexte patient"
+                    form.Message = "Contexte patient annulé"
+                    form.Show()
+                    Me.CodeRetour = True
+                    Close()
+                Catch ex As Exception
+                    MessageBox.Show(ex.Message)
+                End Try
             Else
                 Me.CodeRetour = False
             End If
@@ -438,13 +442,17 @@ Public Class RadFContextedetailEdit
         If MsgBox("confirmation de la transformation en antécédent", MsgBoxStyle.YesNo, "") = MsgBoxResult.Yes Then
             Dim Description As String = contexteUpdate.Description & " (" & contexteUpdate.DateDebut.ToString("MM.yyyy") & ")"
             If contexteDao.TransformationEnAntecedent(SelectedContexteId, ContexteHistoACreer, Description, contexteRead.StatutAffichageTransformation, userLog) = True Then
-                Dim form As New RadFNotification()
-                form.Titre = "Notification contexte patient"
-                form.Message = "Le contexte patient a été transformé en antécédent"
-                form.Show()
-                Me.ContexteTransformeEnAntecedent = True
-                Me.CodeRetour = True
-                Close()
+                Try
+                    Dim form As New RadFNotification()
+                    form.Titre = "Notification contexte patient"
+                    form.Message = "Le contexte patient a été transformé en antécédent"
+                    form.Show()
+                    Me.ContexteTransformeEnAntecedent = True
+                    Me.CodeRetour = True
+                    Close()
+                Catch ex As Exception
+                    MessageBox.Show(ex.Message)
+                End Try
             Else
                 Me.CodeRetour = False
             End If
@@ -462,12 +470,17 @@ Public Class RadFContextedetailEdit
                             episodeDao.MajEpisodeConclusionMedicale(Episode.Id)
                         End If
                         CodeResultat = EnumResultat.CreationOK
-                        Dim form As New RadFNotification()
-                        form.Titre = "Notification contexte patient"
-                        form.Message = "Contexte patient créé"
-                        form.Show()
-                        Me.CodeRetour = True
-                        Close()
+                        Try
+                            Dim form As New RadFNotification()
+                            form.Titre = "Notification contexte patient"
+                            form.Message = "Contexte patient créé"
+                            form.Show()
+                            Me.CodeRetour = True
+                            Close()
+                        Catch ex As Exception
+                            MessageBox.Show(ex.Message)
+                        End Try
+
                     Else
                         Me.CodeRetour = False
                     End If
@@ -476,12 +489,16 @@ Public Class RadFContextedetailEdit
                 If ValidationContexte() = True Then
                     If contexteDao.ModificationContexte(contexteUpdate, ContexteHistoACreer) = True Then
                         CodeResultat = EnumResultat.ModificationOK
-                        Dim form As New RadFNotification()
-                        form.Titre = "Notification contexte patient"
-                        form.Message = "Contexte patient modifié"
-                        form.Show()
-                        Me.CodeRetour = True
-                        Close()
+                        Try
+                            Dim form As New RadFNotification()
+                            form.Titre = "Notification contexte patient"
+                            form.Message = "Contexte patient modifié"
+                            form.Show()
+                            Me.CodeRetour = True
+                            Close()
+                        Catch ex As Exception
+                            MessageBox.Show(ex.Message)
+                        End Try
                     Else
                         Me.CodeRetour = False
                     End If
@@ -562,22 +579,26 @@ Public Class RadFContextedetailEdit
 
     Private Sub SelectDrc()
         'Appel du sélecteur de code DRC
-        Using vFDrcSelecteur As New RadFDRCSelecteur
-            vFDrcSelecteur.SelectedPatient = Me.SelectedPatient
-            vFDrcSelecteur.CategorieOasis = 1       'Catégorie Oasis : "Contexte et Antécédent"
-            vFDrcSelecteur.ShowDialog()             'Modal
-            Dim SelectedDrcId As Integer = vFDrcSelecteur.SelectedDrcId
-            'Si un médicament a été sélectionné
-            If SelectedDrcId <> 0 Then
-                TxtDrcId.Text = SelectedDrcId
-                If drcdao.GetDrc(Drc, SelectedDrcId) = True Then
-                    LblDrcDenomination.Text = Drc.DrcLibelle
-                    LblDrcDenomination.ForeColor = Color.DarkBlue
-                Else
-                    LblDrcDenomination.Text = ""
+        Try
+            Using vFDrcSelecteur As New RadFDRCSelecteur
+                vFDrcSelecteur.SelectedPatient = Me.SelectedPatient
+                vFDrcSelecteur.CategorieOasis = 1       'Catégorie Oasis : "Contexte et Antécédent"
+                vFDrcSelecteur.ShowDialog()             'Modal
+                Dim SelectedDrcId As Integer = vFDrcSelecteur.SelectedDrcId
+                'Si un médicament a été sélectionné
+                If SelectedDrcId <> 0 Then
+                    TxtDrcId.Text = SelectedDrcId
+                    If drcdao.GetDrc(Drc, SelectedDrcId) = True Then
+                        LblDrcDenomination.Text = Drc.DrcLibelle
+                        LblDrcDenomination.ForeColor = Color.DarkBlue
+                    Else
+                        LblDrcDenomination.Text = ""
+                    End If
                 End If
-            End If
-        End Using
+            End Using
+        Catch ex As Exception
+            MessageBox.Show(ex.Message)
+        End Try
     End Sub
 
 
@@ -648,17 +669,6 @@ Public Class RadFContextedetailEdit
     '======================================================
     '   Gestion des zones de saisie modifiées
     '======================================================
-
-    'Private Sub CbxCategorieContexte_SelectedIndexChanged(sender As Object, e As EventArgs)
-    'Select Case CbxCategorieContexte.Text
-    'Case ContexteDao.EnumParcoursBaseItem.Medical
-    'contexteUpdate.CategorieContexte = ContexteDao.EnumParcoursBaseCode.Medical
-    'Case ContexteDao.EnumParcoursBaseItem.BioEnvironnemental
-    'contexteUpdate.CategorieContexte = ContexteDao.EnumParcoursBaseCode.BioEnvironnemental
-    'End Select
-    'GestionAffichageBoutonValidation()
-    'End Sub
-
 
     Private Sub RadioBtnMedical_CheckedChanged(sender As Object, e As EventArgs) Handles RadioBtnMedical.CheckedChanged
         contexteUpdate.CategorieContexte = ContexteDao.EnumParcoursBaseCode.Medical

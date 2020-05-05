@@ -327,8 +327,8 @@ Public Class RadFTraitementHistoListe
             '------------------- Alimentation du DataGridView
 
             'Code et dénomination
-            TraitementDataGridView.Rows(iGrid).Cells("cis").Value = Coalesce(traitementDataTable.Rows(i)("oa_traitement_medicament_cis"), 0)
-            TraitementDataGridView.Rows(iGrid).Cells("dci").Value = Coalesce(traitementDataTable.Rows(i)("oa_traitement_medicament_dci"), 0)
+            TraitementDataGridView.Rows(iGrid).Cells("cis").Value = Coalesce(traitementDataTable.Rows(i)("oa_traitement_medicament_cis"), "")
+            TraitementDataGridView.Rows(iGrid).Cells("dci").Value = Coalesce(traitementDataTable.Rows(i)("oa_traitement_medicament_dci"), "")
 
             'Date historisation
             dateHisto = traitementDataTable.Rows(i)("oa_traitement_histo_date_historisation")

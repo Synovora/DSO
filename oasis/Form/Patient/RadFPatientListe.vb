@@ -296,6 +296,7 @@ Public Class RadFPatientListe
         If UtilisateurConnecte.UtilisateurAdmin = False Then
             RadBtnAdmin.Hide()
             RadBtnRdvEnCours.Hide()
+            RadBtnIntervenantSansRdv.Hide()
         End If
 
         'Gestion des habilitations
@@ -316,31 +317,43 @@ Public Class RadFPatientListe
     Private Sub RadBtnCreatePatient_Click(sender As Object, e As EventArgs) Handles RadBtnCreatePatient.Click
         Cursor.Current = Cursors.WaitCursor
         Me.Enabled = False
-        Using form As New RadFPatientDetailEdit
-            PatientDao.SetPatient(Me.SelectedPatient, 0)
-            form.SelectedPatientId = 0
-            form.UtilisateurConnecte = Me.UtilisateurConnecte
-            form.SelectedPatient = Me.SelectedPatient
-            form.ShowDialog() 'Modal
-            'Si le patient a été créé, on recharge la grid
-            If form.CodeRetour = True Then
-                InitZonesSelectionPatient()
-                ChargementPatient()
-                Me.RadDesktopAlert1.CaptionText = "Notification patient"
-                Me.RadDesktopAlert1.ContentText = "Patient créé"
-                Me.RadDesktopAlert1.Show()
-            End If
-        End Using
+
+        Try
+            Using form As New RadFPatientDetailEdit
+                PatientDao.SetPatient(Me.SelectedPatient, 0)
+                form.SelectedPatientId = 0
+                form.UtilisateurConnecte = Me.UtilisateurConnecte
+                form.SelectedPatient = Me.SelectedPatient
+                form.ShowDialog() 'Modal
+                'Si le patient a été créé, on recharge la grid
+                If form.CodeRetour = True Then
+                    InitZonesSelectionPatient()
+                    ChargementPatient()
+                    Me.RadDesktopAlert1.CaptionText = "Notification patient"
+                    Me.RadDesktopAlert1.ContentText = "Patient créé"
+                    Me.RadDesktopAlert1.Show()
+                End If
+            End Using
+        Catch ex As Exception
+            MessageBox.Show(ex.Message)
+        End Try
+
         Me.Enabled = True
     End Sub
 
     Private Sub RadBtnAdmin_Click(sender As Object, e As EventArgs) Handles RadBtnAdmin.Click
         Me.Cursor = Cursors.WaitCursor
         Me.Enabled = False
-        Using vFMenuAdmin As New FrmMain
-            PatientDao.SetPatient(Me.SelectedPatient, 0)
-            vFMenuAdmin.ShowDialog() 'Modal
-        End Using
+
+        Try
+            Using vFMenuAdmin As New FrmMain
+                PatientDao.SetPatient(Me.SelectedPatient, 0)
+                vFMenuAdmin.ShowDialog() 'Modal
+            End Using
+        Catch ex As Exception
+            MessageBox.Show(ex.Message)
+        End Try
+
         Me.Enabled = True
         Me.Cursor = Cursors.Default
     End Sub
@@ -353,20 +366,26 @@ Public Class RadFPatientListe
             Me.SelectedPatient = PatientDao.getPatientById(patientId)
             Cursor.Current = Cursors.WaitCursor
             Me.Enabled = False
-            Using form As New RadFPatientDetailEdit
-                form.SelectedPatientId = patientId
-                form.SelectedPatient = Me.SelectedPatient
-                form.UtilisateurConnecte = Me.UtilisateurConnecte
-                form.ShowDialog()
-                'Si le patient a été modifié, on recharge la grid
-                If form.CodeRetour = True Then
-                    InitZonesSelectionPatient()
-                    ChargementPatient()
-                    Me.RadDesktopAlert1.CaptionText = "Notification du patient"
-                    Me.RadDesktopAlert1.ContentText = "Patient modifié"
-                    Me.RadDesktopAlert1.Show()
-                End If
-            End Using
+
+            Try
+                Using form As New RadFPatientDetailEdit
+                    form.SelectedPatientId = patientId
+                    form.SelectedPatient = Me.SelectedPatient
+                    form.UtilisateurConnecte = Me.UtilisateurConnecte
+                    form.ShowDialog()
+                    'Si le patient a été modifié, on recharge la grid
+                    If form.CodeRetour = True Then
+                        InitZonesSelectionPatient()
+                        ChargementPatient()
+                        Me.RadDesktopAlert1.CaptionText = "Notification du patient"
+                        Me.RadDesktopAlert1.ContentText = "Patient modifié"
+                        Me.RadDesktopAlert1.Show()
+                    End If
+                End Using
+            Catch ex As Exception
+                MessageBox.Show(ex.Message)
+            End Try
+
             Me.Enabled = True
         Else
             MessageBox.Show("Vous devez sélectionner un patient pour lancer cette option")
@@ -395,14 +414,20 @@ Public Class RadFPatientListe
             Dim patientId As Integer = CInt(TxtIdSelected.Text)
             Cursor.Current = Cursors.WaitCursor
             Me.Enabled = False
-            Using form As New RadFSynthese
-                'PatientDao.SetPatient(Me.SelectedPatient, patientId)
-                Me.SelectedPatient = PatientDao.getPatientById(patientId)
-                form.SelectedPatient = Me.SelectedPatient
-                form.UtilisateurConnecte = Me.UtilisateurConnecte
-                form.EcranPrecedent = EnumAccesEcranPrecedent.SANS
-                form.ShowDialog()
-            End Using
+
+            Try
+                Using form As New RadFSynthese
+                    'PatientDao.SetPatient(Me.SelectedPatient, patientId)
+                    Me.SelectedPatient = PatientDao.GetPatientById(patientId)
+                    form.SelectedPatient = Me.SelectedPatient
+                    form.UtilisateurConnecte = Me.UtilisateurConnecte
+                    form.EcranPrecedent = EnumAccesEcranPrecedent.SANS
+                    form.ShowDialog()
+                End Using
+            Catch ex As Exception
+                MessageBox.Show(ex.Message)
+            End Try
+
             Me.Enabled = True
         Else
             MessageBox.Show("Vous devez sélectionner un patient pour lancer cette option")
@@ -497,12 +522,18 @@ Public Class RadFPatientListe
             Dim patientId As Integer = CInt(TxtIdSelected.Text)
             Cursor.Current = Cursors.WaitCursor
             Me.Enabled = False
-            Using form As New RadFPatientRendezVousListe
-                PatientDao.SetPatient(Me.SelectedPatient, patientId)
-                Me.SelectedPatient = PatientDao.getPatientById(patientId)
-                form.SelectedPatient = Me.SelectedPatient
-                form.ShowDialog() 'Modal
-            End Using
+
+            Try
+                Using form As New RadFPatientRendezVousListe
+                    PatientDao.SetPatient(Me.SelectedPatient, patientId)
+                    Me.SelectedPatient = PatientDao.GetPatientById(patientId)
+                    form.SelectedPatient = Me.SelectedPatient
+                    form.ShowDialog() 'Modal
+                End Using
+            Catch ex As Exception
+                MessageBox.Show(ex.Message)
+            End Try
+
             Me.Enabled = True
         Else
             MessageBox.Show("Vous devez sélectionner un patient pour lancer cette option")
@@ -512,10 +543,16 @@ Public Class RadFPatientListe
     Private Sub RadBtnListeAction_Click(sender As Object, e As EventArgs) Handles RadBtnListeAction.Click
         Cursor.Current = Cursors.WaitCursor
         Me.Enabled = False
-        Using form As New RadFListeActions
-            form.UserId = userLog.UtilisateurId
-            form.ShowDialog()
-        End Using
+
+        Try
+            Using form As New RadFListeActions
+                form.UserId = userLog.UtilisateurId
+                form.ShowDialog()
+            End Using
+        Catch ex As Exception
+            MessageBox.Show(ex.Message)
+        End Try
+
         Me.Enabled = True
     End Sub
 
@@ -537,14 +574,21 @@ Public Class RadFPatientListe
     Private Sub RadButton1_Click(sender As Object, e As EventArgs) Handles RadButton1.Click
         Cursor.Current = Cursors.WaitCursor
         Me.Enabled = False
-        Using form As New RadFEpisodeEnAttenteValidation
-            form.ShowDialog()
-        End Using
+
+        Try
+            Using form As New RadFEpisodeEnAttenteValidation
+                form.ShowDialog()
+            End Using
+        Catch ex As Exception
+            MessageBox.Show(ex.Message)
+        End Try
+
         Me.Enabled = True
     End Sub
 
     Private Sub RadBtnTache_Click(sender As Object, e As EventArgs) Handles RadBtnTache.Click
         Cursor.Current = Cursors.WaitCursor
+
         Try
             Me.Enabled = False
             Using form As New FrmTacheMain
@@ -556,23 +600,51 @@ Public Class RadFPatientListe
             Me.Enabled = True
             Me.Cursor = Cursors.Default
         End Try
+
     End Sub
 
     Private Sub RadBtnTacheEnCours_Click(sender As Object, e As EventArgs) Handles RadBtnRdvEnCours.Click
         Cursor.Current = Cursors.WaitCursor
         Me.Enabled = False
-        Using form As New RadFListeRendezVousEnCours
-            form.ShowDialog()
-        End Using
+
+        Try
+            Using form As New RadFListeRendezVousEnCours
+                form.ShowDialog()
+            End Using
+        Catch ex As Exception
+            MessageBox.Show(ex.Message)
+        End Try
+
+        Me.Enabled = True
+    End Sub
+
+    Private Sub RadBtnIntervenantSansRdv_Click(sender As Object, e As EventArgs) Handles RadBtnIntervenantSansRdv.Click
+        Cursor.Current = Cursors.WaitCursor
+        Me.Enabled = False
+
+        Try
+            Using form As New RadFListeIntervenantSansRDV
+                form.ShowDialog()
+            End Using
+        Catch ex As Exception
+            MessageBox.Show(ex.Message)
+        End Try
+
         Me.Enabled = True
     End Sub
 
     Private Sub RadBtnEpisodeEnCours_Click(sender As Object, e As EventArgs) Handles RadBtnEpisodeEnCours.Click
         Cursor.Current = Cursors.WaitCursor
         Me.Enabled = False
-        Using form As New RadFEpisodeEnCoursListe
-            form.ShowDialog()
-        End Using
+
+        Try
+            Using form As New RadFEpisodeEnCoursListe
+                form.ShowDialog()
+            End Using
+        Catch ex As Exception
+            MessageBox.Show(ex.Message)
+        End Try
+
         Me.Enabled = True
     End Sub
 

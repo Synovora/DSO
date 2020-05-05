@@ -3,6 +3,14 @@ Imports Oasis_Common
 Public Class PpsDao
     Inherits StandardDao
 
+    Public Enum EnumCategoriePPS
+        OBJECTIF_SANTE = 1
+        MESURE_PREVENTIVE = 2
+        SUIVI_INTERVENANT = 3
+        STRATEGIE = 4
+    End Enum
+
+
     Public Function getAllPPSbyPatient(patientId As Integer) As DataTable
         Dim SQLString As String
 

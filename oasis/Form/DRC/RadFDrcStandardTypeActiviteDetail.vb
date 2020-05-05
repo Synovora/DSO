@@ -96,11 +96,17 @@
     Private Sub RadBtnDrcDetail_Click(sender As Object, e As EventArgs) Handles RadBtnDrcDetail.Click
         'Suppression de l'association de la DRC
         Cursor.Current = Cursors.WaitCursor
-        Using vRadFDrcDetailEdit As New RadFDrcDetailEdit
-            vRadFDrcDetailEdit.SelectedDRCId = drcStandard.DrcId
-            vRadFDrcDetailEdit.UtilisateurConnecte = userLog
-            vRadFDrcDetailEdit.ShowDialog()
-        End Using
+
+        Try
+            Using vRadFDrcDetailEdit As New RadFDrcDetailEdit
+                vRadFDrcDetailEdit.SelectedDRCId = drcStandard.DrcId
+                vRadFDrcDetailEdit.UtilisateurConnecte = userLog
+                vRadFDrcDetailEdit.ShowDialog()
+            End Using
+        Catch ex As Exception
+            MessageBox.Show(ex.Message)
+        End Try
+
         Cursor.Current = Cursors.Default
     End Sub
 End Class

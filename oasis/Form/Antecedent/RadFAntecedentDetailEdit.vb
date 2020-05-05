@@ -600,23 +600,27 @@ Public Class RadFAntecedentDetailEdit
     End Sub
 
     Private Sub SelectionAldCim10()
-        Using vFAldCim10Selecteur As New RadFAldCim10Selecteur
-            vFAldCim10Selecteur.UtilisateurConnecte = userLog
-            vFAldCim10Selecteur.SelectedAldId = antecedentUpdate.AldId
-            vFAldCim10Selecteur.ShowDialog() 'Modal
-            'Si un code ALD CIM10 a été sélectionné
-            If vFAldCim10Selecteur.SelectedAldCim10Id <> 0 Then
-                'AntecedentAldCim10Id = SelectedAldCim10Id
-                antecedentUpdate.AldCim10Id = vFAldCim10Selecteur.SelectedAldCim10Id
-                Dim aldCim10 As New AldCim10
-                aldCim10 = AldCim10Dao.GetAldCim10ById(vFAldCim10Selecteur.SelectedAldCim10Id)
-                TxtAldCim10Code.Text = aldCim10.AldCim10Code
-                Lblcim10Description.Text = aldCim10.AldCim10Description
-            End If
-        End Using
-        GestionAffichageZoneAldCim10()
-        GestionAffichageZoneDeclarationAld()
-        GestionAffichageBoutonValidation()
+        Try
+            Using vFAldCim10Selecteur As New RadFAldCim10Selecteur
+                vFAldCim10Selecteur.UtilisateurConnecte = userLog
+                vFAldCim10Selecteur.SelectedAldId = antecedentUpdate.AldId
+                vFAldCim10Selecteur.ShowDialog() 'Modal
+                'Si un code ALD CIM10 a été sélectionné
+                If vFAldCim10Selecteur.SelectedAldCim10Id <> 0 Then
+                    'AntecedentAldCim10Id = SelectedAldCim10Id
+                    antecedentUpdate.AldCim10Id = vFAldCim10Selecteur.SelectedAldCim10Id
+                    Dim aldCim10 As New AldCim10
+                    aldCim10 = AldCim10Dao.GetAldCim10ById(vFAldCim10Selecteur.SelectedAldCim10Id)
+                    TxtAldCim10Code.Text = aldCim10.AldCim10Code
+                    Lblcim10Description.Text = aldCim10.AldCim10Description
+                End If
+            End Using
+            GestionAffichageZoneAldCim10()
+            GestionAffichageZoneDeclarationAld()
+            GestionAffichageBoutonValidation()
+        Catch ex As Exception
+            MessageBox.Show(ex.Message)
+        End Try
     End Sub
 
     '======================================================
@@ -1189,22 +1193,6 @@ Public Class RadFAntecedentDetailEdit
             AntecedentHistoACreer.AldDateFin = antecedentUpdate.AldDateFin
             AntecedentHistoACreer.AldDemandeEnCours = antecedentUpdate.AldDemandeEnCours
             AntecedentHistoACreer.AldDateDemande = antecedentUpdate.AldDateDemande
-
-            'Récupération de l'identifiant du antecedent créé
-            'Dim antecedentLastDataReader As SqlDataReader
-            'SQLstring = "select max(oa_antecedent_id) from oasis.oa_antecedent where oa_antecedent_patient_id = " & SelectedPatient.patientId & ";"
-            'Dim antecedentLastCommand As New SqlCommand(SQLstring, conxn)
-            'conxn.Open()
-            'antecedentLastDataReader = antecedentLastCommand.ExecuteReader()
-            'If antecedentLastDataReader.HasRows Then
-            'antecedentLastDataReader.Read()
-            'Récupération de la clé de l'enregistrement créé
-            'AntecedentHistoACreer.AntecedentId = antecedentLastDataReader(0)
-
-            'Libération des ressources d'accès aux données
-            'conxn.Close()
-            'antecedentLastCommand.Dispose()
-            'End If
 
             'Lecture de l'antecedent créé avec toutes ses données pour communiquer le DataReader à la fonction dédiée
             Dim antecedentCreeDataReader As SqlDataReader

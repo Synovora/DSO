@@ -209,13 +209,19 @@ Public Class RadFEpisodeEnCoursListe
                 patient = PatientDao.getPatientById(patientId)
                 Me.Enabled = False
                 Cursor.Current = Cursors.WaitCursor
-                Using vRadFEpisodeDetail As New RadFEpisodeDetail
-                    vRadFEpisodeDetail.SelectedEpisodeId = episodeId
-                    vRadFEpisodeDetail.SelectedPatient = patient
-                    vRadFEpisodeDetail.RendezVousId = 0
-                    vRadFEpisodeDetail.UtilisateurConnecte = userLog
-                    vRadFEpisodeDetail.ShowDialog()
-                End Using
+
+                Try
+                    Using vRadFEpisodeDetail As New RadFEpisodeDetail
+                        vRadFEpisodeDetail.SelectedEpisodeId = episodeId
+                        vRadFEpisodeDetail.SelectedPatient = patient
+                        vRadFEpisodeDetail.RendezVousId = 0
+                        vRadFEpisodeDetail.UtilisateurConnecte = userLog
+                        vRadFEpisodeDetail.ShowDialog()
+                    End Using
+                Catch ex As Exception
+                    MessageBox.Show(ex.Message)
+                End Try
+
                 Me.Enabled = True
                 ChargementEpisode()
             End If
