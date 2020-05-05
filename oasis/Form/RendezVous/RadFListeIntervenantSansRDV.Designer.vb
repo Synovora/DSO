@@ -31,10 +31,12 @@ Partial Class RadFListeIntervenantSansRDV
         Me.RadGridView = New Telerik.WinControls.UI.RadGridView()
         Me.RadBtnAbandon = New Telerik.WinControls.UI.RadButton()
         Me.RadBtnParcours = New Telerik.WinControls.UI.RadButton()
+        Me.RadBtnReload = New Telerik.WinControls.UI.RadButton()
         CType(Me.RadGridView, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.RadGridView.MasterTemplate, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.RadBtnAbandon, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.RadBtnParcours, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.RadBtnReload, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
@@ -100,12 +102,22 @@ Partial Class RadFListeIntervenantSansRDV
         Me.RadBtnParcours.TabIndex = 2
         Me.RadBtnParcours.Text = "Parcours de soin"
         '
+        'RadBtnReload
+        '
+        Me.RadBtnReload.Image = Global.Oasis_WF.My.Resources.Resources.reload
+        Me.RadBtnReload.ImageAlignment = System.Drawing.ContentAlignment.MiddleCenter
+        Me.RadBtnReload.Location = New System.Drawing.Point(669, 437)
+        Me.RadBtnReload.Name = "RadBtnReload"
+        Me.RadBtnReload.Size = New System.Drawing.Size(24, 24)
+        Me.RadBtnReload.TabIndex = 3
+        '
         'RadFListeIntervenantSansRDV
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.CancelButton = Me.RadBtnAbandon
         Me.ClientSize = New System.Drawing.Size(734, 469)
+        Me.Controls.Add(Me.RadBtnReload)
         Me.Controls.Add(Me.RadBtnParcours)
         Me.Controls.Add(Me.RadBtnAbandon)
         Me.Controls.Add(Me.RadGridView)
@@ -124,6 +136,7 @@ Partial Class RadFListeIntervenantSansRDV
         CType(Me.RadGridView, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.RadBtnAbandon, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.RadBtnParcours, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.RadBtnReload, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
 
@@ -132,5 +145,6 @@ Partial Class RadFListeIntervenantSansRDV
     Friend WithEvents RadGridView As Telerik.WinControls.UI.RadGridView
     Friend WithEvents RadBtnAbandon As Telerik.WinControls.UI.RadButton
     Friend WithEvents RadBtnParcours As Telerik.WinControls.UI.RadButton
+    Friend WithEvents RadBtnReload As Telerik.WinControls.UI.RadButton
 End Class
 

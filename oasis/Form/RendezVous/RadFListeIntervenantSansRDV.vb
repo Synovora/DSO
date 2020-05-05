@@ -27,8 +27,8 @@ Public Class RadFListeIntervenantSansRDV
 
             Dim NomIntervenant As String = Coalesce(dt.Rows(i)("oa_ror_nom"), "")
             Dim NomStructure As String = Coalesce(dt.Rows(i)("oa_ror_structure_nom"), "")
-            Dim NomSpecialite As String = Coalesce(dt.Rows(i)("oa_ror_specialite_id"), "")
-            RadGridView.Rows(iGrid).Cells("intervenant").Value = NomIntervenant & " " & NomStructure & " " & NomSpecialite
+            Dim NomSpecialite As String = Coalesce(dt.Rows(i)("oa_r_specialite_description"), "")
+            RadGridView.Rows(iGrid).Cells("intervenant").Value = NomIntervenant & " - " & NomSpecialite & " - " & NomStructure
 
             RadGridView.Rows(iGrid).Cells("rythme").Value = Coalesce(dt.Rows(i)("oa_parcours_rythme"), "") & " X " & Coalesce(dt.Rows(i)("oa_parcours_base"), "")
         Next
@@ -71,6 +71,7 @@ Public Class RadFListeIntervenantSansRDV
                         vFParcoursDetailEdit.PositionGaucheDroite = EnumPosition.Droite
                         vFParcoursDetailEdit.ShowDialog() 'Modal
                     End Using
+                    ChargementGrid()
                 Catch ex As Exception
                     MsgBox(ex.Message())
                 End Try
@@ -80,4 +81,7 @@ Public Class RadFListeIntervenantSansRDV
         End If
     End Sub
 
+    Private Sub RadBtnReload_Click(sender As Object, e As EventArgs) Handles RadBtnReload.Click
+        ChargementGrid()
+    End Sub
 End Class

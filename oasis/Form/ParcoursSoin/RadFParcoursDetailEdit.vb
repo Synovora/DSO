@@ -128,7 +128,6 @@ Public Class RadFParcoursDetailEdit
 
         If SelectedParcoursId <> 0 Then
             'Modification
-            RadBtnRendezVous.Show()
             ChargementParcours()
             ChargementhistoriqueConsultation()
             If masquerIntervenant = False Then
@@ -360,7 +359,6 @@ Public Class RadFParcoursDetailEdit
         If ParcoursUpdate.UserCreation <> 0 Then
             Dim userDao As New UserDao
             UtilisateurHisto = userDao.getUserById(ParcoursUpdate.UserCreation)
-            'SetUtilisateur(UtilisateurHisto, ParcoursUpdate.UserCreation)
             LblUtilisateurCreation.Text = Me.UtilisateurHisto.UtilisateurPrenom & " " & Me.UtilisateurHisto.UtilisateurNom
         End If
 
@@ -377,7 +375,6 @@ Public Class RadFParcoursDetailEdit
         If ParcoursUpdate.UserModification <> 0 Then
             Dim userDao As New UserDao
             UtilisateurHisto = userDao.getUserById(ParcoursUpdate.UserModification)
-            'SetUtilisateur(UtilisateurHisto, ParcoursUpdate.UserModification)
             LblUtilisateurModification.Text = Me.UtilisateurHisto.UtilisateurPrenom & " " & Me.UtilisateurHisto.UtilisateurNom
         End If
     End Sub
@@ -386,6 +383,7 @@ Public Class RadFParcoursDetailEdit
     Private Sub ChargementhistoriqueConsultation()
         RadBtnModifRDV.Hide()
         RadBtnClotureRDV.Hide()
+        RadBtnRendezVous.Hide()
         'Recherche dernier rendez-vous
         Dim dateLast, dateNext As Date
         Dim tache As Tache
@@ -407,12 +405,13 @@ Public Class RadFParcoursDetailEdit
             RendezVousPlanifieExiste = True
             DateRendezVous = dateNext
             masquerIntervenant = False
-            RadBtnRendezVous.Enabled = False
             RadBtnModifRDV.Show()
+            RadBtnModifRDV.Enabled = True
             If tache.Nature = TacheDao.EnumNatureTacheCode.RDV_SPECIALISTE OrElse
                 tache.Nature = TacheDao.EnumNatureTacheCode.RDV Then
                 If tache.DateRendezVous.Date <= Date.Now.Date() Then
                     RadBtnClotureRDV.Show()
+                    RadBtnClotureRDV.Enabled = True
                 End If
             End If
             RendezVousPlanifieEnCours = True
@@ -436,13 +435,13 @@ Public Class RadFParcoursDetailEdit
                     Case TacheDao.EtatTache.EN_ATTENTE.ToString
                         LblDateNextType.Text = "(Rendez-vous prévisionnel, demande en attente de traitement)"
                         RadBtnModifRDV.Show()
+                        RadBtnModifRDV.Enabled = True
                         DemandeRendezVousEnCours = True
                         RendezVousPlanifieEnCours = False
                     Case Else
                         LblDateNextType.Text = "(Rendez-vous prévisionnel, demande en : " & tache.Etat & ")"
                 End Select
                 masquerIntervenant = False
-                RadBtnRendezVous.Enabled = False
             Else
                 If ParcoursUpdate.Rythme <> 0 And ParcoursUpdate.Base <> "" Then
                     If dateLast <> Nothing Then
@@ -467,6 +466,8 @@ Public Class RadFParcoursDetailEdit
                     LblDateNextType.Text = ""
                     LblDateProchainRendezVous.Text = "(pas de rendez-vous à venir pour cet intervenant)"
                 End If
+                RadBtnRendezVous.Show()
+                RadBtnRendezVous.Enabled = True
             End If
         End If
 
@@ -635,19 +636,6 @@ Public Class RadFParcoursDetailEdit
     '===================== Gestion de l'écran ===========================================
     '====================================================================================
 
-    'Gérer un rendez-vous
-    Private Sub RadBtnRV_Click(sender As Object, e As EventArgs) Handles RadBtnRendezVous.Click
-        GbxIntervention.Show()
-        GbxIntervenant.Enabled = False
-        RadBtnValidation.Enabled = True
-        NumDateRV.Value = Date.Now()
-        NumheureRV.Value = 12
-        RadioBtn0.Checked = True
-        NumMois.Value = Date.Now.Month
-        NumAn.Value = Date.Now.Year
-        RadBtnRendezVous.Enabled = False
-    End Sub
-
     Private Sub RbtInterventionProgramme_ToggleStateChanged(sender As Object, args As Telerik.WinControls.UI.StateChangedEventArgs) Handles RbtInterventionProgramme.ToggleStateChanged
         If RbtInterventionProgramme.CheckState = CheckState.Checked Then
             LblLabelDateRV.Show()
@@ -715,7 +703,7 @@ Public Class RadFParcoursDetailEdit
                         Close()
                     End If
                     RadBtnRORSelect.Hide()
-                    RadBtnRendezVous.Show()
+                    'RadBtnRendezVous.Show()
                     EditMode = EnumEditMode.Modification
                     'ChargementParcours()
                     RbtInterventionProgramme.CheckState = CheckState.Checked
@@ -786,7 +774,6 @@ Public Class RadFParcoursDetailEdit
                                 Dim form As New RadFNotification()
                                 form.Message = "Rendez-vous annulé"
                                 form.Show()
-                                'MessageBox.Show("Rendez-vous annulé")
                             Else
                                 MessageBox.Show("Problème de suppression du prochain rendez-vous, annulation impossible")
                                 AnnulationIntervevant = False
@@ -830,7 +817,6 @@ Public Class RadFParcoursDetailEdit
                     Dim form As New RadFNotification()
                     form.Message = "Intervenant annulé pour le parcours de soin du patient"
                     form.Show()
-                    'MessageBox.Show("Intervenant annulé pour le parcours de soin du patient")
                     Close()
                 End If
             End If
@@ -995,7 +981,6 @@ Public Class RadFParcoursDetailEdit
         Dim tache As New Tache
         Dim tacheDao As New TacheDao
 
-        'SetEmetteurId()
         Dim tacheEmetteurEtDestinataire As TacheEmetteurEtDestinataire
         tacheEmetteurEtDestinataire = tacheDao.SetTacheEmetteurEtDestinatiareBySpecialiteEtSousCategorie(ParcoursUpdate.SpecialiteId, ParcoursUpdate.SousCategorieId)
 
@@ -1046,7 +1031,6 @@ Public Class RadFParcoursDetailEdit
         Dim tache As New Tache
         Dim tacheDao As New TacheDao
 
-        'SetEmetteurId()
         Dim tacheEmetteurEtDestinataire As TacheEmetteurEtDestinataire
         tacheEmetteurEtDestinataire = tacheDao.SetTacheEmetteurEtDestinatiareBySpecialiteEtSousCategorie(ParcoursUpdate.SpecialiteId, ParcoursUpdate.SousCategorieId)
 
@@ -1379,10 +1363,14 @@ Public Class RadFParcoursDetailEdit
         If EditMode = EnumEditMode.Modification Then
             If ParcoursDao.Compare(ParcoursUpdate, parcoursRead) = False Then
                 RadBtnValidation.Enabled = True
+                '-- Si un élément a été modifié, les options ci-dessous ne sont plus accessibles tant que la validation des données n'est pas réalisées
+                '-- car la clôture d'un rendez-vous par exemple peut être impactée par la donnée modifiée
                 RadBtnRendezVous.Enabled = False
+                RadBtnClotureRDV.Enabled = False
+                RadBtnModifRDV.Enabled = False
             Else
                 RadBtnValidation.Enabled = False
-                RadBtnRendezVous.Enabled = True
+                ChargementhistoriqueConsultation()
             End If
         End If
     End Sub
