@@ -22,15 +22,6 @@ Public Class RadFParcoursDetailEdit
         End Set
     End Property
 
-    'Public Property UtilisateurConnecte As Utilisateur
-    'Get
-    'Return _UtilisateurConnecte
-    'End Get
-    'Set(value As Utilisateur)
- _ 'UtilisateurConnecte = value
-    'Set
-    'End Property
-
     Public Property SelectedParcoursId As Integer
         Get
             Return _SelectedParcoursId
@@ -1457,5 +1448,15 @@ Public Class RadFParcoursDetailEdit
             MsgBox(ex.Message())
         End Try
         Me.Enabled = True
+    End Sub
+
+    Private Sub RadBtnRendezVous_Click(sender As Object, e As EventArgs) Handles RadBtnRendezVous.Click
+        GbxIntervention.Show()
+        RadBtnValidation.Show()
+        RadBtnValidation.Enabled = True
+        GbxIntervenant.Enabled = False
+        Dim datePrev As Date = Date.Now.AddDays(31)
+        NumMois.Value = datePrev.Month
+        NumAn.Value = datePrev.Year
     End Sub
 End Class
