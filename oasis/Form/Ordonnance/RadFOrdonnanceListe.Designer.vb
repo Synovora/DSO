@@ -313,11 +313,12 @@ Partial Class RadFOrdonnanceListe
         'RadBtnAbandon
         '
         Me.RadBtnAbandon.DialogResult = System.Windows.Forms.DialogResult.Cancel
-        Me.RadBtnAbandon.Location = New System.Drawing.Point(1033, 553)
+        Me.RadBtnAbandon.Image = Global.Oasis_WF.My.Resources.Resources._exit
+        Me.RadBtnAbandon.ImageAlignment = System.Drawing.ContentAlignment.MiddleCenter
+        Me.RadBtnAbandon.Location = New System.Drawing.Point(1119, 553)
         Me.RadBtnAbandon.Name = "RadBtnAbandon"
-        Me.RadBtnAbandon.Size = New System.Drawing.Size(110, 24)
+        Me.RadBtnAbandon.Size = New System.Drawing.Size(24, 24)
         Me.RadBtnAbandon.TabIndex = 2
-        Me.RadBtnAbandon.Text = "Abandonner"
         '
         'RadOrdonnanceDataGridView
         '
@@ -390,7 +391,7 @@ Partial Class RadFOrdonnanceListe
         '
         Me.OrdoContextMenuStrip.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.CréerUneOrdonnanceToolStripMenuItem, Me.ModifierUneOrdonnanceToolStripMenuItem, Me.SupprimerUneOrdonnanceToolStripMenuItem, Me.RenouvellerUneOrdonnanceToolStripMenuItem})
         Me.OrdoContextMenuStrip.Name = "ContextMenuStrip"
-        Me.OrdoContextMenuStrip.Size = New System.Drawing.Size(227, 114)
+        Me.OrdoContextMenuStrip.Size = New System.Drawing.Size(227, 92)
         '
         'CréerUneOrdonnanceToolStripMenuItem
         '
@@ -418,15 +419,16 @@ Partial Class RadFOrdonnanceListe
         '
         'RadBtnCreation
         '
-        Me.RadBtnCreation.Location = New System.Drawing.Point(917, 553)
+        Me.RadBtnCreation.Location = New System.Drawing.Point(1003, 553)
         Me.RadBtnCreation.Name = "RadBtnCreation"
         Me.RadBtnCreation.Size = New System.Drawing.Size(110, 24)
         Me.RadBtnCreation.TabIndex = 4
-        Me.RadBtnCreation.Text = "Création"
+        Me.RadBtnCreation.Text = "+ Création"
         '
         'RadBtnModifier
         '
-        Me.RadBtnModifier.Location = New System.Drawing.Point(801, 553)
+        Me.RadBtnModifier.Image = Global.Oasis_WF.My.Resources.Resources.modifier
+        Me.RadBtnModifier.Location = New System.Drawing.Point(887, 553)
         Me.RadBtnModifier.Name = "RadBtnModifier"
         Me.RadBtnModifier.Size = New System.Drawing.Size(110, 24)
         Me.RadBtnModifier.TabIndex = 5
@@ -434,7 +436,7 @@ Partial Class RadFOrdonnanceListe
         '
         'RadBtnRenouveler
         '
-        Me.RadBtnRenouveler.Location = New System.Drawing.Point(569, 553)
+        Me.RadBtnRenouveler.Location = New System.Drawing.Point(655, 553)
         Me.RadBtnRenouveler.Name = "RadBtnRenouveler"
         Me.RadBtnRenouveler.Size = New System.Drawing.Size(110, 24)
         Me.RadBtnRenouveler.TabIndex = 7
@@ -442,7 +444,8 @@ Partial Class RadFOrdonnanceListe
         '
         'RadBtnSupprimer
         '
-        Me.RadBtnSupprimer.Location = New System.Drawing.Point(685, 553)
+        Me.RadBtnSupprimer.Image = Global.Oasis_WF.My.Resources.Resources.supprimer1
+        Me.RadBtnSupprimer.Location = New System.Drawing.Point(771, 553)
         Me.RadBtnSupprimer.Name = "RadBtnSupprimer"
         Me.RadBtnSupprimer.Size = New System.Drawing.Size(110, 24)
         Me.RadBtnSupprimer.TabIndex = 9

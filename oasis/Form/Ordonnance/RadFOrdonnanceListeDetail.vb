@@ -110,6 +110,8 @@ Public Class RadFOrdonnanceListeDetail
         End If
 
         ChargementEtatCivil()
+        GetAllergie()
+        GetContreIndication()
         ChargementOrdonnance()
         ChargementOrdonnanceDetail()
     End Sub
@@ -386,101 +388,25 @@ Public Class RadFOrdonnanceListeDetail
             LblALD.Show()
             ToolTip.SetToolTip(LblALD, StringTooltip)
         End If
-
-        ChargementAllergie()
     End Sub
 
-    Private Sub ChargementAllergie()
-        'Allergie
-        If Allergie = True Then
-            LblAllergie.Show()
-        Else
+    Private Sub GetAllergie()
+        Dim StringAllergieToolTip As String = PatientDao.GetStringAllergieByPatient(SelectedPatient.patientId)
+        If StringAllergieToolTip = "" Then
             LblAllergie.Hide()
-        End If
-
-        'Contre-indication
-        If ContreIndication = True Then
-            lblContreIndication.Show()
         Else
+            LblAllergie.Show()
+            ToolTip.SetToolTip(LblAllergie, StringAllergieToolTip)
+        End If
+    End Sub
+
+    Private Sub GetContreIndication()
+        Dim StringContreIndicationToolTip As String = PatientDao.GetStringContreIndicationByPatient(SelectedPatient.patientId)
+        If StringContreIndicationToolTip = "" Then
             lblContreIndication.Hide()
-        End If
-
-        'Si allergie, affichage des substances allergiques
-        If Allergie = True Then
-            LblAllergie.Visible = True
-            Dim premierPassage As Boolean = True
-            Dim LongueurChaine, LongueurSub As Integer
-            Dim AllergieTooltip As String = ""
-            Dim LongueurMax As Integer = 10
-
-            'Chargement du TextBox
-            Dim allergieString As String
-            Dim SubstancesAllergiques As New StringCollection()
-            SubstancesAllergiques = MedocDao.ListeSubstancesAllergiques(SelectedPatient.PatientAllergieCis)
-            Dim allergieEnumerator As StringEnumerator = SubstancesAllergiques.GetEnumerator()
-            While allergieEnumerator.MoveNext()
-                If premierPassage = True Then
-                    allergieString = allergieEnumerator.Current.ToString
-                    LongueurChaine = allergieString.Length
-                    If LongueurChaine < LongueurMax Then
-                        LongueurSub = LongueurChaine - 1
-                    Else
-                        LongueurSub = LongueurMax
-                    End If
-                    AllergieTooltip = allergieString
-                    premierPassage = False
-                Else
-                    allergieString = allergieEnumerator.Current.ToString
-                    LongueurChaine = allergieString.Length
-                    If LongueurChaine < LongueurMax Then
-                        LongueurSub = LongueurChaine - 1
-                    Else
-                        LongueurSub = LongueurMax
-                    End If
-                    AllergieTooltip = AllergieTooltip + vbCrLf + allergieString
-                End If
-            End While
-            ToolTip.SetToolTip(LblAllergie, AllergieTooltip)
-            'Chargement des médicaments génériques associés aux médicaments allergiques déclarés
-            TraitementAllergies(Me.SelectedPatient)
-        End If
-
-        If ContreIndication = True Then
+        Else
             lblContreIndication.Show()
-            'Chargement des médicaments génériques associés aux médicaments contre-indiqués déclarés
-            Dim premierPassage As Boolean = True
-            Dim LongueurChaine, LongueurSub As Integer
-            Dim CITooltip As String = ""
-            Dim LongueurMax As Integer = 10
-
-            'Chargement du TextBox
-            Dim CIString As String
-            Dim SubstancesCI As New StringCollection()
-            SubstancesCI = MedocDao.ListeSubstancesCI(SelectedPatient.PatientContreIndicationCis)
-            Dim CIEnumerator As StringEnumerator = SubstancesCI.GetEnumerator()
-            While CIEnumerator.MoveNext()
-                If premierPassage = True Then
-                    CIString = CIEnumerator.Current.ToString
-                    LongueurChaine = CIString.Length
-                    If LongueurChaine < LongueurMax Then
-                        LongueurSub = LongueurChaine - 1
-                    Else
-                        LongueurSub = LongueurMax
-                    End If
-                    CITooltip = CIString
-                    premierPassage = False
-                Else
-                    CIString = CIEnumerator.Current.ToString
-                    LongueurChaine = CIString.Length
-                    If LongueurChaine < LongueurMax Then
-                        LongueurSub = LongueurChaine - 1
-                    Else
-                        LongueurSub = LongueurMax
-                    End If
-                    CITooltip = CITooltip + vbCrLf + CIString
-                End If
-            End While
-            ToolTip.SetToolTip(lblContreIndication, CITooltip)
+            ToolTip.SetToolTip(lblContreIndication, StringContreIndicationToolTip)
         End If
     End Sub
 

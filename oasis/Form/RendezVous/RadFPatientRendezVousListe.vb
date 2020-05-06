@@ -330,10 +330,7 @@ Public Class RadFPatientRendezVousListe
             tache = tacheDao.GetTacheById(TacheId)
             Dim parcoursDao As New ParcoursDao
             Dim parcours As Parcours = parcoursDao.GetParcoursById(tache.ParcoursId)
-            If parcours.Rythme = 0 Or Not (parcours.Base = ParcoursDao.EnumParcoursBaseCode.TousLes2Ans Or
-                parcours.Base = ParcoursDao.EnumParcoursBaseCode.TousLes3Ans Or
-                parcours.Base = ParcoursDao.EnumParcoursBaseCode.TousLes4Ans Or
-                parcours.Base = ParcoursDao.EnumParcoursBaseCode.TousLes5Ans) Then
+            If parcours.Rythme = 0 Then
                 If RadGridViewRDV.Rows(aRow).Cells("nature").Value = TacheDao.EnumNatureTacheItem.RDV OrElse
                 RadGridViewRDV.Rows(aRow).Cells("nature").Value = TacheDao.EnumNatureTacheItem.RDV_SPECIALISTE Then
                     AnnulationRendezVous(tache)

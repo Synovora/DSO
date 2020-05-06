@@ -203,17 +203,23 @@ Public Class RadFPatientNoteListe
             Dim aRow As Integer = Me.RadNotePatientDataGridView.Rows.IndexOf(Me.RadNotePatientDataGridView.CurrentRow)
             If aRow >= 0 Then
                 Dim NoteId As Integer = RadNotePatientDataGridView.Rows(aRow).Cells("noteId").Value
-                Using vFPatientNoteDetailEdit As New RadFPatientNoteDetailEdit
-                    vFPatientNoteDetailEdit.SelectedNoteId = NoteId
-                    vFPatientNoteDetailEdit.SelectedPatient = Me.SelectedPatient
-                    vFPatientNoteDetailEdit.UtilisateurConnecte = Me.UtilisateurConnecte
-                    vFPatientNoteDetailEdit.TypeNote = Me.TypeNote
-                    vFPatientNoteDetailEdit.ShowDialog() 'Modal
-                    If vFPatientNoteDetailEdit.CodeRetour = True Then
-                        RadNotePatientDataGridView.Rows.Clear()
-                        ChargementnotePatient()
-                    End If
-                End Using
+
+                Try
+                    Using vFPatientNoteDetailEdit As New RadFPatientNoteDetailEdit
+                        vFPatientNoteDetailEdit.SelectedNoteId = NoteId
+                        vFPatientNoteDetailEdit.SelectedPatient = Me.SelectedPatient
+                        vFPatientNoteDetailEdit.UtilisateurConnecte = Me.UtilisateurConnecte
+                        vFPatientNoteDetailEdit.TypeNote = Me.TypeNote
+                        vFPatientNoteDetailEdit.ShowDialog() 'Modal
+                        If vFPatientNoteDetailEdit.CodeRetour = True Then
+                            RadNotePatientDataGridView.Rows.Clear()
+                            ChargementnotePatient()
+                        End If
+                    End Using
+                Catch ex As Exception
+                    MessageBox.Show(ex.Message)
+                End Try
+
             End If
         End If
     End Sub
@@ -227,17 +233,23 @@ Public Class RadFPatientNoteListe
         CreationNote()
     End Sub
     Private Sub CreationNote()
-        Using vFPatientNoteDetailEdit As New RadFPatientNoteDetailEdit
-            vFPatientNoteDetailEdit.SelectedNoteId = 0
-            vFPatientNoteDetailEdit.SelectedPatient = Me.SelectedPatient
-            vFPatientNoteDetailEdit.UtilisateurConnecte = Me.UtilisateurConnecte
-            vFPatientNoteDetailEdit.TypeNote = Me.TypeNote
-            vFPatientNoteDetailEdit.ShowDialog() 'Modal
-            If vFPatientNoteDetailEdit.CodeRetour = True Then
-                RadNotePatientDataGridView.Rows.Clear()
-                ChargementnotePatient()
-            End If
-        End Using
+
+        Try
+            Using vFPatientNoteDetailEdit As New RadFPatientNoteDetailEdit
+                vFPatientNoteDetailEdit.SelectedNoteId = 0
+                vFPatientNoteDetailEdit.SelectedPatient = Me.SelectedPatient
+                vFPatientNoteDetailEdit.UtilisateurConnecte = Me.UtilisateurConnecte
+                vFPatientNoteDetailEdit.TypeNote = Me.TypeNote
+                vFPatientNoteDetailEdit.ShowDialog() 'Modal
+                If vFPatientNoteDetailEdit.CodeRetour = True Then
+                    RadNotePatientDataGridView.Rows.Clear()
+                    ChargementnotePatient()
+                End If
+            End Using
+        Catch ex As Exception
+            MessageBox.Show(ex.Message)
+        End Try
+
     End Sub
 
     Private Sub RadBtnAbandonner_Click(sender As Object, e As EventArgs) Handles RadBtnAbandonner.Click

@@ -26,8 +26,6 @@ Partial Class RadFOrdonnanceDetail
         Me.RadGroupBoxEtatCivil = New Telerik.WinControls.UI.RadGroupBox()
         Me.LblPharmacienNom = New System.Windows.Forms.Label()
         Me.LblLabelPharmacien = New System.Windows.Forms.Label()
-        Me.lblContreIndication = New System.Windows.Forms.Label()
-        Me.LblAllergie = New System.Windows.Forms.Label()
         Me.LblALD = New System.Windows.Forms.Label()
         Me.Label13 = New System.Windows.Forms.Label()
         Me.LblPatientDateMaj = New System.Windows.Forms.Label()
@@ -75,8 +73,6 @@ Partial Class RadFOrdonnanceDetail
         Me.RadGroupBoxEtatCivil.BackColor = System.Drawing.SystemColors.GradientInactiveCaption
         Me.RadGroupBoxEtatCivil.Controls.Add(Me.LblPharmacienNom)
         Me.RadGroupBoxEtatCivil.Controls.Add(Me.LblLabelPharmacien)
-        Me.RadGroupBoxEtatCivil.Controls.Add(Me.lblContreIndication)
-        Me.RadGroupBoxEtatCivil.Controls.Add(Me.LblAllergie)
         Me.RadGroupBoxEtatCivil.Controls.Add(Me.LblALD)
         Me.RadGroupBoxEtatCivil.Controls.Add(Me.Label13)
         Me.RadGroupBoxEtatCivil.Controls.Add(Me.LblPatientDateMaj)
@@ -127,28 +123,6 @@ Partial Class RadFOrdonnanceDetail
         Me.LblLabelPharmacien.Size = New System.Drawing.Size(74, 13)
         Me.LblLabelPharmacien.TabIndex = 69
         Me.LblLabelPharmacien.Text = "Pharmacien :"
-        '
-        'lblContreIndication
-        '
-        Me.lblContreIndication.AutoSize = True
-        Me.lblContreIndication.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.lblContreIndication.ForeColor = System.Drawing.Color.OrangeRed
-        Me.lblContreIndication.Location = New System.Drawing.Point(1027, 53)
-        Me.lblContreIndication.Name = "lblContreIndication"
-        Me.lblContreIndication.Size = New System.Drawing.Size(117, 13)
-        Me.lblContreIndication.TabIndex = 68
-        Me.lblContreIndication.Text = "Contre-indication(s)"
-        '
-        'LblAllergie
-        '
-        Me.LblAllergie.AutoSize = True
-        Me.LblAllergie.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.LblAllergie.ForeColor = System.Drawing.Color.OrangeRed
-        Me.LblAllergie.Location = New System.Drawing.Point(947, 53)
-        Me.LblAllergie.Name = "LblAllergie"
-        Me.LblAllergie.Size = New System.Drawing.Size(63, 13)
-        Me.LblAllergie.TabIndex = 67
-        Me.LblAllergie.Text = "Allergie(s)"
         '
         'LblALD
         '
@@ -418,16 +392,17 @@ Partial Class RadFOrdonnanceDetail
         'RadBtnAbandon
         '
         Me.RadBtnAbandon.DialogResult = System.Windows.Forms.DialogResult.Cancel
-        Me.RadBtnAbandon.Location = New System.Drawing.Point(1194, 254)
+        Me.RadBtnAbandon.Image = Global.Oasis_WF.My.Resources.Resources._exit
+        Me.RadBtnAbandon.Location = New System.Drawing.Point(1275, 254)
         Me.RadBtnAbandon.Name = "RadBtnAbandon"
-        Me.RadBtnAbandon.Size = New System.Drawing.Size(110, 24)
+        Me.RadBtnAbandon.Size = New System.Drawing.Size(24, 24)
         Me.RadBtnAbandon.TabIndex = 5
-        Me.RadBtnAbandon.Text = "Abandonner"
         '
         'RadBtnValidation
         '
         Me.RadBtnValidation.DialogResult = System.Windows.Forms.DialogResult.Cancel
-        Me.RadBtnValidation.Location = New System.Drawing.Point(1078, 254)
+        Me.RadBtnValidation.Image = Global.Oasis_WF.My.Resources.Resources.validation2
+        Me.RadBtnValidation.Location = New System.Drawing.Point(1159, 254)
         Me.RadBtnValidation.Name = "RadBtnValidation"
         Me.RadBtnValidation.Size = New System.Drawing.Size(110, 24)
         Me.RadBtnValidation.TabIndex = 6
@@ -470,8 +445,6 @@ Partial Class RadFOrdonnanceDetail
     Friend WithEvents RadGroupBoxEtatCivil As Telerik.WinControls.UI.RadGroupBox
     Friend WithEvents LblPharmacienNom As Label
     Friend WithEvents LblLabelPharmacien As Label
-    Friend WithEvents lblContreIndication As Label
-    Friend WithEvents LblAllergie As Label
     Friend WithEvents LblALD As Label
     Friend WithEvents Label13 As Label
     Friend WithEvents LblPatientDateMaj As Label

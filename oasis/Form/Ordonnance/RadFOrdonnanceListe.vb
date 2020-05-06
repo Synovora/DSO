@@ -147,19 +147,25 @@ Public Class RadFOrdonnanceListe
 
     Private Sub CreationOrdonnance()
         'Appel création ordonnance
-        Using vFOrdonnanceListeDetail As New RadFOrdonnanceListeDetail
-            Dim OrdonnanceDao As New OrdonnanceDao
-            Dim OrdonnanceId As Integer = OrdonnanceDao.CreateOrdonnance(SelectedPatient.patientId, UtilisateurConnecte.UtilisateurId)
-            vFOrdonnanceListeDetail.SelectedOrdonnanceId = OrdonnanceId
-            vFOrdonnanceListeDetail.SelectedPatient = Me.SelectedPatient
-            vFOrdonnanceListeDetail.UtilisateurConnecte = Me.UtilisateurConnecte
-            vFOrdonnanceListeDetail.Allergie = Me.Allergie
-            vFOrdonnanceListeDetail.ContreIndication = Me.ContreIndication
-            vFOrdonnanceListeDetail.CommentaireOrdonnance = ""
-            vFOrdonnanceListeDetail.ShowDialog() 'Modal
-        End Using
-        RadOrdonnanceDataGridView.Rows.Clear()
-        ChargementOrdonnanceListe()
+
+        Try
+            Using vFOrdonnanceListeDetail As New RadFOrdonnanceListeDetail
+                Dim OrdonnanceDao As New OrdonnanceDao
+                Dim OrdonnanceId As Integer = OrdonnanceDao.CreateOrdonnance(SelectedPatient.patientId, UtilisateurConnecte.UtilisateurId)
+                vFOrdonnanceListeDetail.SelectedOrdonnanceId = OrdonnanceId
+                vFOrdonnanceListeDetail.SelectedPatient = Me.SelectedPatient
+                vFOrdonnanceListeDetail.UtilisateurConnecte = Me.UtilisateurConnecte
+                vFOrdonnanceListeDetail.Allergie = Me.Allergie
+                vFOrdonnanceListeDetail.ContreIndication = Me.ContreIndication
+                vFOrdonnanceListeDetail.CommentaireOrdonnance = ""
+                vFOrdonnanceListeDetail.ShowDialog() 'Modal
+            End Using
+            RadOrdonnanceDataGridView.Rows.Clear()
+            ChargementOrdonnanceListe()
+        Catch ex As Exception
+            MessageBox.Show(ex.Message)
+        End Try
+
     End Sub
 
     'Modification ordonnance, affichage des lignes composant l'ordonnance
@@ -179,17 +185,23 @@ Public Class RadFOrdonnanceListe
             Dim aRow As Integer = Me.RadOrdonnanceDataGridView.Rows.IndexOf(Me.RadOrdonnanceDataGridView.CurrentRow)
             If aRow >= 0 Then
                 Dim OrdonnanceId As Integer = RadOrdonnanceDataGridView.Rows(aRow).Cells("ordonnanceId").Value
-                Using vFOrdonnanceListeDetail As New RadFOrdonnanceListeDetail
-                    vFOrdonnanceListeDetail.SelectedOrdonnanceId = OrdonnanceId
-                    vFOrdonnanceListeDetail.SelectedPatient = Me.SelectedPatient
-                    vFOrdonnanceListeDetail.Allergie = Me.Allergie
-                    vFOrdonnanceListeDetail.ContreIndication = Me.ContreIndication
-                    vFOrdonnanceListeDetail.UtilisateurConnecte = Me.UtilisateurConnecte
-                    vFOrdonnanceListeDetail.CommentaireOrdonnance = RadOrdonnanceDataGridView.Rows(aRow).Cells("commentaire").Value
-                    vFOrdonnanceListeDetail.ShowDialog() 'Modal
-                End Using
-                RadOrdonnanceDataGridView.Rows.Clear()
-                ChargementOrdonnanceListe()
+
+                Try
+                    Using vFOrdonnanceListeDetail As New RadFOrdonnanceListeDetail
+                        vFOrdonnanceListeDetail.SelectedOrdonnanceId = OrdonnanceId
+                        vFOrdonnanceListeDetail.SelectedPatient = Me.SelectedPatient
+                        vFOrdonnanceListeDetail.Allergie = Me.Allergie
+                        vFOrdonnanceListeDetail.ContreIndication = Me.ContreIndication
+                        vFOrdonnanceListeDetail.UtilisateurConnecte = Me.UtilisateurConnecte
+                        vFOrdonnanceListeDetail.CommentaireOrdonnance = RadOrdonnanceDataGridView.Rows(aRow).Cells("commentaire").Value
+                        vFOrdonnanceListeDetail.ShowDialog() 'Modal
+                    End Using
+                    RadOrdonnanceDataGridView.Rows.Clear()
+                    ChargementOrdonnanceListe()
+                Catch ex As Exception
+                    MessageBox.Show(ex.Message)
+                End Try
+
             End If
         Else
             MessageBox.Show("Veuillez sélectionner une ordonnance")

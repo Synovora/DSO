@@ -47,6 +47,8 @@ Partial Class RadFParcoursConsigneDetailEdit
         Me.LblPatientAdresse1 = New System.Windows.Forms.Label()
         Me.RadBtnAbandon = New Telerik.WinControls.UI.RadButton()
         Me.ToolTip1 = New System.Windows.Forms.ToolTip(Me.components)
+        Me.RadBtnValidation = New Telerik.WinControls.UI.RadButton()
+        Me.RadBtnAnnulation = New Telerik.WinControls.UI.RadButton()
         Me.TxtDrcDescription = New System.Windows.Forms.TextBox()
         Me.RadGroupBox1 = New Telerik.WinControls.UI.RadGroupBox()
         Me.LblAgeUnite = New System.Windows.Forms.Label()
@@ -67,19 +69,17 @@ Partial Class RadFParcoursConsigneDetailEdit
         Me.DteDateFin = New System.Windows.Forms.DateTimePicker()
         Me.DteDateDebut = New System.Windows.Forms.DateTimePicker()
         Me.TxtCommentaire = New System.Windows.Forms.TextBox()
-        Me.RadBtnValidation = New Telerik.WinControls.UI.RadButton()
-        Me.RadBtnAnnulation = New Telerik.WinControls.UI.RadButton()
         Me.RadBtnDRCDetail = New Telerik.WinControls.UI.RadButton()
         CType(Me.RadGroupBoxEtatCivil, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.RadGroupBoxEtatCivil.SuspendLayout()
         CType(Me.RadBtnAbandon, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.RadBtnValidation, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.RadBtnAnnulation, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.RadGroupBox1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.RadGroupBox1.SuspendLayout()
         CType(Me.NumAgeMax, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.NumAgeMin, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.NumOrdre, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.RadBtnValidation, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.RadBtnAnnulation, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.RadBtnDRCDetail, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
@@ -324,6 +324,26 @@ Partial Class RadFParcoursConsigneDetailEdit
         Me.RadBtnAbandon.Size = New System.Drawing.Size(24, 24)
         Me.RadBtnAbandon.TabIndex = 4
         '
+        'RadBtnValidation
+        '
+        Me.RadBtnValidation.Image = Global.Oasis_WF.My.Resources.Resources.validation2
+        Me.RadBtnValidation.Location = New System.Drawing.Point(12, 335)
+        Me.RadBtnValidation.Name = "RadBtnValidation"
+        Me.RadBtnValidation.Size = New System.Drawing.Size(110, 24)
+        Me.RadBtnValidation.TabIndex = 7
+        Me.RadBtnValidation.Text = "Valider"
+        Me.ToolTip1.SetToolTip(Me.RadBtnValidation, "Valider")
+        '
+        'RadBtnAnnulation
+        '
+        Me.RadBtnAnnulation.Image = Global.Oasis_WF.My.Resources.Resources.supprimer
+        Me.RadBtnAnnulation.Location = New System.Drawing.Point(128, 335)
+        Me.RadBtnAnnulation.Name = "RadBtnAnnulation"
+        Me.RadBtnAnnulation.Size = New System.Drawing.Size(110, 24)
+        Me.RadBtnAnnulation.TabIndex = 8
+        Me.RadBtnAnnulation.Text = "Annuler"
+        Me.ToolTip1.SetToolTip(Me.RadBtnAnnulation, "Supprimer")
+        '
         'TxtDrcDescription
         '
         Me.TxtDrcDescription.Enabled = False
@@ -517,29 +537,9 @@ Partial Class RadFParcoursConsigneDetailEdit
         Me.TxtCommentaire.Size = New System.Drawing.Size(848, 54)
         Me.TxtCommentaire.TabIndex = 6
         '
-        'RadBtnValidation
-        '
-        Me.RadBtnValidation.Image = Global.Oasis_WF.My.Resources.Resources.validation2
-        Me.RadBtnValidation.ImageAlignment = System.Drawing.ContentAlignment.MiddleCenter
-        Me.RadBtnValidation.Location = New System.Drawing.Point(12, 335)
-        Me.RadBtnValidation.Name = "RadBtnValidation"
-        Me.RadBtnValidation.Size = New System.Drawing.Size(24, 24)
-        Me.RadBtnValidation.TabIndex = 7
-        Me.ToolTip1.SetToolTip(Me.RadBtnValidation, "Valider")
-        '
-        'RadBtnAnnulation
-        '
-        Me.RadBtnAnnulation.Image = Global.Oasis_WF.My.Resources.Resources.supprimer
-        Me.RadBtnAnnulation.ImageAlignment = System.Drawing.ContentAlignment.MiddleCenter
-        Me.RadBtnAnnulation.Location = New System.Drawing.Point(42, 335)
-        Me.RadBtnAnnulation.Name = "RadBtnAnnulation"
-        Me.RadBtnAnnulation.Size = New System.Drawing.Size(24, 24)
-        Me.RadBtnAnnulation.TabIndex = 8
-        Me.ToolTip1.SetToolTip(Me.RadBtnAnnulation, "Supprimer")
-        '
         'RadBtnDRCDetail
         '
-        Me.RadBtnDRCDetail.Location = New System.Drawing.Point(72, 335)
+        Me.RadBtnDRCDetail.Location = New System.Drawing.Point(244, 335)
         Me.RadBtnDRCDetail.Name = "RadBtnDRCDetail"
         Me.RadBtnDRCDetail.Size = New System.Drawing.Size(110, 24)
         Me.RadBtnDRCDetail.TabIndex = 8
@@ -572,14 +572,14 @@ Partial Class RadFParcoursConsigneDetailEdit
         Me.RadGroupBoxEtatCivil.ResumeLayout(False)
         Me.RadGroupBoxEtatCivil.PerformLayout()
         CType(Me.RadBtnAbandon, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.RadBtnValidation, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.RadBtnAnnulation, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.RadGroupBox1, System.ComponentModel.ISupportInitialize).EndInit()
         Me.RadGroupBox1.ResumeLayout(False)
         Me.RadGroupBox1.PerformLayout()
         CType(Me.NumAgeMax, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.NumAgeMin, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.NumOrdre, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.RadBtnValidation, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.RadBtnAnnulation, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.RadBtnDRCDetail, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)

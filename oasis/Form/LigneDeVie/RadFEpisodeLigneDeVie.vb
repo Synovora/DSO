@@ -297,19 +297,6 @@ Public Class RadFEpisodeLigneDeVie
         ligneDeVie.ParametreId4 = 0
         ligneDeVie.ParametreId5 = 0
 
-        'Dim nombreParametre As Integer = listeParametreaAfficher.Count()
-        'If nombreParametre >= 5 Then
-        'RadBtnParametre.Hide()
-        'Else
-        'RadBtnParametre.Show()
-        'End If
-
-        'If nombreParametre > 0 Then
-        'LblLabelParametre.Show()
-        'Else
-        'LblLabelParametre.Hide()
-        'End If
-
         Dim i As Integer = 0
         Dim ParametreEnumerator As List(Of Long).Enumerator = listeParametreaAfficher.GetEnumerator()
         While ParametreEnumerator.MoveNext()
@@ -589,25 +576,37 @@ Public Class RadFEpisodeLigneDeVie
                 If RadGridViewEpisode.Rows(aRow).Cells("type").Value = EpisodeDao.EnumTypeEpisode.PARAMETRE.ToString Then
                     Me.Enabled = False
                     Cursor.Current = Cursors.WaitCursor
-                    Using form As New RadFEpisodeParametresSaisie
-                        form.SelectedPatient = SelectedPatient
-                        form.SelectedEpisodeId = EpisodeId
-                        form.ShowDialog()
-                        If form.CodeRetour = True Then
-                            ChargementEpisode(ligneDeVie)
-                        End If
-                    End Using
+
+                    Try
+                        Using form As New RadFEpisodeParametresSaisie
+                            form.SelectedPatient = SelectedPatient
+                            form.SelectedEpisodeId = EpisodeId
+                            form.ShowDialog()
+                            If form.CodeRetour = True Then
+                                ChargementEpisode(ligneDeVie)
+                            End If
+                        End Using
+                    Catch ex As Exception
+                        MessageBox.Show(ex.Message)
+                    End Try
+
                     Me.Enabled = True
                 Else
                     Me.Enabled = False
                     Cursor.Current = Cursors.WaitCursor
-                    Using form As New RadFEpisodeDetail
-                        form.SelectedEpisodeId = EpisodeId
-                        form.SelectedPatient = Me.SelectedPatient
-                        form.UtilisateurConnecte = Me.UtilisateurConnecte
-                        form.ShowDialog()
-                        ChargementEpisode(ligneDeVie)
-                    End Using
+
+                    Try
+                        Using form As New RadFEpisodeDetail
+                            form.SelectedEpisodeId = EpisodeId
+                            form.SelectedPatient = Me.SelectedPatient
+                            form.UtilisateurConnecte = Me.UtilisateurConnecte
+                            form.ShowDialog()
+                            ChargementEpisode(ligneDeVie)
+                        End Using
+                    Catch ex As Exception
+                        MessageBox.Show(ex.Message)
+                    End Try
+
                     Me.Enabled = True
                 End If
             End If
@@ -660,27 +659,35 @@ Public Class RadFEpisodeLigneDeVie
     End Sub
 
     Private Sub AfficheOrdonnance(OrdonnanceId As Long, episode As Episode)
-        Using vFOrdonnanceListeDetail As New RadFOrdonnanceListeDetail
-            vFOrdonnanceListeDetail.SelectedOrdonnanceId = OrdonnanceId
-            vFOrdonnanceListeDetail.SelectedPatient = Me.SelectedPatient
-            vFOrdonnanceListeDetail.SelectedEpisode = episode
-            vFOrdonnanceListeDetail.UtilisateurConnecte = Me.UtilisateurConnecte
-            'vFOrdonnanceListeDetail.Allergie = Me.Allergie
-            'vFOrdonnanceListeDetail.ContreIndication = Me.ContreIndication
-            vFOrdonnanceListeDetail.CommentaireOrdonnance = ""
-            vFOrdonnanceListeDetail.ShowDialog()
-        End Using
+
+        Try
+            Using vFOrdonnanceListeDetail As New RadFOrdonnanceListeDetail
+                vFOrdonnanceListeDetail.SelectedOrdonnanceId = OrdonnanceId
+                vFOrdonnanceListeDetail.SelectedPatient = Me.SelectedPatient
+                vFOrdonnanceListeDetail.SelectedEpisode = episode
+                vFOrdonnanceListeDetail.UtilisateurConnecte = Me.UtilisateurConnecte
+                vFOrdonnanceListeDetail.CommentaireOrdonnance = ""
+                vFOrdonnanceListeDetail.ShowDialog()
+            End Using
+        Catch ex As Exception
+            MessageBox.Show(ex.Message)
+        End Try
+
     End Sub
 
     Private Sub RadBtnParametre_Click(sender As Object, e As EventArgs) Handles RadBtnParametre.Click
-        'Me.Enabled = False
-        Using form As New RadFLigneDeVieParametreSelecteur
-            form.ListeParametreaAfficher = listeParametreaAfficher
-            form.ShowDialog()
-            listeParametreaAfficher = form.ListeParametreaAfficher
-            AfficheParametres()
-        End Using
-        Me.Enabled = True
+
+        Try
+            Using form As New RadFLigneDeVieParametreSelecteur
+                form.ListeParametreaAfficher = listeParametreaAfficher
+                form.ShowDialog()
+                listeParametreaAfficher = form.ListeParametreaAfficher
+                AfficheParametres()
+            End Using
+        Catch ex As Exception
+            MessageBox.Show(ex.Message)
+        End Try
+
     End Sub
 
     Private Sub Lblparametre1_Click(sender As Object, e As EventArgs) Handles Lblparametre1.Click
@@ -709,20 +716,22 @@ Public Class RadFEpisodeLigneDeVie
 
     Private Sub SousépisodesToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles SousépisodesToolStripMenuItem.Click
         If RadGridViewEpisode.CurrentRow IsNot Nothing Then
+            Me.Cursor = Cursors.WaitCursor
+            Me.Enabled = False
+            Dim EpisodeId As Integer = RadGridViewEpisode.CurrentRow.Cells("episode_Id").Value
+            Dim episode As Episode = episodeDao.GetEpisodeById(EpisodeId)
+
             Try
-                Me.Cursor = Cursors.WaitCursor
-                Me.Enabled = False
-                Dim EpisodeId As Integer = RadGridViewEpisode.CurrentRow.Cells("episode_Id").Value
-                Dim episode As Episode = episodeDao.GetEpisodeById(EpisodeId)
                 Using frm = New FrmSousEpisodeListe(episode, SelectedPatient)
                     frm.ShowDialog()
                 End Using
-            Catch err As Exception
-                MsgBox(err.Message())
-            Finally
-                Me.Enabled = True
-                Me.Cursor = Cursors.Default
+            Catch ex As Exception
+                MessageBox.Show(ex.Message)
             End Try
+
+
+            Me.Enabled = True
+            Me.Cursor = Cursors.Default
         End If
     End Sub
 

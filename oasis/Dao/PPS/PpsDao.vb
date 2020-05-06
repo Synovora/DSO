@@ -10,6 +10,15 @@ Public Class PpsDao
         STRATEGIE = 4
     End Enum
 
+    Public Enum EnumSousCategoriePPS
+        Prophylactique = 7
+        Sociale = 8
+        Symptomatique = 9
+        Curative = 10
+        Diagnostique = 11
+        Palliative = 12
+    End Enum
+
 
     Public Function getAllPPSbyPatient(patientId As Integer) As DataTable
         Dim SQLString As String
@@ -223,6 +232,277 @@ Public Class PpsDao
                 End Using
             End Using
         End Using
+    End Function
+
+    Public Function CreationPPS(pps As Pps) As Boolean
+        Dim da As SqlDataAdapter = New SqlDataAdapter()
+        Dim codeRetour As Boolean = True
+        Dim ppsId As Long
+
+        Dim SQLstring As String = "insert into oasis.oa_patient_pps" &
+        " (oa_pps_patient_id, oa_pps_categorie, oa_pps_sous_categorie, oa_pps_priorite, oa_pps_drc_id, oa_pps_commentaire," &
+        " oa_pps_utilisateur_creation, oa_pps_date_creation, oa_pps_affichage_synthese)" &
+        " VALUES (@patientId, @categorie, @sousCategorie, @priorite, @drcId, @commentaire, @utilisateurCreation, @dateCreation, @affichageSynthese); SELECT SCOPE_IDENTITY()"
+
+        Dim con As SqlConnection = GetConnection()
+        Dim cmd As New SqlCommand(SQLstring, con)
+
+        With cmd.Parameters
+            .AddWithValue("@patientId", pps.PatientId)
+            .AddWithValue("@categorie", pps.CategorieId)
+            .AddWithValue("@sousCategorie", pps.SousCategorieId)
+            .AddWithValue("@priorite", pps.Priorite.ToString)
+            .AddWithValue("@drcId", pps.DrcId)
+            .AddWithValue("@commentaire", pps.Commentaire)
+            .AddWithValue("@utilisateurCreation", userLog.UtilisateurId.ToString)
+            .AddWithValue("@dateCreation", Date.Now.ToString("yyyy-MM-dd HH:mm:ss"))
+            .AddWithValue("@affichageSynthese", 1)
+        End With
+
+        Try
+            da.InsertCommand = cmd
+            ppsId = da.InsertCommand.ExecuteScalar()
+        Catch ex As Exception
+            MessageBox.Show(ex.Message)
+            codeRetour = False
+        Finally
+            con.Close()
+        End Try
+
+        If codeRetour = True Then
+            Dim PPSHistoACreer As New PpsHisto
+            'Mise à jour des données dans l'instance de la classe Historisation antecedent
+            PPSHistoACreer.PpsId = ppsId 'Récupération de l'id de l'occurrence créée
+            PPSHistoACreer.HistorisationDate = DateTime.Now()
+            PPSHistoACreer.HistorisationUtilisateurId = userLog.UtilisateurId
+            PPSHistoACreer.HistorisationEtat = EnumEtatPPSHisto.Creation
+            PPSHistoACreer.PatientId = pps.PatientId
+            PPSHistoACreer.Categorie = pps.CategorieId
+            PPSHistoACreer.SousCategorie = pps.SousCategorieId
+            PPSHistoACreer.Priorite = pps.Priorite
+            PPSHistoACreer.DrcId = pps.DrcId
+            PPSHistoACreer.Commentaire = pps.Commentaire
+            PPSHistoACreer.Inactif = 0
+            PPSHistoACreer.AffichageSynthese = 1
+
+            'Lecture de l'antecedent créé avec toutes ses données pour communiquer le DataReader à la fonction dédiée
+            Dim PPSCreeDataReader As SqlDataReader
+            SQLstring = "Select * from oasis.oa_patient_pps where oa_pps_id = " & PPSHistoACreer.PpsId & ";"
+            Dim antecedentCreeCommand As New SqlCommand(SQLstring, con)
+            con.Open()
+            PPSCreeDataReader = antecedentCreeCommand.ExecuteReader()
+            If PPSCreeDataReader.Read() Then
+                'Initialisation classe Historisation PPS
+                InitClassePPStHistorisation(PPSCreeDataReader, userLog, PPSHistoACreer)
+
+                'Libération des ressources d'accès aux données
+                con.Close()
+                antecedentCreeCommand.Dispose()
+            End If
+
+            'Création dans l'historique des PPS du PPS créé
+            CreationPPSHisto(PPSHistoACreer, userLog, PPSHistoCreationDao.EnumEtatPPSHisto.Creation)
+
+            'Mise à jour de la date de mise à jour de la synthèse (table patient)
+            PatientDao.ModificationDateMajSynthesePatient(pps.PatientId)
+        End If
+
+        Return codeRetour
+    End Function
+
+    Public Function ModificationPPS(pps As Pps) As Boolean
+        Dim da As SqlDataAdapter = New SqlDataAdapter()
+        Dim codeRetour As Boolean = True
+
+        Dim dateModification As Date = Date.Now.Date
+
+        Dim SQLstring As String = "update oasis.oa_patient_pps set oa_pps_sous_categorie = @sousCategorie, oa_pps_date_modification = @dateModification," &
+        " oa_pps_utilisateur_modification = @utilisateurModification, oa_pps_priorite = @priorite, oa_pps_drc_id = @drcId," &
+        " oa_pps_commentaire = @commentaire where oa_pps_id = @ppsId"
+
+        Dim con As SqlConnection = GetConnection()
+        Dim cmd As New SqlCommand(SQLstring, con)
+
+        With cmd.Parameters
+            .AddWithValue("@utilisateurModification", userLog.UtilisateurId)
+            .AddWithValue("@sousCategorie", pps.SousCategorieId)
+            .AddWithValue("@dateModification", DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss"))
+            .AddWithValue("@priorite", pps.Priorite)
+            .AddWithValue("@commentaire", pps.Commentaire)
+            .AddWithValue("@drcId", pps.DrcId)
+            .AddWithValue("@ppsId", pps.Id)
+        End With
+
+        Try
+            da.UpdateCommand = cmd
+            da.UpdateCommand.ExecuteNonQuery()
+        Catch ex As Exception
+            MessageBox.Show(ex.Message)
+            codeRetour = False
+        Finally
+            con.Close()
+        End Try
+
+        If codeRetour = True Then
+            Dim PPSHistoACreer As New PpsHisto
+            'Mise à jour des données modifiées dans l'instance de la classe Historisation antecedent
+            PPSHistoACreer.HistorisationDate = Date.Now()
+            PPSHistoACreer.HistorisationUtilisateurId = userLog.UtilisateurId
+            PPSHistoACreer.HistorisationEtat = EnumEtatPPSHisto.Modification
+            PPSHistoACreer.Categorie = pps.CategorieId
+            PPSHistoACreer.SousCategorie = pps.SousCategorieId
+            PPSHistoACreer.Priorite = pps.Priorite
+            PPSHistoACreer.PatientId = pps.PatientId
+            PPSHistoACreer.PpsId = pps.Id
+            PPSHistoACreer.Commentaire = pps.Commentaire
+            PPSHistoACreer.Inactif = False
+            PPSHistoACreer.AffichageSynthese = True
+            PPSHistoACreer.DrcId = pps.DrcId
+
+            'Création dans l'historique des modifications de l'antecedent
+            CreationPPSHisto(PPSHistoACreer, userLog, EnumEtatPPSHisto.Modification)
+
+            'Mise à jour de la date de mise à jour de la synthèse (table patient)
+            PatientDao.ModificationDateMajSynthesePatient(pps.PatientId)
+        End If
+
+        Return codeRetour
+    End Function
+
+    Public Function AnnulationPrevention(pps As Pps) As Boolean
+        Dim da As SqlDataAdapter = New SqlDataAdapter()
+        Dim codeRetour As Boolean = True
+
+        Dim dateModification As Date = Date.Now.Date
+
+        Dim SQLstring As String = "update oasis.oa_patient_pps set oa_pps_date_modification = @dateModification," &
+        " oa_pps_utilisateur_modification = @utilisateurModification, oa_pps_inactif = @inactif, oa_pps_arret = @arret," &
+        " oa_pps_commentaire_arret = @commentaireArret where oa_pps_id = @ppsId"
+
+        Dim con As SqlConnection = GetConnection()
+        Dim cmd As New SqlCommand(SQLstring, con)
+
+        With cmd.Parameters
+            .AddWithValue("@utilisateurModification", userLog.UtilisateurId.ToString)
+            .AddWithValue("@dateModification", DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss"))
+            .AddWithValue("@inactif", True)
+            .AddWithValue("@ppsId", pps.Id)
+            .AddWithValue("@arret", True)
+            .AddWithValue("@commentaireArret", pps.ArretCommentaire)
+        End With
+
+        Try
+            da.UpdateCommand = cmd
+            da.UpdateCommand.ExecuteNonQuery()
+        Catch ex As Exception
+            'PgbMiseAJour.Hide()
+            MessageBox.Show(ex.Message)
+            codeRetour = False
+        Finally
+            con.Close()
+        End Try
+
+        If codeRetour = True Then
+            Dim PPSHistoACreer As New PpsHisto
+            'Mise à jour des données modifiées dans l'instance de la classe Historisation antecedent
+            PPSHistoACreer.HistorisationDate = Date.Now()
+            PPSHistoACreer.HistorisationUtilisateurId = userLog.UtilisateurId
+            PPSHistoACreer.HistorisationEtat = EnumEtatPPSHisto.Annulation
+            PPSHistoACreer.Categorie = pps.CategorieId
+            PPSHistoACreer.SousCategorie = pps.SousCategorieId
+            PPSHistoACreer.Priorite = pps.Priorite
+            PPSHistoACreer.PatientId = pps.PatientId
+            PPSHistoACreer.PpsId = pps.Id
+            PPSHistoACreer.Commentaire = pps.Commentaire
+            PPSHistoACreer.Arret = True
+            PPSHistoACreer.ArretCommentaire = pps.ArretCommentaire
+            PPSHistoACreer.Inactif = True
+            PPSHistoACreer.DrcId = pps.DrcId
+
+            'Création dans l'historique des modifications de l'antecedent
+            CreationPPSHisto(PPSHistoACreer, userLog, EnumEtatPPSHisto.Annulation)
+
+            'Mise à jour de la date de mise à jour de la synthèse (table patient)
+            PatientDao.ModificationDateMajSynthesePatient(pps.PatientId)
+        End If
+
+        Return codeRetour
+    End Function
+
+    Public Function Compare(source1 As Pps, source2 As Pps) As Boolean
+        If source1.AffichageSynthese <> source2.AffichageSynthese Then
+            Return False
+        End If
+
+        If source1.Arret <> source2.Arret Then
+            Return False
+        End If
+
+        If source1.ArretCommentaire <> source2.ArretCommentaire Then
+            Return False
+        End If
+
+        If source1.CategorieId <> source2.CategorieId Then
+            Return False
+        End If
+
+        If source1.Commentaire <> source2.Commentaire Then
+            Return False
+        End If
+
+        If source1.DateDebut <> source2.DateDebut Then
+            Return False
+        End If
+
+        If source1.DrcId <> source2.DrcId Then
+            Return False
+        End If
+
+        If source1.Inactif <> source2.Inactif Then
+            Return False
+        End If
+
+        If source1.PatientId <> source2.PatientId Then
+            Return False
+        End If
+
+        If source1.Priorite <> source2.Priorite Then
+            Return False
+        End If
+
+        If source1.SousCategorieId <> source2.SousCategorieId Then
+            Return False
+        End If
+
+        If source1.SpecialiteId <> source2.SpecialiteId Then
+            Return False
+        End If
+
+        Return True
+    End Function
+
+    Public Function DeterminationTypeStrategie(TypeStrategieString As String) As Integer
+        Dim typeStrategie As Integer
+
+        Select Case TypeStrategieString
+            Case "Prophylactique"
+                typeStrategie = 7
+            Case "Sociale"
+                typeStrategie = 8
+            Case "Symptomatique"
+                typeStrategie = 9
+            Case "Curative"
+                typeStrategie = 10
+            Case "Diagnostique"
+                typeStrategie = 11
+            Case "Palliative"
+                typeStrategie = 12
+            Case Else
+                typeStrategie = 0
+        End Select
+
+        Return typeStrategie
+
     End Function
 
 End Class

@@ -360,16 +360,22 @@ Public Class RadFEpisodeParametresSaisie
     Private Sub RadBtnParametre_Click(sender As Object, e As EventArgs) Handles RadBtnParametre.Click
         Cursor.Current = Cursors.WaitCursor
         Me.Enabled = False
-        Using vRadFParametreDetailEdit As New RadFEpisodeParametreDetailEdit
-            vRadFParametreDetailEdit.SelectedEpisodeId = Me.SelectedEpisodeId
-            vRadFParametreDetailEdit.SelectedPatient = Me.SelectedPatient
-            vRadFParametreDetailEdit.ShowDialog()
-            If vRadFParametreDetailEdit.CodeRetour = True Then
-                InitParametre()
-                ChargementParametres()
-                Me.CodeRetour = True
-            End If
-        End Using
+
+        Try
+            Using vRadFParametreDetailEdit As New RadFEpisodeParametreDetailEdit
+                vRadFParametreDetailEdit.SelectedEpisodeId = Me.SelectedEpisodeId
+                vRadFParametreDetailEdit.SelectedPatient = Me.SelectedPatient
+                vRadFParametreDetailEdit.ShowDialog()
+                If vRadFParametreDetailEdit.CodeRetour = True Then
+                    InitParametre()
+                    ChargementParametres()
+                    Me.CodeRetour = True
+                End If
+            End Using
+        Catch ex As Exception
+            MessageBox.Show(ex.Message)
+        End Try
+
         Me.Enabled = True
     End Sub
 

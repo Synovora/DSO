@@ -572,7 +572,6 @@ Public Class RadFParcoursDetailEdit
                 Case Else
                     ParcoursUpdate.Base = ""
             End Select
-            'ParcoursUpdate.Base = CbxBase.Text
 
             NumRythme.Hide()
             LblSlash.Hide()

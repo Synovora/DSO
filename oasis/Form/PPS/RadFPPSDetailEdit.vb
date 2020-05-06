@@ -74,6 +74,11 @@ Public Class RadFPPSDetailEdit
     Dim UtilisateurHisto As Utilisateur = New Utilisateur()
     Dim PPSDesignation As String
     Dim SousCategoriePPs As Integer
+
+    Dim PPSRead As Pps
+    Dim PPSUpdate As Pps
+
+    Dim ppsDao As New PpsDao
     Dim drcdao As New DrcDao
 
     Private Sub RadFPPSMesurePreventive_Load(sender As Object, e As EventArgs) Handles MyBase.Load
@@ -104,7 +109,7 @@ Public Class RadFPPSDetailEdit
                 NumPriorite.Hide()
                 LblPriorite.Hide()
         End Select
-        Dim conxn As New SqlConnection(getConnectionString())
+        Dim conxn As New SqlConnection(GetConnectionString())
         DroitAcces()
         ChargementEtatCivil()
 
@@ -114,9 +119,11 @@ Public Class RadFPPSDetailEdit
         RadGbxAnnulation.Hide()
 
         If PPSId <> 0 Then
+            '-- Modification
             EditMode = EnumEditMode.Modification
             ChargementPPS()
         Else
+            '-- Création
             EditMode = EnumEditMode.Creation
             InitZonesEnSaisie()
             RadBtnAnnulation.Hide()
@@ -174,13 +181,13 @@ Public Class RadFPPSDetailEdit
     End Sub
 
     Private Sub ChargementPPS()
-        Dim ppsDao As New PpsDao
-        Dim pps As Pps = ppsDao.getPpsById(PPSId)
+        PPSRead = ppsDao.getPpsById(PPSId)
+        PPSUpdate = PPSRead.Clone()
         Dim dateCreation, dateModification As Date
 
-        TxtCommentaire.Text = pps.Commentaire
+        TxtCommentaire.Text = PPSUpdate.Commentaire
 
-        TxtDrcId.Text = pps.DrcId
+        TxtDrcId.Text = PPSUpdate.DrcId
         Dim Drc As Drc = New Drc()
         If drcdao.GetDrc(Drc, TxtDrcId.Text) = True Then
             TxtDrcDescription.Text = Drc.DrcLibelle
@@ -188,33 +195,33 @@ Public Class RadFPPSDetailEdit
             TxtDrcDescription.Text = ""
         End If
 
-        SousCategoriePPs = pps.SousCategorieId
-        Select Case pps.CategorieId
+        SousCategoriePPs = PPSUpdate.SousCategorieId
+        Select Case PPSUpdate.CategorieId
             Case EnumCategoriePPS.Objectif
             Case EnumCategoriePPS.MesurePreventive
             Case EnumCategoriePPS.Strategie
-                Select Case pps.SousCategorieId
+                Select Case PPSUpdate.SousCategorieId
                     Case 7
-                        CbxTypeStrategie.Text = "Prophylactique"
+                        CbxTypeStrategie.Text = PpsDao.EnumSousCategoriePPS.Prophylactique.ToString
                     Case 8
-                        CbxTypeStrategie.Text = "Sociale"
+                        CbxTypeStrategie.Text = PpsDao.EnumSousCategoriePPS.Sociale.ToString
                     Case 9
-                        CbxTypeStrategie.Text = "Symptomatique"
+                        CbxTypeStrategie.Text = PpsDao.EnumSousCategoriePPS.Symptomatique.ToString
                     Case 10
-                        CbxTypeStrategie.Text = "Curative"
+                        CbxTypeStrategie.Text = PpsDao.EnumSousCategoriePPS.Curative.ToString
                     Case 11
-                        CbxTypeStrategie.Text = "Diagnostique"
+                        CbxTypeStrategie.Text = PpsDao.EnumSousCategoriePPS.Diagnostique.ToString
                     Case 12
-                        CbxTypeStrategie.Text = "Palliative"
+                        CbxTypeStrategie.Text = PpsDao.EnumSousCategoriePPS.Palliative.ToString
                     Case Else
                         CbxTypeStrategie.Text = ""
                 End Select
         End Select
 
-        NumPriorite.Value = pps.Priorite
+        NumPriorite.Value = PPSUpdate.Priorite
 
-        If pps.DateCreation <> Nothing Then
-            dateCreation = pps.DateCreation
+        If PPSUpdate.DateCreation <> Nothing Then
+            dateCreation = PPSUpdate.DateCreation
             LblStrategieDateCreation.Text = dateCreation.ToString("dd.MM.yyyy")
         Else
             LblStrategieDateCreation.Text = ""
@@ -223,15 +230,14 @@ Public Class RadFPPSDetailEdit
         End If
 
         LblUtilisateurCreation.Text = ""
-        If pps.UserCreation <> 0 Then
+        If PPSUpdate.UserCreation <> 0 Then
             Dim userDao As New UserDao
-            UtilisateurHisto = userDao.getUserById(pps.UserCreation)
-            'SetUtilisateur(UtilisateurHisto, pps.UserCreation)
+            UtilisateurHisto = userDao.getUserById(PPSUpdate.UserCreation)
             LblUtilisateurCreation.Text = Me.UtilisateurHisto.UtilisateurPrenom & " " & Me.UtilisateurHisto.UtilisateurNom
         End If
 
-        If pps.DateModification <> Nothing Then
-            dateModification = pps.DateModification
+        If PPSUpdate.DateModification <> Nothing Then
+            dateModification = PPSUpdate.DateModification
             LblStrategieDateModification.Text = dateModification.ToString("dd.MM.yyyy")
         Else
             LblStrategieDateModification.Text = ""
@@ -240,10 +246,9 @@ Public Class RadFPPSDetailEdit
         End If
 
         LblUtilisateurModification.Text = ""
-        If pps.UserModification <> 0 Then
+        If PPSUpdate.UserModification <> 0 Then
             Dim userDao As New UserDao
-            UtilisateurHisto = userDao.getUserById(pps.UserModification)
-            'SetUtilisateur(UtilisateurHisto, pps.UserModification)
+            UtilisateurHisto = userDao.getUserById(PPSUpdate.UserModification)
             LblUtilisateurModification.Text = Me.UtilisateurHisto.UtilisateurPrenom & " " & Me.UtilisateurHisto.UtilisateurNom
         End If
 
@@ -316,7 +321,7 @@ Public Class RadFPPSDetailEdit
             SousCategoriePPs = DeterminationTypeStrategie()
             If SousCategoriePPs = 0 Then
                 ValidationDonnees = False
-                MessageErreur2 = "La sélection du type de la stratégie contextuelle doit être sélectionnée"
+                MessageErreur2 = "Le type de la stratégie contextuelle doit être sélectionné"
             End If
         End If
 
@@ -346,149 +351,42 @@ Public Class RadFPPSDetailEdit
         Return ValidationDonnees
     End Function
     Private Function CreationPPS() As Boolean
-        Dim da As SqlDataAdapter = New SqlDataAdapter()
         Dim codeRetour As Boolean = True
-        Dim ppsId As Long
 
-        Dim SQLstring As String = "insert into oasis.oa_patient_pps" &
-        " (oa_pps_patient_id, oa_pps_categorie, oa_pps_sous_categorie, oa_pps_priorite, oa_pps_drc_id, oa_pps_commentaire," &
-        " oa_pps_utilisateur_creation, oa_pps_date_creation, oa_pps_affichage_synthese)" &
-        " VALUES (@patientId, @categorie, @sousCategorie, @priorite, @drcId, @commentaire, @utilisateurCreation, @dateCreation, @affichageSynthese); SELECT SCOPE_IDENTITY()"
-
-        Dim cmd As New SqlCommand(SQLstring, conxn)
-
+        PPSUpdate = New Pps
+        PPSUpdate.PatientId = SelectedPatient.patientId
+        PPSUpdate.CategorieId = CategoriePPS
         If CategoriePPS = EnumCategoriePPS.Strategie Then
-            SousCategoriePPs = DeterminationTypeStrategie()
+            PPSUpdate.SousCategorieId = DeterminationTypeStrategie()
         End If
+        PPSUpdate.DrcId = TxtDrcId.Text
+        PPSUpdate.Priorite = NumPriorite.Value
+        PPSUpdate.Commentaire = TxtCommentaire.Text
+        PPSUpdate.DateCreation = Date.Now()
+        PPSUpdate.UserCreation = userLog.UtilisateurId
+        PPSUpdate.AffichageSynthese = True
+        PPSUpdate.Inactif = False
 
-        With cmd.Parameters
-            .AddWithValue("@patientId", SelectedPatient.patientId.ToString)
-            .AddWithValue("@categorie", CategoriePPS)
-            .AddWithValue("@sousCategorie", SousCategoriePPs)
-            .AddWithValue("@priorite", NumPriorite.Value.ToString)
-            .AddWithValue("@drcId", TxtDrcId.Text)
-            .AddWithValue("@commentaire", TxtCommentaire.Text)
-            .AddWithValue("@utilisateurCreation", userLog.UtilisateurId.ToString)
-            .AddWithValue("@dateCreation", Date.Now.ToString("yyyy-MM-dd HH:mm:ss"))
-            .AddWithValue("@affichageSynthese", 1)
-        End With
-
-        Try
-            conxn.Open()
-            da.InsertCommand = cmd
-            ppsId = da.InsertCommand.ExecuteScalar()
-            'MessageBox.Show(PPSDesignation & " créée")
+        If ppsDao.CreationPPS(PPSUpdate) = True Then
             Dim form As New RadFNotification()
             form.Message = PPSDesignation & " créée"
             form.Show()
-        Catch ex As Exception
-            MessageBox.Show(ex.Message)
+        Else
             codeRetour = False
-        Finally
-            conxn.Close()
-        End Try
-
-        If codeRetour = True Then
-            'Mise à jour des données dans l'instance de la classe Historisation antecedent
-            PPSHistoACreer.PpsId = ppsId 'Récupération de l'id de l'occurrence créée
-            PPSHistoACreer.HistorisationDate = DateTime.Now()
-            PPSHistoACreer.HistorisationUtilisateurId = userLog.UtilisateurId
-            PPSHistoACreer.HistorisationEtat = EnumEtatPPSHisto.Creation
-            PPSHistoACreer.PatientId = SelectedPatient.patientId.ToString
-            PPSHistoACreer.Categorie = CategoriePPS
-            PPSHistoACreer.SousCategorie = SousCategoriePPs
-            PPSHistoACreer.Priorite = NumPriorite.Value
-            PPSHistoACreer.DrcId = TxtDrcId.Text
-            PPSHistoACreer.Commentaire = TxtCommentaire.Text
-            PPSHistoACreer.Inactif = 0
-            PPSHistoACreer.AffichageSynthese = 1
-
-            'Lecture de l'antecedent créé avec toutes ses données pour communiquer le DataReader à la fonction dédiée
-            Dim PPSCreeDataReader As SqlDataReader
-            SQLstring = "Select * from oasis.oa_patient_pps where oa_pps_id = " & PPSHistoACreer.PpsId & ";"
-            Dim antecedentCreeCommand As New SqlCommand(SQLstring, conxn)
-            conxn.Open()
-            PPSCreeDataReader = antecedentCreeCommand.ExecuteReader()
-            If PPSCreeDataReader.Read() Then
-                'Initialisation classe Historisation PPS
-                InitClassePPStHistorisation(PPSCreeDataReader, userLog, PPSHistoACreer)
-
-                'Libération des ressources d'accès aux données
-                conxn.Close()
-                antecedentCreeCommand.Dispose()
-            End If
-
-            'Création dans l'historique des PPS du PPS créé
-            CreationPPSHisto(PPSHistoACreer, userLog, PPSHistoCreationDao.EnumEtatPPSHisto.Creation)
-
-            'Mise à jour de la date de mise à jour de la synthèse (table patient)
-            PatientDao.ModificationDateMajSynthesePatient(SelectedPatient.patientId)
         End If
 
         Return codeRetour
     End Function
 
     Private Function ModificationPPS() As Boolean
-        Dim da As SqlDataAdapter = New SqlDataAdapter()
         Dim codeRetour As Boolean = True
 
-        Dim dateModification As Date = Date.Now.Date
-
-        Dim SQLstring As String = "update oasis.oa_patient_pps set oa_pps_sous_categorie = @sousCategorie, oa_pps_date_modification = @dateModification," &
-        " oa_pps_utilisateur_modification = @utilisateurModification, oa_pps_priorite = @priorite, oa_pps_drc_id = @drcId," &
-        " oa_pps_commentaire = @commentaire where oa_pps_id = @ppsId"
-
-        Dim cmd As New SqlCommand(SQLstring, conxn)
-
-        If CategoriePPS = EnumCategoriePPS.Strategie Then
-            SousCategoriePPs = DeterminationTypeStrategie()
-        End If
-
-        With cmd.Parameters
-            .AddWithValue("@utilisateurModification", userLog.UtilisateurId.ToString)
-            .AddWithValue("@sousCategorie", SousCategoriePPs)
-            .AddWithValue("@dateModification", DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss"))
-            .AddWithValue("@priorite", NumPriorite.Value.ToString)
-            .AddWithValue("@commentaire", TxtCommentaire.Text)
-            .AddWithValue("@drcId", TxtDrcId.Text)
-            .AddWithValue("@ppsId", PPSId.ToString)
-        End With
-
-        Try
-            conxn.Open()
-            da.UpdateCommand = cmd
-            da.UpdateCommand.ExecuteNonQuery()
-            'MessageBox.Show(PPSDesignation & " modifiée")
+        If ppsDao.ModificationPPS(PPSUpdate) = True Then
             Dim form As New RadFNotification()
             form.Message = PPSDesignation & " modifiée"
             form.Show()
-        Catch ex As Exception
-            MessageBox.Show(ex.Message)
+        Else
             codeRetour = False
-        Finally
-            conxn.Close()
-        End Try
-
-        If codeRetour = True Then
-            'Mise à jour des données modifiées dans l'instance de la classe Historisation antecedent
-            PPSHistoACreer.HistorisationDate = Date.Now()
-            PPSHistoACreer.HistorisationUtilisateurId = userLog.UtilisateurId
-            PPSHistoACreer.HistorisationEtat = EnumEtatPPSHisto.Modification
-            PPSHistoACreer.Categorie = CategoriePPS
-            PPSHistoACreer.SousCategorie = SousCategoriePPs
-            PPSHistoACreer.Priorite = NumPriorite.Value
-            PPSHistoACreer.PatientId = SelectedPatient.patientId.ToString
-            PPSHistoACreer.PpsId = PPSId.ToString
-            PPSHistoACreer.Commentaire = TxtCommentaire.Text
-            PPSHistoACreer.Inactif = 0
-            PPSHistoACreer.AffichageSynthese = 1
-            PPSHistoACreer.DrcId = TxtDrcId.Text
-
-            'Création dans l'historique des modifications de l'antecedent
-            CreationPPSHisto(PPSHistoACreer, userLog, EnumEtatPPSHisto.Modification)
-
-            'Mise à jour de la date de mise à jour de la synthèse (table patient)
-            PatientDao.ModificationDateMajSynthesePatient(SelectedPatient.patientId)
         End If
 
         Return codeRetour
@@ -496,67 +394,14 @@ Public Class RadFPPSDetailEdit
 
 
     Private Function AnnulationPrevention() As Boolean
-        Dim da As SqlDataAdapter = New SqlDataAdapter()
         Dim codeRetour As Boolean = True
 
-        Dim dateModification As Date = Date.Now.Date
-
-        Dim SQLstring As String = "update oasis.oa_patient_pps set oa_pps_date_modification = @dateModification," &
-        " oa_pps_utilisateur_modification = @utilisateurModification, oa_pps_inactif = @inactif, oa_pps_arret = @arret," &
-        " oa_pps_commentaire_arret = @commentaireArret where oa_pps_id = @ppsId"
-
-        Dim cmd As New SqlCommand(SQLstring, conxn)
-
-        With cmd.Parameters
-            .AddWithValue("@utilisateurModification", userLog.UtilisateurId.ToString)
-            .AddWithValue("@dateModification", DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss"))
-            .AddWithValue("@inactif", 1)
-            .AddWithValue("@ppsId", PPSId.ToString)
-            .AddWithValue("@arret", 1)
-            .AddWithValue("@commentaireArret", TxtCommentaireArret.Text)
-        End With
-
-        Try
-            conxn.Open()
-            da.UpdateCommand = cmd
-            da.UpdateCommand.ExecuteNonQuery()
-            'MessageBox.Show(PPSDesignation & " annulée")
+        If ppsDao.AnnulationPrevention(PPSUpdate) = True Then
             Dim form As New RadFNotification()
             form.Message = PPSDesignation & " annulée"
             form.Show()
-        Catch ex As Exception
-            'PgbMiseAJour.Hide()
-            MessageBox.Show(ex.Message)
+        Else
             codeRetour = False
-        Finally
-            conxn.Close()
-        End Try
-
-        If CategoriePPS = EnumCategoriePPS.Strategie Then
-            SousCategoriePPs = DeterminationTypeStrategie()
-        End If
-
-        If codeRetour = True Then
-            'Mise à jour des données modifiées dans l'instance de la classe Historisation antecedent
-            PPSHistoACreer.HistorisationDate = Date.Now()
-            PPSHistoACreer.HistorisationUtilisateurId = userLog.UtilisateurId
-            PPSHistoACreer.HistorisationEtat = EnumEtatPPSHisto.Annulation
-            PPSHistoACreer.Categorie = CategoriePPS
-            PPSHistoACreer.SousCategorie = SousCategoriePPs
-            PPSHistoACreer.Priorite = NumPriorite.Value
-            PPSHistoACreer.PatientId = SelectedPatient.patientId.ToString
-            PPSHistoACreer.PpsId = PPSId.ToString
-            PPSHistoACreer.Commentaire = TxtCommentaire.Text
-            PPSHistoACreer.Arret = 1
-            PPSHistoACreer.ArretCommentaire = TxtCommentaireArret.Text
-            PPSHistoACreer.Inactif = 1
-            PPSHistoACreer.DrcId = TxtDrcId.Text
-
-            'Création dans l'historique des modifications de l'antecedent
-            CreationPPSHisto(PPSHistoACreer, userLog, EnumEtatPPSHisto.Annulation)
-
-            'Mise à jour de la date de mise à jour de la synthèse (table patient)
-            PatientDao.ModificationDateMajSynthesePatient(SelectedPatient.patientId)
         End If
 
         Return codeRetour
@@ -576,11 +421,6 @@ Public Class RadFPPSDetailEdit
 
     'Confirmation de l'annulation de la stratégie
     Private Sub RadBtnConfirmationAnnulation_Click(sender As Object, e As EventArgs) Handles RadBtnConfirmationAnnulation.Click
-        'If TxtCommentaireArret.Text = "" Then
-        'MessageBox.Show("La saisie du commentaire d'arrêt est obligatoire pour annuler une " & PPSDesignation)
-        'Else
-        '
-        'End If
         If MsgBox("Confirmation de l'annulation de la " & PPSDesignation, MsgBoxStyle.YesNo, "") = MsgBoxResult.Yes Then
             'Annulation antécédent
             If AnnulationPrevention() = True Then
@@ -591,23 +431,41 @@ Public Class RadFPPSDetailEdit
     End Sub
 
     Private Sub NumPriorite_ValueChanged(sender As Object, e As EventArgs) Handles NumPriorite.ValueChanged
-        RadBtnValidation.Enabled = True
+        'RadBtnValidation.Enabled = True
+        PPSUpdate.Priorite = NumPriorite.Value
+        GestionAffichageBoutonValidation()
     End Sub
 
     Private Sub TxtDrcId_TextChanged(sender As Object, e As EventArgs) Handles TxtDrcId.TextChanged
-        RadBtnValidation.Enabled = True
+        'RadBtnValidation.Enabled = True
+        PPSUpdate.DrcId = TxtDrcId.Text
+        GestionAffichageBoutonValidation()
     End Sub
 
     Private Sub TxtCommentaire_TextChanged(sender As Object, e As EventArgs) Handles TxtCommentaire.TextChanged
-        RadBtnValidation.Enabled = True
+        'RadBtnValidation.Enabled = True
+        PPSUpdate.Commentaire = TxtCommentaire.Text
+        GestionAffichageBoutonValidation()
     End Sub
 
     Private Sub CbxTypeStrategie_SelectedIndexChanged(sender As Object, e As EventArgs) Handles CbxTypeStrategie.SelectedIndexChanged
-        RadBtnValidation.Enabled = True
+        'RadBtnValidation.Enabled = True
+        PPSUpdate.SousCategorieId = DeterminationTypeStrategie()
+        GestionAffichageBoutonValidation()
     End Sub
 
     Private Sub LblId_MouseHover(sender As Object, e As EventArgs) Handles LblId.MouseHover
         ToolTipPPS.SetToolTip(LblId, "Id : " + PPSId.ToString)
+    End Sub
+
+    Private Sub GestionAffichageBoutonValidation()
+        If EditMode = EnumEditMode.Modification Then
+            If ppsDao.Compare(PPSUpdate, PPSRead) = False Then
+                RadBtnValidation.Enabled = True
+            Else
+                RadBtnValidation.Enabled = False
+            End If
+        End If
     End Sub
 
     Private Function DeterminationTypeStrategie() As Integer
@@ -615,17 +473,17 @@ Public Class RadFPPSDetailEdit
 
         Select Case CbxTypeStrategie.Text
             Case "Prophylactique"
-                typeStrategie = 7
+                typeStrategie = PpsDao.EnumSousCategoriePPS.Prophylactique
             Case "Sociale"
-                typeStrategie = 8
+                typeStrategie = PpsDao.EnumSousCategoriePPS.Sociale
             Case "Symptomatique"
-                typeStrategie = 9
+                typeStrategie = PpsDao.EnumSousCategoriePPS.Symptomatique
             Case "Curative"
-                typeStrategie = 10
+                typeStrategie = PpsDao.EnumSousCategoriePPS.Curative
             Case "Diagnostique"
-                typeStrategie = 11
+                typeStrategie = PpsDao.EnumSousCategoriePPS.Diagnostique
             Case "Palliative"
-                typeStrategie = 12
+                typeStrategie = PpsDao.EnumSousCategoriePPS.Palliative
             Case Else
                 typeStrategie = 0
         End Select
