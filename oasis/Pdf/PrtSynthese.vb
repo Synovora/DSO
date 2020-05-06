@@ -113,7 +113,6 @@ Public Class PrtSynthese
         'Déclaration des variables pour réaliser le parcours du DataTable pour alimenter le DataGridView
         Dim i As Integer
         Dim rowCount As Integer = antecedentDataTable.Rows.Count - 1
-        Dim ExisteAntecedent As Boolean = False
 
         'Comptage += antecedentDataTable.Rows.Count
         'GestionSautDePage(document)
@@ -125,7 +124,7 @@ Public Class PrtSynthese
         Dim diagnostic As String
         Dim antecedentCache, AldValide, AldValideOK, AldDemandeEnCours As Boolean
 
-
+        'Impression titre
         Dim rowTitre As New TableRow()
 
         Dim cellTitreAntecedent As New TableCell()
@@ -134,6 +133,8 @@ Public Class PrtSynthese
         rowTitre.Cells.Add(cellTitreAntecedent)
         table.Rows.Add(rowTitre)
 
+        'Vérifier si le patient a des antécédents
+        Dim ExisteAntecedent As Boolean = False
 
         'Parcours du DataTable pour alimenter le DataGridView
         For i = 0 To rowCount Step 1
@@ -234,9 +235,9 @@ Public Class PrtSynthese
             ExisteAntecedent = True
         Next
 
+        'On signale si le patient n'a pas d'antécédent
         If ExisteAntecedent = False Then
             Dim row As New TableRow()
-
             Dim cellAntecedent As New TableCell()
             cellAntecedent.PreferredWidth = New TableWidthUnit(TableWidthUnitType.Fixed, LargeurCol1)
             EditTools.SetCell(cellAntecedent, "Pas d'antécédents pour ce patient", 10)
@@ -366,6 +367,7 @@ Public Class PrtSynthese
         Dim FenetreTherapeutiqueEnCours As Boolean
         Dim FenetreTherapeutiqueAVenir As Boolean
 
+        'Impression titre
         Dim rowTitre As New TableRow()
 
         Dim cellTitreDci As New TableCell()
@@ -383,6 +385,7 @@ Public Class PrtSynthese
         'Dim Allergie As Boolean = False
         Dim FenetreDateDebut, FenetreDateFin As Date
 
+        'Vérifier si le patient a des traitements
         Dim ExisteTraitement As Boolean = False
 
         'Parcours du DataTable pour alimenter les colonnes du DataGridView
@@ -628,6 +631,7 @@ Public Class PrtSynthese
             ExisteTraitement = True
         Next
 
+        'On signale si le patient n'a pas de traitement
         If ExisteTraitement = False Then
             Dim row As New TableRow()
 
@@ -717,6 +721,7 @@ Public Class PrtSynthese
 
         table.Rows.Add(rowTitre)
 
+        'Vérifier si le patient n'a pas d'intervenant
         Dim ExisteIntervenant As Boolean = False
 
         'Parcours du DataTable pour alimenter les colonnes du DataGridView
@@ -856,6 +861,7 @@ Public Class PrtSynthese
             ExisteIntervenant = True
         Next
 
+        'On signale si le patient n'a pas d'intervenant
         If ExisteIntervenant = False Then
             Dim row As New TableRow()
 
@@ -930,7 +936,7 @@ Public Class PrtSynthese
         Dim categorieContexte, categorieContexteString As String
         Dim contexteCache As Boolean
 
-
+        'Impression titre
         Dim rowTitre As New TableRow()
 
         Dim cellTitreContexte As New TableCell()
@@ -940,6 +946,7 @@ Public Class PrtSynthese
 
         table.Rows.Add(rowTitre)
 
+        'Vérifier si le patient a des contextes
         Dim ContexteExiste As Boolean = False
 
         'Parcours du DataTable pour alimenter le DataGridView
@@ -1021,6 +1028,7 @@ Public Class PrtSynthese
             ContexteExiste = True
         Next
 
+        'On signale si le patient n'a pas de contexte
         If ContexteExiste = False Then
             Dim row As New TableRow()
             Dim cellContexte As New TableCell()
@@ -1076,6 +1084,7 @@ Public Class PrtSynthese
 
         table.Rows.Add(rowTitre)
 
+        'Vérifier si le patient a des PPS
         Dim PPSExiste As Boolean = False
 
         'Parcours du DataTable pour alimenter le DataGridView
@@ -1249,6 +1258,7 @@ Public Class PrtSynthese
             PPSExiste = True
         Next
 
+        'On signale si le patient n'a pas de PPS
         If PPSExiste = False Then
             Dim row As New TableRow()
             Dim cellPPS As New TableCell()
