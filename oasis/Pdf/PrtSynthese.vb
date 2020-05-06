@@ -24,6 +24,7 @@ Public Class PrtSynthese
             PrintAntecedent()
 
             'EditTools.insertFragmentToEditor(PrintTitre("--- Traitement ---"))
+            PrintAllergie()
             PrintTraitement()
 
             'EditTools.insertFragmentToEditor(PrintTitre("--- Parcours de soin ---"))
@@ -270,7 +271,6 @@ Public Class PrtSynthese
             'EditTools.CreateParagraphIntoSection(section, 10)
             'EditTools.AddTexte(TextLegendeALDValide)
             'TextLegendeALDValide.SetFontColor(iText.Kernel.Colors.ColorConstants.RED).SetFontSize(8)
-
         End If
 
         If PrintLegendeALDDemande = True Then
@@ -281,6 +281,61 @@ Public Class PrtSynthese
         End If
 
         EditTools.InsertFragmentToEditor(document)
+    End Sub
+
+    Private Sub PrintAllergie()
+        Dim document As New RadDocument()
+
+        Const LargeurCol1 As Integer = 630
+        Dim PremierPassage As Boolean = True
+
+        Dim section As New Section()
+        Dim table As New Table()
+        table.LayoutMode = TableLayoutMode.Fixed
+        table.StyleName = RadDocumentDefaultStyles.DefaultTableGridStyleName
+
+        Dim dt As DataTable
+        Dim allergiedao As New AllergieDao
+        dt = AllergieDao.GetAllAllergiebyPatient(Me.SelectedPatient.patientId)
+        Dim i As Integer
+        Dim rowCount As Integer = dt.Rows.Count - 1
+
+        If dt.Rows.Count > 0 Then
+            For i = 0 To rowCount Step 1
+                Dim substancePereId As Integer = Coalesce(dt.Rows(i)("substance_pere_id"), 0)
+                Dim AllergieString As String
+                If substancePereId <> 0 Then
+                    AllergieString = Coalesce(dt.Rows(i)("denomination_substance_pere"), "")
+                Else
+                    AllergieString = Coalesce(dt.Rows(i)("denomination_substance"), "")
+                End If
+
+                If PremierPassage = True Then
+                    Dim rowTitre As New TableRow()
+
+                    Dim cellTitreAllergie As New TableCell()
+                    cellTitreAllergie.PreferredWidth = New TableWidthUnit(TableWidthUnitType.Fixed, LargeurCol1)
+                    EditTools.SetCell(cellTitreAllergie, "Allergie", 10,, Telerik.WinControls.RichTextEditor.UI.FontWeights.Bold)
+                    rowTitre.Cells.Add(cellTitreAllergie)
+                    table.Rows.Add(rowTitre)
+                    PremierPassage = False
+                End If
+
+                Dim row As New TableRow()
+
+                Dim cellAllergie As New TableCell()
+                cellAllergie.PreferredWidth = New TableWidthUnit(TableWidthUnitType.Fixed, LargeurCol1)
+                EditTools.SetCell(cellAllergie, AllergieString, 10)
+                row.Cells.Add(cellAllergie)
+                table.Rows.Add(row)
+            Next
+
+            section.Blocks.Add(table)
+            section.Blocks.Add(New Paragraph())
+            document.Sections.Add(section)
+
+            EditTools.InsertFragmentToEditor(document)
+        End If
     End Sub
 
     Private Sub PrintTraitement()
@@ -590,12 +645,12 @@ Public Class PrtSynthese
     Private Sub PrintParcours()
         Dim document As New RadDocument()
 
-        Const LargeurCol1 As Integer = 110
-        Const LargeurCol2 As Integer = 120
-        Const LargeurCol3 As Integer = 150
+        Const LargeurCol1 As Integer = 100
+        Const LargeurCol2 As Integer = 100
+        Const LargeurCol3 As Integer = 100
         Const LargeurCol4 As Integer = 70
         Const LargeurCol5 As Integer = 70
-        Const LargeurCol6 As Integer = 110
+        Const LargeurCol6 As Integer = 190
 
         Dim section As New Section()
         Dim table As New Table()
