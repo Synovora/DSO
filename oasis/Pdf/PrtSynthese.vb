@@ -203,7 +203,7 @@ Public Class PrtSynthese
 
             Dim DescriptionDrcAld As String = ""
             If AldValideOK Or AldDemandeEnCours Then
-                DescriptionDrcAld = Coalesce(antecedentDataTable.Rows(i)("oa_ald_cim10_description"), "")
+                'DescriptionDrcAld = Coalesce(antecedentDataTable.Rows(i)("oa_ald_cim10_description"), "")
             End If
 
             Dim TextAntecedent As String
