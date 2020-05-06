@@ -721,10 +721,10 @@
     <Compile Include="Form\ALD\RadFAldCim10Selecteur.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Form\Antecedent\RadFAntecedentAffectationSelecteur.Designer.vb">
+    <Compile Include="Form\Obsolete\RadFAntecedentAffectationSelecteur.Designer.vb">
       <DependentUpon>RadFAntecedentAffectationSelecteur.vb</DependentUpon>
     </Compile>
-    <Compile Include="Form\Antecedent\RadFAntecedentAffectationSelecteur.vb">
+    <Compile Include="Form\Obsolete\RadFAntecedentAffectationSelecteur.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Form\Antecedent\RadFAntecedentHistoListe.Designer.vb">
@@ -1215,7 +1215,7 @@
     <EmbeddedResource Include="Form\ALD\RadFAldCim10Selecteur.resx">
       <DependentUpon>RadFAldCim10Selecteur.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Form\Antecedent\RadFAntecedentAffectationSelecteur.resx">
+    <EmbeddedResource Include="Form\Obsolete\RadFAntecedentAffectationSelecteur.resx">
       <DependentUpon>RadFAntecedentAffectationSelecteur.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Form\Antecedent\RadFAntecedentHistoListe.resx">
