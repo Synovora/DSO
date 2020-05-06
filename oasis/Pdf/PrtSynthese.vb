@@ -106,8 +106,6 @@ Public Class PrtSynthese
         Dim PrintLegendeALDValide As Boolean = False
         Dim PrintLegendeALDDemande As Boolean = False
 
-        Dim PremierPassage As Boolean = True
-
         Dim antecedentDataTable As DataTable
         Dim antecedentDao As AntecedentDao = New AntecedentDao
         antecedentDataTable = antecedentDao.GetAllAntecedentbyPatient(SelectedPatient.patientId, True, True)
@@ -115,6 +113,7 @@ Public Class PrtSynthese
         'Déclaration des variables pour réaliser le parcours du DataTable pour alimenter le DataGridView
         Dim i As Integer
         Dim rowCount As Integer = antecedentDataTable.Rows.Count - 1
+        Dim ExisteAntecedent As Boolean = False
 
         'Comptage += antecedentDataTable.Rows.Count
         'GestionSautDePage(document)
@@ -125,6 +124,16 @@ Public Class PrtSynthese
         Dim AfficheDateModification As String
         Dim diagnostic As String
         Dim antecedentCache, AldValide, AldValideOK, AldDemandeEnCours As Boolean
+
+
+        Dim rowTitre As New TableRow()
+
+        Dim cellTitreAntecedent As New TableCell()
+        cellTitreAntecedent.PreferredWidth = New TableWidthUnit(TableWidthUnitType.Fixed, LargeurCol1)
+        EditTools.SetCell(cellTitreAntecedent, "Antécédent", 10,, Telerik.WinControls.RichTextEditor.UI.FontWeights.Bold)
+        rowTitre.Cells.Add(cellTitreAntecedent)
+        table.Rows.Add(rowTitre)
+
 
         'Parcours du DataTable pour alimenter le DataGridView
         For i = 0 To rowCount Step 1
@@ -200,17 +209,6 @@ Public Class PrtSynthese
             TextAntecedent = indentation & diagnostic & DescriptionDrcAld & " " & antecedentDescription
             '==========
 
-            If PremierPassage = True Then
-                Dim rowTitre As New TableRow()
-
-                Dim cellTitreAntecedent As New TableCell()
-                cellTitreAntecedent.PreferredWidth = New TableWidthUnit(TableWidthUnitType.Fixed, LargeurCol1)
-                EditTools.SetCell(cellTitreAntecedent, "Antécédent", 10,, Telerik.WinControls.RichTextEditor.UI.FontWeights.Bold)
-                rowTitre.Cells.Add(cellTitreAntecedent)
-                table.Rows.Add(rowTitre)
-                PremierPassage = False
-            End If
-
             Dim row As New TableRow()
 
             Dim cellAntecedent As New TableCell()
@@ -233,15 +231,26 @@ Public Class PrtSynthese
             row.Cells.Add(cellAntecedent)
 
             table.Rows.Add(row)
+            ExisteAntecedent = True
         Next
 
+        If ExisteAntecedent = False Then
+            Dim row As New TableRow()
+
+            Dim cellAntecedent As New TableCell()
+            cellAntecedent.PreferredWidth = New TableWidthUnit(TableWidthUnitType.Fixed, LargeurCol1)
+            EditTools.SetCell(cellAntecedent, "Pas d'antécédents pour ce patient", 10)
+            row.Cells.Add(cellAntecedent)
+            table.Rows.Add(row)
+        End If
+
         If PrintLegendeALDValide = True OrElse PrintLegendeALDDemande = True Then
-            Dim rowTitre As New TableRow()
+            Dim rowTitreALDValide As New TableRow()
             Dim cellVide As New TableCell()
             cellVide.PreferredWidth = New TableWidthUnit(TableWidthUnitType.Fixed, LargeurCol1)
             EditTools.SetCell(cellVide, "-", 8)
-            rowTitre.Cells.Add(cellVide)
-            table.Rows.Add(rowTitre)
+            rowTitreALDValide.Cells.Add(cellVide)
+            table.Rows.Add(rowTitreALDValide)
 
             If PrintLegendeALDValide = True Then
                 Dim rowAldValide As New TableRow()
@@ -265,20 +274,6 @@ Public Class PrtSynthese
         section.Blocks.Add(table)
         section.Blocks.Add(New Paragraph())
         document.Sections.Add(section)
-
-        If PrintLegendeALDValide = True Then
-            'Dim TextLegendeALDValide As String = "Antécédent rouge -> ALD Valide"
-            'EditTools.CreateParagraphIntoSection(section, 10)
-            'EditTools.AddTexte(TextLegendeALDValide)
-            'TextLegendeALDValide.SetFontColor(iText.Kernel.Colors.ColorConstants.RED).SetFontSize(8)
-        End If
-
-        If PrintLegendeALDDemande = True Then
-            'Dim TextLegendeALDDemande As String = "Antécédent orange -> Demande ALD en cours"
-            'EditTools.CreateParagraphIntoSection(section, 10)
-            'EditTools.AddTexte(TextLegendeALDDemande)
-            'TextLegendeALDDemande.SetFontColor(iText.Kernel.Colors.ColorConstants.ORANGE).SetFontSize(8)
-        End If
 
         EditTools.InsertFragmentToEditor(document)
     End Sub
@@ -371,10 +366,24 @@ Public Class PrtSynthese
         Dim FenetreTherapeutiqueEnCours As Boolean
         Dim FenetreTherapeutiqueAVenir As Boolean
 
-        Dim PremierPassage As Boolean = True
+        Dim rowTitre As New TableRow()
+
+        Dim cellTitreDci As New TableCell()
+        cellTitreDci.PreferredWidth = New TableWidthUnit(TableWidthUnitType.Fixed, LargeurCol1)
+        EditTools.SetCell(cellTitreDci, "Traitement", 10,, Telerik.WinControls.RichTextEditor.UI.FontWeights.Bold)
+        rowTitre.Cells.Add(cellTitreDci)
+
+        Dim cellTitrePosologie As New TableCell()
+        cellTitrePosologie.PreferredWidth = New TableWidthUnit(TableWidthUnitType.Fixed, LargeurCol2)
+        EditTools.SetCell(cellTitrePosologie, "Posologie", 10,, Telerik.WinControls.RichTextEditor.UI.FontWeights.Bold)
+        rowTitre.Cells.Add(cellTitrePosologie)
+
+        table.Rows.Add(rowTitre)
 
         'Dim Allergie As Boolean = False
         Dim FenetreDateDebut, FenetreDateFin As Date
+
+        Dim ExisteTraitement As Boolean = False
 
         'Parcours du DataTable pour alimenter les colonnes du DataGridView
         For i = 0 To rowCount Step 1
@@ -603,23 +612,6 @@ Public Class PrtSynthese
             End If
             Dim TextDateModification As String = DateModificationString
 
-            If PremierPassage = True Then
-                Dim rowTitre As New TableRow()
-
-                Dim cellTitreDci As New TableCell()
-                cellTitreDci.PreferredWidth = New TableWidthUnit(TableWidthUnitType.Fixed, LargeurCol1)
-                EditTools.SetCell(cellTitreDci, "Traitement", 10,, Telerik.WinControls.RichTextEditor.UI.FontWeights.Bold)
-                rowTitre.Cells.Add(cellTitreDci)
-
-                Dim cellTitrePosologie As New TableCell()
-                cellTitrePosologie.PreferredWidth = New TableWidthUnit(TableWidthUnitType.Fixed, LargeurCol2)
-                EditTools.SetCell(cellTitrePosologie, "Posologie", 10,, Telerik.WinControls.RichTextEditor.UI.FontWeights.Bold)
-                rowTitre.Cells.Add(cellTitrePosologie)
-
-                table.Rows.Add(rowTitre)
-                PremierPassage = False
-            End If
-
             Dim row As New TableRow()
 
             Dim cellDci As New TableCell()
@@ -633,7 +625,24 @@ Public Class PrtSynthese
             row.Cells.Add(cellPosologie)
 
             table.Rows.Add(row)
+            ExisteTraitement = True
         Next
+
+        If ExisteTraitement = False Then
+            Dim row As New TableRow()
+
+            Dim cellDci As New TableCell()
+            cellDci.PreferredWidth = New TableWidthUnit(TableWidthUnitType.Fixed, LargeurCol1)
+            EditTools.SetCell(cellDci, "Pas de traitement pour ce patient", 10)
+            row.Cells.Add(cellDci)
+
+            Dim cellPosologie As New TableCell()
+            cellPosologie.PreferredWidth = New TableWidthUnit(TableWidthUnitType.Fixed, LargeurCol2)
+            EditTools.SetCell(cellPosologie, " - ", 10)
+            row.Cells.Add(cellPosologie)
+
+            table.Rows.Add(row)
+        End If
 
         section.Blocks.Add(table)
         section.Blocks.Add(New Paragraph())
@@ -672,7 +681,43 @@ Public Class PrtSynthese
         'document.Add(New Paragraph(vbCrLf & "--- Parcours de soin").SetFontSize(11))
 
         Dim ParcoursCacher, ParcoursConsigneEnRouge As Boolean
-        Dim PremierPassage As Boolean = True
+
+        'Impression titre
+        Dim rowTitre As New TableRow()
+
+        Dim cellTitreIntervenant As New TableCell()
+        cellTitreIntervenant.PreferredWidth = New TableWidthUnit(TableWidthUnitType.Fixed, LargeurCol1)
+        EditTools.SetCell(cellTitreIntervenant, "Parcours", 10,, Telerik.WinControls.RichTextEditor.UI.FontWeights.Bold)
+        rowTitre.Cells.Add(cellTitreIntervenant)
+
+        Dim cellTitreNom As New TableCell()
+        cellTitreNom.PreferredWidth = New TableWidthUnit(TableWidthUnitType.Fixed, LargeurCol2)
+        EditTools.SetCell(cellTitreNom, "Nom", 10,, Telerik.WinControls.RichTextEditor.UI.FontWeights.Bold)
+        rowTitre.Cells.Add(cellTitreNom)
+
+        Dim cellTitreStructure As New TableCell()
+        cellTitreStructure.PreferredWidth = New TableWidthUnit(TableWidthUnitType.Fixed, LargeurCol3)
+        EditTools.SetCell(cellTitreStructure, "Structure", 10,, Telerik.WinControls.RichTextEditor.UI.FontWeights.Bold)
+        rowTitre.Cells.Add(cellTitreStructure)
+
+        Dim cellTitreLastRdv As New TableCell()
+        cellTitreLastRdv.PreferredWidth = New TableWidthUnit(TableWidthUnitType.Fixed, LargeurCol4)
+        EditTools.SetCell(cellTitreLastRdv, "Dern. Consult.", 10,, Telerik.WinControls.RichTextEditor.UI.FontWeights.Bold)
+        rowTitre.Cells.Add(cellTitreLastRdv)
+
+        Dim cellTitreNextRdv As New TableCell()
+        cellTitreNextRdv.PreferredWidth = New TableWidthUnit(TableWidthUnitType.Fixed, LargeurCol5)
+        EditTools.SetCell(cellTitreNextRdv, "Proch. Consult.", 10,, Telerik.WinControls.RichTextEditor.UI.FontWeights.Bold)
+        rowTitre.Cells.Add(cellTitreNextRdv)
+
+        Dim cellTitreRemarque As New TableCell()
+        cellTitreRemarque.PreferredWidth = New TableWidthUnit(TableWidthUnitType.Fixed, LargeurCol6)
+        EditTools.SetCell(cellTitreRemarque, "Remarque", 10,, Telerik.WinControls.RichTextEditor.UI.FontWeights.Bold)
+        rowTitre.Cells.Add(cellTitreRemarque)
+
+        table.Rows.Add(rowTitre)
+
+        Dim ExisteIntervenant As Boolean = False
 
         'Parcours du DataTable pour alimenter les colonnes du DataGridView
         For i = 0 To rowCount Step 1
@@ -773,43 +818,7 @@ Public Class PrtSynthese
             Dim TextCommentaire As String
             TextCommentaire = Coalesce(ParcoursDataTable.Rows(i)("oa_parcours_commentaire"), "")
 
-            If PremierPassage = True Then
-                Dim rowTitre As New TableRow()
-
-                Dim cellTitreIntervenant As New TableCell()
-                cellTitreIntervenant.PreferredWidth = New TableWidthUnit(TableWidthUnitType.Fixed, LargeurCol1)
-                EditTools.SetCell(cellTitreIntervenant, "Parcours", 10,, Telerik.WinControls.RichTextEditor.UI.FontWeights.Bold)
-                rowTitre.Cells.Add(cellTitreIntervenant)
-
-                Dim cellTitreNom As New TableCell()
-                cellTitreNom.PreferredWidth = New TableWidthUnit(TableWidthUnitType.Fixed, LargeurCol2)
-                EditTools.SetCell(cellTitreNom, "Nom", 10,, Telerik.WinControls.RichTextEditor.UI.FontWeights.Bold)
-                rowTitre.Cells.Add(cellTitreNom)
-
-                Dim cellTitreStructure As New TableCell()
-                cellTitreStructure.PreferredWidth = New TableWidthUnit(TableWidthUnitType.Fixed, LargeurCol3)
-                EditTools.SetCell(cellTitreStructure, "Structure", 10,, Telerik.WinControls.RichTextEditor.UI.FontWeights.Bold)
-                rowTitre.Cells.Add(cellTitreStructure)
-
-                Dim cellTitreLastRdv As New TableCell()
-                cellTitreLastRdv.PreferredWidth = New TableWidthUnit(TableWidthUnitType.Fixed, LargeurCol4)
-                EditTools.SetCell(cellTitreLastRdv, "Dern. Consult.", 10,, Telerik.WinControls.RichTextEditor.UI.FontWeights.Bold)
-                rowTitre.Cells.Add(cellTitreLastRdv)
-
-                Dim cellTitreNextRdv As New TableCell()
-                cellTitreNextRdv.PreferredWidth = New TableWidthUnit(TableWidthUnitType.Fixed, LargeurCol5)
-                EditTools.SetCell(cellTitreNextRdv, "Proch. Consult.", 10,, Telerik.WinControls.RichTextEditor.UI.FontWeights.Bold)
-                rowTitre.Cells.Add(cellTitreNextRdv)
-
-                Dim cellTitreRemarque As New TableCell()
-                cellTitreRemarque.PreferredWidth = New TableWidthUnit(TableWidthUnitType.Fixed, LargeurCol6)
-                EditTools.SetCell(cellTitreRemarque, "Remarque", 10,, Telerik.WinControls.RichTextEditor.UI.FontWeights.Bold)
-                rowTitre.Cells.Add(cellTitreRemarque)
-
-                table.Rows.Add(rowTitre)
-                PremierPassage = False
-            End If
-
+            'Impression ligne
             Dim row As New TableRow()
 
             Dim cellIntervenant As New TableCell()
@@ -843,7 +852,45 @@ Public Class PrtSynthese
             row.Cells.Add(cellRemarque)
 
             table.Rows.Add(row)
+
+            ExisteIntervenant = True
         Next
+
+        If ExisteIntervenant = False Then
+            Dim row As New TableRow()
+
+            Dim cellIntervenant As New TableCell()
+            cellIntervenant.PreferredWidth = New TableWidthUnit(TableWidthUnitType.Fixed, LargeurCol1)
+            EditTools.SetCell(cellIntervenant, "Parcours patient vide", 10)
+            row.Cells.Add(cellIntervenant)
+
+            Dim cellNom As New TableCell()
+            cellNom.PreferredWidth = New TableWidthUnit(TableWidthUnitType.Fixed, LargeurCol2)
+            EditTools.SetCell(cellNom, "-", 10)
+            row.Cells.Add(cellNom)
+
+            Dim cellStructure As New TableCell()
+            cellStructure.PreferredWidth = New TableWidthUnit(TableWidthUnitType.Fixed, LargeurCol3)
+            EditTools.SetCell(cellStructure, "-", 10)
+            row.Cells.Add(cellStructure)
+
+            Dim cellLastRdv As New TableCell()
+            cellLastRdv.PreferredWidth = New TableWidthUnit(TableWidthUnitType.Fixed, LargeurCol4)
+            EditTools.SetCell(cellLastRdv, "-", 10)
+            row.Cells.Add(cellLastRdv)
+
+            Dim cellNextRdv As New TableCell()
+            cellNextRdv.PreferredWidth = New TableWidthUnit(TableWidthUnitType.Fixed, LargeurCol5)
+            EditTools.SetCell(cellNextRdv, "-", 10)
+            row.Cells.Add(cellNextRdv)
+
+            Dim cellRemarque As New TableCell()
+            cellRemarque.PreferredWidth = New TableWidthUnit(TableWidthUnitType.Fixed, LargeurCol6)
+            EditTools.SetCell(cellRemarque, "-", 10)
+            row.Cells.Add(cellRemarque)
+
+            table.Rows.Add(row)
+        End If
 
         section.Blocks.Add(table)
         section.Blocks.Add(New Paragraph())
@@ -882,6 +929,18 @@ Public Class PrtSynthese
         Dim rowCount As Integer = contexteDataTable.Rows.Count - 1
         Dim categorieContexte, categorieContexteString As String
         Dim contexteCache As Boolean
+
+
+        Dim rowTitre As New TableRow()
+
+        Dim cellTitreContexte As New TableCell()
+        cellTitreContexte.PreferredWidth = New TableWidthUnit(TableWidthUnitType.Fixed, LargeurCol1)
+        EditTools.SetCell(cellTitreContexte, "Contexte", 10,, Telerik.WinControls.RichTextEditor.UI.FontWeights.Bold)
+        rowTitre.Cells.Add(cellTitreContexte)
+
+        table.Rows.Add(rowTitre)
+
+        Dim ContexteExiste As Boolean = False
 
         'Parcours du DataTable pour alimenter le DataGridView
         For i = 0 To rowCount Step 1
@@ -952,25 +1011,24 @@ Public Class PrtSynthese
                 contexteDescription = Replace(contexteDescription, vbCrLf, " ")
             End If
 
-            If PremierPassage = True Then
-                Dim rowTitre As New TableRow()
-
-                Dim cellTitreContexte As New TableCell()
-                cellTitreContexte.PreferredWidth = New TableWidthUnit(TableWidthUnitType.Fixed, LargeurCol1)
-                EditTools.SetCell(cellTitreContexte, "Contexte", 10,, Telerik.WinControls.RichTextEditor.UI.FontWeights.Bold)
-                rowTitre.Cells.Add(cellTitreContexte)
-
-                table.Rows.Add(rowTitre)
-                PremierPassage = False
-            End If
-
             Dim row As New TableRow()
             Dim cellContexte As New TableCell()
             cellContexte.PreferredWidth = New TableWidthUnit(TableWidthUnitType.Fixed, LargeurCol1)
             EditTools.SetCell(cellContexte, AfficheDateModification & diagnostic & " " & contexteDescription, 10)
             row.Cells.Add(cellContexte)
             table.Rows.Add(row)
+
+            ContexteExiste = True
         Next
+
+        If ContexteExiste = False Then
+            Dim row As New TableRow()
+            Dim cellContexte As New TableCell()
+            cellContexte.PreferredWidth = New TableWidthUnit(TableWidthUnitType.Fixed, LargeurCol1)
+            EditTools.SetCell(cellContexte, "Pas de contexte pour ce patient", 10)
+            row.Cells.Add(cellContexte)
+            table.Rows.Add(row)
+        End If
 
         section.Blocks.Add(table)
         section.Blocks.Add(New Paragraph())
@@ -1007,6 +1065,18 @@ Public Class PrtSynthese
         Dim categoriePPS, sousCategoriePPS, Rythme, SpecialiteId As Integer
         Dim ppsArret As Boolean
         Dim NaturePPS, CommentairePPS, commentaireParcours, AffichePPS, AfficheDateModificationPPS, AfficheDateModificationParcours, Base, BaseItem, SpecialiteDescription As String
+
+        'Impression titre
+        Dim rowTitre As New TableRow()
+
+        Dim cellTitrePPS As New TableCell()
+        cellTitrePPS.PreferredWidth = New TableWidthUnit(TableWidthUnitType.Fixed, LargeurCol1)
+        EditTools.SetCell(cellTitrePPS, "PPS", 10,, Telerik.WinControls.RichTextEditor.UI.FontWeights.Bold)
+        rowTitre.Cells.Add(cellTitrePPS)
+
+        table.Rows.Add(rowTitre)
+
+        Dim PPSExiste As Boolean = False
 
         'Parcours du DataTable pour alimenter le DataGridView
         For i = 0 To rowCount Step 1
@@ -1165,18 +1235,6 @@ Public Class PrtSynthese
             AffichePPS = Replace(AffichePPS, vbTab, " ")
             AffichePPS = Replace(AffichePPS, vbCrLf, " ")
 
-            If PremierPassage = True Then
-                Dim rowTitre As New TableRow()
-
-                Dim cellTitrePPS As New TableCell()
-                cellTitrePPS.PreferredWidth = New TableWidthUnit(TableWidthUnitType.Fixed, LargeurCol1)
-                EditTools.SetCell(cellTitrePPS, "PPS", 10,, Telerik.WinControls.RichTextEditor.UI.FontWeights.Bold)
-                rowTitre.Cells.Add(cellTitrePPS)
-
-                table.Rows.Add(rowTitre)
-                PremierPassage = False
-            End If
-
             Dim row As New TableRow()
             Dim cellPPS As New TableCell()
             cellPPS.PreferredWidth = New TableWidthUnit(TableWidthUnitType.Fixed, LargeurCol1)
@@ -1187,7 +1245,18 @@ Public Class PrtSynthese
             End If
             row.Cells.Add(cellPPS)
             table.Rows.Add(row)
+
+            PPSExiste = True
         Next
+
+        If PPSExiste = False Then
+            Dim row As New TableRow()
+            Dim cellPPS As New TableCell()
+            cellPPS.PreferredWidth = New TableWidthUnit(TableWidthUnitType.Fixed, LargeurCol1)
+            EditTools.SetCell(cellPPS, "Pas de PPS pour ce patient", 10)
+            row.Cells.Add(cellPPS)
+            table.Rows.Add(row)
+        End If
 
         section.Blocks.Add(table)
         section.Blocks.Add(New Paragraph())
