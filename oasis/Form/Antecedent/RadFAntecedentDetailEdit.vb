@@ -101,10 +101,13 @@ Public Class RadFAntecedentDetailEdit
     Dim utilisateurHisto As Utilisateur = New Utilisateur()
     Dim Drc As New Drc()
     Dim drcdao As New DrcDao
+
     Dim AntecedentDao As New AntecedentDao
+
     Dim AntecedentHistoACreer As New AntecedentHisto
     Dim antecedentRead As New Antecedent
     Dim antecedentUpdate As New Antecedent
+
     Dim conxn As New SqlConnection(getConnectionString())
 
     Private Sub RadFAntecedentDetailEdit_Load(sender As Object, e As EventArgs) Handles MyBase.Load
@@ -130,6 +133,7 @@ Public Class RadFAntecedentDetailEdit
             EditMode = EnumEditMode.Creation
             EditAction = EnumAction.Creation
             RadBtnHistorique.Hide()
+            antecedentUpdate.PatientId = SelectedPatient.patientId
             'Dénomination DRC
             TxtDrcId.Text = Me.SelectedDrcId
             If Me.SelectedDrcId <> 0 Then
@@ -904,165 +908,31 @@ Public Class RadFAntecedentDetailEdit
     '==================================== Mise à jour de la base de données ======================
     '=============================================================================================
 
-    'Modification d'un antécédent en base de données
+    'Modification d'un antécédent
     Private Function ModificationAntecedent() As Boolean
-        Dim da As SqlDataAdapter = New SqlDataAdapter()
         Dim codeRetour As Boolean = True
 
-        Dim dateModification As Date = Date.Now.Date
-
-        Dim SQLstring As String = "update oasis.oa_antecedent set oa_antecedent_date_modification = @dateModification," &
-        " oa_antecedent_utilisateur_modification = @utilisateurModification, oa_antecedent_drc_id = @drcId, oa_antecedent_description = @description," &
-        " oa_antecedent_date_debut = @dateDebut, oa_antecedent_diagnostic = @diagnostic, oa_antecedent_statut_affichage = @publication," &
-        " oa_antecedent_ald_id = @aldId, oa_antecedent_ald_cim_10_id = @aldCim10Id, oa_antecedent_ald_valide = @aldValide, oa_antecedent_ald_date_debut = @aldDateDebut," &
-        " oa_antecedent_ald_date_fin = @aldDateFin, oa_antecedent_ald_demande_en_cours = @aldDemandeEnCours, oa_antecedent_ald_demande_date = @aldDateDemande" &
-        " where oa_antecedent_id = @antecedentId"
-
-        Dim cmd As New SqlCommand(SQLstring, conxn)
-
-        'Diagnostic
-        Dim Diagnostic As Integer
-        If ChkDiagnosticConfirme.Checked = True Then
-            Diagnostic = 1
-        Else
-            If ChkDiagnosticSuspecte.Checked = True Then
-                Diagnostic = 2
-            Else
-                If ChkDiagnosticNotion.Checked = True Then
-                    Diagnostic = 3
-                End If
-            End If
-        End If
-
-        'Définition publication
-        Dim Publication As String
-        If ChkCache.Checked = True Then
-            Publication = "C"
-        Else
-            If ChkOcculte.Checked = True Then
-                Publication = "O"
-            Else
-                Publication = "P"
-            End If
-        End If
-
-        If antecedentUpdate.AldId = 0 Then
-            antecedentUpdate.AldCim10Id = 0
-            antecedentUpdate.AldValide = False
-            antecedentUpdate.AldDemandeEnCours = False
-        End If
-
-        If antecedentUpdate.AldValide = False Then
-            antecedentUpdate.AldDateDebut = Date.MaxValue
-            antecedentUpdate.AldDateFin = Date.MaxValue
-        End If
-
-        If antecedentUpdate.AldDemandeEnCours = False Then
-            antecedentUpdate.AldDateDemande = Date.MaxValue
-        End If
-
-        With cmd.Parameters
-            .AddWithValue("@utilisateurModification", userLog.UtilisateurId.ToString)
-            .AddWithValue("@dateModification", DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss"))
-            .AddWithValue("@drcId", TxtDrcId.Text)
-            .AddWithValue("@description", TxtAntecedentDescription.Text)
-            .AddWithValue("@dateDebut", DteDateDebut.Value)
-            .AddWithValue("@diagnostic", Diagnostic)
-            .AddWithValue("@publication", Publication)
-            .AddWithValue("@antecedentId", SelectedAntecedentId.ToString)
-            .AddWithValue("@aldId", antecedentUpdate.AldId)
-            .AddWithValue("@aldCim10Id", antecedentUpdate.AldCim10Id)
-            .AddWithValue("@aldValide", antecedentUpdate.AldValide)
-            .AddWithValue("@aldDateDebut", antecedentUpdate.AldDateDebut)
-            .AddWithValue("@aldDateFin", antecedentUpdate.AldDateFin)
-            .AddWithValue("@alddemandeEnCours", antecedentUpdate.AldDemandeEnCours)
-            .AddWithValue("@aldDateDemande", antecedentUpdate.AldDateDemande)
-        End With
-
-        Try
-            conxn.Open()
-            da.UpdateCommand = cmd
-            da.UpdateCommand.ExecuteNonQuery()
+        If AntecedentDao.ModificationAntecedent(antecedentUpdate, antecedentRead) = True Then
             Dim form As New RadFNotification()
             form.Message = "Antécédent patient modifié"
             form.Show()
-        Catch ex As Exception
-            'PgbMiseAJour.Hide()
-            MessageBox.Show(ex.Message)
+        Else
             codeRetour = False
-        Finally
-            conxn.Close()
-        End Try
-
-        If codeRetour = True Then
-            'Mise à jour des données modifiées dans l'instance de la classe Historisation antecedent
-            AntecedentHistoACreer.HistorisationDate = Date.Now()
-            AntecedentHistoACreer.UtilisateurId = userLog.UtilisateurId
-            AntecedentHistoACreer.Etat = AntecedentHistoCreationDao.EnumEtatAntecedentHisto.ModificationAntecedent
-            AntecedentHistoACreer.DrcId = TxtDrcId.Text
-            AntecedentHistoACreer.Description = TxtAntecedentDescription.Text
-            AntecedentHistoACreer.DateDebut = DteDateDebut.Value
-            AntecedentHistoACreer.Diagnostic = Diagnostic
-            AntecedentHistoACreer.AldId = antecedentUpdate.AldId
-            AntecedentHistoACreer.AldCim10Id = antecedentUpdate.AldCim10Id
-            AntecedentHistoACreer.AldValide = antecedentUpdate.AldValide
-            AntecedentHistoACreer.AldDateDebut = antecedentUpdate.AldDateDebut
-            AntecedentHistoACreer.AldDateFin = antecedentUpdate.AldDateFin
-            AntecedentHistoACreer.AldDemandeEnCours = antecedentUpdate.AldDemandeEnCours
-            AntecedentHistoACreer.AldDateDemande = antecedentUpdate.AldDateDemande
-
-            'Création dans l'historique des modifications de l'antecedent
-            AntecedentHistoCreationDao.CreationAntecedentHisto(AntecedentHistoACreer, userLog, AntecedentHistoCreationDao.EnumEtatAntecedentHisto.ModificationAntecedent)
-
-            'Mise à jour de la date de mise à jour de la synthèse (table patient)
-            PatientDao.ModificationDateMajSynthesePatient(SelectedPatient.patientId)
         End If
 
         Return codeRetour
     End Function
 
-    'Annulation d'un antécédent en base de données
+    'Annulation d'un antécédent
     Private Function AnnulationAntecedent() As Boolean
-        Dim da As SqlDataAdapter = New SqlDataAdapter()
         Dim codeRetour As Boolean = True
 
-        Dim dateModification As Date = Date.Now.Date
-
-        Dim SQLstring As String = "update oasis.oa_antecedent set oa_antecedent_date_modification = @dateModification," &
-        " oa_antecedent_utilisateur_modification = @utilisateurModification, oa_antecedent_inactif = @inactif where oa_antecedent_id = @antecedentId"
-
-        Dim cmd As New SqlCommand(SQLstring, conxn)
-
-        With cmd.Parameters
-            .AddWithValue("@utilisateurModification", userLog.UtilisateurId.ToString)
-            .AddWithValue("@dateModification", DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss"))
-            .AddWithValue("@inactif", "1")
-            .AddWithValue("@antecedentId", SelectedAntecedentId.ToString)
-        End With
-
-        Try
-            conxn.Open()
-            da.UpdateCommand = cmd
-            da.UpdateCommand.ExecuteNonQuery()
-        Catch ex As Exception
-            MessageBox.Show(ex.Message)
+        If AntecedentDao.AnnulationAntecedent(antecedentUpdate, antecedentRead) = True Then
+            Dim form As New RadFNotification()
+            form.Message = "Antécédent patient annulé"
+            form.Show()
+        Else
             codeRetour = False
-        Finally
-            conxn.Close()
-        End Try
-
-        If codeRetour = True Then
-            'Mise à jour des données modifiées dans l'instance de la classe Historisation antecedent
-            AntecedentHistoACreer.HistorisationDate = Date.Now()
-            AntecedentHistoACreer.UtilisateurId = userLog.UtilisateurId
-            AntecedentHistoACreer.Etat = AntecedentHistoCreationDao.EnumEtatAntecedentHisto.AnnulationAntecedent
-            AntecedentHistoACreer.Inactif = True
-
-            'Création dans l'historique des modifications de l'antecedent
-            AntecedentHistoCreationDao.CreationAntecedentHisto(AntecedentHistoACreer, userLog, AntecedentHistoCreationDao.EnumEtatAntecedentHisto.AnnulationAntecedent)
-
-            'Mise à jour de la date de mise à jour de la synthèse (table patient)
-            PatientDao.ModificationDateMajSynthesePatient(SelectedPatient.patientId)
         End If
 
         Return codeRetour
@@ -1070,189 +940,19 @@ Public Class RadFAntecedentDetailEdit
 
     'Création d'un antecedent en base de données
     Private Function CreationAntecedent() As Boolean
-        Dim da As SqlDataAdapter = New SqlDataAdapter()
         Dim codeRetour As Boolean = True
-        Dim antecedentId As Long
 
-        'Définition publication
-        Dim Publication As String
-        If ChkCache.Checked = True Then
-            Publication = "C"
-        Else
-            If ChkOcculte.Checked = True Then
-                Publication = "O"
-            Else
-                Publication = "P"
-            End If
-        End If
-
-        Dim dateCreation As Date = Date.Now.Date
-
-        Dim SQLstring As String = "insert into oasis.oa_antecedent (oa_antecedent_patient_id, oa_antecedent_type, oa_antecedent_drc_id, oa_antecedent_description," &
-        " oa_antecedent_date_creation, oa_antecedent_utilisateur_creation, oa_antecedent_utilisateur_modification, oa_antecedent_date_debut, oa_antecedent_niveau," &
-        " oa_antecedent_nature, oa_antecedent_statut_affichage, oa_antecedent_inactif, oa_antecedent_ordre_affichage1, oa_antecedent_ordre_affichage2," &
-        " oa_antecedent_ordre_affichage3, oa_antecedent_diagnostic," &
-        " oa_antecedent_ald_id, oa_antecedent_ald_cim_10_id, oa_antecedent_ald_valide, oa_antecedent_ald_date_debut," &
-        " oa_antecedent_ald_date_fin, oa_antecedent_ald_demande_en_cours, oa_antecedent_ald_demande_date)" &
-        " VALUES (@patientId, @type, @drcId, @description, @dateCreation, @utilisateurCreation," &
-        " @utilisateurModification, @dateDebut, @niveau, @nature, @publication, @inactif, @ordreAffichage1, @ordreAffichage2, @ordreAffichage3, @diagnostic," &
-        " @aldId, @aldCim10Id, @aldValide, @aldDateDebut, @aldDateFin, @aldDemandeEnCours, @aldDateDemande); SELECT SCOPE_IDENTITY()"
-
-        Dim cmd As New SqlCommand(SQLstring, conxn)
-
-        Dim Diagnostic As Integer
-        If ChkDiagnosticConfirme.Checked = True Then
-            Diagnostic = 1
-        Else
-            If ChkDiagnosticSuspecte.Checked = True Then
-                Diagnostic = 2
-            Else
-                If ChkDiagnosticNotion.Checked = True Then
-                    Diagnostic = 3
-                End If
-            End If
-        End If
-
-        If antecedentUpdate.AldId = 0 Then
-            antecedentUpdate.AldCim10Id = 0
-            antecedentUpdate.AldValide = False
-            antecedentUpdate.AldDemandeEnCours = False
-        End If
-
-        If antecedentUpdate.AldValide = False Then
-            antecedentUpdate.AldDateDebut = Date.MaxValue
-            antecedentUpdate.AldDateFin = Date.MaxValue
-        End If
-
-        If antecedentUpdate.AldDemandeEnCours = False Then
-            antecedentUpdate.AldDateDemande = Date.MaxValue
-        End If
-
-        With cmd.Parameters
-            .AddWithValue("@patientId", SelectedPatient.patientId.ToString)
-            .AddWithValue("@type", "A")
-            .AddWithValue("@drcId", TxtDrcId.Text)
-            .AddWithValue("@description", TxtAntecedentDescription.Text)
-            .AddWithValue("@dateCreation", DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss"))
-            .AddWithValue("@utilisateurCreation", userLog.UtilisateurId.ToString)
-            .AddWithValue("@utilisateurModification", 0)
-            .AddWithValue("@dateDebut", DteDateDebut.Value.ToString("yyyy-MM-dd"))
-            .AddWithValue("@niveau", 1)
-            .AddWithValue("@nature", "Patient")
-            .AddWithValue("@publication", Publication)
-            .AddWithValue("@inactif", 0)
-            .AddWithValue("@ordreAffichage1", 980)
-            .AddWithValue("@ordreAffichage2", 0)
-            .AddWithValue("@ordreAffichage3", 0)
-            .AddWithValue("@diagnostic", Diagnostic)
-            .AddWithValue("@aldId", antecedentUpdate.AldId)
-            .AddWithValue("@aldCim10Id", antecedentUpdate.AldCim10Id)
-            .AddWithValue("@aldValide", antecedentUpdate.AldValide)
-            .AddWithValue("@aldDateDebut", antecedentUpdate.AldDateDebut)
-            .AddWithValue("@aldDateFin", antecedentUpdate.AldDateFin)
-            .AddWithValue("@aldDemandeEnCours", antecedentUpdate.AldDemandeEnCours)
-            .AddWithValue("@aldDateDemande", antecedentUpdate.AldDateDemande)
-        End With
-
-        Try
-            conxn.Open()
-            da.InsertCommand = cmd
-            antecedentId = da.InsertCommand.ExecuteScalar()
+        If AntecedentDao.CreationAntecedent(antecedentUpdate) = True Then
             Dim form As New RadFNotification()
-            form.Message = "Antecedent patient créé"
+            form.Message = "Antécédent patient créé"
             form.Show()
-        Catch ex As Exception
-            MessageBox.Show(ex.Message)
+        Else
             codeRetour = False
-        Finally
-            conxn.Close()
-        End Try
-
-        If codeRetour = True Then
-            'Mise à jour des données dans l'instance de la classe Historisation antecedent
-            AntecedentHistoACreer.AntecedentId = antecedentId 'Récupération de l'id créé
-            AntecedentHistoACreer.HistorisationDate = DateTime.Now()
-            AntecedentHistoACreer.UtilisateurId = userLog.UtilisateurId
-            AntecedentHistoACreer.Etat = AntecedentHistoCreationDao.EnumEtatAntecedentHisto.CreationAntecedent
-            AntecedentHistoACreer.PatientId = SelectedPatient.patientId.ToString
-            AntecedentHistoACreer.Type = "A"
-            AntecedentHistoACreer.Description = TxtAntecedentDescription.Text
-            AntecedentHistoACreer.DateDebut = DteDateDebut.Value.ToString("yyyy-MM-dd")
-            AntecedentHistoACreer.Niveau = 1
-            AntecedentHistoACreer.Nature = "Patient"
-            AntecedentHistoACreer.StatutAffichage = Publication
-            AntecedentHistoACreer.Inactif = 0
-            AntecedentHistoACreer.Ordre1 = 980
-            AntecedentHistoACreer.Ordre2 = 0
-            AntecedentHistoACreer.Ordre3 = 0
-            AntecedentHistoACreer.Diagnostic = Diagnostic
-            AntecedentHistoACreer.AldId = antecedentUpdate.AldId
-            AntecedentHistoACreer.AldCim10Id = antecedentUpdate.AldCim10Id
-            AntecedentHistoACreer.AldValide = antecedentUpdate.AldValide
-            AntecedentHistoACreer.AldDateDebut = antecedentUpdate.AldDateDebut
-            AntecedentHistoACreer.AldDateFin = antecedentUpdate.AldDateFin
-            AntecedentHistoACreer.AldDemandeEnCours = antecedentUpdate.AldDemandeEnCours
-            AntecedentHistoACreer.AldDateDemande = antecedentUpdate.AldDateDemande
-
-            'Lecture de l'antecedent créé avec toutes ses données pour communiquer le DataReader à la fonction dédiée
-            Dim antecedentCreeDataReader As SqlDataReader
-            SQLstring = "Select * from oasis.oa_antecedent where oa_antecedent_id = " & AntecedentHistoACreer.AntecedentId & ";"
-            Dim antecedentCreeCommand As New SqlCommand(SQLstring, conxn)
-            conxn.Open()
-            antecedentCreeDataReader = antecedentCreeCommand.ExecuteReader()
-            If antecedentCreeDataReader.Read() Then
-                'Initialisation classe Historisation antecedent 
-                AntecedentHistoCreationDao.InitClasseAntecedentHistorisation(antecedentCreeDataReader, userLog, AntecedentHistoACreer)
-
-                'Libération des ressources d'accès aux données
-                conxn.Close()
-                antecedentCreeCommand.Dispose()
-            End If
-
-            'Création dans l'historique des antecedents du antecedent créé
-            AntecedentHistoCreationDao.CreationAntecedentHisto(AntecedentHistoACreer, userLog, AntecedentHistoCreationDao.EnumEtatAntecedentHisto.CreationAntecedent)
-
-            'Mise à jour de la date de mise à jour de la synthèse (table patient)
-            PatientDao.ModificationDateMajSynthesePatient(SelectedPatient.patientId)
         End If
 
         Return codeRetour
-
     End Function
 
-    'Occultation des antécédents liés à un antécédent réactivé 
-    Private Function TraitementOccultationAntecedentLies(AntecedentId As Integer) As Boolean
-        Dim codeRetour As Boolean = True
-        'Déclaration des données de connexion
-        Dim conxn As New SqlConnection(getConnectionString())
-        Dim antecedentDataAdapter As SqlDataAdapter = New SqlDataAdapter()
-        Dim antecedentDataTable As DataTable = New DataTable()
-        Dim SQLString As String
-
-        SQLString = "Select oa_antecedent_id from oasis.oa_antecedent where oa_antecedent_type = 'A' and (oa_antecedent_id_niveau1 = " & AntecedentId.ToString &
-            " or oa_antecedent_id_niveau2 = " + AntecedentId.ToString + ");"
-
-        'Lecture des données en base
-        antecedentDataAdapter.SelectCommand = New SqlCommand(SQLString, conxn)
-        antecedentDataAdapter.Fill(antecedentDataTable)
-        conxn.Open()
-
-        'Déclaration des variables pour réaliser le parcours du DataTable pour alimenter le DataGridView
-        Dim i As Integer
-        Dim rowCount As Integer = antecedentDataTable.Rows.Count - 1
-
-        'Parcours du DataTable pour réactiver les antécédents liés
-        For i = 0 To rowCount Step 1
-            'Traitement de réactivation des antécédents liés
-            ModificationPublicationAntecedent(antecedentDataTable.Rows(i)("oa_antecedent_id"), "O")
-        Next
-
-        'Libération des ressources
-        conxn.Close()
-        antecedentDataAdapter.Dispose()
-
-        Return codeRetour
-    End Function
 
     '=============================================================================================
     '==================================== Gestion de l'affichage des zones d'écran ===============
@@ -1323,10 +1023,6 @@ Public Class RadFAntecedentDetailEdit
         End If
     End Sub
 
-    '=======================================================================
-    '==========================Code Obsolète================================
-    '=======================================================================
-
     'Inhiber les zones de saisie
     Private Sub InhiberZonesDeSaisie()
         TxtDrcId.Enabled = False
@@ -1342,107 +1038,10 @@ Public Class RadFAntecedentDetailEdit
         RadBtnDrcSelect.Enabled = False
     End Sub
 
-    'Réactivation des antécédents liés à un antécédent réactivé
-    Private Function TraitementReactivationAntecedentLies(AntecedentId As Integer) As Boolean
-        Dim codeRetour As Boolean = True
-        'Déclaration des données de connexion
-        Dim conxn As New SqlConnection(getConnectionString())
-        Dim antecedentDataAdapter As SqlDataAdapter = New SqlDataAdapter()
-        Dim antecedentDataTable As DataTable = New DataTable()
-        Dim SQLString As String
-
-        SQLString = "select oasis.oa_antecedent_id from oasis.oa_antecedent where oa_antecedent_type = 'A' and" &
-        " (oa_antecedent_id_niveau1 = " + AntecedentId.ToString + " Or oa_antecedent_id_niveau2 = " + AntecedentId.ToString + ");"
-
-        'Lecture des données en base
-        antecedentDataAdapter.SelectCommand = New SqlCommand(SQLString, conxn)
-        antecedentDataAdapter.Fill(antecedentDataTable)
-        conxn.Open()
-
-        'Déclaration des variables pour réaliser le parcours du DataTable pour alimenter le DataGridView
-        Dim i As Integer
-        Dim rowCount As Integer = antecedentDataTable.Rows.Count - 1
-
-        'Parcours du DataTable pour réactiver les antécédents liés
-        For i = 0 To rowCount Step 1
-            'Traitement de réactivation des antécédents liés
-            ReactivationAntecedent(antecedentDataTable.Rows(i)("oa_antecedent_id"))
-        Next
-
-        'Libération des ressources
-        conxn.Close()
-        antecedentDataAdapter.Dispose()
-
-        Return codeRetour
-    End Function
-    'Réactivation d'un antécédent en contexte médical
-    Private Function ReactivationAntecedent(antecedentId As Integer) As Boolean
-        Dim da As SqlDataAdapter = New SqlDataAdapter()
-        Dim codeRetour As Boolean = True
-
-        Dim dateModification As Date = Date.Now.Date
-
-        Dim SQLstring As String = "update oasis.oa_antecedent set oa_antecedent_type = 'C', oa_antecedent_date_modification = @dateModification," &
-        " oa_antecedent_utilisateur_modification = @utilisateurModification, oa_antecedent_date_fin = @dateFin, oa_antecedent_nature = @nature," &
-        " oa_antecedent_priorite = @priorite, oa_antecedent_niveau = @niveau, oa_antecedent_id_niveau1 = @idNiveau1, oa_antecedent_id_niveau2 = @idNiveau2," &
-        " oa_antecedent_ordre_affichage1 = @ordreAffichage1, oa_antecedent_ordre_affichage2 = @ordreAffichage2, oa_antecedent_ordre_affichage3 = @ordreAffichage3" &
-        " where oa_antecedent_id = @antecedentId"
-
-        Dim cmd As New SqlCommand(SQLstring, conxn)
-
-        With cmd.Parameters
-            .AddWithValue("@utilisateurModification", userLog.UtilisateurId.ToString)
-            .AddWithValue("@dateModification", DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss"))
-            .AddWithValue("@dateFin", New Date(2999, 12, 31, 0, 0, 0).ToString("yyyy-MM-dd HH:mm:ss"))
-            .AddWithValue("@nature", "")
-            .AddWithValue("@priorite", 0)
-            .AddWithValue("@niveau", 1)
-            .AddWithValue("@idNiveau1", 0)
-            .AddWithValue("@idNiveau2", 0)
-            .AddWithValue("@ordreAffichage1", 990)
-            .AddWithValue("@ordreAffichage2", 0)
-            .AddWithValue("@ordreAffichage3", 0)
-            .AddWithValue("@antecedentId", antecedentId.ToString)
-        End With
-
-        Try
-            conxn.Open()
-            da.UpdateCommand = cmd
-            da.UpdateCommand.ExecuteNonQuery()
-        Catch ex As Exception
-            MessageBox.Show(ex.Message)
-            codeRetour = False
-        Finally
-            conxn.Close()
-        End Try
-
-        If codeRetour = True Then
-            'Mise à jour des données modifiées dans l'instance de la classe Historisation antecedent
-            AntecedentHistoACreer.HistorisationDate = Date.Now()
-            AntecedentHistoACreer.Type = "C"
-            AntecedentHistoACreer.UtilisateurId = userLog.UtilisateurId
-            AntecedentHistoACreer.Etat = AntecedentHistoCreationDao.EnumEtatAntecedentHisto.ReactivationAntecedent
-            AntecedentHistoACreer.Nature = ""
-            AntecedentHistoACreer.Niveau = 1
-            AntecedentHistoACreer.Niveau1Id = 0
-            AntecedentHistoACreer.Niveau2Id = 0
-            AntecedentHistoACreer.Ordre1 = 980
-            AntecedentHistoACreer.Ordre2 = 0
-            AntecedentHistoACreer.Ordre3 = 0
-
-            'Création dans l'historique des modifications de l'antecedent
-            AntecedentHistoCreationDao.CreationAntecedentHisto(AntecedentHistoACreer, userLog, AntecedentHistoCreationDao.EnumEtatAntecedentHisto.ReactivationAntecedent)
-
-            'Mise à jour de la date de mise à jour de la synthèse (table patient)
-            PatientDao.ModificationDateMajSynthesePatient(SelectedPatient.patientId)
-        End If
-
-        Return codeRetour
-    End Function
-
     Private Sub RadBtnHistorique_Click(sender As Object, e As EventArgs) Handles RadBtnHistorique.Click
         Me.Enabled = False
         Cursor.Current = Cursors.WaitCursor
+
         Try
             Using vFAntecedenttHistoListe As New RadFAntecedentHistoListe
                 vFAntecedenttHistoListe.SelectedAntecedentId = SelectedAntecedentId
@@ -1453,56 +1052,8 @@ Public Class RadFAntecedentDetailEdit
         Catch ex As Exception
             MsgBox(ex.Message())
         End Try
+
         Me.Enabled = True
     End Sub
-
-
-    'Modification de la publication d'un antécédent en base de données
-    Private Function ModificationPublicationAntecedent(antecedentId As Integer, publication As String) As Boolean
-        Dim da As SqlDataAdapter = New SqlDataAdapter()
-        Dim codeRetour As Boolean = True
-
-        Dim dateModification As Date = Date.Now.Date
-
-        Dim SQLstring As String = "update oasis.oa_antecedent set oa_antecedent_date_modification = @dateModification," &
-        " oa_antecedent_utilisateur_modification = @utilisateurModification, oa_antecedent_statut_affichage = @publication" &
-        " where oa_antecedent_id = @antecedentId"
-
-        Dim cmd As New SqlCommand(SQLstring, conxn)
-
-        With cmd.Parameters
-            .AddWithValue("@utilisateurModification", userLog.UtilisateurId.ToString)
-            .AddWithValue("@dateModification", DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss"))
-            .AddWithValue("@publication", publication)
-            .AddWithValue("@antecedentId", antecedentId.ToString)
-        End With
-
-        Try
-            conxn.Open()
-            da.UpdateCommand = cmd
-            da.UpdateCommand.ExecuteNonQuery()
-        Catch ex As Exception
-            MessageBox.Show(ex.Message)
-            codeRetour = False
-        Finally
-            conxn.Close()
-        End Try
-
-        If codeRetour = True Then
-            'Mise à jour des données modifiées dans l'instance de la classe Historisation antecedent
-            AntecedentHistoACreer.HistorisationDate = Date.Now()
-            AntecedentHistoACreer.UtilisateurId = userLog.UtilisateurId
-            AntecedentHistoACreer.Etat = AntecedentHistoCreationDao.EnumEtatAntecedentHisto.ModificationAntecedent
-            AntecedentHistoACreer.StatutAffichage = publication
-
-            'Création dans l'historique des modifications de l'antecedent
-            AntecedentHistoCreationDao.CreationAntecedentHisto(AntecedentHistoACreer, userLog, AntecedentHistoCreationDao.EnumEtatAntecedentHisto.ModificationAntecedent)
-
-            'Mise à jour de la date de mise à jour de la synthèse (table patient)
-            PatientDao.ModificationDateMajSynthesePatient(SelectedPatient.patientId)
-        End If
-
-        Return codeRetour
-    End Function
 
 End Class

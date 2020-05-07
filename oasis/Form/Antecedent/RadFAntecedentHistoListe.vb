@@ -302,7 +302,12 @@ Public Class RadFAntecedentHistoListe
             CategorieContexteComp = CategorieContexteString
 
             'Date début
-            RadAntecedentDataGridView.Rows(iGrid).Cells("dateDebut").Value = dateDebut.ToString("dd.MM.yyyy")
+            Dim MinDate As New Date(1753, 1, 1, 0, 0, 0)
+            If dateDebut = Nothing Or dateDebut = MinDate Then
+                RadAntecedentDataGridView.Rows(iGrid).Cells("dateDebut").Value = "-"
+            Else
+                RadAntecedentDataGridView.Rows(iGrid).Cells("dateDebut").Value = dateDebut.ToString("dd.MM.yyyy")
+            End If
             If dateDebut <> DateDebutComp And premierPassage = False Then
                 RadAntecedentDataGridView.Rows(iGrid).Cells("dateDebut").Style.ForeColor = Color.Red
             End If
@@ -316,7 +321,7 @@ Public Class RadFAntecedentHistoListe
                 End If
                 DateFinComp = dateFin
             Else
-                RadAntecedentDataGridView.Rows(iGrid).Cells("dateFin").Value = ""
+                RadAntecedentDataGridView.Rows(iGrid).Cells("dateFin").Value = "-"
             End If
 
             'Publication
@@ -363,7 +368,7 @@ Public Class RadFAntecedentHistoListe
 
                 AldDateDebut = Coalesce(antecedentHistoDataTable.Rows(i)("oa_antecedent_ald_date_debut"), Nothing)
                 If AldDateDebut.Date = MaxDate.Date Or AldDateDebut.Date = Nothing Then
-                    RadAntecedentDataGridView.Rows(iGrid).Cells("oa_antecedent_ald_date_debut").Value = ""
+                    RadAntecedentDataGridView.Rows(iGrid).Cells("oa_antecedent_ald_date_debut").Value = "-"
                 Else
                     RadAntecedentDataGridView.Rows(iGrid).Cells("oa_antecedent_ald_date_debut").Value = AldDateDebut.ToString("dd.MM.yyyy")
                 End If
@@ -374,7 +379,7 @@ Public Class RadFAntecedentHistoListe
 
                 AldDateFin = Coalesce(antecedentHistoDataTable.Rows(i)("oa_antecedent_ald_date_fin"), Nothing)
                 If AldDateFin.Date = MaxDate.Date Or AldDateFin.Date = Nothing Then
-                    RadAntecedentDataGridView.Rows(iGrid).Cells("oa_antecedent_ald_date_fin").Value = ""
+                    RadAntecedentDataGridView.Rows(iGrid).Cells("oa_antecedent_ald_date_fin").Value = "-"
                 Else
                     RadAntecedentDataGridView.Rows(iGrid).Cells("oa_antecedent_ald_date_fin").Value = AldDateFin.ToString("dd.MM.yyyy")
                 End If
@@ -396,7 +401,7 @@ Public Class RadFAntecedentHistoListe
 
                 AldDemandeDate = Coalesce(antecedentHistoDataTable.Rows(i)("oa_antecedent_ald_demande_date"), Nothing)
                 If AldDemandeDate.Date = MaxDate.Date Or AldDemandeDate.Date = Nothing Then
-                    RadAntecedentDataGridView.Rows(iGrid).Cells("oa_antecedent_ald_demande_date").Value = ""
+                    RadAntecedentDataGridView.Rows(iGrid).Cells("oa_antecedent_ald_demande_date").Value = "-"
                 Else
                     RadAntecedentDataGridView.Rows(iGrid).Cells("oa_antecedent_ald_demande_date").Value = AldDemandeDate.ToString("dd.MM.yyyy")
                 End If
