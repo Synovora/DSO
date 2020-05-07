@@ -75,8 +75,8 @@ Public Class RadFPPSDetailEdit
     Dim PPSDesignation As String
     Dim SousCategoriePPs As Integer
 
-    Dim PPSRead As Pps
-    Dim PPSUpdate As Pps
+    Dim PPSRead As New Pps
+    Dim PPSUpdate As New Pps
 
     Dim ppsDao As New PpsDao
     Dim drcdao As New DrcDao
@@ -358,6 +358,8 @@ Public Class RadFPPSDetailEdit
         PPSUpdate.CategorieId = CategoriePPS
         If CategoriePPS = EnumCategoriePPS.Strategie Then
             PPSUpdate.SousCategorieId = DeterminationTypeStrategie()
+        Else
+            PPSUpdate.SousCategorieId = SousCategoriePPs
         End If
         PPSUpdate.DrcId = TxtDrcId.Text
         PPSUpdate.Priorite = NumPriorite.Value
