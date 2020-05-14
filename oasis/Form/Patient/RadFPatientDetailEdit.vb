@@ -61,149 +61,49 @@ Public Class RadFPatientDetailEdit
     End Enum
 
     Dim EditMode As Integer
-    Dim utilisateurHisto As Utilisateur = New Utilisateur()
+
+    Dim patientUpdate As New Patient
+    Dim patientRead As New Patient
+
     Dim rorDao As New RorDao
+
+    Dim utilisateurHisto As Utilisateur = New Utilisateur()
     Dim ror As Ror
     Dim PharmacienRorId As Integer = 0
 
-    Dim conxn As New SqlConnection(getConnectionString())
     Dim uniteSanitaireListe As Dictionary(Of Integer, String) = Table_unite_sanitaire.GetUniteSanitaireListe()
     Dim genreListe As Dictionary(Of String, String) = Table_genre.GetGenreListe()
+
     Private Sub RadFPatientDetailEdit_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         RadGridLocalizationProvider.CurrentProvider = New FrenchRadGridViewLocalizationProvider()
 
         InitZone()
         InitAction()
         If SelectedPatientId <> 0 Then
+            'Modification
             EditMode = EnumEditMode.Modification
             RadBtnValidationDateNaissance.Hide()
             ChargementPatient()
             ChargementNotesPatient()
             InhiberZoneEnSaisie()
         Else
+            'Création
             InhiberZoneEnSaisie()
-            DteDateNaissance.Enabled = True
-
             EditMode = EnumEditMode.Creation
+            DteDateNaissance.Enabled = True
             LblIdentifiantOasis.Hide()
             LblLabelIdOasis.Hide()
             RadBtnModifier.Hide()
             RadBtnSortieOasis.Hide()
             RadBtnValider.Show()
             RadBtnValider.Enabled = True
+            RadBtnAnnulerAction.Hide()
             RadNotePatientDataGridView.Hide()
             NoteContextMenuStrip.Enabled = False
             Me.Width = 590
         End If
     End Sub
-    'Chargement de la Grid Notes patient
-    Private Sub ChargementNotesPatient()
-        Dim conxn As New SqlConnection(getConnectionString())
-        Dim notePatientDataAdapter As SqlDataAdapter = New SqlDataAdapter()
-        Dim NotePatientDataTable As DataTable = New DataTable()
-        Dim SQLString As String
 
-        SQLString = "select * from oasis.oa_patient_note where (oa_patient_note_invalide = '0' or oa_patient_note_invalide is Null)" &
-            " And oa_patient_id = " + SelectedPatient.patientId.ToString + " order by oa_patient_note_date_creation desc;"
-
-        'Lecture des données en base
-        'notePatientDataAdapter.SelectCommand = New MySqlCommand(SQLString, conxn)
-        notePatientDataAdapter.SelectCommand = New SqlCommand(SQLString, conxn)
-        notePatientDataAdapter.Fill(NotePatientDataTable)
-        conxn.Open()
-
-        'Déclaration des variables pour réaliser le parcours du DataTable pour alimenter le DataGridView
-        Dim i As Integer
-        Dim iGrid As Integer = -1 'Indice pour alimenter la Grid qui peut comporter moins d'occurrences que le DataTable
-        Dim dateCreation As Date
-        Dim AfficheDateCreation, NotePatient, Auteur As String
-        Dim AuteurId As Integer
-        Dim rowCount As Integer = NotePatientDataTable.Rows.Count - 1
-
-        'Parcours du DataTable pour alimenter le DataGridView
-        For i = 0 To rowCount Step 1
-            If NotePatientDataTable.Rows(i)("oa_patient_note") IsNot DBNull.Value Then
-                NotePatient = NotePatientDataTable.Rows(i)("oa_patient_note")
-            Else
-                NotePatient = ""
-            End If
-
-            'Utilisateur creation
-            Auteur = ""
-            If NotePatientDataTable.Rows(i)("oa_patient_note_utilisateur_creation") IsNot DBNull.Value Then
-                If NotePatientDataTable.Rows(i)("oa_patient_note_utilisateur_creation") <> 0 Then
-                    'Dim UtilisateurCreation = New Utilisateur()
-                    Dim userDao As New UserDao
-                    utilisateurHisto = userDao.getUserById(NotePatientDataTable.Rows(i)("oa_patient_note_utilisateur_creation"))
-                    'SetUtilisateur(utilisateurHisto, NotePatientDataTable.Rows(i)("oa_patient_note_utilisateur_creation"))
-                    Auteur = Me.utilisateurHisto.UtilisateurPrenom & " " & Me.utilisateurHisto.UtilisateurNom
-                End If
-            End If
-
-            'Date création
-            AfficheDateCreation = ""
-            If NotePatientDataTable.Rows(i)("oa_patient_note_date_creation") IsNot DBNull.Value Then
-                dateCreation = NotePatientDataTable.Rows(i)("oa_patient_note_date_creation")
-                AfficheDateCreation = outils.FormatageDateAffichage(dateCreation)
-            Else
-                If NotePatientDataTable.Rows(i)("oa_patient_note_date_creation") IsNot DBNull.Value Then
-                    dateCreation = NotePatientDataTable.Rows(i)("oa_patient_note_date_creation")
-                    AfficheDateCreation = outils.FormatageDateAffichage(dateCreation)
-                End If
-            End If
-
-            AuteurId = 0
-            If NotePatientDataTable.Rows(i)("oa_patient_note_utilisateur_creation") IsNot DBNull.Value Then
-                AuteurId = NotePatientDataTable.Rows(i)("oa_patient_note_utilisateur_creation")
-            End If
-
-            'Ajout d'une ligne au DataGridView
-            iGrid += 1
-            RadNotePatientDataGridView.AutoSizeRows = True
-            RadNotePatientDataGridView.Rows.Add(iGrid)
-
-            'Alimentation du DataGridView
-            'RadNotePatientDataGridView("note", iGrid).Value = NotePatient
-            RadNotePatientDataGridView.Rows(iGrid).Cells("note").Value = NotePatient
-
-            'Identifiant notePatient
-            'RadNotePatientDataGridView("noteId", iGrid).Value = NotePatientDataTable.Rows(i)("oa_patient_note_id")
-            RadNotePatientDataGridView.Rows(iGrid).Cells("noteId").Value = NotePatientDataTable.Rows(i)("oa_patient_note_id")
-
-            'Auteur de la note
-            'RadNotePatientDataGridView("auteur", iGrid).Value = Auteur & vbCrLf & AfficheDateCreation
-            RadNotePatientDataGridView.Rows(iGrid).Cells("auteur").Value = Auteur & vbCrLf & AfficheDateCreation
-        Next
-        conxn.Close()
-        notePatientDataAdapter.Dispose()
-
-        'Enlève le focus sur la première ligne de la Grid
-        If iGrid > -1 Then
-            Me.RadNotePatientDataGridView.Rows(0).IsSelected = True
-            Me.RadNotePatientDataGridView.Rows(0).IsCurrent = True
-            Me.RadNotePatientDataGridView.Rows(0).EnsureVisible()
-            'RadNotePatientDataGridView.ClearSelection()
-        End If
-
-    End Sub
-
-    Private Sub RadBtnGoogleMaps_Click(sender As Object, e As EventArgs) Handles RadBtnGoogleMaps.Click
-        Dim GoogleOK As Boolean = False
-        If TxtAdresse1.Text <> "" Then
-            If TxtCodePostal.Text <> "" Then
-                If TxtVille.Text <> "" Then
-                    'lancer l'URL pour afficher l'adresse dans Google Maps
-                    GoogleOK = True
-                    Dim MonURL As String
-                    MonURL = "http://www.google.fr/maps/place/" + TxtAdresse1.Text + " " + TxtCodePostal.Text + " " + TxtVille.Text
-                    Process.Start(MonURL)
-                End If
-            End If
-        End If
-        If GoogleOK = False Then
-            MessageBox.Show("L'adresse 1, le code postal et la ville doivent être renseignés pour lancer cette fonctionnalité")
-        End If
-    End Sub
 
     Private Sub InitZone()
         TxtPrenom.Text = ""
@@ -261,102 +161,137 @@ Public Class RadFPatientDetailEdit
         CbxUniteSanitaire.DataSource = uniteSanitaireDescription
     End Sub
 
-    Private Sub ChargementPatient()
-        LblIdentifiantOasis.Text = SelectedPatient.patientId
-        TxtPrenom.Text = SelectedPatient.PatientPrenom
-        TxtNom.Text = SelectedPatient.PatientNom
+    Private Sub InitAction()
+        RadBtnValider.Enabled = False
+        RadBtnSortieOasis.Enabled = True
+        RadBtnAnnulerAction.Hide()
 
-        If SelectedPatient.PatientDateNaissance < DteDateNaissance.MinDate Or SelectedPatient.PatientDateNaissance > DteDateNaissance.MaxDate Then
+        'Droits personnel non Médical, non Paramédical, non Accueil paramédical
+        If Not (userLog.TypeProfil = ProfilDao.EnumProfilType.MEDICAL.ToString OrElse
+            userLog.TypeProfil = ProfilDao.EnumProfilType.PARAMEDICAL.ToString OrElse
+            userLog.TypeProfil = ProfilDao.EnumProfilType.ACCUEIL.ToString) Then
+            RadBtnModifier.Hide()
+            RadBtnPharmacien.Hide()
+            RadBtnRDV.Hide()
+            RadBtnValidationDateNaissance.Hide()
+            RadBtnSortieOasis.Hide()
+            RadBtnValider.Hide()
+            BtnCreerNote.Hide()
+        End If
+    End Sub
+
+    'Chargement des données du patient
+    Private Sub ChargementPatient()
+        patientRead = PatientDao.GetPatientById(SelectedPatientId)
+        patientUpdate = PatientDao.ClonePatient(patientRead)
+
+        LblIdentifiantOasis.Text = patientUpdate.patientId
+        TxtPrenom.Text = patientUpdate.PatientPrenom
+        TxtNom.Text = patientUpdate.PatientNom
+
+        If patientUpdate.PatientDateNaissance < DteDateNaissance.MinDate Or patientUpdate.PatientDateNaissance > DteDateNaissance.MaxDate Then
             DteDateNaissance.Value = DteDateNaissance.MinDate
         Else
-            DteDateNaissance.Value = SelectedPatient.PatientDateNaissance
+            DteDateNaissance.Value = patientUpdate.PatientDateNaissance
             DteDateNaissance.Format = DateTimePickerFormat.Long
         End If
 
-        If SelectedPatient.PatientGenreId = "M" Then
+        If patientUpdate.PatientGenreId = "M" Then
             TxtNomMarital.Text = ""
             TxtNomMarital.Hide()
         End If
 
-        LblAge.Text = SelectedPatient.PatientAge
-        CbxGenre.SelectedItem = SelectedPatient.PatientGenre
-        TxtNIR.Text = SelectedPatient.PatientNir
-        TxtAdresse1.Text = SelectedPatient.PatientAdresse1
-        TxtAdresse2.Text = SelectedPatient.PatientAdresse2
-        TxtCodePostal.Text = SelectedPatient.PatientCodePostal
-        TxtVille.Text = SelectedPatient.PatientVille
+        LblAge.Text = patientUpdate.PatientAge
+        CbxGenre.SelectedItem = patientUpdate.PatientGenre
 
-        TxtTelFixe.Text = SelectedPatient.PatientTel1
+        TxtNIR.Text = patientUpdate.PatientNir
+        TxtINS.Text = patientUpdate.INS
 
-        TxtTelMobile.Text = SelectedPatient.PatientTel2
-        TxtEmail.Text = SelectedPatient.PatientEmail
+        TxtAdresse1.Text = patientUpdate.PatientAdresse1
+        TxtAdresse2.Text = patientUpdate.PatientAdresse2
+        TxtCodePostal.Text = patientUpdate.PatientCodePostal
+        TxtVille.Text = patientUpdate.PatientVille
 
-        TxtProfession.Text = SelectedPatient.Profession
-        PharmacienRorId = SelectedPatient.PharmacienId
-        If SelectedPatient.PharmacienId <> 0 Then
-            ror = rorDao.getRorById(SelectedPatient.PharmacienId)
+        TxtTelFixe.Text = patientUpdate.PatientTel1
+
+        TxtTelMobile.Text = patientUpdate.PatientTel2
+        TxtEmail.Text = patientUpdate.PatientEmail
+
+        TxtProfession.Text = patientUpdate.Profession
+        PharmacienRorId = patientUpdate.PharmacienId
+        If patientUpdate.PharmacienId <> 0 Then
+            ror = rorDao.getRorById(patientUpdate.PharmacienId)
             TxtPharmacien.Text = ror.Nom
         End If
 
-        Dim PatientgSiteDescription As String = Table_site.GetSiteDescription(SelectedPatient.PatientSiteId)
+        Dim PatientgSiteDescription As String = Table_site.GetSiteDescription(patientUpdate.PatientSiteId)
         CbxSite.SelectedItem = PatientgSiteDescription
 
-        Dim PatientgUniteSanitaireDescription As String = Table_unite_sanitaire.GetUniteSanitaireDescription(SelectedPatient.PatientUniteSanitaireId)
+        Dim PatientgUniteSanitaireDescription As String = Table_unite_sanitaire.GetUniteSanitaireDescription(patientUpdate.PatientUniteSanitaireId)
         CbxUniteSanitaire.SelectedItem = PatientgUniteSanitaireDescription
 
-        If SelectedPatient.PatientInternet = True Then
+        If patientUpdate.PatientInternet = True Then
             ChkCouvertureInternet.Checked = True
         Else
             ChkCouvertureInternet.Checked = False
         End If
 
         'Date entrée
-        If SelectedPatient.PatientDateEntree > DteDateEntree.MaxDate Then
+        If patientUpdate.PatientDateEntree > DteDateEntree.MaxDate Then
             DteDateEntree.Value = DteDateEntree.MaxDate
         Else
-            If SelectedPatient.PatientDateEntree < DteDateEntree.MinDate Then
+            If patientUpdate.PatientDateEntree < DteDateEntree.MinDate Then
                 DteDateEntree.Value = DteDateEntree.MaxDate
             Else
-                DteDateEntree.Value = SelectedPatient.PatientDateEntree
+                DteDateEntree.Value = patientUpdate.PatientDateEntree
             End If
         End If
         If DteDateEntree.Value <> DteDateEntree.MaxDate Then
             DteDateEntree.Format = DateTimePickerFormat.Long
+        Else
+            'Si le patient n'a pas de date d'entrée dans Oasis, on n'affiche pas le bouton de sortie
+            RadBtnSortieOasis.Hide()
         End If
 
         'Date sortie
-        If SelectedPatient.PatientDateSortie < DteDateSortie.MaxDate Then
-            DteDateSortie.Value = DteDateSortie.MaxDate
-        Else
-            DteDateSortie.Value = SelectedPatient.PatientDateSortie
-        End If
+        'If patientUpdate.PatientDateSortie = DteDateSortie.MaxDate Then
+        'DteDateSortie.Value = DteDateSortie.MaxDate
+        'Else
+        'DteDateSortie.Value = patientUpdate.PatientDateSortie
+        'End If
+        DteDateSortie.Value = Coalesce(patientUpdate.PatientDateSortie, DteDateSortie.MaxDate)
+
         If DteDateSortie.Value <> DteDateSortie.MaxDate Then
             DteDateSortie.Format = DateTimePickerFormat.Long
+            '-- Si le patient est sorti d'Oasis, on n'affiche pas le bouton de validation de la déclaration de sortie
+            RadBtnValidationSortie.Hide()
+            GbxSortieOasis.Show()
+            RadBtnSortieOasis.Hide()
         End If
 
         'Date décès
-        If SelectedPatient.PatientDateDeces < DteDateDeces.MinDate Or SelectedPatient.PatientDateDeces > DteDateDeces.MaxDate Then
+        If patientUpdate.PatientDateDeces < DteDateDeces.MinDate Or patientUpdate.PatientDateDeces > DteDateDeces.MaxDate Then
             DteDateDeces.Value = DteDateDeces.MaxDate
         Else
-            DteDateDeces.Value = SelectedPatient.PatientDateDeces
+            DteDateDeces.Value = patientUpdate.PatientDateDeces
         End If
         If DteDateDeces.Value <> DteDateDeces.MaxDate Then
             DteDateDeces.Format = DateTimePickerFormat.Long
         End If
 
-        TxtCommentaireSortie.Text = SelectedPatient.PatientCommentaireSortie
+        TxtCommentaireSortie.Text = patientUpdate.PatientCommentaireSortie
 
-        If SelectedPatient.PatientUniteSanitaireId <> 0 Then
+        If patientUpdate.PatientUniteSanitaireId <> 0 Then
             'Unité sanitaire id
             For Each kvp As KeyValuePair(Of Integer, String) In uniteSanitaireListe
-                If kvp.Key = SelectedPatient.PatientUniteSanitaireId Then
+                If kvp.Key = patientUpdate.PatientUniteSanitaireId Then
                     CbxUniteSanitaire.SelectedItem = kvp.Value
                     Exit For
                 End If
             Next kvp
 
-            'Chargement combo site par rapport à l'unité sanitaire choisie
-            Dim siteListeParUniteSanitaire As Dictionary(Of Integer, String) = Table_site.GetSiteListeParUniteSanitaire(SelectedPatient.PatientUniteSanitaireId)
+            'Chargement Combo site par rapport à l'unité sanitaire choisie
+            Dim siteListeParUniteSanitaire As Dictionary(Of Integer, String) = Table_site.GetSiteListeParUniteSanitaire(patientUpdate.PatientUniteSanitaireId)
             Dim indice As Integer = siteListeParUniteSanitaire.Count - 1
             Dim siteDescription(indice) As String
             Dim i As Integer = 0
@@ -368,10 +303,10 @@ Public Class RadFPatientDetailEdit
 
             CbxSite.DataSource = siteDescription
 
-            If SelectedPatient.PatientSiteId <> 0 Then
+            If patientUpdate.PatientSiteId <> 0 Then
                 'Unité sanitaire id
                 For Each kvp As KeyValuePair(Of Integer, String) In siteListeParUniteSanitaire
-                    If kvp.Key = SelectedPatient.PatientSiteId Then
+                    If kvp.Key = patientUpdate.PatientSiteId Then
                         CbxSite.SelectedItem = kvp.Value
                         Exit For
                     End If
@@ -379,7 +314,71 @@ Public Class RadFPatientDetailEdit
             End If
         End If
 
+    End Sub
 
+
+    '====================================================================================================================================
+    '-- Gestion de la mise à jour du patient
+    '====================================================================================================================================
+
+    'Appel de la modification des informations du patient
+    Private Sub RadBtnModifier_Click(sender As Object, e As EventArgs) Handles RadBtnModifier.Click
+        ActiverZoneEnSaisie()
+        RadBtnSortieOasis.Enabled = False
+        RadBtnModifier.Enabled = False
+        RadBtnAnnulerAction.Show()
+        '-- Si le patient est sorti d'Oasis, on ne peut pas modifier les éléments de sortie
+        If patientUpdate.PatientDateSortie <> DteDateSortie.MaxDate Then
+            DteDateSortie.Enabled = False
+            TxtCommentaireSortie.Enabled = False
+        End If
+        GestionAffichageBoutonValidation()
+    End Sub
+
+    'Annulation de l'appel de modification ou de sortie
+    Private Sub RadBtnAnnulerAction_Click(sender As Object, e As EventArgs) Handles RadBtnAnnulerAction.Click
+        ChargementPatient()
+        InhiberZoneEnSaisie()
+        RadBtnAnnulerAction.Hide()
+        RadBtnModifier.Enabled = True
+        RadBtnSortieOasis.Show()
+        GbxSortieOasis.Hide()
+        RadBtnSortieOasis.Enabled = True
+
+        '-- Si le patient est sorti d'Oasis, on n'affiche pas le bouton de validation de la déclaration de sortie
+        If patientUpdate.PatientDateSortie <> DteDateSortie.MaxDate Then
+            DteDateSortie.Format = DateTimePickerFormat.Long
+            RadBtnValidationSortie.Hide()
+            GbxSortieOasis.Show()
+            RadBtnSortieOasis.Hide()
+        End If
+
+        '-- Si le patient n'a pas de date d'entrée, on n'affiche pas le bouton de sortie d'Oasis
+        If patientUpdate.PatientDateEntree = DteDateEntree.MaxDate Then
+            RadBtnSortieOasis.Hide()
+        End If
+    End Sub
+
+    'Validation des modifications des données ou de la création d'un nouveau patient
+    Private Sub RadBtnValider_Click(sender As Object, e As EventArgs) Handles RadBtnValider.Click
+        If ValidationDonnéesSaisies() = True Then
+            Select Case EditMode
+                Case EnumEditMode.Creation
+                    If DteDateEntree.Value = DteDateEntree.MaxDate Then
+                        If MsgBox("Attention, la date d'entrée dans le disposition Oasis n'est pas renseignée." & vbCrLf &
+                                  "Sans date d'entrée, ce nouveau patient ne fera pas partie du dispositif Oasis et sera accessible uniquement avec l'option 'Tous' dans la liste des patients." & vbCrLf &
+                                  "Confirmez-vous la création de ce patient sans date d'entrée dans le dispositif Oasis", MsgBoxStyle.YesNo, "") = MsgBoxResult.No Then
+                            Exit Sub
+                        End If
+                    End If
+                    Me.CodeRetour = CreationPatient()
+                Case EnumEditMode.Modification
+                    Me.CodeRetour = ModificationPatient()
+            End Select
+            If Me.CodeRetour = True Then
+                Close()
+            End If
+        End If
     End Sub
 
     Private Function ValidationDonnéesSaisies() As Boolean
@@ -410,9 +409,15 @@ Public Class RadFPatientDetailEdit
             Valide = False
         End If
 
-        'Les zones : NIR, téléphone fixe, téléphone mobile et code postal doivent être numériques si elles sont saisies
+        'Les zones : NIR, INS, téléphone fixe, téléphone mobile et code postal doivent être numériques si elles sont saisies
         If TxtNIR.Text.Trim <> "" Then
             If Not IsNumeric(TxtNIR.Text) Then
+                zoneNumerique = False
+            End If
+        End If
+
+        If TxtINS.Text.Trim <> "" Then
+            If Not IsNumeric(TxtINS.Text) Then
                 zoneNumerique = False
             End If
         End If
@@ -436,10 +441,11 @@ Public Class RadFPatientDetailEdit
         End If
 
         If zoneNumerique = False Then
-            messageErreur2 = "- Les zones : NIR, Téléphone fixe, téléphone mobile et code postal doivent être numériques si elles sont saisies"
+            messageErreur2 = "- Les zones : NIR, INS, Téléphone fixe, téléphone mobile et code postal doivent être numériques si elles sont saisies"
             Valide = False
         End If
 
+        'Contrôle existence NIR
         If EditMode = EnumEditMode.Creation Then
             'Contrôle de l'existence du NIR
             If IsNumeric(TxtNIR.Text) Then
@@ -465,6 +471,8 @@ Public Class RadFPatientDetailEdit
                 End If
             End If
         End If
+
+        'TODO: PatientDetail -> Contrôle existence INS
 
 
         If DteDateNaissance.Value.Date > Date.Now.Date Then
@@ -498,330 +506,40 @@ Public Class RadFPatientDetailEdit
         Return Valide
     End Function
 
+    'Modification du patient
     Private Function ModificationPatient() As Boolean
-        'Dim da As MySqlDataAdapter = New MySqlDataAdapter()
-        Dim da As SqlDataAdapter = New SqlDataAdapter()
-        Dim codeRetour As Boolean = True
-        Dim GenreId As String
-        Dim SiteId, UniteSanitaireId, Modulo As Integer
-        Dim Internet As Boolean
-        Dim NIR As Int64
+        Dim codeRetour As Boolean = False
 
-        Dim SQLstring As String = "UPDATE oasis.oa_patient SET" &
-        " oa_patient_nir = @nir, oa_patient_nir_modulo = @nirModulo, oa_patient_prenom = @prenom, oa_patient_nom = @nom, oa_patient_nom_marital = @nomMarital," &
-        " oa_patient_date_naissance = @dateNaissance, oa_patient_genre_id = @genreId, oa_patient_adresse1 = @adresse1, oa_patient_adresse2 = @adresse2," &
-        " oa_patient_code_postal = @codePostal, oa_patient_ville = @ville, oa_patient_tel1 = @tel1, oa_patient_tel2 = @tel2, oa_patient_email = @email," &
-        " oa_patient_date_entree_oasis = @dateEntree, oa_patient_date_sortie_oasis = @dateSortie, oa_patient_commentaire_sortie = @commentaireSortie," &
-        " oa_patient_date_deces = @dateDeces, oa_patient_site_id = @siteId, oa_patient_unite_sanitaire_id = @uniteSanitaireId," &
-        " oa_patient_couverture_internet = @internet, oa_patient_pharmacie_id = @pharmacienId, oa_patient_profession = @profession" &
-        " WHERE oa_patient_id = @patientId"
-
-        'Dim cmd As New MySqlCommand(SQLstring, conxn)
-        Dim cmd As New SqlCommand(SQLstring, conxn)
-
-        'Modulo
-
-        'Genre id
-        GenreId = 0
-        For Each kvp As KeyValuePair(Of String, String) In genreListe
-            If kvp.Value = CbxGenre.SelectedValue Then
-                GenreId = kvp.Key
-                Exit For
-            End If
-        Next kvp
-
-        'Unité sanitaire id
-        UniteSanitaireId = 0
-        For Each kvp As KeyValuePair(Of Integer, String) In uniteSanitaireListe
-            If kvp.Value = CbxUniteSanitaire.SelectedValue Then
-                UniteSanitaireId = kvp.Key
-                Exit For
-            End If
-        Next kvp
-
-        'Site id
-        Dim siteListeParUniteSanitaire As Dictionary(Of Integer, String) = Table_site.GetSiteListeParUniteSanitaire(UniteSanitaireId)
-        SiteId = 0
-        For Each kvp As KeyValuePair(Of Integer, String) In siteListeParUniteSanitaire
-            If kvp.Value = CbxSite.SelectedValue Then
-                SiteId = kvp.Key
-                Exit For
-            End If
-        Next kvp
-
-        'Internet
-        If ChkCouvertureInternet.Checked = True Then
-            Internet = True
-        Else
-            Internet = False
-        End If
-
-        'NIR
-        If TxtNIR.Text <> "" And IsNumeric(TxtNIR.Text) Then
-            NIR = CDec(TxtNIR.Text)
-        Else
-            NIR = 0
-        End If
-
-
-        With cmd.Parameters
-            .AddWithValue("@nir", NIR.ToString)
-            .AddWithValue("@nirModulo", Modulo.ToString)
-            .AddWithValue("@prenom", TxtPrenom.Text)
-            .AddWithValue("@nom", TxtNom.Text)
-            .AddWithValue("@nomMarital", TxtNomMarital.Text)
-            .AddWithValue("@dateNaissance", DteDateNaissance.Value.ToString("yyyy-MM-dd"))
-            .AddWithValue("@genreId", GenreId.ToString)
-            .AddWithValue("@adresse1", TxtAdresse1.Text)
-            .AddWithValue("@adresse2", TxtAdresse2.Text)
-            .AddWithValue("@codePostal", TxtCodePostal.Text)
-            .AddWithValue("@ville", TxtVille.Text)
-            .AddWithValue("@tel1", TxtTelFixe.Text)
-            .AddWithValue("@tel2", TxtTelMobile.Text)
-            .AddWithValue("@email", TxtEmail.Text)
-            .AddWithValue("@dateEntree", DteDateEntree.Value.ToString("yyyy-MM-dd"))
-            .AddWithValue("@dateSortie", DteDateSortie.Value.ToString("yyyy-MM-dd"))
-            .AddWithValue("@commentaireSortie", TxtCommentaireSortie.Text)
-            .AddWithValue("@dateDeces", DteDateDeces.Value.ToString("yyyy-MM-dd"))
-            .AddWithValue("@siteId", SiteId.ToString)
-            .AddWithValue("@uniteSanitaireId", UniteSanitaireId.ToString)
-            .AddWithValue("@internet", Internet.ToString)
-            .AddWithValue("@pharmacienId", PharmacienRorId)
-            .AddWithValue("@profession", TxtProfession.Text)
-            .AddWithValue("@patientId", SelectedPatient.patientId.ToString)
-        End With
-
-        Try
-            conxn.Open()
-            da.UpdateCommand = cmd
-            da.UpdateCommand.ExecuteNonQuery()
-            Action = "Modification"
-            MessageBox.Show("patient modifié")
-        Catch ex As Exception
-            MessageBox.Show(ex.Message)
-            codeRetour = False
-        Finally
-            conxn.Close()
-        End Try
-
-        If codeRetour = True Then
-            'Contrôle si existence des intervenants Oasis par défaut
-            If DteDateEntree.Value <> DteDateEntree.MaxDate And DteDateSortie.Value = DteDateSortie.MaxDate Then
-                Dim parcoursDao As New ParcoursDao
-                parcoursDao.CreateIntervenantOasisByPatient(SelectedPatient.patientId)
-            End If
-
-            'Mise à jour des données modifiées dans l'instance de la classe Historisation traitement
-
-            'Rechargement du Bean Patient
-            SelectedPatient.PatientNir = NIR.ToString
-            SelectedPatient.PatientPrenom = TxtPrenom.Text
-            SelectedPatient.PatientNom = TxtNom.Text
-            SelectedPatient.PatientNomMarital = TxtNomMarital.Text
-            SelectedPatient.PatientDateNaissance = DteDateNaissance.Value
-            SelectedPatient.PatientGenreId = GenreId
-            SelectedPatient.PatientAdresse1 = TxtAdresse1.Text
-            SelectedPatient.PatientAdresse2 = TxtAdresse2.Text
-            SelectedPatient.PatientCodePostal = TxtCodePostal.Text
-            SelectedPatient.PatientVille = TxtVille.Text
-            SelectedPatient.PatientTel1 = TxtTelFixe.Text
-            SelectedPatient.PatientTel2 = TxtTelMobile.Text
-            SelectedPatient.PatientEmail = TxtEmail.Text
-            SelectedPatient.PatientDateEntree = DteDateEntree.Value
-            SelectedPatient.PatientDateSortie = DteDateSortie.Value
-            SelectedPatient.PatientDateDeces = DteDateDeces.Value
-            SelectedPatient.PatientCommentaireSortie = TxtCommentaireSortie.Text
-            SelectedPatient.PatientSiteId = SiteId
-            SelectedPatient.PatientUniteSanitaireId = UniteSanitaireId
-            SelectedPatient.PatientInternet = Internet
-            SelectedPatient.Profession = TxtProfession.Text
-            SelectedPatient.PharmacienId = PharmacienRorId
+        If PatientDao.ModificationPatient(patientUpdate) = True Then
+            codeRetour = True
+            Dim form As New RadFNotification()
+            form.Message = "Patient modifié"
+            form.Show()
         End If
 
         Return codeRetour
     End Function
 
-    'Déclaration de sortie
-    Private Function DeclarationSortie() As Boolean
-        'Dim da As MySqlDataAdapter = New MySqlDataAdapter()
-        Dim da As SqlDataAdapter = New SqlDataAdapter()
-        Dim codeRetour As Boolean = True
-
-        Dim SQLstring As String = "UPDATE oasis.oa_patient" &
-            " SET oa_patient_date_sortie_oasis = @dateSortie, oa_patient_commentaire_sortie = @commentaireSortie" &
-            " WHERE oa_patient_id = @patientId"
-
-        'Dim cmd As New MySqlCommand(SQLstring, conxn)
-        Dim cmd As New SqlCommand(SQLstring, conxn)
-
-        With cmd.Parameters
-            .AddWithValue("@dateSortie", DteDateSortie.Value.ToString("yyyy-MM-dd"))
-            .AddWithValue("@commentaireSortie", TxtCommentaireSortie.Text)
-            .AddWithValue("@patientId", SelectedPatient.patientId.ToString)
-        End With
-
-        Try
-            conxn.Open()
-            da.UpdateCommand = cmd
-            da.UpdateCommand.ExecuteNonQuery()
-
-            MessageBox.Show("Déclaration de sortie du patient effectuée")
-        Catch ex As Exception
-            MessageBox.Show(ex.Message)
-            codeRetour = False
-        Finally
-            conxn.Close()
-        End Try
-
-        If codeRetour = True Then
-            'Mise à jour des données modifiées dans l'instance de la classe Historisation traitement
-        End If
-
-        Return codeRetour
-    End Function
-
+    'Création du patient
     Private Function CreationPatient() As Boolean
-        'Dim da As MySqlDataAdapter = New MySqlDataAdapter()
-        Dim da As SqlDataAdapter = New SqlDataAdapter()
-        Dim patientId As Long
-        Dim codeRetour As Boolean = True
-        Dim GenreId As String
-        Dim SiteId, UniteSanitaireId, Modulo As Integer
-        Dim Internet As Boolean
-        Dim NIR As Int64
+        Dim codeRetour As Boolean = False
 
-        Dim SQLstring As String = "INSERT INTO oasis.oa_patient" &
-        " (oa_patient_nir, oa_patient_nir_modulo, oa_patient_prenom, oa_patient_nom, oa_patient_nom_marital, oa_patient_date_naissance," &
-        " oa_patient_genre_id, oa_patient_adresse1, oa_patient_adresse2, oa_patient_code_postal, oa_patient_ville, oa_patient_tel1," &
-        " oa_patient_tel2, oa_patient_email, oa_patient_date_entree_oasis, oa_patient_date_sortie_oasis, oa_patient_commentaire_sortie," &
-        " oa_patient_date_deces, oa_patient_site_id, oa_patient_unite_sanitaire_id, oa_patient_couverture_internet, oa_patient_profession, oa_patient_pharmacie_id, oa_patient_siege_id)" &
-        " VALUES (@nir, @nirModulo, @prenom, @nom, @nomMarital, @dateNaissance," &
-        " @genreId, @adresse1, @adresse2, @codePostal, @ville, @tel1," &
-        " @tel2, @email, @dateEntree, @dateSortie, @commentaireSortie, @dateDeces, @siteId, @uniteSanitaireId, @internet, @profession, @pharmacienId, @siegeId) ; SELECT SCOPE_IDENTITY()"
-
-
-        Dim cmd As New SqlCommand(SQLstring, conxn)
-
-        'NIR
-        If TxtNIR.Text <> "" And IsNumeric(TxtNIR.Text) Then
-            NIR = CDec(TxtNIR.Text)
-        Else
-            NIR = 0
+        If PatientDao.CreationPatient(patientUpdate) = True Then
+            codeRetour = True
+            Dim form As New RadFNotification()
+            form.Message = "Patient créé"
+            form.Show()
         End If
-
-        'Genre id
-        GenreId = 0
-        For Each kvp As KeyValuePair(Of String, String) In genreListe
-            If kvp.Value = CbxGenre.SelectedValue Then
-                GenreId = kvp.Key
-                Exit For
-            End If
-        Next kvp
-
-        'Unité sanitaire id
-        UniteSanitaireId = 0
-        For Each kvp As KeyValuePair(Of Integer, String) In uniteSanitaireListe
-            If kvp.Value = CbxUniteSanitaire.SelectedValue Then
-                UniteSanitaireId = kvp.Key
-                Exit For
-            End If
-        Next kvp
-
-        'Site id
-        Dim siteListeParUniteSanitaire As Dictionary(Of Integer, String) = Table_site.GetSiteListeParUniteSanitaire(UniteSanitaireId)
-        SiteId = 0
-        For Each kvp As KeyValuePair(Of Integer, String) In siteListeParUniteSanitaire
-            If kvp.Value = CbxSite.SelectedValue Then
-                SiteId = kvp.Key
-                Exit For
-            End If
-        Next kvp
-
-
-        'Internet
-        If ChkCouvertureInternet.Checked = True Then
-            Internet = True
-        Else
-            Internet = False
-        End If
-
-
-        With cmd.Parameters
-            '.AddWithValue("@patientId", SelectedPatient.patientId.ToString)
-            .AddWithValue("@nir", NIR.ToString)
-            .AddWithValue("@nirModulo", Modulo.ToString)
-            .AddWithValue("@prenom", TxtPrenom.Text)
-            .AddWithValue("@nom", TxtNom.Text)
-            .AddWithValue("@nomMarital", TxtNomMarital.Text)
-            .AddWithValue("@dateNaissance", DteDateNaissance.Value.ToString("yyyy-MM-dd"))
-            .AddWithValue("@genreId", GenreId.ToString)
-            .AddWithValue("@adresse1", TxtAdresse1.Text)
-            .AddWithValue("@adresse2", TxtAdresse2.Text)
-            .AddWithValue("@codePostal", TxtCodePostal.Text)
-            .AddWithValue("@ville", TxtVille.Text)
-            .AddWithValue("@tel1", TxtTelFixe.Text)
-            .AddWithValue("@tel2", TxtTelMobile.Text)
-            .AddWithValue("@email", TxtEmail.Text)
-            .AddWithValue("@dateEntree", DteDateEntree.Value.ToString("yyyy-MM-dd"))
-            .AddWithValue("@dateSortie", DteDateSortie.Value.ToString("yyyy-MM-dd"))
-            .AddWithValue("@commentaireSortie", TxtCommentaireSortie.Text)
-            .AddWithValue("@dateDeces", DteDateDeces.Value.ToString("yyyy-MM-dd"))
-            .AddWithValue("@siteId", SiteId.ToString)
-            .AddWithValue("@uniteSanitaireId", UniteSanitaireId.ToString)
-            .AddWithValue("@internet", Internet.ToString)
-            .AddWithValue("@profession", TxtProfession.Text)
-            .AddWithValue("@pharmacienId", PharmacienRorId.ToString)
-            .AddWithValue("@siegeId", "1")
-        End With
-
-        Try
-            conxn.Open()
-            da.InsertCommand = cmd
-            patientId = da.InsertCommand.ExecuteScalar()
-            MessageBox.Show("Patient créé")
-        Catch ex As Exception
-            MessageBox.Show(ex.Message)
-            codeRetour = False
-        Finally
-            conxn.Close()
-        End Try
-
-        If DteDateEntree.Value <> DteDateEntree.MaxDate Then
-            If patientId <> 0 Then
-                Dim parcoursDao As New ParcoursDao
-                parcoursDao.CreateIntervenantOasisByPatient(patientId)
-            End If
-        End If
-
-        'Traitement historisation patient créé
-        'If codeRetour = True Then
-        'Récupération de l'identifiant du patient créé
-        'Dim antecedentLastDataReader As MySqlDataReader
-        'SQLstring = "select max(oa_patient_id) from oa_patient where oa_patient_id = " & SelectedPatient.patientId & ";"
-        'Dim antecedentLastCommand As New MySqlCommand(SQLstring, conxn)
-        'conxn.Open()
-        'antecedentLastDataReader = antecedentLastCommand.ExecuteReader()
-        'If antecedentLastDataReader.Read() Then
-        'Récupération de la clé de l'enregistrement créé
-        'AntecedentHistoACreer.HistorisationAntecedentId = antecedentLastDataReader("max(oa_patient_id)")
-
-        'Libération des ressources d'accès aux données
-        'conxn.Close()
-        'antecedentLastCommand.Dispose()
-        'End If
-        'End If
 
         Return codeRetour
     End Function
 
-    Private Sub RadBtnModifier_Click(sender As Object, e As EventArgs) Handles RadBtnModifier.Click
-        ActiverZoneEnSaisie()
-        RadBtnSortieOasis.Enabled = False
-        RadBtnValider.Enabled = True
-        RadBtnModifier.Enabled = False
-    End Sub
 
-    'Appel saisie sortie Oasis
+    '====================================================================================================================================
+    '-- Gestion de la sortie d'Oasis du patient
+    '====================================================================================================================================
+
+    'Appel de la saisie des informations de sortie Oasis
     Private Sub RadBtnSortieOasis_Click(sender As Object, e As EventArgs) Handles RadBtnSortieOasis.Click
         RadBtnSortieOasis.Hide()
         GbxSortieOasis.Show()
@@ -832,6 +550,7 @@ Public Class RadFPatientDetailEdit
         DteDateSortie.Value = Date.Now
         DteDateSortie.Format = DateTimePickerFormat.Long
         TxtCommentaireSortie.Enabled = True
+        RadBtnAnnulerAction.Show()
     End Sub
 
     'Validation sortie Oasis
@@ -844,104 +563,230 @@ Public Class RadFPatientDetailEdit
         End If
     End Sub
 
+    'Déclaration de sortie du patient
+    Private Function DeclarationSortie() As Boolean
+        Dim codeRetour As Boolean = False
 
-    'Validation des modifications des données ou de la création d'un nouveau patient
-    Private Sub RadBtnValider_Click(sender As Object, e As EventArgs) Handles RadBtnValider.Click
-        If ValidationDonnéesSaisies() = True Then
-            Select Case EditMode
-                Case EnumEditMode.Creation
-                    If DteDateEntree.Value = DteDateEntree.MaxDate Then
-                        If MsgBox("Attention, la date d'entrée dans le disposition Oasis n'est pas renseignée." & vbCrLf &
-                                  "Sans date d'entrée, ce nouveau patient ne fera pas partie du dispositif Oasis et sera accessible uniquement avec l'option 'Tous' dans la liste des patients." & vbCrLf &
-                                  "Confirmez-vous la création de ce patient sans date d'entrée dans le dispositif Oasis", MsgBoxStyle.YesNo, "") = MsgBoxResult.No Then
-                            Exit Sub
-                        End If
-                    End If
-                    Me.CodeRetour = CreationPatient()
-                Case EnumEditMode.Modification
-                    Me.CodeRetour = ModificationPatient()
-            End Select
-            If Me.CodeRetour = True Then
-                conxn.Dispose()
-                Close()
+        If PatientDao.DeclarationSortie(patientUpdate) = True Then
+            codeRetour = True
+            Dim form As New RadFNotification()
+            form.Message = "Déclaration de sortie du patient effectuée"
+            form.Show()
+        End If
+
+        Return codeRetour
+    End Function
+
+
+    '====================================================================================================================================
+    '-- Gestion des modifications de zone
+    '====================================================================================================================================
+    Private Sub DteDateNaissance_ValueChanged(sender As Object, e As EventArgs) Handles DteDateNaissance.ValueChanged
+        patientUpdate.PatientDateNaissance = DteDateNaissance.Value
+        GestionAffichageBoutonValidation()
+    End Sub
+
+    Private Sub TxtPrenom_TextChanged(sender As Object, e As EventArgs) Handles TxtPrenom.TextChanged
+        patientUpdate.PatientPrenom = TxtPrenom.Text
+        GestionAffichageBoutonValidation()
+    End Sub
+
+    Private Sub TxtNom_TextChanged(sender As Object, e As EventArgs) Handles TxtNom.TextChanged
+        patientUpdate.PatientNom = TxtNom.Text
+        GestionAffichageBoutonValidation()
+    End Sub
+
+    'Modification du genre par l'utilisateur
+    Private Sub CbxGenre_SelectedIndexChanged(sender As Object, e As EventArgs) Handles CbxGenre.SelectedIndexChanged
+        patientUpdate.PatientGenre = CbxGenre.SelectedValue
+        GestionAffichageBoutonValidation()
+        If CbxGenre.SelectedValue = "Masculin" Then
+            patientUpdate.PatientGenreId = EnumGenreId.Masculin
+            TxtNomMarital.Text = ""
+            TxtNomMarital.Hide()
+            LblNomMarital.Hide()
+        Else
+            patientUpdate.PatientGenreId = EnumGenreId.Feminin
+            TxtNomMarital.Show()
+            LblNomMarital.Show()
+        End If
+    End Sub
+
+    Private Sub TxtNomMarital_TextChanged(sender As Object, e As EventArgs) Handles TxtNomMarital.TextChanged
+        patientUpdate.PatientNomMarital = TxtNomMarital.Text
+        GestionAffichageBoutonValidation()
+    End Sub
+
+    Private Sub TxtNIR_TextChanged(sender As Object, e As EventArgs) Handles TxtNIR.TextChanged
+        If IsNumeric(TxtNIR.Text) Then
+            Dim NIR As Int64 = CDec(TxtNIR.Text)
+            Dim Modulo As Integer
+            Modulo = CalculmoduloNIR(NIR)
+            LblModulo.Text = Modulo
+            LblModulo.Show()
+            patientUpdate.PatientNir = NIR
+            GestionAffichageBoutonValidation()
+        Else
+            LblModulo.Hide()
+            patientUpdate.PatientNir = 0
+        End If
+    End Sub
+
+    Private Sub TxtINS_TextChanged(sender As Object, e As EventArgs) Handles TxtINS.TextChanged
+        If IsNumeric(TxtINS.Text) Then
+            Dim INS As Int64 = CDec(TxtINS.Text)
+            patientUpdate.INS = INS
+            GestionAffichageBoutonValidation()
+        Else
+            patientUpdate.INS = 0
+        End If
+    End Sub
+
+    Private Sub TxtAdresse1_TextChanged(sender As Object, e As EventArgs) Handles TxtAdresse1.TextChanged
+        patientUpdate.PatientAdresse1 = TxtAdresse1.Text
+        GestionAffichageBoutonValidation()
+    End Sub
+
+    Private Sub TxtAdresse2_TextChanged(sender As Object, e As EventArgs) Handles TxtAdresse2.TextChanged
+        patientUpdate.PatientAdresse2 = TxtAdresse2.Text
+        GestionAffichageBoutonValidation()
+    End Sub
+
+    Private Sub TxtCodePostal_TextChanged(sender As Object, e As EventArgs) Handles TxtCodePostal.TextChanged
+        patientUpdate.PatientCodePostal = TxtCodePostal.Text
+        GestionAffichageBoutonValidation()
+    End Sub
+
+    Private Sub TxtVille_TextChanged(sender As Object, e As EventArgs) Handles TxtVille.TextChanged
+        patientUpdate.PatientVille = TxtVille.Text
+        GestionAffichageBoutonValidation()
+    End Sub
+
+    Private Sub TxtTelFixe_TextChanged(sender As Object, e As EventArgs) Handles TxtTelFixe.TextChanged
+        patientUpdate.PatientTel1 = TxtTelFixe.Text
+        GestionAffichageBoutonValidation()
+    End Sub
+
+    Private Sub TxtTelMobile_TextChanged(sender As Object, e As EventArgs) Handles TxtTelMobile.TextChanged
+        patientUpdate.PatientTel2 = TxtTelMobile.Text
+        GestionAffichageBoutonValidation()
+    End Sub
+
+    Private Sub TxtEmail_TextChanged(sender As Object, e As EventArgs) Handles TxtEmail.TextChanged
+        patientUpdate.PatientEmail = TxtEmail.Text
+        GestionAffichageBoutonValidation()
+    End Sub
+
+    Private Sub ChkCouvertureInternet_CheckedChanged(sender As Object, e As EventArgs) Handles ChkCouvertureInternet.CheckedChanged
+        If ChkCouvertureInternet.Checked = True Then
+            patientUpdate.PatientInternet = True
+        Else
+            patientUpdate.PatientInternet = False
+        End If
+        GestionAffichageBoutonValidation()
+    End Sub
+
+    Private Sub TxtProfession_TextChanged(sender As Object, e As EventArgs) Handles TxtProfession.TextChanged
+        patientUpdate.Profession = TxtProfession.Text
+        GestionAffichageBoutonValidation()
+    End Sub
+
+    Private Sub DteDateEntree_ValueChanged(sender As Object, e As EventArgs) Handles DteDateEntree.ValueChanged
+        If DteDateEntree.Value <> DteDateEntree.MaxDate Then
+            DteDateEntree.Format = DateTimePickerFormat.Long
+        End If
+
+        patientUpdate.PatientDateEntree = DteDateEntree.Value
+        GestionAffichageBoutonValidation()
+    End Sub
+
+    Private Sub CbxUniteSanitaire_SelectedIndexChanged(sender As Object, e As EventArgs) Handles CbxUniteSanitaire.SelectedIndexChanged
+        Dim uniteSanitaireId, indice, i As Integer
+
+        'Détermination de l'unité sanitaire id
+        uniteSanitaireId = 0
+        For Each kvp As KeyValuePair(Of Integer, String) In uniteSanitaireListe
+            If kvp.Value = CbxUniteSanitaire.SelectedValue Then
+                uniteSanitaireId = kvp.Key
+                Exit For
+            End If
+        Next kvp
+
+        patientUpdate.PatientUniteSanitaireId = uniteSanitaireId
+        GestionAffichageBoutonValidation()
+
+        'Site
+        CbxSite.ResetText()
+
+        If uniteSanitaireId <> 0 Then
+            Dim siteListeParUniteSanitaire As Dictionary(Of Integer, String) = Table_site.GetSiteListeParUniteSanitaire(uniteSanitaireId)
+            indice = siteListeParUniteSanitaire.Count - 1
+            Dim siteDescription(indice) As String
+            i = 0
+
+            For Each kvp As KeyValuePair(Of Integer, String) In siteListeParUniteSanitaire
+                siteDescription(i) = kvp.Value
+                i += 1
+            Next kvp
+            CbxSite.DataSource = siteDescription
+        End If
+    End Sub
+
+    Private Sub CbxSite_SelectedIndexChanged(sender As Object, e As EventArgs) Handles CbxSite.SelectedIndexChanged
+        Dim siteListeParUniteSanitaire As Dictionary(Of Integer, String) = Table_site.GetSiteListeParUniteSanitaire(patientUpdate.PatientUniteSanitaireId)
+        Dim SiteId As Integer = 0
+        For Each kvp As KeyValuePair(Of Integer, String) In siteListeParUniteSanitaire
+            If kvp.Value = CbxSite.SelectedValue Then
+                SiteId = kvp.Key
+                Exit For
+            End If
+        Next kvp
+
+        If SiteId = 0 Then
+            If siteListeParUniteSanitaire.Count > 0 Then
+                Dim kvpSite As KeyValuePair(Of Integer, String) = siteListeParUniteSanitaire.ElementAt(0)
+                patientUpdate.PatientSiteId = kvpSite.Key
+                CbxSite.SelectedItem = kvpSite.Value
+            End If
+        Else
+            patientUpdate.PatientSiteId = SiteId
+        End If
+
+        GestionAffichageBoutonValidation()
+    End Sub
+
+    Private Sub TxtPharmacien_TextChanged(sender As Object, e As EventArgs) Handles TxtPharmacien.TextChanged
+        patientUpdate.PharmacienId = PharmacienRorId
+        GestionAffichageBoutonValidation()
+    End Sub
+
+    Private Sub DteDateDeces_ValueChanged(sender As Object, e As EventArgs) Handles DteDateDeces.ValueChanged
+        patientUpdate.PatientDateDeces = DteDateDeces.Value
+        GestionAffichageBoutonValidation()
+    End Sub
+
+
+    '-- Sortie
+    Private Sub DteDateSortie_ValueChanged(sender As Object, e As EventArgs) Handles DteDateSortie.ValueChanged
+        patientUpdate.PatientDateSortie = DteDateSortie.Value
+    End Sub
+
+    Private Sub TxtCommentaireSortie_TextChanged(sender As Object, e As EventArgs) Handles TxtCommentaireSortie.TextChanged
+        patientUpdate.PatientCommentaireSortie = TxtCommentaireSortie.Text
+    End Sub
+
+
+    '-- Gestion de l'affichage du bouton de validation de mise à jour des données
+    Private Sub GestionAffichageBoutonValidation()
+        If EditMode = EnumEditMode.Modification Then
+            If PatientDao.Compare(patientUpdate, patientRead) = False Then
+                RadBtnValider.Enabled = True
+            Else
+                RadBtnValider.Enabled = False
             End If
         End If
     End Sub
 
-    'Retour écran précédent sans action
-    Private Sub RadBtnAbandonner_Click(sender As Object, e As EventArgs) Handles RadBtnAbandonner.Click
-        Me.CodeRetour = False
-        Close()
-    End Sub
-
-    Private Sub InhiberZoneEnSaisie()
-        TxtPrenom.Enabled = False
-        TxtNom.Enabled = False
-        TxtNomMarital.Enabled = False
-        DteDateNaissance.Enabled = False
-        CbxGenre.Enabled = False
-        TxtNIR.Enabled = False
-        TxtAdresse1.Enabled = False
-        TxtAdresse2.Enabled = False
-        TxtCodePostal.Enabled = False
-        TxtVille.Enabled = False
-        TxtTelFixe.Enabled = False
-        TxtTelMobile.Enabled = False
-        TxtEmail.Enabled = False
-        DteDateEntree.Enabled = False
-        CbxSite.Enabled = False
-        CbxUniteSanitaire.Enabled = False
-        ChkCouvertureInternet.Enabled = False
-        DteDateSortie.Enabled = False
-        DteDateDeces.Enabled = False
-        TxtCommentaireSortie.Enabled = False
-        TxtProfession.Enabled = False
-        RadBtnPharmacien.Enabled = False
-    End Sub
-
-
-    Private Sub ActiverZoneEnSaisie()
-        TxtPrenom.Enabled = True
-        TxtNom.Enabled = True
-        TxtNomMarital.Enabled = True
-        DteDateNaissance.Enabled = True
-        CbxGenre.Enabled = True
-        TxtNIR.Enabled = True
-        TxtAdresse1.Enabled = True
-        TxtAdresse2.Enabled = True
-        TxtCodePostal.Enabled = True
-        TxtVille.Enabled = True
-        TxtTelFixe.Enabled = True
-        TxtTelMobile.Enabled = True
-        TxtEmail.Enabled = True
-        DteDateEntree.Enabled = True
-        CbxSite.Enabled = True
-        CbxUniteSanitaire.Enabled = True
-        ChkCouvertureInternet.Enabled = True
-        DteDateSortie.Enabled = True
-        DteDateDeces.Enabled = True
-        TxtCommentaireSortie.Enabled = True
-        TxtProfession.Enabled = True
-        RadBtnPharmacien.Enabled = True
-    End Sub
-
-    Private Sub InitAction()
-        RadBtnValider.Enabled = False
-        RadBtnSortieOasis.Enabled = True
-
-        'Droits personnel non Médical, non Paramédical, non Accueil paramédical
-        If Not (userLog.TypeProfil = ProfilDao.EnumProfilType.MEDICAL.ToString OrElse
-            userLog.TypeProfil = ProfilDao.EnumProfilType.PARAMEDICAL.ToString OrElse
-            userLog.TypeProfil = ProfilDao.EnumProfilType.ACCUEIL.ToString) Then
-            RadBtnModifier.Hide()
-            RadBtnPharmacien.Hide()
-            RadBtnRDV.Hide()
-            RadBtnValidationDateNaissance.Hide()
-            RadBtnSortieOasis.Hide()
-            RadBtnValider.Hide()
-            BtnCreerNote.Hide()
-        End If
-    End Sub
 
     'Gestion de l'affichage du contrôle de saisie de la date de naissance
     Private Sub DteDateNaissance_DropDown(sender As Object, e As EventArgs) Handles DteDateNaissance.DropDown
@@ -975,16 +820,89 @@ Public Class RadFPatientDetailEdit
         End If
     End Sub
 
-    'Modification du genre par l'utilisateur
-    Private Sub CbxGenre_SelectedIndexChanged(sender As Object, e As EventArgs) Handles CbxGenre.SelectedIndexChanged
-        If CbxGenre.SelectedValue = "Masculin" Then
-            TxtNomMarital.Text = ""
-            TxtNomMarital.Hide()
-            LblNomMarital.Hide()
-        Else
-            TxtNomMarital.Show()
-            LblNomMarital.Show()
+    Private Function CalculmoduloNIR(NIR As Int64) As Integer
+        Dim Reste As Integer
+        Reste = NIR Mod 97
+        Return 97 - Reste
+    End Function
+
+
+
+    '====================================================================================================================================
+    '-- Gestion des notes
+    '====================================================================================================================================
+
+    'Chargement de la Grid Notes patient
+    Private Sub ChargementNotesPatient()
+        Dim patientNoteDao As New PatientNoteDao
+        Dim dt As DataTable = patientNoteDao.getAllNotebyPatient(patientUpdate.patientId)
+
+        'Déclaration des variables pour réaliser le parcours du DataTable pour alimenter le DataGridView
+        Dim i As Integer
+        Dim iGrid As Integer = -1 'Indice pour alimenter la Grid qui peut comporter moins d'occurrences que le DataTable
+        Dim dateCreation As Date
+        Dim AfficheDateCreation, NotePatient, Auteur As String
+        Dim AuteurId As Integer
+        Dim rowCount As Integer = dt.Rows.Count - 1
+
+        'Parcours du DataTable pour alimenter le DataGridView
+        For i = 0 To rowCount Step 1
+            If dt.Rows(i)("oa_patient_note") IsNot DBNull.Value Then
+                NotePatient = dt.Rows(i)("oa_patient_note")
+            Else
+                NotePatient = ""
+            End If
+
+            'Utilisateur creation
+            Auteur = ""
+            If dt.Rows(i)("oa_patient_note_utilisateur_creation") IsNot DBNull.Value Then
+                If dt.Rows(i)("oa_patient_note_utilisateur_creation") <> 0 Then
+                    Dim userDao As New UserDao
+                    utilisateurHisto = userDao.getUserById(dt.Rows(i)("oa_patient_note_utilisateur_creation"))
+                    Auteur = Me.utilisateurHisto.UtilisateurPrenom & " " & Me.utilisateurHisto.UtilisateurNom
+                End If
+            End If
+
+            'Date création
+            AfficheDateCreation = ""
+            If dt.Rows(i)("oa_patient_note_date_creation") IsNot DBNull.Value Then
+                dateCreation = dt.Rows(i)("oa_patient_note_date_creation")
+                AfficheDateCreation = outils.FormatageDateAffichage(dateCreation)
+            Else
+                If dt.Rows(i)("oa_patient_note_date_creation") IsNot DBNull.Value Then
+                    dateCreation = dt.Rows(i)("oa_patient_note_date_creation")
+                    AfficheDateCreation = outils.FormatageDateAffichage(dateCreation)
+                End If
+            End If
+
+            AuteurId = 0
+            If dt.Rows(i)("oa_patient_note_utilisateur_creation") IsNot DBNull.Value Then
+                AuteurId = dt.Rows(i)("oa_patient_note_utilisateur_creation")
+            End If
+
+            'Ajout d'une ligne au DataGridView
+            iGrid += 1
+            RadNotePatientDataGridView.AutoSizeRows = True
+            RadNotePatientDataGridView.Rows.Add(iGrid)
+
+            'Alimentation du DataGridView
+            RadNotePatientDataGridView.Rows(iGrid).Cells("note").Value = NotePatient
+
+            'Identifiant notePatient
+            RadNotePatientDataGridView.Rows(iGrid).Cells("noteId").Value = dt.Rows(i)("oa_patient_note_id")
+
+            'Auteur de la note
+            RadNotePatientDataGridView.Rows(iGrid).Cells("auteur").Value = Auteur & vbCrLf & AfficheDateCreation
+        Next
+
+        'Enlève le focus sur la première ligne de la Grid
+        If iGrid > -1 Then
+            Me.RadNotePatientDataGridView.Rows(0).IsSelected = True
+            Me.RadNotePatientDataGridView.Rows(0).IsCurrent = True
+            Me.RadNotePatientDataGridView.Rows(0).EnsureVisible()
+            'RadNotePatientDataGridView.ClearSelection()
         End If
+
     End Sub
 
     'Appel détail note en modification
@@ -999,7 +917,7 @@ Public Class RadFPatientDetailEdit
 
             Using vFNotePatientDetailEdit As New RadFPatientNoteDetailEdit
                 vFNotePatientDetailEdit.SelectedNoteId = NoteId
-                vFNotePatientDetailEdit.SelectedPatient = Me.SelectedPatient
+                vFNotePatientDetailEdit.SelectedPatient = patientUpdate
                 vFNotePatientDetailEdit.UtilisateurConnecte = Me.UtilisateurConnecte
                 vFNotePatientDetailEdit.TypeNote = EnumTypeNote.Administratif
                 vFNotePatientDetailEdit.ShowDialog() 'Modal
@@ -1015,6 +933,7 @@ Public Class RadFPatientDetailEdit
     Private Sub BtnCreerNote_Click(sender As Object, e As EventArgs) Handles BtnCreerNote.Click
         CreerNote()
     End Sub
+
     'Appel détail note en création
     Private Sub CréerUneNoteToolStripMenuItem_Click_1(sender As Object, e As EventArgs) Handles CréerUneNoteToolStripMenuItem.Click
         CreerNote()
@@ -1023,7 +942,7 @@ Public Class RadFPatientDetailEdit
     Private Sub CreerNote()
         Using vFNotePatientDetailEdit As New RadFPatientNoteDetailEdit
             vFNotePatientDetailEdit.SelectedNoteId = 0
-            vFNotePatientDetailEdit.SelectedPatient = Me.SelectedPatient
+            vFNotePatientDetailEdit.SelectedPatient = patientUpdate
             vFNotePatientDetailEdit.UtilisateurConnecte = Me.UtilisateurConnecte
             vFNotePatientDetailEdit.TypeNote = EnumTypeNote.Administratif
             vFNotePatientDetailEdit.ShowDialog() 'Modal
@@ -1033,52 +952,94 @@ Public Class RadFPatientDetailEdit
             End If
         End Using
     End Sub
-    Private Function CalculmoduloNIR(NIR As Int64) As Integer
-        Dim Reste As Integer
-        Reste = NIR Mod 97
-        Return 97 - Reste
-    End Function
 
-    Private Sub TxtNIR_TextChanged(sender As Object, e As EventArgs) Handles TxtNIR.TextChanged
-        If IsNumeric(TxtNIR.Text) Then
-            Dim NIR As Int64 = CDec(TxtNIR.Text)
-            Dim Modulo As Integer
-            Modulo = CalculmoduloNIR(NIR)
-            LblModulo.Text = Modulo
-            LblModulo.Show()
-        Else
-            LblModulo.Hide()
+    'Gestion du tooltip de l'affichage des notes
+    Private Sub RadNotePatientDataGridView_ToolTipTextNeeded(sender As Object, e As Telerik.WinControls.ToolTipTextNeededEventArgs) Handles RadNotePatientDataGridView.ToolTipTextNeeded
+        Dim cell As GridDataCellElement = TryCast(sender, GridDataCellElement)
+        If cell IsNot Nothing AndAlso cell.ColumnInfo.Name = "note" Then
+            e.ToolTipText = cell.Value.ToString()
         End If
     End Sub
 
-    Private Sub CbxUniteSanitaire_SelectedIndexChanged(sender As Object, e As EventArgs) Handles CbxUniteSanitaire.SelectedIndexChanged
-        Dim uniteSanitaireId, indice, i As Integer
 
-        'Détermination de l'unité sanitaire id
-        uniteSanitaireId = 0
-        For Each kvp As KeyValuePair(Of Integer, String) In uniteSanitaireListe
-            If kvp.Value = CbxUniteSanitaire.SelectedValue Then
-                uniteSanitaireId = kvp.Key
-                Exit For
+
+    '====================================================================================================================================
+    '-- Gestion divers
+    '====================================================================================================================================
+    Private Sub InhiberZoneEnSaisie()
+        TxtPrenom.Enabled = False
+        TxtNom.Enabled = False
+        TxtNomMarital.Enabled = False
+        DteDateNaissance.Enabled = False
+        CbxGenre.Enabled = False
+        TxtNIR.Enabled = False
+        TxtINS.Enabled = False
+        TxtAdresse1.Enabled = False
+        TxtAdresse2.Enabled = False
+        TxtCodePostal.Enabled = False
+        TxtVille.Enabled = False
+        TxtTelFixe.Enabled = False
+        TxtTelMobile.Enabled = False
+        TxtEmail.Enabled = False
+        DteDateEntree.Enabled = False
+        CbxSite.Enabled = False
+        CbxUniteSanitaire.Enabled = False
+        ChkCouvertureInternet.Enabled = False
+        DteDateSortie.Enabled = False
+        DteDateDeces.Enabled = False
+        TxtCommentaireSortie.Enabled = False
+        TxtProfession.Enabled = False
+        RadBtnPharmacien.Enabled = False
+    End Sub
+
+    Private Sub ActiverZoneEnSaisie()
+        TxtPrenom.Enabled = True
+        TxtNom.Enabled = True
+        TxtNomMarital.Enabled = True
+        DteDateNaissance.Enabled = True
+        CbxGenre.Enabled = True
+        TxtNIR.Enabled = True
+        TxtINS.Enabled = True
+        TxtAdresse1.Enabled = True
+        TxtAdresse2.Enabled = True
+        TxtCodePostal.Enabled = True
+        TxtVille.Enabled = True
+        TxtTelFixe.Enabled = True
+        TxtTelMobile.Enabled = True
+        TxtEmail.Enabled = True
+        DteDateEntree.Enabled = True
+        CbxSite.Enabled = True
+        CbxUniteSanitaire.Enabled = True
+        ChkCouvertureInternet.Enabled = True
+        DteDateSortie.Enabled = True
+        DteDateDeces.Enabled = True
+        TxtCommentaireSortie.Enabled = True
+        TxtProfession.Enabled = True
+        RadBtnPharmacien.Enabled = True
+    End Sub
+
+
+    '====================================================================================================================================
+    '-- Gestion des boutons d'action
+    '====================================================================================================================================
+
+    'Appel google maps
+    Private Sub RadBtnGoogleMaps_Click(sender As Object, e As EventArgs) Handles RadBtnGoogleMaps.Click
+        Dim GoogleOK As Boolean = False
+        If TxtAdresse1.Text <> "" Then
+            If TxtCodePostal.Text <> "" Then
+                If TxtVille.Text <> "" Then
+                    'lancer l'URL pour afficher l'adresse dans Google Maps
+                    GoogleOK = True
+                    Dim MonURL As String
+                    MonURL = "http://www.google.fr/maps/place/" + TxtAdresse1.Text + " " + TxtCodePostal.Text + " " + TxtVille.Text
+                    Process.Start(MonURL)
+                End If
             End If
-        Next kvp
-
-        'Site
-        CbxSite.ResetText()
-
-        If uniteSanitaireId <> 0 Then
-            Dim siteListeParUniteSanitaire As Dictionary(Of Integer, String) = Table_site.GetSiteListeParUniteSanitaire(uniteSanitaireId)
-            indice = siteListeParUniteSanitaire.Count - 1
-            Dim siteDescription(indice) As String
-            i = 0
-
-            For Each kvp As KeyValuePair(Of Integer, String) In siteListeParUniteSanitaire
-                siteDescription(i) = kvp.Value
-                i += 1
-            Next kvp
-            CbxSite.DataSource = siteDescription
         End If
-
+        If GoogleOK = False Then
+            MessageBox.Show("L'adresse 1, le code postal et la ville doivent être renseignés pour lancer la recherche", "Notification", MessageBoxButtons.OK, MessageBoxIcon.Exclamation)
+        End If
     End Sub
 
     Private Sub RadBtnValidationDateNaissance_Click(sender As Object, e As EventArgs) Handles RadBtnValidationDateNaissance.Click
@@ -1119,7 +1080,7 @@ Public Class RadFPatientDetailEdit
     Private Sub RadBtnPharmacien_Click(sender As Object, e As EventArgs) Handles RadBtnPharmacien.Click
         Using vRadFRorListe As New RadFRorListe
             vRadFRorListe.Selecteur = True
-            vRadFRorListe.PatientId = Me.SelectedPatient.patientId
+            vRadFRorListe.PatientId = Me.SelectedPatientId
             vRadFRorListe.SpecialiteId = 50 'Pharmacien
             vRadFRorListe.TypeRor = "Intervenant"
             vRadFRorListe.ShowDialog()
@@ -1135,22 +1096,16 @@ Public Class RadFPatientDetailEdit
         Cursor.Current = Cursors.WaitCursor
         Me.Enabled = False
         Using form As New RadFPatientRendezVousListe
-            form.SelectedPatient = Me.SelectedPatient
+            form.SelectedPatient = patientUpdate
             form.ShowDialog()
         End Using
         Me.Enabled = True
     End Sub
 
-    Private Sub RadNotePatientDataGridView_ToolTipTextNeeded(sender As Object, e As Telerik.WinControls.ToolTipTextNeededEventArgs) Handles RadNotePatientDataGridView.ToolTipTextNeeded
-        Dim cell As GridDataCellElement = TryCast(sender, GridDataCellElement)
-        If cell IsNot Nothing AndAlso cell.ColumnInfo.Name = "note" Then
-            e.ToolTipText = cell.Value.ToString()
-        End If
+    'Retour écran précédent sans action
+    Private Sub RadBtnAbandonner_Click(sender As Object, e As EventArgs) Handles RadBtnAbandonner.Click
+        Me.CodeRetour = False
+        Close()
     End Sub
 
-    Private Sub DteDateEntree_ValueChanged(sender As Object, e As EventArgs) Handles DteDateEntree.ValueChanged
-        If DteDateEntree.Value <> DteDateEntree.MaxDate Then
-            DteDateEntree.Format = DateTimePickerFormat.Long
-        End If
-    End Sub
 End Class

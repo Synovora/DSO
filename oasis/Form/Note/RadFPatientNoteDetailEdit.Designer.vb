@@ -97,22 +97,22 @@ Partial Class RadFPatientNoteDetailEdit
         '
         Me.RadBtnValidation.ForeColor = System.Drawing.Color.Black
         Me.RadBtnValidation.Image = Global.Oasis_WF.My.Resources.Resources.validation2
-        Me.RadBtnValidation.ImageAlignment = System.Drawing.ContentAlignment.MiddleCenter
         Me.RadBtnValidation.Location = New System.Drawing.Point(12, 369)
         Me.RadBtnValidation.Name = "RadBtnValidation"
-        Me.RadBtnValidation.Size = New System.Drawing.Size(24, 24)
+        Me.RadBtnValidation.Size = New System.Drawing.Size(110, 24)
         Me.RadBtnValidation.TabIndex = 64
+        Me.RadBtnValidation.Text = "Valider"
         Me.ToolTip.SetToolTip(Me.RadBtnValidation, "Validation")
         '
         'RadBtnAnnuler
         '
         Me.RadBtnAnnuler.ForeColor = System.Drawing.Color.Black
         Me.RadBtnAnnuler.Image = Global.Oasis_WF.My.Resources.Resources.supprimer
-        Me.RadBtnAnnuler.ImageAlignment = System.Drawing.ContentAlignment.MiddleCenter
-        Me.RadBtnAnnuler.Location = New System.Drawing.Point(42, 369)
+        Me.RadBtnAnnuler.Location = New System.Drawing.Point(128, 369)
         Me.RadBtnAnnuler.Name = "RadBtnAnnuler"
-        Me.RadBtnAnnuler.Size = New System.Drawing.Size(24, 24)
+        Me.RadBtnAnnuler.Size = New System.Drawing.Size(110, 24)
         Me.RadBtnAnnuler.TabIndex = 65
+        Me.RadBtnAnnuler.Text = "Annuler"
         Me.ToolTip.SetToolTip(Me.RadBtnAnnuler, "Annuler la nore")
         '
         'RadGroupBox1

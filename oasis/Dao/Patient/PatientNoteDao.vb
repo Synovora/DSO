@@ -3,8 +3,34 @@ Imports Oasis_Common
 Public Class PatientNoteDao
     Inherits StandardDao
 
+    Friend Function getAllNotebyPatient(patientId As Integer) As DataTable
+        Dim SQLString As String
 
-    Friend Function getTraitementById(traitementId As Integer) As PatientNote
+        SQLString = "SELECT *" &
+                    " FROM oasis.oa_patient_note" &
+                    " WHERE (oa_patient_note_invalide = '0' or oa_patient_note_invalide is Null)" &
+                    " AND oa_patient_id = " & patientId.ToString & " order by oa_patient_note_date_creation desc;"
+
+        Using con As SqlConnection = GetConnection()
+            Dim da As SqlDataAdapter = New SqlDataAdapter()
+            Using da
+                da.SelectCommand = New SqlCommand(SQLString, con)
+                Dim dt As DataTable = New DataTable()
+                Using dt
+                    Try
+                        da.Fill(dt)
+                        Dim command As SqlCommand = con.CreateCommand()
+                    Catch ex As Exception
+                        Throw ex
+                    End Try
+                    Return dt
+                End Using
+            End Using
+        End Using
+    End Function
+
+
+    Friend Function getNoteById(traitementId As Integer) As PatientNote
         Dim patientNote As PatientNote
         Dim con As SqlConnection
 

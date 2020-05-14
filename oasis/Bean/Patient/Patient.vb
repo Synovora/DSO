@@ -222,6 +222,7 @@ Public Class Patient
                 Me.Profession = Coalesce(patientDataReader("oa_patient_profession"), "")
                 Me.PharmacienId = Coalesce(patientDataReader("oa_patient_pharmacie_id"), 0)
                 Me.BlocageMedical = Coalesce(patientDataReader("oa_patient_blocage_medical"), False)
+                Me.INS = Coalesce(patientDataReader("oa_patient_INS"), 0)
 
             Else
                 MessageBox.Show("Erreur de lecture du patient")
@@ -269,6 +270,7 @@ Public Class Patient
         Me.PatientContreIndicationCis = New StringCollection()
         Me.PatientMedicamentsPrescritsCis = New StringCollection()
         Me.BlocageMedical = False
+        Me.INS = 0
     End Sub
 
     Public Property patientId As Integer

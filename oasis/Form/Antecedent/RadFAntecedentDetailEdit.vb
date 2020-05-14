@@ -738,7 +738,6 @@ Public Class RadFAntecedentDetailEdit
         GestionAffichageBoutonValidation()
     End Sub
 
-
     Private Sub DteALDDateDebut_ValueChanged(sender As Object, e As EventArgs) Handles DteALDDateDebut.ValueChanged
         antecedentUpdate.AldDateDebut = DteALDDateDebut.Value
         GestionAffichageBoutonValidation()

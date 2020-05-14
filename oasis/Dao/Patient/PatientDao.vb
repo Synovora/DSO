@@ -225,6 +225,133 @@ Module PatientDao
         instancePatient.INS = 0
     End Sub
 
+    Friend Function Compare(source1 As Patient, source2 As Patient) As Boolean
+        If source1.patientId <> source2.patientId Then
+            Return False
+        End If
+        If source1.PatientNir <> source2.PatientNir Then
+            Return False
+        End If
+        If source1.PatientNom <> source2.PatientNom Then
+            Return False
+        End If
+        If source1.PatientPrenom <> source2.PatientPrenom Then
+            Return False
+        End If
+        If source1.PatientNomMarital <> source2.PatientNomMarital Then
+            Return False
+        End If
+        If source1.PatientDateNaissance <> source2.PatientDateNaissance Then
+            Return False
+        End If
+        If source1.PatientGenreId <> source2.PatientGenreId Then
+            Return False
+        End If
+        If source1.PatientAdresse1 <> source2.PatientAdresse1 Then
+            Return False
+        End If
+        If source1.PatientAdresse2 <> source2.PatientAdresse2 Then
+            Return False
+        End If
+        If source1.PatientCodePostal <> source2.PatientCodePostal Then
+            Return False
+        End If
+        If source1.PatientVille <> source2.PatientVille Then
+            Return False
+        End If
+        If source1.PatientTel1 <> source2.PatientTel1 Then
+            Return False
+        End If
+        If source1.PatientTel2 <> source2.PatientTel2 Then
+            Return False
+        End If
+        If source1.PatientEmail <> source2.PatientEmail Then
+            Return False
+        End If
+        If source1.PatientDateEntree <> source2.PatientDateEntree Then
+            Return False
+        End If
+        If source1.PatientDateSortie <> source2.PatientDateSortie Then
+            Return False
+        End If
+        If source1.PatientDateDeces <> source2.PatientDateDeces Then
+            Return False
+        End If
+        If source1.PatientCommentaireSortie <> source2.PatientCommentaireSortie Then
+            Return False
+        End If
+        If source1.PatientInternet <> source2.PatientInternet Then
+            Return False
+        End If
+        If source1.PatientSiteId <> source2.PatientSiteId Then
+            Return False
+        End If
+        If source1.PatientUniteSanitaireId <> source2.PatientUniteSanitaireId Then
+            Return False
+        End If
+        If source1.PatientSyntheseDateMaj <> source2.PatientSyntheseDateMaj Then
+            Return False
+        End If
+        If source1.PatientAge <> source2.PatientAge Then
+            Return False
+        End If
+        If source1.PatientGenre <> source2.PatientGenre Then
+            Return False
+        End If
+        If source1.Profession <> source2.Profession Then
+            Return False
+        End If
+        If source1.PharmacienId <> source2.PharmacienId Then
+            Return False
+        End If
+        If source1.Taille <> source2.Taille Then
+            Return False
+        End If
+        If source1.BlocageMedical <> source2.BlocageMedical Then
+            Return False
+        End If
+        If source1.INS <> source2.INS Then
+            Return False
+        End If
+
+        Return True
+    End Function
+
+    Friend Function ClonePatient(Source As Patient) As Patient
+        Dim Cible As New Patient
+        Cible.patientId = Source.patientId
+        Cible.PatientNir = Source.PatientNir
+        Cible.PatientNom = Source.PatientNom
+        Cible.PatientPrenom = Source.PatientPrenom
+        Cible.PatientNomMarital = Source.PatientNomMarital
+        Cible.PatientDateNaissance = Source.PatientDateNaissance
+        Cible.PatientGenreId = Source.PatientGenreId
+        Cible.PatientAdresse1 = Source.PatientAdresse1
+        Cible.PatientAdresse2 = Source.PatientAdresse2
+        Cible.PatientCodePostal = Source.PatientCodePostal
+        Cible.PatientVille = Source.PatientVille
+        Cible.PatientTel1 = Source.PatientTel1
+        Cible.PatientTel2 = Source.PatientTel2
+        Cible.PatientEmail = Source.PatientEmail
+        Cible.PatientDateEntree = Source.PatientDateEntree
+        Cible.PatientDateSortie = Source.PatientDateSortie
+        Cible.PatientDateDeces = Source.PatientDateDeces
+        Cible.PatientCommentaireSortie = Source.PatientCommentaireSortie
+        Cible.PatientInternet = Source.PatientInternet
+        Cible.PatientSiteId = Source.PatientSiteId
+        Cible.PatientUniteSanitaireId = Source.PatientUniteSanitaireId
+        Cible.PatientSyntheseDateMaj = Source.PatientSyntheseDateMaj
+        Cible.PatientAge = Source.PatientAge
+        Cible.PatientGenre = Source.PatientGenre
+        Cible.Profession = Source.Profession
+        Cible.PharmacienId = Source.PharmacienId
+        Cible.Taille = Source.Taille
+        Cible.BlocageMedical = Source.BlocageMedical
+        Cible.INS = Source.INS
+
+        Return Cible
+    End Function
+
     Public Function NonExistencePatientNIR(NIR As Int64, PatientId As Integer) As Boolean
         Dim CodeRetour As Boolean = True
         Dim conxn As New SqlConnection(getConnectionString())
@@ -392,7 +519,7 @@ Module PatientDao
         Return codeRetour
     End Function
 
-    'Modification taille
+    'Blocage médical de la fiche du patient
     Friend Function BlocageMedical(patientId As Integer) As Boolean
         Dim da As SqlDataAdapter = New SqlDataAdapter()
         Dim codeRetour As Boolean = True
@@ -493,6 +620,175 @@ Module PatientDao
         Next
 
         Return StringContreIndication
+    End Function
+
+    Public Function CreationPatient(patient As Patient) As Boolean
+        'Dim da As MySqlDataAdapter = New MySqlDataAdapter()
+        Dim da As SqlDataAdapter = New SqlDataAdapter()
+        Dim patientId As Long
+        Dim codeRetour As Boolean = True
+
+        Dim SQLstring As String = "INSERT INTO oasis.oa_patient" &
+        " (oa_patient_nir, oa_patient_nir_modulo, oa_patient_INS, oa_patient_prenom, oa_patient_nom, oa_patient_nom_marital, oa_patient_date_naissance," &
+        " oa_patient_genre_id, oa_patient_adresse1, oa_patient_adresse2, oa_patient_code_postal, oa_patient_ville, oa_patient_tel1," &
+        " oa_patient_tel2, oa_patient_email, oa_patient_date_entree_oasis, oa_patient_date_sortie_oasis, oa_patient_commentaire_sortie," &
+        " oa_patient_date_deces, oa_patient_site_id, oa_patient_unite_sanitaire_id, oa_patient_couverture_internet, oa_patient_profession, oa_patient_pharmacie_id, oa_patient_siege_id)" &
+        " VALUES (@nir, @nirModulo, @ins, @prenom, @nom, @nomMarital, @dateNaissance," &
+        " @genreId, @adresse1, @adresse2, @codePostal, @ville, @tel1," &
+        " @tel2, @email, @dateEntree, @dateSortie, @commentaireSortie, @dateDeces, @siteId, @uniteSanitaireId, @internet, @profession, @pharmacienId, @siegeId) ; SELECT SCOPE_IDENTITY()"
+
+        Dim conxn As New SqlConnection(GetConnectionString())
+        Dim cmd As New SqlCommand(SQLstring, conxn)
+
+        With cmd.Parameters
+            .AddWithValue("@nir", patient.PatientNir)
+            .AddWithValue("@nirModulo", 0)
+            .AddWithValue("@ins", patient.INS)
+            .AddWithValue("@prenom", patient.PatientPrenom)
+            .AddWithValue("@nom", patient.PatientNom)
+            .AddWithValue("@nomMarital", patient.PatientNomMarital)
+            .AddWithValue("@dateNaissance", patient.PatientDateNaissance.ToString("yyyy-MM-dd"))
+            .AddWithValue("@genreId", patient.PatientGenreId.ToString)
+            .AddWithValue("@adresse1", patient.PatientAdresse1)
+            .AddWithValue("@adresse2", patient.PatientAdresse2)
+            .AddWithValue("@codePostal", patient.PatientCodePostal)
+            .AddWithValue("@ville", patient.PatientVille)
+            .AddWithValue("@tel1", patient.PatientTel1)
+            .AddWithValue("@tel2", patient.PatientTel2)
+            .AddWithValue("@email", patient.PatientEmail)
+            .AddWithValue("@dateEntree", patient.PatientDateEntree.ToString("yyyy-MM-dd"))
+            .AddWithValue("@dateSortie", patient.PatientDateSortie.ToString("yyyy-MM-dd"))
+            .AddWithValue("@commentaireSortie", patient.PatientCommentaireSortie)
+            .AddWithValue("@dateDeces", patient.PatientDateDeces.ToString("yyyy-MM-dd"))
+            .AddWithValue("@siteId", patient.PatientSiteId.ToString)
+            .AddWithValue("@uniteSanitaireId", patient.PatientUniteSanitaireId.ToString)
+            .AddWithValue("@internet", patient.PatientInternet.ToString)
+            .AddWithValue("@profession", patient.Profession)
+            .AddWithValue("@pharmacienId", patient.PharmacienId.ToString)
+            .AddWithValue("@siegeId", "1")
+        End With
+
+        Try
+            conxn.Open()
+            da.InsertCommand = cmd
+            patientId = da.InsertCommand.ExecuteScalar()
+            MessageBox.Show("Patient créé")
+        Catch ex As Exception
+            MessageBox.Show(ex.Message)
+            codeRetour = False
+        Finally
+            conxn.Close()
+        End Try
+
+        Dim MaxDate As New Date(9998, 12, 31, 0, 0, 0)
+        If patient.PatientDateEntree.Date <> MaxDate.Date Then
+            If patientId <> 0 Then
+                Dim parcoursDao As New ParcoursDao
+                parcoursDao.CreateIntervenantOasisByPatient(patientId)
+            End If
+        End If
+
+        Return codeRetour
+    End Function
+
+    Public Function ModificationPatient(patient As Patient) As Boolean
+        'Dim da As MySqlDataAdapter = New MySqlDataAdapter()
+        Dim da As SqlDataAdapter = New SqlDataAdapter()
+        Dim codeRetour As Boolean = True
+
+        Dim SQLstring As String = "UPDATE oasis.oa_patient SET" &
+        " oa_patient_nir = @nir, oa_patient_nir_modulo = @nirModulo, oa_patient_INS = @ins, oa_patient_prenom = @prenom, oa_patient_nom = @nom, oa_patient_nom_marital = @nomMarital," &
+        " oa_patient_date_naissance = @dateNaissance, oa_patient_genre_id = @genreId, oa_patient_adresse1 = @adresse1, oa_patient_adresse2 = @adresse2," &
+        " oa_patient_code_postal = @codePostal, oa_patient_ville = @ville, oa_patient_tel1 = @tel1, oa_patient_tel2 = @tel2, oa_patient_email = @email," &
+        " oa_patient_date_entree_oasis = @dateEntree, oa_patient_date_sortie_oasis = @dateSortie, oa_patient_commentaire_sortie = @commentaireSortie," &
+        " oa_patient_date_deces = @dateDeces, oa_patient_site_id = @siteId, oa_patient_unite_sanitaire_id = @uniteSanitaireId," &
+        " oa_patient_couverture_internet = @internet, oa_patient_pharmacie_id = @pharmacienId, oa_patient_profession = @profession" &
+        " WHERE oa_patient_id = @patientId"
+
+        Dim conxn As New SqlConnection(GetConnectionString())
+        Dim cmd As New SqlCommand(SQLstring, conxn)
+
+        With cmd.Parameters
+            .AddWithValue("@nir", patient.PatientNir)
+            .AddWithValue("@nirModulo", 0)
+            .AddWithValue("@ins", patient.INS)
+            .AddWithValue("@prenom", patient.PatientPrenom)
+            .AddWithValue("@nom", patient.PatientNom)
+            .AddWithValue("@nomMarital", patient.PatientNomMarital)
+            .AddWithValue("@dateNaissance", patient.PatientDateNaissance.ToString("yyyy-MM-dd"))
+            .AddWithValue("@genreId", patient.PatientGenreId)
+            .AddWithValue("@adresse1", patient.PatientAdresse1)
+            .AddWithValue("@adresse2", patient.PatientAdresse2)
+            .AddWithValue("@codePostal", patient.PatientCodePostal)
+            .AddWithValue("@ville", patient.PatientVille)
+            .AddWithValue("@tel1", patient.PatientTel1)
+            .AddWithValue("@tel2", patient.PatientTel2)
+            .AddWithValue("@email", patient.PatientEmail)
+            .AddWithValue("@dateEntree", patient.PatientDateEntree.ToString("yyyy-MM-dd"))
+            .AddWithValue("@dateSortie", patient.PatientDateSortie.ToString("yyyy-MM-dd"))
+            .AddWithValue("@commentaireSortie", patient.PatientCommentaireSortie)
+            .AddWithValue("@dateDeces", patient.PatientDateDeces.ToString("yyyy-MM-dd"))
+            .AddWithValue("@siteId", patient.PatientSiteId)
+            .AddWithValue("@uniteSanitaireId", patient.PatientUniteSanitaireId)
+            .AddWithValue("@internet", patient.PatientInternet)
+            .AddWithValue("@pharmacienId", patient.PharmacienId)
+            .AddWithValue("@profession", patient.Profession)
+            .AddWithValue("@patientId", patient.patientId)
+        End With
+
+        Try
+            conxn.Open()
+            da.UpdateCommand = cmd
+            da.UpdateCommand.ExecuteNonQuery()
+        Catch ex As Exception
+            MessageBox.Show(ex.Message)
+            codeRetour = False
+        Finally
+            conxn.Close()
+        End Try
+
+        If codeRetour = True Then
+            'Contrôle si existence des intervenants Oasis par défaut
+            Dim MaxDate As New Date(9998, 12, 31, 0, 0, 0)
+            If patient.PatientDateEntree <> MaxDate And patient.PatientDateSortie = MaxDate Then
+                Dim parcoursDao As New ParcoursDao
+                parcoursDao.CreateIntervenantOasisByPatient(patient.patientId)
+            End If
+        End If
+
+        Return codeRetour
+    End Function
+
+    Public Function DeclarationSortie(patient As Patient) As Boolean
+        'Dim da As MySqlDataAdapter = New MySqlDataAdapter()
+        Dim da As SqlDataAdapter = New SqlDataAdapter()
+        Dim codeRetour As Boolean = True
+
+        Dim SQLstring As String = "UPDATE oasis.oa_patient" &
+            " SET oa_patient_date_sortie_oasis = @dateSortie, oa_patient_commentaire_sortie = @commentaireSortie" &
+            " WHERE oa_patient_id = @patientId"
+
+        Dim conxn As New SqlConnection(GetConnectionString())
+        Dim cmd As New SqlCommand(SQLstring, conxn)
+
+        With cmd.Parameters
+            .AddWithValue("@dateSortie", patient.PatientDateSortie.ToString("yyyy-MM-dd"))
+            .AddWithValue("@commentaireSortie", patient.PatientCommentaireSortie)
+            .AddWithValue("@patientId", patient.patientId)
+        End With
+
+        Try
+            conxn.Open()
+            da.UpdateCommand = cmd
+            da.UpdateCommand.ExecuteNonQuery()
+        Catch ex As Exception
+            MessageBox.Show(ex.Message)
+            codeRetour = False
+        Finally
+            conxn.Close()
+        End Try
+
+        Return codeRetour
     End Function
 
 End Module

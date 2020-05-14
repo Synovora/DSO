@@ -233,23 +233,6 @@ Public Class ContexteDao
             contexteHistoACreer.DateFin = contexte.DateFin
             contexteHistoACreer.Diagnostic = contexte.Diagnostic
 
-            'Récupération de l'identifiant du contexte créé
-            'Dim contexteLastDataReader As SqlDataReader
-            'SQLstring = "select max(oa_antecedent_id) from oasis.oa_antecedent where oa_antecedent_patient_id = " & contexte.PatientId & ";"
-            'Dim contexteLastCommand As New SqlCommand(SQLstring, con)
-            'con.Open()
-            'contexteLastDataReader = contexteLastCommand.ExecuteReader()
-            'If contexteLastDataReader.HasRows Then
-            'contexteLastDataReader.Read()
-            'Récupération de la clé de l'enregistrement créé
-            'contexteHistoACreer.AntecedentId = contexteLastDataReader(0)
-            'ContexteConclusionEpisodeId = contexteLastDataReader(0)
-
-            'Libération des ressources d'accès aux données
-            'con.Close()
-            'contexteLastCommand.Dispose()
-            'End If
-
             'Ajout contexte créé si conclusion médicale de l'épisode
             If conclusionEpisode = True Then
                 If episode IsNot Nothing Then

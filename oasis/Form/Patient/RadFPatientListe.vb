@@ -329,9 +329,6 @@ Public Class RadFPatientListe
                 If form.CodeRetour = True Then
                     InitZonesSelectionPatient()
                     ChargementPatient()
-                    Me.RadDesktopAlert1.CaptionText = "Notification patient"
-                    Me.RadDesktopAlert1.ContentText = "Patient créé"
-                    Me.RadDesktopAlert1.Show()
                 End If
             End Using
         Catch ex As Exception
@@ -377,9 +374,6 @@ Public Class RadFPatientListe
                     If form.CodeRetour = True Then
                         InitZonesSelectionPatient()
                         ChargementPatient()
-                        Me.RadDesktopAlert1.CaptionText = "Notification du patient"
-                        Me.RadDesktopAlert1.ContentText = "Patient modifié"
-                        Me.RadDesktopAlert1.Show()
                     End If
                 End Using
             Catch ex As Exception

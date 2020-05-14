@@ -110,19 +110,19 @@ Public Class RadFPatientNoteDetailEdit
             Select Case TypeNote
                 Case EnumTypeNote.Medicale
                     Dim patientNoteMedicaleDao As PatientNoteMedicaleDao = New PatientNoteMedicaleDao
-                    patientNote = patientNoteMedicaleDao.getTraitementById(SelectedNoteId)
+                    patientNote = patientNoteMedicaleDao.getNoteById(SelectedNoteId)
                 Case EnumTypeNote.Vaccin
                     Dim patientNoteVaccinDao As PatientNoteVaccinDao = New PatientNoteVaccinDao
-                    patientNote = patientNoteVaccinDao.getTraitementById(SelectedNoteId)
+                    patientNote = patientNoteVaccinDao.getNoteById(SelectedNoteId)
                 Case EnumTypeNote.Social
                     Dim patientNoteSocialeDao As PatientNoteSocialeDao = New PatientNoteSocialeDao
-                    patientNote = patientNoteSocialeDao.getTraitementById(SelectedNoteId)
+                    patientNote = patientNoteSocialeDao.getNoteById(SelectedNoteId)
                 Case EnumTypeNote.Administratif
                     Dim patientNoteDao As PatientNoteDao = New PatientNoteDao
-                    patientNote = patientNoteDao.getTraitementById(SelectedNoteId)
+                    patientNote = patientNoteDao.getNoteById(SelectedNoteId)
                 Case EnumTypeNote.Directive
                     Dim patientNotedirectiveDao As PatientNoteDirectiveDao = New PatientNoteDirectiveDao
-                    patientNote = patientNotedirectiveDao.getTraitementById(SelectedNoteId)
+                    patientNote = patientNotedirectiveDao.getNoteById(SelectedNoteId)
             End Select
         Catch ex As Exception
             MessageBox.Show("Note patient : " + ex.Message, "Problème", MessageBoxButtons.OK, MessageBoxIcon.Error)

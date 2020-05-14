@@ -2352,7 +2352,7 @@ Public Class RadFSynthese
             'Présentation PPS : Stratégie contextuelle (Base, Rythme, Commentaire)
             If categoriePPS = Environnement.EnumCategoriePPS.Strategie Then
                 Select Case sousCategoriePPS
-                    'TODO: Déclarer ces sous-catégories PPS dans une Enum
+                    'TODO: Synthese -> Déclarer ces sous-catégories PPS dans une Enum
                     Case 7
                         NaturePPS = "Démarche prophylactique "
                     Case 8

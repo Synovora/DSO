@@ -26,7 +26,7 @@ Public Class PatientNoteDirectiveDao
         End Using
     End Function
 
-    Friend Function getTraitementById(traitementId As Integer) As PatientNote
+    Friend Function getNoteById(noteId As Integer) As PatientNote
         Dim patientNote As PatientNote
         Dim con As SqlConnection
 
@@ -37,7 +37,7 @@ Public Class PatientNoteDirectiveDao
 
             command.CommandText =
                 "select * from oasis.oa_patient_note_directive where oa_patient_note_id = @id"
-            command.Parameters.AddWithValue("@id", traitementId)
+            command.Parameters.AddWithValue("@id", noteId)
             Using reader As SqlDataReader = command.ExecuteReader()
                 If reader.Read() Then
                     patientNote = buildBean(reader)
