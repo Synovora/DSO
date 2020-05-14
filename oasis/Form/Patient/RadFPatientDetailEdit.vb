@@ -95,6 +95,7 @@ Public Class RadFPatientDetailEdit
             LblLabelIdOasis.Hide()
             RadBtnModifier.Hide()
             RadBtnSortieOasis.Hide()
+            RadBtnRDV.Hide()
             RadBtnValider.Show()
             RadBtnValider.Enabled = True
             RadBtnAnnulerAction.Hide()
@@ -106,6 +107,7 @@ Public Class RadFPatientDetailEdit
 
 
     Private Sub InitZone()
+        LblHorsOasis.Hide()
         TxtPrenom.Text = ""
         TxtNom.Text = ""
         DteDateNaissance.Value = DteDateNaissance.MinDate
@@ -251,14 +253,11 @@ Public Class RadFPatientDetailEdit
         Else
             'Si le patient n'a pas de date d'entrée dans Oasis, on n'affiche pas le bouton de sortie
             RadBtnSortieOasis.Hide()
+            LblHorsOasis.Show()
+            LblHorsOasis.Text = "Attention, ce patient ne fait pas partie du dispositif Oasis"
         End If
 
         'Date sortie
-        'If patientUpdate.PatientDateSortie = DteDateSortie.MaxDate Then
-        'DteDateSortie.Value = DteDateSortie.MaxDate
-        'Else
-        'DteDateSortie.Value = patientUpdate.PatientDateSortie
-        'End If
         DteDateSortie.Value = Coalesce(patientUpdate.PatientDateSortie, DteDateSortie.MaxDate)
 
         If DteDateSortie.Value <> DteDateSortie.MaxDate Then
@@ -267,6 +266,8 @@ Public Class RadFPatientDetailEdit
             RadBtnValidationSortie.Hide()
             GbxSortieOasis.Show()
             RadBtnSortieOasis.Hide()
+            LblHorsOasis.Show()
+            LblHorsOasis.Text = "Attention, ce patient est sorti du dispositif Oasis"
         End If
 
         'Date décès
@@ -277,6 +278,8 @@ Public Class RadFPatientDetailEdit
         End If
         If DteDateDeces.Value <> DteDateDeces.MaxDate Then
             DteDateDeces.Format = DateTimePickerFormat.Long
+            LblHorsOasis.Show()
+            LblHorsOasis.Text = "Patient décédé"
         End If
 
         TxtCommentaireSortie.Text = patientUpdate.PatientCommentaireSortie
@@ -390,6 +393,8 @@ Public Class RadFPatientDetailEdit
         Dim messageErreur2 As String = ""
         Dim messageErreur3 As String = ""
         Dim messageErreur4 As String = ""
+        Dim messageErreur5 As String = ""
+        Dim messageErreur6 As String = ""
 
         'Nom, Prenom, date naissance, genre, adresse 1, code postal et ville obligatoire
         If TxtPrenom.Text = "" Then
@@ -472,13 +477,22 @@ Public Class RadFPatientDetailEdit
             End If
         End If
 
-        'TODO: PatientDetail -> Contrôle existence INS
-
-
+        'Date naissance
         If DteDateNaissance.Value.Date > Date.Now.Date Then
             messageErreur4 = "- La date de naissance ne doit pas être supérieure à la date du jour"
             Valide = False
         End If
+
+        'Date décès
+        If DteDateDeces.Value <> DteDateDeces.MaxDate Then
+            If DteDateDeces.Value.Date > Date.Now.Date Then
+                messageErreur5 = "- La date de décès ne doit pas être supérieure à la date du jour"
+                Valide = False
+            End If
+        End If
+
+        'TODO: PatientDetail -> Contrôle existence INS
+
 
         'Préparation de l'affichage des erreurs
         If Valide = False Then
@@ -496,6 +510,14 @@ Public Class RadFPatientDetailEdit
 
             If messageErreur4 <> "" Then
                 messageErreur = messageErreur + vbCrLf + messageErreur4
+            End If
+
+            If messageErreur5 <> "" Then
+                messageErreur = messageErreur + vbCrLf + messageErreur5
+            End If
+
+            If messageErreur6 <> "" Then
+                messageErreur = messageErreur + vbCrLf + messageErreur6
             End If
 
             messageErreur = messageErreur + vbCrLf + vbCrLf + "/!\ Validation impossible, des données sont incorrectes"
