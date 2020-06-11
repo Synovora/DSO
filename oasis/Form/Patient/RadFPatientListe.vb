@@ -12,7 +12,7 @@ Public Class RadFPatientListe
         End Set
     End Property
 
-    Dim aldDao As New AldDao
+    ReadOnly aldDao As New AldDao
 
     'Instanciation du patient pour le fournir aux Forms qui seront appelées depuis cette Form
     Dim SelectedPatient As New Patient
