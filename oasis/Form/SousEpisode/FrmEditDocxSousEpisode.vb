@@ -91,15 +91,17 @@ Public Class FrmEditDocxSousEpisode
         Dim provider As DocxFormatProvider = New DocxFormatProvider()
         Dim sauvegarde As RadDocument = Nothing
         Dim dateSign = Date.Now
+        Dim signature As String = Nothing
         Me.Cursor = Cursors.WaitCursor
         Try
             If isSignAlso Then
                 sauvegarde = Me.RadRichTextEditor1.MailMerge()
-                appose_signature(dateSign)
+                signature = userLog.Sign(sousEpisode.Serialize())
+                appose_signature(dateSign, signature)
             End If
             tbl = provider.Export(Me.RadRichTextEditor1.Document)
             Dim sousEpisodeDao = New SousEpisodeDao
-            sousEpisodeDao.writeDocAndEventualySign(sousEpisode, tbl, isSignAlso, dateSign)
+            sousEpisodeDao.writeDocAndEventualySign(sousEpisode, tbl, signature, dateSign)
             ResetFlagChange()
             Notification.show("Sauvegarde", "Action effectuée avec succès !", 1)
         Catch err As Exception
@@ -113,11 +115,11 @@ Public Class FrmEditDocxSousEpisode
 
     End Sub
 
-    Private Sub appose_signature(dateSign As Date)
+    Private Sub appose_signature(dateSign As Date, signature As String)
         ReplaceAllMatches("@Signataire_Fonction", userLog.UtilisateurProfilId.ToLower.Trim.Replace("_", " "))
         ReplaceAllMatches("@Signataire_PrenomNom", userLog.UtilisateurPrenom.Trim & " " & userLog.UtilisateurNom.Trim)
         ReplaceAllMatches("@Signature_Date", dateSign.ToString("dd MMM yyyy"))
-
+        'ReplaceAllMatches("@Signature", signature)
     End Sub
 
     ''' <summary>

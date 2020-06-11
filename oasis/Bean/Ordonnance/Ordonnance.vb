@@ -1,4 +1,6 @@
-﻿Public Class Ordonnance
+﻿Imports System.IO
+
+Public Class Ordonnance
     Private _id As Long
     Private _patientId As Long
     Private _episodeId As Long
@@ -10,6 +12,7 @@
     Private _commentaire As String
     Private _renouvellement As Integer
     Private _inactif As Boolean
+    Private _signature As String
 
     Public Property Id As Long
         Get
@@ -109,4 +112,56 @@
             _inactif = value
         End Set
     End Property
+
+    Public Property Signature As String
+        Get
+            Return _signature
+        End Get
+        Set(value As String)
+            _signature = value
+        End Set
+    End Property
+
+    Public Function Clone() As Ordonnance
+        Dim newInstance As Ordonnance = DirectCast(Me.MemberwiseClone(), Ordonnance)
+        Return newInstance
+    End Function
+
+    Public Function Serialize() As Byte()
+        Using m As MemoryStream = New MemoryStream()
+            Using writer As BinaryWriter = New BinaryWriter(m)
+                writer.Write(_id) 'Long
+                writer.Write(_patientId) 'Long
+                writer.Write(_episodeId) 'Long
+                writer.Write(_utilisateurCreation) 'Long
+                writer.Write(_dateCreation.Ticks) 'Date -> Long
+                writer.Write(_dateValidation.Ticks) 'Date -> Long
+                writer.Write(_userValidation) 'Long
+                'writer.Write(_dateEdition.Ticks) 'Date -> LongK
+                writer.Write(_commentaire) 'String
+                writer.Write(_renouvellement) 'Int
+            End Using
+            Return m.ToArray()
+        End Using
+    End Function
+
+    Public Shared Function Deserialize(ByVal data As Byte()) As Ordonnance
+        Dim result As Ordonnance = New Ordonnance()
+        Using m As MemoryStream = New MemoryStream(data)
+            Using reader As BinaryReader = New BinaryReader(m)
+                result.Id = reader.ReadInt64()
+                result.PatientId = reader.ReadInt64()
+                result.EpisodeId = reader.ReadInt64()
+                result.UtilisateurCreation = reader.ReadInt64()
+                result.DateCreation = New Date(reader.ReadInt64())
+                result.DateValidation = New Date(reader.ReadInt64())
+                result.UserValidation = reader.ReadInt64()
+                'result.DateEdition = New Date(reader.ReadInt64())
+                result.Commentaire = reader.ReadString()
+                result.Renouvellement = reader.ReadInt32()
+            End Using
+        End Using
+        Return result
+    End Function
+
 End Class

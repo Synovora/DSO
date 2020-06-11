@@ -1,4 +1,5 @@
 ﻿Imports System.Security.Cryptography
+Imports Nethereum.Signer
 
 Public Class Utilisateur
     Public Property UtilisateurId As Integer
@@ -20,6 +21,8 @@ Public Class Utilisateur
     Public Property UtilisateurTelephone As String
     Public Property UtilisateurFax As String
     Public Property UtilisateurMail As String
+    Public Property UtilisateurClePrivee As String
+    Public Property UtilisateurAddress As String
 
 
     Public Sub New()
@@ -35,6 +38,8 @@ Public Class Utilisateur
         Me.UtilisateurTelephone = ""
         Me.UtilisateurFax = ""
         Me.UtilisateurMail = ""
+        Me.UtilisateurClePrivee = ""
+        Me.UtilisateurAddress = ""
     End Sub
 
     ''' <summary>
@@ -71,6 +76,17 @@ Public Class Utilisateur
             If fonction.Id = idFonction Then Return True
         Next
         Return False
+    End Function
+
+    Public Function Sign(data As Byte()) As String
+        Dim signer As MessageSigner = New MessageSigner()
+        Dim signature As String = signer.HashAndSign(data, UtilisateurClePrivee)
+
+        'Verification de la signature
+        'If signer.EcRecover(hash, signature) <> UtilisateurAddress Then
+        'signature = ""
+        'End 
+        Return signature
     End Function
 
 End Class

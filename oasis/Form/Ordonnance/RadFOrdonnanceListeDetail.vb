@@ -720,11 +720,11 @@ Public Class RadFOrdonnanceListeDetail
     Private Sub RadBtnValidation_Click(sender As Object, e As EventArgs) Handles RadBtnValidation.Click
         If userLog.TypeProfil = FonctionDao.EnumTypeFonction.MEDICAL.ToString Then
             If ordonnanceDao.ValidationOrdonnance(SelectedOrdonnanceId) = True Then
-                ordonnance = ordonnanceDao.getOrdonnaceById(SelectedOrdonnanceId)
+                ordonnance = ordonnanceDao.GetOrdonnaceById(SelectedOrdonnanceId)
                 GestionAccesBoutonAction()
                 Dim form As New RadFNotification()
                 form.Message = "L'ordonnance a été signée numériquement par : " & userLog.UtilisateurPrenom & " " & userLog.UtilisateurNom & vbCrLf &
-                    ". L'ordonnance est à présent disponible pour être imprimée"
+                ". L'ordonnance est à présent disponible pour être imprimée"
                 form.Show()
             Else
                 MessageBox.Show("Erreur rencontrée pendant la validation de l'ordonnance")

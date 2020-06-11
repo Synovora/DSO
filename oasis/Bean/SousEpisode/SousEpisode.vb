@@ -1,4 +1,5 @@
 ﻿Imports System.Configuration
+Imports System.IO
 Imports Oasis_Common
 Public Class SousEpisode
     Property Id As Long
@@ -20,6 +21,7 @@ Public Class SousEpisode
     Property HorodateLastRecu As DateTime
     Property isInactif As Boolean
     Property lstDetail As List(Of SousEpisodeDetailSousType)
+    Property Signature As String
 
 
     Public Sub New()
@@ -43,7 +45,7 @@ Public Class SousEpisode
 
         Me.Commentaire = Coalesce(row("commentaire"), "")
 
-        Me.isALD = row("is_ald")
+        Me.IsALD = row("is_ald")
         Me.IsReponse = Coalesce(row("is_reponse"), False)
         Me.DelaiSinceValidation = Coalesce(row("delai_since_validation"), ConfigurationManager.AppSettings("DelaiDefautReponseSousEpisode"))
 
@@ -98,6 +100,63 @@ Public Class SousEpisode
     End Sub
     Private Function getFilenameServer() As String
         Return "Episode_" & Me.EpisodeId & "_SousEpisode_" & Me.Id & "_SousEpisodeSousType_" & Me.IdSousEpisodeSousType & ".DOCX"
+    End Function
+
+    Public Function Serialize() As Byte()
+        Using m As MemoryStream = New MemoryStream()
+            Using writer As BinaryWriter = New BinaryWriter(m)
+                writer.Write(Id) 'Long
+                writer.Write(IdIntervenant) 'Long
+                writer.Write(EpisodeId) 'Long
+                writer.Write(IdSousEpisodeType) 'Long
+                writer.Write(IdSousEpisodeSousType) 'Long
+                writer.Write(CreateUserId) 'Long
+                writer.Write(HorodateCreation.Ticks) 'Date -> Long
+                writer.Write(LastUpdateUserId) 'Long
+                writer.Write(HorodateLastUpdate.Ticks) 'Date -> Long
+                writer.Write(ValidateUserId) 'Long
+                writer.Write(HorodateValidate.Ticks) 'Date -> Long
+                writer.Write(Commentaire) 'String
+                writer.Write(IsALD) 'Boolean
+                writer.Write(IsReponse) 'Boolean
+                writer.Write(DelaiSinceValidation) 'Int
+                writer.Write(IsReponseRecue) 'Boolean
+                writer.Write(HorodateLastRecu.Ticks) 'Date -> Long
+                'writer.Write(isInactif) 'Boolean
+
+                'writer.Write(lstDetail) 'Int
+
+            End Using
+            Return m.ToArray()
+        End Using
+    End Function
+
+    Public Shared Function Deserialize(ByVal data As Byte()) As SousEpisode
+        Dim result As SousEpisode = New SousEpisode()
+        Using m As MemoryStream = New MemoryStream(data)
+            Using reader As BinaryReader = New BinaryReader(m)
+                result.Id = reader.ReadInt64()
+                result.IdIntervenant = reader.ReadInt64()
+                result.EpisodeId = reader.ReadInt64()
+                result.IdSousEpisodeType = reader.ReadInt64()
+                result.IdSousEpisodeSousType = reader.ReadInt64()
+                result.CreateUserId = reader.ReadInt64()
+                result.HorodateCreation = New Date(reader.ReadInt64())
+                result.LastUpdateUserId = reader.ReadInt64()
+                result.HorodateLastUpdate = New Date(reader.ReadInt64())
+                result.ValidateUserId = reader.ReadInt64()
+                result.HorodateValidate = New Date(reader.ReadInt64())
+                result.Commentaire = reader.ReadString()
+                result.IsALD = reader.ReadBoolean()
+                result.IsReponse = reader.ReadBoolean()
+                result.DelaiSinceValidation = reader.ReadInt32()
+                result.IsReponseRecue = reader.ReadBoolean()
+                result.HorodateLastRecu = New Date(reader.ReadInt64())
+                'result.isInactif = reader.ReadBoolean()
+
+            End Using
+        End Using
+        Return result
     End Function
 
 End Class

@@ -3,7 +3,6 @@ Imports System.Data.SqlClient
 Imports Oasis_Common
 Public Class OrdonnanceDao
     Inherits StandardDao
-
     Friend Function GetOrdonnaceById(OrdonnanceId As Integer) As Ordonnance
         Dim ordonnance As Ordonnance
         Dim con As SqlConnection
@@ -45,6 +44,7 @@ Public Class OrdonnanceDao
         ordonnance.Commentaire = Coalesce(reader("oa_ordonnance_commentaire"), "")
         ordonnance.Renouvellement = Coalesce(reader("oa_ordonnance_renouvellement"), 0)
         ordonnance.Inactif = Coalesce(reader("oa_ordonnance_inactif"), False)
+        ordonnance.Signature = Coalesce(reader("oa_ordonnance_signature"), "")
         Return ordonnance
     End Function
 
@@ -228,22 +228,34 @@ Public Class OrdonnanceDao
     End Function
 
     Friend Function ValidationOrdonnance(OrdonnanceId As Integer) As Boolean
+        Dim ordonnanceFull As OrdonnanceFull = OrdonnanceFull.Invoke(OrdonnanceId)
+
         Dim da As SqlDataAdapter = New SqlDataAdapter()
         Dim codeRetour As Boolean = True
         Dim con As SqlConnection
         con = GetConnection()
 
+        'Update ordonnance before sign
+        ordonnanceFull.Ordonnance.DateValidation = Date.Now
+        ordonnanceFull.Ordonnance.DateEdition = ordonnanceFull.Ordonnance.DateValidation
+        ordonnanceFull.Ordonnance.UserValidation = userLog.UtilisateurId
+
+        Console.WriteLine("Serialize Ordonnance: " & BitConverter.ToString(ordonnanceFull.Serialize()))
+
         Dim SQLstring As String = "UPDATE oasis.oa_patient_ordonnance SET" &
         " oa_ordonnance_date_validation = @dateValidation," &
-        " oa_ordonnance_user_validation = @userValidation" &
+        " oa_ordonnance_user_validation = @userValidation," &
+                " oa_ordonnance_date_edition = @dateEdition," &
+        " oa_ordonnance_signature = @signature" &
         " WHERE oa_ordonnance_id = @ordonnanceId"
 
         Dim cmd As New SqlCommand(SQLstring, con)
-
         With cmd.Parameters
             .AddWithValue("@ordonnanceId", OrdonnanceId)
-            .AddWithValue("@dateValidation", Date.Now)
-            .AddWithValue("@userValidation", userLog.UtilisateurId)
+            .AddWithValue("@dateValidation", ordonnanceFull.Ordonnance.DateValidation)
+            .AddWithValue("@userValidation", ordonnanceFull.Ordonnance.UserValidation)
+            .AddWithValue("@dateEdition", ordonnanceFull.Ordonnance.DateEdition)
+            .AddWithValue("@signature", userLog.Sign(OrdonnanceFull.Serialize()))
         End With
 
         Try

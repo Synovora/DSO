@@ -48,6 +48,8 @@ Public Class UserDao
                 .AddWithValue("@oa_utilisateur_mail", utilisateur.UtilisateurMail)
                 .AddWithValue("@oa_utilisateur_rpps", utilisateur.UtilisateurRPPS)
                 .AddWithValue("@oa_utilisateur_password_is_unique_usage", utilisateur.IsPasswordUniqueUsage)
+                .AddWithValue("@oa_utilisateur_cle_privee", utilisateur.UtilisateurClePrivee)
+                .AddWithValue("@oa_utilisateur_cle_publique", utilisateur.UtilisateurAddress)
             End With
 
             da.InsertCommand = cmd
@@ -226,6 +228,8 @@ Public Class UserDao
         user.TypeProfil = Coalesce(reader("oa_r_profil_type"), "")
         user.UtilisateurRPPS = Coalesce(reader("oa_utilisateur_rpps"), "")
         user.IsPasswordUniqueUsage = Coalesce(reader("oa_utilisateur_password_is_unique_usage"), False)
+        user.UtilisateurClePrivee = Coalesce(reader("cle_privee"), "0x0000000000000000000000000000000000000000000000000000000000000001") 'TODO: remove
+        user.UtilisateurAddress = Coalesce(reader("cle_publique"), "0x7E5F4552091A69125d5DfCb7b8C2659029395Bdf") 'TODO: remove
 
         ' --- recuperation des fonctions correspondant au profil de l'utilisateur
         addFonctions(user)

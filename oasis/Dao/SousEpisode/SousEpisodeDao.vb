@@ -221,17 +221,17 @@ Public Class SousEpisodeDao
     End Function
 
 
-    Friend Sub writeDocAndEventualySign(sousEpisode As SousEpisode, tbl As Byte(), isSignAlso As Boolean, dateSignature As Date)
+    Friend Sub writeDocAndEventualySign(sousEpisode As SousEpisode, tbl As Byte(), signature As String, dateSignature As Date)
         Dim da As SqlDataAdapter = New SqlDataAdapter()
         Dim con As SqlConnection = GetConnection()
         Dim transaction As SqlTransaction = con.BeginTransaction
 
         Try
             ' -- 1 : enregistrement en base si signataure
-            If isSignAlso Then
+            If String.IsNullOrEmpty(signature) = False Then
                 dateSignature = DateTime.Now
                 Dim SQLstring As String = "UPDATE oasis.oa_sous_episode " &
-                                      "SET validate_user_id = @ValidateUserId, horodate_validate = @HoroDateValidate " &
+                                      "SET validate_user_id = @ValidateUserId, horodate_validate = @HoroDateValidate, signature = @Signature " &
                                       "WHERE id=@Id"
 
                 Dim cmd As New SqlCommand(SQLstring, con, transaction)
@@ -239,7 +239,10 @@ Public Class SousEpisodeDao
                     .AddWithValue("@ValidateUserId", userLog.UtilisateurId)
                     .AddWithValue("@HoroDateValidate", dateSignature)
                     .AddWithValue("@id", sousEpisode.Id)
+                    .AddWithValue("@Signature", signature)
                 End With
+
+                Console.WriteLine("@Signature: " & signature)
 
                 da.UpdateCommand = cmd
                 Dim nb As Integer = da.UpdateCommand.ExecuteNonQuery()
@@ -252,7 +255,7 @@ Public Class SousEpisodeDao
             sousEpisode.writeContenuModel(tbl)
 
             ' -- 3 : commit et maj bean si signature
-            If isSignAlso Then
+            If String.IsNullOrEmpty(signature) = False Then
                 transaction.Commit()
                 sousEpisode.ValidateUserId = userLog.UtilisateurId
                 sousEpisode.HorodateValidate = dateSignature
@@ -260,7 +263,7 @@ Public Class SousEpisodeDao
 
 
         Catch ex As Exception
-            If isSignAlso Then transaction.Rollback()
+            If String.IsNullOrEmpty(signature) = False Then transaction.Rollback()
             Throw ex
         Finally
             transaction.Dispose()
@@ -279,18 +282,23 @@ Public Class SousEpisodeDao
             transaction = con.BeginTransaction
         End If
 
+
         Try
             Dim SQLstring As String = "UPDATE oasis.oa_sous_episode " &
                                       "SET validate_user_id = @ValidateUserId, horodate_validate = @HoroDateValidate " &
                                       "WHERE id=@Id"
 
             'SousEpisode.HorodateCreation = DateTime.Now
+
+
+
             Dim cmd As New SqlCommand(SQLstring, con, transaction)
             With cmd.Parameters
                 .AddWithValue("@ValidateUserId", userLog.UtilisateurId)
                 .AddWithValue("@HoroDateValidate", DateTime.Now)
                 .AddWithValue("@id", idSousEpisode)
             End With
+
 
             da.UpdateCommand = cmd
             Dim nb As Integer = da.UpdateCommand.ExecuteNonQuery()

@@ -70,6 +70,32 @@ Public Class OrdonnanceDetailDao
         Return ordonnanceDetail
     End Function
 
+    Friend Function GetOrdonnanceLigneByOrdonnanceId(ordonnanceId As Integer) As List(Of OrdonnanceDetail)
+        Dim ordonnanceDetail As New List(Of OrdonnanceDetail)
+        Dim con As SqlConnection
+        con = GetConnection()
+
+        Try
+            Dim command As SqlCommand = con.CreateCommand()
+
+            command.CommandText =
+                "SELECT * FROM oasis.oa_patient_ordonnance_detail WHERE oa_ordonnance_id = @ordonnanceId ORDER BY oa_traitement_ordre_affichage, oa_ordonnance_ligne_id"
+            command.Parameters.AddWithValue("@ordonnanceId", ordonnanceId)
+            Using reader As SqlDataReader = command.ExecuteReader()
+                While (reader.Read())
+                    ordonnanceDetail.Add(buildBean(reader))
+                End While
+            End Using
+
+        Catch ex As Exception
+            Throw ex
+        Finally
+            con.Close()
+        End Try
+
+        Return ordonnanceDetail
+    End Function
+
     Friend Function getAllOrdonnanceLigneByOrdonnanceId(ordonnanceId As Integer) As DataTable
         Dim SQLString As String
         SQLString = "SELECT * FROM oasis.oa_patient_ordonnance_detail WHERE oa_ordonnance_id = " & ordonnanceId.ToString &

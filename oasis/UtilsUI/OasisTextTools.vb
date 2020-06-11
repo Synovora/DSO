@@ -70,6 +70,15 @@ Public Class OasisTextTools
 
     End Function
 
+    Public Sub AddImage(image As WriteableBitmap, size As Size)
+        If paragrapheEnCours Is Nothing Then Throw New Exception("Pas de paragraphe en cours")
+        Dim _img As ImageInline = New ImageInline(image)
+        _img.Size = size
+        paragrapheEnCours.Inlines.Add(_img)
+        Return
+
+    End Sub
+
     Public Sub AddTexte(text As String,
                              Optional fontSize As Double = 12,
                              Optional fontWeight As Telerik.WinControls.RichTextEditor.UI.FontWeight = Nothing,

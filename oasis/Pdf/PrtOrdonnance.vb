@@ -2,6 +2,9 @@
 Imports Telerik.WinForms.Documents.Layout
 Imports Telerik.WinControls.RichTextEditor.UI
 Imports Oasis_Common
+Imports Microsoft.IdentityModel.Tokens
+Imports Nethereum.Hex.HexConvertors.Extensions
+Imports QRCoder
 
 Public Class PrtOrdonnance
     Public Property SelectedPatient As Patient
@@ -20,6 +23,7 @@ Public Class PrtOrdonnance
     ReadOnly profilDao As New ProfilDao
     ReadOnly theriaqueDao As New TheriaqueDao
     ReadOnly aldDao As New AldDao
+    ReadOnly SIGN_URL As String = "https://sign.synovora.com/"
 
     Dim ordonnance As Ordonnance
 
@@ -27,7 +31,7 @@ Public Class PrtOrdonnance
     Dim TraitementAldExiste As Boolean = False
 
     Public Sub PrintDocument()
-        ordonnance = ordonnanceDao.getOrdonnaceById(SelectedOrdonnanceId)
+        ordonnance = ordonnanceDao.GetOrdonnaceById(SelectedOrdonnanceId)
         If aldDao.IsPatientALD(SelectedPatient.patientId) Then
             PatientIsAld = True
         End If
@@ -317,13 +321,17 @@ Public Class PrtOrdonnance
     End Function
 
     Private Sub PrintBasPage(section As Section)
+        Dim ordonnance As Ordonnance = ordonnanceDao.GetOrdonnaceById(SelectedOrdonnanceId)
+        Dim QG As QRCodeGenerator = New QRCoder.QRCodeGenerator()
+        Dim Data As QRCodeData = QG.CreateQrCode(SIGN_URL & Base64UrlEncoder.Encode(ordonnance.Signature.HexToByteArray()), QRCodeGenerator.ECCLevel.L)
+        Dim my_qrCode = New QRCode(Data)
         With EditTools
             .CreateParagraphIntoSection(section,, RadTextAlignment.Right)
-
             Dim Medecin As Utilisateur = userDao.getUserById(ordonnance.UserValidation)
             Dim profil As Profil = profilDao.getProfilById(Medecin.UtilisateurProfilId)
             .AddTexteLine(Medecin.UtilisateurPrenom & " " & Medecin.UtilisateurNom & ", " & profil.Designation)
             .AddTexteLine("RPPS : " & Medecin.UtilisateurRPPS)
+            .AddImage(New WriteableBitmap(my_qrCode.GetGraphic(3)), New Size(150, 150))
         End With
     End Sub
 End Class
