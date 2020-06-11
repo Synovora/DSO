@@ -2296,7 +2296,7 @@ Public Class RadFSynthese
             End If
 
             If categoriePPS = Environnement.EnumCategoriePPS.MesurePreventive Then
-                mesureCount = mesureCount + 1
+                mesureCount += 1
                 If mesureCount > 2 Then
                     RadChkMesureMax.Show()
                     mesureMax = True
