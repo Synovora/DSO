@@ -1,11 +1,12 @@
 ﻿Imports System.DateTime
 Imports System.Configuration
-Imports System.Data.SqlClient
 Imports Telerik.WinControls.UI
 Imports Oasis_Common
 Imports System.Runtime.InteropServices
 Imports System.IO
+Imports System.Runtime.CompilerServices
 
+<Assembly: InternalsVisibleTo("UnitTest")>
 Friend Module outils
 
     Public Const JoursAAjouterPourCalculAgePreScolaire As Integer = 4
@@ -100,8 +101,8 @@ Friend Module outils
     End Function
 
     Public Function CalculDureeEnJourString(dateDebut As Date, dateFin As Date) As String
-        Dim DureeString As String = ""
         Dim Duree As Integer
+        Dim DureeString As String
 
         Duree = DateDiff(DateInterval.Day, dateDebut, dateFin)
         If Duree <= 31 Then
@@ -146,6 +147,7 @@ Friend Module outils
 
         Return Jour
     End Function
+
     Public Function GetConnectionString() As String
         Dim SqlConnection As String
         SqlConnection = ConfigurationManager.ConnectionStrings("Oasis_WF.My.MySettings.oasisConnection").ConnectionString
@@ -287,15 +289,15 @@ Friend Module outils
     '========================================================================================
     Class MAPI
         Public Function AddRecipientTo(ByVal email As String) As Boolean
-            Return AddRecipient(email, howTo.MAPI_TO)
+            Return AddRecipient(email, HowTo.MAPI_TO)
         End Function
 
         Public Function AddRecipientCC(ByVal email As String) As Boolean
-            Return AddRecipient(email, howTo.MAPI_TO)
+            Return AddRecipient(email, HowTo.MAPI_TO)
         End Function
 
         Public Function AddRecipientBCC(ByVal email As String) As Boolean
-            Return AddRecipient(email, howTo.MAPI_TO)
+            Return AddRecipient(email, HowTo.MAPI_TO)
         End Function
 
         Public Sub AddAttachment(ByVal strAttachmentFileName As String)
@@ -340,7 +342,7 @@ Friend Module outils
         End Function
 
         Private Function AddRecipient(ByVal email As String,
-            ByVal howTo As howTo) As Boolean
+            ByVal howTo As HowTo) As Boolean
             Dim recipient As MapiRecipDesc = New MapiRecipDesc()
 
             recipient.recipClass = CType(howTo, Integer)

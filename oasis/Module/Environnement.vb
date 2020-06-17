@@ -1,5 +1,4 @@
-﻿Imports System.Collections.Specialized
-Imports System.Configuration
+﻿Imports System.Configuration
 Imports System.Data.SqlClient
 Imports Oasis_Common
 
@@ -39,8 +38,8 @@ Module Environnement
     End Enum
 
     Public Enum EnumSousCategoriePPS
-        medecinReferent = 4
         IDE = 3
+        medecinReferent = 4
         sageFemme = 5
         specialiste = 6
     End Enum

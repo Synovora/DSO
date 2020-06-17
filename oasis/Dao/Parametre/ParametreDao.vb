@@ -12,6 +12,23 @@ Public Class ParametreDao
         PAD = 7
     End Enum
 
+    Private Function BuildBean(reader As SqlDataReader) As Parametre
+        Dim parametre As New Parametre
+
+        parametre.Id = reader("id")
+        parametre.Description = Coalesce(reader("description"), "")
+        parametre.DescriptionPatient = Coalesce(reader("description_patient"), "")
+        parametre.Entier = Coalesce(reader("entier"), 0)
+        parametre.Decimal = Coalesce(reader("decimal"), 0)
+        parametre.Unite = Coalesce(reader("unite"), "")
+        parametre.ValeurMin = Coalesce(reader("valeur_min"), 0)
+        parametre.ValeurMax = Coalesce(reader("valeur_max"), 0)
+        parametre.Ordre = Coalesce(reader("ordre"), 0)
+        parametre.Inactif = Coalesce(reader("inactif"), False)
+
+        Return parametre
+    End Function
+
     Friend Function GetParametreById(parametreId As Integer) As Parametre
         Dim parametre As Parametre
         Dim con As SqlConnection
@@ -36,22 +53,6 @@ Public Class ParametreDao
         Finally
             con.Close()
         End Try
-
-        Return parametre
-    End Function
-
-    Private Function BuildBean(reader As SqlDataReader) As Parametre
-        Dim parametre As New Parametre
-
-        parametre.Id = reader("id")
-        parametre.Description = Coalesce(reader("description"), "")
-        parametre.Entier = Coalesce(reader("entier"), 0)
-        parametre.Decimal = Coalesce(reader("decimal"), 0)
-        parametre.Unite = Coalesce(reader("unite"), "")
-        parametre.ValeurMin = Coalesce(reader("valeur_min"), 0)
-        parametre.ValeurMax = Coalesce(reader("valeur_max"), 0)
-        parametre.Ordre = Coalesce(reader("ordre"), 0)
-        parametre.Inactif = Coalesce(reader("inactif"), False)
 
         Return parametre
     End Function

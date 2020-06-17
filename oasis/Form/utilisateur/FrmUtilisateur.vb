@@ -1,4 +1,5 @@
-﻿Imports Oasis_Common
+﻿Imports Nethereum.Signer
+Imports Oasis_Common
 Imports Telerik.WinControls.UI
 
 Public Class FrmUtilisateur
@@ -20,7 +21,7 @@ Public Class FrmUtilisateur
         InitializeComponent()
 
         ' Ajoutez une initialisation quelconque après l'appel InitializeComponent().
-        afficheTitleForm(Me, Me.Text)
+        AfficheTitleForm(Me, Me.Text)
         Me.utilisateur = utilisateur
         isCreation = If(utilisateur.UtilisateurId = 0, True, False)
 
@@ -215,6 +216,9 @@ Public Class FrmUtilisateur
                 .IsPasswordUniqueUsage = True
             End If
             .UtilisateurRPPS = If(isProfilMedicalOrParamedical(), TxtRPPS.Text, "")
+            Dim ecKey As EthECKey = EthECKey.GenerateKey()
+            .UtilisateurClePrivee = "0x" & BitConverter.ToString(ecKey.GetPrivateKeyAsBytes()).Replace("-", "")
+            .UtilisateurAddress = ecKey.GetPublicAddress()
         End With
         ' --- enregistrement
         If isCreation Then
