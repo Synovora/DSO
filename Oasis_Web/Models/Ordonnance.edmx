@@ -1,0 +1,403 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="oasisModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="oa_patient">
+          <Key>
+            <PropertyRef Name="oa_patient_id" />
+          </Key>
+          <Property Name="oa_patient_id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="oa_patient_nir" Type="bigint" />
+          <Property Name="oa_patient_nir_modulo" Type="int" />
+          <Property Name="oa_patient_INS" Type="bigint" />
+          <Property Name="oa_patient_prenom" Type="nvarchar(max)" />
+          <Property Name="oa_patient_nom" Type="nvarchar(max)" />
+          <Property Name="oa_patient_nom_usuel" Type="nvarchar(max)" />
+          <Property Name="oa_patient_nom_marital" Type="nvarchar(max)" />
+          <Property Name="oa_patient_date_naissance" Type="date" />
+          <Property Name="oa_patient_lieu_naissance" Type="nvarchar(max)" />
+          <Property Name="oa_patient_taille" Type="int" />
+          <Property Name="oa_patient_genre_id" Type="char" MaxLength="1" />
+          <Property Name="oa_patient_profession" Type="nvarchar(max)" />
+          <Property Name="oa_patient_adresse1" Type="nvarchar(max)" />
+          <Property Name="oa_patient_adresse2" Type="nvarchar(max)" />
+          <Property Name="oa_patient_code_postal" Type="char" MaxLength="5" />
+          <Property Name="oa_patient_ville" Type="nvarchar(max)" />
+          <Property Name="oa_patient_tel1" Type="nvarchar(max)" />
+          <Property Name="oa_patient_tel2" Type="nvarchar(max)" />
+          <Property Name="oa_patient_email" Type="nvarchar(max)" />
+          <Property Name="oa_patient_date_entree_oasis" Type="date" />
+          <Property Name="oa_patient_date_sortie_oasis" Type="date" />
+          <Property Name="oa_patient_commentaire_sortie" Type="nvarchar(max)" />
+          <Property Name="oa_patient_date_deces" Type="date" />
+          <Property Name="oa_patient_site_id" Type="bigint" />
+          <Property Name="oa_patient_siege_id" Type="bigint" />
+          <Property Name="oa_patient_unite_sanitaire_id" Type="bigint" />
+          <Property Name="oa_patient_pharmacie_id" Type="bigint" />
+          <Property Name="oa_patient_synthese_date_maj" Type="date" />
+          <Property Name="oa_patient_couverture_internet" Type="bit" />
+          <Property Name="oa_patient_creation_interne" Type="nchar" MaxLength="1" />
+          <Property Name="oa_patient_date_interface_entrante" Type="date" />
+          <Property Name="oa_patient_date_interface_sortante" Type="date" />
+          <Property Name="oa_patient_blocage_medical" Type="bit" />
+        </EntityType>
+        <EntityType Name="oa_patient_ordonnance">
+          <Key>
+            <PropertyRef Name="oa_ordonnance_id" />
+          </Key>
+          <Property Name="oa_ordonnance_id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="oa_ordonnance_patient_id" Type="bigint" Nullable="false" />
+          <Property Name="oa_ordonnance_utilisateur_creation" Type="bigint" Nullable="false" />
+          <Property Name="oa_ordonnance_date_creation" Type="datetime" Nullable="false" />
+          <Property Name="oa_ordonnance_date_validation" Type="datetime" />
+          <Property Name="oa_ordonnance_user_validation" Type="bigint" />
+          <Property Name="oa_ordonnance_signature" Type="varchar(max)" />
+          <Property Name="oa_ordonnance_date_edition" Type="datetime" />
+          <Property Name="oa_ordonnance_episode_id" Type="bigint" />
+          <Property Name="oa_ordonnance_commentaire" Type="nvarchar(max)" />
+          <Property Name="oa_ordonnance_renouvellement" Type="int" />
+          <Property Name="oa_ordonnance_inactif" Type="bit" />
+        </EntityType>
+        <EntityType Name="oa_patient_ordonnance_detail">
+          <Key>
+            <PropertyRef Name="oa_ordonnance_ligne_id" />
+          </Key>
+          <Property Name="oa_ordonnance_ligne_id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="oa_ordonnance_id" Type="bigint" />
+          <Property Name="oa_ordonnance_traitement" Type="bit" />
+          <Property Name="oa_traitement_id" Type="bigint" />
+          <Property Name="oa_traitement_ordre_affichage" Type="int" />
+          <Property Name="oa_traitement_ald" Type="bit" />
+          <Property Name="oa_traitement_a_delivrer" Type="bit" />
+          <Property Name="oa_traitement_medicament_cis" Type="bigint" />
+          <Property Name="oa_traitement_medicament_dci" Type="nvarchar(max)" />
+          <Property Name="oa_traitement_date_debut" Type="date" />
+          <Property Name="oa_traitement_date_fin" Type="date" />
+          <Property Name="oa_traitement_duree" Type="int" />
+          <Property Name="oa_traitement_posologie" Type="nvarchar(max)" />
+          <Property Name="oa_traitement_posologie_base" Type="nchar" MaxLength="1" />
+          <Property Name="oa_traitement_posologie_rythme" Type="int" />
+          <Property Name="oa_traitement_posologie_matin" Type="int" />
+          <Property Name="oa_traitement_posologie_midi" Type="int" />
+          <Property Name="oa_traitement_posologie_apres_midi" Type="int" />
+          <Property Name="oa_traitement_posologie_soir" Type="int" />
+          <Property Name="oa_traitement_fraction_matin" Type="nvarchar" MaxLength="10" />
+          <Property Name="oa_traitement_fraction_midi" Type="nvarchar" MaxLength="10" />
+          <Property Name="oa_traitement_fraction_apres_midi" Type="nvarchar" MaxLength="10" />
+          <Property Name="oa_traitement_fraction_soir" Type="nvarchar" MaxLength="10" />
+          <Property Name="oa_traitement_posologie_commentaire" Type="nvarchar(max)" />
+          <Property Name="oa_traitement_commentaire" Type="nvarchar(max)" />
+          <Property Name="oa_traitement_fenetre" Type="bit" />
+          <Property Name="oa_traitement_fenetre_date_debut" Type="date" />
+          <Property Name="oa_traitement_fenetre_date_fin" Type="date" />
+          <Property Name="oa_traitement_inactif" Type="bit" />
+        </EntityType>
+        <EntityType Name="oa_utilisateur">
+          <Key>
+            <PropertyRef Name="oa_utilisateur_id" />
+          </Key>
+          <Property Name="oa_utilisateur_id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="oa_utilisateur_prenom" Type="nvarchar(max)" />
+          <Property Name="oa_utilisateur_nom" Type="nvarchar(max)" />
+          <Property Name="oa_utilisateur_profil_id" Type="nvarchar" MaxLength="50" />
+          <Property Name="oa_utilisateur_login" Type="nvarchar" MaxLength="45" />
+          <Property Name="oa_utilisateur_siege_id" Type="bigint" />
+          <Property Name="oa_utilisateur_unite_sanitaire_id" Type="bigint" />
+          <Property Name="oa_utilisateur_site_id" Type="bigint" />
+          <Property Name="oa_utilisateur_date_entree" Type="date" />
+          <Property Name="oa_utilisateur_date_sortie" Type="date" />
+          <Property Name="oa_utilisateur_etat" Type="nchar" MaxLength="1" />
+          <Property Name="oa_password" Type="nchar" MaxLength="45" />
+          <Property Name="oa_utilisateur_admin" Type="bit" />
+          <Property Name="oa_utilisateur_telephone" Type="varchar(max)" />
+          <Property Name="oa_utilisateur_fax" Type="varchar(max)" />
+          <Property Name="oa_utilisateur_mail" Type="varchar(max)" />
+          <Property Name="oa_utilisateur_rpps" Type="varchar" MaxLength="11" />
+          <Property Name="oa_utilisateur_password_is_unique_usage" Type="bit" Nullable="false" />
+          <Property Name="cle_privee" Type="varchar(max)" />
+          <Property Name="cle_publique" Type="varchar(max)" />
+        </EntityType>
+        <EntityContainer Name="oasisModelStoreContainer">
+          <EntitySet Name="oa_patient" EntityType="Self.oa_patient" Schema="oasis" store:Type="Tables" />
+          <EntitySet Name="oa_patient_ordonnance" EntityType="Self.oa_patient_ordonnance" Schema="oasis" store:Type="Tables" />
+          <EntitySet Name="oa_patient_ordonnance_detail" EntityType="Self.oa_patient_ordonnance_detail" Schema="oasis" store:Type="Tables" />
+          <EntitySet Name="oa_utilisateur" EntityType="Self.oa_utilisateur" Schema="oasis" store:Type="Tables" />
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="oasisModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="oa_patient">
+          <Key>
+            <PropertyRef Name="oa_patient_id" />
+          </Key>
+          <Property Name="oa_patient_id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="oa_patient_nir" Type="Int64" />
+          <Property Name="oa_patient_nir_modulo" Type="Int32" />
+          <Property Name="oa_patient_INS" Type="Int64" />
+          <Property Name="oa_patient_prenom" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="oa_patient_nom" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="oa_patient_nom_usuel" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="oa_patient_nom_marital" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="oa_patient_date_naissance" Type="DateTime" Precision="0" />
+          <Property Name="oa_patient_lieu_naissance" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="oa_patient_taille" Type="Int32" />
+          <Property Name="oa_patient_genre_id" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="oa_patient_profession" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="oa_patient_adresse1" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="oa_patient_adresse2" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="oa_patient_code_postal" Type="String" MaxLength="5" FixedLength="true" Unicode="false" />
+          <Property Name="oa_patient_ville" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="oa_patient_tel1" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="oa_patient_tel2" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="oa_patient_email" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="oa_patient_date_entree_oasis" Type="DateTime" Precision="0" />
+          <Property Name="oa_patient_date_sortie_oasis" Type="DateTime" Precision="0" />
+          <Property Name="oa_patient_commentaire_sortie" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="oa_patient_date_deces" Type="DateTime" Precision="0" />
+          <Property Name="oa_patient_site_id" Type="Int64" />
+          <Property Name="oa_patient_siege_id" Type="Int64" />
+          <Property Name="oa_patient_unite_sanitaire_id" Type="Int64" />
+          <Property Name="oa_patient_pharmacie_id" Type="Int64" />
+          <Property Name="oa_patient_synthese_date_maj" Type="DateTime" Precision="0" />
+          <Property Name="oa_patient_couverture_internet" Type="Boolean" />
+          <Property Name="oa_patient_creation_interne" Type="String" MaxLength="1" FixedLength="true" Unicode="true" />
+          <Property Name="oa_patient_date_interface_entrante" Type="DateTime" Precision="0" />
+          <Property Name="oa_patient_date_interface_sortante" Type="DateTime" Precision="0" />
+          <Property Name="oa_patient_blocage_medical" Type="Boolean" />
+        </EntityType>
+        <EntityType Name="oa_patient_ordonnance">
+          <Key>
+            <PropertyRef Name="oa_ordonnance_id" />
+          </Key>
+          <Property Name="oa_ordonnance_id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="oa_ordonnance_patient_id" Type="Int64" Nullable="false" />
+          <Property Name="oa_ordonnance_utilisateur_creation" Type="Int64" Nullable="false" />
+          <Property Name="oa_ordonnance_date_creation" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="oa_ordonnance_date_validation" Type="DateTime" Precision="3" />
+          <Property Name="oa_ordonnance_user_validation" Type="Int64" />
+          <Property Name="oa_ordonnance_signature" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="oa_ordonnance_date_edition" Type="DateTime" Precision="3" />
+          <Property Name="oa_ordonnance_episode_id" Type="Int64" />
+          <Property Name="oa_ordonnance_commentaire" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="oa_ordonnance_renouvellement" Type="Int32" />
+          <Property Name="oa_ordonnance_inactif" Type="Boolean" />
+        </EntityType>
+        <EntityType Name="oa_patient_ordonnance_detail">
+          <Key>
+            <PropertyRef Name="oa_ordonnance_ligne_id" />
+          </Key>
+          <Property Name="oa_ordonnance_ligne_id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="oa_ordonnance_id" Type="Int64" />
+          <Property Name="oa_ordonnance_traitement" Type="Boolean" />
+          <Property Name="oa_traitement_id" Type="Int64" />
+          <Property Name="oa_traitement_ordre_affichage" Type="Int32" />
+          <Property Name="oa_traitement_ald" Type="Boolean" />
+          <Property Name="oa_traitement_a_delivrer" Type="Boolean" />
+          <Property Name="oa_traitement_medicament_cis" Type="Int64" />
+          <Property Name="oa_traitement_medicament_dci" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="oa_traitement_date_debut" Type="DateTime" Precision="0" />
+          <Property Name="oa_traitement_date_fin" Type="DateTime" Precision="0" />
+          <Property Name="oa_traitement_duree" Type="Int32" />
+          <Property Name="oa_traitement_posologie" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="oa_traitement_posologie_base" Type="String" MaxLength="1" FixedLength="true" Unicode="true" />
+          <Property Name="oa_traitement_posologie_rythme" Type="Int32" />
+          <Property Name="oa_traitement_posologie_matin" Type="Int32" />
+          <Property Name="oa_traitement_posologie_midi" Type="Int32" />
+          <Property Name="oa_traitement_posologie_apres_midi" Type="Int32" />
+          <Property Name="oa_traitement_posologie_soir" Type="Int32" />
+          <Property Name="oa_traitement_fraction_matin" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="oa_traitement_fraction_midi" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="oa_traitement_fraction_apres_midi" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="oa_traitement_fraction_soir" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="oa_traitement_posologie_commentaire" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="oa_traitement_commentaire" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="oa_traitement_fenetre" Type="Boolean" />
+          <Property Name="oa_traitement_fenetre_date_debut" Type="DateTime" Precision="0" />
+          <Property Name="oa_traitement_fenetre_date_fin" Type="DateTime" Precision="0" />
+          <Property Name="oa_traitement_inactif" Type="Boolean" />
+        </EntityType>
+        <EntityType Name="oa_utilisateur">
+          <Key>
+            <PropertyRef Name="oa_utilisateur_id" />
+          </Key>
+          <Property Name="oa_utilisateur_id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="oa_utilisateur_prenom" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="oa_utilisateur_nom" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="oa_utilisateur_profil_id" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="oa_utilisateur_login" Type="String" MaxLength="45" FixedLength="false" Unicode="true" />
+          <Property Name="oa_utilisateur_siege_id" Type="Int64" />
+          <Property Name="oa_utilisateur_unite_sanitaire_id" Type="Int64" />
+          <Property Name="oa_utilisateur_site_id" Type="Int64" />
+          <Property Name="oa_utilisateur_date_entree" Type="DateTime" Precision="0" />
+          <Property Name="oa_utilisateur_date_sortie" Type="DateTime" Precision="0" />
+          <Property Name="oa_utilisateur_etat" Type="String" MaxLength="1" FixedLength="true" Unicode="true" />
+          <Property Name="oa_password" Type="String" MaxLength="45" FixedLength="true" Unicode="true" />
+          <Property Name="oa_utilisateur_admin" Type="Boolean" />
+          <Property Name="oa_utilisateur_telephone" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="oa_utilisateur_fax" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="oa_utilisateur_mail" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="oa_utilisateur_rpps" Type="String" MaxLength="11" FixedLength="false" Unicode="false" />
+          <Property Name="oa_utilisateur_password_is_unique_usage" Type="Boolean" Nullable="false" />
+          <Property Name="cle_privee" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="cle_publique" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityContainer Name="oasisEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="oa_patient" EntityType="Self.oa_patient" />
+          <EntitySet Name="oa_patient_ordonnance" EntityType="Self.oa_patient_ordonnance" />
+          <EntitySet Name="oa_patient_ordonnance_detail" EntityType="Self.oa_patient_ordonnance_detail" />
+          <EntitySet Name="oa_utilisateur" EntityType="Self.oa_utilisateur" />
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="oasisModelStoreContainer" CdmEntityContainer="oasisEntities">
+          <EntitySetMapping Name="oa_patient">
+            <EntityTypeMapping TypeName="oasisModel.oa_patient">
+              <MappingFragment StoreEntitySet="oa_patient">
+                <ScalarProperty Name="oa_patient_id" ColumnName="oa_patient_id" />
+                <ScalarProperty Name="oa_patient_nir" ColumnName="oa_patient_nir" />
+                <ScalarProperty Name="oa_patient_nir_modulo" ColumnName="oa_patient_nir_modulo" />
+                <ScalarProperty Name="oa_patient_INS" ColumnName="oa_patient_INS" />
+                <ScalarProperty Name="oa_patient_prenom" ColumnName="oa_patient_prenom" />
+                <ScalarProperty Name="oa_patient_nom" ColumnName="oa_patient_nom" />
+                <ScalarProperty Name="oa_patient_nom_usuel" ColumnName="oa_patient_nom_usuel" />
+                <ScalarProperty Name="oa_patient_nom_marital" ColumnName="oa_patient_nom_marital" />
+                <ScalarProperty Name="oa_patient_date_naissance" ColumnName="oa_patient_date_naissance" />
+                <ScalarProperty Name="oa_patient_lieu_naissance" ColumnName="oa_patient_lieu_naissance" />
+                <ScalarProperty Name="oa_patient_taille" ColumnName="oa_patient_taille" />
+                <ScalarProperty Name="oa_patient_genre_id" ColumnName="oa_patient_genre_id" />
+                <ScalarProperty Name="oa_patient_profession" ColumnName="oa_patient_profession" />
+                <ScalarProperty Name="oa_patient_adresse1" ColumnName="oa_patient_adresse1" />
+                <ScalarProperty Name="oa_patient_adresse2" ColumnName="oa_patient_adresse2" />
+                <ScalarProperty Name="oa_patient_code_postal" ColumnName="oa_patient_code_postal" />
+                <ScalarProperty Name="oa_patient_ville" ColumnName="oa_patient_ville" />
+                <ScalarProperty Name="oa_patient_tel1" ColumnName="oa_patient_tel1" />
+                <ScalarProperty Name="oa_patient_tel2" ColumnName="oa_patient_tel2" />
+                <ScalarProperty Name="oa_patient_email" ColumnName="oa_patient_email" />
+                <ScalarProperty Name="oa_patient_date_entree_oasis" ColumnName="oa_patient_date_entree_oasis" />
+                <ScalarProperty Name="oa_patient_date_sortie_oasis" ColumnName="oa_patient_date_sortie_oasis" />
+                <ScalarProperty Name="oa_patient_commentaire_sortie" ColumnName="oa_patient_commentaire_sortie" />
+                <ScalarProperty Name="oa_patient_date_deces" ColumnName="oa_patient_date_deces" />
+                <ScalarProperty Name="oa_patient_site_id" ColumnName="oa_patient_site_id" />
+                <ScalarProperty Name="oa_patient_siege_id" ColumnName="oa_patient_siege_id" />
+                <ScalarProperty Name="oa_patient_unite_sanitaire_id" ColumnName="oa_patient_unite_sanitaire_id" />
+                <ScalarProperty Name="oa_patient_pharmacie_id" ColumnName="oa_patient_pharmacie_id" />
+                <ScalarProperty Name="oa_patient_synthese_date_maj" ColumnName="oa_patient_synthese_date_maj" />
+                <ScalarProperty Name="oa_patient_couverture_internet" ColumnName="oa_patient_couverture_internet" />
+                <ScalarProperty Name="oa_patient_creation_interne" ColumnName="oa_patient_creation_interne" />
+                <ScalarProperty Name="oa_patient_date_interface_entrante" ColumnName="oa_patient_date_interface_entrante" />
+                <ScalarProperty Name="oa_patient_date_interface_sortante" ColumnName="oa_patient_date_interface_sortante" />
+                <ScalarProperty Name="oa_patient_blocage_medical" ColumnName="oa_patient_blocage_medical" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="oa_patient_ordonnance">
+            <EntityTypeMapping TypeName="oasisModel.oa_patient_ordonnance">
+              <MappingFragment StoreEntitySet="oa_patient_ordonnance">
+                <ScalarProperty Name="oa_ordonnance_id" ColumnName="oa_ordonnance_id" />
+                <ScalarProperty Name="oa_ordonnance_patient_id" ColumnName="oa_ordonnance_patient_id" />
+                <ScalarProperty Name="oa_ordonnance_utilisateur_creation" ColumnName="oa_ordonnance_utilisateur_creation" />
+                <ScalarProperty Name="oa_ordonnance_date_creation" ColumnName="oa_ordonnance_date_creation" />
+                <ScalarProperty Name="oa_ordonnance_date_validation" ColumnName="oa_ordonnance_date_validation" />
+                <ScalarProperty Name="oa_ordonnance_user_validation" ColumnName="oa_ordonnance_user_validation" />
+                <ScalarProperty Name="oa_ordonnance_signature" ColumnName="oa_ordonnance_signature" />
+                <ScalarProperty Name="oa_ordonnance_date_edition" ColumnName="oa_ordonnance_date_edition" />
+                <ScalarProperty Name="oa_ordonnance_episode_id" ColumnName="oa_ordonnance_episode_id" />
+                <ScalarProperty Name="oa_ordonnance_commentaire" ColumnName="oa_ordonnance_commentaire" />
+                <ScalarProperty Name="oa_ordonnance_renouvellement" ColumnName="oa_ordonnance_renouvellement" />
+                <ScalarProperty Name="oa_ordonnance_inactif" ColumnName="oa_ordonnance_inactif" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="oa_patient_ordonnance_detail">
+            <EntityTypeMapping TypeName="oasisModel.oa_patient_ordonnance_detail">
+              <MappingFragment StoreEntitySet="oa_patient_ordonnance_detail">
+                <ScalarProperty Name="oa_ordonnance_ligne_id" ColumnName="oa_ordonnance_ligne_id" />
+                <ScalarProperty Name="oa_ordonnance_id" ColumnName="oa_ordonnance_id" />
+                <ScalarProperty Name="oa_ordonnance_traitement" ColumnName="oa_ordonnance_traitement" />
+                <ScalarProperty Name="oa_traitement_id" ColumnName="oa_traitement_id" />
+                <ScalarProperty Name="oa_traitement_ordre_affichage" ColumnName="oa_traitement_ordre_affichage" />
+                <ScalarProperty Name="oa_traitement_ald" ColumnName="oa_traitement_ald" />
+                <ScalarProperty Name="oa_traitement_a_delivrer" ColumnName="oa_traitement_a_delivrer" />
+                <ScalarProperty Name="oa_traitement_medicament_cis" ColumnName="oa_traitement_medicament_cis" />
+                <ScalarProperty Name="oa_traitement_medicament_dci" ColumnName="oa_traitement_medicament_dci" />
+                <ScalarProperty Name="oa_traitement_date_debut" ColumnName="oa_traitement_date_debut" />
+                <ScalarProperty Name="oa_traitement_date_fin" ColumnName="oa_traitement_date_fin" />
+                <ScalarProperty Name="oa_traitement_duree" ColumnName="oa_traitement_duree" />
+                <ScalarProperty Name="oa_traitement_posologie" ColumnName="oa_traitement_posologie" />
+                <ScalarProperty Name="oa_traitement_posologie_base" ColumnName="oa_traitement_posologie_base" />
+                <ScalarProperty Name="oa_traitement_posologie_rythme" ColumnName="oa_traitement_posologie_rythme" />
+                <ScalarProperty Name="oa_traitement_posologie_matin" ColumnName="oa_traitement_posologie_matin" />
+                <ScalarProperty Name="oa_traitement_posologie_midi" ColumnName="oa_traitement_posologie_midi" />
+                <ScalarProperty Name="oa_traitement_posologie_apres_midi" ColumnName="oa_traitement_posologie_apres_midi" />
+                <ScalarProperty Name="oa_traitement_posologie_soir" ColumnName="oa_traitement_posologie_soir" />
+                <ScalarProperty Name="oa_traitement_fraction_matin" ColumnName="oa_traitement_fraction_matin" />
+                <ScalarProperty Name="oa_traitement_fraction_midi" ColumnName="oa_traitement_fraction_midi" />
+                <ScalarProperty Name="oa_traitement_fraction_apres_midi" ColumnName="oa_traitement_fraction_apres_midi" />
+                <ScalarProperty Name="oa_traitement_fraction_soir" ColumnName="oa_traitement_fraction_soir" />
+                <ScalarProperty Name="oa_traitement_posologie_commentaire" ColumnName="oa_traitement_posologie_commentaire" />
+                <ScalarProperty Name="oa_traitement_commentaire" ColumnName="oa_traitement_commentaire" />
+                <ScalarProperty Name="oa_traitement_fenetre" ColumnName="oa_traitement_fenetre" />
+                <ScalarProperty Name="oa_traitement_fenetre_date_debut" ColumnName="oa_traitement_fenetre_date_debut" />
+                <ScalarProperty Name="oa_traitement_fenetre_date_fin" ColumnName="oa_traitement_fenetre_date_fin" />
+                <ScalarProperty Name="oa_traitement_inactif" ColumnName="oa_traitement_inactif" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="oa_utilisateur">
+            <EntityTypeMapping TypeName="oasisModel.oa_utilisateur">
+              <MappingFragment StoreEntitySet="oa_utilisateur">
+                <ScalarProperty Name="oa_utilisateur_id" ColumnName="oa_utilisateur_id" />
+                <ScalarProperty Name="oa_utilisateur_prenom" ColumnName="oa_utilisateur_prenom" />
+                <ScalarProperty Name="oa_utilisateur_nom" ColumnName="oa_utilisateur_nom" />
+                <ScalarProperty Name="oa_utilisateur_profil_id" ColumnName="oa_utilisateur_profil_id" />
+                <ScalarProperty Name="oa_utilisateur_login" ColumnName="oa_utilisateur_login" />
+                <ScalarProperty Name="oa_utilisateur_siege_id" ColumnName="oa_utilisateur_siege_id" />
+                <ScalarProperty Name="oa_utilisateur_unite_sanitaire_id" ColumnName="oa_utilisateur_unite_sanitaire_id" />
+                <ScalarProperty Name="oa_utilisateur_site_id" ColumnName="oa_utilisateur_site_id" />
+                <ScalarProperty Name="oa_utilisateur_date_entree" ColumnName="oa_utilisateur_date_entree" />
+                <ScalarProperty Name="oa_utilisateur_date_sortie" ColumnName="oa_utilisateur_date_sortie" />
+                <ScalarProperty Name="oa_utilisateur_etat" ColumnName="oa_utilisateur_etat" />
+                <ScalarProperty Name="oa_password" ColumnName="oa_password" />
+                <ScalarProperty Name="oa_utilisateur_admin" ColumnName="oa_utilisateur_admin" />
+                <ScalarProperty Name="oa_utilisateur_telephone" ColumnName="oa_utilisateur_telephone" />
+                <ScalarProperty Name="oa_utilisateur_fax" ColumnName="oa_utilisateur_fax" />
+                <ScalarProperty Name="oa_utilisateur_mail" ColumnName="oa_utilisateur_mail" />
+                <ScalarProperty Name="oa_utilisateur_rpps" ColumnName="oa_utilisateur_rpps" />
+                <ScalarProperty Name="oa_utilisateur_password_is_unique_usage" ColumnName="oa_utilisateur_password_is_unique_usage" />
+                <ScalarProperty Name="cle_privee" ColumnName="cle_privee" />
+                <ScalarProperty Name="cle_publique" ColumnName="cle_publique" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
