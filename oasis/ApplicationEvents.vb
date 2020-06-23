@@ -5,6 +5,8 @@
     ' UnhandledException : Déclenché si l'application rencontre une exception non gérée.
     ' StartupNextInstance : Déclenché lors du lancement d'une application à instance unique et si cette application est déjà active. 
     ' NetworkAvailabilityChanged : Déclenché quand la connexion réseau est connectée ou déconnectée.
+
+    'this is a test
     Partial Friend Class MyApplication
 
         Private Sub MyApplication_Startup(sender As Object, e As Microsoft.VisualBasic.ApplicationServices.StartupEventArgs) Handles Me.Startup
