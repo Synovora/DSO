@@ -3,7 +3,7 @@ Imports Oasis_Common
 Public Class ParametreDao
     Inherits StandardDao
 
-    Public Enum enumParametreId
+    Public Enum EnumParametreId
         POIDS = 1
         TAILLE = 2
         IMC = 3
