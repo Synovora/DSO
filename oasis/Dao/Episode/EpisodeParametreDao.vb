@@ -179,7 +179,7 @@ Public Class EpisodeParametreDao
             Dim tacheDataAdapter As SqlDataAdapter = New SqlDataAdapter()
             Using tacheDataAdapter
                 tacheDataAdapter.SelectCommand = New SqlCommand(SQLString, con)
-                tacheDataAdapter.SelectCommand.Parameters.AddWithValue("@TypeParam", ParametreDao.enumParametreId.POIDS)
+                tacheDataAdapter.SelectCommand.Parameters.AddWithValue("@TypeParam", ParametreDao.EnumParametreId.POIDS)
                 tacheDataAdapter.SelectCommand.Parameters.AddWithValue("@EpisodeId", idEpisode)
                 tacheDataAdapter.SelectCommand.Parameters.AddWithValue("@PatientId", idPatient)
                 Dim tacheDataTable As DataTable = New DataTable()

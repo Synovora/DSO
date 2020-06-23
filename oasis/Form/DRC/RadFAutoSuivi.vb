@@ -13,27 +13,18 @@ Public Class RadFAutoSuivi
     End Class
 
     Property SelectedPatient As Patient
+    Private ReadOnly episodeProtocoleCollaboratifDao As New EpisodeProtocoleCollaboratifDao
+    Private ReadOnly autoSuiviDao As New AutoSuiviDao
+    ReadOnly parametreDao As New ParametreDao
 
-    Dim episodeProtocoleCollaboratifDao As New EpisodeProtocoleCollaboratifDao
-    Dim autoSuiviDao As New AutoSuiviDao
-    Dim parametreDao As New ParametreDao
-
-    Dim parametres As List(Of AutoSuiviItem) = New List(Of AutoSuiviItem)
-    Dim TypeActiviteAcode As String = EpisodeDao.EnumTypeActiviteEpisodeCode.SUIVI_CHRONIQUE
-    Dim hiddenlist = New String() {"PAD", "PAM"}
-
-    Private Function isHiddenParametre(parametre As Parametre) As Boolean
-        If Array.IndexOf(hiddenlist, parametre.Description) <> -1 Then
-            Return True
-        End If
-        Return False
-    End Function
+    ReadOnly parametres As List(Of AutoSuiviItem) = New List(Of AutoSuiviItem)
+    ReadOnly TypeActiviteAcode As String = EpisodeDao.EnumTypeActiviteEpisodeCode.SUIVI_CHRONIQUE
 
     Private Sub BuildList()
         Dim ListParametres As List(Of Long) = episodeProtocoleCollaboratifDao.GetListeParametreByPatientEtTypeEpisode(SelectedPatient.patientId, TypeActiviteAcode)
         For i = 0 To ListParametres.Count - 1
             Dim parametre = parametreDao.GetParametreById(ListParametres.Item(i))
-            If isHiddenParametre(parametre) Then
+            If parametre.ExclusionAutoSuivi = True Then
                 Continue For
             End If
             Dim autoSuivi = autoSuiviDao.GetAutoSuiviByPatientIdAndParametreId(SelectedPatient.patientId, ListParametres.Item(i))

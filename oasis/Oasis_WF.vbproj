@@ -1346,7 +1346,6 @@
     <EmbeddedResource Include="Menu\SplashForm.resx">
       <DependentUpon>SplashForm.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="My Project\licenses.licx" />
     <EmbeddedResource Include="Form\Antecedent\RadFAntecedentDetailEdit.resx">
       <DependentUpon>RadFAntecedentDetailEdit.vb</DependentUpon>
     </EmbeddedResource>
@@ -1356,6 +1355,7 @@
     <EmbeddedResource Include="Menu\FAuthentification.resx">
       <DependentUpon>FAuthentification.vb</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="My Project\licenses.licx" />
     <EmbeddedResource Include="My Project\Resources.resx">
       <Generator>VbMyResourcesResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.vb</LastGenOutput>
