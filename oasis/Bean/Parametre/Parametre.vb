@@ -9,5 +9,6 @@
     Property Ordre As Integer
     Property Inactif As Boolean
     Property DescriptionPatient As String
+    Property ExclusionAutoSuivi As String
 
 End Class

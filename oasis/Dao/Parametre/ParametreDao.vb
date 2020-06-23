@@ -13,18 +13,19 @@ Public Class ParametreDao
     End Enum
 
     Private Function BuildBean(reader As SqlDataReader) As Parametre
-        Dim parametre As New Parametre
-
-        parametre.Id = reader("id")
-        parametre.Description = Coalesce(reader("description"), "")
-        parametre.DescriptionPatient = Coalesce(reader("description_patient"), "")
-        parametre.Entier = Coalesce(reader("entier"), 0)
-        parametre.Decimal = Coalesce(reader("decimal"), 0)
-        parametre.Unite = Coalesce(reader("unite"), "")
-        parametre.ValeurMin = Coalesce(reader("valeur_min"), 0)
-        parametre.ValeurMax = Coalesce(reader("valeur_max"), 0)
-        parametre.Ordre = Coalesce(reader("ordre"), 0)
-        parametre.Inactif = Coalesce(reader("inactif"), False)
+        Dim parametre As New Parametre With {
+            .Id = reader("id"),
+            .Description = Coalesce(reader("description"), ""),
+            .DescriptionPatient = Coalesce(reader("description_patient"), ""),
+            .Entier = Coalesce(reader("entier"), 0),
+            .Decimal = Coalesce(reader("decimal"), 0),
+            .Unite = Coalesce(reader("unite"), ""),
+            .ValeurMin = Coalesce(reader("valeur_min"), 0),
+            .ValeurMax = Coalesce(reader("valeur_max"), 0),
+            .Ordre = Coalesce(reader("ordre"), 0),
+            .Inactif = Coalesce(reader("inactif"), False),
+            .ExclusionAutoSuivi = Coalesce(reader("exclusion_auto_suivi"), False)
+        }
 
         Return parametre
     End Function
