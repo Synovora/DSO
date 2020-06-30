@@ -50,7 +50,7 @@ Public Class Ordonnance
                 result.UserValidation = reader.ReadInt64()
                 'result.DateEdition = New Date(reader.ReadInt64())
                 result.Commentaire = reader.ReadString()
-                result.Renouevellement = reader.ReadInt32()
+                result.Renouvellement = reader.ReadInt32()
             End Using
         End Using
         Return result
