@@ -1,5 +1,4 @@
-﻿Imports Microsoft.VisualBasic
-Imports System.Configuration
+﻿Imports System.Configuration
 Imports System.Reflection
 Imports System.Data.SqlClient
 
