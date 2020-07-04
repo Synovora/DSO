@@ -1,5 +1,14 @@
 ﻿Imports DeepEqual.Syntax
+Imports Nethereum.Signer
 Imports Oasis_WF
+
+<TestClass()> Public Class TestUtilisateur
+    <TestMethod()> Public Sub TestUpdatePk()
+        Dim ecKey As EthECKey = EthECKey.GenerateKey()
+        Console.WriteLine("0x" & BitConverter.ToString(ecKey.GetPrivateKeyAsBytes()).Replace("-", ""))
+        Console.WriteLine(ecKey.GetPublicAddress())
+    End Sub
+End Class
 
 <TestClass()> Public Class TestOrdonnance
 
@@ -92,7 +101,7 @@ End Class
         Dim ordonnanceFullSerialized As Byte() = ordonnanceFull.Serialize()
 
         Console.WriteLine(BitConverter.ToString(ordonnanceFullSerialized))
-        Dim ordonnanceFull2 As OrdonnanceFull = ordonnanceFull.Deserialize(ordonnanceFullSerialized)
+        Dim ordonnanceFull2 As OrdonnanceFull = OrdonnanceFull.Deserialize(ordonnanceFullSerialized)
 
         ordonnanceFull.ShouldDeepEqual(ordonnanceFull2)
     End Sub

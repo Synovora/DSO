@@ -22,8 +22,6 @@ Public Class SousEpisode
     Property isInactif As Boolean
     Property lstDetail As List(Of SousEpisodeDetailSousType)
     Property Signature As String
-
-
     Public Sub New()
     End Sub
 
@@ -123,9 +121,7 @@ Public Class SousEpisode
                 writer.Write(IsReponseRecue) 'Boolean
                 writer.Write(HorodateLastRecu.Ticks) 'Date -> Long
                 'writer.Write(isInactif) 'Boolean
-
                 'writer.Write(lstDetail) 'Int
-
             End Using
             Return m.ToArray()
         End Using
@@ -153,7 +149,6 @@ Public Class SousEpisode
                 result.IsReponseRecue = reader.ReadBoolean()
                 result.HorodateLastRecu = New Date(reader.ReadInt64())
                 'result.isInactif = reader.ReadBoolean()
-
             End Using
         End Using
         Return result

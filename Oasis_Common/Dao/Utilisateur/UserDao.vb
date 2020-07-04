@@ -21,12 +21,14 @@ Public Class UserDao
                                      " oa_utilisateur_prenom, oa_utilisateur_nom, oa_utilisateur_profil_id, oa_utilisateur_login,oa_utilisateur_siege_id " &
                                      ",oa_utilisateur_unite_sanitaire_id, oa_utilisateur_site_id, oa_utilisateur_date_entree, oa_utilisateur_date_sortie " &
                                      ",oa_utilisateur_etat, oa_password, oa_utilisateur_admin, oa_utilisateur_telephone, oa_utilisateur_fax " &
-                                     ",oa_utilisateur_mail, oa_utilisateur_rpps, oa_utilisateur_password_is_unique_usage)" & vbCrLf &
+                                     ",oa_utilisateur_mail, oa_utilisateur_rpps " &
+                                     ",oa_utilisateur_password_is_unique_usage, cle_privee, cle_publique)" & vbCrLf &
                                      " VALUES (" & vbCrLf &
                                      " @oa_utilisateur_prenom, @oa_utilisateur_nom, @oa_utilisateur_profil_id, @oa_utilisateur_login,@oa_utilisateur_siege_id " &
                                      ",@oa_utilisateur_unite_sanitaire_id, @oa_utilisateur_site_id, @oa_utilisateur_date_entree, @oa_utilisateur_date_sortie " &
                                      ",@oa_utilisateur_etat, @oa_password, @oa_utilisateur_admin, @oa_utilisateur_telephone, @oa_utilisateur_fax " &
-                                     ",@oa_utilisateur_mail, @oa_utilisateur_rpps, @oa_utilisateur_password_is_unique_usage);" & vbCrLf &
+                                     ",@oa_utilisateur_mail, @oa_utilisateur_rpps " &
+                                     ",@oa_utilisateur_password_is_unique_usage, @oa_utilisateur_cle_privee, @oa_utilisateur_cle_publique);" & vbCrLf &
                                      "SELECT SCOPE_IDENTITY()"
 
             Dim cmd As New SqlCommand(SQLstring, con, transaction)

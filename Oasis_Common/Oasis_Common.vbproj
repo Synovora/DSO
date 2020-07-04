@@ -94,12 +94,16 @@
   <ItemGroup>
     <Compile Include="ApiRest\ApiOasis.vb" />
     <Compile Include="ApiRest\Class1.vb" />
+    <Compile Include="Bean\Ordonnance\Ordonnance.vb" />
+    <Compile Include="Bean\Ordonnance\OrdonnanceDetail.vb" />
     <Compile Include="Bean\Utilisateur\Action.vb" />
     <Compile Include="Bean\Utilisateur\Fonction.vb" />
     <Compile Include="Bean\WebTech\DownloadRequest.vb" />
     <Compile Include="Bean\WebTech\LoginRequest.vb" />
     <Compile Include="Bean\Utilisateur\Profil.vb" />
     <Compile Include="Bean\Utilisateur\UtilisateurClass.vb" />
+    <Compile Include="Dao\Ordonnance\OrdonnanceDao.vb" />
+    <Compile Include="Dao\Ordonnance\OrdonnanceDetailDao.vb" />
     <Compile Include="Dao\StandardDao.vb" />
     <Compile Include="Dao\Utilisateur\ActionDao.vb" />
     <Compile Include="Dao\Utilisateur\FonctionDao.vb" />
@@ -144,5 +148,6 @@
     </None>
     <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
 </Project>

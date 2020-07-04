@@ -14,10 +14,5 @@ Public Module RouteConfig
             url:="{controller}/{action}/{id}",
             defaults:=New With {.controller = "Home", .action = "Index", .id = UrlParameter.Optional}
         )
-        routes.MapRoute(
-            name:="Sign",
-            url:="Sign/{action}/{id}",
-            defaults:=New With {.action = "Check", .id = UrlParameter.Optional}
-        )
     End Sub
 End Module

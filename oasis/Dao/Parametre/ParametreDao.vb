@@ -3,7 +3,7 @@ Imports Oasis_Common
 Public Class ParametreDao
     Inherits StandardDao
 
-    Public Enum enumParametreId
+    Public Enum EnumParametreId
         POIDS = 1
         TAILLE = 2
         IMC = 3
@@ -11,6 +11,24 @@ Public Class ParametreDao
         PAS = 6
         PAD = 7
     End Enum
+
+    Private Function BuildBean(reader As SqlDataReader) As Parametre
+        Dim parametre As New Parametre With {
+            .Id = reader("id"),
+            .Description = Coalesce(reader("description"), ""),
+            .DescriptionPatient = Coalesce(reader("description_patient"), ""),
+            .Entier = Coalesce(reader("entier"), 0),
+            .Decimal = Coalesce(reader("decimal"), 0),
+            .Unite = Coalesce(reader("unite"), ""),
+            .ValeurMin = Coalesce(reader("valeur_min"), 0),
+            .ValeurMax = Coalesce(reader("valeur_max"), 0),
+            .Ordre = Coalesce(reader("ordre"), 0),
+            .Inactif = Coalesce(reader("inactif"), False),
+            .ExclusionAutoSuivi = Coalesce(reader("exclusion_auto_suivi"), False)
+        }
+
+        Return parametre
+    End Function
 
     Friend Function GetParametreById(parametreId As Integer) As Parametre
         Dim parametre As Parametre
@@ -36,22 +54,6 @@ Public Class ParametreDao
         Finally
             con.Close()
         End Try
-
-        Return parametre
-    End Function
-
-    Private Function BuildBean(reader As SqlDataReader) As Parametre
-        Dim parametre As New Parametre
-
-        parametre.Id = reader("id")
-        parametre.Description = Coalesce(reader("description"), "")
-        parametre.Entier = Coalesce(reader("entier"), 0)
-        parametre.Decimal = Coalesce(reader("decimal"), 0)
-        parametre.Unite = Coalesce(reader("unite"), "")
-        parametre.ValeurMin = Coalesce(reader("valeur_min"), 0)
-        parametre.ValeurMax = Coalesce(reader("valeur_max"), 0)
-        parametre.Ordre = Coalesce(reader("ordre"), 0)
-        parametre.Inactif = Coalesce(reader("inactif"), False)
 
         Return parametre
     End Function
