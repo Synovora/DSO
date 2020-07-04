@@ -1458,4 +1458,15 @@ Public Class RadFParcoursDetailEdit
         NumMois.Value = datePrev.Month
         NumAn.Value = datePrev.Year
     End Sub
+
+    Private Sub RadBtnAutoSuivi_Click(sender As Object, e As EventArgs) Handles RadBtnAutoSuivi.Click
+        Cursor.Current = Cursors.WaitCursor
+        Me.Enabled = False
+        Using form As New RadFAutoSuivi
+            form.SelectedPatient = Me.SelectedPatient
+            form.ShowDialog()
+        End Using
+        Me.Enabled = True
+    End Sub
+
 End Class

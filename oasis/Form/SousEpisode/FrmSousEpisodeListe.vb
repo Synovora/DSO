@@ -33,14 +33,14 @@ Public Class FrmSousEpisodeListe
         AddHandler RadSousEpisodeGrid.RowSourceNeeded, AddressOf RadSousEpisodeGrid_RowSourceNeeded
         '-- handler sur bouton sous_grid
         AddHandler RadSousEpisodeGrid.CommandCellClick, AddressOf subGridReponse_CommandCellClick
-        RefreshGrid()
+        refreshGrid()
 
     End Sub
 
     ''' <summary>
     ''' 
     ''' </summary>
-    Private Sub RefreshGrid()
+    Private Sub refreshGrid()
         Dim exId As Long, index As Integer = -1, exPosit = 0, sousEpisodeDetailSousTypeDao = New SousEpisodeDetailSousTypeDao
         Dim dataDetail As DataTable
 
@@ -190,7 +190,7 @@ Public Class FrmSousEpisodeListe
     ''' <param name="e"></param>
     Private Sub RadSousEpisodeGrid_RowSourceNeeded(sender As Object, e As GridViewRowSourceNeededEventArgs) Handles RadSousEpisodeGrid.RowSourceNeeded
         If Me.RadSousEpisodeGrid.Rows.Count > 0 AndAlso Me.RadSousEpisodeGrid.CurrentRow.IsSelected Then
-            RefreshReponseSubGrid(e)
+            refreshReponseSubGrid(e)
         End If
 
     End Sub
@@ -206,9 +206,9 @@ Public Class FrmSousEpisodeListe
         Dim sousEpisodeReponse As SousEpisodeReponse
         Try
             Me.Cursor = Cursors.WaitCursor
-            sousEpisodeReponse = sousEpisodeReponseDao.GetById(gce.RowInfo.Cells("Id").Value)
+            sousEpisodeReponse = sousEpisodeReponseDao.getById(gce.RowInfo.Cells("Id").Value)
 
-            Dim tbl As Byte() = sousEpisodeReponseDao.GetContenu(episode.Id, sousEpisodeReponse)
+            Dim tbl As Byte() = sousEpisodeReponseDao.getContenu(episode.Id, sousEpisodeReponse)
             Me.Cursor = Cursors.Default
             'SaveFileDialog1.FileName = sousEpisodeReponse.NomFichier
             'Select Case (SaveFileDialog1.ShowDialog())
@@ -249,12 +249,12 @@ Public Class FrmSousEpisodeListe
     ''' 
     ''' </summary>
     ''' <param name="e"></param>
-    Private Sub RefreshReponseSubGrid(ByVal e As GridViewRowSourceNeededEventArgs)
+    Private Sub refreshReponseSubGrid(ByVal e As GridViewRowSourceNeededEventArgs)
         Me.Cursor = Cursors.WaitCursor
         Dim rowView As DataRowView = TryCast(e.ParentRow.DataBoundItem, DataRowView)
 
         Try
-            Dim data As DataTable = sousEpisodeReponseDao.GetTableSousEpisodeReponse(Me.RadSousEpisodeGrid.CurrentRow.Cells("IdSousEpisode").Value)
+            Dim data As DataTable = sousEpisodeReponseDao.getTableSousEpisodeReponse(Me.RadSousEpisodeGrid.CurrentRow.Cells("IdSousEpisode").Value)
             e.SourceCollection.Clear()
 
             For Each row In data.Rows
@@ -292,7 +292,7 @@ Public Class FrmSousEpisodeListe
     ''' <param name="e"></param>
     Private Sub BtnCreate_Click(sender As Object, e As EventArgs) Handles BtnCreate.Click
         Dim sousEpisode = New SousEpisode
-        FicheSousEpisode(sousEpisode, userLog.UtilisateurPrenom + " " + userLog.UtilisateurNom, Nothing, Nothing)
+        ficheSousEpisode(sousEpisode, userLog.UtilisateurPrenom + " " + userLog.UtilisateurNom, Nothing, Nothing)
 
     End Sub
 
@@ -302,7 +302,7 @@ Public Class FrmSousEpisodeListe
     ''' <param name="sender"></param>
     ''' <param name="e"></param>
     Private Sub RadSousEpisodeGrid_MouseDoubleClick(sender As Object, e As MouseEventArgs) Handles RadSousEpisodeGrid.MouseDoubleClick
-        EditSousEpisode()
+        editSousEpisode()
     End Sub
 
     ''' <summary>
@@ -311,13 +311,13 @@ Public Class FrmSousEpisodeListe
     ''' <param name="sender"></param>
     ''' <param name="e"></param>
     Private Sub BtnDetail_Click(sender As Object, e As EventArgs) Handles BtnDetail.Click
-        EditSousEpisode()
+        editSousEpisode()
     End Sub
 
     ''' <summary>
     ''' 
     ''' </summary>
-    Private Sub EditSousEpisode()
+    Private Sub editSousEpisode()
         If Me.RadSousEpisodeGrid.Rows.Count = 0 OrElse Me.RadSousEpisodeGrid.CurrentRow.IsSelected = False Then Return
 
         Dim sousEpisode As SousEpisode
@@ -333,7 +333,7 @@ Public Class FrmSousEpisodeListe
         ' -- si selection = subgrid => on prend le parent
         Dim gridViewRow As GridViewRowInfo = If(TryCast(Me.RadSousEpisodeGrid.CurrentRow.Parent, MasterGridViewTemplate) Is Nothing, Me.RadSousEpisodeGrid.CurrentRow.Parent, Me.RadSousEpisodeGrid.CurrentRow)
         With gridViewRow
-            FicheSousEpisode(sousEpisode, .Cells("CreateUser").Value, .Cells("LastUpdateUser").Value, .Cells("ValidateUser").Value)
+            ficheSousEpisode(sousEpisode, .Cells("CreateUser").Value, .Cells("LastUpdateUser").Value, .Cells("ValidateUser").Value)
         End With
 
     End Sub
@@ -345,7 +345,7 @@ Public Class FrmSousEpisodeListe
     ''' <param name="userCreateNom"></param>
     ''' <param name="userUpdateNom"></param>
     ''' <param name="userValidateNom"></param>
-    Private Sub FicheSousEpisode(sousEpisode As SousEpisode, userCreateNom As String, userUpdateNom As String, userValidateNom As String)
+    Private Sub ficheSousEpisode(sousEpisode As SousEpisode, userCreateNom As String, userUpdateNom As String, userValidateNom As String)
 
         Try
             Me.Cursor = Cursors.WaitCursor
@@ -354,7 +354,7 @@ Public Class FrmSousEpisodeListe
                 frm.ShowDialog()
                 frm.Dispose()
             End Using
-            RefreshGrid()
+            refreshGrid()
         Catch err As Exception
             MsgBox(err.Message())
         Finally

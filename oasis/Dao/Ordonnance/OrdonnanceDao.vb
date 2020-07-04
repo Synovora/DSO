@@ -32,19 +32,20 @@ Public Class OrdonnanceDao
     End Function
 
     Private Function BuildBean(reader As SqlDataReader) As Ordonnance
-        Dim ordonnance As New Ordonnance
-        ordonnance.Id = reader("oa_ordonnance_id")
-        ordonnance.PatientId = Coalesce(reader("oa_ordonnance_patient_id"), 0)
-        ordonnance.EpisodeId = Coalesce(reader("oa_ordonnance_episode_id"), 0)
-        ordonnance.UtilisateurCreation = Coalesce(reader("oa_ordonnance_utilisateur_creation"), 0)
-        ordonnance.DateCreation = Coalesce(reader("oa_ordonnance_date_creation"), Nothing)
-        ordonnance.DateValidation = Coalesce(reader("oa_ordonnance_date_validation"), Nothing)
-        ordonnance.UserValidation = Coalesce(reader("oa_ordonnance_user_validation"), 0)
-        ordonnance.DateEdition = Coalesce(reader("oa_ordonnance_date_edition"), Nothing)
-        ordonnance.Commentaire = Coalesce(reader("oa_ordonnance_commentaire"), "")
-        ordonnance.Renouvellement = Coalesce(reader("oa_ordonnance_renouvellement"), 0)
-        ordonnance.Inactif = Coalesce(reader("oa_ordonnance_inactif"), False)
-        ordonnance.Signature = Coalesce(reader("oa_ordonnance_signature"), "")
+        Dim ordonnance As New Ordonnance With {
+            .Id = reader("oa_ordonnance_id"),
+            .PatientId = Coalesce(reader("oa_ordonnance_patient_id"), 0),
+            .EpisodeId = Coalesce(reader("oa_ordonnance_episode_id"), 0),
+            .UtilisateurCreation = Coalesce(reader("oa_ordonnance_utilisateur_creation"), 0),
+            .DateCreation = Coalesce(reader("oa_ordonnance_date_creation"), Nothing),
+            .DateValidation = Coalesce(reader("oa_ordonnance_date_validation"), Nothing),
+            .UserValidation = Coalesce(reader("oa_ordonnance_user_validation"), 0),
+            .DateEdition = Coalesce(reader("oa_ordonnance_date_edition"), Nothing),
+            .Commentaire = Coalesce(reader("oa_ordonnance_commentaire"), ""),
+            .Renouvellement = Coalesce(reader("oa_ordonnance_renouvellement"), 0),
+            .Inactif = Coalesce(reader("oa_ordonnance_inactif"), False),
+            .Signature = Coalesce(reader("oa_ordonnance_signature"), "")
+        }
         Return ordonnance
     End Function
 
@@ -128,7 +129,8 @@ Public Class OrdonnanceDao
             da.InsertCommand = cmd
             OrdonnanceId = da.InsertCommand.ExecuteScalar()
         Catch ex As Exception
-            MessageBox.Show(ex.Message)
+            Throw ex
+            MessageBox.Show(ex.Message) 'TODO:
             OrdonnanceId = 0
         Finally
             con.Close()
@@ -255,7 +257,7 @@ Public Class OrdonnanceDao
             .AddWithValue("@dateValidation", ordonnanceFull.Ordonnance.DateValidation)
             .AddWithValue("@userValidation", ordonnanceFull.Ordonnance.UserValidation)
             .AddWithValue("@dateEdition", ordonnanceFull.Ordonnance.DateEdition)
-            .AddWithValue("@signature", userLog.Sign(OrdonnanceFull.Serialize()))
+            .AddWithValue("@signature", userLog.Sign(ordonnanceFull.Serialize()))
         End With
 
         Try

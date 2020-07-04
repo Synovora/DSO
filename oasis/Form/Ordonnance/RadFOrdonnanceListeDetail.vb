@@ -84,9 +84,9 @@ Public Class RadFOrdonnanceListeDetail
         End Set
     End Property
 
-    ReadOnly aldDao As New AldDao
-    ReadOnly ordonnanceDao As New OrdonnanceDao
-    ReadOnly ordonnanceDetailDao As New OrdonnanceDetailDao
+    Dim aldDao As New AldDao
+    Dim ordonnanceDao As New OrdonnanceDao
+    Dim ordonnanceDetailDao As New OrdonnanceDetailDao
 
     Dim ordonnance As Ordonnance
 
@@ -95,7 +95,7 @@ Public Class RadFOrdonnanceListeDetail
     Dim iGridALD As Integer
     Dim iGridNonALD As Integer
     Dim PatientALD As Boolean = False
-    'Dim TraitementALD As Boolean
+    Dim TraitementALD As Boolean
 
     Private Sub RadFOrdonnanceDetailEdit_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         'Si patient Non ALD, on cache la partie concernant les traitements ALD

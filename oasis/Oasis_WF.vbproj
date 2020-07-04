@@ -182,6 +182,7 @@
       <HintPath>..\lib\RCWF\2020.1.218.40\Telerik.WinControls.Themes.FluentDark.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Telerik.WinControls.Themes.Office2007Silver, Version=2020.2.512.40, Culture=neutral, PublicKeyToken=5bb2a467cbec794e, processorArchitecture=MSIL" />
     <Reference Include="Telerik.WinControls.Themes.Office2013Dark, Version=2020.1.218.40, Culture=neutral, PublicKeyToken=5bb2a467cbec794e, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\lib\RCWF\2020.1.218.40\Telerik.WinControls.Themes.Office2013Dark.dll</HintPath>
@@ -231,6 +232,7 @@
     <Compile Include="Bean\Ordonnance\Ordonnance.vb" />
     <Compile Include="Bean\Ordonnance\OrdonnanceDetailGrid.vb" />
     <Compile Include="Bean\Medicament\Medicament.vb" />
+    <Compile Include="Bean\Parametre\AutoSuivi.vb" />
     <Compile Include="Bean\Parcours\IntervenantParcours.vb" />
     <Compile Include="Bean\SousEpisode\SousEpisodeDetailSousType.vb" />
     <Compile Include="Bean\SousEpisode\SousEpisodeFusion.vb" />
@@ -256,6 +258,13 @@
     <Compile Include="Dao\Episode\EpisodeContexteDao.vb" />
     <Compile Include="Dao\LigneDeVie\PatientParametreLdvDao.vb" />
     <Compile Include="Dao\Medicament\MedicamentDao.vb" />
+    <Compile Include="Dao\Parametre\AutoSuiviDao.vb" />
+    <Compile Include="Form\DRC\RadFAutoSuivi.Designer.vb">
+      <DependentUpon>RadFAutoSuivi.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Form\DRC\RadFAutoSuivi.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Form\RendezVous\RadFListeIntervenantSansRDV.Designer.vb">
       <DependentUpon>RadFListeIntervenantSansRDV.vb</DependentUpon>
     </Compile>
@@ -1061,6 +1070,9 @@
     <Compile Include="Settings.vb" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Form\DRC\RadFAutoSuivi.resx">
+      <DependentUpon>RadFAutoSuivi.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Form\RendezVous\RadFListeIntervenantSansRDV.resx">
       <DependentUpon>RadFListeIntervenantSansRDV.vb</DependentUpon>
     </EmbeddedResource>
@@ -1334,7 +1346,6 @@
     <EmbeddedResource Include="Menu\SplashForm.resx">
       <DependentUpon>SplashForm.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="My Project\licenses.licx" />
     <EmbeddedResource Include="Form\Antecedent\RadFAntecedentDetailEdit.resx">
       <DependentUpon>RadFAntecedentDetailEdit.vb</DependentUpon>
     </EmbeddedResource>
@@ -1344,6 +1355,7 @@
     <EmbeddedResource Include="Menu\FAuthentification.resx">
       <DependentUpon>FAuthentification.vb</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="My Project\licenses.licx" />
     <EmbeddedResource Include="My Project\Resources.resx">
       <Generator>VbMyResourcesResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.vb</LastGenOutput>

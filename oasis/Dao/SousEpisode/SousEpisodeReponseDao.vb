@@ -11,11 +11,11 @@ Public Class SousEpisodeReponseDao
     ''' </summary>
     ''' <param name="idSousEpisodeReponse"></param>
     ''' <returns></returns>
-    Public Function GetLstSousEpisodeReponse(idSousEpisode As Long, Optional idSousEpisodeReponse As Long = 0) As List(Of SousEpisodeReponse)
+    Public Function getLstSousEpisodeReponse(idSousEpisode As Long, Optional idSousEpisodeReponse As Long = 0) As List(Of SousEpisodeReponse)
         Dim lst As List(Of SousEpisodeReponse) = New List(Of SousEpisodeReponse)
-        Dim data As DataTable = GetTableSousEpisodeReponse(idSousEpisode, idSousEpisodeReponse)
+        Dim data As DataTable = getTableSousEpisodeReponse(idSousEpisode, idSousEpisodeReponse)
         For Each row In data.Rows
-            lst.Add(BuildBean(row))
+            lst.Add(buildBean(row))
         Next
         Return lst
     End Function
@@ -25,7 +25,7 @@ Public Class SousEpisodeReponseDao
     ''' </summary>
     ''' <param name="idSousEpisode"></param>
     ''' <returns></returns>
-    Public Function GetTableSousEpisodeReponse(Optional idSousEpisode As Long = 0, Optional idSousEpisodeReponse As Long = 0) As DataTable
+    Public Function getTableSousEpisodeReponse(Optional idSousEpisode As Long = 0, Optional idSousEpisodeReponse As Long = 0) As DataTable
         Dim SQLString As String
         'Console.WriteLine("----------> getAllTacheEnCours")
         SQLString =
@@ -72,7 +72,7 @@ Public Class SousEpisodeReponseDao
         End Using
     End Function
 
-    Friend Sub Delete(sousEpisode As SousEpisode, idReponseRecue As Long, isDernier As Boolean)
+    Friend Sub delete(sousEpisode As SousEpisode, idReponseRecue As Long, isDernier As Boolean)
         Dim da As SqlDataAdapter = New SqlDataAdapter()
         Dim codeRetour As Boolean = True
         Dim con As SqlConnection
@@ -182,7 +182,7 @@ Public Class SousEpisodeReponseDao
         Return codeRetour
     End Function
 
-    Public Function GetContenu(idEpisode As Long, sousEpisodeReponse As SousEpisodeReponse) As Byte()
+    Public Function getContenu(idEpisode As Long, sousEpisodeReponse As SousEpisodeReponse) As Byte()
         Dim filename = sousEpisodeReponse.getFilenameServer(idEpisode)
         ' -- download
         Using apiOasis As New ApiOasis()
@@ -195,8 +195,8 @@ Public Class SousEpisodeReponseDao
 
     End Function
 
-    Friend Function GetById(idSousEpisodeReponse As Long) As SousEpisodeReponse
-        Return GetLstSousEpisodeReponse(0, idSousEpisodeReponse)(0)
+    Friend Function getById(idSousEpisodeReponse As Long) As SousEpisodeReponse
+        Return getLstSousEpisodeReponse(0, idSousEpisodeReponse)(0)
     End Function
 
     ''' <summary>
@@ -204,7 +204,7 @@ Public Class SousEpisodeReponseDao
     ''' </summary>
     ''' <param name="row"></param>
     ''' <returns></returns>
-    Private Function BuildBean(row As DataRow) As SousEpisodeReponse
+    Private Function buildBean(row As DataRow) As SousEpisodeReponse
         Dim seType As New SousEpisodeReponse(row)
         Return seType
     End Function

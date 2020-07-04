@@ -126,8 +126,10 @@ Partial Class RadFParcoursDetailEdit
         Me.RadBtnprotocoleConsigne = New Telerik.WinControls.UI.RadButton()
         Me.RadDesktopAlert1 = New Telerik.WinControls.UI.RadDesktopAlert(Me.components)
         Me.RadBtnMesurePreventive = New Telerik.WinControls.UI.RadButton()
-        Me.RadBtnTestActePara = New Telerik.WinControls.UI.RadButton()
         Me.RadBtnTestParametre = New Telerik.WinControls.UI.RadButton()
+        Me.RadBtnAutoSuivi = New Telerik.WinControls.UI.RadButton()
+        Me.RadBtnTestActePara = New Telerik.WinControls.UI.RadButton()
+        Me.Office2007SilverTheme1 = New Telerik.WinControls.Themes.Office2007SilverTheme()
         CType(Me.RadGroupBoxEtatCivil, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.RadGroupBoxEtatCivil.SuspendLayout()
         CType(Me.RadBtnAnnuler, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -160,8 +162,9 @@ Partial Class RadFParcoursDetailEdit
         CType(Me.RadBtnParametreConsigne, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.RadBtnprotocoleConsigne, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.RadBtnMesurePreventive, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.RadBtnTestActePara, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.RadBtnTestParametre, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.RadBtnAutoSuivi, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.RadBtnTestActePara, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
@@ -1018,7 +1021,7 @@ Partial Class RadFParcoursDetailEdit
         Me.RadParcoursConsigneDataGridView.Font = New System.Drawing.Font("Segoe UI", 8.25!)
         Me.RadParcoursConsigneDataGridView.ForeColor = System.Drawing.Color.Black
         Me.RadParcoursConsigneDataGridView.ImeMode = System.Windows.Forms.ImeMode.NoControl
-        Me.RadParcoursConsigneDataGridView.Location = New System.Drawing.Point(988, 92)
+        Me.RadParcoursConsigneDataGridView.Location = New System.Drawing.Point(988, 48)
         '
         '
         '
@@ -1073,7 +1076,7 @@ Partial Class RadFParcoursDetailEdit
         Me.RadParcoursConsigneDataGridView.Name = "RadParcoursConsigneDataGridView"
         Me.RadParcoursConsigneDataGridView.RightToLeft = System.Windows.Forms.RightToLeft.No
         Me.RadParcoursConsigneDataGridView.ShowGroupPanel = False
-        Me.RadParcoursConsigneDataGridView.Size = New System.Drawing.Size(560, 493)
+        Me.RadParcoursConsigneDataGridView.Size = New System.Drawing.Size(560, 537)
         Me.RadParcoursConsigneDataGridView.TabIndex = 105
         '
         'ContextMenuStrip1
@@ -1116,7 +1119,7 @@ Partial Class RadFParcoursDetailEdit
         '
         'RadBtnprotocoleConsigne
         '
-        Me.RadBtnprotocoleConsigne.Location = New System.Drawing.Point(1113, 591)
+        Me.RadBtnprotocoleConsigne.Location = New System.Drawing.Point(1104, 591)
         Me.RadBtnprotocoleConsigne.Name = "RadBtnprotocoleConsigne"
         Me.RadBtnprotocoleConsigne.Size = New System.Drawing.Size(152, 24)
         Me.RadBtnprotocoleConsigne.TabIndex = 107
@@ -1132,27 +1135,35 @@ Partial Class RadFParcoursDetailEdit
         '
         'RadBtnMesurePreventive
         '
-        Me.RadBtnMesurePreventive.Location = New System.Drawing.Point(997, 591)
+        Me.RadBtnMesurePreventive.Location = New System.Drawing.Point(988, 591)
         Me.RadBtnMesurePreventive.Name = "RadBtnMesurePreventive"
         Me.RadBtnMesurePreventive.Size = New System.Drawing.Size(110, 24)
         Me.RadBtnMesurePreventive.TabIndex = 11
         Me.RadBtnMesurePreventive.Text = "+ prévention"
         '
-        'RadBtnTestActePara
-        '
-        Me.RadBtnTestActePara.Location = New System.Drawing.Point(1094, 43)
-        Me.RadBtnTestActePara.Name = "RadBtnTestActePara"
-        Me.RadBtnTestActePara.Size = New System.Drawing.Size(197, 24)
-        Me.RadBtnTestActePara.TabIndex = 108
-        Me.RadBtnTestActePara.Text = "Test génération actes paramédicaux"
-        '
         'RadBtnTestParametre
         '
-        Me.RadBtnTestParametre.Location = New System.Drawing.Point(1297, 43)
+        Me.RadBtnTestParametre.Location = New System.Drawing.Point(1232, 18)
         Me.RadBtnTestParametre.Name = "RadBtnTestParametre"
-        Me.RadBtnTestParametre.Size = New System.Drawing.Size(151, 24)
+        Me.RadBtnTestParametre.Size = New System.Drawing.Size(186, 24)
         Me.RadBtnTestParametre.TabIndex = 110
         Me.RadBtnTestParametre.Text = "Test génération paramètres"
+        '
+        'RadBtnAutoSuivi
+        '
+        Me.RadBtnAutoSuivi.Location = New System.Drawing.Point(1424, 18)
+        Me.RadBtnAutoSuivi.Name = "RadBtnAutoSuivi"
+        Me.RadBtnAutoSuivi.Size = New System.Drawing.Size(124, 24)
+        Me.RadBtnAutoSuivi.TabIndex = 111
+        Me.RadBtnAutoSuivi.Text = "Auto-Suivi"
+        '
+        'RadBtnTestActePara
+        '
+        Me.RadBtnTestActePara.Location = New System.Drawing.Point(988, 18)
+        Me.RadBtnTestActePara.Name = "RadBtnTestActePara"
+        Me.RadBtnTestActePara.Size = New System.Drawing.Size(238, 24)
+        Me.RadBtnTestActePara.TabIndex = 108
+        Me.RadBtnTestActePara.Text = "Test génération actes paramédicaux"
         '
         'RadFParcoursDetailEdit
         '
@@ -1160,10 +1171,11 @@ Partial Class RadFParcoursDetailEdit
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.CancelButton = Me.RadBtnAbandon
-        Me.ClientSize = New System.Drawing.Size(1550, 621)
-        Me.Controls.Add(Me.RadBtnHistorique)
+        Me.ClientSize = New System.Drawing.Size(1557, 620)
+        Me.Controls.Add(Me.RadBtnAutoSuivi)
         Me.Controls.Add(Me.RadBtnTestParametre)
         Me.Controls.Add(Me.RadBtnTestActePara)
+        Me.Controls.Add(Me.RadBtnHistorique)
         Me.Controls.Add(Me.RadBtnMesurePreventive)
         Me.Controls.Add(Me.RadBtnprotocoleConsigne)
         Me.Controls.Add(Me.RadBtnParametreConsigne)
@@ -1236,8 +1248,9 @@ Partial Class RadFParcoursDetailEdit
         CType(Me.RadBtnParametreConsigne, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.RadBtnprotocoleConsigne, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.RadBtnMesurePreventive, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.RadBtnTestActePara, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.RadBtnTestParametre, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.RadBtnAutoSuivi, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.RadBtnTestActePara, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
         Me.PerformLayout()
@@ -1335,10 +1348,12 @@ Partial Class RadFParcoursDetailEdit
     Friend WithEvents RadDesktopAlert1 As Telerik.WinControls.UI.RadDesktopAlert
     Friend WithEvents RadBtnMesurePreventive As Telerik.WinControls.UI.RadButton
     Friend WithEvents AjouterUneMesurePréventiveToolStripMenuItem As ToolStripMenuItem
-    Friend WithEvents RadBtnTestActePara As Telerik.WinControls.UI.RadButton
     Friend WithEvents RadBtnTestParametre As Telerik.WinControls.UI.RadButton
     Friend WithEvents RadBtnClotureRDV As Telerik.WinControls.UI.RadButton
     Friend WithEvents RadBtnHistorique As Telerik.WinControls.UI.RadButton
     Friend WithEvents RadBtnHistoRDV As Telerik.WinControls.UI.RadButton
+    Friend WithEvents RadBtnAutoSuivi As Telerik.WinControls.UI.RadButton
+    Friend WithEvents RadBtnTestActePara As Telerik.WinControls.UI.RadButton
+    Friend WithEvents Office2007SilverTheme1 As Telerik.WinControls.Themes.Office2007SilverTheme
 End Class
 

@@ -701,18 +701,18 @@ Public Class RadFEpisodeDetail
             End Select
 
             Select Case ParametreId
-                Case ParametreDao.enumParametreId.POIDS
+                Case ParametreDao.EnumParametreId.POIDS
                     LblLabelPoids.Text = "Poids"
                     LblParmPoids.Text = valeurString & " " & unite
                     valeurPoids = Valeur
-                Case ParametreDao.enumParametreId.TAILLE
+                Case ParametreDao.EnumParametreId.TAILLE
                     LblLabelTaille.Text = "Taille"
                     LblParmTaille.Text = valeurString & " " & unite
                     valeurTaille = Valeur
                     If valeurTaille = 0 Then
                         valeurTaille = SelectedPatient.Taille
                     End If
-                Case ParametreDao.enumParametreId.IMC
+                Case ParametreDao.EnumParametreId.IMC
                     LblLabelIMC.Text = "IMC"
                     uniteIMC = unite
                     EpisodeParametreIdIMC = EpisodeParametreId
@@ -724,15 +724,15 @@ Public Class RadFEpisodeDetail
                 Case 5
                     LblLabelFC.Text = "FC"
                     LblParmFC.Text = valeurString & " " & unite
-                Case ParametreDao.enumParametreId.PAS
+                Case ParametreDao.EnumParametreId.PAS
                     LblLabelPAS.Text = "PAS"
                     LblParmPAS.Text = valeurString & " " & unite
                     valeurPAS = Valeur
-                Case ParametreDao.enumParametreId.PAD
+                Case ParametreDao.EnumParametreId.PAD
                     LblLabelPAD.Text = "PAD"
                     LblParmPAD.Text = valeurString & " " & unite
                     valeurPAD = Valeur
-                Case ParametreDao.enumParametreId.PAM
+                Case ParametreDao.EnumParametreId.PAM
                     LblLabelPAM.Text = "PAM"
                     unitePAM = unite
                     EpisodeParametreIdPAM = EpisodeParametreId
@@ -802,7 +802,7 @@ Public Class RadFEpisodeDetail
         If LblLabelTaille.Text = "" Then
             Dim parametre As Parametre
             Dim parametreDao As New ParametreDao
-            parametre = parametreDao.GetParametreById(ParametreDao.enumParametreId.TAILLE) 'Taille
+            parametre = parametreDao.GetParametreById(ParametreDao.EnumParametreId.TAILLE) 'Taille
             LblLabelTaille.Text = "Taille"
             valeurString = SelectedPatient.Taille.ToString("##0")
             LblParmTaille.Text = valeurString & " " & parametre.Unite

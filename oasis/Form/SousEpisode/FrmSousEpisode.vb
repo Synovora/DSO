@@ -54,8 +54,8 @@ Public Class FrmSousEpisode
         Me.userValidateNom = userValidateNom
 
         ' -- initialisation des controles du formulaire
-        InitOneShot()
-        InitControls()
+        initOneShot()
+        initControls()
     End Sub
 
     ''' <summary>
@@ -66,8 +66,8 @@ Public Class FrmSousEpisode
     Private Sub DropDownType_SelectedIndexChanged(sender As Object, e As Data.PositionChangedEventArgs) Handles DropDownType.SelectedIndexChanged
         If Me.DropDownType.SelectedItem IsNot Nothing Then
             Dim seType = TryCast(Me.DropDownType.SelectedItem.Value, SousEpisodeType)
-            InitSousTypes(seType.Id)
-            InitDestinataire(seType)
+            initSousTypes(seType.Id)
+            initDestinataire(seType)
         End If
     End Sub
 
@@ -78,14 +78,14 @@ Public Class FrmSousEpisode
     ''' <param name="e"></param>
     Private Sub DropDownSousType_SelectedIndexChanged(sender As Object, e As Data.PositionChangedEventArgs) Handles DropDownSousType.SelectedIndexChanged
         If Me.DropDownSousType.SelectedItem IsNot Nothing Then
-            InitSousSousTypes(TryCast(Me.DropDownSousType.SelectedItem.Value, SousEpisodeSousType).Id)
+            initSousSousTypes(TryCast(Me.DropDownSousType.SelectedItem.Value, SousEpisodeSousType).Id)
             'setDefaultALDGrid()
             If isCreation Then
                 Dim sousEpisodeSousType As SousEpisodeSousType = TryCast(Me.DropDownSousType.SelectedItem.Value, SousEpisodeSousType)
                 TxtDelai.Value = Coalesce(sousEpisodeSousType.DelaiReponse, "")
                 ChkBReponseAttendue.Checked = sousEpisodeSousType.IsReponseRequise
             End If
-            InitALDetReponse()
+            initALDetReponse()
 
         End If
     End Sub
@@ -140,7 +140,7 @@ Public Class FrmSousEpisode
                     Notification.show("Ajout document", "ERREUR insertion du nouveau document !!!")
                 Else
                     Notification.show("Ajout document", "Ajout terminée avec succès !")
-                    RefreshGrid()
+                    refreshGrid()
                 End If
             Finally
                 Me.Cursor = Cursors.Default
@@ -160,7 +160,7 @@ Public Class FrmSousEpisode
             Case "telecharger"
                 TelechargerReponse(gce)
             Case "supprimer"
-                Supprimer(gce)
+                supprimer(gce)
         End Select
     End Sub
 
@@ -170,7 +170,7 @@ Public Class FrmSousEpisode
     ''' <param name="sender"></param>
     ''' <param name="e"></param>
     Private Sub BtnValidate_Click(sender As Object, e As EventArgs) Handles BtnValidate.Click
-        If SerializeSousEpisode() Then
+        If serializeSousEpisode() Then
             ' -- on enchaine directe sur edition doc
             BtnEditerDocument_Click(sender, e)
         End If
@@ -185,9 +185,9 @@ Public Class FrmSousEpisode
         Dim sousEpisodeReponse As SousEpisodeReponse
         Try
             Me.Cursor = Cursors.WaitCursor
-            sousEpisodeReponse = sousEpisodeReponseDao.GetById(gce.RowInfo.Cells("Id").Value)
+            sousEpisodeReponse = sousEpisodeReponseDao.getById(gce.RowInfo.Cells("Id").Value)
 
-            Dim tbl As Byte() = sousEpisodeReponseDao.GetContenu(episode.Id, sousEpisodeReponse)
+            Dim tbl As Byte() = sousEpisodeReponseDao.getContenu(episode.Id, sousEpisodeReponse)
             'Me.Cursor = Cursors.Default
             'SaveFileDialog1.FileName = sousEpisodeReponse.NomFichier
             'Select Case (SaveFileDialog1.ShowDialog())
@@ -224,11 +224,11 @@ Public Class FrmSousEpisode
 
     End Sub
 
-    Private Sub Supprimer(gce As GridCommandCellElement)
+    Private Sub supprimer(gce As GridCommandCellElement)
         If MsgBox("Etes-vous sur de vouloir supprimer ce fichier ?", MsgBoxStyle.YesNo Or MsgBoxStyle.DefaultButton2 Or MsgBoxStyle.Critical, "Suppression") = MsgBoxResult.Yes Then
             Dim isDernier As Boolean = Me.RadReponseGrid.Rows.Count < 2
-            sousEpisodeReponseDao.Delete(sousEpisode, gce.RowInfo.Cells("Id").Value, isDernier)
-            RefreshGrid()
+            sousEpisodeReponseDao.delete(sousEpisode, gce.RowInfo.Cells("Id").Value, isDernier)
+            refreshGrid()
         End If
     End Sub
 
@@ -242,7 +242,7 @@ Public Class FrmSousEpisode
     ''' <summary>
     ''' 
     ''' </summary>
-    Private Sub SetDefaultALDGrid()
+    Private Sub setDefaultALDGrid()
         If isCreation Then
             Dim sousType As SousEpisodeSousType = TryCast(Me.DropDownSousType.SelectedItem.Value, SousEpisodeSousType)
             Dim isALD = sousType.IsALDPossible AndAlso isPatientALD AndAlso ChkALD.Checked
@@ -256,7 +256,7 @@ Public Class FrmSousEpisode
     ''' <summary>
     ''' 
     ''' </summary>
-    Private Sub InitOneShot()
+    Private Sub initOneShot()
         '  -- somme nous en mode creation (sinon mode update)
         isCreation = If(sousEpisode.Id = 0, True, False)
         ' -- le patient est il en ALD
@@ -280,19 +280,19 @@ Public Class FrmSousEpisode
             ' -- combo type
             Me.DropDownType.Items.Clear()
             For Each sousEpisodeType As SousEpisodeType In lstSousEpisodeType
-                If FiltreTypeByProfil(sousEpisodeType) Then Continue For
+                If filtreTypeByProfil(sousEpisodeType) Then Continue For
                 Dim radListItem As New RadListDataItem(sousEpisodeType.Libelle, sousEpisodeType)
                 Me.DropDownType.Items.Add(radListItem)
                 'If TryCast(radListItem.Value, SousEpisodeType).Id = Me.sousEpisode.IdSousEpisodeType Then
                 If sousEpisodeType.Id = Me.sousEpisode.IdSousEpisodeType Then
                     radListItem.Selected = True
                     ' -- init des sous types
-                    InitSousTypes(sousEpisodeType.Id)
+                    initSousTypes(sousEpisodeType.Id)
                 End If
             Next
             If isCreation AndAlso Me.DropDownType.Items.Count > 0 Then
                 Me.DropDownType.SelectedItem = Me.DropDownType.Items(0)
-                InitSousTypes(TryCast(Me.DropDownType.SelectedItem.Value, SousEpisodeType).Id)
+                initSousTypes(TryCast(Me.DropDownType.SelectedItem.Value, SousEpisodeType).Id)
             End If
             Me.DropDownType.DefaultItemsCountInDropDown = DropDownType.Items.Count
 
@@ -318,7 +318,7 @@ Public Class FrmSousEpisode
     ''' <summary>
     ''' 
     ''' </summary>
-    Private Sub InitControls()
+    Private Sub initControls()
         isNotSigned = (sousEpisode.HorodateValidate = Nothing)
 
         With sousEpisode
@@ -333,7 +333,7 @@ Public Class FrmSousEpisode
             ChkBReponseAttendue.Checked = sousEpisode.IsReponse
             ChkBReponseAttendue.Enabled = isCreation
             TxtDelai.Value = If(sousEpisode.DelaiSinceValidation = Nothing, "", sousEpisode.DelaiSinceValidation)
-            RefreshGrid()
+            refreshGrid()
         End If
         TxtDelai.Enabled = isCreation
         BtnAjoutReponse.Visible = isCreation = False AndAlso isNotSigned = False
@@ -360,11 +360,11 @@ Public Class FrmSousEpisode
     ''' <summary>
     ''' refresh du grid des reponses au sous-episode
     ''' </summary>
-    Private Sub RefreshGrid()
+    Private Sub refreshGrid()
         Dim exId As Long, index As Integer = -1, exPosit = 0
         Me.Cursor = Cursors.WaitCursor
         Try
-            Dim data As DataTable = sousEpisodeReponseDao.GetTableSousEpisodeReponse(sousEpisode.Id)
+            Dim data As DataTable = sousEpisodeReponseDao.getTableSousEpisodeReponse(sousEpisode.Id)
 
             Dim numRowGrid As Integer = 0
 
@@ -422,7 +422,7 @@ Public Class FrmSousEpisode
     ''' </summary>
     ''' <param name="sousEpisodeType"></param>
     ''' <returns></returns>
-    Private Function FiltreTypeByProfil(sousEpisodeType As SousEpisodeType) As Boolean
+    Private Function filtreTypeByProfil(sousEpisodeType As SousEpisodeType) As Boolean
         If isCreation = False Then Return False   ' pas de filtre si pas en création
         ' -- on regarde si au moins un sousType autorisé pour ce profil
         For Each sousEpisodeSousType As SousEpisodeSousType In lstSousEpisodeSousType
@@ -438,8 +438,8 @@ Public Class FrmSousEpisode
         Try
             Me.Cursor = Cursors.WaitCursor
             Me.Enabled = False
-            Dim lstSousEpisodeFusion As List(Of SousEpisodeFusion) = ConstitueFusion()
-            Dim tbl = Telecharger_SousEpisodeDemande(sousType)
+            Dim lstSousEpisodeFusion As List(Of SousEpisodeFusion) = constitueFusion()
+            Dim tbl = telecharger_SousEpisodeDemande(sousType)
             Dim ins = New MemoryStream(tbl)
             Dim provider = New DocxFormatProvider()
 
@@ -462,10 +462,10 @@ Public Class FrmSousEpisode
                 If isNotSignedNew = False AndAlso isNotSignedNew <> isNotSigned Then
                     isNotSigned = isNotSignedNew
                     userValidateNom = userLog.UtilisateurPrenom + " " + userLog.UtilisateurNom
-                    InitControls()
+                    initControls()
                 End If
             End Using
-            RefreshGrid()
+            refreshGrid()
         Catch err As Exception
             MsgBox(err.Message())
         Finally
@@ -488,7 +488,7 @@ Public Class FrmSousEpisode
         End If
     End Sub
 
-    Private Function Telecharger_model(sousEpisodeSousType As SousEpisodeSousType) As Byte()
+    Private Function telecharger_model(sousEpisodeSousType As SousEpisodeSousType) As Byte()
         Dim tbl As Byte() = {}
         Try
             tbl = sousEpisodeSousType.getContenuModel()
@@ -501,7 +501,7 @@ Public Class FrmSousEpisode
         End Try
     End Function
 
-    Private Function Telecharger_SousEpisodeDemande(sousEpisodeSousType As SousEpisodeSousType) As Byte()
+    Private Function telecharger_SousEpisodeDemande(sousEpisodeSousType As SousEpisodeSousType) As Byte()
         Dim tbl As Byte() = {}
         Try
             tbl = sousEpisode.getContenu()
@@ -518,7 +518,7 @@ Public Class FrmSousEpisode
         End Try
     End Function
 
-    Private Function ConstitueFusion() As List(Of SousEpisodeFusion)
+    Private Function constitueFusion() As List(Of SousEpisodeFusion)
         Dim lstFusion = New List(Of SousEpisodeFusion)(1)
         Dim sousEF As New SousEpisodeFusion
         Dim episodeParametreDao = New EpisodeParametreDao
@@ -566,7 +566,7 @@ Public Class FrmSousEpisode
             .IntervenantStructure = Coalesce(intervenant.Structure, "")
 
             ' -- alimente automatiquement tous les parametres (poids, FC ..etc) 
-            episodeParametreDao.AlimenteFusionDocumentParametres(sousEF, sousEpisode.EpisodeId, patient.patientId)
+            episodeParametreDao.alimenteFusionDocumentParametres(sousEF, sousEpisode.EpisodeId, patient.patientId)
 
             .Patient_PrenomNom = patient.PatientPrenom & " " & patient.PatientNom
             .Patient_NIR = patient.PatientNir
@@ -670,7 +670,7 @@ Public Class FrmSousEpisode
     ''' 
     ''' </summary>
     ''' <param name="idType"></param>
-    Private Sub InitSousTypes(idType As Long)
+    Private Sub initSousTypes(idType As Long)
         Me.DropDownSousType.Items.Clear()
 
         For Each sousEpisodeSousType As SousEpisodeSousType In lstSousEpisodeSousType
@@ -703,7 +703,7 @@ Public Class FrmSousEpisode
     ''' 
     ''' </summary>
     ''' <param name="idSousType"></param>
-    Private Sub InitSousSousTypes(idSousType As Long)
+    Private Sub initSousSousTypes(idSousType As Long)
         Me.Cursor = Cursors.WaitCursor
         Try
             Dim numRowGrid As Integer = 0
@@ -739,7 +739,7 @@ Public Class FrmSousEpisode
 
     End Sub
 
-    Private Sub InitDestinataire(sousEpisodeType As SousEpisodeType)
+    Private Sub initDestinataire(sousEpisodeType As SousEpisodeType)
         Me.LblDestinataire.Visible = sousEpisodeType.isWithDestinataire()
         Me.DropDownDestinataire.Visible = sousEpisodeType.isWithDestinataire()
     End Sub
@@ -747,7 +747,7 @@ Public Class FrmSousEpisode
     ''' <summary>
     ''' 
     ''' </summary>
-    Private Sub InitALDetReponse()
+    Private Sub initALDetReponse()
         If Me.DropDownSousType.SelectedItem IsNot Nothing Then
             Dim sousType As SousEpisodeSousType = TryCast(Me.DropDownSousType.SelectedItem.Value, SousEpisodeSousType)
             Dim visible = sousType.IsALDPossible AndAlso isPatientALD
@@ -763,7 +763,7 @@ Public Class FrmSousEpisode
         End If
     End Sub
 
-    Private Function SerializeSousEpisode() As Boolean
+    Private Function serializeSousEpisode() As Boolean
 
         With sousEpisode
             .HorodateCreation = DateTime.Now
@@ -809,7 +809,7 @@ Public Class FrmSousEpisode
 
         ' --- reaffiche le formulaire en mode update
         isCreation = False
-        InitControls()
+        initControls()
         Return True
     End Function
 

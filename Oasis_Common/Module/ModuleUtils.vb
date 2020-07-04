@@ -144,7 +144,7 @@ Public Module ModuleUtils
     ''' </summary>
     ''' <returns></returns>
     Public Function ReadPermTry() As Integer
-        '-- cration eventuelle de la clé
+        '-- creation eventuelle de la clé
         Using uediSurveyKey = Registry.CurrentUser.CreateSubKey("Software\USYNSurvey")
         End Using
         Dim readValue = "" & My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Software\USYNSurvey", "USS", EncryptString("" & 0))
