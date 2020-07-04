@@ -50,7 +50,6 @@ Public Class AntecedentChangementOrdreDao
         'Lecture des données en base
         antecedentDataAdapter.SelectCommand = New SqlCommand(SQLString, con)
         antecedentDataAdapter.Fill(antecedentDataTable)
-        'conxn.Open()
 
         'Déclaration des variables pour réaliser le parcours du DataTable pour alimenter le DataGridView
         Dim i As Integer
@@ -152,7 +151,6 @@ Public Class AntecedentChangementOrdreDao
         End With
 
         Try
-            'con2.Open()
             da.UpdateCommand = cmd
             da.UpdateCommand.ExecuteNonQuery()
         Catch ex As Exception

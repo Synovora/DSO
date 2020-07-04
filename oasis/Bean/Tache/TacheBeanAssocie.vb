@@ -5,7 +5,7 @@ Public Class TacheBeanAssocie
     Private _fonctionEmetteur As Fonction
     Private _uniteSanitaire As UniteSanitaire
     Private _site As Site
-    Private _patient As Patient
+    Private _patient As PatientBase
     Private _parcours As Parcours
     Private _episode As Episode
     Private _sousEpisode As Episode
@@ -50,11 +50,11 @@ Public Class TacheBeanAssocie
         End Set
     End Property
 
-    Public Property Patient As Patient
+    Public Property Patient As PatientBase
         Get
             Return _patient
         End Get
-        Set(value As Patient)
+        Set(value As PatientBase)
             _patient = value
         End Set
     End Property

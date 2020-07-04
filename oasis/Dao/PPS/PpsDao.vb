@@ -3,6 +3,8 @@ Imports Oasis_Common
 Public Class PpsDao
     Inherits StandardDao
 
+    Dim patientDao As New PatientDao
+
     Public Enum EnumCategoriePPS
         OBJECTIF_SANTE = 1
         MESURE_PREVENTIVE = 2
@@ -304,7 +306,7 @@ Public Class PpsDao
             CreationPPSHisto(PPSHistoACreer, userLog, PPSHistoCreationDao.EnumEtatPPSHisto.Creation)
 
             'Mise à jour de la date de mise à jour de la synthèse (table patient)
-            PatientDao.ModificationDateMajSynthesePatient(pps.PatientId)
+            patientDao.ModificationDateMajSynthesePatient(pps.PatientId)
         End If
 
         Return codeRetour
@@ -363,7 +365,7 @@ Public Class PpsDao
             CreationPPSHisto(PPSHistoACreer, userLog, EnumEtatPPSHisto.Modification)
 
             'Mise à jour de la date de mise à jour de la synthèse (table patient)
-            PatientDao.ModificationDateMajSynthesePatient(pps.PatientId)
+            patientDao.ModificationDateMajSynthesePatient(pps.PatientId)
         End If
 
         Return codeRetour
@@ -423,7 +425,7 @@ Public Class PpsDao
             CreationPPSHisto(PPSHistoACreer, userLog, EnumEtatPPSHisto.Annulation)
 
             'Mise à jour de la date de mise à jour de la synthèse (table patient)
-            PatientDao.ModificationDateMajSynthesePatient(pps.PatientId)
+            patientDao.ModificationDateMajSynthesePatient(pps.PatientId)
         End If
 
         Return codeRetour

@@ -3,6 +3,7 @@ Imports Oasis_Common
 Public Class ContexteDao
     Inherits StandardDao
 
+    Dim patientDao As New PatientDao
     Public Structure EnumParcoursBaseItem
         Const Medical = "Médical"
         Const BioEnvironnemental = "Bio-environnemental"
@@ -266,7 +267,7 @@ Public Class ContexteDao
             AntecedentHistoCreationDao.CreationAntecedentHisto(contexteHistoACreer, userLog, AntecedentHistoCreationDao.EnumEtatAntecedentHisto.CreationAntecedent)
 
             'Mise à jour de la date de mise à jour de la synthèse (table patient)
-            PatientDao.ModificationDateMajSynthesePatient(contexte.PatientId)
+            patientDao.ModificationDateMajSynthesePatient(contexte.PatientId)
         End If
 
         Return codeRetour
@@ -336,7 +337,7 @@ Public Class ContexteDao
             AntecedentHistoCreationDao.CreationAntecedentHisto(contexteHistoACreer, userLog, AntecedentHistoCreationDao.EnumEtatAntecedentHisto.ModificationAntecedent)
 
             'Mise à jour de la date de mise à jour de la synthèse (table patient)
-            PatientDao.ModificationDateMajSynthesePatient(contexte.PatientId)
+            patientDao.ModificationDateMajSynthesePatient(contexte.PatientId)
         End If
 
         Return codeRetour
@@ -385,7 +386,7 @@ Public Class ContexteDao
             AntecedentHistoCreationDao.CreationAntecedentHisto(contexteHistoACreer, userLog, AntecedentHistoCreationDao.EnumEtatAntecedentHisto.AnnulationAntecedent)
 
             'Mise à jour de la date de mise à jour de la synthèse (table patient)
-            PatientDao.ModificationDateMajSynthesePatient(contexte.PatientId)
+            patientDao.ModificationDateMajSynthesePatient(contexte.PatientId)
         End If
 
         Return codeRetour

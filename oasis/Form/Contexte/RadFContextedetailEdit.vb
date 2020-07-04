@@ -1,7 +1,7 @@
 ﻿Imports System.Data.SqlClient
 Imports Oasis_Common
 Public Class RadFContextedetailEdit
-    Private privateSelectedPatient As Patient
+    Private privateSelectedPatient As PatientBase
     Private privateUtilisateurConnecte As Utilisateur
     Private privateSelectedContexteId As Integer
     Private privateSelectedDrcId As Integer
@@ -13,11 +13,11 @@ Public Class RadFContextedetailEdit
     Private _episode As Episode
 
 
-    Public Property SelectedPatient As Patient
+    Public Property SelectedPatient As PatientBase
         Get
             Return privateSelectedPatient
         End Get
-        Set(value As Patient)
+        Set(value As PatientBase)
             privateSelectedPatient = value
         End Set
     End Property

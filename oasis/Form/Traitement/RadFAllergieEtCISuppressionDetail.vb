@@ -1,7 +1,9 @@
-﻿Public Class RadFAllergieEtCISuppressionDetail
+﻿Imports Oasis_Common
+
+Public Class RadFAllergieEtCISuppressionDetail
     Private _selectedTraitement As Traitement
     Private _codeRetour As Boolean
-    Private _SelectedPatient As Patient
+    Private _SelectedPatient As PatientBase
 
     Public Property SelectedTraitement As Traitement
         Get
@@ -21,11 +23,11 @@
         End Set
     End Property
 
-    Public Property SelectedPatient As Patient
+    Public Property SelectedPatient As PatientBase
         Get
             Return _SelectedPatient
         End Get
-        Set(value As Patient)
+        Set(value As PatientBase)
             _SelectedPatient = value
         End Set
     End Property
@@ -60,10 +62,10 @@
 
     Private Sub ChargementMedicament()
         medicament = medicamentDao.GetMedicamentById(SelectedTraitement.MedicamentId)
-        LblMedicamentDCI.Text = Medicament.MedicamentDci
-        LblMedicamentForme.Text = Medicament.Forme
-        LblMedicamentAdministration.Text = Medicament.VoieAdministration
-        LblMedicamentTitulaire.Text = Medicament.Titulaire
+        LblMedicamentDCI.Text = medicament.MedicamentDci
+        LblMedicamentForme.Text = medicament.Forme
+        LblMedicamentAdministration.Text = medicament.VoieAdministration
+        LblMedicamentTitulaire.Text = medicament.Titulaire
     End Sub
 
     Private Sub ChargerZonesArret()

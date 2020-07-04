@@ -15,7 +15,7 @@ Public Class LoginController
     ' POST api/<controller>
     Public Function PostValue(<FromBody()> ByVal loginRequest As LoginRequest) As HttpResponseMessage
         Dim userDao As UserDao = New UserDao
-        Dim userLog = Nothing
+
         Try
             verifPassword(loginRequest.login, loginRequest.password)
             Dim enc = EncryptString(ConfigurationManager.ConnectionStrings("Oasis_WF.My.MySettings.oasisConnection").ConnectionString)

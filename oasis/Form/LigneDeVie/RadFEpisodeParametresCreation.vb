@@ -2,14 +2,14 @@
 Imports Oasis_Common
 Imports Telerik.WinControls.UI
 Public Class RadFEpisodeParametresCreation
-    Private _SelectedPatient As Patient
+    Private _SelectedPatient As PatientBase
     Private _CodeRetour As Boolean
 
-    Public Property SelectedPatient As Patient
+    Public Property SelectedPatient As PatientBase
         Get
             Return _SelectedPatient
         End Get
-        Set(value As Patient)
+        Set(value As PatientBase)
             _SelectedPatient = value
         End Set
     End Property

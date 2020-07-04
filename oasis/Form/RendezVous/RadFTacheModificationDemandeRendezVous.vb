@@ -1,6 +1,8 @@
-﻿Public Class RadFTacheModificationDemandeRendezVous
+﻿Imports Oasis_Common
+
+Public Class RadFTacheModificationDemandeRendezVous
     Private _selectedTacheId As Long
-    Private _selectedPatient As Patient
+    Private _selectedPatient As PatientBase
     Private _codeRetour As Boolean
 
     Public Property SelectedTacheId As Long
@@ -12,11 +14,11 @@
         End Set
     End Property
 
-    Public Property SelectedPatient As Patient
+    Public Property SelectedPatient As PatientBase
         Get
             Return _selectedPatient
         End Get
-        Set(value As Patient)
+        Set(value As PatientBase)
             _selectedPatient = value
         End Set
     End Property
@@ -36,14 +38,14 @@
     Dim tacheDao As New TacheDao
 
     Private Sub RadFTacheModificationRendezVous_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-        afficheTitleForm(Me, "Modification demande de rendez-vous")
+        AfficheTitleForm(Me, "Modification demande de rendez-vous")
         ChargementEtatCivil()
-        tache = tacheDao.getTacheById(SelectedTacheId)
+        tache = tacheDao.GetTacheById(SelectedTacheId)
         Select Case tache.TypedemandeRendezVous
-            Case TacheDao.typeDemandeRendezVous.ANNEE.ToString
+            Case TacheDao.TypeDemandeRendezVous.ANNEE.ToString
                 NumAn.Value = tache.DateRendezVous.Year()
                 RadChkDRVAnneeSeulement.Checked = True
-            Case TacheDao.typeDemandeRendezVous.ANNEEMOIS.ToString
+            Case TacheDao.TypeDemandeRendezVous.ANNEEMOIS.ToString
                 NumAn.Value = tache.DateRendezVous.Year()
                 NumMois.Value = tache.DateRendezVous.Month()
                 RadChkDRVAnneeSeulement.Checked = False
@@ -92,7 +94,7 @@
             If RadChkDRVAnneeSeulement.Checked = True Then
                 'Création demande de rendez-vous pour une année donnée (AAAA)
                 Dim dateRendezVous As New DateTime(NumAn.Value, 1, 1, 0, 0, 0)
-                If ModificationDemandeRendezVous(dateRendezVous, TacheDao.typeDemandeRendezVous.ANNEE.ToString) = True Then
+                If ModificationDemandeRendezVous(dateRendezVous, TacheDao.TypeDemandeRendezVous.ANNEE.ToString) = True Then
                     MessageBox.Show("demande de rendez-vous modifiée pour " & NumAn.Value.ToString)
                     Me.CodeRetour = True
                     Close()
@@ -103,7 +105,7 @@
                 Else
                     'Création demande de rendez-vous pour une période donnée (MM/AAAA)
                     Dim dateRendezVous As New DateTime(NumAn.Value, NumMois.Value, 1, 0, 0, 0)
-                    If ModificationDemandeRendezVous(dateRendezVous, TacheDao.typeDemandeRendezVous.ANNEEMOIS.ToString) = True Then
+                    If ModificationDemandeRendezVous(dateRendezVous, TacheDao.TypeDemandeRendezVous.ANNEEMOIS.ToString) = True Then
                         MessageBox.Show("Demande de rendez-vous modifiée pour " & NumMois.Value.ToString & "/" & NumAn.Value.ToString)
                         Me.CodeRetour = True
                         Close()

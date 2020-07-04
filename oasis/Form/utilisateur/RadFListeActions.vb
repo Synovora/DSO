@@ -90,11 +90,12 @@ Public Class RadFListeActions
     End Sub
 
     Private Sub MasterTemplate_CellDoubleClick(sender As Object, e As Telerik.WinControls.UI.GridViewCellEventArgs) Handles RadGridViewAction.CellDoubleClick
+        Dim patientDao As New PatientDao
         If RadGridViewAction.CurrentRow IsNot Nothing Then
             Dim aRow As Integer = Me.RadGridViewAction.Rows.IndexOf(Me.RadGridViewAction.CurrentRow)
             If aRow >= 0 Then
                 Dim PatientId As Integer = RadGridViewAction.Rows(aRow).Cells("patientId").Value
-                Dim patient As Patient = PatientDao.getPatientById(PatientId)
+                Dim patient As PatientBase = patientDao.GetPatientById(PatientId)
                 Select Case RadGridViewAction.Rows(aRow).Cells("fonction").Value
                     Case ActionDao.EnumFonctionCode.EPISODE
                         Dim EpisodeId As Integer = RadGridViewAction.Rows(aRow).Cells("fonctionId").Value

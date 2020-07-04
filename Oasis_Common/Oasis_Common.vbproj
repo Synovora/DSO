@@ -94,23 +94,26 @@
   <ItemGroup>
     <Compile Include="ApiRest\ApiOasis.vb" />
     <Compile Include="ApiRest\Class1.vb" />
-    <Compile Include="Bean\Ordonnance\Ordonnance.vb" />
-    <Compile Include="Bean\Ordonnance\OrdonnanceDetail.vb" />
+    <Compile Include="Bean\Ordonnance\OrdonnanceBase.vb" />
+    <Compile Include="Bean\Ordonnance\OrdonnanceDetailBase.vb" />
+    <Compile Include="Bean\Patient\PatientBase.vb" />
     <Compile Include="Bean\Utilisateur\Action.vb" />
     <Compile Include="Bean\Utilisateur\Fonction.vb" />
     <Compile Include="Bean\WebTech\DownloadRequest.vb" />
     <Compile Include="Bean\WebTech\LoginRequest.vb" />
     <Compile Include="Bean\Utilisateur\Profil.vb" />
     <Compile Include="Bean\Utilisateur\UtilisateurClass.vb" />
-    <Compile Include="Dao\Ordonnance\OrdonnanceDao.vb" />
-    <Compile Include="Dao\Ordonnance\OrdonnanceDetailDao.vb" />
+    <Compile Include="Dao\Ordonnance\OrdonnanceDaoBase.vb" />
+    <Compile Include="Dao\Ordonnance\OrdonnanceDetailDaoBase.vb" />
+    <Compile Include="Dao\Patient\PatientDaoBase.vb" />
     <Compile Include="Dao\StandardDao.vb" />
     <Compile Include="Dao\Utilisateur\ActionDao.vb" />
     <Compile Include="Dao\Utilisateur\FonctionDao.vb" />
     <Compile Include="Dao\Utilisateur\ProfilDao.vb" />
     <Compile Include="Dao\Utilisateur\UserDao.vb" />
     <Compile Include="Dao\Obsolete\UtilisateurDao.vb" />
-    <Compile Include="Module\ModuleUtils.vb" />
+    <Compile Include="Module\EnvironnementBase.vb" />
+    <Compile Include="Module\ModuleUtilsBase.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
       <AutoGen>True</AutoGen>

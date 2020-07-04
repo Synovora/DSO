@@ -9,8 +9,6 @@ Imports System.Runtime.CompilerServices
 <Assembly: InternalsVisibleTo("UnitTest")>
 Friend Module outils
 
-    Public Const JoursAAjouterPourCalculAgePreScolaire As Integer = 4
-
     Dim logDao As New LogDao
     Dim log As Log
 
@@ -59,7 +57,7 @@ Friend Module outils
         End Get
     End Property
 
-    Public Function AccesFonctionMedicaleSynthese(patient As Patient) As Boolean
+    Public Function AccesFonctionMedicaleSynthese(patient As PatientBase) As Boolean
         Dim CodeRetour As Boolean = False
 
         If userLog.TypeProfil = ProfilDao.EnumProfilType.MEDICAL.ToString OrElse
@@ -130,30 +128,6 @@ Friend Module outils
         Return Duree
     End Function
 
-    Public Function CalculAgeEnmois(dateNaissance As Date) As Integer
-        Dim datetimenow = DateTime.Now
-        Dim mois As Integer
-
-        mois = DateDiff("m", dateNaissance, datetimenow)
-
-        Return mois
-    End Function
-
-    Public Function CalculAgeEnJour(dateNaissance As Date) As Integer
-        Dim datetimenow = DateTime.Now
-        Dim Jour As Integer
-
-        Jour = DateDiff("d", dateNaissance, datetimenow)
-
-        Return Jour
-    End Function
-
-    Public Function GetConnectionString() As String
-        Dim SqlConnection As String
-        SqlConnection = ConfigurationManager.ConnectionStrings("Oasis_WF.My.MySettings.oasisConnection").ConnectionString
-        Return SqlConnection
-    End Function
-
     'Calcul de la durée du traitement
     Public Function CalculDureeTraitementEnJour(dateDebut As Date, dateFin As Date) As Integer
         Dim duree As Integer
@@ -201,55 +175,6 @@ Friend Module outils
         End If
 
         Return dateCreationNote
-    End Function
-
-    Public Function CalculAgeEnAnneeEtMoisString(DateNaissance As Date) As String
-        Dim lMois As Integer
-        Dim Age As String
-        Dim PatientMoisRestant, PatientAn As Integer
-        lMois = CalculAgeEnmois(DateNaissance)
-        If lMois > 35 Then
-            PatientMoisRestant = lMois Mod 12
-            lMois -= PatientMoisRestant
-            PatientAn = lMois / 12
-        Else
-            Dim lJour = CalculAgeEnJour(DateNaissance)
-            lJour += JoursAAjouterPourCalculAgePreScolaire
-            Dim lJourRestant = lJour Mod 30.4375
-            lJour -= lJourRestant
-            lMois = lJour \ 30.4375
-        End If
-        Select Case lMois
-            Case 0 To 35
-                If lMois <> 0 Then
-                    Age = lMois & " mois"
-                Else
-                    Age = "Nouveau né"
-                End If
-            Case 36 To 119
-                Age = PatientAn & " ans " & PatientMoisRestant & " mois"
-            Case Else
-                Age = PatientAn.ToString & " ans"
-        End Select
-
-        Return Age
-    End Function
-
-    Public Function CalculAgeEnAnnee(dateNaissance As Date) As Integer
-        Dim datetimenow = DateTime.Now
-        Dim age As Integer
-
-        age = CInt(Now.Year - dateNaissance.Year)
-
-        If dateNaissance.Month > Now.Month Then
-            age -= 1
-        End If
-
-        If ((dateNaissance.Month = Now.Month) And (dateNaissance.Day > Now.Day)) Then
-            age -= 1
-        End If
-
-        Return age
     End Function
 
     Public Function CalculProchainRendezVous(dateReference As Date, rythme As Integer, Base As String) As Date

@@ -2,15 +2,15 @@
 Imports Oasis_Common
 
 Public Class RadFEpisodeDetailCreation
-    Private _SelectedPatient As Patient
+    Private _SelectedPatient As PatientBase
     Private _episodeId As Long
     Private _CodeRetour As Boolean
 
-    Public Property SelectedPatient As Patient
+    Public Property SelectedPatient As PatientBase
         Get
             Return _SelectedPatient
         End Get
-        Set(value As Patient)
+        Set(value As PatientBase)
             _SelectedPatient = value
         End Set
     End Property
@@ -53,7 +53,7 @@ Public Class RadFEpisodeDetailCreation
         End If
 
         Dim genre, enfant As String
-        Dim agePatient As Integer = outils.CalculAgeEnAnnee(SelectedPatient.PatientDateNaissance)
+        Dim agePatient As Integer = CalculAgeEnAnnee(SelectedPatient.PatientDateNaissance)
 
         Dim listActivite As New List(Of String)
         episodeActiviteDT = episodeActiviteDao.GetAllEpisodeActivite

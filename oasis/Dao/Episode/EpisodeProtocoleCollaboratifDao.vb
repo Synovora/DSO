@@ -12,6 +12,7 @@ Public Class EpisodeProtocoleCollaboratifDao
         'Lecture de la liste des paramètres et création des paramètres attachés à l'épisode
         Dim parametreDao As New ParametreDao
         Dim episodeParametreDao As New EpisodeParametreDao
+        Dim patientDao As New PatientDao
         Dim parametre As Parametre
         For i = 0 To ListParam.Count - 1
             parametre = parametreDao.GetParametreById(ListParam.Item(i))
@@ -53,19 +54,20 @@ Public Class EpisodeProtocoleCollaboratifDao
     Friend Function GetListeActeParamedicalByPatientEtTypeEpisode(patientId As Long, TypeActiviteEpisode As String) As List(Of Long)
         Dim ListActePara = New List(Of Long)
         Dim ListProtocol = New List(Of Long)
+        Dim patientDao As New PatientDao
 
-        Dim patient As Patient
+        Dim patient As PatientBase
         Dim agePatientEnJour As Integer = 0
         Dim agePatientEnAnnee As Integer = 0
-        patient = PatientDao.getPatientById(patientId)
+        patient = patientDao.GetPatientById(patientId)
         Select Case TypeActiviteEpisode
             Case EpisodeDao.EnumTypeActiviteEpisodeCode.PREVENTION_ENFANT_PRE_SCOLAIRE
                 'Calcul âge enfant en jour
-                agePatientEnJour = outils.CalculAgeEnJour(patient.PatientDateNaissance)
-                agePatientEnJour += outils.JoursAAjouterPourCalculAgePreScolaire
+                agePatientEnJour = CalculAgeEnJour(patient.PatientDateNaissance)
+                agePatientEnJour += JoursAAjouterPourCalculAgePreScolaire
             Case EpisodeDao.EnumTypeActiviteEpisodeCode.PREVENTION_ENFANT_SCOLAIRE
                 'Calcul âge enfant en année
-                agePatientEnAnnee = outils.CalculAgeEnAnnee(patient.PatientDateNaissance)
+                agePatientEnAnnee = CalculAgeEnAnnee(patient.PatientDateNaissance)
             Case Else
         End Select
 
@@ -207,29 +209,30 @@ Public Class EpisodeProtocoleCollaboratifDao
     End Function
 
     Friend Function GetListeParametreByPatientEtTypeEpisode(patientId As Long, TypeActiviteEpisode As String) As List(Of Long)
+        Dim patientDao As New PatientDao
         Dim ListGroupeParam = New List(Of Long)
         Dim ListParam = New List(Of Long)
 
-        Dim patient As Patient
+        Dim patient As PatientBase
         Dim agePatientEnJour As Integer = 0
         Dim agePatientEnAnnee As Integer = 0
 
-        patient = PatientDao.getPatientById(patientId)
+        patient = patientDao.GetPatientById(patientId)
         Select Case TypeActiviteEpisode
             Case EpisodeDao.EnumTypeActiviteEpisodeCode.PREVENTION_ENFANT_PRE_SCOLAIRE
                 'Calcul âge enfant en jour
-                agePatientEnJour = outils.CalculAgeEnJour(patient.PatientDateNaissance)
-                agePatientEnJour += outils.JoursAAjouterPourCalculAgePreScolaire
+                agePatientEnJour = CalculAgeEnJour(patient.PatientDateNaissance)
+                agePatientEnJour += JoursAAjouterPourCalculAgePreScolaire
             Case EpisodeDao.EnumTypeActiviteEpisodeCode.PREVENTION_ENFANT_SCOLAIRE
                 'Calcul âge enfant en année
-                agePatientEnAnnee = outils.CalculAgeEnAnnee(patient.PatientDateNaissance)
+                agePatientEnAnnee = CalculAgeEnAnnee(patient.PatientDateNaissance)
             Case Else
         End Select
 
         'Protocole standard
         Dim DrcStandardDatatable As DataTable
         Dim drcStandardDao As New DrcStandardDao
-        DrcStandardDatatable = drcStandardDao.getAllDrcByTypeActivite(TypeActiviteEpisode)
+        DrcStandardDatatable = drcStandardDao.GetAllDrcByTypeActivite(TypeActiviteEpisode)
         Dim i As Integer
         Dim drcId As Long
         Dim ageMinDrc, AgeMaxDrc As Integer

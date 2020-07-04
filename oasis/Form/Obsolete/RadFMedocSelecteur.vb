@@ -4,17 +4,17 @@ Imports Telerik.WinControls.UI.Localization
 Imports Oasis_Common
 Public Class RadFMedocSelecteur
 
-    Private privateSelectedPatient As Patient
+    Private privateSelectedPatient As PatientBase
     Private privateUtilisateurConnecte As Utilisateur
     Private privateSelectedMedicamentCis As Integer
     Private privateAllergie As Boolean
     Private privateContreIndication As Boolean
 
-    Public Property SelectedPatient As Patient
+    Public Property SelectedPatient As PatientBase
         Get
             Return privateSelectedPatient
         End Get
-        Set(value As Patient)
+        Set(value As PatientBase)
             privateSelectedPatient = value
         End Set
     End Property

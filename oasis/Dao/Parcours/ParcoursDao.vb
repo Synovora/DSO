@@ -4,6 +4,9 @@ Imports Oasis_Common
 Public Class ParcoursDao
     Inherits StandardDao
 
+
+    Dim patientDao As New PatientDao
+
     Public Structure EnumParcoursBaseItem
         Const Quotidien = "Quotidien"
         Const Hebdomadaire = "Par semaine"
@@ -289,7 +292,7 @@ Public Class ParcoursDao
                     MessageBox.Show("Intervenant médecin référent du parcours de soin créé")
                 End If
                 'Création automatique de la première demande de rendez-vous
-                Dim patient As Patient = PatientDao.GetPatientById(PatientId)
+                Dim patient As PatientBase = patientDao.GetPatientById(PatientId)
                 Dim tacheDao As New TacheDao
                 tacheDao.CreationAutomatiqueDeDemandeRendezVous(patient, parcours, Date.Now(), True)
             End If
@@ -317,7 +320,7 @@ Public Class ParcoursDao
                     MessageBox.Show("Intervenant IDE sur site du parcours de soin créé")
                 End If
                 'Création automatique de la première demande de rendez-vous
-                Dim patient As Patient = PatientDao.GetPatientById(PatientId)
+                Dim patient As PatientBase = patientDao.GetPatientById(PatientId)
                 Dim tacheDao As New TacheDao
                 tacheDao.CreationAutomatiqueDeDemandeRendezVous(patient, parcours, Date.Now(), True)
             End If
@@ -393,7 +396,7 @@ Public Class ParcoursDao
             parcoursHistoDao.CreationParcoursHisto(ParcoursHistoACreer, userLog, ParcoursHistoDao.EnumEtatParcoursHisto.Creation)
 
             'Mise à jour de la date de mise à jour de la synthèse (table patient)
-            PatientDao.ModificationDateMajSynthesePatient(parcours.PatientId)
+            patientDao.ModificationDateMajSynthesePatient(parcours.PatientId)
         End If
 
 
@@ -401,6 +404,7 @@ Public Class ParcoursDao
     End Function
 
     Friend Function ModificationIntervenantParcours(parcours As Parcours) As Boolean
+        Dim patientDao As New PatientDao
         Dim da As SqlDataAdapter = New SqlDataAdapter()
         Dim codeRetour As Boolean = True
         Dim con As SqlConnection = GetConnection()
@@ -468,7 +472,7 @@ Public Class ParcoursDao
             parcoursHistoDao.CreationParcoursHisto(ParcoursHistoACreer, userLog, ParcoursHistoDao.EnumEtatParcoursHisto.Modification)
 
             'Mise à jour de la date de mise à jour de la synthèse (table patient)
-            PatientDao.ModificationDateMajSynthesePatient(parcours.PatientId)
+            patientDao.ModificationDateMajSynthesePatient(parcours.PatientId)
         End If
 
         Return codeRetour
@@ -478,6 +482,7 @@ Public Class ParcoursDao
         Dim da As SqlDataAdapter = New SqlDataAdapter()
         Dim codeRetour As Boolean = True
         Dim con As SqlConnection = GetConnection()
+        Dim patientDao As New PatientDao
 
         Dim dateModification As Date = Date.Now.Date
 
@@ -528,7 +533,7 @@ Public Class ParcoursDao
             parcoursHistoDao.CreationParcoursHisto(ParcoursHistoACreer, userLog, ParcoursHistoDao.EnumEtatParcoursHisto.Annulation)
 
             'Mise à jour de la date de mise à jour de la synthèse (table patient)
-            PatientDao.ModificationDateMajSynthesePatient(parcours.PatientId)
+            patientDao.ModificationDateMajSynthesePatient(parcours.PatientId)
         End If
 
         Return codeRetour

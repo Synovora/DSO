@@ -564,7 +564,7 @@ Public Class TheriaqueDao
     '=============================================================================================
     '=== Contrôle contre-indication
     '=============================================================================================
-    Friend Function IsSpecialiteContreIndique(patient As Patient, specialiteId As Long) As SpecialiteContreIndique
+    Friend Function IsSpecialiteContreIndique(patient As PatientBase, specialiteId As Long) As SpecialiteContreIndique
         Dim specialiteContreIndique As New SpecialiteContreIndique
         specialiteContreIndique.ContreIndication = False
         specialiteContreIndique.MessageContreIndication = ""
@@ -663,7 +663,7 @@ Public Class TheriaqueDao
     '=============================================================================================
     '=== Contrôle allergie
     '=============================================================================================
-    Friend Function IsSpecialiteAllergique(patient As Patient, specialiteId As Long) As SpecialiteAllergique
+    Friend Function IsSpecialiteAllergique(patient As PatientBase, specialiteId As Long) As SpecialiteAllergique
         Dim specialiteAllergique As New SpecialiteAllergique
         specialiteAllergique.Allergie = False
         specialiteAllergique.MessageAllergie = ""

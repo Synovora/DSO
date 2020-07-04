@@ -419,7 +419,7 @@ Public Class RadFDrcDetailEdit
     Private Sub RecuperationSynonyme()
         Dim SynonymeDRCDataAdapter As SqlDataAdapter = New SqlDataAdapter()
         Dim SynonymeDRCDataTable As DataTable = New DataTable()
-        Dim conxn As New SqlConnection(outils.getConnectionString())
+        Dim conxn As New SqlConnection(GetConnectionString())
         Dim SQLString As String
         SQLString = "SELECT oa_drc_synonyme_id, oa_drc_synonyme_libelle" &
                     " FROM oasis.oa_drc_synonyme WHERE oa_drc_id = " & SelectedDRCId.ToString &

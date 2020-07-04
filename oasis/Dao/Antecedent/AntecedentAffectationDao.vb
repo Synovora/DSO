@@ -5,7 +5,7 @@ Public Class AntecedentAffectationDao
     Inherits StandardDao
 
 
-    Friend Sub AntecedentModificationNiveau(antecedentId As Long, antecedentIdPere As Long, niveauActuel As Integer, niveauCible As Integer, antecedentId1 As Long, antecedentId2 As Long, ordre1 As Integer, ordre2 As Integer, ordre3 As Integer, SelectedPatient As Patient, Cacher As String)
+    Friend Sub AntecedentModificationNiveau(antecedentId As Long, antecedentIdPere As Long, niveauActuel As Integer, niveauCible As Integer, antecedentId1 As Long, antecedentId2 As Long, ordre1 As Integer, ordre2 As Integer, ordre3 As Integer, SelectedPatient As PatientBase, Cacher As String)
         UpdateAntecedentaAffecter(antecedentId, niveauCible, antecedentId1, antecedentId2, ordre1, ordre2, ordre3)
         AntecedentReorganisationOrdre(antecedentId, niveauCible, SelectedPatient.patientId, Cacher)
 

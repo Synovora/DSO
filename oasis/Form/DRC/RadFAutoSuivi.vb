@@ -12,7 +12,7 @@ Public Class RadFAutoSuivi
         Property IsActif As Boolean
     End Class
 
-    Property SelectedPatient As Patient
+    Property SelectedPatient As PatientBase
     Private ReadOnly episodeProtocoleCollaboratifDao As New EpisodeProtocoleCollaboratifDao
     Private ReadOnly autoSuiviDao As New AutoSuiviDao
     ReadOnly parametreDao As New ParametreDao

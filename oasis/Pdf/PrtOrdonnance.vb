@@ -7,7 +7,7 @@ Imports Nethereum.Hex.HexConvertors.Extensions
 Imports QRCoder
 
 Public Class PrtOrdonnance
-    Public Property SelectedPatient As Patient
+    Public Property SelectedPatient As PatientBase
     Public Property SelectedOrdonnanceId As Long
 
     ReadOnly EditTools As New OasisTextTools
@@ -25,7 +25,7 @@ Public Class PrtOrdonnance
     ReadOnly aldDao As New AldDao
     ReadOnly SIGN_URL As String = "https://sign.synovora.com/"
 
-    Dim ordonnance As Ordonnance
+    Dim ordonnance As OrdonnanceBase
 
     Dim PatientIsAld As Boolean = False
     Dim TraitementAldExiste As Boolean = False
@@ -321,7 +321,7 @@ Public Class PrtOrdonnance
     End Function
 
     Private Sub PrintBasPage(section As Section)
-        Dim ordonnance As Ordonnance = ordonnanceDao.GetOrdonnaceById(SelectedOrdonnanceId)
+        Dim ordonnance As OrdonnanceBase = ordonnanceDao.GetOrdonnaceById(SelectedOrdonnanceId)
         Dim QG As QRCodeGenerator = New QRCoder.QRCodeGenerator()
         Dim Data As QRCodeData = QG.CreateQrCode(SIGN_URL & Base64UrlEncoder.Encode(ordonnance.Signature.HexToByteArray()), QRCodeGenerator.ECCLevel.L)
         Dim my_qrCode = New QRCode(Data)

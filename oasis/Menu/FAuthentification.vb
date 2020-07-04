@@ -201,6 +201,7 @@ Public Class FAuthentificattion
     End Sub
 
     Private Sub BtnTheriaque_Click(sender As Object, e As EventArgs) Handles BtnTheriaque.Click
+        Dim patientDao As New PatientDao
         'Using form As New FrmTestDynamiqueDocument
         'Form.ShowDialog()
         'End Using
@@ -209,9 +210,9 @@ Public Class FAuthentificattion
         Cursor.Current = Cursors.WaitCursor
         Try
             Dim print As New PrtSynthese
-            Dim selectedPatient As Patient = PatientDao.GetPatientById(1)
+            Dim selectedPatient As PatientBase = patientDao.GetPatientById(1)
             print.SelectedPatient = selectedPatient
-            print.printDocument()
+            print.PrintDocument()
         Catch ex As Exception
             MsgBox(ex.Message())
         End Try

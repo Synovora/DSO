@@ -651,7 +651,7 @@ Public Class EpisodeDao
         Return codeRetour
     End Function
 
-    Friend Function CallEpisode(selectedPatient As Patient, rendezVousId As Long, Optional EcransPrecedent As EnumAccesEcranPrecedent = EnumAccesEcranPrecedent.SANS) As Boolean
+    Friend Function CallEpisode(selectedPatient As PatientBase, rendezVousId As Long, Optional EcransPrecedent As EnumAccesEcranPrecedent = EnumAccesEcranPrecedent.SANS) As Boolean
         Dim IsRendezVousCloture As Boolean = False
         'Tester si l'utilisateur a une fonction de type MEDICAL ou PARAMEDICALE
         If Not (userLog.TypeProfil = ProfilDao.EnumProfilType.MEDICAL.ToString Or userLog.TypeProfil = ProfilDao.EnumProfilType.PARAMEDICAL.ToString) Then

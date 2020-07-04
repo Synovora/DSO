@@ -6,7 +6,7 @@ Public Class RadFEpisodeEnCoursListe
 
     Dim episodeDao As New EpisodeDao
 
-    Dim patient As New Patient
+    Dim patient As New PatientBase
 
     Dim InitForm As Boolean
     Dim Filtre As EnumFiltre
@@ -174,7 +174,7 @@ Public Class RadFEpisodeEnCoursListe
                 patientNom = Coalesce(episodeDataTable.Rows(i)("oa_patient_nom"), "")
                 patientPrenom = Coalesce(episodeDataTable.Rows(i)("oa_patient_prenom"), "")
                 If patientDateNaissance <> Nothing Then
-                    patientAge = outils.CalculAgeEnAnneeEtMoisString(patientDateNaissance)
+                    patientAge = CalculAgeEnAnneeEtMoisString(patientDateNaissance)
                 Else
                     patientAge = ""
                 End If
@@ -200,13 +200,14 @@ Public Class RadFEpisodeEnCoursListe
     End Sub
 
     Private Sub MasterTemplate_CellDoubleClick(sender As Object, e As Telerik.WinControls.UI.GridViewCellEventArgs) Handles RadGridViewEpisode.CellDoubleClick
+        Dim patientDao As New PatientDao
         If RadGridViewEpisode.CurrentRow IsNot Nothing Then
             Dim aRow As Integer = Me.RadGridViewEpisode.Rows.IndexOf(Me.RadGridViewEpisode.CurrentRow)
             If aRow >= 0 Then
                 Dim episodeId As Integer = RadGridViewEpisode.Rows(aRow).Cells("episode_id").Value
                 Dim patientId As Integer = RadGridViewEpisode.Rows(aRow).Cells("patient_id").Value
-                'PatientDao.SetPatient(patient, patientId)
-                patient = PatientDao.getPatientById(patientId)
+                'patientDao.SetPatient(patient, patientId)
+                patient = patientDao.GetPatientById(patientId)
                 Me.Enabled = False
                 Cursor.Current = Cursors.WaitCursor
 

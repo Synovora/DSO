@@ -8,17 +8,17 @@ Imports System.IO
 Imports Telerik.WinForms.Documents.FormatProviders.Pdf
 
 Public Class RadFSynthese
-    Private privateSelectedPatient As Patient
+    Private privateSelectedPatient As PatientBase
     Private privateUtilisateurConnecte As Utilisateur
     Private _rendezVousId As Long
     Private _IsRendezVousCloture As Boolean
     Private _ecranPrecedent As EnumAccesEcranPrecedent
 
-    Public Property SelectedPatient As Patient
+    Public Property SelectedPatient As PatientBase
         Get
             Return privateSelectedPatient
         End Get
-        Set(value As Patient)
+        Set(value As PatientBase)
             privateSelectedPatient = value
         End Set
     End Property
@@ -191,7 +191,8 @@ Public Class RadFSynthese
     End Sub
 
     Private Sub GetContreIndication()
-        Dim StringContreIndicationToolTip As String = PatientDao.GetStringContreIndicationByPatient(SelectedPatient.patientId)
+        Dim patientDao As New PatientDao
+        Dim StringContreIndicationToolTip As String = patientDao.GetStringContreIndicationByPatient(SelectedPatient.patientId)
         If StringContreIndicationToolTip = "" Then
             LblContreIndication.Hide()
             PatientContreIndication = False
@@ -205,7 +206,8 @@ Public Class RadFSynthese
     End Sub
 
     Private Sub GetAllergie()
-        Dim StringAllergieToolTip As String = PatientDao.GetStringAllergieByPatient(SelectedPatient.patientId)
+        Dim patientDao As New PatientDao
+        Dim StringAllergieToolTip As String = patientDao.GetStringAllergieByPatient(SelectedPatient.patientId)
         If StringAllergieToolTip = "" Then
             PatientAllergie = False
             LblAllergie.Hide()

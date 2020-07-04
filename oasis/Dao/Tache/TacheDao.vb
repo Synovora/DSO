@@ -1172,7 +1172,7 @@ Public Class TacheDao
         Return codeRetour
     End Function
 
-    Friend Function CreationAutomatiqueDeDemandeRendezVous(Patient As Patient, parcours As Parcours, dateDebut As Date, Optional PremierRDV As Boolean = False) As Boolean
+    Friend Function CreationAutomatiqueDeDemandeRendezVous(Patient As PatientBase, parcours As Parcours, dateDebut As Date, Optional PremierRDV As Boolean = False) As Boolean
         'Calcul de la période (année, mois) du rendez-vous demandé
         Dim Commentaire As String = ""
         Dim Rythme As Integer = parcours.Rythme
@@ -1590,13 +1590,14 @@ Public Class TacheDao
         Dim parcoursDao As New ParcoursDao
         Dim episodeDao As New EpisodeDao
         Dim rorDao As New RorDao
+        Dim patientDao As New PatientDao
 
         Dim tacheBeanAssocie = New TacheBeanAssocie
         tacheBeanAssocie.UserEmetteur = userDao.getUserById(tache.EmetteurUserId)
         If tache.EmetteurFonctionId <> 0 Then tacheBeanAssocie.FonctionEmetteur = fonctionDao.GetFonctionById(tache.EmetteurFonctionId)
         tacheBeanAssocie.UniteSanitaire = uniteSanitaireDao.getUniteSanitaireById(tache.UniteSanitaireId, True)
         tacheBeanAssocie.Site = siteDao.getSiteById(tache.SiteId, True)
-        tacheBeanAssocie.Patient = PatientDao.GetPatientById(tache.PatientId)
+        tacheBeanAssocie.Patient = patientDao.GetPatientById(tache.PatientId)
         If tache.ParcoursId <> 0 Then
             tacheBeanAssocie.Parcours = parcoursDao.getParcoursById(tache.ParcoursId)
             If tacheBeanAssocie.Parcours.SpecialiteId <> 0 Then
@@ -1706,7 +1707,7 @@ Public Class TacheDao
     ''' <param name="patient"></param>
     ''' <param name="parcours"></param>
     ''' <param name="tacheParent"></param>
-    Public Sub CreateRendezVous(patient As Patient, parcours As Parcours, typeTache As TypeTache, dateRDV As Date, duree As Integer, commentaire As String, Optional tacheParent As Tache = Nothing)
+    Public Sub CreateRendezVous(patient As PatientBase, parcours As Parcours, typeTache As TypeTache, dateRDV As Date, duree As Integer, commentaire As String, Optional tacheParent As Tache = Nothing)
         Dim tache As Tache = New Tache()
 
         If typeTache <> TypeTache.RDV_MISSION AndAlso typeTache <> TypeTache.RDV AndAlso typeTache <> TypeTache.RDV_SPECIALISTE Then

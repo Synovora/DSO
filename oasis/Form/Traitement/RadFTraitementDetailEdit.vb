@@ -5,7 +5,7 @@ Imports Telerik.WinControls.UI.Localization
 Imports Oasis_Common
 
 Public Class RadFTraitementDetailEdit
-    Private privateSelectedPatient As Patient
+    Private privateSelectedPatient As PatientBase
     'Private privateUtilisateurConnecte As Utilisateur
     Private privateSelectedMedicamentId As Integer
     Private privateSelectedTraitementId As Integer
@@ -13,12 +13,13 @@ Public Class RadFTraitementDetailEdit
     Private privateContreIndication As Boolean
     Private privateCodeRetour As Boolean
     Private _positionGaucheDroite As Integer
+    Dim patientDao As New PatientDao
 
-    Public Property SelectedPatient As Patient
+    Public Property SelectedPatient As PatientBase
         Get
             Return privateSelectedPatient
         End Get
-        Set(value As Patient)
+        Set(value As PatientBase)
             privateSelectedPatient = value
         End Set
     End Property
@@ -232,7 +233,7 @@ Public Class RadFTraitementDetailEdit
     End Sub
 
     Private Sub GetContreIndication()
-        Dim StringContreIndicationToolTip As String = PatientDao.GetStringContreIndicationByPatient(SelectedPatient.patientId)
+        Dim StringContreIndicationToolTip As String = patientDao.GetStringContreIndicationByPatient(SelectedPatient.patientId)
         If StringContreIndicationToolTip = "" Then
             lblContreIndication.Hide()
         Else
@@ -242,7 +243,7 @@ Public Class RadFTraitementDetailEdit
     End Sub
 
     Private Sub GetAllergie()
-        Dim StringAllergieToolTip As String = PatientDao.GetStringAllergieByPatient(SelectedPatient.patientId)
+        Dim StringAllergieToolTip As String = patientDao.GetStringAllergieByPatient(SelectedPatient.patientId)
         If StringAllergieToolTip = "" Then
             LblAllergie.Hide()
         Else

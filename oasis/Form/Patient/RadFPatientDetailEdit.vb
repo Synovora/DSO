@@ -5,7 +5,7 @@ Imports Telerik.WinControls.UI
 
 Public Class RadFPatientDetailEdit
     Private privateSelectedPatientId As Integer
-    Private privateSelectedPatient As Patient
+    Private privateSelectedPatient As PatientBase
     Private privateUtilisateurConnecte As Utilisateur
     Private privateCodeRetour As Boolean
     Private _Action As String
@@ -37,11 +37,11 @@ Public Class RadFPatientDetailEdit
         End Set
     End Property
 
-    Public Property SelectedPatient As Patient
+    Public Property SelectedPatient As PatientBase
         Get
             Return privateSelectedPatient
         End Get
-        Set(value As Patient)
+        Set(value As PatientBase)
             privateSelectedPatient = value
         End Set
     End Property
@@ -62,10 +62,11 @@ Public Class RadFPatientDetailEdit
 
     Dim EditMode As Integer
 
-    Dim patientUpdate As New Patient
-    Dim patientRead As New Patient
+    Dim patientUpdate As New PatientBase
+    Dim patientRead As New PatientBase
 
     Dim rorDao As New RorDao
+    Dim patientDao As New PatientDao
 
     Dim utilisateurHisto As Utilisateur = New Utilisateur()
     Dim ror As Ror
@@ -184,8 +185,8 @@ Public Class RadFPatientDetailEdit
 
     'Chargement des données du patient
     Private Sub ChargementPatient()
-        patientRead = PatientDao.GetPatientById(SelectedPatientId)
-        patientUpdate = PatientDao.ClonePatient(patientRead)
+        patientRead = patientDao.GetPatientById(SelectedPatientId)
+        patientUpdate = patientDao.ClonePatient(patientRead)
 
         LblIdentifiantOasis.Text = patientUpdate.patientId
         TxtPrenom.Text = patientUpdate.PatientPrenom
@@ -456,7 +457,7 @@ Public Class RadFPatientDetailEdit
             If IsNumeric(TxtNIR.Text) Then
                 Dim NirPatient As Int64
                 NirPatient = TxtNIR.Text
-                If NonExistencePatientNIR(NirPatient, 0) = False Then
+                If patientDao.NonExistencePatientNIR(NirPatient, 0) = False Then
                     messageErreur3 = "- Le NIR saisie existe déjà pour un autre patient défini dans le référentiel d'Oasis, création impossible"
                     Valide = False
                 End If
@@ -469,7 +470,7 @@ Public Class RadFPatientDetailEdit
                 If TxtNIR.Text <> "0" Then
                     Dim NirPatient As Int64
                     NirPatient = TxtNIR.Text
-                    If NonExistencePatientNIR(NirPatient, SelectedPatientId) = False Then
+                    If patientDao.NonExistencePatientNIR(NirPatient, SelectedPatientId) = False Then
                         messageErreur3 = "- Le NIR saisie existe déjà pour un autre patient défini dans le référentiel d'Oasis, modification impossible"
                         Valide = False
                     End If
@@ -532,7 +533,7 @@ Public Class RadFPatientDetailEdit
     Private Function ModificationPatient() As Boolean
         Dim codeRetour As Boolean = False
 
-        If PatientDao.ModificationPatient(patientUpdate) = True Then
+        If patientDao.ModificationPatient(patientUpdate) = True Then
             codeRetour = True
             Dim form As New RadFNotification()
             form.Message = "Patient modifié"
@@ -546,7 +547,7 @@ Public Class RadFPatientDetailEdit
     Private Function CreationPatient() As Boolean
         Dim codeRetour As Boolean = False
 
-        If PatientDao.CreationPatient(patientUpdate) = True Then
+        If patientDao.CreationPatient(patientUpdate) = True Then
             codeRetour = True
             Dim form As New RadFNotification()
             form.Message = "Patient créé"
@@ -589,7 +590,7 @@ Public Class RadFPatientDetailEdit
     Private Function DeclarationSortie() As Boolean
         Dim codeRetour As Boolean = False
 
-        If PatientDao.DeclarationSortie(patientUpdate) = True Then
+        If patientDao.DeclarationSortie(patientUpdate) = True Then
             codeRetour = True
             Dim form As New RadFNotification()
             form.Message = "Déclaration de sortie du patient effectuée"
@@ -623,12 +624,12 @@ Public Class RadFPatientDetailEdit
         patientUpdate.PatientGenre = CbxGenre.SelectedValue
         GestionAffichageBoutonValidation()
         If CbxGenre.SelectedValue = "Masculin" Then
-            patientUpdate.PatientGenreId = EnumGenreId.Masculin
+            patientUpdate.PatientGenreId = patientDao.EnumGenreId.Masculin
             TxtNomMarital.Text = ""
             TxtNomMarital.Hide()
             LblNomMarital.Hide()
         Else
-            patientUpdate.PatientGenreId = EnumGenreId.Feminin
+            patientUpdate.PatientGenreId = patientDao.EnumGenreId.Feminin
             TxtNomMarital.Show()
             LblNomMarital.Show()
         End If
@@ -801,7 +802,7 @@ Public Class RadFPatientDetailEdit
     '-- Gestion de l'affichage du bouton de validation de mise à jour des données
     Private Sub GestionAffichageBoutonValidation()
         If EditMode = EnumEditMode.Modification Then
-            If PatientDao.Compare(patientUpdate, patientRead) = False Then
+            If patientDao.Compare(patientUpdate, patientRead) = False Then
                 RadBtnValider.Enabled = True
             Else
                 RadBtnValider.Enabled = False
@@ -1077,7 +1078,7 @@ Public Class RadFPatientDetailEdit
                 LblAge.Text = CalculAgeEnAnneeEtMoisString(DateNaissance)
 
                 'Vérifie s'il existe des patients ayant la même date de naissance
-                Dim ListeDataTable As DataTable = ListePatientDateNaissance(DteDateNaissance.Value)
+                Dim ListeDataTable As DataTable = patientDao.ListePatientDateNaissance(DteDateNaissance.Value)
                 If ListeDataTable.Rows.Count > 0 Then
                     Using vFPatientListeDoublons As New FPatientListeDoublons
                         vFPatientListeDoublons.UtilisateurConnecte = Me.UtilisateurConnecte

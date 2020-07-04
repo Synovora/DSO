@@ -26,7 +26,7 @@ Public Class RadFEpisodeConclusionContextePatient
     Dim InitContextePublie As Boolean = False
     Dim SelectedContexteId As Long = 0
 
-    Dim SelectedPatient As Patient
+    Dim SelectedPatient As PatientBase
 
     Private Sub RadFEpisodeSelecteurContextePatient_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         ChargementEtatCivil()
@@ -41,7 +41,8 @@ Public Class RadFEpisodeConclusionContextePatient
     Dim ListConclusion As List(Of Long) = New List(Of Long)
 
     Private Sub ChargementEtatCivil()
-        SelectedPatient = PatientDao.getPatientById(SelectedEpisode.PatientId)
+        Dim patientDao As New PatientDao
+        SelectedPatient = patientDao.GetPatientById(SelectedEpisode.PatientId)
         LblPatientNIR.Text = SelectedPatient.PatientNir.ToString
         LblPatientPrenom.Text = SelectedPatient.PatientPrenom
         LblPatientNom.Text = SelectedPatient.PatientNom

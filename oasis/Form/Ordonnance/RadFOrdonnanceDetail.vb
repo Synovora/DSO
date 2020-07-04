@@ -2,7 +2,7 @@
 Imports Oasis_Common
 
 Public Class RadFOrdonnanceDetail
-    Private _SelectedPatient As Patient
+    Private _SelectedPatient As PatientBase
     Private _SelectedEpisode As Episode
     Private _SelectedOrdonnanceId As Integer
     Private _SelectedOrdonnanceLigneId As Integer
@@ -11,11 +11,11 @@ Public Class RadFOrdonnanceDetail
     Private _ContreIndication As Boolean
     Private _CodeRetour As Boolean
 
-    Public Property SelectedPatient As Patient
+    Public Property SelectedPatient As PatientBase
         Get
             Return _SelectedPatient
         End Get
-        Set(value As Patient)
+        Set(value As PatientBase)
             _SelectedPatient = value
         End Set
     End Property
@@ -89,7 +89,7 @@ Public Class RadFOrdonnanceDetail
     End Enum
 
     Dim ordonnanceDetailDao As New OrdonnanceDetailDao
-    Dim ordonnanceDetail As OrdonnanceDetail
+    Dim ordonnanceDetail As OrdonnanceDetailBase
 
     Dim EditMode As Integer
 
@@ -107,7 +107,7 @@ Public Class RadFOrdonnanceDetail
             TxtPosologie.Text = ordonnanceDetail.Posologie
         Else
             EditMode = EnumEditMode.Creation
-            ordonnanceDetail = New OrdonnanceDetail
+            ordonnanceDetail = New OrdonnanceDetailBase
             ordonnanceDetail.OrdonnanceId = SelectedOrdonnanceId
             ordonnanceDetail.TraitementId = 0
             ordonnanceDetail.Traitement = False

@@ -3,6 +3,8 @@ Imports Oasis_Common
 Public Class TraitementDao
     Inherits StandardDao
 
+    Dim patientDao As New PatientDao
+
     Public Enum EnumMonographie
         CLASSIQUE = 0
         VIRTUEL = 1
@@ -422,7 +424,7 @@ Public Class TraitementDao
             CreationTraitementHisto(traitementHistoACreer, userLog, EnumEtatTraitementHisto.ModificationTraitement)
 
             'Mise à jour de la date de mise à jour de la synthèse (table patient)
-            PatientDao.ModificationDateMajSynthesePatient(traitement.PatientId)
+            patientDao.ModificationDateMajSynthesePatient(traitement.PatientId)
         End If
 
         Return codeRetour
@@ -532,7 +534,7 @@ Public Class TraitementDao
             CreationTraitementHisto(traitementHistoACreer, userLog, EnumEtatTraitementHisto.CreationTraitement)
 
             'Mise à jour de la date de mise à jour de la synthèse (table patient)
-            PatientDao.ModificationDateMajSynthesePatient(traitement.PatientId)
+            patientDao.ModificationDateMajSynthesePatient(traitement.PatientId)
         End If
 
         Return codeRetour
@@ -586,7 +588,7 @@ Public Class TraitementDao
             CreationTraitementHisto(traitementHistoACreer, userLog, EnumEtatTraitementHisto.AnnulationTraitement)
 
             'Mise à jour de la date de mise à jour de la synthèse (table patient)
-            PatientDao.ModificationDateMajSynthesePatient(traitement.PatientId)
+            patientDao.ModificationDateMajSynthesePatient(traitement.PatientId)
         End If
 
         Return codeRetour
@@ -647,7 +649,7 @@ Public Class TraitementDao
             CreationTraitementHisto(traitementHistoACreer, userLog, EnumEtatTraitementHisto.ArretTraitement)
 
             'Mise à jour de la date de mise à jour de la synthèse (table patient)
-            PatientDao.ModificationDateMajSynthesePatient(traitement.PatientId)
+            patientDao.ModificationDateMajSynthesePatient(traitement.PatientId)
         End If
 
         Return codeRetour
@@ -690,7 +692,7 @@ Public Class TraitementDao
             CreationTraitementHisto(traitementHistoACreer, userLog, EnumEtatTraitementHisto.SuppressionTraitement)
 
             'Mise à jour de la date de mise à jour de la synthèse (table patient)
-            PatientDao.ModificationDateMajSynthesePatient(traitement.PatientId)
+            patientDao.ModificationDateMajSynthesePatient(traitement.PatientId)
         End If
 
         Return codeRetour
@@ -735,7 +737,7 @@ Public Class TraitementDao
         End Try
 
         'Mise à jour de la date de mise à jour de la synthèse (table patient)
-        PatientDao.ModificationDateMajSynthesePatient(traitement.PatientId)
+        patientDao.ModificationDateMajSynthesePatient(traitement.PatientId)
 
         Return codeRetour
     End Function

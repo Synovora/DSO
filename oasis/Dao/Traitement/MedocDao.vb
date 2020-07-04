@@ -1,5 +1,7 @@
 ﻿Imports System.Data.SqlClient
 Imports System.Collections.Specialized
+Imports Oasis_Common
+
 Module MedocDao
 
     Public Function ListeSubstancesAllergiques(PatientMedocAllergiqueCis As StringCollection) As StringCollection

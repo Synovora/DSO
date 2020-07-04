@@ -69,7 +69,7 @@ Public Class EpisodeTypeActiviteDao
         Return dt
     End Function
 
-    Friend Function GetTypeActiviteEpisodeByPatient(patient As Patient) As List(Of String)
+    Friend Function GetTypeActiviteEpisodeByPatient(patient As PatientBase) As List(Of String)
         Dim LimiteAgeEnfantParm As Integer
 
         Dim episodeActiviteDT As DataTable
@@ -89,7 +89,7 @@ Public Class EpisodeTypeActiviteDao
         End If
 
         Dim genre, enfant As String
-        Dim agePatient As Integer = outils.CalculAgeEnAnnee(patient.PatientDateNaissance)
+        Dim agePatient As Integer = CalculAgeEnAnnee(patient.PatientDateNaissance)
 
         Dim listActivite As New List(Of String)
         episodeActiviteDT = episodeActiviteDao.GetAllEpisodeActivite

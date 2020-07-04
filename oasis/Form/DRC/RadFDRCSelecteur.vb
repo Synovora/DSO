@@ -5,17 +5,17 @@ Imports Telerik.WinControls.UI.Localization
 Imports Oasis_Common
 
 Public Class RadFDRCSelecteur
-    Private privateSelectedPatient As Patient
+    Private privateSelectedPatient As PatientBase
     Private privateUtilisateurConnecte As Utilisateur
     Private privateSelectedDrcId As Integer
     Private _SelectedDrc As Drc
     Private _CategorieOasis As Integer
 
-    Public Property SelectedPatient As Patient
+    Public Property SelectedPatient As PatientBase
         Get
             Return privateSelectedPatient
         End Get
-        Set(value As Patient)
+        Set(value As PatientBase)
             privateSelectedPatient = value
         End Set
     End Property
@@ -151,7 +151,7 @@ Public Class RadFDRCSelecteur
     Private Sub ChargementDrcSynonyme(drcId As Integer)
         Dim drcSynonymeDataAdapter As SqlDataAdapter = New SqlDataAdapter()
 
-        Dim conxn As New SqlConnection(outils.getConnectionString())
+        Dim conxn As New SqlConnection(GetConnectionString())
 
         Dim SQLString As String
         'Exlusion des traitements : traitements déclarés 'annulé' 

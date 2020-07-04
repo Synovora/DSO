@@ -3,7 +3,7 @@ Imports Telerik.WinForms.Documents.Layout
 Imports Telerik.WinControls.RichTextEditor.UI
 Imports Oasis_Common
 Public Class PrtSynthese
-    Public Property SelectedPatient As Patient
+    Public Property SelectedPatient As PatientBase
 
     Dim EditTools As OasisTextTools
 
@@ -61,7 +61,7 @@ Public Class PrtSynthese
             "    " & SelectedPatient.PatientGenre
 
         Dim ligne2 As String =
-            "   Date de naissance : " & SelectedPatient.PatientDateNaissance.ToString("dd.MM.yyyy") & "   -   âge : " & outils.CalculAgeEnAnneeEtMoisString(SelectedPatient.PatientDateNaissance)
+            "   Date de naissance : " & SelectedPatient.PatientDateNaissance.ToString("dd.MM.yyyy") & "   -   âge : " & CalculAgeEnAnneeEtMoisString(SelectedPatient.PatientDateNaissance)
 
         Dim ligne3 As String =
             "   Rattachement au site Oasis de " & Environnement.Table_site.GetSiteDescription(SelectedPatient.PatientSiteId) &

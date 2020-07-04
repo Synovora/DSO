@@ -8,14 +8,14 @@ Imports Telerik.WinControls.UI
 Public Class FrmSousEpisodeListe
     Dim sousEpisodeDao As SousEpisodeDao = New SousEpisodeDao
     Dim sousEpisodeReponseDao As SousEpisodeReponseDao = New SousEpisodeReponseDao
-    Dim episode As Episode, patient As Patient
+    Dim episode As Episode, patient As PatientBase
 
     ''' <summary>
     ''' 
     ''' </summary>
     ''' <param name="episode"></param>
     ''' <param name="patient"></param>
-    Sub New(episode As Episode, patient As Patient)
+    Sub New(episode As Episode, patient As PatientBase)
 
         ' Cet appel est requis par le concepteur.
         InitializeComponent()

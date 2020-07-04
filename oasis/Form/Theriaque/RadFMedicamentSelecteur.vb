@@ -1,9 +1,10 @@
 ﻿Imports System.Collections.Specialized
 Imports Telerik.WinControls.UI
+Imports Oasis_Common
 
 Public Class RadFMedicamentSelecteur
     Private _SelectedSpecialiteId As Long
-    Private _SelectedPatient As Patient
+    Private _SelectedPatient As PatientBase
     Private _selectedClasseAtc As String
 
     Public Property SelectedSpecialiteId As Long
@@ -15,11 +16,11 @@ Public Class RadFMedicamentSelecteur
         End Set
     End Property
 
-    Public Property SelectedPatient As Patient
+    Public Property SelectedPatient As PatientBase
         Get
             Return _SelectedPatient
         End Get
-        Set(value As Patient)
+        Set(value As PatientBase)
             _SelectedPatient = value
         End Set
     End Property
@@ -100,7 +101,8 @@ Public Class RadFMedicamentSelecteur
     End Sub
 
     Private Sub GetContreIndication()
-        Dim StringContreIndicationToolTip As String = PatientDao.GetStringContreIndicationByPatient(SelectedPatient.patientId)
+        Dim patientDao As New PatientDao
+        Dim StringContreIndicationToolTip As String = patientDao.GetStringContreIndicationByPatient(SelectedPatient.patientId)
         If StringContreIndicationToolTip = "" Then
             lblContreIndication.Hide()
         Else
@@ -111,7 +113,8 @@ Public Class RadFMedicamentSelecteur
 
 
     Private Sub GetAllergie()
-        Dim StringAllergieToolTip As String = PatientDao.GetStringAllergieByPatient(SelectedPatient.patientId)
+        Dim patientDao As New PatientDao
+        Dim StringAllergieToolTip As String = patientDao.GetStringAllergieByPatient(SelectedPatient.patientId)
         If StringAllergieToolTip = "" Then
             LblAllergie.Hide()
         Else

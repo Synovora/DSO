@@ -1,5 +1,7 @@
 ﻿Imports System.Collections.Specialized
 Imports System.Data.SqlClient
+Imports Oasis_Common
+
 Module MedicamentGeneriqueDao
 
     Friend Function GetCountMedicament(Filtre As String) As Integer
@@ -28,7 +30,7 @@ Module MedicamentGeneriqueDao
 
 
     'Lecture des médicaments déclarés allergiques
-    Public Sub TraitementAllergies(Patient As Patient)
+    Public Sub TraitementAllergies(Patient As PatientBase)
         'Intialisation de la StringCollection des médicaments cis génériques associés aux allergiques
         Patient.PatientAllergiesGénériquesCis.Clear()
 
@@ -41,7 +43,7 @@ Module MedicamentGeneriqueDao
         End While
     End Sub
 
-    Private Sub ChargementGenerique(MedicamentCis As Integer, patient As Patient)
+    Private Sub ChargementGenerique(MedicamentCis As Integer, patient As PatientBase)
         'Déclaration des données de connexion
         Dim conxn As New SqlConnection(getConnectionString())
         Dim MedicamentDataAdapter As SqlDataAdapter = New SqlDataAdapter()
@@ -75,7 +77,7 @@ Module MedicamentGeneriqueDao
 
     End Sub
 
-    Private Sub ChargementMedicamentCisAllergieCollectionPatient(MedicamentGeneriqueId As Integer, patient As Patient)
+    Private Sub ChargementMedicamentCisAllergieCollectionPatient(MedicamentGeneriqueId As Integer, patient As PatientBase)
         'Déclaration des données de connexion
         Dim conxn As New SqlConnection(getConnectionString())
         Dim MedicamentDataAdapter As SqlDataAdapter = New SqlDataAdapter()

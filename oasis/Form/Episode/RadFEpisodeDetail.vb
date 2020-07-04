@@ -7,7 +7,7 @@ Imports Telerik.WinControls.UI.Docking
 
 Public Class RadFEpisodeDetail
     Private _SelectedEpisodeId As Long
-    Private _SelectedPatient As Patient
+    Private _SelectedPatient As PatientBase
     Private _rendezVousId As Long
     Private _isRendezVousCloture As Boolean
     Private _UtilisateurConnecte As Utilisateur
@@ -22,11 +22,11 @@ Public Class RadFEpisodeDetail
         End Set
     End Property
 
-    Public Property SelectedPatient As Patient
+    Public Property SelectedPatient As PatientBase
         Get
             Return _SelectedPatient
         End Get
-        Set(value As Patient)
+        Set(value As PatientBase)
             _SelectedPatient = value
         End Set
     End Property
@@ -86,6 +86,7 @@ Public Class RadFEpisodeDetail
     Dim antecedentChangementOrdreDao As New AntecedentChangementOrdreDao
     Dim antecedentAffectationDao As New AntecedentAffectationDao
     Dim antecedentDao As New AntecedentDao
+    Dim patientDao As New PatientDao
 
     Dim log As Log
     Dim episode As Episode
@@ -398,7 +399,7 @@ Public Class RadFEpisodeDetail
     End Sub
 
     Private Sub GetContreIndication()
-        Dim StringContreIndicationToolTip As String = PatientDao.GetStringContreIndicationByPatient(SelectedPatient.patientId)
+        Dim StringContreIndicationToolTip As String = patientDao.GetStringContreIndicationByPatient(SelectedPatient.patientId)
         If StringContreIndicationToolTip = "" Then
             LblContreIndication.Hide()
             PatientContreIndication = False
@@ -412,7 +413,7 @@ Public Class RadFEpisodeDetail
     End Sub
 
     Private Sub GetAllergie()
-        Dim StringAllergieToolTip As String = PatientDao.GetStringAllergieByPatient(SelectedPatient.patientId)
+        Dim StringAllergieToolTip As String = patientDao.GetStringAllergieByPatient(SelectedPatient.patientId)
         If StringAllergieToolTip = "" Then
             PatientAllergie = False
             LblAllergie.Hide()

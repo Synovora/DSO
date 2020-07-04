@@ -1,6 +1,7 @@
 ﻿Imports DeepEqual.Syntax
 Imports Nethereum.Signer
 Imports Oasis_WF
+Imports Oasis_Common
 
 <TestClass()> Public Class TestUtilisateur
     <TestMethod()> Public Sub TestUpdatePk()
@@ -12,8 +13,8 @@ End Class
 
 <TestClass()> Public Class TestOrdonnance
 
-    Public Shared Function GenerateOrdonnance() As Ordonnance
-        Dim ordonnance As New Ordonnance()
+    Public Shared Function GenerateOrdonnance() As OrdonnanceBase
+        Dim ordonnance As New OrdonnanceBase()
         ordonnance.Id = 1337
         ordonnance.PatientId = 666
         ordonnance.EpisodeId = 333
@@ -27,11 +28,11 @@ End Class
     End Function
 
     <TestMethod()> Public Sub TestSerializeDeserialize()
-        Dim ordonnance As Ordonnance = GenerateOrdonnance()
+        Dim ordonnance As OrdonnanceBase = GenerateOrdonnance()
         Dim ordonnanceSerialized As Byte() = ordonnance.Serialize()
 
         Console.WriteLine(BitConverter.ToString(ordonnanceSerialized))
-        Dim ordonnance2 As Ordonnance = Ordonnance.Deserialize(ordonnanceSerialized)
+        Dim ordonnance2 As OrdonnanceBase = ordonnance.Deserialize(ordonnanceSerialized)
 
         ordonnance.ShouldDeepEqual(ordonnance2)
     End Sub
@@ -39,8 +40,9 @@ End Class
 
 <TestClass()> Public Class TestOrdonnanceDetail
 
-    Public Shared Function GenerateOrdonnanceDetail() As OrdonnanceDetail
-        Dim ordonnanceDetail As New OrdonnanceDetail
+    Public Shared Function GenerateOrdonnanceDetail() As OrdonnanceDetailBase
+        Dim patientDao As New PatientDao
+        Dim ordonnanceDetail As New OrdonnanceDetailBase
         'ordonnanceDetail.LigneId = 1337
         ordonnanceDetail.Traitement = True
         ordonnanceDetail.TraitementId = 33
@@ -74,11 +76,11 @@ End Class
     End Function
 
     <TestMethod()> Public Sub TestSerializeDeserialize()
-        Dim ordonnanceDetail As OrdonnanceDetail = GenerateOrdonnanceDetail()
+        Dim ordonnanceDetail As OrdonnanceDetailBase = GenerateOrdonnanceDetail()
         Dim ordonnanceSerialized As Byte() = ordonnanceDetail.Serialize()
 
         Console.WriteLine(BitConverter.ToString(ordonnanceSerialized))
-        Dim ordonnanceDetail2 As OrdonnanceDetail = OrdonnanceDetail.Deserialize(ordonnanceSerialized)
+        Dim ordonnanceDetail2 As OrdonnanceDetailBase = ordonnanceDetail.Deserialize(ordonnanceSerialized)
 
         ordonnanceDetail.ShouldDeepEqual(ordonnanceDetail2)
     End Sub
@@ -88,11 +90,11 @@ End Class
 
     <TestMethod()> Public Sub TestSerializeDeserialize()
         Dim ordonnanceFull As New OrdonnanceFull()
-        Dim ordonnance As Ordonnance = TestOrdonnance.GenerateOrdonnance()
-        Dim ordonnanceDetail As OrdonnanceDetail = TestOrdonnanceDetail.GenerateOrdonnanceDetail()
+        Dim ordonnance As OrdonnanceBase = TestOrdonnance.GenerateOrdonnance()
+        Dim ordonnanceDetail As OrdonnanceDetailBase = TestOrdonnanceDetail.GenerateOrdonnanceDetail()
 
         ordonnanceFull.Ordonnance = ordonnance
-        ordonnanceFull.Details = New List(Of OrdonnanceDetail) From {
+        ordonnanceFull.Details = New List(Of OrdonnanceDetailBase) From {
             ordonnanceDetail,
             ordonnanceDetail,
             ordonnanceDetail

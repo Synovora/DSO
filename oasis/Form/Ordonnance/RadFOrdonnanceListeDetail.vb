@@ -3,7 +3,7 @@ Imports Oasis_WF
 Imports Telerik.WinControls.UI
 Imports Oasis_Common
 Public Class RadFOrdonnanceListeDetail
-    Private _SelectedPatient As Patient
+    Private _SelectedPatient As PatientBase
     Private _SelectedEpisode As Episode
     Private _UtilisateurConnecte As Utilisateur
     Private _SelectedOrdonnanceId As Integer
@@ -12,11 +12,11 @@ Public Class RadFOrdonnanceListeDetail
     Private _ContreIndication As Boolean
     Private _CodeRetour As Boolean
 
-    Public Property SelectedPatient As Patient
+    Public Property SelectedPatient As PatientBase
         Get
             Return _SelectedPatient
         End Get
-        Set(value As Patient)
+        Set(value As PatientBase)
             _SelectedPatient = value
         End Set
     End Property
@@ -87,8 +87,9 @@ Public Class RadFOrdonnanceListeDetail
     Dim aldDao As New AldDao
     Dim ordonnanceDao As New OrdonnanceDao
     Dim ordonnanceDetailDao As New OrdonnanceDetailDao
+    Dim patientDao As New PatientDao
 
-    Dim ordonnance As Ordonnance
+    Dim ordonnance As OrdonnanceBase
 
     Dim CommentaireModified As Boolean = False
     Dim RenouvellementModified As Boolean = False
@@ -391,7 +392,7 @@ Public Class RadFOrdonnanceListeDetail
     End Sub
 
     Private Sub GetAllergie()
-        Dim StringAllergieToolTip As String = PatientDao.GetStringAllergieByPatient(SelectedPatient.patientId)
+        Dim StringAllergieToolTip As String = patientDao.GetStringAllergieByPatient(SelectedPatient.patientId)
         If StringAllergieToolTip = "" Then
             LblAllergie.Hide()
         Else
@@ -401,7 +402,7 @@ Public Class RadFOrdonnanceListeDetail
     End Sub
 
     Private Sub GetContreIndication()
-        Dim StringContreIndicationToolTip As String = PatientDao.GetStringContreIndicationByPatient(SelectedPatient.patientId)
+        Dim StringContreIndicationToolTip As String = patientDao.GetStringContreIndicationByPatient(SelectedPatient.patientId)
         If StringContreIndicationToolTip = "" Then
             lblContreIndication.Hide()
         Else

@@ -279,7 +279,7 @@ Public Class FrmTacheDetail_vb
                     If IsNumeric(ConfigurationManager.AppSettings("dureeRendezVous")) Then
                         dureeRendezVous = ConfigurationManager.AppSettings("dureeRendezVous")
                     End If
-                    '     Public Sub createRendezVous(patient As Patient, parcours As Parcours, typeTache As TypeTache, dateRDV As Date, duree As Integer, commentaire As String, Optional tacheParent As Tache = Nothing)
+                    '     Public Sub createRendezVous(patient As PatientBase, parcours As Parcours, typeTache As TypeTache, dateRDV As Date, duree As Integer, commentaire As String, Optional tacheParent As Tache = Nothing)
                     tacheDao.createRendezVous(tacheBeanAssocie.Patient, tacheBeanAssocie.Parcours, tache.getTypeRdvFromDemande(), frmChoixDateHeure.DateChoisie, dureeRendezVous, frmChoixDateHeure.Commentaire, tache)
                     IsActionEffectuee = True
                     Close()

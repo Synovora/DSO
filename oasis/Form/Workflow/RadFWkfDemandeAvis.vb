@@ -2,7 +2,7 @@
 Public Class RadFWkfDemandeAvis
     Private _selectedEpisodeId As Long
     Private _SelectedTacheId As Long
-    Private _selectedPatient As Patient
+    Private _selectedPatient As PatientBase
     Private _Creation As Boolean
     Private _codeRetour As Boolean
     Private _provenance As EnumProvenance
@@ -26,11 +26,11 @@ Public Class RadFWkfDemandeAvis
         End Set
     End Property
 
-    Public Property SelectedPatient As Patient
+    Public Property SelectedPatient As PatientBase
         Get
             Return _selectedPatient
         End Get
-        Set(value As Patient)
+        Set(value As PatientBase)
             _selectedPatient = value
         End Set
     End Property

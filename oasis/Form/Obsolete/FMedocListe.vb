@@ -1,6 +1,7 @@
 ﻿'Liste des médicaments
 
 Imports System.Data.SqlClient
+Imports Oasis_Common
 
 Public Class FMedocListe
     'Le DataAdapter a pour objet de récupérer les données de la BDD et permettre le renvoi des modifications à la BDD
@@ -21,7 +22,7 @@ Public Class FMedocListe
     End Sub
 
     Private Sub BindGrid()
-        Dim conxn As New SqlConnection(outils.getConnectionString())
+        Dim conxn As New SqlConnection(getConnectionString())
 
         Dim SQLString As String
         SQLString = getSQLString()

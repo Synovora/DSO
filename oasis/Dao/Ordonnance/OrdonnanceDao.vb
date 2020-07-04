@@ -8,8 +8,7 @@ Public Class OrdonnanceDao
     Friend Function CreateOrdonnance(patientId As Integer, episodeId As Integer) As Integer
         Dim da As SqlDataAdapter = New SqlDataAdapter()
         Dim OrdonnanceId As Integer = 0
-        Dim con As SqlConnection
-        con = GetConnection()
+        Dim con As SqlConnection = GetConnection()
 
         Dim dateCreation As Date = Date.Now.Date
 
@@ -352,7 +351,7 @@ Public Class OrdonnanceDao
                 End Select
             End If
 
-            Dim ordonnanceDetail As New OrdonnanceDetail
+            Dim ordonnanceDetail As New OrdonnanceDetailBase
             ordonnanceDetail.OrdonnanceId = ordonnanceId
             ordonnanceDetail.Traitement = True
             ordonnanceDetail.TraitementId = TraitementDataTable.Rows(i)("oa_traitement_id")

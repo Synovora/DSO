@@ -3,6 +3,8 @@ Imports Oasis_Common
 Public Class AntecedentDao
     Inherits StandardDao
 
+    Dim patientDao As New PatientDao
+
     Public Structure EnumTypeAntecedentContexte
         Const ANTECEDENT = "A"
         Const CONTEXTE = "C"
@@ -377,6 +379,7 @@ Public Class AntecedentDao
 
     Public Function ModificationAntecedent(antecedentUpdate As Antecedent, antecedentRead As Antecedent) As Boolean
         Dim da As SqlDataAdapter = New SqlDataAdapter()
+        Dim patientDao As New PatientDao
         Dim codeRetour As Boolean = True
 
         Dim dateModification As Date = Date.Now.Date
@@ -460,7 +463,7 @@ Public Class AntecedentDao
             AntecedentHistoCreationDao.CreationAntecedentHisto(AntecedentHistoACreer, userLog, AntecedentHistoCreationDao.EnumEtatAntecedentHisto.ModificationAntecedent)
 
             'Mise à jour de la date de mise à jour de la synthèse (table patient)
-            PatientDao.ModificationDateMajSynthesePatient(antecedentUpdate.PatientId)
+            patientDao.ModificationDateMajSynthesePatient(antecedentUpdate.PatientId)
         End If
 
         Return codeRetour
@@ -510,7 +513,7 @@ Public Class AntecedentDao
             AntecedentHistoCreationDao.CreationAntecedentHisto(AntecedentHistoACreer, userLog, AntecedentHistoCreationDao.EnumEtatAntecedentHisto.AnnulationAntecedent)
 
             'Mise à jour de la date de mise à jour de la synthèse (table patient)
-            PatientDao.ModificationDateMajSynthesePatient(antecedentUpdate.PatientId)
+            patientDao.ModificationDateMajSynthesePatient(antecedentUpdate.PatientId)
         End If
 
         Return codeRetour
@@ -620,7 +623,7 @@ Public Class AntecedentDao
             AntecedentHistoCreationDao.CreationAntecedentHisto(AntecedentHistoACreer, userLog, AntecedentHistoCreationDao.EnumEtatAntecedentHisto.CreationAntecedent)
 
             'Mise à jour de la date de mise à jour de la synthèse (table patient)
-            PatientDao.ModificationDateMajSynthesePatient(antecedentUpdate.PatientId)
+            patientDao.ModificationDateMajSynthesePatient(antecedentUpdate.PatientId)
         End If
 
         Return codeRetour
@@ -735,7 +738,7 @@ Public Class AntecedentDao
             AntecedentHistoCreationDao.CreationAntecedentHisto(AntecedentHistoACreer, userLog, AntecedentHistoCreationDao.EnumEtatAntecedentHisto.ReactivationAntecedent)
 
             'Mise à jour de la date de mise à jour de la synthèse (table patient)
-            PatientDao.ModificationDateMajSynthesePatient(antecedentRead.PatientId)
+            patientDao.ModificationDateMajSynthesePatient(antecedentRead.PatientId)
         End If
 
         Return codeRetour
@@ -788,7 +791,7 @@ Public Class AntecedentDao
             AntecedentHistoCreationDao.CreationAntecedentHisto(AntecedentHistoACreer, userLog, AntecedentHistoCreationDao.EnumEtatAntecedentHisto.ModificationAntecedent)
 
             'Mise à jour de la date de mise à jour de la synthèse (table patient)
-            PatientDao.ModificationDateMajSynthesePatient(antecedentRead.PatientId)
+            patientDao.ModificationDateMajSynthesePatient(antecedentRead.PatientId)
         End If
 
         Return codeRetour

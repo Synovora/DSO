@@ -1,7 +1,7 @@
 ﻿Imports Oasis_Common
 Public Class RadFEpisodeObservationDetailEdit
     Private _SelectedEpisodeId As Long
-    Private _SelectedPatient As Patient
+    Private _SelectedPatient As PatientBase
     Private _selectedObservationId As Long
     Private _codeRetour As Boolean
 
@@ -14,11 +14,11 @@ Public Class RadFEpisodeObservationDetailEdit
         End Set
     End Property
 
-    Public Property SelectedPatient As Patient
+    Public Property SelectedPatient As PatientBase
         Get
             Return _SelectedPatient
         End Get
-        Set(value As Patient)
+        Set(value As PatientBase)
             _SelectedPatient = value
         End Set
     End Property

@@ -3,6 +3,7 @@ Imports Oasis_Common
 Public Class PatientNoteVaccinDao
     Inherits StandardDao
 
+    Dim patientDao As New PatientDao
     Friend Function getAllNoteVaccinbyPatient(patientId As Integer) As DataTable
         Dim SQLString As String = "select * from oasis.oa_patient_note_vaccin where" &
         " (oa_patient_note_invalide = '0' or oa_patient_note_invalide is Null) and" &
@@ -103,7 +104,7 @@ Public Class PatientNoteVaccinDao
 
         If codeRetour = True Then
             'Mise à jour de la date de mise à jour de la synthèse (table patient)
-            PatientDao.ModificationDateMajSynthesePatient(patientNote.PatientId)
+            patientDao.ModificationDateMajSynthesePatient(patientNote.PatientId)
         End If
 
         Return codeRetour
@@ -143,7 +144,7 @@ Public Class PatientNoteVaccinDao
 
         If codeRetour = True Then
             'Mise à jour de la date de mise à jour de la synthèse (table patient)
-            PatientDao.ModificationDateMajSynthesePatient(patientNote.PatientId)
+            patientDao.ModificationDateMajSynthesePatient(patientNote.PatientId)
         End If
 
         Return codeRetour
@@ -182,7 +183,7 @@ Public Class PatientNoteVaccinDao
 
         If codeRetour = True Then
             'Mise à jour de la date de mise à jour de la synthèse (table patient)
-            PatientDao.ModificationDateMajSynthesePatient(patientNote.PatientId)
+            patientDao.ModificationDateMajSynthesePatient(patientNote.PatientId)
         End If
 
         Return codeRetour

@@ -5,7 +5,7 @@ Imports System.Configuration
 
 Public Class RadFEpisodeParametreDetailEdit
     Private _SelectedEpisodeId As Long
-    Private _SelectedPatient As Patient
+    Private _SelectedPatient As PatientBase
     Private _codeRetour As Boolean
 
     Public Property SelectedEpisodeId As Long
@@ -17,11 +17,11 @@ Public Class RadFEpisodeParametreDetailEdit
         End Set
     End Property
 
-    Public Property SelectedPatient As Patient
+    Public Property SelectedPatient As PatientBase
         Get
             Return _SelectedPatient
         End Get
-        Set(value As Patient)
+        Set(value As PatientBase)
             _SelectedPatient = value
         End Set
     End Property
@@ -306,6 +306,7 @@ Public Class RadFEpisodeParametreDetailEdit
     Private Sub Validation()
         Dim MiseAJour As Boolean = False
         Dim ParmRowIndex As Integer = 0
+        Dim patientDao As New PatientDao
 
         For Each rowInfo As GridViewRowInfo In RadGridViewParm.Rows
             Dim valeurInput As Decimal = 0
@@ -350,15 +351,15 @@ Public Class RadFEpisodeParametreDetailEdit
                         'Calcul age par rapport à la date de l'épisode de saisie des  
                         Case "M"
                             If SelectedPatient.PatientAgeEnAnnee >= AgeAdulteHomme Then
-                                PatientDao.ModificationPatientTaille(SelectedPatient.patientId, valeurInput)
+                                patientDao.ModificationPatientTaille(SelectedPatient.patientId, valeurInput)
                             End If
                         Case "F"
                             If SelectedPatient.PatientAgeEnAnnee >= AgeAdulteFemme Then
-                                PatientDao.ModificationPatientTaille(SelectedPatient.patientId, valeurInput)
+                                patientDao.ModificationPatientTaille(SelectedPatient.patientId, valeurInput)
                             End If
                         Case Else
                             If SelectedPatient.PatientAgeEnAnnee >= AgeAdulteHomme Then
-                                PatientDao.ModificationPatientTaille(SelectedPatient.patientId, valeurInput)
+                                patientDao.ModificationPatientTaille(SelectedPatient.patientId, valeurInput)
                             End If
                     End Select
                 End If

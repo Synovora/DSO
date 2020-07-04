@@ -1040,7 +1040,6 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>UniteSanitaireDataSet.xsd</DependentUpon>
     </Compile>
-    <Compile Include="Bean\Patient\Patient.vb" />
     <Compile Include="Menu\FAuthentification.Designer.vb">
       <DependentUpon>FAuthentification.vb</DependentUpon>
     </Compile>

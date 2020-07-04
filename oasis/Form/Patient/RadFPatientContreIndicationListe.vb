@@ -2,7 +2,7 @@
 Imports Oasis_Common
 
 Public Class RadFPatientContreIndicationListe
-    Private privateSelectedPatient As Patient
+    Private privateSelectedPatient As PatientBase
     Private privateCodeRetour As Boolean
 
     Public Property CodeRetour As Boolean
@@ -14,11 +14,11 @@ Public Class RadFPatientContreIndicationListe
         End Set
     End Property
 
-    Public Property SelectedPatient As Patient
+    Public Property SelectedPatient As PatientBase
         Get
             Return privateSelectedPatient
         End Get
-        Set(value As Patient)
+        Set(value As PatientBase)
             privateSelectedPatient = value
         End Set
     End Property
