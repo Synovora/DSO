@@ -1,5 +1,5 @@
 ﻿Imports System.IO
-Imports System.Runtime.Serialization.Formatters.Binary
+Imports Oasis_Common
 
 <Serializable()>
 Public Class OrdonnanceFull
