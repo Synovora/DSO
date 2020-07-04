@@ -74,7 +74,7 @@ Partial Class RadFAutoSuivi
         '
         'RadFAutoSuivi
         '
-        Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
+        Me.AutoScaleDimensions = New System.Drawing.SizeF(12.0!, 25.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(350, 420)
         Me.Controls.Add(Me.RadGridViewAutoSuivi)
@@ -87,7 +87,7 @@ Partial Class RadFAutoSuivi
         Me.RootElement.ApplyShapeToControl = True
         Me.ShowInTaskbar = False
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent
-        Me.Text = "RadFParametreTest"
+        Me.Text = "Parametre d'Auto-Suivi"
         CType(Me.RadGridViewAutoSuivi.MasterTemplate, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.RadGridViewAutoSuivi, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me, System.ComponentModel.ISupportInitialize).EndInit()

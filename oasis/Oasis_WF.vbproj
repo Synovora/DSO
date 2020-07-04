@@ -229,7 +229,6 @@
     <Compile Include="Bean\DRC\DrcStandard.vb" />
     <Compile Include="Bean\LigneDeVie\PatientParametreLdv.vb" />
     <Compile Include="Bean\Ordonnance\OrdonnanceFull.vb" />
-    <Compile Include="Bean\Ordonnance\Ordonnance.vb" />
     <Compile Include="Bean\Ordonnance\OrdonnanceDetailGrid.vb" />
     <Compile Include="Bean\Medicament\Medicament.vb" />
     <Compile Include="Bean\Parametre\AutoSuivi.vb" />
@@ -329,7 +328,6 @@
     <Compile Include="Bean\Parametre\Parametre.vb" />
     <Compile Include="Bean\Parametre\ParametreDrc.vb" />
     <Compile Include="Bean\Parametre\ParametreTypeEpisodeDrc.vb" />
-    <Compile Include="Bean\Ordonnance\OrdonnanceDetail.vb" />
     <Compile Include="Bean\Parcours\ParcoursClass.vb" />
     <Compile Include="Bean\Parcours\ParcoursConsigneClass.vb" />
     <Compile Include="Bean\Parcours\ParcoursHistoClass.vb" />
