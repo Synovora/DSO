@@ -11,9 +11,9 @@ Public Class PatientDaoBase
 
     'Initialisation des propriétés d'une instance de Patient depuis la BDD
     Public Overridable Function SetPatient(patientId As Integer) As PatientBase
-        Dim patient = New PatientBase
+        Dim patient As New PatientBase
         If patientId = 0 Then
-            Return Nothing
+            Return patient
         End If
         Dim con As SqlConnection = GetConnection()
         Try
