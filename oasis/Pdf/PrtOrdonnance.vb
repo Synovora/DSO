@@ -230,7 +230,7 @@ Public Class PrtOrdonnance
                 Dim Posologie As String = dt.Rows(i)("oa_traitement_posologie")
                 Dim traitementId As Long = Coalesce(dt.Rows(i)("oa_traitement_id"), 0)
 
-                Dim traitement As New Traitement
+                Dim traitement As New TraitementBase
                 If traitementId <> 0 Then
                     traitement = traitementDao.GetTraitementById(traitementId)
                 End If

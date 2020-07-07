@@ -134,7 +134,7 @@ Module TraitementHistoDao
         Return codeRetour
     End Function
 
-    Public Sub InitClasseTraitementHistorisation(traitement As Traitement, UtilisateurConnecte As Utilisateur, TraitementHistoACreer As TraitementHisto)
+    Public Sub InitClasseTraitementHistorisation(traitement As TraitementBase, UtilisateurConnecte As Utilisateur, TraitementHistoACreer As TraitementHisto)
         'Initialisation classe Historisation traitement 
         TraitementHistoACreer.HistorisationDate = Date.Now()
         TraitementHistoACreer.HistorisationUtilisateurId = UtilisateurConnecte.UtilisateurId

@@ -97,6 +97,7 @@
     <Compile Include="Bean\Ordonnance\OrdonnanceBase.vb" />
     <Compile Include="Bean\Ordonnance\OrdonnanceDetailBase.vb" />
     <Compile Include="Bean\Patient\PatientBase.vb" />
+    <Compile Include="Bean\Traitement\TraitementBase.vb" />
     <Compile Include="Bean\Utilisateur\Action.vb" />
     <Compile Include="Bean\Utilisateur\Fonction.vb" />
     <Compile Include="Bean\WebTech\DownloadRequest.vb" />
@@ -107,6 +108,7 @@
     <Compile Include="Dao\Ordonnance\OrdonnanceDetailDaoBase.vb" />
     <Compile Include="Dao\Patient\PatientDaoBase.vb" />
     <Compile Include="Dao\StandardDao.vb" />
+    <Compile Include="Dao\Traitement\TraitementDaoBase.vb" />
     <Compile Include="Dao\Utilisateur\ActionDao.vb" />
     <Compile Include="Dao\Utilisateur\FonctionDao.vb" />
     <Compile Include="Dao\Utilisateur\ProfilDao.vb" />

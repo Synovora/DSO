@@ -254,7 +254,7 @@ Public Class RadFTraitementDetailEdit
 
     Private Sub ChargementTraitementExistant()
         Dim traitementDao As TraitementDao = New TraitementDao
-        Dim traitement As Traitement
+        Dim traitement As TraitementBase
 
         Try
             traitement = traitementDao.getTraitementById(SelectedTraitementId)
@@ -607,7 +607,7 @@ Public Class RadFTraitementDetailEdit
         End If
     End Sub
 
-    Private Sub ChargerZonesArret(traitement As Traitement)
+    Private Sub ChargerZonesArret(traitement As TraitementBase)
         TxtCommentaireArret.Text = traitement.ArretCommentaire
         ChkAllergie.Checked = False
         If traitement.Allergie = True Then
@@ -626,7 +626,7 @@ Public Class RadFTraitementDetailEdit
         End If
     End Sub
 
-    Private Sub ChargerZonesAnnulation(traitement As Traitement)
+    Private Sub ChargerZonesAnnulation(traitement As TraitementBase)
         TxtCommentaireAnnulation.Text = traitement.AnnulationCommentaire
     End Sub
 
@@ -893,7 +893,7 @@ Public Class RadFTraitementDetailEdit
         'Définition de la base du traitement
         Dim baseTraitement As Char = traitementDao.GetBaseCodeByItem(CbxTraitementBase.Text)
 
-        Dim traitementaCreer As New Traitement
+        Dim traitementaCreer As New TraitementBase
         traitementaCreer.TraitementId = SelectedTraitementId
         traitementaCreer.PatientId = SelectedPatient.patientId
         traitementaCreer.MedicamentId = medicament_selecteur_cis
@@ -943,7 +943,7 @@ Public Class RadFTraitementDetailEdit
         'Définition de la base du traitement
         Dim baseTraitement As Char = traitementDao.GetBaseCodeByItem(CbxTraitementBase.Text)
 
-        Dim traitementaModifier As New Traitement
+        Dim traitementaModifier As New TraitementBase
         traitementaModifier.TraitementId = SelectedTraitementId
         traitementaModifier.MedicamentId = medicament_selecteur_cis
         traitementaModifier.MedicamentDci = LblMedicamentDCI.Text
@@ -999,7 +999,7 @@ Public Class RadFTraitementDetailEdit
             contreIndication = 0
         End If
 
-        Dim traitementaArreter As New Traitement
+        Dim traitementaArreter As New TraitementBase
         traitementaArreter.TraitementId = SelectedTraitementId
         traitementaArreter.PatientId = SelectedPatient.patientId
         traitementaArreter.DateModification = Date.Now.Date
@@ -1046,7 +1046,7 @@ Public Class RadFTraitementDetailEdit
 
         Dim codeRetour As Boolean = True
 
-        Dim traitementaAnnuler As New Traitement
+        Dim traitementaAnnuler As New TraitementBase
         traitementaAnnuler.TraitementId = SelectedTraitementId
         traitementaAnnuler.PatientId = SelectedPatient.patientId
         traitementaAnnuler.DateModification = Date.Now.Date
@@ -1072,7 +1072,7 @@ Public Class RadFTraitementDetailEdit
 
         Dim codeRetour As Boolean = True
 
-        Dim traitementaAnnuler As New Traitement
+        Dim traitementaAnnuler As New TraitementBase
         traitementaAnnuler.TraitementId = SelectedTraitementId
         traitementaAnnuler.PatientId = SelectedPatient.patientId
         traitementaAnnuler.UserModification = userLog.UtilisateurId

@@ -336,7 +336,6 @@
     <Compile Include="Bean\ROR\RorClass.vb" />
     <Compile Include="Bean\Parcours\SpecialiteClass.vb" />
     <Compile Include="Bean\Tache\TacheClass.vb" />
-    <Compile Include="Bean\Traitement\Traitement.vb" />
     <Compile Include="Dao\ALD\AldCim10Dao.vb" />
     <Compile Include="Bean\Antecedent\AntecedentHisto.vb" />
     <Compile Include="Dao\ALD\AldDao.vb" />
