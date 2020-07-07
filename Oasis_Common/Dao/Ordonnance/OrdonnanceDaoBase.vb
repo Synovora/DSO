@@ -1,6 +1,6 @@
 ﻿Imports System.Data.SqlClient
 
-Public MustInherit Class OrdonnanceDaoBase
+Public Class OrdonnanceDaoBase
     Inherits StandardDao
 
     Public Function GetOrdonnaceById(OrdonnanceId As Integer) As OrdonnanceBase

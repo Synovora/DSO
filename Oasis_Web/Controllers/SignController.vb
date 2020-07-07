@@ -10,21 +10,39 @@ Namespace Controllers
         End Function
 
         'GET: /Sign/Check/
-        Function Check(Optional id As Integer = 1) As ActionResult
-            'Dim ordonnanceDao As OrdonnanceDaoBase = New OrdonnanceDaoBase
+        Function Check(Optional id As Integer = 10105) As ActionResult
 
-            'Dim ordonnance = ordonnanceDao.GetOrdonnaceById(id)
-            'Dim db As oasisEntities = New oasisEntities()
-            'Dim ordonnance As oa_patient_ordonnance = db.oa_patient_ordonnance.SingleOrDefault(Function(x As oa_patient_ordonnance) x.oa_ordonnance_id = id)
+            Dim ordonnanceDao As New OrdonnanceDaoBase
+            Dim patientDao As New PatientDaoBase
+            Dim utilisateurDao As New UserDao
+            Dim ordonnanceDetailDao As New OrdonnanceDetailDaoBase
+
+            Dim ordonnance = ordonnanceDao.GetOrdonnaceById(id)
             'If ordonnance Is Nothing Then
-            '    Return View()
+            'Return View()
             'End If
-            'Dim patient As oa_patient = db.oa_patient.SingleOrDefault(Function(x As oa_patient) x.oa_patient_id = ordonnance.oa_ordonnance_patient_id)
-            'If patient Is Nothing Then
-            '    Return View()
+            If ordonnance.Inactif = True Then
+                Return View()
+            End If
+            ViewBag.Ordonnance = ordonnance
+
+            Dim ordonnanceDetail = ordonnanceDetailDao.GetOrdonnanceLigneByOrdonnanceId(id)
+            'If ordonnanceDetail Is Nothing Then
+            'Return View()
             'End If
-            'ViewBag.Ordonnance = ordonnance
-            'ViewBag.Patient = patient
+            ViewBag.OrdonnanceDetail = ordonnanceDetail
+
+            Dim patient = patientDao.GetPatientById(ordonnance.PatientId)
+            If patient Is Nothing Then
+                Return View()
+            End If
+            ViewBag.Patient = patient
+
+            Dim user = utilisateurDao.getUserById(ordonnance.UtilisateurCreation)
+            If user Is Nothing Then
+                Return View()
+            End If
+            ViewBag.User = user
             Return View()
         End Function
     End Class
