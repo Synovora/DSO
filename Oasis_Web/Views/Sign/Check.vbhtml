@@ -17,14 +17,14 @@
                     '<span class="badge badge-secondary badge-pill">@ViewBag.OrdonnanceDetail.Count</span>
                 </h4>
                 <ul class="list-group mb-3">
-                    @For Each ordonnanceDetail In ViewBag.OrdonnanceDetail
+                    @For Each traitement In ViewBag.Traitements
 
                     @<li class="list-group-item d-flex justify-content-between lh-condensed">
                         <div>
-                        <h6 class="my-0">@ordonnanceDetail.TraitementId</h6>
-                            <small class="text-muted">@ordonnanceDetail.Posologie</small>
+                        <h6 class="my-0">@traitement.MedicamentDci</h6>
+                        <small class="text-muted">@traitement.DateDebut - @traitement.DateFin</small>
                         </div>
-                        <span class="text-muted">@ordonnanceDetail.Duree</span>
+                        <span class="text-muted">@traitement.MedicamentId</span>
                     </li>
                     Next
 
