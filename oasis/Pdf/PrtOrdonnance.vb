@@ -162,9 +162,10 @@ Public Class PrtOrdonnance
 
 
         Dim section As New Section()
-        Dim table As New Table()
-        table.LayoutMode = TableLayoutMode.Fixed
-        table.StyleName = RadDocumentDefaultStyles.DefaultTableGridStyleName
+        Dim table As New Table With {
+            .LayoutMode = TableLayoutMode.Fixed,
+            .StyleName = RadDocumentDefaultStyles.DefaultTableGridStyleName
+        }
 
         Dim dt As DataTable
         dt = ordonnanceDetailDao.getAllOrdonnanceLigneSelectAldByOrdonnanceId(SelectedOrdonnanceId, SelectionALD)
@@ -175,22 +176,26 @@ Public Class PrtOrdonnance
         If dt.Rows.Count > 0 Then
             Dim row0 As New TableRow()
 
-            Dim celleTitre1 As New TableCell()
-            celleTitre1.PreferredWidth = New TableWidthUnit(TableWidthUnitType.Fixed, LargeurCol1)
-            Dim spanTitre1 As New Span()
-            spanTitre1.FontSize = 10
-            spanTitre1.FontWeight = Telerik.WinControls.RichTextEditor.UI.FontWeights.Bold
+            Dim celleTitre1 As New TableCell With {
+                .PreferredWidth = New TableWidthUnit(TableWidthUnitType.Fixed, LargeurCol1)
+            }
+            Dim spanTitre1 As New Span With {
+                .FontSize = 10,
+                .FontWeight = Telerik.WinControls.RichTextEditor.UI.FontWeights.Bold
+            }
             Dim paragrapheTitre1 As New Paragraph()
             spanTitre1.Text = "Spécialité"
             paragrapheTitre1.Inlines.Add(spanTitre1)
             celleTitre1.Blocks.Add(paragrapheTitre1)
             row0.Cells.Add(celleTitre1)
 
-            Dim cellTitre2 As New TableCell()
-            cellTitre2.PreferredWidth = New TableWidthUnit(TableWidthUnitType.Fixed, LargeurCol2)
-            Dim spanTitre2 As New Span()
-            spanTitre2.FontSize = 10
-            spanTitre2.FontWeight = Telerik.WinControls.RichTextEditor.UI.FontWeights.Normal
+            Dim cellTitre2 As New TableCell With {
+                .PreferredWidth = New TableWidthUnit(TableWidthUnitType.Fixed, LargeurCol2)
+            }
+            Dim spanTitre2 As New Span With {
+                .FontSize = 10,
+                .FontWeight = Telerik.WinControls.RichTextEditor.UI.FontWeights.Normal
+            }
             Dim paragrapheTitre2 As New Paragraph()
             spanTitre2.Text = "Durée"
             paragrapheTitre2.TextAlignment = RadTextAlignment.Center
@@ -198,10 +203,12 @@ Public Class PrtOrdonnance
             cellTitre2.Blocks.Add(paragrapheTitre2)
             row0.Cells.Add(cellTitre2)
 
-            Dim cellTitre3 As New TableCell()
-            cellTitre3.PreferredWidth = New TableWidthUnit(TableWidthUnitType.Fixed, LargeurCol3)
-            Dim spanTitre3 As New Span()
-            spanTitre3.FontSize = 10
+            Dim cellTitre3 As New TableCell With {
+                .PreferredWidth = New TableWidthUnit(TableWidthUnitType.Fixed, LargeurCol3)
+            }
+            Dim spanTitre3 As New Span With {
+                .FontSize = 10
+            }
             spanTitre2.FontWeight = Telerik.WinControls.RichTextEditor.UI.FontWeights.Normal
             Dim paragrapheTitre3 As New Paragraph()
             spanTitre3.Text = "Délivrance"
@@ -241,11 +248,13 @@ Public Class PrtOrdonnance
 
                 Dim row As New TableRow()
 
-                Dim cellDetail1 As New TableCell()
-                cellDetail1.PreferredWidth = New TableWidthUnit(TableWidthUnitType.Fixed, LargeurCol1)
-                Dim spanDetail11 As New Span()
-                spanDetail11.FontSize = 10
-                spanDetail11.FontWeight = Telerik.WinControls.RichTextEditor.UI.FontWeights.Bold
+                Dim cellDetail1 As New TableCell With {
+                    .PreferredWidth = New TableWidthUnit(TableWidthUnitType.Fixed, LargeurCol1)
+                }
+                Dim spanDetail11 As New Span With {
+                    .FontSize = 10,
+                    .FontWeight = Telerik.WinControls.RichTextEditor.UI.FontWeights.Bold
+                }
                 Dim paragrapheDetail1 As New Paragraph()
 
                 If traitementId <> 0 Then
@@ -258,9 +267,10 @@ Public Class PrtOrdonnance
                     paragrapheDetail1.Inlines.Add(spanDetail11)
                 End If
 
-                Dim spanDetail12 As New Span()
-                spanDetail12.FontSize = 10
-                spanDetail12.FontWeight = Telerik.WinControls.RichTextEditor.UI.FontWeights.Normal
+                Dim spanDetail12 As New Span With {
+                    .FontSize = 10,
+                    .FontWeight = Telerik.WinControls.RichTextEditor.UI.FontWeights.Normal
+                }
 
                 Dim PosologieBase As String = ""
                 If Coalesce(dt.Rows(i)("oa_traitement_posologie_base"), "") = "J" Then
@@ -277,12 +287,15 @@ Public Class PrtOrdonnance
                 cellDetail1.Blocks.Add(paragrapheDetail1)
                 row.Cells.Add(cellDetail1)
 
-                Dim cellDetail2 As New TableCell()
-                cellDetail2.PreferredWidth = New TableWidthUnit(TableWidthUnitType.Fixed, LargeurCol2)
-                Dim spanDetail2 As New Span()
-                spanDetail2.FontSize = 10
-                Dim paragrapheDetail2 As New Paragraph()
-                paragrapheDetail2.TextAlignment = TextAlignment.Center
+                Dim cellDetail2 As New TableCell With {
+                    .PreferredWidth = New TableWidthUnit(TableWidthUnitType.Fixed, LargeurCol2)
+                }
+                Dim spanDetail2 As New Span With {
+                    .FontSize = 10
+                }
+                Dim paragrapheDetail2 As New Paragraph With {
+                    .TextAlignment = TextAlignment.Center
+                }
                 spanDetail2.Text = duree & " jour(s)"
                 If spanDetail2.Text <> "" Then
                     paragrapheDetail2.Inlines.Add(spanDetail2)
@@ -297,10 +310,12 @@ Public Class PrtOrdonnance
                     End If
                 End If
 
-                Dim cellDetail3 As New TableCell()
-                cellDetail3.PreferredWidth = New TableWidthUnit(TableWidthUnitType.Fixed, LargeurCol3)
-                Dim spanDetail3 As New Span()
-                spanDetail3.FontSize = 9
+                Dim cellDetail3 As New TableCell With {
+                    .PreferredWidth = New TableWidthUnit(TableWidthUnitType.Fixed, LargeurCol3)
+                }
+                Dim spanDetail3 As New Span With {
+                    .FontSize = 9
+                }
                 Dim paragrapheDetail3 As New Paragraph()
                 spanDetail3.Text = Delivrance
                 If spanDetail3.Text <> "" Then
@@ -332,6 +347,10 @@ Public Class PrtOrdonnance
             .AddTexteLine(Medecin.UtilisateurPrenom & " " & Medecin.UtilisateurNom & ", " & profil.Designation)
             .AddTexteLine("RPPS : " & Medecin.UtilisateurRPPS)
             .AddImage(New WriteableBitmap(my_qrCode.GetGraphic(3)), New Size(150, 150))
+        End With
+        With EditTools
+            .CreateParagraphIntoSection(section,, RadTextAlignment.Left)
+            .AddTexteLine(If(ordonnance.Renouvellement > 0, "A renouveller " & ordonnance.Renouvellement & " fois", "Non renouvelable"))
         End With
     End Sub
 End Class
