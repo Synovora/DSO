@@ -6,7 +6,6 @@
 <body class="bg-light">
     <div class="container">
         <div class="py-5 text-center">
-            @*<img class="d-block mx-auto mb-4" src="https://getbootstrap.com/docs/4.0/assets/brand/bootstrap-solid.svg" alt="" width="72" height="72">*@
             <h2>Verification d'Ordonnance</h2>
             <p class="lead">Verifier rapidement et simplement l'authenticite d'une ordonnance</p>
         </div>
@@ -14,7 +13,7 @@
             <div class="col-md-6 order-md-2 mb-6">
                 <h4 class="d-flex justify-content-between align-items-center mb-3">
                     <span class="text-muted">Details</span>
-                    '<span class="badge badge-secondary badge-pill">@ViewBag.OrdonnanceDetail.Count</span>
+                    '<span class="badge badge-secondary badge-pill">@ViewBag.Traitements.Count</span>
                 </h4>
                 <ul class="list-group mb-3">
                     @For Each traitement In ViewBag.Traitements
@@ -22,102 +21,81 @@
                     @<li class="list-group-item d-flex justify-content-between lh-condensed">
                         <div>
                         <h6 class="my-0">@traitement.DenominationLongue</h6>
-                        <small class="text-muted">Posologie: @traitement.PosologieMatin / @traitement.PosologieMidi / @traitement.PosologieApresMidi / @traitement.PosologieSoir </small>
+                        <small class="text-muted">Posologie: @(If(traitement.PosologieBase = "J", traitement.PosologieMatin & "." & traitement.PosologieMidi & "." & traitement.PosologieApresMidi & "." & traitement.PosologieSoir & "/" & traitement.PosologieBase, traitement.PosologieRythme & "/" & traitement.PosologieBase))</small>
                         </div>
-                        <span class="text-muted">@traitement.PosologieRythme @traitement.PosologieBase</span>
+                        <span Class="text-muted">---</span>
                     </li>
                     Next
-
-                    @*<li class="list-group-item d-flex justify-content-between bg-light">
-                        <div class="text-success">
-                            <h6 class="my-0">Traitement 4</h6>
-                            <small>test</small>
-                        </div>
-                        <span class="text-success">5</span>
-                    </li>*@
-                    @*<li class="list-group-item d-flex justify-content-between">
-                        <span>Total</span>
-                        <strong>20</strong>
-                    </li>*@
                 </ul>
-
-                @*<form class="card p-2">
-                    <div class="input-group">
-                        <input type="text" class="form-control" placeholder="Promo code">
-                        <div class="input-group-append">
-                            <button type="submit" class="btn btn-secondary">Redeem</button>
-                        </div>
-                    </div>
-                </form>*@
             </div>
-            <div class="col-md-6 order-md-1">
-                <form class="needs-validation" novalidate>
-                    <div class="row">
-                        <h4 class="mb-3">Patient</h4>
-                        <div class="row">
-                            <div class="col-md-6 mb-3">
-                                <label for="firstName">Nom</label>
-                                <input type="text" class="form-control" id="firstName" placeholder="" value=@ViewBag.Patient.PatientNom required disabled>
-                                <div class="invalid-feedback">
-                                    Valid first name is required.
+            <div Class="col-md-6 order-md-1">
+                <form Class="needs-validation" novalidate>
+                    <div Class="row">
+                        <h4 Class="mb-3">Patient</h4>
+                        <div Class="row">
+                            <div Class="col-md-6 mb-3">
+                                <Label for="firstName">Nom</label>
+                                <input type = "text" Class="form-control" id="firstName" placeholder="" value=@ViewBag.Patient.PatientNom required disabled>
+                                <div Class="invalid-feedback">
+                                    Valid first name Is required.
                                 </div>
                             </div>
-                            <div class="col-md-6 mb-3">
-                                <label for="lastName">Prenom</label>
-                                <input type="text" class="form-control" id="lastName" placeholder="" value=@ViewBag.Patient.PatientPrenom required disabled>
-                                <div class="invalid-feedback">
-                                    Valid last name is required.
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-6 mb-3">
-                                <label for="birthDate">Date de naissance</label>
-                                <input type="text" class="form-control" id="birthDate" placeholder="" value=@ViewBag.Patient.PatientDateNaissance required disabled>
-                                <div class="invalid-feedback">
-                                    Valid birthDate is required.
-                                </div>
-                            </div>
-                            <div class="col-md-6 mb-3">
-                                <label for="CPAM">Immatriculation CPAM</label>
-                                <input type="text" class="form-control" id="CPAM" placeholder="" value=@ViewBag.Patient.INS required disabled>
-                                <div class="invalid-feedback">
-                                    Valid CPAM is required.
+                            <div Class="col-md-6 mb-3">
+                                <Label for="lastName">Prenom</label>
+                                <input type = "text" Class="form-control" id="lastName" placeholder="" value=@ViewBag.Patient.PatientPrenom required disabled>
+                                <div Class="invalid-feedback">
+                                    Valid last name Is required.
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    <hr />
-                    <div class="row">
-                        <h4 class="mb-3">Medecin</h4>
-                        <div class="row">
-                            <div class="col-md-6 mb-3">
-                                <label for="firstName">Nom</label>
-                                <input type="text" class="form-control" id="firstName" placeholder="" value=@ViewBag.User.UtilisateurNom required disabled>
-                                <div class="invalid-feedback">
-                                    Valid first name is required.
+                        <div Class="row">
+                            <div Class="col-md-6 mb-3">
+                                <Label for="birthDate">Date de naissance</label>
+                                <input type = "text" Class="form-control" id="birthDate" placeholder="" value=@ViewBag.Patient.PatientDateNaissance required disabled>
+                                <div Class="invalid-feedback">
+                                    Valid birthDate Is required.
                                 </div>
                             </div>
-                            <div class="col-md-6 mb-3">
-                                <label for="lastName">Prenom</label>
-                                <input type="text" class="form-control" id="lastName" placeholder="" value=@ViewBag.User.UtilisateurPrenom required disabled>
-                                <div class="invalid-feedback">
-                                    Valid last name is required.
+                            <div Class="col-md-6 mb-3">
+                                <Label for="CPAM">Immatriculation CPAM</label>
+                                <input type = "text" Class="form-control" id="CPAM" placeholder="" value=@ViewBag.Patient.INS required disabled>
+                                <div Class="invalid-feedback">
+                                    Valid CPAM Is required.
                                 </div>
                             </div>
                         </div>
                     </div>
                     <hr />
-                    <div class="row">
-                        <h4 class="mb-3">Information</h4>
-                        <div class="row">
-                            <div class="col-md-6 mb-3">
-                                <label for="date">Date</label>
-                                <input type="text" class="form-control" id="date" placeholder="" value=@ViewBag.Ordonnance.DateValidation required disabled>
+                    <div Class="row">
+                        <h4 Class="mb-3">Medecin</h4>
+                        <div Class="row">
+                            <div Class="col-md-6 mb-3">
+                                <Label for="firstName">Nom</label>
+                                <input type = "text" Class="form-control" id="firstName" placeholder="" value=@ViewBag.User.UtilisateurNom required disabled>
+                                <div Class="invalid-feedback">
+                                    Valid first name Is required.
+                                </div>
                             </div>
-                            <div class="col-md-6 mb-3">
-                                <label for="renouvelable">Renouvelable</label>
-                                <input type="text" class="form-control" id="renouvelable" placeholder="" value=@(If(ViewBag.Ordonnance.Renouvellement, ViewBag.Ordonnance.Renouvellement, "Non")) required disabled>
+                            <div Class="col-md-6 mb-3">
+                                <Label for="lastName">Prenom</label>
+                                <input type = "text" Class="form-control" id="lastName" placeholder="" value=@ViewBag.User.UtilisateurPrenom required disabled>
+                                <div Class="invalid-feedback">
+                                    Valid last name Is required.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <hr />
+                    <div Class="row">
+                        <h4 Class="mb-3">Information</h4>
+                        <div Class="row">
+                            <div Class="col-md-6 mb-3">
+                                <Label for="date">Date</label>
+                                <input type = "text" Class="form-control" id="date" placeholder="" value=@ViewBag.Ordonnance.DateValidation required disabled>
+                            </div>
+                            <div Class="col-md-6 mb-3">
+                                <Label for="renouvelable">Renouvelable</label>
+                                <input type = "text" Class="form-control" id="renouvelable" placeholder="" value=@(If(ViewBag.Ordonnance.Renouvellement, ViewBag.Ordonnance.Renouvellement, "Non")) required disabled>
                             </div>
                         </div>
                     </div>

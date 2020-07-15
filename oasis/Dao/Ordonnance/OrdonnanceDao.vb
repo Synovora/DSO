@@ -145,8 +145,6 @@ Public Class OrdonnanceDao
         ordonnanceFull.Ordonnance.DateEdition = ordonnanceFull.Ordonnance.DateValidation
         ordonnanceFull.Ordonnance.UserValidation = userLog.UtilisateurId
 
-        Console.WriteLine("Serialize Ordonnance: " & BitConverter.ToString(ordonnanceFull.Serialize()))
-
         Dim SQLstring As String = "UPDATE oasis.oa_patient_ordonnance SET" &
         " oa_ordonnance_date_validation = @dateValidation," &
         " oa_ordonnance_user_validation = @userValidation," &

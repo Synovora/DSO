@@ -30,6 +30,33 @@ Public Class OrdonnanceDaoBase
         Return ordonnance
     End Function
 
+    Public Function GetOrdonnaceBySignature(OrdonnanceSignature As String) As OrdonnanceBase
+        Dim ordonnance As OrdonnanceBase
+        Dim con As SqlConnection = GetConnection()
+
+        Try
+            Dim command As SqlCommand = con.CreateCommand()
+
+            command.CommandText =
+                "SELECT * FROM oasis.oa_patient_ordonnance WHERE oa_ordonnance_signature = @signature"
+            command.Parameters.AddWithValue("@signature", OrdonnanceSignature)
+            Using reader As SqlDataReader = command.ExecuteReader()
+                If reader.Read() Then
+                    ordonnance = BuildBean(reader)
+                Else
+                    Throw New ArgumentException("Ordonnance inexistante !")
+                End If
+            End Using
+
+        Catch ex As Exception
+            Throw ex
+        Finally
+            con.Close()
+        End Try
+
+        Return ordonnance
+    End Function
+
     Private Function BuildBean(reader As SqlDataReader) As OrdonnanceBase
         Dim ordonnance As New OrdonnanceBase With {
             .Id = reader("oa_ordonnance_id"),

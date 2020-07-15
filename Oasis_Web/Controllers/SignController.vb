@@ -1,4 +1,5 @@
 ﻿Imports System.Web.Mvc
+Imports Microsoft.IdentityModel.Tokens
 Imports Oasis_Common
 
 Namespace Controllers
@@ -10,7 +11,9 @@ Namespace Controllers
         End Function
 
         'GET: /Sign/Check/
-        Function Check(Optional id As Integer = 10105) As ActionResult
+        Function Check(Optional id As String = "") As ActionResult
+            Dim signatue As Byte() = Base64UrlEncoder.DecodeBytes(id)
+            System.Diagnostics.Debug.WriteLine(signatue)
 
             Dim ordonnanceDao As New OrdonnanceDaoBase
             Dim patientDao As New PatientDaoBase
@@ -18,37 +21,37 @@ Namespace Controllers
             Dim ordonnanceDetailDao As New OrdonnanceDetailDaoBase
             Dim traitementDao As New TraitementDaoBase
 
-            Dim ordonnance = ordonnanceDao.GetOrdonnaceById(id)
-            'If ordonnance Is Nothing Then
-            'Return View()
-            'End If
-            If ordonnance.Inactif = True Then
-                Return View()
-            End If
-            ViewBag.Ordonnance = ordonnance
+            Try
+                Dim sigHex As String = "0x" & LCase(BitConverter.ToString(signatue).Replace("-", String.Empty))
+                Dim ordonnance = ordonnanceDao.GetOrdonnaceBySignature(sigHex)
+                If ordonnance.Inactif = True Then
+                    'Set inactif
+                    Return View("~/Views/Shared/Error.vbhtml")
+                End If
+                ViewBag.Ordonnance = ordonnance
+                Dim ordonnanceDetail = ordonnanceDetailDao.GetOrdonnanceLigneByOrdonnanceId(ordonnance.Id)
+                ViewBag.OrdonnanceDetail = ordonnanceDetail
+                Dim traitements As New List(Of TraitementBase)
+                For Each detail In ordonnanceDetail
+                    traitements.Add(traitementDao.GetTraitementById(detail.TraitementId))
+                Next
+                ViewBag.Traitements = traitements
 
-            Dim ordonnanceDetail = ordonnanceDetailDao.GetOrdonnanceLigneByOrdonnanceId(id)
-            'If ordonnanceDetail Is Nothing Then
-            'Return View()
-            'End If
-            ViewBag.OrdonnanceDetail = ordonnanceDetail
-            Dim traitements As New List(Of TraitementBase)
-            For Each detail In ordonnanceDetail
-                traitements.Add(traitementDao.GetTraitementById(detail.TraitementId))
-            Next
-            ViewBag.Traitements = traitements
+                Dim patient = patientDao.GetPatientById(ordonnance.PatientId)
+                If patient Is Nothing Then
+                    Return View()
+                End If
+                ViewBag.Patient = patient
 
-            Dim patient = patientDao.GetPatientById(ordonnance.PatientId)
-            If patient Is Nothing Then
-                Return View()
-            End If
-            ViewBag.Patient = patient
+                Dim user = utilisateurDao.getUserById(ordonnance.UtilisateurCreation)
+                If user Is Nothing Then
+                    Return View()
+                End If
+                ViewBag.User = user
+            Catch
+                Return View("~/Views/Shared/Error.vbhtml")
+            End Try
 
-            Dim user = utilisateurDao.getUserById(ordonnance.UtilisateurCreation)
-            If user Is Nothing Then
-                Return View()
-            End If
-            ViewBag.User = user
             Return View()
         End Function
     End Class
