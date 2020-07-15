@@ -6,7 +6,7 @@
 <body class="bg-light">
     <div class="container">
         <div class="py-5 text-center">
-            <img class="d-block mx-auto mb-4" src="https://getbootstrap.com/docs/4.0/assets/brand/bootstrap-solid.svg" alt="" width="72" height="72">
+            @*<img class="d-block mx-auto mb-4" src="https://getbootstrap.com/docs/4.0/assets/brand/bootstrap-solid.svg" alt="" width="72" height="72">*@
             <h2>Verification d'Ordonnance</h2>
             <p class="lead">Verifier rapidement et simplement l'authenticite d'une ordonnance</p>
         </div>
@@ -21,10 +21,10 @@
 
                     @<li class="list-group-item d-flex justify-content-between lh-condensed">
                         <div>
-                        <h6 class="my-0">@traitement.MedicamentDci</h6>
-                        <small class="text-muted">@traitement.DateDebut - @traitement.DateFin</small>
+                        <h6 class="my-0">@traitement.DenominationLongue</h6>
+                        <small class="text-muted">Posologie: @traitement.PosologieMatin / @traitement.PosologieMidi / @traitement.PosologieApresMidi / @traitement.PosologieSoir </small>
                         </div>
-                        <span class="text-muted">@traitement.MedicamentId</span>
+                        <span class="text-muted">@traitement.PosologieRythme @traitement.PosologieBase</span>
                     </li>
                     Next
 
@@ -109,16 +109,19 @@
                     </div>
                     <hr />
                     <div class="row">
-                        <h4 class="mb-3">Signature</h4>
-                        <div class="mb-3">
-                            <label for="date">Date</label>
+                        <h4 class="mb-3">Information</h4>
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label for="date">Date</label>
                                 <input type="text" class="form-control" id="date" placeholder="" value=@ViewBag.Ordonnance.DateValidation required disabled>
-                        </div>
-                        <div class="mb-3">
-                            <label for="signature">Signature</label>
-                            <input type="text" class="form-control" id="signature" placeholder="" value=@ViewBag.Ordonnance.Inactif required disabled>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label for="renouvelable">Renouvelable</label>
+                                <input type="text" class="form-control" id="renouvelable" placeholder="" value=@(If(ViewBag.Ordonnance.Renouvellement, ViewBag.Ordonnance.Renouvellement, "Non")) required disabled>
+                            </div>
                         </div>
                     </div>
+                    <hr />
                 </form>
             </div>
         </div>
