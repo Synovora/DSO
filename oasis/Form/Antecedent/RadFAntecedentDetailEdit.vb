@@ -13,6 +13,8 @@ Public Class RadFAntecedentDetailEdit
     Private privateReactivation As Boolean
     Private _positionGaucheDroite As Integer
 
+    ReadOnly aldCim10Dao As AldCim10Dao = New AldCim10Dao()
+
     Public Property SelectedPatient As PatientBase
         Get
             Return privateSelectedPatient
@@ -100,15 +102,11 @@ Public Class RadFAntecedentDetailEdit
     Dim EditMode, EditAction As Integer
     Dim utilisateurHisto As Utilisateur = New Utilisateur()
     Dim Drc As New Drc()
-    Dim drcdao As New DrcDao
-
-    Dim AntecedentDao As New AntecedentDao
-
-    Dim AntecedentHistoACreer As New AntecedentHisto
+    ReadOnly drcdao As New DrcDao
+    ReadOnly AntecedentDao As New AntecedentDao
+    ReadOnly AntecedentHistoACreer As New AntecedentHisto
     Dim antecedentRead As New Antecedent
     Dim antecedentUpdate As New Antecedent
-
-    Dim conxn As New SqlConnection(getConnectionString())
 
     Private Sub RadFAntecedentDetailEdit_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         RadGridLocalizationProvider.CurrentProvider = New FrenchRadGridViewLocalizationProvider()

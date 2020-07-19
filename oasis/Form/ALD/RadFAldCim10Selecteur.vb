@@ -11,6 +11,7 @@ Public Class RadFAldCim10Selecteur
 
     'Le DataTable contient les données que le Grid va afficher (on pourrait utiliser un Dataset si on utilise plusieurs tables)
     Dim AldDataTable As DataTable = New DataTable()
+    ReadOnly aldCim10Dao As AldCim10Dao = New AldCim10Dao()
 
     Public Property UtilisateurConnecte As Utilisateur
         Get
@@ -49,7 +50,7 @@ Public Class RadFAldCim10Selecteur
 
     Private Sub ChargementAld()
         Dim AldDataTable As DataTable
-        AldDataTable = AldCim10Dao.getAllAldCIM10ByAldId(SelectedAldId)
+        AldDataTable = aldCim10Dao.getAllAldCIM10ByAldId(SelectedAldId)
         RadAldDataGridView.DataSource = AldDataTable
         'Enlève le focus sur la première ligne de la Grid
         RadAldDataGridView.ClearSelection()

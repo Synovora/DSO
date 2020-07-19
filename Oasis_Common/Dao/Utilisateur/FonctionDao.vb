@@ -100,7 +100,7 @@ Public Class FonctionDao
             End Using
 
         Catch ex As Exception
-            MessageBox.Show(ex.Message)
+            Throw New Exception(ex.Message)
         Finally
             con.Close()
         End Try

@@ -130,7 +130,7 @@ Public Class RadFParcoursDetailEdit
         Else
             'Création
             'Données spécialité
-            specialite = Environnement.Table_specialite.GetSpecialiteById(Me.SelectedSpecialiteId)
+            specialite = Table_specialite.GetSpecialiteById(Me.SelectedSpecialiteId)
             If SelectedSpecialiteId <> 0 Then
                 If SelectedSpecialiteId = EnumSpecialiteOasis.IDE Then
                     'FixeTailleEcranPourIDE()
@@ -285,7 +285,7 @@ Public Class RadFParcoursDetailEdit
         End If
 
         'Données spécialité
-        specialite = Environnement.Table_specialite.GetSpecialiteById(ParcoursUpdate.SpecialiteId)
+        specialite = Table_specialite.GetSpecialiteById(ParcoursUpdate.SpecialiteId)
         If ParcoursUpdate.SpecialiteId = EnumSpecialiteOasis.IDE Then
             FixeTailleEcranPourIDE()
             ChargementConsigne()
@@ -1010,7 +1010,7 @@ Public Class RadFParcoursDetailEdit
         tache.TypedemandeRendezVous = ""
         tache.DateRendezVous = dateRendezVous
 
-        If tacheDao.CreateTache(tache) = True Then
+        If tacheDao.CreateTache(tache, , userLog) = True Then
             CodeRetour = True
         End If
 
