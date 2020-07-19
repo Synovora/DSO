@@ -99,20 +99,20 @@ Public Class UniteSanitaireDao
     ''' <param name="reader"></param>
     ''' <returns></returns>
     Private Function buildBean(reader As SqlDataReader) As UniteSanitaire
-        Dim bean As New UniteSanitaire
-
-        bean.Oa_unite_sanitaire_id = reader("oa_unite_sanitaire_id")
-        bean.Oa_unite_sanitaire_description = Coalesce(reader("oa_unite_sanitaire_description"), "")
-        bean.Oa_unite_sanitaire_siege_id = Coalesce(reader("oa_unite_sanitaire_siege_id"), 0)
-        bean.Oa_unite_sanitaire_adresse1 = Coalesce(reader("oa_unite_sanitaire_adresse1"), "")
-        bean.Oa_unite_sanitaire_adresse2 = Coalesce(reader("oa_unite_sanitaire_adresse2"), "")
-        bean.Oa_unite_sanitaire_ville = Coalesce(reader("oa_unite_sanitaire_ville"), "")
-        bean.Oa_unite_sanitaire_code_postal = Coalesce(reader("oa_unite_sanitaire_code_postal"), "")
-        bean.Telephone = Coalesce(reader("telephone"), "")
-        bean.Mail = Coalesce(reader("mail"), "")
-        bean.Fax = Coalesce(reader("fax"), "")
-        bean.Oa_unite_sanitaire_inactif = Coalesce(reader("oa_unite_sanitaire_inactif"), False)
-        bean.NumeroStructure = Coalesce(reader("numero_structure"), 0)
+        Dim bean As New UniteSanitaire With {
+            .Oa_unite_sanitaire_id = reader("oa_unite_sanitaire_id"),
+            .Oa_unite_sanitaire_description = Coalesce(reader("oa_unite_sanitaire_description"), ""),
+            .Oa_unite_sanitaire_siege_id = Coalesce(reader("oa_unite_sanitaire_siege_id"), 0),
+            .Oa_unite_sanitaire_adresse1 = Coalesce(reader("oa_unite_sanitaire_adresse1"), ""),
+            .Oa_unite_sanitaire_adresse2 = Coalesce(reader("oa_unite_sanitaire_adresse2"), ""),
+            .Oa_unite_sanitaire_ville = Coalesce(reader("oa_unite_sanitaire_ville"), ""),
+            .Oa_unite_sanitaire_code_postal = Coalesce(reader("oa_unite_sanitaire_code_postal"), ""),
+            .Telephone = Coalesce(reader("telephone"), ""),
+            .Mail = Coalesce(reader("mail"), ""),
+            .Fax = Coalesce(reader("fax"), ""),
+            .Oa_unite_sanitaire_inactif = Coalesce(reader("oa_unite_sanitaire_inactif"), False),
+            .NumeroStructure = Coalesce(reader("numero_structure"), 0)
+        }
 
         Return bean
     End Function

@@ -42,10 +42,10 @@ Public Class RadFTacheModificationDemandeRendezVous
         ChargementEtatCivil()
         tache = tacheDao.GetTacheById(SelectedTacheId)
         Select Case tache.TypedemandeRendezVous
-            Case TacheDao.TypeDemandeRendezVous.ANNEE.ToString
+            Case Tache.EnumDemandeRendezVous.ANNEE.ToString
                 NumAn.Value = tache.DateRendezVous.Year()
                 RadChkDRVAnneeSeulement.Checked = True
-            Case TacheDao.TypeDemandeRendezVous.ANNEEMOIS.ToString
+            Case Tache.EnumDemandeRendezVous.ANNEEMOIS.ToString
                 NumAn.Value = tache.DateRendezVous.Year()
                 NumMois.Value = tache.DateRendezVous.Month()
                 RadChkDRVAnneeSeulement.Checked = False
@@ -94,7 +94,7 @@ Public Class RadFTacheModificationDemandeRendezVous
             If RadChkDRVAnneeSeulement.Checked = True Then
                 'Création demande de rendez-vous pour une année donnée (AAAA)
                 Dim dateRendezVous As New DateTime(NumAn.Value, 1, 1, 0, 0, 0)
-                If ModificationDemandeRendezVous(dateRendezVous, TacheDao.TypeDemandeRendezVous.ANNEE.ToString) = True Then
+                If ModificationDemandeRendezVous(dateRendezVous, Tache.EnumDemandeRendezVous.ANNEE.ToString) = True Then
                     MessageBox.Show("demande de rendez-vous modifiée pour " & NumAn.Value.ToString)
                     Me.CodeRetour = True
                     Close()
@@ -105,7 +105,7 @@ Public Class RadFTacheModificationDemandeRendezVous
                 Else
                     'Création demande de rendez-vous pour une période donnée (MM/AAAA)
                     Dim dateRendezVous As New DateTime(NumAn.Value, NumMois.Value, 1, 0, 0, 0)
-                    If ModificationDemandeRendezVous(dateRendezVous, TacheDao.TypeDemandeRendezVous.ANNEEMOIS.ToString) = True Then
+                    If ModificationDemandeRendezVous(dateRendezVous, Tache.EnumDemandeRendezVous.ANNEEMOIS.ToString) = True Then
                         MessageBox.Show("Demande de rendez-vous modifiée pour " & NumMois.Value.ToString & "/" & NumAn.Value.ToString)
                         Me.CodeRetour = True
                         Close()

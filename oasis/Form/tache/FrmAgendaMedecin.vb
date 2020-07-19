@@ -1,4 +1,5 @@
 ﻿Imports System.ComponentModel
+Imports Oasis_Common
 Imports Telerik.WinControls.UI
 Imports Telerik.WinControls.UI.Localization
 

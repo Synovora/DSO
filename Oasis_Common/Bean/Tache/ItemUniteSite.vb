@@ -1,6 +1,4 @@
 ﻿Imports System.ComponentModel
-Imports Telerik.WinControls.Enumerations
-
 Public Class ItemUniteSite
     Implements System.ComponentModel.INotifyPropertyChanged
     Public Event PropertyChanged As PropertyChangedEventHandler Implements System.ComponentModel.INotifyPropertyChanged.PropertyChanged
@@ -11,16 +9,17 @@ Public Class ItemUniteSite
     Private m_id As Integer
     Private m_parentId As Integer
     Private m_name As String
-    Private m_isActive As ToggleState
+    Private m_isActive As Boolean
     Private uniteSanitaireOuSite As Object
 
-    Public Sub New(unitesanitaireOusite As Object, ByVal description As String, ByVal isActive As ToggleState, ByVal parent_Id As Integer, ByVal id As Integer)
+    Public Sub New(unitesanitaireOusite As Object, ByVal description As String, ByVal isActive As Boolean, ByVal parent_Id As Integer, ByVal id As Integer)
         Me.uniteSanitaireOuSite = unitesanitaireOusite
         Me.m_name = description
         Me.m_isActive = isActive
         Me.m_parentId = parent_Id
         Me.m_id = id
     End Sub
+
     Public Property Id As Integer
         Get
             Return m_id
@@ -54,11 +53,11 @@ Public Class ItemUniteSite
             End If
         End Set
     End Property
-    Public Property IsActive As ToggleState
+    Public Property IsActive As Boolean
         Get
             Return m_isActive
         End Get
-        Set(ByVal value As ToggleState)
+        Set(ByVal value As Boolean)
             If Me.m_isActive <> value Then
                 Me.m_isActive = value
                 OnPropertyChanged("IsActive")

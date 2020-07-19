@@ -252,7 +252,7 @@ Public Class SousEpisodeDao
             End If
 
             ' -- 2 : serialisation du fichier
-            sousEpisode.writeContenuModel(tbl)
+            sousEpisode.WriteContenuModel(tbl, loginRequestLog)
 
             ' -- 3 : commit et maj bean si signature
             If String.IsNullOrEmpty(signature) = False Then

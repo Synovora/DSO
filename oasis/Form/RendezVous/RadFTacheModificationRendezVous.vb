@@ -108,7 +108,7 @@ Public Class RadFTacheModificationRendezVous
 
             '--- Initialisation de la date de rendez-vous à créer en fonction de la demande
             Select Case TacheDemandeRdv.TypedemandeRendezVous
-                Case TacheDao.TypeDemandeRendezVous.ANNEE.ToString
+                Case Tache.EnumDemandeRendezVous.ANNEE.ToString
                     If Date.Now.Year = TacheDemandeRdv.DateRendezVous.Year Then
                         NumDateRV.Value = Date.Now.ToString("dd.MM.yyyy")
                     Else
@@ -119,7 +119,7 @@ Public Class RadFTacheModificationRendezVous
                             NumDateRV.Value = Date.Now.ToString("dd.MM.yyyy")
                         End If
                     End If
-                Case TacheDao.TypeDemandeRendezVous.ANNEEMOIS.ToString
+                Case Tache.EnumDemandeRendezVous.ANNEEMOIS.ToString
                     If Date.Now.Year = TacheDemandeRdv.DateRendezVous.Year Then
                         If Date.Now.Month >= TacheDemandeRdv.DateRendezVous.Month Then
                             NumDateRV.Value = Date.Now.ToString("dd.MM.yyyy")
@@ -229,18 +229,18 @@ Public Class RadFTacheModificationRendezVous
         TacheCreation.TraiteUserId = 0
         TacheCreation.TraiteFonctionId = tacheEmetteurEtDestinataire.TraiteFonctionId
         TacheCreation.DestinataireFonctionId = tacheEmetteurEtDestinataire.DestinataireFonctionId
-        TacheCreation.Priorite = TacheDao.Priorite.BASSE
+        TacheCreation.Priorite = Tache.EnumPriorite.BASSE
         TacheCreation.OrdreAffichage = 30
-        TacheCreation.Categorie = TacheDao.CategorieTache.SOIN.ToString
+        TacheCreation.Categorie = Tache.CategorieTache.SOIN.ToString
         'Si le destinataire du rendez-vous n'est pas Oasis, on déclare un rendez-vous de type Spécialiste
         If parcours.SousCategorieId = EnumSousCategoriePPS.IDE Or
            parcours.SousCategorieId = EnumSousCategoriePPS.medecinReferent Or
            parcours.SousCategorieId = EnumSousCategoriePPS.sageFemme Then
-            TacheCreation.Type = TacheDao.TypeTache.RDV.ToString
-            TacheCreation.Nature = TacheDao.NatureTache.RDV.ToString
+            TacheCreation.Type = Tache.TypeTache.RDV.ToString
+            TacheCreation.Nature = Tache.NatureTache.RDV.ToString
         Else
-            TacheCreation.Type = TacheDao.TypeTache.RDV_SPECIALISTE.ToString()
-            TacheCreation.Nature = TacheDao.NatureTache.RDV_SPECIALISTE.ToString
+            TacheCreation.Type = Tache.TypeTache.RDV_SPECIALISTE.ToString()
+            TacheCreation.Nature = Tache.NatureTache.RDV_SPECIALISTE.ToString
         End If
 
         Dim DureeRendezVous As Integer = 15
@@ -256,10 +256,10 @@ Public Class RadFTacheModificationRendezVous
         TacheCreation.EmetteurCommentaire = TxtRDVCommentaire.Text
         TacheCreation.HorodatageCreation = Date.Now()
         If ClotureTache = True Then
-            TacheCreation.Etat = TacheDao.EtatTache.TERMINEE.ToString
+            TacheCreation.Etat = Tache.EtatTache.TERMINEE.ToString
             TacheCreation.Cloture = True
         Else
-            TacheCreation.Etat = TacheDao.EtatTache.EN_ATTENTE.ToString
+            TacheCreation.Etat = Tache.EtatTache.EN_ATTENTE.ToString
             TacheCreation.Cloture = False
         End If
 
@@ -407,14 +407,14 @@ Public Class RadFTacheModificationRendezVous
                 tache.Priorite = tacheInit.Priorite
                 tache.OrdreAffichage = tacheInit.OrdreAffichage
                 tache.Categorie = tacheInit.Categorie
-                tache.Type = TacheDao.TypeTache.RDV_DEMANDE.ToString
-                tache.Nature = TacheDao.NatureTache.RDV_DEMANDE.ToString
+                tache.Type = Tache.TypeTache.RDV_DEMANDE.ToString
+                tache.Nature = Tache.NatureTache.RDV_DEMANDE.ToString
                 tache.Duree = tacheInit.Duree
                 tache.EmetteurCommentaire = tacheInit.EmetteurCommentaire
                 tache.HorodatageCreation = Date.Now()
-                tache.TypedemandeRendezVous = TacheDao.TypeDemandeRendezVous.ANNEE.ToString
+                tache.TypedemandeRendezVous = Tache.EnumDemandeRendezVous.ANNEE.ToString
                 tache.DateRendezVous = New Date(tacheInit.DateRendezVous.Year, tacheInit.DateRendezVous.Month, 1, 0, 0, 0)
-                tache.Etat = TacheDao.EtatTache.EN_ATTENTE.ToString
+                tache.Etat = Tache.EtatTache.EN_ATTENTE.ToString
                 If tacheDao.CreateTache(tache) = True Then
                     Dim tacheId As Long = tacheDao.GetLastDemandeRendezVousByPatient(SelectedPatient.patientId)
                     tacheDao.AttribueTacheToUserLog(tacheId)

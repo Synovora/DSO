@@ -217,7 +217,7 @@ Public Class Drc
                 Me.DateModification = Coalesce(DrcDataReader("oa_drc_date_modification"), Nothing)
                 Me.UserModification = Coalesce(DrcDataReader("oa_drc_utilisateur_modification"), 0)
             Else
-                MessageBox.Show("Erreur de lecture du Drc")
+                Throw New Exception("Erreur de lecture du Drc")
             End If
 
             conxn.Close()

@@ -38,20 +38,5 @@ Public Class OrdonnanceFull
         Return result
     End Function
 
-    Public Shared Function Invoke(ordonnanceId As Integer) As OrdonnanceFull
-        Dim ordonnanceDao As OrdonnanceDao = New OrdonnanceDao 'Why instanciate ?
-        Dim ordonnanceDetailDao As OrdonnanceDetailDao = New OrdonnanceDetailDao 'Why instanciate ?
-
-        Dim ordonnance As OrdonnanceBase = ordonnanceDao.GetOrdonnaceById(ordonnanceId)
-        Dim ordonnanceDetailA As List(Of OrdonnanceDetailBase) = ordonnanceDetailDao.GetOrdonnanceLigneByOrdonnanceId(ordonnanceId)
-        Dim ordonnanceDetail As List(Of OrdonnanceDetailBase) = TryCast(CObj(ordonnanceDetailA), List(Of OrdonnanceDetailBase))
-
-        Dim ordonnanceFull As OrdonnanceFull = New OrdonnanceFull With {
-            .Ordonnance = ordonnance,
-            .Details = ordonnanceDetail
-        }
-        Return ordonnanceFull
-    End Function
-
 End Class
 

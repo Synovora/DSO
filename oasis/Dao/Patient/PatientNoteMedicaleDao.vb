@@ -40,7 +40,7 @@ Public Class PatientNoteMedicaleDao
             command.Parameters.AddWithValue("@id", noteId)
             Using reader As SqlDataReader = command.ExecuteReader()
                 If reader.Read() Then
-                    patientNote = buildBean(reader)
+                    patientNote = BuildBean(reader)
                 Else
                     Throw New ArgumentException("Note médicale patient inexistante !")
                 End If
@@ -55,17 +55,17 @@ Public Class PatientNoteMedicaleDao
         Return patientNote
     End Function
 
-    Private Function buildBean(reader As SqlDataReader) As PatientNote
-        Dim patientNote As New PatientNote
-
-        patientNote.NoteId = reader("oa_patient_note_id")
-        patientNote.PatientId = Coalesce(reader("oa_patient_id"), 0)
-        patientNote.PatientNote = Coalesce(reader("oa_patient_note"), "")
-        patientNote.UserCreation = Coalesce(reader("oa_patient_note_utilisateur_creation"), 0)
-        patientNote.DateCreation = Coalesce(reader("oa_patient_note_date_creation"), Nothing)
-        patientNote.UserModification = Coalesce(reader("oa_patient_note_utilisateur_modification"), 0)
-        patientNote.DateModification = Coalesce(reader("oa_patient_note_date_modification"), Nothing)
-        patientNote.Invalide = Coalesce(reader("oa_patient_note_invalide"), False)
+    Private Function BuildBean(reader As SqlDataReader) As PatientNote
+        Dim patientNote As New PatientNote With {
+            .NoteId = reader("oa_patient_note_id"),
+            .PatientId = Coalesce(reader("oa_patient_id"), 0),
+            .PatientNote = Coalesce(reader("oa_patient_note"), ""),
+            .UserCreation = Coalesce(reader("oa_patient_note_utilisateur_creation"), 0),
+            .DateCreation = Coalesce(reader("oa_patient_note_date_creation"), Nothing),
+            .UserModification = Coalesce(reader("oa_patient_note_utilisateur_modification"), 0),
+            .DateModification = Coalesce(reader("oa_patient_note_date_modification"), Nothing),
+            .Invalide = Coalesce(reader("oa_patient_note_invalide"), False)
+        }
         Return patientNote
     End Function
 

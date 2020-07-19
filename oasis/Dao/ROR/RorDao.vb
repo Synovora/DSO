@@ -38,30 +38,31 @@ Public Class RorDao
     End Function
 
     Private Function buildBean(reader As SqlDataReader) As Ror
-        Dim ror As New Ror
-        ror.Id = reader("oa_ror_id")
-        ror.SpecialiteId = Coalesce(reader("oa_ror_specialite_id"), 0)
-        ror.Nom = Coalesce(reader("oa_ror_nom"), "")
-        ror.Oasis = Coalesce(reader("oa_ror_oasis"), False)
-        ror.Type = Coalesce(reader("oa_ror_type"), "")
-        ror.StructureId = Coalesce(reader("oa_ror_structure_id"), 0)
-        ror.StructureNom = Coalesce(reader("oa_ror_structure_nom"), "")
-        ror.Adresse1 = Coalesce(reader("oa_ror_adresse1"), "")
-        ror.Adresse2 = Coalesce(reader("oa_ror_adresse2"), "")
-        ror.CodePostal = Coalesce(reader("oa_ror_code_postal"), "")
-        ror.Ville = Coalesce(reader("oa_ror_ville"), "")
-        ror.Code = Coalesce(reader("oa_ror_code"), "")
-        ror.Telephone = Coalesce(reader("oa_ror_telephone"), "")
-        ror.Email = Coalesce(reader("oa_ror_email"), "")
-        ror.Commentaire = Coalesce(reader("oa_ror_commentaire"), "")
-        ror.Rpps = Coalesce(reader("oa_ror_rpps"), 0)
-        ror.Finess = Coalesce(reader("oa_ror_finess"), 0)
-        ror.Adeli = Coalesce(reader("oa_ror_adeli"), 0)
-        ror.Inactif = Coalesce(reader("oa_ror_inactif"), False)
-        ror.UserCreation = Coalesce(reader("oa_ror_user_creation"), 0)
-        ror.DateCreation = Coalesce(reader("oa_ror_date_creation"), Nothing)
-        ror.UserModification = Coalesce(reader("oa_ror_user_modification"), 0)
-        ror.DateModification = Coalesce(reader("oa_ror_date_modification"), Nothing)
+        Dim ror As New Ror With {
+            .Id = reader("oa_ror_id"),
+            .SpecialiteId = Coalesce(reader("oa_ror_specialite_id"), 0),
+            .Nom = Coalesce(reader("oa_ror_nom"), ""),
+            .Oasis = Coalesce(reader("oa_ror_oasis"), False),
+            .Type = Coalesce(reader("oa_ror_type"), ""),
+            .StructureId = Coalesce(reader("oa_ror_structure_id"), 0),
+            .StructureNom = Coalesce(reader("oa_ror_structure_nom"), ""),
+            .Adresse1 = Coalesce(reader("oa_ror_adresse1"), ""),
+            .Adresse2 = Coalesce(reader("oa_ror_adresse2"), ""),
+            .CodePostal = Coalesce(reader("oa_ror_code_postal"), ""),
+            .Ville = Coalesce(reader("oa_ror_ville"), ""),
+            .Code = Coalesce(reader("oa_ror_code"), ""),
+            .Telephone = Coalesce(reader("oa_ror_telephone"), ""),
+            .Email = Coalesce(reader("oa_ror_email"), ""),
+            .Commentaire = Coalesce(reader("oa_ror_commentaire"), ""),
+            .Rpps = Coalesce(reader("oa_ror_rpps"), 0),
+            .Finess = Coalesce(reader("oa_ror_finess"), 0),
+            .Adeli = Coalesce(reader("oa_ror_adeli"), 0),
+            .Inactif = Coalesce(reader("oa_ror_inactif"), False),
+            .UserCreation = Coalesce(reader("oa_ror_user_creation"), 0),
+            .DateCreation = Coalesce(reader("oa_ror_date_creation"), Nothing),
+            .UserModification = Coalesce(reader("oa_ror_user_modification"), 0),
+            .DateModification = Coalesce(reader("oa_ror_date_modification"), Nothing)
+        }
         Return ror
     End Function
 

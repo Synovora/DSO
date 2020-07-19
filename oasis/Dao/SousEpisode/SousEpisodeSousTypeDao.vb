@@ -10,7 +10,7 @@ Public Class SousEpisodeSousTypeDao
         Dim lst As List(Of SousEpisodeSousType) = New List(Of SousEpisodeSousType)
         Dim data As DataTable = getTableSousEpisodeSousType(idSousEpisodeType)
         For Each row In data.Rows
-            lst.Add(buildBean(row))
+            lst.Add(BuildBean(row))
         Next
         Return lst
     End Function
@@ -18,7 +18,7 @@ Public Class SousEpisodeSousTypeDao
         Dim dic As Dictionary(Of Long, SousEpisodeSousType) = New Dictionary(Of Long, SousEpisodeSousType)
         Dim data As DataTable = getTableSousEpisodeSousType(idSousEpisodeType)
         For Each row In data.Rows
-            dic.Add(row("id"), buildBean(row))
+            dic.Add(row("id"), BuildBean(row))
         Next
         Return dic
     End Function
@@ -109,7 +109,7 @@ Public Class SousEpisodeSousTypeDao
         Return codeRetour
     End Function
 
-    Private Function buildBean(row As DataRow) As SousEpisodeSousType
+    Private Function BuildBean(row As DataRow) As SousEpisodeSousType
         Dim seType As New SousEpisodeSousType(row)
         Return seType
     End Function

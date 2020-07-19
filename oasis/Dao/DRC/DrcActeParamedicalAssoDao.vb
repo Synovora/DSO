@@ -60,10 +60,11 @@ Public Class DrcActeParamedicalAssoDao
     End Function
 
     Private Function buildBean(reader As SqlDataReader) As DrcActeParamedicalAsso
-        Dim drcActeParamedicalAsso As New DrcActeParamedicalAsso
-        drcActeParamedicalAsso.Id = reader("id")
-        drcActeParamedicalAsso.ProtocleCollabaratifDrcId = Coalesce(reader("drc_protocole_collaboratif_id"), 0)
-        drcActeParamedicalAsso.ActeParamedicalDrcId = Coalesce(reader("drc_acte_paramedical_id"), 0)
+        Dim drcActeParamedicalAsso As New DrcActeParamedicalAsso With {
+            .Id = reader("id"),
+            .ProtocleCollabaratifDrcId = Coalesce(reader("drc_protocole_collaboratif_id"), 0),
+            .ActeParamedicalDrcId = Coalesce(reader("drc_acte_paramedical_id"), 0)
+        }
         Return drcActeParamedicalAsso
     End Function
 

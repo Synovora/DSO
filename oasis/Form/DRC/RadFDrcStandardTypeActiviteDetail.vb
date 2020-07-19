@@ -1,4 +1,6 @@
-﻿Public Class RadFDrcStandardTypeActiviteDetail
+﻿Imports Oasis_Common
+
+Public Class RadFDrcStandardTypeActiviteDetail
     Private _DrcStandardId As Long
     Private _codeRetour As Boolean
 

@@ -1,4 +1,6 @@
-﻿Public Class RadFEpisodeProtocoleAiguDetail
+﻿Imports Oasis_Common
+
+Public Class RadFEpisodeProtocoleAiguDetail
     Private _episodeActeParamedicalId As Long
     Private _codeRetour As Boolean
 
@@ -33,7 +35,7 @@
 
     Private Sub ChargementObservation()
         episodeActeParamedical = episodeActeParamedicalDao.GetEpisodeActeParamedicalById(EpisodeActeParamedicalId)
-        drc = drcDao.getDrcById(episodeActeParamedical.DrcId)
+        drc = drcDao.GetDrcById(episodeActeParamedical.DrcId)
         TxtObservation.Text = episodeActeParamedical.Observation
         TxtGuide.Text = drc.Commentaire
         TxtReponseCommentee.Text = drc.ReponseCommentee

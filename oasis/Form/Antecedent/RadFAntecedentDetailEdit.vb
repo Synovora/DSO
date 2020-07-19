@@ -815,7 +815,7 @@ Public Class RadFAntecedentDetailEdit
 
     Private Sub GestionAffichageZoneAldCim10()
         If antecedentUpdate.AldCim10Id <> 0 Then
-            Dim aldCim10 As AldCim10 = New AldCim10(antecedentUpdate.AldCim10Id)
+            Dim aldCim10 As AldCim10 = AldCim10Dao.GetAldCim10(antecedentUpdate.AldCim10Id)
             Lblcim10Description.Text = aldCim10.AldCim10Description
             Lblcim10Description.Show()
         Else

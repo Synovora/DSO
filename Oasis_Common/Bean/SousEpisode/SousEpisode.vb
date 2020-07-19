@@ -53,7 +53,7 @@ Public Class SousEpisode
 
     End Sub
 
-    Public Function isThisDetailALD(idSousSousType As Long) As Boolean
+    Public Function IsThisDetailALD(idSousSousType As Long) As Boolean
         If Me.lstDetail Is Nothing Then Return False
         For Each s In Me.lstDetail
             If s.IdSousEpisodeSousSousType = idSousSousType Then Return s.IsALD
@@ -61,7 +61,7 @@ Public Class SousEpisode
         Return False
     End Function
 
-    Public Function isThisSousSousTypePresent(idSousSousType As Long) As Boolean
+    Public Function IsThisSousSousTypePresent(idSousSousType As Long) As Boolean
         If Me.lstDetail Is Nothing Then Return False
         For Each s In Me.lstDetail
             If s.IdSousEpisodeSousSousType = idSousSousType Then Return True
@@ -69,11 +69,11 @@ Public Class SousEpisode
         Return False
     End Function
 
-    Public Function isIntervenant() As Boolean
+    Public Function IsIntervenant() As Boolean
         Return Me.IdIntervenant <> 0
     End Function
 
-    Public Function getContenu() As Byte()
+    Public Function GetContenu(loginRequestLog) As Byte()
         Dim filename = getFilenameServer()
         ' -- download
         Using apiOasis As New ApiOasis()
@@ -86,7 +86,7 @@ Public Class SousEpisode
 
     End Function
 
-    Public Sub writeContenuModel(tblContenu As Byte())
+    Public Sub WriteContenuModel(tblContenu As Byte(), loginRequestLog As Object)
         ' --- tentative d'upload
         Using apiOasis As New ApiOasis()
             apiOasis.uploadFileRest(loginRequestLog.login,

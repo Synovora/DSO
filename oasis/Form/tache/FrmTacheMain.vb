@@ -538,16 +538,16 @@ Public Class FrmTacheMain
             Dim brush As Brush
             brush = Brushes.Transparent.Clone()
             Select Case e.Cell.RowElement.RowInfo.Cells("typetache").Value
-                Case TacheDao.TypeTache.RDV.ToString()
+                Case Tache.TypeTache.RDV.ToString()
                     brush.Dispose()
                     brush = Brushes.LightGreen.Clone()
-                Case TacheDao.TypeTache.RDV_DEMANDE.ToString(), TacheDao.TypeTache.REUNION_STAFF.ToString
+                Case Tache.TypeTache.RDV_DEMANDE.ToString(), Tache.TypeTache.REUNION_STAFF.ToString
                     brush.Dispose()
                     brush = Brushes.LightGray.Clone()
-                Case TacheDao.TypeTache.RDV_MISSION.ToString()
+                Case Tache.TypeTache.RDV_MISSION.ToString()
                     brush.Dispose()
                     brush = Brushes.LightSalmon.Clone()
-                Case TacheDao.TypeTache.RDV_SPECIALISTE.ToString()
+                Case Tache.TypeTache.RDV_SPECIALISTE.ToString()
                     brush.Dispose()
                     brush = New SolidBrush(Color.FromArgb(180, 160, 223))
             End Select

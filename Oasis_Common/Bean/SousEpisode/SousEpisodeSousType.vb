@@ -36,16 +36,16 @@ Public Class SousEpisodeSousType
     ''' 
     ''' </summary>
     ''' <returns></returns>
-    Public Function isUserLogRedactionAutorise() As Boolean
-        Return isUserLogAutorise(Me.RedactionProfilTypes)
+    Public Function IsUserLogRedactionAutorise(userLog As Object) As Boolean
+        Return IsUserLogAutorise(Me.RedactionProfilTypes, userLog)
     End Function
 
     ''' <summary>
     ''' 
     ''' </summary>
     ''' <returns></returns>
-    Public Function isUserLogValidationAutorise() As Boolean
-        Return isUserLogAutorise(Me.ValidationProfilTypes)
+    Public Function IsUserLogValidationAutorise(userLog As Object) As Boolean
+        Return IsUserLogAutorise(Me.ValidationProfilTypes, userLog)
     End Function
 
     ''' <summary>
@@ -53,7 +53,7 @@ Public Class SousEpisodeSousType
     ''' </summary>
     ''' <param name="strProfil"></param>
     ''' <returns></returns>
-    Public Shared Function isUserLogAutorise(strProfil As String) As Boolean
+    Public Shared Function IsUserLogAutorise(strProfil As String, userLog As Object) As Boolean
         Dim lst As List(Of ProfilDao.EnumProfilType) = getListProfilsAutoriseList(strProfil)
         Try
             Return lst.Contains([Enum].Parse(GetType(ProfilDao.EnumProfilType), userLog.TypeProfil))
@@ -81,7 +81,7 @@ Public Class SousEpisodeSousType
         Return lst
     End Function
 
-    Public Function getContenuModel() As Byte()
+    Public Function getContenuModel(loginRequestLog As Object) As Byte()
         Dim filename = getFilenameServer()
         ' -- download
         Using apiOasis As New ApiOasis()
@@ -94,7 +94,7 @@ Public Class SousEpisodeSousType
 
     End Function
 
-    Public Sub writeContenuModel(tblContenu As Byte())
+    Public Sub writeContenuModel(tblContenu As Byte(), loginRequestLog As Object)
         ' --- tentative d'upload
         Using apiOasis As New ApiOasis()
             apiOasis.uploadFileRest(loginRequestLog.login,

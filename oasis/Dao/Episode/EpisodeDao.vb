@@ -124,33 +124,33 @@ Public Class EpisodeDao
     End Function
 
     Private Function BuildBean(reader As SqlDataReader) As Episode
-        Dim episode As New Episode
-
-        episode.Id = reader("episode_id")
-        episode.PatientId = Coalesce(reader("patient_id"), 0)
-        episode.Type = Coalesce(reader("type"), "")
-        episode.TypeActivite = Coalesce(reader("type_activite"), "")
-        episode.TypeProfil = Coalesce(reader("type_profil"), "")
-        episode.DescriptionActivite = Coalesce(reader("description_activite"), "")
-        episode.Commentaire = Coalesce(reader("commentaire"), "")
-        episode.ObservationMedical = Coalesce(reader("observation_medical"), "")
-        episode.ObservationParamedical = Coalesce(reader("observation_paramedical"), "")
-        episode.Decision = Coalesce(reader("decision"), "")
-        episode.ConclusionIdeType = Coalesce(reader("conclusion_ide_type"), "")
-        episode.ConclusionMedConsigneDrcId = Coalesce(reader("conclusion_med_consigne_drc_id"), 0)
-        episode.ConclusionMedConsigneDenomination = Coalesce(reader("conclusion_med_consigne_denomination"), "")
-        episode.ConclusionMedContexte1DrcId = Coalesce(reader("conclusion_med_contexte1_drc_id"), 0)
-        episode.ConclusionMedContexte1AntecedentId = Coalesce(reader("conclusion_med_contexte1_antecedent_id"), 0)
-        episode.ConclusionMedContexte2DrcId = Coalesce(reader("conclusion_med_contexte2_drc_id"), 0)
-        episode.ConclusionMedContexte2AntecedentId = Coalesce(reader("conclusion_med_contexte2_antecedent_id"), 0)
-        episode.ConclusionMedContexte3DrcId = Coalesce(reader("conclusion_med_contexte3_drc_id"), 0)
-        episode.ConclusionMedContexte3AntecedentId = Coalesce(reader("conclusion_med_contexte3_antecedent_id"), 0)
-        episode.UserCreation = Coalesce(reader("user_creation"), 0)
-        episode.DateCreation = Coalesce(reader("date_creation"), Nothing)
-        episode.UserModification = Coalesce(reader("user_modification"), 0)
-        episode.DateModification = Coalesce(reader("date_modification"), Nothing)
-        episode.Etat = Coalesce(reader("etat"), "")
-        episode.Inactif = Coalesce(reader("inactif"), False)
+        Dim episode As New Episode With {
+            .Id = reader("episode_id"),
+            .PatientId = Coalesce(reader("patient_id"), 0),
+            .Type = Coalesce(reader("type"), ""),
+            .TypeActivite = Coalesce(reader("type_activite"), ""),
+            .TypeProfil = Coalesce(reader("type_profil"), ""),
+            .DescriptionActivite = Coalesce(reader("description_activite"), ""),
+            .Commentaire = Coalesce(reader("commentaire"), ""),
+            .ObservationMedical = Coalesce(reader("observation_medical"), ""),
+            .ObservationParamedical = Coalesce(reader("observation_paramedical"), ""),
+            .Decision = Coalesce(reader("decision"), ""),
+            .ConclusionIdeType = Coalesce(reader("conclusion_ide_type"), ""),
+            .ConclusionMedConsigneDrcId = Coalesce(reader("conclusion_med_consigne_drc_id"), 0),
+            .ConclusionMedConsigneDenomination = Coalesce(reader("conclusion_med_consigne_denomination"), ""),
+            .ConclusionMedContexte1DrcId = Coalesce(reader("conclusion_med_contexte1_drc_id"), 0),
+            .ConclusionMedContexte1AntecedentId = Coalesce(reader("conclusion_med_contexte1_antecedent_id"), 0),
+            .ConclusionMedContexte2DrcId = Coalesce(reader("conclusion_med_contexte2_drc_id"), 0),
+            .ConclusionMedContexte2AntecedentId = Coalesce(reader("conclusion_med_contexte2_antecedent_id"), 0),
+            .ConclusionMedContexte3DrcId = Coalesce(reader("conclusion_med_contexte3_drc_id"), 0),
+            .ConclusionMedContexte3AntecedentId = Coalesce(reader("conclusion_med_contexte3_antecedent_id"), 0),
+            .UserCreation = Coalesce(reader("user_creation"), 0),
+            .DateCreation = Coalesce(reader("date_creation"), Nothing),
+            .UserModification = Coalesce(reader("user_modification"), 0),
+            .DateModification = Coalesce(reader("date_modification"), Nothing),
+            .Etat = Coalesce(reader("etat"), ""),
+            .Inactif = Coalesce(reader("inactif"), False)
+        }
         Return episode
     End Function
 
@@ -452,8 +452,8 @@ Public Class EpisodeDao
                         " LEFT JOIN oasis.oasis.oa_r_fonction ON destinataire_fonction_id = oa_r_fonction_id" &
                         " LEFT JOIN oasis.oasis.oa_utilisateur ON oa_utilisateur_id = traite_user_id" &
                         " WHERE episode_Id = E.episode_id" &
-                        " AND (etat = '" & TacheDao.EtatTache.EN_ATTENTE.ToString() & "' OR etat = '" & TacheDao.EtatTache.EN_COURS.ToString() & "')" &
-                        " AND [type] = '" & TacheDao.TypeTache.AVIS_EPISODE.ToString() & "'" &
+                        " AND (etat = '" & Tache.EtatTache.EN_ATTENTE.ToString() & "' OR etat = '" & Tache.EtatTache.EN_COURS.ToString() & "')" &
+                        " AND [type] = '" & Tache.TypeTache.AVIS_EPISODE.ToString() & "'" &
                         " AND categorie = 'SOIN') AS TACHE" &
                     " WHERE E.etat = 'EN_COURS'" &
                     " AND (E.[type] = '" & EnumTypeEpisode.CONSULTATION.ToString & "' OR E.[type] = '" & EnumTypeEpisode.VIRTUEL.ToString & "')" &
@@ -664,7 +664,7 @@ Public Class EpisodeDao
 
         Dim episodeDao As New EpisodeDao
         Dim episode As Episode
-        episode = episodeDao.GetEpisodeEnCoursByPatientId(selectedPatient.patientId)
+        episode = episodeDao.GetEpisodeEnCoursByPatientId(selectedPatient.PatientId)
         If episode.Id = 0 Then
             Using vRadFEpisodeDetailCreation As New RadFEpisodeDetailCreation
                 vRadFEpisodeDetailCreation.SelectedPatient = selectedPatient
@@ -693,7 +693,7 @@ Public Class EpisodeDao
             End Using
         End If
 
-            Return IsRendezVousCloture
+        Return IsRendezVousCloture
     End Function
 
     Friend Function MajEpisodeConclusionMedicale(episodeId As Long) As Boolean

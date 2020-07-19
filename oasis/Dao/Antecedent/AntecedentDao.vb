@@ -45,42 +45,42 @@ Public Class AntecedentDao
     End Function
 
     Private Function BuildBean(reader As SqlDataReader) As Antecedent
-        Dim antecedent As New Antecedent
-
-        antecedent.Id = reader("oa_antecedent_id")
-        antecedent.PatientId = Coalesce(reader("oa_antecedent_patient_id"), 0)
-        antecedent.Type = Coalesce(reader("oa_antecedent_type"), "")
-        antecedent.DrcId = Coalesce(reader("oa_antecedent_drc_id"), 0)
-        antecedent.Description = Coalesce(reader("oa_antecedent_description"), "")
-        antecedent.UserCreation = Coalesce(reader("oa_antecedent_utilisateur_creation"), 0)
-        antecedent.DateCreation = Coalesce(reader("oa_antecedent_date_creation"), Nothing)
-        antecedent.UserModification = Coalesce(reader("oa_antecedent_utilisateur_modification"), 0)
-        antecedent.DateModification = Coalesce(reader("oa_antecedent_date_modification"), Nothing)
-        antecedent.Diagnostic = Coalesce(reader("oa_antecedent_diagnostic"), 0)
-        antecedent.DateDebut = Coalesce(reader("oa_antecedent_date_debut"), Nothing)
-        antecedent.DateFin = Coalesce(reader("oa_antecedent_date_fin"), Nothing)
-        antecedent.AldId = Coalesce(reader("oa_antecedent_ald_id"), 0)
-        antecedent.AldCim10Id = Coalesce(reader("oa_antecedent_ald_cim_10_id"), 0)
-        antecedent.AldValide = Coalesce(reader("oa_antecedent_ald_valide"), False)
-        antecedent.AldDateDebut = Coalesce(reader("oa_antecedent_ald_date_debut"), Nothing)
-        antecedent.AldDateFin = Coalesce(reader("oa_antecedent_ald_date_fin"), Nothing)
-        antecedent.AldDemandeEnCours = Coalesce(reader("oa_antecedent_ald_demande_en_cours"), False)
-        antecedent.AldDateDemande = Coalesce(reader("oa_antecedent_ald_demande_date"), Nothing)
-        antecedent.Arret = Coalesce(reader("oa_antecedent_arret"), False)
-        antecedent.ArretCommentaire = Coalesce(reader("oa_antecedent_arret_commentaire"), "")
-        antecedent.Nature = Coalesce(reader("oa_antecedent_nature"), "")
-        antecedent.Priorite = Coalesce(reader("oa_antecedent_priorite"), 0)
-        antecedent.Niveau = Coalesce(reader("oa_antecedent_niveau"), 0)
-        antecedent.Niveau1Id = Coalesce(reader("oa_antecedent_id_niveau1"), 0)
-        antecedent.Niveau2Id = Coalesce(reader("oa_antecedent_id_niveau2"), 0)
-        antecedent.Ordre1 = Coalesce(reader("oa_antecedent_ordre_affichage1"), 0)
-        antecedent.Ordre2 = Coalesce(reader("oa_antecedent_ordre_affichage2"), 0)
-        antecedent.Ordre3 = Coalesce(reader("oa_antecedent_ordre_affichage3"), 0)
-        antecedent.StatutAffichage = Coalesce(reader("oa_antecedent_statut_affichage"), "")
-        antecedent.StatutAffichageTransformation = Coalesce(reader("oa_antecedent_statut_affichage_transformation"), "")
-        antecedent.CategorieContexte = Coalesce(reader("oa_antecedent_categorie_contexte"), "")
-        antecedent.EpisodeId = Coalesce(reader("oa_episode_id"), 0)
-        antecedent.Inactif = Coalesce(reader("oa_antecedent_inactif"), False)
+        Dim antecedent As New Antecedent With {
+            .Id = reader("oa_antecedent_id"),
+            .PatientId = Coalesce(reader("oa_antecedent_patient_id"), 0),
+            .Type = Coalesce(reader("oa_antecedent_type"), ""),
+            .DrcId = Coalesce(reader("oa_antecedent_drc_id"), 0),
+            .Description = Coalesce(reader("oa_antecedent_description"), ""),
+            .UserCreation = Coalesce(reader("oa_antecedent_utilisateur_creation"), 0),
+            .DateCreation = Coalesce(reader("oa_antecedent_date_creation"), Nothing),
+            .UserModification = Coalesce(reader("oa_antecedent_utilisateur_modification"), 0),
+            .DateModification = Coalesce(reader("oa_antecedent_date_modification"), Nothing),
+            .Diagnostic = Coalesce(reader("oa_antecedent_diagnostic"), 0),
+            .DateDebut = Coalesce(reader("oa_antecedent_date_debut"), Nothing),
+            .DateFin = Coalesce(reader("oa_antecedent_date_fin"), Nothing),
+            .AldId = Coalesce(reader("oa_antecedent_ald_id"), 0),
+            .AldCim10Id = Coalesce(reader("oa_antecedent_ald_cim_10_id"), 0),
+            .AldValide = Coalesce(reader("oa_antecedent_ald_valide"), False),
+            .AldDateDebut = Coalesce(reader("oa_antecedent_ald_date_debut"), Nothing),
+            .AldDateFin = Coalesce(reader("oa_antecedent_ald_date_fin"), Nothing),
+            .AldDemandeEnCours = Coalesce(reader("oa_antecedent_ald_demande_en_cours"), False),
+            .AldDateDemande = Coalesce(reader("oa_antecedent_ald_demande_date"), Nothing),
+            .Arret = Coalesce(reader("oa_antecedent_arret"), False),
+            .ArretCommentaire = Coalesce(reader("oa_antecedent_arret_commentaire"), ""),
+            .Nature = Coalesce(reader("oa_antecedent_nature"), ""),
+            .Priorite = Coalesce(reader("oa_antecedent_priorite"), 0),
+            .Niveau = Coalesce(reader("oa_antecedent_niveau"), 0),
+            .Niveau1Id = Coalesce(reader("oa_antecedent_id_niveau1"), 0),
+            .Niveau2Id = Coalesce(reader("oa_antecedent_id_niveau2"), 0),
+            .Ordre1 = Coalesce(reader("oa_antecedent_ordre_affichage1"), 0),
+            .Ordre2 = Coalesce(reader("oa_antecedent_ordre_affichage2"), 0),
+            .Ordre3 = Coalesce(reader("oa_antecedent_ordre_affichage3"), 0),
+            .StatutAffichage = Coalesce(reader("oa_antecedent_statut_affichage"), ""),
+            .StatutAffichageTransformation = Coalesce(reader("oa_antecedent_statut_affichage_transformation"), ""),
+            .CategorieContexte = Coalesce(reader("oa_antecedent_categorie_contexte"), ""),
+            .EpisodeId = Coalesce(reader("oa_episode_id"), 0),
+            .Inactif = Coalesce(reader("oa_antecedent_inactif"), False)
+        }
         Return antecedent
     End Function
 

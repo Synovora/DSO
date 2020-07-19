@@ -32,19 +32,20 @@ Module AldCim10Dao
     End Function
 
     Private Function BuildBean(reader As SqlDataReader) As AldCim10
-        Dim aldCim10 As New AldCim10
-        aldCim10.AldCim10Id = Convert.ToInt64(reader("oa_ald_cim10_id"))
-        aldCim10.AldCim10AldId = Coalesce(reader("oa_ald_cim10_ald_id"), 0)
-        aldCim10.AldCim10AldCode = Coalesce(reader("oa_ald_cim10_ald_code"), "")
-        aldCim10.AldCim10Code = Coalesce(reader("oa_ald_cim10_code"), "")
-        aldCim10.AldCim10Description = Coalesce(reader("oa_ald_cim10_description"), "")
+        Dim aldCim10 As New AldCim10 With {
+            .AldCim10Id = Convert.ToInt64(reader("oa_ald_cim10_id")),
+            .AldCim10AldId = Coalesce(reader("oa_ald_cim10_ald_id"), 0),
+            .AldCim10AldCode = Coalesce(reader("oa_ald_cim10_ald_code"), ""),
+            .AldCim10Code = Coalesce(reader("oa_ald_cim10_code"), ""),
+            .AldCim10Description = Coalesce(reader("oa_ald_cim10_description"), "")
+        }
         Return aldCim10
     End Function
 
     'Initialisation des propriétés d'une instance de Drc depuis la BDD
-    Public Function SetAldCim10(instanceAldCim10 As AldCim10, AldCim10Id As Integer) As Boolean
-        Dim CodeRetour As Boolean = True
-        Dim conxn As New SqlConnection(getConnectionString())
+    Public Function GetAldCim10(AldCim10Id As Integer) As AldCim10
+        Dim instanceAldCim10 As AldCim10 = New AldCim10()
+        Dim conxn As New SqlConnection(GetConnectionString())
         Dim SQLString As String = "select * from oasis.oa_ald_cim10 where oa_ald_cim10_id = @aldCim10Id"
         Dim AldCim10DataReader As SqlDataReader
         Dim cmd As New SqlCommand(SQLString, conxn)
@@ -56,14 +57,13 @@ Module AldCim10Dao
             AldCim10DataReader = cmd.ExecuteReader()
             setAldCim10Properties(instanceAldCim10, AldCim10DataReader)
         Catch ex As Exception
-            MessageBox.Show(ex.Message)
-            Return CodeRetour = False
+            Throw New Exception(ex.Message)
         Finally
             conxn.Close()
             cmd.Dispose()
         End Try
 
-        Return CodeRetour
+        Return instanceAldCim10
 
     End Function
 

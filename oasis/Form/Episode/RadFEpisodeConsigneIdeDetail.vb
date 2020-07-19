@@ -1,4 +1,6 @@
-﻿Public Class RadFEpisodeConsigneIdeDetail
+﻿Imports Oasis_Common
+
+Public Class RadFEpisodeConsigneIdeDetail
     Private _drcId As Long
     Private _denominationConsigneIde As String
     Private _codeRetour As Boolean

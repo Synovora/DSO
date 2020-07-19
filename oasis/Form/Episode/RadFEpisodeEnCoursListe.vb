@@ -85,11 +85,11 @@ Public Class RadFEpisodeEnCoursListe
             Dim FonctionDestinataire As Long = Coalesce(episodeDataTable.Rows(i)("destinataire_fonction_id"), 0)
             RadGridViewEpisode.Rows(iGrid).Cells("workflowFonctionDestinataire").Value = Coalesce(episodeDataTable.Rows(i)("oa_r_fonction_designation"), "")
             RadGridViewEpisode.Rows(iGrid).Cells("workflowEtat").Value = Coalesce(episodeDataTable.Rows(i)("etat"), "")
-            If RadGridViewEpisode.Rows(iGrid).Cells("workflowEtat").Value = TacheDao.EtatTache.EN_COURS.ToString() Then
+            If RadGridViewEpisode.Rows(iGrid).Cells("workflowEtat").Value = Tache.EtatTache.EN_COURS.ToString() Then
                 RadGridViewEpisode.Rows(iGrid).Cells("workflowAttribution").Value = Coalesce(episodeDataTable.Rows(i)("oa_utilisateur_prenom"), "") &
                     " " & Coalesce(episodeDataTable.Rows(i)("oa_utilisateur_nom"), "")
             Else
-                If RadGridViewEpisode.Rows(iGrid).Cells("workflowEtat").Value = TacheDao.EtatTache.EN_ATTENTE.ToString() Then
+                If RadGridViewEpisode.Rows(iGrid).Cells("workflowEtat").Value = Tache.EtatTache.EN_ATTENTE.ToString() Then
                     RadGridViewEpisode.Rows(iGrid).Cells("workflowAttribution").Value = "Workflow non attribué"
                 End If
             End If
@@ -100,25 +100,25 @@ Public Class RadFEpisodeEnCoursListe
             Select Case FonctionDestinataireType
                 Case ProfilDao.EnumProfilType.PARAMEDICAL.ToString
                     Select Case TacheNature
-                        Case TacheDao.NatureTache.DEMANDE.ToString
+                        Case Tache.NatureTache.DEMANDE.ToString
                             RadGridViewEpisode.Rows(iGrid).Cells("workflowEtat").Value = "Réponse à rendre"
                             'RadBtnWorkflowMed.Text = "Avis demandé"
-                        Case TacheDao.NatureTache.REPONSE.ToString
+                        Case Tache.NatureTache.REPONSE.ToString
                             RadGridViewEpisode.Rows(iGrid).Cells("workflowEtat").Value = "Avis à valider"
                             'RadBtnWorkflowMed.Text = "Avis rendu"
-                        Case TacheDao.NatureTache.COMPLEMENT.ToString
+                        Case Tache.NatureTache.COMPLEMENT.ToString
                             RadGridViewEpisode.Rows(iGrid).Cells("workflowEtat").Value = "Précision à rendre"
                             'RadBtnWorkflowMed.Text = "Demande précision"
                     End Select
                 Case ProfilDao.EnumProfilType.MEDICAL.ToString
                     Select Case TacheNature
-                        Case TacheDao.NatureTache.DEMANDE.ToString
+                        Case Tache.NatureTache.DEMANDE.ToString
                             RadGridViewEpisode.Rows(iGrid).Cells("workflowEtat").Value = "Réponse à rendre"
                             'RadBtnWorkflowIde.Text = "Avis demandé"
-                        Case TacheDao.NatureTache.REPONSE.ToString
+                        Case Tache.NatureTache.REPONSE.ToString
                             RadGridViewEpisode.Rows(iGrid).Cells("workflowEtat").Value = "Avis à valider"
                             'RadBtnWorkflowIde.Text = "Avis rendu"
-                        Case TacheDao.NatureTache.COMPLEMENT.ToString
+                        Case Tache.NatureTache.COMPLEMENT.ToString
                             RadGridViewEpisode.Rows(iGrid).Cells("workflowEtat").Value = "Précision à rendre"
                             'RadBtnWorkflowIde.Text = "Demande de précision"
                     End Select

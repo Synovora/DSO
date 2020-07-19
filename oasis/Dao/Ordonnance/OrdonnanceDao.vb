@@ -133,7 +133,17 @@ Public Class OrdonnanceDao
     End Function
 
     Friend Function ValidationOrdonnance(OrdonnanceId As Integer) As Boolean
-        Dim ordonnanceFull As OrdonnanceFull = OrdonnanceFull.Invoke(OrdonnanceId)
+        Dim ordonnanceDao As OrdonnanceDao = New OrdonnanceDao 'Why instanciate ?
+        Dim ordonnanceDetailDao As OrdonnanceDetailDao = New OrdonnanceDetailDao 'Why instanciate ?
+
+        Dim ordonnance As OrdonnanceBase = OrdonnanceDao.GetOrdonnaceById(OrdonnanceId)
+        Dim ordonnanceDetailA As List(Of OrdonnanceDetailBase) = ordonnanceDetailDao.GetOrdonnanceLigneByOrdonnanceId(OrdonnanceId)
+        Dim ordonnanceDetail As List(Of OrdonnanceDetailBase) = TryCast(CObj(ordonnanceDetailA), List(Of OrdonnanceDetailBase))
+
+        Dim ordonnanceFull As OrdonnanceFull = New OrdonnanceFull With {
+            .Ordonnance = ordonnance,
+            .Details = ordonnanceDetail
+        }
 
         Dim da As SqlDataAdapter = New SqlDataAdapter()
         Dim codeRetour As Boolean = True
@@ -141,9 +151,9 @@ Public Class OrdonnanceDao
         con = GetConnection()
 
         'Update ordonnance before sign
-        ordonnanceFull.Ordonnance.DateValidation = Date.Now
-        ordonnanceFull.Ordonnance.DateEdition = ordonnanceFull.Ordonnance.DateValidation
-        ordonnanceFull.Ordonnance.UserValidation = userLog.UtilisateurId
+        OrdonnanceFull.Ordonnance.DateValidation = Date.Now
+        OrdonnanceFull.Ordonnance.DateEdition = OrdonnanceFull.Ordonnance.DateValidation
+        OrdonnanceFull.Ordonnance.UserValidation = userLog.UtilisateurId
 
         Dim SQLstring As String = "UPDATE oasis.oa_patient_ordonnance SET" &
         " oa_ordonnance_date_validation = @dateValidation," &

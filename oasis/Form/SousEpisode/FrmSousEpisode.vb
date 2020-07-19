@@ -280,7 +280,7 @@ Public Class FrmSousEpisode
             ' -- combo type
             Me.DropDownType.Items.Clear()
             For Each sousEpisodeType As SousEpisodeType In lstSousEpisodeType
-                If filtreTypeByProfil(sousEpisodeType) Then Continue For
+                If FiltreTypeByProfil(sousEpisodeType, userLog) Then Continue For
                 Dim radListItem As New RadListDataItem(sousEpisodeType.Libelle, sousEpisodeType)
                 Me.DropDownType.Items.Add(radListItem)
                 'If TryCast(radListItem.Value, SousEpisodeType).Id = Me.sousEpisode.IdSousEpisodeType Then
@@ -422,12 +422,12 @@ Public Class FrmSousEpisode
     ''' </summary>
     ''' <param name="sousEpisodeType"></param>
     ''' <returns></returns>
-    Private Function filtreTypeByProfil(sousEpisodeType As SousEpisodeType) As Boolean
+    Private Function FiltreTypeByProfil(sousEpisodeType As SousEpisodeType, userLog As Object) As Boolean
         If isCreation = False Then Return False   ' pas de filtre si pas en création
         ' -- on regarde si au moins un sousType autorisé pour ce profil
         For Each sousEpisodeSousType As SousEpisodeSousType In lstSousEpisodeSousType
             If sousEpisodeSousType.IdSousEpisodeType <> sousEpisodeType.Id Then Continue For
-            If sousEpisodeSousType.isUserLogRedactionAutorise() Then Return False
+            If sousEpisodeSousType.IsUserLogRedactionAutorise(userLog) Then Return False
         Next
         Return True '  => pas autorisé
     End Function
@@ -439,7 +439,7 @@ Public Class FrmSousEpisode
             Me.Cursor = Cursors.WaitCursor
             Me.Enabled = False
             Dim lstSousEpisodeFusion As List(Of SousEpisodeFusion) = constitueFusion()
-            Dim tbl = telecharger_SousEpisodeDemande(sousType)
+            Dim tbl = Telecharger_SousEpisodeDemande(sousType)
             Dim ins = New MemoryStream(tbl)
             Dim provider = New DocxFormatProvider()
 
@@ -491,7 +491,7 @@ Public Class FrmSousEpisode
     Private Function telecharger_model(sousEpisodeSousType As SousEpisodeSousType) As Byte()
         Dim tbl As Byte() = {}
         Try
-            tbl = sousEpisodeSousType.getContenuModel()
+            tbl = sousEpisodeSousType.getContenuModel(loginRequestLog)
             Return tbl
         Catch err As Exception
             If err IsNot Nothing AndAlso err.Message IsNot Nothing AndAlso err.Message.Contains("Fichier demandé inexistant") Then
@@ -501,16 +501,16 @@ Public Class FrmSousEpisode
         End Try
     End Function
 
-    Private Function telecharger_SousEpisodeDemande(sousEpisodeSousType As SousEpisodeSousType) As Byte()
-        Dim tbl As Byte() = {}
+    Private Function Telecharger_SousEpisodeDemande(sousEpisodeSousType As SousEpisodeSousType) As Byte()
+        Dim tbl As Byte()
         Try
-            tbl = sousEpisode.getContenu()
+            tbl = sousEpisode.GetContenu(loginRequestLog)
             isFusionTodo = False
             Return tbl
         Catch err As Exception
             ' --- si inexistant => 1ere saisie : on récupère le modèle
             If err IsNot Nothing AndAlso err.Message IsNot Nothing AndAlso err.Message.Contains("Fichier demandé inexistant") Then
-                tbl = sousEpisodeSousType.getContenuModel()
+                tbl = sousEpisodeSousType.getContenuModel(loginRequestLog)
                 isFusionTodo = True ' 
                 Return tbl
             End If
@@ -532,9 +532,9 @@ Public Class FrmSousEpisode
         ' -- recherche de l'unite sanitaire et du site du patient
         Dim uniteSanitaire = uniteSanitaireDao.getUniteSanitaireById(patient.PatientUniteSanitaireId)
         Dim site = siteDao.getSiteById(patient.PatientSiteId)
-        Dim lstContexte = contexteDao.GetListOfContextebyPatient(patient.patientId)
-        Dim lstAntecedent = antecedentDao.GetListOfAntecedentPatient(patient.patientId)
-        Dim lstTraitement = traitementDao.GetListOfTraitementPatient(patient.patientId)
+        Dim lstContexte = contexteDao.GetListOfContextebyPatient(patient.PatientId)
+        Dim lstAntecedent = antecedentDao.GetListOfAntecedentPatient(patient.PatientId)
+        Dim lstTraitement = traitementDao.GetListOfTraitementPatient(patient.PatientId)
         Dim sousType As SousEpisodeSousType = TryCast(Me.DropDownSousType.SelectedItem.Value, SousEpisodeSousType)
         Dim intervenant As IntervenantParcours
         intervenant = If(DropDownDestinataire.SelectedIndex = -1,
@@ -566,7 +566,7 @@ Public Class FrmSousEpisode
             .IntervenantStructure = Coalesce(intervenant.Structure, "")
 
             ' -- alimente automatiquement tous les parametres (poids, FC ..etc) 
-            episodeParametreDao.alimenteFusionDocumentParametres(sousEF, sousEpisode.EpisodeId, patient.patientId)
+            episodeParametreDao.AlimenteFusionDocumentParametres(sousEF, sousEpisode.EpisodeId, patient.PatientId)
 
             .Patient_PrenomNom = patient.PatientPrenom & " " & patient.PatientNom
             .Patient_NIR = patient.PatientNir
@@ -675,7 +675,7 @@ Public Class FrmSousEpisode
 
         For Each sousEpisodeSousType As SousEpisodeSousType In lstSousEpisodeSousType
             If sousEpisodeSousType.IdSousEpisodeType <> idType Then Continue For ' pas pour ce type d'episode
-            If isCreation = False AndAlso sousEpisodeSousType.isUserLogRedactionAutorise() = False Then Continue For ' pas autorisé
+            If isCreation = False AndAlso sousEpisodeSousType.IsUserLogRedactionAutorise(userLog) = False Then Continue For ' pas autorisé
 
             Dim radListItemST As New RadListDataItem(sousEpisodeSousType.Libelle, sousEpisodeSousType)
             Me.DropDownSousType.Items.Add(radListItemST)
@@ -712,7 +712,7 @@ Public Class FrmSousEpisode
 
             For Each sousEpisodeSousSousType As SousEpisodeSousSousType In lstSousEpisodeSousSousType
                 If sousEpisodeSousSousType.IdSousEpisodeSousType <> idSousType Then Continue For ' pas pour ce sous type d'episode
-                If Not isCreation AndAlso sousEpisode.isThisSousSousTypePresent(sousEpisodeSousSousType.Id) = False Then Continue For
+                If Not isCreation AndAlso sousEpisode.IsThisSousSousTypePresent(sousEpisodeSousSousType.Id) = False Then Continue For
                 RadSousSousTypeGrid.Rows.Add(numRowGrid)
                 '------------------- Alimentation du DataGridView
                 With RadSousSousTypeGrid.Rows(numRowGrid)
@@ -720,7 +720,7 @@ Public Class FrmSousEpisode
                     .Cells("IdSousEpisodeSousType").Value = sousEpisodeSousSousType.IdSousEpisodeSousType
                     .Cells("Libelle").Value = sousEpisodeSousSousType.Libelle
                     If Not isCreation Then
-                        .Cells("ChkALD").Value = sousEpisode.isThisDetailALD(sousEpisodeSousSousType.Id)
+                        .Cells("ChkALD").Value = sousEpisode.IsThisDetailALD(sousEpisodeSousSousType.Id)
                         .Cells("ChkChoice").Value = True
                     End If
                     .Cells("Commentaire").Value = sousEpisodeSousSousType.commentaire

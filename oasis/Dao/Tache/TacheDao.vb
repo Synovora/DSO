@@ -6,111 +6,26 @@ Imports System.Configuration
 Public Class TacheDao
     Inherits StandardDao
 
-    Public Enum EtatTache
-        EN_ATTENTE
-        EN_COURS
-        TERMINEE
-        ANNULEE
-    End Enum
-
-    Public Enum Priorite
-        HAUTE = 100
-        MOYENNE = 200
-        BASSE = 300
-    End Enum
-
-    Public Enum CategorieTache
-        SOIN
-        LOGISTIQUE
-        RH
-    End Enum
-
-    Public Enum TypeTache      ' - le chiffre sert dans l'agenda pour la couleur du RDV, ne pas changer SVP
-        RDV_DEMANDE = 100
-        RDV = 2
-        MISSION_DEMANDE = 200
-        RDV_MISSION = 4
-        REUNION_STAFF = 3
-        RDV_SPECIALISTE = 11
-        AVIS_EPISODE = 300
-        AVIS_SOUS_EPISODE = 400
-    End Enum
-
-    Public Enum PrioriteByTypeTache
-        AVIS_EPISODE_URGENT = 100       'Correspond à priorité Haute
-        AVIS_EPISODE_SYNCHRONE = 200    'correspond à priorité Moyenne
-        RDV = 230
-        RDV_MISSION = 260
-        AVIS_EPISODE_ASYNCHRONE = 300   'Correspond à priorité Basse
-        RDV_DEMANDE = 400
-    End Enum
-
-    Public Enum NatureTache
-        DEMANDE                 '    nature des TypeTache AVIS (les 2)
-        REPONSE                 '    nature des TypeTache AVIS (les 2)
-        COMPLEMENT              '    nature de TypeTache AVIS_EPISODE
-        RDV_DEMANDE             '   = TypeTache
-        RDV                     '   = TypeTache
-        MISSION_DEMANDE         '   = TypeTache
-        REUNION_STAFF           '   = TypeTache
-        RDV_SPECIALISTE         '   = TypeTache
-    End Enum
-
-    Public Structure EnumNatureTacheItem
-        Const DEMANDE = "Demande d'avis"
-        Const REPONSE = "Réponse à demande d'avis"
-        Const COMPLEMENT = "Demande de complément d'information"
-        Const RDV_DEMANDE = "Demande de rendez-vous"
-        Const RDV = "Rendez-vous Oasis"
-        Const RDV_SPECIALISTE = "Rendez-vous spécialiste"
-        Const MISSION_DEMANDE = "Rendez-vous mission"
-        Const REUNION_STAFF = "Réunion staff"
-    End Structure
-
-    Public Structure EnumNatureTacheCode
-        Const DEMANDE = "DEMANDE"
-        Const REPONSE = "REPONSE"
-        Const COMPLEMENT = "COMPLEMENT"
-        Const RDV_DEMANDE = "RDV_DEMANDE"
-        Const RDV = "RDV"
-        Const RDV_SPECIALISTE = "RDV_SPECIALISTE"
-        Const MISSION_DEMANDE = "MISSION_DEMANDE"
-        Const REUNION_STAFF = "REUNION_STAFF"
-    End Structure
-
-    Public Enum TypeDemandeRendezVous
-        ANNEEMOIS
-        ANNEE
-    End Enum
-
-    Public Enum EnumOptionWorkflow
-        REPONSE_AVIS
-        DEMANDE_PRECISION
-        VALIDATION_AVIS
-        RELANCE_AVIS
-        NULL
-    End Enum
-
     Friend Function GetCodeNatureTacheByItem(item As String) As String
         Dim CodeNatureTache As String
 
         Select Case item
-            Case EnumNatureTacheItem.DEMANDE
-                CodeNatureTache = EnumNatureTacheCode.DEMANDE
-            Case EnumNatureTacheItem.COMPLEMENT
-                CodeNatureTache = EnumNatureTacheCode.COMPLEMENT
-            Case EnumNatureTacheItem.MISSION_DEMANDE
-                CodeNatureTache = EnumNatureTacheCode.MISSION_DEMANDE
-            Case EnumNatureTacheItem.RDV
-                CodeNatureTache = EnumNatureTacheCode.RDV
-            Case EnumNatureTacheItem.RDV_DEMANDE
-                CodeNatureTache = EnumNatureTacheCode.RDV_DEMANDE
-            Case EnumNatureTacheItem.RDV_SPECIALISTE
-                CodeNatureTache = EnumNatureTacheCode.RDV_SPECIALISTE
-            Case EnumNatureTacheItem.REPONSE
-                CodeNatureTache = EnumNatureTacheCode.REPONSE
-            Case EnumNatureTacheItem.REUNION_STAFF
-                CodeNatureTache = EnumNatureTacheCode.REUNION_STAFF
+            Case Tache.EnumNatureTacheItem.DEMANDE
+                CodeNatureTache = Tache.EnumNatureTacheCode.DEMANDE
+            Case Tache.EnumNatureTacheItem.COMPLEMENT
+                CodeNatureTache = Tache.EnumNatureTacheCode.COMPLEMENT
+            Case Tache.EnumNatureTacheItem.MISSION_DEMANDE
+                CodeNatureTache = Tache.EnumNatureTacheCode.MISSION_DEMANDE
+            Case Tache.EnumNatureTacheItem.RDV
+                CodeNatureTache = Tache.EnumNatureTacheCode.RDV
+            Case Tache.EnumNatureTacheItem.RDV_DEMANDE
+                CodeNatureTache = Tache.EnumNatureTacheCode.RDV_DEMANDE
+            Case Tache.EnumNatureTacheItem.RDV_SPECIALISTE
+                CodeNatureTache = Tache.EnumNatureTacheCode.RDV_SPECIALISTE
+            Case Tache.EnumNatureTacheItem.REPONSE
+                CodeNatureTache = Tache.EnumNatureTacheCode.REPONSE
+            Case Tache.EnumNatureTacheItem.REUNION_STAFF
+                CodeNatureTache = Tache.EnumNatureTacheCode.REUNION_STAFF
             Case Else
                 CodeNatureTache = "Inconnue"
         End Select
@@ -122,37 +37,27 @@ Public Class TacheDao
         Dim ItemNatureTache As String
 
         Select Case code
-            Case EnumNatureTacheCode.DEMANDE
-                ItemNatureTache = EnumNatureTacheItem.DEMANDE
-            Case EnumNatureTacheCode.COMPLEMENT
-                ItemNatureTache = EnumNatureTacheItem.COMPLEMENT
-            Case EnumNatureTacheCode.MISSION_DEMANDE
-                ItemNatureTache = EnumNatureTacheItem.MISSION_DEMANDE
-            Case EnumNatureTacheCode.RDV
-                ItemNatureTache = EnumNatureTacheItem.RDV
-            Case EnumNatureTacheCode.RDV_DEMANDE
-                ItemNatureTache = EnumNatureTacheItem.RDV_DEMANDE
-            Case EnumNatureTacheCode.RDV_SPECIALISTE
-                ItemNatureTache = EnumNatureTacheItem.RDV_SPECIALISTE
-            Case EnumNatureTacheCode.REPONSE
-                ItemNatureTache = EnumNatureTacheItem.REPONSE
-            Case EnumNatureTacheCode.REUNION_STAFF
-                ItemNatureTache = EnumNatureTacheItem.REUNION_STAFF
+            Case Tache.EnumNatureTacheCode.DEMANDE
+                ItemNatureTache = Tache.EnumNatureTacheItem.DEMANDE
+            Case Tache.EnumNatureTacheCode.COMPLEMENT
+                ItemNatureTache = Tache.EnumNatureTacheItem.COMPLEMENT
+            Case Tache.EnumNatureTacheCode.MISSION_DEMANDE
+                ItemNatureTache = Tache.EnumNatureTacheItem.MISSION_DEMANDE
+            Case Tache.EnumNatureTacheCode.RDV
+                ItemNatureTache = Tache.EnumNatureTacheItem.RDV
+            Case Tache.EnumNatureTacheCode.RDV_DEMANDE
+                ItemNatureTache = Tache.EnumNatureTacheItem.RDV_DEMANDE
+            Case Tache.EnumNatureTacheCode.RDV_SPECIALISTE
+                ItemNatureTache = Tache.EnumNatureTacheItem.RDV_SPECIALISTE
+            Case Tache.EnumNatureTacheCode.REPONSE
+                ItemNatureTache = Tache.EnumNatureTacheItem.REPONSE
+            Case Tache.EnumNatureTacheCode.REUNION_STAFF
+                ItemNatureTache = Tache.EnumNatureTacheItem.REUNION_STAFF
             Case Else
                 ItemNatureTache = "Inconnue"
         End Select
 
         Return ItemNatureTache
-    End Function
-
-    Public Shared Function GetTypeTacheIndex(inputString As String) As Integer
-        Dim a As TypeTache
-        Try
-            a = TypeTache.Parse(GetType(TypeTache), inputString)
-        Catch
-            Return 0
-        End Try
-        Return CInt(a)
     End Function
 
     Public Function GetAllTacheATraiterChk(lstFonction As List(Of Fonction), filtreTache As FiltreTache) As Integer
@@ -174,10 +79,10 @@ Public Class TacheDao
             Dim tacheDataAdapter As SqlDataAdapter = New SqlDataAdapter()
             Using tacheDataAdapter
                 tacheDataAdapter.SelectCommand = New SqlCommand(SQLString, con)
-                tacheDataAdapter.SelectCommand.Parameters.AddWithValue("@etat", EtatTache.EN_ATTENTE.ToString)
-                tacheDataAdapter.SelectCommand.Parameters.AddWithValue("@typeSpecialiste", TypeTache.RDV_SPECIALISTE.ToString)
-                tacheDataAdapter.SelectCommand.Parameters.AddWithValue("@typeRdv", TypeTache.RDV.ToString)
-                tacheDataAdapter.SelectCommand.Parameters.AddWithValue("@typeRdvMission", TypeTache.RDV_MISSION.ToString)
+                tacheDataAdapter.SelectCommand.Parameters.AddWithValue("@etat", Tache.EtatTache.EN_ATTENTE.ToString)
+                tacheDataAdapter.SelectCommand.Parameters.AddWithValue("@typeSpecialiste", Tache.TypeTache.RDV_SPECIALISTE.ToString)
+                tacheDataAdapter.SelectCommand.Parameters.AddWithValue("@typeRdv", Tache.TypeTache.RDV.ToString)
+                tacheDataAdapter.SelectCommand.Parameters.AddWithValue("@typeRdvMission", Tache.TypeTache.RDV_MISSION.ToString)
                 tacheDataAdapter.SelectCommand.Parameters.AddWithValue("@dateRdv", DateTime.Now)
                 Dim tacheDataTable As DataTable = New DataTable()
                 Using tacheDataTable
@@ -237,10 +142,10 @@ Public Class TacheDao
             Dim tacheDataAdapter As SqlDataAdapter = New SqlDataAdapter()
             Using tacheDataAdapter
                 tacheDataAdapter.SelectCommand = New SqlCommand(SQLString, con)
-                tacheDataAdapter.SelectCommand.Parameters.AddWithValue("@etat", EtatTache.EN_ATTENTE.ToString)
-                tacheDataAdapter.SelectCommand.Parameters.AddWithValue("@typeSpecialiste", TypeTache.RDV_SPECIALISTE.ToString)
-                tacheDataAdapter.SelectCommand.Parameters.AddWithValue("@typeRdv", TypeTache.RDV.ToString)
-                tacheDataAdapter.SelectCommand.Parameters.AddWithValue("@typeRdvMission", TypeTache.RDV_MISSION.ToString)
+                tacheDataAdapter.SelectCommand.Parameters.AddWithValue("@etat", Tache.EtatTache.EN_ATTENTE.ToString)
+                tacheDataAdapter.SelectCommand.Parameters.AddWithValue("@typeSpecialiste", Tache.TypeTache.RDV_SPECIALISTE.ToString)
+                tacheDataAdapter.SelectCommand.Parameters.AddWithValue("@typeRdv", Tache.TypeTache.RDV.ToString)
+                tacheDataAdapter.SelectCommand.Parameters.AddWithValue("@typeRdvMission", Tache.TypeTache.RDV_MISSION.ToString)
                 tacheDataAdapter.SelectCommand.Parameters.AddWithValue("@daterdv", DateTime.Now)
                 Dim tacheDataTable As DataTable = New DataTable()
                 Using tacheDataTable
@@ -341,9 +246,9 @@ Public Class TacheDao
             Dim tacheDataAdapter As SqlDataAdapter = New SqlDataAdapter()
             Using tacheDataAdapter
                 tacheDataAdapter.SelectCommand = New SqlCommand(SQLString, con)
-                tacheDataAdapter.SelectCommand.Parameters.AddWithValue("@etat", EtatTache.EN_COURS.ToString)
-                If (isMyTache = False AndAlso isWithNonAttribue) Then tacheDataAdapter.SelectCommand.Parameters.AddWithValue("@etat1", EtatTache.EN_ATTENTE.ToString)
-                tacheDataAdapter.SelectCommand.Parameters.AddWithValue("@type", TypeTache.RDV_SPECIALISTE.ToString)
+                tacheDataAdapter.SelectCommand.Parameters.AddWithValue("@etat", Tache.EtatTache.EN_COURS.ToString)
+                If (isMyTache = False AndAlso isWithNonAttribue) Then tacheDataAdapter.SelectCommand.Parameters.AddWithValue("@etat1", Tache.EtatTache.EN_ATTENTE.ToString)
+                tacheDataAdapter.SelectCommand.Parameters.AddWithValue("@type", Tache.TypeTache.RDV_SPECIALISTE.ToString)
                 If isMyTache Then tacheDataAdapter.SelectCommand.Parameters.AddWithValue("@traite_user_id", userLog.UtilisateurId)
                 Dim tacheDataTable As DataTable = New DataTable()
                 Using tacheDataTable
@@ -398,10 +303,10 @@ Public Class TacheDao
             Dim tacheDataAdapter As SqlDataAdapter = New SqlDataAdapter()
             Using tacheDataAdapter
                 tacheDataAdapter.SelectCommand = New SqlCommand(SQLString, con)
-                tacheDataAdapter.SelectCommand.Parameters.AddWithValue("@etat", EtatTache.EN_COURS.ToString)
-                tacheDataAdapter.SelectCommand.Parameters.AddWithValue("@type1", TypeTache.RDV.ToString)
-                tacheDataAdapter.SelectCommand.Parameters.AddWithValue("@type2", TypeTache.RDV_SPECIALISTE.ToString)
-                tacheDataAdapter.SelectCommand.Parameters.AddWithValue("@type3", TypeTache.RDV_DEMANDE.ToString)
+                tacheDataAdapter.SelectCommand.Parameters.AddWithValue("@etat", Tache.EtatTache.EN_COURS.ToString)
+                tacheDataAdapter.SelectCommand.Parameters.AddWithValue("@type1", Tache.TypeTache.RDV.ToString)
+                tacheDataAdapter.SelectCommand.Parameters.AddWithValue("@type2", Tache.TypeTache.RDV_SPECIALISTE.ToString)
+                tacheDataAdapter.SelectCommand.Parameters.AddWithValue("@type3", Tache.TypeTache.RDV_DEMANDE.ToString)
 
                 Dim tacheDataTable As DataTable = New DataTable()
                 Using tacheDataTable
@@ -474,11 +379,11 @@ Public Class TacheDao
             Using tacheDataAdapter
                 tacheDataAdapter.SelectCommand = New SqlCommand(SQLString, con)
                 tacheDataAdapter.SelectCommand.Parameters.AddWithValue("@traite_user_id", userLog.UtilisateurId)
-                tacheDataAdapter.SelectCommand.Parameters.AddWithValue("@etat", EtatTache.EN_COURS.ToString)
-                If (isMyTache = False AndAlso isWithNonAttribue) Then tacheDataAdapter.SelectCommand.Parameters.AddWithValue("@etat1", EtatTache.EN_ATTENTE.ToString)
-                tacheDataAdapter.SelectCommand.Parameters.AddWithValue("@typeTache1", TypeTache.RDV.ToString)
-                tacheDataAdapter.SelectCommand.Parameters.AddWithValue("@typeTache2", TypeTache.RDV_MISSION.ToString)
-                tacheDataAdapter.SelectCommand.Parameters.AddWithValue("@typeTache3", TypeTache.REUNION_STAFF.ToString)
+                tacheDataAdapter.SelectCommand.Parameters.AddWithValue("@etat", Tache.EtatTache.EN_COURS.ToString)
+                If (isMyTache = False AndAlso isWithNonAttribue) Then tacheDataAdapter.SelectCommand.Parameters.AddWithValue("@etat1", Tache.EtatTache.EN_ATTENTE.ToString)
+                tacheDataAdapter.SelectCommand.Parameters.AddWithValue("@typeTache1", Tache.TypeTache.RDV.ToString)
+                tacheDataAdapter.SelectCommand.Parameters.AddWithValue("@typeTache2", Tache.TypeTache.RDV_MISSION.ToString)
+                tacheDataAdapter.SelectCommand.Parameters.AddWithValue("@typeTache3", Tache.TypeTache.REUNION_STAFF.ToString)
                 'tacheDataAdapter.SelectCommand.Parameters.AddWithValue("@typeTache4", TypeTache.RDV_SPECIALISTE.ToString)
                 tacheDataAdapter.SelectCommand.Parameters.AddWithValue("@datedebut", dateDebut)
                 tacheDataAdapter.SelectCommand.Parameters.AddWithValue("@datefin", dateFin.AddDays(1))   ' <= jour suivant à minuit
@@ -529,7 +434,7 @@ Public Class TacheDao
 
         ' -- filtre Not Final
         If isNotFinal Then
-            SQLString += "AND etat NOT IN ('" + TacheDao.EtatTache.ANNULEE.ToString + "','" + TacheDao.EtatTache.TERMINEE.ToString + "')" + vbCrLf
+            SQLString += "AND etat NOT IN ('" + Tache.EtatTache.ANNULEE.ToString + "','" + Tache.EtatTache.TERMINEE.ToString + "')" + vbCrLf
         End If
 
         SQLString += "ORDER BY priorite,ordre_affichage,horodate_creation "
@@ -598,9 +503,9 @@ Public Class TacheDao
             Using tacheDataAdapter
                 tacheDataAdapter.SelectCommand = New SqlCommand(SQLString, con)
                 tacheDataAdapter.SelectCommand.Parameters.AddWithValue("@episodeId", episodeId)
-                tacheDataAdapter.SelectCommand.Parameters.AddWithValue("@type", TacheDao.TypeTache.AVIS_EPISODE.ToString)
-                tacheDataAdapter.SelectCommand.Parameters.AddWithValue("@categorie", TacheDao.CategorieTache.SOIN.ToString)
-                tacheDataAdapter.SelectCommand.Parameters.AddWithValue("@etat", TacheDao.EtatTache.ANNULEE.ToString)
+                tacheDataAdapter.SelectCommand.Parameters.AddWithValue("@type", Tache.TypeTache.AVIS_EPISODE.ToString)
+                tacheDataAdapter.SelectCommand.Parameters.AddWithValue("@categorie", Tache.CategorieTache.SOIN.ToString)
+                tacheDataAdapter.SelectCommand.Parameters.AddWithValue("@etat", Tache.EtatTache.ANNULEE.ToString)
                 Dim tacheDataTable As DataTable = New DataTable()
                 Using tacheDataTable
                     Try
@@ -657,13 +562,13 @@ Public Class TacheDao
             Using tacheDataAdapter
                 tacheDataAdapter.SelectCommand = New SqlCommand(SQLString, con)
                 tacheDataAdapter.SelectCommand.Parameters.AddWithValue("@patientId", patientId)
-                tacheDataAdapter.SelectCommand.Parameters.AddWithValue("@type1", TacheDao.TypeTache.RDV_SPECIALISTE.ToString)
-                tacheDataAdapter.SelectCommand.Parameters.AddWithValue("@type2", TacheDao.TypeTache.RDV.ToString)
-                tacheDataAdapter.SelectCommand.Parameters.AddWithValue("@type3", TacheDao.TypeTache.RDV_MISSION.ToString)
-                tacheDataAdapter.SelectCommand.Parameters.AddWithValue("@type4", TacheDao.TypeTache.RDV_DEMANDE.ToString)
-                tacheDataAdapter.SelectCommand.Parameters.AddWithValue("@categorie", TacheDao.CategorieTache.SOIN.ToString)
-                tacheDataAdapter.SelectCommand.Parameters.AddWithValue("@etat1", TacheDao.EtatTache.EN_COURS.ToString)
-                tacheDataAdapter.SelectCommand.Parameters.AddWithValue("@etat2", TacheDao.EtatTache.EN_ATTENTE.ToString)
+                tacheDataAdapter.SelectCommand.Parameters.AddWithValue("@type1", Tache.TypeTache.RDV_SPECIALISTE.ToString)
+                tacheDataAdapter.SelectCommand.Parameters.AddWithValue("@type2", Tache.TypeTache.RDV.ToString)
+                tacheDataAdapter.SelectCommand.Parameters.AddWithValue("@type3", Tache.TypeTache.RDV_MISSION.ToString)
+                tacheDataAdapter.SelectCommand.Parameters.AddWithValue("@type4", Tache.TypeTache.RDV_DEMANDE.ToString)
+                tacheDataAdapter.SelectCommand.Parameters.AddWithValue("@categorie", Tache.CategorieTache.SOIN.ToString)
+                tacheDataAdapter.SelectCommand.Parameters.AddWithValue("@etat1", Tache.EtatTache.EN_COURS.ToString)
+                tacheDataAdapter.SelectCommand.Parameters.AddWithValue("@etat2", Tache.EtatTache.EN_ATTENTE.ToString)
                 Dim tacheDataTable As DataTable = New DataTable()
                 Using tacheDataTable
                     Try
@@ -702,10 +607,10 @@ Public Class TacheDao
                 tacheDataAdapter.SelectCommand = New SqlCommand(SQLString, con)
                 tacheDataAdapter.SelectCommand.Parameters.AddWithValue("@patientId", patientId)
                 tacheDataAdapter.SelectCommand.Parameters.AddWithValue("@parcoursId", parcoursId)
-                tacheDataAdapter.SelectCommand.Parameters.AddWithValue("@type1", TacheDao.TypeTache.RDV_SPECIALISTE.ToString)
-                tacheDataAdapter.SelectCommand.Parameters.AddWithValue("@type2", TacheDao.TypeTache.RDV.ToString)
-                tacheDataAdapter.SelectCommand.Parameters.AddWithValue("@categorie", TacheDao.CategorieTache.SOIN.ToString)
-                tacheDataAdapter.SelectCommand.Parameters.AddWithValue("@etat", TacheDao.EtatTache.TERMINEE.ToString)
+                tacheDataAdapter.SelectCommand.Parameters.AddWithValue("@type1", Tache.TypeTache.RDV_SPECIALISTE.ToString)
+                tacheDataAdapter.SelectCommand.Parameters.AddWithValue("@type2", Tache.TypeTache.RDV.ToString)
+                tacheDataAdapter.SelectCommand.Parameters.AddWithValue("@categorie", Tache.CategorieTache.SOIN.ToString)
+                tacheDataAdapter.SelectCommand.Parameters.AddWithValue("@etat", Tache.EtatTache.TERMINEE.ToString)
                 Dim tacheDataTable As DataTable = New DataTable()
                 Using tacheDataTable
                     Try
@@ -740,12 +645,12 @@ Public Class TacheDao
             With command.Parameters
                 .AddWithValue("@patientId", patientId)
                 .AddWithValue("@parcoursId", parcoursId)
-                .AddWithValue("@etat", EtatTache.TERMINEE.ToString)
-                .AddWithValue("@categorie", CategorieTache.SOIN.ToString)
-                .AddWithValue("@type", TypeTache.RDV.ToString)
-                .AddWithValue("@type2", TypeTache.RDV_SPECIALISTE.ToString)
-                .AddWithValue("@nature", NatureTache.RDV.ToString)
-                .AddWithValue("@nature2", NatureTache.RDV_SPECIALISTE.ToString)
+                .AddWithValue("@etat", Tache.EtatTache.TERMINEE.ToString)
+                .AddWithValue("@categorie", Tache.CategorieTache.SOIN.ToString)
+                .AddWithValue("@type", Tache.TypeTache.RDV.ToString)
+                .AddWithValue("@type2", Tache.TypeTache.RDV_SPECIALISTE.ToString)
+                .AddWithValue("@nature", Tache.NatureTache.RDV.ToString)
+                .AddWithValue("@nature2", Tache.NatureTache.RDV_SPECIALISTE.ToString)
             End With
 
             Using reader As SqlDataReader = command.ExecuteReader()
@@ -794,7 +699,7 @@ Public Class TacheDao
             End If
             command.CommandText = strRequete
             command.Parameters.AddWithValue("@id", id)
-            If isWithAnnule = False Then command.Parameters.AddWithValue("@etat", EtatTache.ANNULEE.ToString)
+            If isWithAnnule = False Then command.Parameters.AddWithValue("@etat", Tache.EtatTache.ANNULEE.ToString)
             Using reader As SqlDataReader = command.ExecuteReader()
                 If reader.Read() Then
                     tache = BuildBean(reader)
@@ -835,13 +740,13 @@ Public Class TacheDao
             With command.Parameters
                 .AddWithValue("@patientId", patientId)
                 .AddWithValue("@parcoursId", parcoursId)
-                .AddWithValue("@etat1", EtatTache.EN_ATTENTE.ToString)
-                .AddWithValue("@etat2", EtatTache.EN_COURS.ToString)
-                .AddWithValue("@categorie", CategorieTache.SOIN.ToString)
-                .AddWithValue("@type1", TypeTache.RDV.ToString)
-                .AddWithValue("@type2", TypeTache.RDV_SPECIALISTE.ToString)
-                .AddWithValue("@nature1", NatureTache.RDV.ToString)
-                .AddWithValue("@nature2", NatureTache.RDV_SPECIALISTE.ToString)
+                .AddWithValue("@etat1", Tache.EtatTache.EN_ATTENTE.ToString)
+                .AddWithValue("@etat2", Tache.EtatTache.EN_COURS.ToString)
+                .AddWithValue("@categorie", Tache.CategorieTache.SOIN.ToString)
+                .AddWithValue("@type1", Tache.TypeTache.RDV.ToString)
+                .AddWithValue("@type2", Tache.TypeTache.RDV_SPECIALISTE.ToString)
+                .AddWithValue("@nature1", Tache.NatureTache.RDV.ToString)
+                .AddWithValue("@nature2", Tache.NatureTache.RDV_SPECIALISTE.ToString)
             End With
 
             Using reader As SqlDataReader = command.ExecuteReader()
@@ -886,10 +791,10 @@ Public Class TacheDao
 
             With command.Parameters
                 .AddWithValue("@patientId", patientId)
-                .AddWithValue("@etat", EtatTache.EN_ATTENTE.ToString)
-                .AddWithValue("@categorie", CategorieTache.SOIN.ToString)
-                .AddWithValue("@type", TypeTache.RDV.ToString)
-                .AddWithValue("@nature", NatureTache.RDV.ToString)
+                .AddWithValue("@etat", Tache.EtatTache.EN_ATTENTE.ToString)
+                .AddWithValue("@categorie", Tache.CategorieTache.SOIN.ToString)
+                .AddWithValue("@type", Tache.TypeTache.RDV.ToString)
+                .AddWithValue("@nature", Tache.NatureTache.RDV.ToString)
                 .AddWithValue("@fonctionId", fonctionId)
             End With
 
@@ -933,11 +838,11 @@ Public Class TacheDao
             With command.Parameters
                 .AddWithValue("@patientId", patientId)
                 .AddWithValue("@parcoursId", parcoursId)
-                .AddWithValue("@etat1", EtatTache.EN_ATTENTE.ToString)
-                .AddWithValue("@etat2", EtatTache.EN_COURS.ToString)
-                .AddWithValue("@categorie", CategorieTache.SOIN.ToString)
-                .AddWithValue("@type", TypeTache.RDV_DEMANDE.ToString)
-                .AddWithValue("@nature", NatureTache.RDV_DEMANDE.ToString)
+                .AddWithValue("@etat1", Tache.EtatTache.EN_ATTENTE.ToString)
+                .AddWithValue("@etat2", Tache.EtatTache.EN_COURS.ToString)
+                .AddWithValue("@categorie", Tache.CategorieTache.SOIN.ToString)
+                .AddWithValue("@type", Tache.TypeTache.RDV_DEMANDE.ToString)
+                .AddWithValue("@nature", Tache.NatureTache.RDV_DEMANDE.ToString)
             End With
 
             Using reader As SqlDataReader = command.ExecuteReader()
@@ -977,11 +882,11 @@ Public Class TacheDao
 
             Dim cmd As New SqlCommand(SQLstring, con)
             With cmd.Parameters
-                .AddWithValue("@etat", EtatTache.EN_COURS.ToString)
+                .AddWithValue("@etat", Tache.EtatTache.EN_COURS.ToString)
                 .AddWithValue("@traiteUserId", userLog.UtilisateurId)
                 .AddWithValue("@dateAttrib", Date.Now())
                 .AddWithValue("@Id", idTache)
-                .AddWithValue("@etatWhere", EtatTache.EN_ATTENTE.ToString)
+                .AddWithValue("@etatWhere", Tache.EtatTache.EN_ATTENTE.ToString)
             End With
 
             da.UpdateCommand = cmd
@@ -1018,11 +923,11 @@ Public Class TacheDao
 
             Dim cmd As New SqlCommand(SQLstring, con)
             With cmd.Parameters
-                .AddWithValue("@etat", EtatTache.EN_ATTENTE.ToString)
+                .AddWithValue("@etat", Tache.EtatTache.EN_ATTENTE.ToString)
                 .AddWithValue("@traiteUserId", DBNull.Value)
                 .AddWithValue("@dateAttrib", DBNull.Value)
                 .AddWithValue("@Id", idTache)
-                .AddWithValue("@etatWhere", EtatTache.EN_COURS.ToString)
+                .AddWithValue("@etatWhere", Tache.EtatTache.EN_COURS.ToString)
             End With
 
             da.UpdateCommand = cmd
@@ -1046,35 +951,36 @@ Public Class TacheDao
     End Function
 
     Private Function BuildBean(reader As SqlDataReader) As Tache
-        Dim tache As New Tache
-        tache.Id = reader("id")
-        tache.ParentId = Coalesce(reader("parent_id"), 0)
-        tache.EmetteurUserId = Coalesce(reader("emetteur_user_id"), 0)
-        tache.EmetteurFonctionId = Coalesce(reader("emetteur_fonction_id"), 0)
-        tache.UniteSanitaireId = Coalesce(reader("unite_sanitaire_id"), 0)
-        tache.SiteId = Coalesce(reader("site_id"), 0)
-        tache.PatientId = Coalesce(reader("patient_id"), 0)
-        tache.ParcoursId = Coalesce(reader("parcours_id"), 0)
-        tache.EpisodeId = Coalesce(reader("episode_id"), 0)
-        tache.SousEpisodeId = Coalesce(reader("sous_episode_id"), 0)
-        tache.TraiteUserId = Coalesce(reader("traite_user_id"), 0)
-        tache.TraiteFonctionId = Coalesce(reader("traite_fonction_id"), 0)
-        tache.DestinataireFonctionId = Coalesce(reader("destinataire_fonction_id"), 0)
-        tache.Priorite = Coalesce(reader("priorite"), 0)
-        tache.OrdreAffichage = Coalesce(reader("ordre_affichage"), 0)
-        tache.Categorie = Coalesce(reader("categorie"), "")
-        tache.Type = Coalesce(reader("type"), "")
-        tache.Nature = Coalesce(reader("nature"), "")
-        tache.Duree = Coalesce(reader("duree_mn"), 0)
-        tache.EmetteurCommentaire = Coalesce(reader("emetteur_commentaire"), "")
-        tache.HorodatageCreation = Coalesce(reader("horodate_creation"), Nothing)
-        tache.HorodatageAttribution = Coalesce(reader("horodate_attrib"), Nothing)
-        tache.HorodatageCloture = Coalesce(reader("horodate_cloture"), Nothing)
-        tache.Etat = Coalesce(reader("etat"), "")
-        tache.Cloture = Coalesce(reader("cloture"), False)
-        tache.TypedemandeRendezVous = Coalesce(reader("type_demande_rendez_vous"), "")
-        tache.DateRendezVous = Coalesce(reader("date_rendez_vous"), Nothing)
-        tache.DateTraitementDemandeRendezVous = Coalesce(reader("date_traitement_demande_rendez_vous"), Nothing)
+        Dim tache As New Tache With {
+            .Id = reader("id"),
+            .ParentId = Coalesce(reader("parent_id"), 0),
+            .EmetteurUserId = Coalesce(reader("emetteur_user_id"), 0),
+            .EmetteurFonctionId = Coalesce(reader("emetteur_fonction_id"), 0),
+            .UniteSanitaireId = Coalesce(reader("unite_sanitaire_id"), 0),
+            .SiteId = Coalesce(reader("site_id"), 0),
+            .PatientId = Coalesce(reader("patient_id"), 0),
+            .ParcoursId = Coalesce(reader("parcours_id"), 0),
+            .EpisodeId = Coalesce(reader("episode_id"), 0),
+            .SousEpisodeId = Coalesce(reader("sous_episode_id"), 0),
+            .TraiteUserId = Coalesce(reader("traite_user_id"), 0),
+            .TraiteFonctionId = Coalesce(reader("traite_fonction_id"), 0),
+            .DestinataireFonctionId = Coalesce(reader("destinataire_fonction_id"), 0),
+            .Priorite = Coalesce(reader("priorite"), 0),
+            .OrdreAffichage = Coalesce(reader("ordre_affichage"), 0),
+            .Categorie = Coalesce(reader("categorie"), ""),
+            .Type = Coalesce(reader("type"), ""),
+            .Nature = Coalesce(reader("nature"), ""),
+            .Duree = Coalesce(reader("duree_mn"), 0),
+            .EmetteurCommentaire = Coalesce(reader("emetteur_commentaire"), ""),
+            .HorodatageCreation = Coalesce(reader("horodate_creation"), Nothing),
+            .HorodatageAttribution = Coalesce(reader("horodate_attrib"), Nothing),
+            .HorodatageCloture = Coalesce(reader("horodate_cloture"), Nothing),
+            .Etat = Coalesce(reader("etat"), ""),
+            .Cloture = Coalesce(reader("cloture"), False),
+            .TypedemandeRendezVous = Coalesce(reader("type_demande_rendez_vous"), ""),
+            .DateRendezVous = Coalesce(reader("date_rendez_vous"), Nothing),
+            .DateTraitementDemandeRendezVous = Coalesce(reader("date_traitement_demande_rendez_vous"), Nothing)
+        }
         Return tache
     End Function
 
@@ -1089,7 +995,7 @@ Public Class TacheDao
         Try
             ' --- test si update tache parent todo
             If tache.ParentId <> 0 Then
-                ClosTache(con, tache.ParentId, EtatTache.TERMINEE, False, transaction)
+                ClosTache(con, tache.ParentId, Tache.EtatTache.TERMINEE, False, transaction)
             End If
 
             Dim SQLstring As String = "INSERT INTO oasis.oa_tache " &
@@ -1155,10 +1061,10 @@ Public Class TacheDao
         "IF Not EXISTS (SELECT 1 FROM oasis.oa_tache" & vbCrLf &
         " WHERE patient_id = " & tache.PatientId & vbCrLf &
         " And parcours_id = " & tache.ParcoursId & vbCrLf &
-        " And (type = '" & TypeTache.RDV.ToString &
-            "' OR (type = '" & TypeTache.RDV_SPECIALISTE.ToString &
-            "' OR (type = '" & TypeTache.RDV_DEMANDE.ToString & "')" & vbCrLf &
-        " AND (etat = '" & EtatTache.EN_COURS.ToString & "' OR etat = '" & EtatTache.EN_ATTENTE.ToString & "'))"
+        " And (type = '" & Tache.TypeTache.RDV.ToString &
+            "' OR (type = '" & Tache.TypeTache.RDV_SPECIALISTE.ToString &
+            "' OR (type = '" & Tache.TypeTache.RDV_DEMANDE.ToString & "')" & vbCrLf &
+        " AND (etat = '" & Tache.EtatTache.EN_COURS.ToString & "' OR etat = '" & Tache.EtatTache.EN_ATTENTE.ToString & "'))"
 
         'Console.WriteLine(SQLstring)
 
@@ -1269,7 +1175,7 @@ Public Class TacheDao
             Case ParcoursDao.EnumParcoursBaseCode.TousLes5Ans
                 Jour = 1825
             Case Else
-                CreateLog("Base de calcul des demandes de rendez-vous inconnue pour le parcours " & parcours.Id & " du patient " & Patient.patientId, "TacheDao.CreateDemandeRendezVous", LogDao.EnumTypeLog.ERREUR.ToString)
+                CreateLog("Base de calcul des demandes de rendez-vous inconnue pour le parcours " & parcours.Id & " du patient " & Patient.PatientId, "CreateDemandeRendezVous", LogDao.EnumTypeLog.ERREUR.ToString)
                 MessageBox.Show("Base de calcul de la demande de rendez-vous inconnue pour l'intervenant, la demande de rendez-vous a été créée avec un délai par défaut de 30 jours !")
                 Commentaire = "Base de calcul de la demande de rendez-vous inconnue pour l'intervenant, la demande de rendez-vous a été créée avec un délai par défaut de 30 jours !"
                 Jour = 30
@@ -1303,7 +1209,7 @@ Public Class TacheDao
         If IsNumeric(UserAutoIdString) Then
             UserAutoId = CInt(UserAutoIdString)
         Else
-            CreateLog("Paramètre application 'IdUserAuto' non trouvé !", "TacheDao.CreateDemandeRendezVous", LogDao.EnumTypeLog.ERREUR.ToString)
+            CreateLog("Paramètre application 'IdUserAuto' non trouvé !", "CreateDemandeRendezVous", LogDao.EnumTypeLog.ERREUR.ToString)
             UserAutoId = 1
         End If
 
@@ -1313,7 +1219,7 @@ Public Class TacheDao
         If IsNumeric(FonctionEmetteurAutoIdString) Then
             FonctionEmetteurAutoId = CInt(FonctionEmetteurAutoIdString)
         Else
-            CreateLog("Paramètre application 'FonctionEmetteurAutoId' non trouvé !", "TacheDao.CreateDemandeRendezVous", LogDao.EnumTypeLog.ERREUR.ToString)
+            CreateLog("Paramètre application 'FonctionEmetteurAutoId' non trouvé !", "CreateDemandeRendezVous", LogDao.EnumTypeLog.ERREUR.ToString)
             FonctionEmetteurAutoId = 14
         End If
 
@@ -1323,7 +1229,7 @@ Public Class TacheDao
         If IsNumeric(DureeRendezVousParDefautString) Then
             DureeRendezVousParDefaut = CInt(DureeRendezVousParDefautString)
         Else
-            CreateLog("Paramètre application 'DureeRendezVousParDefaut' non trouvé !", "TacheDao.CreateDemandeRendezVous", LogDao.EnumTypeLog.ERREUR.ToString)
+            CreateLog("Paramètre application 'DureeRendezVousParDefaut' non trouvé !", "CreateDemandeRendezVous", LogDao.EnumTypeLog.ERREUR.ToString)
             DureeRendezVousParDefaut = 15
         End If
 
@@ -1360,23 +1266,23 @@ Public Class TacheDao
         tache.EmetteurFonctionId = FonctionEmetteurAutoId
         tache.UniteSanitaireId = Patient.PatientUniteSanitaireId
         tache.SiteId = Patient.PatientSiteId
-        tache.PatientId = Patient.patientId
+        tache.PatientId = Patient.PatientId
         tache.ParcoursId = parcours.Id
         tache.EpisodeId = 0
         tache.SousEpisodeId = 0
         tache.TraiteUserId = 0
         tache.TraiteFonctionId = TraiteFonctionId
         tache.DestinataireFonctionId = DestinataireFonctionId
-        tache.Priorite = TacheDao.Priorite.BASSE
+        tache.Priorite = Tache.EnumPriorite.BASSE
         tache.OrdreAffichage = 20
-        tache.Categorie = TacheDao.CategorieTache.SOIN.ToString
-        tache.Type = TacheDao.TypeTache.RDV_DEMANDE.ToString()
-        tache.Nature = TacheDao.NatureTache.RDV_DEMANDE.ToString
+        tache.Categorie = Tache.CategorieTache.SOIN.ToString
+        tache.Type = Tache.TypeTache.RDV_DEMANDE.ToString()
+        tache.Nature = Tache.NatureTache.RDV_DEMANDE.ToString
         tache.Duree = DureeRendezVousParDefaut
         tache.EmetteurCommentaire = Commentaire
         tache.HorodatageCreation = Date.Now()
-        tache.Etat = TacheDao.EtatTache.EN_ATTENTE.ToString
-        tache.TypedemandeRendezVous = TacheDao.TypeDemandeRendezVous.ANNEEMOIS.ToString
+        tache.Etat = Tache.EtatTache.EN_ATTENTE.ToString
+        tache.TypedemandeRendezVous = Tache.EnumDemandeRendezVous.ANNEEMOIS.ToString
         tache.DateRendezVous = DateRendezVous
         tache.DateTraitementDemandeRendezVous = DateTraitementDemandeRendezVous
 
@@ -1393,8 +1299,8 @@ Public Class TacheDao
                 "SELECT 1 FROM oasis.oa_tache" & vbCrLf &
                 " WHERE patient_id = " & tache.PatientId & vbCrLf &
                 " AND parcours_id = " & tache.ParcoursId & vbCrLf &
-                " AND (type = '" & TypeTache.RDV_DEMANDE.ToString & "' OR type = '" & TypeTache.RDV_SPECIALISTE.ToString & "' OR type = '" & TypeTache.RDV.ToString & "')" & vbCrLf &
-                " AND (etat = '" & EtatTache.EN_COURS.ToString & "' OR etat = '" & EtatTache.EN_ATTENTE.ToString & "')"
+                " AND (type = '" & Tache.TypeTache.RDV_DEMANDE.ToString & "' OR type = '" & Tache.TypeTache.RDV_SPECIALISTE.ToString & "' OR type = '" & Tache.TypeTache.RDV.ToString & "')" & vbCrLf &
+                " AND (etat = '" & Tache.EtatTache.EN_COURS.ToString & "' OR etat = '" & Tache.EtatTache.EN_ATTENTE.ToString & "')"
 
             'Console.WriteLine(SQLstring)
 
@@ -1443,8 +1349,8 @@ Public Class TacheDao
         "IF NOT EXISTS (SELECT 1 FROM oasis.oa_tache" &
         " WHERE patient_id = @patientId" &
         " AND episode_id = @episodeId" &
-        " AND type = '" & TypeTache.AVIS_EPISODE.ToString & "'" &
-        " AND (etat = '" & EtatTache.EN_COURS.ToString & "' OR etat = '" & EtatTache.EN_ATTENTE.ToString & "'))" &
+        " AND type = '" & Tache.TypeTache.AVIS_EPISODE.ToString & "'" &
+        " AND (etat = '" & Tache.EtatTache.EN_COURS.ToString & "' OR etat = '" & Tache.EtatTache.EN_ATTENTE.ToString & "'))" &
         "INSERT INTO oasis.oa_tache " &
                 "(parent_id, emetteur_user_id, emetteur_fonction_id, unite_sanitaire_id, site_id, patient_id, parcours_id, episode_id," &
                 " sous_episode_id, traite_user_id, traite_fonction_id, destinataire_fonction_id, priorite, ordre_affichage, categorie, type," &
@@ -1508,7 +1414,7 @@ Public Class TacheDao
 
         con = GetConnection()
         Try
-            ClosTache(con, idTache, EtatTache.ANNULEE, True)
+            ClosTache(con, idTache, Tache.EtatTache.ANNULEE, True)
 
         Catch ex As Exception
             MessageBox.Show(ex.Message)
@@ -1519,7 +1425,7 @@ Public Class TacheDao
 
         Return codeRetour
     End Function
-    Friend Sub ClosTache(con As SqlConnection, idTache As Long, etatFinal As EtatTache, cloture As Boolean, Optional transaction As SqlTransaction = Nothing)
+    Friend Sub ClosTache(con As SqlConnection, idTache As Long, etatFinal As Tache.EtatTache, cloture As Boolean, Optional transaction As SqlTransaction = Nothing)
         Dim da As SqlDataAdapter = New SqlDataAdapter()
         Dim codeRetour As Boolean = True
         Dim nbUpdate As Integer
@@ -1563,7 +1469,7 @@ Public Class TacheDao
 
         con = GetConnection()
         Try
-            ClosTache(con, idTache, EtatTache.TERMINEE, cloture)
+            ClosTache(con, idTache, Tache.EtatTache.TERMINEE, cloture)
             codeRetour = True
         Catch ex As Exception
             MessageBox.Show(ex.Message)
@@ -1599,7 +1505,7 @@ Public Class TacheDao
         tacheBeanAssocie.Site = siteDao.getSiteById(tache.SiteId, True)
         tacheBeanAssocie.Patient = patientDao.GetPatientById(tache.PatientId)
         If tache.ParcoursId <> 0 Then
-            tacheBeanAssocie.Parcours = parcoursDao.getParcoursById(tache.ParcoursId)
+            tacheBeanAssocie.Parcours = parcoursDao.GetParcoursById(tache.ParcoursId)
             If tacheBeanAssocie.Parcours.SpecialiteId <> 0 Then
                 tacheBeanAssocie.Specialite = Environnement.Table_specialite.GetSpecialiteById(tacheBeanAssocie.Parcours.SpecialiteId)
                 If tacheBeanAssocie.Specialite.Oasis = False Then
@@ -1631,10 +1537,10 @@ Public Class TacheDao
 
             With command.Parameters
                 .AddWithValue("@episodeId", episodeId)
-                .AddWithValue("@etat1", EtatTache.EN_ATTENTE.ToString)
-                .AddWithValue("@etat2", EtatTache.EN_COURS.ToString)
-                .AddWithValue("@categorie", CategorieTache.SOIN.ToString)
-                .AddWithValue("@type", TypeTache.AVIS_EPISODE.ToString)
+                .AddWithValue("@etat1", Tache.EtatTache.EN_ATTENTE.ToString)
+                .AddWithValue("@etat2", Tache.EtatTache.EN_COURS.ToString)
+                .AddWithValue("@categorie", Tache.CategorieTache.SOIN.ToString)
+                .AddWithValue("@type", Tache.TypeTache.AVIS_EPISODE.ToString)
             End With
 
             Using reader As SqlDataReader = command.ExecuteReader()
@@ -1643,7 +1549,7 @@ Public Class TacheDao
                 Else
                     tache.Id = 0
                     tache.DateRendezVous = Nothing
-                    tache.TypedemandeRendezVous = TypeTache.AVIS_EPISODE.ToString
+                    tache.TypedemandeRendezVous = Tache.TypeTache.AVIS_EPISODE.ToString
                     tache.Nature = ""
                     tache.Etat = ""
                 End If
@@ -1682,9 +1588,9 @@ Public Class TacheDao
                 .AddWithValue("@episodeId", episodeId)
                 .AddWithValue("@typeEmetteur", ProfilDao.EnumProfilType.PARAMEDICAL.ToString)
                 .AddWithValue("@typeDestinataire", ProfilDao.EnumProfilType.MEDICAL.ToString)
-                .AddWithValue("@categorie", CategorieTache.SOIN.ToString)
-                .AddWithValue("@type", TypeTache.AVIS_EPISODE.ToString)
-                .AddWithValue("@etat", TacheDao.EtatTache.ANNULEE.ToString)
+                .AddWithValue("@categorie", Tache.CategorieTache.SOIN.ToString)
+                .AddWithValue("@type", Tache.TypeTache.AVIS_EPISODE.ToString)
+                .AddWithValue("@etat", Tache.EtatTache.ANNULEE.ToString)
             End With
 
             Using reader As SqlDataReader = command.ExecuteReader()
@@ -1707,17 +1613,17 @@ Public Class TacheDao
     ''' <param name="patient"></param>
     ''' <param name="parcours"></param>
     ''' <param name="tacheParent"></param>
-    Public Sub CreateRendezVous(patient As PatientBase, parcours As Parcours, typeTache As TypeTache, dateRDV As Date, duree As Integer, commentaire As String, Optional tacheParent As Tache = Nothing)
+    Public Sub CreateRendezVous(patient As PatientBase, parcours As Parcours, typeTache As Tache.TypeTache, dateRDV As Date, duree As Integer, commentaire As String, Optional tacheParent As Tache = Nothing)
         Dim tache As Tache = New Tache()
 
-        If typeTache <> TypeTache.RDV_MISSION AndAlso typeTache <> TypeTache.RDV AndAlso typeTache <> TypeTache.RDV_SPECIALISTE Then
+        If typeTache <> typeTache.RDV_MISSION AndAlso typeTache <> typeTache.RDV AndAlso typeTache <> typeTache.RDV_SPECIALISTE Then
             Throw New Exception("Pas de rendez-vous possible sur ce type de tache !")
         End If
 
         ' --- parent id
         If Not IsNothing(tacheParent) Then
-            If (tacheParent.Type = TypeTache.MISSION_DEMANDE.ToString() AndAlso typeTache = TypeTache.RDV_MISSION) _
-                    OrElse (tacheParent.Type = TypeTache.RDV_DEMANDE.ToString() AndAlso typeTache = TypeTache.RDV) Then
+            If (tacheParent.Type = typeTache.MISSION_DEMANDE.ToString() AndAlso typeTache = typeTache.RDV_MISSION) _
+                    OrElse (tacheParent.Type = typeTache.RDV_DEMANDE.ToString() AndAlso typeTache = typeTache.RDV) Then
                 tache.ParentId = tacheParent.Id
             Else
                 Throw New Exception("Pas de rendez-vous possible sur ce type de tache parent !")
@@ -1731,20 +1637,20 @@ Public Class TacheDao
         ' --- set du reste 
         tache.UniteSanitaireId = patient.PatientUniteSanitaireId
         tache.SiteId = patient.PatientSiteId
-        tache.PatientId = patient.patientId
+        tache.PatientId = patient.PatientId
         tache.ParcoursId = parcours.Id
         tache.EpisodeId = 0
         tache.SousEpisodeId = 0
         tache.TraiteUserId = 0
-        tache.Priorite = TacheDao.Priorite.BASSE
+        tache.Priorite = Tache.EnumPriorite.BASSE
         tache.OrdreAffichage = 20
-        tache.Categorie = TacheDao.CategorieTache.SOIN.ToString
+        tache.Categorie = Tache.CategorieTache.SOIN.ToString
         tache.Type = typeTache.ToString
         tache.Nature = tache.Type  ' nature = type en string sur ce type de tache
         tache.Duree = duree
         tache.EmetteurCommentaire = commentaire
         tache.HorodatageCreation = Date.Now()
-        tache.Etat = TacheDao.EtatTache.EN_ATTENTE.ToString
+        tache.Etat = Tache.EtatTache.EN_ATTENTE.ToString
         'tache.TypedemandeRendezVous =     ' => pas sur ce type de tache
         tache.DateRendezVous = dateRDV
 
@@ -1771,7 +1677,7 @@ Public Class TacheDao
                 .AddWithValue("@typeDemandeRendezVous", tache.TypedemandeRendezVous)
                 .AddWithValue("@dateRendezVous", tache.DateRendezVous)
                 .AddWithValue("@commentaire", tache.EmetteurCommentaire)
-                .AddWithValue("@etat", TacheDao.EtatTache.EN_COURS.ToString)
+                .AddWithValue("@etat", Tache.EtatTache.EN_COURS.ToString)
             End With
 
             da.UpdateCommand = cmd
@@ -1811,7 +1717,7 @@ Public Class TacheDao
                 .AddWithValue("@Id", tache.Id)
                 .AddWithValue("@dateRendezVous", tache.DateRendezVous)
                 .AddWithValue("@commentaire", tache.EmetteurCommentaire)
-                .AddWithValue("@etat", TacheDao.EtatTache.EN_ATTENTE.ToString())
+                .AddWithValue("@etat", Tache.EtatTache.EN_ATTENTE.ToString())
                 .AddWithValue("@etatActuel", etatActuel)
             End With
 
@@ -1899,7 +1805,7 @@ Public Class TacheDao
         Dim cmd As New SqlCommand(SQLstring, con)
         With cmd.Parameters
             .AddWithValue("@patientId", patientId)
-            .AddWithValue("@type", TacheDao.TypeTache.RDV_DEMANDE.ToString)
+            .AddWithValue("@type", Tache.TypeTache.RDV_DEMANDE.ToString)
         End With
 
         dr = cmd.ExecuteReader()

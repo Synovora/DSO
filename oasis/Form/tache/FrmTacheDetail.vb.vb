@@ -46,33 +46,33 @@ Public Class FrmTacheDetail_vb
             Me.TxtPatientNom.Text = .Patient.PatientPrenom + " " + .Patient.PatientNom + If(.Patient.PatientNomMarital <> "", "(" + .Patient.PatientNomMarital + ")", "")
             Me.TxtPatientNir.Text = .Patient.PatientNir
             Select Case tache.Type
-                Case TacheDao.TypeTache.RDV.ToString, TacheDao.TypeTache.RDV_MISSION.ToString, TacheDao.TypeTache.REUNION_STAFF.ToString, TacheDao.TypeTache.RDV_SPECIALISTE.ToString
+                Case Tache.TypeTache.RDV.ToString, Tache.TypeTache.RDV_MISSION.ToString, Tache.TypeTache.REUNION_STAFF.ToString, Tache.TypeTache.RDV_SPECIALISTE.ToString
                     Me.LblTypeRDV.Text = tache.Type.Replace("_", " ")
-                    If tache.Etat <> TacheDao.EtatTache.ANNULEE.ToString AndAlso tache.Etat <> TacheDao.EtatTache.TERMINEE.ToString Then
+                    If tache.Etat <> Tache.EtatTache.ANNULEE.ToString AndAlso tache.Etat <> Tache.EtatTache.TERMINEE.ToString Then
                         metEnExergue(Me.LblTypeRDV, Me.TxtTypeRDV)
                     End If
                     Me.TxtTypeRDV.Text = tache.DateRendezVous.ToLongDateString &
                                " à " & Strings.Left(tache.DateRendezVous.ToLongTimeString, Strings.Len(tache.DateRendezVous.ToLongTimeString) - 3) &
                                " - Durée " & tache.Duree & " mn"
-                Case TacheDao.TypeTache.RDV_DEMANDE.ToString, TacheDao.TypeTache.MISSION_DEMANDE.ToString
+                Case Tache.TypeTache.RDV_DEMANDE.ToString, Tache.TypeTache.MISSION_DEMANDE.ToString
                     If Coalesce(tache.TypedemandeRendezVous, "").ToString().Length > 0 Then
                         metEnExergue(Me.LblTypeRDV, Me.TxtTypeRDV)
                         Select Case tache.TypedemandeRendezVous
-                            Case TacheDao.TypeDemandeRendezVous.ANNEE.ToString
+                            Case Tache.EnumDemandeRendezVous.ANNEE.ToString
                                 Me.TxtTypeRDV.Text = "dans l'année " & tache.DateRendezVous.Year & " - Durée " & tache.Duree & " mn"
-                            Case TacheDao.TypeDemandeRendezVous.ANNEEMOIS.ToString
+                            Case Tache.EnumDemandeRendezVous.ANNEEMOIS.ToString
                                 Me.TxtTypeRDV.Text = "dans le courant de " & tache.DateRendezVous.Month.ToString("00") & "/" & tache.DateRendezVous.Year &
                                     " - Durée " & tache.Duree & " mn"
                         End Select
                     End If
-                Case TacheDao.TypeTache.AVIS_EPISODE.ToString, TacheDao.TypeTache.AVIS_SOUS_EPISODE.ToString
+                Case Tache.TypeTache.AVIS_EPISODE.ToString, Tache.TypeTache.AVIS_SOUS_EPISODE.ToString
                     Me.LblTypeRDV.Text = StrConv(tache.Type.ToLower, VbStrConv.ProperCase).Replace("_", " ").Replace("E", "É")   ' camel case 
-                    If tache.Etat <> TacheDao.EtatTache.ANNULEE.ToString AndAlso tache.Etat <> TacheDao.EtatTache.TERMINEE.ToString Then
+                    If tache.Etat <> Tache.EtatTache.ANNULEE.ToString AndAlso tache.Etat <> Tache.EtatTache.TERMINEE.ToString Then
                         metEnExergue(Me.LblTypeRDV, Me.TxtTypeRDV)
                     End If
                     Me.TxtTypeRDV.Text = StrConv(tache.Nature.ToString.ToLower, VbStrConv.ProperCase)   ' camel case  
             End Select
-            Me.lblTypeTache.Text = tache.getLibelleTacheNature
+            Me.lblTypeTache.Text = tache.GetLibelleTacheNature
             Me.TxtSpecialite.Text = If(IsNothing(.Specialite), "", .Specialite.Description)
             Me.TxtIntervenant.Text = .Intervenant
             ' -- on efface le conteneur parcours si pas de parcours
@@ -87,23 +87,23 @@ Public Class FrmTacheDetail_vb
         ' ---- boutons d'action
 
         ' ---- Attribution possible si tache pas encore attribuée et que mes fonctions me le permettent
-        BtnAttribution.Visible = tache.isAttribuable() OrElse tache.isDesattribuable()
+        BtnAttribution.Visible = tache.IsAttribuable(userLog) OrElse tache.IsDesattribuable(userLog)
         ' -- mode attribution
-        If (tache.isAttribuable()) Then
+        If (tache.IsAttribuable(userLog)) Then
             BtnAttribution.Text = "M'attribuer la tâche"
         End If
         ' -- mode désattribution
-        If tache.isDesattribuable() Then
+        If tache.IsDesattribuable(userLog) Then
             BtnAttribution.Text = "Désattribuer la tâche"
             BtnAttribution.ForeColor = Color.DarkRed
         End If
 
         ' ---- annulation possible si je suis emetteur et tache pas encore attribuée
-        BtnAnnulation.Visible = tache.isAnnulable()
+        BtnAnnulation.Visible = tache.IsAnnulable(userLog)
         ' ---- 
-        BtnFixeRDV.Visible = tache.isRendezVousAFixer()
+        BtnFixeRDV.Visible = tache.IsRendezVousAFixer(userLog)
         ' ---
-        BtnEpidode.Visible = ((tache.Type = TacheDao.TypeTache.AVIS_EPISODE.ToString AndAlso tache.EpisodeId <> 0) OrElse (tache.isUnRdv())) AndAlso userLog.IsFonctionIdPossible(tache.TraiteFonctionId)
+        BtnEpidode.Visible = ((tache.Type = Tache.TypeTache.AVIS_EPISODE.ToString AndAlso tache.EpisodeId <> 0) OrElse (tache.IsUnRdv())) AndAlso userLog.IsFonctionIdPossible(tache.TraiteFonctionId)
         If tache.EpisodeId <> 0 Then
             BtnEpidode.ForeColor = Color.Red
             BtnEpidode.Font = New Font(BtnEpidode.Font, FontStyle.Bold)
@@ -208,7 +208,7 @@ Public Class FrmTacheDetail_vb
             ' -- si passage de la tache à l'etat final => on sort du formulaire
             Dim exEtat = tache.Etat
             tache = tacheDao.GetTacheById(tache.Id, True)
-            If tache.Etat <> exEtat And tache.isStatutFinal Then
+            If tache.Etat <> exEtat And tache.IsStatutFinal Then
                 _isActionEffectuee1 = True
                 Me.Close()
             End If
@@ -236,10 +236,10 @@ Public Class FrmTacheDetail_vb
 
     Private Sub BtnAttribution_Click(sender As Object, e As EventArgs) Handles BtnAttribution.Click
         ' --- mode attribution
-        If tache.isAttribuable() Then
+        If tache.IsAttribuable(userLog) Then
             Try
-                If tacheDao.attribueTacheToUserLog(tache.Id) Then
-                    initControls(tache.Id)
+                If tacheDao.AttribueTacheToUserLog(tache.Id) Then
+                    InitControls(tache.Id)
                     IsActionEffectuee = True
                     'Me.Close()
                 End If
@@ -280,7 +280,7 @@ Public Class FrmTacheDetail_vb
                         dureeRendezVous = ConfigurationManager.AppSettings("dureeRendezVous")
                     End If
                     '     Public Sub createRendezVous(patient As PatientBase, parcours As Parcours, typeTache As TypeTache, dateRDV As Date, duree As Integer, commentaire As String, Optional tacheParent As Tache = Nothing)
-                    tacheDao.createRendezVous(tacheBeanAssocie.Patient, tacheBeanAssocie.Parcours, tache.getTypeRdvFromDemande(), frmChoixDateHeure.DateChoisie, dureeRendezVous, frmChoixDateHeure.Commentaire, tache)
+                    tacheDao.CreateRendezVous(tacheBeanAssocie.Patient, tacheBeanAssocie.Parcours, tache.GetTypeRdvFromDemande(), frmChoixDateHeure.DateChoisie, dureeRendezVous, frmChoixDateHeure.Commentaire, tache)
                     IsActionEffectuee = True
                     Close()
                 End If

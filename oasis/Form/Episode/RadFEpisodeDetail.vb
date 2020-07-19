@@ -120,7 +120,7 @@ Public Class RadFEpisodeDetail
     Dim ControleOrdonnanceValide As Boolean = False
     Dim ControleOrdonnanceExiste As Boolean = False
 
-    Dim OptionWorkflow As TacheDao.EnumOptionWorkflow
+    Dim OptionWorkflow As Tache.EnumOptionWorkflow
 
     Dim ControleAjoutConclusion As Boolean = True
 
@@ -260,14 +260,14 @@ Public Class RadFEpisodeDetail
         If Me.RendezVousId <> 0 Then
             Dim tacheRendezVous As Tache
             tacheRendezVous = tacheDao.getTacheById(RendezVousId)
-            If tacheRendezVous.isUnRdv Then
+            If tacheRendezVous.IsUnRdv() Then
                 'Controler que l'utilisateur est celui qui s'est attribué la tâche
-                If tacheRendezVous.isMyTacheATraiter = False Then
-                    If tacheRendezVous.isAttribuable Then
+                If tacheRendezVous.IsMyTacheATraiter(userLog) = False Then
+                    If tacheRendezVous.IsAttribuable(userLog) Then
                         'Tâche non encore attribuée et l'utilisateur n'est pas encore propriétaire du rendez-vous, proposition d'attribution de la tâche à l'utilisateur
                         If MsgBox("Vous allez vous attribuer le traitement du rendez-vous qui sera honoré à la sortie de l'épisode. Confirmez-vous son attribution", MsgBoxStyle.YesNo, "") = MsgBoxResult.Yes Then
                             Try
-                                tacheDao.attribueTacheToUserLog(tacheRendezVous.Id)
+                                tacheDao.AttribueTacheToUserLog(tacheRendezVous.Id)
                             Catch ex As Exception
                                 MessageBox.Show(ex.ToString)
                                 Exit Sub
@@ -302,7 +302,7 @@ Public Class RadFEpisodeDetail
             tacheRendezVous = tacheDao.GetProchainRendezVousOasisByPatientIdEtFonctionId(SelectedPatient.patientId, userLog.FonctionParDefautId)
             'Si RDV Oasis existe et que la date du DRV est <= date du jour
             If tacheRendezVous.Id <> 0 AndAlso tacheRendezVous.DateRendezVous.Date <= Date.Now.Date Then
-                If tacheRendezVous.isAttribuable Then
+                If tacheRendezVous.IsAttribuable(userLog) Then
                     Dim fonctiondao As New FonctionDao
                     Dim fonction As Fonction
                     fonction = fonctiondao.GetFonctionById(tacheRendezVous.DestinataireFonctionId)
@@ -315,7 +315,7 @@ Public Class RadFEpisodeDetail
                         "Confirmation de déclarer le rendez-vous honoré ?"
                     If MsgBox(message, MsgBoxStyle.YesNo, "") = MsgBoxResult.Yes Then
                         Try
-                            tacheDao.attribueTacheToUserLog(tacheRendezVous.Id)
+                            tacheDao.AttribueTacheToUserLog(tacheRendezVous.Id)
                         Catch ex As Exception
                             If ex.ToString.StartsWith("Collision") Then
                                 Dim Description As String = "Attribution annulé, le rendez-vous (tâche n° " & Me.RendezVousId.ToString & ") était déjà honoré"
@@ -1624,7 +1624,7 @@ Public Class RadFEpisodeDetail
             End Select
             LblPriorité.Show()
             ControleWorkflowEnCoursExistant = True
-            OptionWorkflow = TacheDao.EnumOptionWorkflow.NULL
+            OptionWorkflow = Tache.EnumOptionWorkflow.NULL
             Dim fonctionDestinataire As Fonction
             fonctionDestinataire = fonctionDao.GetFonctionById(tache.DestinataireFonctionId)
             Select Case fonctionDestinataire.Type
@@ -1634,17 +1634,17 @@ Public Class RadFEpisodeDetail
                     RadBtnWorkflowIde.ForeColor = Color.Red
                     RadBtnWorkflowIde.Font = New Font(RadBtnWorkflowIde.Font, FontStyle.Bold)
                     Select Case tache.Nature
-                        Case TacheDao.NatureTache.DEMANDE.ToString
+                        Case Tache.NatureTache.DEMANDE.ToString
                             'LblWorkflowIDE.Text = "Demande d'avis à traiter"
                             'LblWorkflowMed.Text = "Attente rendu de demande d'avis"
                             RadBtnWorkflowIde.Text = "Réponse à rendre"
                             RadBtnWorkflowMed.Text = "Avis demandé"
-                        Case TacheDao.NatureTache.REPONSE.ToString
+                        Case Tache.NatureTache.REPONSE.ToString
                             'LblWorkflowIDE.Text = "Réponse à valider"
                             'LblWorkflowMed.Text = "Demande d'avis rendue"
                             RadBtnWorkflowIde.Text = "Avis à valider"
                             RadBtnWorkflowMed.Text = "Avis rendu"
-                        Case TacheDao.NatureTache.COMPLEMENT.ToString
+                        Case Tache.NatureTache.COMPLEMENT.ToString
                             'LblWorkflowIDE.Text = "Demande de complément d'information"
                             'LblWorkflowMed.Text = "Attente complément d'information"
                             RadBtnWorkflowIde.Text = "Précision à rendre"
@@ -1667,17 +1667,17 @@ Public Class RadFEpisodeDetail
                     RadBtnWorkflowMed.ForeColor = Color.Red
                     RadBtnWorkflowMed.Font = New Font(RadBtnWorkflowMed.Font, FontStyle.Bold)
                     Select Case tache.Nature
-                        Case TacheDao.NatureTache.DEMANDE.ToString
+                        Case Tache.NatureTache.DEMANDE.ToString
                             'LblWorkflowMed.Text = "Demande d'avis à traiter"
                             'LblWorkflowIDE.Text = "Attente rendu de demande d'avis"
                             RadBtnWorkflowMed.Text = "Réponse à rendre"
                             RadBtnWorkflowIde.Text = "Avis demandé"
-                        Case TacheDao.NatureTache.REPONSE.ToString
+                        Case Tache.NatureTache.REPONSE.ToString
                             'LblWorkflowMed.Text = "Réponse à valider"
                             'LblWorkflowIDE.Text = "Demande d'avis rendue"
                             RadBtnWorkflowMed.Text = "Avis à valider"
                             RadBtnWorkflowIde.Text = "Avis rendu"
-                        Case TacheDao.NatureTache.COMPLEMENT.ToString
+                        Case Tache.NatureTache.COMPLEMENT.ToString
                             'LblWorkflowMed.Text = "Demande de complément d'information"
                             'LblWorkflowIDE.Text = "Attente complément d'information"
                             RadBtnWorkflowMed.Text = "Précision à rendre"
@@ -1856,7 +1856,7 @@ Public Class RadFEpisodeDetail
     'Avant la fermeture de l'écran : si un utilisateur s'est attribué le traitement de demande d'avis (Workflow) et qu'il sort de l'épisode sans l'avoir traité, on lui désattibue le tâche
     Private Sub RadFEpisodeDetail_FormClosed(sender As Object, e As FormClosedEventArgs) Handles MyBase.FormClosed
         tache = tacheDao.GetDemandeEnCoursByEpisode(SelectedEpisodeId)
-        If tache.isAttribue AndAlso tache.TraiteUserId = userLog.UtilisateurId Then
+        If tache.IsAttribue AndAlso tache.TraiteUserId = userLog.UtilisateurId Then
             tacheDao.DesattribueTache(tache.Id)
 
             Try
@@ -4022,9 +4022,9 @@ Public Class RadFEpisodeDetail
                     'Rendez-vous prévisionnel, demande en cours
                     TypeDemandeRdv = Coalesce(ParcoursDataTable.Rows(i)("TypeDemandeRdv"), "")
                     Select Case TypeDemandeRdv
-                        Case TacheDao.TypeDemandeRendezVous.ANNEE.ToString
+                        Case Tache.EnumDemandeRendezVous.ANNEE.ToString
                             RadParcoursDataGridView.Rows(iGrid).Cells("consultationNext").Value = dateNext.ToString("yyyy")
-                        Case TacheDao.TypeDemandeRendezVous.ANNEEMOIS.ToString
+                        Case Tache.EnumDemandeRendezVous.ANNEEMOIS.ToString
                             RadParcoursDataGridView.Rows(iGrid).Cells("consultationNext").Value = dateNext.ToString("MM.yyyy")
                         Case Else
                             RadParcoursDataGridView.Rows(iGrid).Cells("consultationNext").Value = outils.FormatageDateAffichage(dateNext, True)

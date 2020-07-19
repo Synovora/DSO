@@ -1,4 +1,6 @@
-﻿Public Class RadFEpisodeActeParamedicalDetailEdit
+﻿Imports Oasis_Common
+
+Public Class RadFEpisodeActeParamedicalDetailEdit
     Private _episodeActeParamedicalId As Long
     Private _codeRetour As Boolean
 

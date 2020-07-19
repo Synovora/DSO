@@ -1,6 +1,7 @@
 ﻿
 
 Imports System.ComponentModel
+Imports Oasis_Common
 Imports Telerik.WinControls.Enumerations
 Imports Telerik.WinControls.UI
 

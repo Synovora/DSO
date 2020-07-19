@@ -46,19 +46,19 @@ Public Class EpisodeObservationDao
     End Function
 
     Private Function BuildBean(reader As SqlDataReader) As EpisodeObservation
-        Dim episodeObservation As New EpisodeObservation
-
-        episodeObservation.Id = reader("episode_observation_id")
-        episodeObservation.EpisodeId = Coalesce(reader("episode_id"), 0)
-        episodeObservation.PatientId = Coalesce(reader("patient_id"), 0)
-        episodeObservation.TypeObservation = Coalesce(reader("type_observation"), "")
-        episodeObservation.NatureObservation = Coalesce(reader("nature_observation"), "")
-        episodeObservation.NaturePresence = Coalesce(reader("nature_presence"), "")
-        episodeObservation.Observation = Coalesce(reader("observation"), "")
-        episodeObservation.UserCreation = Coalesce(reader("user_id"), 0)
-        episodeObservation.DateCreation = Coalesce(reader("date_creation"), Nothing)
-        episodeObservation.DateModification = Coalesce(reader("date_modification"), Nothing)
-        episodeObservation.Inactif = Coalesce(reader("inactif"), False)
+        Dim episodeObservation As New EpisodeObservation With {
+            .Id = reader("episode_observation_id"),
+            .EpisodeId = Coalesce(reader("episode_id"), 0),
+            .PatientId = Coalesce(reader("patient_id"), 0),
+            .TypeObservation = Coalesce(reader("type_observation"), ""),
+            .NatureObservation = Coalesce(reader("nature_observation"), ""),
+            .NaturePresence = Coalesce(reader("nature_presence"), ""),
+            .Observation = Coalesce(reader("observation"), ""),
+            .UserCreation = Coalesce(reader("user_id"), 0),
+            .DateCreation = Coalesce(reader("date_creation"), Nothing),
+            .DateModification = Coalesce(reader("date_modification"), Nothing),
+            .Inactif = Coalesce(reader("inactif"), False)
+        }
         Return episodeObservation
     End Function
 

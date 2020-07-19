@@ -1,4 +1,6 @@
-﻿Public Class AppointmentDao
+﻿Imports Oasis_Common
+
+Public Class AppointmentDao
 
     Friend Sub CreateAppointment(tache As Tache)
 

@@ -789,9 +789,9 @@ Public Class PrtSynthese
                     'Rendez-vous prévisionnel, demande en cours
                     TypeDemandeRdv = Coalesce(ParcoursDataTable.Rows(i)("TypeDemandeRdv"), "")
                     Select Case TypeDemandeRdv
-                        Case TacheDao.TypeDemandeRendezVous.ANNEE.ToString
+                        Case Tache.EnumDemandeRendezVous.ANNEE.ToString
                             TextConsultationNext = dateNext.ToString("yyyy")
-                        Case TacheDao.TypeDemandeRendezVous.ANNEEMOIS.ToString
+                        Case Tache.EnumDemandeRendezVous.ANNEEMOIS.ToString
                             TextConsultationNext = dateNext.ToString("MM.yyyy")
                         Case Else
                             TextConsultationNext = dateNext.ToString(outils.FormatageDateAffichage(dateNext, True))

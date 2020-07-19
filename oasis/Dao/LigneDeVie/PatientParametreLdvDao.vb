@@ -32,29 +32,29 @@ Public Class PatientParametreLdvDao
     End Function
 
     Private Function BuildBean(reader As SqlDataReader) As PatientParametreLdv
-        Dim patientParametreLdv As New PatientParametreLdv
-
-        patientParametreLdv.PatientId = Coalesce(reader("patient_id"), 0)
-        patientParametreLdv.ActivitePathologieAigue = Coalesce(reader("activite_pathologie_aigue"), False)
-        patientParametreLdv.ActivitePreventionAutre = Coalesce(reader("activite_prevention_autre"), False)
-        patientParametreLdv.ActivitePreventionEnfantPreScolaire = Coalesce(reader("activite_prevention_enfant_pre_scolaire"), False)
-        patientParametreLdv.ActivitePreventionEnfantScolaire = Coalesce(reader("activite_prevention_enfant_scolaire"), False)
-        patientParametreLdv.ActiviteSuiviGrossesse = Coalesce(reader("activite_suivi_grossesse"), False)
-        patientParametreLdv.ActiviteSuiviGynecologique = Coalesce(reader("activite_suivi_gynecologique"), False)
-        patientParametreLdv.ActiviteSocial = Coalesce(reader("activite_social"), False)
-        patientParametreLdv.ActiviteSuiviChronique = Coalesce(reader("activite_suivi_chronique"), False)
-        patientParametreLdv.TypeConsultation = Coalesce(reader("type_consultation"), False)
-        patientParametreLdv.TypeVirtuel = Coalesce(reader("type_virtuel"), False)
-        patientParametreLdv.TypeParametre = Coalesce(reader("type_parametre"), False)
-        patientParametreLdv.ProfilMedical = Coalesce(reader("profil_medical"), False)
-        patientParametreLdv.ProfilParamedical = Coalesce(reader("profil_paramedical"), False)
-        patientParametreLdv.Parametre1 = Coalesce(reader("parametre1"), 0)
-        patientParametreLdv.Parametre2 = Coalesce(reader("parametre2"), 0)
-        patientParametreLdv.Parametre3 = Coalesce(reader("parametre3"), 0)
-        patientParametreLdv.Parametre4 = Coalesce(reader("parametre4"), 0)
-        patientParametreLdv.Parametre5 = Coalesce(reader("parametre5"), 0)
-        patientParametreLdv.UserModification = Coalesce(reader("user_modification"), 0)
-        patientParametreLdv.DateModification = Coalesce(reader("date_modification"), Nothing)
+        Dim patientParametreLdv As New PatientParametreLdv With {
+            .PatientId = Coalesce(reader("patient_id"), 0),
+            .ActivitePathologieAigue = Coalesce(reader("activite_pathologie_aigue"), False),
+            .ActivitePreventionAutre = Coalesce(reader("activite_prevention_autre"), False),
+            .ActivitePreventionEnfantPreScolaire = Coalesce(reader("activite_prevention_enfant_pre_scolaire"), False),
+            .ActivitePreventionEnfantScolaire = Coalesce(reader("activite_prevention_enfant_scolaire"), False),
+            .ActiviteSuiviGrossesse = Coalesce(reader("activite_suivi_grossesse"), False),
+            .ActiviteSuiviGynecologique = Coalesce(reader("activite_suivi_gynecologique"), False),
+            .ActiviteSocial = Coalesce(reader("activite_social"), False),
+            .ActiviteSuiviChronique = Coalesce(reader("activite_suivi_chronique"), False),
+            .TypeConsultation = Coalesce(reader("type_consultation"), False),
+            .TypeVirtuel = Coalesce(reader("type_virtuel"), False),
+            .TypeParametre = Coalesce(reader("type_parametre"), False),
+            .ProfilMedical = Coalesce(reader("profil_medical"), False),
+            .ProfilParamedical = Coalesce(reader("profil_paramedical"), False),
+            .Parametre1 = Coalesce(reader("parametre1"), 0),
+            .Parametre2 = Coalesce(reader("parametre2"), 0),
+            .Parametre3 = Coalesce(reader("parametre3"), 0),
+            .Parametre4 = Coalesce(reader("parametre4"), 0),
+            .Parametre5 = Coalesce(reader("parametre5"), 0),
+            .UserModification = Coalesce(reader("user_modification"), 0),
+            .DateModification = Coalesce(reader("date_modification"), Nothing)
+        }
 
         Return patientParametreLdv
     End Function

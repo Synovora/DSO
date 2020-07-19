@@ -185,15 +185,15 @@ Public Class RadFWkfDemandeAvis
             ' Détermination de la nature du Workflow en cours
             '===========================================================================================================
             Select Case tache.Nature
-                Case TacheDao.NatureTache.DEMANDE.ToString
+                Case Tache.NatureTache.DEMANDE.ToString
                     LblLabelTypeTache.Text = "Demande d'avis à traiter"
                     CheckBox1.Text = EnumAction.REPONSE_AVIS
                     CheckBox2.Text = EnumAction.COMPLEMENT
-                Case TacheDao.NatureTache.REPONSE.ToString
+                Case Tache.NatureTache.REPONSE.ToString
                     LblLabelTypeTache.Text = "Rendu d'avis à valider"
                     CheckBox1.Text = EnumAction.VALIDATION
                     CheckBox2.Text = EnumAction.DEMANDE_AVIS
-                Case TacheDao.NatureTache.COMPLEMENT.ToString
+                Case Tache.NatureTache.COMPLEMENT.ToString
                     LblLabelTypeTache.Text = "Demande de précision à traiter"
                     CheckBox1.Text = EnumAction.REPONSE_COMPLEMENT
                     CheckBox1.Hide()
@@ -308,7 +308,7 @@ Public Class RadFWkfDemandeAvis
         If Creation = True Then
             'Création tache de demande d'avis (DEMANDE)
             NewTache.ParentId = 0
-            NewTache.Nature = TacheDao.NatureTache.DEMANDE.ToString
+            NewTache.Nature = Tache.NatureTache.DEMANDE.ToString
 
             'Récupération fonction destinataire du comboBox
             Dim i, indice As Integer
@@ -334,10 +334,10 @@ Public Class RadFWkfDemandeAvis
             NewTache.TraiteFonctionId = tache.EmetteurFonctionId
 
             Select Case tache.Nature
-                Case TacheDao.NatureTache.DEMANDE.ToString
+                Case Tache.NatureTache.DEMANDE.ToString
                     If CheckBox1.Checked = True Then
                         'Création tâche de réponse sur demande d'avis (REPONSE_AVIS) et cloture de la tâche en cours pris en charge par le CreateTache (transaction)
-                        NewTache.Nature = TacheDao.NatureTache.REPONSE.ToString
+                        NewTache.Nature = Tache.NatureTache.REPONSE.ToString
                         If tacheDao.CreateTache(NewTache) = True Then
                             MessageBox.Show("Réponse à la demande d'avis envoyée")
                             CodeRetour = True
@@ -346,7 +346,7 @@ Public Class RadFWkfDemandeAvis
                     Else
                         If CheckBox2.Checked = True Then
                             'Création tâche de demande de complément d'information (COMPLEMENT) et cloture de la tâche en cours
-                            NewTache.Nature = TacheDao.NatureTache.COMPLEMENT.ToString
+                            NewTache.Nature = Tache.NatureTache.COMPLEMENT.ToString
                             If tacheDao.CreateTache(NewTache) = True Then
                                 MessageBox.Show("Demande de précision envoyée")
                                 CodeRetour = True
@@ -356,7 +356,7 @@ Public Class RadFWkfDemandeAvis
                             MessageBox.Show("Vous devez choisir une option pour valider le Workflow")
                         End If
                     End If
-                Case TacheDao.NatureTache.REPONSE.ToString
+                Case Tache.NatureTache.REPONSE.ToString
                     If CheckBox1.Checked = True Then
                         'Validation et fin du Workflow, cloture de la tâche en cours
                         If tacheDao.ClotureTache(SelectedTacheId, True) = True Then
@@ -367,7 +367,7 @@ Public Class RadFWkfDemandeAvis
                     Else
                         If CheckBox2.Checked = True Then
                             'Création tâche de demande d'avis (DEMANDE) et cloture de la tâche en cours
-                            NewTache.Nature = TacheDao.NatureTache.DEMANDE.ToString
+                            NewTache.Nature = Tache.NatureTache.DEMANDE.ToString
                             If tacheDao.CreateTache(NewTache) = True Then
                                 MessageBox.Show("Relance de la demande d'avis envoyée")
                                 CodeRetour = True
@@ -377,9 +377,9 @@ Public Class RadFWkfDemandeAvis
                             MessageBox.Show("Vous devez choisir une option pour valider le Workflow")
                         End If
                     End If
-                Case TacheDao.NatureTache.COMPLEMENT.ToString
+                Case Tache.NatureTache.COMPLEMENT.ToString
                     'Création tâche de demande d'avis (DEMANDE) et cloture de la tâche en cours
-                    NewTache.Nature = TacheDao.NatureTache.DEMANDE.ToString
+                    NewTache.Nature = Tache.NatureTache.DEMANDE.ToString
                     If tacheDao.CreateTache(NewTache) = True Then
                         MessageBox.Show("Réponse à la demande de précision envoyée")
                         CodeRetour = True
@@ -404,19 +404,19 @@ Public Class RadFWkfDemandeAvis
         NewTache.SiteId = SelectedPatient.PatientSiteId
         NewTache.ParcoursId = 0
         If RadioBtnAvisUrgent.Checked = True Then
-            NewTache.Priorite = TacheDao.Priorite.HAUTE
+            NewTache.Priorite = Tache.EnumPriorite.HAUTE
         Else
             If RadioBtnSynchrone.Checked = True Then
-                NewTache.Priorite = TacheDao.Priorite.MOYENNE
+                NewTache.Priorite = Tache.EnumPriorite.MOYENNE
             Else
-                NewTache.Priorite = TacheDao.Priorite.BASSE
+                NewTache.Priorite = Tache.EnumPriorite.BASSE
             End If
         End If
         NewTache.OrdreAffichage = 10
-        NewTache.Categorie = TacheDao.CategorieTache.SOIN.ToString
-        NewTache.Type = TacheDao.TypeTache.AVIS_EPISODE.ToString
+        NewTache.Categorie = Tache.CategorieTache.SOIN.ToString
+        NewTache.Type = Tache.TypeTache.AVIS_EPISODE.ToString
         NewTache.EmetteurCommentaire = TxtCommentaireDemande.Text
-        NewTache.Etat = TacheDao.EtatTache.EN_ATTENTE.ToString
+        NewTache.Etat = Tache.EtatTache.EN_ATTENTE.ToString
         NewTache.Cloture = False
         NewTache.TypedemandeRendezVous = ""
         NewTache.HorodatageCreation = Date.Now()
