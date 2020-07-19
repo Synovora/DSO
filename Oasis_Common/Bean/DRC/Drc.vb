@@ -1,187 +1,24 @@
 ﻿Imports System.Data.SqlClient
-Imports System.Collections.Specialized
-Imports Oasis_Common
+
 Public Class Drc
-    Private privateDrcId As Integer
-    Private privateDrcLibelle As String
-    Private privateDrcSexe As Integer       '1:Masculin, 2:Féminin, 3:Les deux
-    Private privateDrcTypeEpisode As String 'C:Chronique, A:Aigue, NC:Non concerné
-    Private privateDrcAgeMin As Integer
-    Private privateDrcAgeMax As Integer
-    Private _categorieOasisId As Integer    '1:Contexte et antécédent, 2:Stratégie contextuelle, 3:Mesure préventive, 4:Objectif, 5:Acte paramédical
-    Private _categorieMajeure As Integer
-    Private _aldId As Integer
-    Private _aldCode As String
-    Private _commentaire As String
-    Private _reponseCommentee As String
-    Private _dateCreation As Date
-    Private _userCreation As Long
-    Private _dateModification As Date
-    Private _userModification As Long
-    Private _CodeCim As String
-    Private _CodeCisp As String
-
-    Public Property DrcId As Integer
-        Get
-            Return privateDrcId
-        End Get
-        Set(value As Integer)
-            privateDrcId = value
-        End Set
-    End Property
-
-    Public Property DrcLibelle As String
-        Get
-            Return privateDrcLibelle
-        End Get
-        Set(value As String)
-            privateDrcLibelle = value
-        End Set
-    End Property
-
-    Public Property DrcSexe As Integer
-        Get
-            Return privateDrcSexe
-        End Get
-        Set(value As Integer)
-            privateDrcSexe = value
-        End Set
-    End Property
-
-    Public Property DrcTypeEpisode As String
-        Get
-            Return privateDrcTypeEpisode
-        End Get
-        Set(value As String)
-            privateDrcTypeEpisode = value
-        End Set
-    End Property
-
-    Public Property DrcAgeMin As Integer
-        Get
-            Return privateDrcAgeMin
-        End Get
-        Set(value As Integer)
-            privateDrcAgeMin = value
-        End Set
-    End Property
-
-    Public Property DrcAgeMax As Integer
-        Get
-            Return privateDrcAgeMax
-        End Get
-        Set(value As Integer)
-            privateDrcAgeMax = value
-        End Set
-    End Property
-
-    Public Property CategorieOasisId As Integer
-        Get
-            Return _categorieOasisId
-        End Get
-        Set(value As Integer)
-            _categorieOasisId = value
-        End Set
-    End Property
-
-    Public Property CategorieMajeure As Integer
-        Get
-            Return _categorieMajeure
-        End Get
-        Set(value As Integer)
-            _categorieMajeure = value
-        End Set
-    End Property
-
-    Public Property AldId As Integer
-        Get
-            Return _aldId
-        End Get
-        Set(value As Integer)
-            _aldId = value
-        End Set
-    End Property
-
-    Public Property AldCode As String
-        Get
-            Return _aldCode
-        End Get
-        Set(value As String)
-            _aldCode = value
-        End Set
-    End Property
-
-    Public Property Commentaire As String
-        Get
-            Return _commentaire
-        End Get
-        Set(value As String)
-            _commentaire = value
-        End Set
-    End Property
-
-    Public Property DateCreation As Date
-        Get
-            Return _dateCreation
-        End Get
-        Set(value As Date)
-            _dateCreation = value
-        End Set
-    End Property
-
-    Public Property UserCreation As Long
-        Get
-            Return _userCreation
-        End Get
-        Set(value As Long)
-            _userCreation = value
-        End Set
-    End Property
-
-    Public Property DateModification As Date
-        Get
-            Return _dateModification
-        End Get
-        Set(value As Date)
-            _dateModification = value
-        End Set
-    End Property
-
-    Public Property UserModification As Long
-        Get
-            Return _userModification
-        End Get
-        Set(value As Long)
-            _userModification = value
-        End Set
-    End Property
-
-    Public Property CodeCim As String
-        Get
-            Return _CodeCim
-        End Get
-        Set(value As String)
-            _CodeCim = value
-        End Set
-    End Property
-
-    Public Property CodeCisp As String
-        Get
-            Return _CodeCisp
-        End Get
-        Set(value As String)
-            _CodeCisp = value
-        End Set
-    End Property
-
-    Public Property ReponseCommentee As String
-        Get
-            Return _reponseCommentee
-        End Get
-        Set(value As String)
-            _reponseCommentee = value
-        End Set
-    End Property
+    Property DrcId As Integer
+    Property DrcLibelle As String
+    Property DrcSexe As Integer       '1:Masculin, 2:Féminin, 3:Les deux
+    Property DrcTypeEpisode As String 'C:Chronique, A:Aigue, NC:Non concerné
+    Property DrcAgeMin As Integer
+    Property DrcAgeMax As Integer
+    Property CategorieOasisId As Integer    '1:Contexte et antécédent, 2:Stratégie contextuelle, 3:Mesure préventive, 4:Objectif, 5:Acte paramédical
+    Property CategorieMajeure As Integer
+    Property AldId As Integer
+    Property AldCode As String
+    Property Commentaire As String
+    Property ReponseCommentee As String
+    Property DateCreation As Date
+    Property UserCreation As Long
+    Property DateModification As Date
+    Property UserModification As Long
+    Property CodeCim As String
+    Property CodeCisp As String
 
     Sub New()
         InitInstance()

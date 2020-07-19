@@ -95,7 +95,7 @@
     <Compile Include="ApiRest\ApiOasis.vb" />
     <Compile Include="ApiRest\Class1.vb" />
     <Compile Include="Bean\Antecedent\AldCim10.vb" />
-    <Compile Include="Bean\Antecedent\AldClass.vb" />
+    <Compile Include="Bean\Antecedent\Ald.vb" />
     <Compile Include="Bean\Antecedent\Antecedent.vb" />
     <Compile Include="Bean\Antecedent\AntecedentCourrier.vb" />
     <Compile Include="Bean\Antecedent\AntecedentDeplacement.vb" />
