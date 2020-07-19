@@ -1,8 +1,33 @@
 ﻿Imports System.Configuration
 Imports System.Data.SqlClient
 Imports Oasis_Common
+Imports Telerik.WinControls.UI
 
 Module Environnement
+
+    Public ReadOnly Property AssemblyVersion() As String
+        Get
+            Return System.Reflection.Assembly.GetExecutingAssembly().GetName().Version.ToString()
+        End Get
+    End Property
+
+    Public Sub AfficheTitleForm(form As RadForm, titre As String, userLog As Utilisateur)
+        ' --- centrage et chgt de style du titre du formulaire
+        With form
+            .Text = titre & " -" & GetProfilUserString(userLog) & " - " & String.Format("Version {0}", AssemblyVersion) & "   Date : " & Date.Now.ToString("dd.MM.yyyy")
+            If form.FormElement IsNot Nothing Then
+                Try
+                    .FormElement.TitleBar.TitlePrimitive.StretchHorizontally = True
+                    .FormElement.TitleBar.TitlePrimitive.TextAlignment = ContentAlignment.MiddleCenter
+                    .FormElement.TitleBar.TitlePrimitive.ForeColor = Color.DarkBlue
+                    '.FormElement.TitleBar.TitlePrimitive.Font = New Font(.FormElement.TitleBar.Font, FontStyle.Bold)
+                Catch
+                Finally
+                End Try
+            End If
+
+        End With
+    End Sub
 
     '=========================================================================
     '================== Contrôle d'accès pour les principaux écrans (Synthèse, Episode et Ligne de vie

@@ -212,7 +212,7 @@ Public Module EnvironnementBase
             If IsNumeric(DelaiString) Then
                 Delai = CInt(DelaiString)
             Else
-                CreateLog("Paramètre application 'SpecialiteDelaiPriseEnCharge' non trouvé !", "Environnement.Table_specialite.New()", LogDao.EnumTypeLog.ERREUR.ToString)
+                'TODO: CreateLog("Paramètre application 'SpecialiteDelaiPriseEnCharge' non trouvé !", "Environnement.Table_specialite.New()", LogDao.EnumTypeLog.ERREUR.ToString, userLog)
                 Delai = 30
             End If
 

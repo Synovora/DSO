@@ -89,7 +89,7 @@ Public Class RorDao
         End Using
     End Function
 
-    Public Function CreationRor(ror As Ror) As Boolean
+    Public Function CreationRor(ror As Ror, userLog As Utilisateur) As Boolean
         Dim da As SqlDataAdapter = New SqlDataAdapter()
         Dim codeRetour As Boolean = True
         Dim con As SqlConnection
@@ -141,7 +141,7 @@ Public Class RorDao
         Return codeRetour
     End Function
 
-    Public Function ModificationRor(ror As Ror) As Boolean
+    Public Function ModificationRor(ror As Ror, userLog As Utilisateur) As Boolean
         Dim da As SqlDataAdapter = New SqlDataAdapter()
         Dim codeRetour As Boolean = True
         Dim con As SqlConnection = GetConnection()

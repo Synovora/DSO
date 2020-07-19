@@ -74,7 +74,7 @@ Public Class ParametreDrcDao
         Return parametreDrc
     End Function
 
-    Public Function CreationParametreDrc(parametreDrc As ParametreDrc) As Boolean
+    Public Function CreationParametreDrc(parametreDrc As ParametreDrc, userLog As Utilisateur) As Boolean
         Dim da As SqlDataAdapter = New SqlDataAdapter()
         Dim codeRetour As Boolean = True
         Dim NbInsert As Integer
@@ -99,7 +99,7 @@ Public Class ParametreDrcDao
             If NbInsert = 0 Then
                 Dim anomalie As String = "La création du paramètre n'a pas abouti - DRC N° : " & parametreDrc.DrcId.ToString & " Id. paramètre : " & parametreDrc.ParametreId.ToString
                 Throw New Exception(anomalie)
-                CreateLog(anomalie, "ParametreDrcDao", LogDao.EnumTypeLog.ERREUR.ToString)
+                CreateLog(anomalie, "ParametreDrcDao", LogDao.EnumTypeLog.ERREUR.ToString, userLog)
             End If
         Catch ex As Exception
             Throw New Exception(ex.Message)
@@ -111,7 +111,7 @@ Public Class ParametreDrcDao
         Return codeRetour
     End Function
 
-    Public Function ModificationParametreDrc(parametreDrc As ParametreDrc) As Boolean
+    Public Function ModificationParametreDrc(parametreDrc As ParametreDrc, userLog As Utilisateur) As Boolean
         Dim NbUpdate As Integer
         Dim da As SqlDataAdapter = New SqlDataAdapter()
         Dim codeRetour As Boolean = True
@@ -135,7 +135,7 @@ Public Class ParametreDrcDao
             If NbUpdate = 0 Then
                 Dim anomalie As String = "La modification du paramètre n'a pas abouti - Id : " & parametreDrc.Id.ToString & " DRC N° : " & parametreDrc.DrcId.ToString & " Id. paramètre : " & parametreDrc.ParametreId.ToString
                 Throw New Exception(anomalie)
-                CreateLog(anomalie, "ParametreDrcDao", LogDao.EnumTypeLog.ERREUR.ToString)
+                CreateLog(anomalie, "ParametreDrcDao", LogDao.EnumTypeLog.ERREUR.ToString, userLog)
             End If
         Catch ex As Exception
             Throw New Exception(ex.Message)

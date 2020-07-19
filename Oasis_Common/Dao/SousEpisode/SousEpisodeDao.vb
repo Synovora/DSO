@@ -221,7 +221,7 @@ Public Class SousEpisodeDao
     End Function
 
 
-    Public Sub writeDocAndEventualySign(sousEpisode As SousEpisode, tbl As Byte(), signature As String, dateSignature As Date, userLog As Utilisateur)
+    Public Sub writeDocAndEventualySign(sousEpisode As SousEpisode, tbl As Byte(), signature As String, dateSignature As Date, userLog As Utilisateur, loginRequestLog As Object)
         Dim da As SqlDataAdapter = New SqlDataAdapter()
         Dim con As SqlConnection = GetConnection()
         Dim transaction As SqlTransaction = con.BeginTransaction

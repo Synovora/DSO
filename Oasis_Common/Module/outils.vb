@@ -7,7 +7,7 @@ Public Module outils
     ReadOnly logDao As New LogDao
     Dim log As Log
 
-    Public Sub CreateLog(Description As String, FormName As String, TypeLog As String)
+    Public Sub CreateLog(Description As String, FormName As String, TypeLog As String, userLog As Utilisateur)
         If log Is Nothing Then
             log = New Log()
         End If
@@ -18,7 +18,7 @@ Public Module outils
         log.Description = Description
         log.TypeLog = TypeLog
         log.Origine = FormName
-        logDao.CreateLog(log)
+        logDao.CreateLog(log, userLog)
     End Sub
 
     Public Function GetProfilUserString(userLog As Utilisateur) As String

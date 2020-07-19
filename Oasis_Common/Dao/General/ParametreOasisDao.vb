@@ -169,7 +169,7 @@ Public Class ParametreOasisDao
                 If IsNumeric(IdUserAutoString) Then
                     IdUserAuto = CInt(IdUserAutoString)
                 Else
-                    CreateLog("Paramètre application 'IdUserAuto' non trouvé !", "ParametreOasisDao", LogDao.EnumTypeLog.ERREUR.ToString)
+                    'TODO CreateLog("Paramètre application 'IdUserAuto' non trouvé !", "ParametreOasisDao", LogDao.EnumTypeLog.ERREUR.ToString, userLog)
                     IdUserAuto = 1
                 End If
                 Dim userdao As New UserDao

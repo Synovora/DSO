@@ -120,7 +120,7 @@ Public Class SousEpisodeReponseDao
     ''' <param name="sousEpisodeReponse"></param>
     ''' <param name="filenameSrc"></param>
     ''' <returns></returns>
-    Public Function Create(sousEpisode As SousEpisode, sousEpisodeReponse As SousEpisodeReponse, filenameSrc As String) As Boolean
+    Public Function Create(sousEpisode As SousEpisode, sousEpisodeReponse As SousEpisodeReponse, filenameSrc As String, loginRequestLog As Object) As Boolean
         Dim da As SqlDataAdapter = New SqlDataAdapter()
         Dim codeRetour As Boolean = True
         Dim con As SqlConnection
@@ -182,7 +182,7 @@ Public Class SousEpisodeReponseDao
         Return codeRetour
     End Function
 
-    Public Function getContenu(idEpisode As Long, sousEpisodeReponse As SousEpisodeReponse) As Byte()
+    Public Function getContenu(idEpisode As Long, sousEpisodeReponse As SousEpisodeReponse, loginRequestLog As Object) As Byte()
         Dim filename = sousEpisodeReponse.getFilenameServer(idEpisode)
         ' -- download
         Using apiOasis As New ApiOasis()

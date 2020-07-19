@@ -49,7 +49,7 @@ Public Class LogDao
         Return log
     End Function
 
-    Public Function CreateLog(log As Log) As Boolean
+    Public Function CreateLog(log As Log, userLog As Utilisateur) As Boolean
         Dim da As SqlDataAdapter = New SqlDataAdapter()
         Dim CodeRetour As Boolean = True
         Dim con As SqlConnection

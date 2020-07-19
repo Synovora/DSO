@@ -1,4 +1,6 @@
-﻿Public Class RadFEffetSecondaire
+﻿Imports Oasis_Common
+
+Public Class RadFEffetSecondaire
     Private _medicamentId1 As Integer
 
     Public Property MedicamentId As Integer
@@ -13,14 +15,14 @@
     Dim theriaqueDao As New TheriaqueDao
 
     Private Sub RadFEffetSecondaire_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-        afficheTitleForm(Me, "Thériaque - Effets indésirables")
+        AfficheTitleForm(Me, "Thériaque - Effets indésirables", userLog)
         ChargementText()
         RadBtnAbandon.Select()
     End Sub
 
     Private Sub ChargementText()
         Dim dt As DataTable
-        dt = theriaqueDao.getSpecialiteByArgument(MedicamentId, TheriaqueDao.EnumGetSpecialite.ID_THERIAQUE, TheriaqueDao.EnumMonoVir.NULL)
+        dt = theriaqueDao.GetSpecialiteByArgument(MedicamentId, TheriaqueDao.EnumGetSpecialite.ID_THERIAQUE, TheriaqueDao.EnumMonoVir.NULL)
         TextBoxMedicament.Text = dt.Rows(0)("SP_NOMLONG")
 
         TextBoxClinique.Text = theriaqueDao.GetEffetIndesirableBySpecialite(MedicamentId, TheriaqueDao.EnumTypeEffetIndesirable.CLINIQUE)

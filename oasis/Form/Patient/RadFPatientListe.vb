@@ -23,7 +23,7 @@ Public Class RadFPatientListe
     Dim Tous, PatientOasis As Boolean
 
     Private Sub RadFPatientListe_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-        afficheTitleForm(Me, "Liste des patients")
+        AfficheTitleForm(Me, "Liste des patients", userLog)
 
         Me.RadDesktopAlert1.Popup.AlertElement.CaptionElement.TextAndButtonsElement.TextElement.ForeColor = Color.Red
         Me.RadDesktopAlert1.Popup.AlertElement.CaptionElement.CaptionGrip.BackColor = Color.DarkBlue
@@ -395,7 +395,7 @@ Public Class RadFPatientListe
             If aRow >= 0 Then
                 Dim patientId As Integer = RadPatientGridView.Rows(aRow).Cells("oa_patient_id").Value
                 Dim parcoursDao As New ParcoursDao
-                parcoursDao.CreateIntervenantOasisByPatient(patientId)
+                parcoursDao.CreateIntervenantOasisByPatient(patientId, userLog)
             End If
         End If
     End Sub
@@ -494,7 +494,7 @@ Public Class RadFPatientListe
             Me.SelectedPatient = patientDao.GetPatientById(patientId)
             Cursor.Current = Cursors.WaitCursor
             Me.Enabled = False
-            episodeDao.CallEpisode(SelectedPatient, 0, EnumAccesEcranPrecedent.SANS, userLog)
+            episodeDao.CallEpisode(SelectedPatient, 0, userLog, EnumAccesEcranPrecedent.SANS)
             Me.Enabled = True
             episode = episodeDao.GetEpisodeEnCoursByPatientId(Me.SelectedPatient.patientId)
             If episode.Id <> 0 Then

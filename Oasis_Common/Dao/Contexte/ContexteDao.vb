@@ -156,7 +156,7 @@ Public Class ContexteDao
         Return codeRetour
     End Function
 
-    Public Function CreationContexte(contexte As Antecedent, contexteHistoACreer As AntecedentHisto, Optional conclusionEpisode As Boolean = False, Optional episode As Episode = Nothing) As Boolean
+    Public Function CreationContexte(contexte As Antecedent, contexteHistoACreer As AntecedentHisto, userLog As Utilisateur, Optional conclusionEpisode As Boolean = False, Optional episode As Episode = Nothing) As Boolean
         Dim da As SqlDataAdapter = New SqlDataAdapter()
         Dim codeRetour As Boolean = True
         Dim contexteId As Long
@@ -244,7 +244,7 @@ Public Class ContexteDao
                     episodeContexte.PatientId = episode.PatientId
                     episodeContexte.DateCreation = Date.Now()
                     episodeContexte.UserCreation = userLog.UtilisateurId
-                    episodeContexteDao.CreateEpisodeContexte(episodeContexte)
+                    episodeContexteDao.CreateEpisodeContexte(episodeContexte, userLog)
                 End If
             End If
 
@@ -267,13 +267,13 @@ Public Class ContexteDao
             AntecedentHistoCreationDao.CreationAntecedentHisto(contexteHistoACreer, userLog, AntecedentHistoCreationDao.EnumEtatAntecedentHisto.CreationAntecedent)
 
             'Mise à jour de la date de mise à jour de la synthèse (table patient)
-            patientDao.ModificationDateMajSynthesePatient(contexte.PatientId)
+            patientDao.ModificationDateMajSynthesePatient(contexte.PatientId, userLog)
         End If
 
         Return codeRetour
     End Function
 
-    Public Function ModificationContexte(contexte As Antecedent, contexteHistoACreer As AntecedentHisto) As Boolean
+    Public Function ModificationContexte(contexte As Antecedent, contexteHistoACreer As AntecedentHisto, userLog As Utilisateur) As Boolean
         Dim da As SqlDataAdapter = New SqlDataAdapter()
         Dim codeRetour As Boolean = True
 
@@ -337,13 +337,13 @@ Public Class ContexteDao
             AntecedentHistoCreationDao.CreationAntecedentHisto(contexteHistoACreer, userLog, AntecedentHistoCreationDao.EnumEtatAntecedentHisto.ModificationAntecedent)
 
             'Mise à jour de la date de mise à jour de la synthèse (table patient)
-            patientDao.ModificationDateMajSynthesePatient(contexte.PatientId)
+            patientDao.ModificationDateMajSynthesePatient(contexte.PatientId, userLog)
         End If
 
         Return codeRetour
     End Function
 
-    Public Function AnnulationContexte(contexte As Antecedent, contexteHistoACreer As AntecedentHisto) As Boolean
+    Public Function AnnulationContexte(contexte As Antecedent, contexteHistoACreer As AntecedentHisto, userLog As Utilisateur) As Boolean
         Dim da As SqlDataAdapter = New SqlDataAdapter()
         Dim codeRetour As Boolean = True
 
@@ -386,7 +386,7 @@ Public Class ContexteDao
             AntecedentHistoCreationDao.CreationAntecedentHisto(contexteHistoACreer, userLog, AntecedentHistoCreationDao.EnumEtatAntecedentHisto.AnnulationAntecedent)
 
             'Mise à jour de la date de mise à jour de la synthèse (table patient)
-            patientDao.ModificationDateMajSynthesePatient(contexte.PatientId)
+            patientDao.ModificationDateMajSynthesePatient(contexte.PatientId, userLog)
         End If
 
         Return codeRetour

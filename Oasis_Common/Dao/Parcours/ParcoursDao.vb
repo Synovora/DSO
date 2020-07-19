@@ -197,7 +197,7 @@ Public Class ParcoursDao
                     intervenantParcours.Structure = Intervenant.StructureNom
 
                     Dim SpecialiteId As Long = row("oa_parcours_specialite")
-                    intervenantParcours.Specialite = Environnement.Table_specialite.GetSpecialiteDescription(SpecialiteId)
+                    intervenantParcours.Specialite = Table_specialite.GetSpecialiteDescription(SpecialiteId)
 
                     ListIntervenant.Add(intervenantParcours)
                 Next
@@ -266,7 +266,7 @@ Public Class ParcoursDao
         Return False
     End Function
 
-    Public Function CreateIntervenantOasisByPatient(PatientId As Integer, Optional afficheMessage As Boolean = True) As Boolean
+    Public Function CreateIntervenantOasisByPatient(PatientId As Integer, userLog As Utilisateur, Optional afficheMessage As Boolean = True) As Boolean
         Dim parcours As New Parcours
         'Dim rorDao As New RorDao
 
@@ -286,7 +286,7 @@ Public Class ParcoursDao
             parcours.UserCreation = userLog.UtilisateurId
             parcours.DateCreation = Date.Now()
 
-            parcours.Id = CreateIntervenantParcours(parcours)
+            parcours.Id = CreateIntervenantParcours(parcours, userLog)
             If parcours.Id <> 0 Then
                 If afficheMessage = True Then
                     Throw New Exception("Intervenant médecin référent du parcours de soin créé")
@@ -294,7 +294,7 @@ Public Class ParcoursDao
                 'Création automatique de la première demande de rendez-vous
                 Dim patient As PatientBase = patientDao.GetPatientById(PatientId)
                 Dim tacheDao As New TacheDao
-                tacheDao.CreationAutomatiqueDeDemandeRendezVous(patient, parcours, Date.Now(), True)
+                tacheDao.CreationAutomatiqueDeDemandeRendezVous(patient, parcours, Date.Now(), userLog, True)
             End If
         End If
 
@@ -314,7 +314,7 @@ Public Class ParcoursDao
             parcours.UserCreation = userLog.UtilisateurId
             parcours.DateCreation = Date.Now()
 
-            parcours.Id = CreateIntervenantParcours(parcours)
+            parcours.Id = CreateIntervenantParcours(parcours, userLog)
             If parcours.Id <> 0 Then
                 If afficheMessage = True Then
                     Throw New Exception("Intervenant IDE sur site du parcours de soin créé")
@@ -322,14 +322,14 @@ Public Class ParcoursDao
                 'Création automatique de la première demande de rendez-vous
                 Dim patient As PatientBase = patientDao.GetPatientById(PatientId)
                 Dim tacheDao As New TacheDao
-                tacheDao.CreationAutomatiqueDeDemandeRendezVous(patient, parcours, Date.Now(), True)
+                tacheDao.CreationAutomatiqueDeDemandeRendezVous(patient, parcours, Date.Now(), userLog, True)
             End If
         End If
 
         Return True
     End Function
 
-    Public Function CreateIntervenantParcours(parcours As Parcours) As Long
+    Public Function CreateIntervenantParcours(parcours As Parcours, userLog As Utilisateur) As Long
         Dim da As SqlDataAdapter = New SqlDataAdapter()
         Dim parcoursId As Long = 0
         Dim con As SqlConnection
@@ -396,14 +396,14 @@ Public Class ParcoursDao
             parcoursHistoDao.CreationParcoursHisto(ParcoursHistoACreer, userLog, ParcoursHistoDao.EnumEtatParcoursHisto.Creation)
 
             'Mise à jour de la date de mise à jour de la synthèse (table patient)
-            patientDao.ModificationDateMajSynthesePatient(parcours.PatientId)
+            patientDao.ModificationDateMajSynthesePatient(parcours.PatientId, userLog)
         End If
 
 
         Return parcoursId
     End Function
 
-    Public Function ModificationIntervenantParcours(parcours As Parcours) As Boolean
+    Public Function ModificationIntervenantParcours(parcours As Parcours, userLog As Utilisateur) As Boolean
         Dim patientDao As New PatientDao
         Dim da As SqlDataAdapter = New SqlDataAdapter()
         Dim codeRetour As Boolean = True
@@ -450,35 +450,36 @@ Public Class ParcoursDao
 
         If codeRetour = True Then
             Dim parcoursHistoDao As New ParcoursHistoDao
-            Dim ParcoursHistoACreer As New ParcoursHisto
             'Mise à jour des données dans l'instance de la classe d'historisation du parcours
-            ParcoursHistoACreer.HistorisationDate = parcours.DateCreation
-            ParcoursHistoACreer.HistorisationUtilisateurId = parcours.UserCreation
-            ParcoursHistoACreer.HistorisationEtat = ParcoursHistoDao.EnumEtatParcoursHisto.Modification
-            ParcoursHistoACreer.Id = parcours.Id
-            ParcoursHistoACreer.PatientId = parcours.PatientId
-            ParcoursHistoACreer.SpecialiteId = parcours.SpecialiteId
-            ParcoursHistoACreer.CategorieId = parcours.CategorieId
-            ParcoursHistoACreer.SousCategorieId = parcours.SousCategorieId
-            ParcoursHistoACreer.IntervenantOasis = parcours.IntervenantOasis
-            ParcoursHistoACreer.RorId = parcours.RorId
-            ParcoursHistoACreer.Commentaire = parcours.Commentaire
-            ParcoursHistoACreer.Base = parcours.Base
-            ParcoursHistoACreer.Rythme = parcours.Rythme
-            ParcoursHistoACreer.Cacher = parcours.Cacher
-            ParcoursHistoACreer.Inactif = parcours.Inactif
+            Dim ParcoursHistoACreer As New ParcoursHisto With {
+                .HistorisationDate = parcours.DateCreation,
+                .HistorisationUtilisateurId = parcours.UserCreation,
+                .HistorisationEtat = ParcoursHistoDao.EnumEtatParcoursHisto.Modification,
+                .Id = parcours.Id,
+                .PatientId = parcours.PatientId,
+                .SpecialiteId = parcours.SpecialiteId,
+                .CategorieId = parcours.CategorieId,
+                .SousCategorieId = parcours.SousCategorieId,
+                .IntervenantOasis = parcours.IntervenantOasis,
+                .RorId = parcours.RorId,
+                .Commentaire = parcours.Commentaire,
+                .Base = parcours.Base,
+                .Rythme = parcours.Rythme,
+                .Cacher = parcours.Cacher,
+                .Inactif = parcours.Inactif
+            }
 
             'Création dans l'historique des PPS du PPS créé
             parcoursHistoDao.CreationParcoursHisto(ParcoursHistoACreer, userLog, ParcoursHistoDao.EnumEtatParcoursHisto.Modification)
 
             'Mise à jour de la date de mise à jour de la synthèse (table patient)
-            patientDao.ModificationDateMajSynthesePatient(parcours.PatientId)
+            patientDao.ModificationDateMajSynthesePatient(parcours.PatientId, userLog)
         End If
 
         Return codeRetour
     End Function
 
-    Public Function AnnulationIntervenantParcours(parcours As Parcours) As Boolean
+    Public Function AnnulationIntervenantParcours(parcours As Parcours, userLog As Utilisateur) As Boolean
         Dim da As SqlDataAdapter = New SqlDataAdapter()
         Dim codeRetour As Boolean = True
         Dim con As SqlConnection = GetConnection()
@@ -533,7 +534,7 @@ Public Class ParcoursDao
             parcoursHistoDao.CreationParcoursHisto(ParcoursHistoACreer, userLog, ParcoursHistoDao.EnumEtatParcoursHisto.Annulation)
 
             'Mise à jour de la date de mise à jour de la synthèse (table patient)
-            patientDao.ModificationDateMajSynthesePatient(parcours.PatientId)
+            patientDao.ModificationDateMajSynthesePatient(parcours.PatientId, userLog)
         End If
 
         Return codeRetour

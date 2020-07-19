@@ -74,7 +74,7 @@ Public Class AllergieDao
         End Using
     End Function
 
-    Public Function CreationAllergie(allergie As Allergie) As Boolean
+    Public Function CreationAllergie(allergie As Allergie, userLog As Utilisateur) As Boolean
         Dim da As SqlDataAdapter = New SqlDataAdapter()
         Dim codeRetour As Boolean = True
         Dim n As Integer 'Pour récupérer le nombre d'occurences enregistrées
@@ -101,7 +101,7 @@ Public Class AllergieDao
             SQLstring += SqlStringCond2
             allergie.SubstanceId = 0
             allergie.DenominationSubstance = ""
-            allergie.DenominationSubstancePere = theriaqueDao.getSubstancePereDenominationById(allergie.SubstancePereId)
+            allergie.DenominationSubstancePere = theriaqueDao.GetSubstancePereDenominationById(allergie.SubstancePereId)
         End If
 
         SQLstring += SqlStringFin
@@ -137,7 +137,7 @@ Public Class AllergieDao
         Return codeRetour
     End Function
 
-    Public Function AnnulationAllergie(allergieId) As Boolean
+    Public Function AnnulationAllergie(allergieId As Integer, userLog As Utilisateur) As Boolean
         Dim da As SqlDataAdapter = New SqlDataAdapter()
         Dim codeRetour As Boolean = True
         Dim n As Integer 'Pour récupérer le nombre d'occurences enregistrées

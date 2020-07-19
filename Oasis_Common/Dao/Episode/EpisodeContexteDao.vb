@@ -63,18 +63,18 @@ Public Class EpisodeContexteDao
     End Function
 
     Private Function BuildBean(reader As SqlDataReader) As EpisodeContexte
-        Dim episodeContexte As New EpisodeContexte
-
-        episodeContexte.EpisodeContexteId = reader("episode_contexte_id")
-        episodeContexte.EpisodeId = Coalesce(reader("episode_id"), 0)
-        episodeContexte.PatientId = Coalesce(reader("patient_id"), 0)
-        episodeContexte.ContexteId = Coalesce(reader("contexte_id"), 0)
-        episodeContexte.UserCreation = Coalesce(reader("user_creation"), 0)
-        episodeContexte.DateCreation = Coalesce(reader("date_creation"), Nothing)
+        Dim episodeContexte As New EpisodeContexte With {
+            .EpisodeContexteId = reader("episode_contexte_id"),
+            .EpisodeId = Coalesce(reader("episode_id"), 0),
+            .PatientId = Coalesce(reader("patient_id"), 0),
+            .ContexteId = Coalesce(reader("contexte_id"), 0),
+            .UserCreation = Coalesce(reader("user_creation"), 0),
+            .DateCreation = Coalesce(reader("date_creation"), Nothing)
+        }
         Return episodeContexte
     End Function
 
-    Public Function CreateEpisodeContexte(episodeContexte As EpisodeContexte) As Boolean
+    Public Function CreateEpisodeContexte(episodeContexte As EpisodeContexte, userLog As Utilisateur) As Boolean
         Dim nbcreate As Integer
         Dim da As SqlDataAdapter = New SqlDataAdapter()
         Dim episodeIdCree As Integer = 0

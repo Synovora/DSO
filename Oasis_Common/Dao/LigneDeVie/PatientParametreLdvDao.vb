@@ -59,7 +59,7 @@ Public Class PatientParametreLdvDao
         Return patientParametreLdv
     End Function
 
-    Public Function CreateConfigurationParametre(patientparametreldv As PatientParametreLdv) As Boolean
+    Public Function CreateConfigurationParametre(patientparametreldv As PatientParametreLdv, userLog As Utilisateur) As Boolean
         Dim nbcreate As Integer
         Dim da As SqlDataAdapter = New SqlDataAdapter()
         Dim episodeIdCree As Integer = 0
@@ -120,7 +120,7 @@ Public Class PatientParametreLdvDao
         Return CodeRetour
     End Function
 
-    Public Function UpdateConfigurationParametre(patientParametreLdv As PatientParametreLdv) As Boolean
+    Public Function UpdateConfigurationParametre(patientParametreLdv As PatientParametreLdv, userLog As Utilisateur) As Boolean
         Dim da As SqlDataAdapter = New SqlDataAdapter()
         Dim codeRetour As Boolean = True
         Dim con As SqlConnection = GetConnection()

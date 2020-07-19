@@ -193,7 +193,7 @@ Public Class EpisodeActeParamedicalDao
         Return codeRetour
     End Function
 
-    Public Function ModificationEpisodeActeParamedicalObservation(episodeActeParamedicalId As Long, Observation As String) As Boolean
+    Public Function ModificationEpisodeActeParamedicalObservation(episodeActeParamedicalId As Long, Observation As String, userLog As Utilisateur) As Boolean
         Dim da As SqlDataAdapter = New SqlDataAdapter()
         Dim codeRetour As Boolean = True
         Dim con As SqlConnection = GetConnection()

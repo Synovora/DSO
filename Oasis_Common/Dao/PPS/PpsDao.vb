@@ -236,7 +236,7 @@ Public Class PpsDao
         End Using
     End Function
 
-    Public Function CreationPPS(pps As Pps) As Boolean
+    Public Function CreationPPS(pps As Pps, userLog As Utilisateur) As Boolean
         Dim da As SqlDataAdapter = New SqlDataAdapter()
         Dim codeRetour As Boolean = True
         Dim ppsId As Long
@@ -306,13 +306,13 @@ Public Class PpsDao
             CreationPPSHisto(PPSHistoACreer, userLog, PPSHistoCreationDao.EnumEtatPPSHisto.Creation)
 
             'Mise à jour de la date de mise à jour de la synthèse (table patient)
-            patientDao.ModificationDateMajSynthesePatient(pps.PatientId)
+            patientDao.ModificationDateMajSynthesePatient(pps.PatientId, userLog)
         End If
 
         Return codeRetour
     End Function
 
-    Public Function ModificationPPS(pps As Pps) As Boolean
+    Public Function ModificationPPS(pps As Pps, userLog As Utilisateur) As Boolean
         Dim da As SqlDataAdapter = New SqlDataAdapter()
         Dim codeRetour As Boolean = True
 
@@ -365,13 +365,13 @@ Public Class PpsDao
             CreationPPSHisto(PPSHistoACreer, userLog, EnumEtatPPSHisto.Modification)
 
             'Mise à jour de la date de mise à jour de la synthèse (table patient)
-            patientDao.ModificationDateMajSynthesePatient(pps.PatientId)
+            patientDao.ModificationDateMajSynthesePatient(pps.PatientId, userLog)
         End If
 
         Return codeRetour
     End Function
 
-    Public Function AnnulationPrevention(pps As Pps) As Boolean
+    Public Function AnnulationPrevention(pps As Pps, userLog As Utilisateur) As Boolean
         Dim da As SqlDataAdapter = New SqlDataAdapter()
         Dim codeRetour As Boolean = True
 
@@ -425,7 +425,7 @@ Public Class PpsDao
             CreationPPSHisto(PPSHistoACreer, userLog, EnumEtatPPSHisto.Annulation)
 
             'Mise à jour de la date de mise à jour de la synthèse (table patient)
-            patientDao.ModificationDateMajSynthesePatient(pps.PatientId)
+            patientDao.ModificationDateMajSynthesePatient(pps.PatientId, userLog)
         End If
 
         Return codeRetour

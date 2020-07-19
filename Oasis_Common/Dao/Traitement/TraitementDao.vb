@@ -192,7 +192,7 @@ Public Class TraitementDao
         End Using
     End Function
 
-    Public Function ModificationTraitement(traitement As TraitementBase, traitementHistoACreer As TraitementHisto) As Boolean
+    Public Function ModificationTraitement(traitement As TraitementBase, traitementHistoACreer As TraitementHisto, userLog As Utilisateur) As Boolean
         Dim da As SqlDataAdapter = New SqlDataAdapter()
         Dim codeRetour As Boolean = True
 
@@ -284,13 +284,13 @@ Public Class TraitementDao
             CreationTraitementHisto(traitementHistoACreer, userLog, EnumEtatTraitementHisto.ModificationTraitement)
 
             'Mise à jour de la date de mise à jour de la synthèse (table patient)
-            patientDao.ModificationDateMajSynthesePatient(traitement.PatientId)
+            patientDao.ModificationDateMajSynthesePatient(traitement.PatientId, userLog)
         End If
 
         Return codeRetour
     End Function
 
-    Public Function CreationTraitement(traitement As TraitementBase, traitementHistoACreer As TraitementHisto) As Boolean
+    Public Function CreationTraitement(traitement As TraitementBase, traitementHistoACreer As TraitementHisto, userLog As Utilisateur) As Boolean
         Dim da As SqlDataAdapter = New SqlDataAdapter()
         Dim codeRetour As Boolean = True
         Dim traitementId As Long
@@ -384,7 +384,7 @@ Public Class TraitementDao
             Try
                 traitementCree = traitementDao.GetTraitementById(traitementHistoACreer.HistorisationTraitementId)
             Catch ex As Exception
-                Throw New Exception("Traitement : " + ex.Message, "Problème", MessageBoxButtons.OK, MessageBoxIcon.Error)
+                Throw New Exception("Traitement : " + ex.Message + "Problème")
                 Return False
             End Try
             InitClasseTraitementHistorisation(traitementCree, userLog, traitementHistoACreer)
@@ -394,13 +394,13 @@ Public Class TraitementDao
             CreationTraitementHisto(traitementHistoACreer, userLog, EnumEtatTraitementHisto.CreationTraitement)
 
             'Mise à jour de la date de mise à jour de la synthèse (table patient)
-            patientDao.ModificationDateMajSynthesePatient(traitement.PatientId)
+            patientDao.ModificationDateMajSynthesePatient(traitement.PatientId, userLog)
         End If
 
         Return codeRetour
     End Function
 
-    Public Function AnnulationTraitement(traitement As TraitementBase, traitementHistoACreer As TraitementHisto) As Boolean
+    Public Function AnnulationTraitement(traitement As TraitementBase, traitementHistoACreer As TraitementHisto, userLog As Utilisateur) As Boolean
         Dim da As SqlDataAdapter = New SqlDataAdapter()
         Dim codeRetour As Boolean = True
 
@@ -448,13 +448,13 @@ Public Class TraitementDao
             CreationTraitementHisto(traitementHistoACreer, userLog, EnumEtatTraitementHisto.AnnulationTraitement)
 
             'Mise à jour de la date de mise à jour de la synthèse (table patient)
-            patientDao.ModificationDateMajSynthesePatient(traitement.PatientId)
+            patientDao.ModificationDateMajSynthesePatient(traitement.PatientId, userLog)
         End If
 
         Return codeRetour
     End Function
 
-    Public Function ArretTraitement(traitement As TraitementBase, traitementHistoACreer As TraitementHisto) As Boolean
+    Public Function ArretTraitement(traitement As TraitementBase, traitementHistoACreer As TraitementHisto, userLog As Utilisateur) As Boolean
         Dim da As SqlDataAdapter = New SqlDataAdapter()
         Dim codeRetour As Boolean = True
 
@@ -509,14 +509,14 @@ Public Class TraitementDao
             CreationTraitementHisto(traitementHistoACreer, userLog, EnumEtatTraitementHisto.ArretTraitement)
 
             'Mise à jour de la date de mise à jour de la synthèse (table patient)
-            patientDao.ModificationDateMajSynthesePatient(traitement.PatientId)
+            patientDao.ModificationDateMajSynthesePatient(traitement.PatientId, userLog)
         End If
 
         Return codeRetour
     End Function
 
 
-    Public Function SuppressionTraitement(traitement As TraitementBase, traitementHistoACreer As TraitementHisto) As Boolean
+    Public Function SuppressionTraitement(traitement As TraitementBase, traitementHistoACreer As TraitementHisto, userLog As Utilisateur) As Boolean
         Dim da As SqlDataAdapter = New SqlDataAdapter()
         Dim codeRetour As Boolean = True
 
@@ -552,13 +552,13 @@ Public Class TraitementDao
             CreationTraitementHisto(traitementHistoACreer, userLog, EnumEtatTraitementHisto.SuppressionTraitement)
 
             'Mise à jour de la date de mise à jour de la synthèse (table patient)
-            patientDao.ModificationDateMajSynthesePatient(traitement.PatientId)
+            patientDao.ModificationDateMajSynthesePatient(traitement.PatientId, userLog)
         End If
 
         Return codeRetour
     End Function
 
-    Public Function DeclarationTraitementAllergieOuCI(traitement As TraitementBase) As Boolean
+    Public Function DeclarationTraitementAllergieOuCI(traitement As TraitementBase, userLog As Utilisateur) As Boolean
         Dim da As SqlDataAdapter = New SqlDataAdapter()
         Dim codeRetour As Boolean = True
 
@@ -597,7 +597,7 @@ Public Class TraitementDao
         End Try
 
         'Mise à jour de la date de mise à jour de la synthèse (table patient)
-        patientDao.ModificationDateMajSynthesePatient(traitement.PatientId)
+        patientDao.ModificationDateMajSynthesePatient(traitement.PatientId, userLog)
 
         Return codeRetour
     End Function

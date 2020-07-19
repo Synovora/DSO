@@ -211,7 +211,7 @@ Public Class DrcStandardDao
         Return codeRetour
     End Function
 
-    Public Function ModificationDrcStandard(drcStandard As DrcStandard) As Boolean
+    Public Function ModificationDrcStandard(drcStandard As DrcStandard, userLog As Utilisateur) As Boolean
         Dim NbUpdate As Integer
         Dim da As SqlDataAdapter = New SqlDataAdapter()
         Dim codeRetour As Boolean = True
@@ -237,7 +237,7 @@ Public Class DrcStandardDao
                 Dim anomalie As String = "La modification de la DRC standard n'a pas abouti - Id : " & drcStandard.Id.ToString & " DRC N° : " & drcStandard.DrcId.ToString
                 Throw New Exception(anomalie)
                 Throw New Exception(anomalie)
-                CreateLog(anomalie, "DrcStandardDao", LogDao.EnumTypeLog.ERREUR.ToString)
+                CreateLog(anomalie, "DrcStandardDao", LogDao.EnumTypeLog.ERREUR.ToString, userLog)
             End If
         Catch ex As Exception
             Throw New Exception(ex.Message)
@@ -249,7 +249,7 @@ Public Class DrcStandardDao
         Return codeRetour
     End Function
 
-    Public Function AnnulationDrcStandard(Id As Long) As Boolean
+    Public Function AnnulationDrcStandard(Id As Long, userLog As Utilisateur) As Boolean
         Dim NbUpdate As Integer
         Dim da As SqlDataAdapter = New SqlDataAdapter()
         Dim codeRetour As Boolean = True
@@ -274,7 +274,7 @@ Public Class DrcStandardDao
                 Dim anomalie As String = "L'annulation de la DRC standard n'a pas abouti - Id : " & Id.ToString
                 Throw New Exception(anomalie)
                 Throw New Exception(anomalie)
-                CreateLog(anomalie, "DrcStandardDao", LogDao.EnumTypeLog.ERREUR.ToString)
+                CreateLog(anomalie, "DrcStandardDao", LogDao.EnumTypeLog.ERREUR.ToString, userLog)
             End If
         Catch ex As Exception
             Throw New Exception(ex.Message)

@@ -595,7 +595,7 @@ Public Class PatientDao
         Return StringContreIndication
     End Function
 
-    Public Function CreationPatient(patient As PatientBase) As Boolean
+    Public Function CreationPatient(patient As PatientBase, userLog As Utilisateur) As Boolean
         'Dim da As MySqlDataAdapter = New MySqlDataAdapter()
         Dim da As SqlDataAdapter = New SqlDataAdapter()
         Dim patientId As Long
@@ -658,14 +658,14 @@ Public Class PatientDao
         If patient.PatientDateEntree.Date <> MaxDate.Date Then
             If patientId <> 0 Then
                 Dim parcoursDao As New ParcoursDao
-                parcoursDao.CreateIntervenantOasisByPatient(patientId)
+                parcoursDao.CreateIntervenantOasisByPatient(patientId, userLog)
             End If
         End If
 
         Return codeRetour
     End Function
 
-    Public Function ModificationPatient(patient As PatientBase) As Boolean
+    Public Function ModificationPatient(patient As PatientBase, userLog As Utilisateur) As Boolean
         'Dim da As MySqlDataAdapter = New MySqlDataAdapter()
         Dim da As SqlDataAdapter = New SqlDataAdapter()
         Dim codeRetour As Boolean = True
@@ -727,7 +727,7 @@ Public Class PatientDao
             Dim MaxDate As New Date(9998, 12, 31, 0, 0, 0)
             If patient.PatientDateEntree <> MaxDate And patient.PatientDateSortie = MaxDate Then
                 Dim parcoursDao As New ParcoursDao
-                parcoursDao.CreateIntervenantOasisByPatient(patient.PatientId)
+                parcoursDao.CreateIntervenantOasisByPatient(patient.PatientId, userLog)
             End If
         End If
 

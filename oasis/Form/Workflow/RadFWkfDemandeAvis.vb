@@ -93,7 +93,7 @@ Public Class RadFWkfDemandeAvis
 
 
     Private Sub RadFWkfDemandeAvis_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-        afficheTitleForm(Me, "Demande d'avis")
+        AfficheTitleForm(Me, "Demande d'avis", userLog)
         Me.CodeRetour = False
 
         'Placement de la fenêtre en bas à droite de l'écran parent
@@ -112,7 +112,7 @@ Public Class RadFWkfDemandeAvis
     End Sub
 
     Private Sub ChargementDemandeAvis()
-        afficheTitleForm(Me, "Demande d'avis")
+        AfficheTitleForm(Me, "Demande d'avis", userLog)
 
         If Creation = True Then
             '===========================================================================================================
@@ -321,7 +321,7 @@ Public Class RadFWkfDemandeAvis
                 End If
             Next
 
-            If tacheDao.CreationDemandeAvis(NewTache) = True Then
+            If tacheDao.CreationDemandeAvis(NewTache, userLog) = True Then
                 MessageBox.Show("Demande d'avis créée")
                 CodeRetour = True
                 Close()
@@ -338,7 +338,7 @@ Public Class RadFWkfDemandeAvis
                     If CheckBox1.Checked = True Then
                         'Création tâche de réponse sur demande d'avis (REPONSE_AVIS) et cloture de la tâche en cours pris en charge par le CreateTache (transaction)
                         NewTache.Nature = Tache.NatureTache.REPONSE.ToString
-                        If tacheDao.CreateTache(NewTache) = True Then
+                        If tacheDao.CreateTache(NewTache, userLog) = True Then
                             MessageBox.Show("Réponse à la demande d'avis envoyée")
                             CodeRetour = True
                             Close()
@@ -347,7 +347,7 @@ Public Class RadFWkfDemandeAvis
                         If CheckBox2.Checked = True Then
                             'Création tâche de demande de complément d'information (COMPLEMENT) et cloture de la tâche en cours
                             NewTache.Nature = Tache.NatureTache.COMPLEMENT.ToString
-                            If tacheDao.CreateTache(NewTache) = True Then
+                            If tacheDao.CreateTache(NewTache, userLog) = True Then
                                 MessageBox.Show("Demande de précision envoyée")
                                 CodeRetour = True
                                 Close()
@@ -359,7 +359,7 @@ Public Class RadFWkfDemandeAvis
                 Case Tache.NatureTache.REPONSE.ToString
                     If CheckBox1.Checked = True Then
                         'Validation et fin du Workflow, cloture de la tâche en cours
-                        If tacheDao.ClotureTache(SelectedTacheId, True) = True Then
+                        If tacheDao.ClotureTache(SelectedTacheId, True, userLog) = True Then
                             MessageBox.Show("Validation de la réponse rendue, demande d'avis terminée")
                             CodeRetour = True
                             Close()
@@ -368,7 +368,7 @@ Public Class RadFWkfDemandeAvis
                         If CheckBox2.Checked = True Then
                             'Création tâche de demande d'avis (DEMANDE) et cloture de la tâche en cours
                             NewTache.Nature = Tache.NatureTache.DEMANDE.ToString
-                            If tacheDao.CreateTache(NewTache) = True Then
+                            If tacheDao.CreateTache(NewTache, userLog) = True Then
                                 MessageBox.Show("Relance de la demande d'avis envoyée")
                                 CodeRetour = True
                                 Close()
@@ -380,7 +380,7 @@ Public Class RadFWkfDemandeAvis
                 Case Tache.NatureTache.COMPLEMENT.ToString
                     'Création tâche de demande d'avis (DEMANDE) et cloture de la tâche en cours
                     NewTache.Nature = Tache.NatureTache.DEMANDE.ToString
-                    If tacheDao.CreateTache(NewTache) = True Then
+                    If tacheDao.CreateTache(NewTache, userLog) = True Then
                         MessageBox.Show("Réponse à la demande de précision envoyée")
                         CodeRetour = True
                         Close()

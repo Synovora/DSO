@@ -74,7 +74,7 @@ Public Class ContreIndicationSubstanceDao
         End Using
     End Function
 
-    Public Function CreationContreIndicationSubstance(contreIndication As ContreIndicationSubstance) As Boolean
+    Public Function CreationContreIndicationSubstance(contreIndication As ContreIndicationSubstance, userLog As Utilisateur) As Boolean
         Dim da As SqlDataAdapter = New SqlDataAdapter()
         Dim codeRetour As Boolean = True
         Dim n As Integer 'Pour récupérer le nombre d'occurences enregistrées
@@ -101,7 +101,7 @@ Public Class ContreIndicationSubstanceDao
             SQLstring += SqlStringCond2
             contreIndication.SubstanceId = 0
             contreIndication.DenominationSubstance = ""
-            contreIndication.DenominationSubstancePere = theriaqueDao.getSubstancePereDenominationById(contreIndication.SubstancePereId)
+            contreIndication.DenominationSubstancePere = theriaqueDao.GetSubstancePereDenominationById(contreIndication.SubstancePereId)
         End If
 
         SQLstring += SqlStringFin
@@ -137,7 +137,7 @@ Public Class ContreIndicationSubstanceDao
         Return codeRetour
     End Function
 
-    Public Function AnnulationContreIndicationSubstance(contreIndicationId) As Boolean
+    Public Function AnnulationContreIndicationSubstance(contreIndicationId As Integer, userLog As Utilisateur) As Boolean
         Dim da As SqlDataAdapter = New SqlDataAdapter()
         Dim codeRetour As Boolean = True
         Dim n As Integer 'Pour récupérer le nombre d'occurences enregistrées

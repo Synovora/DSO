@@ -70,7 +70,7 @@ Public Class PatientNoteVaccinDao
         Return patientNote
     End Function
 
-    Public Function CreationNote(patientNote As PatientNote) As Boolean
+    Public Function CreationNote(patientNote As PatientNote, userLog As Utilisateur) As Boolean
         Dim da As SqlDataAdapter = New SqlDataAdapter()
         Dim codeRetour As Boolean = True
         Dim con As SqlConnection
@@ -104,13 +104,13 @@ Public Class PatientNoteVaccinDao
 
         If codeRetour = True Then
             'Mise à jour de la date de mise à jour de la synthèse (table patient)
-            patientDao.ModificationDateMajSynthesePatient(patientNote.PatientId)
+            patientDao.ModificationDateMajSynthesePatient(patientNote.PatientId, userLog)
         End If
 
         Return codeRetour
     End Function
 
-    Public Function ModificationNote(patientNote As PatientNote) As Boolean
+    Public Function ModificationNote(patientNote As PatientNote, userLog As Utilisateur) As Boolean
         Dim da As SqlDataAdapter = New SqlDataAdapter()
         Dim codeRetour As Boolean = True
         Dim con As SqlConnection
@@ -144,13 +144,13 @@ Public Class PatientNoteVaccinDao
 
         If codeRetour = True Then
             'Mise à jour de la date de mise à jour de la synthèse (table patient)
-            patientDao.ModificationDateMajSynthesePatient(patientNote.PatientId)
+            patientDao.ModificationDateMajSynthesePatient(patientNote.PatientId, userLog)
         End If
 
         Return codeRetour
     End Function
 
-    Public Function AnnulationNote(patientNote As PatientNote) As Boolean
+    Public Function AnnulationNote(patientNote As PatientNote, userLog As Utilisateur) As Boolean
         Dim da As SqlDataAdapter = New SqlDataAdapter()
         Dim codeRetour As Boolean = True
         Dim con As SqlConnection
@@ -183,7 +183,7 @@ Public Class PatientNoteVaccinDao
 
         If codeRetour = True Then
             'Mise à jour de la date de mise à jour de la synthèse (table patient)
-            patientDao.ModificationDateMajSynthesePatient(patientNote.PatientId)
+            patientDao.ModificationDateMajSynthesePatient(patientNote.PatientId, userLog)
         End If
 
         Return codeRetour

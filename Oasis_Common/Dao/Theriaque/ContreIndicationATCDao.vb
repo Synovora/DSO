@@ -72,7 +72,7 @@ Public Class ContreIndicationATCDao
         End Using
     End Function
 
-    Public Function CreationContreIndicationATC(contreIndicationATC As ContreIndicationATC) As Boolean
+    Public Function CreationContreIndicationATC(contreIndicationATC As ContreIndicationATC, userLog As Utilisateur) As Boolean
         Dim da As SqlDataAdapter = New SqlDataAdapter()
         Dim codeRetour As Boolean = True
         Dim n As Integer 'Pour récupérer le nombre d'occurences enregistrées
@@ -116,7 +116,7 @@ Public Class ContreIndicationATCDao
         Return codeRetour
     End Function
 
-    Public Function AnnulationContreIndicationATC(contreIndicationId) As Boolean
+    Public Function AnnulationContreIndicationATC(contreIndicationId As Integer, userLog As Utilisateur) As Boolean
         Dim da As SqlDataAdapter = New SqlDataAdapter()
         Dim codeRetour As Boolean = True
         Dim n As Integer 'Pour récupérer le nombre d'occurences enregistrées

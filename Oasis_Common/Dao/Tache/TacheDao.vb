@@ -982,7 +982,7 @@ Public Class TacheDao
         Return tache
     End Function
 
-    Public Function CreateTache(tache As Tache, Optional ifExist As String = "", userLog As Utilisateur) As Boolean
+    Public Function CreateTache(tache As Tache, userLog As Utilisateur, Optional ifExist As String = "") As Boolean
         Dim da As SqlDataAdapter = New SqlDataAdapter()
         Dim codeRetour As Boolean = True
         Dim con As SqlConnection
@@ -993,7 +993,7 @@ Public Class TacheDao
         Try
             ' --- test si update tache parent todo
             If tache.ParentId <> 0 Then
-                ClosTache(con, tache.ParentId, Tache.EtatTache.TERMINEE, False, transaction, userLog)
+                ClosTache(con, tache.ParentId, Tache.EtatTache.TERMINEE, False, userLog, transaction)
             End If
 
             Dim SQLstring As String = "INSERT INTO oasis.oa_tache " &
@@ -1067,7 +1067,7 @@ Public Class TacheDao
         'Console.WriteLine(SQLstring)
 
         Try
-            CreateTache(tache, SQLstring, userLog)
+            CreateTache(tache, userLog, SQLstring)
         Catch ex As Exception
             MsgBox(ex.Message)
             codeRetour = False
@@ -1076,7 +1076,7 @@ Public Class TacheDao
         Return codeRetour
     End Function
 
-    Public Function CreationAutomatiqueDeDemandeRendezVous(Patient As PatientBase, parcours As Parcours, dateDebut As Date, Optional PremierRDV As Boolean = False, userLog As Utilisateur) As Boolean
+    Public Function CreationAutomatiqueDeDemandeRendezVous(Patient As PatientBase, parcours As Parcours, dateDebut As Date, userLog As Utilisateur, Optional PremierRDV As Boolean = False) As Boolean
         'Calcul de la période (année, mois) du rendez-vous demandé
         Dim Commentaire As String = ""
         Dim Rythme As Integer = parcours.Rythme
@@ -1318,7 +1318,7 @@ Public Class TacheDao
                     codeRetour = False
                 Else
                     Try
-                        If CreateTache(tache,, userLog) = True Then
+                        If CreateTache(tache, userLog) = True Then
                             codeRetour = True
                         End If
                     Catch ex As Exception
@@ -1336,7 +1336,7 @@ Public Class TacheDao
         Return codeRetour
     End Function
 
-    Public Function CreationDemandeAvis(tache As Tache) As Boolean
+    Public Function CreationDemandeAvis(tache As Tache, userLog As Utilisateur) As Boolean
         Dim nbCreate As Integer
         Dim da As SqlDataAdapter = New SqlDataAdapter()
         Dim codeRetour As Boolean = True
@@ -1393,7 +1393,7 @@ Public Class TacheDao
             End If
         Catch ex As Exception
             Throw New Exception(ex.Message)
-            CreateLog(ex.ToString, "TacheDao", LogDao.EnumTypeLog.ERREUR.ToString)
+            CreateLog(ex.ToString, "TacheDao", LogDao.EnumTypeLog.ERREUR.ToString, userLog)
             codeRetour = False
         Finally
             con.Close()
@@ -1412,7 +1412,7 @@ Public Class TacheDao
 
         con = GetConnection()
         Try
-            ClosTache(con, idTache, Tache.EtatTache.ANNULEE, True,, userLog)
+            ClosTache(con, idTache, Tache.EtatTache.ANNULEE, True, userLog)
 
         Catch ex As Exception
             Throw New Exception(ex.Message)
@@ -1423,7 +1423,7 @@ Public Class TacheDao
 
         Return codeRetour
     End Function
-    Public Sub ClosTache(con As SqlConnection, idTache As Long, etatFinal As Tache.EtatTache, cloture As Boolean, Optional transaction As SqlTransaction = Nothing, userLog As Utilisateur)
+    Public Sub ClosTache(con As SqlConnection, idTache As Long, etatFinal As Tache.EtatTache, cloture As Boolean, userLog As Utilisateur, Optional transaction As SqlTransaction = Nothing)
         Dim da As SqlDataAdapter = New SqlDataAdapter()
         Dim codeRetour As Boolean = True
         Dim nbUpdate As Integer
@@ -1467,7 +1467,7 @@ Public Class TacheDao
 
         con = GetConnection()
         Try
-            ClosTache(con, idTache, Tache.EtatTache.TERMINEE, cloture, , userLog)
+            ClosTache(con, idTache, Tache.EtatTache.TERMINEE, cloture, userLog)
             codeRetour = True
         Catch ex As Exception
             Throw New Exception(ex.Message)
@@ -1611,7 +1611,7 @@ Public Class TacheDao
     ''' <param name="patient"></param>
     ''' <param name="parcours"></param>
     ''' <param name="tacheParent"></param>
-    Public Sub CreateRendezVous(patient As PatientBase, parcours As Parcours, typeTache As Tache.TypeTache, dateRDV As Date, duree As Integer, commentaire As String, Optional tacheParent As Tache = Nothing, userLog As Utilisateur)
+    Public Sub CreateRendezVous(patient As PatientBase, parcours As Parcours, typeTache As Tache.TypeTache, dateRDV As Date, duree As Integer, commentaire As String, userLog As Utilisateur, Optional tacheParent As Tache = Nothing)
         Dim tache As Tache = New Tache()
 
         If typeTache <> typeTache.RDV_MISSION AndAlso typeTache <> typeTache.RDV AndAlso typeTache <> typeTache.RDV_SPECIALISTE Then
@@ -1631,7 +1631,7 @@ Public Class TacheDao
         End If
 
         ' --- on set emetteurFonctionId, traiteFonctionId et destinataireFonctionid
-        SetFonctionsIdFromUserLogAnParcours(tache, parcours, tacheParent, userLog)
+        SetFonctionsIdFromUserLogAnParcours(tache, parcours, userLog, tacheParent)
         ' --- set du reste 
         tache.UniteSanitaireId = patient.PatientUniteSanitaireId
         tache.SiteId = patient.PatientSiteId
@@ -1652,7 +1652,7 @@ Public Class TacheDao
         'tache.TypedemandeRendezVous =     ' => pas sur ce type de tache
         tache.DateRendezVous = dateRDV
 
-        CreateTache(tache,, userLog)
+        CreateTache(tache, userLog)
 
     End Sub
 
@@ -1738,7 +1738,7 @@ Public Class TacheDao
         Return isOK
     End Function
 
-    Private Sub SetFonctionsIdFromUserLogAnParcours(tache As Tache, parcours As Parcours, Optional tacheParent As Tache = Nothing, userLog As Utilisateur)
+    Private Sub SetFonctionsIdFromUserLogAnParcours(tache As Tache, parcours As Parcours, userLog As Utilisateur, Optional tacheParent As Tache = Nothing)
 
         With tache
             ' -- emetteur ID
