@@ -116,7 +116,7 @@ Public Class RadFParcoursHistoListe
             If i = 0 Then
                 specialiteId = Coalesce(parcoursHistoDataTable.Rows(i)("oa_parcours_specialite"), 0)
                 If specialiteId <> 0 Then
-                    specialiteString = Environnement.Table_specialite.GetSpecialiteDescription(specialiteId)
+                    specialiteString = Table_specialite.GetSpecialiteDescription(specialiteId)
                 End If
             End If
 

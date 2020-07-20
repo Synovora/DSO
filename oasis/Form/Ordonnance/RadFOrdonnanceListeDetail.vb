@@ -720,7 +720,7 @@ Public Class RadFOrdonnanceListeDetail
 
     Private Sub RadBtnValidation_Click(sender As Object, e As EventArgs) Handles RadBtnValidation.Click
         If userLog.TypeProfil = FonctionDao.EnumTypeFonction.MEDICAL.ToString Then
-            If ordonnanceDao.ValidationOrdonnance(SelectedOrdonnanceId) = True Then
+            If ordonnanceDao.ValidationOrdonnance(SelectedOrdonnanceId, userLog) = True Then
                 ordonnance = ordonnanceDao.GetOrdonnaceById(SelectedOrdonnanceId)
                 GestionAccesBoutonAction()
                 Dim form As New RadFNotification()

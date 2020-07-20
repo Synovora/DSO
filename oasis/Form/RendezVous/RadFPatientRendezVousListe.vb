@@ -55,7 +55,7 @@ Public Class RadFPatientRendezVousListe
             parcoursId = Coalesce(RdvDataTable.Rows(i)("parcours_id"), 0)
             specialiteId = Coalesce(RdvDataTable.Rows(i)("oa_ror_specialite_id"), 0)
             If specialiteId <> 0 Then
-                RadGridViewRDV.Rows(iGrid).Cells("specialite").Value = Environnement.Table_specialite.GetSpecialiteDescription(specialiteId)
+                RadGridViewRDV.Rows(iGrid).Cells("specialite").Value = Table_specialite.GetSpecialiteDescription(specialiteId)
             Else
                 RadGridViewRDV.Rows(iGrid).Cells("specialite").Value = ""
             End If
@@ -180,7 +180,7 @@ Public Class RadFPatientRendezVousListe
                 'Si la tâche est en attente on attribue la tâche à l'utilisateur
                 If tache.Etat = Tache.EtatTache.EN_ATTENTE.ToString Then
                     TacheALiberer = True
-                    tacheDao.AttribueTacheToUserLog(tache.Id)
+                    tacheDao.AttribueTacheToUserLog(tache.Id, userLog)
                 End If
 
                 Using form As New RadFTacheModificationDemandeRendezVous
@@ -222,7 +222,7 @@ Public Class RadFPatientRendezVousListe
                 'Si la tâche est en attente on attribue la tâche à l'utilisateur
                 If tache.Etat = Tache.EtatTache.EN_ATTENTE.ToString Then
                     TacheALiberer = True
-                    tacheDao.AttribueTacheToUserLog(tache.Id)
+                    tacheDao.AttribueTacheToUserLog(tache.Id, userLog)
                 End If
 
                 Dim RDVisTranforme As Boolean = False
@@ -276,11 +276,11 @@ Public Class RadFPatientRendezVousListe
                             'Si la tâche est en attente on attribue la tâche à l'utilisateur
                             If tache.Etat = Tache.EtatTache.EN_ATTENTE.ToString Then
                                 TacheALiberer = True
-                                tacheDao.AttribueTacheToUserLog(tache.Id)
+                                tacheDao.AttribueTacheToUserLog(tache.Id, userLog)
                             End If
 
                             If MsgBox("Confirmation de la clôture du rendez-vous", MsgBoxStyle.YesNo, "") = MsgBoxResult.Yes Then
-                                If tacheDao.ClotureTache(tache.Id, True) = True Then
+                                If tacheDao.ClotureTache(tache.Id, True, userLog) = True Then
                                     Me.RadDesktopAlert1.CaptionText = "Notification rendez-vous"
                                     Me.RadDesktopAlert1.ContentText = "Rendez-vous clôturé"
                                     Me.RadDesktopAlert1.Show()
@@ -290,7 +290,7 @@ Public Class RadFPatientRendezVousListe
                                     Dim parcoursDao As New ParcoursDao
                                     Dim parcours As Parcours = parcoursDao.GetParcoursById(parcoursId)
                                     If parcours.Rythme <> 0 Then
-                                        If tacheDao.CreationAutomatiqueDeDemandeRendezVous(SelectedPatient, parcours, tache.DateRendezVous.Date) = True Then
+                                        If tacheDao.CreationAutomatiqueDeDemandeRendezVous(SelectedPatient, parcours, tache.DateRendezVous.Date, userLog) = True Then
                                             Me.RadDesktopAlert1.CaptionText = "Notification demande de rendez-vous"
                                             Me.RadDesktopAlert1.ContentText = "Une demande de rendez-vous a été automatiquement générée pour cet intervenant"
                                             Me.RadDesktopAlert1.Show()
@@ -353,12 +353,12 @@ Public Class RadFPatientRendezVousListe
 
             'Si la tâche est en attente on attribue la tâche à l'utilisateur
             If tache.Etat = Tache.EtatTache.EN_ATTENTE.ToString Then
-                tacheDao.AttribueTacheToUserLog(tache.Id)
+                tacheDao.AttribueTacheToUserLog(tache.Id, userLog)
                 TacheALiberer = True
             End If
 
             If MsgBox("Confirmation de l'annulation du rendez-vous", vbYesNo + vbExclamation, "Annulation rendez-vous") = MsgBoxResult.Yes Then
-                If tacheDao.AnnulationTache(tache.Id) = True Then
+                If tacheDao.AnnulationTache(tache.Id, userLog) = True Then
                     Me.RadDesktopAlert1.CaptionText = "Notification rendez-vous"
                     Me.RadDesktopAlert1.ContentText = "Rendez-vous annulé"
                     Me.RadDesktopAlert1.Show()
@@ -387,12 +387,12 @@ Public Class RadFPatientRendezVousListe
 
             'Si la tâche est en attente on attribue la tâche à l'utilisateur
             If tache.Etat = Tache.EtatTache.EN_ATTENTE.ToString Then
-                tacheDao.AttribueTacheToUserLog(tache.Id)
+                tacheDao.AttribueTacheToUserLog(tache.Id, userLog)
                 TacheALiberer = True
             End If
 
             If MsgBox("Confirmation de l'annulation de la demande de rendez-vous", MsgBoxStyle.YesNo, "") = MsgBoxResult.Yes Then
-                If tacheDao.AnnulationTache(tache.Id) = True Then
+                If tacheDao.AnnulationTache(tache.Id, userLog) = True Then
                     Me.RadDesktopAlert1.CaptionText = "Notification rendez-vous"
                     Me.RadDesktopAlert1.ContentText = "Demande de rendez-vous annulée"
                     Me.RadDesktopAlert1.Show()

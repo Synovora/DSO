@@ -67,7 +67,7 @@ Public Class FrmAdminTemplateDocx
     End Sub
 
     Private Sub initCtrl()
-        AfficheTitleForm(Me, Me.Text)
+        AfficheTitleForm(Me, Me.Text, userLog)
 
         'hide the default "Save as" button
         'Me.RichTextEditorRibbonBar1.BackstageControl.Items.Last().Visibility = ElementVisibility.Collapsed

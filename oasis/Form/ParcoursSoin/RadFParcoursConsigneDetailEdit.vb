@@ -175,7 +175,7 @@ Public Class RadFParcoursConsigneDetailEdit
         Else
             LimiteAgeEnfantParm = 16
             Dim Description As String = "Paramètre 'LimiteAgeEnfant' non défini dans le fichier App.config"
-            CreateLog(Description, Me.Name, LogDao.EnumTypeLog.ERREUR.ToString)
+            CreateLog(Description, Me.Name, LogDao.EnumTypeLog.ERREUR.ToString, userLog)
         End If
     End Sub
 

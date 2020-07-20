@@ -21,7 +21,7 @@ Public Class FrmUtilisateur
         InitializeComponent()
 
         ' Ajoutez une initialisation quelconque après l'appel InitializeComponent().
-        AfficheTitleForm(Me, Me.Text)
+        AfficheTitleForm(Me, Me.Text, userLog)
         Me.utilisateur = utilisateur
         isCreation = If(utilisateur.UtilisateurId = 0, True, False)
 

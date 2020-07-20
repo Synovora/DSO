@@ -52,7 +52,7 @@ Public Class RadFDrcDetailEdit
     Dim conxn As New SqlConnection(getConnectionString())
 
     Private Sub RadFDrcDetailEdit_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-        afficheTitleForm(Me, "Gestion des DRC")
+        AfficheTitleForm(Me, "Gestion des DRC", userLog)
         CodeRetour = False
 
         Me.Width = 854

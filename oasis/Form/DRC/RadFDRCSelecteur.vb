@@ -240,10 +240,10 @@ Public Class RadFDRCSelecteur
             LblDrcAgeMax.Text = DrcDataGridView.Rows(aRow).Cells("oa_drc_age_max").Value
             AgeMax = DrcDataGridView.Rows(aRow).Cells("oa_drc_age_max").Value
             Sexe = CInt(DrcDataGridView.Rows(aRow).Cells("contexte").Value)
-            TxtCategorieMajeure.Text = Environnement.Table_categorie_majeure.GetCategorieMajeureDescription(DrcDataGridView.Rows(aRow).Cells("oa_drc_categorie_majeure_id").Value)
+            TxtCategorieMajeure.Text = Table_categorie_majeure.GetCategorieMajeureDescription(DrcDataGridView.Rows(aRow).Cells("oa_drc_categorie_majeure_id").Value)
             Dim AldId As Integer = Coalesce(DrcDataGridView.Rows(aRow).Cells("oa_drc_ald_id").Value, 0)
             If AldId <> 0 Then
-                TxtAldDescription.Text = Environnement.Table_ald.GetAldDescription(AldId)
+                TxtAldDescription.Text = Table_ald.GetAldDescription(AldId)
                 LblLabelAld.Show()
                 TxtAldDescription.Show()
             Else

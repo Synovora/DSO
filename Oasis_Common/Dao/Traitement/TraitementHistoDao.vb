@@ -1,7 +1,7 @@
 ﻿Imports System.Configuration
 Imports System.Data.SqlClient
-Imports Oasis_Common
-Module TraitementHistoDao
+
+Public Module TraitementHistoDao
     Public Enum EnumEtatTraitementHisto
         CreationTraitement = 1
         ModificationTraitement = 2
@@ -13,7 +13,7 @@ Module TraitementHistoDao
         SuppressionTraitement = 8
     End Enum
 
-    Public Function getAllHistoTraitementbyId(traitementId As Integer) As DataTable
+    Public Function GetAllHistoTraitementbyId(traitementId As Integer) As DataTable
         Dim SQLString As String = "SELECT * FROM oasis.oa_traitement_histo WHERE oa_traitement_id = '" + traitementId.ToString + "' ORDER BY oa_traitement_histo_id DESC;"
 
         Using con As SqlConnection = getConnection()
@@ -35,7 +35,7 @@ Module TraitementHistoDao
     End Function
 
     Public Function CreationTraitementHisto(TraitementHistoACreer As TraitementHisto, UtilisateurConnecte As Utilisateur, EtatHistorisation As Integer) As Boolean
-        Dim conxn As New SqlConnection(getConnectionString())
+        Dim conxn As New SqlConnection(GetConnectionString())
         Dim da As SqlDataAdapter = New SqlDataAdapter()
         Dim codeRetour As Boolean = True
         Dim dateCreation As DateTime = Date.Now.Date

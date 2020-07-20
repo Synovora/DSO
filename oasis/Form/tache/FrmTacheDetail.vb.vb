@@ -31,9 +31,9 @@ Public Class FrmTacheDetail_vb
         tache = tacheDao.GetTacheById(idTache, True)
 
         ' --- centrage et chgt de style du titre du formulaire
-        afficheTitleForm(Me, tache.Type.ToString & If(tache.Nature.ToString <> tache.Type.ToString, "/" + tache.Nature.ToString, "") &
+        AfficheTitleForm(Me, tache.Type.ToString & If(tache.Nature.ToString <> tache.Type.ToString, "/" + tache.Nature.ToString, "") &
             " - créée le " & tache.HorodatageCreation &
-            " - Etat : " & tache.Etat.ToString)
+            " - Etat : " & tache.Etat.ToString, userLog)
 
         ' -- recherche beans associes à la tache et init des controls
         tacheBeanAssocie = tacheDao.GetTacheBeanAssocie(tache)
@@ -191,7 +191,7 @@ Public Class FrmTacheDetail_vb
             Me.Enabled = False
             If tache.isUnRdv() Then
                 Dim episodeDao As EpisodeDao = New EpisodeDao
-                IsActionEffectuee = episodeDao.CallEpisode(tacheBeanAssocie.Patient, tache.Id,, userLog)
+                IsActionEffectuee = episodeDao.CallEpisode(tacheBeanAssocie.Patient, tache.Id, userLog)
             Else
                 Using vRadFEpisodeDetail As New RadFEpisodeDetail
                     vRadFEpisodeDetail.SelectedEpisodeId = tache.EpisodeId
@@ -224,7 +224,7 @@ Public Class FrmTacheDetail_vb
         Interaction.Beep()
         If MsgBox("Etes-vous sur de vouloir annuler cette tâche ?", MsgBoxStyle.YesNo Or MsgBoxStyle.DefaultButton2 Or MsgBoxStyle.Critical, "Annulation Tâche") = MsgBoxResult.Yes Then
             Try
-                tacheDao.AnnulationTache(tache.Id)
+                tacheDao.AnnulationTache(tache.Id, userLog)
                 _isActionEffectuee1 = True
                 Me.Close()
             Catch err As Exception
@@ -238,7 +238,7 @@ Public Class FrmTacheDetail_vb
         ' --- mode attribution
         If tache.IsAttribuable(userLog) Then
             Try
-                If tacheDao.AttribueTacheToUserLog(tache.Id) Then
+                If tacheDao.AttribueTacheToUserLog(tache.Id, userLog) Then
                     InitControls(tache.Id)
                     IsActionEffectuee = True
                     'Me.Close()
@@ -280,7 +280,7 @@ Public Class FrmTacheDetail_vb
                         dureeRendezVous = ConfigurationManager.AppSettings("dureeRendezVous")
                     End If
                     '     Public Sub createRendezVous(patient As PatientBase, parcours As Parcours, typeTache As TypeTache, dateRDV As Date, duree As Integer, commentaire As String, Optional tacheParent As Tache = Nothing)
-                    tacheDao.CreateRendezVous(tacheBeanAssocie.Patient, tacheBeanAssocie.Parcours, tache.GetTypeRdvFromDemande(), frmChoixDateHeure.DateChoisie, dureeRendezVous, frmChoixDateHeure.Commentaire, tache)
+                    tacheDao.CreateRendezVous(tacheBeanAssocie.Patient, tacheBeanAssocie.Parcours, tache.GetTypeRdvFromDemande(), frmChoixDateHeure.DateChoisie, dureeRendezVous, frmChoixDateHeure.Commentaire, userLog, tache)
                     IsActionEffectuee = True
                     Close()
                 End If

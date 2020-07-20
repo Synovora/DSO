@@ -97,7 +97,7 @@ Public Class RadFDrcStandardTypeActiviteListe
                 If MsgBox("Confirmation de l'annulation ", MsgBoxStyle.YesNo, "") = MsgBoxResult.Yes Then
                     Dim DrcStandardId As Integer = RadGridViewDrcAsso.Rows(aRow).Cells("Id").Value
                     'Suppression de l'association de la DRC
-                    If drcStandardDao.AnnulationDrcStandard(DrcStandardId) = True Then
+                    If drcStandardDao.AnnulationDrcStandard(DrcStandardId, userLog) = True Then
                         MessageBox.Show("La DRC standard a été annulée")
                         RadGridViewDrcAsso.Rows.Clear()
                         ChargementDrc()
@@ -160,7 +160,7 @@ Public Class RadFDrcStandardTypeActiviteListe
                             ChargementDrc()
                         End If
                     Catch ex As Exception
-                        CreateLog(ex.ToString, Me.Name, LogDao.EnumTypeLog.ERREUR.ToString)
+                        CreateLog(ex.ToString, Me.Name, LogDao.EnumTypeLog.ERREUR.ToString, userLog)
                         If ex.Message.StartsWith("Collision") = True Then
                             MessageBox.Show("La DRC sélectionnée existe déjà pour le type d'activité d'épisode")
                         End If

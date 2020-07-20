@@ -1,7 +1,7 @@
 ﻿Imports System.Data.SqlClient
 Imports Oasis_Common
 
-Module PPSHistoCreationDao
+Public Module PPSHistoCreationDao
 
     Public Enum EnumEtatPPSHisto
         Creation = 1
@@ -11,7 +11,7 @@ Module PPSHistoCreationDao
     End Enum
 
     Public Function CreationPPSHisto(PPSHistoACreer As PpsHisto, UtilisateurConnecte As Utilisateur, EtatHistorisation As Integer) As Boolean
-        Dim conxn As New SqlConnection(getConnectionString())
+        Dim conxn As New SqlConnection(GetConnectionString())
         Dim da As SqlDataAdapter = New SqlDataAdapter()
         Dim codeRetour As Boolean = True
         Dim dateCreation As DateTime = Date.Now.Date

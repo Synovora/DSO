@@ -38,7 +38,7 @@ Public Class RadFTacheModificationDemandeRendezVous
     Dim tacheDao As New TacheDao
 
     Private Sub RadFTacheModificationRendezVous_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-        AfficheTitleForm(Me, "Modification demande de rendez-vous")
+        AfficheTitleForm(Me, "Modification demande de rendez-vous", userLog)
         ChargementEtatCivil()
         tache = tacheDao.GetTacheById(SelectedTacheId)
         Select Case tache.TypedemandeRendezVous
@@ -161,7 +161,7 @@ Public Class RadFTacheModificationDemandeRendezVous
             form.ShowDialog()
             If form.CodeRetour = True Then
                 'Cloturer la tache de demande de rendez-vous
-                tacheDao.ClotureTache(SelectedTacheId, True)
+                tacheDao.ClotureTache(SelectedTacheId, True, userLog)
                 '--> Quand on vient d'une demande de rendez-vous pour laquelle on planifie le rendez-vous
                 '--- Si le RDV est antérieur à la date du jour, la création automatique de la demande de rendez-vous doit se faire après la clôture de la demande de rendez-vous initiale
                 '--- car on ne peut pas créer une demande de rendez-vous si une autre existe
@@ -175,7 +175,7 @@ Public Class RadFTacheModificationDemandeRendezVous
                     Else
                         DateDemandeDrv = Date.Now()
                     End If
-                    tacheDao.CreationAutomatiqueDeDemandeRendezVous(SelectedPatient, parcours, DateDemandeDrv)
+                    tacheDao.CreationAutomatiqueDeDemandeRendezVous(SelectedPatient, parcours, DateDemandeDrv, userLog)
                 End If
                 Me.CodeRetour = True
             End If

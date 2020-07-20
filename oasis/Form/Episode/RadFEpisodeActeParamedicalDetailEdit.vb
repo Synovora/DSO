@@ -38,7 +38,7 @@ Public Class RadFEpisodeActeParamedicalDetailEdit
     End Sub
 
     Private Sub RadBtnValidation_Click(sender As Object, e As EventArgs) Handles RadBtnValidation.Click
-        episodeActeParamedicalDao.ModificationEpisodeActeParamedicalObservation(EpisodeActeParamedicalId, TxtObservation.Text)
+        episodeActeParamedicalDao.ModificationEpisodeActeParamedicalObservation(EpisodeActeParamedicalId, TxtObservation.Text, userLog)
         CodeRetour = True
         Close()
     End Sub

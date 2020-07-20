@@ -74,7 +74,7 @@ Public Class RadFRorListe
         If SpecialiteId <> 0 Then
             FiltreSpecialite = " oa_ror_specialite_id = " & SpecialiteId.ToString & " and oa_ror_type = '" & TypeRor.Trim() & "'"
             VrorBindingSource.Filter = FiltreSpecialite
-            LblSpecialiteFiltre.Text = Environnement.Table_specialite.GetSpecialiteDescription(SpecialiteId)
+            LblSpecialiteFiltre.Text = Table_specialite.GetSpecialiteDescription(SpecialiteId)
         Else
             LblLabelSpecialite.Hide()
             LblSpecialiteFiltre.Hide()

@@ -8,7 +8,7 @@ Public Class FrmChangePassword
         InitializeComponent()
 
         ' Ajoutez une initialisation quelconque après l'appel InitializeComponent().
-        afficheTitleForm(Me, Me.Text)
+        AfficheTitleForm(Me, Me.Text, userLog)
 
         LblMessagePassword.Text = messageFormatPassword
         Me.Tag = False

@@ -121,7 +121,7 @@ Public Class RadFEpisodeDetailCreation
             If episode.TypeActivite = EpisodeDao.EnumTypeActiviteEpisodeCode.PREVENTION_SUIVI_GROSSESSE Then
                 Dim DrcIdGrossesse As Integer = ConfigurationManager.AppSettings("DrcIdGrossesse")
                 If DrcIdGrossesse = 0 Then
-                    outils.CreateLog("DRC Grossesse non trouvée", Me.Name, LogDao.EnumTypeLog.ERREUR.ToString)
+                    outils.CreateLog("DRC Grossesse non trouvée", Me.Name, LogDao.EnumTypeLog.ERREUR.ToString, userLog)
                     DrcIdGrossesse = 833
                 End If
                 If contexteDao.ExistContexteValideWithDrcId(SelectedPatient.patientId, DrcIdGrossesse) Then
@@ -136,7 +136,7 @@ Public Class RadFEpisodeDetailCreation
             If IsCreationOk Then
                 episode.PatientId = SelectedPatient.patientId
                 episode.TypeProfil = userLog.TypeProfil
-                EpisodeId = episodeDao.CreateEpisode(episode)
+                EpisodeId = episodeDao.CreateEpisode(episode, userLog)
                 episode.Id = EpisodeId
                 If EpisodeId <> 0 Then
                     Cursor.Current = Cursors.WaitCursor
@@ -151,7 +151,7 @@ Public Class RadFEpisodeDetailCreation
                         parcours = parcoursDao.getParcoursIDEbyPatient(SelectedPatient.patientId)
                     Catch ex As Exception
                         If ex.Message.StartsWith("parcours inexistant") Then
-                            parcoursDao.CreateIntervenantOasisByPatient(SelectedPatient.patientId, False)
+                            parcoursDao.CreateIntervenantOasisByPatient(SelectedPatient.PatientId, userLog, False)
                         End If
                     End Try
 

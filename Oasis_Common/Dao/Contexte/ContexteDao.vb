@@ -1,5 +1,7 @@
 ﻿Imports System.Data.SqlClient
 Imports Oasis_Common
+Imports Oasis_Common.AntecedentHistoCreationDao
+
 Public Class ContexteDao
     Inherits StandardDao
 

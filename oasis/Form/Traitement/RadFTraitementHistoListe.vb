@@ -83,7 +83,7 @@ Public Class RadFTraitementHistoListe
     'Chargement de la Grid
     Private Sub ChargementTraitement()
         Dim traitementDataTable As DataTable = New DataTable()
-        traitementDataTable = TraitementHistoDao.getAllHistoTraitementbyId(SelectedTraitementId)
+        traitementDataTable = TraitementHistoDao.GetAllHistoTraitementbyId(SelectedTraitementId)
 
         'Ajout d'une colonne 'oa_traitement_posologie' dans le DataTable de traitement
         traitementDataTable.Columns.Add("oa_traitement_posologie", Type.GetType("System.String"))

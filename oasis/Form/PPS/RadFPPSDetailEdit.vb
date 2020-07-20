@@ -369,7 +369,7 @@ Public Class RadFPPSDetailEdit
         PPSUpdate.AffichageSynthese = True
         PPSUpdate.Inactif = False
 
-        If ppsDao.CreationPPS(PPSUpdate) = True Then
+        If ppsDao.CreationPPS(PPSUpdate, userLog) = True Then
             Dim form As New RadFNotification()
             form.Message = PPSDesignation & " créée"
             form.Show()
@@ -383,9 +383,10 @@ Public Class RadFPPSDetailEdit
     Private Function ModificationPPS() As Boolean
         Dim codeRetour As Boolean = True
 
-        If ppsDao.ModificationPPS(PPSUpdate) = True Then
-            Dim form As New RadFNotification()
-            form.Message = PPSDesignation & " modifiée"
+        If ppsDao.ModificationPPS(PPSUpdate, userLog) = True Then
+            Dim form As New RadFNotification With {
+                .Message = PPSDesignation & " modifiée"
+            }
             form.Show()
         Else
             codeRetour = False
@@ -398,7 +399,7 @@ Public Class RadFPPSDetailEdit
     Private Function AnnulationPrevention() As Boolean
         Dim codeRetour As Boolean = True
 
-        If ppsDao.AnnulationPrevention(PPSUpdate) = True Then
+        If ppsDao.AnnulationPrevention(PPSUpdate, userLog) = True Then
             Dim form As New RadFNotification()
             form.Message = PPSDesignation & " annulée"
             form.Show()
@@ -503,7 +504,7 @@ Public Class RadFPPSDetailEdit
     End Sub
 
     Private Sub DroitAcces()
-        If outils.AccesFonctionMedicaleSynthese(SelectedPatient) = False Then
+        If outils.AccesFonctionMedicaleSynthese(SelectedPatient, userLog) = False Then
             RadBtnConfirmationAnnulation.Hide()
             RadBtnAnnulation.Hide()
             RadBtnConfirmationAnnulation.Hide()

@@ -137,9 +137,9 @@ Public Class RadFContextedetailEdit
         CodeResultat = EnumResultat.AttenteAction
 
         If ConclusionEpisode = True Then
-            afficheTitleForm(Me, "Détail contexte de conclusion d'épisode")
+            AfficheTitleForm(Me, "Détail contexte de conclusion d'épisode", userLog)
         Else
-            afficheTitleForm(Me, "Détail contexte")
+            AfficheTitleForm(Me, "Détail contexte", userLog)
         End If
 
         InitZone()
@@ -419,7 +419,7 @@ Public Class RadFContextedetailEdit
     Private Sub RadBtnSupprimer_Click(sender As Object, e As EventArgs) Handles RadBtnSupprimer.Click
         If MsgBox("Attention, confirmez-vous l'annulation du contexte", MsgBoxStyle.YesNo, "") = MsgBoxResult.Yes Then
             'Annulation contexte
-            If contexteDao.AnnulationContexte(contexteUpdate, ContexteHistoACreer) = True Then
+            If contexteDao.AnnulationContexte(contexteUpdate, ContexteHistoACreer, userLog) = True Then
                 CodeResultat = EnumResultat.AnnulationOK
                 Try
                     Dim form As New RadFNotification()
@@ -464,7 +464,7 @@ Public Class RadFContextedetailEdit
         Select Case Traitement
             Case EnumTraitement.Creation
                 If ValidationContexte() = True Then
-                    If contexteDao.CreationContexte(contexteUpdate, ContexteHistoACreer, ConclusionEpisode, Episode) = True Then
+                    If contexteDao.CreationContexte(contexteUpdate, ContexteHistoACreer, userLog, ConclusionEpisode, Episode) = True Then
                         If ConclusionEpisode = True Then
                             Dim episodeDao As New EpisodeDao
                             episodeDao.MajEpisodeConclusionMedicale(Episode.Id)
@@ -487,7 +487,7 @@ Public Class RadFContextedetailEdit
                 End If
             Case EnumTraitement.Modification
                 If ValidationContexte() = True Then
-                    If contexteDao.ModificationContexte(contexteUpdate, ContexteHistoACreer) = True Then
+                    If contexteDao.ModificationContexte(contexteUpdate, ContexteHistoACreer, userLog) = True Then
                         CodeResultat = EnumResultat.ModificationOK
                         Try
                             Dim form As New RadFNotification()
@@ -820,7 +820,7 @@ Public Class RadFContextedetailEdit
             RadBtnSupprimer.Enabled = False
         End If
 
-        If outils.AccesFonctionMedicaleSynthese(SelectedPatient) = False Then
+        If outils.AccesFonctionMedicaleSynthese(SelectedPatient, userLog) = False Then
             RadBtnDrcSelect.Hide()
             RadBtnRecupereDrc.Hide()
             RadBtnSupprimer.Hide()

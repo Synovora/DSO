@@ -187,7 +187,7 @@ Public Class RadFDeclarationAllergieEtCIDetail
         Cursor.Current = Cursors.WaitCursor
         Dim codeRetour As Boolean
 
-        codeRetour = traitementDao.DeclarationTraitementAllergieOuCI(traitement)
+        codeRetour = traitementDao.DeclarationTraitementAllergieOuCI(traitement, userLog)
         If codeRetour = True Then
             Dim form As New RadFNotification()
             If traitement.Allergie = True Then

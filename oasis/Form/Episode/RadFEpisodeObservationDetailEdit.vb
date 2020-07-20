@@ -56,7 +56,7 @@ Public Class RadFEpisodeObservationDetailEdit
     Dim user As New Utilisateur
 
     Private Sub RadFEpisodeObservationDetailEdit_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-        afficheTitleForm(Me, "Observation libre")
+        AfficheTitleForm(Me, "Observation libre", userLog)
         Me.Location = New Point(10, Screen.PrimaryScreen.WorkingArea.Height - Me.Height - 10)
         Me.CodeRetour = False
 

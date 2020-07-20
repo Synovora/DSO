@@ -99,7 +99,7 @@ Public Class RadFAllergieEtCISuppressionDetail
         If SelectedTraitement.DateFin = Nothing Then
             SelectedTraitement.DateFin = Date.MaxValue
         End If
-        traitementDao.ArretTraitement(SelectedTraitement, traitementHistoACreer)
+        traitementDao.ArretTraitement(SelectedTraitement, traitementHistoACreer, userLog)
         CodeRetour = True
         Close()
     End Sub

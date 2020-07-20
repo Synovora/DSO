@@ -18,7 +18,7 @@ Public Class RadFEpisodeEnCoursListe
     End Enum
 
     Private Sub RadFEpisodeEnCoursListe_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-        afficheTitleForm(Me, "Liste des épisodes patient en cours")
+        AfficheTitleForm(Me, "Liste des épisodes patient en cours", userLog)
 
         InitForm = True
         RadioBtnTous.Checked = True

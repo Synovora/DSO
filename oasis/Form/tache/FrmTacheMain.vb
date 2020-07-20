@@ -22,7 +22,7 @@ Public Class FrmTacheMain
         ' Cet appel est requis par le concepteur.
         InitializeComponent()
 
-        afficheTitleForm(Me, Me.Text)
+        AfficheTitleForm(Me, Me.Text, userLog)
 
         ' Ajoutez une initialisation quelconque après l'appel InitializeComponent().
         Me.SplitContainerMain.Dock = DockStyle.Fill
@@ -226,7 +226,7 @@ Public Class FrmTacheMain
 
             Dim isMyTache As Boolean = RadioMesTachesEnCours.IsChecked
             Dim isWithNonAttribue = RadChkNonAttribuee.Checked
-            Dim data As DataTable = tacheDao.getAgendaMyRDV(dateDebut, dateFin, isMyTache, lstFonctionChoisie, filterTache, isWithNonAttribue)
+            Dim data As DataTable = tacheDao.GetAgendaMyRDV(dateDebut, dateFin, isMyTache, lstFonctionChoisie, filterTache, isWithNonAttribue, userLog)
 
             lstAppointments.Clear()
 
@@ -425,7 +425,7 @@ Public Class FrmTacheMain
             Me.Cursor = Cursors.WaitCursor
 
             Dim isMyTache As Boolean = RadioMesTachesEnCours.IsChecked
-            Dim data As DataTable = tacheDao.getAllTacheEnCours(isMyTache, lstFonctionChoisie, filterTache, RadChkNonAttribuee.IsChecked)
+            Dim data As DataTable = tacheDao.GetAllTacheEnCours(isMyTache, lstFonctionChoisie, filterTache, RadChkNonAttribuee.IsChecked, userLog)
             Dim numRowGrid As Integer = 0
             Dim exId As Long, index As Integer = -1, exPosit = 0
             Dim typeTache As String
@@ -578,7 +578,7 @@ Public Class FrmTacheMain
     End Sub
 
     Private Sub prendreTacheATraiter(idTache As Long)
-        If tacheDao.attribueTacheToUserLog(idTache) Then
+        If tacheDao.AttribueTacheToUserLog(idTache, userLog) Then
             refreshGridTacheATraiter()
             refreshGridTacheEnCours()
         End If
@@ -714,7 +714,7 @@ Public Class FrmTacheMain
         Me.Cursor = Cursors.WaitCursor
         Try
             Dim isNotFinal As Boolean = RadioTacheEmiseEnCours.IsChecked
-            Dim data As DataTable = tacheDao.getAllTacheEmise(isNotFinal)
+            Dim data As DataTable = tacheDao.GetAllTacheEmise(isNotFinal, userLog)
             Dim numRowGrid As Integer = 0
 
             ' -- recup eventuelle precedente selectionnée

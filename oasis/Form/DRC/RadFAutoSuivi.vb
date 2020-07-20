@@ -63,7 +63,7 @@ Public Class RadFAutoSuivi
         If parametres.Item(e.RowIndex).IsActif Then
             autoSuiviDao.DeleteAutoSuivi(autoSuivi)
         Else
-            autoSuiviDao.CreateAutoSuivi(autoSuivi)
+            autoSuiviDao.CreateAutoSuivi(autoSuivi, userLog)
         End If
         RadFAutoSuivi_Refresh()
     End Sub

@@ -1,8 +1,7 @@
 ﻿Imports System.Collections.Specialized
 Imports System.Data.SqlClient
-Imports Oasis_Common
 
-Module MedicamentGeneriqueDao
+Public Module MedicamentGeneriqueDao
 
     Public Function GetCountMedicament(Filtre As String) As Integer
         Dim SqlString As String = "SELECT COUNT(*) FROM oasis.v_medoc WHERE "
@@ -12,7 +11,7 @@ Module MedicamentGeneriqueDao
             SqlString += Filtre
         End If
 
-        Dim conxn As New SqlConnection(getConnectionString())
+        Dim conxn As New SqlConnection(GetConnectionString())
         Dim cmd As New SqlCommand(SqlString, conxn)
         Try
             conxn.Open()
@@ -45,7 +44,7 @@ Module MedicamentGeneriqueDao
 
     Private Sub ChargementGenerique(MedicamentCis As Integer, patient As PatientBase)
         'Déclaration des données de connexion
-        Dim conxn As New SqlConnection(getConnectionString())
+        Dim conxn As New SqlConnection(GetConnectionString())
         Dim MedicamentDataAdapter As SqlDataAdapter = New SqlDataAdapter()
         Dim MedicamentDataTable As DataTable = New DataTable()
         Dim SQLString As String
@@ -79,7 +78,7 @@ Module MedicamentGeneriqueDao
 
     Private Sub ChargementMedicamentCisAllergieCollectionPatient(MedicamentGeneriqueId As Integer, patient As PatientBase)
         'Déclaration des données de connexion
-        Dim conxn As New SqlConnection(getConnectionString())
+        Dim conxn As New SqlConnection(GetConnectionString())
         Dim MedicamentDataAdapter As SqlDataAdapter = New SqlDataAdapter()
         Dim MedicamentDataTable As DataTable = New DataTable()
         Dim SQLString As String

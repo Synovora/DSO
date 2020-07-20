@@ -63,7 +63,7 @@ Public Class RadFPPSListeParcours
             RadParcoursDataGridView.Rows(iGrid).Cells("parcoursId").Value = ParcoursDataTable.Rows(i)("oa_parcours_id")
 
             SpecialiteId = ParcoursDataTable.Rows(i)("oa_parcours_specialite")
-            SpecialiteDescription = Environnement.Table_specialite.GetSpecialiteDescription(SpecialiteId)
+            SpecialiteDescription = Table_specialite.GetSpecialiteDescription(SpecialiteId)
             RadParcoursDataGridView.Rows(iGrid).Cells("specialite").Value = SpecialiteDescription
 
             'Nom intervenant et Structure
@@ -193,7 +193,7 @@ Public Class RadFPPSListeParcours
     End Sub
 
     Private Sub CreationIntervenant()
-        If outils.AccesFonctionMedicaleSynthese(SelectedPatient) = False Then
+        If outils.AccesFonctionMedicaleSynthese(SelectedPatient, userLog) = False Then
             Exit Sub
         End If
 

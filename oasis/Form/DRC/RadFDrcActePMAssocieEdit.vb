@@ -139,7 +139,7 @@ Public Class RadFDrcActePMAssocieEdit
                             ChargementDrc()
                         End If
                     Catch ex As Exception
-                        CreateLog(ex.ToString, Me.Name, LogDao.EnumTypeLog.ERREUR.ToString)
+                        CreateLog(ex.ToString, Me.Name, LogDao.EnumTypeLog.ERREUR.ToString, userLog)
                         If ex.Message.StartsWith("Collisio") = True Then
                             MessageBox.Show("L'acte médical sélectionné existe déjà pour le protocole collaboratif")
                         End If

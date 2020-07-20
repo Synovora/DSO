@@ -43,7 +43,7 @@ Public Class FrmSousEpisode
         InitializeComponent()
 
         ' -- Ajoutez une initialisation quelconque après l'appel InitializeComponent().
-        afficheTitleForm(Me, Me.Text)
+        AfficheTitleForm(Me, Me.Text, userLog)
 
         ' -- episode en cours
         Me.episode = episode
@@ -136,7 +136,7 @@ Public Class FrmSousEpisode
                     .NomFichier = Path.GetFileName(fileName)
                     .Commentaire = comment
                 End With
-                If sousEpisodeReponseDao.Create(sousEpisode, sousEpisodeReponse, fileName) = False Then
+                If sousEpisodeReponseDao.Create(sousEpisode, sousEpisodeReponse, fileName, loginRequestLog) = False Then
                     Notification.show("Ajout document", "ERREUR insertion du nouveau document !!!")
                 Else
                     Notification.show("Ajout document", "Ajout terminée avec succès !")
@@ -187,7 +187,7 @@ Public Class FrmSousEpisode
             Me.Cursor = Cursors.WaitCursor
             sousEpisodeReponse = sousEpisodeReponseDao.getById(gce.RowInfo.Cells("Id").Value)
 
-            Dim tbl As Byte() = sousEpisodeReponseDao.getContenu(episode.Id, sousEpisodeReponse)
+            Dim tbl As Byte() = sousEpisodeReponseDao.getContenu(episode.Id, sousEpisodeReponse, loginRequestLog)
             'Me.Cursor = Cursors.Default
             'SaveFileDialog1.FileName = sousEpisodeReponse.NomFichier
             'Select Case (SaveFileDialog1.ShowDialog())

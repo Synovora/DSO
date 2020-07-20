@@ -85,7 +85,7 @@ Public Class RadFEpisodeParametresCreation
             episode.Etat = EpisodeDao.EnumEtatEpisode.CLOTURE.ToString
 
             Dim episodeId As Long
-            episodeId = episodeDao.CreateEpisode(episode)
+            episodeId = episodeDao.CreateEpisode(episode, userLog)
             If episodeId <> 0 Then
                 'Création parametres aigus standards
                 Dim ListGroupeParam = New List(Of Long)

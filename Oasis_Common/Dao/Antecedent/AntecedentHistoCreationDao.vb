@@ -1,6 +1,6 @@
 ﻿Imports System.Data.SqlClient
-Imports Oasis_Common
-Module AntecedentHistoCreationDao
+
+Public Class AntecedentHistoCreationDao
 
     Public Enum EnumEtatAntecedentHisto
         CreationAntecedent = 1
@@ -10,8 +10,8 @@ Module AntecedentHistoCreationDao
         ReactivationAntecedent = 5
     End Enum
 
-    Public Function CreationAntecedentHisto(AntecedentHistoACreer As AntecedentHisto, UtilisateurConnecte As Utilisateur, EtatHistorisation As Integer) As Boolean
-        Dim conxn As New SqlConnection(getConnectionString())
+    Public Shared Function CreationAntecedentHisto(AntecedentHistoACreer As AntecedentHisto, UtilisateurConnecte As Utilisateur, EtatHistorisation As Integer) As Boolean
+        Dim conxn As New SqlConnection(GetConnectionString())
         Dim da As SqlDataAdapter = New SqlDataAdapter()
         Dim codeRetour As Boolean = True
         Dim dateCreation As DateTime = Date.Now.Date
@@ -88,7 +88,7 @@ Module AntecedentHistoCreationDao
         Return codeRetour
     End Function
 
-    Public Sub InitAntecedentHistorisation(antecedent As Antecedent, UtilisateurConnecte As Utilisateur, AntecedentHistoACreer As AntecedentHisto)
+    Public Shared Function InitAntecedentHistorisation(antecedent As Antecedent, UtilisateurConnecte As Utilisateur, AntecedentHistoACreer As AntecedentHisto)
         'Initialisation classe Historisation antecedent
         AntecedentHistoACreer.HistorisationDate = Date.Now()
         AntecedentHistoACreer.UtilisateurId = UtilisateurConnecte.UtilisateurId
@@ -124,9 +124,9 @@ Module AntecedentHistoCreationDao
         AntecedentHistoACreer.AldDateFin = antecedent.AldDateFin
         AntecedentHistoACreer.AldDemandeEnCours = antecedent.AldDemandeEnCours
         AntecedentHistoACreer.AldDateDemande = antecedent.AldDateDemande
-    End Sub
+    End Function
 
-    Public Sub InitClasseAntecedentHistorisation(antecedentDataReader As SqlDataReader, UtilisateurConnecte As Utilisateur, AntecedentHistoACreer As AntecedentHisto)
+    Public Shared Function InitClasseAntecedentHistorisation(antecedentDataReader As SqlDataReader, UtilisateurConnecte As Utilisateur, AntecedentHistoACreer As AntecedentHisto)
         'Initialisation classe Historisation antecedent
         AntecedentHistoACreer.HistorisationDate = Date.Now()
         AntecedentHistoACreer.UtilisateurId = UtilisateurConnecte.UtilisateurId
@@ -242,7 +242,6 @@ Module AntecedentHistoCreationDao
         AntecedentHistoACreer.AldDateFin = Coalesce(antecedentDataReader("oa_antecedent_ald_date_fin"), Date.Now())
         AntecedentHistoACreer.AldDemandeEnCours = Coalesce(antecedentDataReader("oa_antecedent_ald_demande_en_cours"), False)
         AntecedentHistoACreer.AldDateDemande = Coalesce(antecedentDataReader("oa_antecedent_ald_demande_date"), Date.Now())
-    End Sub
+    End Function
 
-
-End Module
+End Class

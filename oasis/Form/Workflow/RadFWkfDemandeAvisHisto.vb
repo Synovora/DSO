@@ -26,7 +26,7 @@ Public Class RadFWkfDemandeAvisHisto
     Dim tacheDT As DataTable
 
     Private Sub RadFWkfDemandeAvisHisto_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-        afficheTitleForm(Me, "Historique des workflows de demande d'avis de l'épisode")
+        AfficheTitleForm(Me, "Historique des workflows de demande d'avis de l'épisode", userLog)
 
         ChargementEtatCivil()
         ChargementHisto()

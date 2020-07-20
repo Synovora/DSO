@@ -70,7 +70,7 @@ Public Class RadFDrcStandardTypeActiviteDetail
         If drcStandard.AgeMin > drcStandard.AgeMax Then
             MessageBox.Show("L'âge min doit être inférieur à la l'âge max")
         Else
-            If drcStandardDao.ModificationDrcStandard(drcStandard) = True Then
+            If drcStandardDao.ModificationDrcStandard(drcStandard, userLog) = True Then
                 MessageBox.Show("La DRC standard a été modifiée")
                 Close()
             End If
@@ -79,7 +79,7 @@ Public Class RadFDrcStandardTypeActiviteDetail
 
     Private Sub RadBtnAnnulation_Click(sender As Object, e As EventArgs) Handles RadBtnAnnulation.Click
         If MsgBox("Confirmation de l'annulation ", MsgBoxStyle.YesNo, "") = MsgBoxResult.Yes Then
-            If drcStandardDao.AnnulationDrcStandard(SelectedDrcStandardId) = True Then
+            If drcStandardDao.AnnulationDrcStandard(SelectedDrcStandardId, userLog) = True Then
                 MessageBox.Show("La DRC standard a été annulée")
                 CodeRetour = True
                 Close()

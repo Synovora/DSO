@@ -21,7 +21,7 @@
     End Property
 
     Private Sub RadFAffichaeInfo_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-        afficheTitleForm(Me, Titre)
+        AfficheTitleForm(Me, Titre, userLog)
         TextBoxInfo.Text = InfoToDisplay
         RadBtnAbandon.Select()
     End Sub

@@ -102,7 +102,7 @@ Public Class FrmEditDocxSousEpisode
             End If
             tbl = provider.Export(Me.RadRichTextEditor1.Document)
             Dim sousEpisodeDao = New SousEpisodeDao
-            sousEpisodeDao.writeDocAndEventualySign(sousEpisode, tbl, signature, dateSign)
+            sousEpisodeDao.writeDocAndEventualySign(sousEpisode, tbl, signature, dateSign, userLog, loginRequestLog)
             ResetFlagChange()
             Notification.show("Sauvegarde", "Action effectuée avec succès !", 1)
         Catch err As Exception
@@ -127,7 +127,7 @@ Public Class FrmEditDocxSousEpisode
     ''' 
     ''' </summary>
     Private Sub initCtrl()
-        AfficheTitleForm(Me, Me.Text)
+        AfficheTitleForm(Me, Me.Text, userLog)
 
         'hide the default "Save as" button
         'Me.RichTextEditorRibbonBar1.BackstageControl.Items.Last().Visibility = ElementVisibility.Collapsed

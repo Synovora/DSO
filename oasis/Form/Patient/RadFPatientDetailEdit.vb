@@ -533,7 +533,7 @@ Public Class RadFPatientDetailEdit
     Private Function ModificationPatient() As Boolean
         Dim codeRetour As Boolean = False
 
-        If patientDao.ModificationPatient(patientUpdate) = True Then
+        If patientDao.ModificationPatient(patientUpdate, userLog) = True Then
             codeRetour = True
             Dim form As New RadFNotification()
             form.Message = "Patient modifié"
@@ -547,7 +547,7 @@ Public Class RadFPatientDetailEdit
     Private Function CreationPatient() As Boolean
         Dim codeRetour As Boolean = False
 
-        If patientDao.CreationPatient(patientUpdate) = True Then
+        If patientDao.CreationPatient(patientUpdate, userLog) = True Then
             codeRetour = True
             Dim form As New RadFNotification()
             form.Message = "Patient créé"

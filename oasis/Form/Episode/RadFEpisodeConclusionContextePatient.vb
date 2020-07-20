@@ -342,7 +342,7 @@ Public Class RadFEpisodeConclusionContextePatient
                 episodeContexte.PatientId = SelectedEpisode.PatientId
                 episodeContexte.UserCreation = userLog.UtilisateurId
                 episodeContexte.DateCreation = Date.Now()
-                episodeContexteDao.CreateEpisodeContexte(episodeContexte)
+                episodeContexteDao.CreateEpisodeContexte(episodeContexte, userLog)
                 ChargementConclusion()
                 ChargementContexte()
                 CodeRetour = True

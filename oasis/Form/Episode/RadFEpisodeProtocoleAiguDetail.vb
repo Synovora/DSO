@@ -42,7 +42,7 @@ Public Class RadFEpisodeProtocoleAiguDetail
     End Sub
 
     Private Sub RadBtnValidation_Click(sender As Object, e As EventArgs) Handles RadBtnValidation.Click
-        If episodeActeParamedicalDao.ModificationEpisodeActeParamedicalObservation(EpisodeActeParamedicalId, TxtObservation.Text) = True Then
+        If episodeActeParamedicalDao.ModificationEpisodeActeParamedicalObservation(EpisodeActeParamedicalId, TxtObservation.Text, userLog) = True Then
             Dim form As New RadFNotification()
             form.Titre = "OBservation spécifique - Protocole aigu"
             form.Message = "Observation mise à jour"

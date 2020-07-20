@@ -909,7 +909,7 @@ Public Class RadFAntecedentDetailEdit
     Private Function ModificationAntecedent() As Boolean
         Dim codeRetour As Boolean = True
 
-        If AntecedentDao.ModificationAntecedent(antecedentUpdate, antecedentRead) = True Then
+        If AntecedentDao.ModificationAntecedent(antecedentUpdate, antecedentRead, userLog) = True Then
             Dim form As New RadFNotification()
             form.Message = "Antécédent patient modifié"
             form.Show()
@@ -924,7 +924,7 @@ Public Class RadFAntecedentDetailEdit
     Private Function AnnulationAntecedent() As Boolean
         Dim codeRetour As Boolean = True
 
-        If AntecedentDao.AnnulationAntecedent(antecedentUpdate, antecedentRead) = True Then
+        If AntecedentDao.AnnulationAntecedent(antecedentUpdate, antecedentRead, userLog) = True Then
             Dim form As New RadFNotification()
             form.Message = "Antécédent patient annulé"
             form.Show()
@@ -939,7 +939,7 @@ Public Class RadFAntecedentDetailEdit
     Private Function CreationAntecedent() As Boolean
         Dim codeRetour As Boolean = True
 
-        If AntecedentDao.CreationAntecedent(antecedentUpdate) = True Then
+        If AntecedentDao.CreationAntecedent(antecedentUpdate, userLog) = True Then
             Dim form As New RadFNotification()
             form.Message = "Antécédent patient créé"
             form.Show()
@@ -1012,7 +1012,7 @@ Public Class RadFAntecedentDetailEdit
 
     Private Sub DroitAcces()
         'Si l'utilisateur n'a pas les droits requis ou que le traitement a été arrêté, les zones de saisie ne sont pas modifiables 
-        If outils.AccesFonctionMedicaleSynthese(SelectedPatient) = False Then
+        If outils.AccesFonctionMedicaleSynthese(SelectedPatient, userLog) = False Then
             InhiberZonesDeSaisie()
             RadBtnValidation.Hide()
             RadBtnSupprimer.Hide()

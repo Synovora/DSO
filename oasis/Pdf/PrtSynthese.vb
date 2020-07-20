@@ -733,7 +733,7 @@ Public Class PrtSynthese
             End If
 
             SpecialiteId = ParcoursDataTable.Rows(i)("oa_parcours_specialite")
-            Dim TextSpecialite As String = Environnement.Table_specialite.GetSpecialiteDescription(SpecialiteId)
+            Dim TextSpecialite As String = Table_specialite.GetSpecialiteDescription(SpecialiteId)
 
             'Nom intervenant et Structure
             IntervenantOasis = False
@@ -1168,12 +1168,12 @@ Public Class PrtSynthese
             NaturePPS = ""
             AffichePPS = ""
             'Présentation PPS : Cible/Objectif de santé (commentaire)
-            If categoriePPS = Environnement.EnumCategoriePPS.Objectif Then
+            If categoriePPS = EnumCategoriePPS.Objectif Then
                 NaturePPS = "Objectif santé : "
                 AffichePPS = NaturePPS + " " + CommentairePPS
             End If
 
-            If categoriePPS = Environnement.EnumCategoriePPS.MesurePreventive Then
+            If categoriePPS = EnumCategoriePPS.MesurePreventive Then
                 'Suivi mesures préventives (Code DRC, libellé DRC, commentaire)
                 NaturePPS = "Mesures préventives : "
                 AffichePPS = NaturePPS & " " & CommentairePPS
@@ -1181,7 +1181,7 @@ Public Class PrtSynthese
 
             SpecialiteDescription = ""
             'Présentation PPS : Suivi
-            If categoriePPS = Environnement.EnumCategoriePPS.Suivi Then
+            If categoriePPS = EnumCategoriePPS.Suivi Then
                 'Un parcours caché ne doit être affiché
                 Dim parcoursCache As Boolean = Coalesce(PPSDataTable.Rows(i)("oa_parcours_cacher"), False)
                 If parcoursCache = True Then
@@ -1194,13 +1194,13 @@ Public Class PrtSynthese
 
                 'Suivi IDE, Médecin référent, Sage-femme et Spécialiste (Base, Rythme, Commentaire)
                 Select Case sousCategoriePPS
-                    Case Environnement.EnumSousCategoriePPS.IDE
+                    Case EnumSousCategoriePPS.IDE
                         NaturePPS = "Suivi IDE : "
-                    Case Environnement.EnumSousCategoriePPS.medecinReferent
+                    Case EnumSousCategoriePPS.medecinReferent
                         NaturePPS = "Suivi médecin télémédecine : "
-                    Case Environnement.EnumSousCategoriePPS.sageFemme
+                    Case EnumSousCategoriePPS.sageFemme
                         NaturePPS = "Suivi sage-femme : "
-                    Case Environnement.EnumSousCategoriePPS.specialiste
+                    Case EnumSousCategoriePPS.specialiste
                         'Récupération spécialité
                         If PPSDataTable.Rows(i)("oa_parcours_specialite") IsNot DBNull.Value Then
                             SpecialiteId = PPSDataTable.Rows(i)("oa_parcours_specialite")
@@ -1220,7 +1220,7 @@ Public Class PrtSynthese
             End If
 
             'Présentation PPS : Stratégie contextuelle (Base, Rythme, Commentaire)
-            If categoriePPS = Environnement.EnumCategoriePPS.Strategie Then
+            If categoriePPS = EnumCategoriePPS.Strategie Then
                 Select Case sousCategoriePPS
                     Case 7
                         NaturePPS = "Démarche prophylactique "
