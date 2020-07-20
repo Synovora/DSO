@@ -62,7 +62,6 @@ Public Class RadFDRCSelecteur
     ReadOnly instanceDrc As New Drc
     ReadOnly drcdao As New DrcDao
 
-    Dim categorieMajeureListe As Dictionary(Of Integer, String) = Table_categorie_majeure.GetCategorieMajeureListe()
     Private Sub RadFDRCSelecteur_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         RadGridLocalizationProvider.CurrentProvider = New FrenchRadGridViewLocalizationProvider()
 

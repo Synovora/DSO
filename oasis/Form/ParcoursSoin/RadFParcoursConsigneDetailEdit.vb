@@ -69,14 +69,13 @@ Public Class RadFParcoursConsigneDetailEdit
     End Enum
 
     Dim EditMode As Integer
-    Dim drcdao As New DrcDao
-    Dim parcoursConsigneDao As New ParcoursConsigneDao
+    ReadOnly drcdao As New DrcDao
+    ReadOnly parcoursConsigneDao As New ParcoursConsigneDao
     Dim parcoursConsigne As New ParcoursConsigne
-    Dim episodeActiviteDao As New EpisodeTypeActiviteDao
-    Dim episodeActiviteDT As New DataTable
-    Dim episodeDao As New EpisodeDao
+    ReadOnly episodeActiviteDao As New EpisodeTypeActiviteDao
+    ReadOnly episodeDao As New EpisodeDao
 
-    Dim drc As New Drc
+    ReadOnly drc As New Drc
     Dim DateDebut, DateFin As Date
     Dim LimiteAgeEnfantParm As Integer
 
@@ -89,7 +88,7 @@ Public Class RadFParcoursConsigneDetailEdit
         If SelectedConsigneId <> 0 Then
             EditMode = EnumEditMode.Modification
             'Modification
-            parcoursConsigne = parcoursConsigneDao.getParcoursConsigneById(SelectedConsigneId)
+            parcoursConsigne = parcoursConsigneDao.GetParcoursConsigneById(SelectedConsigneId)
             TxtCommentaire.Text = parcoursConsigne.Commentaire
             drcdao.GetDrc(drc, parcoursConsigne.DrcId)
             TxtDrcDescription.Text = drc.DrcLibelle
@@ -175,7 +174,7 @@ Public Class RadFParcoursConsigneDetailEdit
         Else
             LimiteAgeEnfantParm = 16
             Dim Description As String = "Paramètre 'LimiteAgeEnfant' non défini dans le fichier App.config"
-            CreateLog(Description, Me.Name, LogDao.EnumTypeLog.ERREUR.ToString, userLog)
+            CreateLog(Description, Me.Name, Log.EnumTypeLog.ERREUR.ToString, userLog)
         End If
     End Sub
 

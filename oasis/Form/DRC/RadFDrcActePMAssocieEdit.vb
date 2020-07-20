@@ -131,16 +131,17 @@ Public Class RadFDrcActePMAssocieEdit
                 'Sélection de la DRC et association avec le protoole collaboratif
                 If SelectedDrcId <> 0 Then
                     'Ajout de l'occurrence choisie (contrôle que cette DORC n'est pas déjà associée)
-                    Dim drcActeParamedicalAsso As DrcActeParamedicalAsso = New DrcActeParamedicalAsso
-                    drcActeParamedicalAsso.ProtocleCollabaratifDrcId = ProtocoleCollaboratifDrcId
-                    drcActeParamedicalAsso.ActeParamedicalDrcId = SelectedDrcId
+                    Dim drcActeParamedicalAsso As DrcActeParamedicalAsso = New DrcActeParamedicalAsso With {
+                        .ProtocleCollabaratifDrcId = ProtocoleCollaboratifDrcId,
+                        .ActeParamedicalDrcId = SelectedDrcId
+                    }
                     Try
                         If drcActeParamedicalAssoDao.CreateDrcActeParamedicalAsso(drcActeParamedicalAsso) = True Then
                             ChargementActePMAssocies()
                             ChargementDrc()
                         End If
                     Catch ex As Exception
-                        CreateLog(ex.ToString, Me.Name, LogDao.EnumTypeLog.ERREUR.ToString, userLog)
+                        CreateLog(ex.ToString, Me.Name, Log.EnumTypeLog.ERREUR.ToString, userLog)
                         If ex.Message.StartsWith("Collisio") = True Then
                             MessageBox.Show("L'acte médical sélectionné existe déjà pour le protocole collaboratif")
                         End If

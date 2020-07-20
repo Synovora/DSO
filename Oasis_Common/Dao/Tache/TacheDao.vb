@@ -1258,31 +1258,32 @@ Public Class TacheDao
         End Select
 
         'Alimentation du bean Tache
-        Dim tache As New Tache
-        tache.ParentId = 0
-        tache.EmetteurUserId = UserAutoId 'auto
-        tache.EmetteurFonctionId = FonctionEmetteurAutoId
-        tache.UniteSanitaireId = Patient.PatientUniteSanitaireId
-        tache.SiteId = Patient.PatientSiteId
-        tache.PatientId = Patient.PatientId
-        tache.ParcoursId = parcours.Id
-        tache.EpisodeId = 0
-        tache.SousEpisodeId = 0
-        tache.TraiteUserId = 0
-        tache.TraiteFonctionId = TraiteFonctionId
-        tache.DestinataireFonctionId = DestinataireFonctionId
-        tache.Priorite = Tache.EnumPriorite.BASSE
-        tache.OrdreAffichage = 20
-        tache.Categorie = Tache.CategorieTache.SOIN.ToString
-        tache.Type = Tache.TypeTache.RDV_DEMANDE.ToString()
-        tache.Nature = Tache.NatureTache.RDV_DEMANDE.ToString
-        tache.Duree = DureeRendezVousParDefaut
-        tache.EmetteurCommentaire = Commentaire
-        tache.HorodatageCreation = Date.Now()
-        tache.Etat = Tache.EtatTache.EN_ATTENTE.ToString
-        tache.TypedemandeRendezVous = Tache.EnumDemandeRendezVous.ANNEEMOIS.ToString
-        tache.DateRendezVous = DateRendezVous
-        tache.DateTraitementDemandeRendezVous = DateTraitementDemandeRendezVous
+        Dim tache As New Tache With {
+            .ParentId = 0,
+            .EmetteurUserId = UserAutoId, 'auto
+            .EmetteurFonctionId = FonctionEmetteurAutoId,
+            .UniteSanitaireId = Patient.PatientUniteSanitaireId,
+            .SiteId = Patient.PatientSiteId,
+            .PatientId = Patient.PatientId,
+            .ParcoursId = parcours.Id,
+            .EpisodeId = 0,
+            .SousEpisodeId = 0,
+            .TraiteUserId = 0,
+            .TraiteFonctionId = TraiteFonctionId,
+            .DestinataireFonctionId = DestinataireFonctionId,
+            .Priorite = Tache.EnumPriorite.BASSE,
+            .OrdreAffichage = 20,
+            .Categorie = Tache.CategorieTache.SOIN.ToString,
+            .Type = Tache.TypeTache.RDV_DEMANDE.ToString(),
+            .Nature = Tache.NatureTache.RDV_DEMANDE.ToString,
+            .Duree = DureeRendezVousParDefaut,
+            .EmetteurCommentaire = Commentaire,
+            .HorodatageCreation = Date.Now(),
+            .Etat = Tache.EtatTache.EN_ATTENTE.ToString,
+            .TypedemandeRendezVous = Tache.EnumDemandeRendezVous.ANNEEMOIS.ToString,
+            .DateRendezVous = DateRendezVous,
+            .DateTraitementDemandeRendezVous = DateTraitementDemandeRendezVous
+        }
 
         Dim codeRetour As Boolean = True
         Dim con As SqlConnection
@@ -1393,7 +1394,7 @@ Public Class TacheDao
             End If
         Catch ex As Exception
             Throw New Exception(ex.Message)
-            CreateLog(ex.ToString, "TacheDao", LogDao.EnumTypeLog.ERREUR.ToString, userLog)
+            CreateLog(ex.ToString, "TacheDao", Log.EnumTypeLog.ERREUR.ToString, userLog)
             codeRetour = False
         Finally
             con.Close()
@@ -1496,8 +1497,9 @@ Public Class TacheDao
         Dim rorDao As New RorDao
         Dim patientDao As New PatientDao
 
-        Dim tacheBeanAssocie = New TacheBeanAssocie
-        tacheBeanAssocie.UserEmetteur = userDao.getUserById(tache.EmetteurUserId)
+        Dim tacheBeanAssocie = New TacheBeanAssocie With {
+            .UserEmetteur = userDao.getUserById(tache.EmetteurUserId)
+        }
         If tache.EmetteurFonctionId <> 0 Then tacheBeanAssocie.FonctionEmetteur = fonctionDao.GetFonctionById(tache.EmetteurFonctionId)
         tacheBeanAssocie.UniteSanitaire = uniteSanitaireDao.getUniteSanitaireById(tache.UniteSanitaireId, True)
         tacheBeanAssocie.Site = siteDao.getSiteById(tache.SiteId, True)
@@ -1853,10 +1855,11 @@ Public Class TacheDao
     End Function
 
     Public Function SetTacheEmetteurEtDestinatiareBySpecialiteEtSousCategorie(SpecialiteId As Long, SousCategorieId As Long, userLog As Utilisateur) As TacheEmetteurEtDestinataire
-        Dim tacheEmetteurEtDestinataire As New TacheEmetteurEtDestinataire
-        tacheEmetteurEtDestinataire.DestinataireFonctionId = 0
-        tacheEmetteurEtDestinataire.EmetteurFonctionId = 0
-        tacheEmetteurEtDestinataire.TraiteFonctionId = 0
+        Dim tacheEmetteurEtDestinataire As New TacheEmetteurEtDestinataire With {
+            .DestinataireFonctionId = 0,
+            .EmetteurFonctionId = 0,
+            .TraiteFonctionId = 0
+        }
 
         Select Case userLog.UtilisateurProfilId.Trim()
             Case "IDE"

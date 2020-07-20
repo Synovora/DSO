@@ -46,14 +46,15 @@ Public Class ParametreOasisDao
             Dim i As Integer
             Dim rowCount As Integer = ContexteObsoleteDataTable.Rows.Count - 1
             For i = 0 To rowCount Step 1
-                Dim AntecedentHistoaCreer As New AntecedentHisto
-                AntecedentHistoaCreer.HistorisationDate = Date.Now()
-                AntecedentHistoaCreer.UtilisateurId = 1
-                AntecedentHistoaCreer.Etat = 0
-                AntecedentHistoaCreer.AntecedentId = ContexteObsoleteDataTable.Rows(i)("oa_antecedent_id")
-                AntecedentHistoaCreer.PatientId = ContexteObsoleteDataTable.Rows(i)("oa_antecedent_patient_id")
-                AntecedentHistoaCreer.Type = ContexteObsoleteDataTable.Rows(i)("oa_antecedent_type")
-                AntecedentHistoaCreer.DrcId = ContexteObsoleteDataTable.Rows(i)("oa_antecedent_drc_id")
+                Dim AntecedentHistoaCreer As New AntecedentHisto With {
+                    .HistorisationDate = Date.Now(),
+                    .UtilisateurId = 1,
+                    .Etat = 0,
+                    .AntecedentId = ContexteObsoleteDataTable.Rows(i)("oa_antecedent_id"),
+                    .PatientId = ContexteObsoleteDataTable.Rows(i)("oa_antecedent_patient_id"),
+                    .Type = ContexteObsoleteDataTable.Rows(i)("oa_antecedent_type"),
+                    .DrcId = ContexteObsoleteDataTable.Rows(i)("oa_antecedent_drc_id")
+                }
                 If ContexteObsoleteDataTable.Rows(i)("oa_antecedent_description") Is DBNull.Value Then
                     AntecedentHistoaCreer.Description = ""
                 Else

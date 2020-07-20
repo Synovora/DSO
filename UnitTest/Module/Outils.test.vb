@@ -3,28 +3,29 @@ Imports Oasis_WF
 
 <TestClass()> Public Class TestOutils
     Public Function GenerateUserLog() As Utilisateur
-        Dim userLog = New Utilisateur
-        userLog.UtilisateurId = 1337
-        userLog.UtilisateurNom = "MonNom"
-        userLog.UtilisateurPrenom = "MonPrenom"
-        userLog.UtilisateurProfilId = "MonProfilID"
-        userLog.UtilisateurRPPS = "MonRPPS"
-        userLog.UtilisateurAdmin = False
-        userLog.UtilisateurLogin = "MonLogin"
-        userLog.UtilisateurSiegeId = 33
-        userLog.UtilisateurSiteId = 22
-        userLog.UtilisateurUniteSanitaireId = 11
-        userLog.UtilisateurNiveauAcces = 1
-        userLog.Password = "MyPassword"
-        userLog.IsPasswordUniqueUsage = True
         'userLog.LstFonction As List(Of Fonction)
-        userLog.TypeProfil = "TypeProfil"
-        userLog.FonctionParDefautId = 0
-        userLog.UtilisateurTelephone = "MonPhone"
-        userLog.UtilisateurFax = "MonFax"
-        userLog.UtilisateurMail = "MonMail"
-        userLog.UtilisateurClePrivee = "0x00000"
-        userLog.UtilisateurAddress = "MyAddress"
+        Dim userLog = New Utilisateur With {
+            .UtilisateurId = 1337,
+            .UtilisateurNom = "MonNom",
+            .UtilisateurPrenom = "MonPrenom",
+            .UtilisateurProfilId = "MonProfilID",
+            .UtilisateurRPPS = "MonRPPS",
+            .UtilisateurAdmin = False,
+            .UtilisateurLogin = "MonLogin",
+            .UtilisateurSiegeId = 33,
+            .UtilisateurSiteId = 22,
+            .UtilisateurUniteSanitaireId = 11,
+            .UtilisateurNiveauAcces = 1,
+            .Password = "MyPassword",
+            .IsPasswordUniqueUsage = True,
+            .TypeProfil = "TypeProfil",
+            .FonctionParDefautId = 0,
+            .UtilisateurTelephone = "MonPhone",
+            .UtilisateurFax = "MonFax",
+            .UtilisateurMail = "MonMail",
+            .UtilisateurClePrivee = "0x00000",
+            .UtilisateurAddress = "MyAddress"
+        }
         Return userLog
     End Function
 

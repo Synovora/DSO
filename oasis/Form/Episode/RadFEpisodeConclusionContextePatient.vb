@@ -24,7 +24,6 @@ Public Class RadFEpisodeConclusionContextePatient
     End Property
 
     Dim InitContextePublie As Boolean = False
-    Dim SelectedContexteId As Long = 0
 
     Dim SelectedPatient As PatientBase
 
@@ -35,10 +34,10 @@ Public Class RadFEpisodeConclusionContextePatient
         ChargementContexte()
     End Sub
 
-    Dim episodeContexteDao As New EpisodeContexteDao
-    Dim episodeDao As New EpisodeDao
+    ReadOnly episodeContexteDao As New EpisodeContexteDao
+    ReadOnly episodeDao As New EpisodeDao
 
-    Dim ListConclusion As List(Of Long) = New List(Of Long)
+    ReadOnly ListConclusion As List(Of Long) = New List(Of Long)
 
     Private Sub ChargementEtatCivil()
         Dim patientDao As New PatientDao
@@ -54,7 +53,6 @@ Public Class RadFEpisodeConclusionContextePatient
 
     Private Sub ChargementContexte()
         RadContexteDataGridView.Rows.Clear()
-        SelectedContexteId = 0
 
         Dim contexteDataTable As DataTable
         Dim antecedentDao As AntecedentDao = New AntecedentDao
@@ -253,14 +251,16 @@ Public Class RadFEpisodeConclusionContextePatient
                             CodeRetour = True
                             Select Case vFContexteDetailEdit.CodeResultat
                                 Case EnumResultat.AnnulationOK
-                                    Dim form As New RadFNotification()
-                                    form.Titre = "Notification contexte patient"
-                                    form.Message = "Contexte patient annulé"
+                                    Dim form As New RadFNotification With {
+                                        .Titre = "Notification contexte patient",
+                                        .Message = "Contexte patient annulé"
+                                    }
                                     form.Show()
                                 Case EnumResultat.ModificationOK
-                                    Dim form As New RadFNotification()
-                                    form.Titre = "Notification contexte patient"
-                                    form.Message = "Contexte patient modifié"
+                                    Dim form As New RadFNotification With {
+                                        .Titre = "Notification contexte patient",
+                                        .Message = "Contexte patient modifié"
+                                    }
                                     form.Show()
                             End Select
                             ChargementConclusion()
@@ -309,9 +309,10 @@ Public Class RadFEpisodeConclusionContextePatient
                             'Si le traitement a été créé, on recharge la grid
                             If vFContexteDetailEdit.CodeRetour = True Then
                                 CodeRetour = True
-                                Dim form As New RadFNotification()
-                                form.Titre = "Notification contexte patient"
-                                form.Message = "Contexte patient créé"
+                                Dim form As New RadFNotification With {
+                                    .Titre = "Notification contexte patient",
+                                    .Message = "Contexte patient créé"
+                                }
                                 form.Show()
                                 ChargementConclusion()
                                 ChargementContexte()
@@ -336,12 +337,13 @@ Public Class RadFEpisodeConclusionContextePatient
                 Dim ContexteId As Integer = RadContexteDataGridView.Rows(aRow).Cells("ContexteId").Value
                 Me.Enabled = False
                 Cursor.Current = Cursors.WaitCursor
-                Dim episodeContexte As New EpisodeContexte
-                episodeContexte.ContexteId = ContexteId
-                episodeContexte.EpisodeId = SelectedEpisode.Id
-                episodeContexte.PatientId = SelectedEpisode.PatientId
-                episodeContexte.UserCreation = userLog.UtilisateurId
-                episodeContexte.DateCreation = Date.Now()
+                Dim episodeContexte As New EpisodeContexte With {
+                    .ContexteId = ContexteId,
+                    .EpisodeId = SelectedEpisode.Id,
+                    .PatientId = SelectedEpisode.PatientId,
+                    .UserCreation = userLog.UtilisateurId,
+                    .DateCreation = Date.Now()
+                }
                 episodeContexteDao.CreateEpisodeContexte(episodeContexte, userLog)
                 ChargementConclusion()
                 ChargementContexte()

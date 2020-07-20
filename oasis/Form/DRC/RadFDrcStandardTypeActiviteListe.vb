@@ -108,25 +108,25 @@ Public Class RadFDrcStandardTypeActiviteListe
 
     Private Sub RadBtnActePM_Click(sender As Object, e As EventArgs) Handles RadBtnActePM.Click
         Dim CategorieOasis = Drc.EnumCategorieOasisCode.ActeParamedical
-        selectDrc(CategorieOasis)
+        SelectDrc(CategorieOasis)
     End Sub
 
     Private Sub RadBtnSlectProtocole_Click(sender As Object, e As EventArgs) Handles RadBtnSlectProtocole.Click
         Dim CategorieOasis = Drc.EnumCategorieOasisCode.ProtocoleCollaboratif
-        selectDrc(CategorieOasis)
+        SelectDrc(CategorieOasis)
     End Sub
 
     Private Sub RadBtnSelectParm_Click(sender As Object, e As EventArgs) Handles RadBtnSelectParm.Click
         Dim CategorieOasis = Drc.EnumCategorieOasisCode.GroupeParametres
-        selectDrc(CategorieOasis)
+        SelectDrc(CategorieOasis)
     End Sub
     Private Sub RadBtnMesurePreventive_Click(sender As Object, e As EventArgs) Handles RadBtnMesurePreventive.Click
         Dim CategorieOasis = Drc.EnumCategorieOasisCode.Prevention
-        selectDrc(CategorieOasis)
+        SelectDrc(CategorieOasis)
     End Sub
 
     'Sélection DRC à implémenter
-    Private Sub selectDrc(CategorieOasis As String)
+    Private Sub SelectDrc(CategorieOasis As String)
         Dim SelectedDrcId As Integer
         Cursor.Current = Cursors.WaitCursor
 
@@ -138,9 +138,10 @@ Public Class RadFDrcStandardTypeActiviteListe
                 SelectedDrcId = vFDrcSelecteur.SelectedDrcId
                 If SelectedDrcId <> 0 Then
                     'Ajout de l'occurrence choisie (contrôle que cette DORC n'est pas déjà associée)
-                    Dim drcStandard As DrcStandard = New DrcStandard
-                    drcStandard.TypeActivite = TypeActivite
-                    drcStandard.DrcId = SelectedDrcId
+                    Dim drcStandard As DrcStandard = New DrcStandard With {
+                        .TypeActivite = TypeActivite,
+                        .DrcId = SelectedDrcId
+                    }
                     Dim drcSelected As Drc = New Drc
                     drcdao.GetDrc(drcSelected, SelectedDrcId)
                     drcStandard.CategorieOasis = drcSelected.CategorieOasisId
@@ -159,7 +160,7 @@ Public Class RadFDrcStandardTypeActiviteListe
                             ChargementDrc()
                         End If
                     Catch ex As Exception
-                        CreateLog(ex.ToString, Me.Name, LogDao.EnumTypeLog.ERREUR.ToString, userLog)
+                        CreateLog(ex.ToString, Me.Name, Log.EnumTypeLog.ERREUR.ToString, userLog)
                         If ex.Message.StartsWith("Collision") = True Then
                             MessageBox.Show("La DRC sélectionnée existe déjà pour le type d'activité d'épisode")
                         End If
@@ -250,14 +251,14 @@ Public Class RadFDrcStandardTypeActiviteListe
 
     'Appel gestion DRC Standard
     Private Sub RadGridViewDrcAsso_CellDoubleClick(sender As Object, e As Telerik.WinControls.UI.GridViewCellEventArgs) Handles RadGridViewDrcAsso.CellDoubleClick
-        modifierDRCStandard()
+        ModifierDRCStandard()
     End Sub
 
     Private Sub RadBtnModifier_Click(sender As Object, e As EventArgs) Handles RadBtnModifier.Click
-        modifierDRCStandard()
+        ModifierDRCStandard()
     End Sub
 
-    Private Sub modifierDRCStandard()
+    Private Sub ModifierDRCStandard()
         If RadGridViewDrcAsso.CurrentRow IsNot Nothing Then
             Dim aRow As Integer = Me.RadGridViewDrcAsso.Rows.IndexOf(Me.RadGridViewDrcAsso.CurrentRow)
             If aRow >= 0 Then

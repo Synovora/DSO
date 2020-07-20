@@ -89,16 +89,16 @@ Public Class RadFEpisodeDetail
     Dim episode As Episode
     Dim tache As Tache
     Dim user As New Utilisateur
-    Dim utilisateurHisto As Utilisateur = New Utilisateur()
+    ReadOnly utilisateurHisto As Utilisateur = New Utilisateur()
 
-    Dim ParcoursListProfilsOasis As New List(Of Integer)
-    Dim ListeParametreExistant As New List(Of Long)
+    ReadOnly ParcoursListProfilsOasis As New List(Of Integer)
+    ReadOnly ListeParametreExistant As New List(Of Long)
 
     Dim InitPublie, InitParPriorite, InitMajeur, InitContextePublie, InitParcoursNonCache As Boolean
     Dim PPSSuiviIdeExiste, PPSSuiviSageFemmeExiste, PPSSuiviMedecinExiste As Boolean
     Dim PatientAllergie, PatientContreIndication As Boolean
-    Dim ObservationMedicaleModifie As Boolean = False
-    Dim ObservationParamedicaleModifie As Boolean = False
+    ReadOnly ObservationMedicaleModifie As Boolean = False
+    ReadOnly ObservationParamedicaleModifie As Boolean = False
     Dim IsTraitementLoaded As Boolean = False
     Dim IsParcoursLoaded As Boolean = False
     Dim IsContexteLoaded As Boolean = False
@@ -168,12 +168,13 @@ Public Class RadFEpisodeDetail
         Me.RadDesktopAlert1.Popup.AlertElement.BorderColor = Color.DarkBlue
 
         Dim actiondao As New ActionDao
-        Dim action As New Action
-        action.UtilisateurId = userLog.UtilisateurId
-        action.PatientId = SelectedPatient.patientId
-        action.Fonction = ActionDao.EnumFonctionCode.EPISODE
-        action.FonctionId = Me.SelectedEpisodeId
-        action.Action = "Accès épisode patient n° " & SelectedEpisodeId
+        Dim action As New Action With {
+            .UtilisateurId = userLog.UtilisateurId,
+            .PatientId = SelectedPatient.PatientId,
+            .Fonction = ActionDao.EnumFonctionCode.EPISODE,
+            .FonctionId = Me.SelectedEpisodeId,
+            .Action = "Accès épisode patient n° " & SelectedEpisodeId
+        }
         actiondao.CreationAction(action)
 
         RadBtnUp.Text = Char.ConvertFromUtf32(8593)
@@ -209,7 +210,7 @@ Public Class RadFEpisodeDetail
 
         ClotureAutomatiqueRendezVous()
         ChargementParametreApplication()
-        initZones()
+        InitZones()
         ChargementEtatCivil()
 
         'Episode
@@ -241,7 +242,7 @@ Public Class RadFEpisodeDetail
         'Synthèse, chargement de la page par défaut
         ChargementAntecedent()
 
-        refreshButtonSousEpisodeProperties()
+        RefreshButtonSousEpisodeProperties()
 
         Cursor.Current = Cursors.Default
     End Sub
@@ -256,7 +257,7 @@ Public Class RadFEpisodeDetail
         Me.IsRendezVousCloture = False
         If Me.RendezVousId <> 0 Then
             Dim tacheRendezVous As Tache
-            tacheRendezVous = tacheDao.getTacheById(RendezVousId)
+            tacheRendezVous = tacheDao.GetTacheById(RendezVousId)
             If tacheRendezVous.IsUnRdv() Then
                 'Controler que l'utilisateur est celui qui s'est attribué la tâche
                 If tacheRendezVous.IsMyTacheATraiter(userLog) = False Then
@@ -285,18 +286,18 @@ Public Class RadFEpisodeDetail
                 Catch ex As Exception
                     If ex.ToString.StartsWith("Collision") Then
                         Dim Description As String = "Traitement annulé, le rendez-vous (tâche n° " & Me.RendezVousId.ToString & ") était déjà honoré"
-                        CreateLog(Description, Me.Name, LogDao.EnumTypeLog.ERREUR.ToString, userLog)
+                        CreateLog(Description, Me.Name, Log.EnumTypeLog.ERREUR.ToString, userLog)
                     Else
                         MessageBox.Show(ex.ToString)
                         Dim Description As String = "Le traitement pour honorer le rendez-vous (tâche n° " & Me.RendezVousId.ToString & ") a échouée"
-                        CreateLog(Description, Me.Name, LogDao.EnumTypeLog.ERREUR.ToString, userLog)
+                        CreateLog(Description, Me.Name, Log.EnumTypeLog.ERREUR.ToString, userLog)
                     End If
                 End Try
             End If
         Else
             'Si le rendez-vous n'a pas été communiqué à l'épisode, on recherche si un rendez-vous en attente existe pour la fonction de l'utilisateur avec une date <= date du jour
             Dim tacheRendezVous As Tache
-            tacheRendezVous = tacheDao.GetProchainRendezVousOasisByPatientIdEtFonctionId(SelectedPatient.patientId, userLog.FonctionParDefautId)
+            tacheRendezVous = tacheDao.GetProchainRendezVousOasisByPatientIdEtFonctionId(SelectedPatient.PatientId, userLog.FonctionParDefautId)
             'Si RDV Oasis existe et que la date du DRV est <= date du jour
             If tacheRendezVous.Id <> 0 AndAlso tacheRendezVous.DateRendezVous.Date <= Date.Now.Date Then
                 If tacheRendezVous.IsAttribuable(userLog) Then
@@ -316,11 +317,11 @@ Public Class RadFEpisodeDetail
                         Catch ex As Exception
                             If ex.ToString.StartsWith("Collision") Then
                                 Dim Description As String = "Attribution annulé, le rendez-vous (tâche n° " & Me.RendezVousId.ToString & ") était déjà honoré"
-                                CreateLog(Description, Me.Name, LogDao.EnumTypeLog.ERREUR.ToString, userLog)
+                                CreateLog(Description, Me.Name, Log.EnumTypeLog.ERREUR.ToString, userLog)
                                 MessageBox.Show(Description)
                             Else
                                 Dim Description As String = "L'attribution du rendez-vous (tâche n° " & Me.RendezVousId.ToString & ") a échouée" & ex.ToString
-                                CreateLog(Description, Me.Name, LogDao.EnumTypeLog.ERREUR.ToString, userLog)
+                                CreateLog(Description, Me.Name, Log.EnumTypeLog.ERREUR.ToString, userLog)
                                 MessageBox.Show(Description)
                             End If
                             MessageBox.Show(ex.ToString)
@@ -343,7 +344,7 @@ Public Class RadFEpisodeDetail
         Dim parcoursId As Long = tacheRendezVous.ParcoursId
         If parcoursId <> 0 Then
             Dim parcoursDao As New ParcoursDao
-            Dim parcours As Parcours = parcoursDao.getParcoursById(tacheRendezVous.ParcoursId)
+            Dim parcours As Parcours = parcoursDao.GetParcoursById(tacheRendezVous.ParcoursId)
             If parcours.Rythme <> 0 Then
                 If tacheDao.CreationAutomatiqueDeDemandeRendezVous(SelectedPatient, parcours, tacheRendezVous.DateRendezVous.Date, userLog) = True Then
                     Me.RadDesktopAlert1.CaptionText = "Notification demande de rendez-vous"
@@ -357,15 +358,16 @@ Public Class RadFEpisodeDetail
     Private Sub ClotureRendezVous(tacheRendezVous As Tache)
         Try
             If tacheDao.ClotureTache(tacheRendezVous.Id, True, userLog) = True Then
-                Dim form As New RadFNotification()
-                form.Titre = "Rendez-vous patient honoré"
-                form.Message = "Le rendez-vous de type '" & userLog.TypeProfil & "', programmé le " & tacheRendezVous.DateRendezVous.ToString("dd.MM.yyyy") & " est honoré"
+                Dim form As New RadFNotification With {
+                    .Titre = "Rendez-vous patient honoré",
+                    .Message = "Le rendez-vous de type '" & userLog.TypeProfil & "', programmé le " & tacheRendezVous.DateRendezVous.ToString("dd.MM.yyyy") & " est honoré"
+                }
                 form.Show()
             End If
         Catch ex As Exception
             MessageBox.Show(ex.ToString)
             Dim Description As String = "La cloture du rendez-vous n° " & Me.RendezVousId.ToString & ") a échouée, information système : " & ex.ToString
-            CreateLog(Description, Me.Name, LogDao.EnumTypeLog.ERREUR.ToString, userLog)
+            CreateLog(Description, Me.Name, Log.EnumTypeLog.ERREUR.ToString, userLog)
         End Try
     End Sub
 
@@ -396,7 +398,7 @@ Public Class RadFEpisodeDetail
     End Sub
 
     Private Sub GetContreIndication()
-        Dim StringContreIndicationToolTip As String = patientDao.GetStringContreIndicationByPatient(SelectedPatient.patientId)
+        Dim StringContreIndicationToolTip As String = patientDao.GetStringContreIndicationByPatient(SelectedPatient.PatientId)
         If StringContreIndicationToolTip = "" Then
             LblContreIndication.Hide()
             PatientContreIndication = False
@@ -410,7 +412,7 @@ Public Class RadFEpisodeDetail
     End Sub
 
     Private Sub GetAllergie()
-        Dim StringAllergieToolTip As String = patientDao.GetStringAllergieByPatient(SelectedPatient.patientId)
+        Dim StringAllergieToolTip As String = patientDao.GetStringAllergieByPatient(SelectedPatient.PatientId)
         If StringAllergieToolTip = "" Then
             PatientAllergie = False
             LblAllergie.Hide()
@@ -475,7 +477,7 @@ Public Class RadFEpisodeDetail
         Dim DateValidationOrdonnance As Date = Nothing
         Dim DateCreationOrdonnance As Date = Nothing
         Dim dt As DataTable
-        dt = ordonnaceDao.getOrdonnanceValidebyPatient(SelectedPatient.patientId, SelectedEpisodeId)
+        dt = ordonnaceDao.GetOrdonnanceValidebyPatient(SelectedPatient.PatientId, SelectedEpisodeId)
         If dt.Rows.Count > 0 Then
             OrdonnanceToolStripMenuItem.ForeColor = Color.Red
             'RadPageView1.Pages(1).Item.ForeColor = Color.Orange
@@ -548,9 +550,10 @@ Public Class RadFEpisodeDetail
     End Sub
 
     Private Sub LblTypeEpisode_Click(sender As Object, e As EventArgs) Handles LblTypeEpisode.Click
-        Dim form As New RadFNotification()
-        form.Titre = "Caractéristique épisode patient"
-        form.Message = ConstitutionNotification()
+        Dim form As New RadFNotification With {
+            .Titre = "Caractéristique épisode patient",
+            .Message = ConstitutionNotification()
+        }
         form.Show()
     End Sub
 
@@ -1210,14 +1213,15 @@ Public Class RadFEpisodeDetail
                 If SelectedDrcId <> 0 Then
                     Cursor.Current = Cursors.WaitCursor
                     'Création observation spécifique
-                    Dim episodeActeParamedical As New EpisodeActeParamedical
-                    episodeActeParamedical.DrcId = SelectedDrcId
-                    episodeActeParamedical.EpisodeId = SelectedEpisodeId
-                    episodeActeParamedical.PatientId = SelectedPatient.patientId
-                    episodeActeParamedical.TypeObservation = FonctionDao.EnumTypeFonction.PARAMEDICAL.ToString
-                    episodeActeParamedical.Observation = ""
-                    episodeActeParamedical.UserId = userLog.UtilisateurId
-                    episodeActeParamedical.Inactif = False
+                    Dim episodeActeParamedical As New EpisodeActeParamedical With {
+                        .DrcId = SelectedDrcId,
+                        .EpisodeId = SelectedEpisodeId,
+                        .PatientId = SelectedPatient.PatientId,
+                        .TypeObservation = FonctionDao.EnumTypeFonction.PARAMEDICAL.ToString,
+                        .Observation = "",
+                        .UserId = userLog.UtilisateurId,
+                        .Inactif = False
+                    }
                     Dim episodeActeParamedicalId As Long
                     episodeActeParamedicalId = episodeActeParamedicalDao.CreateEpisodeActeParamedical(episodeActeParamedical)
                     If episodeActeParamedicalId <> 0 Then
@@ -1408,9 +1412,10 @@ Public Class RadFEpisodeDetail
         Next
 
         If MiseAJour = True Then
-            Dim form As New RadFNotification()
-            form.Titre = "Notification saisie observation spécifique patient"
-            form.Message = "Observation spécifique mise à jour"
+            Dim form As New RadFNotification With {
+                .Titre = "Notification saisie observation spécifique patient",
+                .Message = "Observation spécifique mise à jour"
+            }
             form.Show()
             'Rechargement grid
             ChargementEpisodeActesParamedicauxMedical()
@@ -1857,9 +1862,10 @@ Public Class RadFEpisodeDetail
             tacheDao.DesattribueTache(tache.Id)
 
             Try
-                Dim form As New RadFNotification()
-                form.Titre = "Notification épisode"
-                form.Message = "La sortie de l'épisode sans traiter la demande d'avis a automatiquement annulé l'attribution de la tâche"
+                Dim form As New RadFNotification With {
+                    .Titre = "Notification épisode",
+                    .Message = "La sortie de l'épisode sans traiter la demande d'avis a automatiquement annulé l'attribution de la tâche"
+                }
                 form.Show()
             Catch ex As Exception
                 MessageBox.Show(ex.Message)
@@ -2374,9 +2380,11 @@ Public Class RadFEpisodeDetail
                 contexte.Description = "Contexte IDE : " & episode.ObservationParamedical
                 contexteDao.CreationContexte(contexte, contexteHisto, userLog)
             End If
-            Dim form As New RadFNotification()
-            form.Titre = "Notification épisode patient"
-            form.Message = "=== Episode clôturé ==="
+
+            Dim form As New RadFNotification With {
+                .Titre = "Notification épisode patient",
+                .Message = "=== Episode clôturé ==="
+            }
             form.Show()
             Close()
         End If
@@ -2442,9 +2450,10 @@ Public Class RadFEpisodeDetail
             episodeProtocoleCollaboratifDao.GenerateParametreEtProtocoleCollaboratifByEpisode(episode)
             Cursor.Current = Cursors.Default
             Refresh()
-            Dim form As New RadFNotification()
-            form.Titre = "Notification épisode"
-            form.Message = "Traitement de génération des paramètres et des protocoles terminé"
+            Dim form As New RadFNotification With {
+                .Titre = "Notification épisode",
+                .Message = "Traitement de génération des paramètres et des protocoles terminé"
+            }
             form.Show()
         End If
     End Sub
@@ -2466,7 +2475,7 @@ Public Class RadFEpisodeDetail
         InitParametre()
         ChargementParametres()
         ChargementSousEpisode()
-        refreshButtonSousEpisodeProperties()
+        RefreshButtonSousEpisodeProperties()
         ChargementObservationSpecifique()
         ChargementObservationLibre()
         ChargementConclusion()
@@ -2525,15 +2534,15 @@ Public Class RadFEpisodeDetail
 
         If RadChkPublie.Checked = True Then
             If RadChkParPriorite.Checked = True Then
-                antecedentDataTable = antecedentDao.GetAllAntecedentbyPatient(SelectedPatient.patientId, True, True)
+                antecedentDataTable = antecedentDao.GetAllAntecedentbyPatient(SelectedPatient.PatientId, True, True)
             Else
-                antecedentDataTable = antecedentDao.GetAllAntecedentbyPatient(SelectedPatient.patientId, True, False)
+                antecedentDataTable = antecedentDao.GetAllAntecedentbyPatient(SelectedPatient.PatientId, True, False)
             End If
         Else
             If RadChkParPriorite.Checked = True Then
-                antecedentDataTable = antecedentDao.GetAllAntecedentbyPatient(SelectedPatient.patientId, False, True)
+                antecedentDataTable = antecedentDao.GetAllAntecedentbyPatient(SelectedPatient.PatientId, False, True)
             Else
-                antecedentDataTable = antecedentDao.GetAllAntecedentbyPatient(SelectedPatient.patientId, False, False)
+                antecedentDataTable = antecedentDao.GetAllAntecedentbyPatient(SelectedPatient.PatientId, False, False)
             End If
         End If
 
@@ -2873,7 +2882,7 @@ Public Class RadFEpisodeDetail
             antecedentChangementOrdreDao.UpdateAntecedent(antecedentId, NouveauOrdreAffichage, NiveauAntecedentAOrdonner)
 
             AntecedentModificationOrdre(NiveauAntecedentAOrdonner)
-            CodeRetour = antecedentChangementOrdreDao.AntecedentReorganisationOrdre(NiveauAntecedentAOrdonner, SelectedPatient.patientId, antecedentIdPere, NiveauAntecedentAOrdonner, Cacher)
+            CodeRetour = antecedentChangementOrdreDao.AntecedentReorganisationOrdre(NiveauAntecedentAOrdonner, SelectedPatient.PatientId, antecedentIdPere, NiveauAntecedentAOrdonner, Cacher)
             If CodeRetour = True Then
                 ChargementAntecedentAvecPositionnementCurseur()
             End If
@@ -2916,7 +2925,7 @@ Public Class RadFEpisodeDetail
             antecedentChangementOrdreDao.UpdateAntecedent(antecedentId, NouveauOrdreAffichage, NiveauAntecedentAOrdonner)
 
             AntecedentModificationOrdre(NiveauAntecedentAOrdonner)
-            CodeRetour = antecedentChangementOrdreDao.AntecedentReorganisationOrdre(NiveauAntecedentAOrdonner, SelectedPatient.patientId, antecedentIdPere, NiveauAntecedentAOrdonner, Cacher)
+            CodeRetour = antecedentChangementOrdreDao.AntecedentReorganisationOrdre(NiveauAntecedentAOrdonner, SelectedPatient.PatientId, antecedentIdPere, NiveauAntecedentAOrdonner, Cacher)
             If CodeRetour = True Then
                 ChargementAntecedentAvecPositionnementCurseur()
             End If
@@ -3187,7 +3196,7 @@ Public Class RadFEpisodeDetail
     Private Sub ChargementToolTipAld()
         Dim StringTooltip As String
         Dim aldDao As New AldDao
-        StringTooltip = aldDao.DateFinALD(Me.SelectedPatient.patientId)
+        StringTooltip = aldDao.DateFinALD(Me.SelectedPatient.PatientId)
         If StringTooltip <> "" Then
             LblALD.Show()
             ToolTip.SetToolTip(LblALD, StringTooltip)
@@ -3213,7 +3222,7 @@ Public Class RadFEpisodeDetail
         Cursor.Current = Cursors.WaitCursor
         RadTraitementDataGridView.Rows.Clear()
 
-        traitementDataTable = traitementDao.getTraitementEnCoursbyPatient(Me.SelectedPatient.patientId)
+        traitementDataTable = traitementDao.GetTraitementEnCoursbyPatient(Me.SelectedPatient.PatientId)
 
         'Ajout d'une colonne 'oa_traitement_posologie' dans le DataTable de traitement
         traitementDataTable.Columns.Add("oa_traitement_posologie", Type.GetType("System.String"))
@@ -3498,7 +3507,7 @@ Public Class RadFEpisodeDetail
         Dim DateArretString, TraitementArretString, TraitementArretMedicament, TraitementArretCommentaire As String
         Dim DateArret As Date
         Dim traitementArretDatatable As DataTable
-        traitementArretDatatable = traitementDao.getAllTraitementArreteByPatient(Me.SelectedPatient.patientId)
+        traitementArretDatatable = traitementDao.GetAllTraitementArreteByPatient(Me.SelectedPatient.PatientId)
         rowCount = traitementArretDatatable.Rows.Count - 1
         For i = 0 To rowCount Step 1
             isTraitementArret = True
@@ -3872,7 +3881,7 @@ Public Class RadFEpisodeDetail
         Cursor.Current = Cursors.WaitCursor
         Dim OrdonnanceId As Long
         Dim dt As DataTable
-        dt = ordonnaceDao.getOrdonnanceValidebyPatient(SelectedPatient.patientId, SelectedEpisodeId)
+        dt = ordonnaceDao.GetOrdonnanceValidebyPatient(SelectedPatient.PatientId, SelectedEpisodeId)
         If dt.Rows.Count > 0 Then
             'Ordonnance existante
             OrdonnanceId = dt.Rows(0)("oa_ordonnance_id")
@@ -3888,7 +3897,7 @@ Public Class RadFEpisodeDetail
             End If
             OrdonnanceId = ordonnaceDao.CreateOrdonnance(SelectedPatient.PatientId, SelectedEpisodeId, userLog)
             If OrdonnanceId <> 0 Then
-                If ordonnaceDao.CreateNewOrdonnanceDetail(SelectedPatient.patientId, OrdonnanceId, episode) = True Then
+                If ordonnaceDao.CreateNewOrdonnanceDetail(SelectedPatient.PatientId, OrdonnanceId, episode) = True Then
                     AfficheOrdonnance(OrdonnanceId)
                 Else
                     'Erreur, l'ordonnance détail n'a pa été créée
@@ -3937,7 +3946,7 @@ Public Class RadFEpisodeDetail
         Dim IntervenantOasis As Boolean
 
         Cursor.Current = Cursors.WaitCursor
-        ParcoursDataTable = parcoursDao.getAllParcoursbyPatient(SelectedPatient.patientId)
+        ParcoursDataTable = parcoursDao.GetAllParcoursbyPatient(SelectedPatient.PatientId)
 
         Dim iGrid As Integer = -1 'Indice pour alimenter la Grid qui peut comporter moins d'occurrences que le DataTable
         Dim rowCount As Integer = ParcoursDataTable.Rows.Count - 1
@@ -4116,7 +4125,7 @@ Public Class RadFEpisodeDetail
                     Try
                         Using vRadFRorListe As New RadFRorListe
                             vRadFRorListe.Selecteur = True
-                            vRadFRorListe.PatientId = Me.SelectedPatient.patientId
+                            vRadFRorListe.PatientId = Me.SelectedPatient.PatientId
                             vRadFRorListe.SpecialiteId = vFSpecialiteSelecteur.SelectedSpecialiteId
                             vRadFRorListe.TypeRor = "Intervenant"
                             vRadFRorListe.ShowDialog()                  'Sélection d'un professionnel de santé
@@ -4253,9 +4262,9 @@ Public Class RadFEpisodeDetail
 
         Cursor.Current = Cursors.WaitCursor
         If RadChkContextePublie.Checked = True Then
-            contexteDataTable = antecedentDao.GetContextebyPatient(SelectedPatient.patientId, True)
+            contexteDataTable = antecedentDao.GetContextebyPatient(SelectedPatient.PatientId, True)
         Else
-            contexteDataTable = antecedentDao.GetContextebyPatient(SelectedPatient.patientId, False)
+            contexteDataTable = antecedentDao.GetContextebyPatient(SelectedPatient.PatientId, False)
         End If
 
         RadContexteDataGridView.Rows.Clear()
@@ -4534,7 +4543,7 @@ Public Class RadFEpisodeDetail
         Dim PPSDao As PpsDao = New PpsDao
 
         Cursor.Current = Cursors.WaitCursor
-        PPSDataTable = PPSDao.getAllPPSbyPatient(SelectedPatient.patientId)
+        PPSDataTable = PPSDao.getAllPPSbyPatient(SelectedPatient.PatientId)
 
         RadPPSDataGridView.Rows.Clear()
 
@@ -4872,7 +4881,7 @@ Public Class RadFEpisodeDetail
 
         'Contrôler si un objectif de santé valide existe
         Dim ppsdao As New PpsDao
-        If ppsdao.ExistPPSObjectifByPatientId(SelectedPatient.patientId) = False Then
+        If ppsdao.ExistPPSObjectifByPatientId(SelectedPatient.PatientId) = False Then
             Me.Enabled = False
             Cursor.Current = Cursors.WaitCursor
 
@@ -5097,7 +5106,7 @@ Public Class RadFEpisodeDetail
             LongueurStringAllergie = CInt(LongueurStringAllergieString)
         Else
             LongueurStringAllergie = 12
-            CreateLog("Paramètre application 'longueurStringAllergie' non trouvé !", "Episode", LogDao.EnumTypeLog.ERREUR.ToString, userLog)
+            CreateLog("Paramètre application 'longueurStringAllergie' non trouvé !", "Episode", Log.EnumTypeLog.ERREUR.ToString, userLog)
         End If
 
         Dim drcIdConclusionIdeString As String = ConfigurationManager.AppSettings("drcIdConclusionIde")
@@ -5105,7 +5114,7 @@ Public Class RadFEpisodeDetail
             drcIdConclusionIde = CInt(drcIdConclusionIdeString)
         Else
             drcIdConclusionIde = 128001
-            CreateLog("Paramètre application 'drcIdConclusionIde' non trouvé !", "Episode", LogDao.EnumTypeLog.ERREUR.ToString, userLog)
+            CreateLog("Paramètre application 'drcIdConclusionIde' non trouvé !", "Episode", Log.EnumTypeLog.ERREUR.ToString, userLog)
         End If
     End Sub
 
@@ -5328,7 +5337,7 @@ Public Class RadFEpisodeDetail
         Try
             Using vFPatientNoteListe As New RadFPatientNoteListe
                 vFPatientNoteListe.TypeNote = EnumTypeNote.Social
-                vFPatientNoteListe.SelectedPatientId = Me.SelectedPatient.patientId
+                vFPatientNoteListe.SelectedPatientId = Me.SelectedPatient.PatientId
                 vFPatientNoteListe.SelectedPatient = Me.SelectedPatient
                 vFPatientNoteListe.UtilisateurConnecte = Me.UtilisateurConnecte
                 vFPatientNoteListe.ShowDialog() 'Modal
@@ -5347,7 +5356,7 @@ Public Class RadFEpisodeDetail
         Try
             Using vFPatientNoteListe As New RadFPatientNoteListe
                 vFPatientNoteListe.TypeNote = EnumTypeNote.Vaccin
-                vFPatientNoteListe.SelectedPatientId = Me.SelectedPatient.patientId
+                vFPatientNoteListe.SelectedPatientId = Me.SelectedPatient.PatientId
                 vFPatientNoteListe.SelectedPatient = Me.SelectedPatient
                 vFPatientNoteListe.UtilisateurConnecte = Me.UtilisateurConnecte
                 vFPatientNoteListe.ShowDialog() 'Modal
@@ -5366,7 +5375,7 @@ Public Class RadFEpisodeDetail
         Try
             Using vFPatientNoteListe As New RadFPatientNoteListe
                 vFPatientNoteListe.TypeNote = EnumTypeNote.Medicale
-                vFPatientNoteListe.SelectedPatientId = Me.SelectedPatient.patientId
+                vFPatientNoteListe.SelectedPatientId = Me.SelectedPatient.PatientId
                 vFPatientNoteListe.SelectedPatient = Me.SelectedPatient
                 vFPatientNoteListe.UtilisateurConnecte = Me.UtilisateurConnecte
                 vFPatientNoteListe.ShowDialog() 'Modal
@@ -5385,7 +5394,7 @@ Public Class RadFEpisodeDetail
         Try
             Using vFPatientNoteListe As New RadFPatientNoteListe
                 vFPatientNoteListe.TypeNote = EnumTypeNote.Directive
-                vFPatientNoteListe.SelectedPatientId = Me.SelectedPatient.patientId
+                vFPatientNoteListe.SelectedPatientId = Me.SelectedPatient.PatientId
                 vFPatientNoteListe.SelectedPatient = Me.SelectedPatient
                 vFPatientNoteListe.UtilisateurConnecte = Me.UtilisateurConnecte
                 vFPatientNoteListe.ShowDialog() 'Modal

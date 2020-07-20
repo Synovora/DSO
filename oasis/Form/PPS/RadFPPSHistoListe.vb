@@ -44,7 +44,7 @@ Public Class RadFPPSHistoListe
     'Chargement de la Grid
     Private Sub ChargementHistorique()
         Dim ppsHistoDataTable As DataTable
-        ppsHistoDataTable = ppsHistoDao.getAllPPSHistobyPPSId(SelectedPPSId)
+        ppsHistoDataTable = ppsHistoDao.GetAllPPSHistobyPPSId(SelectedPPSId)
 
         Dim i As Integer
         Dim iGrid As Integer = -1 'Indice pour alimenter la Grid qui peut comporter moins d'occurrences que le DataTable

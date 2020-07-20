@@ -1,19 +1,11 @@
 ﻿Imports System.Data.SqlClient
-Imports Oasis_Common
 
 Public Class LogDao
     Inherits StandardDao
 
-    Public Enum EnumTypeLog
-        ERREUR
-        INFO
-    End Enum
-
     Public Function GetLogById(LogId As Integer) As Log
         Dim log As Log
-        Dim con As SqlConnection
-
-        con = GetConnection()
+        Dim con As SqlConnection = GetConnection()
 
         Try
             Dim command As SqlCommand = con.CreateCommand()
@@ -38,22 +30,21 @@ Public Class LogDao
     End Function
 
     Private Function BuildBean(reader As SqlDataReader) As Log
-        Dim log As New Log
-
-        log.Id = reader("id")
-        log.Description = Coalesce(reader("description"), "")
-        log.Origine = Coalesce(reader("origine"), "")
-        log.TypeLog = Coalesce(reader("type_log"), "")
-        log.UserLog = Coalesce(reader("user_creation"), 0)
-        log.DateLog = Coalesce(reader("date_creation"), Nothing)
+        Dim log As New Log With {
+            .Id = reader("id"),
+            .Description = Coalesce(reader("description"), ""),
+            .Origine = Coalesce(reader("origine"), ""),
+            .TypeLog = Coalesce(reader("type_log"), ""),
+            .UserLog = Coalesce(reader("user_creation"), 0),
+            .DateLog = Coalesce(reader("date_creation"), Nothing)
+        }
         Return log
     End Function
 
     Public Function CreateLog(log As Log, userLog As Utilisateur) As Boolean
         Dim da As SqlDataAdapter = New SqlDataAdapter()
         Dim CodeRetour As Boolean = True
-        Dim con As SqlConnection
-        con = GetConnection()
+        Dim con As SqlConnection = GetConnection()
 
         Dim dateCreation As Date = Date.Now.Date
 

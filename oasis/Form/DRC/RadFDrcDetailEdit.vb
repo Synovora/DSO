@@ -49,7 +49,7 @@ Public Class RadFDrcDetailEdit
 
     Dim SelectedAldId As Integer
 
-    Dim conxn As New SqlConnection(getConnectionString())
+    ReadOnly conxn As New SqlConnection(GetConnectionString())
 
     Private Sub RadFDrcDetailEdit_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         AfficheTitleForm(Me, "Gestion des DRC", userLog)
@@ -98,20 +98,21 @@ Public Class RadFDrcDetailEdit
             'Création
             EditMode = EnumEditMode.Creation
 
-            drc = New Drc
-            drc.DrcId = 0
-            drc.DrcLibelle = ""
-            drc.CategorieMajeure = 0
-            drc.CategorieOasisId = 0
-            drc.CodeCim = ""
-            drc.CodeCisp = ""
-            drc.Commentaire = ""
-            drc.ReponseCommentee = ""
-            drc.DrcSexe = 0
-            drc.DrcAgeMax = 0
-            drc.DrcAgeMin = 0
-            drc.DateCreation = Date.Now
-            drc.UserCreation = userLog.UtilisateurId
+            drc = New Drc With {
+                .DrcId = 0,
+                .DrcLibelle = "",
+                .CategorieMajeure = 0,
+                .CategorieOasisId = 0,
+                .CodeCim = "",
+                .CodeCisp = "",
+                .Commentaire = "",
+                .ReponseCommentee = "",
+                .DrcSexe = 0,
+                .DrcAgeMax = 0,
+                .DrcAgeMin = 0,
+                .DateCreation = Date.Now,
+                .UserCreation = userLog.UtilisateurId
+            }
 
             TxtId.Hide()
             LblDRCId.Hide()
@@ -134,7 +135,7 @@ Public Class RadFDrcDetailEdit
 
     Private Sub ChargementDRCxistante()
         Dim dateCreation, dateModification As Date
-        drc = drcDao.getDrcById(SelectedDRCId)
+        drc = drcDao.GetDrcById(SelectedDRCId)
         TxtId.Text = drc.DrcId
         'Description
         TxtLibelle.Text = drc.DrcLibelle
@@ -571,7 +572,7 @@ Public Class RadFDrcDetailEdit
 
     Private Function RechercheIdentifiantDRC() As Integer
         Dim CMDCDateReader As SqlDataReader
-        Dim conxn As New SqlConnection(getConnectionString())
+        Dim conxn As New SqlConnection(GetConnectionString())
         Dim SQLString As String
 
         'Catégorie Oasis
@@ -725,8 +726,9 @@ Public Class RadFDrcDetailEdit
     End Sub
 
     Private Sub TxtAld_DoubleClick(sender As Object, e As EventArgs) Handles TxtAld.DoubleClick
-        Dim vFAldSelecteur As New RadFSelecteurALD
-        vFAldSelecteur.UtilisateurConnecte = userLog
+        Dim vFAldSelecteur As New RadFSelecteurALD With {
+            .UtilisateurConnecte = userLog
+        }
         vFAldSelecteur.ShowDialog() 'Modal
 
         Dim SelectedAldCode As String = vFAldSelecteur.SelectedAldCode

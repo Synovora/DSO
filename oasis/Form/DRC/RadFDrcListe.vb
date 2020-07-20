@@ -21,7 +21,6 @@ Public Class RadFDrcListe
     Dim SelectAld As Boolean
     ReadOnly drcdao As New DrcDao
     ReadOnly alddao As New AldDao
-    ReadOnly Ald As Ald
 
     Private Sub RadFDrcListe_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         CbxCategorieOasis.Items.Clear()

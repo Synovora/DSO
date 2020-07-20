@@ -60,7 +60,7 @@ Public Class AutoSuiviDao
             If NbInsert = 0 Then
                 Dim anomalie As String = "La création du paramètre d'auto-suivi n'a pas abouti - Patient N° : " & autoSuivi.PatientId.ToString & " Id paramètre : " & autoSuivi.ParametreId.ToString
                 Throw New Exception(anomalie)
-                CreateLog(anomalie, "AutoSuiviDao", LogDao.EnumTypeLog.ERREUR.ToString, userLog)
+                CreateLog(anomalie, "AutoSuiviDao", Log.EnumTypeLog.ERREUR.ToString, userLog)
             End If
         Catch ex As Exception
             Throw New Exception(ex.Message)

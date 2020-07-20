@@ -35,10 +35,10 @@ Public Class RadFEpisodeParametreDetailEdit
         End Set
     End Property
 
-    Dim episodeParametreDao As New EpisodeParametreDao
-    Dim parametreDao As New ParametreDao
+    ReadOnly episodeParametreDao As New EpisodeParametreDao
+    ReadOnly parametreDao As New ParametreDao
 
-    Dim listeParametreEpisode As New List(Of Long)
+    ReadOnly listeParametreEpisode As New List(Of Long)
 
     Dim FinChargementParametres As Boolean = False
 
@@ -74,7 +74,7 @@ Public Class RadFEpisodeParametreDetailEdit
             ParametreIdTaille = CInt(ParametreIdTailleString)
         Else
             ParametreIdTaille = 2
-            CreateLog("Paramètre application 'ParametreIdTaille' non trouvé !", Me.Name, LogDao.EnumTypeLog.ERREUR.ToString, userLog)
+            CreateLog("Paramètre application 'ParametreIdTaille' non trouvé !", Me.Name, Log.EnumTypeLog.ERREUR.ToString, userLog)
         End If
 
         Dim AgeAdulteHommeString As String = ConfigurationManager.AppSettings("AgeAdulteHomme")
@@ -82,7 +82,7 @@ Public Class RadFEpisodeParametreDetailEdit
             AgeAdulteHomme = CInt(AgeAdulteHommeString)
         Else
             AgeAdulteHomme = 15
-            CreateLog("Paramètre application 'AgeAdulteHomme' non trouvé !", Me.Name, LogDao.EnumTypeLog.ERREUR.ToString, userLog)
+            CreateLog("Paramètre application 'AgeAdulteHomme' non trouvé !", Me.Name, Log.EnumTypeLog.ERREUR.ToString, userLog)
         End If
 
         Dim AgeAdulteFemmeString As String = ConfigurationManager.AppSettings("AgeAdulteFemme")
@@ -90,7 +90,7 @@ Public Class RadFEpisodeParametreDetailEdit
             AgeAdulteFemme = CInt(AgeAdulteFemmeString)
         Else
             AgeAdulteFemme = 20
-            CreateLog("Paramètre application 'AgeAdulteFemme' non trouvé !", Me.Name, LogDao.EnumTypeLog.ERREUR.ToString, userLog)
+            CreateLog("Paramètre application 'AgeAdulteFemme' non trouvé !", Me.Name, Log.EnumTypeLog.ERREUR.ToString, userLog)
         End If
     End Sub
 
@@ -401,21 +401,22 @@ Public Class RadFEpisodeParametreDetailEdit
             If form.IsSelected = True Then
                 'Création paramètre
                 Try
-                    Dim episodeParametre As New EpisodeParametre
-                    episodeParametre.ParametreId = form.SelectedParametre.Id
-                    episodeParametre.EpisodeId = SelectedEpisodeId
-                    episodeParametre.PatientId = SelectedPatient.patientId
-                    episodeParametre.Valeur = 0
-                    episodeParametre.Description = form.SelectedParametre.Description
-                    episodeParametre.Entier = form.SelectedParametre.Entier
-                    episodeParametre.Decimal = form.SelectedParametre.Decimal
-                    episodeParametre.Unite = form.SelectedParametre.Unite
-                    episodeParametre.Ordre = form.SelectedParametre.Ordre
-                    episodeParametre.ParametreAjoute = True
-                    episodeParametre.Inactif = False
+                    Dim episodeParametre As New EpisodeParametre With {
+                        .ParametreId = form.SelectedParametre.Id,
+                        .EpisodeId = SelectedEpisodeId,
+                        .PatientId = SelectedPatient.PatientId,
+                        .Valeur = 0,
+                        .Description = form.SelectedParametre.Description,
+                        .Entier = form.SelectedParametre.Entier,
+                        .Decimal = form.SelectedParametre.Decimal,
+                        .Unite = form.SelectedParametre.Unite,
+                        .Ordre = form.SelectedParametre.Ordre,
+                        .ParametreAjoute = True,
+                        .Inactif = False
+                    }
                     episodeParametreDao.CreateEpisodeParametre(episodeParametre)
                 Catch ex As Exception
-                    CreateLog(ex.ToString, Me.Name, LogDao.EnumTypeLog.ERREUR.ToString, userLog)
+                    CreateLog(ex.ToString, Me.Name, Log.EnumTypeLog.ERREUR.ToString, userLog)
                     If ex.Message.StartsWith("Collisio") = True Then
                         MessageBox.Show("paramètre déjà existant pour cet épisode !")
                     End If
@@ -443,24 +444,25 @@ Public Class RadFEpisodeParametreDetailEdit
             Dim SelectedParametre As Parametre
             SelectedParametre = parametreDao.GetParametreById(SelectedParametreId)
             Try
-                Dim episodeParametre As New EpisodeParametre
-                episodeParametre.ParametreId = SelectedParametre.Id
-                episodeParametre.EpisodeId = SelectedEpisodeId
-                episodeParametre.PatientId = SelectedPatient.patientId
-                episodeParametre.Valeur = 0
-                episodeParametre.Description = SelectedParametre.Description
-                episodeParametre.Entier = SelectedParametre.Entier
-                episodeParametre.Decimal = SelectedParametre.Decimal
-                episodeParametre.Unite = SelectedParametre.Unite
-                episodeParametre.Ordre = SelectedParametre.Ordre
-                episodeParametre.ParametreAjoute = True
-                episodeParametre.Inactif = False
+                Dim episodeParametre As New EpisodeParametre With {
+                    .ParametreId = SelectedParametre.Id,
+                    .EpisodeId = SelectedEpisodeId,
+                    .PatientId = SelectedPatient.PatientId,
+                    .Valeur = 0,
+                    .Description = SelectedParametre.Description,
+                    .Entier = SelectedParametre.Entier,
+                    .Decimal = SelectedParametre.Decimal,
+                    .Unite = SelectedParametre.Unite,
+                    .Ordre = SelectedParametre.Ordre,
+                    .ParametreAjoute = True,
+                    .Inactif = False
+                }
                 If SelectedParametre.Id = ParametreIdTaille Then
                     episodeParametre.Valeur = SelectedPatient.Taille
                 End If
                 episodeParametreDao.CreateEpisodeParametre(episodeParametre)
             Catch ex As Exception
-                CreateLog(ex.ToString, Me.Name, LogDao.EnumTypeLog.ERREUR.ToString, userLog)
+                CreateLog(ex.ToString, Me.Name, Log.EnumTypeLog.ERREUR.ToString, userLog)
                 If ex.Message.StartsWith("Collisio") = True Then
                     MessageBox.Show("paramètre déjà existant pour cet épisode !")
                 End If

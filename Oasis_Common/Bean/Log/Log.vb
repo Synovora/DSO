@@ -1,4 +1,9 @@
 ﻿Public Class Log
+    Public Enum EnumTypeLog
+        ERREUR
+        INFO
+    End Enum
+
     Private _id As Long
     Private _description As String
     Private _origine As String

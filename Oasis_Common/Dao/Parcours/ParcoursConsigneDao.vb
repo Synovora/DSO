@@ -3,7 +3,7 @@
 Public Class ParcoursConsigneDao
     Inherits StandardDao
 
-    Public Function getParcoursConsigneById(ConsigneId As Integer) As ParcoursConsigne
+    Public Function GetParcoursConsigneById(ConsigneId As Integer) As ParcoursConsigne
         Dim parcoursConsigne As ParcoursConsigne
         Dim con As SqlConnection = GetConnection()
 
@@ -48,7 +48,7 @@ Public Class ParcoursConsigneDao
         Return parcoursConsigne
     End Function
 
-    Public Function getConsigneParamedicalebyParcoursId(parcoursId As Integer) As DataTable
+    Public Function GetConsigneParamedicalebyParcoursId(parcoursId As Integer) As DataTable
         Dim SQLString As String = "SELECT oa_parcours_consigne_id, oa_parcours_id, oa_parcours_consigne_patient_id, oa_parcours_consigne_drc_id," &
             " activite_type_episode, oa_parcours_consigne_commentaire, oa_parcours_consigne_ordre, oa_parcours_consigne_date_debut," &
             " oa_parcours_consigne_date_fin, oa_drc_libelle FROM oasis.oa_patient_parcours_consigne" &
@@ -77,7 +77,7 @@ Public Class ParcoursConsigneDao
         End Using
     End Function
 
-    Public Function getAllConsignebyParcoursId(parcoursId As Integer) As DataTable
+    Public Function GetAllConsignebyParcoursId(parcoursId As Integer) As DataTable
         Dim SQLString As String = "SELECT oa_parcours_consigne_id, oa_parcours_id, oa_parcours_consigne_patient_id, oa_parcours_consigne_drc_id," &
             " activite_type_episode, oa_parcours_consigne_commentaire, oa_parcours_consigne_ordre, oa_parcours_consigne_date_debut," &
             " oa_parcours_consigne_date_fin, oa_drc_libelle FROM oasis.oa_patient_parcours_consigne" &
@@ -105,7 +105,7 @@ Public Class ParcoursConsigneDao
         End Using
     End Function
 
-    Public Function getDrcConsigneByActiviteEtPatientId(typeActivite As String, patientId As Long) As DataTable
+    Public Function GetDrcConsigneByActiviteEtPatientId(typeActivite As String, patientId As Long) As DataTable
         Dim SQLString As String = "SELECT oa_parcours_consigne_drc_id, oa_drc_oasis_categorie" &
             " LEFT JOIN oasis.oa_drc ON oa_parcours_consigne_drc_id = oa_drc_id" &
             " WHERE oa_parcours_consigne_patient_id = " + patientId.ToString &

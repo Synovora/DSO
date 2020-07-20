@@ -241,12 +241,13 @@ Public Class ContexteDao
             If conclusionEpisode = True Then
                 If episode IsNot Nothing Then
                     Dim episodeContexteDao As New EpisodeContexteDao
-                    Dim episodeContexte As New EpisodeContexte
-                    episodeContexte.ContexteId = ContexteConclusionEpisodeId
-                    episodeContexte.EpisodeId = episode.Id
-                    episodeContexte.PatientId = episode.PatientId
-                    episodeContexte.DateCreation = Date.Now()
-                    episodeContexte.UserCreation = userLog.UtilisateurId
+                    Dim episodeContexte As New EpisodeContexte With {
+                        .ContexteId = ContexteConclusionEpisodeId,
+                        .EpisodeId = episode.Id,
+                        .PatientId = episode.PatientId,
+                        .DateCreation = Date.Now(),
+                        .UserCreation = userLog.UtilisateurId
+                    }
                     episodeContexteDao.CreateEpisodeContexte(episodeContexte, userLog)
                 End If
             End If
@@ -403,9 +404,10 @@ Public Class ContexteDao
 
         Dim rowCount As Integer = dt.Rows.Count - 1
         For i = 0 To rowCount Step 1
-            Dim contexteCourrier As New ContexteCourrier
-            contexteCourrier.PatientId = patientId
-            contexteCourrier.Id = dt.Rows(i)("oa_antecedent_id")
+            Dim contexteCourrier As New ContexteCourrier With {
+                .PatientId = patientId,
+                .Id = dt.Rows(i)("oa_antecedent_id")
+            }
 
             'Préparation de l'affichage du contexte
             Dim longueurString As Integer

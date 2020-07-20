@@ -1,13 +1,11 @@
 ﻿Imports System.Data.SqlClient
-Imports Oasis_Common
+
 Public Class ParametreDrcDao
     Inherits StandardDao
 
     Public Function GetParametreDrcById(parametreId As Integer) As ParametreDrc
         Dim parametreDrc As ParametreDrc
-        Dim con As SqlConnection
-
-        con = GetConnection()
+        Dim con As SqlConnection = GetConnection()
 
         Try
             Dim command As SqlCommand = con.CreateCommand()
@@ -32,11 +30,11 @@ Public Class ParametreDrcDao
     End Function
 
     Private Function BuildBean(reader As SqlDataReader) As ParametreDrc
-        Dim parametreDrc As New ParametreDrc
-
-        parametreDrc.Id = reader("id")
-        parametreDrc.DrcId = Coalesce(reader("drc_id"), 0)
-        parametreDrc.ParametreId = Coalesce(reader("parametre_id"), 0)
+        Dim parametreDrc As New ParametreDrc With {
+            .Id = reader("id"),
+            .DrcId = Coalesce(reader("drc_id"), 0),
+            .ParametreId = Coalesce(reader("parametre_id"), 0)
+        }
 
         Return parametreDrc
     End Function
@@ -59,10 +57,11 @@ Public Class ParametreDrcDao
                 If reader.Read() Then
                     parametreDrc = BuildBean(reader)
                 Else
-                    parametreDrc = New ParametreDrc
-                    parametreDrc.Id = 0
-                    parametreDrc.ParametreId = 0
-                    parametreDrc.DrcId = 0
+                    parametreDrc = New ParametreDrc With {
+                        .Id = 0,
+                        .ParametreId = 0,
+                        .DrcId = 0
+                    }
                 End If
             End Using
         Catch ex As Exception
@@ -78,8 +77,7 @@ Public Class ParametreDrcDao
         Dim da As SqlDataAdapter = New SqlDataAdapter()
         Dim codeRetour As Boolean = True
         Dim NbInsert As Integer
-        Dim con As SqlConnection
-        con = GetConnection()
+        Dim con As SqlConnection = GetConnection()
 
         Dim dateCreation As Date = Date.Now.Date
 
@@ -99,10 +97,10 @@ Public Class ParametreDrcDao
             If NbInsert = 0 Then
                 Dim anomalie As String = "La création du paramètre n'a pas abouti - DRC N° : " & parametreDrc.DrcId.ToString & " Id. paramètre : " & parametreDrc.ParametreId.ToString
                 Throw New Exception(anomalie)
-                CreateLog(anomalie, "ParametreDrcDao", LogDao.EnumTypeLog.ERREUR.ToString, userLog)
+                CreateLog(anomalie, "ParametreDrcDao", Log.EnumTypeLog.ERREUR.ToString, userLog)
             End If
         Catch ex As Exception
-            Throw New Exception(ex.Message)
+            Throw ex
             codeRetour = False
         Finally
             con.Close()
@@ -135,10 +133,10 @@ Public Class ParametreDrcDao
             If NbUpdate = 0 Then
                 Dim anomalie As String = "La modification du paramètre n'a pas abouti - Id : " & parametreDrc.Id.ToString & " DRC N° : " & parametreDrc.DrcId.ToString & " Id. paramètre : " & parametreDrc.ParametreId.ToString
                 Throw New Exception(anomalie)
-                CreateLog(anomalie, "ParametreDrcDao", LogDao.EnumTypeLog.ERREUR.ToString, userLog)
+                CreateLog(anomalie, "ParametreDrcDao", Log.EnumTypeLog.ERREUR.ToString, userLog)
             End If
         Catch ex As Exception
-            Throw New Exception(ex.Message)
+            Throw ex
             codeRetour = False
         Finally
             con.Close()
@@ -165,7 +163,7 @@ Public Class ParametreDrcDao
             da.DeleteCommand = cmd
             da.DeleteCommand.ExecuteNonQuery()
         Catch ex As Exception
-            Throw New Exception(ex.Message)
+            Throw ex
             codeRetour = False
         Finally
             con.Close()
@@ -174,7 +172,7 @@ Public Class ParametreDrcDao
         Return codeRetour
     End Function
 
-    Public Function getParametresByDrcId(DrcId As Long) As DataTable
+    Public Function GetParametresByDrcId(DrcId As Long) As DataTable
         Dim SQLString As String
 
         SQLString = "SELECT * FROM oasis.oa_drc_parametre" &

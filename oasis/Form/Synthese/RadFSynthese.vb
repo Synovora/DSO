@@ -64,16 +64,16 @@ Public Class RadFSynthese
         EPISODE = 2
     End Enum
 
-    Dim antecedentChangementOrdreDao As New AntecedentChangementOrdreDao
-    Dim antecedentAffectationDao As New AntecedentAffectationDao
-    Dim antecedentDao As New AntecedentDao
-    Dim theriaqueDao As New TheriaqueDao
+    ReadOnly antecedentChangementOrdreDao As New AntecedentChangementOrdreDao
+    ReadOnly antecedentAffectationDao As New AntecedentAffectationDao
+    ReadOnly antecedentDao As New AntecedentDao
+    ReadOnly theriaqueDao As New TheriaqueDao
 
     Dim InitPublie, InitParPriorite, InitMajeur, InitContextePublie, InitParcoursNonCache, InitContexteBioPublie As Boolean
     Dim PatientAllergie, PatientContreIndication As Boolean
     Dim PPSSuiviIdeExiste, PPSSuiviSageFemmeExiste, PPSSuiviMedecinExiste As Boolean
     Dim LongueurStringAllergie As Integer
-    Dim ParcoursListProfilsOasis As New List(Of Integer)
+    ReadOnly ParcoursListProfilsOasis As New List(Of Integer)
 
     'Antécédent
     Dim iGridMax As Integer
@@ -99,12 +99,13 @@ Public Class RadFSynthese
         RadBtnLeft.Text = Char.ConvertFromUtf32(8592)
 
         Dim actiondao As New ActionDao
-        Dim action As New Action
-        action.UtilisateurId = userLog.UtilisateurId
-        action.PatientId = SelectedPatient.patientId
-        action.Action = "Accès synthèse patient"
-        action.Fonction = ActionDao.EnumFonctionCode.SYNTHESE
-        action.FonctionId = 0
+        Dim action As New Action With {
+            .UtilisateurId = userLog.UtilisateurId,
+            .PatientId = SelectedPatient.PatientId,
+            .Action = "Accès synthèse patient",
+            .Fonction = ActionDao.EnumFonctionCode.SYNTHESE,
+            .FonctionId = 0
+        }
         actiondao.CreationAction(action)
 
         AfficheTitleForm(Me, "Synthèse patient", userLog)
@@ -112,7 +113,7 @@ Public Class RadFSynthese
         'CreateLog("Test depuis synthese, utilisateur : " & userLog.UtilisateurId.ToString, Me.Name, LogDao.EnumTypeLog.INFO.ToString)
         RadGridLocalizationProvider.CurrentProvider = New FrenchRadGridViewLocalizationProvider()
         ChargementParametreApplication()
-        initZones()
+        InitZones()
         GestionDroitsAcces()
         ChargementEtatCivil()
         ChargementAntecedent()
@@ -129,7 +130,7 @@ Public Class RadFSynthese
         If IsNumeric(LongueurStringAllergieString) Then
             LongueurStringAllergie = CInt(LongueurStringAllergieString)
         Else
-            CreateLog("Paramètre application 'longueurStringAllergie' non trouvé !", "Synthese", LogDao.EnumTypeLog.ERREUR.ToString, userLog)
+            CreateLog("Paramètre application 'longueurStringAllergie' non trouvé !", "Synthese", Log.EnumTypeLog.ERREUR.ToString, userLog)
             LongueurStringAllergie = 12
         End If
     End Sub
@@ -137,7 +138,7 @@ Public Class RadFSynthese
     Private Sub ControleExistenceEpisode()
         Dim episodeDao As New EpisodeDao
         Dim episode As Episode
-        episode = episodeDao.GetEpisodeEnCoursByPatientId(Me.SelectedPatient.patientId)
+        episode = episodeDao.GetEpisodeEnCoursByPatientId(Me.SelectedPatient.PatientId)
         Dim BtnColor As New Color
         BtnColor = RadBtnEpisode.BackColor
 
@@ -192,7 +193,7 @@ Public Class RadFSynthese
 
     Private Sub GetContreIndication()
         Dim patientDao As New PatientDao
-        Dim StringContreIndicationToolTip As String = patientDao.GetStringContreIndicationByPatient(SelectedPatient.patientId)
+        Dim StringContreIndicationToolTip As String = patientDao.GetStringContreIndicationByPatient(SelectedPatient.PatientId)
         If StringContreIndicationToolTip = "" Then
             LblContreIndication.Hide()
             PatientContreIndication = False
@@ -207,7 +208,7 @@ Public Class RadFSynthese
 
     Private Sub GetAllergie()
         Dim patientDao As New PatientDao
-        Dim StringAllergieToolTip As String = patientDao.GetStringAllergieByPatient(SelectedPatient.patientId)
+        Dim StringAllergieToolTip As String = patientDao.GetStringAllergieByPatient(SelectedPatient.PatientId)
         If StringAllergieToolTip = "" Then
             PatientAllergie = False
             LblAllergie.Hide()
@@ -237,7 +238,7 @@ Public Class RadFSynthese
 
         Try
             Using vFFPatientDetailEdit As New RadFPatientDetailEdit
-                vFFPatientDetailEdit.SelectedPatientId = SelectedPatient.patientId
+                vFFPatientDetailEdit.SelectedPatientId = SelectedPatient.PatientId
                 vFFPatientDetailEdit.SelectedPatient = Me.SelectedPatient
                 vFFPatientDetailEdit.UtilisateurConnecte = Me.UtilisateurConnecte
                 vFFPatientDetailEdit.ShowDialog()
@@ -266,15 +267,15 @@ Public Class RadFSynthese
         Dim antecedentDao As AntecedentDao = New AntecedentDao
         If RadChkPublie.Checked = True Then
             If RadChkParPriorite.Checked = True Then
-                antecedentDataTable = antecedentDao.GetAllAntecedentbyPatient(SelectedPatient.patientId, True, True)
+                antecedentDataTable = antecedentDao.GetAllAntecedentbyPatient(SelectedPatient.PatientId, True, True)
             Else
-                antecedentDataTable = antecedentDao.GetAllAntecedentbyPatient(SelectedPatient.patientId, True, False)
+                antecedentDataTable = antecedentDao.GetAllAntecedentbyPatient(SelectedPatient.PatientId, True, False)
             End If
         Else
             If RadChkParPriorite.Checked = True Then
-                antecedentDataTable = antecedentDao.GetAllAntecedentbyPatient(SelectedPatient.patientId, False, True)
+                antecedentDataTable = antecedentDao.GetAllAntecedentbyPatient(SelectedPatient.PatientId, False, True)
             Else
-                antecedentDataTable = antecedentDao.GetAllAntecedentbyPatient(SelectedPatient.patientId, False, False)
+                antecedentDataTable = antecedentDao.GetAllAntecedentbyPatient(SelectedPatient.PatientId, False, False)
             End If
         End If
 
@@ -648,7 +649,7 @@ Public Class RadFSynthese
                 antecedentChangementOrdreDao.UpdateAntecedent(antecedentId, NouveauOrdreAffichage, NiveauAntecedentAOrdonner)
 
                 AntecedentModificationOrdre(NiveauAntecedentAOrdonner)
-                CodeRetour = antecedentChangementOrdreDao.AntecedentReorganisationOrdre(NiveauAntecedentAOrdonner, SelectedPatient.patientId, antecedentIdPere, NiveauAntecedentAOrdonner, Cacher)
+                CodeRetour = antecedentChangementOrdreDao.AntecedentReorganisationOrdre(NiveauAntecedentAOrdonner, SelectedPatient.PatientId, antecedentIdPere, NiveauAntecedentAOrdonner, Cacher)
                 If CodeRetour = True Then
                     ChargementAntecedentAvecPositionnementCurseur()
                 End If
@@ -697,7 +698,7 @@ Public Class RadFSynthese
                 antecedentChangementOrdreDao.UpdateAntecedent(antecedentId, NouveauOrdreAffichage, NiveauAntecedentAOrdonner)
 
                 AntecedentModificationOrdre(NiveauAntecedentAOrdonner)
-                CodeRetour = antecedentChangementOrdreDao.AntecedentReorganisationOrdre(NiveauAntecedentAOrdonner, SelectedPatient.patientId, antecedentIdPere, NiveauAntecedentAOrdonner, Cacher)
+                CodeRetour = antecedentChangementOrdreDao.AntecedentReorganisationOrdre(NiveauAntecedentAOrdonner, SelectedPatient.PatientId, antecedentIdPere, NiveauAntecedentAOrdonner, Cacher)
                 If CodeRetour = True Then
                     ChargementAntecedentAvecPositionnementCurseur()
                 End If
@@ -946,7 +947,7 @@ Public Class RadFSynthese
         Dim StringTooltip As String
         Dim aldDao As New AldDao
 
-        StringTooltip = aldDao.DateFinALD(Me.SelectedPatient.patientId)
+        StringTooltip = aldDao.DateFinALD(Me.SelectedPatient.PatientId)
         If StringTooltip <> "" Then
             LblALD.Show()
             ToolTip.SetToolTip(LblALD, StringTooltip)
@@ -970,7 +971,7 @@ Public Class RadFSynthese
 
         Dim traitementDataTable As DataTable
         Dim traitementDao As TraitementDao = New TraitementDao
-        traitementDataTable = traitementDao.getTraitementEnCoursbyPatient(Me.SelectedPatient.patientId)
+        traitementDataTable = traitementDao.GetTraitementEnCoursbyPatient(Me.SelectedPatient.PatientId)
 
         'Ajout d'une colonne 'oa_traitement_posologie' dans le DataTable de traitement
         traitementDataTable.Columns.Add("oa_traitement_posologie", Type.GetType("System.String"))
@@ -1228,7 +1229,7 @@ Public Class RadFSynthese
         Dim DateArretString, TraitementArretString, TraitementArretMedicament, TraitementArretCommentaire As String
         Dim DateArret As Date
         Dim traitementArretDatatable As DataTable
-        traitementArretDatatable = traitementDao.getAllTraitementArreteByPatient(Me.SelectedPatient.patientId)
+        traitementArretDatatable = traitementDao.GetAllTraitementArreteByPatient(Me.SelectedPatient.PatientId)
         rowCount = traitementArretDatatable.Rows.Count - 1
         For i = 0 To rowCount Step 1
             isTraitementArret = True
@@ -1603,7 +1604,7 @@ Public Class RadFSynthese
         Dim SousCategorie, SpecialiteId As Integer
         Dim IntervenantOasis As Boolean
 
-        ParcoursDataTable = parcoursDao.getAllParcoursbyPatient(SelectedPatient.patientId)
+        ParcoursDataTable = parcoursDao.GetAllParcoursbyPatient(SelectedPatient.PatientId)
 
         Dim iGrid As Integer = -1 'Indice pour alimenter la Grid qui peut comporter moins d'occurrences que le DataTable
         Dim rowCount As Integer = ParcoursDataTable.Rows.Count - 1
@@ -1777,7 +1778,7 @@ Public Class RadFSynthese
                     Try
                         Using vRadFRorListe As New RadFRorListe
                             vRadFRorListe.Selecteur = True
-                            vRadFRorListe.PatientId = Me.SelectedPatient.patientId
+                            vRadFRorListe.PatientId = Me.SelectedPatient.PatientId
                             vRadFRorListe.SpecialiteId = vFSpecialiteSelecteur.SelectedSpecialiteId
                             vRadFRorListe.TypeRor = "Intervenant"
                             vRadFRorListe.ShowDialog()                  'Sélection d'un professionnel de santé
@@ -1917,9 +1918,9 @@ Public Class RadFSynthese
         Dim contexteDataTable As DataTable
         Dim antecedentDao As AntecedentDao = New AntecedentDao
         If RadChkContextePublie.Checked = True Then
-            contexteDataTable = antecedentDao.GetContextebyPatient(SelectedPatient.patientId, True)
+            contexteDataTable = antecedentDao.GetContextebyPatient(SelectedPatient.PatientId, True)
         Else
-            contexteDataTable = antecedentDao.GetContextebyPatient(SelectedPatient.patientId, False)
+            contexteDataTable = antecedentDao.GetContextebyPatient(SelectedPatient.PatientId, False)
         End If
 
         'Déclaration des variables pour réaliser le parcours du DataTable pour alimenter le DataGridView
@@ -2181,7 +2182,7 @@ Public Class RadFSynthese
 
         Dim PPSDataTable As DataTable
         Dim PPSDao As PpsDao = New PpsDao
-        PPSDataTable = PPSDao.getAllPPSbyPatient(SelectedPatient.patientId)
+        PPSDataTable = PPSDao.getAllPPSbyPatient(SelectedPatient.PatientId)
 
         'Déclaration des variables pour réaliser le parcours du DataTable pour alimenter le DataGridView
         Dim i, mesureCount As Integer
@@ -2529,7 +2530,7 @@ Public Class RadFSynthese
 
         'Contrôler si un objectif de santé valide existe
         Dim ppsdao As New PpsDao
-        If ppsdao.ExistPPSObjectifByPatientId(SelectedPatient.patientId) = False Then
+        If ppsdao.ExistPPSObjectifByPatientId(SelectedPatient.PatientId) = False Then
             Me.Enabled = False
             Cursor.Current = Cursors.WaitCursor
 
@@ -2797,7 +2798,7 @@ Public Class RadFSynthese
     End Sub
 
     Private Sub RadFSynthese_FormClosed(sender As Object, e As FormClosedEventArgs) Handles MyBase.FormClosed
-        Environnement.ControleAccesForm.removeFormToControl(EnumForm.SYNTHESE.ToString)
+        Environnement.ControleAccesForm.RemoveFormToControl(EnumForm.SYNTHESE.ToString)
     End Sub
 
     Private Sub RadBtnSocial_Click(sender As Object, e As EventArgs) Handles RadBtnSocial.Click
@@ -2807,7 +2808,7 @@ Public Class RadFSynthese
         Try
             Using vFPatientNoteListe As New RadFPatientNoteListe
                 vFPatientNoteListe.TypeNote = EnumTypeNote.Social
-                vFPatientNoteListe.SelectedPatientId = Me.SelectedPatient.patientId
+                vFPatientNoteListe.SelectedPatientId = Me.SelectedPatient.PatientId
                 vFPatientNoteListe.SelectedPatient = Me.SelectedPatient
                 vFPatientNoteListe.UtilisateurConnecte = Me.UtilisateurConnecte
                 vFPatientNoteListe.ShowDialog() 'Modal
@@ -2826,7 +2827,7 @@ Public Class RadFSynthese
         Try
             Using vFPatientNoteListe As New RadFPatientNoteListe
                 vFPatientNoteListe.TypeNote = EnumTypeNote.Vaccin
-                vFPatientNoteListe.SelectedPatientId = Me.SelectedPatient.patientId
+                vFPatientNoteListe.SelectedPatientId = Me.SelectedPatient.PatientId
                 vFPatientNoteListe.SelectedPatient = Me.SelectedPatient
                 vFPatientNoteListe.UtilisateurConnecte = Me.UtilisateurConnecte
                 vFPatientNoteListe.ShowDialog() 'Modal
@@ -2845,7 +2846,7 @@ Public Class RadFSynthese
         Try
             Using vFPatientNoteListe As New RadFPatientNoteListe
                 vFPatientNoteListe.TypeNote = EnumTypeNote.Medicale
-                vFPatientNoteListe.SelectedPatientId = Me.SelectedPatient.patientId
+                vFPatientNoteListe.SelectedPatientId = Me.SelectedPatient.PatientId
                 vFPatientNoteListe.SelectedPatient = Me.SelectedPatient
                 vFPatientNoteListe.UtilisateurConnecte = Me.UtilisateurConnecte
                 vFPatientNoteListe.ShowDialog() 'Modal
@@ -2864,7 +2865,7 @@ Public Class RadFSynthese
         Try
             Using vFPatientNoteListe As New RadFPatientNoteListe
                 vFPatientNoteListe.TypeNote = EnumTypeNote.Directive
-                vFPatientNoteListe.SelectedPatientId = Me.SelectedPatient.patientId
+                vFPatientNoteListe.SelectedPatientId = Me.SelectedPatient.PatientId
                 vFPatientNoteListe.SelectedPatient = Me.SelectedPatient
                 vFPatientNoteListe.UtilisateurConnecte = Me.UtilisateurConnecte
                 vFPatientNoteListe.ShowDialog() 'Modal
@@ -2881,8 +2882,9 @@ Public Class RadFSynthese
         Cursor.Current = Cursors.WaitCursor
 
         Try
-            Dim print As New PrtSynthese
-            print.SelectedPatient = SelectedPatient
+            Dim print As New PrtSynthese With {
+                .SelectedPatient = SelectedPatient
+            }
             print.PrintDocument()
         Catch ex As Exception
             MsgBox(ex.Message())
@@ -2919,7 +2921,7 @@ Public Class RadFSynthese
 
         Me.IsRendezVousCloture = EpisodeUtils.CallEpisode(SelectedPatient, RendezVousId, userLog)
         Me.Enabled = True
-        episode = episodeDao.GetEpisodeEnCoursByPatientId(Me.SelectedPatient.patientId)
+        episode = episodeDao.GetEpisodeEnCoursByPatientId(Me.SelectedPatient.PatientId)
         If episode.Id <> 0 Then
             RadBtnEpisode.ForeColor = Color.Red
             RadBtnEpisode.Font = New Font(RadBtnEpisode.Font, FontStyle.Bold)

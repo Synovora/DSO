@@ -17,17 +17,18 @@ Public Class EpisodeProtocoleCollaboratifDao
         For i = 0 To ListParam.Count - 1
             parametre = parametreDao.GetParametreById(ListParam.Item(i))
             'Creation
-            Dim episodeParametre As EpisodeParametre = New EpisodeParametre
-            episodeParametre.EpisodeId = episode.Id
-            episodeParametre.ParametreId = parametre.Id
-            episodeParametre.PatientId = episode.PatientId
-            episodeParametre.Entier = parametre.Entier
-            episodeParametre.Decimal = parametre.Decimal
-            episodeParametre.Unite = parametre.Unite
-            episodeParametre.Ordre = parametre.Ordre
-            episodeParametre.Description = parametre.Description
-            episodeParametre.Valeur = 0
-            episodeParametre.Inactif = False
+            Dim episodeParametre As EpisodeParametre = New EpisodeParametre With {
+                .EpisodeId = episode.Id,
+                .ParametreId = parametre.Id,
+                .PatientId = episode.PatientId,
+                .Entier = parametre.Entier,
+                .Decimal = parametre.Decimal,
+                .Unite = parametre.Unite,
+                .Ordre = parametre.Ordre,
+                .Description = parametre.Description,
+                .Valeur = 0,
+                .Inactif = False
+            }
             episodeParametreDao.CreateEpisodeParametre(episodeParametre)
         Next
 
@@ -37,16 +38,17 @@ Public Class EpisodeProtocoleCollaboratifDao
         For i = 0 To ListActePara.Count - 1
             'parametre = parametreDao.GetParametreById(ListParam.Item(i))
             'Creation
-            Dim episodeActeParamedical As EpisodeActeParamedical = New EpisodeActeParamedical
-            episodeActeParamedical.EpisodeId = episode.Id
-            episodeActeParamedical.PatientId = episode.PatientId
-            episodeActeParamedical.DrcId = ListActePara.Item(i)
-            episodeActeParamedical.Observation = ""
-            episodeActeParamedical.TypeObservation = EpisodeObservationDao.EnumTypeEpisodeObservation.PARAMEDICAL.ToString
-            episodeActeParamedical.UserId = 0
-            episodeActeParamedical.DateObservation = Nothing
-            episodeActeParamedical.DateModification = Nothing
-            episodeActeParamedical.Inactif = False
+            Dim episodeActeParamedical As EpisodeActeParamedical = New EpisodeActeParamedical With {
+                .EpisodeId = episode.Id,
+                .PatientId = episode.PatientId,
+                .DrcId = ListActePara.Item(i),
+                .Observation = "",
+                .TypeObservation = EpisodeObservationDao.EnumTypeEpisodeObservation.PARAMEDICAL.ToString,
+                .UserId = 0,
+                .DateObservation = Nothing,
+                .DateModification = Nothing,
+                .Inactif = False
+            }
             episodeActeParamedicalDao.CreateEpisodeActeParamedical(episodeActeParamedical)
         Next
     End Sub
@@ -345,7 +347,7 @@ Public Class EpisodeProtocoleCollaboratifDao
         Dim ParamDt As DataTable
         'Lecture groupe de paramètres
         For i = 0 To ListGroupeParam.Count - 1
-            ParamDt = parametreDrcDao.getParametresByDrcId(ListGroupeParam.Item(i))
+            ParamDt = parametreDrcDao.GetParametresByDrcId(ListGroupeParam.Item(i))
             rowCount = ParamDt.Rows.Count - 1
             For J = 0 To rowCount Step 1
                 Dim ParamId As Integer = Coalesce(ParamDt.Rows(J)("parametre_id"), 0)

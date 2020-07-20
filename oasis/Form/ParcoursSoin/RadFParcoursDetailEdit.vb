@@ -89,14 +89,14 @@ Public Class RadFParcoursDetailEdit
     Dim EditMode As Integer
 
     Dim UtilisateurHisto As Utilisateur = New Utilisateur()
-    Dim ParcoursDao As New ParcoursDao
+    ReadOnly ParcoursDao As New ParcoursDao
     Dim ParcoursUpdate As New Parcours
     Dim parcoursRead As New Parcours
-    Dim parcoursConsigneDao As New ParcoursConsigneDao
-    Dim userDao As New UserDao
+    ReadOnly parcoursConsigneDao As New ParcoursConsigneDao
+    ReadOnly userDao As New UserDao
 
-    Dim rordao As New RorDao
-    Dim tacheDao As New TacheDao
+    ReadOnly rordao As New RorDao
+    ReadOnly tacheDao As New TacheDao
     Dim ror As Ror
     Dim specialite As Specialite
     Dim masquerIntervenant As Boolean = True
@@ -470,7 +470,7 @@ Public Class RadFParcoursDetailEdit
         Dim DateDebut, DateFin As Date
         Dim MaxDate As New Date(9998, 12, 31, 0, 0, 0)
 
-        ParcoursConsigneDataTable = parcoursConsigneDao.getAllConsignebyParcoursId(SelectedParcoursId)
+        ParcoursConsigneDataTable = parcoursConsigneDao.GetAllConsignebyParcoursId(SelectedParcoursId)
 
         Dim iGrid As Integer = -1 'Indice pour alimenter la Grid qui peut comporter moins d'occurrences que le DataTable
         Dim rowCount As Integer = ParcoursConsigneDataTable.Rows.Count - 1
@@ -680,8 +680,9 @@ Public Class RadFParcoursDetailEdit
                     ParcoursUpdate.Id = ParcoursDao.CreateIntervenantParcours(ParcoursUpdate, userLog)
                     If ParcoursUpdate.Id <> 0 Then
                         Me.CodeRetour = True
-                        Dim form As New RadFNotification()
-                        form.Message = "Intervenant du parcours de soin créé"
+                        Dim form As New RadFNotification With {
+                            .Message = "Intervenant du parcours de soin créé"
+                        }
                         form.Show()
                         'Création automatique de demande de rendez-vous
                         If ParcoursUpdate.Rythme <> 0 AndAlso ParcoursUpdate.Base.Trim() <> "" Then
@@ -703,8 +704,9 @@ Public Class RadFParcoursDetailEdit
                     'Appel modification
                     If ValidationDonneeSaisie() = True Then
                         If ParcoursDao.ModificationIntervenantParcours(ParcoursUpdate, userLog) = True Then
-                            Dim form As New RadFNotification()
-                            form.Message = "Intervenant du parcours de soin modifié"
+                            Dim form As New RadFNotification With {
+                                .Message = "Intervenant du parcours de soin modifié"
+                            }
                             form.Show()
                             'Création automatique de demande de rendez-vous
                             If parcoursRead.Rythme = 0 AndAlso parcoursRead.Base.Trim() = "" Then
@@ -761,8 +763,9 @@ Public Class RadFParcoursDetailEdit
                     If MsgBox("Un rendez-vous est planifié pour cet intervenant, confirmation de l'annulation", MsgBoxStyle.YesNo, "") = MsgBoxResult.Yes Then
                         Try
                             If tacheDao.AnnulationTache(tache, userLog) = True Then
-                                Dim form As New RadFNotification()
-                                form.Message = "Rendez-vous annulé"
+                                Dim form As New RadFNotification With {
+                                    .Message = "Rendez-vous annulé"
+                                }
                                 form.Show()
                             Else
                                 MessageBox.Show("Problème de suppression du prochain rendez-vous, annulation impossible")
@@ -805,8 +808,9 @@ Public Class RadFParcoursDetailEdit
                 'Annulation de l'intervenant (inactif = True)
                 If ParcoursDao.AnnulationIntervenantParcours(ParcoursUpdate, userLog) = True Then
                     Me.CodeRetour = True
-                    Dim form As New RadFNotification()
-                    form.Message = "Intervenant annulé pour le parcours de soin du patient"
+                    Dim form As New RadFNotification With {
+                        .Message = "Intervenant annulé pour le parcours de soin du patient"
+                    }
                     form.Show()
                     Close()
                 End If

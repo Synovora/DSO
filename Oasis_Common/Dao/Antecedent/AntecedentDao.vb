@@ -317,9 +317,10 @@ Public Class AntecedentDao
 
         Dim rowCount As Integer = dt.Rows.Count - 1
         For i = 0 To rowCount Step 1
-            Dim antecedentCourrier As New AntecedentCourrier
-            antecedentCourrier.PatientId = patientId
-            antecedentCourrier.Id = dt.Rows(i)("oa_antecedent_id")
+            Dim antecedentCourrier As New AntecedentCourrier With {
+                .PatientId = patientId,
+                .Id = dt.Rows(i)("oa_antecedent_id")
+            }
 
             Select Case dt.Rows(i)("oa_antecedent_niveau")
                 Case 1
@@ -581,33 +582,33 @@ Public Class AntecedentDao
         End Try
 
         If codeRetour = True Then
-            Dim AntecedentHistoACreer As New AntecedentHisto
-
             'Mise à jour des données dans l'instance de la classe Historisation antecedent
-            AntecedentHistoACreer.AntecedentId = antecedentId 'Récupération de l'id créé
-            AntecedentHistoACreer.HistorisationDate = DateTime.Now()
-            AntecedentHistoACreer.UtilisateurId = userLog.UtilisateurId
-            AntecedentHistoACreer.Etat = AntecedentHistoCreationDao.EnumEtatAntecedentHisto.CreationAntecedent
-            AntecedentHistoACreer.PatientId = antecedentUpdate.PatientId
-            AntecedentHistoACreer.DrcId = antecedentUpdate.DrcId
-            AntecedentHistoACreer.Type = "A"
-            AntecedentHistoACreer.Description = antecedentUpdate.Description
-            AntecedentHistoACreer.DateDebut = antecedentUpdate.DateDebut
-            AntecedentHistoACreer.Niveau = 1
-            AntecedentHistoACreer.Nature = "Patient"
-            AntecedentHistoACreer.StatutAffichage = antecedentUpdate.StatutAffichage
-            AntecedentHistoACreer.Inactif = 0
-            AntecedentHistoACreer.Ordre1 = 980
-            AntecedentHistoACreer.Ordre2 = 0
-            AntecedentHistoACreer.Ordre3 = 0
-            AntecedentHistoACreer.Diagnostic = antecedentUpdate.Diagnostic
-            AntecedentHistoACreer.AldId = antecedentUpdate.AldId
-            AntecedentHistoACreer.AldCim10Id = antecedentUpdate.AldCim10Id
-            AntecedentHistoACreer.AldValide = antecedentUpdate.AldValide
-            AntecedentHistoACreer.AldDateDebut = antecedentUpdate.AldDateDebut
-            AntecedentHistoACreer.AldDateFin = antecedentUpdate.AldDateFin
-            AntecedentHistoACreer.AldDemandeEnCours = antecedentUpdate.AldDemandeEnCours
-            AntecedentHistoACreer.AldDateDemande = antecedentUpdate.AldDateDemande
+            Dim AntecedentHistoACreer As New AntecedentHisto With {
+                .AntecedentId = antecedentId, 'Récupération de l'id créé
+                .HistorisationDate = DateTime.Now(),
+                .UtilisateurId = userLog.UtilisateurId,
+                .Etat = AntecedentHistoCreationDao.EnumEtatAntecedentHisto.CreationAntecedent,
+                .PatientId = antecedentUpdate.PatientId,
+                .DrcId = antecedentUpdate.DrcId,
+                .Type = "A",
+                .Description = antecedentUpdate.Description,
+                .DateDebut = antecedentUpdate.DateDebut,
+                .Niveau = 1,
+                .Nature = "Patient",
+                .StatutAffichage = antecedentUpdate.StatutAffichage,
+                .Inactif = 0,
+                .Ordre1 = 980,
+                .Ordre2 = 0,
+                .Ordre3 = 0,
+                .Diagnostic = antecedentUpdate.Diagnostic,
+                .AldId = antecedentUpdate.AldId,
+                .AldCim10Id = antecedentUpdate.AldCim10Id,
+                .AldValide = antecedentUpdate.AldValide,
+                .AldDateDebut = antecedentUpdate.AldDateDebut,
+                .AldDateFin = antecedentUpdate.AldDateFin,
+                .AldDemandeEnCours = antecedentUpdate.AldDemandeEnCours,
+                .AldDateDemande = antecedentUpdate.AldDateDemande
+            }
 
             'Création dans l'historique des antecedents du antecedent créé
             AntecedentHistoCreationDao.CreationAntecedentHisto(AntecedentHistoACreer, userLog, AntecedentHistoCreationDao.EnumEtatAntecedentHisto.CreationAntecedent)

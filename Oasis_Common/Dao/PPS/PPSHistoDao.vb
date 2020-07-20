@@ -3,7 +3,7 @@ Imports Oasis_Common
 Public Class PPSHistoDao
     Inherits StandardDao
 
-    Public Function getAllPPSHistobyPPSId(ppsId As Integer) As DataTable
+    Public Function GetAllPPSHistobyPPSId(ppsId As Integer) As DataTable
         Dim SQLString As String
 
         SQLString = "SELECT oa_pps_histo_id, oa_pps_histo_date_historisation, oa_pps_histo_utilisateur_historisation, oa_pps_histo_etat_historisation," &

@@ -11,9 +11,9 @@ Public Module outils
         If log Is Nothing Then
             log = New Log()
         End If
-        If TypeLog = LogDao.EnumTypeLog.ERREUR.ToString Or TypeLog = LogDao.EnumTypeLog.INFO.ToString Then
+        If TypeLog = Log.EnumTypeLog.ERREUR.ToString Or TypeLog = Log.EnumTypeLog.INFO.ToString Then
         Else
-            TypeLog = LogDao.EnumTypeLog.INFO.ToString
+            TypeLog = Log.EnumTypeLog.INFO.ToString
         End If
         log.Description = Description
         log.TypeLog = TypeLog
@@ -219,9 +219,10 @@ Public Module outils
 
         Private Function SendMail(ByVal strSubject As String,
             ByVal strBody As String, ByVal how As Integer) As Integer
-            Dim msg As MapiMessage = New MapiMessage()
-            msg.subject = strSubject
-            msg.noteText = strBody
+            Dim msg As MapiMessage = New MapiMessage With {
+                .subject = strSubject,
+                .noteText = strBody
+            }
 
             msg.recips = GetRecipients(msg.recipCount)
             msg.files = GetAttachments(msg.fileCount)
@@ -239,10 +240,10 @@ Public Module outils
 
         Private Function AddRecipient(ByVal email As String,
             ByVal howTo As HowTo) As Boolean
-            Dim recipient As MapiRecipDesc = New MapiRecipDesc()
-
-            recipient.recipClass = CType(howTo, Integer)
-            recipient.name = email
+            Dim recipient As MapiRecipDesc = New MapiRecipDesc With {
+                .recipClass = CType(howTo, Integer),
+                .name = email
+            }
             m_recipients.Add(recipient)
 
             Return True
@@ -284,8 +285,9 @@ Public Module outils
             Dim intPtr As IntPtr = Marshal.AllocHGlobal(
                 m_attachments.Count * size)
 
-            Dim mapiFileDesc As MapiFileDesc = New MapiFileDesc()
-            mapiFileDesc.position = -1
+            Dim mapiFileDesc As MapiFileDesc = New MapiFileDesc With {
+                .position = -1
+            }
             Dim ptr As Integer = CType(intPtr, Integer)
 
             Dim strAttachment As String
@@ -356,8 +358,8 @@ Public Module outils
             "Invalid edit fields [24]", "Invalid recipients [25]",
             "Not supported [26]"}
 
-        Dim m_recipients As New List(Of MapiRecipDesc)
-        Dim m_attachments As New List(Of String)
+        ReadOnly m_recipients As New List(Of MapiRecipDesc)
+        ReadOnly m_attachments As New List(Of String)
         Dim m_lastError As Integer = 0
 
         Private Const MAPI_LOGON_UI As Integer = &H1
