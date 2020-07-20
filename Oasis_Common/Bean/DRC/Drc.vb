@@ -1,6 +1,40 @@
 ﻿Imports System.Data.SqlClient
 
 Public Class Drc
+
+    Public Enum EnumGenreItem
+        Homme = 1
+        Femme = 2
+        HommeEtFemme = 3
+    End Enum
+
+    Public Structure EnumGenre
+        Const Homme = "Homme"
+        Const Femme = "Femme"
+        Const HommeEtFemme = "Homme et femme"
+    End Structure
+
+    Public Enum EnumCategorieOasisCode
+        Contexte = 1
+        Strategie = 2
+        Prevention = 3
+        Objectif = 4
+        ActeParamedical = 5
+        GroupeParametres = 6
+        ProtocoleCollaboratif = 7
+        ProtocoleAigu = 8
+    End Enum
+
+    Public Structure EnumCategorieOasisItem
+        Const Contexte = "Contexte et antécédent"
+        Const Strategie = "Stratégie"
+        Const Prevention = "Prévention"
+        Const Objectif = "Objectif"
+        Const ActeParamedical = "Acte paramédical"
+        Const GroupeParametres = "Groupe de paramètres"
+        Const ProtocoleCollaboratif = "Procédure collaborative"
+        Const ProtocoleAigu = "Procédure pathologie aigüe"
+    End Structure
     Property DrcId As Integer
     Property DrcLibelle As String
     Property DrcSexe As Integer       '1:Masculin, 2:Féminin, 3:Les deux
@@ -26,7 +60,7 @@ Public Class Drc
 
     Sub New(DrcId As Integer)
         If DrcId <> 0 Then
-            Dim conxn As New SqlConnection(getConnectionString())
+            Dim conxn As New SqlConnection(GetConnectionString())
             Dim SQLString As String
             Dim DrcDataReader As SqlDataReader
             SQLString = "select * from oasis.oa_drc where oa_drc_id = " & DrcId & ";"

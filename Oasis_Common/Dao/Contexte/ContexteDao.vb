@@ -5,7 +5,8 @@ Imports Oasis_Common.AntecedentHistoCreationDao
 Public Class ContexteDao
     Inherits StandardDao
 
-    Dim patientDao As New PatientDao
+    ReadOnly patientDao As New PatientDao
+
     Public Structure EnumParcoursBaseItem
         Const Medical = "Médical"
         Const BioEnvironnemental = "Bio-environnemental"

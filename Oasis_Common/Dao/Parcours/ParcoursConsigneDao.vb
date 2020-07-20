@@ -54,7 +54,7 @@ Public Class ParcoursConsigneDao
             " oa_parcours_consigne_date_fin, oa_drc_libelle FROM oasis.oa_patient_parcours_consigne" &
             " LEFT JOIN oasis.oa_drc ON oa_parcours_consigne_drc_id = oa_drc_id" &
             " WHERE oa_parcours_id = " + parcoursId.ToString &
-            " AND oa_drc_oasis_categorie = " & DrcDao.EnumCategorieOasisCode.ActeParamedical &
+            " AND oa_drc_oasis_categorie = " & Drc.EnumCategorieOasisCode.ActeParamedical &
             " AND (oa_parcours_consigne_inactif Is Null Or oa_parcours_consigne_inactif = 'False')" &
             " AND (oa_parcours_consigne_date_fin is Null OR oa_parcours_consigne_date_fin >= GETDATE())" &
             " ORDER BY oa_parcours_consigne_ordre"

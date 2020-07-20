@@ -50,7 +50,7 @@ Public Class RadFAldCim10Selecteur
 
     Private Sub ChargementAld()
         Dim AldDataTable As DataTable
-        AldDataTable = aldCim10Dao.getAllAldCIM10ByAldId(SelectedAldId)
+        AldDataTable = aldCim10Dao.GetAllAldCIM10ByAldId(SelectedAldId)
         RadAldDataGridView.DataSource = AldDataTable
         'Enlève le focus sur la première ligne de la Grid
         RadAldDataGridView.ClearSelection()

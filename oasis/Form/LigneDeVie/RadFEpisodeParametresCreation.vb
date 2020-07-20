@@ -102,7 +102,7 @@ Public Class RadFEpisodeParametresCreation
                     drcId = DrcStandardDatatable.Rows(i)("drc_id")
                     categorieOasis = DrcStandardDatatable.Rows(i)("categorie_oasis")
                     Select Case categorieOasis
-                        Case DrcDao.EnumCategorieOasisCode.GroupeParametres
+                        Case Drc.EnumCategorieOasisCode.GroupeParametres
                             If Not ListGroupeParam.Contains(drcId) Then
                                 ListGroupeParam.Add(drcId)
                             End If

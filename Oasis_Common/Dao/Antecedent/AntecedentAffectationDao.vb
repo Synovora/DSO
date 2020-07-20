@@ -3,7 +3,6 @@
 Public Class AntecedentAffectationDao
     Inherits StandardDao
 
-
     Public Sub AntecedentModificationNiveau(antecedentId As Long, antecedentIdPere As Long, niveauActuel As Integer, niveauCible As Integer, antecedentId1 As Long, antecedentId2 As Long, ordre1 As Integer, ordre2 As Integer, ordre3 As Integer, SelectedPatient As PatientBase, Cacher As String)
         UpdateAntecedentaAffecter(antecedentId, niveauCible, antecedentId1, antecedentId2, ordre1, ordre2, ordre3)
         AntecedentReorganisationOrdre(antecedentId, niveauCible, SelectedPatient.PatientId, Cacher)
@@ -60,16 +59,11 @@ Public Class AntecedentAffectationDao
     End Sub
 
     Public Function UpdateAntecedentaAffecter(antecedentId As Integer, Niveau As Integer, AntecedentId1 As Integer, AntecedentId2 As Integer, ordre1 As Integer, ordre2 As Integer, ordre3 As Integer) As Boolean
-        Dim con As SqlConnection
-        con = GetConnection()
-
+        Dim con As SqlConnection = GetConnection()
         Dim da As SqlDataAdapter = New SqlDataAdapter()
         Dim CodeRetour As Boolean = True
-
         Dim dateModification As Date = Date.Now.Date
-        Dim SQLstring As String
-
-        SQLstring = "UPDATE oasis.oa_antecedent SET" &
+        Dim SQLstring As String = "UPDATE oasis.oa_antecedent SET" &
                     " oa_antecedent_niveau = @niveau," &
                     " oa_antecedent_id_niveau1 = @antecedentId1," &
                     " oa_antecedent_id_niveau2 = @antecedentId2," &
@@ -77,7 +71,6 @@ Public Class AntecedentAffectationDao
                     " oa_antecedent_ordre_affichage2 = @ordre2," &
                     " oa_antecedent_ordre_affichage3 = @ordre3" &
                     " WHERE oa_antecedent_id = @antecedentId"
-
         Dim cmd As New SqlCommand(SQLstring, con)
 
         With cmd.Parameters
@@ -94,7 +87,7 @@ Public Class AntecedentAffectationDao
             da.UpdateCommand = cmd
             da.UpdateCommand.ExecuteNonQuery()
         Catch ex As Exception
-            Throw New Exception(ex.Message)
+            Throw ex
             CodeRetour = False
         Finally
             con.Close()
@@ -108,7 +101,6 @@ Public Class AntecedentAffectationDao
         'Déclaration des données de connexion
         Dim con As SqlConnection
         con = GetConnection()
-        Dim CodeRetour As Boolean = False
 
         Dim antecedentDataAdapter As SqlDataAdapter = New SqlDataAdapter()
         Dim antecedentDataTable As DataTable = New DataTable()
@@ -148,8 +140,8 @@ Public Class AntecedentAffectationDao
         'Lecture des données en base
         antecedentDataAdapter.SelectCommand = New SqlCommand(SQLString, con)
         antecedentDataAdapter.Fill(antecedentDataTable)
-        'con.Open()
-        CodeRetour = True
+
+        Dim CodeRetour As Boolean = True
 
         'Déclaration des variables pour réaliser le parcours du DataTable pour alimenter le DataGridView
         Dim i As Integer
@@ -174,8 +166,6 @@ Public Class AntecedentAffectationDao
         'Déclaration des données de connexion
         Dim con As SqlConnection
         con = GetConnection()
-
-        Dim CodeRetour As Boolean = False
 
         Dim antecedentDataAdapter As SqlDataAdapter = New SqlDataAdapter()
         Dim antecedentDataTable As DataTable = New DataTable()
@@ -205,8 +195,7 @@ Public Class AntecedentAffectationDao
         'Lecture des données en base
         antecedentDataAdapter.SelectCommand = New SqlCommand(SQLString, con)
         antecedentDataAdapter.Fill(antecedentDataTable)
-        CodeRetour = True
-        'conxn3.Open()
+        Dim CodeRetour As Boolean = True
 
 
         'Déclaration des variables pour réaliser le parcours du DataTable pour alimenter le DataGridView
@@ -343,17 +332,11 @@ Public Class AntecedentAffectationDao
     End Function
 
     Private Function UpdateOccultationAntecedent(antecedentId As Integer) As Boolean
-        'Dim conxn2 As New SqlConnection(getConnectionString())
         Dim da As SqlDataAdapter = New SqlDataAdapter()
-        Dim con As SqlConnection
-        con = GetConnection()
-
+        Dim con As SqlConnection = GetConnection()
         Dim CodeRetour As Boolean = True
-
         Dim dateModification As Date = Date.Now.Date
-        Dim SQLstring As String
-
-        SQLstring = "UPDATE oasis.oa_antecedent SET" &
+        Dim SQLstring As String = "UPDATE oasis.oa_antecedent SET" &
                     " oa_antecedent_niveau = 1," &
                     " oa_antecedent_id_niveau1 = 0," &
                     " oa_antecedent_id_niveau2 = 0," &
@@ -370,12 +353,10 @@ Public Class AntecedentAffectationDao
         End With
 
         Try
-            'conxn2.Open()
             da.UpdateCommand = cmd
             da.UpdateCommand.ExecuteNonQuery()
         Catch ex As Exception
-            'PgbMiseAJour.Hide()
-            Throw New Exception(ex.Message)
+            Throw ex
             CodeRetour = False
         Finally
             con.Close()

@@ -114,11 +114,11 @@ Public Class EpisodeProtocoleCollaboratifDao
             End Select
 
             Select Case categorieOasis
-                Case DrcDao.EnumCategorieOasisCode.ActeParamedical
+                Case Drc.EnumCategorieOasisCode.ActeParamedical
                     If Not ListActePara.Contains(drcId) Then
                         ListActePara.Add(drcId)
                     End If
-                Case DrcDao.EnumCategorieOasisCode.ProtocoleCollaboratif
+                Case Drc.EnumCategorieOasisCode.ProtocoleCollaboratif
                     If Not ListProtocol.Contains(drcId) Then
                         ListProtocol.Add(drcId)
                     End If
@@ -179,11 +179,11 @@ Public Class EpisodeProtocoleCollaboratifDao
             End If
 
             Select Case categorieOasis
-                Case DrcDao.EnumCategorieOasisCode.ActeParamedical, DrcDao.EnumCategorieOasisCode.Prevention
+                Case Drc.EnumCategorieOasisCode.ActeParamedical, Drc.EnumCategorieOasisCode.Prevention
                     If Not ListActePara.Contains(drcId) Then
                         ListActePara.Add(drcId)
                     End If
-                Case DrcDao.EnumCategorieOasisCode.ProtocoleCollaboratif
+                Case Drc.EnumCategorieOasisCode.ProtocoleCollaboratif
                     If Not ListProtocol.Contains(drcId) Then
                         ListProtocol.Add(drcId)
                     End If
@@ -195,7 +195,7 @@ Public Class EpisodeProtocoleCollaboratifDao
         Dim DrcDt As DataTable
         'Lecture groupe de paramètres
         For i = 0 To ListProtocol.Count - 1
-            DrcDt = drcActeParamedicalAssoDao.getAllActeParamedicalAssoByProtocoleCollaboratifId(ListProtocol.Item(i))
+            DrcDt = drcActeParamedicalAssoDao.GetAllActeParamedicalAssoByProtocoleCollaboratifId(ListProtocol.Item(i))
             rowCount = DrcDt.Rows.Count - 1
             For J = 0 To rowCount Step 1
                 drcId = Coalesce(DrcDt.Rows(J)("drc_acte_paramedical_id"), 0)
@@ -272,7 +272,7 @@ Public Class EpisodeProtocoleCollaboratifDao
             End Select
 
             Select Case categorieOasis
-                Case DrcDao.EnumCategorieOasisCode.GroupeParametres
+                Case Drc.EnumCategorieOasisCode.GroupeParametres
                     If Not ListGroupeParam.Contains(drcId) Then
                         ListGroupeParam.Add(drcId)
                     End If
@@ -333,7 +333,7 @@ Public Class EpisodeProtocoleCollaboratifDao
             End If
 
             Select Case categorieOasis
-                Case DrcDao.EnumCategorieOasisCode.GroupeParametres
+                Case Drc.EnumCategorieOasisCode.GroupeParametres
                     If Not ListGroupeParam.Contains(drcId) Then
                         ListGroupeParam.Add(drcId)
                     End If

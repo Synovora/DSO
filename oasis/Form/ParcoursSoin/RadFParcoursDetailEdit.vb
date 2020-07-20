@@ -1190,38 +1190,38 @@ Public Class RadFParcoursDetailEdit
 
     'Ajouter un acte paramédical (consigne IDE)
     Private Sub RadBtnConsigne_Click(sender As Object, e As EventArgs) Handles RadBtnActeParamedical.Click
-        AjoutConsigneActeParamedical(DrcDao.EnumCategorieOasisCode.ActeParamedical)
+        AjoutConsigneActeParamedical(Drc.EnumCategorieOasisCode.ActeParamedical)
     End Sub
 
     Private Sub CréerUneConsigneParamédicaleToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles CréerUneConsigneParamédicaleToolStripMenuItem.Click
-        AjoutConsigneActeParamedical(DrcDao.EnumCategorieOasisCode.ActeParamedical)
+        AjoutConsigneActeParamedical(Drc.EnumCategorieOasisCode.ActeParamedical)
     End Sub
 
     'Ajouter un groupe de paramètres (consigne IDE)
     Private Sub RadBtnParametreConsigne_Click(sender As Object, e As EventArgs) Handles RadBtnParametreConsigne.Click
-        AjoutConsigneActeParamedical(DrcDao.EnumCategorieOasisCode.GroupeParametres)
+        AjoutConsigneActeParamedical(Drc.EnumCategorieOasisCode.GroupeParametres)
     End Sub
 
     Private Sub AjouterUnGroupeDeParamètresToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles AjouterUnGroupeDeParamètresToolStripMenuItem.Click
-        AjoutConsigneActeParamedical(DrcDao.EnumCategorieOasisCode.GroupeParametres)
+        AjoutConsigneActeParamedical(Drc.EnumCategorieOasisCode.GroupeParametres)
     End Sub
 
     'Ajouter un protocole collaboratif (consigne IDE)
     Private Sub AjouterUnProtocoleCollaboratifToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles AjouterUnProtocoleCollaboratifToolStripMenuItem.Click
-        AjoutConsigneActeParamedical(DrcDao.EnumCategorieOasisCode.ProtocoleCollaboratif)
+        AjoutConsigneActeParamedical(Drc.EnumCategorieOasisCode.ProtocoleCollaboratif)
     End Sub
 
     Private Sub RadBtnprotocoleConsigne_Click(sender As Object, e As EventArgs) Handles RadBtnprotocoleConsigne.Click
-        AjoutConsigneActeParamedical(DrcDao.EnumCategorieOasisCode.ProtocoleCollaboratif)
+        AjoutConsigneActeParamedical(Drc.EnumCategorieOasisCode.ProtocoleCollaboratif)
     End Sub
 
     'Ajouter une mesure préventive (Consigne IDE)
     Private Sub RadBtnMesurePreventive_Click(sender As Object, e As EventArgs) Handles RadBtnMesurePreventive.Click
-        AjoutConsigneActeParamedical(DrcDao.EnumCategorieOasisCode.Prevention)
+        AjoutConsigneActeParamedical(Drc.EnumCategorieOasisCode.Prevention)
     End Sub
 
     Private Sub AjouterUneMesurePréventiveToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles AjouterUneMesurePréventiveToolStripMenuItem.Click
-        AjoutConsigneActeParamedical(DrcDao.EnumCategorieOasisCode.Prevention)
+        AjoutConsigneActeParamedical(Drc.EnumCategorieOasisCode.Prevention)
     End Sub
 
     'Ajout consigne IDE

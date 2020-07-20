@@ -67,28 +67,25 @@ Public Class RadFEpisodeDetail
         End Set
     End Property
 
-    Dim episodeDao As New EpisodeDao
-    Dim tacheDao As New TacheDao
-    Dim fonctionDao As New FonctionDao
-    Dim drcDao As New DrcDao
-    Dim ordonnaceDao As New OrdonnanceDao
-    'Dim parcoursDao As New ParcoursDao
-    Dim ParcoursConsigneDao As New ParcoursConsigneDao
-    Dim UserDao As New UserDao
-    Dim drc As Drc
-    Dim episodeProtocoleCollaboratifDao As New EpisodeProtocoleCollaboratifDao
-    Dim episodeParametreDao As New EpisodeParametreDao
-    Dim episodeActeParamedicalDao As New EpisodeActeParamedicalDao
-    Dim episodeContexteDao As New EpisodeContexteDao
-    Dim sousEpisodeDao As New SousEpisodeDao
-    Dim theriaqueDao As New TheriaqueDao
-
-    Dim antecedentChangementOrdreDao As New AntecedentChangementOrdreDao
-    Dim antecedentAffectationDao As New AntecedentAffectationDao
-    Dim antecedentDao As New AntecedentDao
-    Dim patientDao As New PatientDao
-
-    Dim log As Log
+    ReadOnly episodeDao As New EpisodeDao
+    ReadOnly tacheDao As New TacheDao
+    ReadOnly fonctionDao As New FonctionDao
+    ReadOnly drcDao As New DrcDao
+    ReadOnly ordonnaceDao As New OrdonnanceDao
+    ReadOnly ParcoursConsigneDao As New ParcoursConsigneDao
+    ReadOnly UserDao As New UserDao
+    ReadOnly drc As Drc
+    ReadOnly episodeProtocoleCollaboratifDao As New EpisodeProtocoleCollaboratifDao
+    ReadOnly episodeParametreDao As New EpisodeParametreDao
+    ReadOnly episodeActeParamedicalDao As New EpisodeActeParamedicalDao
+    ReadOnly episodeContexteDao As New EpisodeContexteDao
+    ReadOnly sousEpisodeDao As New SousEpisodeDao
+    ReadOnly theriaqueDao As New TheriaqueDao
+    ReadOnly antecedentChangementOrdreDao As New AntecedentChangementOrdreDao
+    ReadOnly antecedentAffectationDao As New AntecedentAffectationDao
+    ReadOnly antecedentDao As New AntecedentDao
+    ReadOnly patientDao As New PatientDao
+    ReadOnly log As Log
     Dim episode As Episode
     Dim tache As Tache
     Dim user As New Utilisateur
@@ -1028,7 +1025,7 @@ Public Class RadFEpisodeDetail
             RadObsSpeIdeDataGridView.Rows(iGrid).Cells("observationInput").Value = Coalesce(acteParamedicalDataTable.Rows(i)("observation"), "")
             RadObsSpeIdeDataGridView.Rows(iGrid).Cells("drcCommentaire").Value = Coalesce(acteParamedicalDataTable.Rows(i)("oa_drc_dur_prob_epis"), "")
             RadObsSpeIdeDataGridView.Rows(iGrid).Cells("categorieOasis").Value = Coalesce(acteParamedicalDataTable.Rows(i)("oa_drc_oasis_categorie"), 0)
-            If RadObsSpeIdeDataGridView.Rows(iGrid).Cells("categorieOasis").Value = DrcDao.EnumCategorieOasisCode.ProtocoleAigu Then
+            If RadObsSpeIdeDataGridView.Rows(iGrid).Cells("categorieOasis").Value = Drc.EnumCategorieOasisCode.ProtocoleAigu Then
                 RadObsSpeIdeDataGridView.Rows(iGrid).Cells("drcDescription").Style.ForeColor = Color.Red
                 ControleProtocoleAiguExiste = True
             End If
@@ -1145,7 +1142,7 @@ Public Class RadFEpisodeDetail
                 Me.Enabled = False
                 Cursor.Current = Cursors.WaitCursor
                 Select Case categorieOasis
-                    Case DrcDao.EnumCategorieOasisCode.ProtocoleAigu
+                    Case Drc.EnumCategorieOasisCode.ProtocoleAigu
                         Try
                             Using form As New RadFEpisodeProtocoleAiguDetail
                                 form.EpisodeActeParamedicalId = episodeActeParamedicalId
@@ -1157,8 +1154,8 @@ Public Class RadFEpisodeDetail
                         Catch ex As Exception
                             MessageBox.Show(ex.Message)
                         End Try
-                    Case DrcDao.EnumCategorieOasisCode.ActeParamedical,
-                         DrcDao.EnumCategorieOasisCode.Prevention
+                    Case Drc.EnumCategorieOasisCode.ActeParamedical,
+                         Drc.EnumCategorieOasisCode.Prevention
                         Try
                             Using form As New RadFEpisodeActeParamedicalDetailEdit
                                 form.EpisodeActeParamedicalId = episodeActeParamedicalId
@@ -1206,7 +1203,7 @@ Public Class RadFEpisodeDetail
         Try
             Using vFDrcSelecteur As New RadFDRCSelecteur
                 vFDrcSelecteur.SelectedPatient = Me.SelectedPatient
-                vFDrcSelecteur.CategorieOasis = DrcDao.EnumCategorieOasisCode.ProtocoleAigu
+                vFDrcSelecteur.CategorieOasis = Drc.EnumCategorieOasisCode.ProtocoleAigu
                 vFDrcSelecteur.ShowDialog()
                 SelectedDrcId = vFDrcSelecteur.SelectedDrcId
                 'Si une DORC a été sélectionnée, on appelle le Formulaire de création
@@ -1282,7 +1279,7 @@ Public Class RadFEpisodeDetail
             RadObsSpeMedDataGridView.Rows(iGrid).Cells("observationInput").Value = Coalesce(acteParamedicalDataTable.Rows(i)("observation"), "")
             RadObsSpeMedDataGridView.Rows(iGrid).Cells("drcCommentaire").Value = Coalesce(acteParamedicalDataTable.Rows(i)("oa_drc_dur_prob_epis"), "")
             RadObsSpeMedDataGridView.Rows(iGrid).Cells("categorieOasis").Value = Coalesce(acteParamedicalDataTable.Rows(i)("oa_drc_oasis_categorie"), 0)
-            If RadObsSpeMedDataGridView.Rows(iGrid).Cells("categorieOasis").Value = DrcDao.EnumCategorieOasisCode.ProtocoleAigu Then
+            If RadObsSpeMedDataGridView.Rows(iGrid).Cells("categorieOasis").Value = Drc.EnumCategorieOasisCode.ProtocoleAigu Then
                 RadObsSpeMedDataGridView.Rows(iGrid).Cells("drcDescription").Style.ForeColor = Color.Red
                 ControleProtocoleAiguExiste = True
             End If
@@ -1328,7 +1325,7 @@ Public Class RadFEpisodeDetail
                 Me.Enabled = False
                 Cursor.Current = Cursors.WaitCursor
                 Select Case categorieOasis
-                    Case DrcDao.EnumCategorieOasisCode.ProtocoleAigu
+                    Case Drc.EnumCategorieOasisCode.ProtocoleAigu
                         Try
                             Using form As New RadFEpisodeProtocoleAiguDetail
                                 form.EpisodeActeParamedicalId = episodeActeParamedicalId
@@ -1340,8 +1337,8 @@ Public Class RadFEpisodeDetail
                         Catch ex As Exception
                             MessageBox.Show(ex.Message)
                         End Try
-                    Case DrcDao.EnumCategorieOasisCode.ActeParamedical,
-                         DrcDao.EnumCategorieOasisCode.Prevention
+                    Case Drc.EnumCategorieOasisCode.ActeParamedical,
+                         Drc.EnumCategorieOasisCode.Prevention
                         Try
                             Using form As New RadFEpisodeActeParamedicalDetailEdit
                                 form.EpisodeActeParamedicalId = episodeActeParamedicalId
@@ -2166,7 +2163,7 @@ Public Class RadFEpisodeDetail
         Try
             Using vFDrcSelecteur As New RadFDRCSelecteur
                 vFDrcSelecteur.SelectedPatient = Me.SelectedPatient
-                vFDrcSelecteur.CategorieOasis = DrcDao.EnumCategorieOasisCode.ActeParamedical
+                vFDrcSelecteur.CategorieOasis = Drc.EnumCategorieOasisCode.ActeParamedical
                 vFDrcSelecteur.ShowDialog()
                 SelectedDrcId = vFDrcSelecteur.SelectedDrcId
                 'Si une DORC a été sélectionnée, on créé la consigne médicale
@@ -4433,7 +4430,7 @@ Public Class RadFEpisodeDetail
         Try
             Using vFDrcSelecteur As New RadFDRCSelecteur
                 vFDrcSelecteur.SelectedPatient = Me.SelectedPatient
-                vFDrcSelecteur.CategorieOasis = DrcDao.EnumCategorieOasisCode.Contexte
+                vFDrcSelecteur.CategorieOasis = Drc.EnumCategorieOasisCode.Contexte
                 vFDrcSelecteur.ShowDialog()
                 SelectedDrcId = vFDrcSelecteur.SelectedDrcId
                 'Si un médicament a été sélectionné, on appelle le Formulaire de création

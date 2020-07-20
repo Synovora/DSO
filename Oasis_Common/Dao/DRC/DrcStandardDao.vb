@@ -1,5 +1,4 @@
 ﻿Imports System.Data.SqlClient
-Imports Oasis_Common
 
 Public Class DrcStandardDao
     Inherits StandardDao
@@ -33,16 +32,16 @@ Public Class DrcStandardDao
     End Function
 
     Private Function BuildBean(reader As SqlDataReader) As DrcStandard
-        Dim drcStandard As New DrcStandard
-
-        drcStandard.Id = reader("id")
-        drcStandard.TypeActivite = Coalesce(reader("type_activite_episode"), "")
-        drcStandard.DrcId = Coalesce(reader("drc_id"), 0)
-        drcStandard.CategorieOasis = Coalesce(reader("categorie_oasis"), 0)
-        drcStandard.AgeMin = Coalesce(reader("age_min"), 0)
-        drcStandard.AgeMax = Coalesce(reader("age_max"), 0)
-        drcStandard.DateModification = Coalesce(reader("date_modification"), Nothing)
-        drcStandard.Inactif = Coalesce(reader("inactif"), False)
+        Dim drcStandard As New DrcStandard With {
+            .Id = reader("id"),
+            .TypeActivite = Coalesce(reader("type_activite_episode"), ""),
+            .DrcId = Coalesce(reader("drc_id"), 0),
+            .CategorieOasis = Coalesce(reader("categorie_oasis"), 0),
+            .AgeMin = Coalesce(reader("age_min"), 0),
+            .AgeMax = Coalesce(reader("age_max"), 0),
+            .DateModification = Coalesce(reader("date_modification"), Nothing),
+            .Inactif = Coalesce(reader("inactif"), False)
+        }
 
         Return drcStandard
     End Function
@@ -76,9 +75,7 @@ Public Class DrcStandardDao
     End Function
 
     Public Function GetDrcStandardByTypeActivite(typeActivite As String) As DataTable
-        Dim SQLString As String
-
-        SQLString =
+        Dim SQLString As String =
             "SELECT " & vbCrLf &
             "	  id," & vbCrLf &
             "	  type_activite_episode," & vbCrLf &
@@ -89,8 +86,6 @@ Public Class DrcStandardDao
             " FROM oasis.oa_drc_standard" & vbCrLf &
             " WHERE type_activite_episode = @typeActivite" & vbCrLf &
             " AND (inactif = 'False' OR inactif is Null)" & vbCrLf
-
-        'Console.WriteLine(SQLString)
 
         Using con As SqlConnection = GetConnection()
 
@@ -154,9 +149,7 @@ Public Class DrcStandardDao
 
     Public Function GetDrcStandardCreated(drcStandard As DrcStandard) As Long
         Dim DrcStandardId As Long = 0
-        Dim con As SqlConnection
-
-        con = GetConnection()
+        Dim con As SqlConnection = GetConnection()
 
         Try
             Dim command As SqlCommand = con.CreateCommand()

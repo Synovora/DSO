@@ -1,4 +1,15 @@
 ﻿Public Class Antecedent
+
+    Public Structure EnumTypeAntecedentContexte
+        Const ANTECEDENT = "A"
+        Const CONTEXTE = "C"
+    End Structure
+
+    Public Structure EnumStatutAffichage
+        Const PUBLIE = "P"
+        Const CACHE = "C"
+        Const OCCULTE = "O"
+    End Structure
     Property Id As Integer
     Property PatientId As Integer
     Property Type As String

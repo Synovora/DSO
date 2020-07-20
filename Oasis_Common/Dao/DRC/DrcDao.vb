@@ -3,40 +3,6 @@ Imports Oasis_Common
 Public Class DrcDao
     Inherits StandardDao
 
-    Public Enum EnumGenreItem
-        Homme = 1
-        Femme = 2
-        HommeEtFemme = 3
-    End Enum
-
-    Public Structure EnumGenre
-        Const Homme = "Homme"
-        Const Femme = "Femme"
-        Const HommeEtFemme = "Homme et femme"
-    End Structure
-
-    Public Enum EnumCategorieOasisCode
-        Contexte = 1
-        Strategie = 2
-        Prevention = 3
-        Objectif = 4
-        ActeParamedical = 5
-        GroupeParametres = 6
-        ProtocoleCollaboratif = 7
-        ProtocoleAigu = 8
-    End Enum
-
-    Public Structure EnumCategorieOasisItem
-        Const Contexte = "Contexte et antécédent"
-        Const Strategie = "Stratégie"
-        Const Prevention = "Prévention"
-        Const Objectif = "Objectif"
-        Const ActeParamedical = "Acte paramédical"
-        Const GroupeParametres = "Groupe de paramètres"
-        Const ProtocoleCollaboratif = "Procédure collaborative"
-        Const ProtocoleAigu = "Procédure pathologie aigüe"
-    End Structure
-
     Public Function GetDrc(instanceDrc As Drc, DrcId As Integer) As Boolean
         Dim CodeRetour As Boolean = True
         Dim con As SqlConnection = GetConnection()
@@ -85,52 +51,53 @@ Public Class DrcDao
 
     Public Function GetDrcById(DrcId As Long) As Drc
         Dim drc As Drc
-        Dim con As SqlConnection
-        con = GetConnection()
+        Using con As SqlConnection = GetConnection()
 
-        Try
-            Dim command As SqlCommand = con.CreateCommand()
+            Try
+                Dim command As SqlCommand = con.CreateCommand()
 
-            command.CommandText =
-                "SELECT * FROM oasis.oa_drc WHERE oa_drc_id = @id"
-            command.Parameters.AddWithValue("@id", DrcId)
-            Using reader As SqlDataReader = command.ExecuteReader()
-                If reader.Read() Then
-                    drc = BuildBean(reader)
-                Else
-                    Throw New ArgumentException("DRC inexistante !")
-                End If
-            End Using
+                command.CommandText =
+                    "SELECT * FROM oasis.oa_drc WHERE oa_drc_id = @id"
+                command.Parameters.AddWithValue("@id", DrcId)
+                Using reader As SqlDataReader = command.ExecuteReader()
+                    If reader.Read() Then
+                        drc = BuildBean(reader)
+                    Else
+                        Throw New ArgumentException("DRC inexistante !")
+                    End If
+                End Using
 
-        Catch ex As Exception
-            Throw ex
-        Finally
-            con.Close()
-        End Try
+            Catch ex As Exception
+                Throw ex
+            Finally
+                con.Close()
+            End Try
+        End Using
 
         Return drc
     End Function
 
     Private Function BuildBean(reader As SqlDataReader) As Drc
-        Dim drc As New Drc
-        drc.DrcId = Convert.ToInt64(reader("oa_drc_id"))
-        drc.DrcLibelle = Coalesce(reader("oa_drc_libelle"), "")
-        drc.DrcSexe = Coalesce(reader("oa_drc_sexe"), 0)
-        drc.DrcTypeEpisode = Coalesce(reader("oa_drc_typ_epi"), "")
-        drc.DrcAgeMin = Coalesce(reader("oa_drc_age_min"), 0)
-        drc.DrcAgeMax = Coalesce(reader("oa_drc_age_max"), 0)
-        drc.CategorieMajeure = Coalesce(reader("oa_drc_categorie_majeure_id"), 0)
-        drc.CategorieOasisId = Coalesce(reader("oa_drc_oasis_categorie"), 0)
-        drc.CodeCim = Coalesce(reader("oa_drc_code_cim_defaut"), "")
-        drc.CodeCisp = Coalesce(reader("oa_drc_code_cisp_defaut"), "")
-        drc.AldId = Coalesce(reader("oa_drc_ald_id"), 0)
-        drc.AldCode = Coalesce(reader("oa_drc_ald_code"), "")
-        drc.Commentaire = Coalesce(reader("oa_drc_dur_prob_epis"), "")
-        drc.ReponseCommentee = Coalesce(reader("oa_drc_typ_epi"), "")
-        drc.DateCreation = Coalesce(reader("oa_drc_date_creation"), Nothing)
-        drc.UserCreation = Coalesce(reader("oa_drc_utilisateur_creation"), 0)
-        drc.DateModification = Coalesce(reader("oa_drc_date_modification"), Nothing)
-        drc.UserModification = Coalesce(reader("oa_drc_utilisateur_modification"), 0)
+        Dim drc As New Drc With {
+            .DrcId = Convert.ToInt64(reader("oa_drc_id")),
+            .DrcLibelle = Coalesce(reader("oa_drc_libelle"), ""),
+            .DrcSexe = Coalesce(reader("oa_drc_sexe"), 0),
+            .DrcTypeEpisode = Coalesce(reader("oa_drc_typ_epi"), ""),
+            .DrcAgeMin = Coalesce(reader("oa_drc_age_min"), 0),
+            .DrcAgeMax = Coalesce(reader("oa_drc_age_max"), 0),
+            .CategorieMajeure = Coalesce(reader("oa_drc_categorie_majeure_id"), 0),
+            .CategorieOasisId = Coalesce(reader("oa_drc_oasis_categorie"), 0),
+            .CodeCim = Coalesce(reader("oa_drc_code_cim_defaut"), ""),
+            .CodeCisp = Coalesce(reader("oa_drc_code_cisp_defaut"), ""),
+            .AldId = Coalesce(reader("oa_drc_ald_id"), 0),
+            .AldCode = Coalesce(reader("oa_drc_ald_code"), ""),
+            .Commentaire = Coalesce(reader("oa_drc_dur_prob_epis"), ""),
+            .ReponseCommentee = Coalesce(reader("oa_drc_typ_epi"), ""),
+            .DateCreation = Coalesce(reader("oa_drc_date_creation"), Nothing),
+            .UserCreation = Coalesce(reader("oa_drc_utilisateur_creation"), 0),
+            .DateModification = Coalesce(reader("oa_drc_date_modification"), Nothing),
+            .UserModification = Coalesce(reader("oa_drc_utilisateur_modification"), 0)
+        }
         Return drc
     End Function
 
@@ -138,14 +105,14 @@ Public Class DrcDao
     Public Function GetItemGenreByCode(Code As Integer) As String
         Dim Item As String
         Select Case Code
-            Case DrcDao.EnumGenreItem.Homme
-                Item = DrcDao.EnumGenre.Homme
-            Case DrcDao.EnumGenreItem.Femme
-                Item = DrcDao.EnumGenre.Femme
-            Case DrcDao.EnumGenreItem.HommeEtFemme
-                Item = DrcDao.EnumGenre.HommeEtFemme
+            Case Drc.EnumGenreItem.Homme
+                Item = Drc.EnumGenre.Homme
+            Case Drc.EnumGenreItem.Femme
+                Item = Drc.EnumGenre.Femme
+            Case Drc.EnumGenreItem.HommeEtFemme
+                Item = Drc.EnumGenre.HommeEtFemme
             Case Else
-                Item = DrcDao.EnumGenre.HommeEtFemme
+                Item = Drc.EnumGenre.HommeEtFemme
         End Select
 
         Return Item
@@ -154,14 +121,14 @@ Public Class DrcDao
     Public Function GetCodeGenreByItem(Item As String) As Integer
         Dim Code As Integer
         Select Case Item
-            Case DrcDao.EnumGenre.Homme
-                Code = DrcDao.EnumGenreItem.Homme
-            Case DrcDao.EnumGenre.Femme
-                Code = DrcDao.EnumGenreItem.Femme
-            Case DrcDao.EnumGenre.HommeEtFemme
-                Code = DrcDao.EnumGenreItem.HommeEtFemme
+            Case Drc.EnumGenre.Homme
+                Code = Drc.EnumGenreItem.Homme
+            Case Drc.EnumGenre.Femme
+                Code = Drc.EnumGenreItem.Femme
+            Case Drc.EnumGenre.HommeEtFemme
+                Code = Drc.EnumGenreItem.HommeEtFemme
             Case Else
-                Code = DrcDao.EnumGenreItem.HommeEtFemme
+                Code = Drc.EnumGenreItem.HommeEtFemme
         End Select
 
         Return Code
@@ -170,22 +137,22 @@ Public Class DrcDao
     Public Function GetItemCategorieOasisByCode(Code As Integer) As String
         Dim Item As String
         Select Case Code
-            Case DrcDao.EnumCategorieOasisCode.Contexte
-                Item = DrcDao.EnumCategorieOasisItem.Contexte
-            Case DrcDao.EnumCategorieOasisCode.Objectif
-                Item = DrcDao.EnumCategorieOasisItem.Objectif
-            Case DrcDao.EnumCategorieOasisCode.Prevention
-                Item = DrcDao.EnumCategorieOasisItem.Prevention
-            Case DrcDao.EnumCategorieOasisCode.Strategie
-                Item = DrcDao.EnumCategorieOasisItem.Strategie
-            Case DrcDao.EnumCategorieOasisCode.ActeParamedical
-                Item = DrcDao.EnumCategorieOasisItem.ActeParamedical
-            Case DrcDao.EnumCategorieOasisCode.GroupeParametres
-                Item = DrcDao.EnumCategorieOasisItem.GroupeParametres
-            Case DrcDao.EnumCategorieOasisCode.ProtocoleCollaboratif
-                Item = DrcDao.EnumCategorieOasisItem.ProtocoleCollaboratif
-            Case DrcDao.EnumCategorieOasisCode.ProtocoleAigu
-                Item = DrcDao.EnumCategorieOasisItem.ProtocoleAigu
+            Case Drc.EnumCategorieOasisCode.Contexte
+                Item = Drc.EnumCategorieOasisItem.Contexte
+            Case Drc.EnumCategorieOasisCode.Objectif
+                Item = Drc.EnumCategorieOasisItem.Objectif
+            Case Drc.EnumCategorieOasisCode.Prevention
+                Item = Drc.EnumCategorieOasisItem.Prevention
+            Case Drc.EnumCategorieOasisCode.Strategie
+                Item = Drc.EnumCategorieOasisItem.Strategie
+            Case Drc.EnumCategorieOasisCode.ActeParamedical
+                Item = Drc.EnumCategorieOasisItem.ActeParamedical
+            Case Drc.EnumCategorieOasisCode.GroupeParametres
+                Item = Drc.EnumCategorieOasisItem.GroupeParametres
+            Case Drc.EnumCategorieOasisCode.ProtocoleCollaboratif
+                Item = Drc.EnumCategorieOasisItem.ProtocoleCollaboratif
+            Case Drc.EnumCategorieOasisCode.ProtocoleAigu
+                Item = Drc.EnumCategorieOasisItem.ProtocoleAigu
             Case Else
                 Item = "Inconnue"
         End Select
@@ -196,22 +163,22 @@ Public Class DrcDao
     Public Function GetCodeCategorieOasisByItem(Item As String) As Integer
         Dim Code As Integer
         Select Case Item
-            Case DrcDao.EnumCategorieOasisItem.Contexte
-                Code = DrcDao.EnumCategorieOasisCode.Contexte
-            Case DrcDao.EnumCategorieOasisItem.Objectif
-                Code = DrcDao.EnumCategorieOasisCode.Objectif
-            Case DrcDao.EnumCategorieOasisItem.Prevention
-                Code = DrcDao.EnumCategorieOasisCode.Prevention
-            Case DrcDao.EnumCategorieOasisItem.Strategie
-                Code = DrcDao.EnumCategorieOasisCode.Strategie
-            Case DrcDao.EnumCategorieOasisItem.ActeParamedical
-                Code = DrcDao.EnumCategorieOasisCode.ActeParamedical
-            Case DrcDao.EnumCategorieOasisItem.GroupeParametres
-                Code = DrcDao.EnumCategorieOasisCode.GroupeParametres
-            Case DrcDao.EnumCategorieOasisItem.ProtocoleCollaboratif
-                Code = DrcDao.EnumCategorieOasisCode.ProtocoleCollaboratif
-            Case DrcDao.EnumCategorieOasisItem.ProtocoleAigu
-                Code = DrcDao.EnumCategorieOasisCode.ProtocoleAigu
+            Case Drc.EnumCategorieOasisItem.Contexte
+                Code = Drc.EnumCategorieOasisCode.Contexte
+            Case Drc.EnumCategorieOasisItem.Objectif
+                Code = Drc.EnumCategorieOasisCode.Objectif
+            Case Drc.EnumCategorieOasisItem.Prevention
+                Code = Drc.EnumCategorieOasisCode.Prevention
+            Case Drc.EnumCategorieOasisItem.Strategie
+                Code = Drc.EnumCategorieOasisCode.Strategie
+            Case Drc.EnumCategorieOasisItem.ActeParamedical
+                Code = Drc.EnumCategorieOasisCode.ActeParamedical
+            Case Drc.EnumCategorieOasisItem.GroupeParametres
+                Code = Drc.EnumCategorieOasisCode.GroupeParametres
+            Case Drc.EnumCategorieOasisItem.ProtocoleCollaboratif
+                Code = Drc.EnumCategorieOasisCode.ProtocoleCollaboratif
+            Case Drc.EnumCategorieOasisItem.ProtocoleAigu
+                Code = Drc.EnumCategorieOasisCode.ProtocoleAigu
             Case Else
                 Code = 0
         End Select
@@ -223,11 +190,11 @@ Public Class DrcDao
         Dim CategorieOasis As Integer
         Select Case CategoriePPS
             Case EnumCategoriePPS.Objectif
-                CategorieOasis = DrcDao.EnumCategorieOasisCode.Objectif
+                CategorieOasis = Drc.EnumCategorieOasisCode.Objectif
             Case EnumCategoriePPS.MesurePreventive
-                CategorieOasis = DrcDao.EnumCategorieOasisCode.Prevention
+                CategorieOasis = Drc.EnumCategorieOasisCode.Prevention
             Case EnumCategoriePPS.Strategie
-                CategorieOasis = DrcDao.EnumCategorieOasisCode.Strategie
+                CategorieOasis = Drc.EnumCategorieOasisCode.Strategie
         End Select
 
         Return CategorieOasis

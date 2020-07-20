@@ -3,18 +3,7 @@ Imports Oasis_Common
 Public Class AntecedentDao
     Inherits StandardDao
 
-    Dim patientDao As New PatientDao
-
-    Public Structure EnumTypeAntecedentContexte
-        Const ANTECEDENT = "A"
-        Const CONTEXTE = "C"
-    End Structure
-
-    Public Structure EnumStatutAffichage
-        Const PUBLIE = "P"
-        Const CACHE = "C"
-        Const OCCULTE = "O"
-    End Structure
+    ReadOnly patientDao As New PatientDao
 
     Public Function GetAntecedentById(antecedentId As Integer) As Antecedent
         Dim antecedent As Antecedent
@@ -85,41 +74,42 @@ Public Class AntecedentDao
     End Function
 
     Public Function CloneAntecedent(Source As Antecedent) As Antecedent
-        Dim Cible As New Antecedent
-        Cible.Id = Source.Id
-        Cible.PatientId = Source.PatientId
-        Cible.Type = Source.Type
-        Cible.DrcId = Source.DrcId
-        Cible.Description = Source.Description
-        Cible.UserCreation = Source.UserCreation
-        Cible.DateCreation = Source.DateCreation
-        Cible.UserModification = Source.UserModification
-        Cible.DateModification = Source.DateModification
-        Cible.Diagnostic = Source.Diagnostic
-        Cible.DateDebut = Source.DateDebut
-        Cible.DateFin = Source.DateFin
-        Cible.AldId = Source.AldId
-        Cible.AldCim10Id = Source.AldCim10Id
-        Cible.AldValide = Source.AldValide
-        Cible.AldDateDebut = Source.AldDateDebut
-        Cible.AldDateFin = Source.AldDateFin
-        Cible.AldDemandeEnCours = Source.AldDemandeEnCours
-        Cible.AldDateDemande = Source.AldDateDemande
-        Cible.Arret = Source.Arret
-        Cible.ArretCommentaire = Source.ArretCommentaire
-        Cible.Nature = Source.Nature
-        Cible.Priorite = Source.Priorite
-        Cible.Niveau = Source.Niveau
-        Cible.Niveau1Id = Source.Niveau1Id
-        Cible.Niveau2Id = Source.Niveau2Id
-        Cible.Ordre1 = Source.Ordre1
-        Cible.Ordre2 = Source.Ordre2
-        Cible.Ordre3 = Source.Ordre3
-        Cible.StatutAffichage = Source.StatutAffichage
-        Cible.StatutAffichageTransformation = Source.StatutAffichageTransformation
-        Cible.CategorieContexte = Source.CategorieContexte
-        Cible.EpisodeId = Source.EpisodeId
-        Cible.Inactif = Source.Inactif
+        Dim Cible As New Antecedent With {
+            .Id = Source.Id,
+            .PatientId = Source.PatientId,
+            .Type = Source.Type,
+            .DrcId = Source.DrcId,
+            .Description = Source.Description,
+            .UserCreation = Source.UserCreation,
+            .DateCreation = Source.DateCreation,
+            .UserModification = Source.UserModification,
+            .DateModification = Source.DateModification,
+            .Diagnostic = Source.Diagnostic,
+            .DateDebut = Source.DateDebut,
+            .DateFin = Source.DateFin,
+            .AldId = Source.AldId,
+            .AldCim10Id = Source.AldCim10Id,
+            .AldValide = Source.AldValide,
+            .AldDateDebut = Source.AldDateDebut,
+            .AldDateFin = Source.AldDateFin,
+            .AldDemandeEnCours = Source.AldDemandeEnCours,
+            .AldDateDemande = Source.AldDateDemande,
+            .Arret = Source.Arret,
+            .ArretCommentaire = Source.ArretCommentaire,
+            .Nature = Source.Nature,
+            .Priorite = Source.Priorite,
+            .Niveau = Source.Niveau,
+            .Niveau1Id = Source.Niveau1Id,
+            .Niveau2Id = Source.Niveau2Id,
+            .Ordre1 = Source.Ordre1,
+            .Ordre2 = Source.Ordre2,
+            .Ordre3 = Source.Ordre3,
+            .StatutAffichage = Source.StatutAffichage,
+            .StatutAffichageTransformation = Source.StatutAffichageTransformation,
+            .CategorieContexte = Source.CategorieContexte,
+            .EpisodeId = Source.EpisodeId,
+            .Inactif = Source.Inactif
+        }
         Return Cible
     End Function
 

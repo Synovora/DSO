@@ -293,7 +293,7 @@ Public Class RadFEpisodeConclusionContextePatient
         Try
             Using vFDrcSelecteur As New RadFDRCSelecteur
                 vFDrcSelecteur.SelectedPatient = Me.SelectedPatient
-                vFDrcSelecteur.CategorieOasis = DrcDao.EnumCategorieOasisCode.Contexte
+                vFDrcSelecteur.CategorieOasis = Drc.EnumCategorieOasisCode.Contexte
                 vFDrcSelecteur.ShowDialog()
                 SelectedDrcId = vFDrcSelecteur.SelectedDrcId
                 'Si un médicament a été sélectionné, on appelle le Formulaire de création

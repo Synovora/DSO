@@ -516,7 +516,7 @@ Public Class RadFSynthese
         Try
             Using vFDrcSelecteur As New RadFDRCSelecteur
                 vFDrcSelecteur.SelectedPatient = Me.SelectedPatient
-                vFDrcSelecteur.CategorieOasis = DrcDao.EnumCategorieOasisCode.Contexte       'Catégorie Oasis : "Antécédent et Contexte"
+                vFDrcSelecteur.CategorieOasis = Drc.EnumCategorieOasisCode.Contexte       'Catégorie Oasis : "Antécédent et Contexte"
                 vFDrcSelecteur.ShowDialog()             'Modal
                 SelectedDrcId = vFDrcSelecteur.SelectedDrcId
                 'Si un DRC a été sélectionné
@@ -641,9 +641,9 @@ Public Class RadFSynthese
                     Case Else
                         Exit Sub
                 End Select
-                Dim Cacher As String = AntecedentDao.EnumStatutAffichage.PUBLIE
+                Dim Cacher As String = Antecedent.EnumStatutAffichage.PUBLIE
                 If RadChkTous.Checked = True Then
-                    Cacher = AntecedentDao.EnumStatutAffichage.CACHE
+                    Cacher = Antecedent.EnumStatutAffichage.CACHE
                 End If
                 antecedentChangementOrdreDao.UpdateAntecedent(antecedentId, NouveauOrdreAffichage, NiveauAntecedentAOrdonner)
 
@@ -690,9 +690,9 @@ Public Class RadFSynthese
                     Case Else
                         Exit Sub
                 End Select
-                Dim Cacher As String = AntecedentDao.EnumStatutAffichage.PUBLIE
+                Dim Cacher As String = Antecedent.EnumStatutAffichage.PUBLIE
                 If RadChkTous.Checked = True Then
-                    Cacher = AntecedentDao.EnumStatutAffichage.CACHE
+                    Cacher = Antecedent.EnumStatutAffichage.CACHE
                 End If
                 antecedentChangementOrdreDao.UpdateAntecedent(antecedentId, NouveauOrdreAffichage, NiveauAntecedentAOrdonner)
 
@@ -747,9 +747,9 @@ Public Class RadFSynthese
                     Dim antecedentPere As Antecedent
                     Dim antecedentId, antecedentIdPere, niveauActuel As Integer
                     Dim NiveauCible, AntecedentId1, AntecedentId2, ordre1, ordre2, ordre3 As Integer
-                    Dim Cacher As String = AntecedentDao.EnumStatutAffichage.PUBLIE
+                    Dim Cacher As String = Antecedent.EnumStatutAffichage.PUBLIE
                     If RadChkTous.Checked = True Then
-                        Cacher = AntecedentDao.EnumStatutAffichage.CACHE
+                        Cacher = Antecedent.EnumStatutAffichage.CACHE
                     End If
                     antecedentId = RadAntecedentDataGridView.Rows(aRow).Cells("antecedentId").Value
                     antecedentIdADeplacer = RadAntecedentDataGridView.Rows(aRow).Cells("antecedentId").Value
@@ -805,9 +805,9 @@ Public Class RadFSynthese
                 If aRow >= 0 Then
                     Dim antecedentId, antecedentIdPere, niveauActuel As Integer
                     Dim NiveauCible, AntecedentId1, AntecedentId2, ordre1, ordre2, ordre3 As Integer
-                    Dim Cacher As String = AntecedentDao.EnumStatutAffichage.PUBLIE
+                    Dim Cacher As String = Antecedent.EnumStatutAffichage.PUBLIE
                     If RadChkTous.Checked = True Then
-                        Cacher = AntecedentDao.EnumStatutAffichage.CACHE
+                        Cacher = Antecedent.EnumStatutAffichage.CACHE
                     End If
                     antecedentId = RadAntecedentDataGridView.Rows(aRow).Cells("antecedentId").Value
                     antecedentIdADeplacer = RadAntecedentDataGridView.Rows(aRow).Cells("antecedentId").Value
@@ -2079,7 +2079,7 @@ Public Class RadFSynthese
         Try
             Using vFDrcSelecteur As New RadFDRCSelecteur
                 vFDrcSelecteur.SelectedPatient = Me.SelectedPatient
-                vFDrcSelecteur.CategorieOasis = DrcDao.EnumCategorieOasisCode.Contexte
+                vFDrcSelecteur.CategorieOasis = Drc.EnumCategorieOasisCode.Contexte
                 vFDrcSelecteur.ShowDialog()
                 SelectedDrcId = vFDrcSelecteur.SelectedDrcId
                 'Si un médicament a été sélectionné, on appelle le Formulaire de création

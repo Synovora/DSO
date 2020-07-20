@@ -57,10 +57,10 @@ Public Class RadFDRCSelecteur
     End Property
 
     Dim drcDataTable As DataTable = New DataTable()
-    Dim drcSynonymeDataTable As DataTable = New DataTable()
     Dim SelectAld As Boolean
-    Dim instanceDrc As New Drc
-    Dim drcdao As New DrcDao
+    ReadOnly drcSynonymeDataTable As DataTable = New DataTable()
+    ReadOnly instanceDrc As New Drc
+    ReadOnly drcdao As New DrcDao
 
     Dim categorieMajeureListe As Dictionary(Of Integer, String) = Table_categorie_majeure.GetCategorieMajeureListe()
     Private Sub RadFDRCSelecteur_Load(sender As Object, e As EventArgs) Handles MyBase.Load
@@ -71,7 +71,7 @@ Public Class RadFDRCSelecteur
         'Chargement du label affichant la catégorie Oasis en restriction dans l'affichage en entête
         If CategorieOasis <> 0 Then
             LblCategorieOasis.Text = drcdao.GetItemCategorieOasisByCode(CategorieOasis)
-            If CategorieOasis <> DrcDao.EnumCategorieOasisCode.Contexte Then
+            If CategorieOasis <> Drc.EnumCategorieOasisCode.Contexte Then
                 ChargementDrc()
             End If
         Else
@@ -331,7 +331,7 @@ Public Class RadFDRCSelecteur
                 ChargementDrc()
             End If
         Else
-            If CategorieOasis = DrcDao.EnumCategorieOasisCode.Contexte Then
+            If CategorieOasis = Drc.EnumCategorieOasisCode.Contexte Then
                 drcSynonymeDataTable.Rows.Clear()
                 DrcDataGridView.Rows.Clear()
             Else

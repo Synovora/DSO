@@ -3,7 +3,7 @@
 Public Class AldDao
     Inherits StandardDao
 
-    Public Function getAldById(AldId As Integer) As Ald
+    Public Function GetAldById(AldId As Integer) As Ald
         Dim ald As Ald
         Dim con As SqlConnection
         con = GetConnection()
@@ -16,7 +16,7 @@ Public Class AldDao
             command.Parameters.AddWithValue("@id", AldId)
             Using reader As SqlDataReader = command.ExecuteReader()
                 If reader.Read() Then
-                    ald = buildBean(reader)
+                    ald = BuildBean(reader)
                 Else
                     Throw New ArgumentException("ALD inexistante !")
                 End If
@@ -31,18 +31,17 @@ Public Class AldDao
         Return ald
     End Function
 
-    Private Function buildBean(reader As SqlDataReader) As Ald
-        Dim ald As New Ald
-        ald.AldId = reader("oa_ald_id")
-        ald.AldCode = Coalesce(reader("oa_ald_code"), "")
-        ald.AldDescription = Coalesce(reader("oa_ald_description"), "")
+    Private Function BuildBean(reader As SqlDataReader) As Ald
+        Dim ald As New Ald With {
+            .AldId = reader("oa_ald_id"),
+            .AldCode = Coalesce(reader("oa_ald_code"), ""),
+            .AldDescription = Coalesce(reader("oa_ald_description"), "")
+        }
         Return ald
     End Function
 
-    Public Function getAllAld() As DataTable
-        Dim SQLString As String
-
-        SQLString = "SELECT oa_ald_id, oa_ald_code, oa_ald_description FROM oasis.oa_ald;"
+    Public Function GetAllAld() As DataTable
+        Dim SQLString As String = "SELECT oa_ald_id, oa_ald_code, oa_ald_description FROM oasis.oa_ald;"
 
         Using con As SqlConnection = GetConnection()
             Dim AldDataAdapter As SqlDataAdapter = New SqlDataAdapter()
@@ -63,11 +62,9 @@ Public Class AldDao
     End Function
 
     Public Function DateFinALD(patientId As Integer) As String
-        Dim SQLString As String
         Dim StringRetour As String = ""
         Dim PremierPassage As Boolean = True
-
-        SQLString = "SELECT * FROM oasis.oa_antecedent" &
+        Dim SQLString As String = "SELECT * FROM oasis.oa_antecedent" &
             " WHERE oa_antecedent_type = 'A'" &
             " AND oa_antecedent_statut_affichage = 'P'" &
             " AND (oa_antecedent_inactif = '0' OR oa_antecedent_inactif is Null)" &
@@ -112,13 +109,9 @@ Public Class AldDao
 
     Public Function IsPatientALD(patientId As Integer) As Boolean
         Dim CodeRetour As Boolean = False
-        Dim SQLString As String
         Dim DateMax As New Date(2999, 12, 31, 0, 0, 0)
         Dim DateValide As Date = Date.Now().AddDays(-30)
-
-        Dim PremierPassage As Boolean = True
-
-        SQLString = "SELECT oa_antecedent_id, oa_antecedent_ald_date_fin" &
+        Dim SQLString As String = "SELECT oa_antecedent_id, oa_antecedent_ald_date_fin" &
             " FROM oasis.oa_antecedent" &
             " WHERE oa_antecedent_type = 'A'" &
             " AND oa_antecedent_statut_affichage = 'P'" &

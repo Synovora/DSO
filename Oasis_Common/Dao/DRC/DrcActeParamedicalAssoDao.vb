@@ -1,9 +1,9 @@
 ﻿Imports System.Data.SqlClient
-Imports Oasis_Common
+
 Public Class DrcActeParamedicalAssoDao
     Inherits StandardDao
 
-    Public Function getAllActeParamedicalAssoByProtocoleCollaboratifId(protocoleCollaboratifDrcId As Integer) As DataTable
+    Public Function GetAllActeParamedicalAssoByProtocoleCollaboratifId(protocoleCollaboratifDrcId As Integer) As DataTable
         Dim SQLString As String
         SQLString =
             "SELECT * FROM oasis.oa_drc_acte_paramedical" &
@@ -30,11 +30,9 @@ Public Class DrcActeParamedicalAssoDao
         Return ParcoursDataTable
     End Function
 
-    Public Function getDrcActeParamedicalAssoById(Id As Integer) As DrcActeParamedicalAsso
+    Public Function GetDrcActeParamedicalAssoById(Id As Integer) As DrcActeParamedicalAsso
         Dim drcActeParamedicalAsso As DrcActeParamedicalAsso
-        Dim con As SqlConnection
-
-        con = GetConnection()
+        Dim con As SqlConnection = GetConnection()
 
         Try
             Dim command As SqlCommand = con.CreateCommand()
@@ -44,7 +42,7 @@ Public Class DrcActeParamedicalAssoDao
             command.Parameters.AddWithValue("@id", Id)
             Using reader As SqlDataReader = command.ExecuteReader()
                 If reader.Read() Then
-                    drcActeParamedicalAsso = buildBean(reader)
+                    drcActeParamedicalAsso = BuildBean(reader)
                 Else
                     Throw New ArgumentException("Association acte paramédical / protocole collaboratif inexistant !")
                 End If
@@ -59,7 +57,7 @@ Public Class DrcActeParamedicalAssoDao
         Return drcActeParamedicalAsso
     End Function
 
-    Private Function buildBean(reader As SqlDataReader) As DrcActeParamedicalAsso
+    Private Function BuildBean(reader As SqlDataReader) As DrcActeParamedicalAsso
         Dim drcActeParamedicalAsso As New DrcActeParamedicalAsso With {
             .Id = reader("id"),
             .ProtocleCollabaratifDrcId = Coalesce(reader("drc_protocole_collaboratif_id"), 0),

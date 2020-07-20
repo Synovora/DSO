@@ -1,4 +1,5 @@
 ﻿Imports Oasis_Common
+
 Public Class RadFDrcActePMAssocieEdit
     Private _drcId As Long
 
@@ -11,9 +12,9 @@ Public Class RadFDrcActePMAssocieEdit
         End Set
     End Property
 
-    Dim drcActeParamedicalAssoDao As New DrcActeParamedicalAssoDao
-    Dim drcdao As New DrcDao
-    Dim ListDrcAssocie As List(Of Long) = New List(Of Long)
+    ReadOnly drcActeParamedicalAssoDao As New DrcActeParamedicalAssoDao
+    ReadOnly drcdao As New DrcDao
+    ReadOnly ListDrcAssocie As List(Of Long) = New List(Of Long)
 
     Private Sub RadFDrcActePMAssocieEdit_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         Dim drc As New Drc
@@ -29,7 +30,7 @@ Public Class RadFDrcActePMAssocieEdit
 
         Dim DrcDataTable As DataTable
         Dim ActeParamedicalDrcId As Long
-        DrcDataTable = drcActeParamedicalAssoDao.getAllActeParamedicalAssoByProtocoleCollaboratifId(ProtocoleCollaboratifDrcId)
+        DrcDataTable = drcActeParamedicalAssoDao.GetAllActeParamedicalAssoByProtocoleCollaboratifId(ProtocoleCollaboratifDrcId)
         Dim iGrid As Integer = -1 'Indice pour alimenter la Grid qui peut comporter moins d'occurrences que le DataTable
         Dim rowCount As Integer = DrcDataTable.Rows.Count - 1
         'Parcours du DataTable pour alimenter les colonnes du DataGridView
@@ -61,7 +62,7 @@ Public Class RadFDrcActePMAssocieEdit
         DrcDataGridView.Rows.Clear()
 
         Dim drcDataTable As DataTable
-        Dim CategorieOasis As Integer = DrcDao.EnumCategorieOasisCode.ActeParamedical
+        Dim CategorieOasis As Integer = Drc.EnumCategorieOasisCode.ActeParamedical
         Dim SelectAld As Boolean = False
         drcDataTable = drcdao.GetAllDrcByCategorieAndGenre("", 0, CategorieOasis, SelectAld, "")
 

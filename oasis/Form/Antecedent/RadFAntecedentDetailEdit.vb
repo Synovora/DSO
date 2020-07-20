@@ -348,7 +348,7 @@ Public Class RadFAntecedentDetailEdit
             RadGbxAld.Show()
             Dim AldDao As New AldDao
             Dim Ald As Ald
-            Ald = AldDao.getAldById(antecedentRead.AldId)
+            Ald = AldDao.GetAldById(antecedentRead.AldId)
             TxtAldCode.Text = Ald.AldCode
             LblAldDescription.Text = Ald.AldDescription
         Else

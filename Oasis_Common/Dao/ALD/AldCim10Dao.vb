@@ -1,8 +1,6 @@
 ﻿Imports System.Data.SqlClient
-Imports Oasis_Common
 
 Public Class AldCim10Dao
-
     Public Function GetAldCim10ById(AldCim10Id As Integer) As AldCim10
         Dim aldCim10 As AldCim10
         Dim con As New SqlConnection(GetConnectionString())
@@ -57,7 +55,7 @@ Public Class AldCim10Dao
             AldCim10DataReader = cmd.ExecuteReader()
             SetAldCim10Properties(instanceAldCim10, AldCim10DataReader)
         Catch ex As Exception
-            Throw New Exception(ex.Message)
+            Throw ex
         Finally
             conxn.Close()
             cmd.Dispose()
@@ -84,10 +82,8 @@ Public Class AldCim10Dao
         End If
     End Sub
 
-    Public Function getAllAldCIM10ByAldId(AldId As Long) As DataTable
-        Dim SQLString As String
-
-        SQLString = "SELECT oa_ald_cim10_id, oa_ald_cim10_ald_code, oa_ald_cim10_code, oa_ald_cim10_description" &
+    Public Function GetAllAldCIM10ByAldId(AldId As Long) As DataTable
+        Dim SQLString As String = "SELECT oa_ald_cim10_id, oa_ald_cim10_ald_code, oa_ald_cim10_code, oa_ald_cim10_description" &
                     " FROM oasis.oa_ald_cim10 WHERE oa_ald_cim10_ald_id = " & AldId.ToString & ";"
 
 

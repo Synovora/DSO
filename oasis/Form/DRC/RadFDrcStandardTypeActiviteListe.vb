@@ -1,10 +1,9 @@
 ﻿Imports Oasis_Common
 
 Public Class RadFDrcStandardTypeActiviteListe
-
-    Dim drc As New Drc
-    Dim drcdao As New DrcDao
-    Dim drcStandardDao As New DrcStandardDao
+    ReadOnly drc As New Drc
+    ReadOnly drcdao As New DrcDao
+    ReadOnly drcStandardDao As New DrcStandardDao
     Dim TypeActivite As String
 
 
@@ -108,21 +107,21 @@ Public Class RadFDrcStandardTypeActiviteListe
     End Sub
 
     Private Sub RadBtnActePM_Click(sender As Object, e As EventArgs) Handles RadBtnActePM.Click
-        Dim CategorieOasis = DrcDao.EnumCategorieOasisCode.ActeParamedical
+        Dim CategorieOasis = Drc.EnumCategorieOasisCode.ActeParamedical
         selectDrc(CategorieOasis)
     End Sub
 
     Private Sub RadBtnSlectProtocole_Click(sender As Object, e As EventArgs) Handles RadBtnSlectProtocole.Click
-        Dim CategorieOasis = DrcDao.EnumCategorieOasisCode.ProtocoleCollaboratif
+        Dim CategorieOasis = Drc.EnumCategorieOasisCode.ProtocoleCollaboratif
         selectDrc(CategorieOasis)
     End Sub
 
     Private Sub RadBtnSelectParm_Click(sender As Object, e As EventArgs) Handles RadBtnSelectParm.Click
-        Dim CategorieOasis = DrcDao.EnumCategorieOasisCode.GroupeParametres
+        Dim CategorieOasis = Drc.EnumCategorieOasisCode.GroupeParametres
         selectDrc(CategorieOasis)
     End Sub
     Private Sub RadBtnMesurePreventive_Click(sender As Object, e As EventArgs) Handles RadBtnMesurePreventive.Click
-        Dim CategorieOasis = DrcDao.EnumCategorieOasisCode.Prevention
+        Dim CategorieOasis = Drc.EnumCategorieOasisCode.Prevention
         selectDrc(CategorieOasis)
     End Sub
 
