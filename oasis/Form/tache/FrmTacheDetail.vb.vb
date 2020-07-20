@@ -191,7 +191,7 @@ Public Class FrmTacheDetail_vb
             Me.Enabled = False
             If tache.isUnRdv() Then
                 Dim episodeDao As EpisodeDao = New EpisodeDao
-                IsActionEffectuee = episodeDao.CallEpisode(tacheBeanAssocie.Patient, tache.Id, userLog)
+                IsActionEffectuee = EpisodeUtils.CallEpisode(tacheBeanAssocie.Patient, tache.Id, userLog)
             Else
                 Using vRadFEpisodeDetail As New RadFEpisodeDetail
                     vRadFEpisodeDetail.SelectedEpisodeId = tache.EpisodeId

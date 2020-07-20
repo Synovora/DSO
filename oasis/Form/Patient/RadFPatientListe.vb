@@ -494,7 +494,7 @@ Public Class RadFPatientListe
             Me.SelectedPatient = patientDao.GetPatientById(patientId)
             Cursor.Current = Cursors.WaitCursor
             Me.Enabled = False
-            episodeDao.CallEpisode(SelectedPatient, 0, userLog, EnumAccesEcranPrecedent.SANS)
+            EpisodeUtils.CallEpisode(SelectedPatient, 0, userLog, EnumAccesEcranPrecedent.SANS)
             Me.Enabled = True
             episode = episodeDao.GetEpisodeEnCoursByPatientId(Me.SelectedPatient.patientId)
             If episode.Id <> 0 Then

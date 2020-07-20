@@ -225,6 +225,7 @@
     <Compile Include="Form\DRC\RadFAutoSuivi.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="Form\Episode\EpisodeUtils.vb" />
     <Compile Include="Form\RendezVous\RadFListeIntervenantSansRDV.Designer.vb">
       <DependentUpon>RadFListeIntervenantSansRDV.vb</DependentUpon>
     </Compile>

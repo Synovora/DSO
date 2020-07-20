@@ -2917,7 +2917,7 @@ Public Class RadFSynthese
         Cursor.Current = Cursors.WaitCursor
         Me.Enabled = False
 
-        Me.IsRendezVousCloture = episodeDao.CallEpisode(SelectedPatient, RendezVousId, userLog)
+        Me.IsRendezVousCloture = EpisodeUtils.CallEpisode(SelectedPatient, RendezVousId, userLog)
         Me.Enabled = True
         episode = episodeDao.GetEpisodeEnCoursByPatientId(Me.SelectedPatient.patientId)
         If episode.Id <> 0 Then
