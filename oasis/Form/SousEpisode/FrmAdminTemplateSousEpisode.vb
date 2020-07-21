@@ -1,4 +1,5 @@
 ﻿Imports System.IO
+Imports Oasis_Common
 Imports Telerik.WinControls.UI
 Imports Telerik.WinForms.Documents.FormatProviders.OpenXml.Docx
 Imports Telerik.WinForms.Documents.Model
@@ -19,7 +20,7 @@ Public Class FrmAdminTemplateSousEpisode
         ' -- listes de references
         lstSousEpisodeType = sousEpisodeTypeDao.getLstSousEpisodeType()
         lstSousEpisodeSousType = sousEpisodeSousTypeDao.getLstSousEpisodeSousType()
-        initOneShot()
+        InitOneShot()
 
     End Sub
 
@@ -31,7 +32,7 @@ Public Class FrmAdminTemplateSousEpisode
             Me.Cursor = Cursors.WaitCursor
             Me.Enabled = False
             Dim lstSousEpisodeFusion As List(Of SousEpisodeFusion) = constitueFusion()
-            Dim tbl = telecharger_model(sousType)
+            Dim tbl = Telecharger_model(sousType)
             Dim ins = New MemoryStream(tbl)
             Dim provider = New DocxFormatProvider()
 
@@ -73,10 +74,10 @@ Public Class FrmAdminTemplateSousEpisode
         End If
     End Sub
 
-    Private Function telecharger_model(sousEpisodeSousType As SousEpisodeSousType) As Byte()
+    Private Function Telecharger_model(sousEpisodeSousType As SousEpisodeSousType) As Byte()
         Dim tbl As Byte() = {}
         Try
-            tbl = sousEpisodeSousType.getContenuModel()
+            tbl = sousEpisodeSousType.getContenuModel(loginRequestLog)
             Return tbl
         Catch err As Exception
             If err IsNot Nothing AndAlso err.Message IsNot Nothing AndAlso err.Message.Contains("Fichier demandé inexistant") Then
@@ -86,7 +87,7 @@ Public Class FrmAdminTemplateSousEpisode
         End Try
     End Function
 
-    Private Sub initOneShot()
+    Private Sub InitOneShot()
 
         Me.DropDownType.Items.Clear()
         For Each sousEpisodeType As SousEpisodeType In lstSousEpisodeType

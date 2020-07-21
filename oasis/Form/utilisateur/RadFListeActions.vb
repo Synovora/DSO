@@ -19,7 +19,7 @@ Public Class RadFListeActions
     Dim UserActionId As Long
 
     Private Sub RadFListeActions_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-        afficheTitleForm(Me, "Liste des actions réalisées")
+        AfficheTitleForm(Me, "Liste des actions réalisées", userLog)
 
         DteSelection.Value = Date.Now()
         RadBtnApres.Enabled = False

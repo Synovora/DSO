@@ -81,7 +81,7 @@ Public Class RadFDrcParametresEdit
                 parametredrc.Id = 0
                 parametredrc.DrcId = Me.DrcId
                 parametredrc.ParametreId = ParametreId
-                parametreDrcDao.CreationParametreDrc(parametredrc)
+                parametreDrcDao.CreationParametreDrc(parametredrc, userLog)
             End If
         Next
 

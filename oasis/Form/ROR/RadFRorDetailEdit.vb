@@ -56,7 +56,7 @@ Public Class RadFRorDetailEdit
         If SelectedRorId = 0 Then
             EditMode = EnumEditMode.Creation
             If SelectedSpecialiteId <> 0 Then
-                TxtSpecialite.Text = Environnement.Table_specialite.GetSpecialiteDescription(SelectedSpecialiteId)
+                TxtSpecialite.Text = Table_specialite.GetSpecialiteDescription(SelectedSpecialiteId)
                 InitZoneCreation()
             End If
         Else
@@ -68,7 +68,7 @@ Public Class RadFRorDetailEdit
     Private Sub ChargementRor()
         Dim dateCreation, dateModification As Date
         ror = rorDao.getRorById(Me.SelectedRorId)
-        TxtSpecialite.Text = Environnement.Table_specialite.GetSpecialiteDescription(ror.SpecialiteId)
+        TxtSpecialite.Text = Table_specialite.GetSpecialiteDescription(ror.SpecialiteId)
         TxtSpecialite.Enabled = False
         TxtNomIntervenant.Text = ror.Nom
         CbxType.Text = ror.Type
@@ -169,7 +169,7 @@ Public Class RadFRorDetailEdit
         Select Case EditMode
             Case EnumEditMode.Creation
                 If ValidationDonneeSaisie() = True Then
-                    If rorDao.CreationRor(ror) = True Then
+                    If rorDao.CreationRor(ror, userLog) = True Then
                         MessageBox.Show("Elément créé dans le référentiel des professionnels de santé de type : " & CbxType.Text)
                         CodeRetour = True
                         Close()
@@ -177,7 +177,7 @@ Public Class RadFRorDetailEdit
                 End If
             Case EnumEditMode.Modification
                 If ValidationDonneeSaisie() = True Then
-                    If rorDao.ModificationRor(ror) = True Then
+                    If rorDao.ModificationRor(ror, userLog) = True Then
                         MessageBox.Show("Elément modifié dans le référentiel des professionnels de santé de type : " & CbxType.Text)
                         CodeRetour = True
                         Close()
@@ -275,7 +275,7 @@ Public Class RadFRorDetailEdit
             SelectedSpecialiteId = vRadFSpecialiteSelecteur.SelectedSpecialiteId
             If SelectedSpecialiteId <> 0 Then
                 ror.SpecialiteId = SelectedSpecialiteId
-                TxtSpecialite.Text = Environnement.Table_specialite.GetSpecialiteDescription(ror.SpecialiteId)
+                TxtSpecialite.Text = Table_specialite.GetSpecialiteDescription(ror.SpecialiteId)
             End If
         End Using
     End Sub

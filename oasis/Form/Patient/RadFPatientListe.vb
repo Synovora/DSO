@@ -15,15 +15,14 @@ Public Class RadFPatientListe
     End Property
 
     ReadOnly aldDao As New AldDao
-    Dim patientDao As New PatientDao
+    ReadOnly patientDao As New PatientDao
 
     'Instanciation du patient pour le fournir aux Forms qui seront appelées depuis cette Form
     Dim SelectedPatient As New PatientBase
     Dim IndexGrid As Integer
-    Dim Tous, PatientOasis As Boolean
 
     Private Sub RadFPatientListe_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-        afficheTitleForm(Me, "Liste des patients")
+        AfficheTitleForm(Me, "Liste des patients", userLog)
 
         Me.RadDesktopAlert1.Popup.AlertElement.CaptionElement.TextAndButtonsElement.TextElement.ForeColor = Color.Red
         Me.RadDesktopAlert1.Popup.AlertElement.CaptionElement.CaptionGrip.BackColor = Color.DarkBlue
@@ -395,7 +394,7 @@ Public Class RadFPatientListe
             If aRow >= 0 Then
                 Dim patientId As Integer = RadPatientGridView.Rows(aRow).Cells("oa_patient_id").Value
                 Dim parcoursDao As New ParcoursDao
-                parcoursDao.CreateIntervenantOasisByPatient(patientId)
+                parcoursDao.CreateIntervenantOasisByPatient(patientId, userLog)
             End If
         End If
     End Sub
@@ -494,7 +493,7 @@ Public Class RadFPatientListe
             Me.SelectedPatient = patientDao.GetPatientById(patientId)
             Cursor.Current = Cursors.WaitCursor
             Me.Enabled = False
-            episodeDao.CallEpisode(SelectedPatient, 0, EnumAccesEcranPrecedent.SANS)
+            EpisodeUtils.CallEpisode(SelectedPatient, 0, userLog, EnumAccesEcranPrecedent.SANS)
             Me.Enabled = True
             episode = episodeDao.GetEpisodeEnCoursByPatientId(Me.SelectedPatient.patientId)
             If episode.Id <> 0 Then

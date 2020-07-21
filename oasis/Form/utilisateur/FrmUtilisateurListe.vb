@@ -12,7 +12,7 @@ Public Class FrmUtilisateurListe
         ' Cet appel est requis par le concepteur.
         InitializeComponent()
 
-        afficheTitleForm(Me, Me.Text)
+        AfficheTitleForm(Me, Me.Text, userLog)
 
         initCtrl()
 

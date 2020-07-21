@@ -30,7 +30,7 @@ Public Class RadFPatientContreIndicationListe
         ChargementPatient()
         ChargementContreIndicationATCPatient()
         ChargementContreIndicationSubstancePatient()
-        If outils.AccesFonctionMedicaleSynthese(SelectedPatient) = False Then
+        If outils.AccesFonctionMedicaleSynthese(SelectedPatient, userLog) = False Then
             RadBtnAnnulerATC.Hide()
             RadBtnAnnulerSubstance.Hide()
         End If
@@ -112,7 +112,7 @@ Public Class RadFPatientContreIndicationListe
     End Sub
 
     Private Sub RadBtnAnnulerATC_Click(sender As Object, e As EventArgs) Handles RadBtnAnnulerATC.Click
-        If outils.AccesFonctionMedicaleSynthese(SelectedPatient) = False Then
+        If outils.AccesFonctionMedicaleSynthese(SelectedPatient, userLog) = False Then
             Exit Sub
         End If
 
@@ -120,7 +120,7 @@ Public Class RadFPatientContreIndicationListe
             Dim aRow As Integer = Me.RadCIATCPatientDataGridView.Rows.IndexOf(Me.RadCIATCPatientDataGridView.CurrentRow)
             If aRow >= 0 Then
                 Dim ContreIndicationId As Integer = RadCIATCPatientDataGridView.Rows(aRow).Cells("contre_indication_id").Value
-                contreIndicationATCDao.AnnulationContreIndicationATC(ContreIndicationId)
+                contreIndicationATCDao.AnnulationContreIndicationATC(ContreIndicationId, userLog)
             End If
         End If
 
@@ -128,7 +128,7 @@ Public Class RadFPatientContreIndicationListe
     End Sub
 
     Private Sub RadBtnAnnulerSubstance_Click(sender As Object, e As EventArgs) Handles RadBtnAnnulerSubstance.Click
-        If outils.AccesFonctionMedicaleSynthese(SelectedPatient) = False Then
+        If outils.AccesFonctionMedicaleSynthese(SelectedPatient, userLog) = False Then
             Exit Sub
         End If
 
@@ -136,7 +136,7 @@ Public Class RadFPatientContreIndicationListe
             Dim aRow As Integer = Me.RadCISubstancePatientDataGridView.Rows.IndexOf(Me.RadCISubstancePatientDataGridView.CurrentRow)
             If aRow >= 0 Then
                 Dim ContreIndicationId As Integer = RadCISubstancePatientDataGridView.Rows(aRow).Cells("contre_indication_id").Value
-                contreIndicationSubstanceDao.AnnulationContreIndicationSubstance(ContreIndicationId)
+                contreIndicationSubstanceDao.AnnulationContreIndicationSubstance(ContreIndicationId, userLog)
             End If
         End If
 

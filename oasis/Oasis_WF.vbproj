@@ -219,69 +219,19 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Bean\Antecedent\AldCim10.vb" />
-    <Compile Include="Bean\Antecedent\AldClass.vb" />
-    <Compile Include="Bean\Antecedent\Antecedent.vb" />
-    <Compile Include="Bean\Antecedent\AntecedentCourrier.vb" />
-    <Compile Include="Bean\Antecedent\AntecedentDeplacement.vb" />
-    <Compile Include="Bean\Contexte\ContexteCourrier.vb" />
-    <Compile Include="Bean\DRC\DrcActeParamedicalAsso.vb" />
-    <Compile Include="Bean\DRC\DrcStandard.vb" />
-    <Compile Include="Bean\LigneDeVie\PatientParametreLdv.vb" />
-    <Compile Include="Bean\Ordonnance\OrdonnanceFull.vb" />
-    <Compile Include="Bean\Ordonnance\OrdonnanceDetailGrid.vb" />
-    <Compile Include="Bean\Medicament\Medicament.vb" />
-    <Compile Include="Bean\Parametre\AutoSuivi.vb" />
-    <Compile Include="Bean\Parcours\IntervenantParcours.vb" />
-    <Compile Include="Bean\SousEpisode\SousEpisodeDetailSousType.vb" />
-    <Compile Include="Bean\SousEpisode\SousEpisodeFusion.vb" />
-    <Compile Include="Bean\SousEpisode\SousEpisodeReponse.vb" />
-    <Compile Include="Bean\SousEpisode\SousEpisodeSousType.vb" />
-    <Compile Include="Bean\SousEpisode\SousEpisode.vb" />
-    <Compile Include="Bean\SousEpisode\SousEpisodeType.vb" />
-    <Compile Include="Bean\structurebase\Siege.vb" />
-    <Compile Include="Bean\Tache\TacheEmetteurEtDestinataire.vb" />
-    <Compile Include="Bean\Theriaque\Allergie.vb" />
-    <Compile Include="Bean\Theriaque\ContreIndicationATC.vb" />
-    <Compile Include="Bean\Theriaque\ContreIndicationSubstance.vb" />
-    <Compile Include="Bean\Theriaque\SpecialiteAllergique.vb" />
-    <Compile Include="Bean\Theriaque\SpecialiteContreIndique.vb" />
-    <Compile Include="Bean\Theriaque\SpecialiteTheriaque.vb" />
-    <Compile Include="Bean\Theriaque\Substance.vb" />
-    <Compile Include="Bean\Traitement\TraitementCourrier.vb" />
-    <Compile Include="Dao\Antecedent\AntecedentAffectationDao.vb" />
-    <Compile Include="Bean\LigneDeVie\LigneDeVie.vb" />
-    <Compile Include="Bean\Episode\EpisodeContexte.vb" />
-    <Compile Include="Dao\Antecedent\AntecedentChangementOrdreDao.vb" />
-    <Compile Include="Dao\Antecedent\AntecedentDeplacementDao.vb" />
-    <Compile Include="Dao\Episode\EpisodeContexteDao.vb" />
-    <Compile Include="Dao\LigneDeVie\PatientParametreLdvDao.vb" />
-    <Compile Include="Dao\Medicament\MedicamentDao.vb" />
-    <Compile Include="Dao\Parametre\AutoSuiviDao.vb" />
     <Compile Include="Form\DRC\RadFAutoSuivi.Designer.vb">
       <DependentUpon>RadFAutoSuivi.vb</DependentUpon>
     </Compile>
     <Compile Include="Form\DRC\RadFAutoSuivi.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="Form\Episode\EpisodeUtils.vb" />
     <Compile Include="Form\RendezVous\RadFListeIntervenantSansRDV.Designer.vb">
       <DependentUpon>RadFListeIntervenantSansRDV.vb</DependentUpon>
     </Compile>
     <Compile Include="Form\RendezVous\RadFListeIntervenantSansRDV.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Dao\SousEpisode\SousEpisodeDao.vb" />
-    <Compile Include="Dao\SousEpisode\SousEpisodeDetailSousTypeDao.vb" />
-    <Compile Include="Dao\SousEpisode\SousEpisodeReponseDao.vb" />
-    <Compile Include="Dao\SousEpisode\SousEpisodeSousSousType.vb" />
-    <Compile Include="Dao\SousEpisode\SousEpisodeSousSousTypeDao.vb" />
-    <Compile Include="Dao\SousEpisode\SousEpisodeSousTypeDao.vb" />
-    <Compile Include="Dao\SousEpisode\SousEpisodeTypeDao.vb" />
-    <Compile Include="Dao\structurebase\SiegeDao.vb" />
-    <Compile Include="Dao\Theriaque\AllergieDao.vb" />
-    <Compile Include="Dao\Theriaque\ContreIndicationATCDao.vb" />
-    <Compile Include="Dao\Theriaque\ContreIndicationSubstanceDao.vb" />
-    <Compile Include="Dao\Theriaque\TheriaqueDao.vb" />
     <Compile Include="Form\ALD\RadFSelecteurALD.Designer.vb">
       <DependentUpon>RadFSelecteurALD.vb</DependentUpon>
     </Compile>
@@ -318,44 +268,7 @@
     <Compile Include="Form\Episode\RadFEpisodeEnCoursListe.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Dao\DRC\DrcStandardDao.vb" />
-    <Compile Include="Bean\Episode\EpisodeActeParamedical.vb" />
-    <Compile Include="Bean\Episode\EpisodeParametre.vb" />
-    <Compile Include="Bean\Episode\EpisodeTypeActivite.vb" />
-    <Compile Include="Bean\Episode\Episode.vb" />
-    <Compile Include="Bean\Episode\EpisodeObservation.vb" />
-    <Compile Include="Bean\Log\Log.vb" />
-    <Compile Include="Bean\Parametre\Parametre.vb" />
-    <Compile Include="Bean\Parametre\ParametreDrc.vb" />
-    <Compile Include="Bean\Parametre\ParametreTypeEpisodeDrc.vb" />
-    <Compile Include="Bean\Parcours\ParcoursClass.vb" />
-    <Compile Include="Bean\Parcours\ParcoursConsigneClass.vb" />
-    <Compile Include="Bean\Parcours\ParcoursHistoClass.vb" />
-    <Compile Include="Bean\Patient\PatientNote.vb" />
-    <Compile Include="Bean\PPS\PpsClass.vb" />
-    <Compile Include="Bean\ROR\RorClass.vb" />
-    <Compile Include="Bean\Parcours\SpecialiteClass.vb" />
-    <Compile Include="Bean\Tache\TacheClass.vb" />
-    <Compile Include="Dao\ALD\AldCim10Dao.vb" />
-    <Compile Include="Bean\Antecedent\AntecedentHisto.vb" />
-    <Compile Include="Dao\ALD\AldDao.vb" />
-    <Compile Include="Dao\Antecedent\AntecedentHistoCreationDao.vb" />
     <Compile Include="ApplicationEvents.vb" />
-    <Compile Include="Dao\Antecedent\AntecedentHistoDao.vb" />
-    <Compile Include="Dao\Agenda\AppointmentDao.vb" />
-    <Compile Include="Dao\Contexte\ContexteDao.vb" />
-    <Compile Include="Dao\DRC\DrcActeParamedicalAssoDao.vb" />
-    <Compile Include="Dao\DRC\DrcDao.vb" />
-    <Compile Include="Dao\DRC\DrcSynonymeDao.vb" />
-    <Compile Include="Dao\Episode\EpisodeActeParamedicalDao.vb" />
-    <Compile Include="Dao\Episode\EpisodeParametreDao.vb" />
-    <Compile Include="Dao\Episode\EpisodeProtocoleCollaboratifDao.vb" />
-    <Compile Include="Dao\Episode\EpisodeTypeActiviteDao.vb" />
-    <Compile Include="Dao\Episode\EpisodeDao.vb" />
-    <Compile Include="Dao\Episode\EpisodeObservationDao.vb" />
-    <Compile Include="Dao\Log\LogDao.vb" />
-    <Compile Include="Dao\Parametre\ParametreDao.vb" />
-    <Compile Include="Dao\Parametre\ParametreDrcDao.vb" />
     <Compile Include="Form\DRC\RadFDrcActePMAssocieEdit.Designer.vb">
       <DependentUpon>RadFDrcActePMAssocieEdit.vb</DependentUpon>
     </Compile>
@@ -392,20 +305,6 @@
     <Compile Include="Form\Episode\RadFEpisodeDetailCreation.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Dao\Ordonnance\OrdonnanceDao.vb" />
-    <Compile Include="Dao\Ordonnance\OrdonnanceDetailDao.vb" />
-    <Compile Include="Dao\General\ParametreOasisDao.vb" />
-    <Compile Include="Dao\Parcours\ParcoursConsigneDao.vb" />
-    <Compile Include="Dao\Parcours\ParcoursDao.vb" />
-    <Compile Include="Dao\Parcours\ParcoursHistoDao.vb" />
-    <Compile Include="Dao\Patient\PatientNoteDao.vb" />
-    <Compile Include="Dao\Patient\PatientNoteDirectiveDao.vb" />
-    <Compile Include="Dao\Patient\PatientNoteMedicaleDao.vb" />
-    <Compile Include="Dao\Patient\PatientNoteSocialeDao.vb" />
-    <Compile Include="Dao\Patient\PatientNoteVaccinDao.vb" />
-    <Compile Include="Dao\PPS\PpsDao.vb" />
-    <Compile Include="Dao\PPS\PPSHistoDao.vb" />
-    <Compile Include="Dao\ROR\RorDao.vb" />
     <Compile Include="DataSetDRC.Designer.vb">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -431,15 +330,6 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>DatSetDRC.xsd</DependentUpon>
     </Compile>
-    <Compile Include="Bean\DRC\Drc.vb" />
-    <Compile Include="Bean\Tache\AppointmentOasis.vb" />
-    <Compile Include="Bean\Tache\FiltreTache.vb" />
-    <Compile Include="Bean\structurebase\Site.vb" />
-    <Compile Include="Bean\Tache\TacheBeanAssocie.vb" />
-    <Compile Include="Bean\structurebase\UniteSanitaire.vb" />
-    <Compile Include="Dao\structurebase\SiteDao.vb" />
-    <Compile Include="Dao\Tache\TacheDao.vb" />
-    <Compile Include="Dao\structurebase\UniteSanitaireDao.vb" />
     <Compile Include="Form\Episode\RadFEpisodeObservationDetailEdit.Designer.vb">
       <DependentUpon>RadFEpisodeObservationDetailEdit.vb</DependentUpon>
     </Compile>
@@ -698,7 +588,6 @@
     <Compile Include="Form\utilisateur\FrmUtilisateurListe.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Bean\Tache\ItemUniteSite.vb" />
     <Compile Include="Form\utilisateur\RadFListeActions.Designer.vb">
       <DependentUpon>RadFListeActions.vb</DependentUpon>
     </Compile>
@@ -739,7 +628,6 @@
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Module\CacheGlobal.vb" />
-    <Compile Include="Dao\Antecedent\AntecedentDao.vb" />
     <Compile Include="DS_Ordonnance.Designer.vb">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -924,7 +812,6 @@
     <Compile Include="Form\Traitement\RadFTraitementObsoletes.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Dao\Traitement\TraitementDao.vb" />
     <Compile Include="Pdf\PrtOrdonnance.vb" />
     <Compile Include="Pdf\PrtSynthese.vb" />
     <Compile Include="Resources\FrenchRichTextBoxStrings.Designer.vb">
@@ -949,7 +836,6 @@
     <Compile Include="Form\Obsolete\RadFMedocSelecteur.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Dao\Traitement\MedocDao.vb" />
     <Compile Include="oasisDataSet.Designer.vb">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -965,8 +851,6 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>oasisDataSet2.xsd</DependentUpon>
     </Compile>
-    <Compile Include="Bean\PPS\PpsHisto.vb" />
-    <Compile Include="Dao\PPS\PPSHistoCreationDao.vb" />
     <Compile Include="ProjectInstaller.Designer.vb">
       <DependentUpon>ProjectInstaller.vb</DependentUpon>
     </Compile>
@@ -1030,10 +914,6 @@
     <Compile Include="UtilsUI\Notification.vb" />
     <Compile Include="UtilsUI\OasisTextTools.vb" />
     <Compile Include="UtilsUI\RadInputBox.vb" />
-    <Compile Include="Bean\Traitement\TraitementHistoClass.vb" />
-    <Compile Include="Dao\Traitement\MedicamentGeneriqueDao.vb" />
-    <Compile Include="Dao\Patient\PatientDao.vb" />
-    <Compile Include="Dao\Traitement\TraitementHistoDao.vb" />
     <Compile Include="UniteSanitaireDataSet.Designer.vb">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -1046,7 +926,6 @@
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Module\Environnement.vb" />
-    <Compile Include="Module\outils.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
       <AutoGen>True</AutoGen>
@@ -1574,10 +1453,7 @@
     <Resource Include="Resources\RichTextBoxStrings.xml" />
     <None Include="Resources\Keys-icon.png" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Bean\Utilisateur\" />
-    <Folder Include="Dao\Utilisateur\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <ProjectReference Include="..\Oasis_Common\Oasis_Common.vbproj">
       <Project>{2dac58a3-f441-4561-93ea-b093cf6f982a}</Project>

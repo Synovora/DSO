@@ -40,7 +40,7 @@ Public Class RadFMedicamentSelecteur
     Dim PremierPassage As Boolean = False
 
     Private Sub RadFATCListe_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-        afficheTitleForm(Me, "Thériaque - Recherche médicament")
+        AfficheTitleForm(Me, "Thériaque - Recherche médicament", userLog)
         RadioBtnVirtuel.Checked = True
         ChargementEtatCivil()
         ChargementATC1()

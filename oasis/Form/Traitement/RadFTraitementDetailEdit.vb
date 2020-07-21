@@ -137,7 +137,7 @@ Public Class RadFTraitementDetailEdit
         'Chargement de l'écran
         If SelectedTraitementId = 0 Then
             EditMode = "C" 'Création
-            afficheTitleForm(Me, "Création traitement patient")
+            AfficheTitleForm(Me, "Création traitement patient", userLog)
             LblstatutTraitement.Hide()
             RadPnlStatutTraitement.Hide()
             'Récupération du cis du médicament sélectionné
@@ -181,7 +181,7 @@ Public Class RadFTraitementDetailEdit
             ActionEnCours = EnumAction.Creation
         Else
             EditMode = "M" 'Modification
-            afficheTitleForm(Me, "Modification traitement patient")
+            AfficheTitleForm(Me, "Modification traitement patient", userLog)
             LblstatutTraitement.Hide()
             RadPnlStatutTraitement.Hide()
             'Chargement du traitement à modifier
@@ -922,7 +922,7 @@ Public Class RadFTraitementDetailEdit
         traitementaCreer.MedicamentMonographie = medicamentMonographie
         traitementaCreer.ClasseAtc = classeAtc
 
-        codeRetour = traitementDao.CreationTraitement(traitementaCreer, TraitementHistoACreer)
+        codeRetour = traitementDao.CreationTraitement(traitementaCreer, TraitementHistoACreer, userLog)
         If codeRetour = True Then
             Dim form As New RadFNotification()
             form.Message = "Traitement patient créé"
@@ -968,7 +968,7 @@ Public Class RadFTraitementDetailEdit
         traitementaModifier.DateDebut = DteTraitementDateDebut.Value
         traitementaModifier.DateFin = DteTraitementDateFin.Value
 
-        codeRetour = traitementDao.ModificationTraitement(traitementaModifier, TraitementHistoACreer)
+        codeRetour = traitementDao.ModificationTraitement(traitementaModifier, TraitementHistoACreer, userLog)
         If codeRetour = True Then
             Dim form As New RadFNotification()
             form.Message = "Traitement patient modifié"
@@ -1010,7 +1010,7 @@ Public Class RadFTraitementDetailEdit
         traitementaArreter.Allergie = allergie
         traitementaArreter.ContreIndication = contreIndication
 
-        codeRetour = traitementDao.ArretTraitement(traitementaArreter, TraitementHistoACreer)
+        codeRetour = traitementDao.ArretTraitement(traitementaArreter, TraitementHistoACreer, userLog)
 
         'Déclaration de traitement arrêté pour contre-indication
         If contreIndication = 1 Then
@@ -1055,7 +1055,7 @@ Public Class RadFTraitementDetailEdit
         traitementaAnnuler.AnnulationCommentaire = TxtCommentaireAnnulation.Text
         traitementaAnnuler.DateFin = DteTraitementDateFin.Value
 
-        codeRetour = traitementDao.AnnulationTraitement(traitementaAnnuler, TraitementHistoACreer)
+        codeRetour = traitementDao.AnnulationTraitement(traitementaAnnuler, TraitementHistoACreer, userLog)
         If codeRetour = True Then
             Dim form As New RadFNotification()
             form.Message = "Traitement patient annulé"
@@ -1077,7 +1077,7 @@ Public Class RadFTraitementDetailEdit
         traitementaAnnuler.PatientId = SelectedPatient.patientId
         traitementaAnnuler.UserModification = userLog.UtilisateurId
 
-        codeRetour = traitementDao.SuppressionTraitement(traitementaAnnuler, TraitementHistoACreer)
+        codeRetour = traitementDao.SuppressionTraitement(traitementaAnnuler, TraitementHistoACreer, userLog)
         If codeRetour = True Then
             Dim form As New RadFNotification()
             form.Message = "Traitement patient supprimé"
@@ -1196,7 +1196,7 @@ Public Class RadFTraitementDetailEdit
 
     Private Sub DroitAcces()
         'Si l'utilisateur n'a pas les droits requis ou que le traitement a été arrêté, les zones de saisie ne sont pas modifiables 
-        If outils.AccesFonctionMedicaleSynthese(SelectedPatient) = False Then
+        If outils.AccesFonctionMedicaleSynthese(SelectedPatient, userLog) = False Then
             Me.Text = "Visualisation détail traitement patient"
             LblstatutTraitement.Text = "Visualisation détail traitement patient"
             LblstatutTraitement.Hide()

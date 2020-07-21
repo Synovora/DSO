@@ -151,7 +151,7 @@ Public Class RadFOrdonnanceListe
         Try
             Using vFOrdonnanceListeDetail As New RadFOrdonnanceListeDetail
                 Dim OrdonnanceDao As New OrdonnanceDao
-                Dim OrdonnanceId As Integer = OrdonnanceDao.CreateOrdonnance(SelectedPatient.patientId, UtilisateurConnecte.UtilisateurId)
+                Dim OrdonnanceId As Integer = OrdonnanceDao.CreateOrdonnance(SelectedPatient.PatientId, UtilisateurConnecte.UtilisateurId, userLog)
                 vFOrdonnanceListeDetail.SelectedOrdonnanceId = OrdonnanceId
                 vFOrdonnanceListeDetail.SelectedPatient = Me.SelectedPatient
                 vFOrdonnanceListeDetail.UtilisateurConnecte = Me.UtilisateurConnecte

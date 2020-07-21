@@ -74,7 +74,7 @@ Public Class RadFEpisodeLigneDeVie
             RadBtnEpisode.Hide()
         End If
 
-        afficheTitleForm(Me, "Ligne de vie du patient")
+        AfficheTitleForm(Me, "Ligne de vie du patient", userLog)
         If userLog.TypeProfil = ProfilDao.EnumProfilType.MEDICAL.ToString OrElse userLog.TypeProfil = ProfilDao.EnumProfilType.PARAMEDICAL.ToString Then
         Else
             RadBtnCreationEpisodeParametre.Enabled = False
@@ -641,7 +641,7 @@ Public Class RadFEpisodeLigneDeVie
                             Exit Sub
                         End If
                     End If
-                    OrdonnanceId = ordonnanceDao.CreateOrdonnance(SelectedPatient.patientId, EpisodeId)
+                    OrdonnanceId = ordonnanceDao.CreateOrdonnance(SelectedPatient.PatientId, EpisodeId, userLog)
                     If OrdonnanceId <> 0 Then
                         If ordonnanceDao.CreateNewOrdonnanceDetail(SelectedPatient.patientId, OrdonnanceId, episode) = True Then
                             AfficheOrdonnance(OrdonnanceId, episode)
@@ -965,14 +965,14 @@ Public Class RadFEpisodeLigneDeVie
         patientParametreLdv.Parametre5 = Coalesce(Parametre5Id, 0)
 
         If ConfigurationParametreExiste = True Then
-            patientParametreLdvDao.UpdateConfigurationParametre(patientParametreLdv)
+            patientParametreLdvDao.UpdateConfigurationParametre(patientParametreLdv, userLog)
             Dim form As New RadFNotification()
             form.Titre = "Notification configuration filtre et paramètre de la ligne de vie"
             form.Message = "Configuration filtre et paramètre modifiée"
             form.Show()
         Else
             ConfigurationParametreExiste = True
-            patientParametreLdvDao.CreateConfigurationParametre(patientParametreLdv)
+            patientParametreLdvDao.CreateConfigurationParametre(patientParametreLdv, userLog)
             Dim form As New RadFNotification()
             form.Titre = "Notification configuration filtre et paramètre de la ligne de vie"
             form.Message = "Configuration filtre et paramètre créée"

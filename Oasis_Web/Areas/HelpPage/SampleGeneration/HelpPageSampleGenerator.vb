@@ -31,8 +31,9 @@ Namespace Areas.HelpPage
             ActualHttpMessageTypes = New Dictionary(Of HelpPageSampleKey, Type)
             ActionSamples = New Dictionary(Of HelpPageSampleKey, Object)
             SampleObjects = New Dictionary(Of Type, Object)
-            SampleObjectFactories = New List(Of Func(Of HelpPageSampleGenerator, Type, Object))
-            SampleObjectFactories.Add(AddressOf DefaultSampleObjectFactory)
+            SampleObjectFactories = New List(Of Func(Of HelpPageSampleGenerator, Type, Object)) From {
+                AddressOf DefaultSampleObjectFactory
+            }
         End Sub
 
         ''' <summary>
@@ -261,7 +262,7 @@ Namespace Areas.HelpPage
                 Select Case sampleDirection
                     Case sampleDirection.Request
                         Dim requestBodyParameter As ApiParameterDescription = api.ParameterDescriptions.FirstOrDefault(Function(p) p.Source = ApiParameterSource.FromBody)
-                        type = If(requestBodyParameter Is Nothing, Nothing, requestBodyParameter.ParameterDescriptor.ParameterType)
+                        type = requestBodyParameter?.ParameterDescriptor.ParameterType
                         formatters = api.SupportedRequestBodyFormatters
                     Case Else
                         'Case sampleDirection.Response

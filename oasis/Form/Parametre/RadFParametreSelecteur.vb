@@ -1,4 +1,6 @@
-﻿Public Class RadFParametreSelecteur
+﻿Imports Oasis_Common
+
+Public Class RadFParametreSelecteur
     Private _selectedParametre As Parametre
     Private _isSelected As Boolean
     Private _ListeParametreExistant As List(Of Long)

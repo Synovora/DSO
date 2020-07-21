@@ -13,6 +13,8 @@ Public Class RadFAntecedentDetailEdit
     Private privateReactivation As Boolean
     Private _positionGaucheDroite As Integer
 
+    ReadOnly aldCim10Dao As AldCim10Dao = New AldCim10Dao()
+
     Public Property SelectedPatient As PatientBase
         Get
             Return privateSelectedPatient
@@ -100,15 +102,11 @@ Public Class RadFAntecedentDetailEdit
     Dim EditMode, EditAction As Integer
     Dim utilisateurHisto As Utilisateur = New Utilisateur()
     Dim Drc As New Drc()
-    Dim drcdao As New DrcDao
-
-    Dim AntecedentDao As New AntecedentDao
-
-    Dim AntecedentHistoACreer As New AntecedentHisto
+    ReadOnly drcdao As New DrcDao
+    ReadOnly AntecedentDao As New AntecedentDao
+    ReadOnly AntecedentHistoACreer As New AntecedentHisto
     Dim antecedentRead As New Antecedent
     Dim antecedentUpdate As New Antecedent
-
-    Dim conxn As New SqlConnection(getConnectionString())
 
     Private Sub RadFAntecedentDetailEdit_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         RadGridLocalizationProvider.CurrentProvider = New FrenchRadGridViewLocalizationProvider()
@@ -350,7 +348,7 @@ Public Class RadFAntecedentDetailEdit
             RadGbxAld.Show()
             Dim AldDao As New AldDao
             Dim Ald As Ald
-            Ald = AldDao.getAldById(antecedentRead.AldId)
+            Ald = AldDao.GetAldById(antecedentRead.AldId)
             TxtAldCode.Text = Ald.AldCode
             LblAldDescription.Text = Ald.AldDescription
         Else
@@ -815,7 +813,7 @@ Public Class RadFAntecedentDetailEdit
 
     Private Sub GestionAffichageZoneAldCim10()
         If antecedentUpdate.AldCim10Id <> 0 Then
-            Dim aldCim10 As AldCim10 = New AldCim10(antecedentUpdate.AldCim10Id)
+            Dim aldCim10 As AldCim10 = AldCim10Dao.GetAldCim10(antecedentUpdate.AldCim10Id)
             Lblcim10Description.Text = aldCim10.AldCim10Description
             Lblcim10Description.Show()
         Else
@@ -911,7 +909,7 @@ Public Class RadFAntecedentDetailEdit
     Private Function ModificationAntecedent() As Boolean
         Dim codeRetour As Boolean = True
 
-        If AntecedentDao.ModificationAntecedent(antecedentUpdate, antecedentRead) = True Then
+        If AntecedentDao.ModificationAntecedent(antecedentUpdate, antecedentRead, userLog) = True Then
             Dim form As New RadFNotification()
             form.Message = "Antécédent patient modifié"
             form.Show()
@@ -926,7 +924,7 @@ Public Class RadFAntecedentDetailEdit
     Private Function AnnulationAntecedent() As Boolean
         Dim codeRetour As Boolean = True
 
-        If AntecedentDao.AnnulationAntecedent(antecedentUpdate, antecedentRead) = True Then
+        If AntecedentDao.AnnulationAntecedent(antecedentUpdate, antecedentRead, userLog) = True Then
             Dim form As New RadFNotification()
             form.Message = "Antécédent patient annulé"
             form.Show()
@@ -941,7 +939,7 @@ Public Class RadFAntecedentDetailEdit
     Private Function CreationAntecedent() As Boolean
         Dim codeRetour As Boolean = True
 
-        If AntecedentDao.CreationAntecedent(antecedentUpdate) = True Then
+        If AntecedentDao.CreationAntecedent(antecedentUpdate, userLog) = True Then
             Dim form As New RadFNotification()
             form.Message = "Antécédent patient créé"
             form.Show()
@@ -1014,7 +1012,7 @@ Public Class RadFAntecedentDetailEdit
 
     Private Sub DroitAcces()
         'Si l'utilisateur n'a pas les droits requis ou que le traitement a été arrêté, les zones de saisie ne sont pas modifiables 
-        If outils.AccesFonctionMedicaleSynthese(SelectedPatient) = False Then
+        If outils.AccesFonctionMedicaleSynthese(SelectedPatient, userLog) = False Then
             InhiberZonesDeSaisie()
             RadBtnValidation.Hide()
             RadBtnSupprimer.Hide()

@@ -37,38 +37,38 @@ Public Class RadFDrcDetailEdit
         Modification = 2
     End Enum
 
-    Dim drcDao As New DrcDao
+    ReadOnly drcDao As New DrcDao
 
     Dim drc As Drc
 
     Dim EditMode As Integer
     Dim utilisateurHisto As Utilisateur = New Utilisateur()
-    Dim categorieMajeureListe As Dictionary(Of Integer, String) = Table_categorie_majeure.GetCategorieMajeureListe()
+    ReadOnly categorieMajeureListe As Dictionary(Of Integer, String) = Table_categorie_majeure.GetCategorieMajeureListe()
     Dim TransformationEnCours As Boolean = False
     Dim TransformedDrcId As Integer 'Utilisé pour la duplication des synonymes
 
     Dim SelectedAldId As Integer
 
-    Dim conxn As New SqlConnection(getConnectionString())
+    ReadOnly conxn As New SqlConnection(GetConnectionString())
 
     Private Sub RadFDrcDetailEdit_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-        afficheTitleForm(Me, "Gestion des DRC")
+        AfficheTitleForm(Me, "Gestion des DRC", userLog)
         CodeRetour = False
 
         Me.Width = 854
 
-        CbxCategorieOasis.Items.Add(DrcDao.EnumCategorieOasisItem.Contexte)
-        CbxCategorieOasis.Items.Add(DrcDao.EnumCategorieOasisItem.Strategie)
-        CbxCategorieOasis.Items.Add(DrcDao.EnumCategorieOasisItem.Prevention)
-        CbxCategorieOasis.Items.Add(DrcDao.EnumCategorieOasisItem.Objectif)
-        CbxCategorieOasis.Items.Add(DrcDao.EnumCategorieOasisItem.ActeParamedical)
-        CbxCategorieOasis.Items.Add(DrcDao.EnumCategorieOasisItem.GroupeParametres)
-        CbxCategorieOasis.Items.Add(DrcDao.EnumCategorieOasisItem.ProtocoleCollaboratif)
-        CbxCategorieOasis.Items.Add(DrcDao.EnumCategorieOasisItem.ProtocoleAigu)
+        CbxCategorieOasis.Items.Add(Drc.EnumCategorieOasisItem.Contexte)
+        CbxCategorieOasis.Items.Add(Drc.EnumCategorieOasisItem.Strategie)
+        CbxCategorieOasis.Items.Add(Drc.EnumCategorieOasisItem.Prevention)
+        CbxCategorieOasis.Items.Add(Drc.EnumCategorieOasisItem.Objectif)
+        CbxCategorieOasis.Items.Add(Drc.EnumCategorieOasisItem.ActeParamedical)
+        CbxCategorieOasis.Items.Add(Drc.EnumCategorieOasisItem.GroupeParametres)
+        CbxCategorieOasis.Items.Add(Drc.EnumCategorieOasisItem.ProtocoleCollaboratif)
+        CbxCategorieOasis.Items.Add(Drc.EnumCategorieOasisItem.ProtocoleAigu)
 
-        CbxSexe.Items.Add(DrcDao.EnumGenre.Homme)
-        CbxSexe.Items.Add(DrcDao.EnumGenre.Femme)
-        CbxSexe.Items.Add(DrcDao.EnumGenre.HommeEtFemme)
+        CbxSexe.Items.Add(Drc.EnumGenre.Homme)
+        CbxSexe.Items.Add(Drc.EnumGenre.Femme)
+        CbxSexe.Items.Add(Drc.EnumGenre.HommeEtFemme)
 
         LblALDDescription.Text = ""
 
@@ -98,20 +98,21 @@ Public Class RadFDrcDetailEdit
             'Création
             EditMode = EnumEditMode.Creation
 
-            drc = New Drc
-            drc.DrcId = 0
-            drc.DrcLibelle = ""
-            drc.CategorieMajeure = 0
-            drc.CategorieOasisId = 0
-            drc.CodeCim = ""
-            drc.CodeCisp = ""
-            drc.Commentaire = ""
-            drc.ReponseCommentee = ""
-            drc.DrcSexe = 0
-            drc.DrcAgeMax = 0
-            drc.DrcAgeMin = 0
-            drc.DateCreation = Date.Now
-            drc.UserCreation = userLog.UtilisateurId
+            drc = New Drc With {
+                .DrcId = 0,
+                .DrcLibelle = "",
+                .CategorieMajeure = 0,
+                .CategorieOasisId = 0,
+                .CodeCim = "",
+                .CodeCisp = "",
+                .Commentaire = "",
+                .ReponseCommentee = "",
+                .DrcSexe = 0,
+                .DrcAgeMax = 0,
+                .DrcAgeMin = 0,
+                .DateCreation = Date.Now,
+                .UserCreation = userLog.UtilisateurId
+            }
 
             TxtId.Hide()
             LblDRCId.Hide()
@@ -134,7 +135,7 @@ Public Class RadFDrcDetailEdit
 
     Private Sub ChargementDRCxistante()
         Dim dateCreation, dateModification As Date
-        drc = drcDao.getDrcById(SelectedDRCId)
+        drc = drcDao.GetDrcById(SelectedDRCId)
         TxtId.Text = drc.DrcId
         'Description
         TxtLibelle.Text = drc.DrcLibelle
@@ -535,9 +536,9 @@ Public Class RadFDrcDetailEdit
         End If
 
         'Catégorie majeure obligatore pour antécédent et contexte
-        If CbxCategorieOasis.SelectedItem = DrcDao.EnumCategorieOasisItem.Contexte Then
+        If CbxCategorieOasis.SelectedItem = Drc.EnumCategorieOasisItem.Contexte Then
             If CbxCategorieMajeure.SelectedItem = "" Then
-                messageErreur4 = "- La catégorie majeure est obligatoire pour la catégorie Oasis : (" & DrcDao.EnumCategorieOasisItem.Contexte & ")"
+                messageErreur4 = "- La catégorie majeure est obligatoire pour la catégorie Oasis : (" & Drc.EnumCategorieOasisItem.Contexte & ")"
                 Valide = False
             End If
         End If
@@ -571,7 +572,7 @@ Public Class RadFDrcDetailEdit
 
     Private Function RechercheIdentifiantDRC() As Integer
         Dim CMDCDateReader As SqlDataReader
-        Dim conxn As New SqlConnection(getConnectionString())
+        Dim conxn As New SqlConnection(GetConnectionString())
         Dim SQLString As String
 
         'Catégorie Oasis
@@ -598,35 +599,35 @@ Public Class RadFDrcDetailEdit
         If CMDCDateReader.HasRows Then
             CMDCDateReader.Read()
             Select Case CategorieOasis
-                Case DrcDao.EnumCategorieOasisCode.Contexte
+                Case Drc.EnumCategorieOasisCode.Contexte
                     If CMDCDateReader("oa_r_categorie_majeure_compteur_cat1") IsNot DBNull.Value Then
                         Compteur = CMDCDateReader("oa_r_categorie_majeure_compteur_cat1")
                     End If
-                Case DrcDao.EnumCategorieOasisCode.Strategie
+                Case Drc.EnumCategorieOasisCode.Strategie
                     If CMDCDateReader("oa_r_categorie_majeure_compteur_cat2") IsNot DBNull.Value Then
                         Compteur = CMDCDateReader("oa_r_categorie_majeure_compteur_cat2")
                     End If
-                Case DrcDao.EnumCategorieOasisCode.Prevention
+                Case Drc.EnumCategorieOasisCode.Prevention
                     If CMDCDateReader("oa_r_categorie_majeure_compteur_cat3") IsNot DBNull.Value Then
                         Compteur = CMDCDateReader("oa_r_categorie_majeure_compteur_cat3")
                     End If
-                Case DrcDao.EnumCategorieOasisCode.Objectif
+                Case Drc.EnumCategorieOasisCode.Objectif
                     If CMDCDateReader("oa_r_categorie_majeure_compteur_cat4") IsNot DBNull.Value Then
                         Compteur = CMDCDateReader("oa_r_categorie_majeure_compteur_cat4")
                     End If
-                Case DrcDao.EnumCategorieOasisCode.ActeParamedical
+                Case Drc.EnumCategorieOasisCode.ActeParamedical
                     If CMDCDateReader("oa_r_categorie_majeure_compteur_cat5") IsNot DBNull.Value Then
                         Compteur = CMDCDateReader("oa_r_categorie_majeure_compteur_cat5")
                     End If
-                Case DrcDao.EnumCategorieOasisCode.GroupeParametres
+                Case Drc.EnumCategorieOasisCode.GroupeParametres
                     If CMDCDateReader("oa_r_categorie_majeure_compteur_cat6") IsNot DBNull.Value Then
                         Compteur = CMDCDateReader("oa_r_categorie_majeure_compteur_cat6")
                     End If
-                Case DrcDao.EnumCategorieOasisCode.ProtocoleCollaboratif
+                Case Drc.EnumCategorieOasisCode.ProtocoleCollaboratif
                     If CMDCDateReader("oa_r_categorie_majeure_compteur_cat7") IsNot DBNull.Value Then
                         Compteur = CMDCDateReader("oa_r_categorie_majeure_compteur_cat7")
                     End If
-                Case DrcDao.EnumCategorieOasisCode.ProtocoleAigu
+                Case Drc.EnumCategorieOasisCode.ProtocoleAigu
                     If CMDCDateReader("oa_r_categorie_majeure_compteur_cat8") IsNot DBNull.Value Then
                         Compteur = CMDCDateReader("oa_r_categorie_majeure_compteur_cat8")
                     End If
@@ -642,21 +643,21 @@ Public Class RadFDrcDetailEdit
 
         'Mise à jour du compteur
         Select Case CategorieOasis
-            Case DrcDao.EnumCategorieOasisCode.Contexte
+            Case Drc.EnumCategorieOasisCode.Contexte
                 SQLString = "update oasis.oa_r_categorie_majeure set oa_r_categorie_majeure_compteur_cat1 = " & Compteur & " where oa_r_categorie_majeure_id = " & CategorieMajeureId & ";"
-            Case DrcDao.EnumCategorieOasisCode.Strategie
+            Case Drc.EnumCategorieOasisCode.Strategie
                 SQLString = "update oasis.oa_r_categorie_majeure set oa_r_categorie_majeure_compteur_cat2 = " & Compteur & " where oa_r_categorie_majeure_id = " & CategorieMajeureId & ";"
-            Case DrcDao.EnumCategorieOasisCode.Prevention
+            Case Drc.EnumCategorieOasisCode.Prevention
                 SQLString = "update oasis.oa_r_categorie_majeure set oa_r_categorie_majeure_compteur_cat3 = " & Compteur & " where oa_r_categorie_majeure_id = " & CategorieMajeureId & ";"
-            Case DrcDao.EnumCategorieOasisCode.Objectif
+            Case Drc.EnumCategorieOasisCode.Objectif
                 SQLString = "update oasis.oa_r_categorie_majeure set oa_r_categorie_majeure_compteur_cat4 = " & Compteur & " where oa_r_categorie_majeure_id = " & CategorieMajeureId & ";"
-            Case DrcDao.EnumCategorieOasisCode.ActeParamedical
+            Case Drc.EnumCategorieOasisCode.ActeParamedical
                 SQLString = "update oasis.oa_r_categorie_majeure set oa_r_categorie_majeure_compteur_cat5 = " & Compteur & " where oa_r_categorie_majeure_id = " & CategorieMajeureId & ";"
-            Case DrcDao.EnumCategorieOasisCode.GroupeParametres
+            Case Drc.EnumCategorieOasisCode.GroupeParametres
                 SQLString = "update oasis.oa_r_categorie_majeure set oa_r_categorie_majeure_compteur_cat6 = " & Compteur & " where oa_r_categorie_majeure_id = " & CategorieMajeureId & ";"
-            Case DrcDao.EnumCategorieOasisCode.ProtocoleCollaboratif
+            Case Drc.EnumCategorieOasisCode.ProtocoleCollaboratif
                 SQLString = "update oasis.oa_r_categorie_majeure set oa_r_categorie_majeure_compteur_cat7 = " & Compteur & " where oa_r_categorie_majeure_id = " & CategorieMajeureId & ";"
-            Case DrcDao.EnumCategorieOasisCode.ProtocoleAigu
+            Case Drc.EnumCategorieOasisCode.ProtocoleAigu
                 SQLString = "update oasis.oa_r_categorie_majeure set oa_r_categorie_majeure_compteur_cat8 = " & Compteur & " where oa_r_categorie_majeure_id = " & CategorieMajeureId & ";"
         End Select
 
@@ -725,8 +726,9 @@ Public Class RadFDrcDetailEdit
     End Sub
 
     Private Sub TxtAld_DoubleClick(sender As Object, e As EventArgs) Handles TxtAld.DoubleClick
-        Dim vFAldSelecteur As New RadFSelecteurALD
-        vFAldSelecteur.UtilisateurConnecte = userLog
+        Dim vFAldSelecteur As New RadFSelecteurALD With {
+            .UtilisateurConnecte = userLog
+        }
         vFAldSelecteur.ShowDialog() 'Modal
 
         Dim SelectedAldCode As String = vFAldSelecteur.SelectedAldCode
@@ -761,20 +763,20 @@ Public Class RadFDrcDetailEdit
     End Sub
 
     Private Sub CbxCategorieOasis_SelectedIndexChanged(sender As Object, e As EventArgs) Handles CbxCategorieOasis.SelectedIndexChanged
-        If CbxCategorieOasis.Text = DrcDao.EnumCategorieOasisItem.ActeParamedical Or
-            CbxCategorieOasis.Text = DrcDao.EnumCategorieOasisItem.GroupeParametres Or
-            CbxCategorieOasis.Text = DrcDao.EnumCategorieOasisItem.ProtocoleAigu Or
-            CbxCategorieOasis.Text = DrcDao.EnumCategorieOasisItem.ProtocoleCollaboratif Then
+        If CbxCategorieOasis.Text = Drc.EnumCategorieOasisItem.ActeParamedical Or
+            CbxCategorieOasis.Text = Drc.EnumCategorieOasisItem.GroupeParametres Or
+            CbxCategorieOasis.Text = Drc.EnumCategorieOasisItem.ProtocoleAigu Or
+            CbxCategorieOasis.Text = Drc.EnumCategorieOasisItem.ProtocoleCollaboratif Then
             RadGroupBox2.Hide()
             CbxCategorieMajeure.SelectedItem = ""
         End If
-        If CbxCategorieOasis.Text <> DrcDao.EnumCategorieOasisItem.GroupeParametres Then
+        If CbxCategorieOasis.Text <> Drc.EnumCategorieOasisItem.GroupeParametres Then
             RadBtnParametre.Hide()
         End If
-        If CbxCategorieOasis.Text <> DrcDao.EnumCategorieOasisItem.ProtocoleCollaboratif Then
+        If CbxCategorieOasis.Text <> Drc.EnumCategorieOasisItem.ProtocoleCollaboratif Then
             RadBtnProtocole.Hide()
         End If
-        If CbxCategorieOasis.Text <> DrcDao.EnumCategorieOasisItem.ProtocoleAigu Then
+        If CbxCategorieOasis.Text <> Drc.EnumCategorieOasisItem.ProtocoleAigu Then
             RadGbxReponse.Hide()
             Me.Width = 854
         Else

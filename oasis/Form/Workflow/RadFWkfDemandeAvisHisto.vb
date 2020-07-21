@@ -26,7 +26,7 @@ Public Class RadFWkfDemandeAvisHisto
     Dim tacheDT As DataTable
 
     Private Sub RadFWkfDemandeAvisHisto_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-        afficheTitleForm(Me, "Historique des workflows de demande d'avis de l'épisode")
+        AfficheTitleForm(Me, "Historique des workflows de demande d'avis de l'épisode", userLog)
 
         ChargementEtatCivil()
         ChargementHisto()
@@ -69,19 +69,19 @@ Public Class RadFWkfDemandeAvisHisto
             RadHistoDataGridView.Rows(iGrid).Cells("dateTraitement").Value = histoWorkflow.Rows(i)("horodate_cloture").ToString()
 
             Select Case histoWorkflow.Rows(i)("nature")
-                Case TacheDao.NatureTache.DEMANDE.ToString
+                Case Tache.NatureTache.DEMANDE.ToString
                     Select Case naturePrecedente
-                        Case TacheDao.NatureTache.COMPLEMENT.ToString
+                        Case Tache.NatureTache.COMPLEMENT.ToString
                             RadHistoDataGridView.Rows(iGrid).Cells("nature").Value = "Précision rendue"
-                        Case TacheDao.NatureTache.REPONSE.ToString
+                        Case Tache.NatureTache.REPONSE.ToString
                             RadHistoDataGridView.Rows(iGrid).Cells("nature").Value = "Relande de la demande d'avis"
                         Case Else
                             RadHistoDataGridView.Rows(iGrid).Cells("nature").Value = "Demande d'avis (début de workflow)"
                             RadHistoDataGridView.Rows(iGrid).Cells("nature").Style.ForeColor = Color.Blue
                     End Select
-                Case TacheDao.NatureTache.COMPLEMENT.ToString
+                Case Tache.NatureTache.COMPLEMENT.ToString
                     RadHistoDataGridView.Rows(iGrid).Cells("nature").Value = "Demande de précision"
-                Case TacheDao.NatureTache.REPONSE.ToString
+                Case Tache.NatureTache.REPONSE.ToString
                     RadHistoDataGridView.Rows(iGrid).Cells("nature").Value = "Demande d'avis rendue"
             End Select
 

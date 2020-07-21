@@ -43,7 +43,7 @@ Public Class RadF_AllergieSelecteur
     Dim RowCountATC1 As Integer
 
     Private Sub RadF_AllergieSelecteur_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-        afficheTitleForm(Me, "Déclaration allergie - Sélection substance")
+        AfficheTitleForm(Me, "Déclaration allergie - Sélection substance", userLog)
 
         Me.CodeRetour = False
         RadioBtnVirtuel.Checked = True
@@ -723,7 +723,7 @@ Public Class RadF_AllergieSelecteur
             'Dénomination substance père
             allergieSubstance.DenominationSubstancePere = ""
 
-            If allergieDao.CreationAllergie(allergieSubstance) = True Then
+            If allergieDao.CreationAllergie(allergieSubstance, userLog) = True Then
                 NombreCICreation += 1
             End If
         End While

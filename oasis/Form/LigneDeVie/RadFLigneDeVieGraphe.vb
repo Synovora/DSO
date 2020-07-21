@@ -1,4 +1,5 @@
-﻿Imports Telerik.Charting
+﻿Imports Oasis_Common
+Imports Telerik.Charting
 Imports Telerik.WinControls.UI
 
 Public Class RadFLigneDeVieGraphe

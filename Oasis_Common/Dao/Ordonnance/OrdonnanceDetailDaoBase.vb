@@ -21,7 +21,7 @@ Public Class OrdonnanceDetailDaoBase
             command.Parameters.AddWithValue("@ordonnanceLigneId", OrdonnanceLigneId)
             Using reader As SqlDataReader = command.ExecuteReader()
                 If reader.Read() Then
-                    ordonnanceDetail = buildBean(reader)
+                    ordonnanceDetail = BuildBean(reader)
                 Else
                     Throw New ArgumentException("Ordonnance inexistante !")
                 End If
@@ -36,37 +36,37 @@ Public Class OrdonnanceDetailDaoBase
         Return ordonnanceDetail
     End Function
 
-    Private Function buildBean(reader As SqlDataReader) As OrdonnanceDetailBase
-        Dim ordonnanceDetail As New OrdonnanceDetailBase
-
-        ordonnanceDetail.LigneId = reader("oa_ordonnance_ligne_id")
-        ordonnanceDetail.Traitement = Coalesce(reader("oa_ordonnance_traitement"), False)
-        ordonnanceDetail.TraitementId = Coalesce(reader("oa_traitement_id"), 0)
-        ordonnanceDetail.OrdreAffichage = Coalesce(reader("oa_traitement_ordre_affichage"), 0)
-        ordonnanceDetail.Ald = Coalesce(reader("oa_traitement_ald"), False)
-        ordonnanceDetail.ADelivrer = Coalesce(reader("oa_traitement_a_delivrer"), False)
-        ordonnanceDetail.MedicamentCis = Coalesce(reader("oa_traitement_medicament_cis"), 0)
-        ordonnanceDetail.MedicamentDci = Coalesce(reader("oa_traitement_medicament_dci"), "")
-        ordonnanceDetail.DateDebut = Coalesce(reader("oa_traitement_date_debut"), Nothing)
-        ordonnanceDetail.DateFin = Coalesce(reader("oa_traitement_date_fin"), Nothing)
-        ordonnanceDetail.Duree = Coalesce(reader("oa_traitement_duree"), 0)
-        ordonnanceDetail.Posologie = Coalesce(reader("oa_traitement_posologie"), "")
-        ordonnanceDetail.PosologieBase = Coalesce(reader("oa_traitement_posologie_base"), "")
-        ordonnanceDetail.PosologieRythme = Coalesce(reader("oa_traitement_posologie_rythme"), 0)
-        ordonnanceDetail.PosologieMatin = Coalesce(reader("oa_traitement_posologie_matin"), 0)
-        ordonnanceDetail.PosologieMidi = Coalesce(reader("oa_traitement_posologie_midi"), 0)
-        ordonnanceDetail.PosologieApresMidi = Coalesce(reader("oa_traitement_posologie_apres_midi"), 0)
-        ordonnanceDetail.PosologieSoir = Coalesce(reader("oa_traitement_posologie_soir"), 0)
-        ordonnanceDetail.FractionMatin = Coalesce(reader("oa_traitement_fraction_matin"), "")
-        ordonnanceDetail.FractionMidi = Coalesce(reader("oa_traitement_fraction_midi"), "")
-        ordonnanceDetail.FractionApresMidi = Coalesce(reader("oa_traitement_fraction_apres_midi"), "")
-        ordonnanceDetail.FractionSoir = Coalesce(reader("oa_traitement_fraction_soir"), "")
-        ordonnanceDetail.PosologieCommentaire = Coalesce(reader("oa_traitement_posologie_commentaire"), "")
-        ordonnanceDetail.Commentaire = Coalesce(reader("oa_traitement_commentaire"), "")
-        ordonnanceDetail.Fenetre = Coalesce(reader("oa_traitement_fenetre"), False)
-        ordonnanceDetail.FenetreDateDebut = Coalesce(reader("oa_traitement_fenetre_date_debut"), Nothing)
-        ordonnanceDetail.FenetreDateFin = Coalesce(reader("oa_traitement_fenetre_date_fin"), Nothing)
-        ordonnanceDetail.Inactif = Coalesce(reader("oa_traitement_inactif"), False)
+    Private Function BuildBean(reader As SqlDataReader) As OrdonnanceDetailBase
+        Dim ordonnanceDetail As New OrdonnanceDetailBase With {
+            .LigneId = reader("oa_ordonnance_ligne_id"),
+            .Traitement = Coalesce(reader("oa_ordonnance_traitement"), False),
+            .TraitementId = Coalesce(reader("oa_traitement_id"), 0),
+            .OrdreAffichage = Coalesce(reader("oa_traitement_ordre_affichage"), 0),
+            .Ald = Coalesce(reader("oa_traitement_ald"), False),
+            .ADelivrer = Coalesce(reader("oa_traitement_a_delivrer"), False),
+            .MedicamentCis = Coalesce(reader("oa_traitement_medicament_cis"), 0),
+            .MedicamentDci = Coalesce(reader("oa_traitement_medicament_dci"), ""),
+            .DateDebut = Coalesce(reader("oa_traitement_date_debut"), Nothing),
+            .DateFin = Coalesce(reader("oa_traitement_date_fin"), Nothing),
+            .Duree = Coalesce(reader("oa_traitement_duree"), 0),
+            .Posologie = Coalesce(reader("oa_traitement_posologie"), ""),
+            .PosologieBase = Coalesce(reader("oa_traitement_posologie_base"), ""),
+            .PosologieRythme = Coalesce(reader("oa_traitement_posologie_rythme"), 0),
+            .PosologieMatin = Coalesce(reader("oa_traitement_posologie_matin"), 0),
+            .PosologieMidi = Coalesce(reader("oa_traitement_posologie_midi"), 0),
+            .PosologieApresMidi = Coalesce(reader("oa_traitement_posologie_apres_midi"), 0),
+            .PosologieSoir = Coalesce(reader("oa_traitement_posologie_soir"), 0),
+            .FractionMatin = Coalesce(reader("oa_traitement_fraction_matin"), ""),
+            .FractionMidi = Coalesce(reader("oa_traitement_fraction_midi"), ""),
+            .FractionApresMidi = Coalesce(reader("oa_traitement_fraction_apres_midi"), ""),
+            .FractionSoir = Coalesce(reader("oa_traitement_fraction_soir"), ""),
+            .PosologieCommentaire = Coalesce(reader("oa_traitement_posologie_commentaire"), ""),
+            .Commentaire = Coalesce(reader("oa_traitement_commentaire"), ""),
+            .Fenetre = Coalesce(reader("oa_traitement_fenetre"), False),
+            .FenetreDateDebut = Coalesce(reader("oa_traitement_fenetre_date_debut"), Nothing),
+            .FenetreDateFin = Coalesce(reader("oa_traitement_fenetre_date_fin"), Nothing),
+            .Inactif = Coalesce(reader("oa_traitement_inactif"), False)
+        }
 
         Return ordonnanceDetail
     End Function
@@ -82,7 +82,7 @@ Public Class OrdonnanceDetailDaoBase
             command.Parameters.AddWithValue("@ordonnanceId", ordonnanceId)
             Using reader As SqlDataReader = command.ExecuteReader()
                 While (reader.Read())
-                    ordonnanceDetail.Add(buildBean(reader))
+                    ordonnanceDetail.Add(BuildBean(reader))
                 End While
             End Using
         Catch ex As Exception

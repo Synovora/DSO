@@ -65,15 +65,15 @@ Public Class RadFPatientDetailEdit
     Dim patientUpdate As New PatientBase
     Dim patientRead As New PatientBase
 
-    Dim rorDao As New RorDao
-    Dim patientDao As New PatientDao
+    ReadOnly rorDao As New RorDao
+    ReadOnly patientDao As New PatientDao
 
     Dim utilisateurHisto As Utilisateur = New Utilisateur()
     Dim ror As Ror
     Dim PharmacienRorId As Integer = 0
 
-    Dim uniteSanitaireListe As Dictionary(Of Integer, String) = Table_unite_sanitaire.GetUniteSanitaireListe()
-    Dim genreListe As Dictionary(Of String, String) = Table_genre.GetGenreListe()
+    ReadOnly uniteSanitaireListe As Dictionary(Of Integer, String) = Table_unite_sanitaire.GetUniteSanitaireListe()
+    ReadOnly genreListe As Dictionary(Of String, String) = Table_genre.GetGenreListe()
 
     Private Sub RadFPatientDetailEdit_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         RadGridLocalizationProvider.CurrentProvider = New FrenchRadGridViewLocalizationProvider()
@@ -533,10 +533,11 @@ Public Class RadFPatientDetailEdit
     Private Function ModificationPatient() As Boolean
         Dim codeRetour As Boolean = False
 
-        If patientDao.ModificationPatient(patientUpdate) = True Then
+        If patientDao.ModificationPatient(patientUpdate, userLog) = True Then
             codeRetour = True
-            Dim form As New RadFNotification()
-            form.Message = "Patient modifié"
+            Dim form As New RadFNotification With {
+                .Message = "Patient modifié"
+            }
             form.Show()
         End If
 
@@ -547,10 +548,11 @@ Public Class RadFPatientDetailEdit
     Private Function CreationPatient() As Boolean
         Dim codeRetour As Boolean = False
 
-        If patientDao.CreationPatient(patientUpdate) = True Then
+        If patientDao.CreationPatient(patientUpdate, userLog) = True Then
             codeRetour = True
-            Dim form As New RadFNotification()
-            form.Message = "Patient créé"
+            Dim form As New RadFNotification With {
+                .Message = "Patient créé"
+            }
             form.Show()
         End If
 
@@ -592,8 +594,9 @@ Public Class RadFPatientDetailEdit
 
         If patientDao.DeclarationSortie(patientUpdate) = True Then
             codeRetour = True
-            Dim form As New RadFNotification()
-            form.Message = "Déclaration de sortie du patient effectuée"
+            Dim form As New RadFNotification With {
+                .Message = "Déclaration de sortie du patient effectuée"
+            }
             form.Show()
         End If
 

@@ -145,11 +145,11 @@ Public Class FAuthentificattion
                 .password = "a"
         }
 
-        If StandardDao.isConnectionStringFixed() = False Then
+        If StandardDao.IsConnectionStringFixed() = False Then
             Me.Cursor = Cursors.WaitCursor
             Try
                 Using apiOasis As New ApiOasis()
-                    StandardDao.fixConnectionString(apiOasis.loginRest(loginRequestLog))
+                    StandardDao.FixConnectionString(apiOasis.loginRest(loginRequestLog))
                 End Using
 
             Catch ex As Exception

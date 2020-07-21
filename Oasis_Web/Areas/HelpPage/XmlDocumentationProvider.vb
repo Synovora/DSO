@@ -15,7 +15,7 @@ Namespace Areas.HelpPage
         Implements IDocumentationProvider
         Implements IModelDocumentationProvider
 
-        Private _documentNavigator As XPathNavigator
+        Private ReadOnly _documentNavigator As XPathNavigator
         Private Const TypeExpression As String = "/doc/members/member[@name='T:{0}']"
         Private Const MethodExpression As String = "/doc/members/member[@name='M:{0}']"
         Private Const PropertyExpression As String = "/doc/members/member[@name='P:{0}']"

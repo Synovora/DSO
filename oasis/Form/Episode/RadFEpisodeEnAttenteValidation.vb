@@ -5,7 +5,7 @@ Public Class RadFEpisodeEnAttenteValidation
     Dim episodeDao As New EpisodeDao
 
     Private Sub RadFEpisodeEnAttenteValidation_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-        afficheTitleForm(Me, "Episodes avec document(s) en attente de validation médicale")
+        AfficheTitleForm(Me, "Episodes avec document(s) en attente de validation médicale", userLog)
         ChargementEpisode()
     End Sub
 
