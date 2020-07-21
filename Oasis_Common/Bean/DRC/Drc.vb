@@ -1,7 +1,6 @@
 ﻿Imports System.Data.SqlClient
 
 Public Class Drc
-
     Public Enum EnumGenreItem
         Homme = 1
         Femme = 2
@@ -35,6 +34,7 @@ Public Class Drc
         Const ProtocoleCollaboratif = "Procédure collaborative"
         Const ProtocoleAigu = "Procédure pathologie aigüe"
     End Structure
+
     Property DrcId As Integer
     Property DrcLibelle As String
     Property DrcSexe As Integer       '1:Masculin, 2:Féminin, 3:Les deux
