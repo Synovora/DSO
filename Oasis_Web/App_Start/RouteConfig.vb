@@ -9,15 +9,20 @@ Public Module RouteConfig
     Public Sub RegisterRoutes(ByVal routes As RouteCollection)
         routes.IgnoreRoute("{resource}.axd/{*pathInfo}")
 
+        'routes.MapRoute(
+        '    name:="Default",
+        '    url:="{controller}/{action}/{id}",
+        '    defaults:=New With {.controller = "Home", .action = "Index", .id = UrlParameter.Optional}
+        ')
+        'routes.MapRoute(
+        '    name:="Sign",
+        '    url:="Sign/{action}/{id}",
+        '    defaults:=New With {.action = "Check", .id = UrlParameter.Optional}
+        ')
         routes.MapRoute(
-            name:="Default",
-            url:="{controller}/{action}/{id}",
-            defaults:=New With {.controller = "Home", .action = "Index", .id = UrlParameter.Optional}
-        )
-        routes.MapRoute(
-            name:="Sign",
-            url:="Sign/{action}/{id}",
-            defaults:=New With {.action = "Check", .id = UrlParameter.Optional}
-        )
+                name:="Dashboard",
+                url:="{controller}/{action}/{id}",
+                defaults:=New With {.controller = "Dashboard", .action = "Index", .id = UrlParameter.Optional}
+            )
     End Sub
 End Module

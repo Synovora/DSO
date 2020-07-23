@@ -1,5 +1,4 @@
-﻿Imports System.Web.Mvc
-Imports Microsoft.IdentityModel.Tokens
+﻿Imports Microsoft.IdentityModel.Tokens
 Imports Oasis_Common
 
 Namespace Controllers
@@ -11,22 +10,21 @@ Namespace Controllers
         End Function
 
         'GET: /Sign/Check/
-        Function Check(Optional id As String = "") As ActionResult
-            Dim signatue As Byte() = Base64UrlEncoder.DecodeBytes(id)
-            System.Diagnostics.Debug.WriteLine(signatue)
-
+        Function Check(id As String) As ActionResult
             Dim ordonnanceDao As New OrdonnanceDaoBase
             Dim patientDao As New PatientDaoBase
             Dim utilisateurDao As New UserDao
             Dim ordonnanceDetailDao As New OrdonnanceDetailDaoBase
-            Dim traitementDao As New TraitementDaoBase
+            Dim traitementDao As New TraitementDao
+
+            ViewBag.traitementDao = traitementDao
 
             Try
+                Dim signatue As Byte() = Base64UrlEncoder.DecodeBytes(id)
                 Dim sigHex As String = "0x" & LCase(BitConverter.ToString(signatue).Replace("-", String.Empty))
                 Dim ordonnance = ordonnanceDao.GetOrdonnaceBySignature(sigHex)
                 If ordonnance.Inactif = True Then
-                    'Set inactif
-                    Return View("~/Views/Shared/Error.vbhtml")
+                    Return View("~/Views/Sign/Inactif.vbhtml")
                 End If
                 ViewBag.Ordonnance = ordonnance
                 Dim ordonnanceDetail = ordonnanceDetailDao.GetOrdonnanceLigneByOrdonnanceId(ordonnance.Id)

@@ -194,6 +194,7 @@
     <Compile Include="Areas\HelpPage\SampleGeneration\SampleDirection.vb" />
     <Compile Include="Areas\HelpPage\SampleGeneration\TextSample.vb" />
     <Compile Include="Areas\HelpPage\XmlDocumentationProvider.vb" />
+    <Compile Include="Constants.vb" />
     <Compile Include="Controllers\DocFileUploadController.vb" />
     <Compile Include="Controllers\DocFileDownloadController.vb" />
     <Compile Include="Controllers\LoginController.vb" />
@@ -270,6 +271,10 @@
       <LastGenOutput>Settings.Designer.vb</LastGenOutput>
     </None>
     <None Include="packages.config" />
+    <Compile Include="Controllers\DashboardController.vb" />
+    <Compile Include="Controllers\AuthController.vb" />
+    <Compile Include="Controllers\LayoutsController.vb" />
+    <Compile Include="Controllers\PagesController.vb" />
     <Content Include="Scripts\bootstrap.bundle.js" />
     <Content Include="Scripts\bootstrap.bundle.min.js" />
     <Content Include="Scripts\bootstrap.js" />
@@ -375,13 +380,49 @@
     <Content Include="Scripts\popper.js.map" />
     <Content Include="Scripts\popper-utils.min.js.map" />
     <Content Include="Scripts\popper-utils.js.map" />
-    <Content Include="Views\Sign\Check.vbhtml" />
-    <Content Include="Views\Sign\Index.vbhtml" />
+    <Content Include="Views\Auth\auth-lock-screen.cshtml" />
+    <Content Include="Views\Auth\auth-login.cshtml" />
+    <Content Include="Views\Auth\auth-recoverpw.cshtml" />
+    <Content Include="Views\Auth\auth-register.cshtml" />
+    <None Include="Views\Dashboard\Index.cshtml" />
+    <Content Include="Views\Shared\Error.cshtml" />
+    <Content Include="Views\Shared\Layouts\_layout_boxed.cshtml" />
+    <Content Include="Views\Shared\Layouts\_layout_colored_sidebar.cshtml" />
+    <Content Include="Views\Shared\Layouts\_layout_compact_sidebar.cshtml" />
+    <Content Include="Views\Shared\Layouts\_layout_horizontal.cshtml" />
+    <Content Include="Views\Shared\Layouts\_layout_icon_sidebar.cshtml" />
+    <Content Include="Views\Shared\Layouts\_layout_light_sidebar.cshtml" />
+    <Content Include="Views\Shared\Layouts\_layout_preloader.cshtml" />
+    <Content Include="Views\Shared\_BlankLayout.cshtml" />
+    <Content Include="Views\Shared\_footer.cshtml" />
+    <Content Include="Views\Shared\_head_css.cshtml" />
+    <Content Include="Views\Shared\_horizontal.cshtml" />
+    <Content Include="Views\Shared\_Layout.cshtml" />
+    <Content Include="Views\Shared\_page_title.cshtml" />
+    <Content Include="Views\Shared\_right_sidebar.cshtml" />
+    <Content Include="Views\Shared\_sidebar.cshtml" />
+    <Content Include="Views\Shared\_title_meta.cshtml" />
+    <Content Include="Views\Shared\_topbar.cshtml" />
+    <Content Include="Views\Shared\_vendor_scripts.cshtml" />
+    <Content Include="Views\Pages\pages-404.cshtml" />
+    <Content Include="Views\Pages\pages-500.cshtml" />
+    <Content Include="Views\Pages\pages-comingsoon.cshtml" />
+    <Content Include="Views\Pages\pages-faqs.cshtml" />
+    <Content Include="Views\Pages\pages-maintenance.cshtml" />
+    <Content Include="Views\Pages\pages-pricing.cshtml" />
+    <Content Include="Views\Pages\pages-starter.cshtml" />
+    <Content Include="Views\Pages\pages-timeline.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
+    <Content Include="Views\Home\Index.vbhtml" />
+    <Content Include="Views\Sign\Check.vbhtml" />
+    <Content Include="Views\Sign\Inactif.vbhtml" />
+    <Content Include="Views\Sign\Index.vbhtml" />
+    <Content Include="Views\Web.config" />
+    <Content Include="Views\_ViewStart.vbhtml" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -391,17 +432,9 @@
     </Content>
     <Content Include="Areas\HelpPage\Views\_ViewStart.vbhtml" />
     <Content Include="Content\Site.css" />
-    <Content Include="Views\Web.config" />
-    <Content Include="Views\_ViewStart.vbhtml" />
-    <Content Include="Views\Home\Index.vbhtml" />
-    <Content Include="Views\Shared\Error.vbhtml" />
-    <Content Include="Views\Shared\_Layout.vbhtml" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="App_Data\" />
-    <Folder Include="metier\" />
     <Folder Include="Models\" />
-    <Folder Include="Properties\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Oasis_Common\Oasis_Common.vbproj">
