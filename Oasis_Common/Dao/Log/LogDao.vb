@@ -3,15 +3,24 @@
 Public Class LogDao
     Inherits StandardDao
 
+    Private Function BuildBean(reader As SqlDataReader) As Log
+        Dim log As New Log With {
+            .Id = reader("id"),
+            .Description = Coalesce(reader("description"), ""),
+            .Origine = Coalesce(reader("origine"), ""),
+            .TypeLog = Coalesce(reader("type_log"), ""),
+            .UserLog = Coalesce(reader("user_creation"), 0),
+            .DateLog = Coalesce(reader("date_creation"), Nothing)
+        }
+        Return log
+    End Function
+
     Public Function GetLogById(LogId As Integer) As Log
         Dim log As Log
         Dim con As SqlConnection = GetConnection()
-
         Try
             Dim command As SqlCommand = con.CreateCommand()
-
-            command.CommandText =
-                "SELECT * FROM oasis.oa_log WHERE id = @id"
+            command.CommandText = "SELECT * FROM oasis.oa_log WHERE id = @id"
             command.Parameters.AddWithValue("@id", LogId)
             Using reader As SqlDataReader = command.ExecuteReader()
                 If reader.Read() Then
@@ -25,29 +34,13 @@ Public Class LogDao
         Finally
             con.Close()
         End Try
-
         Return log
     End Function
 
-    Private Function BuildBean(reader As SqlDataReader) As Log
-        Dim log As New Log With {
-            .Id = reader("id"),
-            .Description = Coalesce(reader("description"), ""),
-            .Origine = Coalesce(reader("origine"), ""),
-            .TypeLog = Coalesce(reader("type_log"), ""),
-            .UserLog = Coalesce(reader("user_creation"), 0),
-            .DateLog = Coalesce(reader("date_creation"), Nothing)
-        }
-        Return log
-    End Function
-
-    Public Function CreateLog(log As Log, userLog As Utilisateur) As Boolean
+    Public Sub CreateLog(log As Log, userLog As Utilisateur)
         Dim da As SqlDataAdapter = New SqlDataAdapter()
-        Dim CodeRetour As Boolean = True
         Dim con As SqlConnection = GetConnection()
-
         Dim dateCreation As Date = Date.Now.Date
-
         Dim SQLstring As String = "INSERT INTO oasis.oa_log" &
         " (description, type_log, origine, date_creation, user_creation)" &
         " VALUES (@description, @typeLog, @origine, @dateCreation, @userCreation)"
@@ -60,18 +53,14 @@ Public Class LogDao
             .AddWithValue("@dateCreation", Date.Now())
             .AddWithValue("@userCreation", userLog.UtilisateurId)
         End With
-
         Try
             da.InsertCommand = cmd
             da.InsertCommand.ExecuteNonQuery()
         Catch ex As Exception
-            Throw New Exception(ex.Message)
-            CodeRetour = False
+            Throw ex
         Finally
             con.Close()
         End Try
-
-        Return CodeRetour
-    End Function
+    End Sub
 
 End Class

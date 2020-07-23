@@ -77,11 +77,11 @@ Public Class RadFEpisodeParametresCreation
                 .DateCreation = NumDateRV.Value.Date.AddHours(NumheureRV.Value).AddMinutes(Minutes),
                 .UserCreation = userLog.UtilisateurId,
                 .PatientId = SelectedPatient.PatientId,
-                .Type = EpisodeDao.EnumTypeEpisode.PARAMETRE.ToString,
-                .TypeActivite = EpisodeDao.EnumTypeEpisode.PARAMETRE.ToString,
+                .Type = Episode.EnumTypeEpisode.PARAMETRE.ToString,
+                .TypeActivite = Episode.EnumTypeEpisode.PARAMETRE.ToString,
                 .DescriptionActivite = "",
                 .TypeProfil = userLog.TypeProfil,
-                .Etat = EpisodeDao.EnumEtatEpisode.CLOTURE.ToString
+                .Etat = Episode.EnumEtatEpisode.CLOTURE.ToString
             }
 
             Dim episodeId As Long
@@ -93,7 +93,7 @@ Public Class RadFEpisodeParametresCreation
                 'Groupe de paramètres Protocole standard pathologie aiguë
                 Dim DrcStandardDatatable As DataTable
                 Dim drcStandardDao As New DrcStandardDao
-                DrcStandardDatatable = drcStandardDao.getAllDrcByTypeActivite(EpisodeDao.EnumTypeActiviteEpisodeCode.PATHOLOGIE_AIGUE)
+                DrcStandardDatatable = drcStandardDao.getAllDrcByTypeActivite(Episode.EnumTypeActiviteEpisodeCode.PATHOLOGIE_AIGUE)
                 Dim i As Integer
                 Dim drcId As Long
                 Dim categorieOasis As Integer

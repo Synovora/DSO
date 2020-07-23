@@ -1,6 +1,7 @@
 ﻿Imports System.Configuration
 Imports System.Data.SqlClient
-Imports Oasis_Common
+
+'TODO: Refac
 Public Class ParametreOasisDao
     Inherits StandardDao
 

@@ -1,4 +1,14 @@
 ﻿Public Class Parametre
+
+    Public Enum EnumParametreId
+        POIDS = 1
+        TAILLE = 2
+        IMC = 3
+        PAM = 8
+        PAS = 6
+        PAD = 7
+    End Enum
+
     Property Id As Long
     Property Description As String
     Property Entier As Integer

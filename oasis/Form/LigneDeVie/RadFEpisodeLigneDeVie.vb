@@ -405,7 +405,7 @@ Public Class RadFEpisodeLigneDeVie
             RadGridViewEpisode.Rows(iGrid).Cells("episode_id").Value = dt.Rows(i)("episode_id")
             RadGridViewEpisode.Rows(iGrid).Cells("type").Value = Coalesce(dt.Rows(i)("type"), "")
 
-            If dt.Rows(i)("type_activite") = EpisodeDao.EnumTypeEpisode.PARAMETRE.ToString Then
+            If dt.Rows(i)("type_activite") = Episode.EnumTypeEpisode.PARAMETRE.ToString Then
                 RadGridViewEpisode.Rows(iGrid).Cells("type_activite").Value = "Prise de paramètres"
             Else
                 RadGridViewEpisode.Rows(iGrid).Cells("type_activite").Value = episodeDao.GetItemTypeActiviteByCode(Coalesce(dt.Rows(i)("type_activite"), ""))
@@ -502,7 +502,7 @@ Public Class RadFEpisodeLigneDeVie
 
             etatCode = Coalesce(dt.Rows(i)("etat"), "")
             Select Case etatCode
-                Case EpisodeDao.EnumEtatEpisode.EN_COURS.ToString
+                Case Episode.EnumEtatEpisode.EN_COURS.ToString
                     RadGridViewEpisode.Rows(iGrid).Cells("etat").Value = "En cours"
                     RadGridViewEpisode.Rows(iGrid).Cells("etat").Style.ForeColor = Color.Red
                     RadGridViewEpisode.Rows(iGrid).Cells("date_creation").Style.ForeColor = Color.Red
@@ -514,7 +514,7 @@ Public Class RadFEpisodeLigneDeVie
                     RadGridViewEpisode.Rows(iGrid).Cells("parametre3").Style.ForeColor = Color.Red
                     RadGridViewEpisode.Rows(iGrid).Cells("parametre4").Style.ForeColor = Color.Red
                     RadGridViewEpisode.Rows(iGrid).Cells("parametre5").Style.ForeColor = Color.Red
-                Case EpisodeDao.EnumEtatEpisode.CLOTURE.ToString
+                Case Episode.EnumEtatEpisode.CLOTURE.ToString
                     RadGridViewEpisode.Rows(iGrid).Cells("etat").Value = "Clôturé"
                 Case Else
                     RadGridViewEpisode.Rows(iGrid).Cells("etat").Value = "Inconnu !"
@@ -573,7 +573,7 @@ Public Class RadFEpisodeLigneDeVie
                     MessageBox.Show("Cet épisode est déjà ouvert dans l'écran qui a conduit à la consultation de la ligne de vie du patient")
                     Exit Sub
                 End If
-                If RadGridViewEpisode.Rows(aRow).Cells("type").Value = EpisodeDao.EnumTypeEpisode.PARAMETRE.ToString Then
+                If RadGridViewEpisode.Rows(aRow).Cells("type").Value = Episode.EnumTypeEpisode.PARAMETRE.ToString Then
                     Me.Enabled = False
                     Cursor.Current = Cursors.WaitCursor
 
@@ -633,7 +633,7 @@ Public Class RadFEpisodeLigneDeVie
                     OrdonnanceId = dt.Rows(0)("oa_ordonnance_id")
                     AfficheOrdonnance(OrdonnanceId, episode)
                 Else
-                    If episode.Etat = EpisodeDao.EnumEtatEpisode.CLOTURE.ToString OrElse episode.Etat = EpisodeDao.EnumEtatEpisode.ANNULE.ToString Then
+                    If episode.Etat = Episode.EnumEtatEpisode.CLOTURE.ToString OrElse episode.Etat = Episode.EnumEtatEpisode.ANNULE.ToString Then
                         If episode.DateModification.Date < Date.Now.Date Then
                             MessageBox.Show("Il n'y a pas d'ordonnance de créée pour cet épisode clôturé !")
                             Cursor.Current = Cursors.Default

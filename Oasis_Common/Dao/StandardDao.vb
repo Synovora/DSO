@@ -7,7 +7,6 @@ Public MustInherit Class StandardDao
     Protected Function GetConnection() As SqlConnection
         Dim strConnect As String = GetConnectionStringOasis() ' ConfigurationManager.ConnectionStrings("Oasis_WF.My.MySettings.oasisConnection").ConnectionString
         Dim conn As SqlConnection = New SqlConnection(strConnect)
-
         Do While True
             Try
                 conn.Open()

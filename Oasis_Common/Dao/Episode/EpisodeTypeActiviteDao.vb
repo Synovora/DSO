@@ -1,6 +1,5 @@
 ﻿Imports System.Configuration
 Imports System.Data.SqlClient
-Imports Oasis_Common
 
 Public Class EpisodeTypeActiviteDao
     Inherits StandardDao
@@ -113,7 +112,7 @@ Public Class EpisodeTypeActiviteDao
                     End If
                 End If
             End If
-            If episodeActiviteDT.Rows(i)("oa_activite_type") = EpisodeDao.EnumTypeActiviteEpisodeCode.SOCIAL Then
+            If episodeActiviteDT.Rows(i)("oa_activite_type") = Episode.EnumTypeActiviteEpisodeCode.SOCIAL Then
                 Continue For
             End If
 

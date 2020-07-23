@@ -166,7 +166,7 @@ Public Class RadFEpisodeConclusionContextePatient
         RadConclusionGridView.Rows.Clear()
         ListConclusion.Clear()
 
-        If SelectedEpisode.Etat = EpisodeDao.EnumEtatEpisode.CLOTURE.ToString Then
+        If SelectedEpisode.Etat = Episode.EnumEtatEpisode.CLOTURE.ToString Then
             If dt.Rows.Count <= 1 Then
                 RadBtnSuppprimer.Enabled = False
             Else

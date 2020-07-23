@@ -1,38 +1,9 @@
 ﻿Imports System.Data.SqlClient
-Imports Oasis_Common
+
 Public Class AntecedentDao
     Inherits StandardDao
 
     ReadOnly patientDao As New PatientDao
-
-    Public Function GetAntecedentById(antecedentId As Integer) As Antecedent
-        Dim antecedent As Antecedent
-        Dim con As SqlConnection
-        con = GetConnection()
-
-        Try
-            Dim command As SqlCommand = con.CreateCommand()
-
-            command.CommandText =
-                "select * from oasis.oa_antecedent where oa_antecedent_id = @id"
-            command.Parameters.AddWithValue("@id", antecedentId)
-            Using reader As SqlDataReader = command.ExecuteReader()
-                If reader.Read() Then
-                    antecedent = BuildBean(reader)
-                Else
-                    Throw New ArgumentException("Antécédent inexistant !")
-                End If
-            End Using
-
-        Catch ex As Exception
-            Throw ex
-        Finally
-            con.Close()
-        End Try
-
-        Return antecedent
-    End Function
-
     Private Function BuildBean(reader As SqlDataReader) As Antecedent
         Dim antecedent As New Antecedent With {
             .Id = reader("oa_antecedent_id"),
@@ -73,7 +44,29 @@ Public Class AntecedentDao
         Return antecedent
     End Function
 
-    Public Function CloneAntecedent(Source As Antecedent) As Antecedent
+    Public Function GetAntecedentById(antecedentId As Integer) As Antecedent
+        Dim antecedent As Antecedent
+        Dim con As SqlConnection = GetConnection()
+        Try
+            Dim command As SqlCommand = con.CreateCommand()
+            command.CommandText = "SELECT * FROM oasis.oa_antecedent WHERE oa_antecedent_id = @id"
+            command.Parameters.AddWithValue("@id", antecedentId)
+            Using reader As SqlDataReader = command.ExecuteReader()
+                If reader.Read() Then
+                    antecedent = BuildBean(reader)
+                Else
+                    Throw New ArgumentException("Antécédent inexistant !")
+                End If
+            End Using
+        Catch ex As Exception
+            Throw ex
+        Finally
+            con.Close()
+        End Try
+        Return antecedent
+    End Function
+
+    Public Function Clone(Source As Antecedent) As Antecedent
         Dim Cible As New Antecedent With {
             .Id = Source.Id,
             .PatientId = Source.PatientId,
@@ -335,10 +328,10 @@ Public Class AntecedentDao
 
             diagnostic = ""
             If dt.Rows(i)("oa_antecedent_diagnostic") IsNot DBNull.Value Then
-                If CInt(dt.Rows(i)("oa_antecedent_diagnostic")) = ContexteDao.EnumDiagnostic.SUSPICION_DE Then
+                If CInt(dt.Rows(i)("oa_antecedent_diagnostic")) = ContexteCourrier.EnumDiagnostic.SUSPICION_DE Then
                     diagnostic = "Suspicion de : "
                 Else
-                    If CInt(dt.Rows(i)("oa_antecedent_diagnostic")) = ContexteDao.EnumDiagnostic.NOTION_DE Then
+                    If CInt(dt.Rows(i)("oa_antecedent_diagnostic")) = ContexteCourrier.EnumDiagnostic.NOTION_DE Then
                         diagnostic = "Notion de : "
                     End If
                 End If

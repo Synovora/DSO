@@ -9,9 +9,7 @@ Public Class OrdonnanceDao
         Dim da As SqlDataAdapter = New SqlDataAdapter()
         Dim OrdonnanceId As Integer = 0
         Dim con As SqlConnection = GetConnection()
-
         Dim dateCreation As Date = Date.Now.Date
-
         Dim SQLstring As String = "INSERT into oasis.oa_patient_ordonnance" &
                                 " (oa_ordonnance_patient_id, oa_ordonnance_utilisateur_creation, oa_ordonnance_date_creation," &
                                 " oa_ordonnance_episode_id, oa_ordonnance_commentaire, oa_ordonnance_renouvellement)" &
@@ -33,7 +31,6 @@ Public Class OrdonnanceDao
             OrdonnanceId = da.InsertCommand.ExecuteScalar()
         Catch ex As Exception
             Throw ex
-            Throw New Exception(ex.Message) 'TODO:
             OrdonnanceId = 0
         Finally
             con.Close()
@@ -412,17 +409,17 @@ Public Class OrdonnanceDao
             'Détermination de la délivrance des traitements prescrits
             ordonnanceDetail.ADelivrer = True
             Select Case episode.TypeActivite
-                Case EpisodeDao.EnumTypeActiviteEpisodeCode.PATHOLOGIE_AIGUE,
-                     EpisodeDao.EnumTypeActiviteEpisodeCode.SOCIAL
+                Case Episode.EnumTypeActiviteEpisodeCode.PATHOLOGIE_AIGUE,
+                     Episode.EnumTypeActiviteEpisodeCode.SOCIAL
                     If DateDebut.Date < Date.Now.Date Then
                         ordonnanceDetail.ADelivrer = False
                     End If
-                Case EpisodeDao.EnumTypeActiviteEpisodeCode.SUIVI_CHRONIQUE,
-                         EpisodeDao.EnumTypeActiviteEpisodeCode.PREVENTION_SUIVI_GROSSESSE,
-                         EpisodeDao.EnumTypeActiviteEpisodeCode.PREVENTION_SUIVI_GYNECOLOGIQUE,
-                         EpisodeDao.EnumTypeActiviteEpisodeCode.PREVENTION_ENFANT_SCOLAIRE,
-                         EpisodeDao.EnumTypeActiviteEpisodeCode.PREVENTION_ENFANT_PRE_SCOLAIRE,
-                         EpisodeDao.EnumTypeActiviteEpisodeCode.PREVENTION_AUTRE
+                Case Episode.EnumTypeActiviteEpisodeCode.SUIVI_CHRONIQUE,
+                         Episode.EnumTypeActiviteEpisodeCode.PREVENTION_SUIVI_GROSSESSE,
+                         Episode.EnumTypeActiviteEpisodeCode.PREVENTION_SUIVI_GYNECOLOGIQUE,
+                         Episode.EnumTypeActiviteEpisodeCode.PREVENTION_ENFANT_SCOLAIRE,
+                         Episode.EnumTypeActiviteEpisodeCode.PREVENTION_ENFANT_PRE_SCOLAIRE,
+                         Episode.EnumTypeActiviteEpisodeCode.PREVENTION_AUTRE
                     If DateDebut.Date <> Date.Now.Date Then
                         If DateDebut >= Date.Now.AddDays(PeriodeNonDelivrance) Then
                             ordonnanceDetail.ADelivrer = False
@@ -446,7 +443,7 @@ Public Class OrdonnanceDao
             'Détermination si traitement ALD / Non ALD
             If PatientAld = True Then
                 ordonnanceDetail.Ald = True
-                If episode.TypeActivite = EpisodeDao.EnumTypeActiviteEpisodeCode.SUIVI_CHRONIQUE Then
+                If episode.TypeActivite = Episode.EnumTypeActiviteEpisodeCode.SUIVI_CHRONIQUE Then
                     If TraitementDataTable.Rows(i)("oa_traitement_posologie_base") = Traitement.EnumBaseCode.CONDITIONNEL Then
                         ordonnanceDetail.Ald = False
                     Else

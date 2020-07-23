@@ -3,31 +3,6 @@
 Public Class ParcoursConsigneDao
     Inherits StandardDao
 
-    Public Function GetParcoursConsigneById(ConsigneId As Integer) As ParcoursConsigne
-        Dim parcoursConsigne As ParcoursConsigne
-        Dim con As SqlConnection = GetConnection()
-
-        Try
-            Dim command As SqlCommand = con.CreateCommand()
-            command.CommandText =
-                "select * from oasis.oa_patient_parcours_consigne where oa_parcours_consigne_id = @id"
-            command.Parameters.AddWithValue("@id", ConsigneId)
-            Using reader As SqlDataReader = command.ExecuteReader()
-                If reader.Read() Then
-                    parcoursConsigne = BuildBean(reader)
-                Else
-                    Throw New ArgumentException("parcours consigne inexistant !")
-                End If
-            End Using
-        Catch ex As Exception
-            Throw ex
-        Finally
-            con.Close()
-        End Try
-
-        Return parcoursConsigne
-    End Function
-
     Private Function BuildBean(reader As SqlDataReader) As ParcoursConsigne
         Dim parcoursConsigne As New ParcoursConsigne With {
             .Id = reader("oa_parcours_consigne_id"),
@@ -44,10 +19,32 @@ Public Class ParcoursConsigneDao
             .DateFin = Coalesce(reader("oa_parcours_consigne_date_fin"), Nothing),
             .Inactif = Coalesce(reader("oa_parcours_consigne_inactif"), False)
         }
-
         Return parcoursConsigne
     End Function
 
+    Public Function GetParcoursConsigneById(ConsigneId As Integer) As ParcoursConsigne
+        Dim parcoursConsigne As ParcoursConsigne
+        Dim con As SqlConnection = GetConnection()
+        Try
+            Dim command As SqlCommand = con.CreateCommand()
+            command.CommandText = "SELECT * FROM oasis.oa_patient_parcours_consigne WHERE oa_parcours_consigne_id = @id"
+            command.Parameters.AddWithValue("@id", ConsigneId)
+            Using reader As SqlDataReader = command.ExecuteReader()
+                If reader.Read() Then
+                    parcoursConsigne = BuildBean(reader)
+                Else
+                    Throw New ArgumentException("parcours consigne inexistant !")
+                End If
+            End Using
+        Catch ex As Exception
+            Throw ex
+        Finally
+            con.Close()
+        End Try
+        Return parcoursConsigne
+    End Function
+
+    'TODO: Change it
     Public Function GetConsigneParamedicalebyParcoursId(parcoursId As Integer) As DataTable
         Dim SQLString As String = "SELECT oa_parcours_consigne_id, oa_parcours_id, oa_parcours_consigne_patient_id, oa_parcours_consigne_drc_id," &
             " activite_type_episode, oa_parcours_consigne_commentaire, oa_parcours_consigne_ordre, oa_parcours_consigne_date_debut," &
@@ -58,7 +55,6 @@ Public Class ParcoursConsigneDao
             " AND (oa_parcours_consigne_inactif Is Null Or oa_parcours_consigne_inactif = 'False')" &
             " AND (oa_parcours_consigne_date_fin is Null OR oa_parcours_consigne_date_fin >= GETDATE())" &
             " ORDER BY oa_parcours_consigne_ordre"
-
         Using con As SqlConnection = GetConnection()
             Dim ParcoursConsigneDataAdapter As SqlDataAdapter = New SqlDataAdapter()
             Using ParcoursConsigneDataAdapter
@@ -77,6 +73,7 @@ Public Class ParcoursConsigneDao
         End Using
     End Function
 
+    'TODO: change it
     Public Function GetAllConsignebyParcoursId(parcoursId As Integer) As DataTable
         Dim SQLString As String = "SELECT oa_parcours_consigne_id, oa_parcours_id, oa_parcours_consigne_patient_id, oa_parcours_consigne_drc_id," &
             " activite_type_episode, oa_parcours_consigne_commentaire, oa_parcours_consigne_ordre, oa_parcours_consigne_date_debut," &
@@ -86,7 +83,6 @@ Public Class ParcoursConsigneDao
             " AND (oa_parcours_consigne_inactif Is Null Or oa_parcours_consigne_inactif = 'False')" &
             " AND (oa_parcours_consigne_date_fin is Null OR oa_parcours_consigne_date_fin >= GETDATE())" &
             " ORDER BY oa_parcours_consigne_ordre"
-
         Using con As SqlConnection = GetConnection()
             Dim ParcoursConsigneDataAdapter As SqlDataAdapter = New SqlDataAdapter()
             Using ParcoursConsigneDataAdapter
@@ -105,6 +101,7 @@ Public Class ParcoursConsigneDao
         End Using
     End Function
 
+    'TODO: change it
     Public Function GetDrcConsigneByActiviteEtPatientId(typeActivite As String, patientId As Long) As DataTable
         Dim SQLString As String = "SELECT oa_parcours_consigne_drc_id, oa_drc_oasis_categorie" &
             " LEFT JOIN oasis.oa_drc ON oa_parcours_consigne_drc_id = oa_drc_id" &
@@ -113,7 +110,6 @@ Public Class ParcoursConsigneDao
             " AND (oa_parcours_consigne_inactif Is Null Or oa_parcours_consigne_inactif = 'False')" &
             " AND (oa_parcours_consigne_date_fin is Null OR oa_parcours_consigne_date_fin >= GETDATE())" &
             " ORDER BY oa_parcours_consigne_ordre"
-
         Using con As SqlConnection = GetConnection()
             Dim ParcoursConsigneDataAdapter As SqlDataAdapter = New SqlDataAdapter()
             Using ParcoursConsigneDataAdapter
@@ -132,10 +128,9 @@ Public Class ParcoursConsigneDao
         End Using
     End Function
 
+    'TODO: Change it
     Public Function GetDrcPatientByTypeActiviteEtPatient(typeActivite As String, patientId As Long) As DataTable
-        Dim SQLString As String
-
-        SQLString =
+        Dim SQLString As String =
             "SELECT " & vbCrLf &
             "	  oa_parcours_consigne_id," & vbCrLf &
             "	  activite_type_episode," & vbCrLf &
@@ -150,11 +145,7 @@ Public Class ParcoursConsigneDao
             " WHERE activite_type_episode = @typeActivite" & vbCrLf &
             " AND oa_parcours_consigne_patient_id = @patientId" & vbCrLf &
             " AND (oa_parcours_consigne_inactif = 'False' OR oa_parcours_consigne_inactif is Null)" & vbCrLf
-
-        'Console.WriteLine(SQLString)
-
         Using con As SqlConnection = GetConnection()
-
             Dim drcDataAdapter As SqlDataAdapter = New SqlDataAdapter()
             Using drcDataAdapter
                 drcDataAdapter.SelectCommand = New SqlCommand(SQLString, con)
@@ -173,18 +164,14 @@ Public Class ParcoursConsigneDao
         End Using
     End Function
 
-    Public Function CreateParcoursConsigne(parcoursconsigne As ParcoursConsigne) As Boolean
+    Public Sub CreateParcoursConsigne(parcoursconsigne As ParcoursConsigne)
         Dim da As SqlDataAdapter = New SqlDataAdapter()
-        Dim codeRetour As Boolean = True
-        Dim con As SqlConnection
-        con = GetConnection()
-
+        Dim con As SqlConnection = GetConnection()
         Dim SQLstring As String = "insert into oasis.oa_patient_parcours_consigne" &
         " (oa_parcours_id, oa_parcours_consigne_patient_id, oa_parcours_consigne_drc_id, activite_type_episode, oa_parcours_consigne_commentaire, oa_parcours_consigne_ordre," &
         " oa_parcours_age_min, oa_parcours_age_max, oa_parcours_age_unite, oa_parcours_consigne_date_debut, oa_parcours_consigne_date_fin, oa_parcours_consigne_inactif)" &
         " VALUES (@parcoursId, @patientId, @drcId, @typeEpisode, @commentaire, @ordre," &
         " @ageMin, @ageMax, @ageUnite, @dateDebut, @dateFin, @inactif)"
-
         Dim cmd As New SqlCommand(SQLstring, con)
         With cmd.Parameters
             .AddWithValue("@parcoursId", parcoursconsigne.ParcoursId)
@@ -200,34 +187,26 @@ Public Class ParcoursConsigneDao
             .AddWithValue("@dateFin", parcoursconsigne.DateFin)
             .AddWithValue("@inactif", parcoursconsigne.Inactif)
         End With
-
         Try
             da.InsertCommand = cmd
             da.InsertCommand.ExecuteNonQuery()
         Catch ex As Exception
-            Throw New Exception(ex.Message)
-            codeRetour = False
+            Throw ex
         Finally
             con.Close()
         End Try
+    End Sub
 
-        Return codeRetour
-    End Function
-
-    Public Function ModificationParcoursConsigne(parcoursConsigne As ParcoursConsigne) As Boolean
+    Public Sub ModificationParcoursConsigne(parcoursConsigne As ParcoursConsigne)
         Dim da As SqlDataAdapter = New SqlDataAdapter()
-        Dim codeRetour As Boolean = True
         Dim con As SqlConnection = GetConnection()
-
         Dim SQLstring As String = "UPDATE oasis.oa_patient_parcours_consigne SET" &
         " oa_parcours_id = @parcoursId, oa_parcours_consigne_patient_id = @patientId, oa_parcours_consigne_drc_id = @drcId," &
         " activite_type_episode = @typeEpisode, oa_parcours_consigne_commentaire = @commentaire," &
         " oa_parcours_consigne_ordre = @ordre, oa_parcours_age_min = @ageMin, oa_parcours_age_max = @ageMax, oa_parcours_age_unite = @ageUnite," &
         " oa_parcours_consigne_date_debut = @dateDebut, oa_parcours_consigne_date_fin = @dateFin, oa_parcours_consigne_inactif = @inactif" &
         " WHERE oa_parcours_consigne_id = @Id"
-
         Dim cmd As New SqlCommand(SQLstring, con)
-
         With cmd.Parameters
             .AddWithValue("@Id", parcoursConsigne.Id)
             .AddWithValue("@parcoursId", parcoursConsigne.ParcoursId)
@@ -243,66 +222,48 @@ Public Class ParcoursConsigneDao
             .AddWithValue("@dateFin", parcoursConsigne.DateFin)
             .AddWithValue("@inactif", parcoursConsigne.Inactif)
         End With
-
         Try
             da.UpdateCommand = cmd
             da.UpdateCommand.ExecuteNonQuery()
         Catch ex As Exception
-            Throw New Exception(ex.Message)
-            codeRetour = False
+            Throw ex
         Finally
             con.Close()
         End Try
+    End Sub
 
-        Return codeRetour
-    End Function
-
-    Public Function AnnulationParcoursConsigne(parcoursConsigne As ParcoursConsigne) As Boolean
+    Public Sub AnnulationParcoursConsigne(parcoursConsigne As ParcoursConsigne)
         Dim da As SqlDataAdapter = New SqlDataAdapter()
-        Dim codeRetour As Boolean = True
         Dim con As SqlConnection = GetConnection()
-
         Dim SQLstring As String = "UPDATE oasis.oa_patient_parcours_consigne SET oa_parcours_consigne_inactif = @inactif" &
         " WHERE oa_parcours_consigne_id = @Id"
-
         Dim cmd As New SqlCommand(SQLstring, con)
-
         With cmd.Parameters
             .AddWithValue("@Id", parcoursConsigne.Id)
             .AddWithValue("@inactif", True)
         End With
-
         Try
             da.UpdateCommand = cmd
             da.UpdateCommand.ExecuteNonQuery()
         Catch ex As Exception
-            Throw New Exception(ex.Message)
-            codeRetour = False
+            Throw ex
         Finally
             con.Close()
         End Try
+    End Sub
 
-        Return codeRetour
-    End Function
-
-    Public Function ExisteParcoursConsigne(parcoursId As Long) As Boolean
-        Dim con As SqlConnection
-        Dim Existe As Boolean = False
-        con = GetConnection()
-
+    Public Function IsExistParcoursConsigne(parcoursId As Long) As Boolean
+        Dim isExist As Boolean = False
+        Dim con As SqlConnection = GetConnection()
         Try
             Dim command As SqlCommand = con.CreateCommand()
-
-            command.CommandText =
-                "SELECT TOP (1) * FROM oasis.oasis.oa_patient_parcours_consigne WHERE oa_parcours_id = @parcoursId"
-
+            command.CommandText = "SELECT TOP (1) * FROM oasis.oasis.oa_patient_parcours_consigne WHERE oa_parcours_id = @parcoursId"
             With command.Parameters
                 .AddWithValue("@parcoursId", parcoursId)
             End With
-
             Using reader As SqlDataReader = command.ExecuteReader()
                 If reader.Read() Then
-                    Existe = True
+                    isExist = True
                 End If
             End Using
         Catch ex As Exception
@@ -310,8 +271,7 @@ Public Class ParcoursConsigneDao
         Finally
             con.Close()
         End Try
-
-        Return Existe
+        Return isExist
     End Function
 
 End Class

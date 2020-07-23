@@ -499,7 +499,7 @@ Public Class RadFParcoursDetailEdit
                 RadParcoursConsigneDataGridView.Rows(iGrid).Cells("dateFin").Value = DateFin.ToString("dd.MM.yyyy")
             End If
 
-            If Coalesce(ParcoursConsigneDataTable.Rows(i)("activite_type_episode"), "") = EpisodeDao.EnumTypeActiviteEpisodeCode.SUIVI_CHRONIQUE Then
+            If Coalesce(ParcoursConsigneDataTable.Rows(i)("activite_type_episode"), "") = Episode.EnumTypeActiviteEpisodeCode.SUIVI_CHRONIQUE Then
                 RadParcoursConsigneDataGridView.Rows(iGrid).Cells("drcDescription").Style.ForeColor = Color.Red
                 RadParcoursConsigneDataGridView.Rows(iGrid).Cells("commentaire").Style.ForeColor = Color.Red
                 RadParcoursConsigneDataGridView.Rows(iGrid).Cells("dateDebut").Style.ForeColor = Color.Red

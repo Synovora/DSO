@@ -1,4 +1,20 @@
 ﻿Public Class EpisodeObservation
+
+    Public Enum EnumTypeEpisodeObservation
+        MEDICAL = 0
+        PARAMEDICAL = 1
+    End Enum
+
+    Public Enum EnumNatureEpisodeObservation
+        SPECIFIQUE = 0
+        LIBRE = 1
+    End Enum
+
+    Public Enum EnumNaturePresence
+        PRESENTIEL = 0
+        DISTANT = 1
+    End Enum
+
     Property Id As Long
     Property EpisodeId As Long
     Property PatientId As Long

@@ -1,26 +1,10 @@
 ﻿Imports System.Data.SqlClient
-Imports Oasis_Common
 Imports Oasis_Common.AntecedentHistoCreationDao
 
 Public Class ContexteDao
     Inherits StandardDao
 
     ReadOnly patientDao As New PatientDao
-
-    Public Structure EnumParcoursBaseItem
-        Const Medical = "Médical"
-        Const BioEnvironnemental = "Bio-environnemental"
-    End Structure
-
-    Public Structure EnumParcoursBaseCode
-        Const Medical = "M"
-        Const BioEnvironnemental = "B"
-    End Structure
-
-    Public Enum EnumDiagnostic
-        SUSPICION_DE = 2
-        NOTION_DE = 3
-    End Enum
 
     Public Function GetContexteObsolete() As DataTable
         Dim SQLString As String
@@ -446,10 +430,10 @@ Public Class ContexteDao
 
             diagnostic = ""
             If dt.Rows(i)("oa_antecedent_diagnostic") IsNot DBNull.Value Then
-                If CInt(dt.Rows(i)("oa_antecedent_diagnostic")) = EnumDiagnostic.SUSPICION_DE Then
+                If CInt(dt.Rows(i)("oa_antecedent_diagnostic")) = ContexteCourrier.EnumDiagnostic.SUSPICION_DE Then
                     diagnostic = "Suspicion de "
                 Else
-                    If CInt(dt.Rows(i)("oa_antecedent_diagnostic")) = EnumDiagnostic.NOTION_DE Then
+                    If CInt(dt.Rows(i)("oa_antecedent_diagnostic")) = ContexteCourrier.EnumDiagnostic.NOTION_DE Then
                         diagnostic = "Notion de "
                     End If
                 End If

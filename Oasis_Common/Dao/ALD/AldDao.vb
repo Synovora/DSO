@@ -3,34 +3,6 @@
 Public Class AldDao
     Inherits StandardDao
 
-    Public Function GetAldById(AldId As Integer) As Ald
-        Dim ald As Ald
-        Dim con As SqlConnection
-        con = GetConnection()
-
-        Try
-            Dim command As SqlCommand = con.CreateCommand()
-
-            command.CommandText =
-                "select * from oasis.oa_ald where oa_ald_id = @id"
-            command.Parameters.AddWithValue("@id", AldId)
-            Using reader As SqlDataReader = command.ExecuteReader()
-                If reader.Read() Then
-                    ald = BuildBean(reader)
-                Else
-                    Throw New ArgumentException("ALD inexistante !")
-                End If
-            End Using
-
-        Catch ex As Exception
-            Throw ex
-        Finally
-            con.Close()
-        End Try
-
-        Return ald
-    End Function
-
     Private Function BuildBean(reader As SqlDataReader) As Ald
         Dim ald As New Ald With {
             .AldId = reader("oa_ald_id"),
@@ -40,26 +12,48 @@ Public Class AldDao
         Return ald
     End Function
 
-    Public Function GetAllAld() As DataTable
-        Dim SQLString As String = "SELECT oa_ald_id, oa_ald_code, oa_ald_description FROM oasis.oa_ald;"
-
-        Using con As SqlConnection = GetConnection()
-            Dim AldDataAdapter As SqlDataAdapter = New SqlDataAdapter()
-            Using AldDataAdapter
-                AldDataAdapter.SelectCommand = New SqlCommand(SQLString, con)
-                Dim AldDataTable As DataTable = New DataTable()
-                Using AldDataTable
-                    Try
-                        AldDataAdapter.Fill(AldDataTable)
-                        Dim command As SqlCommand = con.CreateCommand()
-                    Catch ex As Exception
-                        Throw ex
-                    End Try
-                    Return AldDataTable
-                End Using
+    Public Function GetAldById(AldId As Integer) As Ald
+        Dim ald As Ald
+        Dim con As SqlConnection = GetConnection()
+        Try
+            Dim command As SqlCommand = con.CreateCommand()
+            command.CommandText = "select * from oasis.oa_ald where oa_ald_id = @id"
+            command.Parameters.AddWithValue("@id", AldId)
+            Using reader As SqlDataReader = command.ExecuteReader()
+                If reader.Read() Then
+                    ald = BuildBean(reader)
+                Else
+                    Throw New ArgumentException("ALD inexistante !")
+                End If
             End Using
-        End Using
+        Catch ex As Exception
+            Throw ex
+        Finally
+            con.Close()
+        End Try
+        Return ald
     End Function
+
+    'Public Function GetAllAld() As DataTable
+    '    Dim SQLString As String = "SELECT oa_ald_id, oa_ald_code, oa_ald_description FROM oasis.oa_ald;"
+
+    '    Using con As SqlConnection = GetConnection()
+    '        Dim AldDataAdapter As SqlDataAdapter = New SqlDataAdapter()
+    '        Using AldDataAdapter
+    '            AldDataAdapter.SelectCommand = New SqlCommand(SQLString, con)
+    '            Dim AldDataTable As DataTable = New DataTable()
+    '            Using AldDataTable
+    '                Try
+    '                    AldDataAdapter.Fill(AldDataTable)
+    '                    Dim command As SqlCommand = con.CreateCommand()
+    '                Catch ex As Exception
+    '                    Throw ex
+    '                End Try
+    '                Return AldDataTable
+    '            End Using
+    '        End Using
+    '    End Using
+    'End Function
 
     Public Function DateFinALD(patientId As Integer) As String
         Dim StringRetour As String = ""

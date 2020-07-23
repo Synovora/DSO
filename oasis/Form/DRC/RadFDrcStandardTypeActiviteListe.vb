@@ -8,7 +8,7 @@ Public Class RadFDrcStandardTypeActiviteListe
 
 
     Private Sub RadFDrcStandardTypeActiviteActivite_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-        TypeActivite = EpisodeDao.EnumTypeActiviteEpisodeCode.PREVENTION_SUIVI_GROSSESSE
+        TypeActivite = Episode.EnumTypeActiviteEpisodeCode.PREVENTION_SUIVI_GROSSESSE
         ChargementDrc()
         RadBtnSuiviGrossesse.ForeColor = Color.Red
         RadBtnSuiviGrossesse.Font = New Font(RadBtnSuiviGrossesse.Font, FontStyle.Bold)
@@ -19,8 +19,8 @@ Public Class RadFDrcStandardTypeActiviteListe
         Dim DrcId As Long
         DrcDataTable = drcStandardDao.getAllDrcByTypeActivite(TypeActivite)
 
-        If TypeActivite = EpisodeDao.EnumTypeActiviteEpisodeCode.PREVENTION_ENFANT_PRE_SCOLAIRE OrElse
-            TypeActivite = EpisodeDao.EnumTypeActiviteEpisodeCode.PREVENTION_ENFANT_SCOLAIRE Then
+        If TypeActivite = Episode.EnumTypeActiviteEpisodeCode.PREVENTION_ENFANT_PRE_SCOLAIRE OrElse
+            TypeActivite = Episode.EnumTypeActiviteEpisodeCode.PREVENTION_ENFANT_SCOLAIRE Then
             RadGridViewDrcAsso.Columns.Item("applicationDe").IsVisible = True
             RadGridViewDrcAsso.Columns.Item("applicationA").IsVisible = True
         Else
@@ -51,7 +51,7 @@ Public Class RadFDrcStandardTypeActiviteListe
             ageMin = Coalesce(DrcDataTable.Rows(i)("age_min"), 0)
             ageMax = Coalesce(DrcDataTable.Rows(i)("age_max"), 0)
             Select Case TypeActivite
-                Case EpisodeDao.EnumTypeActiviteEpisodeCode.PREVENTION_ENFANT_PRE_SCOLAIRE
+                Case Episode.EnumTypeActiviteEpisodeCode.PREVENTION_ENFANT_PRE_SCOLAIRE
                     If ageMin = 0 Then
                         RadGridViewDrcAsso.Rows(iGrid).Cells("applicationDe").Value = ""
                     Else
@@ -62,7 +62,7 @@ Public Class RadFDrcStandardTypeActiviteListe
                     Else
                         RadGridViewDrcAsso.Rows(iGrid).Cells("applicationA").Value = ageMax.ToString & " mois"
                     End If
-                Case EpisodeDao.EnumTypeActiviteEpisodeCode.PREVENTION_ENFANT_SCOLAIRE
+                Case Episode.EnumTypeActiviteEpisodeCode.PREVENTION_ENFANT_SCOLAIRE
                     If ageMin = 0 Then
                         RadGridViewDrcAsso.Rows(iGrid).Cells("applicationDe").Value = ""
                     Else
@@ -147,8 +147,8 @@ Public Class RadFDrcStandardTypeActiviteListe
                     drcStandard.CategorieOasis = drcSelected.CategorieOasisId
                     Try
                         If drcStandardDao.CreationDrcStandard(drcStandard) = True Then
-                            If TypeActivite = EpisodeDao.EnumTypeActiviteEpisodeCode.PREVENTION_ENFANT_PRE_SCOLAIRE Or
-                                TypeActivite = EpisodeDao.EnumTypeActiviteEpisodeCode.PREVENTION_ENFANT_SCOLAIRE Then
+                            If TypeActivite = Episode.EnumTypeActiviteEpisodeCode.PREVENTION_ENFANT_PRE_SCOLAIRE Or
+                                TypeActivite = Episode.EnumTypeActiviteEpisodeCode.PREVENTION_ENFANT_SCOLAIRE Then
                                 'Récupérer le dernier DRC standard créé
                                 Dim DrcStandardIdCreated As Integer = drcStandardDao.GetDrcStandardCreated(drcStandard)
                                 Using vRadFDrcStandardTypeActiviteDetail As New RadFDrcStandardTypeActiviteDetail
@@ -177,7 +177,7 @@ Public Class RadFDrcStandardTypeActiviteListe
     Private Sub RadBtnSuiviGrossesse_Click(sender As Object, e As EventArgs) Handles RadBtnSuiviGrossesse.Click
         Cursor.Current = Cursors.WaitCursor
         RadGridViewDrcAsso.Rows.Clear()
-        TypeActivite = EpisodeDao.EnumTypeActiviteEpisodeCode.PREVENTION_SUIVI_GROSSESSE
+        TypeActivite = Episode.EnumTypeActiviteEpisodeCode.PREVENTION_SUIVI_GROSSESSE
         ChargementDrc()
         GestionBtnSelection()
         RadBtnSuiviGrossesse.ForeColor = Color.Red
@@ -189,7 +189,7 @@ Public Class RadFDrcStandardTypeActiviteListe
     Private Sub RadBtnSuiviGynecologique_Click(sender As Object, e As EventArgs) Handles RadBtnSuiviGynecologique.Click
         Cursor.Current = Cursors.WaitCursor
         RadGridViewDrcAsso.Rows.Clear()
-        TypeActivite = EpisodeDao.EnumTypeActiviteEpisodeCode.PREVENTION_SUIVI_GYNECOLOGIQUE
+        TypeActivite = Episode.EnumTypeActiviteEpisodeCode.PREVENTION_SUIVI_GYNECOLOGIQUE
         ChargementDrc()
         GestionBtnSelection()
         RadBtnSuiviGynecologique.ForeColor = Color.Red
@@ -201,7 +201,7 @@ Public Class RadFDrcStandardTypeActiviteListe
     Private Sub RadBtnSuiviEnfantPreScolaire_Click(sender As Object, e As EventArgs) Handles RadBtnSuiviEnfantPreScolaire.Click
         Cursor.Current = Cursors.WaitCursor
         RadGridViewDrcAsso.Rows.Clear()
-        TypeActivite = EpisodeDao.EnumTypeActiviteEpisodeCode.PREVENTION_ENFANT_PRE_SCOLAIRE
+        TypeActivite = Episode.EnumTypeActiviteEpisodeCode.PREVENTION_ENFANT_PRE_SCOLAIRE
         ChargementDrc()
         GestionBtnSelection()
         RadBtnSuiviEnfantPreScolaire.ForeColor = Color.Red
@@ -213,7 +213,7 @@ Public Class RadFDrcStandardTypeActiviteListe
     Private Sub RadBtnSuiviEnfantScolaire_Click(sender As Object, e As EventArgs) Handles RadBtnSuiviEnfantScolaire.Click
         Cursor.Current = Cursors.WaitCursor
         RadGridViewDrcAsso.Rows.Clear()
-        TypeActivite = EpisodeDao.EnumTypeActiviteEpisodeCode.PREVENTION_ENFANT_SCOLAIRE
+        TypeActivite = Episode.EnumTypeActiviteEpisodeCode.PREVENTION_ENFANT_SCOLAIRE
         ChargementDrc()
         GestionBtnSelection()
         RadBtnSuiviEnfantScolaire.ForeColor = Color.Red
@@ -225,7 +225,7 @@ Public Class RadFDrcStandardTypeActiviteListe
     Private Sub RadBtnPathologieAigue_Click(sender As Object, e As EventArgs) Handles RadBtnPathologieAigue.Click
         Cursor.Current = Cursors.WaitCursor
         RadGridViewDrcAsso.Rows.Clear()
-        TypeActivite = EpisodeDao.EnumTypeActiviteEpisodeCode.PATHOLOGIE_AIGUE
+        TypeActivite = Episode.EnumTypeActiviteEpisodeCode.PATHOLOGIE_AIGUE
         ChargementDrc()
         GestionBtnSelection()
         RadBtnPathologieAigue.ForeColor = Color.Red

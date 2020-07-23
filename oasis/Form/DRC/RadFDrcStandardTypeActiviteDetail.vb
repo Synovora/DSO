@@ -40,8 +40,8 @@ Public Class RadFDrcStandardTypeActiviteDetail
         TxtCategorieOasis.Text = drcDao.GetItemCategorieOasisByCode(drcStandard.CategorieOasis)
         NumAgeMin.Value = drcStandard.AgeMin
         NumAgeMax.Value = drcStandard.AgeMax
-        If Not (drcStandard.TypeActivite = EpisodeDao.EnumTypeActiviteEpisodeCode.PREVENTION_ENFANT_PRE_SCOLAIRE Or
-            drcStandard.TypeActivite = EpisodeDao.EnumTypeActiviteEpisodeCode.PREVENTION_ENFANT_SCOLAIRE) Then
+        If Not (drcStandard.TypeActivite = Episode.EnumTypeActiviteEpisodeCode.PREVENTION_ENFANT_PRE_SCOLAIRE Or
+            drcStandard.TypeActivite = Episode.EnumTypeActiviteEpisodeCode.PREVENTION_ENFANT_SCOLAIRE) Then
             LblAgeMin.Hide()
             NumAgeMin.Hide()
             LblAgeMax.Hide()
@@ -53,9 +53,9 @@ Public Class RadFDrcStandardTypeActiviteDetail
         End If
 
         Select Case drcStandard.TypeActivite
-            Case EpisodeDao.EnumTypeActiviteEpisodeCode.PREVENTION_ENFANT_SCOLAIRE
+            Case Episode.EnumTypeActiviteEpisodeCode.PREVENTION_ENFANT_SCOLAIRE
                 LblAgeUnite.Text = "(Age exprimé en année)"
-            Case EpisodeDao.EnumTypeActiviteEpisodeCode.PREVENTION_ENFANT_PRE_SCOLAIRE
+            Case Episode.EnumTypeActiviteEpisodeCode.PREVENTION_ENFANT_PRE_SCOLAIRE
                 LblAgeUnite.Text = "(Age exprimé en mois)"
             Case Else
                 LblAgeUnite.Text = ""

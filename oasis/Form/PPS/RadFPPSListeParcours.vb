@@ -78,7 +78,7 @@ Public Class RadFPPSListeParcours
                     IntervenantOasis = True
                     ParcoursListProfilsOasis.Add(EnumSpecialiteOasis.IDE)
                     Dim pacoursConsigneDao As New ParcoursConsigneDao
-                    If pacoursConsigneDao.ExisteParcoursConsigne(ParcoursDataTable.Rows(i)("oa_parcours_id")) = False Then
+                    If pacoursConsigneDao.IsExistParcoursConsigne(ParcoursDataTable.Rows(i)("oa_parcours_id")) = False Then
                         ParcoursConsigneEnRouge = True
                     End If
                 Case EnumSousCategoriePPS.sageFemme

@@ -43,7 +43,7 @@ Public Class EpisodeProtocoleCollaboratifDao
                 .PatientId = episode.PatientId,
                 .DrcId = ListActePara.Item(i),
                 .Observation = "",
-                .TypeObservation = EpisodeObservationDao.EnumTypeEpisodeObservation.PARAMEDICAL.ToString,
+                .TypeObservation = EpisodeObservation.EnumTypeEpisodeObservation.PARAMEDICAL.ToString,
                 .UserId = 0,
                 .DateObservation = Nothing,
                 .DateModification = Nothing,
@@ -63,11 +63,11 @@ Public Class EpisodeProtocoleCollaboratifDao
         Dim agePatientEnAnnee As Integer = 0
         patient = patientDao.GetPatientById(patientId)
         Select Case TypeActiviteEpisode
-            Case EpisodeDao.EnumTypeActiviteEpisodeCode.PREVENTION_ENFANT_PRE_SCOLAIRE
+            Case Episode.EnumTypeActiviteEpisodeCode.PREVENTION_ENFANT_PRE_SCOLAIRE
                 'Calcul âge enfant en jour
                 agePatientEnJour = CalculAgeEnJour(patient.PatientDateNaissance)
                 agePatientEnJour += JoursAAjouterPourCalculAgePreScolaire
-            Case EpisodeDao.EnumTypeActiviteEpisodeCode.PREVENTION_ENFANT_SCOLAIRE
+            Case Episode.EnumTypeActiviteEpisodeCode.PREVENTION_ENFANT_SCOLAIRE
                 'Calcul âge enfant en année
                 agePatientEnAnnee = CalculAgeEnAnnee(patient.PatientDateNaissance)
             Case Else
@@ -89,7 +89,7 @@ Public Class EpisodeProtocoleCollaboratifDao
             AgeMaxDrc = Coalesce(DrcStandardDatatable.Rows(i)("age_max"), 0)
 
             Select Case TypeActiviteEpisode
-                Case EpisodeDao.EnumTypeActiviteEpisodeCode.PREVENTION_ENFANT_SCOLAIRE
+                Case Episode.EnumTypeActiviteEpisodeCode.PREVENTION_ENFANT_SCOLAIRE
                     If ageMinDrc <> 0 Then
                         If agePatientEnAnnee < ageMinDrc Then
                             Continue For
@@ -100,7 +100,7 @@ Public Class EpisodeProtocoleCollaboratifDao
                             Continue For
                         End If
                     End If
-                Case EpisodeDao.EnumTypeActiviteEpisodeCode.PREVENTION_ENFANT_PRE_SCOLAIRE
+                Case Episode.EnumTypeActiviteEpisodeCode.PREVENTION_ENFANT_PRE_SCOLAIRE
                     Dim ageMinDrcEnJour As Integer = outils.ConvertirEnJourDureeEnMois(ageMinDrc)
                     Dim ageMaxDrcEnJour As Integer = outils.ConvertirEnJourDureeEnMois(AgeMaxDrc)
                     If ageMinDrcEnJour <> 0 Then
@@ -140,7 +140,7 @@ Public Class EpisodeProtocoleCollaboratifDao
             AgeMaxDrc = Coalesce(DrcConsignedDatatable.Rows(i)("oa_parcours_age_max"), 0)
 
             Select Case TypeActiviteEpisode
-                Case EpisodeDao.EnumTypeActiviteEpisodeCode.PREVENTION_ENFANT_SCOLAIRE
+                Case Episode.EnumTypeActiviteEpisodeCode.PREVENTION_ENFANT_SCOLAIRE
                     If ageMinDrc <> 0 Then
                         If agePatientEnAnnee < ageMinDrc Then
                             Continue For
@@ -151,7 +151,7 @@ Public Class EpisodeProtocoleCollaboratifDao
                             Continue For
                         End If
                     End If
-                Case EpisodeDao.EnumTypeActiviteEpisodeCode.PREVENTION_ENFANT_PRE_SCOLAIRE
+                Case Episode.EnumTypeActiviteEpisodeCode.PREVENTION_ENFANT_PRE_SCOLAIRE
                     Dim ageMinEnJour As Integer = outils.ConvertirEnJourDureeEnMois(ageMinDrc)
                     Dim ageMaxEnJour As Integer = outils.ConvertirEnJourDureeEnMois(AgeMaxDrc)
                     If ageMinEnJour <> 0 Then
@@ -221,11 +221,11 @@ Public Class EpisodeProtocoleCollaboratifDao
 
         patient = patientDao.GetPatientById(patientId)
         Select Case TypeActiviteEpisode
-            Case EpisodeDao.EnumTypeActiviteEpisodeCode.PREVENTION_ENFANT_PRE_SCOLAIRE
+            Case Episode.EnumTypeActiviteEpisodeCode.PREVENTION_ENFANT_PRE_SCOLAIRE
                 'Calcul âge enfant en jour
                 agePatientEnJour = CalculAgeEnJour(patient.PatientDateNaissance)
                 agePatientEnJour += JoursAAjouterPourCalculAgePreScolaire
-            Case EpisodeDao.EnumTypeActiviteEpisodeCode.PREVENTION_ENFANT_SCOLAIRE
+            Case Episode.EnumTypeActiviteEpisodeCode.PREVENTION_ENFANT_SCOLAIRE
                 'Calcul âge enfant en année
                 agePatientEnAnnee = CalculAgeEnAnnee(patient.PatientDateNaissance)
             Case Else
@@ -247,7 +247,7 @@ Public Class EpisodeProtocoleCollaboratifDao
             AgeMaxDrc = Coalesce(DrcStandardDatatable.Rows(i)("age_max"), 0)
 
             Select Case TypeActiviteEpisode
-                Case EpisodeDao.EnumTypeActiviteEpisodeCode.PREVENTION_ENFANT_SCOLAIRE
+                Case Episode.EnumTypeActiviteEpisodeCode.PREVENTION_ENFANT_SCOLAIRE
                     If ageMinDrc <> 0 Then
                         If agePatientEnAnnee < ageMinDrc Then
                             Continue For
@@ -258,7 +258,7 @@ Public Class EpisodeProtocoleCollaboratifDao
                             Continue For
                         End If
                     End If
-                Case EpisodeDao.EnumTypeActiviteEpisodeCode.PREVENTION_ENFANT_PRE_SCOLAIRE
+                Case Episode.EnumTypeActiviteEpisodeCode.PREVENTION_ENFANT_PRE_SCOLAIRE
                     Dim ageMinDrcEnJour As Integer = outils.ConvertirEnJourDureeEnMois(ageMinDrc)
                     Dim ageMaxDrcEnJour As Integer = outils.ConvertirEnJourDureeEnMois(AgeMaxDrc)
                     If ageMinDrcEnJour <> 0 Then
@@ -294,7 +294,7 @@ Public Class EpisodeProtocoleCollaboratifDao
             AgeMaxDrc = Coalesce(DrcConsignedDatatable.Rows(i)("oa_parcours_age_max"), 0)
 
             Select Case TypeActiviteEpisode
-                Case EpisodeDao.EnumTypeActiviteEpisodeCode.PREVENTION_ENFANT_SCOLAIRE
+                Case Episode.EnumTypeActiviteEpisodeCode.PREVENTION_ENFANT_SCOLAIRE
                     If ageMinDrc <> 0 Then
                         If agePatientEnAnnee < ageMinDrc Then
                             Continue For
@@ -305,7 +305,7 @@ Public Class EpisodeProtocoleCollaboratifDao
                             Continue For
                         End If
                     End If
-                Case EpisodeDao.EnumTypeActiviteEpisodeCode.PREVENTION_ENFANT_PRE_SCOLAIRE
+                Case Episode.EnumTypeActiviteEpisodeCode.PREVENTION_ENFANT_PRE_SCOLAIRE
                     Dim ageMinEnJour As Integer = outils.ConvertirEnJourDureeEnMois(ageMinDrc)
                     Dim ageMaxEnJour As Integer = outils.ConvertirEnJourDureeEnMois(AgeMaxDrc)
                     If ageMinEnJour <> 0 Then

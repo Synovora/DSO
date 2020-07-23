@@ -1,35 +1,7 @@
 ﻿Imports System.Data.SqlClient
-Imports Oasis_Common
+
 Public Class PatientParametreLdvDao
     Inherits StandardDao
-
-    Public Function GetParametreByPatientId(patientId As Integer) As PatientParametreLdv
-        Dim patientParametreLdv As PatientParametreLdv
-        Dim con As SqlConnection
-
-        con = GetConnection()
-
-        Try
-            Dim command As SqlCommand = con.CreateCommand()
-
-            command.CommandText =
-                "SELECT * FROM oasis.oa_patient_parametre_ldv WHERE patient_id = @id"
-            command.Parameters.AddWithValue("@id", patientId)
-            Using reader As SqlDataReader = command.ExecuteReader()
-                If reader.Read() Then
-                    patientParametreLdv = BuildBean(reader)
-                Else
-                    Throw New ArgumentException("RNF - Paramètres de ligne de vie inexistant pour ce patient !")
-                End If
-            End Using
-        Catch ex As Exception
-            Throw ex
-        Finally
-            con.Close()
-        End Try
-
-        Return patientParametreLdv
-    End Function
 
     Private Function BuildBean(reader As SqlDataReader) As PatientParametreLdv
         Dim patientParametreLdv As New PatientParametreLdv With {
@@ -55,7 +27,28 @@ Public Class PatientParametreLdvDao
             .UserModification = Coalesce(reader("user_modification"), 0),
             .DateModification = Coalesce(reader("date_modification"), Nothing)
         }
+        Return patientParametreLdv
+    End Function
 
+    Public Function GetParametreByPatientId(patientId As Integer) As PatientParametreLdv
+        Dim patientParametreLdv As PatientParametreLdv
+        Dim con As SqlConnection = GetConnection()
+        Try
+            Dim command As SqlCommand = con.CreateCommand()
+            command.CommandText = "SELECT * FROM oasis.oa_patient_parametre_ldv WHERE patient_id = @id"
+            command.Parameters.AddWithValue("@id", patientId)
+            Using reader As SqlDataReader = command.ExecuteReader()
+                If reader.Read() Then
+                    patientParametreLdv = BuildBean(reader)
+                Else
+                    Throw New ArgumentException("RNF - Paramètres de ligne de vie inexistant pour ce patient !")
+                End If
+            End Using
+        Catch ex As Exception
+            Throw ex
+        Finally
+            con.Close()
+        End Try
         Return patientParametreLdv
     End Function
 
@@ -64,8 +57,7 @@ Public Class PatientParametreLdvDao
         Dim da As SqlDataAdapter = New SqlDataAdapter()
         Dim episodeIdCree As Integer = 0
         Dim CodeRetour As Boolean = True
-        Dim con As SqlConnection
-        con = GetConnection()
+        Dim con As SqlConnection = GetConnection()
 
         Dim dateCreation As Date = Date.Now.Date
 

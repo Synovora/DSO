@@ -1,58 +1,22 @@
 ﻿Imports System.Data.SqlClient
 Imports Oasis_Common
+
 Public Class RadFAldCim10Selecteur
-    Private _UtilisateurConnecte As Utilisateur
-    Private _SelectedAldId As Integer
-    Private _SelectedAldCim10Id As Integer
+    Property UtilisateurConnecte As Utilisateur
+    Property SelectedAldId As Integer
+    Property SelectedAldCim10Id As Integer
 
-
-    'Le DataAdapter a pour objet de récupérer les données de la BDD et permettre le renvoi des modifications à la BDD
-    Dim AldDataAdapter As SqlDataAdapter = New SqlDataAdapter()
-
-    'Le DataTable contient les données que le Grid va afficher (on pourrait utiliser un Dataset si on utilise plusieurs tables)
-    Dim AldDataTable As DataTable = New DataTable()
     ReadOnly aldCim10Dao As AldCim10Dao = New AldCim10Dao()
-
-    Public Property UtilisateurConnecte As Utilisateur
-        Get
-            Return _UtilisateurConnecte
-        End Get
-        Set(value As Utilisateur)
-            _UtilisateurConnecte = value
-        End Set
-    End Property
-
-    Public Property SelectedAldId As Integer
-        Get
-            Return _SelectedAldId
-        End Get
-        Set(value As Integer)
-            _SelectedAldId = value
-        End Set
-    End Property
-
-    Public Property SelectedAldCim10Id As Integer
-        Get
-            Return _SelectedAldCim10Id
-        End Get
-        Set(value As Integer)
-            _SelectedAldCim10Id = value
-        End Set
-    End Property
-
     Dim aldCim10Id As Integer
 
     Private Sub RadFAldCim10Selecteur_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         InitAffichageLabel()
-        'Récupération des données de la table [oa_ald] dans un DataTable et liason du DataTable avec la grid
         ChargementAld()
     End Sub
 
     Private Sub ChargementAld()
-        Dim AldDataTable As DataTable
-        AldDataTable = aldCim10Dao.GetAllAldCIM10ByAldId(SelectedAldId)
+        Dim AldDataTable As List(Of AldCim10) = aldCim10Dao.GetAllAldCim10ByAldId(SelectedAldId)
         RadAldDataGridView.DataSource = AldDataTable
-        'Enlève le focus sur la première ligne de la Grid
         RadAldDataGridView.ClearSelection()
     End Sub
 
@@ -87,9 +51,9 @@ Public Class RadFAldCim10Selecteur
         If RadAldDataGridView.CurrentRow IsNot Nothing Then
             Dim aRow As Integer = Me.RadAldDataGridView.Rows.IndexOf(Me.RadAldDataGridView.CurrentRow)
             If aRow >= 0 Then
-                aldCim10Id = RadAldDataGridView.Rows(aRow).Cells("oa_ald_cim10_id").Value
-                LblCim10Code.Text = RadAldDataGridView.Rows(aRow).Cells("oa_ald_cim10_code").Value
-                LblCim10Description.Text = RadAldDataGridView.Rows(aRow).Cells("oa_ald_cim10_description").Value
+                aldCim10Id = RadAldDataGridView.Rows(aRow).Cells("AldCim10Id").Value
+                LblCim10Code.Text = RadAldDataGridView.Rows(aRow).Cells("AldCim10Code").Value
+                LblCim10Description.Text = RadAldDataGridView.Rows(aRow).Cells("AldCim10Description").Value
 
                 If LblCim10Code.Text <> "" Then
                     RadBtnSelection.Show()

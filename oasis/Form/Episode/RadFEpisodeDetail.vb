@@ -218,7 +218,7 @@ Public Class RadFEpisodeDetail
         DroitAcces()
 
         ChargementAffichageBlocWorkflow()
-        If episode.TypeActivite = EpisodeDao.EnumTypeActiviteEpisodeCode.SOCIAL Or episode.Type = EpisodeDao.EnumTypeEpisode.VIRTUEL.ToString Then
+        If episode.TypeActivite = Episode.EnumTypeActiviteEpisodeCode.SOCIAL Or episode.Type = Episode.EnumTypeEpisode.VIRTUEL.ToString Then
             SplitPanelObsMedProtocole.Hide()
             Me.RadSplitContainerObsMed.MoveSplitter(Me.RadSplitContainerObsMed.Splitters(0), RadDirection.Up)
             SplitPanelObsIdeProtocole.Hide()
@@ -436,7 +436,7 @@ Public Class RadFEpisodeDetail
     Private Sub ChargementCaracteristiquesEpisode()
         episode = episodeDao.GetEpisodeById(Me.SelectedEpisodeId)
 
-        If episode.Type = EpisodeDao.EnumTypeEpisode.VIRTUEL.ToString Then
+        If episode.Type = Episode.EnumTypeEpisode.VIRTUEL.ToString Then
             If episode.DescriptionActivite = "" Then
                 LblTypeEpisode.Text = episode.Type.Trim
             Else
@@ -515,7 +515,7 @@ Public Class RadFEpisodeDetail
         End If
 
         Select Case episode.Etat
-            Case EpisodeDao.EnumEtatEpisode.EN_COURS.ToString
+            Case Episode.EnumEtatEpisode.EN_COURS.ToString
                 If ControleOrdonnanceExiste = True Then
                     If ControleOrdonnanceValide = True Then
                         LblLabelEtatEpisode.Text = "EPISODE EN COURS - ORDONNANCE VALIDEE LE " & DateValidationOrdonnance.ToString("dd.MM.yyyy hh:mm")
@@ -525,7 +525,7 @@ Public Class RadFEpisodeDetail
                 Else
                     LblLabelEtatEpisode.Text = "Episode en cours"
                 End If
-            Case EpisodeDao.EnumEtatEpisode.CLOTURE.ToString
+            Case Episode.EnumEtatEpisode.CLOTURE.ToString
                 If episode.DateModification.Date < Date.Now.Date Then
                     LblLabelEtatEpisode.Text = "EPISODE CLOTURE LE " & episode.DateModification.ToString("dd.MM.yyyy") & " (non modifiable, hormis l'ajout de pièces dans les sous-épisodes)"
                 Else
@@ -702,18 +702,18 @@ Public Class RadFEpisodeDetail
             End Select
 
             Select Case ParametreId
-                Case ParametreDao.EnumParametreId.POIDS
+                Case Parametre.EnumParametreId.POIDS
                     LblLabelPoids.Text = "Poids"
                     LblParmPoids.Text = valeurString & " " & unite
                     valeurPoids = Valeur
-                Case ParametreDao.EnumParametreId.TAILLE
+                Case Parametre.EnumParametreId.TAILLE
                     LblLabelTaille.Text = "Taille"
                     LblParmTaille.Text = valeurString & " " & unite
                     valeurTaille = Valeur
                     If valeurTaille = 0 Then
                         valeurTaille = SelectedPatient.Taille
                     End If
-                Case ParametreDao.EnumParametreId.IMC
+                Case Parametre.EnumParametreId.IMC
                     LblLabelIMC.Text = "IMC"
                     uniteIMC = unite
                     EpisodeParametreIdIMC = EpisodeParametreId
@@ -725,15 +725,15 @@ Public Class RadFEpisodeDetail
                 Case 5
                     LblLabelFC.Text = "FC"
                     LblParmFC.Text = valeurString & " " & unite
-                Case ParametreDao.EnumParametreId.PAS
+                Case Parametre.EnumParametreId.PAS
                     LblLabelPAS.Text = "PAS"
                     LblParmPAS.Text = valeurString & " " & unite
                     valeurPAS = Valeur
-                Case ParametreDao.EnumParametreId.PAD
+                Case Parametre.EnumParametreId.PAD
                     LblLabelPAD.Text = "PAD"
                     LblParmPAD.Text = valeurString & " " & unite
                     valeurPAD = Valeur
-                Case ParametreDao.EnumParametreId.PAM
+                Case Parametre.EnumParametreId.PAM
                     LblLabelPAM.Text = "PAM"
                     unitePAM = unite
                     EpisodeParametreIdPAM = EpisodeParametreId
@@ -803,7 +803,7 @@ Public Class RadFEpisodeDetail
         If LblLabelTaille.Text = "" Then
             Dim parametre As Parametre
             Dim parametreDao As New ParametreDao
-            parametre = parametreDao.GetParametreById(ParametreDao.EnumParametreId.TAILLE) 'Taille
+            parametre = parametreDao.GetParametreById(Parametre.EnumParametreId.TAILLE) 'Taille
             LblLabelTaille.Text = "Taille"
             valeurString = SelectedPatient.Taille.ToString("##0")
             LblParmTaille.Text = valeurString & " " & parametre.Unite
@@ -1463,13 +1463,13 @@ Public Class RadFEpisodeDetail
             End If
 
             Select Case ObservationSpe.Rows(i)("type_observation")
-                Case EpisodeObservationDao.EnumTypeEpisodeObservation.MEDICAL.ToString
+                Case EpisodeObservation.EnumTypeEpisodeObservation.MEDICAL.ToString
                     iGridMed += 1
                     RadGridViewObsMed.Rows.Add(iGridMed)
                     RadGridViewObsMed.Rows(iGridMed).Cells("observation").Value = ObservationSpe.Rows(i)("observation")
                     RadGridViewObsMed.Rows(iGridMed).Cells("Identification").Value = Auteur & vbCrLf & AfficheDateCreation
                     RadGridViewObsMed.Rows(iGridMed).Cells("observationId").Value = ObservationSpe.Rows(i)("episode_observation_id")
-                Case EpisodeObservationDao.EnumTypeEpisodeObservation.PARAMEDICAL.ToString()
+                Case EpisodeObservation.EnumTypeEpisodeObservation.PARAMEDICAL.ToString()
                     iGridIde += 1
                     RadGridViewObsIde.Rows.Add(iGridIde)
                     RadGridViewObsIde.Rows(iGridIde).Cells("observation").Value = ObservationSpe.Rows(i)("observation")
@@ -1705,7 +1705,7 @@ Public Class RadFEpisodeDetail
         Else
             LblWorkFlow.Text = ""
             ControleWorkflowEnCoursExistant = False
-            If episode.Etat = EpisodeDao.EnumEtatEpisode.CLOTURE.ToString AndAlso episode.DateModification.Date < Date.Now.Date Then
+            If episode.Etat = Episode.EnumEtatEpisode.CLOTURE.ToString AndAlso episode.DateModification.Date < Date.Now.Date Then
                 RadBtnWorkflowMed.Hide()
                 RadBtnWorkflowIde.Hide()
                 LblWorkFlow.Hide()
@@ -1901,13 +1901,13 @@ Public Class RadFEpisodeDetail
                 episode.ConclusionIdeType = ""
             Case ProfilDao.EnumProfilType.PARAMEDICAL.ToString
                 Select Case episode.ConclusionIdeType
-                    Case EpisodeDao.EnumTypeConclusionParamedicale.ROLE_PROPRE.ToString
+                    Case Episode.EnumTypeConclusionParamedicale.ROLE_PROPRE.ToString
                         RadioBtnRolePropre.Checked = True
                         RadioTypeConclusionIdeModified = False
-                    Case EpisodeDao.EnumTypeConclusionParamedicale.SUR_PROTOCOLE.ToString
+                    Case Episode.EnumTypeConclusionParamedicale.SUR_PROTOCOLE.ToString
                         RadioBtnSurProtocole.Checked = True
                         RadioTypeConclusionIdeModified = False
-                    Case EpisodeDao.EnumTypeConclusionParamedicale.DEMANDE_AVIS.ToString
+                    Case Episode.EnumTypeConclusionParamedicale.DEMANDE_AVIS.ToString
                         RadioBtnDemandeAvis.Checked = True
                         RadioTypeConclusionIdeModified = False
                 End Select
@@ -1943,9 +1943,9 @@ Public Class RadFEpisodeDetail
                 RadioBtnRolePropre.Enabled = False
                 RadioBtnSurProtocole.Enabled = False
                 'Si l'épisode n'avait pas la même valeur, on met à jour l'épisode
-                If episode.ConclusionIdeType <> EpisodeDao.EnumTypeConclusionParamedicale.DEMANDE_AVIS.ToString Then
+                If episode.ConclusionIdeType <> Episode.EnumTypeConclusionParamedicale.DEMANDE_AVIS.ToString Then
                     RadioBtnDemandeAvis.Checked = True
-                    episode.ConclusionIdeType = EpisodeDao.EnumTypeConclusionParamedicale.DEMANDE_AVIS.ToString
+                    episode.ConclusionIdeType = Episode.EnumTypeConclusionParamedicale.DEMANDE_AVIS.ToString
                     episodeDao.ModificationEpisode(episode, userLog)
                     RadioTypeConclusionIdeModified = False
                 End If
@@ -1958,16 +1958,16 @@ Public Class RadFEpisodeDetail
                     RadioBtnRolePropre.Enabled = False
                     RadioBtnSurProtocole.Enabled = False
                     'L'épisode est a minima sur protocole, mais l'IDE peut le déclarer sur demande d'avis
-                    If Not (episode.ConclusionIdeType = EpisodeDao.EnumTypeConclusionParamedicale.SUR_PROTOCOLE.ToString OrElse
-                            episode.ConclusionIdeType = EpisodeDao.EnumTypeConclusionParamedicale.DEMANDE_AVIS.ToString) Then
+                    If Not (episode.ConclusionIdeType = Episode.EnumTypeConclusionParamedicale.SUR_PROTOCOLE.ToString OrElse
+                            episode.ConclusionIdeType = Episode.EnumTypeConclusionParamedicale.DEMANDE_AVIS.ToString) Then
                         RadioBtnSurProtocole.Checked = True
-                        episode.ConclusionIdeType = EpisodeDao.EnumTypeConclusionParamedicale.SUR_PROTOCOLE.ToString
+                        episode.ConclusionIdeType = Episode.EnumTypeConclusionParamedicale.SUR_PROTOCOLE.ToString
                         episodeDao.ModificationEpisode(episode, userLog)
                         RadioTypeConclusionIdeModified = False
                     End If
                     'Seules les options 'Demande d'avis' et 'Protocole' sont possibles si le profil utilisateur est IDE et si l'épisode n'est pas clôturé depuis plus d'un jour
                     If userLog.TypeProfil = ProfilDao.EnumProfilType.PARAMEDICAL.ToString Then
-                        If Not (episode.Etat = EpisodeDao.EnumEtatEpisode.CLOTURE.ToString AndAlso episode.DateModification.Date < Date.Now.Date) Then
+                        If Not (episode.Etat = Episode.EnumEtatEpisode.CLOTURE.ToString AndAlso episode.DateModification.Date < Date.Now.Date) Then
                             RadioBtnDemandeAvis.Enabled = True
                             RadioBtnSurProtocole.Enabled = True
                         End If
@@ -1979,11 +1979,11 @@ Public Class RadFEpisodeDetail
             'Si l'épisode n'avait pas de valeur de définie, alors rôle propre par défaut
             If RadioBtnSurProtocole.Checked = False AndAlso RadioBtnRolePropre.Checked = False AndAlso RadioBtnDemandeAvis.Checked = False Then
                 RadioBtnRolePropre.Checked = True
-                episode.ConclusionIdeType = EpisodeDao.EnumTypeConclusionParamedicale.ROLE_PROPRE.ToString
+                episode.ConclusionIdeType = Episode.EnumTypeConclusionParamedicale.ROLE_PROPRE.ToString
                 episodeDao.ModificationEpisode(episode, userLog)
                 RadioTypeConclusionIdeModified = False
                 If userLog.TypeProfil = ProfilDao.EnumProfilType.PARAMEDICAL.ToString Then
-                    If Not (episode.Etat = EpisodeDao.EnumEtatEpisode.CLOTURE.ToString AndAlso episode.DateModification.Date < Date.Now.Date) Then
+                    If Not (episode.Etat = Episode.EnumEtatEpisode.CLOTURE.ToString AndAlso episode.DateModification.Date < Date.Now.Date) Then
                         RadioBtnDemandeAvis.Enabled = True
                         RadioBtnSurProtocole.Enabled = True
                         RadioBtnRolePropre.Enabled = True
@@ -1992,22 +1992,22 @@ Public Class RadFEpisodeDetail
             End If
             'Autre cas, si l'utilisateur a modifié le type de conclusion
             If RadioBtnRolePropre.Checked = True Then
-                If episode.ConclusionIdeType <> EpisodeDao.EnumTypeConclusionParamedicale.ROLE_PROPRE.ToString Then
-                    episode.ConclusionIdeType = EpisodeDao.EnumTypeConclusionParamedicale.ROLE_PROPRE.ToString
+                If episode.ConclusionIdeType <> Episode.EnumTypeConclusionParamedicale.ROLE_PROPRE.ToString Then
+                    episode.ConclusionIdeType = Episode.EnumTypeConclusionParamedicale.ROLE_PROPRE.ToString
                     episodeDao.ModificationEpisode(episode, userLog)
                     RadioTypeConclusionIdeModified = False
                 End If
             Else
                 If RadioBtnSurProtocole.Checked = True Then
-                    If episode.ConclusionIdeType <> EpisodeDao.EnumTypeConclusionParamedicale.SUR_PROTOCOLE.ToString Then
-                        episode.ConclusionIdeType = EpisodeDao.EnumTypeConclusionParamedicale.SUR_PROTOCOLE.ToString
+                    If episode.ConclusionIdeType <> Episode.EnumTypeConclusionParamedicale.SUR_PROTOCOLE.ToString Then
+                        episode.ConclusionIdeType = Episode.EnumTypeConclusionParamedicale.SUR_PROTOCOLE.ToString
                         episodeDao.ModificationEpisode(episode, userLog)
                         RadioTypeConclusionIdeModified = False
                     End If
                 Else
                     If RadioBtnDemandeAvis.Checked = True Then
-                        If episode.ConclusionIdeType <> EpisodeDao.EnumTypeConclusionParamedicale.DEMANDE_AVIS.ToString Then
-                            episode.ConclusionIdeType = EpisodeDao.EnumTypeConclusionParamedicale.DEMANDE_AVIS.ToString
+                        If episode.ConclusionIdeType <> Episode.EnumTypeConclusionParamedicale.DEMANDE_AVIS.ToString Then
+                            episode.ConclusionIdeType = Episode.EnumTypeConclusionParamedicale.DEMANDE_AVIS.ToString
                             episodeDao.ModificationEpisode(episode, userLog)
                             RadioTypeConclusionIdeModified = False
                         End If
@@ -2227,7 +2227,7 @@ Public Class RadFEpisodeDetail
     Private Sub RadioBtnRolePropre_CheckedChanged(sender As Object, e As EventArgs) Handles RadioBtnRolePropre.CheckedChanged
         If ChargementConclusionEnCours = False Then
             RadioTypeConclusionIdeModified = True
-            episode.ConclusionIdeType = EpisodeDao.EnumTypeConclusionParamedicale.ROLE_PROPRE.ToString
+            episode.ConclusionIdeType = Episode.EnumTypeConclusionParamedicale.ROLE_PROPRE.ToString
             ControleMAJTypeConclusionIDE()
         End If
     End Sub
@@ -2235,7 +2235,7 @@ Public Class RadFEpisodeDetail
     Private Sub RadioBtnSurProtocole_CheckedChanged(sender As Object, e As EventArgs) Handles RadioBtnSurProtocole.CheckedChanged
         If ChargementConclusionEnCours = False Then
             RadioTypeConclusionIdeModified = True
-            episode.ConclusionIdeType = EpisodeDao.EnumTypeConclusionParamedicale.SUR_PROTOCOLE.ToString
+            episode.ConclusionIdeType = Episode.EnumTypeConclusionParamedicale.SUR_PROTOCOLE.ToString
             ControleMAJTypeConclusionIDE()
         End If
     End Sub
@@ -2243,7 +2243,7 @@ Public Class RadFEpisodeDetail
     Private Sub RadioBtnDemandeAvis_CheckedChanged(sender As Object, e As EventArgs) Handles RadioBtnDemandeAvis.CheckedChanged
         If ChargementConclusionEnCours = False Then
             RadioTypeConclusionIdeModified = True
-            episode.ConclusionIdeType = EpisodeDao.EnumTypeConclusionParamedicale.DEMANDE_AVIS.ToString
+            episode.ConclusionIdeType = Episode.EnumTypeConclusionParamedicale.DEMANDE_AVIS.ToString
             ControleMAJTypeConclusionIDE()
         End If
     End Sub
@@ -2252,12 +2252,12 @@ Public Class RadFEpisodeDetail
         If RadioTypeConclusionIdeModified = True Then
             Dim TypeConclusionIde As String
             If RadioBtnDemandeAvis.Checked = True Then
-                TypeConclusionIde = EpisodeDao.EnumTypeConclusionParamedicale.DEMANDE_AVIS.ToString
+                TypeConclusionIde = Episode.EnumTypeConclusionParamedicale.DEMANDE_AVIS.ToString
             Else
                 If RadioBtnRolePropre.Checked = True Then
-                    TypeConclusionIde = EpisodeDao.EnumTypeConclusionParamedicale.ROLE_PROPRE.ToString
+                    TypeConclusionIde = Episode.EnumTypeConclusionParamedicale.ROLE_PROPRE.ToString
                 Else
-                    TypeConclusionIde = EpisodeDao.EnumTypeConclusionParamedicale.SUR_PROTOCOLE.ToString
+                    TypeConclusionIde = Episode.EnumTypeConclusionParamedicale.SUR_PROTOCOLE.ToString
                 End If
             End If
 
@@ -2356,11 +2356,11 @@ Public Class RadFEpisodeDetail
     End Sub
 
     Private Sub ClotureEpisode()
-        episode.Etat = EpisodeDao.EnumEtatEpisode.CLOTURE.ToString
+        episode.Etat = Episode.EnumEtatEpisode.CLOTURE.ToString
         episode.DateModification = Date.Now()
         episode.UserModification = userLog.UtilisateurId
         If episodeDao.ModificationEpisode(episode, userLog) = True Then
-            If episode.ConclusionIdeType = EpisodeDao.EnumTypeConclusionParamedicale.SUR_PROTOCOLE.ToString Then
+            If episode.ConclusionIdeType = Episode.EnumTypeConclusionParamedicale.SUR_PROTOCOLE.ToString Then
                 Dim contexte As New Antecedent
                 Dim contexteHisto As New AntecedentHisto
                 Dim contexteDao As New ContexteDao
@@ -2420,7 +2420,7 @@ Public Class RadFEpisodeDetail
     End Sub
 
     Private Sub AnnulationEpisode()
-        episode.Etat = EpisodeDao.EnumEtatEpisode.ANNULE.ToString
+        episode.Etat = Episode.EnumEtatEpisode.ANNULE.ToString
         episode.Inactif = True
         episode.DateModification = Date.Now()
         episode.UserModification = userLog.UtilisateurId
@@ -3742,7 +3742,7 @@ Public Class RadFEpisodeDetail
             OrdonnanceId = dt.Rows(0)("oa_ordonnance_id")
             AfficheOrdonnance(OrdonnanceId)
         Else
-            If episode.Etat = EpisodeDao.EnumEtatEpisode.CLOTURE.ToString Then
+            If episode.Etat = Episode.EnumEtatEpisode.CLOTURE.ToString Then
                 If episode.DateModification.Date < Date.Now.Date Then
                     MessageBox.Show("Il n'y a pas d'ordonnance de créée pour cet épisode clôturé !")
                     Cursor.Current = Cursors.Default
@@ -3840,7 +3840,7 @@ Public Class RadFEpisodeDetail
                     IntervenantOasis = True
                     ParcoursListProfilsOasis.Add(EnumSpecialiteOasis.IDE)
                     Dim pacoursConsigneDao As New ParcoursConsigneDao
-                    If pacoursConsigneDao.ExisteParcoursConsigne(ParcoursDataTable.Rows(i)("oa_parcours_id")) = False Then
+                    If pacoursConsigneDao.IsExistParcoursConsigne(ParcoursDataTable.Rows(i)("oa_parcours_id")) = False Then
                         ParcoursConsigneEnRouge = True
                     End If
                 Case EnumSousCategoriePPS.sageFemme
@@ -4141,10 +4141,10 @@ Public Class RadFEpisodeDetail
                 categorieContexte = contexteDataTable.Rows(i)("oa_antecedent_categorie_contexte")
             End If
             Select Case categorieContexte
-                Case ContexteDao.EnumParcoursBaseCode.Medical
-                    categorieContexteString = ContexteDao.EnumParcoursBaseItem.Medical
-                Case ContexteDao.EnumParcoursBaseCode.BioEnvironnemental
-                    categorieContexteString = ContexteDao.EnumParcoursBaseItem.BioEnvironnemental
+                Case ContexteCourrier.EnumParcoursBaseCode.Medical
+                    categorieContexteString = ContexteCourrier.EnumParcoursBaseItem.Medical
+                Case ContexteCourrier.EnumParcoursBaseCode.BioEnvironnemental
+                    categorieContexteString = ContexteCourrier.EnumParcoursBaseItem.BioEnvironnemental
                 Case Else
                     categorieContexteString = ""
             End Select
@@ -4981,11 +4981,11 @@ Public Class RadFEpisodeDetail
     '======================= Droits d'accès ====================
     '===========================================================
     Private Sub DroitAcces()
-        If episode.Etat = EpisodeDao.EnumEtatEpisode.CLOTURE.ToString Then
+        If episode.Etat = Episode.EnumEtatEpisode.CLOTURE.ToString Then
             RadBtnCloture.Enabled = False
         End If
 
-        If episode.Etat = EpisodeDao.EnumEtatEpisode.CLOTURE.ToString AndAlso episode.DateModification.Date < Date.Now.Date Then
+        If episode.Etat = Episode.EnumEtatEpisode.CLOTURE.ToString AndAlso episode.DateModification.Date < Date.Now.Date Then
             InhibeAccesIDE()
             InhibeAccesMed()
         Else
@@ -4994,7 +4994,7 @@ Public Class RadFEpisodeDetail
                     InhibeAccesIDE()
                 Case ProfilDao.EnumProfilType.PARAMEDICAL.ToString
                     InhibeAccesMed()
-                    If episode.TypeActivite <> EpisodeDao.EnumTypeActiviteEpisodeCode.PATHOLOGIE_AIGUE Then
+                    If episode.TypeActivite <> Episode.EnumTypeActiviteEpisodeCode.PATHOLOGIE_AIGUE Then
                         AjoutProtocoleAiguToolStripMenuItem.Visible = False
                     End If
             End Select
@@ -5004,7 +5004,7 @@ Public Class RadFEpisodeDetail
             End If
         End If
 
-        If episode.Etat <> EpisodeDao.EnumEtatEpisode.CLOTURE.ToString Then
+        If episode.Etat <> Episode.EnumEtatEpisode.CLOTURE.ToString Then
             If userLog.TypeProfil = ProfilDao.EnumProfilType.MEDICAL.ToString Or userLog.UtilisateurAdmin = True Then
                 'LibereAccesMed()
             End If
@@ -5059,7 +5059,7 @@ Public Class RadFEpisodeDetail
 
     'Contrôle si l'épisode est clôturé et non modifiable (si la date de clôture est < date du jour)
     Private Sub ControleEpisodeCloture()
-        If episode.Etat = EpisodeDao.EnumEtatEpisode.CLOTURE.ToString Then
+        If episode.Etat = Episode.EnumEtatEpisode.CLOTURE.ToString Then
             'Clôture épisode
             RadBtnCloture.Enabled = False
 
@@ -5154,7 +5154,7 @@ Public Class RadFEpisodeDetail
     Private Sub LibereAccesIde()
         RadBtnWorkflowIde.Enabled = True
         TxtConclusionIDE.Enabled = True
-        If episode.ConclusionIdeType = EpisodeDao.EnumTypeConclusionParamedicale.DEMANDE_AVIS.ToString Then
+        If episode.ConclusionIdeType = Episode.EnumTypeConclusionParamedicale.DEMANDE_AVIS.ToString Then
             If ControleDemandeAvisMedicalExiste = True Then
                 Exit Sub
             End If

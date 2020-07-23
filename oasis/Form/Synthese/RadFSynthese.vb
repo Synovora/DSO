@@ -1643,7 +1643,7 @@ Public Class RadFSynthese
                     IntervenantOasis = True
                     ParcoursListProfilsOasis.Add(EnumSpecialiteOasis.IDE)
                     Dim pacoursConsigneDao As New ParcoursConsigneDao
-                    If pacoursConsigneDao.ExisteParcoursConsigne(ParcoursDataTable.Rows(i)("oa_parcours_id")) = False Then
+                    If pacoursConsigneDao.IsExistParcoursConsigne(ParcoursDataTable.Rows(i)("oa_parcours_id")) = False Then
                         ParcoursConsigneEnRouge = True
                     End If
                 Case EnumSousCategoriePPS.sageFemme
@@ -1940,10 +1940,10 @@ Public Class RadFSynthese
                 categorieContexte = contexteDataTable.Rows(i)("oa_antecedent_categorie_contexte")
             End If
             Select Case categorieContexte
-                Case ContexteDao.EnumParcoursBaseCode.Medical
-                    categorieContexteString = ContexteDao.EnumParcoursBaseItem.Medical
-                Case ContexteDao.EnumParcoursBaseCode.BioEnvironnemental
-                    categorieContexteString = ContexteDao.EnumParcoursBaseItem.BioEnvironnemental
+                Case ContexteCourrier.EnumParcoursBaseCode.Medical
+                    categorieContexteString = ContexteCourrier.EnumParcoursBaseItem.Medical
+                Case ContexteCourrier.EnumParcoursBaseCode.BioEnvironnemental
+                    categorieContexteString = ContexteCourrier.EnumParcoursBaseItem.BioEnvironnemental
                 Case Else
                     categorieContexteString = ""
             End Select

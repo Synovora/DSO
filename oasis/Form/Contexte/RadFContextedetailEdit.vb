@@ -171,8 +171,8 @@ Public Class RadFContextedetailEdit
             RadValidation.Show()
 
             'Catégorie
-            'CbxCategorieContexte.Text = ContexteDao.EnumParcoursBaseItem.Medical
-            contexteUpdate.CategorieContexte = ContexteDao.EnumParcoursBaseCode.Medical
+            'CbxCategorieContexte.Text = ContexteCourrier.EnumParcoursBaseItem.Medical
+            contexteUpdate.CategorieContexte = ContexteCourrier.EnumParcoursBaseCode.Medical
             RadioBtnMedical.Checked = True
 
             'Dénomination DRC
@@ -203,7 +203,7 @@ Public Class RadFContextedetailEdit
             LblPublication.Hide()
             contexteUpdate.StatutAffichage = "P"
             If ConclusionEpisode = True Then
-                If Episode.TypeActivite <> EpisodeDao.EnumTypeActiviteEpisodeCode.PATHOLOGIE_AIGUE Then
+                If Episode.TypeActivite <> Episode.EnumTypeActiviteEpisodeCode.PATHOLOGIE_AIGUE Then
                     ChkCache.Checked = True
                     ChkCache.ForeColor = Color.Red
                     LblPublication.Text = "Contexte masqué"
@@ -252,22 +252,22 @@ Public Class RadFContextedetailEdit
         contexteRead.AldDateDebut = MaxDate
         contexteRead.AldDateFin = MaxDate
         contexteRead.AldDateDemande = MaxDate
-        contexteUpdate = contexteReadDao.CloneAntecedent(contexteRead)
+        contexteUpdate = contexteReadDao.Clone(contexteRead)
 
         Dim dateDebut, dateFin, dateCreation, dateModification As Date
         Dim ordreAffichage As Integer
         Dim dateJouraComparer As New Date(Date.Now.Year, Date.Now.Month, Date.Now.Day, 0, 0, 0)
 
         Select Case contexteRead.CategorieContexte
-            Case ContexteDao.EnumParcoursBaseCode.Medical
-                'CbxCategorieContexte.Text = ContexteDao.EnumParcoursBaseItem.Medical
+            Case ContexteCourrier.EnumParcoursBaseCode.Medical
+                'CbxCategorieContexte.Text = ContexteCourrier.EnumParcoursBaseItem.Medical
                 RadioBtnMedical.Checked = True
-            Case ContexteDao.EnumParcoursBaseCode.BioEnvironnemental
-                'CbxCategorieContexte.Text = ContexteDao.EnumParcoursBaseItem.BioEnvironnemental
+            Case ContexteCourrier.EnumParcoursBaseCode.BioEnvironnemental
+                'CbxCategorieContexte.Text = ContexteCourrier.EnumParcoursBaseItem.BioEnvironnemental
                 RadioBtnBioEnvironnemental.Checked = True
             Case Else
-                'CbxCategorieContexte.Text = ContexteDao.EnumParcoursBaseItem.Medical
-                contexteUpdate.CategorieContexte = ContexteDao.EnumParcoursBaseCode.Medical
+                'CbxCategorieContexte.Text = ContexteCourrier.EnumParcoursBaseItem.Medical
+                contexteUpdate.CategorieContexte = ContexteCourrier.EnumParcoursBaseCode.Medical
                 RadioBtnMedical.Checked = True
         End Select
 
@@ -609,8 +609,8 @@ Public Class RadFContextedetailEdit
     'Initialisation des zones de saisie
     Private Sub InitZone()
         'CbxCategorieContexte.Items.Clear()
-        'CbxCategorieContexte.Items.Add(ContexteDao.EnumParcoursBaseItem.Medical)
-        'CbxCategorieContexte.Items.Add(ContexteDao.EnumParcoursBaseItem.BioEnvironnemental)
+        'CbxCategorieContexte.Items.Add(ContexteCourrier.EnumParcoursBaseItem.Medical)
+        'CbxCategorieContexte.Items.Add(ContexteCourrier.EnumParcoursBaseItem.BioEnvironnemental)
 
         Me.ContexteTransformeEnAntecedent = False
         TxtDrcId.Text = ""
@@ -671,12 +671,12 @@ Public Class RadFContextedetailEdit
     '======================================================
 
     Private Sub RadioBtnMedical_CheckedChanged(sender As Object, e As EventArgs) Handles RadioBtnMedical.CheckedChanged
-        contexteUpdate.CategorieContexte = ContexteDao.EnumParcoursBaseCode.Medical
+        contexteUpdate.CategorieContexte = ContexteCourrier.EnumParcoursBaseCode.Medical
         GestionAffichageBoutonValidation()
     End Sub
 
     Private Sub RadioBtnBioEnvironnemental_CheckedChanged(sender As Object, e As EventArgs) Handles RadioBtnBioEnvironnemental.CheckedChanged
-        contexteUpdate.CategorieContexte = ContexteDao.EnumParcoursBaseCode.BioEnvironnemental
+        contexteUpdate.CategorieContexte = ContexteCourrier.EnumParcoursBaseCode.BioEnvironnemental
         GestionAffichageBoutonValidation()
     End Sub
 

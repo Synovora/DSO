@@ -3,65 +3,25 @@
 Public Class EpisodeDao
     Inherits StandardDao
 
-    Public Enum EnumTypeConclusionParamedicale
-        ROLE_PROPRE
-        SUR_PROTOCOLE
-        DEMANDE_AVIS
-    End Enum
-
-    Public Structure EnumTypeActiviteEpisodeItem
-        Const PATHOLOGIE_AIGUE = "Pathologie Aiguë"
-        Const PREVENTION_AUTRE = "Autre prévention"
-        Const PREVENTION_ENFANT_PRE_SCOLAIRE = "Prévention de l'enfant en âge pré-scolaire (0 à 40 mois)"
-        Const PREVENTION_ENFANT_SCOLAIRE = "Prévention de l'enfant en âge scolaire (à partir de 3 ans)"
-        Const PREVENTION_SUIVI_GROSSESSE = "Suivi grossesse"
-        Const PREVENTION_SUIVI_GYNECOLOGIQUE = "Suivi gynécologique"
-        Const SOCIAL = "Social"
-        Const SUIVI_CHRONIQUE = "Suivi chronique"
-    End Structure
-
-    Public Structure EnumTypeActiviteEpisodeCode
-        Const PATHOLOGIE_AIGUE = "PATHOLOGIE_AIGUE"
-        Const PREVENTION_AUTRE = "PREVENTION_AUTRE"
-        Const PREVENTION_ENFANT_PRE_SCOLAIRE = "PREVENTION_ENFANT_PRE_SCOLAIRE"
-        Const PREVENTION_ENFANT_SCOLAIRE = "PREVENTION_ENFANT_SCOLAIRE"
-        Const PREVENTION_SUIVI_GROSSESSE = "PREVENTION_SUIVI_GROSSESSE"
-        Const PREVENTION_SUIVI_GYNECOLOGIQUE = "PREVENTION_SUIVI_GYNECOLOGIQUE"
-        Const SOCIAL = "SOCIAL"
-        Const SUIVI_CHRONIQUE = "SUIVI_CHRONIQUE"
-    End Structure
-
-    Public Enum EnumEtatEpisode
-        EN_COURS
-        CLOTURE
-        ANNULE
-    End Enum
-
-    Public Enum EnumTypeEpisode
-        CONSULTATION
-        VIRTUEL
-        PARAMETRE
-    End Enum
-
     Public Function GetItemTypeActiviteByCode(Code As String) As String
         Dim Item As String
         Select Case Code
-            Case EnumTypeActiviteEpisodeCode.PATHOLOGIE_AIGUE
-                Item = EnumTypeActiviteEpisodeItem.PATHOLOGIE_AIGUE
-            Case EnumTypeActiviteEpisodeCode.PREVENTION_AUTRE
-                Item = EnumTypeActiviteEpisodeItem.PREVENTION_AUTRE
-            Case EnumTypeActiviteEpisodeCode.PREVENTION_ENFANT_PRE_SCOLAIRE
-                Item = EnumTypeActiviteEpisodeItem.PREVENTION_ENFANT_PRE_SCOLAIRE
-            Case EnumTypeActiviteEpisodeCode.PREVENTION_ENFANT_SCOLAIRE
-                Item = EnumTypeActiviteEpisodeItem.PREVENTION_ENFANT_SCOLAIRE
-            Case EnumTypeActiviteEpisodeCode.PREVENTION_SUIVI_GROSSESSE
-                Item = EnumTypeActiviteEpisodeItem.PREVENTION_SUIVI_GROSSESSE
-            Case EnumTypeActiviteEpisodeCode.PREVENTION_SUIVI_GYNECOLOGIQUE
-                Item = EnumTypeActiviteEpisodeItem.PREVENTION_SUIVI_GYNECOLOGIQUE
-            Case EnumTypeActiviteEpisodeCode.SUIVI_CHRONIQUE
-                Item = EnumTypeActiviteEpisodeItem.SUIVI_CHRONIQUE
-            Case EnumTypeActiviteEpisodeCode.SOCIAL
-                Item = EnumTypeActiviteEpisodeItem.SOCIAL
+            Case Episode.EnumTypeActiviteEpisodeCode.PATHOLOGIE_AIGUE
+                Item = Episode.EnumTypeActiviteEpisodeItem.PATHOLOGIE_AIGUE
+            Case Episode.EnumTypeActiviteEpisodeCode.PREVENTION_AUTRE
+                Item = Episode.EnumTypeActiviteEpisodeItem.PREVENTION_AUTRE
+            Case Episode.EnumTypeActiviteEpisodeCode.PREVENTION_ENFANT_PRE_SCOLAIRE
+                Item = Episode.EnumTypeActiviteEpisodeItem.PREVENTION_ENFANT_PRE_SCOLAIRE
+            Case Episode.EnumTypeActiviteEpisodeCode.PREVENTION_ENFANT_SCOLAIRE
+                Item = Episode.EnumTypeActiviteEpisodeItem.PREVENTION_ENFANT_SCOLAIRE
+            Case Episode.EnumTypeActiviteEpisodeCode.PREVENTION_SUIVI_GROSSESSE
+                Item = Episode.EnumTypeActiviteEpisodeItem.PREVENTION_SUIVI_GROSSESSE
+            Case Episode.EnumTypeActiviteEpisodeCode.PREVENTION_SUIVI_GYNECOLOGIQUE
+                Item = Episode.EnumTypeActiviteEpisodeItem.PREVENTION_SUIVI_GYNECOLOGIQUE
+            Case Episode.EnumTypeActiviteEpisodeCode.SUIVI_CHRONIQUE
+                Item = Episode.EnumTypeActiviteEpisodeItem.SUIVI_CHRONIQUE
+            Case Episode.EnumTypeActiviteEpisodeCode.SOCIAL
+                Item = Episode.EnumTypeActiviteEpisodeItem.SOCIAL
             Case Else
                 Item = ""
         End Select
@@ -72,22 +32,22 @@ Public Class EpisodeDao
     Public Function GetCodeTypeActiviteByItem(Item As String) As String
         Dim Code As String
         Select Case Item
-            Case EnumTypeActiviteEpisodeItem.PATHOLOGIE_AIGUE
-                Code = EnumTypeActiviteEpisodeCode.PATHOLOGIE_AIGUE
-            Case EnumTypeActiviteEpisodeItem.PREVENTION_AUTRE
-                Code = EnumTypeActiviteEpisodeCode.PREVENTION_AUTRE
-            Case EnumTypeActiviteEpisodeItem.PREVENTION_ENFANT_PRE_SCOLAIRE
-                Code = EnumTypeActiviteEpisodeCode.PREVENTION_ENFANT_PRE_SCOLAIRE
-            Case EnumTypeActiviteEpisodeItem.PREVENTION_ENFANT_SCOLAIRE
-                Code = EnumTypeActiviteEpisodeCode.PREVENTION_ENFANT_SCOLAIRE
-            Case EnumTypeActiviteEpisodeItem.PREVENTION_SUIVI_GROSSESSE
-                Code = EnumTypeActiviteEpisodeCode.PREVENTION_SUIVI_GROSSESSE
-            Case EnumTypeActiviteEpisodeItem.PREVENTION_SUIVI_GYNECOLOGIQUE
-                Code = EnumTypeActiviteEpisodeCode.PREVENTION_SUIVI_GYNECOLOGIQUE
-            Case EnumTypeActiviteEpisodeItem.SUIVI_CHRONIQUE
-                Code = EnumTypeActiviteEpisodeCode.SUIVI_CHRONIQUE
-            Case EnumTypeActiviteEpisodeItem.SOCIAL
-                Code = EnumTypeActiviteEpisodeCode.SOCIAL
+            Case Episode.EnumTypeActiviteEpisodeItem.PATHOLOGIE_AIGUE
+                Code = Episode.EnumTypeActiviteEpisodeCode.PATHOLOGIE_AIGUE
+            Case Episode.EnumTypeActiviteEpisodeItem.PREVENTION_AUTRE
+                Code = Episode.EnumTypeActiviteEpisodeCode.PREVENTION_AUTRE
+            Case Episode.EnumTypeActiviteEpisodeItem.PREVENTION_ENFANT_PRE_SCOLAIRE
+                Code = Episode.EnumTypeActiviteEpisodeCode.PREVENTION_ENFANT_PRE_SCOLAIRE
+            Case Episode.EnumTypeActiviteEpisodeItem.PREVENTION_ENFANT_SCOLAIRE
+                Code = Episode.EnumTypeActiviteEpisodeCode.PREVENTION_ENFANT_SCOLAIRE
+            Case Episode.EnumTypeActiviteEpisodeItem.PREVENTION_SUIVI_GROSSESSE
+                Code = Episode.EnumTypeActiviteEpisodeCode.PREVENTION_SUIVI_GROSSESSE
+            Case Episode.EnumTypeActiviteEpisodeItem.PREVENTION_SUIVI_GYNECOLOGIQUE
+                Code = Episode.EnumTypeActiviteEpisodeCode.PREVENTION_SUIVI_GYNECOLOGIQUE
+            Case Episode.EnumTypeActiviteEpisodeItem.SUIVI_CHRONIQUE
+                Code = Episode.EnumTypeActiviteEpisodeCode.SUIVI_CHRONIQUE
+            Case Episode.EnumTypeActiviteEpisodeItem.SOCIAL
+                Code = Episode.EnumTypeActiviteEpisodeCode.SOCIAL
             Case Else
                 Code = ""
         End Select
@@ -167,12 +127,12 @@ Public Class EpisodeDao
                 " WHERE patient_Id = @patientId" &
                 " AND etat = @etat" &
                 " AND (inactif = 'False' OR inactif is Null)" &
-                " AND ([type] = '" & EnumTypeEpisode.CONSULTATION.ToString & "' OR [type] = '" & EnumTypeEpisode.VIRTUEL.ToString & "')" &
+                " AND ([type] = '" & Episode.EnumTypeEpisode.CONSULTATION.ToString & "' OR [type] = '" & Episode.EnumTypeEpisode.VIRTUEL.ToString & "')" &
                 " ORDER BY date_creation DESC"
 
             With command.Parameters
                 .AddWithValue("@patientId", patientId)
-                .AddWithValue("@etat", EnumEtatEpisode.EN_COURS.ToString)
+                .AddWithValue("@etat", Episode.EnumEtatEpisode.EN_COURS.ToString)
             End With
 
             Using reader As SqlDataReader = command.ExecuteReader()
@@ -270,21 +230,21 @@ Public Class EpisodeDao
         TypeEpisodeString = " AND [type] IN ('"
         If ligneDeVie.TypeConsultation = True Then
             RechercherTypeEpisode = True
-            TypeEpisodeString += EpisodeDao.EnumTypeEpisode.CONSULTATION.ToString & "'"
+            TypeEpisodeString += Episode.EnumTypeEpisode.CONSULTATION.ToString & "'"
         End If
         If ligneDeVie.TypeVirtuel = True Then
             If RechercherTypeEpisode = True Then
                 TypeEpisodeString += ", '"
             End If
             RechercherTypeEpisode = True
-            TypeEpisodeString += EpisodeDao.EnumTypeEpisode.VIRTUEL.ToString & "'"
+            TypeEpisodeString += Episode.EnumTypeEpisode.VIRTUEL.ToString & "'"
         End If
         If ligneDeVie.TypeParametre = True Then
             If RechercherTypeEpisode = True Then
                 TypeEpisodeString += ", '"
             End If
             RechercherTypeEpisode = True
-            TypeEpisodeString += EpisodeDao.EnumTypeEpisode.PARAMETRE.ToString & "'"
+            TypeEpisodeString += Episode.EnumTypeEpisode.PARAMETRE.ToString & "'"
         End If
         If RechercherTypeEpisode = True Then
             TypeEpisodeString += ")" & vbCrLf
@@ -311,63 +271,63 @@ Public Class EpisodeDao
         ActiviteEpisodeString = " AND type_activite IN ('"
         If ligneDeVie.ActivitePathologieAigue = True Then
             RechercherActiviteEpisode = True
-            ActiviteEpisodeString += EpisodeDao.EnumTypeActiviteEpisodeCode.PATHOLOGIE_AIGUE & "'"
+            ActiviteEpisodeString += Episode.EnumTypeActiviteEpisodeCode.PATHOLOGIE_AIGUE & "'"
         End If
         If ligneDeVie.ActivitePreventionAutre = True Then
             If RechercherActiviteEpisode = True Then
                 ActiviteEpisodeString += ", '"
             End If
             RechercherActiviteEpisode = True
-            ActiviteEpisodeString += EpisodeDao.EnumTypeActiviteEpisodeCode.PREVENTION_AUTRE & "'"
+            ActiviteEpisodeString += Episode.EnumTypeActiviteEpisodeCode.PREVENTION_AUTRE & "'"
         End If
         If ligneDeVie.ActivitePreventionEnfantPreScolaire = True Then
             If RechercherActiviteEpisode = True Then
                 ActiviteEpisodeString += ", '"
             End If
             RechercherActiviteEpisode = True
-            ActiviteEpisodeString += EpisodeDao.EnumTypeActiviteEpisodeCode.PREVENTION_ENFANT_PRE_SCOLAIRE & "'"
+            ActiviteEpisodeString += Episode.EnumTypeActiviteEpisodeCode.PREVENTION_ENFANT_PRE_SCOLAIRE & "'"
         End If
         If ligneDeVie.ActivitePreventionEnfantScolaire = True Then
             If RechercherActiviteEpisode = True Then
                 ActiviteEpisodeString += ", '"
             End If
             RechercherActiviteEpisode = True
-            ActiviteEpisodeString += EpisodeDao.EnumTypeActiviteEpisodeCode.PREVENTION_ENFANT_SCOLAIRE & "'"
+            ActiviteEpisodeString += Episode.EnumTypeActiviteEpisodeCode.PREVENTION_ENFANT_SCOLAIRE & "'"
         End If
         If ligneDeVie.ActiviteSocial = True Then
             If RechercherActiviteEpisode = True Then
                 ActiviteEpisodeString += ", '"
             End If
             RechercherActiviteEpisode = True
-            ActiviteEpisodeString += EpisodeDao.EnumTypeActiviteEpisodeCode.SOCIAL & "'"
+            ActiviteEpisodeString += Episode.EnumTypeActiviteEpisodeCode.SOCIAL & "'"
         End If
         If ligneDeVie.ActiviteSuiviChronique = True Then
             If RechercherActiviteEpisode = True Then
                 ActiviteEpisodeString += ", '"
             End If
             RechercherActiviteEpisode = True
-            ActiviteEpisodeString += EpisodeDao.EnumTypeActiviteEpisodeCode.SUIVI_CHRONIQUE & "'"
+            ActiviteEpisodeString += Episode.EnumTypeActiviteEpisodeCode.SUIVI_CHRONIQUE & "'"
         End If
         If ligneDeVie.ActiviteSuiviGrossesse = True Then
             If RechercherActiviteEpisode = True Then
                 ActiviteEpisodeString += ", '"
             End If
             RechercherActiviteEpisode = True
-            ActiviteEpisodeString += EpisodeDao.EnumTypeActiviteEpisodeCode.PREVENTION_SUIVI_GROSSESSE & "'"
+            ActiviteEpisodeString += Episode.EnumTypeActiviteEpisodeCode.PREVENTION_SUIVI_GROSSESSE & "'"
         End If
         If ligneDeVie.ActiviteSuiviGyncologique = True Then
             If RechercherActiviteEpisode = True Then
                 ActiviteEpisodeString += ", '"
             End If
             RechercherActiviteEpisode = True
-            ActiviteEpisodeString += EpisodeDao.EnumTypeActiviteEpisodeCode.PREVENTION_SUIVI_GYNECOLOGIQUE & "'"
+            ActiviteEpisodeString += Episode.EnumTypeActiviteEpisodeCode.PREVENTION_SUIVI_GYNECOLOGIQUE & "'"
         End If
         If ligneDeVie.TypeParametre = True Then
             If RechercherActiviteEpisode = True Then
                 ActiviteEpisodeString += ", '"
             End If
             RechercherActiviteEpisode = True
-            ActiviteEpisodeString += EpisodeDao.EnumTypeEpisode.PARAMETRE.ToString & "'"
+            ActiviteEpisodeString += Episode.EnumTypeEpisode.PARAMETRE.ToString & "'"
         End If
         If ligneDeVie.TypeVirtuel = True Then
             If RechercherTypeEpisode = True Then
@@ -456,7 +416,7 @@ Public Class EpisodeDao
                         " AND [type] = '" & Tache.TypeTache.AVIS_EPISODE.ToString() & "'" &
                         " AND categorie = 'SOIN') AS TACHE" &
                     " WHERE E.etat = 'EN_COURS'" &
-                    " AND (E.[type] = '" & EnumTypeEpisode.CONSULTATION.ToString & "' OR E.[type] = '" & EnumTypeEpisode.VIRTUEL.ToString & "')" &
+                    " AND (E.[type] = '" & Episode.EnumTypeEpisode.CONSULTATION.ToString & "' OR E.[type] = '" & Episode.EnumTypeEpisode.VIRTUEL.ToString & "')" &
                     " AND (inactif = 'False' OR inactif is Null)" &
                     " ORDER BY date_creation"
 
@@ -496,8 +456,8 @@ Public Class EpisodeDao
                         " WHERE SP.episode_id = E.episode_id" &
                         " AND is_inactif = 'False'" &
                         " AND horodate_validate is NULL) AS SSP(TotalSSP)" &
-                    " WHERE (E.etat = '" & EnumEtatEpisode.EN_COURS.ToString & "' OR E.etat = '" & EnumEtatEpisode.CLOTURE.ToString & "')" &
-                    " AND (E.[type] = '" & EnumTypeEpisode.CONSULTATION.ToString & "' OR E.[type] = '" & EnumTypeEpisode.VIRTUEL.ToString & "')" &
+                    " WHERE (E.etat = '" & Episode.EnumEtatEpisode.EN_COURS.ToString & "' OR E.etat = '" & Episode.EnumEtatEpisode.CLOTURE.ToString & "')" &
+                    " AND (E.[type] = '" & Episode.EnumTypeEpisode.CONSULTATION.ToString & "' OR E.[type] = '" & Episode.EnumTypeEpisode.VIRTUEL.ToString & "')" &
                     " AND (inactif = 'False' OR inactif is Null)" &
                     " AND (ORDO.oa_ordonnance_id is not NULL OR SSP.TotalSSP > 0)" &
                     " ORDER BY date_creation"
@@ -533,12 +493,12 @@ Public Class EpisodeDao
         Dim dateCreation As Date = Date.Now.Date
 
         Dim SQLstring As String
-        If episode.Type = EpisodeDao.EnumTypeEpisode.PARAMETRE.ToString Then
+        If episode.Type = Episode.EnumTypeEpisode.PARAMETRE.ToString Then
             SQLstring = " INSERT INTO oasis.oa_episode" &
             " (patient_id, type, type_activite, type_profil, description_activite, commentaire," &
             " user_creation, date_creation, date_modification, etat)" &
             " VALUES (@patientId, @type, @typeActivite, @typeProfil, @descriptionActivite, @commentaire," &
-            " @userCreation, '" & episode.DateCreation.ToString("yyyy-MM-dd HH:mm:ss") & "',  @dateModification, '" & EpisodeDao.EnumEtatEpisode.CLOTURE.ToString & "'); SELECT SCOPE_IDENTITY()"
+            " @userCreation, '" & episode.DateCreation.ToString("yyyy-MM-dd HH:mm:ss") & "',  @dateModification, '" & Episode.EnumEtatEpisode.CLOTURE.ToString & "'); SELECT SCOPE_IDENTITY()"
         Else
             SQLstring = "IF Not EXISTS (SELECT 1 FROM oasis.oa_episode WHERE patient_id = @patientId And etat = @etat)" &
             " INSERT INTO oasis.oa_episode" &
@@ -559,7 +519,7 @@ Public Class EpisodeDao
             .AddWithValue("@userCreation", userLog.UtilisateurId)
             .AddWithValue("@dateCreation", Date.Now)
             .AddWithValue("@dateModification", Date.Now)
-            .AddWithValue("@etat", EpisodeDao.EnumEtatEpisode.EN_COURS.ToString)
+            .AddWithValue("@etat", Episode.EnumEtatEpisode.EN_COURS.ToString)
         End With
 
         Try

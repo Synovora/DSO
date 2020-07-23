@@ -18,7 +18,7 @@ Public Class RadFAutoSuivi
     ReadOnly parametreDao As New ParametreDao
 
     ReadOnly parametres As List(Of AutoSuiviItem) = New List(Of AutoSuiviItem)
-    ReadOnly TypeActiviteAcode As String = EpisodeDao.EnumTypeActiviteEpisodeCode.SUIVI_CHRONIQUE
+    ReadOnly TypeActiviteAcode As String = Episode.EnumTypeActiviteEpisodeCode.SUIVI_CHRONIQUE
 
     Private Sub BuildList()
         Dim ListParametres As List(Of Long) = episodeProtocoleCollaboratifDao.GetListeParametreByPatientEtTypeEpisode(SelectedPatient.patientId, TypeActiviteAcode)

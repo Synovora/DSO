@@ -97,10 +97,10 @@ Public Class RadFParcoursConsigneDetailEdit
             CbxActiviteEpisode.Text = episodeDao.GetItemTypeActiviteByCode(parcoursConsigne.TypeEpisode)
 
             Select Case parcoursConsigne.TypeEpisode
-                Case EpisodeDao.EnumTypeActiviteEpisodeCode.PREVENTION_ENFANT_PRE_SCOLAIRE
+                Case Episode.EnumTypeActiviteEpisodeCode.PREVENTION_ENFANT_PRE_SCOLAIRE
                     LblAgeUnite.Text = "(Age exprimé en mois)"
                     AfficheAge()
-                Case EpisodeDao.EnumTypeActiviteEpisodeCode.PREVENTION_ENFANT_SCOLAIRE
+                Case Episode.EnumTypeActiviteEpisodeCode.PREVENTION_ENFANT_SCOLAIRE
                     LblAgeUnite.Text = "(Age exprimé en année)"
                     AfficheAge()
                 Case Else
@@ -266,11 +266,11 @@ Public Class RadFParcoursConsigneDetailEdit
     Private Sub CbxActiviteEpisode_SelectedIndexChanged(sender As Object, e As EventArgs) Handles CbxActiviteEpisode.SelectedIndexChanged
         parcoursConsigne.TypeEpisode = episodeDao.GetCodeTypeActiviteByItem(CbxActiviteEpisode.Text)
         Select Case parcoursConsigne.TypeEpisode
-            Case EpisodeDao.EnumTypeActiviteEpisodeCode.PREVENTION_ENFANT_PRE_SCOLAIRE
+            Case Episode.EnumTypeActiviteEpisodeCode.PREVENTION_ENFANT_PRE_SCOLAIRE
                 AfficheAge()
                 LblAgeUnite.Text = "(Age exprimé en mois, de 0 à 40 mois)"
                 NumAgeMax.Maximum = 40
-            Case EpisodeDao.EnumTypeActiviteEpisodeCode.PREVENTION_ENFANT_SCOLAIRE
+            Case Episode.EnumTypeActiviteEpisodeCode.PREVENTION_ENFANT_SCOLAIRE
                 AfficheAge()
                 LblAgeUnite.Text = "(Age exprimé en année, de 0 à " & LimiteAgeEnfantParm & " ans)"
                 NumAgeMax.Maximum = LimiteAgeEnfantParm

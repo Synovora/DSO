@@ -116,7 +116,6 @@ Public Class EpisodeParametreDao
     ''' <param name="idEpisode"></param>
     ''' <param name="idPatient"></param>
     Public Sub AlimenteFusionDocumentParametres(sousEpisodeFusion As SousEpisodeFusion, idEpisode As Long, idPatient As Long)
-
         Using con As SqlConnection = GetConnection()
             Dim valeur As Double
             Dim isComposite As Boolean
@@ -154,9 +153,7 @@ Public Class EpisodeParametreDao
     End Sub
 
     Public Function GetPoidsByEpisodeIdOrLastKnow(idEpisode As Long, idPatient As Long) As Double
-        Dim SQLString As String
-
-        SQLString = "SELECT TOP 1 COALESCE(EP1.valeur, " & vbCrLf &
+        Dim SQLString As String = "SELECT TOP 1 COALESCE(EP1.valeur, " & vbCrLf &
                                  "      (SELECT TOP 1 EP2.valeur " & vbCrLf &
                                  "  	FROM oasis.oa_episode_parametre EP2 " & vbCrLf &
                                  "  	WHERE EP2.parametre_id= @TypeParam " & vbCrLf &
@@ -173,13 +170,11 @@ Public Class EpisodeParametreDao
                             "AND EP1.valeur>0" & vbCrLf &
                             "AND COALESCE(EP1.inactif,0) = 0 " & vbCrLf &
                     "WHERE P.oa_patient_id = @PatientId"
-
         Using con As SqlConnection = GetConnection()
-
             Dim tacheDataAdapter As SqlDataAdapter = New SqlDataAdapter()
             Using tacheDataAdapter
                 tacheDataAdapter.SelectCommand = New SqlCommand(SQLString, con)
-                tacheDataAdapter.SelectCommand.Parameters.AddWithValue("@TypeParam", ParametreDao.EnumParametreId.POIDS)
+                tacheDataAdapter.SelectCommand.Parameters.AddWithValue("@TypeParam", Parametre.EnumParametreId.POIDS)
                 tacheDataAdapter.SelectCommand.Parameters.AddWithValue("@EpisodeId", idEpisode)
                 tacheDataAdapter.SelectCommand.Parameters.AddWithValue("@PatientId", idPatient)
                 Dim tacheDataTable As DataTable = New DataTable()

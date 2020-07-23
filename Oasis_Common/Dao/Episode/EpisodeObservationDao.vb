@@ -1,21 +1,7 @@
 ﻿Imports System.Data.SqlClient
-Imports Oasis_Common
+
 Public Class EpisodeObservationDao
     Inherits StandardDao
-    Public Enum EnumTypeEpisodeObservation
-        MEDICAL
-        PARAMEDICAL
-    End Enum
-
-    Public Enum EnumNatureEpisodeObservation
-        SPECIFIQUE
-        LIBRE
-    End Enum
-
-    Public Enum EnumNaturePresence
-        PRESENTIEL
-        DISTANT
-    End Enum
 
     Public Function GetEpisodeObservationById(Id As Integer) As EpisodeObservation
         Dim episodeObservation As EpisodeObservation
