@@ -18,11 +18,8 @@ Public Class AldCim10Dao
         Dim con As SqlConnection = GetConnection()
         Try
             Dim command As SqlCommand = con.CreateCommand()
-
-            command.CommandText =
-                "SELECT * FROM oasis.oa_ald_cim10 WHERE oa_ald_cim10_id = @id"
+            command.CommandText = "SELECT * FROM oasis.oa_ald_cim10 WHERE oa_ald_cim10_id = @id"
             command.Parameters.AddWithValue("@id", AldCim10Id)
-            con.Open()
             Using reader As SqlDataReader = command.ExecuteReader()
                 If reader.Read() Then
                     aldCim10 = BuildBean(reader)

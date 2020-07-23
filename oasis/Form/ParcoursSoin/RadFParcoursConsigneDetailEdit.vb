@@ -283,34 +283,26 @@ Public Class RadFParcoursConsigneDetailEdit
 
     'Validation
     Private Sub RadBtnValidation_Click(sender As Object, e As EventArgs) Handles RadBtnValidation.Click
-        CodeRetour = False
         If ControleDonnees() = True Then
             Select Case EditMode
                 Case EnumEditMode.Modification
-                    If parcoursConsigneDao.ModificationParcoursConsigne(parcoursConsigne) Then
-                        MessageBox.Show("Consigne paramédicale modifiée")
-                        CodeRetour = True
-                        Close()
-                    End If
+                    parcoursConsigneDao.ModificationParcoursConsigne(parcoursConsigne)
+                    MessageBox.Show("Consigne paramédicale modifiée")
+                    Close()
                 Case EnumEditMode.Creation
-                    If parcoursConsigneDao.CreateParcoursConsigne(parcoursConsigne) Then
-                        MessageBox.Show("Consigne paramédicale créée")
-                        CodeRetour = True
-                        Close()
-                    End If
+                    parcoursConsigneDao.CreateParcoursConsigne(parcoursConsigne)
+                    MessageBox.Show("Consigne paramédicale créée")
+                    Close()
             End Select
         End If
     End Sub
 
     'Annulation consigne paramédicale
     Private Sub RadBtnAnnulation_Click(sender As Object, e As EventArgs) Handles RadBtnAnnulation.Click
-        CodeRetour = False
         If MsgBox("Confirmation de l'annulation ", MsgBoxStyle.YesNo, "") = MsgBoxResult.Yes Then
-            If parcoursConsigneDao.AnnulationParcoursConsigne(parcoursConsigne) = True Then
-                MessageBox.Show("Consigne paramédicale annulée")
-                CodeRetour = True
-                Close()
-            End If
+            parcoursConsigneDao.AnnulationParcoursConsigne(parcoursConsigne)
+            MessageBox.Show("Consigne paramédicale annulée")
+            Close()
         End If
     End Sub
 
