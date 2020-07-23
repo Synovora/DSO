@@ -1,6 +1,6 @@
 ﻿Imports System.IO
 
-Public Class OrdonnanceBase
+Public Class Ordonnance
     Property Id As Long
     Property PatientId As Long
     Property EpisodeId As Long
@@ -14,8 +14,8 @@ Public Class OrdonnanceBase
     Property Inactif As Boolean
     Property Signature As String
 
-    Public Function Clone() As OrdonnanceBase
-        Dim newInstance As OrdonnanceBase = DirectCast(Me.MemberwiseClone(), OrdonnanceBase)
+    Public Function Clone() As Ordonnance
+        Dim newInstance As Ordonnance = DirectCast(Me.MemberwiseClone(), Ordonnance)
         Return newInstance
     End Function
 
@@ -37,8 +37,8 @@ Public Class OrdonnanceBase
         End Using
     End Function
 
-    Public Shared Function Deserialize(ByVal data As Byte()) As OrdonnanceBase
-        Dim result As OrdonnanceBase = New OrdonnanceBase()
+    Public Shared Function Deserialize(ByVal data As Byte()) As Ordonnance
+        Dim result As Ordonnance = New Ordonnance()
         Using m As MemoryStream = New MemoryStream(data)
             Using reader As BinaryReader = New BinaryReader(m)
                 result.Id = reader.ReadInt64()

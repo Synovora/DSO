@@ -25,14 +25,14 @@ Public Class PrtOrdonnance
     ReadOnly aldDao As New AldDao
     ReadOnly SIGN_URL As String = "https://localhost:44355/Sign/Check/"
 
-    Dim ordonnance As OrdonnanceBase
+    Dim ordonnance As Ordonnance
 
     Dim PatientIsAld As Boolean = False
     Dim TraitementAldExiste As Boolean = False
 
     Public Sub PrintDocument()
         ordonnance = ordonnanceDao.GetOrdonnaceById(SelectedOrdonnanceId)
-        If aldDao.IsPatientALD(SelectedPatient.patientId) Then
+        If aldDao.IsPatientALD(SelectedPatient.PatientId) Then
             PatientIsAld = True
         End If
 
@@ -107,7 +107,7 @@ Public Class PrtOrdonnance
             .AddTexteLine("Date de naissance : " & DateNaissancePatient.ToString("dd.MM.yyyy"))
             .AddTexteLine("Immatriculation CPAM : " & SelectedPatient.PatientNir)
             .AddNewLigne()
-            Dim Poids As Double = episodeParametreDao.GetPoidsByEpisodeIdOrLastKnow(0, SelectedPatient.patientId)
+            Dim Poids As Double = episodeParametreDao.GetPoidsByEpisodeIdOrLastKnow(0, SelectedPatient.PatientId)
             If Poids > 0 Then
                 .AddTexteLine("Poids : " & Poids & " Kg")
             End If
@@ -237,7 +237,7 @@ Public Class PrtOrdonnance
                 Dim Posologie As String = dt.Rows(i)("oa_traitement_posologie")
                 Dim traitementId As Long = Coalesce(dt.Rows(i)("oa_traitement_id"), 0)
 
-                Dim traitement As New TraitementBase
+                Dim traitement As New Traitement
                 If traitementId <> 0 Then
                     traitement = traitementDao.GetTraitementById(traitementId)
                 End If
@@ -336,7 +336,7 @@ Public Class PrtOrdonnance
     End Function
 
     Private Sub PrintBasPage(section As Section)
-        Dim ordonnance As OrdonnanceBase = ordonnanceDao.GetOrdonnaceById(SelectedOrdonnanceId)
+        Dim ordonnance As Ordonnance = ordonnanceDao.GetOrdonnaceById(SelectedOrdonnanceId)
         Dim QG As QRCodeGenerator = New QRCoder.QRCodeGenerator()
         Dim Data As QRCodeData = QG.CreateQrCode(SIGN_URL & Base64UrlEncoder.Encode(ordonnance.Signature.HexToByteArray()), QRCodeGenerator.ECCLevel.L)
         Dim my_qrCode = New QRCode(Data)

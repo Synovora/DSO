@@ -3216,25 +3216,16 @@ Public Class RadFEpisodeDetail
 
     'Chargement de la Grid
     Private Sub ChargementTraitement()
-        Dim traitementDataTable As DataTable
         Dim traitementDao As TraitementDao = New TraitementDao
 
         Cursor.Current = Cursors.WaitCursor
         RadTraitementDataGridView.Rows.Clear()
-
-        traitementDataTable = traitementDao.GetTraitementEnCoursbyPatient(Me.SelectedPatient.PatientId)
-
-        'Ajout d'une colonne 'oa_traitement_posologie' dans le DataTable de traitement
-        traitementDataTable.Columns.Add("oa_traitement_posologie", Type.GetType("System.String"))
+        Dim traitements As List(Of Traitement) = traitementDao.GetTraitementsEnCoursbyPatient(Me.SelectedPatient.PatientId)
 
         Dim i As Integer
         Dim iGrid As Integer = -1 'Indice pour alimenter la Grid qui peut comporter moins d'occurrences que le DataTable
-        Dim rowCount As Integer = traitementDataTable.Rows.Count - 1
-        Dim Base As String
-        Dim Posologie As String
+        Dim Posologie As String = ""
         Dim dateFin, dateDebut, dateModification, dateCreation As Date
-        Dim posologieMatin, posologieMidi, posologieApresMidi, posologieSoir As Integer
-        Dim Rythme As Integer
         Dim FenetreTherapeutiqueEnCours As Boolean
         Dim FenetreTherapeutiqueAVenir As Boolean
 
@@ -3242,62 +3233,39 @@ Public Class RadFEpisodeDetail
         Dim FenetreDateDebut, FenetreDateFin As Date
 
         'Parcours du DataTable pour alimenter les colonnes du DataGridView
-        For i = 0 To rowCount Step 1
+        For i = 0 To traitements.Count - 1 Step 1
+            Dim traitement As Traitement = traitements(i)
             'Récupération des médicaments déclarés 'allergique' et exclusion de l'affichage
-            If traitementDataTable.Rows(i)("oa_traitement_allergie") IsNot DBNull.Value Then
-                If traitementDataTable.Rows(i)("oa_traitement_allergie") = "1" Then
-                    'Allergie = True
-                    'SelectedPatient.PatientAllergieDci.Add(traitementDataTable.Rows(i)("oa_traitement_medicament_dci"))
-                    'SelectedPatient.PatientAllergieCis.Add(traitementDataTable.Rows(i)("oa_traitement_medicament_cis"))
-                    Continue For
-                End If
+            If traitement.Allergie = "1" Then
+                'Allergie = True
+                'SelectedPatient.PatientAllergieDci.Add(traitementDataTable.Rows(i)("oa_traitement_medicament_dci"))
+                'SelectedPatient.PatientAllergieCis.Add(traitementDataTable.Rows(i)("oa_traitement_medicament_cis"))
+                Continue For
             End If
 
             'Récupération des médicaments déclarés 'contre-indiqué' et exclusion de l'affichage
-            If traitementDataTable.Rows(i)("oa_traitement_contre_indication") IsNot DBNull.Value Then
-                If traitementDataTable.Rows(i)("oa_traitement_contre_indication") = "1" Then
-                    'ContreIndication = True
-                    'SelectedPatient.PatientContreIndicationDci.Add(traitementDataTable.Rows(i)("oa_traitement_medicament_dci"))
-                    'SelectedPatient.PatientContreIndicationCis.Add(traitementDataTable.Rows(i)("oa_traitement_medicament_cis"))
-                    Continue For
-                End If
+            If traitement.ContreIndication = "1" Then
+                'ContreIndication = True
+                'SelectedPatient.PatientContreIndicationDci.Add(traitementDataTable.Rows(i)("oa_traitement_medicament_dci"))
+                'SelectedPatient.PatientContreIndicationCis.Add(traitementDataTable.Rows(i)("oa_traitement_medicament_cis"))
+                Continue For
             End If
 
             'Exclusion de l'affichage des traitements déclarés 'arrêté'
             'Cette condition est traitée en exclusion (et non dans la requête SQL) pour stocker les allergies et les contre-indications arrêtés dans la StringCollection
-            If traitementDataTable.Rows(i)("oa_traitement_arret") IsNot DBNull.Value Then
-                If traitementDataTable.Rows(i)("oa_traitement_arret") = "A" Then
-                    Continue For
-                End If
+            If traitement.Arret = "A" Then
+                Continue For
             End If
 
             'Date de fin
-            If traitementDataTable.Rows(i)("oa_traitement_date_fin") IsNot DBNull.Value Then
-                dateFin = traitementDataTable.Rows(i)("oa_traitement_date_fin")
-            Else
-                dateFin = "31/12/2999"
-            End If
-
+            dateFin = traitement.DateFin
             'Date début
-            If traitementDataTable.Rows(i)("oa_traitement_date_debut") IsNot DBNull.Value Then
-                dateDebut = traitementDataTable.Rows(i)("oa_traitement_date_debut")
-            Else
-                dateDebut = "01/01/1900"
-            End If
-
+            dateDebut = traitement.DateDebut
             'Date création
-            If traitementDataTable.Rows(i)("oa_traitement_date_creation") IsNot DBNull.Value Then
-                dateCreation = traitementDataTable.Rows(i)("oa_traitement_date_creation")
-            Else
-                dateCreation = "01/01/1900"
-            End If
-
+            dateCreation = traitement.DateCreation
             'Date modification
-            If traitementDataTable.Rows(i)("oa_traitement_date_modification") IsNot DBNull.Value Then
-                dateModification = traitementDataTable.Rows(i)("oa_traitement_date_modification")
-            Else
-                dateModification = dateCreation
-            End If
+            dateModification = traitement.DateModification
+
 
             'Exclusion de l'affichage des traitements dont la date de fin est <à la date du jour
             'Cette condition est traitée en exclusion (et non dans la requête SQL) pour stocker les allergies et les contre-indications dans la StringCollection quel que soit leur date de fin
@@ -3311,158 +3279,46 @@ Public Class RadFEpisodeDetail
             FenetreTherapeutiqueEnCours = False
             FenetreTherapeutiqueAVenir = False
 
-            If traitementDataTable.Rows(i)("oa_traitement_fenetre_date_debut") IsNot DBNull.Value Then
-                FenetreDateDebut = traitementDataTable.Rows(i)("oa_traitement_fenetre_date_debut")
-            Else
-                FenetreDateDebut = "31/12/2999"
-            End If
 
-            If traitementDataTable.Rows(i)("oa_traitement_fenetre_date_fin") IsNot DBNull.Value Then
-                FenetreDateFin = traitementDataTable.Rows(i)("oa_traitement_fenetre_date_fin")
-            Else
-                FenetreDateFin = "01/01/1900"
-            End If
-
-            Posologie = ""
+            FenetreDateDebut = traitement.FenetreDateDebut
+            FenetreDateFin = traitement.FenetreDateFin
 
             'Existence d'une fenêtre thérapeutique
             Dim FenetreTherapeutiqueExiste As Boolean = False
             Dim dateDebutFenetreaComparer As New Date(FenetreDateDebut.Year, FenetreDateDebut.Month, FenetreDateDebut.Day, 0, 0, 0)
             Dim dateFinFenetreaComparer As New Date(FenetreDateFin.Year, FenetreDateFin.Month, FenetreDateFin.Day, 0, 0, 0)
-            If traitementDataTable.Rows(i)("oa_traitement_fenetre") IsNot DBNull.Value Then
-                If traitementDataTable.Rows(i)("oa_traitement_fenetre") = "1" Then
-                    'Fenêtre thérapeutique en cours, à venir ou obsolète
-                    FenetreTherapeutiqueExiste = True
-                    If FenetreDateDebut <= dateJouraComparer And FenetreDateFin >= dateJouraComparer Then
-                        'Fenêtre thérapeutique en cours
-                        FenetreTherapeutiqueEnCours = True
-                        Posologie = "Fenêtre Th."
-                    Else
-                        If FenetreDateDebut > dateJouraComparer Then
-                            FenetreTherapeutiqueAVenir = True
-                        End If
+            If traitement.Fenetre = "1" Then
+                'Fenêtre thérapeutique en cours, à venir ou obsolète
+                FenetreTherapeutiqueExiste = True
+                If FenetreDateDebut <= dateJouraComparer And FenetreDateFin >= dateJouraComparer Then
+                    'Fenêtre thérapeutique en cours
+                    FenetreTherapeutiqueEnCours = True
+                    Posologie = "Fenêtre Th."
+                Else
+                    If FenetreDateDebut > dateJouraComparer Then
+                        FenetreTherapeutiqueAVenir = True
                     End If
                 End If
             End If
 
             'Formatage de la posologie
             If FenetreTherapeutiqueEnCours = False Then
-                Dim PosologieMatinString, PosologieMidiString, PosologieApresMidiString, PosologieSoirString As String
-                Dim FractionMatin, FractionMidi, FractionApresMidi, FractionSoir As String
-                Dim PosologieBase As String
-
-                FractionMatin = Coalesce(traitementDataTable.Rows(i)("oa_traitement_fraction_matin"), TraitementDao.EnumFraction.Non)
-                FractionMidi = Coalesce(traitementDataTable.Rows(i)("oa_traitement_fraction_midi"), TraitementDao.EnumFraction.Non)
-                FractionApresMidi = Coalesce(traitementDataTable.Rows(i)("oa_traitement_fraction_apres_midi"), TraitementDao.EnumFraction.Non)
-                FractionSoir = Coalesce(traitementDataTable.Rows(i)("oa_traitement_fraction_soir"), TraitementDao.EnumFraction.Non)
-
-                posologieMatin = Coalesce(traitementDataTable.Rows(i)("oa_traitement_Posologie_matin"), 0)
-                posologieMidi = Coalesce(traitementDataTable.Rows(i)("oa_traitement_Posologie_midi"), 0)
-                posologieApresMidi = Coalesce(traitementDataTable.Rows(i)("oa_traitement_Posologie_apres_midi"), 0)
-                posologieSoir = Coalesce(traitementDataTable.Rows(i)("oa_traitement_Posologie_soir"), 0)
-
-                PosologieBase = Coalesce(traitementDataTable.Rows(i)("oa_traitement_Posologie_base"), "")
-
-                If FractionMatin <> "" AndAlso FractionMatin <> TraitementDao.EnumFraction.Non Then
-                    If posologieMatin <> 0 Then
-                        PosologieMatinString = posologieMatin.ToString & "+" & FractionMatin
-                    Else
-                        PosologieMatinString = FractionMatin
-                    End If
-                Else
-                    If posologieMatin <> 0 Then
-                        PosologieMatinString = posologieMatin.ToString
-                    Else
-                        PosologieMatinString = "0"
-                    End If
-                End If
-
-                If FractionMidi <> "" AndAlso FractionMidi <> TraitementDao.EnumFraction.Non Then
-                    If posologieMidi <> 0 Then
-                        PosologieMidiString = posologieMidi.ToString & "+" & FractionMidi
-                    Else
-                        PosologieMidiString = FractionMidi
-                    End If
-                Else
-                    If posologieMidi <> 0 Then
-                        PosologieMidiString = posologieMidi.ToString
-                    Else
-                        PosologieMidiString = "0"
-                    End If
-                End If
-
-                PosologieApresMidiString = ""
-                If FractionApresMidi <> "" AndAlso FractionApresMidi <> TraitementDao.EnumFraction.Non Then
-                    If posologieApresMidi <> 0 Then
-                        PosologieApresMidiString = posologieApresMidi.ToString & "+" & FractionApresMidi
-                    Else
-                        PosologieApresMidiString = FractionApresMidi
-                    End If
-                Else
-                    If posologieApresMidi <> 0 Then
-                        PosologieApresMidiString = posologieApresMidi.ToString
-                    End If
-                End If
-
-                If FractionSoir <> "" AndAlso FractionSoir <> TraitementDao.EnumFraction.Non Then
-                    If posologieSoir <> 0 Then
-                        PosologieSoirString = posologieSoir.ToString & "+" & FractionSoir
-                    Else
-                        PosologieSoirString = FractionSoir
-                    End If
-                Else
-                    If posologieSoir <> 0 Then
-                        PosologieSoirString = posologieSoir.ToString
-                    Else
-                        PosologieSoirString = "0"
-                    End If
-                End If
-                If traitementDataTable.Rows(i)("oa_traitement_posologie_base") IsNot DBNull.Value Then
-                    Rythme = traitementDataTable.Rows(i)("oa_traitement_posologie_rythme")
-                    Select Case PosologieBase
-                        Case TraitementDao.EnumBaseCode.JOURNALIER
-                            Base = ""
-                            If posologieApresMidi <> 0 OrElse FractionApresMidi <> TraitementDao.EnumFraction.Non Then
-                                Posologie = Base + PosologieMatinString + ". " + PosologieMidiString + ". " + PosologieApresMidiString + ". " + PosologieSoirString
-                            Else
-                                Posologie = Base + " " + PosologieMatinString + ". " + PosologieMidiString + ". " + PosologieSoirString
-                            End If
-                        Case Else
-                            Dim RythmeString As String = ""
-                            If FractionMatin <> "" AndAlso FractionMatin <> TraitementDao.EnumFraction.Non Then
-                                If Rythme <> 0 Then
-                                    RythmeString = Rythme.ToString & "+" & FractionMatin
-                                Else
-                                    RythmeString = FractionMatin
-                                End If
-                            Else
-                                If Rythme <> 0 Then
-                                    RythmeString = Rythme.ToString
-                                End If
-                            End If
-
-                            Base = traitementDao.GetBaseDescription(traitementDataTable.Rows(i)("oa_traitement_posologie_base"))
-                            Posologie = Base + RythmeString
-                    End Select
-                End If
+                Posologie = traitementDao.PosologieToText(traitement)
             End If
 
-            Dim commentaire As String = Coalesce(traitementDataTable.Rows(i)("oa_traitement_commentaire"), "")
-            Dim commentairePosologie As String = Coalesce(traitementDataTable.Rows(i)("oa_traitement_posologie_commentaire"), "")
-
             'Stockage des médicaments prescrits (pour contrôle lors de la selection d'un médicament dans le cadre d'un nouveau traitement
-            SelectedPatient.PatientMedicamentsPrescritsCis.Add(traitementDataTable.Rows(i)("oa_traitement_medicament_cis"))
+            SelectedPatient.PatientMedicamentsPrescritsCis.Add(traitement.MedicamentId)
 
             iGrid += 1
             'Ajout d'une ligne au DataGridView
             RadTraitementDataGridView.Rows.Add(iGrid)
-            'Alimentation du DataGridView
             'DCI
-            RadTraitementDataGridView.Rows(iGrid).Cells("medicamentDci").Value = traitementDataTable.Rows(i)("oa_traitement_medicament_dci")
+            RadTraitementDataGridView.Rows(iGrid).Cells("medicamentDci").Value = traitement.MedicamentDci
+
             'Posologie
             RadTraitementDataGridView.Rows(iGrid).Cells("posologie").Value = Posologie
-            RadTraitementDataGridView.Rows(iGrid).Cells("commentaire").Value = commentaire
-            RadTraitementDataGridView.Rows(iGrid).Cells("commentairePosologie").Value = commentairePosologie
+            RadTraitementDataGridView.Rows(iGrid).Cells("commentaire").Value = traitement.Commentaire
+            RadTraitementDataGridView.Rows(iGrid).Cells("commentairePosologie").Value = traitement.PosologieCommentaire
 
             If Posologie = "Fenêtre Th." Then
                 RadTraitementDataGridView.Rows(iGrid).Cells("posologie").Style.ForeColor = Color.Red
@@ -3476,24 +3332,24 @@ Public Class RadFEpisodeDetail
             End If
 
             'Traitement du format d'affichage de la fin du traitement
-            If dateDebut = "31/12/2999" Then
+            If dateDebut = Nothing Then
                 RadTraitementDataGridView.Rows(iGrid).Cells("dateDebut").Value = "Date non définie"
             Else
                 RadTraitementDataGridView.Rows(iGrid).Cells("dateDebut").Value = FormatageDateAffichage(dateDebut, True)
             End If
 
             'Traitement du format d'affichage de modification du traitement
-            If dateModification = "01/01/1900" Then
+            If dateModification = Nothing Then
                 RadTraitementDataGridView.Rows(iGrid).Cells("dateModification").Value = "Date non définie"
             Else
                 RadTraitementDataGridView.Rows(iGrid).Cells("dateModification").Value = FormatageDateAffichage(dateModification, True)
             End If
 
             'Identifiant du traitement
-            RadTraitementDataGridView.Rows(iGrid).Cells("traitementId").Value = traitementDataTable.Rows(i)("oa_traitement_id")
+            RadTraitementDataGridView.Rows(iGrid).Cells("traitementId").Value = traitement.TraitementId
 
             'CIS du médicament
-            RadTraitementDataGridView.Rows(iGrid).Cells("medicamentCis").Value = traitementDataTable.Rows(i)("oa_traitement_medicament_cis")
+            RadTraitementDataGridView.Rows(iGrid).Cells("medicamentCis").Value = traitement.MedicamentId
 
             'Bouton gérer fenêtre thérapeutique
             If FenetreTherapeutiqueAVenir = True Or FenetreTherapeutiqueEnCours = True Then
@@ -3508,8 +3364,7 @@ Public Class RadFEpisodeDetail
         Dim DateArret As Date
         Dim traitementArretDatatable As DataTable
         traitementArretDatatable = traitementDao.GetAllTraitementArreteByPatient(Me.SelectedPatient.PatientId)
-        rowCount = traitementArretDatatable.Rows.Count - 1
-        For i = 0 To rowCount Step 1
+        For i = 0 To traitementArretDatatable.Rows.Count - 1 Step 1
             isTraitementArret = True
             TraitementArretMedicament = Coalesce(traitementArretDatatable.Rows(i)("oa_traitement_medicament_dci"), "")
             TraitementArretCommentaire = Coalesce(traitementArretDatatable.Rows(i)("oa_traitement_arret_commentaire"), "")

@@ -3,8 +3,8 @@ Imports Oasis_Common
 
 <Serializable()>
 Public Class OrdonnanceFull
-    Property Ordonnance As OrdonnanceBase
-    Property Details As List(Of OrdonnanceDetailBase)
+    Property Ordonnance As Ordonnance
+    Property Details As List(Of OrdonnanceDetail)
 
     Public Function Serialize() As Byte()
         Using m As MemoryStream = New MemoryStream()
@@ -26,12 +26,12 @@ Public Class OrdonnanceFull
         Using m As MemoryStream = New MemoryStream(data)
             Using reader As BinaryReader = New BinaryReader(m)
                 Dim ordonnanceSize As Integer = reader.ReadInt32()
-                result._ordonnance = OrdonnanceBase.Deserialize(reader.ReadBytes(ordonnanceSize))
+                result._Ordonnance = Ordonnance.Deserialize(reader.ReadBytes(ordonnanceSize))
                 Dim detailListSize As Integer = reader.ReadInt32()
-                result._details = New List(Of OrdonnanceDetailBase)
+                result._Details = New List(Of OrdonnanceDetail)
                 For i = 0 To detailListSize - 1
                     Dim detailSize As Integer = reader.ReadInt32()
-                    result._details.Add(OrdonnanceDetailBase.Deserialize(reader.ReadBytes(detailSize)))
+                    result._Details.Add(OrdonnanceDetail.Deserialize(reader.ReadBytes(detailSize)))
                 Next
             End Using
         End Using

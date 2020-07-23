@@ -4,7 +4,7 @@ Imports Oasis_Common
 Public Class OrdonnanceDetailDao
     Inherits OrdonnanceDetailDaoBase
 
-    Public Function CreationOrdonnanceDetail(ordonnanceDetail As OrdonnanceDetailBase) As Boolean
+    Public Function CreationOrdonnanceDetail(ordonnanceDetail As OrdonnanceDetail) As Boolean
         Dim da As SqlDataAdapter = New SqlDataAdapter()
         Dim codeRetour As Boolean = True
         Dim con As SqlConnection = GetConnection()

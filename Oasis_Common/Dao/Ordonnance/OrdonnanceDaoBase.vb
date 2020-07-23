@@ -3,8 +3,8 @@
 Public Class OrdonnanceDaoBase
     Inherits StandardDao
 
-    Public Function GetOrdonnaceById(OrdonnanceId As Integer) As OrdonnanceBase
-        Dim ordonnance As OrdonnanceBase
+    Public Function GetOrdonnaceById(OrdonnanceId As Integer) As Ordonnance
+        Dim ordonnance As Ordonnance
         Dim con As SqlConnection = GetConnection()
 
         Try
@@ -30,8 +30,8 @@ Public Class OrdonnanceDaoBase
         Return ordonnance
     End Function
 
-    Public Function GetOrdonnaceBySignature(OrdonnanceSignature As String) As OrdonnanceBase
-        Dim ordonnance As OrdonnanceBase
+    Public Function GetOrdonnaceBySignature(OrdonnanceSignature As String) As Ordonnance
+        Dim ordonnance As Ordonnance
         Dim con As SqlConnection = GetConnection()
 
         Try
@@ -57,8 +57,8 @@ Public Class OrdonnanceDaoBase
         Return ordonnance
     End Function
 
-    Private Function BuildBean(reader As SqlDataReader) As OrdonnanceBase
-        Dim ordonnance As New OrdonnanceBase With {
+    Private Function BuildBean(reader As SqlDataReader) As Ordonnance
+        Dim ordonnance As New Ordonnance With {
             .Id = reader("oa_ordonnance_id"),
             .PatientId = Coalesce(reader("oa_ordonnance_patient_id"), 0),
             .EpisodeId = Coalesce(reader("oa_ordonnance_episode_id"), 0),

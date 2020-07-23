@@ -89,7 +89,7 @@ Public Class RadFOrdonnanceListeDetail
     Dim ordonnanceDetailDao As New OrdonnanceDetailDao
     Dim patientDao As New PatientDao
 
-    Dim ordonnance As OrdonnanceBase
+    Dim ordonnance As Ordonnance
 
     Dim CommentaireModified As Boolean = False
     Dim RenouvellementModified As Boolean = False

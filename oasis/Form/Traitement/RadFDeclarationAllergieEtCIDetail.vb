@@ -47,7 +47,7 @@ Public Class RadFDeclarationAllergieEtCIDetail
     Dim theriaqueDao As New TheriaqueDao
     Dim traitementDao As New TraitementDao
 
-    Dim traitement As TraitementBase
+    Dim traitement As Traitement
 
     Private Sub RadFDeclarationAllergieEtCIDetail_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         ChargementEtatCivil()
@@ -57,7 +57,7 @@ Public Class RadFDeclarationAllergieEtCIDetail
         Else
             ChkAllergie.Checked = False
             ChkContreIndication.Checked = False
-            traitement = New TraitementBase()
+            traitement = New Traitement()
             traitement.PatientId = SelectedPatient.patientId
             traitement.MedicamentId = SelectedMedicamentId
             traitement.MedicamentDci = LblMedicamentDCI.Text
@@ -118,7 +118,7 @@ Public Class RadFDeclarationAllergieEtCIDetail
         ChargerZonesArret(traitement)
     End Sub
 
-    Private Sub ChargerZonesArret(traitement As TraitementBase)
+    Private Sub ChargerZonesArret(traitement As Traitement)
         TxtCommentaireArret.Text = traitement.ArretCommentaire
         ChkAllergie.Checked = False
         If traitement.Allergie = True Then

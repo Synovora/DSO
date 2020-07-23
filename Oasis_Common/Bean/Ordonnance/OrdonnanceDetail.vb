@@ -1,6 +1,6 @@
 ﻿Imports System.IO
 
-Public Class OrdonnanceDetailBase
+Public Class OrdonnanceDetail
     Property LigneId As Integer
     Property OrdonnanceId As Integer
     Property Traitement As Boolean
@@ -32,8 +32,8 @@ Public Class OrdonnanceDetailBase
     Property FenetreCommentaire As String
     Property Inactif As Boolean
 
-    Public Function Clone() As OrdonnanceDetailBase
-        Dim newInstance As OrdonnanceDetailBase = DirectCast(Me.MemberwiseClone(), OrdonnanceDetailBase)
+    Public Function Clone() As OrdonnanceDetail
+        Dim newInstance As OrdonnanceDetail = DirectCast(Me.MemberwiseClone(), OrdonnanceDetail)
         Return newInstance
     End Function
 
@@ -74,8 +74,8 @@ Public Class OrdonnanceDetailBase
         End Using
     End Function
 
-    Public Shared Function Deserialize(ByVal data As Byte()) As OrdonnanceDetailBase
-        Dim result As OrdonnanceDetailBase = New OrdonnanceDetailBase()
+    Public Shared Function Deserialize(ByVal data As Byte()) As OrdonnanceDetail
+        Dim result As OrdonnanceDetail = New OrdonnanceDetail()
         Using m As MemoryStream = New MemoryStream(data)
             Using reader As BinaryReader = New BinaryReader(m)
                 'result.LigneId = reader.ReadInt32()

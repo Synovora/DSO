@@ -204,7 +204,7 @@ Public Class RadFTraitementAllergieEtCI
             If aRow >= 0 Then
                 Dim TraitementId As Integer
                 TraitementId = RadTraitementDataGridView.Rows(aRow).Cells("TraitementId").Value
-                Dim traitement As TraitementBase
+                Dim traitement As Traitement
                 traitement = traitementDao.getTraitementById(TraitementId)
                 Using form As New RadFAllergieEtCISuppressionDetail
                     form.SelectedTraitement = traitement

@@ -114,8 +114,8 @@
     <Compile Include="Bean\LigneDeVie\PatientParametreLdv.vb" />
     <Compile Include="Bean\Log\Log.vb" />
     <Compile Include="Bean\Medicament\Medicament.vb" />
-    <Compile Include="Bean\Ordonnance\OrdonnanceBase.vb" />
-    <Compile Include="Bean\Ordonnance\OrdonnanceDetailBase.vb" />
+    <Compile Include="Bean\Ordonnance\Ordonnance.vb" />
+    <Compile Include="Bean\Ordonnance\OrdonnanceDetail.vb" />
     <Compile Include="Bean\Ordonnance\OrdonnanceDetailGrid.vb" />
     <Compile Include="Bean\Ordonnance\OrdonnanceFull.vb" />
     <Compile Include="Bean\Parametre\AutoSuivi.vb" />
@@ -154,7 +154,7 @@
     <Compile Include="Bean\Theriaque\SpecialiteContreIndique.vb" />
     <Compile Include="Bean\Theriaque\SpecialiteTheriaque.vb" />
     <Compile Include="Bean\Theriaque\Substance.vb" />
-    <Compile Include="Bean\Traitement\TraitementBase.vb" />
+    <Compile Include="Bean\Traitement\Traitement.vb" />
     <Compile Include="Bean\Traitement\TraitementCourrier.vb" />
     <Compile Include="Bean\Traitement\TraitementHistoClass.vb" />
     <Compile Include="Bean\Utilisateur\Action.vb" />
@@ -228,7 +228,6 @@
     <Compile Include="Dao\Traitement\MedicamentGeneriqueDao.vb" />
     <Compile Include="Dao\Traitement\MedocDao.vb" />
     <Compile Include="Dao\Traitement\TraitementDao.vb" />
-    <Compile Include="Dao\Traitement\TraitementDaoBase.vb" />
     <Compile Include="Dao\Traitement\TraitementHistoDao.vb" />
     <Compile Include="Dao\Utilisateur\ActionDao.vb" />
     <Compile Include="Dao\Utilisateur\FonctionDao.vb" />

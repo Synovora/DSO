@@ -89,7 +89,7 @@ Public Class RadFOrdonnanceDetail
     End Enum
 
     Dim ordonnanceDetailDao As New OrdonnanceDetailDao
-    Dim ordonnanceDetail As OrdonnanceDetailBase
+    Dim ordonnanceDetail As OrdonnanceDetail
 
     Dim EditMode As Integer
 
@@ -107,7 +107,7 @@ Public Class RadFOrdonnanceDetail
             TxtPosologie.Text = ordonnanceDetail.Posologie
         Else
             EditMode = EnumEditMode.Creation
-            ordonnanceDetail = New OrdonnanceDetailBase
+            ordonnanceDetail = New OrdonnanceDetail
             ordonnanceDetail.OrdonnanceId = SelectedOrdonnanceId
             ordonnanceDetail.TraitementId = 0
             ordonnanceDetail.Traitement = False

@@ -134,7 +134,7 @@ Public Module TraitementHistoDao
         Return codeRetour
     End Function
 
-    Public Sub InitClasseTraitementHistorisation(traitement As TraitementBase, UtilisateurConnecte As Utilisateur, TraitementHistoACreer As TraitementHisto)
+    Public Sub InitClasseTraitementHistorisation(traitement As Traitement, UtilisateurConnecte As Utilisateur, TraitementHistoACreer As TraitementHisto)
         'Initialisation classe Historisation traitement 
         TraitementHistoACreer.HistorisationDate = Date.Now()
         TraitementHistoACreer.HistorisationUtilisateurId = UtilisateurConnecte.UtilisateurId
@@ -190,10 +190,10 @@ Public Module TraitementHistoDao
         TraitementHistoACreer.HistorisationPosologieMidi = Coalesce(traitementDataReader("oa_traitement_posologie_midi"), 0)
         TraitementHistoACreer.HistorisationPosologieApresMidi = Coalesce(traitementDataReader("oa_traitement_posologie_apres_midi"), 0)
         TraitementHistoACreer.HistorisationPosologieSoir = Coalesce(traitementDataReader("oa_traitement_posologie_soir"), 0)
-        TraitementHistoACreer.HistorisationFractionMatin = Coalesce(traitementDataReader("oa_traitement_fraction_matin"), TraitementDao.EnumFraction.Non)
-        TraitementHistoACreer.HistorisationFractionMidi = Coalesce(traitementDataReader("oa_traitement_fraction_midi"), TraitementDao.EnumFraction.Non)
-        TraitementHistoACreer.HistorisationFractionApresMidi = Coalesce(traitementDataReader("oa_traitement_fraction_apres_midi"), TraitementDao.EnumFraction.Non)
-        TraitementHistoACreer.HistorisationFractionSoir = Coalesce(traitementDataReader("oa_traitement_fraction_soir"), TraitementDao.EnumFraction.Non)
+        TraitementHistoACreer.HistorisationFractionMatin = Coalesce(traitementDataReader("oa_traitement_fraction_matin"), Traitement.EnumFraction.Non)
+        TraitementHistoACreer.HistorisationFractionMidi = Coalesce(traitementDataReader("oa_traitement_fraction_midi"), Traitement.EnumFraction.Non)
+        TraitementHistoACreer.HistorisationFractionApresMidi = Coalesce(traitementDataReader("oa_traitement_fraction_apres_midi"), Traitement.EnumFraction.Non)
+        TraitementHistoACreer.HistorisationFractionSoir = Coalesce(traitementDataReader("oa_traitement_fraction_soir"), Traitement.EnumFraction.Non)
         TraitementHistoACreer.HistorisationPosologieCommentaire = Coalesce(traitementDataReader("oa_traitement_posologie_commentaire"), "")
         TraitementHistoACreer.HistorisationFenetre = Coalesce(traitementDataReader("oa_traitement_fenetre"), False)
         TraitementHistoACreer.HistorisationFenetreDateDebut = Coalesce(traitementDataReader("oa_traitement_fenetre_date_debut"), New Date(1, 1, 1, 0, 0, 0))

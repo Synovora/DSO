@@ -8,8 +8,8 @@ Public Class OrdonnanceDetailDaoBase
         Const NE_PAS_DELIVRER = "Ne pas délivrer"
     End Structure
 
-    Public Function getOrdonnanceLigneById(OrdonnanceLigneId As Long) As OrdonnanceDetailBase
-        Dim ordonnanceDetail As OrdonnanceDetailBase
+    Public Function getOrdonnanceLigneById(OrdonnanceLigneId As Long) As OrdonnanceDetail
+        Dim ordonnanceDetail As OrdonnanceDetail
         Dim con As SqlConnection
         con = GetConnection()
 
@@ -36,8 +36,8 @@ Public Class OrdonnanceDetailDaoBase
         Return ordonnanceDetail
     End Function
 
-    Private Function BuildBean(reader As SqlDataReader) As OrdonnanceDetailBase
-        Dim ordonnanceDetail As New OrdonnanceDetailBase With {
+    Private Function BuildBean(reader As SqlDataReader) As OrdonnanceDetail
+        Dim ordonnanceDetail As New OrdonnanceDetail With {
             .LigneId = reader("oa_ordonnance_ligne_id"),
             .Traitement = Coalesce(reader("oa_ordonnance_traitement"), False),
             .TraitementId = Coalesce(reader("oa_traitement_id"), 0),
@@ -71,8 +71,8 @@ Public Class OrdonnanceDetailDaoBase
         Return ordonnanceDetail
     End Function
 
-    Public Function GetOrdonnanceLigneByOrdonnanceId(ordonnanceId As Integer) As List(Of OrdonnanceDetailBase)
-        Dim ordonnanceDetail As New List(Of OrdonnanceDetailBase)
+    Public Function GetOrdonnanceLigneByOrdonnanceId(ordonnanceId As Integer) As List(Of OrdonnanceDetail)
+        Dim ordonnanceDetail As New List(Of OrdonnanceDetail)
         Dim con As SqlConnection = GetConnection()
 
         Try

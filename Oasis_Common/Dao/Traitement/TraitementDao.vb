@@ -1,9 +1,218 @@
 ﻿Imports System.Data.SqlClient
-Imports Oasis_Common
-Public Class TraitementDao
-    Inherits TraitementDaoBase
 
-    Dim patientDao As New PatientDao
+Public Class TraitementDao
+    Inherits StandardDao
+
+    ReadOnly patientDao As New PatientDao
+
+    Public Function GetBaseCodeByItem(Item As String) As String
+        Dim Code As String
+        Select Case Item
+            Case Traitement.EnumBaseItem.JOURNALIER
+                Code = Traitement.EnumBaseCode.JOURNALIER
+            Case Traitement.EnumBaseItem.HEBDOMADAIRE
+                Code = Traitement.EnumBaseCode.HEBDOMADAIRE
+            Case Traitement.EnumBaseItem.MENSUEL
+                Code = Traitement.EnumBaseCode.MENSUEL
+            Case Traitement.EnumBaseItem.ANNUEL
+                Code = Traitement.EnumBaseCode.ANNUEL
+            Case Traitement.EnumBaseItem.CONDITIONNEL
+                Code = Traitement.EnumBaseCode.CONDITIONNEL
+            Case Else
+                Code = ""
+        End Select
+
+        Return Code
+    End Function
+
+    Public Function GetBseItemByCode(Code As String) As String
+        Dim Item As String
+        Select Case Code
+            Case Traitement.EnumBaseCode.JOURNALIER
+                Item = Traitement.EnumBaseItem.JOURNALIER
+            Case Traitement.EnumBaseCode.HEBDOMADAIRE
+                Item = Traitement.EnumBaseItem.HEBDOMADAIRE
+            Case Traitement.EnumBaseCode.MENSUEL
+                Item = Traitement.EnumBaseItem.MENSUEL
+            Case Traitement.EnumBaseCode.ANNUEL
+                Item = Traitement.EnumBaseItem.ANNUEL
+            Case Traitement.EnumBaseCode.CONDITIONNEL
+                Item = Traitement.EnumBaseItem.CONDITIONNEL
+            Case Else
+                Item = ""
+        End Select
+
+        Return Item
+    End Function
+
+    Public Function GetTraitementById(traitementId As Integer) As Traitement
+        Dim traitement As Traitement
+        Dim con As SqlConnection = GetConnection()
+        Try
+            Dim command As SqlCommand = con.CreateCommand()
+            command.CommandText = "SELECT * FROM oasis.oa_traitement WHERE oa_traitement_id = @id"
+            command.Parameters.AddWithValue("@id", traitementId)
+            Using reader As SqlDataReader = command.ExecuteReader()
+                If reader.Read() Then
+                    traitement = BuildBean(reader)
+                Else
+                    Throw New ArgumentException("Traitement inexistant !")
+                End If
+            End Using
+
+        Catch ex As Exception
+            Throw ex
+        Finally
+            con.Close()
+        End Try
+        Return traitement
+    End Function
+
+    Private Function BuildBean(reader As SqlDataReader) As Traitement
+        Dim traitement As New Traitement With {
+            .TraitementId = reader("oa_traitement_id"),
+            .PatientId = Coalesce(reader("oa_traitement_patient_id"), ""),
+            .MedicamentId = Coalesce(reader("oa_traitement_medicament_cis"), ""),
+            .MedicamentDci = Coalesce(reader("oa_traitement_medicament_dci"), ""),
+            .ClasseAtc = Coalesce(reader("oa_traitement_classe_atc"), ""),
+            .DenominationLongue = Coalesce(reader("oa_traitement_denomination_longue"), ""),
+            .UserCreation = Coalesce(reader("oa_traitement_identifiant_creation"), 0),
+            .DateCreation = Coalesce(reader("oa_traitement_date_creation"), Nothing),
+            .UserModification = Coalesce(reader("oa_traitement_identifiant_modification"), 0),
+            .DateModification = Coalesce(reader("oa_traitement_date_modification"), Nothing),
+            .DateDebut = Coalesce(reader("oa_traitement_date_debut"), Nothing),
+            .DateFin = Coalesce(reader("oa_traitement_date_fin"), Nothing),
+            .OrdreAffichage = Coalesce(reader("oa_traitement_ordre_affichage"), 0),
+            .PosologieBase = Coalesce(reader("oa_traitement_posologie_base"), ""),
+            .PosologieRythme = Coalesce(reader("oa_traitement_posologie_rythme"), 0),
+            .PosologieMatin = Coalesce(reader("oa_traitement_posologie_matin"), 0),
+            .PosologieMidi = Coalesce(reader("oa_traitement_posologie_midi"), 0),
+            .PosologieApresMidi = Coalesce(reader("oa_traitement_posologie_apres_midi"), 0),
+            .PosologieSoir = Coalesce(reader("oa_traitement_posologie_soir"), 0),
+            .FractionMatin = Coalesce(reader("oa_traitement_fraction_matin"), ""),
+            .FractionMidi = Coalesce(reader("oa_traitement_fraction_midi"), ""),
+            .FractionApresMidi = Coalesce(reader("oa_traitement_fraction_apres_midi"), ""),
+            .FractionSoir = Coalesce(reader("oa_traitement_fraction_soir"), ""),
+            .PosologieCommentaire = Coalesce(reader("oa_traitement_posologie_commentaire"), ""),
+            .Fenetre = Coalesce(reader("oa_traitement_fenetre"), False),
+            .FenetreDateDebut = Coalesce(reader("oa_traitement_fenetre_date_debut"), Nothing),
+            .FenetreDateFin = Coalesce(reader("oa_traitement_fenetre_date_fin"), Nothing),
+            .FenetreCommentaire = Coalesce(reader("oa_traitement_fenetre_commentaire"), ""),
+            .Commentaire = Coalesce(reader("oa_traitement_commentaire"), ""),
+            .Arret = Coalesce(reader("oa_traitement_arret"), ""),
+            .ArretCommentaire = Coalesce(reader("oa_traitement_arret_commentaire"), ""),
+            .Allergie = Coalesce(reader("oa_traitement_allergie"), False),
+            .ContreIndication = Coalesce(reader("oa_traitement_contre_indication"), False),
+            .DeclaratifHorsTraitement = Coalesce(reader("oa_traitement_declaratif_hors_traitement"), False),
+            .Annulation = Coalesce(reader("oa_traitement_annulation"), ""),
+            .AnnulationCommentaire = Coalesce(reader("oa_traitement_annulation_commentaire"), "")
+        }
+        Return traitement
+    End Function
+
+    Public Function PosologieToText(traitement As Traitement) As String
+        Dim Posologie, PosologieMatinString, PosologieMidiString, PosologieApresMidiString, PosologieSoirString As String
+
+        If traitement.FractionMatin <> "" AndAlso traitement.FractionMatin <> Traitement.EnumFraction.Non Then
+            If traitement.PosologieMatin <> 0 Then
+                PosologieMatinString = traitement.PosologieMatin.ToString & "+" & traitement.FractionMatin
+            Else
+                PosologieMatinString = traitement.FractionMatin
+            End If
+        Else
+            If traitement.PosologieMatin <> 0 Then
+                PosologieMatinString = traitement.PosologieMatin.ToString
+            Else
+                PosologieMatinString = "0"
+            End If
+        End If
+
+        If traitement.FractionMidi <> "" AndAlso traitement.FractionMidi <> Traitement.EnumFraction.Non Then
+            If traitement.PosologieMidi <> 0 Then
+                PosologieMidiString = traitement.PosologieMidi.ToString & "+" & traitement.FractionMidi
+            Else
+                PosologieMidiString = traitement.FractionMidi
+            End If
+        Else
+            If traitement.PosologieMidi <> 0 Then
+                PosologieMidiString = traitement.PosologieMidi.ToString
+            Else
+                PosologieMidiString = "0"
+            End If
+        End If
+
+        If traitement.FractionApresMidi <> "" AndAlso traitement.FractionApresMidi <> Traitement.EnumFraction.Non Then
+            If traitement.PosologieApresMidi <> 0 Then
+                PosologieApresMidiString = traitement.PosologieApresMidi.ToString & "+" & traitement.FractionApresMidi
+            Else
+                PosologieApresMidiString = traitement.FractionApresMidi
+            End If
+        Else
+            If traitement.PosologieApresMidi <> 0 Then
+                PosologieApresMidiString = traitement.PosologieApresMidi.ToString
+            Else
+                PosologieApresMidiString = "0"
+            End If
+        End If
+
+        If traitement.FractionSoir <> "" AndAlso traitement.FractionSoir <> Traitement.EnumFraction.Non Then
+            If traitement.PosologieSoir <> 0 Then
+                PosologieSoirString = traitement.PosologieSoir.ToString & "+" & traitement.FractionSoir
+            Else
+                PosologieSoirString = traitement.FractionSoir
+            End If
+        Else
+            If traitement.PosologieSoir <> 0 Then
+                PosologieSoirString = traitement.PosologieSoir.ToString
+            Else
+                PosologieSoirString = "0"
+            End If
+        End If
+
+        Select Case traitement.PosologieBase
+            Case Traitement.EnumBaseCode.JOURNALIER
+                Posologie = PosologieMatinString + ". " + PosologieMidiString + ". " + PosologieApresMidiString + ". " + PosologieSoirString
+            Case Else
+                Posologie = ""
+                If traitement.FractionMatin <> "" AndAlso traitement.FractionMatin <> Traitement.EnumFraction.Non Then
+                    If traitement.PosologieRythme <> 0 Then
+                        Posologie = traitement.PosologieRythme.ToString & "+" & traitement.FractionMatin
+                    Else
+                        Posologie = traitement.FractionMatin
+                    End If
+                Else
+                    If traitement.PosologieRythme <> 0 Then
+                        Posologie = traitement.PosologieRythme.ToString
+                    End If
+                End If
+        End Select
+
+        Posologie &= " /" & traitement.PosologieBase
+
+        If traitement.PosologieBase = Traitement.EnumBaseCode.CONDITIONNEL Then
+            Posologie &= ": " & traitement.PosologieCommentaire
+        End If
+        Return Posologie
+    End Function
+
+    Public Function GetBaseDescription(base As String) As String
+        Dim baseString As String
+        Select Case base
+            Case Traitement.EnumBaseCode.CONDITIONNEL
+                baseString = "Conditionnel : "
+            Case Traitement.EnumBaseCode.HEBDOMADAIRE
+                baseString = "Hebdo : "
+            Case Traitement.EnumBaseCode.MENSUEL
+                baseString = "Mensuel : "
+            Case Traitement.EnumBaseCode.ANNUEL
+                baseString = "Annuel : "
+            Case Else
+                baseString = "Base inconnue ! "
+        End Select
+
+        Return baseString
+    End Function
+
 
     Public Function GetAllTraitementCIbyPatient(patientId As Integer) As DataTable
         Dim SQLString As String = "SELECT oa_traitement_id, oa_traitement_medicament_dci, oa_traitement_arret, oa_traitement_posologie_base," &
@@ -98,6 +307,33 @@ Public Class TraitementDao
         End Using
     End Function
 
+    Public Function GetTraitementsEnCoursbyPatient(patientId As Integer) As List(Of Traitement)
+        Dim con As SqlConnection = GetConnection()
+        Dim traitements As List(Of Traitement) = New List(Of Traitement)
+        Try
+            Dim command As SqlCommand = con.CreateCommand()
+            command.CommandText =
+                "SELECT * FROM oasis.oa_traitement WHERE (oa_traitement_annulation Is Null Or oa_traitement_annulation = '')" &
+                " AND (oa_traitement_date_fin >= CONVERT(DATE, GETDATE()))" &
+                " AND (oa_traitement_arret is Null OR oa_traitement_arret <> 'A')" &
+                " AND (oa_traitement_allergie is Null OR oa_traitement_allergie = 'False')" &
+                " AND (oa_traitement_contre_indication is Null OR oa_traitement_contre_indication = 'False')" &
+                " AND oa_traitement_patient_id = @patienId" &
+                " ORDER BY oa_traitement_ordre_affichage;"
+            command.Parameters.AddWithValue("@patienId", patientId)
+            Using reader As SqlDataReader = command.ExecuteReader()
+                While (reader.Read())
+                    traitements.Add(BuildBean(reader))
+                End While
+            End Using
+        Catch ex As Exception
+            Throw ex
+        Finally
+            con.Close()
+        End Try
+        Return traitements
+    End Function
+
     Public Function GetTraitementEnCoursbyPatient(patientId As Integer) As DataTable
         Dim SQLString As String = "SELECT oa_traitement_id, oa_traitement_medicament_cis, oa_traitement_medicament_dci, oa_traitement_denomination_longue," &
         " oa_traitement_posologie_base, oa_traitement_posologie_rythme, oa_traitement_posologie_matin, oa_traitement_posologie_midi," &
@@ -112,39 +348,6 @@ Public Class TraitementDao
         " AND (oa_traitement_arret is Null OR oa_traitement_arret <> 'A')" &
         " AND (oa_traitement_allergie is Null OR oa_traitement_allergie = 'False')" &
         " AND (oa_traitement_contre_indication is Null OR oa_traitement_contre_indication = 'False')" &
-        " AND oa_traitement_patient_id = " & patientId.ToString &
-        " ORDER BY oa_traitement_ordre_affichage;"
-
-        Using con As SqlConnection = GetConnection()
-            Dim TraitementDataAdapter As SqlDataAdapter = New SqlDataAdapter()
-            Using TraitementDataAdapter
-                TraitementDataAdapter.SelectCommand = New SqlCommand(SQLString, con)
-                Dim TraitementDataTable As DataTable = New DataTable()
-                Using TraitementDataTable
-                    Try
-                        TraitementDataAdapter.Fill(TraitementDataTable)
-                        Dim command As SqlCommand = con.CreateCommand()
-                    Catch ex As Exception
-                        Throw ex
-                    End Try
-                    Return TraitementDataTable
-                End Using
-            End Using
-        End Using
-    End Function
-
-    'Version sauvegardée de la précédente version utilisée (remplacée par getTraitementEnCoursbyPatient) ===> A supprimer
-    Public Function GetTraitementNotCancelledbyPatient(patientId As Integer) As DataTable
-        Dim SQLString As String = "SELECT oa_traitement_id, oa_traitement_medicament_cis, oa_traitement_medicament_dci," &
-        " oa_traitement_posologie_base, oa_traitement_posologie_rythme, oa_traitement_posologie_matin, oa_traitement_posologie_midi," &
-        " oa_traitement_posologie_apres_midi, oa_traitement_posologie_soir," &
-        " oa_traitement_fraction_matin, oa_traitement_fraction_midi, oa_traitement_fraction_apres_midi, oa_traitement_fraction_soir," &
-        " oa_traitement_posologie_commentaire, oa_traitement_ordre_affichage, oa_traitement_date_creation," &
-        " oa_traitement_commentaire, oa_traitement_date_modification, oa_traitement_date_debut, oa_traitement_date_fin, oa_traitement_fenetre," &
-        " oa_traitement_fenetre_date_debut, oa_traitement_fenetre_date_fin, oa_traitement_arret, oa_traitement_allergie," &
-        " oa_traitement_contre_indication FROM oasis.oa_traitement" &
-        " WHERE (oa_traitement_annulation Is Null Or oa_traitement_annulation = '')" &
-        " AND (oa_traitement_date_fin >= CONVERT(DATE, GETDATE()) OR (oa_traitement_allergie = 'True') OR (oa_traitement_contre_indication = 'True'))" &
         " AND oa_traitement_patient_id = " & patientId.ToString &
         " ORDER BY oa_traitement_ordre_affichage;"
 
@@ -192,7 +395,7 @@ Public Class TraitementDao
         End Using
     End Function
 
-    Public Function ModificationTraitement(traitement As TraitementBase, traitementHistoACreer As TraitementHisto, userLog As Utilisateur) As Boolean
+    Public Function ModificationTraitement(traitement As Traitement, traitementHistoACreer As TraitementHisto, userLog As Utilisateur) As Boolean
         Dim da As SqlDataAdapter = New SqlDataAdapter()
         Dim codeRetour As Boolean = True
 
@@ -290,7 +493,7 @@ Public Class TraitementDao
         Return codeRetour
     End Function
 
-    Public Function CreationTraitement(traitement As TraitementBase, traitementHistoACreer As TraitementHisto, userLog As Utilisateur) As Boolean
+    Public Function CreationTraitement(traitement As Traitement, traitementHistoACreer As TraitementHisto, userLog As Utilisateur) As Boolean
         Dim da As SqlDataAdapter = New SqlDataAdapter()
         Dim codeRetour As Boolean = True
         Dim traitementId As Long
@@ -379,7 +582,7 @@ Public Class TraitementDao
             traitementHistoACreer.HistorisationContreIndication = False
 
             Dim traitementDao As TraitementDao = New TraitementDao
-            Dim traitementCree As TraitementBase
+            Dim traitementCree As Traitement
 
             Try
                 traitementCree = traitementDao.GetTraitementById(traitementHistoACreer.HistorisationTraitementId)
@@ -400,7 +603,7 @@ Public Class TraitementDao
         Return codeRetour
     End Function
 
-    Public Function AnnulationTraitement(traitement As TraitementBase, traitementHistoACreer As TraitementHisto, userLog As Utilisateur) As Boolean
+    Public Function AnnulationTraitement(traitement As Traitement, traitementHistoACreer As TraitementHisto, userLog As Utilisateur) As Boolean
         Dim da As SqlDataAdapter = New SqlDataAdapter()
         Dim codeRetour As Boolean = True
 
@@ -454,7 +657,7 @@ Public Class TraitementDao
         Return codeRetour
     End Function
 
-    Public Function ArretTraitement(traitement As TraitementBase, traitementHistoACreer As TraitementHisto, userLog As Utilisateur) As Boolean
+    Public Function ArretTraitement(traitement As Traitement, traitementHistoACreer As TraitementHisto, userLog As Utilisateur) As Boolean
         Dim da As SqlDataAdapter = New SqlDataAdapter()
         Dim codeRetour As Boolean = True
 
@@ -516,7 +719,7 @@ Public Class TraitementDao
     End Function
 
 
-    Public Function SuppressionTraitement(traitement As TraitementBase, traitementHistoACreer As TraitementHisto, userLog As Utilisateur) As Boolean
+    Public Function SuppressionTraitement(traitement As Traitement, traitementHistoACreer As TraitementHisto, userLog As Utilisateur) As Boolean
         Dim da As SqlDataAdapter = New SqlDataAdapter()
         Dim codeRetour As Boolean = True
 
@@ -558,7 +761,7 @@ Public Class TraitementDao
         Return codeRetour
     End Function
 
-    Public Function DeclarationTraitementAllergieOuCI(traitement As TraitementBase, userLog As Utilisateur) As Boolean
+    Public Function DeclarationTraitementAllergieOuCI(traitement As Traitement, userLog As Utilisateur) As Boolean
         Dim da As SqlDataAdapter = New SqlDataAdapter()
         Dim codeRetour As Boolean = True
 
@@ -606,7 +809,7 @@ Public Class TraitementDao
         Dim ListTraitement As New List(Of TraitementCourrier)
         Dim traitementDao As New TraitementDao
         Dim dt As DataTable
-        dt = traitementDao.getTraitementEnCoursbyPatient(patientId)
+        dt = traitementDao.GetTraitementEnCoursbyPatient(patientId)
 
         Dim rowCount As Integer = dt.Rows.Count - 1
         For i = 0 To rowCount Step 1
@@ -662,10 +865,10 @@ Public Class TraitementDao
                 Dim FractionMatin, FractionMidi, FractionApresMidi, FractionSoir As String
                 Dim PosologieBase As String
 
-                FractionMatin = Coalesce(dt.Rows(i)("oa_traitement_fraction_matin"), TraitementDao.EnumFraction.Non)
-                FractionMidi = Coalesce(dt.Rows(i)("oa_traitement_fraction_midi"), TraitementDao.EnumFraction.Non)
-                FractionApresMidi = Coalesce(dt.Rows(i)("oa_traitement_fraction_apres_midi"), TraitementDao.EnumFraction.Non)
-                FractionSoir = Coalesce(dt.Rows(i)("oa_traitement_fraction_soir"), TraitementDao.EnumFraction.Non)
+                FractionMatin = Coalesce(dt.Rows(i)("oa_traitement_fraction_matin"), Traitement.EnumFraction.Non)
+                FractionMidi = Coalesce(dt.Rows(i)("oa_traitement_fraction_midi"), Traitement.EnumFraction.Non)
+                FractionApresMidi = Coalesce(dt.Rows(i)("oa_traitement_fraction_apres_midi"), Traitement.EnumFraction.Non)
+                FractionSoir = Coalesce(dt.Rows(i)("oa_traitement_fraction_soir"), Traitement.EnumFraction.Non)
 
                 posologieMatin = Coalesce(dt.Rows(i)("oa_traitement_Posologie_matin"), 0)
                 posologieMidi = Coalesce(dt.Rows(i)("oa_traitement_Posologie_midi"), 0)
@@ -674,7 +877,7 @@ Public Class TraitementDao
 
                 PosologieBase = Coalesce(dt.Rows(i)("oa_traitement_Posologie_base"), "")
 
-                If FractionMatin <> "" AndAlso FractionMatin <> TraitementDao.EnumFraction.Non Then
+                If FractionMatin <> "" AndAlso FractionMatin <> Traitement.EnumFraction.Non Then
                     If posologieMatin <> 0 Then
                         PosologieMatinString = posologieMatin.ToString & "+" & FractionMatin
                     Else
@@ -688,7 +891,7 @@ Public Class TraitementDao
                     End If
                 End If
 
-                If FractionMidi <> "" AndAlso FractionMidi <> TraitementDao.EnumFraction.Non Then
+                If FractionMidi <> "" AndAlso FractionMidi <> Traitement.EnumFraction.Non Then
                     If posologieMidi <> 0 Then
                         PosologieMidiString = posologieMidi.ToString & "+" & FractionMidi
                     Else
@@ -703,7 +906,7 @@ Public Class TraitementDao
                 End If
 
                 PosologieApresMidiString = ""
-                If FractionApresMidi <> "" AndAlso FractionApresMidi <> TraitementDao.EnumFraction.Non Then
+                If FractionApresMidi <> "" AndAlso FractionApresMidi <> Traitement.EnumFraction.Non Then
                     If posologieApresMidi <> 0 Then
                         PosologieApresMidiString = posologieApresMidi.ToString & "+" & FractionApresMidi
                     Else
@@ -715,7 +918,7 @@ Public Class TraitementDao
                     End If
                 End If
 
-                If FractionSoir <> "" AndAlso FractionSoir <> TraitementDao.EnumFraction.Non Then
+                If FractionSoir <> "" AndAlso FractionSoir <> Traitement.EnumFraction.Non Then
                     If posologieSoir <> 0 Then
                         PosologieSoirString = posologieSoir.ToString & "+" & FractionSoir
                     Else
@@ -731,16 +934,16 @@ Public Class TraitementDao
                 If dt.Rows(i)("oa_traitement_posologie_base") IsNot DBNull.Value Then
                     Rythme = dt.Rows(i)("oa_traitement_posologie_rythme")
                     Select Case PosologieBase
-                        Case TraitementDao.EnumBaseCode.JOURNALIER
+                        Case Traitement.EnumBaseCode.JOURNALIER
                             Base = ""
-                            If posologieApresMidi <> 0 OrElse FractionApresMidi <> TraitementDao.EnumFraction.Non Then
+                            If posologieApresMidi <> 0 OrElse FractionApresMidi <> Traitement.EnumFraction.Non Then
                                 Posologie = Base + PosologieMatinString + ". " + PosologieMidiString + ". " + PosologieApresMidiString + ". " + PosologieSoirString
                             Else
                                 Posologie = Base + " " + PosologieMatinString + ". " + PosologieMidiString + ". " + PosologieSoirString
                             End If
                         Case Else
                             Dim RythmeString As String = ""
-                            If FractionMatin <> "" AndAlso FractionMatin <> TraitementDao.EnumFraction.Non Then
+                            If FractionMatin <> "" AndAlso FractionMatin <> Traitement.EnumFraction.Non Then
                                 If Rythme <> 0 Then
                                     RythmeString = Rythme.ToString & "+" & FractionMatin
                                 Else

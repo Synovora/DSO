@@ -1,15 +1,15 @@
 ﻿Imports Oasis_Common
 
 Public Class RadFAllergieEtCISuppressionDetail
-    Private _selectedTraitement As TraitementBase
+    Private _selectedTraitement As Traitement
     Private _codeRetour As Boolean
     Private _SelectedPatient As PatientBase
 
-    Public Property SelectedTraitement As TraitementBase
+    Public Property SelectedTraitement As Traitement
         Get
             Return _selectedTraitement
         End Get
-        Set(value As TraitementBase)
+        Set(value As Traitement)
             _selectedTraitement = value
         End Set
     End Property

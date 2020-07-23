@@ -31,7 +31,7 @@ Namespace Controllers
                 ViewBag.Ordonnance = ordonnance
                 Dim ordonnanceDetail = ordonnanceDetailDao.GetOrdonnanceLigneByOrdonnanceId(ordonnance.Id)
                 ViewBag.OrdonnanceDetail = ordonnanceDetail
-                Dim traitements As New List(Of TraitementBase)
+                Dim traitements As New List(Of Traitement)
                 For Each detail In ordonnanceDetail
                     traitements.Add(traitementDao.GetTraitementById(detail.TraitementId))
                 Next

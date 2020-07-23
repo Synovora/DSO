@@ -1074,10 +1074,10 @@ Public Class RadFSynthese
                 Dim FractionMatin, FractionMidi, FractionApresMidi, FractionSoir As String
                 Dim PosologieBase As String
 
-                FractionMatin = Coalesce(traitementDataTable.Rows(i)("oa_traitement_fraction_matin"), TraitementDao.EnumFraction.Non)
-                FractionMidi = Coalesce(traitementDataTable.Rows(i)("oa_traitement_fraction_midi"), TraitementDao.EnumFraction.Non)
-                FractionApresMidi = Coalesce(traitementDataTable.Rows(i)("oa_traitement_fraction_apres_midi"), TraitementDao.EnumFraction.Non)
-                FractionSoir = Coalesce(traitementDataTable.Rows(i)("oa_traitement_fraction_soir"), TraitementDao.EnumFraction.Non)
+                FractionMatin = Coalesce(traitementDataTable.Rows(i)("oa_traitement_fraction_matin"), Traitement.EnumFraction.Non)
+                FractionMidi = Coalesce(traitementDataTable.Rows(i)("oa_traitement_fraction_midi"), Traitement.EnumFraction.Non)
+                FractionApresMidi = Coalesce(traitementDataTable.Rows(i)("oa_traitement_fraction_apres_midi"), Traitement.EnumFraction.Non)
+                FractionSoir = Coalesce(traitementDataTable.Rows(i)("oa_traitement_fraction_soir"), Traitement.EnumFraction.Non)
 
                 posologieMatin = Coalesce(traitementDataTable.Rows(i)("oa_traitement_Posologie_matin"), 0)
                 posologieMidi = Coalesce(traitementDataTable.Rows(i)("oa_traitement_Posologie_midi"), 0)
@@ -1086,7 +1086,7 @@ Public Class RadFSynthese
 
                 PosologieBase = Coalesce(traitementDataTable.Rows(i)("oa_traitement_Posologie_base"), "")
 
-                If FractionMatin <> "" AndAlso FractionMatin <> TraitementDao.EnumFraction.Non Then
+                If FractionMatin <> "" AndAlso FractionMatin <> Traitement.EnumFraction.Non Then
                     If posologieMatin <> 0 Then
                         PosologieMatinString = posologieMatin.ToString & "+" & FractionMatin
                     Else
@@ -1100,7 +1100,7 @@ Public Class RadFSynthese
                     End If
                 End If
 
-                If FractionMidi <> "" AndAlso FractionMidi <> TraitementDao.EnumFraction.Non Then
+                If FractionMidi <> "" AndAlso FractionMidi <> Traitement.EnumFraction.Non Then
                     If posologieMidi <> 0 Then
                         PosologieMidiString = posologieMidi.ToString & "+" & FractionMidi
                     Else
@@ -1115,7 +1115,7 @@ Public Class RadFSynthese
                 End If
 
                 PosologieApresMidiString = ""
-                If FractionApresMidi <> "" AndAlso FractionApresMidi <> TraitementDao.EnumFraction.Non Then
+                If FractionApresMidi <> "" AndAlso FractionApresMidi <> Traitement.EnumFraction.Non Then
                     If posologieApresMidi <> 0 Then
                         PosologieApresMidiString = posologieApresMidi.ToString & "+" & FractionApresMidi
                     Else
@@ -1127,7 +1127,7 @@ Public Class RadFSynthese
                     End If
                 End If
 
-                If FractionSoir <> "" AndAlso FractionSoir <> TraitementDao.EnumFraction.Non Then
+                If FractionSoir <> "" AndAlso FractionSoir <> Traitement.EnumFraction.Non Then
                     If posologieSoir <> 0 Then
                         PosologieSoirString = posologieSoir.ToString & "+" & FractionSoir
                     Else
@@ -1143,16 +1143,16 @@ Public Class RadFSynthese
                 If traitementDataTable.Rows(i)("oa_traitement_posologie_base") IsNot DBNull.Value Then
                     Rythme = traitementDataTable.Rows(i)("oa_traitement_posologie_rythme")
                     Select Case PosologieBase
-                        Case TraitementDao.EnumBaseCode.JOURNALIER
+                        Case Traitement.EnumBaseCode.JOURNALIER
                             Base = ""
-                            If posologieApresMidi <> 0 OrElse FractionApresMidi <> TraitementDao.EnumFraction.Non Then
+                            If posologieApresMidi <> 0 OrElse FractionApresMidi <> Traitement.EnumFraction.Non Then
                                 Posologie = Base + PosologieMatinString + ". " + PosologieMidiString + ". " + PosologieApresMidiString + ". " + PosologieSoirString
                             Else
                                 Posologie = Base + " " + PosologieMatinString + ". " + PosologieMidiString + ". " + PosologieSoirString
                             End If
                         Case Else
                             Dim RythmeString As String = ""
-                            If FractionMatin <> "" AndAlso FractionMatin <> TraitementDao.EnumFraction.Non Then
+                            If FractionMatin <> "" AndAlso FractionMatin <> Traitement.EnumFraction.Non Then
                                 If Rythme <> 0 Then
                                     RythmeString = Rythme.ToString & "+" & FractionMatin
                                 Else

@@ -1,4 +1,33 @@
-﻿Public Class TraitementBase
+﻿Public Class Traitement
+
+    Public Enum EnumMonographie
+        CLASSIQUE = 0
+        VIRTUEL = 1
+    End Enum
+
+    Public Structure EnumBaseCode
+        Const JOURNALIER = "J"
+        Const HEBDOMADAIRE = "H"
+        Const MENSUEL = "M"
+        Const ANNUEL = "A"
+        Const CONDITIONNEL = "C"
+    End Structure
+
+    Public Structure EnumBaseItem
+        Const JOURNALIER = "Journalier"
+        Const HEBDOMADAIRE = "Hebdomadaire"
+        Const MENSUEL = "Mensuel"
+        Const ANNUEL = "Annuel"
+        Const CONDITIONNEL = "Conditionnel"
+    End Structure
+
+    Public Structure EnumFraction
+        Const Non = "0"
+        Const Quart = "1/4"
+        Const Demi = "1/2"
+        Const TroisQuart = "3/4"
+    End Structure
+
     Property TraitementId As Integer
     Property PatientId As Integer
     Property MedicamentId As Integer
@@ -37,8 +66,8 @@
     Property Annulation As String
     Property AnnulationCommentaire As String
 
-    Public Function Clone() As TraitementBase
-        Dim newInstance As TraitementBase = DirectCast(Me.MemberwiseClone(), TraitementBase)
+    Public Function Clone() As Traitement
+        Dim newInstance As Traitement = DirectCast(Me.MemberwiseClone(), Traitement)
         Return newInstance
     End Function
 
