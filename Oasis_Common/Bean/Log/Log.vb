@@ -10,6 +10,6 @@
     Property Origine As String
     Property TypeLog As String
     Property DateLog As Date
-    Property UserLog As Long
+    Property UserLog As Utilisateur
 
 End Class

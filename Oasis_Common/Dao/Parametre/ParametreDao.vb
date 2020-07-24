@@ -1,6 +1,7 @@
 ﻿Imports System.Data.SqlClient
 
 Public Class ParametreDao
+
     Inherits StandardDao
 
     Private Function BuildBean(reader As SqlDataReader) As Parametre
@@ -17,7 +18,6 @@ Public Class ParametreDao
             .Inactif = Coalesce(reader("inactif"), False),
             .ExclusionAutoSuivi = Coalesce(reader("exclusion_auto_suivi"), False)
         }
-
         Return parametre
     End Function
 
@@ -43,6 +43,7 @@ Public Class ParametreDao
         Return parametre
     End Function
 
+    'TODO: change it
     Public Function GetAllParametre() As DataTable
         Dim SQLString As String = "SELECT * FROM oasis.oasis.oa_r_parametre" &
                 " WHERE inactif is Null or inactif = 'False'" &

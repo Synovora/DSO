@@ -168,7 +168,7 @@ Public Class PrtOrdonnance
         }
 
         Dim dt As DataTable
-        dt = ordonnanceDetailDao.getAllOrdonnanceLigneSelectAldByOrdonnanceId(SelectedOrdonnanceId, SelectionALD)
+        dt = ordonnanceDetailDao.GetAllOrdonnanceLigneSelectAldByOrdonnanceId(SelectedOrdonnanceId, SelectionALD)
 
         Dim i As Integer
         Dim rowCount As Integer = dt.Rows.Count - 1

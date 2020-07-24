@@ -101,7 +101,7 @@ Public Class RadFOrdonnanceDetail
     Private Sub ChargementDetail()
         If SelectedOrdonnanceLigneId <> 0 Then
             EditMode = EnumEditMode.Modification
-            ordonnanceDetail = ordonnanceDetailDao.getOrdonnanceLigneById(SelectedOrdonnanceLigneId)
+            ordonnanceDetail = ordonnanceDetailDao.GetOrdonnanceLigneById(SelectedOrdonnanceLigneId)
             NumDuree.Value = ordonnanceDetail.Duree
             TxtCommentaire.Text = ordonnanceDetail.PosologieCommentaire
             TxtPosologie.Text = ordonnanceDetail.Posologie

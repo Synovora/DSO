@@ -4,6 +4,7 @@ Imports System.Runtime.CompilerServices
 
 <Assembly: InternalsVisibleTo("UnitTest")>
 Public Module outils
+
     ReadOnly logDao As New LogDao
     Dim log As Log
 
@@ -18,7 +19,8 @@ Public Module outils
         log.Description = Description
         log.TypeLog = TypeLog
         log.Origine = FormName
-        logDao.CreateLog(log, userLog)
+        log.UserLog = userLog
+        logDao.CreateLog(log)
     End Sub
 
     Public Function GetProfilUserString(userLog As Utilisateur) As String

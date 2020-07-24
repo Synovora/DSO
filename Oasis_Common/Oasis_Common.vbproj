@@ -193,9 +193,7 @@
     <Compile Include="Dao\Log\LogDao.vb" />
     <Compile Include="Dao\Medicament\MedicamentDao.vb" />
     <Compile Include="Dao\Ordonnance\OrdonnanceDao.vb" />
-    <Compile Include="Dao\Ordonnance\OrdonnanceDaoBase.vb" />
     <Compile Include="Dao\Ordonnance\OrdonnanceDetailDao.vb" />
-    <Compile Include="Dao\Ordonnance\OrdonnanceDetailDaoBase.vb" />
     <Compile Include="Dao\Parametre\AutoSuiviDao.vb" />
     <Compile Include="Dao\Parametre\ParametreDao.vb" />
     <Compile Include="Dao\Parametre\ParametreDrcDao.vb" />

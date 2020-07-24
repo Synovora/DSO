@@ -37,21 +37,20 @@ Public Class LogDao
         Return log
     End Function
 
-    Public Sub CreateLog(log As Log, userLog As Utilisateur)
+    Public Sub CreateLog(log As Log)
         Dim da As SqlDataAdapter = New SqlDataAdapter()
         Dim con As SqlConnection = GetConnection()
         Dim dateCreation As Date = Date.Now.Date
         Dim SQLstring As String = "INSERT INTO oasis.oa_log" &
         " (description, type_log, origine, date_creation, user_creation)" &
         " VALUES (@description, @typeLog, @origine, @dateCreation, @userCreation)"
-
         Dim cmd As New SqlCommand(SQLstring, con)
         With cmd.Parameters
             .AddWithValue("@description", log.Description)
             .AddWithValue("@typelog", log.TypeLog)
             .AddWithValue("@origine", log.Origine)
             .AddWithValue("@dateCreation", Date.Now())
-            .AddWithValue("@userCreation", userLog.UtilisateurId)
+            .AddWithValue("@userCreation", log.UserLog.UtilisateurId)
         End With
         Try
             da.InsertCommand = cmd

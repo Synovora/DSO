@@ -625,13 +625,9 @@ Public Class RadFEpisodeLigneDeVie
                 Dim episode As Episode = episodeDao.GetEpisodeById(EpisodeId)
                 Me.Enabled = False
                 Cursor.Current = Cursors.WaitCursor
-                Dim OrdonnanceId As Long
-                Dim dt As DataTable
-                dt = ordonnanceDao.getOrdonnanceValidebyPatient(SelectedPatient.patientId, EpisodeId)
-                If dt.Rows.Count > 0 Then
-                    'Ordonnance existante
-                    OrdonnanceId = dt.Rows(0)("oa_ordonnance_id")
-                    AfficheOrdonnance(OrdonnanceId, episode)
+                Dim ordonnances As List(Of Ordonnance) = ordonnanceDao.GetOrdonnanceValideByPatient(SelectedPatient.PatientId, EpisodeId)
+                If ordonnances.Count > 0 Then
+                    AfficheOrdonnance(ordonnances(0).Id, episode)
                 Else
                     If episode.Etat = Episode.EnumEtatEpisode.CLOTURE.ToString OrElse episode.Etat = Episode.EnumEtatEpisode.ANNULE.ToString Then
                         If episode.DateModification.Date < Date.Now.Date Then
@@ -641,15 +637,10 @@ Public Class RadFEpisodeLigneDeVie
                             Exit Sub
                         End If
                     End If
-                    OrdonnanceId = ordonnanceDao.CreateOrdonnance(SelectedPatient.PatientId, EpisodeId, userLog)
+                    Dim OrdonnanceId = ordonnanceDao.CreateOrdonnance(SelectedPatient.PatientId, EpisodeId, userLog)
                     If OrdonnanceId <> 0 Then
-                        If ordonnanceDao.CreateNewOrdonnanceDetail(SelectedPatient.patientId, OrdonnanceId, episode) = True Then
-                            AfficheOrdonnance(OrdonnanceId, episode)
-                        Else
-                            'Erreur, l'ordonnance détail n'a pa été créée
-                        End If
-                    Else
-                        'Erreur, l'ordonnance n'a pa été créée
+                        ordonnanceDao.CreateNewOrdonnanceDetail(SelectedPatient.PatientId, OrdonnanceId, episode)
+                        AfficheOrdonnance(OrdonnanceId, episode)
                     End If
                 End If
                 Cursor.Current = Cursors.Default

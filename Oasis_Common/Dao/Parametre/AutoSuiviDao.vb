@@ -1,6 +1,7 @@
 ﻿Imports System.Data.SqlClient
 
 Public Class AutoSuiviDao
+
     Inherits StandardDao
 
     Private Function BuildBean(reader As SqlDataReader) As AutoSuivi
@@ -15,7 +16,6 @@ Public Class AutoSuiviDao
         Dim con As SqlConnection = GetConnection()
         Try
             Dim command As SqlCommand = con.CreateCommand()
-
             command.CommandText = "select * from oasis.oa_r_autosuivi where patient_id = @patient_id AND parametre_id = @parametre_id"
             command.Parameters.AddWithValue("@patient_id", patientId)
             command.Parameters.AddWithValue("@parametre_id", parametreId)
@@ -32,16 +32,14 @@ Public Class AutoSuiviDao
         Return instance
     End Function
 
-    Public Function CreateAutoSuivi(autoSuivi As AutoSuivi, userLog As Utilisateur) As Boolean
+    Public Function CreateAutoSuivi(autoSuivi As AutoSuivi) As Integer
         Dim da As SqlDataAdapter = New SqlDataAdapter()
-        Dim codeRetour As Boolean = True
-        Dim NbInsert As Integer
+        Dim autoSuiviId As Integer = 0
         Dim con As SqlConnection = GetConnection()
         Dim dateCreation As Date = Date.Now.Date
         Dim SQLstring As String = "INSERT INTO oasis.oa_r_autosuivi" &
         " (patient_id, parametre_id)" &
         " VALUES (@patient_id, @parametre_id)"
-
         Dim cmd As New SqlCommand(SQLstring, con)
         With cmd.Parameters
             .AddWithValue("@patient_id", autoSuivi.PatientId)
@@ -49,29 +47,21 @@ Public Class AutoSuiviDao
         End With
         Try
             da.InsertCommand = cmd
-            NbInsert = da.InsertCommand.ExecuteNonQuery()
-            If NbInsert = 0 Then
-                Dim anomalie As String = "La création du paramètre d'auto-suivi n'a pas abouti - Patient N° : " & autoSuivi.PatientId.ToString & " Id paramètre : " & autoSuivi.ParametreId.ToString
-                Throw New Exception(anomalie)
-                CreateLog(anomalie, "AutoSuiviDao", Log.EnumTypeLog.ERREUR.ToString, userLog)
-            End If
+            autoSuiviId = da.InsertCommand.ExecuteScalar()
         Catch ex As Exception
-            Throw New Exception(ex.Message)
-            codeRetour = False
+            Throw ex
         Finally
             con.Close()
         End Try
-        Return codeRetour
+        Return autoSuiviId
     End Function
 
-    Public Function DeleteAutoSuivi(autoSuivi As AutoSuivi) As Boolean
+    Public Sub DeleteAutoSuivi(autoSuivi As AutoSuivi)
         Dim da As SqlDataAdapter = New SqlDataAdapter()
-        Dim codeRetour As Boolean = True
         Dim con As SqlConnection = GetConnection()
         Dim dateCreation As Date = Date.Now.Date
         Dim SQLstring As String = "DELETE oasis.oa_r_autosuivi" &
         " WHERE patient_id = @patient_id AND parametre_id = @parametre_id"
-
         Dim cmd As New SqlCommand(SQLstring, con)
         With cmd.Parameters
             .AddWithValue("@patient_id", autoSuivi.PatientId)
@@ -81,11 +71,10 @@ Public Class AutoSuiviDao
             da.DeleteCommand = cmd
             da.DeleteCommand.ExecuteNonQuery()
         Catch ex As Exception
-            Throw New Exception(ex.Message)
-            codeRetour = False
+            Throw ex
         Finally
             con.Close()
         End Try
-        Return codeRetour
-    End Function
+    End Sub
+
 End Class

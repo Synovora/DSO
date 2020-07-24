@@ -135,7 +135,7 @@ Public Class RadFOrdonnanceListeDetail
 
         Dim ordonnanceDataTable As DataTable
         Dim ordonnanceDaoDetail As OrdonnanceDetailDao = New OrdonnanceDetailDao
-        ordonnanceDataTable = ordonnanceDaoDetail.getAllOrdonnanceLigneByOrdonnanceId(Me.SelectedOrdonnanceId)
+        ordonnanceDataTable = ordonnanceDaoDetail.GetAllOrdonnanceLigneByOrdonnanceId(Me.SelectedOrdonnanceId)
 
         Dim i As Integer
         Dim rowCount As Integer = ordonnanceDataTable.Rows.Count - 1
@@ -266,7 +266,7 @@ Public Class RadFOrdonnanceListeDetail
             If ordonnanceDetailGrid.ADelivrer = True Then
                 RadAldGridView.Rows(iGridALD).Cells("delivrance").Value = ""
             Else
-                RadAldGridView.Rows(iGridALD).Cells("delivrance").Value = OrdonnanceDetailDao.EnumDelivrance.NE_PAS_DELIVRER
+                RadAldGridView.Rows(iGridALD).Cells("delivrance").Value = OrdonnanceDetail.EnumDelivrance.NE_PAS_DELIVRER
             End If
         Else
             RadAldGridView.Rows(iGridALD).Cells("posologie").Value = ""
@@ -320,7 +320,7 @@ Public Class RadFOrdonnanceListeDetail
             If ordonnanceDetailGrid.ADelivrer = True Then
                 RadNonAldGridView.Rows(iGridNonALD).Cells("delivrance").Value = "" 'OrdonnanceDetailDao.EnumDelivrance.A_DELIVRER
             Else
-                RadNonAldGridView.Rows(iGridNonALD).Cells("delivrance").Value = OrdonnanceDetailDao.EnumDelivrance.NE_PAS_DELIVRER
+                RadNonAldGridView.Rows(iGridNonALD).Cells("delivrance").Value = OrdonnanceDetail.EnumDelivrance.NE_PAS_DELIVRER
             End If
         Else
             RadNonAldGridView.Rows(iGridNonALD).Cells("posologie").Value = ""
@@ -512,9 +512,8 @@ Public Class RadFOrdonnanceListeDetail
                 Dim ordonnanceLigneId As Integer = RadAldGridView.Rows(aRow).Cells("ordonnanceLigneId").Value
                 Me.Enabled = False
                 Cursor.Current = Cursors.WaitCursor
-                If ordonnanceDetailDao.ModificationOrdonnanceDetailALD(ordonnanceLigneId, False) = True Then
-                    ChargementOrdonnanceDetail()
-                End If
+                ordonnanceDetailDao.ModificationOrdonnanceDetailALD(ordonnanceLigneId, False)
+                ChargementOrdonnanceDetail()
                 Cursor.Current = Cursors.Default
                 Me.Enabled = True
             End If
@@ -545,9 +544,8 @@ Public Class RadFOrdonnanceListeDetail
                 Dim TraitementId As Integer = RadAldGridView.Rows(aRow).Cells("traitementId").Value
                 'Tester si l'ordonnance sélectionnée est à valider
                 If TraitementId = 0 Then
-                    If ordonnanceDetailDao.SuppressionOrdonnanceDetailByDrcId(OrdonnanceLigneId) = True Then
-                        ChargementOrdonnanceDetail()
-                    End If
+                    ordonnanceDetailDao.SuppressionOrdonnanceDetailByDrcId(OrdonnanceLigneId)
+                    ChargementOrdonnanceDetail()
                 End If
             End If
         Else
@@ -570,9 +568,8 @@ Public Class RadFOrdonnanceListeDetail
                 Else
                     aDelivrer = True
                 End If
-                If ordonnanceDetailDao.ModificationOrdonnanceDetailDelivrance(ordonnanceLigneId, aDelivrer) = True Then
-                    ChargementOrdonnanceDetail()
-                End If
+                ordonnanceDetailDao.ModificationOrdonnanceDetailDelivrance(ordonnanceLigneId, aDelivrer)
+                ChargementOrdonnanceDetail()
                 Cursor.Current = Cursors.Default
                 Me.Enabled = True
             End If
@@ -640,9 +637,8 @@ Public Class RadFOrdonnanceListeDetail
                 Dim TraitementId As Integer = RadNonAldGridView.Rows(aRow).Cells("traitementId").Value
                 'Tester si l'ordonnance sélectionnée est à valider
                 If TraitementId = 0 Then
-                    If ordonnanceDetailDao.SuppressionOrdonnanceDetailByDrcId(OrdonnanceLigneId) = True Then
-                        ChargementOrdonnanceDetail()
-                    End If
+                    ordonnanceDetailDao.SuppressionOrdonnanceDetailByDrcId(OrdonnanceLigneId)
+                    ChargementOrdonnanceDetail()
                 End If
             End If
         Else
@@ -664,9 +660,8 @@ Public Class RadFOrdonnanceListeDetail
                 Else
                     aDelivrer = True
                 End If
-                If ordonnanceDetailDao.ModificationOrdonnanceDetailDelivrance(ordonnanceLigneId, aDelivrer) = True Then
-                    ChargementOrdonnanceDetail()
-                End If
+                ordonnanceDetailDao.ModificationOrdonnanceDetailDelivrance(ordonnanceLigneId, aDelivrer)
+                ChargementOrdonnanceDetail()
                 Cursor.Current = Cursors.Default
                 Me.Enabled = True
             End If
@@ -680,9 +675,11 @@ Public Class RadFOrdonnanceListeDetail
                 Dim ordonnanceLigneId As Integer = RadNonAldGridView.Rows(aRow).Cells("ordonnanceLigneId").Value
                 Me.Enabled = False
                 Cursor.Current = Cursors.WaitCursor
-                If ordonnanceDetailDao.ModificationOrdonnanceDetailALD(ordonnanceLigneId, True) = True Then
+                Try
+                    ordonnanceDetailDao.ModificationOrdonnanceDetailALD(ordonnanceLigneId, True)
                     ChargementOrdonnanceDetail()
-                End If
+                Catch
+                End Try
                 Cursor.Current = Cursors.Default
                 Me.Enabled = True
             End If
@@ -695,12 +692,12 @@ Public Class RadFOrdonnanceListeDetail
 
     'Annuler l'ordonnance
     Private Sub RadBtnAnnulerOrdonnance_Click(sender As Object, e As EventArgs) Handles RadBtnAnnulerOrdonnance.Click
-        If ordonnanceDao.AnnulerOrdonnance(SelectedOrdonnanceId) = True Then
-            Dim form As New RadFNotification()
-            form.Message = "L'ordonnance a été annulée"
-            form.Show()
-            Close()
-        End If
+        ordonnanceDao.AnnulerOrdonnance(SelectedOrdonnanceId)
+        Dim form As New RadFNotification With {
+            .Message = "L'ordonnance a été annulée"
+        }
+        form.Show()
+        Close()
     End Sub
 
     'Ajouter une ligne de commentaire (Hors ALD)
@@ -720,16 +717,18 @@ Public Class RadFOrdonnanceListeDetail
 
     Private Sub RadBtnValidation_Click(sender As Object, e As EventArgs) Handles RadBtnValidation.Click
         If userLog.TypeProfil = FonctionDao.EnumTypeFonction.MEDICAL.ToString Then
-            If ordonnanceDao.ValidationOrdonnance(SelectedOrdonnanceId, userLog) = True Then
+            Try
+                ordonnanceDao.ValidationOrdonnance(SelectedOrdonnanceId, userLog)
                 ordonnance = ordonnanceDao.GetOrdonnaceById(SelectedOrdonnanceId)
                 GestionAccesBoutonAction()
-                Dim form As New RadFNotification()
-                form.Message = "L'ordonnance a été signée numériquement par : " & userLog.UtilisateurPrenom & " " & userLog.UtilisateurNom & vbCrLf &
-                ". L'ordonnance est à présent disponible pour être imprimée"
+                Dim form As New RadFNotification With {
+                    .Message = "L'ordonnance a été signée numériquement par : " & userLog.UtilisateurPrenom & " " & userLog.UtilisateurNom & vbCrLf &
+            ". L'ordonnance est à présent disponible pour être imprimée"
+                }
                 form.Show()
-            Else
+            Catch
                 MessageBox.Show("Erreur rencontrée pendant la validation de l'ordonnance")
-            End If
+            End Try
         Else
             MessageBox.Show("Vous ne disposez pas d'un profil de type 'Médical', pour valider une ordonnance." &
                             " Votre prodil est de type : " & userLog.TypeProfil)

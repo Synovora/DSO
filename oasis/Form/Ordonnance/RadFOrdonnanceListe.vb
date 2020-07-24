@@ -1,48 +1,12 @@
-﻿Imports Oasis_WF
-Imports Oasis_Common
+﻿Imports Oasis_Common
+
 Public Class RadFOrdonnanceListe
-    Private _SelectedPatient As Patient
-    Private _UtilisateurConnecte As Utilisateur
-    Private _Allergie As Boolean
-    Private _ContreIndication As Boolean
+    Property SelectedPatient As Patient
+    Property UtilisateurConnecte As Utilisateur
+    Property Allergie As Boolean
+    Property ContreIndication As Boolean
 
-    Public Property SelectedPatient As Patient
-        Get
-            Return _SelectedPatient
-        End Get
-        Set(value As Patient)
-            _SelectedPatient = value
-        End Set
-    End Property
-
-    Public Property UtilisateurConnecte As Utilisateur
-        Get
-            Return _UtilisateurConnecte
-        End Get
-        Set(value As Utilisateur)
-            _UtilisateurConnecte = value
-        End Set
-    End Property
-
-    Public Property Allergie As Boolean
-        Get
-            Return _Allergie
-        End Get
-        Set(value As Boolean)
-            _Allergie = value
-        End Set
-    End Property
-
-    Public Property ContreIndication As Boolean
-        Get
-            Return _ContreIndication
-        End Get
-        Set(value As Boolean)
-            _ContreIndication = value
-        End Set
-    End Property
-
-    Dim OrdonnanceDataTable As DataTable
+    Dim ordonnances As List(Of Ordonnance)
 
     Private Sub RadFOrdonnanceListe_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         ChargementOrdonnanceListe()
@@ -52,58 +16,45 @@ Public Class RadFOrdonnanceListe
 
     Private Sub ChargementOrdonnanceListe()
         Dim ordonnanceDao As New OrdonnanceDao
-        OrdonnanceDataTable = ordonnanceDao.getAllOrdonnancebyPatient(SelectedPatient.patientId)
+        Dim iGrid As Integer = 0
+        ordonnances = ordonnanceDao.GetAllOrdonnanceByPatient(SelectedPatient.PatientId)
 
-        Dim i As Integer
-        Dim rowCount As Integer = OrdonnanceDataTable.Rows.Count - 1
-        Dim iGrid As Integer = -1 'Indice pour alimenter la Grid qui peut comporter moins d'occurrences que le DataTable
-        Dim DateCreation, DateValidation, DateEdition As Date
-        Dim Commentaire, AuteurNom As String
-        Dim AuteurId As Integer
-
-        For i = 0 To rowCount Step 1
-            DateCreation = Coalesce(OrdonnanceDataTable.Rows(i)("oa_ordonnance_date_creation"), Nothing)
-            DateValidation = Coalesce(OrdonnanceDataTable.Rows(i)("oa_ordonnance_date_validation"), Nothing)
-            DateEdition = Coalesce(OrdonnanceDataTable.Rows(i)("oa_ordonnance_date_edition"), Nothing)
-            Commentaire = Coalesce(OrdonnanceDataTable.Rows(i)("oa_ordonnance_commentaire"), "")
-            AuteurId = Coalesce(OrdonnanceDataTable.Rows(i)("oa_ordonnance_utilisateur_creation"), 0)
-
-            iGrid += 1
+        For Each ordonnance In ordonnances
             'Ajout d'une ligne au DataGridView
             RadOrdonnanceDataGridView.Rows.Add(iGrid)
-            RadOrdonnanceDataGridView.Rows(iGrid).Cells("ordonnanceId").Value = (OrdonnanceDataTable.Rows(i)("oa_ordonnance_id"))
+            RadOrdonnanceDataGridView.Rows(iGrid).Cells("ordonnanceId").Value = ordonnance.Id
 
-            AuteurNom = ""
-            If AuteurId <> 0 Then
+            Dim AuteurNom = ""
+            If ordonnance.UtilisateurCreation <> 0 Then
                 Dim auteur As Utilisateur
                 Dim userDao As New UserDao
-                auteur = userDao.getUserById(AuteurId)
+                auteur = userDao.getUserById(ordonnance.UtilisateurCreation)
                 'UtilisateurDao.SetUtilisateur(auteur, AuteurId)
                 AuteurNom = auteur.UtilisateurPrenom & " " & auteur.UtilisateurNom
             End If
             RadOrdonnanceDataGridView.Rows(iGrid).Cells("auteur").Value = AuteurNom
 
-            If DateCreation <> Nothing Then
-                RadOrdonnanceDataGridView.Rows(iGrid).Cells("dateCreation").Value = DateCreation.ToString("dd.MM.yyyy")
+            If ordonnance.DateCreation <> Nothing Then
+                RadOrdonnanceDataGridView.Rows(iGrid).Cells("dateCreation").Value = ordonnance.DateCreation.ToString("dd.MM.yyyy")
             Else
                 RadOrdonnanceDataGridView.Rows(iGrid).Cells("dateCreation").Value = ""
             End If
 
-            If DateValidation <> Nothing Then
-                RadOrdonnanceDataGridView.Rows(iGrid).Cells("dateValidation").Value = DateCreation.ToString("dd.MM.yyyy")
+            If ordonnance.DateValidation <> Nothing Then
+                RadOrdonnanceDataGridView.Rows(iGrid).Cells("dateValidation").Value = ordonnance.DateCreation.ToString("dd.MM.yyyy")
             Else
                 RadOrdonnanceDataGridView.Rows(iGrid).Cells("dateValidation").Value = "En attente"
             End If
 
-            If DateEdition <> Nothing Then
-                RadOrdonnanceDataGridView.Rows(iGrid).Cells("dateEdition").Value = DateCreation.ToString("dd.MM.yyyy")
+            If ordonnance.DateEdition <> Nothing Then
+                RadOrdonnanceDataGridView.Rows(iGrid).Cells("dateEdition").Value = ordonnance.DateCreation.ToString("dd.MM.yyyy")
             Else
                 RadOrdonnanceDataGridView.Rows(iGrid).Cells("dateEdition").Value = "En attente"
             End If
 
-            RadOrdonnanceDataGridView.Rows(iGrid).Cells("commentaire").Value = Commentaire
+            RadOrdonnanceDataGridView.Rows(iGrid).Cells("commentaire").Value = ordonnance.Commentaire
+            iGrid += 1
         Next
-
         'Positionnement du grid sur la première occurrence
         If RadOrdonnanceDataGridView.Rows.Count > 0 Then
             Me.RadOrdonnanceDataGridView.CurrentRow = RadOrdonnanceDataGridView.ChildRows(0)

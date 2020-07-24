@@ -1,6 +1,7 @@
 ﻿Imports System.Data.SqlClient
 
 Public Class ParametreDrcDao
+
     Inherits StandardDao
 
     Private Function BuildBean(reader As SqlDataReader) As ParametreDrc
@@ -47,11 +48,7 @@ Public Class ParametreDrcDao
                 If reader.Read() Then
                     parametreDrc = BuildBean(reader)
                 Else
-                    parametreDrc = New ParametreDrc With {
-                        .Id = 0,
-                        .ParametreId = 0,
-                        .DrcId = 0
-                    }
+                    Throw New ArgumentException("ParametreDrc inexistant !")
                 End If
             End Using
         Catch ex As Exception
@@ -62,9 +59,8 @@ Public Class ParametreDrcDao
         Return parametreDrc
     End Function
 
-    Public Sub CreationParametreDrc(parametreDrc As ParametreDrc, userLog As Utilisateur)
+    Public Sub CreationParametreDrc(parametreDrc As ParametreDrc)
         Dim da As SqlDataAdapter = New SqlDataAdapter
-        Dim NbInsert As Integer
         Dim con As SqlConnection = GetConnection()
         Dim dateCreation As Date = Date.Now.Date
         Dim SQLstring As String = "INSERT INTO oasis.oa_drc_parametre" &
@@ -77,12 +73,7 @@ Public Class ParametreDrcDao
         End With
         Try
             da.InsertCommand = cmd
-            NbInsert = da.InsertCommand.ExecuteNonQuery()
-            If NbInsert = 0 Then
-                Dim anomalie As String = "La création du paramètre n'a pas abouti - DRC N° : " & parametreDrc.DrcId.ToString & " Id. paramètre : " & parametreDrc.ParametreId.ToString
-                Throw New Exception(anomalie)
-                CreateLog(anomalie, "ParametreDrcDao", Log.EnumTypeLog.ERREUR.ToString, userLog)
-            End If
+            da.InsertCommand.ExecuteNonQuery()
         Catch ex As Exception
             Throw ex
         Finally
@@ -90,8 +81,7 @@ Public Class ParametreDrcDao
         End Try
     End Sub
 
-    Public Sub ModificationParametreDrc(parametreDrc As ParametreDrc, userLog As Utilisateur)
-        Dim NbUpdate As Integer
+    Public Sub ModificationParametreDrc(parametreDrc As ParametreDrc)
         Dim da As SqlDataAdapter = New SqlDataAdapter()
         Dim con As SqlConnection = GetConnection()
         Dim SQLstring As String = "UPDATE oasis.oa_drc_parametre SET" &
@@ -105,12 +95,7 @@ Public Class ParametreDrcDao
         End With
         Try
             da.UpdateCommand = cmd
-            NbUpdate = da.UpdateCommand.ExecuteNonQuery()
-            If NbUpdate = 0 Then
-                Dim anomalie As String = "La modification du paramètre n'a pas abouti - Id : " & parametreDrc.Id.ToString & " DRC N° : " & parametreDrc.DrcId.ToString & " Id. paramètre : " & parametreDrc.ParametreId.ToString
-                Throw New Exception(anomalie)
-                CreateLog(anomalie, "ParametreDrcDao", Log.EnumTypeLog.ERREUR.ToString, userLog)
-            End If
+            da.UpdateCommand.ExecuteNonQuery()
         Catch ex As Exception
             Throw ex
         Finally

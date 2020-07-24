@@ -474,37 +474,26 @@ Public Class RadFEpisodeDetail
     End Sub
 
     Private Sub ChargementEtatEpisode()
-        Dim DateValidationOrdonnance As Date = Nothing
-        Dim DateCreationOrdonnance As Date = Nothing
-        Dim dt As DataTable
-        dt = ordonnaceDao.GetOrdonnanceValidebyPatient(SelectedPatient.PatientId, SelectedEpisodeId)
-        If dt.Rows.Count > 0 Then
+        Dim ordonnances As List(Of Ordonnance) = ordonnaceDao.GetOrdonnanceValideByPatient(SelectedPatient.PatientId, SelectedEpisodeId)
+        If ordonnances.Count > 0 Then
             OrdonnanceToolStripMenuItem.ForeColor = Color.Red
-            'RadPageView1.Pages(1).Item.ForeColor = Color.Orange
             RadPageView1.Pages(1).Item.DrawFill = True
             RadPageView1.Pages(1).Item.BackColor = Color.LightSalmon
             RadPageView1.Pages(1).Item.GradientStyle = GradientStyles.Solid
             RadBtnOrdonnance.BackColor = Color.LightSalmon
             ToolTip.SetToolTip(RadBtnOrdonnance, "Ordonnance existante en attente de validation médicale")
-            If dt.Rows.Count > 0 Then
-                ControleOrdonnanceExiste = True
-                DateValidationOrdonnance = Coalesce(dt.Rows(0)("oa_ordonnance_date_validation"), Nothing)
-                DateCreationOrdonnance = Coalesce(dt.Rows(0)("oa_ordonnance_date_creation"), Nothing)
-                If DateValidationOrdonnance <> Nothing Then
-                    ControleOrdonnanceValide = True
-                    'RadPageView1.Pages(1).Item.ForeColor = Color.Red
-                    RadPageView1.Pages(1).Item.DrawFill = True
-                    RadPageView1.Pages(1).Item.BackColor = Color.LightGreen
-                    RadPageView1.Pages(1).Item.GradientStyle = GradientStyles.Solid
-                    RadBtnOrdonnance.BackColor = Color.LightGreen
-                    ToolTip.SetToolTip(RadBtnOrdonnance, "Ordonnance existante et valide (signature médicale)")
-                Else
-                    ControleOrdonnanceValide = False
-                End If
+            ControleOrdonnanceExiste = True
+            ControleOrdonnanceValide = False
+            If ordonnances(0).DateValidation <> Nothing Then
+                ControleOrdonnanceValide = True
+                RadPageView1.Pages(1).Item.DrawFill = True
+                RadPageView1.Pages(1).Item.BackColor = Color.LightGreen
+                RadPageView1.Pages(1).Item.GradientStyle = GradientStyles.Solid
+                RadBtnOrdonnance.BackColor = Color.LightGreen
+                ToolTip.SetToolTip(RadBtnOrdonnance, "Ordonnance existante et valide (signature médicale)")
             End If
         Else
             OrdonnanceToolStripMenuItem.ForeColor = Color.Black
-            'RadPageView1.Pages(1).Item.ForeColor = Color.Black
             RadPageView1.Pages(1).Item.DrawFill = True
             RadPageView1.Pages(1).Item.BackColor = Color.FromArgb(191, 219, 255)
             RadPageView1.Pages(1).Item.GradientStyle = GradientStyles.Solid
@@ -518,9 +507,9 @@ Public Class RadFEpisodeDetail
             Case Episode.EnumEtatEpisode.EN_COURS.ToString
                 If ControleOrdonnanceExiste = True Then
                     If ControleOrdonnanceValide = True Then
-                        LblLabelEtatEpisode.Text = "EPISODE EN COURS - ORDONNANCE VALIDEE LE " & DateValidationOrdonnance.ToString("dd.MM.yyyy hh:mm")
+                        LblLabelEtatEpisode.Text = "EPISODE EN COURS - ORDONNANCE VALIDEE LE " & ordonnances(0).DateValidation.ToString("dd.MM.yyyy hh:mm")
                     Else
-                        LblLabelEtatEpisode.Text = "EPISODE EN COURS - ORDONNANCE CREEE LE " & DateCreationOrdonnance.ToString("dd.MM.yyyy hh:mm") & ", EN ATTENTE DE VALIDATION !"
+                        LblLabelEtatEpisode.Text = "EPISODE EN COURS - ORDONNANCE CREEE LE " & ordonnances(0).DateCreation.ToString("dd.MM.yyyy hh:mm") & ", EN ATTENTE DE VALIDATION !"
                     End If
                 Else
                     LblLabelEtatEpisode.Text = "Episode en cours"
@@ -3734,13 +3723,9 @@ Public Class RadFEpisodeDetail
     Private Sub GetOrdonnance()
         Me.Enabled = False
         Cursor.Current = Cursors.WaitCursor
-        Dim OrdonnanceId As Long
-        Dim dt As DataTable
-        dt = ordonnaceDao.GetOrdonnanceValidebyPatient(SelectedPatient.PatientId, SelectedEpisodeId)
-        If dt.Rows.Count > 0 Then
-            'Ordonnance existante
-            OrdonnanceId = dt.Rows(0)("oa_ordonnance_id")
-            AfficheOrdonnance(OrdonnanceId)
+        Dim ordonnances As List(Of Ordonnance) = ordonnaceDao.GetOrdonnanceValideByPatient(SelectedPatient.PatientId, SelectedEpisodeId)
+        If ordonnances.Count > 0 Then
+            AfficheOrdonnance(ordonnances(0).Id)
         Else
             If episode.Etat = Episode.EnumEtatEpisode.CLOTURE.ToString Then
                 If episode.DateModification.Date < Date.Now.Date Then
@@ -3750,15 +3735,10 @@ Public Class RadFEpisodeDetail
                     Exit Sub
                 End If
             End If
-            OrdonnanceId = ordonnaceDao.CreateOrdonnance(SelectedPatient.PatientId, SelectedEpisodeId, userLog)
+            Dim OrdonnanceId = ordonnaceDao.CreateOrdonnance(SelectedPatient.PatientId, SelectedEpisodeId, userLog)
             If OrdonnanceId <> 0 Then
-                If ordonnaceDao.CreateNewOrdonnanceDetail(SelectedPatient.PatientId, OrdonnanceId, episode) = True Then
-                    AfficheOrdonnance(OrdonnanceId)
-                Else
-                    'Erreur, l'ordonnance détail n'a pa été créée
-                End If
-            Else
-                'Erreur, l'ordonnance n'a pa été créée
+                ordonnaceDao.CreateNewOrdonnanceDetail(SelectedPatient.PatientId, OrdonnanceId, episode)
+                AfficheOrdonnance(OrdonnanceId)
             End If
         End If
         ChargementEtatEpisode()

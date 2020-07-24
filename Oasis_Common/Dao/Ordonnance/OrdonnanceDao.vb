@@ -1,9 +1,117 @@
 ﻿Imports System.Configuration
 Imports System.Data.SqlClient
-Imports Oasis_Common
 
 Public Class OrdonnanceDao
-    Inherits OrdonnanceDaoBase
+    Inherits StandardDao
+
+    Private Function BuildBean(reader As SqlDataReader) As Ordonnance
+        Dim ordonnance As New Ordonnance With {
+            .Id = reader("oa_ordonnance_id"),
+            .PatientId = Coalesce(reader("oa_ordonnance_patient_id"), 0),
+            .EpisodeId = Coalesce(reader("oa_ordonnance_episode_id"), 0),
+            .UtilisateurCreation = Coalesce(reader("oa_ordonnance_utilisateur_creation"), 0),
+            .DateCreation = Coalesce(reader("oa_ordonnance_date_creation"), Nothing),
+            .DateValidation = Coalesce(reader("oa_ordonnance_date_validation"), Nothing),
+            .UserValidation = Coalesce(reader("oa_ordonnance_user_validation"), 0),
+            .DateEdition = Coalesce(reader("oa_ordonnance_date_edition"), Nothing),
+            .Commentaire = Coalesce(reader("oa_ordonnance_commentaire"), ""),
+            .Renouvellement = Coalesce(reader("oa_ordonnance_renouvellement"), 0),
+            .Inactif = Coalesce(reader("oa_ordonnance_inactif"), False),
+            .Signature = Coalesce(reader("oa_ordonnance_signature"), "")
+        }
+        Return ordonnance
+    End Function
+
+    Public Function GetOrdonnaceById(OrdonnanceId As Integer) As Ordonnance
+        Dim ordonnance As Ordonnance
+        Dim con As SqlConnection = GetConnection()
+        Try
+            Dim command As SqlCommand = con.CreateCommand()
+            command.CommandText =
+                "SELECT * FROM oasis.oa_patient_ordonnance WHERE oa_ordonnance_id = @ordonnanceId"
+            command.Parameters.AddWithValue("@ordonnanceId", OrdonnanceId)
+            Using reader As SqlDataReader = command.ExecuteReader()
+                If reader.Read() Then
+                    ordonnance = BuildBean(reader)
+                Else
+                    Throw New ArgumentException("Ordonnance inexistante !")
+                End If
+            End Using
+        Catch ex As Exception
+            Throw ex
+        Finally
+            con.Close()
+        End Try
+        Return ordonnance
+    End Function
+
+    Public Function GetOrdonnaceBySignature(OrdonnanceSignature As String) As Ordonnance
+        Dim ordonnance As Ordonnance
+        Dim con As SqlConnection = GetConnection()
+        Try
+            Dim command As SqlCommand = con.CreateCommand()
+            command.CommandText = "SELECT * FROM oasis.oa_patient_ordonnance WHERE oa_ordonnance_signature = @signature"
+            command.Parameters.AddWithValue("@signature", OrdonnanceSignature)
+            Using reader As SqlDataReader = command.ExecuteReader()
+                If reader.Read() Then
+                    ordonnance = BuildBean(reader)
+                Else
+                    Throw New ArgumentException("Ordonnance inexistante !")
+                End If
+            End Using
+        Catch ex As Exception
+            Throw ex
+        Finally
+            con.Close()
+        End Try
+        Return ordonnance
+    End Function
+
+    Public Function GetAllOrdonnanceByPatient(patientId As Integer) As List(Of Ordonnance)
+        Dim con As SqlConnection = GetConnection()
+        Dim ordonnances As List(Of Ordonnance) = New List(Of Ordonnance)
+        Try
+            Dim command As SqlCommand = con.CreateCommand()
+            command.CommandText = "SELECT * FROM oasis.oa_patient_ordonnance" &
+                    " WHERE oa_ordonnance_patient_id = @patienId" &
+                    " ORDER BY oa_ordonnance_id DESC"
+            command.Parameters.AddWithValue("@patienId", patientId)
+            Using reader As SqlDataReader = command.ExecuteReader()
+                While (reader.Read())
+                    ordonnances.Add(BuildBean(reader))
+                End While
+            End Using
+        Catch ex As Exception
+            Throw ex
+        Finally
+            con.Close()
+        End Try
+        Return ordonnances
+    End Function
+
+    Public Function GetOrdonnanceValideByPatient(patientId As Integer, episodeId As Long) As List(Of Ordonnance)
+        Dim con As SqlConnection = GetConnection()
+        Dim ordonnances As List(Of Ordonnance) = New List(Of Ordonnance)
+        Try
+            Dim command As SqlCommand = con.CreateCommand()
+            command.CommandText = "SELECT * FROM oasis.oa_patient_ordonnance" &
+                    " WHERE oa_ordonnance_patient_id = @patienId" &
+                    " AND oa_ordonnance_episode_id = @episodeId" &
+                    " AND (oa_ordonnance_inactif = 'False' OR oa_ordonnance_inactif is Null)"
+            command.Parameters.AddWithValue("@patienId", patientId)
+            command.Parameters.AddWithValue("@episodeId", episodeId)
+            Using reader As SqlDataReader = command.ExecuteReader()
+                While (reader.Read())
+                    ordonnances.Add(BuildBean(reader))
+                End While
+            End Using
+        Catch ex As Exception
+            Throw ex
+        Finally
+            con.Close()
+        End Try
+        Return ordonnances
+    End Function
 
     Public Function CreateOrdonnance(patientId As Integer, episodeId As Integer, userLog As Utilisateur) As Integer
         Dim da As SqlDataAdapter = New SqlDataAdapter()
@@ -15,7 +123,6 @@ Public Class OrdonnanceDao
                                 " oa_ordonnance_episode_id, oa_ordonnance_commentaire, oa_ordonnance_renouvellement)" &
                                 " VALUES (@patientId, @userCreation, @dateCreation," &
                                 " @episodeid, @commentaire, @renouvellement); SELECT SCOPE_IDENTITY()"
-
         Dim cmd As New SqlCommand(SQLstring, con)
         With cmd.Parameters
             .AddWithValue("@patientId", patientId)
@@ -25,127 +132,93 @@ Public Class OrdonnanceDao
             .AddWithValue("@commentaire", "")
             .AddWithValue("@renouvellement", 0)
         End With
-
         Try
             da.InsertCommand = cmd
             OrdonnanceId = da.InsertCommand.ExecuteScalar()
         Catch ex As Exception
             Throw ex
-            OrdonnanceId = 0
         Finally
             con.Close()
         End Try
-
         Return OrdonnanceId
     End Function
 
-    Public Function ModificationOrdonnanceCommentaire(OrdonnanceId As Integer, Commentaire As String) As Boolean
+    Public Sub ModificationOrdonnanceCommentaire(OrdonnanceId As Integer, Commentaire As String)
         Dim da As SqlDataAdapter = New SqlDataAdapter()
-        Dim codeRetour As Boolean = True
-        Dim con As SqlConnection
-        con = GetConnection()
-
+        Dim con As SqlConnection = GetConnection()
         Dim SQLstring As String = "UPDATE oasis.oa_patient_ordonnance SET" &
         " oa_ordonnance_commentaire = @commentaire" &
         " WHERE oa_ordonnance_id = @ordonnanceId"
-
         Dim cmd As New SqlCommand(SQLstring, con)
-
         With cmd.Parameters
             .AddWithValue("@ordonnanceId", OrdonnanceId)
             .AddWithValue("@commentaire", Commentaire.Trim())
         End With
-
         Try
             da.UpdateCommand = cmd
             da.UpdateCommand.ExecuteNonQuery()
         Catch ex As Exception
-            Throw New Exception(ex.Message)
-            codeRetour = False
+            Throw ex
         Finally
             con.Close()
         End Try
+    End Sub
 
-        Return codeRetour
-    End Function
-
-    Public Function ModificationOrdonnanceRenouvellement(OrdonnanceId As Integer, Renouvellement As Integer) As Boolean
+    Public Sub ModificationOrdonnanceRenouvellement(OrdonnanceId As Integer, Renouvellement As Integer)
         Dim da As SqlDataAdapter = New SqlDataAdapter()
-        Dim codeRetour As Boolean = True
-        Dim con As SqlConnection
-        con = GetConnection()
-
+        Dim con As SqlConnection = GetConnection()
         Dim SQLstring As String = "UPDATE oasis.oa_patient_ordonnance SET" &
         " oa_ordonnance_renouvellement = @renouvellement" &
         " WHERE oa_ordonnance_id = @ordonnanceId"
-
         Dim cmd As New SqlCommand(SQLstring, con)
-
         With cmd.Parameters
             .AddWithValue("@ordonnanceId", OrdonnanceId)
             .AddWithValue("@renouvellement", Renouvellement)
         End With
-
         Try
             da.UpdateCommand = cmd
             da.UpdateCommand.ExecuteNonQuery()
         Catch ex As Exception
-            Throw New Exception(ex.Message)
-            codeRetour = False
+            Throw ex
         Finally
             con.Close()
         End Try
+    End Sub
 
-        Return codeRetour
-    End Function
-
-    Public Function AnnulerOrdonnance(OrdonnanceId As Integer) As Boolean
+    Public Sub AnnulerOrdonnance(OrdonnanceId As Integer)
         Dim da As SqlDataAdapter = New SqlDataAdapter()
-        Dim codeRetour As Boolean = True
-        Dim con As SqlConnection
-        con = GetConnection()
-
+        Dim con As SqlConnection = GetConnection()
         Dim SQLstring As String = "UPDATE oasis.oa_patient_ordonnance SET" &
         " oa_ordonnance_inactif = @inactif" &
         " WHERE oa_ordonnance_id = @ordonnanceId"
-
         Dim cmd As New SqlCommand(SQLstring, con)
-
         With cmd.Parameters
             .AddWithValue("@ordonnanceId", OrdonnanceId)
             .AddWithValue("@inactif", True)
         End With
-
         Try
             da.UpdateCommand = cmd
             da.UpdateCommand.ExecuteNonQuery()
         Catch ex As Exception
-            Throw New Exception(ex.Message)
-            codeRetour = False
+            Throw ex
         Finally
             con.Close()
         End Try
+    End Sub
 
-        Return codeRetour
-    End Function
-
-    Public Function ValidationOrdonnance(OrdonnanceId As Integer, userLog As Utilisateur) As Boolean
-        Dim ordonnanceDao As OrdonnanceDao = New OrdonnanceDao 'Why instanciate ?
-        Dim ordonnanceDetailDao As OrdonnanceDetailDao = New OrdonnanceDetailDao 'Why instanciate ?
-
+    Public Sub ValidationOrdonnance(OrdonnanceId As Integer, userLog As Utilisateur)
+        Dim ordonnanceDao As OrdonnanceDao = New OrdonnanceDao
+        Dim ordonnanceDetailDao As OrdonnanceDetailDao = New OrdonnanceDetailDao
         Dim ordonnance As Ordonnance = ordonnanceDao.GetOrdonnaceById(OrdonnanceId)
         Dim ordonnanceDetailA As List(Of OrdonnanceDetail) = ordonnanceDetailDao.GetOrdonnanceLigneByOrdonnanceId(OrdonnanceId)
         Dim ordonnanceDetail As List(Of OrdonnanceDetail) = TryCast(CObj(ordonnanceDetailA), List(Of OrdonnanceDetail))
-
         Dim ordonnanceFull As OrdonnanceFull = New OrdonnanceFull With {
             .Ordonnance = ordonnance,
             .Details = ordonnanceDetail
         }
-
         Dim da As SqlDataAdapter = New SqlDataAdapter()
         Dim codeRetour As Boolean = True
-        Dim con As SqlConnection
-        con = GetConnection()
+        Dim con As SqlConnection = GetConnection()
 
         'Update ordonnance before sign
         ordonnanceFull.Ordonnance.DateValidation = Date.Now
@@ -158,7 +231,6 @@ Public Class OrdonnanceDao
                 " oa_ordonnance_date_edition = @dateEdition," &
         " oa_ordonnance_signature = @signature" &
         " WHERE oa_ordonnance_id = @ordonnanceId"
-
         Dim cmd As New SqlCommand(SQLstring, con)
         With cmd.Parameters
             .AddWithValue("@ordonnanceId", OrdonnanceId)
@@ -167,35 +239,27 @@ Public Class OrdonnanceDao
             .AddWithValue("@dateEdition", ordonnanceFull.Ordonnance.DateEdition)
             .AddWithValue("@signature", userLog.Sign(ordonnanceFull.Serialize()))
         End With
-
         Try
             da.UpdateCommand = cmd
             da.UpdateCommand.ExecuteNonQuery()
         Catch ex As Exception
-            Throw New Exception(ex.Message)
-            codeRetour = False
+            Throw ex
         Finally
             con.Close()
         End Try
+    End Sub
 
-        Return codeRetour
-    End Function
-
-    Public Function CreateNewOrdonnanceDetail(patientId As Integer, ordonnanceId As Integer, episode As Episode) As Boolean
-        Dim Coderetour As Boolean = True
+    Public Sub CreateNewOrdonnanceDetail(patientId As Integer, ordonnanceId As Integer, episode As Episode)
         Dim alddao As New AldDao
         Dim TraitementDao As New TraitementDao
         Dim OrdonnanceDetailDao As New OrdonnanceDetailDao
-
         Dim TraitementDataTable As DataTable
         Dim PatientAld As Boolean
         Dim FenetreTherapeutiqueEnCours As Boolean
-
         Dim posologieMatin, posologieMidi, posologieApresMidi, posologieSoir As Integer
         Dim Rythme As Integer
 
         PatientAld = alddao.IsPatientALD(patientId)
-
         TraitementDataTable = TraitementDao.GetTraitementEnCoursbyPatient(patientId)
 
         Dim i As Integer
@@ -356,32 +420,33 @@ Public Class OrdonnanceDao
                 End Select
             End If
 
-            Dim ordonnanceDetail As New OrdonnanceDetail
-            ordonnanceDetail.OrdonnanceId = ordonnanceId
-            ordonnanceDetail.Traitement = True
-            ordonnanceDetail.TraitementId = TraitementDataTable.Rows(i)("oa_traitement_id")
-            ordonnanceDetail.OrdreAffichage = TraitementDataTable.Rows(i)("oa_traitement_ordre_affichage")
-            ordonnanceDetail.MedicamentCis = TraitementDataTable.Rows(i)("oa_traitement_medicament_cis")
-            ordonnanceDetail.MedicamentDci = Coalesce(TraitementDataTable.Rows(i)("oa_traitement_medicament_dci"), "")
-            ordonnanceDetail.DateDebut = DateDebut
-            ordonnanceDetail.DateFin = DateFin
-            ordonnanceDetail.Duree = duree
-            ordonnanceDetail.Posologie = Posologie
-            ordonnanceDetail.PosologieBase = Coalesce(TraitementDataTable.Rows(i)("oa_traitement_posologie_base"), "")
-            ordonnanceDetail.PosologieRythme = Coalesce(TraitementDataTable.Rows(i)("oa_traitement_posologie_rythme"), 0)
-            ordonnanceDetail.PosologieMatin = Coalesce(TraitementDataTable.Rows(i)("oa_traitement_posologie_matin"), 0)
-            ordonnanceDetail.PosologieMidi = Coalesce(TraitementDataTable.Rows(i)("oa_traitement_posologie_midi"), 0)
-            ordonnanceDetail.PosologieApresMidi = Coalesce(TraitementDataTable.Rows(i)("oa_traitement_posologie_apres_midi"), 0)
-            ordonnanceDetail.PosologieSoir = Coalesce(TraitementDataTable.Rows(i)("oa_traitement_posologie_soir"), 0)
-            ordonnanceDetail.FractionMatin = Coalesce(TraitementDataTable.Rows(i)("oa_traitement_fraction_matin"), "")
-            ordonnanceDetail.FractionMidi = Coalesce(TraitementDataTable.Rows(i)("oa_traitement_fraction_midi"), "")
-            ordonnanceDetail.FractionApresMidi = Coalesce(TraitementDataTable.Rows(i)("oa_traitement_fraction_apres_midi"), "")
-            ordonnanceDetail.FractionSoir = Coalesce(TraitementDataTable.Rows(i)("oa_traitement_fraction_soir"), "")
-            ordonnanceDetail.PosologieCommentaire = Coalesce(TraitementDataTable.Rows(i)("oa_traitement_posologie_commentaire"), "")
-            ordonnanceDetail.Commentaire = Coalesce(TraitementDataTable.Rows(i)("oa_traitement_commentaire"), "")
-            ordonnanceDetail.Fenetre = Coalesce(TraitementDataTable.Rows(i)("oa_traitement_fenetre"), False)
-            ordonnanceDetail.FenetreDateDebut = Coalesce(TraitementDataTable.Rows(i)("oa_traitement_fenetre_date_debut"), "31/12/2999")
-            ordonnanceDetail.FenetreDateFin = Coalesce(TraitementDataTable.Rows(i)("oa_traitement_fenetre_date_fin"), "31/12/2999")
+            Dim ordonnanceDetail As New OrdonnanceDetail With {
+                .OrdonnanceId = ordonnanceId,
+                .Traitement = True,
+                .TraitementId = TraitementDataTable.Rows(i)("oa_traitement_id"),
+                .OrdreAffichage = TraitementDataTable.Rows(i)("oa_traitement_ordre_affichage"),
+                .MedicamentCis = TraitementDataTable.Rows(i)("oa_traitement_medicament_cis"),
+                .MedicamentDci = Coalesce(TraitementDataTable.Rows(i)("oa_traitement_medicament_dci"), ""),
+                .DateDebut = DateDebut,
+                .DateFin = DateFin,
+                .Duree = duree,
+                .Posologie = Posologie,
+                .PosologieBase = Coalesce(TraitementDataTable.Rows(i)("oa_traitement_posologie_base"), ""),
+                .PosologieRythme = Coalesce(TraitementDataTable.Rows(i)("oa_traitement_posologie_rythme"), 0),
+                .PosologieMatin = Coalesce(TraitementDataTable.Rows(i)("oa_traitement_posologie_matin"), 0),
+                .PosologieMidi = Coalesce(TraitementDataTable.Rows(i)("oa_traitement_posologie_midi"), 0),
+                .PosologieApresMidi = Coalesce(TraitementDataTable.Rows(i)("oa_traitement_posologie_apres_midi"), 0),
+                .PosologieSoir = Coalesce(TraitementDataTable.Rows(i)("oa_traitement_posologie_soir"), 0),
+                .FractionMatin = Coalesce(TraitementDataTable.Rows(i)("oa_traitement_fraction_matin"), ""),
+                .FractionMidi = Coalesce(TraitementDataTable.Rows(i)("oa_traitement_fraction_midi"), ""),
+                .FractionApresMidi = Coalesce(TraitementDataTable.Rows(i)("oa_traitement_fraction_apres_midi"), ""),
+                .FractionSoir = Coalesce(TraitementDataTable.Rows(i)("oa_traitement_fraction_soir"), ""),
+                .PosologieCommentaire = Coalesce(TraitementDataTable.Rows(i)("oa_traitement_posologie_commentaire"), ""),
+                .Commentaire = Coalesce(TraitementDataTable.Rows(i)("oa_traitement_commentaire"), ""),
+                .Fenetre = Coalesce(TraitementDataTable.Rows(i)("oa_traitement_fenetre"), False),
+                .FenetreDateDebut = Coalesce(TraitementDataTable.Rows(i)("oa_traitement_fenetre_date_debut"), "31/12/2999"),
+                .FenetreDateFin = Coalesce(TraitementDataTable.Rows(i)("oa_traitement_fenetre_date_fin"), "31/12/2999")
+            }
             ordonnanceDetail.Fenetre = Coalesce(TraitementDataTable.Rows(i)("oa_traitement_fenetre"), False)
 
             'Existence d'une fenêtre thérapeutique
@@ -468,8 +533,6 @@ Public Class OrdonnanceDao
 
             OrdonnanceDetailDao.CreationOrdonnanceDetail(ordonnanceDetail)
         Next
-
-        Return Coderetour
-    End Function
+    End Sub
 
 End Class
