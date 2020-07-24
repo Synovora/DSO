@@ -1,6 +1,7 @@
 ﻿Imports System.IO
 
 Public Class OrdonnanceDetail
+
     Property LigneId As Integer
     Property OrdonnanceId As Integer
     Property Traitement As Boolean

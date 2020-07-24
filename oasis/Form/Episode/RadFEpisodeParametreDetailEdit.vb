@@ -5,7 +5,7 @@ Imports System.Configuration
 
 Public Class RadFEpisodeParametreDetailEdit
     Private _SelectedEpisodeId As Long
-    Private _SelectedPatient As PatientBase
+    Private _SelectedPatient As Patient
     Private _codeRetour As Boolean
 
     Public Property SelectedEpisodeId As Long
@@ -17,11 +17,11 @@ Public Class RadFEpisodeParametreDetailEdit
         End Set
     End Property
 
-    Public Property SelectedPatient As PatientBase
+    Public Property SelectedPatient As Patient
         Get
             Return _SelectedPatient
         End Get
-        Set(value As PatientBase)
+        Set(value As Patient)
             _SelectedPatient = value
         End Set
     End Property

@@ -3,7 +3,7 @@ Imports Telerik.WinForms.Documents.Layout
 Imports Telerik.WinControls.RichTextEditor.UI
 Imports Oasis_Common
 Public Class PrtSynthese
-    Public Property SelectedPatient As PatientBase
+    Public Property SelectedPatient As Patient
 
     Dim EditTools As OasisTextTools
 

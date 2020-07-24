@@ -2,18 +2,18 @@
 Imports Oasis_WF
 Imports Oasis_Common
 Public Class RadFParcoursConsigneDetailEdit
-    Private _SelectedPatient As PatientBase
+    Private _SelectedPatient As Patient
     Private _UtilisateurConnecte As Utilisateur
     Private _SelectedParcoursId As Integer
     Private _SelectedConsigneId As Integer
     Private _SelectedDrcId As Integer
     Private _CodeRetour As Boolean
 
-    Public Property SelectedPatient As PatientBase
+    Public Property SelectedPatient As Patient
         Get
             Return _SelectedPatient
         End Get
-        Set(value As PatientBase)
+        Set(value As Patient)
             _SelectedPatient = value
         End Set
     End Property

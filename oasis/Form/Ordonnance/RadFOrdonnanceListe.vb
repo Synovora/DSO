@@ -1,16 +1,16 @@
 ﻿Imports Oasis_WF
 Imports Oasis_Common
 Public Class RadFOrdonnanceListe
-    Private _SelectedPatient As PatientBase
+    Private _SelectedPatient As Patient
     Private _UtilisateurConnecte As Utilisateur
     Private _Allergie As Boolean
     Private _ContreIndication As Boolean
 
-    Public Property SelectedPatient As PatientBase
+    Public Property SelectedPatient As Patient
         Get
             Return _SelectedPatient
         End Get
-        Set(value As PatientBase)
+        Set(value As Patient)
             _SelectedPatient = value
         End Set
     End Property

@@ -1,13 +1,13 @@
 ﻿Imports Oasis_Common
 Public Class RadFHistoriqueRDVPatient
-    Private _SelectedPatient As PatientBase
+    Private _SelectedPatient As Patient
     Private _SelectedParcoursId As Integer
 
-    Public Property SelectedPatient As PatientBase
+    Public Property SelectedPatient As Patient
         Get
             Return _SelectedPatient
         End Get
-        Set(value As PatientBase)
+        Set(value As Patient)
             _SelectedPatient = value
         End Set
     End Property

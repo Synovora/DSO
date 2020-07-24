@@ -58,7 +58,7 @@ Public Class EpisodeProtocoleCollaboratifDao
         Dim ListProtocol = New List(Of Long)
         Dim patientDao As New PatientDao
 
-        Dim patient As PatientBase
+        Dim patient As Patient
         Dim agePatientEnJour As Integer = 0
         Dim agePatientEnAnnee As Integer = 0
         patient = patientDao.GetPatientById(patientId)
@@ -215,7 +215,7 @@ Public Class EpisodeProtocoleCollaboratifDao
         Dim ListGroupeParam = New List(Of Long)
         Dim ListParam = New List(Of Long)
 
-        Dim patient As PatientBase
+        Dim patient As Patient
         Dim agePatientEnJour As Integer = 0
         Dim agePatientEnAnnee As Integer = 0
 

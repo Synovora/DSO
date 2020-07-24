@@ -3,7 +3,7 @@ Imports Oasis_Common
 Public Class RadFPatientNoteListe
     Private _typeNote As Integer
     Private privateSelectedPatientId As Integer
-    Private privateSelectedPatient As PatientBase
+    Private privateSelectedPatient As Patient
     Private privateUtilisateurConnecte As Utilisateur
     Private privateCodeRetour As Boolean
 
@@ -34,11 +34,11 @@ Public Class RadFPatientNoteListe
         End Set
     End Property
 
-    Public Property SelectedPatient As PatientBase
+    Public Property SelectedPatient As Patient
         Get
             Return privateSelectedPatient
         End Get
-        Set(value As PatientBase)
+        Set(value As Patient)
             privateSelectedPatient = value
         End Set
     End Property

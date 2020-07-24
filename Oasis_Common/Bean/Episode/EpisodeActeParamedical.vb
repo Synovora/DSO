@@ -9,4 +9,5 @@
     Property DateObservation As Date
     Property DateModification As Date
     Property Inactif As Boolean
+
 End Class

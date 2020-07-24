@@ -11,4 +11,5 @@
     Property ParametreAjoute As Boolean
     Property Ordre As Integer
     Property Inactif As Boolean
+
 End Class

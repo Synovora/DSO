@@ -210,7 +210,7 @@ Public Class FAuthentificattion
         Cursor.Current = Cursors.WaitCursor
         Try
             Dim print As New PrtSynthese
-            Dim selectedPatient As PatientBase = patientDao.GetPatientById(1)
+            Dim selectedPatient As Patient = patientDao.GetPatientById(1)
             print.SelectedPatient = selectedPatient
             print.PrintDocument()
         Catch ex As Exception

@@ -8,17 +8,17 @@ Imports System.IO
 Imports Telerik.WinForms.Documents.FormatProviders.Pdf
 
 Public Class RadFSynthese
-    Private privateSelectedPatient As PatientBase
+    Private privateSelectedPatient As Patient
     Private privateUtilisateurConnecte As Utilisateur
     Private _rendezVousId As Long
     Private _IsRendezVousCloture As Boolean
     Private _ecranPrecedent As EnumAccesEcranPrecedent
 
-    Public Property SelectedPatient As PatientBase
+    Public Property SelectedPatient As Patient
         Get
             Return privateSelectedPatient
         End Get
-        Set(value As PatientBase)
+        Set(value As Patient)
             privateSelectedPatient = value
         End Set
     End Property

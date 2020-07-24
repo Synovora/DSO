@@ -75,7 +75,7 @@ Public Class SousEpisodeTypeDao
                 .AddWithValue("@categorie", seType.Category)
                 .AddWithValue("@dateCreation", seType.HorodateCreation)
                 .AddWithValue("@libelle", seType.Libelle)
-                .AddWithValue("@is_with_destinataire", seType.isWithDestinataire)
+                .AddWithValue("@is_with_destinataire", seType.IsWithDestinataire)
             End With
 
             da.InsertCommand = cmd
@@ -101,7 +101,7 @@ Public Class SousEpisodeTypeDao
         seType.Category = Coalesce(row("categorie"), "")
         seType.HorodateCreation = row("horodate_creation")
         seType.Libelle = row("libelle")
-        seType.isWithDestinataire = Coalesce(row("is_with_destinataire"), False)
+        seType.IsWithDestinataire = Coalesce(row("is_with_destinataire"), False)
         seType.LstSousEpisodeSousType = New SousEpisodeSousTypeDao().getLstSousEpisodeSousType(seType.Id)
         Return seType
     End Function

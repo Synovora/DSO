@@ -20,4 +20,5 @@
     Property Parametre5 As Long
     Property UserModification As Long
     Property DateModification As Date
+
 End Class

@@ -18,7 +18,7 @@ Public Class RadFPatientListe
     ReadOnly patientDao As New PatientDao
 
     'Instanciation du patient pour le fournir aux Forms qui seront appelées depuis cette Form
-    Dim SelectedPatient As New PatientBase
+    Dim SelectedPatient As New Patient
     Dim IndexGrid As Integer
 
     Private Sub RadFPatientListe_Load(sender As Object, e As EventArgs) Handles MyBase.Load

@@ -4,7 +4,7 @@ Imports Oasis_Common
 
 Public Class RadFMedicamentSelecteur
     Private _SelectedSpecialiteId As Long
-    Private _SelectedPatient As PatientBase
+    Private _SelectedPatient As Patient
     Private _selectedClasseAtc As String
 
     Public Property SelectedSpecialiteId As Long
@@ -16,11 +16,11 @@ Public Class RadFMedicamentSelecteur
         End Set
     End Property
 
-    Public Property SelectedPatient As PatientBase
+    Public Property SelectedPatient As Patient
         Get
             Return _SelectedPatient
         End Get
-        Set(value As PatientBase)
+        Set(value As Patient)
             _SelectedPatient = value
         End Set
     End Property

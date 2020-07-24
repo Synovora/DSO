@@ -29,7 +29,7 @@ Public Module MedicamentGeneriqueDao
 
 
     'Lecture des médicaments déclarés allergiques
-    Public Sub TraitementAllergies(Patient As PatientBase)
+    Public Sub TraitementAllergies(Patient As Patient)
         'Intialisation de la StringCollection des médicaments cis génériques associés aux allergiques
         Patient.PatientAllergiesGénériquesCis.Clear()
 
@@ -42,7 +42,7 @@ Public Module MedicamentGeneriqueDao
         End While
     End Sub
 
-    Private Sub ChargementGenerique(MedicamentCis As Integer, patient As PatientBase)
+    Private Sub ChargementGenerique(MedicamentCis As Integer, patient As Patient)
         'Déclaration des données de connexion
         Dim conxn As New SqlConnection(GetConnectionString())
         Dim MedicamentDataAdapter As SqlDataAdapter = New SqlDataAdapter()
@@ -76,7 +76,7 @@ Public Module MedicamentGeneriqueDao
 
     End Sub
 
-    Private Sub ChargementMedicamentCisAllergieCollectionPatient(MedicamentGeneriqueId As Integer, patient As PatientBase)
+    Private Sub ChargementMedicamentCisAllergieCollectionPatient(MedicamentGeneriqueId As Integer, patient As Patient)
         'Déclaration des données de connexion
         Dim conxn As New SqlConnection(GetConnectionString())
         Dim MedicamentDataAdapter As SqlDataAdapter = New SqlDataAdapter()

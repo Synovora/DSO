@@ -1,7 +1,7 @@
 ﻿Imports System.Data.SqlClient
 Imports Oasis_Common
 Public Class RadFAntecedentOrdreSelecteur
-    Private privateSelectedPatient As PatientBase
+    Private privateSelectedPatient As Patient
     Private privateUtilisateurConnecte As Utilisateur
     Private privateAntecedentIdaOrdonner As Integer
     Private privateAntecedentDescriptionAOrdonner As String
@@ -10,11 +10,11 @@ Public Class RadFAntecedentOrdreSelecteur
     Private privateCodeRetour As Boolean
     Private _positionGaucheDroite As Integer
 
-    Public Property SelectedPatient As PatientBase
+    Public Property SelectedPatient As Patient
         Get
             Return privateSelectedPatient
         End Get
-        Set(value As PatientBase)
+        Set(value As Patient)
             privateSelectedPatient = value
         End Set
     End Property

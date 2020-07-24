@@ -6,7 +6,7 @@ Public Class RadFEpisodeEnCoursListe
 
     Dim episodeDao As New EpisodeDao
 
-    Dim patient As New PatientBase
+    Dim patient As New Patient
 
     Dim InitForm As Boolean
     Dim Filtre As EnumFiltre

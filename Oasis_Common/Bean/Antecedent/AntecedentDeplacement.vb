@@ -6,4 +6,5 @@
     Property Ordre1 As Integer
     Property Ordre2 As Integer
     Property Ordre3 As Integer
+
 End Class

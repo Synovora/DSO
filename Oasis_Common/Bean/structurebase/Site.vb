@@ -13,21 +13,13 @@
     Public Property Mail As String
     Public Property Fax As String
 
-    ''' <summary>
-    ''' return in "(id1,id2, ... , idn)"
-    ''' </summary>
-    ''' <param name="lstOrigine"></param>
-    ''' <returns></returns>
-    Public Shared Function getQueryInForIds(lstOrigine As List(Of Site)) As String
+    Public Shared Function GetQueryInForIds(lstOrigine As List(Of Site)) As String
         Dim lstId As List(Of Long) = New List(Of Long)
-
         If lstOrigine Is Nothing Then Return ""
         For Each sitelu In lstOrigine
             lstId.Add(sitelu.Oa_site_id)
         Next
-
         Return " in ( " + String.Join(",", lstId) + ") "
-
     End Function
 
 End Class

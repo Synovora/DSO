@@ -1,18 +1,18 @@
 ﻿Imports System.Data.SqlClient
 Imports Oasis_Common
 Public Class RadFPPSDetailEdit
-    Private _SelectedPatient As PatientBase
+    Private _SelectedPatient As Patient
     Private _UtilisateurConnecte As Utilisateur
     Private _CategoriePPS As Integer
     Private _PPSId As Integer
     Private _codeRetour As Boolean
     Private _positionGaucheDroite As Integer
 
-    Public Property SelectedPatient As PatientBase
+    Public Property SelectedPatient As Patient
         Get
             Return _SelectedPatient
         End Get
-        Set(value As PatientBase)
+        Set(value As Patient)
             _SelectedPatient = value
         End Set
     End Property

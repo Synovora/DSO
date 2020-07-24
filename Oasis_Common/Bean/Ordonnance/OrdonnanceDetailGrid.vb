@@ -1,4 +1,5 @@
 ﻿Public Class OrdonnanceDetailGrid
+
     Property Posologie As String
     Property MedicamentDci As String
     Property MedicamentCis As Long
@@ -9,4 +10,5 @@
     Property CommentairePosologie As String
     Property ADelivrer As Boolean
     Property Ald As Boolean
+
 End Class

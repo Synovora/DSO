@@ -162,7 +162,7 @@ Public Class SousEpisodeReponseDao
             Using apiOasis As New ApiOasis()
                 apiOasis.uploadFileRest(loginRequestLog.login,
                                         loginRequestLog.password,
-                                        sousEpisodeReponse.getFilenameServer(sousEpisode.EpisodeId, idSEReponse),
+                                        sousEpisodeReponse.GetFilenameServer(sousEpisode.EpisodeId, idSEReponse),
                                         File.ReadAllBytes(filenameSrc))
             End Using
             ' -- upload ok => on fixe l'id de la reponse
@@ -183,7 +183,7 @@ Public Class SousEpisodeReponseDao
     End Function
 
     Public Function getContenu(idEpisode As Long, sousEpisodeReponse As SousEpisodeReponse, loginRequestLog As LoginRequest) As Byte()
-        Dim filename = sousEpisodeReponse.getFilenameServer(idEpisode)
+        Dim filename = sousEpisodeReponse.GetFilenameServer(idEpisode)
         ' -- download
         Using apiOasis As New ApiOasis()
             Dim downloadRequest As New DownloadRequest With {

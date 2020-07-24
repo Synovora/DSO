@@ -1,6 +1,5 @@
-﻿Imports Oasis_Common
+﻿Public Class Tache
 
-Public Class Tache
     Public Enum EtatTache
         EN_ATTENTE
         EN_COURS
@@ -208,9 +207,5 @@ Public Class Tache
     Public Function IsFonctionPossiblePourUser(user As Utilisateur) As Boolean
         Return user.IsFonctionIdPossible(TraiteFonctionId)
     End Function
-
-    'Public Function IsFonctionPossiblePourUserLog() As Boolean
-    '    Return IsFonctionPossiblePourUser(userLog)
-    'End Function
 
 End Class

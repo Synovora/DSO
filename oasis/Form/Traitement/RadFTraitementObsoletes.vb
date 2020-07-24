@@ -2,16 +2,17 @@
 Imports Telerik.WinControls.UI
 Imports Telerik.WinControls.UI.Localization
 Imports Oasis_Common
+
 Public Class RadFTraitementObsoletes
 
-    Private privateSelectedPatient As PatientBase
+    Private privateSelectedPatient As Patient
     Private privateUtilisateurConnecte As Utilisateur
 
-    Public Property SelectedPatient As PatientBase
+    Public Property SelectedPatient As Patient
         Get
             Return privateSelectedPatient
         End Get
-        Set(value As PatientBase)
+        Set(value As Patient)
             privateSelectedPatient = value
         End Set
     End Property

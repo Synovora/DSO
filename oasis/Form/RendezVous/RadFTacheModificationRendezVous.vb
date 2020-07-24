@@ -3,7 +3,7 @@ Imports Oasis_Common
 
 Public Class RadFTacheModificationRendezVous
     Private _selectedTacheId As Long
-    Private _selectedPatient As PatientBase
+    Private _selectedPatient As Patient
     Private _tacheDemandeRdv As Tache
     Private _codeRetour As Boolean
     Private _CreationDemandeRendezVous As Boolean
@@ -20,11 +20,11 @@ Public Class RadFTacheModificationRendezVous
         End Set
     End Property
 
-    Public Property SelectedPatient As PatientBase
+    Public Property SelectedPatient As Patient
         Get
             Return _selectedPatient
         End Get
-        Set(value As PatientBase)
+        Set(value As Patient)
             _selectedPatient = value
         End Set
     End Property

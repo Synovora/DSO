@@ -1,5 +1,4 @@
 ﻿Imports System.ComponentModel
-Imports Oasis_Common
 
 Public Class AppointmentOasis
     Implements INotifyPropertyChanged
@@ -47,4 +46,5 @@ Public Class AppointmentOasis
             RaiseEvent PropertyChanged(Me, New PropertyChangedEventArgs(propertyName))
         End If
     End Sub
+
 End Class

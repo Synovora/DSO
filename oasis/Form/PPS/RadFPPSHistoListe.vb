@@ -2,15 +2,15 @@
 Imports Oasis_WF
 
 Public Class RadFPPSHistoListe
-    Private _SelectedPatient As PatientBase
+    Private _SelectedPatient As Patient
     Private _UtilisateurConnecte As Utilisateur
     Private _SelectedPPSId As Integer
 
-    Public Property SelectedPatient As PatientBase
+    Public Property SelectedPatient As Patient
         Get
             Return _SelectedPatient
         End Get
-        Set(value As PatientBase)
+        Set(value As Patient)
             _SelectedPatient = value
         End Set
     End Property

@@ -2,16 +2,16 @@
 Imports Oasis_Common
 
 Public Class RadFTraitementHistoListe
-    Private privateSelectedPatient As PatientBase
+    Private privateSelectedPatient As Patient
     Private privateUtilisateurConnecte As Utilisateur
     Private privateSelectedTraitementId As Integer
     Private privateMedicamentDenomination As String
 
-    Public Property SelectedPatient As PatientBase
+    Public Property SelectedPatient As Patient
         Get
             Return privateSelectedPatient
         End Get
-        Set(value As PatientBase)
+        Set(value As Patient)
             privateSelectedPatient = value
         End Set
     End Property

@@ -2,17 +2,17 @@
 Imports Oasis_Common
 Public Class RadFTraitementFenetreTh
 
-    Private privateSelectedPatient As PatientBase
+    Private privateSelectedPatient As Patient
     Private privateUtilisateurConnecte As Utilisateur
     Private privateSelectedTraitementId As Integer
     Private privateFenetreTherapeutiqueExiste As Boolean
     Private privateCodeRetour As Boolean
 
-    Public Property SelectedPatient As PatientBase
+    Public Property SelectedPatient As Patient
         Get
             Return privateSelectedPatient
         End Get
-        Set(value As PatientBase)
+        Set(value As Patient)
             privateSelectedPatient = value
         End Set
     End Property

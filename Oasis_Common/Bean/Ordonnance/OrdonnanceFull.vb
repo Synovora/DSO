@@ -1,8 +1,8 @@
 ﻿Imports System.IO
-Imports Oasis_Common
 
 <Serializable()>
 Public Class OrdonnanceFull
+
     Property Ordonnance As Ordonnance
     Property Details As List(Of OrdonnanceDetail)
 

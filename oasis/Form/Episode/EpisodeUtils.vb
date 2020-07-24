@@ -1,7 +1,7 @@
 ﻿Imports Oasis_Common
 
 Module EpisodeUtils
-    Public Function CallEpisode(selectedPatient As PatientBase, rendezVousId As Long, userLog As Utilisateur, Optional EcransPrecedent As EnumAccesEcranPrecedent = EnumAccesEcranPrecedent.SANS) As Boolean
+    Public Function CallEpisode(selectedPatient As Patient, rendezVousId As Long, userLog As Utilisateur, Optional EcransPrecedent As EnumAccesEcranPrecedent = EnumAccesEcranPrecedent.SANS) As Boolean
         Dim IsRendezVousCloture As Boolean = False
         'Tester si l'utilisateur a une fonction de type MEDICAL ou PARAMEDICALE
         If Not (userLog.TypeProfil = ProfilDao.EnumProfilType.MEDICAL.ToString Or userLog.TypeProfil = ProfilDao.EnumProfilType.PARAMEDICAL.ToString) Then

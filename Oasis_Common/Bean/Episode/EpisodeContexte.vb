@@ -5,4 +5,5 @@
     Property ContexteId As Long
     Property DateCreation As Date
     Property UserCreation As Long
+
 End Class

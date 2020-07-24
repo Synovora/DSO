@@ -16,7 +16,7 @@ Public Class FrmSousEpisode
     Dim sousEpisodeReponseDao As SousEpisodeReponseDao = New SousEpisodeReponseDao
     Dim parcoursDao As ParcoursDao = New ParcoursDao
 
-    Dim episode As Episode, patient As PatientBase, sousEpisode As SousEpisode
+    Dim episode As Episode, patient As Patient, sousEpisode As SousEpisode
     Dim userCreateNom As String, userUpdateNom As String, userValidateNom As String
     Dim isCreation As Boolean
     Dim isNotSigned As Boolean
@@ -37,7 +37,7 @@ Public Class FrmSousEpisode
     ''' <param name="userCreateNom"></param>
     ''' <param name="userUpdateNom"></param>
     ''' <param name="userValidateNom"></param>
-    Sub New(episode As Episode, patient As PatientBase, sousEpisode As SousEpisode, userCreateNom As String, userUpdateNom As String, userValidateNom As String)
+    Sub New(episode As Episode, patient As Patient, sousEpisode As SousEpisode, userCreateNom As String, userUpdateNom As String, userValidateNom As String)
 
         ' -- Cet appel est requis par le concepteur.
         InitializeComponent()
@@ -740,8 +740,8 @@ Public Class FrmSousEpisode
     End Sub
 
     Private Sub initDestinataire(sousEpisodeType As SousEpisodeType)
-        Me.LblDestinataire.Visible = sousEpisodeType.isWithDestinataire()
-        Me.DropDownDestinataire.Visible = sousEpisodeType.isWithDestinataire()
+        Me.LblDestinataire.Visible = sousEpisodeType.IsWithDestinataire()
+        Me.DropDownDestinataire.Visible = sousEpisodeType.IsWithDestinataire()
     End Sub
 
     ''' <summary>

@@ -7,7 +7,7 @@ Imports Nethereum.Hex.HexConvertors.Extensions
 Imports QRCoder
 
 Public Class PrtOrdonnance
-    Public Property SelectedPatient As PatientBase
+    Public Property SelectedPatient As Patient
     Public Property SelectedOrdonnanceId As Long
 
     ReadOnly EditTools As New OasisTextTools

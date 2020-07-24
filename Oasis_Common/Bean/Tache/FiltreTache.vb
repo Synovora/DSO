@@ -1,31 +1,16 @@
-﻿Imports Oasis_WF
+﻿Public Class FiltreTache
 
-Public Class FiltreTache
+    Property LstUniteSanitaire As New List(Of UniteSanitaire)
 
-    Private _lstUniteSanitaire As New List(Of UniteSanitaire)
-
-    Public Property LstUniteSanitaire As List(Of UniteSanitaire)
-        Get
-            Return _lstUniteSanitaire
-        End Get
-        Set(value As List(Of UniteSanitaire))
-            _lstUniteSanitaire = value
-        End Set
-    End Property
-
-    Public Sub addSiteToUniteSanitaire(us As UniteSanitaire, site As Site)
+    Public Sub AddSiteToUniteSanitaire(us As UniteSanitaire, site As Site)
         us.AddSite(site)
     End Sub
 
-    Public Sub addUniteSanitaire(unite_s As UniteSanitaire)
+    Public Sub AddUniteSanitaire(unite_s As UniteSanitaire)
         LstUniteSanitaire.Add(unite_s)
     End Sub
 
-    ''' <summary>
-    ''' Résumé du filtre
-    ''' </summary>
-    ''' <returns></returns>
-    Public Function resumeFiltre() As String
+    Public Function ResumeFiltre() As String
         Dim resu As String = "", strSite As String
         Dim us As UniteSanitaire
         Dim firstSite As Boolean
@@ -48,11 +33,7 @@ Public Class FiltreTache
         Return resu
     End Function
 
-    ''' <summary>
-    ''' retourne une liste plate de tous les sites selectionnés
-    ''' </summary>
-    ''' <returns></returns>
-    Public Function getListAllSite() As List(Of Site)
+    Public Function GetListAllSite() As List(Of Site)
         Dim lstAllSite As List(Of Site) = New List(Of Site)
         For Each us In LstUniteSanitaire
             For Each sitelu In us.LstSite

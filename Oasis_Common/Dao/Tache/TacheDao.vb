@@ -164,17 +164,17 @@ Public Class TacheDao
         If (lstFonction.Count < 1) Then
             SQLString += "AND 0=1 " & vbCrLf  ' si pas de fonction => pas de resultats (sécurité)
         Else
-            SQLString += "AND traite_fonction_id " & Fonction.getQueryInForIds(lstFonction) & vbCrLf
+            SQLString += "AND traite_fonction_id " & Fonction.GetQueryInForIds(lstFonction) & vbCrLf
         End If
         ' --- filtre unités sanitaire
         If filtreTache.LstUniteSanitaire.Count > 0 Then
-            SQLString += "AND unite_sanitaire_id " & UniteSanitaire.getQueryInForIds(filtreTache.LstUniteSanitaire) & vbCrLf
+            SQLString += "AND unite_sanitaire_id " & UniteSanitaire.GetQueryInForIds(filtreTache.LstUniteSanitaire) & vbCrLf
         End If
         ' --- filtre sites
         Dim lstAllSite As List(Of Site)
-        lstAllSite = filtreTache.getListAllSite()
+        lstAllSite = filtreTache.GetListAllSite()
         If lstAllSite.Count > 0 Then
-            SQLString += "AND site_id " & Site.getQueryInForIds(lstAllSite) & vbCrLf
+            SQLString += "AND site_id " & Site.GetQueryInForIds(lstAllSite) & vbCrLf
         End If
         Return SQLString
     End Function
@@ -224,14 +224,14 @@ Public Class TacheDao
                 SQLString += "AND 0=1 " & vbCrLf  ' pas de fonction ou pas de filtre => pas de tache
             Else
                 ' --- filtre fonction
-                SQLString += "AND traite_fonction_id " & Fonction.getQueryInForIds(lstFonctionChoisie) & vbCrLf
+                SQLString += "AND traite_fonction_id " & Fonction.GetQueryInForIds(lstFonctionChoisie) & vbCrLf
                 ' --- filtre unités sanitaire
                 If filtre.LstUniteSanitaire.Count > 0 Then
-                    SQLString += "AND unite_sanitaire_id " & UniteSanitaire.getQueryInForIds(filtre.LstUniteSanitaire) & vbCrLf
+                    SQLString += "AND unite_sanitaire_id " & UniteSanitaire.GetQueryInForIds(filtre.LstUniteSanitaire) & vbCrLf
                 End If
                 ' --- filtre sites
-                If filtre.getListAllSite().Count > 0 Then
-                    SQLString += "AND site_id " & Site.getQueryInForIds(filtre.getListAllSite()) & vbCrLf
+                If filtre.GetListAllSite().Count > 0 Then
+                    SQLString += "AND site_id " & Site.GetQueryInForIds(filtre.GetListAllSite()) & vbCrLf
                 End If
             End If
         End If
@@ -353,14 +353,14 @@ Public Class TacheDao
                 SQLString += "AND 0=1 " & vbCrLf  ' pas de fonction ou pas de filtre => pas de tache
             Else
                 ' --- filtre fonction
-                SQLString += "AND traite_fonction_id " & Fonction.getQueryInForIds(lstFonctionChoisie) & vbCrLf
+                SQLString += "AND traite_fonction_id " & Fonction.GetQueryInForIds(lstFonctionChoisie) & vbCrLf
                 ' --- filtre unités sanitaire
                 If filtre.LstUniteSanitaire.Count > 0 Then
-                    SQLString += "AND unite_sanitaire_id " & UniteSanitaire.getQueryInForIds(filtre.LstUniteSanitaire) & vbCrLf
+                    SQLString += "AND unite_sanitaire_id " & UniteSanitaire.GetQueryInForIds(filtre.LstUniteSanitaire) & vbCrLf
                 End If
                 ' --- filtre sites
-                If filtre.getListAllSite().Count > 0 Then
-                    SQLString += "AND site_id " & Site.getQueryInForIds(filtre.getListAllSite()) & vbCrLf
+                If filtre.GetListAllSite().Count > 0 Then
+                    SQLString += "AND site_id " & Site.GetQueryInForIds(filtre.GetListAllSite()) & vbCrLf
                 End If
             End If
         End If
@@ -1076,7 +1076,7 @@ Public Class TacheDao
         Return codeRetour
     End Function
 
-    Public Function CreationAutomatiqueDeDemandeRendezVous(Patient As PatientBase, parcours As Parcours, dateDebut As Date, userLog As Utilisateur, Optional PremierRDV As Boolean = False) As Boolean
+    Public Function CreationAutomatiqueDeDemandeRendezVous(Patient As Patient, parcours As Parcours, dateDebut As Date, userLog As Utilisateur, Optional PremierRDV As Boolean = False) As Boolean
         'Calcul de la période (année, mois) du rendez-vous demandé
         Dim Commentaire As String = ""
         Dim Rythme As Integer = parcours.Rythme
@@ -1613,7 +1613,7 @@ Public Class TacheDao
     ''' <param name="patient"></param>
     ''' <param name="parcours"></param>
     ''' <param name="tacheParent"></param>
-    Public Sub CreateRendezVous(patient As PatientBase, parcours As Parcours, typeTache As Tache.TypeTache, dateRDV As Date, duree As Integer, commentaire As String, userLog As Utilisateur, Optional tacheParent As Tache = Nothing)
+    Public Sub CreateRendezVous(patient As Patient, parcours As Parcours, typeTache As Tache.TypeTache, dateRDV As Date, duree As Integer, commentaire As String, userLog As Utilisateur, Optional tacheParent As Tache = Nothing)
         Dim tache As Tache = New Tache()
 
         If typeTache <> typeTache.RDV_MISSION AndAlso typeTache <> typeTache.RDV AndAlso typeTache <> typeTache.RDV_SPECIALISTE Then

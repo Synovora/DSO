@@ -74,7 +74,7 @@ Public Class RadFEpisodeEnAttenteValidation
             If aRow >= 0 Then
                 Dim episodeId As Integer = RadGridViewEpisode.Rows(aRow).Cells("episode_id").Value
                 Dim patientId As Integer = RadGridViewEpisode.Rows(aRow).Cells("patient_id").Value
-                Dim patient As PatientBase
+                Dim patient As Patient
                 'patientDao.SetPatient(patient, patientId)
                 patient = patientDao.GetPatientById(patientId)
                 Me.Enabled = False

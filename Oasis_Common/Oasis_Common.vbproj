@@ -131,7 +131,7 @@
     <Compile Include="Bean\Parcours\ParcoursConsigneClass.vb" />
     <Compile Include="Bean\Parcours\ParcoursHistoClass.vb" />
     <Compile Include="Bean\Parcours\SpecialiteClass.vb" />
-    <Compile Include="Bean\Patient\PatientBase.vb" />
+    <Compile Include="Bean\Patient\Patient.vb" />
     <Compile Include="Bean\Patient\PatientNote.vb" />
     <Compile Include="Bean\PPS\PpsClass.vb" />
     <Compile Include="Bean\PPS\PpsHisto.vb" />

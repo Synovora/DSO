@@ -1,4 +1,5 @@
 ﻿Public Class ParametreTypeEpisodeDrc
+
     Property Id As Long
     Property TypeEpisode As String
     Property DrcId As Long

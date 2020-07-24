@@ -2,7 +2,7 @@
 
 Public Class RadFEpisodeObservationDetailEdit
     Property SelectedEpisodeId As Long
-    Property SelectedPatient As PatientBase
+    Property SelectedPatient As Patient
     Property SelectedObservationId As Long
     Property CodeRetour As Boolean
 

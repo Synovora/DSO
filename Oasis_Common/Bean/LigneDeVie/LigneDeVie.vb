@@ -17,4 +17,5 @@
     Property ParametreId3 As Long
     Property ParametreId4 As Long
     Property ParametreId5 As Long
+
 End Class

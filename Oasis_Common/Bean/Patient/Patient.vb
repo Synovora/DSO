@@ -1,7 +1,7 @@
-﻿Imports System.Data.SqlClient
-Imports System.Collections.Specialized
+﻿Imports System.Collections.Specialized
 
-Public Class PatientBase
+Public Class Patient
+
     Property PatientId As Integer
     Property PatientNir As Long
     Property PatientPrenom As String
@@ -82,8 +82,8 @@ Public Class PatientBase
         Me.INS = 0
     End Sub
 
-    Public Function Clone() As PatientBase
-        Dim newInstance As PatientBase = DirectCast(Me.MemberwiseClone(), PatientBase)
+    Public Function Clone() As Patient
+        Dim newInstance As Patient = DirectCast(Me.MemberwiseClone(), Patient)
         Return newInstance
     End Function
 

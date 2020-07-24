@@ -3,7 +3,7 @@
 Public Class RadFAllergieEtCISuppressionDetail
     Private _selectedTraitement As Traitement
     Private _codeRetour As Boolean
-    Private _SelectedPatient As PatientBase
+    Private _SelectedPatient As Patient
 
     Public Property SelectedTraitement As Traitement
         Get
@@ -23,11 +23,11 @@ Public Class RadFAllergieEtCISuppressionDetail
         End Set
     End Property
 
-    Public Property SelectedPatient As PatientBase
+    Public Property SelectedPatient As Patient
         Get
             Return _SelectedPatient
         End Get
-        Set(value As PatientBase)
+        Set(value As Patient)
             _SelectedPatient = value
         End Set
     End Property

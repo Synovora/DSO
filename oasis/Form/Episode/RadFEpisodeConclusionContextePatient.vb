@@ -25,7 +25,7 @@ Public Class RadFEpisodeConclusionContextePatient
 
     Dim InitContextePublie As Boolean = False
 
-    Dim SelectedPatient As PatientBase
+    Dim SelectedPatient As Patient
 
     Private Sub RadFEpisodeSelecteurContextePatient_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         ChargementEtatCivil()

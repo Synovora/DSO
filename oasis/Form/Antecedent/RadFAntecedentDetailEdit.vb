@@ -1,10 +1,8 @@
-﻿Imports System.Data.SqlClient
-Imports Oasis_WF
+﻿Imports Oasis_Common
 Imports Telerik.WinControls.UI.Localization
-Imports Oasis_Common
 
 Public Class RadFAntecedentDetailEdit
-    Private privateSelectedPatient As PatientBase
+    Private privateSelectedPatient As Patient
     Private privateUtilisateurConnecte As Utilisateur
     Private privateSelectedAntecedentId As Integer
     Private privateSelectedDrcId As Integer
@@ -15,11 +13,11 @@ Public Class RadFAntecedentDetailEdit
 
     ReadOnly aldCim10Dao As AldCim10Dao = New AldCim10Dao()
 
-    Public Property SelectedPatient As PatientBase
+    Public Property SelectedPatient As Patient
         Get
             Return privateSelectedPatient
         End Get
-        Set(value As PatientBase)
+        Set(value As Patient)
             privateSelectedPatient = value
         End Set
     End Property

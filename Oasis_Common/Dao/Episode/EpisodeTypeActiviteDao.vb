@@ -68,7 +68,7 @@ Public Class EpisodeTypeActiviteDao
         Return dt
     End Function
 
-    Public Function GetTypeActiviteEpisodeByPatient(patient As PatientBase) As List(Of String)
+    Public Function GetTypeActiviteEpisodeByPatient(patient As Patient) As List(Of String)
         Dim LimiteAgeEnfantParm As Integer
 
         Dim episodeActiviteDT As DataTable

@@ -163,11 +163,11 @@ Public Class FrmTacheMain
             If userLog.UtilisateurUniteSanitaireId <> 0 Then
                 uniteSanitaire = uniteSanitaireDao.getUniteSanitaireById(userLog.UtilisateurUniteSanitaireId)
                 If userLog.UtilisateurSiteId <> 0 Then
-                    uniteSanitaire.addSite(siteDao.getSiteById(userLog.UtilisateurSiteId))
+                    uniteSanitaire.AddSite(siteDao.getSiteById(userLog.UtilisateurSiteId))
                 Else
                     uniteSanitaire.LstSite = siteDao.getList(False, userLog.UtilisateurUniteSanitaireId)
                 End If
-                filterTache.addUniteSanitaire(uniteSanitaire)
+                filterTache.AddUniteSanitaire(uniteSanitaire)
             End If
 
         Catch err As Exception
@@ -382,7 +382,7 @@ Public Class FrmTacheMain
     Private Sub RadTextBox1_ToolTipTextNeeded(sender As Object, e As Telerik.WinControls.ToolTipTextNeededEventArgs) Handles RadTextBox1.ToolTipTextNeeded
         Dim rtbe As RadTextBoxElement = DirectCast(Me.RadTextBox1.RootElement.Children(0), RadTextBoxElement)
         rtbe.TextBoxItem.AutoToolTip = True
-        rtbe.TextBoxItem.ToolTipText = filterTache.resumeFiltre
+        rtbe.TextBoxItem.ToolTipText = filterTache.ResumeFiltre
         Me.RadTextBox1.ShowItemToolTips = True
 
     End Sub
@@ -393,7 +393,7 @@ Public Class FrmTacheMain
 
     Private Sub refreshPanelFilter()
         Dim i As Integer, j As Integer
-        Me.RadTextBox1.Text = filterTache.resumeFiltre
+        Me.RadTextBox1.Text = filterTache.ResumeFiltre
         j = Me.RadTextBox1.Lines.Length
         If j <= 0 Then j = 1
         i = 50 + ((j + 1) * 14)

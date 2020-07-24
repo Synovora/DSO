@@ -10,8 +10,8 @@ Public Class PatientDaoBase
     End Structure
 
     'Initialisation des propriétés d'une instance de Patient depuis la BDD
-    Public Overridable Function SetPatient(patientId As Integer) As PatientBase
-        Dim patient As New PatientBase
+    Public Overridable Function SetPatient(patientId As Integer) As Patient
+        Dim patient As New Patient
         If patientId = 0 Then
             Return patient
         End If
@@ -37,8 +37,8 @@ Public Class PatientDaoBase
         Return patient
     End Function
 
-    Private Function BuildBean(reader As SqlDataReader) As PatientBase
-        Dim patient As New PatientBase With {
+    Private Function BuildBean(reader As SqlDataReader) As Patient
+        Dim patient As New Patient With {
             .PatientId = Convert.ToInt64(reader("oa_patient_id")),
             .PatientNir = Coalesce(reader("oa_patient_nir"), 0),
             .PatientNom = Coalesce(reader("oa_patient_nom"), ""),
@@ -73,8 +73,8 @@ Public Class PatientDaoBase
         Return patient
     End Function
 
-    Public Overridable Function GetPatientById(id As Long) As PatientBase
-        Dim patient As PatientBase = SetPatient(id)
+    Public Overridable Function GetPatientById(id As Long) As Patient
+        Dim patient As Patient = SetPatient(id)
         If patient Is Nothing Then
             Throw New ArgumentException("Patient non retrouvé !")
         End If

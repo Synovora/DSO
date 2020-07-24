@@ -10,6 +10,7 @@
         Const CACHE = "C"
         Const OCCULTE = "O"
     End Structure
+
     Property Id As Integer
     Property PatientId As Integer
     Property Type As String

@@ -3,16 +3,16 @@ Imports Telerik.WinControls
 Imports Telerik.WinControls.UI.Localization
 Imports Oasis_Common
 Public Class RadFDeclarationAllergieEtCIDetail
-    Private _SelectedPatient As PatientBase
+    Private _SelectedPatient As Patient
     Private _SelectedMedicamentId As Integer
     Private _SelectedTraitementId As Integer
     Private _CodeRetour As Boolean
 
-    Public Property SelectedPatient As PatientBase
+    Public Property SelectedPatient As Patient
         Get
             Return _SelectedPatient
         End Get
-        Set(value As PatientBase)
+        Set(value As Patient)
             _SelectedPatient = value
         End Set
     End Property

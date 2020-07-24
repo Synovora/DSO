@@ -292,7 +292,7 @@ Public Class ParcoursDao
                     Throw New Exception("Intervenant médecin référent du parcours de soin créé")
                 End If
                 'Création automatique de la première demande de rendez-vous
-                Dim patient As PatientBase = patientDao.GetPatientById(PatientId)
+                Dim patient As Patient = patientDao.GetPatientById(PatientId)
                 Dim tacheDao As New TacheDao
                 tacheDao.CreationAutomatiqueDeDemandeRendezVous(patient, parcours, Date.Now(), userLog, True)
             End If
@@ -320,7 +320,7 @@ Public Class ParcoursDao
                     Throw New Exception("Intervenant IDE sur site du parcours de soin créé")
                 End If
                 'Création automatique de la première demande de rendez-vous
-                Dim patient As PatientBase = patientDao.GetPatientById(PatientId)
+                Dim patient As Patient = patientDao.GetPatientById(PatientId)
                 Dim tacheDao As New TacheDao
                 tacheDao.CreationAutomatiqueDeDemandeRendezVous(patient, parcours, Date.Now(), userLog, True)
             End If

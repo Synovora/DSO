@@ -5,7 +5,7 @@ Imports Telerik.WinControls.UI
 
 Public Class RadFPatientDetailEdit
     Private privateSelectedPatientId As Integer
-    Private privateSelectedPatient As PatientBase
+    Private privateSelectedPatient As Patient
     Private privateUtilisateurConnecte As Utilisateur
     Private privateCodeRetour As Boolean
     Private _Action As String
@@ -37,11 +37,11 @@ Public Class RadFPatientDetailEdit
         End Set
     End Property
 
-    Public Property SelectedPatient As PatientBase
+    Public Property SelectedPatient As Patient
         Get
             Return privateSelectedPatient
         End Get
-        Set(value As PatientBase)
+        Set(value As Patient)
             privateSelectedPatient = value
         End Set
     End Property
@@ -62,8 +62,8 @@ Public Class RadFPatientDetailEdit
 
     Dim EditMode As Integer
 
-    Dim patientUpdate As New PatientBase
-    Dim patientRead As New PatientBase
+    Dim patientUpdate As New Patient
+    Dim patientRead As New Patient
 
     ReadOnly rorDao As New RorDao
     ReadOnly patientDao As New PatientDao

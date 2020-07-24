@@ -2,13 +2,13 @@
 Imports Oasis_Common
 Public Class RadFPatientRendezVousListe
 
-    Private _selectedPatient As PatientBase
+    Private _selectedPatient As Patient
 
-    Public Property SelectedPatient As PatientBase
+    Public Property SelectedPatient As Patient
         Get
             Return _selectedPatient
         End Get
-        Set(value As PatientBase)
+        Set(value As Patient)
             _selectedPatient = value
         End Set
     End Property

@@ -35,7 +35,7 @@ Public Class FPatientListeDoublons
     End Property
 
     'Instanciation du patient pour le fournir aux Forms qui seront appelées depuis cette Form
-    Dim SelectedPatient As New PatientBase
+    Dim SelectedPatient As New Patient
 
     Private Sub FPatientListeDoublons_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         'Initialisation des données du patient en session et dans le Form

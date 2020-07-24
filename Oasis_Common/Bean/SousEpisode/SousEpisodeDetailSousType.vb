@@ -1,4 +1,5 @@
 ﻿Public Class SousEpisodeDetailSousType
+
     Property Id As Long
     Property IdSousEpisode As Long
     Property IdSousEpisodeSousSousType As Long

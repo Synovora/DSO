@@ -1,15 +1,15 @@
 ﻿Imports Oasis_Common
 
 Public Class RadFTraitementAllergieEtCI
-    Private privateSelectedPatient As PatientBase
+    Private privateSelectedPatient As Patient
     Private privateUtilisateurConnecte As Utilisateur
     Private privateAllergieOuContreIndication As EnumAllergieOuContreIndication
 
-    Public Property SelectedPatient As PatientBase
+    Public Property SelectedPatient As Patient
         Get
             Return privateSelectedPatient
         End Get
-        Set(value As PatientBase)
+        Set(value As Patient)
             privateSelectedPatient = value
         End Set
     End Property

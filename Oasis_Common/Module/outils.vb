@@ -28,7 +28,7 @@ Public Module outils
                 " / " & userLog.TypeProfil.ToLower.Trim & ")")
     End Function
 
-    Public Function AccesFonctionMedicaleSynthese(patient As PatientBase, userLog As Utilisateur) As Boolean
+    Public Function AccesFonctionMedicaleSynthese(patient As Patient, userLog As Utilisateur) As Boolean
         Dim CodeRetour As Boolean = False
 
         If userLog.TypeProfil = ProfilDao.EnumProfilType.MEDICAL.ToString OrElse

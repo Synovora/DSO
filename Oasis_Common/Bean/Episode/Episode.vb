@@ -65,4 +65,5 @@
     Property DateModification As Date
     Property Etat As String         'En cours, En attente, Cloturé
     Property Inactif As Boolean
+
 End Class

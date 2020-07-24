@@ -4,7 +4,7 @@ Imports Telerik.WinControls
 Imports Telerik.WinControls.UI
 Imports Oasis_Common
 Public Class RadFParcoursDetailEdit
-    Private _SelectedPatient As PatientBase
+    Private _SelectedPatient As Patient
     'Private _UtilisateurConnecte As Utilisateur
     Private _SelectedParcoursId As Integer
     Private _SelectedSpecialiteId As Integer
@@ -13,11 +13,11 @@ Public Class RadFParcoursDetailEdit
     Private _RythmeObligatoire As Boolean
     Private _positionGaucheDroite As Integer
 
-    Public Property SelectedPatient As PatientBase
+    Public Property SelectedPatient As Patient
         Get
             Return _SelectedPatient
         End Get
-        Set(value As PatientBase)
+        Set(value As Patient)
             _SelectedPatient = value
         End Set
     End Property

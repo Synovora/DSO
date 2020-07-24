@@ -1,7 +1,7 @@
-﻿Imports System.Configuration
-Imports System.IO
-Imports Oasis_Common
+﻿Imports System.IO
+
 Public Class SousEpisodeReponse
+
     Property Id As Long
     Property IdSousEpisode As Long
     Property CreateUserId As Long
@@ -25,7 +25,7 @@ Public Class SousEpisodeReponse
 
     End Sub
 
-    Public Function getFilenameServer(idEpisode As Long, Optional idSEREponse As Long = 0) As String
+    Public Function GetFilenameServer(idEpisode As Long, Optional idSEREponse As Long = 0) As String
         If idSEREponse = 0 Then idSEREponse = Me.Id
         Return "Episode_" & idEpisode & "_SousEpisode_" & Me.IdSousEpisode & "_SousEpisodeReponse_" & idSEREponse & Path.GetExtension(Me.NomFichier)
     End Function

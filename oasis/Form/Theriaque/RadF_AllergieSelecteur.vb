@@ -3,15 +3,15 @@ Imports Telerik.WinControls.UI
 Imports Oasis_Common
 
 Public Class RadF_AllergieSelecteur
-    Private _SelectedPatient As PatientBase
+    Private _SelectedPatient As Patient
     Private _selectedSpecialiteId As Integer
     Private _codeRetour As Boolean
 
-    Public Property SelectedPatient As PatientBase
+    Public Property SelectedPatient As Patient
         Get
             Return _SelectedPatient
         End Get
-        Set(value As PatientBase)
+        Set(value As Patient)
             _SelectedPatient = value
         End Set
     End Property

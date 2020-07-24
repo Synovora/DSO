@@ -5,8 +5,8 @@ Imports Oasis_Common
 Public Class PatientDao
     Inherits PatientDaoBase
 
-    Public Overrides Function SetPatient(patientId As Integer) As PatientBase
-        Dim patient As New PatientBase
+    Public Overrides Function SetPatient(patientId As Integer) As Patient
+        Dim patient As New Patient
         If patientId = 0 Then
             Return Nothing
         End If
@@ -32,8 +32,8 @@ Public Class PatientDao
         Return patient
     End Function
 
-    Private Function BuildBean(patientDataReader As SqlDataReader) As PatientBase
-        Dim patient As New PatientBase With {
+    Private Function BuildBean(patientDataReader As SqlDataReader) As Patient
+        Dim patient As New Patient With {
             .patientId = Convert.ToInt64(patientDataReader("oa_patient_id"))
         }
 
@@ -183,15 +183,15 @@ Public Class PatientDao
         Return patient
     End Function
 
-    Public Overrides Function GetPatientById(id As Long) As PatientBase
-        Dim patient As PatientBase = SetPatient(id)
+    Public Overrides Function GetPatientById(id As Long) As Patient
+        Dim patient As Patient = SetPatient(id)
         If patient Is Nothing Then
             Throw New ArgumentException("Patient non retrouvé !")
         End If
         Return patient
     End Function
 
-    Public Function Compare(source1 As PatientBase, source2 As PatientBase) As Boolean
+    Public Function Compare(source1 As Patient, source2 As Patient) As Boolean
         If source1.PatientId <> source2.PatientId Then
             Return False
         End If
@@ -283,8 +283,8 @@ Public Class PatientDao
         Return True
     End Function
 
-    Public Function ClonePatient(Source As PatientBase) As PatientBase
-        Dim Cible As New PatientBase With {
+    Public Function ClonePatient(Source As Patient) As Patient
+        Dim Cible As New Patient With {
             .PatientId = Source.PatientId,
             .PatientNir = Source.PatientNir,
             .PatientNom = Source.PatientNom,
@@ -431,7 +431,7 @@ Public Class PatientDao
         Dim da As SqlDataAdapter = New SqlDataAdapter()
         Dim codeRetour As Boolean = True
 
-        Dim patient As PatientBase = GetPatientById(patientId)
+        Dim patient As Patient = GetPatientById(patientId)
 
         Dim SQLstring As String = "UPDATE oasis.oa_patient SET oa_patient_synthese_date_maj = @date WHERE oa_patient_id = @patientId"
 
@@ -595,7 +595,7 @@ Public Class PatientDao
         Return StringContreIndication
     End Function
 
-    Public Function CreationPatient(patient As PatientBase, userLog As Utilisateur) As Boolean
+    Public Function CreationPatient(patient As Patient, userLog As Utilisateur) As Boolean
         'Dim da As MySqlDataAdapter = New MySqlDataAdapter()
         Dim da As SqlDataAdapter = New SqlDataAdapter()
         Dim patientId As Long
@@ -665,7 +665,7 @@ Public Class PatientDao
         Return codeRetour
     End Function
 
-    Public Function ModificationPatient(patient As PatientBase, userLog As Utilisateur) As Boolean
+    Public Function ModificationPatient(patient As Patient, userLog As Utilisateur) As Boolean
         'Dim da As MySqlDataAdapter = New MySqlDataAdapter()
         Dim da As SqlDataAdapter = New SqlDataAdapter()
         Dim codeRetour As Boolean = True
@@ -734,7 +734,7 @@ Public Class PatientDao
         Return codeRetour
     End Function
 
-    Public Shared Function DeclarationSortie(patient As PatientBase) As Boolean
+    Public Shared Function DeclarationSortie(patient As Patient) As Boolean
         'Dim da As MySqlDataAdapter = New MySqlDataAdapter()
         Dim da As SqlDataAdapter = New SqlDataAdapter()
         Dim codeRetour As Boolean = True

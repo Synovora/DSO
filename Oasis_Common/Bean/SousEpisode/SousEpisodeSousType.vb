@@ -1,8 +1,7 @@
 ﻿Imports System.Configuration
-Imports System.Windows.Documents
-Imports Oasis_Common
 
 Public Class SousEpisodeSousType
+
     Property Id As Long
     Property IdSousEpisodeType As Long
     Property HorodateCreation As DateTime

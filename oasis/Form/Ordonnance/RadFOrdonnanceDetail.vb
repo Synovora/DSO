@@ -2,7 +2,7 @@
 Imports Oasis_Common
 
 Public Class RadFOrdonnanceDetail
-    Private _SelectedPatient As PatientBase
+    Private _SelectedPatient As Patient
     Private _SelectedEpisode As Episode
     Private _SelectedOrdonnanceId As Integer
     Private _SelectedOrdonnanceLigneId As Integer
@@ -11,11 +11,11 @@ Public Class RadFOrdonnanceDetail
     Private _ContreIndication As Boolean
     Private _CodeRetour As Boolean
 
-    Public Property SelectedPatient As PatientBase
+    Public Property SelectedPatient As Patient
         Get
             Return _SelectedPatient
         End Get
-        Set(value As PatientBase)
+        Set(value As Patient)
             _SelectedPatient = value
         End Set
     End Property

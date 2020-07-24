@@ -2,7 +2,7 @@
 
 Public Class RadFWkfDemandeAvisHisto
     Private _selectedEpisodeId As Long
-    Private _selectedPatient As PatientBase
+    Private _selectedPatient As Patient
 
     Public Property SelectedEpisodeId As Long
         Get
@@ -13,11 +13,11 @@ Public Class RadFWkfDemandeAvisHisto
         End Set
     End Property
 
-    Public Property SelectedPatient As PatientBase
+    Public Property SelectedPatient As Patient
         Get
             Return _selectedPatient
         End Get
-        Set(value As PatientBase)
+        Set(value As Patient)
             _selectedPatient = value
         End Set
     End Property

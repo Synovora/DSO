@@ -1,6 +1,6 @@
 ﻿Imports System.Configuration
 Imports System.IO
-Imports Oasis_Common
+
 Public Class SousEpisode
     Property Id As Long
     Property IdIntervenant As Long
@@ -22,9 +22,11 @@ Public Class SousEpisode
     Property isInactif As Boolean
     Property lstDetail As List(Of SousEpisodeDetailSousType)
     Property Signature As String
+
     Public Sub New()
     End Sub
 
+    'TODO: change it
     Public Sub New(row As DataRow)
         Me.Id = row("id")
         Me.EpisodeId = row("episode_id")
