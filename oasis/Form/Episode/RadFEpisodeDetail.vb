@@ -67,38 +67,41 @@ Public Class RadFEpisodeDetail
         End Set
     End Property
 
-    ReadOnly episodeDao As New EpisodeDao
-    ReadOnly tacheDao As New TacheDao
-    ReadOnly fonctionDao As New FonctionDao
-    ReadOnly drcDao As New DrcDao
-    ReadOnly ordonnaceDao As New OrdonnanceDao
-    ReadOnly ParcoursConsigneDao As New ParcoursConsigneDao
-    ReadOnly UserDao As New UserDao
-    ReadOnly drc As Drc
-    ReadOnly episodeProtocoleCollaboratifDao As New EpisodeProtocoleCollaboratifDao
-    ReadOnly episodeParametreDao As New EpisodeParametreDao
-    ReadOnly episodeActeParamedicalDao As New EpisodeActeParamedicalDao
-    ReadOnly episodeContexteDao As New EpisodeContexteDao
-    ReadOnly sousEpisodeDao As New SousEpisodeDao
-    ReadOnly theriaqueDao As New TheriaqueDao
-    ReadOnly antecedentChangementOrdreDao As New AntecedentChangementOrdreDao
-    ReadOnly antecedentAffectationDao As New AntecedentAffectationDao
-    ReadOnly antecedentDao As New AntecedentDao
-    ReadOnly patientDao As New PatientDao
-    ReadOnly log As Log
+    Dim episodeDao As New EpisodeDao
+    Dim tacheDao As New TacheDao
+    Dim fonctionDao As New FonctionDao
+    Dim drcDao As New DrcDao
+    Dim ordonnaceDao As New OrdonnanceDao
+    'Dim parcoursDao As New ParcoursDao
+    Dim ParcoursConsigneDao As New ParcoursConsigneDao
+    Dim UserDao As New UserDao
+    Dim drc As Drc
+    Dim episodeProtocoleCollaboratifDao As New EpisodeProtocoleCollaboratifDao
+    Dim episodeParametreDao As New EpisodeParametreDao
+    Dim episodeActeParamedicalDao As New EpisodeActeParamedicalDao
+    Dim episodeContexteDao As New EpisodeContexteDao
+    Dim sousEpisodeDao As New SousEpisodeDao
+    Dim theriaqueDao As New TheriaqueDao
+
+    Dim antecedentChangementOrdreDao As New AntecedentChangementOrdreDao
+    Dim antecedentAffectationDao As New AntecedentAffectationDao
+    Dim antecedentDao As New AntecedentDao
+    Dim patientDao As New PatientDao
+
+    Dim log As Log
     Dim episode As Episode
     Dim tache As Tache
     Dim user As New Utilisateur
-    ReadOnly utilisateurHisto As Utilisateur = New Utilisateur()
+    Dim utilisateurHisto As Utilisateur = New Utilisateur()
 
-    ReadOnly ParcoursListProfilsOasis As New List(Of Integer)
-    ReadOnly ListeParametreExistant As New List(Of Long)
+    Dim ParcoursListProfilsOasis As New List(Of Integer)
+    Dim ListeParametreExistant As New List(Of Long)
 
     Dim InitPublie, InitParPriorite, InitMajeur, InitContextePublie, InitParcoursNonCache As Boolean
     Dim PPSSuiviIdeExiste, PPSSuiviSageFemmeExiste, PPSSuiviMedecinExiste As Boolean
     Dim PatientAllergie, PatientContreIndication As Boolean
-    ReadOnly ObservationMedicaleModifie As Boolean = False
-    ReadOnly ObservationParamedicaleModifie As Boolean = False
+    Dim ObservationMedicaleModifie As Boolean = False
+    Dim ObservationParamedicaleModifie As Boolean = False
     Dim IsTraitementLoaded As Boolean = False
     Dim IsParcoursLoaded As Boolean = False
     Dim IsContexteLoaded As Boolean = False
@@ -140,7 +143,7 @@ Public Class RadFEpisodeDetail
 
     Private Sub RadFEpisodeDetail_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         'Contrôle d'accès aux écran Synthèse, épisode et ligne de vie
-        Environnement.ControleAccesForm.addFormToControl(EnumForm.EPISODE.ToString)
+        Environnement.ControleAccesForm.AddFormToControl(EnumForm.EPISODE.ToString)
         If Environnement.ControleAccesForm.IsAccessToFormOK(EnumForm.LIGNE_DE_VIE.ToString) = False Then
             RadBtnLigneDeVie.Hide()
         End If
@@ -168,13 +171,12 @@ Public Class RadFEpisodeDetail
         Me.RadDesktopAlert1.Popup.AlertElement.BorderColor = Color.DarkBlue
 
         Dim actiondao As New ActionDao
-        Dim action As New Action With {
-            .UtilisateurId = userLog.UtilisateurId,
-            .PatientId = SelectedPatient.PatientId,
-            .Fonction = ActionDao.EnumFonctionCode.EPISODE,
-            .FonctionId = Me.SelectedEpisodeId,
-            .Action = "Accès épisode patient n° " & SelectedEpisodeId
-        }
+        Dim action As New Action
+        action.UtilisateurId = userLog.UtilisateurId
+        action.PatientId = SelectedPatient.patientId
+        action.Fonction = ActionDao.EnumFonctionCode.EPISODE
+        action.FonctionId = Me.SelectedEpisodeId
+        action.Action = "Accès épisode patient n° " & SelectedEpisodeId
         actiondao.CreationAction(action)
 
         RadBtnUp.Text = Char.ConvertFromUtf32(8593)
@@ -258,7 +260,7 @@ Public Class RadFEpisodeDetail
         If Me.RendezVousId <> 0 Then
             Dim tacheRendezVous As Tache
             tacheRendezVous = tacheDao.GetTacheById(RendezVousId)
-            If tacheRendezVous.IsUnRdv() Then
+            If tacheRendezVous.IsUnRdv Then
                 'Controler que l'utilisateur est celui qui s'est attribué la tâche
                 If tacheRendezVous.IsMyTacheATraiter(userLog) = False Then
                     If tacheRendezVous.IsAttribuable(userLog) Then
@@ -297,7 +299,7 @@ Public Class RadFEpisodeDetail
         Else
             'Si le rendez-vous n'a pas été communiqué à l'épisode, on recherche si un rendez-vous en attente existe pour la fonction de l'utilisateur avec une date <= date du jour
             Dim tacheRendezVous As Tache
-            tacheRendezVous = tacheDao.GetProchainRendezVousOasisByPatientIdEtFonctionId(SelectedPatient.PatientId, userLog.FonctionParDefautId)
+            tacheRendezVous = tacheDao.GetProchainRendezVousOasisByPatientIdEtFonctionId(SelectedPatient.patientId, userLog.FonctionParDefautId)
             'Si RDV Oasis existe et que la date du DRV est <= date du jour
             If tacheRendezVous.Id <> 0 AndAlso tacheRendezVous.DateRendezVous.Date <= Date.Now.Date Then
                 If tacheRendezVous.IsAttribuable(userLog) Then
@@ -358,10 +360,9 @@ Public Class RadFEpisodeDetail
     Private Sub ClotureRendezVous(tacheRendezVous As Tache)
         Try
             If tacheDao.ClotureTache(tacheRendezVous.Id, True, userLog) = True Then
-                Dim form As New RadFNotification With {
-                    .Titre = "Rendez-vous patient honoré",
-                    .Message = "Le rendez-vous de type '" & userLog.TypeProfil & "', programmé le " & tacheRendezVous.DateRendezVous.ToString("dd.MM.yyyy") & " est honoré"
-                }
+                Dim form As New RadFNotification()
+                form.Titre = "Rendez-vous patient honoré"
+                form.Message = "Le rendez-vous de type '" & userLog.TypeProfil & "', programmé le " & tacheRendezVous.DateRendezVous.ToString("dd.MM.yyyy") & " est honoré"
                 form.Show()
             End If
         Catch ex As Exception
@@ -398,7 +399,7 @@ Public Class RadFEpisodeDetail
     End Sub
 
     Private Sub GetContreIndication()
-        Dim StringContreIndicationToolTip As String = patientDao.GetStringContreIndicationByPatient(SelectedPatient.PatientId)
+        Dim StringContreIndicationToolTip As String = patientDao.GetStringContreIndicationByPatient(SelectedPatient.patientId)
         If StringContreIndicationToolTip = "" Then
             LblContreIndication.Hide()
             PatientContreIndication = False
@@ -412,7 +413,7 @@ Public Class RadFEpisodeDetail
     End Sub
 
     Private Sub GetAllergie()
-        Dim StringAllergieToolTip As String = patientDao.GetStringAllergieByPatient(SelectedPatient.PatientId)
+        Dim StringAllergieToolTip As String = patientDao.GetStringAllergieByPatient(SelectedPatient.patientId)
         If StringAllergieToolTip = "" Then
             PatientAllergie = False
             LblAllergie.Hide()
@@ -474,59 +475,66 @@ Public Class RadFEpisodeDetail
     End Sub
 
     Private Sub ChargementEtatEpisode()
-        Try
-            Dim ordonnances As List(Of Ordonnance) = ordonnaceDao.GetOrdonnanceValideByPatient(SelectedPatient.PatientId, SelectedEpisodeId)
-            If ordonnances.Count > 0 Then
-                OrdonnanceToolStripMenuItem.ForeColor = Color.Red
-                RadPageView1.Pages(1).Item.DrawFill = True
-                RadPageView1.Pages(1).Item.BackColor = Color.LightSalmon
-                RadPageView1.Pages(1).Item.GradientStyle = GradientStyles.Solid
-                RadBtnOrdonnance.BackColor = Color.LightSalmon
-                ToolTip.SetToolTip(RadBtnOrdonnance, "Ordonnance existante en attente de validation médicale")
+        Dim DateValidationOrdonnance As Date = Nothing
+        Dim DateCreationOrdonnance As Date = Nothing
+        Dim dt As List(Of Ordonnance)
+        dt = ordonnaceDao.GetOrdonnanceValideByPatient(SelectedPatient.PatientId, SelectedEpisodeId)
+        If dt.Count > 0 Then
+            OrdonnanceToolStripMenuItem.ForeColor = Color.Red
+            'RadPageView1.Pages(1).Item.ForeColor = Color.Orange
+            RadPageView1.Pages(1).Item.DrawFill = True
+            RadPageView1.Pages(1).Item.BackColor = Color.LightSalmon
+            RadPageView1.Pages(1).Item.GradientStyle = GradientStyles.Solid
+            RadBtnOrdonnance.BackColor = Color.LightSalmon
+            ToolTip.SetToolTip(RadBtnOrdonnance, "Ordonnance existante en attente de validation médicale")
+            If dt.Count > 0 Then
                 ControleOrdonnanceExiste = True
-                ControleOrdonnanceValide = False
-                If ordonnances(0).DateValidation <> Nothing Then
+                DateValidationOrdonnance = dt(0).DateValidation
+                DateCreationOrdonnance = dt(0).DateCreation
+                If DateValidationOrdonnance <> Nothing Then
                     ControleOrdonnanceValide = True
+                    'RadPageView1.Pages(1).Item.ForeColor = Color.Red
                     RadPageView1.Pages(1).Item.DrawFill = True
                     RadPageView1.Pages(1).Item.BackColor = Color.LightGreen
                     RadPageView1.Pages(1).Item.GradientStyle = GradientStyles.Solid
                     RadBtnOrdonnance.BackColor = Color.LightGreen
                     ToolTip.SetToolTip(RadBtnOrdonnance, "Ordonnance existante et valide (signature médicale)")
+                Else
+                    ControleOrdonnanceValide = False
                 End If
-            Else
-                OrdonnanceToolStripMenuItem.ForeColor = Color.Black
-                RadPageView1.Pages(1).Item.DrawFill = True
-                RadPageView1.Pages(1).Item.BackColor = Color.FromArgb(191, 219, 255)
-                RadPageView1.Pages(1).Item.GradientStyle = GradientStyles.Solid
-                RadBtnOrdonnance.BackColor = Color.FromArgb(233, 240, 249)
-                ToolTip.SetToolTip(RadBtnOrdonnance, "Création ordonnance")
-                ControleOrdonnanceExiste = False
-                ControleOrdonnanceValide = False
             End If
+        Else
+            OrdonnanceToolStripMenuItem.ForeColor = Color.Black
+            'RadPageView1.Pages(1).Item.ForeColor = Color.Black
+            RadPageView1.Pages(1).Item.DrawFill = True
+            RadPageView1.Pages(1).Item.BackColor = Color.FromArgb(191, 219, 255)
+            RadPageView1.Pages(1).Item.GradientStyle = GradientStyles.Solid
+            RadBtnOrdonnance.BackColor = Color.FromArgb(233, 240, 249)
+            ToolTip.SetToolTip(RadBtnOrdonnance, "Création ordonnance")
+            ControleOrdonnanceExiste = False
+            ControleOrdonnanceValide = False
+        End If
 
-            Select Case episode.Etat
-                Case Episode.EnumEtatEpisode.EN_COURS.ToString
-                    If ControleOrdonnanceExiste = True Then
-                        If ControleOrdonnanceValide = True Then
-                            LblLabelEtatEpisode.Text = "EPISODE EN COURS - ORDONNANCE VALIDEE LE " & ordonnances(0).DateValidation.ToString("dd.MM.yyyy hh:mm")
-                        Else
-                            LblLabelEtatEpisode.Text = "EPISODE EN COURS - ORDONNANCE CREEE LE " & ordonnances(0).DateCreation.ToString("dd.MM.yyyy hh:mm") & ", EN ATTENTE DE VALIDATION !"
-                        End If
+        Select Case episode.Etat
+            Case Episode.EnumEtatEpisode.EN_COURS.ToString
+                If ControleOrdonnanceExiste = True Then
+                    If ControleOrdonnanceValide = True Then
+                        LblLabelEtatEpisode.Text = "EPISODE EN COURS - ORDONNANCE VALIDEE LE " & DateValidationOrdonnance.ToString("dd.MM.yyyy hh:mm")
                     Else
-                        LblLabelEtatEpisode.Text = "Episode en cours"
+                        LblLabelEtatEpisode.Text = "EPISODE EN COURS - ORDONNANCE CREEE LE " & DateCreationOrdonnance.ToString("dd.MM.yyyy hh:mm") & ", EN ATTENTE DE VALIDATION !"
                     End If
-                Case Episode.EnumEtatEpisode.CLOTURE.ToString
-                    If episode.DateModification.Date < Date.Now.Date Then
-                        LblLabelEtatEpisode.Text = "EPISODE CLOTURE LE " & episode.DateModification.ToString("dd.MM.yyyy") & " (non modifiable, hormis l'ajout de pièces dans les sous-épisodes)"
-                    Else
-                        LblLabelEtatEpisode.Text = "EPISODE CLOTURE AUJOURD'HUI (Modification possible pour la journée en cours)"
-                    End If
-                Case Else
-                    LblLabelEtatEpisode.Text = "Etat inconnu !"
-            End Select
-        Catch ex As Exception
-            MsgBox(ex.Message())
-        End Try
+                Else
+                    LblLabelEtatEpisode.Text = "Episode en cours"
+                End If
+            Case Episode.EnumEtatEpisode.CLOTURE.ToString
+                If episode.DateModification.Date < Date.Now.Date Then
+                    LblLabelEtatEpisode.Text = "EPISODE CLOTURE LE " & episode.DateModification.ToString("dd.MM.yyyy") & " (non modifiable, hormis l'ajout de pièces dans les sous-épisodes)"
+                Else
+                    LblLabelEtatEpisode.Text = "EPISODE CLOTURE AUJOURD'HUI (Modification possible pour la journée en cours)"
+                End If
+            Case Else
+                LblLabelEtatEpisode.Text = "Etat inconnu !"
+        End Select
     End Sub
 
     Private Sub RadGroupBox3_MouseHover(sender As Object, e As EventArgs) Handles RadGroupBox3.MouseHover
@@ -543,10 +551,9 @@ Public Class RadFEpisodeDetail
     End Sub
 
     Private Sub LblTypeEpisode_Click(sender As Object, e As EventArgs) Handles LblTypeEpisode.Click
-        Dim form As New RadFNotification With {
-            .Titre = "Caractéristique épisode patient",
-            .Message = ConstitutionNotification()
-        }
+        Dim form As New RadFNotification()
+        form.Titre = "Caractéristique épisode patient"
+        form.Message = ConstitutionNotification()
         form.Show()
     End Sub
 
@@ -1206,15 +1213,14 @@ Public Class RadFEpisodeDetail
                 If SelectedDrcId <> 0 Then
                     Cursor.Current = Cursors.WaitCursor
                     'Création observation spécifique
-                    Dim episodeActeParamedical As New EpisodeActeParamedical With {
-                        .DrcId = SelectedDrcId,
-                        .EpisodeId = SelectedEpisodeId,
-                        .PatientId = SelectedPatient.PatientId,
-                        .TypeObservation = FonctionDao.EnumTypeFonction.PARAMEDICAL.ToString,
-                        .Observation = "",
-                        .UserId = userLog.UtilisateurId,
-                        .Inactif = False
-                    }
+                    Dim episodeActeParamedical As New EpisodeActeParamedical
+                    episodeActeParamedical.DrcId = SelectedDrcId
+                    episodeActeParamedical.EpisodeId = SelectedEpisodeId
+                    episodeActeParamedical.PatientId = SelectedPatient.PatientId
+                    episodeActeParamedical.TypeObservation = FonctionDao.EnumTypeFonction.PARAMEDICAL.ToString
+                    episodeActeParamedical.Observation = ""
+                    episodeActeParamedical.UserId = userLog.UtilisateurId
+                    episodeActeParamedical.Inactif = False
                     Dim episodeActeParamedicalId As Long
                     episodeActeParamedicalId = episodeActeParamedicalDao.CreateEpisodeActeParamedical(episodeActeParamedical)
                     If episodeActeParamedicalId <> 0 Then
@@ -1405,10 +1411,9 @@ Public Class RadFEpisodeDetail
         Next
 
         If MiseAJour = True Then
-            Dim form As New RadFNotification With {
-                .Titre = "Notification saisie observation spécifique patient",
-                .Message = "Observation spécifique mise à jour"
-            }
+            Dim form As New RadFNotification()
+            form.Titre = "Notification saisie observation spécifique patient"
+            form.Message = "Observation spécifique mise à jour"
             form.Show()
             'Rechargement grid
             ChargementEpisodeActesParamedicauxMedical()
@@ -1855,10 +1860,9 @@ Public Class RadFEpisodeDetail
             tacheDao.DesattribueTache(tache.Id)
 
             Try
-                Dim form As New RadFNotification With {
-                    .Titre = "Notification épisode",
-                    .Message = "La sortie de l'épisode sans traiter la demande d'avis a automatiquement annulé l'attribution de la tâche"
-                }
+                Dim form As New RadFNotification()
+                form.Titre = "Notification épisode"
+                form.Message = "La sortie de l'épisode sans traiter la demande d'avis a automatiquement annulé l'attribution de la tâche"
                 form.Show()
             Catch ex As Exception
                 MessageBox.Show(ex.Message)
@@ -2373,11 +2377,9 @@ Public Class RadFEpisodeDetail
                 contexte.Description = "Contexte IDE : " & episode.ObservationParamedical
                 contexteDao.CreationContexte(contexte, contexteHisto, userLog)
             End If
-
-            Dim form As New RadFNotification With {
-                .Titre = "Notification épisode patient",
-                .Message = "=== Episode clôturé ==="
-            }
+            Dim form As New RadFNotification()
+            form.Titre = "Notification épisode patient"
+            form.Message = "=== Episode clôturé ==="
             form.Show()
             Close()
         End If
@@ -2443,10 +2445,9 @@ Public Class RadFEpisodeDetail
             episodeProtocoleCollaboratifDao.GenerateParametreEtProtocoleCollaboratifByEpisode(episode)
             Cursor.Current = Cursors.Default
             Refresh()
-            Dim form As New RadFNotification With {
-                .Titre = "Notification épisode",
-                .Message = "Traitement de génération des paramètres et des protocoles terminé"
-            }
+            Dim form As New RadFNotification()
+            form.Titre = "Notification épisode"
+            form.Message = "Traitement de génération des paramètres et des protocoles terminé"
             form.Show()
         End If
     End Sub
@@ -3209,16 +3210,25 @@ Public Class RadFEpisodeDetail
 
     'Chargement de la Grid
     Private Sub ChargementTraitement()
+        Dim traitementDataTable As DataTable
         Dim traitementDao As TraitementDao = New TraitementDao
 
         Cursor.Current = Cursors.WaitCursor
         RadTraitementDataGridView.Rows.Clear()
-        Dim traitements As List(Of Traitement) = traitementDao.GetTraitementsEnCoursbyPatient(Me.SelectedPatient.PatientId)
+
+        traitementDataTable = traitementDao.GetTraitementEnCoursbyPatient(Me.SelectedPatient.PatientId)
+
+        'Ajout d'une colonne 'oa_traitement_posologie' dans le DataTable de traitement
+        traitementDataTable.Columns.Add("oa_traitement_posologie", Type.GetType("System.String"))
 
         Dim i As Integer
         Dim iGrid As Integer = -1 'Indice pour alimenter la Grid qui peut comporter moins d'occurrences que le DataTable
-        Dim Posologie As String = ""
+        Dim rowCount As Integer = traitementDataTable.Rows.Count - 1
+        Dim Base As String
+        Dim Posologie As String
         Dim dateFin, dateDebut, dateModification, dateCreation As Date
+        Dim posologieMatin, posologieMidi, posologieApresMidi, posologieSoir As Integer
+        Dim Rythme As Integer
         Dim FenetreTherapeutiqueEnCours As Boolean
         Dim FenetreTherapeutiqueAVenir As Boolean
 
@@ -3226,39 +3236,62 @@ Public Class RadFEpisodeDetail
         Dim FenetreDateDebut, FenetreDateFin As Date
 
         'Parcours du DataTable pour alimenter les colonnes du DataGridView
-        For i = 0 To traitements.Count - 1 Step 1
-            Dim traitement As Traitement = traitements(i)
+        For i = 0 To rowCount Step 1
             'Récupération des médicaments déclarés 'allergique' et exclusion de l'affichage
-            If traitement.Allergie = "1" Then
-                'Allergie = True
-                'SelectedPatient.PatientAllergieDci.Add(traitementDataTable.Rows(i)("oa_traitement_medicament_dci"))
-                'SelectedPatient.PatientAllergieCis.Add(traitementDataTable.Rows(i)("oa_traitement_medicament_cis"))
-                Continue For
+            If traitementDataTable.Rows(i)("oa_traitement_allergie") IsNot DBNull.Value Then
+                If traitementDataTable.Rows(i)("oa_traitement_allergie") = "1" Then
+                    'Allergie = True
+                    'SelectedPatient.PatientAllergieDci.Add(traitementDataTable.Rows(i)("oa_traitement_medicament_dci"))
+                    'SelectedPatient.PatientAllergieCis.Add(traitementDataTable.Rows(i)("oa_traitement_medicament_cis"))
+                    Continue For
+                End If
             End If
 
             'Récupération des médicaments déclarés 'contre-indiqué' et exclusion de l'affichage
-            If traitement.ContreIndication = "1" Then
-                'ContreIndication = True
-                'SelectedPatient.PatientContreIndicationDci.Add(traitementDataTable.Rows(i)("oa_traitement_medicament_dci"))
-                'SelectedPatient.PatientContreIndicationCis.Add(traitementDataTable.Rows(i)("oa_traitement_medicament_cis"))
-                Continue For
+            If traitementDataTable.Rows(i)("oa_traitement_contre_indication") IsNot DBNull.Value Then
+                If traitementDataTable.Rows(i)("oa_traitement_contre_indication") = "1" Then
+                    'ContreIndication = True
+                    'SelectedPatient.PatientContreIndicationDci.Add(traitementDataTable.Rows(i)("oa_traitement_medicament_dci"))
+                    'SelectedPatient.PatientContreIndicationCis.Add(traitementDataTable.Rows(i)("oa_traitement_medicament_cis"))
+                    Continue For
+                End If
             End If
 
             'Exclusion de l'affichage des traitements déclarés 'arrêté'
             'Cette condition est traitée en exclusion (et non dans la requête SQL) pour stocker les allergies et les contre-indications arrêtés dans la StringCollection
-            If traitement.Arret = "A" Then
-                Continue For
+            If traitementDataTable.Rows(i)("oa_traitement_arret") IsNot DBNull.Value Then
+                If traitementDataTable.Rows(i)("oa_traitement_arret") = "A" Then
+                    Continue For
+                End If
             End If
 
             'Date de fin
-            dateFin = traitement.DateFin
-            'Date début
-            dateDebut = traitement.DateDebut
-            'Date création
-            dateCreation = traitement.DateCreation
-            'Date modification
-            dateModification = traitement.DateModification
+            If traitementDataTable.Rows(i)("oa_traitement_date_fin") IsNot DBNull.Value Then
+                dateFin = traitementDataTable.Rows(i)("oa_traitement_date_fin")
+            Else
+                dateFin = "31/12/2999"
+            End If
 
+            'Date début
+            If traitementDataTable.Rows(i)("oa_traitement_date_debut") IsNot DBNull.Value Then
+                dateDebut = traitementDataTable.Rows(i)("oa_traitement_date_debut")
+            Else
+                dateDebut = "01/01/1900"
+            End If
+
+            'Date création
+            If traitementDataTable.Rows(i)("oa_traitement_date_creation") IsNot DBNull.Value Then
+                dateCreation = traitementDataTable.Rows(i)("oa_traitement_date_creation")
+            Else
+                dateCreation = "01/01/1900"
+            End If
+
+            'Date modification
+            If traitementDataTable.Rows(i)("oa_traitement_date_modification") IsNot DBNull.Value Then
+                dateModification = traitementDataTable.Rows(i)("oa_traitement_date_modification")
+            Else
+                dateModification = dateCreation
+            End If
 
             'Exclusion de l'affichage des traitements dont la date de fin est <à la date du jour
             'Cette condition est traitée en exclusion (et non dans la requête SQL) pour stocker les allergies et les contre-indications dans la StringCollection quel que soit leur date de fin
@@ -3272,46 +3305,158 @@ Public Class RadFEpisodeDetail
             FenetreTherapeutiqueEnCours = False
             FenetreTherapeutiqueAVenir = False
 
+            If traitementDataTable.Rows(i)("oa_traitement_fenetre_date_debut") IsNot DBNull.Value Then
+                FenetreDateDebut = traitementDataTable.Rows(i)("oa_traitement_fenetre_date_debut")
+            Else
+                FenetreDateDebut = "31/12/2999"
+            End If
 
-            FenetreDateDebut = traitement.FenetreDateDebut
-            FenetreDateFin = traitement.FenetreDateFin
+            If traitementDataTable.Rows(i)("oa_traitement_fenetre_date_fin") IsNot DBNull.Value Then
+                FenetreDateFin = traitementDataTable.Rows(i)("oa_traitement_fenetre_date_fin")
+            Else
+                FenetreDateFin = "01/01/1900"
+            End If
+
+            Posologie = ""
 
             'Existence d'une fenêtre thérapeutique
             Dim FenetreTherapeutiqueExiste As Boolean = False
             Dim dateDebutFenetreaComparer As New Date(FenetreDateDebut.Year, FenetreDateDebut.Month, FenetreDateDebut.Day, 0, 0, 0)
             Dim dateFinFenetreaComparer As New Date(FenetreDateFin.Year, FenetreDateFin.Month, FenetreDateFin.Day, 0, 0, 0)
-            If traitement.Fenetre = "1" Then
-                'Fenêtre thérapeutique en cours, à venir ou obsolète
-                FenetreTherapeutiqueExiste = True
-                If FenetreDateDebut <= dateJouraComparer And FenetreDateFin >= dateJouraComparer Then
-                    'Fenêtre thérapeutique en cours
-                    FenetreTherapeutiqueEnCours = True
-                    Posologie = "Fenêtre Th."
-                Else
-                    If FenetreDateDebut > dateJouraComparer Then
-                        FenetreTherapeutiqueAVenir = True
+            If traitementDataTable.Rows(i)("oa_traitement_fenetre") IsNot DBNull.Value Then
+                If traitementDataTable.Rows(i)("oa_traitement_fenetre") = "1" Then
+                    'Fenêtre thérapeutique en cours, à venir ou obsolète
+                    FenetreTherapeutiqueExiste = True
+                    If FenetreDateDebut <= dateJouraComparer And FenetreDateFin >= dateJouraComparer Then
+                        'Fenêtre thérapeutique en cours
+                        FenetreTherapeutiqueEnCours = True
+                        Posologie = "Fenêtre Th."
+                    Else
+                        If FenetreDateDebut > dateJouraComparer Then
+                            FenetreTherapeutiqueAVenir = True
+                        End If
                     End If
                 End If
             End If
 
             'Formatage de la posologie
             If FenetreTherapeutiqueEnCours = False Then
-                Posologie = traitementDao.PosologieToText(traitement)
+                Dim PosologieMatinString, PosologieMidiString, PosologieApresMidiString, PosologieSoirString As String
+                Dim FractionMatin, FractionMidi, FractionApresMidi, FractionSoir As String
+                Dim PosologieBase As String
+
+                FractionMatin = Coalesce(traitementDataTable.Rows(i)("oa_traitement_fraction_matin"), Traitement.EnumFraction.Non)
+                FractionMidi = Coalesce(traitementDataTable.Rows(i)("oa_traitement_fraction_midi"), Traitement.EnumFraction.Non)
+                FractionApresMidi = Coalesce(traitementDataTable.Rows(i)("oa_traitement_fraction_apres_midi"), Traitement.EnumFraction.Non)
+                FractionSoir = Coalesce(traitementDataTable.Rows(i)("oa_traitement_fraction_soir"), Traitement.EnumFraction.Non)
+
+                posologieMatin = Coalesce(traitementDataTable.Rows(i)("oa_traitement_Posologie_matin"), 0)
+                posologieMidi = Coalesce(traitementDataTable.Rows(i)("oa_traitement_Posologie_midi"), 0)
+                posologieApresMidi = Coalesce(traitementDataTable.Rows(i)("oa_traitement_Posologie_apres_midi"), 0)
+                posologieSoir = Coalesce(traitementDataTable.Rows(i)("oa_traitement_Posologie_soir"), 0)
+
+                PosologieBase = Coalesce(traitementDataTable.Rows(i)("oa_traitement_Posologie_base"), "")
+
+                If FractionMatin <> "" AndAlso FractionMatin <> Traitement.EnumFraction.Non Then
+                    If posologieMatin <> 0 Then
+                        PosologieMatinString = posologieMatin.ToString & "+" & FractionMatin
+                    Else
+                        PosologieMatinString = FractionMatin
+                    End If
+                Else
+                    If posologieMatin <> 0 Then
+                        PosologieMatinString = posologieMatin.ToString
+                    Else
+                        PosologieMatinString = "0"
+                    End If
+                End If
+
+                If FractionMidi <> "" AndAlso FractionMidi <> Traitement.EnumFraction.Non Then
+                    If posologieMidi <> 0 Then
+                        PosologieMidiString = posologieMidi.ToString & "+" & FractionMidi
+                    Else
+                        PosologieMidiString = FractionMidi
+                    End If
+                Else
+                    If posologieMidi <> 0 Then
+                        PosologieMidiString = posologieMidi.ToString
+                    Else
+                        PosologieMidiString = "0"
+                    End If
+                End If
+
+                PosologieApresMidiString = ""
+                If FractionApresMidi <> "" AndAlso FractionApresMidi <> Traitement.EnumFraction.Non Then
+                    If posologieApresMidi <> 0 Then
+                        PosologieApresMidiString = posologieApresMidi.ToString & "+" & FractionApresMidi
+                    Else
+                        PosologieApresMidiString = FractionApresMidi
+                    End If
+                Else
+                    If posologieApresMidi <> 0 Then
+                        PosologieApresMidiString = posologieApresMidi.ToString
+                    End If
+                End If
+
+                If FractionSoir <> "" AndAlso FractionSoir <> Traitement.EnumFraction.Non Then
+                    If posologieSoir <> 0 Then
+                        PosologieSoirString = posologieSoir.ToString & "+" & FractionSoir
+                    Else
+                        PosologieSoirString = FractionSoir
+                    End If
+                Else
+                    If posologieSoir <> 0 Then
+                        PosologieSoirString = posologieSoir.ToString
+                    Else
+                        PosologieSoirString = "0"
+                    End If
+                End If
+                If traitementDataTable.Rows(i)("oa_traitement_posologie_base") IsNot DBNull.Value Then
+                    Rythme = traitementDataTable.Rows(i)("oa_traitement_posologie_rythme")
+                    Select Case PosologieBase
+                        Case Traitement.EnumBaseCode.JOURNALIER
+                            Base = ""
+                            If posologieApresMidi <> 0 OrElse FractionApresMidi <> Traitement.EnumFraction.Non Then
+                                Posologie = Base + PosologieMatinString + ". " + PosologieMidiString + ". " + PosologieApresMidiString + ". " + PosologieSoirString
+                            Else
+                                Posologie = Base + " " + PosologieMatinString + ". " + PosologieMidiString + ". " + PosologieSoirString
+                            End If
+                        Case Else
+                            Dim RythmeString As String = ""
+                            If FractionMatin <> "" AndAlso FractionMatin <> Traitement.EnumFraction.Non Then
+                                If Rythme <> 0 Then
+                                    RythmeString = Rythme.ToString & "+" & FractionMatin
+                                Else
+                                    RythmeString = FractionMatin
+                                End If
+                            Else
+                                If Rythme <> 0 Then
+                                    RythmeString = Rythme.ToString
+                                End If
+                            End If
+
+                            Base = traitementDao.GetBaseDescription(traitementDataTable.Rows(i)("oa_traitement_posologie_base"))
+                            Posologie = Base + RythmeString
+                    End Select
+                End If
             End If
 
+            Dim commentaire As String = Coalesce(traitementDataTable.Rows(i)("oa_traitement_commentaire"), "")
+            Dim commentairePosologie As String = Coalesce(traitementDataTable.Rows(i)("oa_traitement_posologie_commentaire"), "")
+
             'Stockage des médicaments prescrits (pour contrôle lors de la selection d'un médicament dans le cadre d'un nouveau traitement
-            SelectedPatient.PatientMedicamentsPrescritsCis.Add(traitement.MedicamentId)
+            SelectedPatient.PatientMedicamentsPrescritsCis.Add(traitementDataTable.Rows(i)("oa_traitement_medicament_cis"))
 
             iGrid += 1
             'Ajout d'une ligne au DataGridView
             RadTraitementDataGridView.Rows.Add(iGrid)
+            'Alimentation du DataGridView
             'DCI
-            RadTraitementDataGridView.Rows(iGrid).Cells("medicamentDci").Value = traitement.MedicamentDci
-
+            RadTraitementDataGridView.Rows(iGrid).Cells("medicamentDci").Value = traitementDataTable.Rows(i)("oa_traitement_medicament_dci")
             'Posologie
             RadTraitementDataGridView.Rows(iGrid).Cells("posologie").Value = Posologie
-            RadTraitementDataGridView.Rows(iGrid).Cells("commentaire").Value = traitement.Commentaire
-            RadTraitementDataGridView.Rows(iGrid).Cells("commentairePosologie").Value = traitement.PosologieCommentaire
+            RadTraitementDataGridView.Rows(iGrid).Cells("commentaire").Value = commentaire
+            RadTraitementDataGridView.Rows(iGrid).Cells("commentairePosologie").Value = commentairePosologie
 
             If Posologie = "Fenêtre Th." Then
                 RadTraitementDataGridView.Rows(iGrid).Cells("posologie").Style.ForeColor = Color.Red
@@ -3325,24 +3470,24 @@ Public Class RadFEpisodeDetail
             End If
 
             'Traitement du format d'affichage de la fin du traitement
-            If dateDebut = Nothing Then
+            If dateDebut = "31/12/2999" Then
                 RadTraitementDataGridView.Rows(iGrid).Cells("dateDebut").Value = "Date non définie"
             Else
                 RadTraitementDataGridView.Rows(iGrid).Cells("dateDebut").Value = FormatageDateAffichage(dateDebut, True)
             End If
 
             'Traitement du format d'affichage de modification du traitement
-            If dateModification = Nothing Then
+            If dateModification = "01/01/1900" Then
                 RadTraitementDataGridView.Rows(iGrid).Cells("dateModification").Value = "Date non définie"
             Else
                 RadTraitementDataGridView.Rows(iGrid).Cells("dateModification").Value = FormatageDateAffichage(dateModification, True)
             End If
 
             'Identifiant du traitement
-            RadTraitementDataGridView.Rows(iGrid).Cells("traitementId").Value = traitement.TraitementId
+            RadTraitementDataGridView.Rows(iGrid).Cells("traitementId").Value = traitementDataTable.Rows(i)("oa_traitement_id")
 
             'CIS du médicament
-            RadTraitementDataGridView.Rows(iGrid).Cells("medicamentCis").Value = traitement.MedicamentId
+            RadTraitementDataGridView.Rows(iGrid).Cells("medicamentCis").Value = traitementDataTable.Rows(i)("oa_traitement_medicament_cis")
 
             'Bouton gérer fenêtre thérapeutique
             If FenetreTherapeutiqueAVenir = True Or FenetreTherapeutiqueEnCours = True Then
@@ -3357,7 +3502,8 @@ Public Class RadFEpisodeDetail
         Dim DateArret As Date
         Dim traitementArretDatatable As DataTable
         traitementArretDatatable = traitementDao.GetAllTraitementArreteByPatient(Me.SelectedPatient.PatientId)
-        For i = 0 To traitementArretDatatable.Rows.Count - 1 Step 1
+        rowCount = traitementArretDatatable.Rows.Count - 1
+        For i = 0 To rowCount Step 1
             isTraitementArret = True
             TraitementArretMedicament = Coalesce(traitementArretDatatable.Rows(i)("oa_traitement_medicament_dci"), "")
             TraitementArretCommentaire = Coalesce(traitementArretDatatable.Rows(i)("oa_traitement_arret_commentaire"), "")
@@ -3725,33 +3871,35 @@ Public Class RadFEpisodeDetail
     End Sub
 
     Private Sub GetOrdonnance()
-        Try
-            Me.Enabled = False
-            Cursor.Current = Cursors.WaitCursor
-            Dim ordonnances As List(Of Ordonnance) = ordonnaceDao.GetOrdonnanceValideByPatient(SelectedPatient.PatientId, SelectedEpisodeId)
-            If ordonnances.Count > 0 Then
-                AfficheOrdonnance(ordonnances(0).Id)
-            Else
-                If episode.Etat = Episode.EnumEtatEpisode.CLOTURE.ToString Then
-                    If episode.DateModification.Date < Date.Now.Date Then
-                        MessageBox.Show("Il n'y a pas d'ordonnance de créée pour cet épisode clôturé !")
-                        Cursor.Current = Cursors.Default
-                        Me.Enabled = True
-                        Exit Sub
-                    End If
-                End If
-                Dim OrdonnanceId = ordonnaceDao.CreateOrdonnance(SelectedPatient.PatientId, SelectedEpisodeId, userLog)
-                If OrdonnanceId <> 0 Then
-                    ordonnaceDao.CreateNewOrdonnanceDetail(SelectedPatient.PatientId, OrdonnanceId, episode)
-                    AfficheOrdonnance(OrdonnanceId)
+        Me.Enabled = False
+        Cursor.Current = Cursors.WaitCursor
+        Dim OrdonnanceId As Long
+        Dim ordonnances As List(Of Ordonnance)
+        ordonnances = ordonnaceDao.GetOrdonnanceValideByPatient(SelectedPatient.PatientId, SelectedEpisodeId)
+        If ordonnances.Count > 0 Then
+            OrdonnanceId = ordonnances(0).Id
+            AfficheOrdonnance(OrdonnanceId)
+        Else
+            If episode.Etat = Episode.EnumEtatEpisode.CLOTURE.ToString Then
+                If episode.DateModification.Date < Date.Now.Date Then
+                    MessageBox.Show("Il n'y a pas d'ordonnance de créée pour cet épisode clôturé !")
+                    Cursor.Current = Cursors.Default
+                    Me.Enabled = True
+                    Exit Sub
                 End If
             End If
-            ChargementEtatEpisode()
-            Cursor.Current = Cursors.Default
-            Me.Enabled = True
-        Catch ex As Exception
-            MsgBox(ex.Message())
-        End Try
+            Try
+                ordonnaceDao.CreateNewOrdonnanceDetail(SelectedPatient.PatientId, OrdonnanceId, episode)
+                OrdonnanceId = ordonnaceDao.CreateOrdonnance(SelectedPatient.PatientId, SelectedEpisodeId, userLog)
+                AfficheOrdonnance(OrdonnanceId)
+            Catch ex As Exception
+                MessageBox.Show(ex.Message)
+            End Try
+
+        End If
+        ChargementEtatEpisode()
+        Cursor.Current = Cursors.Default
+        Me.Enabled = True
     End Sub
 
     Private Sub AfficheOrdonnance(OrdonnanceId As Long)
@@ -5180,7 +5328,7 @@ Public Class RadFEpisodeDetail
         Try
             Using vFPatientNoteListe As New RadFPatientNoteListe
                 vFPatientNoteListe.TypeNote = EnumTypeNote.Social
-                vFPatientNoteListe.SelectedPatientId = Me.SelectedPatient.PatientId
+                vFPatientNoteListe.SelectedPatientId = Me.SelectedPatient.patientId
                 vFPatientNoteListe.SelectedPatient = Me.SelectedPatient
                 vFPatientNoteListe.UtilisateurConnecte = Me.UtilisateurConnecte
                 vFPatientNoteListe.ShowDialog() 'Modal
@@ -5199,7 +5347,7 @@ Public Class RadFEpisodeDetail
         Try
             Using vFPatientNoteListe As New RadFPatientNoteListe
                 vFPatientNoteListe.TypeNote = EnumTypeNote.Vaccin
-                vFPatientNoteListe.SelectedPatientId = Me.SelectedPatient.PatientId
+                vFPatientNoteListe.SelectedPatientId = Me.SelectedPatient.patientId
                 vFPatientNoteListe.SelectedPatient = Me.SelectedPatient
                 vFPatientNoteListe.UtilisateurConnecte = Me.UtilisateurConnecte
                 vFPatientNoteListe.ShowDialog() 'Modal
@@ -5218,7 +5366,7 @@ Public Class RadFEpisodeDetail
         Try
             Using vFPatientNoteListe As New RadFPatientNoteListe
                 vFPatientNoteListe.TypeNote = EnumTypeNote.Medicale
-                vFPatientNoteListe.SelectedPatientId = Me.SelectedPatient.PatientId
+                vFPatientNoteListe.SelectedPatientId = Me.SelectedPatient.patientId
                 vFPatientNoteListe.SelectedPatient = Me.SelectedPatient
                 vFPatientNoteListe.UtilisateurConnecte = Me.UtilisateurConnecte
                 vFPatientNoteListe.ShowDialog() 'Modal
@@ -5237,7 +5385,7 @@ Public Class RadFEpisodeDetail
         Try
             Using vFPatientNoteListe As New RadFPatientNoteListe
                 vFPatientNoteListe.TypeNote = EnumTypeNote.Directive
-                vFPatientNoteListe.SelectedPatientId = Me.SelectedPatient.PatientId
+                vFPatientNoteListe.SelectedPatientId = Me.SelectedPatient.patientId
                 vFPatientNoteListe.SelectedPatient = Me.SelectedPatient
                 vFPatientNoteListe.UtilisateurConnecte = Me.UtilisateurConnecte
                 vFPatientNoteListe.ShowDialog() 'Modal
