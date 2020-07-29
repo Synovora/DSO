@@ -76,13 +76,13 @@ Public Class RadFPPSHistoListe
             'Nature historisation
             natureHisto = ppsHistoDataTable.Rows(i)("oa_pps_histo_etat_historisation")
             Select Case natureHisto
-                Case PPSHistoCreationDao.EnumEtatPPSHisto.Creation
+                Case PpsHisto.EnumEtatPPSHisto.Creation
                     ActionHistoString = "Creation PPS"
-                Case PPSHistoCreationDao.EnumEtatPPSHisto.Modification
+                Case PpsHisto.EnumEtatPPSHisto.Modification
                     ActionHistoString = "Modification PPS"
-                Case PPSHistoCreationDao.EnumEtatPPSHisto.Annulation
+                Case PpsHisto.EnumEtatPPSHisto.Annulation
                     ActionHistoString = "Annulation PPS"
-                Case PPSHistoCreationDao.EnumEtatPPSHisto.Arret
+                Case PpsHisto.EnumEtatPPSHisto.Arret
                     ActionHistoString = "Arrêt PPS"
                 Case Else
                     ActionHistoString = "Action inconnue"

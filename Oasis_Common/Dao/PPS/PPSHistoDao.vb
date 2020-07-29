@@ -4,9 +4,7 @@ Public Class PPSHistoDao
     Inherits StandardDao
 
     Public Function GetAllPPSHistobyPPSId(ppsId As Integer) As DataTable
-        Dim SQLString As String
-
-        SQLString = "SELECT oa_pps_histo_id, oa_pps_histo_date_historisation, oa_pps_histo_utilisateur_historisation, oa_pps_histo_etat_historisation," &
+        Dim SQLString As String = "SELECT oa_pps_histo_id, oa_pps_histo_date_historisation, oa_pps_histo_utilisateur_historisation, oa_pps_histo_etat_historisation," &
             " oa_pps_id, oa_pps_priorite, oa_pps_drc_id, oa_pps_affichage_synthese, oa_pps_commentaire, oa_pps_date_debut, oa_pps_arret," &
             " oa_pps_commentaire_arret, oa_pps_inactif, oa_drc_libelle FROM oasis.oa_patient_pps_histo" &
             " LEFT JOIN oasis.oa_drc ON oa_drc_id = oa_pps_drc_id" &

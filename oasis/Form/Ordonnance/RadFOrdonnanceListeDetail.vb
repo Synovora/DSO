@@ -118,135 +118,143 @@ Public Class RadFOrdonnanceListeDetail
     End Sub
 
     Private Sub ChargementOrdonnance()
-        ordonnance = ordonnanceDao.getOrdonnaceById(SelectedOrdonnanceId)
-        TxtCommentaire.Text = ordonnance.Commentaire
-        NumRenouvellement.Value = ordonnance.Renouvellement
-        LblDateCreation.Text = ordonnance.DateCreation.ToString("dd/MM/yyyy")
-        LblHeureCreation.Text = ordonnance.DateCreation.ToString("HH:mm")
-        LblOrdonnanceId.Text = ordonnance.Id.ToString
-        GestionAccesBoutonAction()
+        Try
+            ordonnance = ordonnanceDao.GetOrdonnaceById(SelectedOrdonnanceId)
+            TxtCommentaire.Text = ordonnance.Commentaire
+            NumRenouvellement.Value = ordonnance.Renouvellement
+            LblDateCreation.Text = ordonnance.DateCreation.ToString("dd/MM/yyyy")
+            LblHeureCreation.Text = ordonnance.DateCreation.ToString("HH:mm")
+            LblOrdonnanceId.Text = ordonnance.Id.ToString
+            GestionAccesBoutonAction()
+        Catch ex As Exception
+            MsgBox(ex.Message())
+        End Try
     End Sub
 
     Private Sub ChargementOrdonnanceDetail()
-        RadAldGridView.Rows.Clear()
-        RadNonAldGridView.Rows.Clear()
-        iGridALD = -1
-        iGridNonALD = -1
+        Try
+            RadAldGridView.Rows.Clear()
+            RadNonAldGridView.Rows.Clear()
+            iGridALD = -1
+            iGridNonALD = -1
 
-        Dim ordonnanceDataTable As DataTable
-        Dim ordonnanceDaoDetail As OrdonnanceDetailDao = New OrdonnanceDetailDao
-        ordonnanceDataTable = ordonnanceDaoDetail.GetAllOrdonnanceLigneByOrdonnanceId(Me.SelectedOrdonnanceId)
+            Dim ordonnanceDataTable As DataTable
+            Dim ordonnanceDaoDetail As OrdonnanceDetailDao = New OrdonnanceDetailDao
+            ordonnanceDataTable = ordonnanceDaoDetail.GetAllOrdonnanceLigneByOrdonnanceId(Me.SelectedOrdonnanceId)
 
-        Dim i As Integer
-        Dim rowCount As Integer = ordonnanceDataTable.Rows.Count - 1
-        Dim Posologie As String
-        Dim dateFin, dateDebut As Date
-        Dim FenetreTherapeutiqueEnCours As Boolean
-        Dim FenetreTherapeutiqueAVenir As Boolean
+            Dim i As Integer
+            Dim rowCount As Integer = ordonnanceDataTable.Rows.Count - 1
+            Dim Posologie As String
+            Dim dateFin, dateDebut As Date
+            Dim FenetreTherapeutiqueEnCours As Boolean
+            Dim FenetreTherapeutiqueAVenir As Boolean
 
-        'Dim Allergie As Boolean = False
-        Dim FenetreDateDebut, FenetreDateFin As Date
+            'Dim Allergie As Boolean = False
+            Dim FenetreDateDebut, FenetreDateFin As Date
 
-        Allergie = False
+            Allergie = False
 
-        ContreIndication = False
-        LblAllergie.Visible = False
-        lblContreIndication.Visible = False
-        SelectedPatient.PatientAllergieCis.Clear()
-        SelectedPatient.PatientAllergieDci.Clear()
-        SelectedPatient.PatientContreIndicationCis.Clear()
-        SelectedPatient.PatientContreIndicationDci.Clear()
-        SelectedPatient.PatientMedicamentsPrescritsCis.Clear()
+            ContreIndication = False
+            LblAllergie.Visible = False
+            lblContreIndication.Visible = False
+            SelectedPatient.PatientAllergieCis.Clear()
+            SelectedPatient.PatientAllergieDci.Clear()
+            SelectedPatient.PatientContreIndicationCis.Clear()
+            SelectedPatient.PatientContreIndicationDci.Clear()
+            SelectedPatient.PatientMedicamentsPrescritsCis.Clear()
 
-        'Parcours du DataTable pour alimenter les colonnes du DataGridView
-        For i = 0 To rowCount Step 1
-            Dim ordonnanceDetailGrid As New OrdonnanceDetailGrid
-            'Date de fin
-            If ordonnanceDataTable.Rows(i)("oa_traitement_date_fin") IsNot DBNull.Value Then
-                dateFin = ordonnanceDataTable.Rows(i)("oa_traitement_date_fin")
-            Else
-                dateFin = "31/12/2999"
-            End If
+            'Parcours du DataTable pour alimenter les colonnes du DataGridView
+            For i = 0 To rowCount Step 1
+                Dim ordonnanceDetailGrid As New OrdonnanceDetailGrid
+                'Date de fin
+                If ordonnanceDataTable.Rows(i)("oa_traitement_date_fin") IsNot DBNull.Value Then
+                    dateFin = ordonnanceDataTable.Rows(i)("oa_traitement_date_fin")
+                Else
+                    dateFin = "31/12/2999"
+                End If
 
-            'Date début
-            If ordonnanceDataTable.Rows(i)("oa_traitement_date_debut") IsNot DBNull.Value Then
-                dateDebut = ordonnanceDataTable.Rows(i)("oa_traitement_date_debut")
-            Else
-                dateDebut = "01/01/1900"
-            End If
+                'Date début
+                If ordonnanceDataTable.Rows(i)("oa_traitement_date_debut") IsNot DBNull.Value Then
+                    dateDebut = ordonnanceDataTable.Rows(i)("oa_traitement_date_debut")
+                Else
+                    dateDebut = "01/01/1900"
+                End If
 
-            'Exclusion de l'affichage des traitements dont la date de fin est <à la date du jour
-            'Cette condition est traitée en exclusion (et non dans la requête SQL) pour stocker les allergies et les contre-indications dans la StringCollection quel que soit leur date de fin
-            If (dateFin.Date < Date.Now.Date) Then
-                'Continue For
-            End If
+                'Exclusion de l'affichage des traitements dont la date de fin est <à la date du jour
+                'Cette condition est traitée en exclusion (et non dans la requête SQL) pour stocker les allergies et les contre-indications dans la StringCollection quel que soit leur date de fin
+                If (dateFin.Date < Date.Now.Date) Then
+                    'Continue For
+                End If
 
-            'Vérification de l'existence d'une fenêtre thérapeutique active et à venir
-            FenetreTherapeutiqueEnCours = False
-            FenetreTherapeutiqueAVenir = False
+                'Vérification de l'existence d'une fenêtre thérapeutique active et à venir
+                FenetreTherapeutiqueEnCours = False
+                FenetreTherapeutiqueAVenir = False
 
-            If ordonnanceDataTable.Rows(i)("oa_traitement_fenetre_date_debut") IsNot DBNull.Value Then
-                FenetreDateDebut = ordonnanceDataTable.Rows(i)("oa_traitement_fenetre_date_debut")
-            Else
-                FenetreDateDebut = "31/12/2999"
-            End If
+                If ordonnanceDataTable.Rows(i)("oa_traitement_fenetre_date_debut") IsNot DBNull.Value Then
+                    FenetreDateDebut = ordonnanceDataTable.Rows(i)("oa_traitement_fenetre_date_debut")
+                Else
+                    FenetreDateDebut = "31/12/2999"
+                End If
 
 
-            If ordonnanceDataTable.Rows(i)("oa_traitement_fenetre_date_fin") IsNot DBNull.Value Then
-                FenetreDateFin = ordonnanceDataTable.Rows(i)("oa_traitement_fenetre_date_fin")
-            Else
-                FenetreDateFin = "01/01/1900"
-            End If
+                If ordonnanceDataTable.Rows(i)("oa_traitement_fenetre_date_fin") IsNot DBNull.Value Then
+                    FenetreDateFin = ordonnanceDataTable.Rows(i)("oa_traitement_fenetre_date_fin")
+                Else
+                    FenetreDateFin = "01/01/1900"
+                End If
 
-            Posologie = ""
+                Posologie = ""
 
-            'Existence d'une fenêtre thérapeutique
-            Dim FenetreTherapeutiqueExiste As Boolean = False
-            If ordonnanceDataTable.Rows(i)("oa_traitement_fenetre") IsNot DBNull.Value Then
-                If ordonnanceDataTable.Rows(i)("oa_traitement_fenetre") = "1" Then
-                    'Fenêtre thérapeutique en cours, à venir ou obsolète
-                    FenetreTherapeutiqueExiste = True
-                    If FenetreDateDebut.Date <= Date.Now.Date And FenetreDateFin >= Date.Now.Date Then
-                        FenetreTherapeutiqueEnCours = True
-                    Else
-                        If FenetreDateDebut > Date.Now.Date Then
-                            FenetreTherapeutiqueAVenir = True
+                'Existence d'une fenêtre thérapeutique
+                Dim FenetreTherapeutiqueExiste As Boolean = False
+                If ordonnanceDataTable.Rows(i)("oa_traitement_fenetre") IsNot DBNull.Value Then
+                    If ordonnanceDataTable.Rows(i)("oa_traitement_fenetre") = "1" Then
+                        'Fenêtre thérapeutique en cours, à venir ou obsolète
+                        FenetreTherapeutiqueExiste = True
+                        If FenetreDateDebut.Date <= Date.Now.Date And FenetreDateFin >= Date.Now.Date Then
+                            FenetreTherapeutiqueEnCours = True
+                        Else
+                            If FenetreDateDebut > Date.Now.Date Then
+                                FenetreTherapeutiqueAVenir = True
+                            End If
                         End If
                     End If
                 End If
-            End If
 
-            ordonnanceDetailGrid.TraitementId = Coalesce(ordonnanceDataTable.Rows(i)("oa_traitement_id"), 0)
-            ordonnanceDetailGrid.OrdonnanceLigneId = ordonnanceDataTable.Rows(i)("oa_ordonnance_ligne_id")
-            ordonnanceDetailGrid.MedicamentDci = Coalesce(ordonnanceDataTable.Rows(i)("oa_traitement_medicament_dci"), "")
-            ordonnanceDetailGrid.MedicamentCis = Coalesce(ordonnanceDataTable.Rows(i)("oa_traitement_medicament_cis"), 0)
-            ordonnanceDetailGrid.Posologie = Coalesce(ordonnanceDataTable.Rows(i)("oa_traitement_posologie"), "")
-            ordonnanceDetailGrid.CommentairePosologie = Coalesce(ordonnanceDataTable.Rows(i)("oa_traitement_posologie_commentaire"), "")
-            ordonnanceDetailGrid.Duree = Coalesce(ordonnanceDataTable.Rows(i)("oa_traitement_duree"), 0)
-            ordonnanceDetailGrid.ADelivrer = Coalesce(ordonnanceDataTable.Rows(i)("oa_traitement_a_delivrer"), False)
-            ordonnanceDetailGrid.Ald = Coalesce(ordonnanceDataTable.Rows(i)("oa_traitement_ald"), False)
-            ordonnanceDetailGrid.FenetreTherapeutique = FenetreTherapeutiqueEnCours
+                ordonnanceDetailGrid.TraitementId = Coalesce(ordonnanceDataTable.Rows(i)("oa_traitement_id"), 0)
+                ordonnanceDetailGrid.OrdonnanceLigneId = ordonnanceDataTable.Rows(i)("oa_ordonnance_ligne_id")
+                ordonnanceDetailGrid.MedicamentDci = Coalesce(ordonnanceDataTable.Rows(i)("oa_traitement_medicament_dci"), "")
+                ordonnanceDetailGrid.MedicamentCis = Coalesce(ordonnanceDataTable.Rows(i)("oa_traitement_medicament_cis"), 0)
+                ordonnanceDetailGrid.Posologie = Coalesce(ordonnanceDataTable.Rows(i)("oa_traitement_posologie"), "")
+                ordonnanceDetailGrid.CommentairePosologie = Coalesce(ordonnanceDataTable.Rows(i)("oa_traitement_posologie_commentaire"), "")
+                ordonnanceDetailGrid.Duree = Coalesce(ordonnanceDataTable.Rows(i)("oa_traitement_duree"), 0)
+                ordonnanceDetailGrid.ADelivrer = Coalesce(ordonnanceDataTable.Rows(i)("oa_traitement_a_delivrer"), False)
+                ordonnanceDetailGrid.Ald = Coalesce(ordonnanceDataTable.Rows(i)("oa_traitement_ald"), False)
+                ordonnanceDetailGrid.FenetreTherapeutique = FenetreTherapeutiqueEnCours
 
-            'Aiguillage ALD / Non ALD
-            If PatientALD = True Then
-                If ordonnanceDetailGrid.Ald = True Then
-                    ChargementGridALD(ordonnanceDetailGrid)
+                'Aiguillage ALD / Non ALD
+                If PatientALD = True Then
+                    If ordonnanceDetailGrid.Ald = True Then
+                        ChargementGridALD(ordonnanceDetailGrid)
+                    Else
+                        ChargementGridNonALD(ordonnanceDetailGrid)
+                    End If
                 Else
                     ChargementGridNonALD(ordonnanceDetailGrid)
                 End If
-            Else
-                ChargementGridNonALD(ordonnanceDetailGrid)
+            Next
+
+            'Positionnement du grid sur la première occurrence
+            If RadAldGridView.Rows.Count > 0 Then
+                Me.RadAldGridView.CurrentRow = RadAldGridView.ChildRows(0)
             End If
-        Next
 
-        'Positionnement du grid sur la première occurrence
-        If RadAldGridView.Rows.Count > 0 Then
-            Me.RadAldGridView.CurrentRow = RadAldGridView.ChildRows(0)
-        End If
-
-        If RadNonAldGridView.Rows.Count > 0 Then
-            Me.RadNonAldGridView.CurrentRow = RadNonAldGridView.ChildRows(0)
-        End If
+            If RadNonAldGridView.Rows.Count > 0 Then
+                Me.RadNonAldGridView.CurrentRow = RadNonAldGridView.ChildRows(0)
+            End If
+        Catch ex As Exception
+            MsgBox(ex.Message())
+        End Try
     End Sub
 
     Private Sub ChargementGridALD(ordonnanceDetailGrid As OrdonnanceDetailGrid)
@@ -450,19 +458,27 @@ Public Class RadFOrdonnanceListeDetail
     End Sub
 
     Private Sub ModificationCommentaire()
-        If CommentaireModified = True Then
-            'Appel mise à jour de l'ordonnance
-            ordonnanceDao.ModificationOrdonnanceCommentaire(SelectedOrdonnanceId, TxtCommentaire.Text)
-            CommentaireModified = False
-        End If
+        Try
+            If CommentaireModified = True Then
+                'Appel mise à jour de l'ordonnance
+                ordonnanceDao.ModificationOrdonnanceCommentaire(SelectedOrdonnanceId, TxtCommentaire.Text)
+                CommentaireModified = False
+            End If
+        Catch ex As Exception
+            MsgBox(ex.Message())
+        End Try
     End Sub
 
     Private Sub ModificationRenouvellement()
-        If RenouvellementModified = True Then
-            'Appel mise à jour de l'ordonnance
-            ordonnanceDao.ModificationOrdonnanceRenouvellement(SelectedOrdonnanceId, NumRenouvellement.Value)
-            RenouvellementModified = False
-        End If
+        Try
+            If RenouvellementModified = True Then
+                'Appel mise à jour de l'ordonnance
+                ordonnanceDao.ModificationOrdonnanceRenouvellement(SelectedOrdonnanceId, NumRenouvellement.Value)
+                RenouvellementModified = False
+            End If
+        Catch ex As Exception
+            MsgBox(ex.Message())
+        End Try
     End Sub
 
 
@@ -506,18 +522,22 @@ Public Class RadFOrdonnanceListeDetail
 
     'Basculer en Non ALD
     Private Sub BasculerEnNonALDToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles BasculerEnNonALDToolStripMenuItem.Click
-        If RadAldGridView.CurrentRow IsNot Nothing Then
-            Dim aRow As Integer = Me.RadAldGridView.Rows.IndexOf(Me.RadAldGridView.CurrentRow)
-            If aRow >= 0 Then
-                Dim ordonnanceLigneId As Integer = RadAldGridView.Rows(aRow).Cells("ordonnanceLigneId").Value
-                Me.Enabled = False
-                Cursor.Current = Cursors.WaitCursor
-                ordonnanceDetailDao.ModificationOrdonnanceDetailALD(ordonnanceLigneId, False)
-                ChargementOrdonnanceDetail()
-                Cursor.Current = Cursors.Default
-                Me.Enabled = True
+        Try
+            If RadAldGridView.CurrentRow IsNot Nothing Then
+                Dim aRow As Integer = Me.RadAldGridView.Rows.IndexOf(Me.RadAldGridView.CurrentRow)
+                If aRow >= 0 Then
+                    Dim ordonnanceLigneId As Integer = RadAldGridView.Rows(aRow).Cells("ordonnanceLigneId").Value
+                    Me.Enabled = False
+                    Cursor.Current = Cursors.WaitCursor
+                    ordonnanceDetailDao.ModificationOrdonnanceDetailALD(ordonnanceLigneId, False)
+                    ChargementOrdonnanceDetail()
+                    Cursor.Current = Cursors.Default
+                    Me.Enabled = True
+                End If
             End If
-        End If
+        Catch ex As Exception
+            MsgBox(ex.Message())
+        End Try
     End Sub
 
     'Création d'une ligne de commentaire en ALD
@@ -537,43 +557,51 @@ Public Class RadFOrdonnanceListeDetail
 
     'Suppression d'une ligne de commentaire en ALD
     Private Sub SupprimerUneLigneToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles SupprimerUneLigneToolStripMenuItem.Click
-        If RadAldGridView.CurrentRow IsNot Nothing Then
-            Dim aRow As Integer = Me.RadAldGridView.Rows.IndexOf(Me.RadAldGridView.CurrentRow)
-            If aRow >= 0 Then
-                Dim OrdonnanceLigneId As Integer = RadAldGridView.Rows(aRow).Cells("ordonnanceLigneId").Value
-                Dim TraitementId As Integer = RadAldGridView.Rows(aRow).Cells("traitementId").Value
-                'Tester si l'ordonnance sélectionnée est à valider
-                If TraitementId = 0 Then
-                    ordonnanceDetailDao.SuppressionOrdonnanceDetailByDrcId(OrdonnanceLigneId)
-                    ChargementOrdonnanceDetail()
+        Try
+            If RadAldGridView.CurrentRow IsNot Nothing Then
+                Dim aRow As Integer = Me.RadAldGridView.Rows.IndexOf(Me.RadAldGridView.CurrentRow)
+                If aRow >= 0 Then
+                    Dim OrdonnanceLigneId As Integer = RadAldGridView.Rows(aRow).Cells("ordonnanceLigneId").Value
+                    Dim TraitementId As Integer = RadAldGridView.Rows(aRow).Cells("traitementId").Value
+                    'Tester si l'ordonnance sélectionnée est à valider
+                    If TraitementId = 0 Then
+                        ordonnanceDetailDao.SuppressionOrdonnanceDetailByDrcId(OrdonnanceLigneId)
+                        ChargementOrdonnanceDetail()
+                    End If
                 End If
+            Else
+                MessageBox.Show("Veuillez sélectionner une ligne d'ordonnance")
             End If
-        Else
-            MessageBox.Show("Veuillez sélectionner une ligne d'ordonnance")
-        End If
+        Catch ex As Exception
+            MsgBox(ex.Message())
+        End Try
     End Sub
 
     'Bascule Délivrer / Ne pas délivrer
     Private Sub BasculerADélivrerANePasDélivrerToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles BasculerADélivrerANePasDélivrerToolStripMenuItem.Click
-        If RadAldGridView.CurrentRow IsNot Nothing Then
-            Dim aRow As Integer = Me.RadAldGridView.Rows.IndexOf(Me.RadAldGridView.CurrentRow)
-            If aRow >= 0 Then
-                Dim ordonnanceLigneId As Integer = RadAldGridView.Rows(aRow).Cells("ordonnanceLigneId").Value
-                Dim delivrance As String = RadAldGridView.Rows(aRow).Cells("delivrance").Value
-                Me.Enabled = False
-                Cursor.Current = Cursors.WaitCursor
-                Dim aDelivrer As Boolean
-                If delivrance = "" Then                'OrdonnanceDetailDao.EnumDelivrance.A_DELIVRER Then
-                    aDelivrer = False
-                Else
-                    aDelivrer = True
+        Try
+            If RadAldGridView.CurrentRow IsNot Nothing Then
+                Dim aRow As Integer = Me.RadAldGridView.Rows.IndexOf(Me.RadAldGridView.CurrentRow)
+                If aRow >= 0 Then
+                    Dim ordonnanceLigneId As Integer = RadAldGridView.Rows(aRow).Cells("ordonnanceLigneId").Value
+                    Dim delivrance As String = RadAldGridView.Rows(aRow).Cells("delivrance").Value
+                    Me.Enabled = False
+                    Cursor.Current = Cursors.WaitCursor
+                    Dim aDelivrer As Boolean
+                    If delivrance = "" Then                'OrdonnanceDetailDao.EnumDelivrance.A_DELIVRER Then
+                        aDelivrer = False
+                    Else
+                        aDelivrer = True
+                    End If
+                    ordonnanceDetailDao.ModificationOrdonnanceDetailDelivrance(ordonnanceLigneId, aDelivrer)
+                    ChargementOrdonnanceDetail()
+                    Cursor.Current = Cursors.Default
+                    Me.Enabled = True
                 End If
-                ordonnanceDetailDao.ModificationOrdonnanceDetailDelivrance(ordonnanceLigneId, aDelivrer)
-                ChargementOrdonnanceDetail()
-                Cursor.Current = Cursors.Default
-                Me.Enabled = True
             End If
-        End If
+        Catch ex As Exception
+            MsgBox(ex.Message())
+        End Try
     End Sub
 
 
@@ -630,60 +658,69 @@ Public Class RadFOrdonnanceListeDetail
     End Sub
 
     Private Sub SupprimerUneLigneDeCommentaireToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles SupprimerUneLigneDeCommentaireToolStripMenuItem.Click
-        If RadNonAldGridView.CurrentRow IsNot Nothing Then
-            Dim aRow As Integer = Me.RadNonAldGridView.Rows.IndexOf(Me.RadNonAldGridView.CurrentRow)
-            If aRow >= 0 Then
-                Dim OrdonnanceLigneId As Integer = RadNonAldGridView.Rows(aRow).Cells("ordonnanceLigneId").Value
-                Dim TraitementId As Integer = RadNonAldGridView.Rows(aRow).Cells("traitementId").Value
-                'Tester si l'ordonnance sélectionnée est à valider
-                If TraitementId = 0 Then
-                    ordonnanceDetailDao.SuppressionOrdonnanceDetailByDrcId(OrdonnanceLigneId)
-                    ChargementOrdonnanceDetail()
+        Try
+            If RadNonAldGridView.CurrentRow IsNot Nothing Then
+                Dim aRow As Integer = Me.RadNonAldGridView.Rows.IndexOf(Me.RadNonAldGridView.CurrentRow)
+                If aRow >= 0 Then
+                    Dim OrdonnanceLigneId As Integer = RadNonAldGridView.Rows(aRow).Cells("ordonnanceLigneId").Value
+                    Dim TraitementId As Integer = RadNonAldGridView.Rows(aRow).Cells("traitementId").Value
+                    'Tester si l'ordonnance sélectionnée est à valider
+                    If TraitementId = 0 Then
+                        ordonnanceDetailDao.SuppressionOrdonnanceDetailByDrcId(OrdonnanceLigneId)
+                        ChargementOrdonnanceDetail()
+                    End If
                 End If
+            Else
+                MessageBox.Show("Veuillez sélectionner une ligne d'ordonnance")
             End If
-        Else
-            MessageBox.Show("Veuillez sélectionner une ligne d'ordonnance")
-        End If
+        Catch ex As Exception
+            MsgBox(ex.Message())
+        End Try
     End Sub
 
     Private Sub BasculerADélivrerANePasDélivrerToolStripMenuItem1_Click(sender As Object, e As EventArgs) Handles BasculerADélivrerANePasDélivrerToolStripMenuItem1.Click
-        If RadNonAldGridView.CurrentRow IsNot Nothing Then
-            Dim aRow As Integer = Me.RadNonAldGridView.Rows.IndexOf(Me.RadNonAldGridView.CurrentRow)
-            If aRow >= 0 Then
-                Dim ordonnanceLigneId As Integer = RadNonAldGridView.Rows(aRow).Cells("ordonnanceLigneId").Value
-                Dim delivrance As String = RadNonAldGridView.Rows(aRow).Cells("delivrance").Value
-                Me.Enabled = False
-                Cursor.Current = Cursors.WaitCursor
-                Dim aDelivrer As Boolean
-                If delivrance = "" Then 'OrdonnanceDetailDao.EnumDelivrance.A_DELIVRER Then
-                    aDelivrer = False
-                Else
-                    aDelivrer = True
+        Try
+            If RadNonAldGridView.CurrentRow IsNot Nothing Then
+                Dim aRow As Integer = Me.RadNonAldGridView.Rows.IndexOf(Me.RadNonAldGridView.CurrentRow)
+                If aRow >= 0 Then
+                    Dim ordonnanceLigneId As Integer = RadNonAldGridView.Rows(aRow).Cells("ordonnanceLigneId").Value
+                    Dim delivrance As String = RadNonAldGridView.Rows(aRow).Cells("delivrance").Value
+                    Me.Enabled = False
+                    Cursor.Current = Cursors.WaitCursor
+                    Dim aDelivrer As Boolean
+                    If delivrance = "" Then 'OrdonnanceDetailDao.EnumDelivrance.A_DELIVRER Then
+                        aDelivrer = False
+                    Else
+                        aDelivrer = True
+                    End If
+                    ordonnanceDetailDao.ModificationOrdonnanceDetailDelivrance(ordonnanceLigneId, aDelivrer)
+                    ChargementOrdonnanceDetail()
+                    Cursor.Current = Cursors.Default
+                    Me.Enabled = True
                 End If
-                ordonnanceDetailDao.ModificationOrdonnanceDetailDelivrance(ordonnanceLigneId, aDelivrer)
-                ChargementOrdonnanceDetail()
-                Cursor.Current = Cursors.Default
-                Me.Enabled = True
             End If
-        End If
+        Catch ex As Exception
+            MsgBox(ex.Message())
+        End Try
     End Sub
 
     Private Sub BasculerEnALDToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles BasculerEnALDToolStripMenuItem.Click
-        If RadNonAldGridView.CurrentRow IsNot Nothing Then
-            Dim aRow As Integer = Me.RadNonAldGridView.Rows.IndexOf(Me.RadNonAldGridView.CurrentRow)
-            If aRow >= 0 Then
-                Dim ordonnanceLigneId As Integer = RadNonAldGridView.Rows(aRow).Cells("ordonnanceLigneId").Value
-                Me.Enabled = False
-                Cursor.Current = Cursors.WaitCursor
-                Try
+        Try
+            If RadNonAldGridView.CurrentRow IsNot Nothing Then
+                Dim aRow As Integer = Me.RadNonAldGridView.Rows.IndexOf(Me.RadNonAldGridView.CurrentRow)
+                If aRow >= 0 Then
+                    Dim ordonnanceLigneId As Integer = RadNonAldGridView.Rows(aRow).Cells("ordonnanceLigneId").Value
+                    Me.Enabled = False
+                    Cursor.Current = Cursors.WaitCursor
                     ordonnanceDetailDao.ModificationOrdonnanceDetailALD(ordonnanceLigneId, True)
                     ChargementOrdonnanceDetail()
-                Catch
-                End Try
-                Cursor.Current = Cursors.Default
-                Me.Enabled = True
+                    Cursor.Current = Cursors.Default
+                    Me.Enabled = True
+                End If
             End If
-        End If
+        Catch ex As Exception
+            MsgBox(ex.Message())
+        End Try
     End Sub
 
     '=============================================================================================
@@ -692,12 +729,16 @@ Public Class RadFOrdonnanceListeDetail
 
     'Annuler l'ordonnance
     Private Sub RadBtnAnnulerOrdonnance_Click(sender As Object, e As EventArgs) Handles RadBtnAnnulerOrdonnance.Click
-        ordonnanceDao.AnnulerOrdonnance(SelectedOrdonnanceId)
-        Dim form As New RadFNotification With {
-            .Message = "L'ordonnance a été annulée"
-        }
-        form.Show()
-        Close()
+        Try
+            ordonnanceDao.AnnulerOrdonnance(SelectedOrdonnanceId)
+            Dim form As New RadFNotification With {
+                .Message = "L'ordonnance a été annulée"
+            }
+            form.Show()
+            Close()
+        Catch ex As Exception
+            MsgBox(ex.Message())
+        End Try
     End Sub
 
     'Ajouter une ligne de commentaire (Hors ALD)
@@ -716,23 +757,27 @@ Public Class RadFOrdonnanceListeDetail
     End Sub
 
     Private Sub RadBtnValidation_Click(sender As Object, e As EventArgs) Handles RadBtnValidation.Click
-        If userLog.TypeProfil = FonctionDao.EnumTypeFonction.MEDICAL.ToString Then
-            Try
-                ordonnanceDao.ValidationOrdonnance(SelectedOrdonnanceId, userLog)
-                ordonnance = ordonnanceDao.GetOrdonnaceById(SelectedOrdonnanceId)
-                GestionAccesBoutonAction()
-                Dim form As New RadFNotification With {
-                    .Message = "L'ordonnance a été signée numériquement par : " & userLog.UtilisateurPrenom & " " & userLog.UtilisateurNom & vbCrLf &
-            ". L'ordonnance est à présent disponible pour être imprimée"
-                }
-                form.Show()
-            Catch
-                MessageBox.Show("Erreur rencontrée pendant la validation de l'ordonnance")
-            End Try
-        Else
-            MessageBox.Show("Vous ne disposez pas d'un profil de type 'Médical', pour valider une ordonnance." &
-                            " Votre prodil est de type : " & userLog.TypeProfil)
-        End If
+        Try
+            If userLog.TypeProfil = FonctionDao.EnumTypeFonction.MEDICAL.ToString Then
+                Try
+                    ordonnanceDao.ValidationOrdonnance(SelectedOrdonnanceId, userLog)
+                    ordonnance = ordonnanceDao.GetOrdonnaceById(SelectedOrdonnanceId)
+                    GestionAccesBoutonAction()
+                    Dim form As New RadFNotification With {
+                        .Message = "L'ordonnance a été signée numériquement par : " & userLog.UtilisateurPrenom & " " & userLog.UtilisateurNom & vbCrLf &
+                ". L'ordonnance est à présent disponible pour être imprimée"
+                    }
+                    form.Show()
+                Catch
+                    MessageBox.Show("Erreur rencontrée pendant la validation de l'ordonnance")
+                End Try
+            Else
+                MessageBox.Show("Vous ne disposez pas d'un profil de type 'Médical', pour valider une ordonnance." &
+                                " Votre prodil est de type : " & userLog.TypeProfil)
+            End If
+        Catch ex As Exception
+            MsgBox(ex.Message())
+        End Try
     End Sub
 
     Private Sub GestionAccesBoutonAction()
@@ -806,7 +851,7 @@ Public Class RadFOrdonnanceListeDetail
             printPdf.SelectedOrdonnanceId = SelectedOrdonnanceId
             printPdf.PrintDocument()
         Catch ex As Exception
-            MsgBox(ex.Message())
+            MessageBox.Show(ex.Message())
         End Try
         Cursor.Current = Cursors.Default
     End Sub

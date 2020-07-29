@@ -192,12 +192,12 @@ Public Class FrmAdminTemplateSousEpisode
                     If isSautLigneAvant Then .Sous_Type_Libelle_Detail_ALD += vbCrLf
                     .Sous_Type_Libelle_Detail_ALD += (detail.Libelle & vbCrLf)
                     If isSautLigneAvant Then .Sous_Type_Libelle_Detail_commentaire_ALD += vbCrLf
-                    .Sous_Type_Libelle_Detail_commentaire_ALD += (detail.commentaire & vbCrLf)
+                    .Sous_Type_Libelle_Detail_commentaire_ALD += (detail.Commentaire & vbCrLf)
 
                     If isSautLigneAvant Then .Sous_Type_Libelle_Detail_Non_ALD += vbCrLf
                     .Sous_Type_Libelle_Detail_Non_ALD += (detail.Libelle & vbCrLf)
                     If isSautLigneAvant Then .Sous_Type_Libelle_Detail_commentaire_non_ALD += vbCrLf
-                    .Sous_Type_Libelle_Detail_commentaire_non_ALD += (detail.commentaire & vbCrLf)
+                    .Sous_Type_Libelle_Detail_commentaire_non_ALD += (detail.Commentaire & vbCrLf)
                 Next
             End If
         End With

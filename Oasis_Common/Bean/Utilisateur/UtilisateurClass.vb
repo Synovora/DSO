@@ -43,7 +43,7 @@ Public Class Utilisateur
     End Sub
 
     Public Shared Function CryptePwd(login As String, pwd As String) As String
-        Dim UniEnc As New System.Text.UnicodeEncoding
+        Dim UniEnc As New Text.UnicodeEncoding
         Dim bitPass() As Byte = UniEnc.GetBytes("U23cGt'r8c" + login + pwd)
         Using sha As New SHA1CryptoServiceProvider
             Return Convert.ToBase64String(sha.ComputeHash(bitPass))

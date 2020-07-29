@@ -1,8 +1,4 @@
-﻿Imports System
-Imports System.Collections.Generic
-Imports System.Linq
-Imports System.Web
-
+﻿
 Namespace Oasis_Web
     Public Class Constants
         Public Const LAYOUT_VERTICAL As String = "LAYOUT_VERTICAL"

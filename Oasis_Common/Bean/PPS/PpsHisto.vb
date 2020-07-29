@@ -1,5 +1,12 @@
 ﻿Public Class PpsHisto
 
+    Public Enum EnumEtatPPSHisto
+        Creation = 1
+        Modification = 2
+        Arret = 3
+        Annulation = 4
+    End Enum
+
     Property HistorisationDate As Date
     Property HistorisationUtilisateurId As Integer
     Property HistorisationEtat As Integer

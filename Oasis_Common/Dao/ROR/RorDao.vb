@@ -10,9 +10,7 @@ Public Class RorDao
 
     Public Function getRorById(RorId As Integer) As Ror
         Dim ror As Ror
-        Dim con As SqlConnection
-
-        con = GetConnection()
+        Dim con As SqlConnection = GetConnection()
 
         Try
             Dim command As SqlCommand = con.CreateCommand()
@@ -67,9 +65,7 @@ Public Class RorDao
     End Function
 
     Public Function getAllRor() As DataTable
-        Dim SQLString As String
-
-        SQLString = "SELECT * FROM oasis.oa_ror where oa_ror_inactif = 'False' or oa_ror_inactif is Null"
+        Dim SQLString As String = "SELECT * FROM oasis.oa_ror where oa_ror_inactif = 'False' or oa_ror_inactif is Null"
 
         Using con As SqlConnection = GetConnection()
             Dim AldDataAdapter As SqlDataAdapter = New SqlDataAdapter()
@@ -92,11 +88,8 @@ Public Class RorDao
     Public Function CreationRor(ror As Ror, userLog As Utilisateur) As Boolean
         Dim da As SqlDataAdapter = New SqlDataAdapter()
         Dim codeRetour As Boolean = True
-        Dim con As SqlConnection
-        con = GetConnection()
-
+        Dim con As SqlConnection = GetConnection()
         Dim dateCreation As Date = Date.Now.Date
-
         Dim SQLstring As String = "insert into oasis.oa_ror" &
         " (oa_ror_specialite_id, oa_ror_nom, oa_ror_type, oa_ror_structure_id, oa_ror_structure_nom," &
         " oa_ror_adresse1, oa_ror_adresse2, oa_ror_code_postal, oa_ror_ville," &
@@ -145,9 +138,7 @@ Public Class RorDao
         Dim da As SqlDataAdapter = New SqlDataAdapter()
         Dim codeRetour As Boolean = True
         Dim con As SqlConnection = GetConnection()
-
         Dim dateModification As Date = Date.Now.Date
-
         Dim SQLstring As String = "update oasis.oa_ror set" &
         " oa_ror_specialite_id = @specialiteId, oa_ror_nom = @nom, oa_ror_type = @type, oa_ror_structure_id = @structureId," &
         " oa_ror_structure_nom = @structureNom, oa_ror_adresse1 = @adresse1, oa_ror_adresse2 = @adresse2," &

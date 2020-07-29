@@ -66,27 +66,25 @@ Public Class EpisodeParametreDao
     End Function
 
     Private Function BuildBean(reader As SqlDataReader) As EpisodeParametre
-        Dim episodeParametre As New EpisodeParametre
-
-        episodeParametre.Id = reader("episode_parametre_id")
-        episodeParametre.ParametreId = Coalesce(reader("parametre_id"), 0)
-        episodeParametre.EpisodeId = Coalesce(reader("episode_id"), 0)
-        episodeParametre.PatientId = Coalesce(reader("patient_id"), 0)
-        episodeParametre.Valeur = Coalesce(reader("valeur"), 0)
-        episodeParametre.Description = Coalesce(reader("description"), "")
-        episodeParametre.Entier = Coalesce(reader("entier"), 0)
-        episodeParametre.Decimal = Coalesce(reader("decimal"), 0)
-        episodeParametre.Unite = Coalesce(reader("unite"), "")
-        episodeParametre.ParametreAjoute = Coalesce(reader("parametre_ajoute"), False)
-        episodeParametre.Ordre = Coalesce(reader("ordre"), 0)
-        episodeParametre.Inactif = Coalesce(reader("inactif"), False)
+        Dim episodeParametre As New EpisodeParametre With {
+            .Id = reader("episode_parametre_id"),
+            .ParametreId = Coalesce(reader("parametre_id"), 0),
+            .EpisodeId = Coalesce(reader("episode_id"), 0),
+            .PatientId = Coalesce(reader("patient_id"), 0),
+            .Valeur = Coalesce(reader("valeur"), 0),
+            .Description = Coalesce(reader("description"), ""),
+            .Entier = Coalesce(reader("entier"), 0),
+            .Decimal = Coalesce(reader("decimal"), 0),
+            .Unite = Coalesce(reader("unite"), ""),
+            .ParametreAjoute = Coalesce(reader("parametre_ajoute"), False),
+            .Ordre = Coalesce(reader("ordre"), 0),
+            .Inactif = Coalesce(reader("inactif"), False)
+        }
         Return episodeParametre
     End Function
 
     Public Function getAllParametreEpisodeByEpisodeId(episodeId As Long) As DataTable
-        Dim SQLString As String
-
-        SQLString = "SELECT * FROM oasis.oa_episode_parametre" &
+        Dim SQLString As String = "SELECT * FROM oasis.oa_episode_parametre" &
         " WHERE episode_id = " & episodeId.ToString &
         " AND (inactif = '0' OR inactif is Null)" &
         " ORDER BY ordre"

@@ -15,8 +15,8 @@
                         <div class="row">
                             <div class="col-7">
                                 <div class="text-primary p-4">
-                                    <h5 class="text-primary">Welcome Back !</h5>
-                                    <p>Sign in to continue to Synovora.</p>
+                                    <h5 class="text-primary">Bienvenue !</h5>
+                                    <p>Connectez-vous pour continuer vers Synovora.</p>
                                 </div>
                             </div>
                             <div class="col-5 align-self-end">
@@ -38,26 +38,26 @@
                             <form class="form-horizontal" action="@Url.Action("Index","Dashboard")">
 
                                 <div class="form-group">
-                                    <label for="username">Username</label>
-                                    <input type="text" class="form-control" id="username" placeholder="Enter username">
+                                    <label for="username">Nom d'utilisateur</label>
+                                    <input type="text" class="form-control" id="username" placeholder="Entrez votre nom d'utilisateur">
                                 </div>
 
                                 <div class="form-group">
-                                    <label for="userpassword">Password</label>
-                                    <input type="password" class="form-control" id="userpassword" placeholder="Enter password">
+                                    <label for="userpassword">Mot de passe</label>
+                                    <input type="password" class="form-control" id="userpassword" placeholder="Entrez votre mot de passe">
                                 </div>
 
                                 <div class="custom-control custom-checkbox">
                                     <input type="checkbox" class="custom-control-input" id="customControlInline">
-                                    <label class="custom-control-label" for="customControlInline">Remember me</label>
+                                    <label class="custom-control-label" for="customControlInline">Enregistrer la connexion</label>
                                 </div>
 
                                 <div class="mt-3">
-                                    <button class="btn btn-primary btn-block waves-effect waves-light" type="submit" id="btnLogin">Log In</button>
+                                    <button class="btn btn-primary btn-block waves-effect waves-light" type="submit" id="btnLogin">Se connecter</button>
                                 </div>
 
                                 <div class="mt-4 text-center">
-                                    <a href="@Url.Action("auth-recoverpw","Auth")" class="text-muted"><i class="mdi mdi-lock mr-1"></i> Forgot your password?</a>
+                                    <a href="@Url.Action("auth-recoverpw","Auth")" class="text-muted"><i class="mdi mdi-lock mr-1"></i> Mot de passe oublie?</a>
                                 </div>
                             </form>
                         </div>
@@ -65,8 +65,8 @@
                     </div>
                 </div>
                 <div class="mt-5 text-center">
-                    <p>Don't have an account ? <a href="@Url.Action("auth-register","Auth")" class="font-weight-medium text-primary"> Signup now </a> </p>
-                    <p>© 2020 Synovora. Crafted with <i class="mdi mdi-heart text-danger"></i> by Themesbrand</p>
+                    @*<p>Don't have an account ? <a href="@Url.Action("auth-register","Auth")" class="font-weight-medium text-primary"> Signup now </a> </p>*@
+                    <p>© 2020 Synovora.</p>
                 </div>
 
             </div>

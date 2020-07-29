@@ -723,7 +723,7 @@ Public Class FrmSousEpisode
                         .Cells("ChkALD").Value = sousEpisode.IsThisDetailALD(sousEpisodeSousSousType.Id)
                         .Cells("ChkChoice").Value = True
                     End If
-                    .Cells("Commentaire").Value = sousEpisodeSousSousType.commentaire
+                    .Cells("Commentaire").Value = sousEpisodeSousSousType.Commentaire
                 End With
 
                 numRowGrid += 1

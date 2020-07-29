@@ -1,5 +1,20 @@
 ﻿Public Class Pps
 
+    Public Enum EnumCategoriePPS
+        OBJECTIF_SANTE = 1
+        MESURE_PREVENTIVE = 2
+        SUIVI_INTERVENANT = 3
+        STRATEGIE = 4
+    End Enum
+
+    Public Enum EnumSousCategoriePPS
+        Prophylactique = 7
+        Sociale = 8
+        Symptomatique = 9
+        Curative = 10
+        Diagnostique = 11
+        Palliative = 12
+    End Enum
     Property Id As Integer
     Property PatientId As Integer
     Property CategorieId As Integer

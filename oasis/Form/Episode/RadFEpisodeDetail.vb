@@ -474,55 +474,59 @@ Public Class RadFEpisodeDetail
     End Sub
 
     Private Sub ChargementEtatEpisode()
-        Dim ordonnances As List(Of Ordonnance) = ordonnaceDao.GetOrdonnanceValideByPatient(SelectedPatient.PatientId, SelectedEpisodeId)
-        If ordonnances.Count > 0 Then
-            OrdonnanceToolStripMenuItem.ForeColor = Color.Red
-            RadPageView1.Pages(1).Item.DrawFill = True
-            RadPageView1.Pages(1).Item.BackColor = Color.LightSalmon
-            RadPageView1.Pages(1).Item.GradientStyle = GradientStyles.Solid
-            RadBtnOrdonnance.BackColor = Color.LightSalmon
-            ToolTip.SetToolTip(RadBtnOrdonnance, "Ordonnance existante en attente de validation médicale")
-            ControleOrdonnanceExiste = True
-            ControleOrdonnanceValide = False
-            If ordonnances(0).DateValidation <> Nothing Then
-                ControleOrdonnanceValide = True
+        Try
+            Dim ordonnances As List(Of Ordonnance) = ordonnaceDao.GetOrdonnanceValideByPatient(SelectedPatient.PatientId, SelectedEpisodeId)
+            If ordonnances.Count > 0 Then
+                OrdonnanceToolStripMenuItem.ForeColor = Color.Red
                 RadPageView1.Pages(1).Item.DrawFill = True
-                RadPageView1.Pages(1).Item.BackColor = Color.LightGreen
+                RadPageView1.Pages(1).Item.BackColor = Color.LightSalmon
                 RadPageView1.Pages(1).Item.GradientStyle = GradientStyles.Solid
-                RadBtnOrdonnance.BackColor = Color.LightGreen
-                ToolTip.SetToolTip(RadBtnOrdonnance, "Ordonnance existante et valide (signature médicale)")
+                RadBtnOrdonnance.BackColor = Color.LightSalmon
+                ToolTip.SetToolTip(RadBtnOrdonnance, "Ordonnance existante en attente de validation médicale")
+                ControleOrdonnanceExiste = True
+                ControleOrdonnanceValide = False
+                If ordonnances(0).DateValidation <> Nothing Then
+                    ControleOrdonnanceValide = True
+                    RadPageView1.Pages(1).Item.DrawFill = True
+                    RadPageView1.Pages(1).Item.BackColor = Color.LightGreen
+                    RadPageView1.Pages(1).Item.GradientStyle = GradientStyles.Solid
+                    RadBtnOrdonnance.BackColor = Color.LightGreen
+                    ToolTip.SetToolTip(RadBtnOrdonnance, "Ordonnance existante et valide (signature médicale)")
+                End If
+            Else
+                OrdonnanceToolStripMenuItem.ForeColor = Color.Black
+                RadPageView1.Pages(1).Item.DrawFill = True
+                RadPageView1.Pages(1).Item.BackColor = Color.FromArgb(191, 219, 255)
+                RadPageView1.Pages(1).Item.GradientStyle = GradientStyles.Solid
+                RadBtnOrdonnance.BackColor = Color.FromArgb(233, 240, 249)
+                ToolTip.SetToolTip(RadBtnOrdonnance, "Création ordonnance")
+                ControleOrdonnanceExiste = False
+                ControleOrdonnanceValide = False
             End If
-        Else
-            OrdonnanceToolStripMenuItem.ForeColor = Color.Black
-            RadPageView1.Pages(1).Item.DrawFill = True
-            RadPageView1.Pages(1).Item.BackColor = Color.FromArgb(191, 219, 255)
-            RadPageView1.Pages(1).Item.GradientStyle = GradientStyles.Solid
-            RadBtnOrdonnance.BackColor = Color.FromArgb(233, 240, 249)
-            ToolTip.SetToolTip(RadBtnOrdonnance, "Création ordonnance")
-            ControleOrdonnanceExiste = False
-            ControleOrdonnanceValide = False
-        End If
 
-        Select Case episode.Etat
-            Case Episode.EnumEtatEpisode.EN_COURS.ToString
-                If ControleOrdonnanceExiste = True Then
-                    If ControleOrdonnanceValide = True Then
-                        LblLabelEtatEpisode.Text = "EPISODE EN COURS - ORDONNANCE VALIDEE LE " & ordonnances(0).DateValidation.ToString("dd.MM.yyyy hh:mm")
+            Select Case episode.Etat
+                Case Episode.EnumEtatEpisode.EN_COURS.ToString
+                    If ControleOrdonnanceExiste = True Then
+                        If ControleOrdonnanceValide = True Then
+                            LblLabelEtatEpisode.Text = "EPISODE EN COURS - ORDONNANCE VALIDEE LE " & ordonnances(0).DateValidation.ToString("dd.MM.yyyy hh:mm")
+                        Else
+                            LblLabelEtatEpisode.Text = "EPISODE EN COURS - ORDONNANCE CREEE LE " & ordonnances(0).DateCreation.ToString("dd.MM.yyyy hh:mm") & ", EN ATTENTE DE VALIDATION !"
+                        End If
                     Else
-                        LblLabelEtatEpisode.Text = "EPISODE EN COURS - ORDONNANCE CREEE LE " & ordonnances(0).DateCreation.ToString("dd.MM.yyyy hh:mm") & ", EN ATTENTE DE VALIDATION !"
+                        LblLabelEtatEpisode.Text = "Episode en cours"
                     End If
-                Else
-                    LblLabelEtatEpisode.Text = "Episode en cours"
-                End If
-            Case Episode.EnumEtatEpisode.CLOTURE.ToString
-                If episode.DateModification.Date < Date.Now.Date Then
-                    LblLabelEtatEpisode.Text = "EPISODE CLOTURE LE " & episode.DateModification.ToString("dd.MM.yyyy") & " (non modifiable, hormis l'ajout de pièces dans les sous-épisodes)"
-                Else
-                    LblLabelEtatEpisode.Text = "EPISODE CLOTURE AUJOURD'HUI (Modification possible pour la journée en cours)"
-                End If
-            Case Else
-                LblLabelEtatEpisode.Text = "Etat inconnu !"
-        End Select
+                Case Episode.EnumEtatEpisode.CLOTURE.ToString
+                    If episode.DateModification.Date < Date.Now.Date Then
+                        LblLabelEtatEpisode.Text = "EPISODE CLOTURE LE " & episode.DateModification.ToString("dd.MM.yyyy") & " (non modifiable, hormis l'ajout de pièces dans les sous-épisodes)"
+                    Else
+                        LblLabelEtatEpisode.Text = "EPISODE CLOTURE AUJOURD'HUI (Modification possible pour la journée en cours)"
+                    End If
+                Case Else
+                    LblLabelEtatEpisode.Text = "Etat inconnu !"
+            End Select
+        Catch ex As Exception
+            MsgBox(ex.Message())
+        End Try
     End Sub
 
     Private Sub RadGroupBox3_MouseHover(sender As Object, e As EventArgs) Handles RadGroupBox3.MouseHover
@@ -3721,29 +3725,33 @@ Public Class RadFEpisodeDetail
     End Sub
 
     Private Sub GetOrdonnance()
-        Me.Enabled = False
-        Cursor.Current = Cursors.WaitCursor
-        Dim ordonnances As List(Of Ordonnance) = ordonnaceDao.GetOrdonnanceValideByPatient(SelectedPatient.PatientId, SelectedEpisodeId)
-        If ordonnances.Count > 0 Then
-            AfficheOrdonnance(ordonnances(0).Id)
-        Else
-            If episode.Etat = Episode.EnumEtatEpisode.CLOTURE.ToString Then
-                If episode.DateModification.Date < Date.Now.Date Then
-                    MessageBox.Show("Il n'y a pas d'ordonnance de créée pour cet épisode clôturé !")
-                    Cursor.Current = Cursors.Default
-                    Me.Enabled = True
-                    Exit Sub
+        Try
+            Me.Enabled = False
+            Cursor.Current = Cursors.WaitCursor
+            Dim ordonnances As List(Of Ordonnance) = ordonnaceDao.GetOrdonnanceValideByPatient(SelectedPatient.PatientId, SelectedEpisodeId)
+            If ordonnances.Count > 0 Then
+                AfficheOrdonnance(ordonnances(0).Id)
+            Else
+                If episode.Etat = Episode.EnumEtatEpisode.CLOTURE.ToString Then
+                    If episode.DateModification.Date < Date.Now.Date Then
+                        MessageBox.Show("Il n'y a pas d'ordonnance de créée pour cet épisode clôturé !")
+                        Cursor.Current = Cursors.Default
+                        Me.Enabled = True
+                        Exit Sub
+                    End If
+                End If
+                Dim OrdonnanceId = ordonnaceDao.CreateOrdonnance(SelectedPatient.PatientId, SelectedEpisodeId, userLog)
+                If OrdonnanceId <> 0 Then
+                    ordonnaceDao.CreateNewOrdonnanceDetail(SelectedPatient.PatientId, OrdonnanceId, episode)
+                    AfficheOrdonnance(OrdonnanceId)
                 End If
             End If
-            Dim OrdonnanceId = ordonnaceDao.CreateOrdonnance(SelectedPatient.PatientId, SelectedEpisodeId, userLog)
-            If OrdonnanceId <> 0 Then
-                ordonnaceDao.CreateNewOrdonnanceDetail(SelectedPatient.PatientId, OrdonnanceId, episode)
-                AfficheOrdonnance(OrdonnanceId)
-            End If
-        End If
-        ChargementEtatEpisode()
-        Cursor.Current = Cursors.Default
-        Me.Enabled = True
+            ChargementEtatEpisode()
+            Cursor.Current = Cursors.Default
+            Me.Enabled = True
+        Catch ex As Exception
+            MsgBox(ex.Message())
+        End Try
     End Sub
 
     Private Sub AfficheOrdonnance(OrdonnanceId As Long)
@@ -4610,7 +4618,7 @@ Public Class RadFEpisodeDetail
                 SpecialiteId = RadPPSDataGridView.Rows(aRow).Cells("specialiteId").Value
 
                 Select Case categoriePPS
-                    Case PpsDao.EnumCategoriePPS.OBJECTIF_SANTE
+                    Case Pps.EnumCategoriePPS.OBJECTIF_SANTE
                         Cursor.Current = Cursors.WaitCursor
                         Me.Enabled = False
 
@@ -4631,7 +4639,7 @@ Public Class RadFEpisodeDetail
                         End Try
 
                         Me.Enabled = True
-                    Case PpsDao.EnumCategoriePPS.MESURE_PREVENTIVE
+                    Case Pps.EnumCategoriePPS.MESURE_PREVENTIVE
                         Cursor.Current = Cursors.WaitCursor
                         Me.Enabled = False
 
@@ -4652,7 +4660,7 @@ Public Class RadFEpisodeDetail
                         End Try
 
                         Me.Enabled = True
-                    Case PpsDao.EnumCategoriePPS.SUIVI_INTERVENANT
+                    Case Pps.EnumCategoriePPS.SUIVI_INTERVENANT
                         Cursor.Current = Cursors.WaitCursor
                         Me.Enabled = False
 
@@ -4674,7 +4682,7 @@ Public Class RadFEpisodeDetail
                         End Try
 
                         Me.Enabled = True
-                    Case PpsDao.EnumCategoriePPS.STRATEGIE
+                    Case Pps.EnumCategoriePPS.STRATEGIE
                         Cursor.Current = Cursors.WaitCursor
                         Me.Enabled = False
 

@@ -618,35 +618,39 @@ Public Class RadFEpisodeLigneDeVie
     End Sub
 
     Private Sub OrdonnanceMédicaleToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles OrdonnanceMédicaleToolStripMenuItem.Click
-        If RadGridViewEpisode.CurrentRow IsNot Nothing Then
-            Dim aRow As Integer = Me.RadGridViewEpisode.Rows.IndexOf(Me.RadGridViewEpisode.CurrentRow)
-            If aRow >= 0 Then
-                Dim EpisodeId As Integer = RadGridViewEpisode.Rows(aRow).Cells("episode_Id").Value
-                Dim episode As Episode = episodeDao.GetEpisodeById(EpisodeId)
-                Me.Enabled = False
-                Cursor.Current = Cursors.WaitCursor
-                Dim ordonnances As List(Of Ordonnance) = ordonnanceDao.GetOrdonnanceValideByPatient(SelectedPatient.PatientId, EpisodeId)
-                If ordonnances.Count > 0 Then
-                    AfficheOrdonnance(ordonnances(0).Id, episode)
-                Else
-                    If episode.Etat = Episode.EnumEtatEpisode.CLOTURE.ToString OrElse episode.Etat = Episode.EnumEtatEpisode.ANNULE.ToString Then
-                        If episode.DateModification.Date < Date.Now.Date Then
-                            MessageBox.Show("Il n'y a pas d'ordonnance de créée pour cet épisode clôturé !")
-                            Cursor.Current = Cursors.Default
-                            Me.Enabled = True
-                            Exit Sub
+        Try
+            If RadGridViewEpisode.CurrentRow IsNot Nothing Then
+                Dim aRow As Integer = Me.RadGridViewEpisode.Rows.IndexOf(Me.RadGridViewEpisode.CurrentRow)
+                If aRow >= 0 Then
+                    Dim EpisodeId As Integer = RadGridViewEpisode.Rows(aRow).Cells("episode_Id").Value
+                    Dim episode As Episode = episodeDao.GetEpisodeById(EpisodeId)
+                    Me.Enabled = False
+                    Cursor.Current = Cursors.WaitCursor
+                    Dim ordonnances As List(Of Ordonnance) = ordonnanceDao.GetOrdonnanceValideByPatient(SelectedPatient.PatientId, EpisodeId)
+                    If ordonnances.Count > 0 Then
+                        AfficheOrdonnance(ordonnances(0).Id, episode)
+                    Else
+                        If episode.Etat = Episode.EnumEtatEpisode.CLOTURE.ToString OrElse episode.Etat = Episode.EnumEtatEpisode.ANNULE.ToString Then
+                            If episode.DateModification.Date < Date.Now.Date Then
+                                MessageBox.Show("Il n'y a pas d'ordonnance de créée pour cet épisode clôturé !")
+                                Cursor.Current = Cursors.Default
+                                Me.Enabled = True
+                                Exit Sub
+                            End If
+                        End If
+                        Dim OrdonnanceId = ordonnanceDao.CreateOrdonnance(SelectedPatient.PatientId, EpisodeId, userLog)
+                        If OrdonnanceId <> 0 Then
+                            ordonnanceDao.CreateNewOrdonnanceDetail(SelectedPatient.PatientId, OrdonnanceId, episode)
+                            AfficheOrdonnance(OrdonnanceId, episode)
                         End If
                     End If
-                    Dim OrdonnanceId = ordonnanceDao.CreateOrdonnance(SelectedPatient.PatientId, EpisodeId, userLog)
-                    If OrdonnanceId <> 0 Then
-                        ordonnanceDao.CreateNewOrdonnanceDetail(SelectedPatient.PatientId, OrdonnanceId, episode)
-                        AfficheOrdonnance(OrdonnanceId, episode)
-                    End If
+                    Cursor.Current = Cursors.Default
+                    Me.Enabled = True
                 End If
-                Cursor.Current = Cursors.Default
-                Me.Enabled = True
             End If
-        End If
+        Catch ex As Exception
+            MsgBox(ex.Message())
+        End Try
     End Sub
 
     Private Sub AfficheOrdonnance(OrdonnanceId As Long, episode As Episode)

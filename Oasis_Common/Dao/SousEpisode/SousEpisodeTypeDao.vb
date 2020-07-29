@@ -2,13 +2,6 @@
 Imports Oasis_WF
 Imports Oasis_Common
 
-Public Enum CategorieSE
-    PRESCRIPTION
-    CERTIFICAT
-    COURRIER
-    COMPTE_RENDU
-End Enum
-
 Public Class SousEpisodeTypeDao
     Inherits StandardDao
 

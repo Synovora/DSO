@@ -15,50 +15,54 @@ Public Class RadFOrdonnanceListe
     End Sub
 
     Private Sub ChargementOrdonnanceListe()
-        Dim ordonnanceDao As New OrdonnanceDao
-        Dim iGrid As Integer = 0
-        ordonnances = ordonnanceDao.GetAllOrdonnanceByPatient(SelectedPatient.PatientId)
+        Try
+            Dim ordonnanceDao As New OrdonnanceDao
+            Dim iGrid As Integer = 0
+            ordonnances = ordonnanceDao.GetAllOrdonnanceByPatient(SelectedPatient.PatientId)
 
-        For Each ordonnance In ordonnances
-            'Ajout d'une ligne au DataGridView
-            RadOrdonnanceDataGridView.Rows.Add(iGrid)
-            RadOrdonnanceDataGridView.Rows(iGrid).Cells("ordonnanceId").Value = ordonnance.Id
+            For Each ordonnance In ordonnances
+                'Ajout d'une ligne au DataGridView
+                RadOrdonnanceDataGridView.Rows.Add(iGrid)
+                RadOrdonnanceDataGridView.Rows(iGrid).Cells("ordonnanceId").Value = ordonnance.Id
 
-            Dim AuteurNom = ""
-            If ordonnance.UtilisateurCreation <> 0 Then
-                Dim auteur As Utilisateur
-                Dim userDao As New UserDao
-                auteur = userDao.getUserById(ordonnance.UtilisateurCreation)
-                'UtilisateurDao.SetUtilisateur(auteur, AuteurId)
-                AuteurNom = auteur.UtilisateurPrenom & " " & auteur.UtilisateurNom
+                Dim AuteurNom = ""
+                If ordonnance.UtilisateurCreation <> 0 Then
+                    Dim auteur As Utilisateur
+                    Dim userDao As New UserDao
+                    auteur = userDao.getUserById(ordonnance.UtilisateurCreation)
+                    'UtilisateurDao.SetUtilisateur(auteur, AuteurId)
+                    AuteurNom = auteur.UtilisateurPrenom & " " & auteur.UtilisateurNom
+                End If
+                RadOrdonnanceDataGridView.Rows(iGrid).Cells("auteur").Value = AuteurNom
+
+                If ordonnance.DateCreation <> Nothing Then
+                    RadOrdonnanceDataGridView.Rows(iGrid).Cells("dateCreation").Value = ordonnance.DateCreation.ToString("dd.MM.yyyy")
+                Else
+                    RadOrdonnanceDataGridView.Rows(iGrid).Cells("dateCreation").Value = ""
+                End If
+
+                If ordonnance.DateValidation <> Nothing Then
+                    RadOrdonnanceDataGridView.Rows(iGrid).Cells("dateValidation").Value = ordonnance.DateCreation.ToString("dd.MM.yyyy")
+                Else
+                    RadOrdonnanceDataGridView.Rows(iGrid).Cells("dateValidation").Value = "En attente"
+                End If
+
+                If ordonnance.DateEdition <> Nothing Then
+                    RadOrdonnanceDataGridView.Rows(iGrid).Cells("dateEdition").Value = ordonnance.DateCreation.ToString("dd.MM.yyyy")
+                Else
+                    RadOrdonnanceDataGridView.Rows(iGrid).Cells("dateEdition").Value = "En attente"
+                End If
+
+                RadOrdonnanceDataGridView.Rows(iGrid).Cells("commentaire").Value = ordonnance.Commentaire
+                iGrid += 1
+            Next
+            'Positionnement du grid sur la première occurrence
+            If RadOrdonnanceDataGridView.Rows.Count > 0 Then
+                Me.RadOrdonnanceDataGridView.CurrentRow = RadOrdonnanceDataGridView.ChildRows(0)
             End If
-            RadOrdonnanceDataGridView.Rows(iGrid).Cells("auteur").Value = AuteurNom
-
-            If ordonnance.DateCreation <> Nothing Then
-                RadOrdonnanceDataGridView.Rows(iGrid).Cells("dateCreation").Value = ordonnance.DateCreation.ToString("dd.MM.yyyy")
-            Else
-                RadOrdonnanceDataGridView.Rows(iGrid).Cells("dateCreation").Value = ""
-            End If
-
-            If ordonnance.DateValidation <> Nothing Then
-                RadOrdonnanceDataGridView.Rows(iGrid).Cells("dateValidation").Value = ordonnance.DateCreation.ToString("dd.MM.yyyy")
-            Else
-                RadOrdonnanceDataGridView.Rows(iGrid).Cells("dateValidation").Value = "En attente"
-            End If
-
-            If ordonnance.DateEdition <> Nothing Then
-                RadOrdonnanceDataGridView.Rows(iGrid).Cells("dateEdition").Value = ordonnance.DateCreation.ToString("dd.MM.yyyy")
-            Else
-                RadOrdonnanceDataGridView.Rows(iGrid).Cells("dateEdition").Value = "En attente"
-            End If
-
-            RadOrdonnanceDataGridView.Rows(iGrid).Cells("commentaire").Value = ordonnance.Commentaire
-            iGrid += 1
-        Next
-        'Positionnement du grid sur la première occurrence
-        If RadOrdonnanceDataGridView.Rows.Count > 0 Then
-            Me.RadOrdonnanceDataGridView.CurrentRow = RadOrdonnanceDataGridView.ChildRows(0)
-        End If
+        Catch ex As Exception
+            MsgBox(ex.Message())
+        End Try
     End Sub
 
     Private Sub ChargementEtatCivil()
@@ -97,8 +101,6 @@ Public Class RadFOrdonnanceListe
     End Sub
 
     Private Sub CreationOrdonnance()
-        'Appel création ordonnance
-
         Try
             Using vFOrdonnanceListeDetail As New RadFOrdonnanceListeDetail
                 Dim OrdonnanceDao As New OrdonnanceDao

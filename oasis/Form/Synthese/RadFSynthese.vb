@@ -2247,7 +2247,7 @@ Public Class RadFSynthese
             commentaireParcours = Coalesce(PPSDataTable.Rows(i)("oa_parcours_commentaire"), "")
 
             'Détecter si les occurrences qui doivent être uniques existent pour ce patient
-            If categoriePPS = PpsDao.EnumCategoriePPS.SUIVI_INTERVENANT Then
+            If categoriePPS = Pps.EnumCategoriePPS.SUIVI_INTERVENANT Then
                 Select Case sousCategoriePPS
                     Case EnumSousCategoriePPS.IDE
                         PPSSuiviIdeExiste = True
@@ -2424,7 +2424,7 @@ Public Class RadFSynthese
                 sousCategoriePPS = RadPPSDataGridView.Rows(aRow).Cells("sousCategorieId").Value
                 SpecialiteId = RadPPSDataGridView.Rows(aRow).Cells("specialiteId").Value
                 Select Case categoriePPS
-                    Case PpsDao.EnumCategoriePPS.OBJECTIF_SANTE
+                    Case Pps.EnumCategoriePPS.OBJECTIF_SANTE
                         Cursor.Current = Cursors.WaitCursor
                         Me.Enabled = False
 
@@ -2445,7 +2445,7 @@ Public Class RadFSynthese
                         End Try
 
                         Me.Enabled = True
-                    Case PpsDao.EnumCategoriePPS.MESURE_PREVENTIVE
+                    Case Pps.EnumCategoriePPS.MESURE_PREVENTIVE
                         Cursor.Current = Cursors.WaitCursor
                         Me.Enabled = False
 
@@ -2466,7 +2466,7 @@ Public Class RadFSynthese
                         End Try
 
                         Me.Enabled = True
-                    Case PpsDao.EnumCategoriePPS.SUIVI_INTERVENANT
+                    Case Pps.EnumCategoriePPS.SUIVI_INTERVENANT
                         Cursor.Current = Cursors.WaitCursor
                         Me.Enabled = False
 
@@ -2487,7 +2487,7 @@ Public Class RadFSynthese
                         End Try
 
                         Me.Enabled = True
-                    Case PpsDao.EnumCategoriePPS.STRATEGIE
+                    Case Pps.EnumCategoriePPS.STRATEGIE
                         Cursor.Current = Cursors.WaitCursor
                         Me.Enabled = False
 

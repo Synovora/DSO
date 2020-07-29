@@ -1,10 +1,7 @@
 ﻿Imports System.Data.SqlClient
-Imports Oasis_WF
-Imports Oasis_Common
 
 Public Class SousEpisodeDao
     Inherits StandardDao
-
 
     Public Function getLstSousEpisode(idEpisode As Long, Optional idSousEpisode As Long = 0, Optional isWithInactif As Boolean = False) As List(Of SousEpisode)
         Dim lst As List(Of SousEpisode) = New List(Of SousEpisode)

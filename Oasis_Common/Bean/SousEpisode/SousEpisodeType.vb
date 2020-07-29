@@ -1,8 +1,15 @@
 ﻿Public Class SousEpisodeType
 
+    Public Enum CategorieSE
+        PRESCRIPTION
+        CERTIFICAT
+        COURRIER
+        COMPTE_RENDU
+    End Enum
+
     Public Property Id As Long
     Public Property Category As String
-    Public Property HorodateCreation As DateTime
+    Public Property HorodateCreation As Date
     Public Property Libelle As String
     Public Property IsWithDestinataire As Boolean
 

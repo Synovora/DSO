@@ -1,10 +1,7 @@
 ﻿Imports System.Data.SqlClient
-Imports Oasis_WF
-Imports Oasis_Common
 
 Public Class SousEpisodeSousTypeDao
     Inherits StandardDao
-
 
     Public Function getLstSousEpisodeSousType(Optional idSousEpisodeType As Long = 0) As List(Of SousEpisodeSousType)
         Dim lst As List(Of SousEpisodeSousType) = New List(Of SousEpisodeSousType)
@@ -24,9 +21,7 @@ Public Class SousEpisodeSousTypeDao
     End Function
 
     Public Function getTableSousEpisodeSousType(Optional idSousEpisodeType As Long = 0) As DataTable
-        Dim SQLString As String
-        'Console.WriteLine("----------> getAllTacheEnCours")
-        SQLString =
+        Dim SQLString As String =
             "SELECT " & vbCrLf &
             "	  id, " & vbCrLf &
             "     id_sous_episode_type, " & vbCrLf &
@@ -43,8 +38,6 @@ Public Class SousEpisodeSousTypeDao
         If idSousEpisodeType <> 0 Then
             SQLString += "WHERE id_sous_episode_type= @idSousEpisodeType " & vbCrLf
         End If
-
-        'Console.WriteLine(SQLString)
 
         Using con As SqlConnection = GetConnection()
 
@@ -69,9 +62,7 @@ Public Class SousEpisodeSousTypeDao
     Public Function Create(seType As SousEpisodeSousType) As Boolean
         Dim da As SqlDataAdapter = New SqlDataAdapter()
         Dim codeRetour As Boolean = True
-        Dim con As SqlConnection
-
-        con = GetConnection()
+        Dim con As SqlConnection = GetConnection()
         Dim transaction As SqlClient.SqlTransaction = con.BeginTransaction
 
         Try

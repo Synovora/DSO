@@ -1,6 +1,5 @@
 ﻿Imports System.Data.SqlClient
-Imports Oasis_WF
-Imports Oasis_Common
+
 Public Class SousEpisodeDetailSousTypeDao
     Inherits StandardDao
 
@@ -8,14 +7,13 @@ Public Class SousEpisodeDetailSousTypeDao
         Dim lst As List(Of SousEpisodeDetailSousType) = New List(Of SousEpisodeDetailSousType)
         Dim data As DataTable = getTableSousEpisodeDetailSousType(idSousEpisode)
         For Each row In data.Rows
-            lst.Add(buildBean(row))
+            lst.Add(BuildBean(row))
         Next
         Return lst
     End Function
 
     Public Function getTableSousEpisodeDetailSousType(idSousEpisode As Long) As DataTable
         Dim SQLString As String
-        'Console.WriteLine("----------> getTableSousEpisodeDetail")
         SQLString =
             "SELECT " & vbCrLf &
             "	  SED.id, " & vbCrLf &
@@ -29,9 +27,7 @@ Public Class SousEpisodeDetailSousTypeDao
         SQLString += "WHERE 1=1 " & vbCrLf
         SQLString += "AND SED.id_sous_episode= @idSousEpisode " & vbCrLf
 
-        'Console.WriteLine(SQLString)
-
-        Using con As SqlConnection = getConnection()
+        Using con As SqlConnection = GetConnection()
 
             Dim tacheDataAdapter As SqlDataAdapter = New SqlDataAdapter()
             Using tacheDataAdapter
@@ -53,9 +49,7 @@ Public Class SousEpisodeDetailSousTypeDao
     Public Function Create(con As SqlConnection, sousEpisodeDetail As SousEpisodeDetailSousType, transaction As SqlTransaction) As Boolean
         Dim da As SqlDataAdapter = New SqlDataAdapter()
         Dim codeRetour As Boolean = True
-
         Dim isMyTransaction As Boolean = (transaction Is Nothing)
-
         If isMyTransaction Then con = GetConnection()
 
         Try
@@ -90,7 +84,7 @@ Public Class SousEpisodeDetailSousTypeDao
         Return codeRetour
     End Function
 
-    Private Function buildBean(row As DataRow) As SousEpisodeDetailSousType
+    Private Function BuildBean(row As DataRow) As SousEpisodeDetailSousType
         Dim seType As New SousEpisodeDetailSousType(row)
         Return seType
     End Function

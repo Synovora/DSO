@@ -1,26 +1,9 @@
 ﻿Imports System.Data.SqlClient
-Imports Oasis_Common
+
 Public Class PpsDao
     Inherits StandardDao
 
     Dim patientDao As New PatientDao
-
-    Public Enum EnumCategoriePPS
-        OBJECTIF_SANTE = 1
-        MESURE_PREVENTIVE = 2
-        SUIVI_INTERVENANT = 3
-        STRATEGIE = 4
-    End Enum
-
-    Public Enum EnumSousCategoriePPS
-        Prophylactique = 7
-        Sociale = 8
-        Symptomatique = 9
-        Curative = 10
-        Diagnostique = 11
-        Palliative = 12
-    End Enum
-
 
     Public Function getAllPPSbyPatient(patientId As Integer) As DataTable
         Dim SQLString As String
@@ -57,24 +40,19 @@ Public Class PpsDao
 
     Public Function getPpsById(ppsId As Integer) As Pps
         Dim pps As Pps
-        Dim con As SqlConnection
-
-        con = GetConnection()
-
+        Dim con As SqlConnection = GetConnection()
         Try
             Dim command As SqlCommand = con.CreateCommand()
-
             command.CommandText =
                 "select * from oasis.oa_patient_pps where oa_pps_id = @id"
             command.Parameters.AddWithValue("@id", ppsId)
             Using reader As SqlDataReader = command.ExecuteReader()
                 If reader.Read() Then
-                    pps = buildBean(reader)
+                    pps = BuildBean(reader)
                 Else
                     Throw New ArgumentException("PPS inexistant !")
                 End If
             End Using
-
         Catch ex As Exception
             Throw ex
         Finally
@@ -86,85 +64,71 @@ Public Class PpsDao
 
     Public Function getPpsObjectifByPatientId(patientId As Integer) As Pps
         Dim pps As Pps
-        Dim con As SqlConnection
-
-        con = GetConnection()
-
+        Dim con As SqlConnection = GetConnection()
         Try
             Dim command As SqlCommand = con.CreateCommand()
-
             command.CommandText =
                 "select * from oasis.oa_patient_pps where oa_pps_categorie = 1 and oa_pps_sous_categorie = 1 and oa_pps_patient_id = @id"
-
             command.Parameters.AddWithValue("@id", patientId)
             Using reader As SqlDataReader = command.ExecuteReader()
                 If reader.Read() Then
-                    pps = buildBean(reader)
+                    pps = BuildBean(reader)
                 Else
                     Throw New ArgumentException("PPS inexistant !")
                 End If
             End Using
-
         Catch ex As Exception
             Throw ex
         Finally
             con.Close()
         End Try
-
         Return pps
     End Function
 
     Public Function ExistPPSObjectifByPatientId(patientId As Integer) As Boolean
-        Dim con As SqlConnection
-        con = GetConnection()
-
+        Dim con As SqlConnection = GetConnection()
         Try
             Dim command As SqlCommand = con.CreateCommand()
-
             command.CommandText =
                 "SELECT oa_pps_id FROM oasis.oasis.oa_patient_pps" &
                 " WHERE oa_pps_patient_id = @id and oa_pps_categorie = 1 and oa_pps_sous_categorie = 1 and (oa_pps_inactif is NULL or oa_pps_inactif = 0)"
-
             command.Parameters.AddWithValue("@id", patientId)
             Using reader As SqlDataReader = command.ExecuteReader()
                 If reader.Read() Then
                     Return True
                 End If
             End Using
-
         Catch ex As Exception
             Throw ex
         Finally
             con.Close()
         End Try
-
         Return False
     End Function
 
-    Private Function buildBean(reader As SqlDataReader) As Pps
-        Dim pps As New Pps
-        pps.Id = reader("oa_pps_id")
-        pps.PatientId = Coalesce(reader("oa_pps_patient_id"), 0)
-        pps.CategorieId = Coalesce(reader("oa_pps_categorie"), 0)
-        pps.SousCategorieId = Coalesce(reader("oa_pps_sous_categorie"), 0)
-        pps.Priorite = Coalesce(reader("oa_pps_priorite"), 0)
-        pps.DrcId = Coalesce(reader("oa_pps_drc_id"), 0)
-        pps.AffichageSynthese = Coalesce(reader("oa_pps_affichage_synthese"), False)
-        pps.Commentaire = Coalesce(reader("oa_pps_commentaire"), "")
-        pps.DateDebut = Coalesce(reader("oa_pps_date_debut"), Nothing)
-        pps.Arret = Coalesce(reader("oa_pps_arret"), False)
-        pps.ArretCommentaire = Coalesce(reader("oa_pps_commentaire_arret"), "")
-        pps.UserCreation = Coalesce(reader("oa_pps_utilisateur_creation"), 0)
-        pps.DateCreation = Coalesce(reader("oa_pps_date_creation"), Nothing)
-        pps.UserModification = Coalesce(reader("oa_pps_utilisateur_modification"), 0)
-        pps.DateModification = Coalesce(reader("oa_pps_date_modification"), Nothing)
+    Private Function BuildBean(reader As SqlDataReader) As Pps
+        Dim pps As New Pps With {
+            .Id = reader("oa_pps_id"),
+            .PatientId = Coalesce(reader("oa_pps_patient_id"), 0),
+            .CategorieId = Coalesce(reader("oa_pps_categorie"), 0),
+            .SousCategorieId = Coalesce(reader("oa_pps_sous_categorie"), 0),
+            .Priorite = Coalesce(reader("oa_pps_priorite"), 0),
+            .DrcId = Coalesce(reader("oa_pps_drc_id"), 0),
+            .AffichageSynthese = Coalesce(reader("oa_pps_affichage_synthese"), False),
+            .Commentaire = Coalesce(reader("oa_pps_commentaire"), ""),
+            .DateDebut = Coalesce(reader("oa_pps_date_debut"), Nothing),
+            .Arret = Coalesce(reader("oa_pps_arret"), False),
+            .ArretCommentaire = Coalesce(reader("oa_pps_commentaire_arret"), ""),
+            .UserCreation = Coalesce(reader("oa_pps_utilisateur_creation"), 0),
+            .DateCreation = Coalesce(reader("oa_pps_date_creation"), Nothing),
+            .UserModification = Coalesce(reader("oa_pps_utilisateur_modification"), 0),
+            .DateModification = Coalesce(reader("oa_pps_date_modification"), Nothing)
+        }
         Return pps
     End Function
 
     Public Function getAllPPSStrategiePatient(patientId As Integer) As DataTable
-        Dim SQLString As String
-
-        SQLString = "select * from oasis.oa_patient_pps where (oa_pps_inactif is Null or oa_pps_inactif = 0) and" &
+        Dim SQLString As String = "select * from oasis.oa_patient_pps where (oa_pps_inactif is Null or oa_pps_inactif = 0) and" &
         " oa_pps_categorie = 4 And oa_pps_patient_id = " & patientId.ToString & " order by oa_pps_priorite;"
 
         Using con As SqlConnection = GetConnection()
@@ -186,9 +150,7 @@ Public Class PpsDao
     End Function
 
     Public Function getAllPPSSuivibyPatient(patientId As Integer) As DataTable
-        Dim SQLString As String
-
-        SQLString = "select * from oasis.oa_patient_pps where (oa_pps_inactif is Null or oa_pps_inactif = 0)" &
+        Dim SQLString As String = "select * from oasis.oa_patient_pps where (oa_pps_inactif is Null or oa_pps_inactif = 0)" &
             " And (oa_pps_affichage_synthese Is Null Or oa_pps_affichage_synthese = 1)" &
             " And oa_pps_categorie = 2 And oa_pps_sous_categorie <> 2" &
             " And oa_pps_patient_id = " & patientId.ToString & " order by oa_pps_sous_categorie"
@@ -212,9 +174,7 @@ Public Class PpsDao
     End Function
 
     Public Function getAllPPSPreventionbyPatient(patientId As Integer) As DataTable
-        Dim SQLString As String
-
-        SQLString = "select * from oasis.oa_patient_pps where (oa_pps_inactif is Null or oa_pps_inactif = 0)" &
+        Dim SQLString As String = "select * from oasis.oa_patient_pps where (oa_pps_inactif is Null or oa_pps_inactif = 0)" &
         " and oa_pps_categorie = 2 and oa_pps_sous_categorie = 2 and oa_pps_patient_id = " & patientId.ToString &
         " order by oa_pps_priorite"
 
@@ -272,20 +232,21 @@ Public Class PpsDao
         End Try
 
         If codeRetour = True Then
-            Dim PPSHistoACreer As New PpsHisto
             'Mise à jour des données dans l'instance de la classe Historisation antecedent
-            PPSHistoACreer.PpsId = ppsId 'Récupération de l'id de l'occurrence créée
-            PPSHistoACreer.HistorisationDate = DateTime.Now()
-            PPSHistoACreer.HistorisationUtilisateurId = userLog.UtilisateurId
-            PPSHistoACreer.HistorisationEtat = EnumEtatPPSHisto.Creation
-            PPSHistoACreer.PatientId = pps.PatientId
-            PPSHistoACreer.Categorie = pps.CategorieId
-            PPSHistoACreer.SousCategorie = pps.SousCategorieId
-            PPSHistoACreer.Priorite = pps.Priorite
-            PPSHistoACreer.DrcId = pps.DrcId
-            PPSHistoACreer.Commentaire = pps.Commentaire
-            PPSHistoACreer.Inactif = 0
-            PPSHistoACreer.AffichageSynthese = 1
+            Dim PPSHistoACreer As New PpsHisto With {
+                .PpsId = ppsId, 'Récupération de l'id de l'occurrence créée
+                .HistorisationDate = DateTime.Now(),
+                .HistorisationUtilisateurId = userLog.UtilisateurId,
+                .HistorisationEtat = PpsHisto.EnumEtatPPSHisto.Creation,
+                .PatientId = pps.PatientId,
+                .Categorie = pps.CategorieId,
+                .SousCategorie = pps.SousCategorieId,
+                .Priorite = pps.Priorite,
+                .DrcId = pps.DrcId,
+                .Commentaire = pps.Commentaire,
+                .Inactif = 0,
+                .AffichageSynthese = 1
+            }
 
             'Lecture de l'antecedent créé avec toutes ses données pour communiquer le DataReader à la fonction dédiée
             Dim PPSCreeDataReader As SqlDataReader
@@ -303,7 +264,7 @@ Public Class PpsDao
             End If
 
             'Création dans l'historique des PPS du PPS créé
-            CreationPPSHisto(PPSHistoACreer, userLog, PPSHistoCreationDao.EnumEtatPPSHisto.Creation)
+            CreationPPSHisto(PPSHistoACreer, userLog, PpsHisto.EnumEtatPPSHisto.Creation)
 
             'Mise à jour de la date de mise à jour de la synthèse (table patient)
             patientDao.ModificationDateMajSynthesePatient(pps.PatientId, userLog)
@@ -315,9 +276,7 @@ Public Class PpsDao
     Public Function ModificationPPS(pps As Pps, userLog As Utilisateur) As Boolean
         Dim da As SqlDataAdapter = New SqlDataAdapter()
         Dim codeRetour As Boolean = True
-
         Dim dateModification As Date = Date.Now.Date
-
         Dim SQLstring As String = "update oasis.oa_patient_pps set oa_pps_sous_categorie = @sousCategorie, oa_pps_date_modification = @dateModification," &
         " oa_pps_utilisateur_modification = @utilisateurModification, oa_pps_priorite = @priorite, oa_pps_drc_id = @drcId," &
         " oa_pps_commentaire = @commentaire where oa_pps_id = @ppsId"
@@ -350,7 +309,7 @@ Public Class PpsDao
             'Mise à jour des données modifiées dans l'instance de la classe Historisation antecedent
             PPSHistoACreer.HistorisationDate = Date.Now()
             PPSHistoACreer.HistorisationUtilisateurId = userLog.UtilisateurId
-            PPSHistoACreer.HistorisationEtat = EnumEtatPPSHisto.Modification
+            PPSHistoACreer.HistorisationEtat = PpsHisto.EnumEtatPPSHisto.Modification
             PPSHistoACreer.Categorie = pps.CategorieId
             PPSHistoACreer.SousCategorie = pps.SousCategorieId
             PPSHistoACreer.Priorite = pps.Priorite
@@ -362,7 +321,7 @@ Public Class PpsDao
             PPSHistoACreer.DrcId = pps.DrcId
 
             'Création dans l'historique des modifications de l'antecedent
-            CreationPPSHisto(PPSHistoACreer, userLog, EnumEtatPPSHisto.Modification)
+            CreationPPSHisto(PPSHistoACreer, userLog, PpsHisto.EnumEtatPPSHisto.Modification)
 
             'Mise à jour de la date de mise à jour de la synthèse (table patient)
             patientDao.ModificationDateMajSynthesePatient(pps.PatientId, userLog)
@@ -374,9 +333,7 @@ Public Class PpsDao
     Public Function AnnulationPrevention(pps As Pps, userLog As Utilisateur) As Boolean
         Dim da As SqlDataAdapter = New SqlDataAdapter()
         Dim codeRetour As Boolean = True
-
         Dim dateModification As Date = Date.Now.Date
-
         Dim SQLstring As String = "update oasis.oa_patient_pps set oa_pps_date_modification = @dateModification," &
         " oa_pps_utilisateur_modification = @utilisateurModification, oa_pps_inactif = @inactif, oa_pps_arret = @arret," &
         " oa_pps_commentaire_arret = @commentaireArret where oa_pps_id = @ppsId"
@@ -397,7 +354,6 @@ Public Class PpsDao
             da.UpdateCommand = cmd
             da.UpdateCommand.ExecuteNonQuery()
         Catch ex As Exception
-            'PgbMiseAJour.Hide()
             Throw New Exception(ex.Message)
             codeRetour = False
         Finally
@@ -405,24 +361,25 @@ Public Class PpsDao
         End Try
 
         If codeRetour = True Then
-            Dim PPSHistoACreer As New PpsHisto
             'Mise à jour des données modifiées dans l'instance de la classe Historisation antecedent
-            PPSHistoACreer.HistorisationDate = Date.Now()
-            PPSHistoACreer.HistorisationUtilisateurId = userLog.UtilisateurId
-            PPSHistoACreer.HistorisationEtat = EnumEtatPPSHisto.Annulation
-            PPSHistoACreer.Categorie = pps.CategorieId
-            PPSHistoACreer.SousCategorie = pps.SousCategorieId
-            PPSHistoACreer.Priorite = pps.Priorite
-            PPSHistoACreer.PatientId = pps.PatientId
-            PPSHistoACreer.PpsId = pps.Id
-            PPSHistoACreer.Commentaire = pps.Commentaire
-            PPSHistoACreer.Arret = True
-            PPSHistoACreer.ArretCommentaire = pps.ArretCommentaire
-            PPSHistoACreer.Inactif = True
-            PPSHistoACreer.DrcId = pps.DrcId
+            Dim PPSHistoACreer As New PpsHisto With {
+                .HistorisationDate = Date.Now(),
+                .HistorisationUtilisateurId = userLog.UtilisateurId,
+                .HistorisationEtat = PpsHisto.EnumEtatPPSHisto.Annulation,
+                .Categorie = pps.CategorieId,
+                .SousCategorie = pps.SousCategorieId,
+                .Priorite = pps.Priorite,
+                .PatientId = pps.PatientId,
+                .PpsId = pps.Id,
+                .Commentaire = pps.Commentaire,
+                .Arret = True,
+                .ArretCommentaire = pps.ArretCommentaire,
+                .Inactif = True,
+                .DrcId = pps.DrcId
+            }
 
             'Création dans l'historique des modifications de l'antecedent
-            CreationPPSHisto(PPSHistoACreer, userLog, EnumEtatPPSHisto.Annulation)
+            CreationPPSHisto(PPSHistoACreer, userLog, PpsHisto.EnumEtatPPSHisto.Annulation)
 
             'Mise à jour de la date de mise à jour de la synthèse (table patient)
             patientDao.ModificationDateMajSynthesePatient(pps.PatientId, userLog)

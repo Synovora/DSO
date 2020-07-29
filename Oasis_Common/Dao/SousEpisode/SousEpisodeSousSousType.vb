@@ -1,12 +1,11 @@
-﻿Imports Oasis_Common
-
+﻿
 Public Class SousEpisodeSousSousType
 
     Property Id As Long
     Property IdSousEpisodeSousType As Long
     Property HorodateCreation As DateTime
     Property Libelle As String
-    Property commentaire As String
+    Property Commentaire As String
 
     Public Sub New()
     End Sub
@@ -17,7 +16,7 @@ Public Class SousEpisodeSousSousType
         Me.IdSousEpisodeSousType = row("id_sous_episode_sous_type")
         Me.HorodateCreation = row("horodate_creation")
         Me.Libelle = row("libelle")
-        Me.commentaire = coalesce(row("commentaire"), "")
+        Me.Commentaire = Coalesce(row("commentaire"), "")
     End Sub
 
 

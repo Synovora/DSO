@@ -11,10 +11,10 @@ Namespace Controllers
 
         'GET: /Sign/Check/
         Function Check(id As String) As ActionResult
-            Dim ordonnanceDao As New OrdonnanceDaoBase
+            Dim ordonnanceDao As New OrdonnanceDao
             Dim patientDao As New PatientDaoBase
             Dim utilisateurDao As New UserDao
-            Dim ordonnanceDetailDao As New OrdonnanceDetailDaoBase
+            Dim ordonnanceDetailDao As New OrdonnanceDetailDao
             Dim traitementDao As New TraitementDao
 
             ViewBag.traitementDao = traitementDao

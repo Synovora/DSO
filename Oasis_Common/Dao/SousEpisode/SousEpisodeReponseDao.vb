@@ -1,6 +1,4 @@
 ﻿Imports System.Data.SqlClient
-Imports Oasis_WF
-Imports Oasis_Common
 Imports System.IO
 
 Public Class SousEpisodeReponseDao

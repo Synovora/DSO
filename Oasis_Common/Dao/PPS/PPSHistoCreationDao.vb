@@ -2,13 +2,6 @@
 
 Public Module PPSHistoCreationDao
 
-    Public Enum EnumEtatPPSHisto
-        Creation = 1
-        Modification = 2
-        Arret = 3
-        Annulation = 4
-    End Enum
-
     Public Function CreationPPSHisto(PPSHistoACreer As PpsHisto, UtilisateurConnecte As Utilisateur, EtatHistorisation As Integer) As Boolean
         Dim conxn As New SqlConnection(GetConnectionString())
         Dim da As SqlDataAdapter = New SqlDataAdapter()

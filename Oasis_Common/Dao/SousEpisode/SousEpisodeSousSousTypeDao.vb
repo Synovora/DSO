@@ -1,6 +1,4 @@
 ﻿Imports System.Data.SqlClient
-Imports Oasis_WF
-Imports Oasis_Common
 
 Public Class SousEpisodeSousSousTypeDao
     Inherits StandardDao
@@ -9,15 +7,13 @@ Public Class SousEpisodeSousSousTypeDao
         Dim lst As List(Of SousEpisodeSousSousType) = New List(Of SousEpisodeSousSousType)
         Dim data As DataTable = getTableSousEpisodeSousSousType(idSousEpisodeSousType)
         For Each row In data.Rows
-            lst.Add(buildBean(row))
+            lst.Add(BuildBean(row))
         Next
         Return lst
     End Function
 
     Public Function getTableSousEpisodeSousSousType(Optional idSousEpisodeSousType As Long = 0) As DataTable
-        Dim SQLString As String
-        'Console.WriteLine("----------> getAllTacheEnCours")
-        SQLString =
+        Dim SQLString As String =
             "SELECT " & vbCrLf &
             "	  id, " & vbCrLf &
             "     id_sous_episode_sous_type, " & vbCrLf &
@@ -29,8 +25,6 @@ Public Class SousEpisodeSousSousTypeDao
         If idSousEpisodeSousType <> 0 Then
             SQLString += "WHERE id_sous_episode_sous_type= @idSousEpisodeSousType " & vbCrLf
         End If
-
-        'Console.WriteLine(SQLString)
 
         Using con As SqlConnection = GetConnection()
 
@@ -55,9 +49,7 @@ Public Class SousEpisodeSousSousTypeDao
     Public Function Create(seType As SousEpisodeSousSousType) As Boolean
         Dim da As SqlDataAdapter = New SqlDataAdapter()
         Dim codeRetour As Boolean = True
-        Dim con As SqlConnection
-
-        con = GetConnection()
+        Dim con As SqlConnection = GetConnection()
         Dim transaction As SqlClient.SqlTransaction = con.BeginTransaction
 
         Try
@@ -70,7 +62,7 @@ Public Class SousEpisodeSousSousTypeDao
                 .AddWithValue("@id_sous_episode_sous_type", seType.IdSousEpisodeSousType)
                 .AddWithValue("@dateCreation", seType.HorodateCreation)
                 .AddWithValue("@libelle", seType.Libelle)
-                .AddWithValue("@commentaire", seType.commentaire)
+                .AddWithValue("@commentaire", seType.Commentaire)
             End With
 
             da.InsertCommand = cmd
@@ -90,7 +82,7 @@ Public Class SousEpisodeSousSousTypeDao
         Return codeRetour
     End Function
 
-    Private Function buildBean(row As DataRow) As SousEpisodeSousSousType
+    Private Function BuildBean(row As DataRow) As SousEpisodeSousSousType
         Dim seType As New SousEpisodeSousSousType(row)
         Return seType
     End Function
