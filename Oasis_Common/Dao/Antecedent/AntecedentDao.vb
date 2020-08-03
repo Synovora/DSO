@@ -4,6 +4,7 @@ Public Class AntecedentDao
     Inherits StandardDao
 
     ReadOnly patientDao As New PatientDao
+
     Private Function BuildBean(reader As SqlDataReader) As Antecedent
         Dim antecedent As New Antecedent With {
             .Id = reader("oa_antecedent_id"),

@@ -6,8 +6,8 @@ Imports System.Web
 
 Namespace Models
     Public Class UserLogin
-        <Display(Name:="Email ID")>
-        <Required(AllowEmptyStrings:=False, ErrorMessage:="Email ID required")>
+        <Display(Name:="Username")>
+        <Required(AllowEmptyStrings:=False, ErrorMessage:="Username required")>
         Public Property Username As String
         <DataType(DataType.Password)>
         <Required(AllowEmptyStrings:=False, ErrorMessage:="Password required")>

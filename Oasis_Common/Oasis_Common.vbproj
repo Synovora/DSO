@@ -114,6 +114,7 @@
     <Compile Include="Bean\Episode\EpisodeObservation.vb" />
     <Compile Include="Bean\Episode\EpisodeParametre.vb" />
     <Compile Include="Bean\Episode\EpisodeTypeActivite.vb" />
+    <Compile Include="Bean\Internaute\InternautePermission.vb" />
     <Compile Include="Bean\Internaute\Internaute.vb" />
     <Compile Include="Bean\LigneDeVie\LigneDeVie.vb" />
     <Compile Include="Bean\LigneDeVie\PatientParametreLdv.vb" />
@@ -190,6 +191,7 @@
     <Compile Include="Dao\Episode\EpisodeProtocoleCollaboratifDao.vb" />
     <Compile Include="Dao\Episode\EpisodeTypeActiviteDao.vb" />
     <Compile Include="Dao\General\ParametreOasisDao.vb" />
+    <Compile Include="Dao\Internaute\InternautePermissionDao.vb" />
     <Compile Include="Dao\Internaute\InternauteDao.vb" />
     <Compile Include="Dao\LigneDeVie\PatientParametreLdvDao.vb" />
     <Compile Include="Dao\Log\LogDao.vb" />

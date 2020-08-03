@@ -1,3 +1,3 @@
 ﻿@Code
-    Layout = "~/Views/Shared/_Layout.cshtml"
+    Layout = "~/Views/Shared/_Layout.vbhtml"
 End Code

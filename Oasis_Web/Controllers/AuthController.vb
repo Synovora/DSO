@@ -41,8 +41,14 @@ Namespace Oasis_Web.Controllers
         Public Function Login(user As UserLogin, ReturnUrl As String) As ActionResult
             Dim message As String
             Dim internauteDao As InternauteDao = New InternauteDao
-
-            If internauteDao.getUserByLoginPassword(user.Username, user.Password) IsNot Nothing Then
+            Dim internautePermissionDao As InternautePermissionDao = New InternautePermissionDao
+            Dim internaute As Internaute = New Internaute With {
+                .Username = user.Username,
+                .Password = user.Password
+            }
+            'internauteDao.Create(internaute)
+            Try
+                internaute = internauteDao.GetInternauteByLoginPassword(user.Username, user.Password)
                 Dim timeout As Integer = If(user.RememberMe, 525600, 20)
                 Dim ticket = New FormsAuthenticationTicket(user.Username, user.RememberMe, timeout)
                 Dim encrypted As String = FormsAuthentication.Encrypt(ticket)
@@ -51,17 +57,20 @@ Namespace Oasis_Web.Controllers
                     .HttpOnly = True
                 }
                 Response.Cookies.Add(cookie)
-
+                Session("internauteId") = internaute.Id
+                Debug.WriteLine("internauteId: " & internaute.Id)
+                Dim internautePermission = internautePermissionDao.GetPermissionsByInternaute(internaute.Id)
+                Debug.WriteLine("Permission: " & internautePermission.Count)
+                Session("patientId") = internautePermission(0).PatientId
                 If (Url.IsLocalUrl(ReturnUrl)) Then
                     Return Redirect(ReturnUrl)
                 Else
                     Return RedirectToAction("Index", "Dashboard")
                 End If
 
-            Else
-
-                message = "Invalied credential provided"
-            End If
+            Catch ex As Exception
+                message = ex.Message
+            End Try
 
             ViewBag.Message = message
             Return View()

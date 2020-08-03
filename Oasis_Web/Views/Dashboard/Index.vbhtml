@@ -3,7 +3,7 @@
     ViewBag.Title = "Dashboard"
     ViewBag.pTitle = "Dashboard"
     ViewBag.pageTitle = "Synovora"
-    Layout = "~/Views/Shared/_Layout.cshtml"
+    Layout = "~/Views/Shared/_Layout.vbhtml"
 
     '//if (ViewBag.ModeName == Constants.LAYOUT_VERTICAL)
     '//{
@@ -53,8 +53,8 @@ End Code
                 <div class="row">
                     <div class="col-7">
                         <div class="text-primary p-3">
-                            <h5 class="text-primary">Bienvenue !</h5>
-                            <p>Profil Patient</p>
+                            <h5 class="text-primary">Bienvenue @HttpContext.Current.User.Identity.Name N*@Session("internauteId") !</h5>
+                            <p>Profil Patient N*@Session("patientId")</p>
                         </div>
                     </div>
                     <div class="col-5 align-self-end">
@@ -68,7 +68,7 @@ End Code
                         <div class="avatar-md profile-user-wid mb-4">
                             <img src="~/assets/images/users/avatar-1.jpg" alt="" class="img-thumbnail rounded-circle">
                         </div>
-                        <h5 class="font-size-15 text-truncate">Henry Demoi</h5>
+                        <h5 class="font-size-15 text-truncate">@ViewBag.Patient.PatientPrenom @ViewBag.Patient.PatientNom</h5>
                         <p class="text-muted mb-0 text-truncate">Patient</p>
                     </div>
                     <div class="col-sm-8">

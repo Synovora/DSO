@@ -2,8 +2,9 @@
 
 Public Class Internaute
 
-    Public Property Username As Integer
+    Public Property Username As String
     Public Property Password As String
+    Public Property Id As Integer
 
     Public Shared Function CryptePwd(login As String, pwd As String) As String
         Dim UniEnc As New Text.UnicodeEncoding

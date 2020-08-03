@@ -15,6 +15,7 @@ Public Class InternauteDao
                                      " @oa_internaute_username, @oa_internaute_password);"
 
             Dim cmd As New SqlCommand(SQLstring, con, transaction)
+            internaute.CryptePwd()
             With cmd.Parameters
                 .AddWithValue("@oa_internaute_username", internaute.Username)
                 .AddWithValue("@oa_internaute_password", internaute.Password)
@@ -35,18 +36,14 @@ Public Class InternauteDao
 
     End Sub
 
-    Public Function getUserByLoginPassword(login As String, password As String) As Internaute
+    Public Function GetInternauteByLoginPassword(username As String, password As String) As Internaute
         Dim user As Internaute = Nothing
 
         Using con As SqlConnection = GetConnection()
             Dim command As SqlCommand = con.CreateCommand()
             Try
-                command.CommandText =
-                   "select U.*, p.* " &
-                   "from oasis.oa_utilisateur u " &
-                   "inner join oasis.oa_r_profil p on p.oa_r_profil_id = oa_utilisateur_profil_id And COALESCE(oa_r_profil_inactif,'false')='false' " &
-                   "where oa_utilisateur_login = @login AND oa_utilisateur_etat='A'"
-                command.Parameters.AddWithValue("@login", login)
+                command.CommandText = "SELECT * FROM oasis.oa_internaute WHERE oa_internaute_username = @username;"
+                command.Parameters.AddWithValue("@username", username)
                 Using reader As SqlDataReader = command.ExecuteReader()
                     If reader.Read() Then
                         user = BuildBean(reader)
@@ -70,44 +67,11 @@ Public Class InternauteDao
         Throw New ArgumentException("Identifiant et/ou mot de passe erroné !")
     End Sub
 
-    Public Function GetUserById(userId As Integer) As Internaute
-        Dim user As Internaute
-        Dim con As SqlConnection
-
-        con = GetConnection()
-
-        Try
-
-            Dim command As SqlCommand = con.CreateCommand()
-
-            command.CommandText =
-               "select U.*, p.* " &
-               "from oasis.oa_utilisateur u " &
-               "left join oasis.oa_r_profil p on p.oa_r_profil_id = oa_utilisateur_profil_id " &
-               "where oa_utilisateur_id = @id"
-            command.Parameters.AddWithValue("@id", userId)
-            Using reader As SqlDataReader = command.ExecuteReader()
-                If reader.Read() Then
-                    user = BuildBean(reader)
-                Else
-                    Throw New ArgumentException("Utilisateur non retrouvé !")
-                End If
-            End Using
-
-        Catch ex As Exception
-            Throw ex
-        Finally
-            con.Close()
-        End Try
-
-
-        Return user
-    End Function
-
     Public Function BuildBean(reader As SqlDataReader) As Internaute
         Dim user As New Internaute With {
             .Username = reader("oa_internaute_username"),
-            .Password = Coalesce(reader("oa_internuate_password"), "")
+            .Password = Coalesce(reader("oa_internaute_password"), ""),
+            .Id = Coalesce(reader("oa_internaute_id"), 0)
         }
         Return user
     End Function
