@@ -5,11 +5,12 @@ Namespace Controllers
     Public Class SignController
         Inherits Controller
 
-        Function Index() As ActionResult
-            Return View()
-        End Function
+        'Function Index() As ActionResult
+        '    Return View()
+        'End Function
 
         'GET: /Sign/Check/
+        <AllowAnonymous>
         Function Check(id As String) As ActionResult
             Dim ordonnanceDao As New OrdonnanceDao
             Dim patientDao As New PatientDaoBase
@@ -27,10 +28,10 @@ Namespace Controllers
                     Return View("~/Views/Sign/Inactif.vbhtml")
                 End If
                 ViewBag.Ordonnance = ordonnance
-                Dim ordonnanceDetail = ordonnanceDetailDao.GetOrdonnanceLigneByOrdonnanceId(ordonnance.Id)
-                ViewBag.OrdonnanceDetail = ordonnanceDetail
+                Dim ordonnanceDetails = ordonnanceDetailDao.GetOrdonnanceLigneByOrdonnanceId(ordonnance.Id)
+                ViewBag.OrdonnanceDetail = ordonnanceDetails
                 Dim traitements As New List(Of Traitement)
-                For Each detail In ordonnanceDetail
+                For Each detail In ordonnanceDetails
                     traitements.Add(traitementDao.GetTraitementById(detail.TraitementId))
                 Next
                 ViewBag.Traitements = traitements
@@ -47,7 +48,7 @@ Namespace Controllers
                 End If
                 ViewBag.User = user
             Catch
-                Return View("~/Views/Shared/Error.vbhtml")
+                Return View("~/Views/Pages/pages-404.cshtml")
             End Try
 
             Return View()

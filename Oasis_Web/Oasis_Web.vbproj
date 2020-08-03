@@ -202,6 +202,7 @@
     <Compile Include="Global.asax.vb">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\UserLogin.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
       <AutoGen>True</AutoGen>
@@ -381,10 +382,10 @@
     <Content Include="Scripts\popper-utils.min.js.map" />
     <Content Include="Scripts\popper-utils.js.map" />
     <Content Include="Views\Auth\auth-lock-screen.cshtml" />
-    <Content Include="Views\Auth\auth-login.cshtml" />
+    <None Include="Views\Auth\login.vbhtml" />
     <Content Include="Views\Auth\auth-recoverpw.cshtml" />
     <Content Include="Views\Auth\auth-register.cshtml" />
-    <None Include="Views\Dashboard\Index.cshtml" />
+    <None Include="Views\Dashboard\Index.vbhtml" />
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\Layouts\_layout_boxed.cshtml" />
     <Content Include="Views\Shared\Layouts\_layout_colored_sidebar.cshtml" />
@@ -418,9 +419,8 @@
     <Content Include="Global.asax" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
     <Content Include="Views\Home\Index.vbhtml" />
-    <Content Include="Views\Sign\Check.vbhtml" />
-    <Content Include="Views\Sign\Inactif.vbhtml" />
-    <Content Include="Views\Sign\Index.vbhtml" />
+    <None Include="Views\Sign\Check.vbhtml" />
+    <None Include="Views\Sign\Inactif.vbhtml" />
     <Content Include="Views\Web.config" />
     <Content Include="Views\_ViewStart.vbhtml" />
     <Content Include="Web.config" />
@@ -433,9 +433,7 @@
     <Content Include="Areas\HelpPage\Views\_ViewStart.vbhtml" />
     <Content Include="Content\Site.css" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Models\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <ProjectReference Include="..\Oasis_Common\Oasis_Common.vbproj">
       <Project>{2dac58a3-f441-4561-93ea-b093cf6f982a}</Project>

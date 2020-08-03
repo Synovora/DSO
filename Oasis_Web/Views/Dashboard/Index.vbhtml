@@ -1,49 +1,50 @@
 ﻿
-@{
-    ViewBag.Title = "Dashboard";
-    ViewBag.pTitle = "Dashboard";
-    ViewBag.pageTitle = "Synovora";
-    Layout = "~/Views/Shared/_Layout.cshtml";
-    //if (ViewBag.ModeName == Constants.LAYOUT_VERTICAL)
-    //{
-    //    Layout = "~/Views/Shared/_Layout.cshtml";
-    //}
-    //else if (ViewBag.ModeName == Constants.LAYOUT_HORIZONTAL)
-    //{
-    //    Layout = "~/Views/Shared/Layouts/_layout_horizontal.cshtml";
-    //    ViewBag.pTitle = "Horizontal";
-    //}
-    //else if (ViewBag.ModeName == Constants.LAYOUT_LIGHT_SIDEBAR)
-    //{
-    //    Layout = "~/Views/Shared/Layouts/_layout_light_sidebar.cshtml";
-    //    ViewBag.pTitle = "Light Sidebar";
-    //}
-    //else if (ViewBag.ModeName == Constants.LAYOUT_COMPACT_SIDEBAR)
-    //{
-    //    Layout = "~/Views/Shared/Layouts/_layout_compact_sidebar.cshtml";
-    //    ViewBag.pTitle = "Compact Sidebar";
-    //}
-    //else if (ViewBag.ModeName == Constants.LAYOUT_ICON_SIDEBAR)
-    //{
-    //    Layout = "~/Views/Shared/Layouts/_layout_icon_sidebar.cshtml";
-    //    ViewBag.pTitle = "Icon Sidebar";
-    //}
-    //else if (ViewBag.ModeName == Constants.LAYOUT_BOXED)
-    //{
-    //    Layout = "~/Views/Shared/Layouts/_layout_boxed.cshtml";
-    //    ViewBag.pTitle = "Boxed Layout";
-    //}
-    //else if (ViewBag.ModeName == Constants.LAYOUT_PRELOADER)
-    //{
-    //    Layout = "~/Views/Shared/Layouts/_layout_preloader.cshtml";
-    //    ViewBag.pTitle = "Preloader";
-    //}
-    //else if (ViewBag.ModeName == Constants.LAYOUT_COLORED_SIDEBAR)
-    //{
-    //    Layout = "~/Views/Shared/Layouts/_layout_colored_sidebar.cshtml";
-    //    ViewBag.pTitle = "Colored Sidebar";
-    //}
-}
+@Code
+    ViewBag.Title = "Dashboard"
+    ViewBag.pTitle = "Dashboard"
+    ViewBag.pageTitle = "Synovora"
+    Layout = "~/Views/Shared/_Layout.cshtml"
+
+    '//if (ViewBag.ModeName == Constants.LAYOUT_VERTICAL)
+    '//{
+    '//    Layout = "~/Views/Shared/_Layout.cshtml";
+    '//}
+    '//else if (ViewBag.ModeName == Constants.LAYOUT_HORIZONTAL)
+    '//{
+    '//    Layout = "~/Views/Shared/Layouts/_layout_horizontal.cshtml";
+    '//    ViewBag.pTitle = "Horizontal";
+    '//}
+    '//else if (ViewBag.ModeName == Constants.LAYOUT_LIGHT_SIDEBAR)
+    '//{
+    '//    Layout = "~/Views/Shared/Layouts/_layout_light_sidebar.cshtml";
+    '//    ViewBag.pTitle = "Light Sidebar";
+    '//}
+    '//else if (ViewBag.ModeName == Constants.LAYOUT_COMPACT_SIDEBAR)
+    '//{
+    '//    Layout = "~/Views/Shared/Layouts/_layout_compact_sidebar.cshtml";
+    '//    ViewBag.pTitle = "Compact Sidebar";
+    '//}
+    '//else if (ViewBag.ModeName == Constants.LAYOUT_ICON_SIDEBAR)
+    '//{
+    '//    Layout = "~/Views/Shared/Layouts/_layout_icon_sidebar.cshtml";
+    '//    ViewBag.pTitle = "Icon Sidebar";
+    '//}
+    '//else if (ViewBag.ModeName == Constants.LAYOUT_BOXED)
+    '//{
+    '//    Layout = "~/Views/Shared/Layouts/_layout_boxed.cshtml";
+    '//    ViewBag.pTitle = "Boxed Layout";
+    '//}
+    '//else if (ViewBag.ModeName == Constants.LAYOUT_PRELOADER)
+    '//{
+    '//    Layout = "~/Views/Shared/Layouts/_layout_preloader.cshtml";
+    '//    ViewBag.pTitle = "Preloader";
+    '//}
+    '//else if (ViewBag.ModeName == Constants.LAYOUT_COLORED_SIDEBAR)
+    '//{
+    '//    Layout = "~/Views/Shared/Layouts/_layout_colored_sidebar.cshtml";
+    '//    ViewBag.pTitle = "Colored Sidebar";
+    '//}
+End Code
 
 <div class="row">
     <div class="col-xl-4">
@@ -52,7 +53,7 @@
                 <div class="row">
                     <div class="col-7">
                         <div class="text-primary p-3">
-                            <h5 class="text-primary">Bienvenue !EEEEEEEEE</h5>
+                            <h5 class="text-primary">Bienvenue !</h5>
                             <p>Profil Patient</p>
                         </div>
                     </div>
@@ -671,7 +672,7 @@
     </div>
 </div>*@<!-- end Modal -->
 <!-- End Page-content -->
-@section scripts{
+@Section Scripts
     <!-- apexcharts -->
     <script src="~/assets/libs/apexcharts/apexcharts.min.js"></script>
 
@@ -679,4 +680,5 @@
 
     <!-- App js -->
     <script src="~/assets/js/app.js"></script>
-    }
+    
+End section
