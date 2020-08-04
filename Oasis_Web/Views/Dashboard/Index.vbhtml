@@ -53,8 +53,8 @@ End Code
                 <div class="row">
                     <div class="col-7">
                         <div class="text-primary p-3">
-                            <h5 class="text-primary">Bienvenue @HttpContext.Current.User.Identity.Name N*@Session("internauteId") !</h5>
-                            <p>Profil Patient N*@Session("patientId")</p>
+                            <h5 class="text-primary">Bienvenue @HttpContext.Current.User.Identity.Name N*@Request.Cookies("internauteId").Value !</h5>
+                            <p>Profil Patient N*@Request.Cookies("patientId").Value</p>
                         </div>
                     </div>
                     <div class="col-5 align-self-end">
@@ -190,7 +190,21 @@ End Code
                     </ul>
                 </div>
                 <div class="clearfix"></div>
-                <div id="stacked-column-chart" class="apex-charts" dir="ltr"></div>
+                <div id="stacked-column-chart" class="apex-charts" dir="ltr">
+                    <ul class="list-group mb-3">
+                        @For i As Integer = 0 To ViewBag.ParametresAutoSuivi.Count - 1
+                            @<li class="list-group-item d-flex justify-content-between lh-condensed">
+                                <div>
+                                    <h6 class="my-0">@ViewBag.ParametresAutoSuivi(i).Description</h6>
+                                    @*<small class="text-muted">Posologie @ViewBag.OrdonnanceDetail(i).Posologie</small>
+                                    @If ViewBag.Traitements(i).PosologieBase = "C" Then
+                                        @<small Class="text-muted">@ViewBag.Traitements(i).PosologieCommentaire</small>
+                                    End If*@
+                                </div>
+                            </li>
+                        Next
+                    </ul>
+                </div>
             </div>
         </div>
     </div>

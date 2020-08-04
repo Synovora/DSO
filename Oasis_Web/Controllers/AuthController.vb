@@ -11,25 +11,30 @@ Namespace Oasis_Web.Controllers
     Public Class AuthController
         Inherits Controller
 
-        Public Function Index() As ActionResult
-            Return View("login")
-        End Function
+        '<AllowAnonymous>
+        'Public Function Index() As ActionResult
+        '    Return View("login")
+        'End Function
 
+        <AllowAnonymous>
         <ActionName("login")>
         Public Function authlogin() As ActionResult
             Return View()
         End Function
 
+        <AllowAnonymous>
         <ActionName("auth-register")>
         Public Function authregister() As ActionResult
             Return View()
         End Function
 
+        <AllowAnonymous>
         <ActionName("auth-recoverpw")>
         Public Function authrecoverpw() As ActionResult
             Return View()
         End Function
 
+        <AllowAnonymous>
         <ActionName("auth-lock-screen")>
         Public Function authlockscreen() As ActionResult
             Return View()
@@ -38,15 +43,12 @@ Namespace Oasis_Web.Controllers
         'Login POST
         <HttpPost>
         <ValidateAntiForgeryToken>
+        <AllowAnonymous>
         Public Function Login(user As UserLogin, ReturnUrl As String) As ActionResult
             Dim message As String
             Dim internauteDao As InternauteDao = New InternauteDao
             Dim internautePermissionDao As InternautePermissionDao = New InternautePermissionDao
-            Dim internaute As Internaute = New Internaute With {
-                .Username = user.Username,
-                .Password = user.Password
-            }
-            'internauteDao.Create(internaute)
+            Dim internaute As Internaute
             Try
                 internaute = internauteDao.GetInternauteByLoginPassword(user.Username, user.Password)
                 Dim timeout As Integer = If(user.RememberMe, 525600, 20)
@@ -57,11 +59,13 @@ Namespace Oasis_Web.Controllers
                     .HttpOnly = True
                 }
                 Response.Cookies.Add(cookie)
-                Session("internauteId") = internaute.Id
-                Debug.WriteLine("internauteId: " & internaute.Id)
+                Response.Cookies("internauteId").Value = internaute.Id
+                Response.Cookies("internauteId").Expires = DateTime.Now.AddDays(90)
+                'Session("internauteId") = internaute.Id
                 Dim internautePermission = internautePermissionDao.GetPermissionsByInternaute(internaute.Id)
-                Debug.WriteLine("Permission: " & internautePermission.Count)
-                Session("patientId") = internautePermission(0).PatientId
+                'Session("patientId") = internautePermission(0).PatientId
+                Response.Cookies("patientId").Value = internautePermission(0).PatientId
+                Response.Cookies("patientId").Expires = DateTime.Now.AddDays(90)
                 If (Url.IsLocalUrl(ReturnUrl)) Then
                     Return Redirect(ReturnUrl)
                 Else
@@ -76,13 +80,11 @@ Namespace Oasis_Web.Controllers
             Return View()
         End Function
 
-        '//Logout
-        '[HttpPost]
-        '[Authorize]
-        'Public ActionResult Logout()
-        '{
-        '    FormsAuthentication.SignOut();
-        '    Return RedirectToAction("Login", "User");
-        '}
+        <HttpPost>
+        <Authorize>
+        Public Function Logout() As ActionResult
+            FormsAuthentication.SignOut()
+            Return RedirectToAction("Login", "Auth")
+        End Function
     End Class
 End Namespace

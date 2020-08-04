@@ -44,13 +44,11 @@ End Code
 
                                         <div Class="form-group">
                                             <label for="username">Nom d'utilisateur</label>
-                                            @*<input type="text" Class="form-control" id="username" placeholder="Entrez votre nom d'utilisateur">*@
                                             @Html.TextBoxFor(Function(u) u.Username, New With {Key .Class = "form-control", .placeholder = "Entrez votre nom d'utilisateur"})
                                         </div>
 
                                         <div Class="form-group">
                                             <label for="userpassword">Mot de passe</label>
-                                            @*<input type="password" Class="form-control" id="userpassword" placeholder="Entrez votre mot de passe">*@
                                             @Html.PasswordFor(Function(u) u.Password, New With {Key .Class = "form-control", .placeholder = "Entrez votre mot de passe"})
                                             @Html.ValidationMessageFor(Function(u) u.Password)
                                         </div>
@@ -59,16 +57,17 @@ End Code
                                             <input type="checkbox" Class="custom-control-input" id="customControlInline">
                                             <label Class="custom-control-label" for="customControlInline">Enregistrer la connexion</label>
                                         </div>
+                                        <div Class="form-group">
                                             <label>@ViewBag.Message</label>
+                                        </div>
+                                        <div Class="mt-3">
+                                            <button Class="btn btn-primary btn-block waves-effect waves-light" type="submit" id="btnLogin">Se connecter</button>
+                                        </div>
 
-                        <div Class="mt-3">
-                            <button Class="btn btn-primary btn-block waves-effect waves-light" type="submit" id="btnLogin">Se connecter</button>
-                        </div>
-
-                        <div Class="mt-4 text-center">
-                            <a href="@Url.Action("auth-recoverpw", "Auth")" Class="text-muted"><i Class="mdi mdi-lock mr-1"></i> Mot de passe oublie?</a>
-                        </div>
-                    </form>
+                                        <div Class="mt-4 text-center">
+                                            <a href="@Url.Action("auth-recoverpw", "Auth")" Class="text-muted"><i Class="mdi mdi-lock mr-1"></i> Mot de passe oublie?</a>
+                                        </div>
+                                    </form>
                 </div>
 
             </div>

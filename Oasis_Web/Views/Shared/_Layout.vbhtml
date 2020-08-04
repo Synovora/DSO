@@ -23,9 +23,9 @@
             <div class="page-content">
                 <div class="container-fluid">
                     @Html.Partial("~/Views/Shared/_page_title.vbhtml")
-                    @If Request.IsAuthenticated = True Then
+          
                         @RenderBody()
-                    End If
+                   
                 </div> <!-- container-fluid -->
             </div>
             <!-- End Page-content -->

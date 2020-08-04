@@ -5,11 +5,6 @@ Namespace Controllers
     Public Class SignController
         Inherits Controller
 
-        'Function Index() As ActionResult
-        '    Return View()
-        'End Function
-
-        'GET: /Sign/Check/
         <AllowAnonymous>
         Function Check(id As String) As ActionResult
             Dim ordonnanceDao As New OrdonnanceDao
