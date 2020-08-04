@@ -1,8 +1,7 @@
 ﻿@Code
-    ViewBag.Title = "Ordonnance Page";
-    Layout = "~/Views/Shared/_BlankLayout.cshtml";
+    ViewBag.Title = "Ordonnance Page"
+    Layout = "~/Views/Shared/_BlankLayout.cshtml"
 End Code
-
 
 <div class="account-pages my-5 pt-5">
     <div class="container">

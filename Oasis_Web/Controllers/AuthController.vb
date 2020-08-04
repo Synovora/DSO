@@ -61,7 +61,7 @@ Namespace Oasis_Web.Controllers
                 Response.Cookies.Add(cookie)
                 Response.Cookies("internauteId").Value = internaute.Id
                 Response.Cookies("internauteId").Expires = DateTime.Now.AddDays(90)
-                'Session("internauteId") = internaute.Id
+                Session("internauteId") = internaute.Id
                 Dim internautePermission = internautePermissionDao.GetPermissionsByInternaute(internaute.Id)
                 'Session("patientId") = internautePermission(0).PatientId
                 Response.Cookies("patientId").Value = internautePermission(0).PatientId
