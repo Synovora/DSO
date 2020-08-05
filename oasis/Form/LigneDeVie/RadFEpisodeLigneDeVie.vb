@@ -154,13 +154,13 @@ Public Class RadFEpisodeLigneDeVie
             ligneDeVie.ActivitePreventionEnfantScolaire = False
             ChkEnfantPreScolaire.Hide()
             ChkEnfantScolaire.Hide()
-            If SelectedPatient.PatientGenreId = patientDao.EnumGenreId.Feminin OrElse Age >= AgeMinPreventionFemme Then
+            If SelectedPatient.PatientGenreId = Patient.EnumGenreId.Feminin OrElse Age >= AgeMinPreventionFemme Then
                 ChkSuiviGrossesse.Location = New Point(427, 44)
                 ChkSuiviGynecologique.Location = New Point(589, 44)
             End If
         End If
 
-        If SelectedPatient.PatientGenreId = patientDao.EnumGenreId.Masculin OrElse Age < AgeMinPreventionFemme Then
+        If SelectedPatient.PatientGenreId = Patient.EnumGenreId.Masculin OrElse Age < AgeMinPreventionFemme Then
             ligneDeVie.ActiviteSuiviGrossesse = False
             ligneDeVie.ActiviteSuiviGyncologique = False
             ChkSuiviGrossesse.Hide()

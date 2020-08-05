@@ -95,7 +95,7 @@ Public Class RadFListeActions
             Dim aRow As Integer = Me.RadGridViewAction.Rows.IndexOf(Me.RadGridViewAction.CurrentRow)
             If aRow >= 0 Then
                 Dim PatientId As Integer = RadGridViewAction.Rows(aRow).Cells("patientId").Value
-                Dim patient As Patient = patientDao.GetPatientById(PatientId)
+                Dim patient As Patient = patientDao.GetPatient(PatientId)
                 Select Case RadGridViewAction.Rows(aRow).Cells("fonction").Value
                     Case ActionDao.EnumFonctionCode.EPISODE
                         Dim EpisodeId As Integer = RadGridViewAction.Rows(aRow).Cells("fonctionId").Value

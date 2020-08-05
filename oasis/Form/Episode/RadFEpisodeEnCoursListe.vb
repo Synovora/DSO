@@ -207,7 +207,7 @@ Public Class RadFEpisodeEnCoursListe
                 Dim episodeId As Integer = RadGridViewEpisode.Rows(aRow).Cells("episode_id").Value
                 Dim patientId As Integer = RadGridViewEpisode.Rows(aRow).Cells("patient_id").Value
                 'patientDao.SetPatient(patient, patientId)
-                patient = patientDao.GetPatientById(patientId)
+                patient = patientDao.GetPatient(patientId)
                 Me.Enabled = False
                 Cursor.Current = Cursors.WaitCursor
 

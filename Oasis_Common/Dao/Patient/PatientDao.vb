@@ -1,15 +1,47 @@
 ﻿
 Imports System.Data.SqlClient
-Imports Oasis_Common
 
 Public Class PatientDao
-    Inherits PatientDaoBase
+    Inherits StandardDao
 
-    Public Overrides Function SetPatient(patientId As Integer) As Patient
+    Private Function BuildBean(reader As SqlDataReader) As Patient
+        Dim patient As New Patient With {
+            .PatientId = Convert.ToInt64(reader("oa_patient_id")),
+            .PatientNir = Coalesce(reader("oa_patient_nir"), 0),
+            .PatientNom = Coalesce(reader("oa_patient_nom"), ""),
+            .PatientPrenom = Coalesce(reader("oa_patient_prenom"), ""),
+            .PatientDateNaissance = Coalesce((reader("oa_patient_date_naissance")), Nothing),
+            .PatientGenreId = Coalesce(reader("oa_patient_genre_id"), ""),
+            .PatientAdresse1 = Coalesce(reader("oa_patient_adresse1"), ""),
+            .PatientAdresse2 = Coalesce(reader("oa_patient_adresse2"), ""),
+            .PatientCodePostal = Coalesce(reader("oa_patient_code_postal"), ""),
+            .PatientVille = Coalesce(reader("oa_patient_ville"), ""),
+            .PatientTel1 = Coalesce(reader("oa_patient_tel1"), ""),
+            .PatientTel2 = Coalesce(reader("oa_patient_tel2"), ""),
+            .PatientEmail = Coalesce(reader("oa_patient_email"), ""),
+            .PatientNomMarital = Coalesce(reader("oa_patient_nom_marital"), ""),
+            .PatientDateEntree = Coalesce((reader("oa_patient_date_entree_oasis")), Nothing),
+            .PatientDateSortie = Coalesce((reader("oa_patient_date_sortie_oasis")), Nothing),
+            .PatientCommentaireSortie = Coalesce(reader("oa_patient_commentaire_sortie"), ""),
+            .PatientDateDeces = Coalesce((reader("oa_patient_date_deces")), Nothing),
+            .PatientSiteId = Coalesce(reader("oa_patient_site_id"), 0),
+            .PatientInternet = Coalesce((reader("oa_patient_couverture_internet")), False),
+            .PatientUniteSanitaireId = Coalesce((reader("oa_patient_unite_sanitaire_id")), 0),
+            .PatientSyntheseDateMaj = Coalesce((reader("oa_patient_synthese_date_maj")), Nothing),
+            .Profession = Coalesce(reader("oa_patient_profession"), ""),
+            .PharmacienId = Coalesce(reader("oa_patient_pharmacie_id"), 0),
+            .Taille = Coalesce(reader("oa_patient_taille"), 0),
+            .BlocageMedical = Coalesce(reader("oa_patient_blocage_medical"), False),
+            .INS = Coalesce(reader("oa_patient_INS"), 0)
+        }
+        patient.PatientGenre = Coalesce(CType(Table_genre.GetGenreDescription(patient.PatientGenreId), String), "genre ?")
+        patient.PatientAge = Coalesce(CalculAgeEnAnneeEtMoisString(patient.PatientDateNaissance), "Inconnu")
+        patient.PatientAgeEnAnnee = Coalesce(CalculAgeEnAnnee(patient.PatientDateNaissance), "Inconnu")
+        Return patient
+    End Function
+
+    Public Function GetPatient(patientId As Integer) As Patient
         Dim patient As New Patient
-        If patientId = 0 Then
-            Return Nothing
-        End If
         Dim con As SqlConnection = GetConnection()
         Try
             Dim command As SqlCommand = con.CreateCommand()
@@ -20,7 +52,7 @@ Public Class PatientDao
                 If reader.Read() Then
                     patient = BuildBean(reader)
                 Else
-                    Throw New ArgumentException("Patient inexistante !")
+                    Throw New ArgumentException("Patient inexistant !")
                 End If
             End Using
 
@@ -29,165 +61,6 @@ Public Class PatientDao
         Finally
             con.Close()
         End Try
-        Return patient
-    End Function
-
-    Private Function BuildBean(patientDataReader As SqlDataReader) As Patient
-        Dim patient As New Patient With {
-            .patientId = Convert.ToInt64(patientDataReader("oa_patient_id"))
-        }
-
-        If patientDataReader("oa_patient_nir") Is DBNull.Value Then
-            patient.PatientNir = 0
-        Else
-            patient.PatientNir = Convert.ToInt64(patientDataReader("oa_patient_nir"))
-        End If
-
-        If patientDataReader("oa_patient_nom") Is DBNull.Value Then
-            patient.PatientNom = ""
-        Else
-            patient.PatientNom = patientDataReader("oa_patient_nom")
-        End If
-
-        If patientDataReader("oa_patient_prenom") Is DBNull.Value Then
-            patient.PatientPrenom = ""
-        Else
-            patient.PatientPrenom = patientDataReader("oa_patient_prenom")
-        End If
-
-        If patientDataReader("oa_patient_date_naissance") Is DBNull.Value Then
-            patient.PatientDateNaissance = Nothing
-        Else
-            patient.PatientDateNaissance = CDate(patientDataReader("oa_patient_date_naissance"))
-        End If
-
-        If patientDataReader("oa_patient_genre_id") Is DBNull.Value Then
-            patient.PatientGenreId = ""
-        Else
-            patient.PatientGenreId = patientDataReader("oa_patient_genre_id")
-        End If
-
-        If patientDataReader("oa_patient_adresse1") Is DBNull.Value Then
-            patient.PatientAdresse1 = ""
-        Else
-            patient.PatientAdresse1 = patientDataReader("oa_patient_adresse1")
-        End If
-
-        If patientDataReader("oa_patient_adresse2") Is DBNull.Value Then
-            patient.PatientAdresse2 = ""
-        Else
-            patient.PatientAdresse2 = patientDataReader("oa_patient_adresse2")
-        End If
-
-        If patientDataReader("oa_patient_code_postal") Is DBNull.Value Then
-            patient.PatientCodePostal = ""
-        Else
-            patient.PatientCodePostal = patientDataReader("oa_patient_code_postal")
-        End If
-
-        If patientDataReader("oa_patient_ville") Is DBNull.Value Then
-            patient.PatientVille = ""
-        Else
-            patient.PatientVille = patientDataReader("oa_patient_ville")
-        End If
-
-        If patientDataReader("oa_patient_tel1") Is DBNull.Value Then
-            patient.PatientTel1 = ""
-        Else
-            patient.PatientTel1 = patientDataReader("oa_patient_tel1")
-        End If
-
-        If patientDataReader("oa_patient_tel2") Is DBNull.Value Then
-            patient.PatientTel2 = ""
-        Else
-            patient.PatientTel2 = patientDataReader("oa_patient_tel2")
-        End If
-
-        If patientDataReader("oa_patient_email") Is DBNull.Value Then
-            patient.PatientEmail = ""
-        Else
-            patient.PatientEmail = patientDataReader("oa_patient_email")
-        End If
-
-        If patientDataReader("oa_patient_nom_marital") Is DBNull.Value Then
-            patient.PatientNomMarital = ""
-        Else
-            patient.PatientNomMarital = patientDataReader("oa_patient_nom_marital")
-        End If
-
-        If patientDataReader("oa_patient_date_entree_oasis") Is DBNull.Value Then
-            patient.PatientDateEntree = Nothing
-        Else
-            patient.PatientDateEntree = CDate(patientDataReader("oa_patient_date_entree_oasis"))
-        End If
-
-        If patientDataReader("oa_patient_date_sortie_oasis") Is DBNull.Value Then
-            patient.PatientDateSortie = Nothing
-        Else
-            patient.PatientDateSortie = CDate(patientDataReader("oa_patient_date_sortie_oasis"))
-        End If
-
-        If patientDataReader("oa_patient_commentaire_sortie") Is DBNull.Value Then
-            patient.PatientCommentaireSortie = ""
-        Else
-            patient.PatientCommentaireSortie = patientDataReader("oa_patient_commentaire_sortie")
-        End If
-
-        If patientDataReader("oa_patient_date_deces") Is DBNull.Value Then
-            patient.PatientDateDeces = Nothing
-        Else
-            patient.PatientDateDeces = CDate(patientDataReader("oa_patient_date_deces"))
-        End If
-
-        If patientDataReader("oa_patient_site_id") Is DBNull.Value Then
-            patient.PatientSiteId = 0
-        Else
-            patient.PatientSiteId = CInt(patientDataReader("oa_patient_site_id"))
-        End If
-
-        If patientDataReader("oa_patient_couverture_internet") Is DBNull.Value Then
-            patient.PatientInternet = False
-        Else
-            patient.PatientInternet = CInt(patientDataReader("oa_patient_couverture_internet"))
-        End If
-
-        If patientDataReader("oa_patient_unite_sanitaire_id") Is DBNull.Value Then
-            patient.PatientUniteSanitaireId = 0
-        Else
-            patient.PatientUniteSanitaireId = CInt(patientDataReader("oa_patient_unite_sanitaire_id"))
-        End If
-
-        If patientDataReader("oa_patient_synthese_date_maj") Is DBNull.Value Then
-            patient.PatientSyntheseDateMaj = Nothing
-        Else
-            patient.PatientSyntheseDateMaj = CDate(patientDataReader("oa_patient_synthese_date_maj"))
-        End If
-
-        If patientDataReader("oa_patient_date_naissance") Is DBNull.Value Then
-            patient.PatientAge = "Inconnu"
-        Else
-            patient.PatientAge = CalculAgeEnAnneeEtMoisString(patient.PatientDateNaissance)
-            patient.PatientAgeEnAnnee = CalculAgeEnAnnee(patient.PatientDateNaissance)
-        End If
-        Dim genre_description As String = Table_genre.GetGenreDescription(patient.PatientGenreId)
-        If genre_description = "" Then
-            patient.PatientGenre = "genre ?"
-        Else
-            patient.PatientGenre = genre_description
-        End If
-        patient.Profession = Coalesce(patientDataReader("oa_patient_profession"), "")
-        patient.PharmacienId = Coalesce(patientDataReader("oa_patient_pharmacie_id"), 0)
-        patient.Taille = Coalesce(patientDataReader("oa_patient_taille"), 0)
-        patient.BlocageMedical = Coalesce(patientDataReader("oa_patient_blocage_medical"), False)
-        patient.INS = Coalesce(patientDataReader("oa_patient_INS"), 0)
-        Return patient
-    End Function
-
-    Public Overrides Function GetPatientById(id As Long) As Patient
-        Dim patient As Patient = SetPatient(id)
-        If patient Is Nothing Then
-            Throw New ArgumentException("Patient non retrouvé !")
-        End If
         Return patient
     End Function
 
@@ -431,7 +304,7 @@ Public Class PatientDao
         Dim da As SqlDataAdapter = New SqlDataAdapter()
         Dim codeRetour As Boolean = True
 
-        Dim patient As Patient = GetPatientById(patientId)
+        Dim patient As Patient = GetPatient(patientId)
 
         Dim SQLstring As String = "UPDATE oasis.oa_patient SET oa_patient_synthese_date_maj = @date WHERE oa_patient_id = @patientId"
 

@@ -61,7 +61,7 @@ Public Class EpisodeProtocoleCollaboratifDao
         Dim patient As Patient
         Dim agePatientEnJour As Integer = 0
         Dim agePatientEnAnnee As Integer = 0
-        patient = patientDao.GetPatientById(patientId)
+        patient = patientDao.GetPatient(patientId)
         Select Case TypeActiviteEpisode
             Case Episode.EnumTypeActiviteEpisodeCode.PREVENTION_ENFANT_PRE_SCOLAIRE
                 'Calcul âge enfant en jour
@@ -219,7 +219,7 @@ Public Class EpisodeProtocoleCollaboratifDao
         Dim agePatientEnJour As Integer = 0
         Dim agePatientEnAnnee As Integer = 0
 
-        patient = patientDao.GetPatientById(patientId)
+        patient = patientDao.GetPatient(patientId)
         Select Case TypeActiviteEpisode
             Case Episode.EnumTypeActiviteEpisodeCode.PREVENTION_ENFANT_PRE_SCOLAIRE
                 'Calcul âge enfant en jour

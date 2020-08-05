@@ -153,7 +153,7 @@ Public Class FPatientListeDoublons
             'Initialisation du patient sélectionné
             Dim patientId As Integer = CInt(TxtIdSelected.Text)
             'patientDao.SetPatient(Me.SelectedPatient, patientId)
-            Me.SelectedPatient = patientDao.GetPatientById(patientId)
+            Me.SelectedPatient = patientDao.GetPatient(patientId)
 
             Dim vFFPatientDetailEdit As New RadFPatientDetailEdit
             vFFPatientDetailEdit.SelectedPatientId = patientId
@@ -183,7 +183,7 @@ Public Class FPatientListeDoublons
             Dim vFSynthese As New RadFSynthese
 
             'patientDao.SetPatient(Me.SelectedPatient, patientId)
-            Me.SelectedPatient = patientDao.GetPatientById(patientId)
+            Me.SelectedPatient = patientDao.GetPatient(patientId)
 
             vFSynthese.SelectedPatient = Me.SelectedPatient
             vFSynthese.UtilisateurConnecte = Me.UtilisateurConnecte

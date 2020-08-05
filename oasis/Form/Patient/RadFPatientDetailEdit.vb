@@ -185,7 +185,7 @@ Public Class RadFPatientDetailEdit
 
     'Chargement des données du patient
     Private Sub ChargementPatient()
-        patientRead = patientDao.GetPatientById(SelectedPatientId)
+        patientRead = patientDao.GetPatient(SelectedPatientId)
         patientUpdate = patientDao.ClonePatient(patientRead)
 
         LblIdentifiantOasis.Text = patientUpdate.patientId
@@ -627,12 +627,12 @@ Public Class RadFPatientDetailEdit
         patientUpdate.PatientGenre = CbxGenre.SelectedValue
         GestionAffichageBoutonValidation()
         If CbxGenre.SelectedValue = "Masculin" Then
-            patientUpdate.PatientGenreId = patientDao.EnumGenreId.Masculin
+            patientUpdate.PatientGenreId = Patient.EnumGenreId.Masculin
             TxtNomMarital.Text = ""
             TxtNomMarital.Hide()
             LblNomMarital.Hide()
         Else
-            patientUpdate.PatientGenreId = patientDao.EnumGenreId.Feminin
+            patientUpdate.PatientGenreId = Patient.EnumGenreId.Feminin
             TxtNomMarital.Show()
             LblNomMarital.Show()
         End If

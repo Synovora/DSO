@@ -8,7 +8,7 @@ Namespace Controllers
         <AllowAnonymous>
         Function Check(id As String) As ActionResult
             Dim ordonnanceDao As New OrdonnanceDao
-            Dim patientDao As New PatientDaoBase
+            Dim patientDao As New PatientDao
             Dim utilisateurDao As New UserDao
             Dim ordonnanceDetailDao As New OrdonnanceDetailDao
             Dim traitementDao As New TraitementDao
@@ -31,7 +31,7 @@ Namespace Controllers
                 Next
                 ViewBag.Traitements = traitements
 
-                Dim patient = patientDao.GetPatientById(ordonnance.PatientId)
+                Dim patient = patientDao.GetPatient(ordonnance.PatientId)
                 If patient Is Nothing Then
                     Return View()
                 End If

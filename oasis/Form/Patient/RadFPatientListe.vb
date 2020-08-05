@@ -322,7 +322,7 @@ Public Class RadFPatientListe
 
         Try
             Using form As New RadFPatientDetailEdit
-                Me.SelectedPatient = patientDao.SetPatient(0)
+                Me.SelectedPatient = patientDao.GetPatient(0)
                 form.SelectedPatientId = 0
                 form.UtilisateurConnecte = Me.UtilisateurConnecte
                 form.SelectedPatient = Me.SelectedPatient
@@ -346,7 +346,7 @@ Public Class RadFPatientListe
 
         Try
             Using vFMenuAdmin As New FrmMain
-                Me.SelectedPatient = patientDao.SetPatient(0)
+                Me.SelectedPatient = patientDao.GetPatient(0)
                 vFMenuAdmin.ShowDialog() 'Modal
             End Using
         Catch ex As Exception
@@ -361,7 +361,7 @@ Public Class RadFPatientListe
         If TxtIdSelected.Text <> "" Then
             'Initialisation du patient sélectionné
             Dim patientId As Integer = CInt(TxtIdSelected.Text)
-            Me.SelectedPatient = patientDao.GetPatientById(patientId)
+            Me.SelectedPatient = patientDao.GetPatient(patientId)
             Cursor.Current = Cursors.WaitCursor
             Me.Enabled = False
 
@@ -413,7 +413,7 @@ Public Class RadFPatientListe
             Try
                 Using form As New RadFSynthese
                     'patientDao.SetPatient(Me.SelectedPatient, patientId)
-                    Me.SelectedPatient = patientDao.GetPatientById(patientId)
+                    Me.SelectedPatient = patientDao.GetPatient(patientId)
                     form.SelectedPatient = Me.SelectedPatient
                     form.UtilisateurConnecte = Me.UtilisateurConnecte
                     form.EcranPrecedent = EnumAccesEcranPrecedent.SANS
@@ -490,12 +490,12 @@ Public Class RadFPatientListe
         If TxtIdSelected.Text <> "" Then
             'Initialisation du patient sélectionné
             Dim patientId As Integer = CInt(TxtIdSelected.Text)
-            Me.SelectedPatient = patientDao.GetPatientById(patientId)
+            Me.SelectedPatient = patientDao.GetPatient(patientId)
             Cursor.Current = Cursors.WaitCursor
             Me.Enabled = False
             EpisodeUtils.CallEpisode(SelectedPatient, 0, userLog, EnumAccesEcranPrecedent.SANS)
             Me.Enabled = True
-            episode = episodeDao.GetEpisodeEnCoursByPatientId(Me.SelectedPatient.patientId)
+            episode = episodeDao.GetEpisodeEnCoursByPatientId(Me.SelectedPatient.PatientId)
             If episode.Id <> 0 Then
                 RadBtnEpisode.ForeColor = Color.Red
                 RadBtnEpisode.Font = New Font(RadBtnEpisode.Font, FontStyle.Bold)
@@ -519,8 +519,8 @@ Public Class RadFPatientListe
 
             Try
                 Using form As New RadFPatientRendezVousListe
-                    Me.SelectedPatient = patientDao.SetPatient(patientId)
-                    Me.SelectedPatient = patientDao.GetPatientById(patientId)
+                    Me.SelectedPatient = patientDao.GetPatient(patientId)
+                    Me.SelectedPatient = patientDao.GetPatient(patientId)
                     form.SelectedPatient = Me.SelectedPatient
                     form.ShowDialog() 'Modal
                 End Using
@@ -555,7 +555,7 @@ Public Class RadFPatientListe
         Cursor.Current = Cursors.WaitCursor
         Dim patientId As Integer = CInt(TxtIdSelected.Text)
         Using vadFEpisodeListe As New RadFEpisodeLigneDeVie
-            Me.SelectedPatient = patientDao.GetPatientById(patientId)
+            Me.SelectedPatient = patientDao.GetPatient(patientId)
             vadFEpisodeListe.SelectedPatient = Me.SelectedPatient
             vadFEpisodeListe.UtilisateurConnecte = Me.UtilisateurConnecte
             vadFEpisodeListe.EcranPrecedent = EnumAccesEcranPrecedent.SANS

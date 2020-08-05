@@ -1503,7 +1503,7 @@ Public Class TacheDao
         If tache.EmetteurFonctionId <> 0 Then tacheBeanAssocie.FonctionEmetteur = fonctionDao.GetFonctionById(tache.EmetteurFonctionId)
         tacheBeanAssocie.UniteSanitaire = uniteSanitaireDao.getUniteSanitaireById(tache.UniteSanitaireId, True)
         tacheBeanAssocie.Site = siteDao.getSiteById(tache.SiteId, True)
-        tacheBeanAssocie.Patient = patientDao.GetPatientById(tache.PatientId)
+        tacheBeanAssocie.Patient = patientDao.GetPatient(tache.PatientId)
         If tache.ParcoursId <> 0 Then
             tacheBeanAssocie.Parcours = parcoursDao.GetParcoursById(tache.ParcoursId)
             If tacheBeanAssocie.Parcours.SpecialiteId <> 0 Then

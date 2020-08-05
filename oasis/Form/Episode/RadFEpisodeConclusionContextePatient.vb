@@ -41,7 +41,7 @@ Public Class RadFEpisodeConclusionContextePatient
 
     Private Sub ChargementEtatCivil()
         Dim patientDao As New PatientDao
-        SelectedPatient = patientDao.GetPatientById(SelectedEpisode.PatientId)
+        SelectedPatient = patientDao.GetPatient(SelectedEpisode.PatientId)
         LblPatientNIR.Text = SelectedPatient.PatientNir.ToString
         LblPatientPrenom.Text = SelectedPatient.PatientPrenom
         LblPatientNom.Text = SelectedPatient.PatientNom

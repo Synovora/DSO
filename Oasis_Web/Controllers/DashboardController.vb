@@ -11,7 +11,7 @@ Namespace Oasis_Web.Controllers
 
         ReadOnly parametreDao As New ParametreDao
         ReadOnly ordonnanceDao As New OrdonnanceDao
-        ReadOnly patientDao As New PatientDaoBase
+        ReadOnly patientDao As New PatientDao
         ReadOnly utilisateurDao As New UserDao
         ReadOnly ordonnanceDetailDao As New OrdonnanceDetailDao
         ReadOnly traitementDao As New TraitementDao
@@ -31,7 +31,7 @@ Namespace Oasis_Web.Controllers
                 Return View("~/Views/Pages/pages-500.cshtml")
             End If
 
-            Dim patient = patientDao.GetPatientById(Request.Cookies("patientId").Value)
+            Dim patient = patientDao.GetPatient(Request.Cookies("patientId").Value)
             ViewBag.Patient = patient
             ViewBag.ParametresAutoSuivi = BuildAutoSuiviList(patient.PatientId)
 

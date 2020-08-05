@@ -205,7 +205,6 @@
     <Compile Include="Dao\Parcours\ParcoursDao.vb" />
     <Compile Include="Dao\Parcours\ParcoursHistoDao.vb" />
     <Compile Include="Dao\Patient\PatientDao.vb" />
-    <Compile Include="Dao\Patient\PatientDaoBase.vb" />
     <Compile Include="Dao\Patient\PatientNoteDao.vb" />
     <Compile Include="Dao\Patient\PatientNoteDirectiveDao.vb" />
     <Compile Include="Dao\Patient\PatientNoteMedicaleDao.vb" />

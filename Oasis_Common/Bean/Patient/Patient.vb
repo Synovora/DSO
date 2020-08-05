@@ -1,6 +1,10 @@
 ﻿Imports System.Collections.Specialized
 
 Public Class Patient
+    Public Structure EnumGenreId
+        Const Feminin = "F"
+        Const Masculin = "M"
+    End Structure
 
     Property PatientId As Integer
     Property PatientNir As Long
