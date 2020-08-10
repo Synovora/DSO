@@ -50,7 +50,11 @@ Public Class ParametreDrcDao
                 If reader.Read() Then
                     parametreDrc = BuildBean(reader)
                 Else
-                    Throw New ArgumentException("ParametreDrc inexistant !")
+                    parametreDrc = New ParametreDrc With {
+                        .Id = 0,
+                        .ParametreId = 0,
+                        .DrcId = 0
+                    }
                 End If
             End Using
         Catch ex As Exception

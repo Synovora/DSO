@@ -43,6 +43,7 @@ Public Class PatientDao
     Public Function GetPatient(patientId As Integer) As Patient
         Dim patient As New Patient
         Dim con As SqlConnection = GetConnection()
+        Console.WriteLine("GetPatient: " & patientId)
         Try
             Dim command As SqlCommand = con.CreateCommand()
             command.CommandText =
