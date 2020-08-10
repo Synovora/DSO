@@ -268,7 +268,6 @@ Public Class ParcoursDao
 
     Public Function CreateIntervenantOasisByPatient(PatientId As Integer, userLog As Utilisateur, Optional afficheMessage As Boolean = True) As Boolean
         Dim parcours As New Parcours
-        'Dim rorDao As New RorDao
 
         'Création médecin référent
         If ExistIntervenantByPatientId(PatientId, EnumCategoriePPS.Suivi, EnumSousCategoriePPS.medecinReferent, EnumSpecialiteOasis.medecinReferent) = False Then
@@ -288,9 +287,10 @@ Public Class ParcoursDao
 
             parcours.Id = CreateIntervenantParcours(parcours, userLog)
             If parcours.Id <> 0 Then
-                If afficheMessage = True Then
-                    Throw New Exception("Intervenant médecin référent du parcours de soin créé")
-                End If
+                'TODO: Add Message.Show
+                'If afficheMessage = True Then
+                '    Throw New Exception("Intervenant médecin référent du parcours de soin créé")
+                'End If
                 'Création automatique de la première demande de rendez-vous
                 Dim patient As Patient = patientDao.GetPatient(PatientId)
                 Dim tacheDao As New TacheDao
@@ -316,9 +316,10 @@ Public Class ParcoursDao
 
             parcours.Id = CreateIntervenantParcours(parcours, userLog)
             If parcours.Id <> 0 Then
-                If afficheMessage = True Then
-                    Throw New Exception("Intervenant IDE sur site du parcours de soin créé")
-                End If
+                'TODO: Add Message
+                'If afficheMessage = True Then
+                '    Throw New Exception("Intervenant IDE sur site du parcours de soin créé")
+                'End If
                 'Création automatique de la première demande de rendez-vous
                 Dim patient As Patient = patientDao.GetPatient(PatientId)
                 Dim tacheDao As New TacheDao

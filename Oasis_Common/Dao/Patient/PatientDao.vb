@@ -43,25 +43,26 @@ Public Class PatientDao
     Public Function GetPatient(patientId As Integer) As Patient
         Dim patient As New Patient
         Dim con As SqlConnection = GetConnection()
-        Console.WriteLine("GetPatient: " & patientId)
-        Try
-            Dim command As SqlCommand = con.CreateCommand()
-            command.CommandText =
+        If patientId <> 0 Then
+            Try
+                Dim command As SqlCommand = con.CreateCommand()
+                command.CommandText =
                     "SELECT * FROM oasis.oa_patient where oa_patient_id = @patientId"
-            command.Parameters.AddWithValue("@patientId", patientId.ToString)
-            Using reader As SqlDataReader = command.ExecuteReader()
-                If reader.Read() Then
-                    patient = BuildBean(reader)
-                Else
-                    Throw New ArgumentException("Patient inexistant !")
-                End If
-            End Using
+                command.Parameters.AddWithValue("@patientId", patientId.ToString)
+                Using reader As SqlDataReader = command.ExecuteReader()
+                    If reader.Read() Then
+                        patient = BuildBean(reader)
+                    Else
+                        Throw New ArgumentException("Patient inexistant !")
+                    End If
+                End Using
 
-        Catch ex As Exception
-            Throw ex
-        Finally
-            con.Close()
-        End Try
+            Catch ex As Exception
+                Throw ex
+            Finally
+                con.Close()
+            End Try
+        End If
         Return patient
     End Function
 
@@ -469,12 +470,12 @@ Public Class PatientDao
         Return StringContreIndication
     End Function
 
-    Public Function CreationPatient(patient As Patient, userLog As Utilisateur) As Boolean
-        'Dim da As MySqlDataAdapter = New MySqlDataAdapter()
+    Public Sub CreationPatient(patient As Patient, userLog As Utilisateur)
         Dim da As SqlDataAdapter = New SqlDataAdapter()
         Dim patientId As Long
-        Dim codeRetour As Boolean = True
-
+        Dim parcoursDao As New ParcoursDao
+        Dim MaxDate As New Date(9998, 12, 31, 0, 0, 0)
+        Dim con As SqlConnection = GetConnection()
         Dim SQLstring As String = "INSERT INTO oasis.oa_patient" &
         " (oa_patient_nir, oa_patient_nir_modulo, oa_patient_INS, oa_patient_prenom, oa_patient_nom, oa_patient_nom_marital, oa_patient_date_naissance," &
         " oa_patient_genre_id, oa_patient_adresse1, oa_patient_adresse2, oa_patient_code_postal, oa_patient_ville, oa_patient_tel1," &
@@ -484,9 +485,7 @@ Public Class PatientDao
         " @genreId, @adresse1, @adresse2, @codePostal, @ville, @tel1," &
         " @tel2, @email, @dateEntree, @dateSortie, @commentaireSortie, @dateDeces, @siteId, @uniteSanitaireId, @internet, @profession, @pharmacienId, @siegeId) ; SELECT SCOPE_IDENTITY()"
 
-        Dim conxn As New SqlConnection(GetConnectionString())
-        Dim cmd As New SqlCommand(SQLstring, conxn)
-
+        Dim cmd As New SqlCommand(SQLstring, con)
         With cmd.Parameters
             .AddWithValue("@nir", patient.PatientNir)
             .AddWithValue("@nirModulo", 0)
@@ -514,30 +513,18 @@ Public Class PatientDao
             .AddWithValue("@pharmacienId", patient.PharmacienId.ToString)
             .AddWithValue("@siegeId", "1")
         End With
-
         Try
-            conxn.Open()
             da.InsertCommand = cmd
             patientId = da.InsertCommand.ExecuteScalar()
-            Throw New Exception("Patient créé")
-        Catch ex As Exception
-            Throw New Exception(ex.Message)
-            codeRetour = False
-            Throw ex
-        Finally
-            conxn.Close()
-        End Try
-
-        Dim MaxDate As New Date(9998, 12, 31, 0, 0, 0)
-        If patient.PatientDateEntree.Date <> MaxDate.Date Then
-            If patientId <> 0 Then
-                Dim parcoursDao As New ParcoursDao
+            If patient.PatientDateEntree.Date <> MaxDate.Date Then
                 parcoursDao.CreateIntervenantOasisByPatient(patientId, userLog)
             End If
-        End If
-
-        Return codeRetour
-    End Function
+        Catch ex As Exception
+            Throw ex
+        Finally
+            con.Close()
+        End Try
+    End Sub
 
     Public Function ModificationPatient(patient As Patient, userLog As Utilisateur) As Boolean
         'Dim da As MySqlDataAdapter = New MySqlDataAdapter()

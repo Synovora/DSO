@@ -375,7 +375,16 @@ Public Class RadFPatientDetailEdit
                             Exit Sub
                         End If
                     End If
-                    Me.CodeRetour = CreationPatient()
+                    Try
+                        patientDao.CreationPatient(patientUpdate, userLog)
+                        Dim form As New RadFNotification With {
+                            .Message = "Patient créé"
+                        }
+                        form.Show()
+                        Me.CodeRetour = True
+                    Catch ex As Exception
+                        MessageBox.Show(ex.Message)
+                    End Try
                 Case EnumEditMode.Modification
                     Me.CodeRetour = ModificationPatient()
             End Select
@@ -537,21 +546,6 @@ Public Class RadFPatientDetailEdit
             codeRetour = True
             Dim form As New RadFNotification With {
                 .Message = "Patient modifié"
-            }
-            form.Show()
-        End If
-
-        Return codeRetour
-    End Function
-
-    'Création du patient
-    Private Function CreationPatient() As Boolean
-        Dim codeRetour As Boolean = False
-
-        If patientDao.CreationPatient(patientUpdate, userLog) = True Then
-            codeRetour = True
-            Dim form As New RadFNotification With {
-                .Message = "Patient créé"
             }
             form.Show()
         End If
