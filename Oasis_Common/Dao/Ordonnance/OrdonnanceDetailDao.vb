@@ -82,28 +82,6 @@ Public Class OrdonnanceDetailDao
     End Function
 
     'TODO: change it
-    Public Function GetAllOrdonnanceLigneByOrdonnanceId(ordonnanceId As Integer) As DataTable
-        Dim SQLString As String = "SELECT * FROM oasis.oa_patient_ordonnance_detail WHERE oa_ordonnance_id = " & ordonnanceId.ToString &
-                    " ORDER BY oa_traitement_ordre_affichage, oa_ordonnance_ligne_id"
-        Using con As SqlConnection = GetConnection()
-            Dim OrdonnanceDataAdapter As SqlDataAdapter = New SqlDataAdapter()
-            Using OrdonnanceDataAdapter
-                OrdonnanceDataAdapter.SelectCommand = New SqlCommand(SQLString, con)
-                Dim OrdonnanceDataTable As DataTable = New DataTable()
-                Using OrdonnanceDataTable
-                    Try
-                        OrdonnanceDataAdapter.Fill(OrdonnanceDataTable)
-                        Dim command As SqlCommand = con.CreateCommand()
-                    Catch ex As Exception
-                        Throw ex
-                    End Try
-                    Return OrdonnanceDataTable
-                End Using
-            End Using
-        End Using
-    End Function
-
-    'TODO: change it
     Public Function GetAllOrdonnanceLigneSelectAldByOrdonnanceId(ordonnanceId As Integer, traitementAld As Boolean) As DataTable
         Dim SQLString As String = "SELECT * FROM oasis.oa_patient_ordonnance_detail" &
                     " WHERE oa_ordonnance_id = " & ordonnanceId.ToString &
@@ -147,9 +125,9 @@ Public Class OrdonnanceDetailDao
         " @fenetre, @fenetreDateDebut, @fenetreDateFin, @inactif)"
         Dim cmd As New SqlCommand(SQLstring, con)
         With cmd.Parameters
-            .AddWithValue("@ordonnanceId", ordonnanceDetail.OrdonnanceId.ToString)
+            .AddWithValue("@ordonnanceId", ordonnanceDetail.OrdonnanceId)
             .AddWithValue("@traitement", ordonnanceDetail.Traitement)
-            .AddWithValue("@traitementId", ordonnanceDetail.TraitementId.ToString)
+            .AddWithValue("@traitementId", ordonnanceDetail.TraitementId)
             .AddWithValue("@ordreAffichage", ordonnanceDetail.OrdreAffichage.ToString)
             .AddWithValue("@ald", ordonnanceDetail.Ald)
             .AddWithValue("@aDelivrer", ordonnanceDetail.ADelivrer)

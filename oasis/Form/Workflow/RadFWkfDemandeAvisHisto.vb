@@ -1,4 +1,5 @@
 ﻿Imports Oasis_Common
+Imports Telerik.WinControls.UI
 
 Public Class RadFWkfDemandeAvisHisto
     Private _selectedEpisodeId As Long
@@ -33,6 +34,13 @@ Public Class RadFWkfDemandeAvisHisto
         Cursor.Current = Cursors.Default
     End Sub
 
+    Private Sub RadFWkfDemandeAvisHisto_ToolTipTextNeeded(sender As Object, e As Telerik.WinControls.ToolTipTextNeededEventArgs) Handles RadHistoDataGridView.ToolTipTextNeeded
+        Dim cell As GridDataCellElement = TryCast(sender, GridDataCellElement)
+        If cell IsNot Nothing Then
+            e.ToolTipText = cell.Value.ToString()
+        End If
+    End Sub
+
     Private Sub ChargementHisto()
         Dim histoWorkflow As DataTable
         Dim tacheDao As New TacheDao
@@ -64,6 +72,7 @@ Public Class RadFWkfDemandeAvisHisto
             RadHistoDataGridView.Rows(iGrid).Cells("destinataire").Value = histoWorkflow.Rows(i)("user_destinataire_fonction")
 
             RadHistoDataGridView.Rows(iGrid).Cells("commentaire").Value = histoWorkflow.Rows(i)("emetteur_commentaire")
+            'RadHistoDataGridView.Rows(iGrid).Cells("commentaire")
 
             RadHistoDataGridView.Rows(iGrid).Cells("dateCreation").Value = histoWorkflow.Rows(i)("horodate_creation").ToString()
             RadHistoDataGridView.Rows(iGrid).Cells("dateTraitement").Value = histoWorkflow.Rows(i)("horodate_cloture").ToString()

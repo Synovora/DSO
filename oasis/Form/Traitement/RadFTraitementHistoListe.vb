@@ -264,7 +264,7 @@ Public Class RadFTraitementHistoListe
                             End If
                         End If
 
-                        Base = TraitementDao.GetBaseDescription(traitementDataTable.Rows(i)("oa_traitement_posologie_base"))
+                        Base = traitementDao.GetBaseDescription(traitementDataTable.Rows(i)("oa_traitement_posologie_base"))
                         Posologie = Base + RythmeString
                 End Select
             End If

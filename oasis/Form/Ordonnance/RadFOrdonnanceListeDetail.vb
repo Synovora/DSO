@@ -138,22 +138,16 @@ Public Class RadFOrdonnanceListeDetail
             iGridALD = -1
             iGridNonALD = -1
 
-            Dim ordonnanceDataTable As DataTable
             Dim ordonnanceDaoDetail As OrdonnanceDetailDao = New OrdonnanceDetailDao
-            ordonnanceDataTable = ordonnanceDaoDetail.GetAllOrdonnanceLigneByOrdonnanceId(Me.SelectedOrdonnanceId)
-
+            Dim ordonnanceDetails As List(Of OrdonnanceDetail) = ordonnanceDaoDetail.GetOrdonnanceLigneByOrdonnanceId(Me.SelectedOrdonnanceId)
             Dim i As Integer
-            Dim rowCount As Integer = ordonnanceDataTable.Rows.Count - 1
             Dim Posologie As String
             Dim dateFin, dateDebut As Date
             Dim FenetreTherapeutiqueEnCours As Boolean
             Dim FenetreTherapeutiqueAVenir As Boolean
-
-            'Dim Allergie As Boolean = False
             Dim FenetreDateDebut, FenetreDateFin As Date
 
             Allergie = False
-
             ContreIndication = False
             LblAllergie.Visible = False
             lblContreIndication.Visible = False
@@ -164,72 +158,44 @@ Public Class RadFOrdonnanceListeDetail
             SelectedPatient.PatientMedicamentsPrescritsCis.Clear()
 
             'Parcours du DataTable pour alimenter les colonnes du DataGridView
-            For i = 0 To rowCount Step 1
+            For i = 0 To ordonnanceDetails.Count - 1 Step 1
                 Dim ordonnanceDetailGrid As New OrdonnanceDetailGrid
-                'Date de fin
-                If ordonnanceDataTable.Rows(i)("oa_traitement_date_fin") IsNot DBNull.Value Then
-                    dateFin = ordonnanceDataTable.Rows(i)("oa_traitement_date_fin")
-                Else
-                    dateFin = "31/12/2999"
-                End If
-
-                'Date début
-                If ordonnanceDataTable.Rows(i)("oa_traitement_date_debut") IsNot DBNull.Value Then
-                    dateDebut = ordonnanceDataTable.Rows(i)("oa_traitement_date_debut")
-                Else
-                    dateDebut = "01/01/1900"
-                End If
-
-                'Exclusion de l'affichage des traitements dont la date de fin est <à la date du jour
-                'Cette condition est traitée en exclusion (et non dans la requête SQL) pour stocker les allergies et les contre-indications dans la StringCollection quel que soit leur date de fin
-                If (dateFin.Date < Date.Now.Date) Then
-                    'Continue For
-                End If
-
-                'Vérification de l'existence d'une fenêtre thérapeutique active et à venir
+                dateFin = ordonnanceDetails(i).DateFin
+                dateDebut = ordonnanceDetails(i).DateDebut
                 FenetreTherapeutiqueEnCours = False
                 FenetreTherapeutiqueAVenir = False
-
-                If ordonnanceDataTable.Rows(i)("oa_traitement_fenetre_date_debut") IsNot DBNull.Value Then
-                    FenetreDateDebut = ordonnanceDataTable.Rows(i)("oa_traitement_fenetre_date_debut")
-                Else
-                    FenetreDateDebut = "31/12/2999"
-                End If
-
-
-                If ordonnanceDataTable.Rows(i)("oa_traitement_fenetre_date_fin") IsNot DBNull.Value Then
-                    FenetreDateFin = ordonnanceDataTable.Rows(i)("oa_traitement_fenetre_date_fin")
-                Else
-                    FenetreDateFin = "01/01/1900"
-                End If
-
+                FenetreDateDebut = ordonnanceDetails(i).FenetreDateDebut
+                FenetreDateFin = ordonnanceDetails(i).FenetreDateFin
                 Posologie = ""
+                'If (dateFin.Date < Date.Now.Date) Then
+                '    'Continue For
+                'End If
+
+                'Vérification de l'existence d'une fenêtre thérapeutique active et à venir
 
                 'Existence d'une fenêtre thérapeutique
                 Dim FenetreTherapeutiqueExiste As Boolean = False
-                If ordonnanceDataTable.Rows(i)("oa_traitement_fenetre") IsNot DBNull.Value Then
-                    If ordonnanceDataTable.Rows(i)("oa_traitement_fenetre") = "1" Then
-                        'Fenêtre thérapeutique en cours, à venir ou obsolète
-                        FenetreTherapeutiqueExiste = True
-                        If FenetreDateDebut.Date <= Date.Now.Date And FenetreDateFin >= Date.Now.Date Then
-                            FenetreTherapeutiqueEnCours = True
-                        Else
-                            If FenetreDateDebut > Date.Now.Date Then
-                                FenetreTherapeutiqueAVenir = True
-                            End If
+                If ordonnanceDetails(i).Fenetre = True Then
+                    'Fenêtre thérapeutique en cours, à venir ou obsolète
+                    FenetreTherapeutiqueExiste = True
+                    If FenetreDateDebut.Date <= Date.Now.Date And FenetreDateFin >= Date.Now.Date Then
+                        FenetreTherapeutiqueEnCours = True
+                    Else
+                        If FenetreDateDebut > Date.Now.Date Then
+                            FenetreTherapeutiqueAVenir = True
                         End If
                     End If
                 End If
 
-                ordonnanceDetailGrid.TraitementId = Coalesce(ordonnanceDataTable.Rows(i)("oa_traitement_id"), 0)
-                ordonnanceDetailGrid.OrdonnanceLigneId = ordonnanceDataTable.Rows(i)("oa_ordonnance_ligne_id")
-                ordonnanceDetailGrid.MedicamentDci = Coalesce(ordonnanceDataTable.Rows(i)("oa_traitement_medicament_dci"), "")
-                ordonnanceDetailGrid.MedicamentCis = Coalesce(ordonnanceDataTable.Rows(i)("oa_traitement_medicament_cis"), 0)
-                ordonnanceDetailGrid.Posologie = Coalesce(ordonnanceDataTable.Rows(i)("oa_traitement_posologie"), "")
-                ordonnanceDetailGrid.CommentairePosologie = Coalesce(ordonnanceDataTable.Rows(i)("oa_traitement_posologie_commentaire"), "")
-                ordonnanceDetailGrid.Duree = Coalesce(ordonnanceDataTable.Rows(i)("oa_traitement_duree"), 0)
-                ordonnanceDetailGrid.ADelivrer = Coalesce(ordonnanceDataTable.Rows(i)("oa_traitement_a_delivrer"), False)
-                ordonnanceDetailGrid.Ald = Coalesce(ordonnanceDataTable.Rows(i)("oa_traitement_ald"), False)
+                ordonnanceDetailGrid.TraitementId = ordonnanceDetails(i).TraitementId
+                ordonnanceDetailGrid.OrdonnanceLigneId = ordonnanceDetails(i).LigneId
+                ordonnanceDetailGrid.MedicamentDci = ordonnanceDetails(i).MedicamentDci
+                ordonnanceDetailGrid.MedicamentCis = ordonnanceDetails(i).MedicamentCis
+                ordonnanceDetailGrid.Posologie = ordonnanceDetails(i).Posologie
+                ordonnanceDetailGrid.CommentairePosologie = ordonnanceDetails(i).PosologieCommentaire
+                ordonnanceDetailGrid.Duree = ordonnanceDetails(i).Duree
+                ordonnanceDetailGrid.ADelivrer = ordonnanceDetails(i).ADelivrer
+                ordonnanceDetailGrid.Ald = ordonnanceDetails(i).Ald
                 ordonnanceDetailGrid.FenetreTherapeutique = FenetreTherapeutiqueEnCours
 
                 'Aiguillage ALD / Non ALD

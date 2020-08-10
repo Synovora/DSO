@@ -1268,6 +1268,7 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Form\Antecedent\RadFAntecedentDetailEdit.resx">
       <DependentUpon>RadFAntecedentDetailEdit.vb</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Form\Obsolete\RadFMedocSelecteur.resx">
       <DependentUpon>RadFMedocSelecteur.vb</DependentUpon>

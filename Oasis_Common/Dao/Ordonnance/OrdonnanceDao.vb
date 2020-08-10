@@ -254,6 +254,7 @@ Public Class OrdonnanceDao
     End Sub
 
     Public Sub CreateNewOrdonnanceDetail(patientId As Integer, ordonnanceId As Integer, episode As Episode)
+        Console.WriteLine("CreateNewOrdonnanceDetail: " & ordonnanceId)
         Try
             Dim alddao As New AldDao
             Dim TraitementDao As New TraitementDao

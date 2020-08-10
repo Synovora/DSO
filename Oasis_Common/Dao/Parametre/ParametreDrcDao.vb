@@ -38,6 +38,8 @@ Public Class ParametreDrcDao
     Public Function GetParametreByDrcAndId(DrcId As Long, parametreId As Long) As ParametreDrc
         Dim parametreDrc As ParametreDrc
         Dim con As SqlConnection = GetConnection()
+        Console.WriteLine("DrcId: " & DrcId)
+        Console.WriteLine("parametreId: " & parametreId)
         Try
             Dim command As SqlCommand = con.CreateCommand()
             command.CommandText = "SELECT * FROM oasis.oa_drc_parametre " &

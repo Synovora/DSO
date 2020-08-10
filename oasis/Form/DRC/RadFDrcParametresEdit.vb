@@ -42,7 +42,7 @@ Public Class RadFDrcParametresEdit
             RadGridViewParm.Rows(iGrid).Cells("description").Value = parametreDt.Rows(i)("description")
             RadGridViewParm.Rows(iGrid).Cells("unite").Value = parametreDt.Rows(i)("unite")
             ParametreId = Coalesce(parametreDt.Rows(i)("id"), 0)
-            parametreDrc = parametreDrcDao.GetParametreByDrcAndId(Me.DrcId, ParametreId)
+            parametreDrc = parametreDrcDao.GetParametreByDrcAndId(Me.DrcId, ParametreId) 'TODO: check Me.DrcId
             If parametreDrc.Id <> 0 Then
                 RadGridViewParm.Rows(iGrid).Cells("selection").Value = True
             Else

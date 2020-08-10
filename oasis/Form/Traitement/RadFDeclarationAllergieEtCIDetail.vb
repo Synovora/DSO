@@ -114,7 +114,7 @@ Public Class RadFDeclarationAllergieEtCIDetail
     End Sub
 
     Private Sub ChargementTraitementExistant()
-        traitement = traitementDao.getTraitementById(SelectedTraitementId)
+        traitement = traitementDao.GetTraitementById(SelectedTraitementId)
         ChargerZonesArret(traitement)
     End Sub
 

@@ -3889,8 +3889,8 @@ Public Class RadFEpisodeDetail
                 End If
             End If
             Try
-                ordonnaceDao.CreateNewOrdonnanceDetail(SelectedPatient.PatientId, OrdonnanceId, episode)
                 OrdonnanceId = ordonnaceDao.CreateOrdonnance(SelectedPatient.PatientId, SelectedEpisodeId, userLog)
+                ordonnaceDao.CreateNewOrdonnanceDetail(SelectedPatient.PatientId, OrdonnanceId, episode)
                 AfficheOrdonnance(OrdonnanceId)
             Catch ex As Exception
                 MessageBox.Show(ex.Message)
