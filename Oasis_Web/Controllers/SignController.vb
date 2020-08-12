@@ -19,6 +19,7 @@ Namespace Controllers
                 Dim signatue As Byte() = Base64UrlEncoder.DecodeBytes(id)
                 Dim sigHex As String = "0x" & LCase(BitConverter.ToString(signatue).Replace("-", String.Empty))
                 Dim ordonnance = ordonnanceDao.GetOrdonnaceBySignature(sigHex)
+
                 If ordonnance.Inactif = True Then
                     Return View("~/Views/Sign/Inactif.vbhtml")
                 End If
@@ -43,7 +44,7 @@ Namespace Controllers
                 End If
                 ViewBag.User = user
             Catch
-                Return View("~/Views/Pages/pages-404.cshtml")
+                Return View("~/Views/Sign/Inactif.vbhtml")
             End Try
 
             Return View()
