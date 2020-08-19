@@ -283,15 +283,18 @@ Public Class RadFParcoursConsigneDetailEdit
 
     'Validation
     Private Sub RadBtnValidation_Click(sender As Object, e As EventArgs) Handles RadBtnValidation.Click
+        CodeRetour = False
         If ControleDonnees() = True Then
             Select Case EditMode
                 Case EnumEditMode.Modification
                     parcoursConsigneDao.ModificationParcoursConsigne(parcoursConsigne)
                     MessageBox.Show("Consigne paramédicale modifiée")
+                    CodeRetour = True
                     Close()
                 Case EnumEditMode.Creation
                     parcoursConsigneDao.CreateParcoursConsigne(parcoursConsigne)
                     MessageBox.Show("Consigne paramédicale créée")
+                    CodeRetour = True
                     Close()
             End Select
         End If
@@ -299,9 +302,11 @@ Public Class RadFParcoursConsigneDetailEdit
 
     'Annulation consigne paramédicale
     Private Sub RadBtnAnnulation_Click(sender As Object, e As EventArgs) Handles RadBtnAnnulation.Click
+        CodeRetour = False
         If MsgBox("Confirmation de l'annulation ", MsgBoxStyle.YesNo, "") = MsgBoxResult.Yes Then
             parcoursConsigneDao.AnnulationParcoursConsigne(parcoursConsigne)
             MessageBox.Show("Consigne paramédicale annulée")
+            CodeRetour = True
             Close()
         End If
     End Sub

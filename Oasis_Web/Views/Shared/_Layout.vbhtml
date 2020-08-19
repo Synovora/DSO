@@ -6,6 +6,7 @@
     @Html.Partial("~/Views/Shared/_title_meta.cshtml")
     @RenderSection("styles", false)
     @Html.Partial("~/Views/Shared/_head_css.cshtml")
+    <link href="~/assets/css/app.css" id="app-style" rel="stylesheet" type="text/css" />
 
 </head>
 
@@ -18,14 +19,14 @@
         <!-- ============================================================== -->
         <!-- Start right Content here -->
         <!-- ============================================================== -->
-
+        @Scripts.Render("~/bundles/jquery")
         <div class="main-content">
             <div class="page-content">
                 <div class="container-fluid">
                     @Html.Partial("~/Views/Shared/_page_title.vbhtml")
-          
-                        @RenderBody()
-                   
+
+                    @RenderBody()
+
                 </div> <!-- container-fluid -->
             </div>
             <!-- End Page-content -->

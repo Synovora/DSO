@@ -482,7 +482,7 @@ Public Class EpisodeDao
         Return ParcoursDataTable
     End Function
 
-    Public Function CreateEpisode(episode As Episode, userLog As Utilisateur) As Integer
+    Public Function CreateEpisode(episode As Episode, utilisateurId As Long) As Integer
         'Dim nbcreate As Integer
         Dim da As SqlDataAdapter = New SqlDataAdapter()
         Dim episodeIdCree As Integer = 0
@@ -516,7 +516,7 @@ Public Class EpisodeDao
             .AddWithValue("@typeProfil", episode.TypeProfil)
             .AddWithValue("@descriptionActivite", episode.DescriptionActivite)
             .AddWithValue("@commentaire", episode.Commentaire)
-            .AddWithValue("@userCreation", userLog.UtilisateurId)
+            .AddWithValue("@userCreation", utilisateurId)
             .AddWithValue("@dateCreation", Date.Now)
             .AddWithValue("@dateModification", Date.Now)
             .AddWithValue("@etat", Episode.EnumEtatEpisode.EN_COURS.ToString)

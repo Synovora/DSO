@@ -1,7 +1,10 @@
 ﻿Imports System
 Imports System.Collections.Generic
 Imports System.Linq
+Imports System.Net
+Imports System.Net.Http.Formatting
 Imports System.Web
+Imports System.Web.Http
 Imports System.Web.Mvc
 Imports Oasis_Common
 
@@ -17,9 +20,12 @@ Namespace Oasis_Web.Controllers
         ReadOnly traitementDao As New TraitementDao
         ReadOnly autoSuiviDao As New AutoSuiviDao
         ReadOnly episodeProtocoleCollaboratifDao As New EpisodeProtocoleCollaboratifDao
+        ReadOnly episodeDao As New EpisodeDao
+        Dim episodeParametreDao As New EpisodeParametreDao
 
-        <Authorize>
+        <System.Web.Mvc.Authorize>
         Public Function Index() As ActionResult
+
             Dim strName As String = Constants.LAYOUT_VERTICAL
             Dim strWelcomeText As String = "Dashboard"
             If TempData("ModeName") IsNot Nothing Then strName = TempData("ModeName").ToString()
@@ -38,9 +44,56 @@ Namespace Oasis_Web.Controllers
             Return View()
         End Function
 
+        'AutoSuiviValidate POST
+        <System.Web.Mvc.HttpPost>
+        <ValidateAntiForgeryToken>
+        <System.Web.Mvc.Authorize>
+        Public Function AutoSuiviValidate(data As String) As ActionResult
+            Dim parametres = (WebUtility.UrlDecode(data)).Split("&")
+            Dim patientId = Request.Cookies("patientId").Value
+            Dim episode As New Episode With {
+                .Commentaire = "AutoSuivi",
+                .DateCreation = Date.Now,
+                .UserCreation = 0,
+                .PatientId = patientId,
+                .Type = Episode.EnumTypeEpisode.PARAMETRE.ToString,
+                .TypeActivite = Episode.EnumTypeEpisode.PARAMETRE.ToString,
+                .DescriptionActivite = "",
+                .TypeProfil = ProfilDao.EnumProfilType.PATIENT.ToString,
+                .Etat = Episode.EnumEtatEpisode.CLOTURE.ToString
+            }
+            Dim episodeId As Long = episodeDao.CreateEpisode(episode, 0)
+            If episodeId <> 0 Then
+                For i = 0 To parametres.Count - 1
+                    Dim key = parametres(i).Split("=")(0)
+                    Debug.WriteLine(key)
+                    Dim value = Coalesce(parametres(i).Split("=")(1), Nothing)
+                    Debug.WriteLine(value)
+                    If value = Nothing Then
+                        Continue For
+                    End If
+                    Dim parametre = parametreDao.GetParametreById(key)
+                    'Creation
+                    Dim episodeParametre As EpisodeParametre = New EpisodeParametre With {
+                        .EpisodeId = episodeId,
+                        .ParametreId = parametre.Id,
+                        .PatientId = episode.PatientId,
+                        .Entier = parametre.Entier,
+                        .Decimal = parametre.Decimal,
+                        .Unite = parametre.Unite,
+                        .Ordre = parametre.Ordre,
+                        .Description = parametre.Description,
+                        .Valeur = Decimal.Parse(value),
+                        .Inactif = False
+                    }
+                    episodeParametreDao.CreateEpisodeParametre(episodeParametre)
+                Next
+            End If
+        End Function
 
-        Private Function BuildAutoSuiviList(patientId As Integer) As List(Of AutoSuiviItem)
-            Dim parametres As List(Of AutoSuiviItem) = New List(Of AutoSuiviItem)
+
+        Private Function BuildAutoSuiviList(patientId As Integer) As List(Of Parametre)
+            Dim parametres As List(Of Parametre) = New List(Of Parametre)
             Dim TypeActiviteAcode As String = Episode.EnumTypeActiviteEpisodeCode.SUIVI_CHRONIQUE
             Dim ListParametres As List(Of Long) = episodeProtocoleCollaboratifDao.GetListeParametreByPatientEtTypeEpisode(patientId, TypeActiviteAcode)
             For i = 0 To ListParametres.Count - 1
@@ -48,14 +101,10 @@ Namespace Oasis_Web.Controllers
                 If parametre.ExclusionAutoSuivi = True Then
                     Continue For
                 End If
-                Dim autoSuivi = autoSuiviDao.GetAutoSuiviByPatientIdAndParametreId(patientId, ListParametres.Item(i))
+                'TODO: apply autosuivi mask
+                'Dim autoSuivi = autoSuiviDao.GetAutoSuiviByPatientIdAndParametreId(patientId, ListParametres.Item(i))
 
-                parametres.Add(New AutoSuiviItem With {
-                    .PatientId = patientId,
-                    .ParametreId = parametre.Id,
-                    .Description = If(parametre.DescriptionPatient = "", parametre.Description, parametre.DescriptionPatient),
-                    .IsActif = autoSuivi Is Nothing
-                })
+                parametres.Add(parametre)
             Next
             Return parametres
         End Function

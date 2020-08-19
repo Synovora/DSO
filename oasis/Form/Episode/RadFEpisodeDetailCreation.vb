@@ -137,7 +137,7 @@ Public Class RadFEpisodeDetailCreation
             If IsCreationOk Then
                 episode.PatientId = SelectedPatient.PatientId
                 episode.TypeProfil = userLog.TypeProfil
-                EpisodeId = episodeDao.CreateEpisode(episode, userLog)
+                EpisodeId = episodeDao.CreateEpisode(episode, userLog.UtilisateurId)
                 episode.Id = EpisodeId
                 If EpisodeId <> 0 Then
                     Cursor.Current = Cursors.WaitCursor

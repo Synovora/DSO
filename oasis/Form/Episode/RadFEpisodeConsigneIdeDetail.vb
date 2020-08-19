@@ -32,8 +32,8 @@ Public Class RadFEpisodeConsigneIdeDetail
         End Set
     End Property
 
-    Dim drcdao As New DrcDao
-    Dim drc As New Drc
+    ReadOnly drcdao As New DrcDao
+    ReadOnly drc As New Drc
 
     Private Sub RadFEpisodeConsigneIdeDetail_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         CodeRetour = False

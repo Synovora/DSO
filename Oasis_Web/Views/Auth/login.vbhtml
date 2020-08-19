@@ -4,9 +4,6 @@
     Layout = "~/Views/Shared/_BlankLayout.cshtml"
 End Code
 
-<div class="home-btn d-none d-sm-block">
-    <a href="@Url.Action("Index", "Dashboard")" class="text-dark"><i class="fas fa-home h2"></i></a>
-</div>
 <div>
     @Using (Html.BeginForm())
 
@@ -53,10 +50,6 @@ End Code
                                             @Html.ValidationMessageFor(Function(u) u.Password)
                                         </div>
 
-                                        <div Class="custom-control custom-checkbox">
-                                            <input type="checkbox" Class="custom-control-input" id="customControlInline">
-                                            <label Class="custom-control-label" for="customControlInline">Enregistrer la connexion</label>
-                                        </div>
                                         <div Class="form-group">
                                             <label>@ViewBag.Message</label>
                                         </div>
@@ -68,14 +61,13 @@ End Code
                                             <a href="@Url.Action("auth-recoverpw", "Auth")" Class="text-muted"><i Class="mdi mdi-lock mr-1"></i> Mot de passe oublie?</a>
                                         </div>
                                     </form>
-                </div>
+                                </div>
 
-            </div>
-        </div>
-        <div Class="mt-5 text-center">
-            @*<p>Don't have an account ? <a href="@Url.Action("auth-register","Auth")" class="font-weight-medium text-primary"> Signup now </a> </p>*@
-                                            <p>© 2020 Synovora.</p>
-                                        </div>
+                            </div>
+                        </div>
+                        <div Class="mt-5 text-center">
+                            <p>© 2020 Synovora.</p>
+                        </div>
 
                     </div>
                 </div>
