@@ -1,9 +1,9 @@
-﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
+﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()>
 Partial Class RadFEffetSecondaire
     Inherits Telerik.WinControls.UI.RadForm
 
     'Form overrides dispose to clean up the component list.
-    <System.Diagnostics.DebuggerNonUserCode()> _
+    <System.Diagnostics.DebuggerNonUserCode()>
     Protected Overrides Sub Dispose(ByVal disposing As Boolean)
         Try
             If disposing AndAlso components IsNot Nothing Then
@@ -20,7 +20,7 @@ Partial Class RadFEffetSecondaire
     'NOTE: The following procedure is required by the Windows Form Designer
     'It can be modified using the Windows Form Designer.  
     'Do not modify it using the code editor.
-    <System.Diagnostics.DebuggerStepThrough()> _
+    <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
         Me.RadPanel1 = New Telerik.WinControls.UI.RadPanel()
         Me.TextBoxMedicament = New System.Windows.Forms.TextBox()
@@ -71,7 +71,7 @@ Partial Class RadFEffetSecondaire
         Me.RadPanel1.Dock = System.Windows.Forms.DockStyle.Top
         Me.RadPanel1.Location = New System.Drawing.Point(0, 0)
         Me.RadPanel1.Name = "RadPanel1"
-        Me.RadPanel1.Size = New System.Drawing.Size(694, 52)
+        Me.RadPanel1.Size = New System.Drawing.Size(861, 52)
         Me.RadPanel1.TabIndex = 0
         '
         'TextBoxMedicament
@@ -88,15 +88,16 @@ Partial Class RadFEffetSecondaire
         Me.RadPanel2.Dock = System.Windows.Forms.DockStyle.Bottom
         Me.RadPanel2.Location = New System.Drawing.Point(0, 573)
         Me.RadPanel2.Name = "RadPanel2"
-        Me.RadPanel2.Size = New System.Drawing.Size(694, 38)
+        Me.RadPanel2.Size = New System.Drawing.Size(861, 38)
         Me.RadPanel2.TabIndex = 1
         '
         'RadBtnAbandon
         '
+        Me.RadBtnAbandon.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.RadBtnAbandon.DialogResult = System.Windows.Forms.DialogResult.Cancel
         Me.RadBtnAbandon.Image = Global.Oasis_WF.My.Resources.Resources._exit
         Me.RadBtnAbandon.ImageAlignment = System.Drawing.ContentAlignment.MiddleCenter
-        Me.RadBtnAbandon.Location = New System.Drawing.Point(667, 6)
+        Me.RadBtnAbandon.Location = New System.Drawing.Point(825, 6)
         Me.RadBtnAbandon.Name = "RadBtnAbandon"
         Me.RadBtnAbandon.Size = New System.Drawing.Size(24, 24)
         Me.RadBtnAbandon.TabIndex = 0
@@ -110,12 +111,11 @@ Partial Class RadFEffetSecondaire
         Me.RadSplitContainer1.Dock = System.Windows.Forms.DockStyle.Fill
         Me.RadSplitContainer1.Location = New System.Drawing.Point(0, 52)
         Me.RadSplitContainer1.Name = "RadSplitContainer1"
-        Me.RadSplitContainer1.Orientation = System.Windows.Forms.Orientation.Horizontal
         '
         '
         '
         Me.RadSplitContainer1.RootElement.MinSize = New System.Drawing.Size(25, 25)
-        Me.RadSplitContainer1.Size = New System.Drawing.Size(694, 521)
+        Me.RadSplitContainer1.Size = New System.Drawing.Size(861, 521)
         Me.RadSplitContainer1.TabIndex = 2
         Me.RadSplitContainer1.TabStop = False
         '
@@ -128,7 +128,7 @@ Partial Class RadFEffetSecondaire
         '
         '
         Me.SplitPanel1.RootElement.MinSize = New System.Drawing.Size(25, 25)
-        Me.SplitPanel1.Size = New System.Drawing.Size(694, 127)
+        Me.SplitPanel1.Size = New System.Drawing.Size(212, 521)
         Me.SplitPanel1.TabIndex = 0
         Me.SplitPanel1.TabStop = False
         Me.SplitPanel1.Text = "SplitPanel1"
@@ -142,7 +142,7 @@ Partial Class RadFEffetSecondaire
         Me.RadGroupBox1.HeaderText = "Clinique"
         Me.RadGroupBox1.Location = New System.Drawing.Point(0, 0)
         Me.RadGroupBox1.Name = "RadGroupBox1"
-        Me.RadGroupBox1.Size = New System.Drawing.Size(694, 127)
+        Me.RadGroupBox1.Size = New System.Drawing.Size(212, 521)
         Me.RadGroupBox1.TabIndex = 0
         Me.RadGroupBox1.Text = "Clinique"
         '
@@ -155,19 +155,19 @@ Partial Class RadFEffetSecondaire
         Me.TextBoxClinique.Name = "TextBoxClinique"
         Me.TextBoxClinique.ReadOnly = True
         Me.TextBoxClinique.ScrollBars = System.Windows.Forms.ScrollBars.Vertical
-        Me.TextBoxClinique.Size = New System.Drawing.Size(690, 107)
+        Me.TextBoxClinique.Size = New System.Drawing.Size(208, 501)
         Me.TextBoxClinique.TabIndex = 0
         '
         'SplitPanel2
         '
         Me.SplitPanel2.Controls.Add(Me.RadGroupBox2)
-        Me.SplitPanel2.Location = New System.Drawing.Point(0, 131)
+        Me.SplitPanel2.Location = New System.Drawing.Point(216, 0)
         Me.SplitPanel2.Name = "SplitPanel2"
         '
         '
         '
         Me.SplitPanel2.RootElement.MinSize = New System.Drawing.Size(25, 25)
-        Me.SplitPanel2.Size = New System.Drawing.Size(694, 127)
+        Me.SplitPanel2.Size = New System.Drawing.Size(212, 521)
         Me.SplitPanel2.TabIndex = 1
         Me.SplitPanel2.TabStop = False
         Me.SplitPanel2.Text = "SplitPanel2"
@@ -181,7 +181,7 @@ Partial Class RadFEffetSecondaire
         Me.RadGroupBox2.HeaderText = "Paraclinique"
         Me.RadGroupBox2.Location = New System.Drawing.Point(0, 0)
         Me.RadGroupBox2.Name = "RadGroupBox2"
-        Me.RadGroupBox2.Size = New System.Drawing.Size(694, 127)
+        Me.RadGroupBox2.Size = New System.Drawing.Size(212, 521)
         Me.RadGroupBox2.TabIndex = 0
         Me.RadGroupBox2.Text = "Paraclinique"
         '
@@ -194,19 +194,19 @@ Partial Class RadFEffetSecondaire
         Me.TextBoxParaclinique.Name = "TextBoxParaclinique"
         Me.TextBoxParaclinique.ReadOnly = True
         Me.TextBoxParaclinique.ScrollBars = System.Windows.Forms.ScrollBars.Vertical
-        Me.TextBoxParaclinique.Size = New System.Drawing.Size(690, 107)
+        Me.TextBoxParaclinique.Size = New System.Drawing.Size(208, 501)
         Me.TextBoxParaclinique.TabIndex = 0
         '
         'SplitPanel3
         '
         Me.SplitPanel3.Controls.Add(Me.RadGroupBox3)
-        Me.SplitPanel3.Location = New System.Drawing.Point(0, 262)
+        Me.SplitPanel3.Location = New System.Drawing.Point(432, 0)
         Me.SplitPanel3.Name = "SplitPanel3"
         '
         '
         '
         Me.SplitPanel3.RootElement.MinSize = New System.Drawing.Size(25, 25)
-        Me.SplitPanel3.Size = New System.Drawing.Size(694, 127)
+        Me.SplitPanel3.Size = New System.Drawing.Size(212, 521)
         Me.SplitPanel3.TabIndex = 2
         Me.SplitPanel3.TabStop = False
         Me.SplitPanel3.Text = "SplitPanel3"
@@ -220,7 +220,7 @@ Partial Class RadFEffetSecondaire
         Me.RadGroupBox3.HeaderText = "Clinique en cas de surdosage"
         Me.RadGroupBox3.Location = New System.Drawing.Point(0, 0)
         Me.RadGroupBox3.Name = "RadGroupBox3"
-        Me.RadGroupBox3.Size = New System.Drawing.Size(694, 127)
+        Me.RadGroupBox3.Size = New System.Drawing.Size(212, 521)
         Me.RadGroupBox3.TabIndex = 0
         Me.RadGroupBox3.Text = "Clinique en cas de surdosage"
         '
@@ -233,19 +233,19 @@ Partial Class RadFEffetSecondaire
         Me.TextBoxCliniqueSurdosage.Name = "TextBoxCliniqueSurdosage"
         Me.TextBoxCliniqueSurdosage.ReadOnly = True
         Me.TextBoxCliniqueSurdosage.ScrollBars = System.Windows.Forms.ScrollBars.Vertical
-        Me.TextBoxCliniqueSurdosage.Size = New System.Drawing.Size(690, 107)
+        Me.TextBoxCliniqueSurdosage.Size = New System.Drawing.Size(208, 501)
         Me.TextBoxCliniqueSurdosage.TabIndex = 0
         '
         'SplitPanel4
         '
         Me.SplitPanel4.Controls.Add(Me.RadGroupBox4)
-        Me.SplitPanel4.Location = New System.Drawing.Point(0, 393)
+        Me.SplitPanel4.Location = New System.Drawing.Point(648, 0)
         Me.SplitPanel4.Name = "SplitPanel4"
         '
         '
         '
         Me.SplitPanel4.RootElement.MinSize = New System.Drawing.Size(25, 25)
-        Me.SplitPanel4.Size = New System.Drawing.Size(694, 128)
+        Me.SplitPanel4.Size = New System.Drawing.Size(213, 521)
         Me.SplitPanel4.TabIndex = 3
         Me.SplitPanel4.TabStop = False
         Me.SplitPanel4.Text = "SplitPanel4"
@@ -259,7 +259,7 @@ Partial Class RadFEffetSecondaire
         Me.RadGroupBox4.HeaderText = "Paraclinique en cas de surdosage"
         Me.RadGroupBox4.Location = New System.Drawing.Point(0, 0)
         Me.RadGroupBox4.Name = "RadGroupBox4"
-        Me.RadGroupBox4.Size = New System.Drawing.Size(694, 128)
+        Me.RadGroupBox4.Size = New System.Drawing.Size(213, 521)
         Me.RadGroupBox4.TabIndex = 0
         Me.RadGroupBox4.Text = "Paraclinique en cas de surdosage"
         '
@@ -272,7 +272,7 @@ Partial Class RadFEffetSecondaire
         Me.TextBoxParacliniqueSurdosage.Name = "TextBoxParacliniqueSurdosage"
         Me.TextBoxParacliniqueSurdosage.ReadOnly = True
         Me.TextBoxParacliniqueSurdosage.ScrollBars = System.Windows.Forms.ScrollBars.Vertical
-        Me.TextBoxParacliniqueSurdosage.Size = New System.Drawing.Size(690, 108)
+        Me.TextBoxParacliniqueSurdosage.Size = New System.Drawing.Size(209, 501)
         Me.TextBoxParacliniqueSurdosage.TabIndex = 0
         '
         'RadFEffetSecondaire
@@ -280,7 +280,7 @@ Partial Class RadFEffetSecondaire
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.CancelButton = Me.RadBtnAbandon
-        Me.ClientSize = New System.Drawing.Size(694, 611)
+        Me.ClientSize = New System.Drawing.Size(861, 611)
         Me.Controls.Add(Me.RadSplitContainer1)
         Me.Controls.Add(Me.RadPanel2)
         Me.Controls.Add(Me.RadPanel1)
