@@ -182,7 +182,10 @@
       <HintPath>..\lib\RCWF\2020.1.218.40\Telerik.WinControls.Themes.FluentDark.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Telerik.WinControls.Themes.Office2007Silver, Version=2020.2.512.40, Culture=neutral, PublicKeyToken=5bb2a467cbec794e, processorArchitecture=MSIL" />
+    <Reference Include="Telerik.WinControls.Themes.Office2007Silver, Version=2020.1.218.40, Culture=neutral, PublicKeyToken=5bb2a467cbec794e, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\Windows\Microsoft.NET\assembly\GAC_MSIL\Telerik.WinControls.Themes.Office2007Silver\v4.0_2020.1.218.40__5bb2a467cbec794e\Telerik.WinControls.Themes.Office2007Silver.dll</HintPath>
+    </Reference>
     <Reference Include="Telerik.WinControls.Themes.Office2013Dark, Version=2020.1.218.40, Culture=neutral, PublicKeyToken=5bb2a467cbec794e, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\lib\RCWF\2020.1.218.40\Telerik.WinControls.Themes.Office2013Dark.dll</HintPath>
@@ -1585,6 +1588,9 @@
       <Project>{2dac58a3-f441-4561-93ea-b093cf6f982a}</Project>
       <Name>Oasis_Common</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Connected Services\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
 </Project>
