@@ -33,8 +33,8 @@ Public Class RadFListeRendezVousEnCours
             typeDemandeRendezVous = Coalesce(dt.Rows(i)("type_demande_rendez_vous"), "")
 
             If dateRendezVous <> Nothing Then
-                If nature = TacheDao.NatureTache.RDV_DEMANDE.ToString Then
-                    If typeDemandeRendezVous = TacheDao.TypeDemandeRendezVous.ANNEE.ToString Then
+                If nature = Tache.NatureTache.RDV_DEMANDE.ToString Then
+                    If typeDemandeRendezVous = Tache.EnumDemandeRendezVous.ANNEE.ToString Then
                         RadGridView1.Rows(iGrid).Cells("dateRendezVous").Value = dateRendezVous.Year
                     Else
                         RadGridView1.Rows(iGrid).Cells("dateRendezVous").Value = dateRendezVous.Month & "." & dateRendezVous.Year

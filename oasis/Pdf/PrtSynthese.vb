@@ -61,7 +61,7 @@ Public Class PrtSynthese
             "    " & SelectedPatient.PatientGenre
 
         Dim ligne2 As String =
-            "   Date de naissance : " & SelectedPatient.PatientDateNaissance.ToString("dd.MM.yyyy") & "   -   âge : " & outils.CalculAgeEnAnneeEtMoisString(SelectedPatient.PatientDateNaissance)
+            "   Date de naissance : " & SelectedPatient.PatientDateNaissance.ToString("dd.MM.yyyy") & "   -   âge : " & CalculAgeEnAnneeEtMoisString(SelectedPatient.PatientDateNaissance)
 
         Dim ligne3 As String =
             "   Rattachement au site Oasis de " & Environnement.Table_site.GetSiteDescription(SelectedPatient.PatientSiteId) &
@@ -355,10 +355,6 @@ Public Class PrtSynthese
         Dim i As Integer
         Dim rowCount As Integer = traitementDataTable.Rows.Count - 1
 
-        'Comptage += traitementDataTable.Rows.Count
-        'GestionSautDePage(document)
-        'document.Add(New Paragraph(vbCrLf & "--- Traitement").SetFontSize(11))
-
         Dim Base As String
         Dim Posologie As String
         Dim dateFin, dateDebut, dateModification, dateCreation As Date
@@ -492,10 +488,10 @@ Public Class PrtSynthese
                 Dim FractionMatin, FractionMidi, FractionApresMidi, FractionSoir As String
                 Dim PosologieBase As String
 
-                FractionMatin = Coalesce(traitementDataTable.Rows(i)("oa_traitement_fraction_matin"), TraitementDao.EnumFraction.Non)
-                FractionMidi = Coalesce(traitementDataTable.Rows(i)("oa_traitement_fraction_midi"), TraitementDao.EnumFraction.Non)
-                FractionApresMidi = Coalesce(traitementDataTable.Rows(i)("oa_traitement_fraction_apres_midi"), TraitementDao.EnumFraction.Non)
-                FractionSoir = Coalesce(traitementDataTable.Rows(i)("oa_traitement_fraction_soir"), TraitementDao.EnumFraction.Non)
+                FractionMatin = Coalesce(traitementDataTable.Rows(i)("oa_traitement_fraction_matin"), Traitement.EnumFraction.Non)
+                FractionMidi = Coalesce(traitementDataTable.Rows(i)("oa_traitement_fraction_midi"), Traitement.EnumFraction.Non)
+                FractionApresMidi = Coalesce(traitementDataTable.Rows(i)("oa_traitement_fraction_apres_midi"), Traitement.EnumFraction.Non)
+                FractionSoir = Coalesce(traitementDataTable.Rows(i)("oa_traitement_fraction_soir"), Traitement.EnumFraction.Non)
 
                 posologieMatin = Coalesce(traitementDataTable.Rows(i)("oa_traitement_Posologie_matin"), 0)
                 posologieMidi = Coalesce(traitementDataTable.Rows(i)("oa_traitement_Posologie_midi"), 0)
@@ -504,7 +500,7 @@ Public Class PrtSynthese
 
                 PosologieBase = Coalesce(traitementDataTable.Rows(i)("oa_traitement_Posologie_base"), "")
 
-                If FractionMatin <> "" AndAlso FractionMatin <> TraitementDao.EnumFraction.Non Then
+                If FractionMatin <> "" AndAlso FractionMatin <> Traitement.EnumFraction.Non Then
                     If posologieMatin <> 0 Then
                         PosologieMatinString = posologieMatin.ToString & "+" & FractionMatin
                     Else
@@ -518,7 +514,7 @@ Public Class PrtSynthese
                     End If
                 End If
 
-                If FractionMidi <> "" AndAlso FractionMidi <> TraitementDao.EnumFraction.Non Then
+                If FractionMidi <> "" AndAlso FractionMidi <> Traitement.EnumFraction.Non Then
                     If posologieMidi <> 0 Then
                         PosologieMidiString = posologieMidi.ToString & "+" & FractionMidi
                     Else
@@ -533,7 +529,7 @@ Public Class PrtSynthese
                 End If
 
                 PosologieApresMidiString = ""
-                If FractionApresMidi <> "" AndAlso FractionApresMidi <> TraitementDao.EnumFraction.Non Then
+                If FractionApresMidi <> "" AndAlso FractionApresMidi <> Traitement.EnumFraction.Non Then
                     If posologieApresMidi <> 0 Then
                         PosologieApresMidiString = posologieApresMidi.ToString & "+" & FractionApresMidi
                     Else
@@ -545,7 +541,7 @@ Public Class PrtSynthese
                     End If
                 End If
 
-                If FractionSoir <> "" AndAlso FractionSoir <> TraitementDao.EnumFraction.Non Then
+                If FractionSoir <> "" AndAlso FractionSoir <> Traitement.EnumFraction.Non Then
                     If posologieSoir <> 0 Then
                         PosologieSoirString = posologieSoir.ToString & "+" & FractionSoir
                     Else
@@ -561,16 +557,16 @@ Public Class PrtSynthese
                 If traitementDataTable.Rows(i)("oa_traitement_posologie_base") IsNot DBNull.Value Then
                     Rythme = traitementDataTable.Rows(i)("oa_traitement_posologie_rythme")
                     Select Case PosologieBase
-                        Case TraitementDao.EnumBaseCode.JOURNALIER
+                        Case Traitement.EnumBaseCode.JOURNALIER
                             Base = ""
-                            If posologieApresMidi <> 0 OrElse FractionApresMidi <> TraitementDao.EnumFraction.Non Then
+                            If posologieApresMidi <> 0 OrElse FractionApresMidi <> Traitement.EnumFraction.Non Then
                                 Posologie = Base + PosologieMatinString + ". " + PosologieMidiString + ". " + PosologieApresMidiString + ". " + PosologieSoirString
                             Else
                                 Posologie = Base + " " + PosologieMatinString + ". " + PosologieMidiString + ". " + PosologieSoirString
                             End If
                         Case Else
                             Dim RythmeString As String = ""
-                            If FractionMatin <> "" AndAlso FractionMatin <> TraitementDao.EnumFraction.Non Then
+                            If FractionMatin <> "" AndAlso FractionMatin <> Traitement.EnumFraction.Non Then
                                 If Rythme <> 0 Then
                                     RythmeString = Rythme.ToString & "+" & FractionMatin
                                 Else
@@ -590,7 +586,7 @@ Public Class PrtSynthese
                             Posologie = Base + RythmeString
                     End Select
                 End If
-                If PosologieBase = TraitementDao.EnumBaseCode.CONDITIONNEL Then
+                If PosologieBase = Traitement.EnumBaseCode.CONDITIONNEL Then
                     Dim commentairePosologie As String = Coalesce(traitementDataTable.Rows(i)("oa_traitement_posologie_commentaire"), "")
                     Posologie &= " " & commentairePosologie
                 End If
@@ -733,7 +729,7 @@ Public Class PrtSynthese
             End If
 
             SpecialiteId = ParcoursDataTable.Rows(i)("oa_parcours_specialite")
-            Dim TextSpecialite As String = Environnement.Table_specialite.GetSpecialiteDescription(SpecialiteId)
+            Dim TextSpecialite As String = Table_specialite.GetSpecialiteDescription(SpecialiteId)
 
             'Nom intervenant et Structure
             IntervenantOasis = False
@@ -745,7 +741,7 @@ Public Class PrtSynthese
                 Case EnumSousCategoriePPS.IDE
                     IntervenantOasis = True
                     Dim pacoursConsigneDao As New ParcoursConsigneDao
-                    If pacoursConsigneDao.ExisteParcoursConsigne(ParcoursDataTable.Rows(i)("oa_parcours_id")) = False Then
+                    If pacoursConsigneDao.IsExistParcoursConsigne(ParcoursDataTable.Rows(i)("oa_parcours_id")) = False Then
                         ParcoursConsigneEnRouge = True
                     End If
                 Case EnumSousCategoriePPS.sageFemme
@@ -789,9 +785,9 @@ Public Class PrtSynthese
                     'Rendez-vous prévisionnel, demande en cours
                     TypeDemandeRdv = Coalesce(ParcoursDataTable.Rows(i)("TypeDemandeRdv"), "")
                     Select Case TypeDemandeRdv
-                        Case TacheDao.TypeDemandeRendezVous.ANNEE.ToString
+                        Case Tache.EnumDemandeRendezVous.ANNEE.ToString
                             TextConsultationNext = dateNext.ToString("yyyy")
-                        Case TacheDao.TypeDemandeRendezVous.ANNEEMOIS.ToString
+                        Case Tache.EnumDemandeRendezVous.ANNEEMOIS.ToString
                             TextConsultationNext = dateNext.ToString("MM.yyyy")
                         Case Else
                             TextConsultationNext = dateNext.ToString(outils.FormatageDateAffichage(dateNext, True))
@@ -956,10 +952,10 @@ Public Class PrtSynthese
                 categorieContexte = contexteDataTable.Rows(i)("oa_antecedent_categorie_contexte")
             End If
             Select Case categorieContexte
-                Case ContexteDao.EnumParcoursBaseCode.Medical
-                    categorieContexteString = ContexteDao.EnumParcoursBaseItem.Medical
-                Case ContexteDao.EnumParcoursBaseCode.BioEnvironnemental
-                    categorieContexteString = ContexteDao.EnumParcoursBaseItem.BioEnvironnemental
+                Case ContexteCourrier.EnumParcoursBaseCode.Medical
+                    categorieContexteString = ContexteCourrier.EnumParcoursBaseItem.Medical
+                Case ContexteCourrier.EnumParcoursBaseCode.BioEnvironnemental
+                    categorieContexteString = ContexteCourrier.EnumParcoursBaseItem.BioEnvironnemental
                 Case Else
                     categorieContexteString = ""
             End Select
@@ -1168,12 +1164,12 @@ Public Class PrtSynthese
             NaturePPS = ""
             AffichePPS = ""
             'Présentation PPS : Cible/Objectif de santé (commentaire)
-            If categoriePPS = Environnement.EnumCategoriePPS.Objectif Then
+            If categoriePPS = EnumCategoriePPS.Objectif Then
                 NaturePPS = "Objectif santé : "
                 AffichePPS = NaturePPS + " " + CommentairePPS
             End If
 
-            If categoriePPS = Environnement.EnumCategoriePPS.MesurePreventive Then
+            If categoriePPS = EnumCategoriePPS.MesurePreventive Then
                 'Suivi mesures préventives (Code DRC, libellé DRC, commentaire)
                 NaturePPS = "Mesures préventives : "
                 AffichePPS = NaturePPS & " " & CommentairePPS
@@ -1181,7 +1177,7 @@ Public Class PrtSynthese
 
             SpecialiteDescription = ""
             'Présentation PPS : Suivi
-            If categoriePPS = Environnement.EnumCategoriePPS.Suivi Then
+            If categoriePPS = EnumCategoriePPS.Suivi Then
                 'Un parcours caché ne doit être affiché
                 Dim parcoursCache As Boolean = Coalesce(PPSDataTable.Rows(i)("oa_parcours_cacher"), False)
                 If parcoursCache = True Then
@@ -1194,13 +1190,13 @@ Public Class PrtSynthese
 
                 'Suivi IDE, Médecin référent, Sage-femme et Spécialiste (Base, Rythme, Commentaire)
                 Select Case sousCategoriePPS
-                    Case Environnement.EnumSousCategoriePPS.IDE
+                    Case EnumSousCategoriePPS.IDE
                         NaturePPS = "Suivi IDE : "
-                    Case Environnement.EnumSousCategoriePPS.medecinReferent
+                    Case EnumSousCategoriePPS.medecinReferent
                         NaturePPS = "Suivi médecin télémédecine : "
-                    Case Environnement.EnumSousCategoriePPS.sageFemme
+                    Case EnumSousCategoriePPS.sageFemme
                         NaturePPS = "Suivi sage-femme : "
-                    Case Environnement.EnumSousCategoriePPS.specialiste
+                    Case EnumSousCategoriePPS.specialiste
                         'Récupération spécialité
                         If PPSDataTable.Rows(i)("oa_parcours_specialite") IsNot DBNull.Value Then
                             SpecialiteId = PPSDataTable.Rows(i)("oa_parcours_specialite")
@@ -1220,7 +1216,7 @@ Public Class PrtSynthese
             End If
 
             'Présentation PPS : Stratégie contextuelle (Base, Rythme, Commentaire)
-            If categoriePPS = Environnement.EnumCategoriePPS.Strategie Then
+            If categoriePPS = EnumCategoriePPS.Strategie Then
                 Select Case sousCategoriePPS
                     Case 7
                         NaturePPS = "Démarche prophylactique "

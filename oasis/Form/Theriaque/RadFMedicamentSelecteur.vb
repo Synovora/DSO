@@ -40,7 +40,7 @@ Public Class RadFMedicamentSelecteur
     Dim PremierPassage As Boolean = False
 
     Private Sub RadFATCListe_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-        afficheTitleForm(Me, "Thériaque - Recherche médicament")
+        AfficheTitleForm(Me, "Thériaque - Recherche médicament", userLog)
         RadioBtnVirtuel.Checked = True
         ChargementEtatCivil()
         ChargementATC1()
@@ -101,7 +101,8 @@ Public Class RadFMedicamentSelecteur
     End Sub
 
     Private Sub GetContreIndication()
-        Dim StringContreIndicationToolTip As String = PatientDao.GetStringContreIndicationByPatient(SelectedPatient.patientId)
+        Dim patientDao As New PatientDao
+        Dim StringContreIndicationToolTip As String = patientDao.GetStringContreIndicationByPatient(SelectedPatient.patientId)
         If StringContreIndicationToolTip = "" Then
             lblContreIndication.Hide()
         Else
@@ -112,7 +113,8 @@ Public Class RadFMedicamentSelecteur
 
 
     Private Sub GetAllergie()
-        Dim StringAllergieToolTip As String = PatientDao.GetStringAllergieByPatient(SelectedPatient.patientId)
+        Dim patientDao As New PatientDao
+        Dim StringAllergieToolTip As String = patientDao.GetStringAllergieByPatient(SelectedPatient.patientId)
         If StringAllergieToolTip = "" Then
             LblAllergie.Hide()
         Else

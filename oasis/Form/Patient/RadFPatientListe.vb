@@ -1,8 +1,10 @@
 ﻿Imports Telerik.WinControls
 Imports Telerik.WinControls.UI.Localization
 Imports Oasis_Common
+
 Public Class RadFPatientListe
     Private privateUtilisateurConnecte As Utilisateur
+
     Public Property UtilisateurConnecte As Utilisateur
         Get
             Return privateUtilisateurConnecte
@@ -13,14 +15,14 @@ Public Class RadFPatientListe
     End Property
 
     ReadOnly aldDao As New AldDao
+    ReadOnly patientDao As New PatientDao
 
     'Instanciation du patient pour le fournir aux Forms qui seront appelées depuis cette Form
     Dim SelectedPatient As New Patient
     Dim IndexGrid As Integer
-    Dim Tous, PatientOasis As Boolean
 
     Private Sub RadFPatientListe_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-        afficheTitleForm(Me, "Liste des patients")
+        AfficheTitleForm(Me, "Liste des patients", userLog)
 
         Me.RadDesktopAlert1.Popup.AlertElement.CaptionElement.TextAndButtonsElement.TextElement.ForeColor = Color.Red
         Me.RadDesktopAlert1.Popup.AlertElement.CaptionElement.CaptionGrip.BackColor = Color.DarkBlue
@@ -68,7 +70,7 @@ Public Class RadFPatientListe
             End If
         End If
 
-        patientDataTable = PatientDao.GetAllPatient(Tous, PatientOasis)
+        patientDataTable = patientDao.GetAllPatient(Tous, PatientOasis)
 
         Dim iGrid As Integer = -1
         Dim rowCount As Integer = patientDataTable.Rows.Count - 1
@@ -92,7 +94,7 @@ Public Class RadFPatientListe
             Dim DateNaissance As Date = Coalesce(patientDataTable.Rows(i)("oa_patient_date_naissance"), Nothing)
             If DateNaissance <> Nothing Then
                 RadPatientGridView.Rows(iGrid).Cells("oa_patient_date_naissance").Value = DateNaissance.ToString("dd/MM/yyyy")
-                RadPatientGridView.Rows(iGrid).Cells("age").Value = outils.CalculAgeEnAnneeEtMoisString(DateNaissance)
+                RadPatientGridView.Rows(iGrid).Cells("age").Value = CalculAgeEnAnneeEtMoisString(DateNaissance)
             Else
                 RadPatientGridView.Rows(iGrid).Cells("oa_patient_date_naissance").Value = ""
                 RadPatientGridView.Rows(iGrid).Cells("age").Value = ""
@@ -155,7 +157,7 @@ Public Class RadFPatientListe
                 dateNaissance = Coalesce(RadPatientGridView.Rows(aRow).Cells("oa_patient_date_naissance").Value, Nothing)
                 LblDateNaissanceSelected.Text = dateNaissance.ToString("dd.MM.yyyy")
                 LblDateNaissanceSelected.Show()
-                LblAgeSelected.Text = outils.CalculAgeEnAnneeEtMoisString(dateNaissance)
+                LblAgeSelected.Text = CalculAgeEnAnneeEtMoisString(dateNaissance)
                 LblAgeSelected.Show()
             Else
                 LblDateNaissanceSelected.Hide()
@@ -320,7 +322,7 @@ Public Class RadFPatientListe
 
         Try
             Using form As New RadFPatientDetailEdit
-                PatientDao.SetPatient(Me.SelectedPatient, 0)
+                Me.SelectedPatient = patientDao.GetPatient(0)
                 form.SelectedPatientId = 0
                 form.UtilisateurConnecte = Me.UtilisateurConnecte
                 form.SelectedPatient = Me.SelectedPatient
@@ -344,7 +346,7 @@ Public Class RadFPatientListe
 
         Try
             Using vFMenuAdmin As New FrmMain
-                PatientDao.SetPatient(Me.SelectedPatient, 0)
+                Me.SelectedPatient = patientDao.GetPatient(0)
                 vFMenuAdmin.ShowDialog() 'Modal
             End Using
         Catch ex As Exception
@@ -359,8 +361,7 @@ Public Class RadFPatientListe
         If TxtIdSelected.Text <> "" Then
             'Initialisation du patient sélectionné
             Dim patientId As Integer = CInt(TxtIdSelected.Text)
-            'PatientDao.SetPatient(Me.SelectedPatient, patientId)
-            Me.SelectedPatient = PatientDao.getPatientById(patientId)
+            Me.SelectedPatient = patientDao.GetPatient(patientId)
             Cursor.Current = Cursors.WaitCursor
             Me.Enabled = False
 
@@ -393,7 +394,7 @@ Public Class RadFPatientListe
             If aRow >= 0 Then
                 Dim patientId As Integer = RadPatientGridView.Rows(aRow).Cells("oa_patient_id").Value
                 Dim parcoursDao As New ParcoursDao
-                parcoursDao.CreateIntervenantOasisByPatient(patientId)
+                parcoursDao.CreateIntervenantOasisByPatient(patientId, userLog)
             End If
         End If
     End Sub
@@ -411,8 +412,8 @@ Public Class RadFPatientListe
 
             Try
                 Using form As New RadFSynthese
-                    'PatientDao.SetPatient(Me.SelectedPatient, patientId)
-                    Me.SelectedPatient = PatientDao.GetPatientById(patientId)
+                    'patientDao.SetPatient(Me.SelectedPatient, patientId)
+                    Me.SelectedPatient = patientDao.GetPatient(patientId)
                     form.SelectedPatient = Me.SelectedPatient
                     form.UtilisateurConnecte = Me.UtilisateurConnecte
                     form.EcranPrecedent = EnumAccesEcranPrecedent.SANS
@@ -489,13 +490,12 @@ Public Class RadFPatientListe
         If TxtIdSelected.Text <> "" Then
             'Initialisation du patient sélectionné
             Dim patientId As Integer = CInt(TxtIdSelected.Text)
-            'PatientDao.SetPatient(Me.SelectedPatient, patientId)
-            Me.SelectedPatient = PatientDao.getPatientById(patientId)
+            Me.SelectedPatient = patientDao.GetPatient(patientId)
             Cursor.Current = Cursors.WaitCursor
             Me.Enabled = False
-            episodeDao.CallEpisode(SelectedPatient, 0, EnumAccesEcranPrecedent.SANS)
+            EpisodeUtils.CallEpisode(SelectedPatient, 0, userLog, EnumAccesEcranPrecedent.SANS)
             Me.Enabled = True
-            episode = episodeDao.GetEpisodeEnCoursByPatientId(Me.SelectedPatient.patientId)
+            episode = episodeDao.GetEpisodeEnCoursByPatientId(Me.SelectedPatient.PatientId)
             If episode.Id <> 0 Then
                 RadBtnEpisode.ForeColor = Color.Red
                 RadBtnEpisode.Font = New Font(RadBtnEpisode.Font, FontStyle.Bold)
@@ -519,8 +519,8 @@ Public Class RadFPatientListe
 
             Try
                 Using form As New RadFPatientRendezVousListe
-                    PatientDao.SetPatient(Me.SelectedPatient, patientId)
-                    Me.SelectedPatient = PatientDao.GetPatientById(patientId)
+                    Me.SelectedPatient = patientDao.GetPatient(patientId)
+                    Me.SelectedPatient = patientDao.GetPatient(patientId)
                     form.SelectedPatient = Me.SelectedPatient
                     form.ShowDialog() 'Modal
                 End Using
@@ -555,8 +555,7 @@ Public Class RadFPatientListe
         Cursor.Current = Cursors.WaitCursor
         Dim patientId As Integer = CInt(TxtIdSelected.Text)
         Using vadFEpisodeListe As New RadFEpisodeLigneDeVie
-            'PatientDao.SetPatient(Me.SelectedPatient, patientId)
-            Me.SelectedPatient = PatientDao.getPatientById(patientId)
+            Me.SelectedPatient = patientDao.GetPatient(patientId)
             vadFEpisodeListe.SelectedPatient = Me.SelectedPatient
             vadFEpisodeListe.UtilisateurConnecte = Me.UtilisateurConnecte
             vadFEpisodeListe.EcranPrecedent = EnumAccesEcranPrecedent.SANS

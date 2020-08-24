@@ -1,4 +1,6 @@
-﻿Public Class RadFParametreTest
+﻿Imports Oasis_Common
+
+Public Class RadFParametreTest
     Private _selectedPatient As Patient
 
     Public Property SelectedPatient As Patient

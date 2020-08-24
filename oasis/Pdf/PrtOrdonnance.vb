@@ -23,7 +23,7 @@ Public Class PrtOrdonnance
     ReadOnly profilDao As New ProfilDao
     ReadOnly theriaqueDao As New TheriaqueDao
     ReadOnly aldDao As New AldDao
-    ReadOnly SIGN_URL As String = "https://sign.synovora.com/"
+    ReadOnly SIGN_URL As String = "https://localhost:44355/Sign/Check/"
 
     Dim ordonnance As Ordonnance
 
@@ -31,12 +31,12 @@ Public Class PrtOrdonnance
     Dim TraitementAldExiste As Boolean = False
 
     Public Sub PrintDocument()
-        ordonnance = ordonnanceDao.GetOrdonnaceById(SelectedOrdonnanceId)
-        If aldDao.IsPatientALD(SelectedPatient.patientId) Then
-            PatientIsAld = True
-        End If
-
         Try
+            ordonnance = ordonnanceDao.GetOrdonnaceById(SelectedOrdonnanceId)
+            If aldDao.IsPatientALD(SelectedPatient.PatientId) Then
+                PatientIsAld = True
+            End If
+
             Dim section = EditTools.CreateSection()
             Dim document = EditTools.AddSectionIntoDocument(Nothing, section)
 
@@ -107,7 +107,7 @@ Public Class PrtOrdonnance
             .AddTexteLine("Date de naissance : " & DateNaissancePatient.ToString("dd.MM.yyyy"))
             .AddTexteLine("Immatriculation CPAM : " & SelectedPatient.PatientNir)
             .AddNewLigne()
-            Dim Poids As Double = episodeParametreDao.GetPoidsByEpisodeIdOrLastKnow(0, SelectedPatient.patientId)
+            Dim Poids As Double = episodeParametreDao.GetPoidsByEpisodeIdOrLastKnow(0, SelectedPatient.PatientId)
             If Poids > 0 Then
                 .AddTexteLine("Poids : " & Poids & " Kg")
             End If
@@ -151,187 +151,214 @@ Public Class PrtOrdonnance
     End Sub
 
     Private Function PrintOrdonnanceDetail(SelectionALD As Boolean) As RadDocument
-        Dim document As New RadDocument()
-        If PatientIsAld = False AndAlso SelectionALD = True Then
+        Try
+            Dim document As New RadDocument()
+            If PatientIsAld = False AndAlso SelectionALD = True Then
+                Return document
+            End If
+
+            Const LargeurCol1 As Integer = 475
+            Const LargeurCol2 As Integer = 70
+            Const LargeurCol3 As Integer = 85
+
+
+            Dim section As New Section()
+            Dim table As New Table With {
+                .LayoutMode = TableLayoutMode.Fixed,
+                .StyleName = RadDocumentDefaultStyles.DefaultTableGridStyleName
+            }
+
+            Dim dt As DataTable
+            dt = ordonnanceDetailDao.GetAllOrdonnanceLigneSelectAldByOrdonnanceId(SelectedOrdonnanceId, SelectionALD)
+
+            Dim i As Integer
+            Dim rowCount As Integer = dt.Rows.Count - 1
+
+            If dt.Rows.Count > 0 Then
+                Dim row0 As New TableRow()
+
+                Dim celleTitre1 As New TableCell With {
+                    .PreferredWidth = New TableWidthUnit(TableWidthUnitType.Fixed, LargeurCol1)
+                }
+                Dim spanTitre1 As New Span With {
+                    .FontSize = 10,
+                    .FontWeight = Telerik.WinControls.RichTextEditor.UI.FontWeights.Bold
+                }
+                Dim paragrapheTitre1 As New Paragraph()
+                spanTitre1.Text = "Spécialité"
+                paragrapheTitre1.Inlines.Add(spanTitre1)
+                celleTitre1.Blocks.Add(paragrapheTitre1)
+                row0.Cells.Add(celleTitre1)
+
+                Dim cellTitre2 As New TableCell With {
+                    .PreferredWidth = New TableWidthUnit(TableWidthUnitType.Fixed, LargeurCol2)
+                }
+                Dim spanTitre2 As New Span With {
+                    .FontSize = 10,
+                    .FontWeight = Telerik.WinControls.RichTextEditor.UI.FontWeights.Normal
+                }
+                Dim paragrapheTitre2 As New Paragraph()
+                spanTitre2.Text = "Durée"
+                paragrapheTitre2.TextAlignment = RadTextAlignment.Center
+                paragrapheTitre2.Inlines.Add(spanTitre2)
+                cellTitre2.Blocks.Add(paragrapheTitre2)
+                row0.Cells.Add(cellTitre2)
+
+                Dim cellTitre3 As New TableCell With {
+                    .PreferredWidth = New TableWidthUnit(TableWidthUnitType.Fixed, LargeurCol3)
+                }
+                Dim spanTitre3 As New Span With {
+                    .FontSize = 10
+                }
+                spanTitre2.FontWeight = Telerik.WinControls.RichTextEditor.UI.FontWeights.Normal
+                Dim paragrapheTitre3 As New Paragraph()
+                spanTitre3.Text = "Délivrance"
+                paragrapheTitre3.Inlines.Add(spanTitre3)
+                cellTitre3.Blocks.Add(paragrapheTitre3)
+                row0.Cells.Add(cellTitre3)
+
+                table.Rows.Add(row0)
+
+                For i = 0 To rowCount Step 1
+                    Dim traitementALD As Boolean = Coalesce(dt.Rows(i)("oa_traitement_ald"), False)
+                    If SelectionALD = True Then
+                        If traitementALD = False Then
+                            Continue For
+                        End If
+                    Else
+                        If traitementALD = True Then
+                            Continue For
+                        End If
+                    End If
+
+                    If SelectionALD = True AndAlso TraitementAldExiste = False Then
+                        TraitementAldExiste = True
+                    End If
+
+                    Dim Posologie As String = dt.Rows(i)("oa_traitement_posologie")
+                    Dim traitementId As Long = Coalesce(dt.Rows(i)("oa_traitement_id"), 0)
+
+                    Dim traitement As New Traitement
+                    If traitementId <> 0 Then
+                        traitement = traitementDao.GetTraitementById(traitementId)
+                    End If
+
+                    Dim duree As Integer = Coalesce(dt.Rows(i)("oa_traitement_duree"), 0)
+                    Dim MedicamentAld As Boolean = Coalesce(dt.Rows(i)("oa_traitement_ald"), False)
+                    Dim MedicamentADelivrer As Boolean = Coalesce(dt.Rows(i)("oa_traitement_a_delivrer"), False)
+
+                    Dim row As New TableRow()
+
+                    Dim cellDetail1 As New TableCell With {
+                        .PreferredWidth = New TableWidthUnit(TableWidthUnitType.Fixed, LargeurCol1)
+                    }
+                    Dim spanDetail11 As New Span With {
+                        .FontSize = 10,
+                        .FontWeight = Telerik.WinControls.RichTextEditor.UI.FontWeights.Bold
+                    }
+                    Dim paragrapheDetail1 As New Paragraph()
+
+                    If traitementId <> 0 Then
+                        spanDetail11.Text = traitement.DenominationLongue
+                    Else
+                        spanDetail11.Text = Coalesce(dt.Rows(i)("oa_traitement_posologie_commentaire"), "")
+                    End If
+
+                    If spanDetail11.Text <> "" Then
+                        paragrapheDetail1.Inlines.Add(spanDetail11)
+                    End If
+
+                    Dim spanDetail12 As New Span With {
+                        .FontSize = 10,
+                        .FontWeight = Telerik.WinControls.RichTextEditor.UI.FontWeights.Normal
+                    }
+
+                    Dim PosologieBase As String = ""
+                    If Coalesce(dt.Rows(i)("oa_traitement_posologie_base"), "") = "J" Then
+                        PosologieBase = " / jour"
+                    End If
+
+                    If traitementId <> 0 Then
+                        spanDetail12.Text = vbCrLf & "Posologie " & Posologie & PosologieBase & Coalesce(dt.Rows(i)("oa_traitement_posologie_commentaire"), "")
+                        If spanDetail12.Text <> "" Then
+                            paragrapheDetail1.Inlines.Add(spanDetail12)
+                        End If
+                    End If
+
+                    cellDetail1.Blocks.Add(paragrapheDetail1)
+                    row.Cells.Add(cellDetail1)
+
+                    Dim cellDetail2 As New TableCell With {
+                        .PreferredWidth = New TableWidthUnit(TableWidthUnitType.Fixed, LargeurCol2)
+                    }
+                    Dim spanDetail2 As New Span With {
+                        .FontSize = 10
+                    }
+                    Dim paragrapheDetail2 As New Paragraph With {
+                        .TextAlignment = TextAlignment.Center
+                    }
+                    spanDetail2.Text = duree & " jour(s)"
+                    If spanDetail2.Text <> "" Then
+                        paragrapheDetail2.Inlines.Add(spanDetail2)
+                    End If
+                    cellDetail2.Blocks.Add(paragrapheDetail2)
+                    row.Cells.Add(cellDetail2)
+
+                    Dim Delivrance As String = ""
+                    If traitementId <> 0 Then
+                        If MedicamentADelivrer = False Then
+                            Delivrance = "Ne pas delivrer"
+                        End If
+                    End If
+
+                    Dim cellDetail3 As New TableCell With {
+                        .PreferredWidth = New TableWidthUnit(TableWidthUnitType.Fixed, LargeurCol3)
+                    }
+                    Dim spanDetail3 As New Span With {
+                        .FontSize = 9
+                    }
+                    Dim paragrapheDetail3 As New Paragraph()
+                    spanDetail3.Text = Delivrance
+                    If spanDetail3.Text <> "" Then
+                        paragrapheDetail3.Inlines.Add(spanDetail3)
+                    End If
+                    cellDetail3.Blocks.Add(paragrapheDetail3)
+                    row.Cells.Add(cellDetail3)
+
+                    table.Rows.Add(row)
+                Next
+
+                section.Blocks.Add(table)
+                section.Blocks.Add(New Paragraph())
+                document.Sections.Add(section)
+            End If
+
             Return document
-        End If
-
-        Const LargeurCol1 As Integer = 475
-        Const LargeurCol2 As Integer = 70
-        Const LargeurCol3 As Integer = 85
-
-
-        Dim section As New Section()
-        Dim table As New Table()
-        table.LayoutMode = TableLayoutMode.Fixed
-        table.StyleName = RadDocumentDefaultStyles.DefaultTableGridStyleName
-
-        Dim dt As DataTable
-        dt = ordonnanceDetailDao.getAllOrdonnanceLigneSelectAldByOrdonnanceId(SelectedOrdonnanceId, SelectionALD)
-
-        Dim i As Integer
-        Dim rowCount As Integer = dt.Rows.Count - 1
-
-        If dt.Rows.Count > 0 Then
-            Dim row0 As New TableRow()
-
-            Dim celleTitre1 As New TableCell()
-            celleTitre1.PreferredWidth = New TableWidthUnit(TableWidthUnitType.Fixed, LargeurCol1)
-            Dim spanTitre1 As New Span()
-            spanTitre1.FontSize = 10
-            spanTitre1.FontWeight = Telerik.WinControls.RichTextEditor.UI.FontWeights.Bold
-            Dim paragrapheTitre1 As New Paragraph()
-            spanTitre1.Text = "Spécialité"
-            paragrapheTitre1.Inlines.Add(spanTitre1)
-            celleTitre1.Blocks.Add(paragrapheTitre1)
-            row0.Cells.Add(celleTitre1)
-
-            Dim cellTitre2 As New TableCell()
-            cellTitre2.PreferredWidth = New TableWidthUnit(TableWidthUnitType.Fixed, LargeurCol2)
-            Dim spanTitre2 As New Span()
-            spanTitre2.FontSize = 10
-            spanTitre2.FontWeight = Telerik.WinControls.RichTextEditor.UI.FontWeights.Normal
-            Dim paragrapheTitre2 As New Paragraph()
-            spanTitre2.Text = "Durée"
-            paragrapheTitre2.TextAlignment = RadTextAlignment.Center
-            paragrapheTitre2.Inlines.Add(spanTitre2)
-            cellTitre2.Blocks.Add(paragrapheTitre2)
-            row0.Cells.Add(cellTitre2)
-
-            Dim cellTitre3 As New TableCell()
-            cellTitre3.PreferredWidth = New TableWidthUnit(TableWidthUnitType.Fixed, LargeurCol3)
-            Dim spanTitre3 As New Span()
-            spanTitre3.FontSize = 10
-            spanTitre2.FontWeight = Telerik.WinControls.RichTextEditor.UI.FontWeights.Normal
-            Dim paragrapheTitre3 As New Paragraph()
-            spanTitre3.Text = "Délivrance"
-            paragrapheTitre3.Inlines.Add(spanTitre3)
-            cellTitre3.Blocks.Add(paragrapheTitre3)
-            row0.Cells.Add(cellTitre3)
-
-            table.Rows.Add(row0)
-
-            For i = 0 To rowCount Step 1
-                Dim traitementALD As Boolean = Coalesce(dt.Rows(i)("oa_traitement_ald"), False)
-                If SelectionALD = True Then
-                    If traitementALD = False Then
-                        Continue For
-                    End If
-                Else
-                    If traitementALD = True Then
-                        Continue For
-                    End If
-                End If
-
-                If SelectionALD = True AndAlso TraitementAldExiste = False Then
-                    TraitementAldExiste = True
-                End If
-
-                Dim Posologie As String = dt.Rows(i)("oa_traitement_posologie")
-                Dim traitementId As Long = Coalesce(dt.Rows(i)("oa_traitement_id"), 0)
-
-                Dim traitement As New Traitement
-                If traitementId <> 0 Then
-                    traitement = traitementDao.GetTraitementById(traitementId)
-                End If
-
-                Dim duree As Integer = Coalesce(dt.Rows(i)("oa_traitement_duree"), 0)
-                Dim MedicamentAld As Boolean = Coalesce(dt.Rows(i)("oa_traitement_ald"), False)
-                Dim MedicamentADelivrer As Boolean = Coalesce(dt.Rows(i)("oa_traitement_a_delivrer"), False)
-
-                Dim row As New TableRow()
-
-                Dim cellDetail1 As New TableCell()
-                cellDetail1.PreferredWidth = New TableWidthUnit(TableWidthUnitType.Fixed, LargeurCol1)
-                Dim spanDetail11 As New Span()
-                spanDetail11.FontSize = 10
-                spanDetail11.FontWeight = Telerik.WinControls.RichTextEditor.UI.FontWeights.Bold
-                Dim paragrapheDetail1 As New Paragraph()
-
-                If traitementId <> 0 Then
-                    spanDetail11.Text = traitement.DenominationLongue
-                Else
-                    spanDetail11.Text = Coalesce(dt.Rows(i)("oa_traitement_posologie_commentaire"), "")
-                End If
-
-                If spanDetail11.Text <> "" Then
-                    paragrapheDetail1.Inlines.Add(spanDetail11)
-                End If
-
-                Dim spanDetail12 As New Span()
-                spanDetail12.FontSize = 10
-                spanDetail12.FontWeight = Telerik.WinControls.RichTextEditor.UI.FontWeights.Normal
-
-                Dim PosologieBase As String = ""
-                If Coalesce(dt.Rows(i)("oa_traitement_posologie_base"), "") = "J" Then
-                    PosologieBase = " / jour"
-                End If
-
-                If traitementId <> 0 Then
-                    spanDetail12.Text = vbCrLf & "Posologie " & Posologie & PosologieBase & Coalesce(dt.Rows(i)("oa_traitement_posologie_commentaire"), "")
-                    If spanDetail12.Text <> "" Then
-                        paragrapheDetail1.Inlines.Add(spanDetail12)
-                    End If
-                End If
-
-                cellDetail1.Blocks.Add(paragrapheDetail1)
-                row.Cells.Add(cellDetail1)
-
-                Dim cellDetail2 As New TableCell()
-                cellDetail2.PreferredWidth = New TableWidthUnit(TableWidthUnitType.Fixed, LargeurCol2)
-                Dim spanDetail2 As New Span()
-                spanDetail2.FontSize = 10
-                Dim paragrapheDetail2 As New Paragraph()
-                paragrapheDetail2.TextAlignment = TextAlignment.Center
-                spanDetail2.Text = duree & " jour(s)"
-                If spanDetail2.Text <> "" Then
-                    paragrapheDetail2.Inlines.Add(spanDetail2)
-                End If
-                cellDetail2.Blocks.Add(paragrapheDetail2)
-                row.Cells.Add(cellDetail2)
-
-                Dim Delivrance As String = ""
-                If traitementId <> 0 Then
-                    If MedicamentADelivrer = False Then
-                        Delivrance = "Ne pas delivrer"
-                    End If
-                End If
-
-                Dim cellDetail3 As New TableCell()
-                cellDetail3.PreferredWidth = New TableWidthUnit(TableWidthUnitType.Fixed, LargeurCol3)
-                Dim spanDetail3 As New Span()
-                spanDetail3.FontSize = 9
-                Dim paragrapheDetail3 As New Paragraph()
-                spanDetail3.Text = Delivrance
-                If spanDetail3.Text <> "" Then
-                    paragrapheDetail3.Inlines.Add(spanDetail3)
-                End If
-                cellDetail3.Blocks.Add(paragrapheDetail3)
-                row.Cells.Add(cellDetail3)
-
-                table.Rows.Add(row)
-            Next
-
-            section.Blocks.Add(table)
-            section.Blocks.Add(New Paragraph())
-            document.Sections.Add(section)
-        End If
-
-        Return document
+        Catch ex As Exception
+            MsgBox(ex.Message())
+        End Try
     End Function
 
     Private Sub PrintBasPage(section As Section)
-        Dim ordonnance As Ordonnance = ordonnanceDao.GetOrdonnaceById(SelectedOrdonnanceId)
-        Dim QG As QRCodeGenerator = New QRCoder.QRCodeGenerator()
-        Dim Data As QRCodeData = QG.CreateQrCode(SIGN_URL & Base64UrlEncoder.Encode(ordonnance.Signature.HexToByteArray()), QRCodeGenerator.ECCLevel.L)
-        Dim my_qrCode = New QRCode(Data)
-        With EditTools
-            .CreateParagraphIntoSection(section,, RadTextAlignment.Right)
-            Dim Medecin As Utilisateur = userDao.getUserById(ordonnance.UserValidation)
-            Dim profil As Profil = profilDao.getProfilById(Medecin.UtilisateurProfilId)
-            .AddTexteLine(Medecin.UtilisateurPrenom & " " & Medecin.UtilisateurNom & ", " & profil.Designation)
-            .AddTexteLine("RPPS : " & Medecin.UtilisateurRPPS)
-            .AddImage(New WriteableBitmap(my_qrCode.GetGraphic(3)), New Size(150, 150))
-        End With
+        Try
+            Dim ordonnance As Ordonnance = ordonnanceDao.GetOrdonnaceById(SelectedOrdonnanceId)
+            Dim QG As QRCodeGenerator = New QRCoder.QRCodeGenerator()
+            Dim Data As QRCodeData = QG.CreateQrCode(SIGN_URL & Base64UrlEncoder.Encode(ordonnance.Signature.HexToByteArray()), QRCodeGenerator.ECCLevel.L)
+            Dim my_qrCode = New QRCode(Data)
+            With EditTools
+                .CreateParagraphIntoSection(section,, RadTextAlignment.Right)
+                Dim Medecin As Utilisateur = userDao.getUserById(ordonnance.UserValidation)
+                Dim profil As Profil = profilDao.getProfilById(Medecin.UtilisateurProfilId)
+                .AddTexteLine(Medecin.UtilisateurPrenom & " " & Medecin.UtilisateurNom & ", " & profil.Designation)
+                .AddTexteLine("RPPS : " & Medecin.UtilisateurRPPS)
+                .AddImage(New WriteableBitmap(my_qrCode.GetGraphic(3)), New Size(150, 150))
+            End With
+            With EditTools
+                .CreateParagraphIntoSection(section,, RadTextAlignment.Left)
+                .AddTexteLine(If(ordonnance.Renouvellement > 0, "A renouveller " & ordonnance.Renouvellement & " fois", "Non renouvelable"))
+            End With
+        Catch ex As Exception
+            MsgBox(ex.Message())
+        End Try
     End Sub
 End Class

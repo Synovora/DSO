@@ -1,4 +1,6 @@
-﻿Public Class RadFEpisodeActeParamedicalDetailEdit
+﻿Imports Oasis_Common
+
+Public Class RadFEpisodeActeParamedicalDetailEdit
     Private _episodeActeParamedicalId As Long
     Private _codeRetour As Boolean
 
@@ -36,7 +38,7 @@
     End Sub
 
     Private Sub RadBtnValidation_Click(sender As Object, e As EventArgs) Handles RadBtnValidation.Click
-        episodeActeParamedicalDao.ModificationEpisodeActeParamedicalObservation(EpisodeActeParamedicalId, TxtObservation.Text)
+        episodeActeParamedicalDao.ModificationEpisodeActeParamedicalObservation(EpisodeActeParamedicalId, TxtObservation.Text, userLog)
         CodeRetour = True
         Close()
     End Sub

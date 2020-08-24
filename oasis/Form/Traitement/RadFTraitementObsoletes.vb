@@ -2,6 +2,7 @@
 Imports Telerik.WinControls.UI
 Imports Telerik.WinControls.UI.Localization
 Imports Oasis_Common
+
 Public Class RadFTraitementObsoletes
 
     Private privateSelectedPatient As Patient

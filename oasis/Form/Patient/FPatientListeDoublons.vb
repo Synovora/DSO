@@ -1,7 +1,7 @@
 ﻿'Liste des patients
-
 Imports System.Data.SqlClient
 Imports Oasis_Common
+
 Public Class FPatientListeDoublons
     'Properties alimentées par l'écran d'authentification
     Private privateUtilisateurConnecte As Utilisateur
@@ -59,7 +59,7 @@ Public Class FPatientListeDoublons
             If ListeDataTable.Rows(i)("oa_patient_date_naissance") Is DBNull.Value Then
                 ListeDataTable.Rows(i)("oa_patient_age") = 0
             Else
-                ListeDataTable.Rows(i)("oa_patient_age") = outils.CalculAgeEnAnnee(ListeDataTable.Rows(i)("oa_patient_date_naissance"))
+                ListeDataTable.Rows(i)("oa_patient_age") = CalculAgeEnAnnee(ListeDataTable.Rows(i)("oa_patient_date_naissance"))
             End If
 
             If ListeDataTable.Rows(i)("oa_patient_date_sortie_oasis") IsNot DBNull.Value Then
@@ -148,11 +148,12 @@ Public Class FPatientListeDoublons
 
     'Sélection d'un patient dans la liste et affichage du patient sélectionné
     Private Sub BtnPatientDetail_Click(sender As Object, e As EventArgs)
+        Dim patientDao As New PatientDao
         If TxtIdSelected.Text <> "" Then
             'Initialisation du patient sélectionné
             Dim patientId As Integer = CInt(TxtIdSelected.Text)
-            'PatientDao.SetPatient(Me.SelectedPatient, patientId)
-            Me.SelectedPatient = PatientDao.getPatientById(patientId)
+            'patientDao.SetPatient(Me.SelectedPatient, patientId)
+            Me.SelectedPatient = patientDao.GetPatient(patientId)
 
             Dim vFFPatientDetailEdit As New RadFPatientDetailEdit
             vFFPatientDetailEdit.SelectedPatientId = patientId
@@ -175,13 +176,14 @@ Public Class FPatientListeDoublons
 
     'Appel de l'écran de synthèse du patient
     Private Sub BtnSynthese_Click(sender As Object, e As EventArgs) Handles BtnSynthese.Click
+        Dim patientDao As New PatientDao
         If TxtIdSelected.Text <> "" Then
             'Création instance patient
             Dim patientId As Integer = CInt(TxtIdSelected.Text)
             Dim vFSynthese As New RadFSynthese
 
-            'PatientDao.SetPatient(Me.SelectedPatient, patientId)
-            Me.SelectedPatient = PatientDao.getPatientById(patientId)
+            'patientDao.SetPatient(Me.SelectedPatient, patientId)
+            Me.SelectedPatient = patientDao.GetPatient(patientId)
 
             vFSynthese.SelectedPatient = Me.SelectedPatient
             vFSynthese.UtilisateurConnecte = Me.UtilisateurConnecte

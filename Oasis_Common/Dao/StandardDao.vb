@@ -2,15 +2,11 @@
 Imports System.Reflection
 Imports System.Data.SqlClient
 
-
 Public MustInherit Class StandardDao
 
     Protected Function GetConnection() As SqlConnection
-
         Dim strConnect As String = GetConnectionStringOasis() ' ConfigurationManager.ConnectionStrings("Oasis_WF.My.MySettings.oasisConnection").ConnectionString
-
         Dim conn As SqlConnection = New SqlConnection(strConnect)
-
         Do While True
             Try
                 conn.Open()
@@ -23,7 +19,7 @@ Public MustInherit Class StandardDao
 
     End Function
 
-    Public Shared Sub fixConnectionString(newConnectionStringIfEmpty As String)
+    Public Shared Sub FixConnectionString(newConnectionStringIfEmpty As String)
         Dim DBCS = ConfigurationManager.ConnectionStrings("Oasis_WF.My.MySettings.oasisConnection")
         If DBCS.ConnectionString = "" Then
             Dim writable = GetType(ConfigurationElement).GetField("_bReadOnly", BindingFlags.Instance Or BindingFlags.NonPublic)
@@ -32,7 +28,7 @@ Public MustInherit Class StandardDao
         End If
     End Sub
 
-    Public Shared Function isConnectionStringFixed() As Boolean
+    Public Shared Function IsConnectionStringFixed() As Boolean
         Dim DBCS = ConfigurationManager.ConnectionStrings("Oasis_WF.My.MySettings.oasisConnection")
         Return DBCS.ConnectionString.Length <> 0
     End Function

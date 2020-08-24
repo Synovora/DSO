@@ -6,16 +6,15 @@ Imports Oasis_Common
 Public Class LoginController
     Inherits ApiController
 
-    ' GET api/<controller>
+    <AllowAnonymous>
     Public Function GetValues() As String
         Return "API Oasis - Login "
     End Function
 
-
-    ' POST api/<controller>
+    <AllowAnonymous>
     Public Function PostValue(<FromBody()> ByVal loginRequest As LoginRequest) As HttpResponseMessage
         Dim userDao As UserDao = New UserDao
-        Dim userLog = Nothing
+
         Try
             verifPassword(loginRequest.login, loginRequest.password)
             Dim enc = EncryptString(ConfigurationManager.ConnectionStrings("Oasis_WF.My.MySettings.oasisConnection").ConnectionString)

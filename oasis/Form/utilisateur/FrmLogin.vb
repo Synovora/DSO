@@ -15,7 +15,7 @@ Public Class FrmLogin
 
         ' Cet appel est requis par le concepteur.
         InitializeComponent()
-        afficheTitleForm(Me, Me.Text)
+        AfficheTitleForm(Me, Me.Text, userLog)
         '  --- init internationnalisation du richTextBoxEditor ( 1 shot)
         RichTextBoxLocalizationProvider.CurrentProvider = RichTextBoxLocalizationProvider.FromStream(New MemoryStream(New System.Text.UTF8Encoding().GetBytes(FrenchRichTextBoxStrings.RichTextBoxStrings)))
         '  --- init internationnalisation du radgridview
@@ -83,11 +83,11 @@ Public Class FrmLogin
             }
 
         ' --- recherche chaine de connextion / api rest
-        If StandardDao.isConnectionStringFixed() = False Then
+        If StandardDao.IsConnectionStringFixed() = False Then
             Me.Cursor = Cursors.WaitCursor
             Try
                 Using apiOasis As New ApiOasis()
-                    StandardDao.fixConnectionString(apiOasis.loginRest(loginRequestLog))
+                    StandardDao.FixConnectionString(apiOasis.loginRest(loginRequestLog))
                 End Using
             Catch ex As Exception
                 If ex.Message = "Identifiant et/ou mot de passe erroné !" AndAlso IsPermission(True) = False Then PasLeDroitLala()

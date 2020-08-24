@@ -1,4 +1,5 @@
 ﻿Imports System.Collections.Specialized
+Imports Oasis_Common
 
 Public Class RadFSubstancesListe
     Private _SelectedSpecialite As Integer
@@ -15,7 +16,7 @@ Public Class RadFSubstancesListe
     Dim theriaqueDao As New TheriaqueDao
 
     Private Sub RadFSubstancesListe_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-        Dim dt As DataTable = theriaqueDao.getSpecialiteByArgument(SelectedSpecialite, TheriaqueDao.EnumGetSpecialite.ID_THERIAQUE, TheriaqueDao.EnumMonoVir.NULL)
+        Dim dt As DataTable = theriaqueDao.GetSpecialiteByArgument(SelectedSpecialite, TheriaqueDao.EnumGetSpecialite.ID_THERIAQUE, TheriaqueDao.EnumMonoVir.NULL)
         TextBoxSpecialite.Text = dt.Rows(0)("SP_NOM")
 
         Dim SubstanceListe As List(Of Integer)

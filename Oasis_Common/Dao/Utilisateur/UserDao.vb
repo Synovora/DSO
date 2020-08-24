@@ -61,7 +61,7 @@ Public Class UserDao
 
         Catch ex As Exception
             transaction.Rollback()
-            Windows.Forms.MessageBox.Show(ex.Message)
+            Throw New Exception(ex.Message)
             codeRetour = False
         Finally
             transaction.Dispose()
@@ -120,7 +120,7 @@ Public Class UserDao
 
         Catch ex As Exception
             transaction.Rollback()
-            Windows.Forms.MessageBox.Show(ex.Message)
+            Throw New Exception(ex.Message)
             codeRetour = False
         Finally
             transaction.Dispose()

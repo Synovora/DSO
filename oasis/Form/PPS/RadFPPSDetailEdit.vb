@@ -202,17 +202,17 @@ Public Class RadFPPSDetailEdit
             Case EnumCategoriePPS.Strategie
                 Select Case PPSUpdate.SousCategorieId
                     Case 7
-                        CbxTypeStrategie.Text = PpsDao.EnumSousCategoriePPS.Prophylactique.ToString
+                        CbxTypeStrategie.Text = Pps.EnumSousCategoriePPS.Prophylactique.ToString
                     Case 8
-                        CbxTypeStrategie.Text = PpsDao.EnumSousCategoriePPS.Sociale.ToString
+                        CbxTypeStrategie.Text = Pps.EnumSousCategoriePPS.Sociale.ToString
                     Case 9
-                        CbxTypeStrategie.Text = PpsDao.EnumSousCategoriePPS.Symptomatique.ToString
+                        CbxTypeStrategie.Text = Pps.EnumSousCategoriePPS.Symptomatique.ToString
                     Case 10
-                        CbxTypeStrategie.Text = PpsDao.EnumSousCategoriePPS.Curative.ToString
+                        CbxTypeStrategie.Text = Pps.EnumSousCategoriePPS.Curative.ToString
                     Case 11
-                        CbxTypeStrategie.Text = PpsDao.EnumSousCategoriePPS.Diagnostique.ToString
+                        CbxTypeStrategie.Text = Pps.EnumSousCategoriePPS.Diagnostique.ToString
                     Case 12
-                        CbxTypeStrategie.Text = PpsDao.EnumSousCategoriePPS.Palliative.ToString
+                        CbxTypeStrategie.Text = Pps.EnumSousCategoriePPS.Palliative.ToString
                     Case Else
                         CbxTypeStrategie.Text = ""
                 End Select
@@ -369,7 +369,7 @@ Public Class RadFPPSDetailEdit
         PPSUpdate.AffichageSynthese = True
         PPSUpdate.Inactif = False
 
-        If ppsDao.CreationPPS(PPSUpdate) = True Then
+        If ppsDao.CreationPPS(PPSUpdate, userLog) = True Then
             Dim form As New RadFNotification()
             form.Message = PPSDesignation & " créée"
             form.Show()
@@ -383,9 +383,10 @@ Public Class RadFPPSDetailEdit
     Private Function ModificationPPS() As Boolean
         Dim codeRetour As Boolean = True
 
-        If ppsDao.ModificationPPS(PPSUpdate) = True Then
-            Dim form As New RadFNotification()
-            form.Message = PPSDesignation & " modifiée"
+        If ppsDao.ModificationPPS(PPSUpdate, userLog) = True Then
+            Dim form As New RadFNotification With {
+                .Message = PPSDesignation & " modifiée"
+            }
             form.Show()
         Else
             codeRetour = False
@@ -398,7 +399,7 @@ Public Class RadFPPSDetailEdit
     Private Function AnnulationPrevention() As Boolean
         Dim codeRetour As Boolean = True
 
-        If ppsDao.AnnulationPrevention(PPSUpdate) = True Then
+        If ppsDao.AnnulationPrevention(PPSUpdate, userLog) = True Then
             Dim form As New RadFNotification()
             form.Message = PPSDesignation & " annulée"
             form.Show()
@@ -475,17 +476,17 @@ Public Class RadFPPSDetailEdit
 
         Select Case CbxTypeStrategie.Text
             Case "Prophylactique"
-                typeStrategie = PpsDao.EnumSousCategoriePPS.Prophylactique
+                typeStrategie = Pps.EnumSousCategoriePPS.Prophylactique
             Case "Sociale"
-                typeStrategie = PpsDao.EnumSousCategoriePPS.Sociale
+                typeStrategie = Pps.EnumSousCategoriePPS.Sociale
             Case "Symptomatique"
-                typeStrategie = PpsDao.EnumSousCategoriePPS.Symptomatique
+                typeStrategie = Pps.EnumSousCategoriePPS.Symptomatique
             Case "Curative"
-                typeStrategie = PpsDao.EnumSousCategoriePPS.Curative
+                typeStrategie = Pps.EnumSousCategoriePPS.Curative
             Case "Diagnostique"
-                typeStrategie = PpsDao.EnumSousCategoriePPS.Diagnostique
+                typeStrategie = Pps.EnumSousCategoriePPS.Diagnostique
             Case "Palliative"
-                typeStrategie = PpsDao.EnumSousCategoriePPS.Palliative
+                typeStrategie = Pps.EnumSousCategoriePPS.Palliative
             Case Else
                 typeStrategie = 0
         End Select
@@ -503,7 +504,7 @@ Public Class RadFPPSDetailEdit
     End Sub
 
     Private Sub DroitAcces()
-        If outils.AccesFonctionMedicaleSynthese(SelectedPatient) = False Then
+        If outils.AccesFonctionMedicaleSynthese(SelectedPatient, userLog) = False Then
             RadBtnConfirmationAnnulation.Hide()
             RadBtnAnnulation.Hide()
             RadBtnConfirmationAnnulation.Hide()

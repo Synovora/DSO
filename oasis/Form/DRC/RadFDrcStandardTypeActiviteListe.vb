@@ -1,15 +1,14 @@
 ﻿Imports Oasis_Common
 
 Public Class RadFDrcStandardTypeActiviteListe
-
-    Dim drc As New Drc
-    Dim drcdao As New DrcDao
-    Dim drcStandardDao As New DrcStandardDao
+    ReadOnly drc As New Drc
+    ReadOnly drcdao As New DrcDao
+    ReadOnly drcStandardDao As New DrcStandardDao
     Dim TypeActivite As String
 
 
     Private Sub RadFDrcStandardTypeActiviteActivite_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-        TypeActivite = EpisodeDao.EnumTypeActiviteEpisodeCode.PREVENTION_SUIVI_GROSSESSE
+        TypeActivite = Episode.EnumTypeActiviteEpisodeCode.PREVENTION_SUIVI_GROSSESSE
         ChargementDrc()
         RadBtnSuiviGrossesse.ForeColor = Color.Red
         RadBtnSuiviGrossesse.Font = New Font(RadBtnSuiviGrossesse.Font, FontStyle.Bold)
@@ -20,8 +19,8 @@ Public Class RadFDrcStandardTypeActiviteListe
         Dim DrcId As Long
         DrcDataTable = drcStandardDao.getAllDrcByTypeActivite(TypeActivite)
 
-        If TypeActivite = EpisodeDao.EnumTypeActiviteEpisodeCode.PREVENTION_ENFANT_PRE_SCOLAIRE OrElse
-            TypeActivite = EpisodeDao.EnumTypeActiviteEpisodeCode.PREVENTION_ENFANT_SCOLAIRE Then
+        If TypeActivite = Episode.EnumTypeActiviteEpisodeCode.PREVENTION_ENFANT_PRE_SCOLAIRE OrElse
+            TypeActivite = Episode.EnumTypeActiviteEpisodeCode.PREVENTION_ENFANT_SCOLAIRE Then
             RadGridViewDrcAsso.Columns.Item("applicationDe").IsVisible = True
             RadGridViewDrcAsso.Columns.Item("applicationA").IsVisible = True
         Else
@@ -52,7 +51,7 @@ Public Class RadFDrcStandardTypeActiviteListe
             ageMin = Coalesce(DrcDataTable.Rows(i)("age_min"), 0)
             ageMax = Coalesce(DrcDataTable.Rows(i)("age_max"), 0)
             Select Case TypeActivite
-                Case EpisodeDao.EnumTypeActiviteEpisodeCode.PREVENTION_ENFANT_PRE_SCOLAIRE
+                Case Episode.EnumTypeActiviteEpisodeCode.PREVENTION_ENFANT_PRE_SCOLAIRE
                     If ageMin = 0 Then
                         RadGridViewDrcAsso.Rows(iGrid).Cells("applicationDe").Value = ""
                     Else
@@ -63,7 +62,7 @@ Public Class RadFDrcStandardTypeActiviteListe
                     Else
                         RadGridViewDrcAsso.Rows(iGrid).Cells("applicationA").Value = ageMax.ToString & " mois"
                     End If
-                Case EpisodeDao.EnumTypeActiviteEpisodeCode.PREVENTION_ENFANT_SCOLAIRE
+                Case Episode.EnumTypeActiviteEpisodeCode.PREVENTION_ENFANT_SCOLAIRE
                     If ageMin = 0 Then
                         RadGridViewDrcAsso.Rows(iGrid).Cells("applicationDe").Value = ""
                     Else
@@ -97,7 +96,7 @@ Public Class RadFDrcStandardTypeActiviteListe
                 If MsgBox("Confirmation de l'annulation ", MsgBoxStyle.YesNo, "") = MsgBoxResult.Yes Then
                     Dim DrcStandardId As Integer = RadGridViewDrcAsso.Rows(aRow).Cells("Id").Value
                     'Suppression de l'association de la DRC
-                    If drcStandardDao.AnnulationDrcStandard(DrcStandardId) = True Then
+                    If drcStandardDao.AnnulationDrcStandard(DrcStandardId, userLog) = True Then
                         MessageBox.Show("La DRC standard a été annulée")
                         RadGridViewDrcAsso.Rows.Clear()
                         ChargementDrc()
@@ -108,26 +107,26 @@ Public Class RadFDrcStandardTypeActiviteListe
     End Sub
 
     Private Sub RadBtnActePM_Click(sender As Object, e As EventArgs) Handles RadBtnActePM.Click
-        Dim CategorieOasis = DrcDao.EnumCategorieOasisCode.ActeParamedical
-        selectDrc(CategorieOasis)
+        Dim CategorieOasis = Drc.EnumCategorieOasisCode.ActeParamedical
+        SelectDrc(CategorieOasis)
     End Sub
 
     Private Sub RadBtnSlectProtocole_Click(sender As Object, e As EventArgs) Handles RadBtnSlectProtocole.Click
-        Dim CategorieOasis = DrcDao.EnumCategorieOasisCode.ProtocoleCollaboratif
-        selectDrc(CategorieOasis)
+        Dim CategorieOasis = Drc.EnumCategorieOasisCode.ProtocoleCollaboratif
+        SelectDrc(CategorieOasis)
     End Sub
 
     Private Sub RadBtnSelectParm_Click(sender As Object, e As EventArgs) Handles RadBtnSelectParm.Click
-        Dim CategorieOasis = DrcDao.EnumCategorieOasisCode.GroupeParametres
-        selectDrc(CategorieOasis)
+        Dim CategorieOasis = Drc.EnumCategorieOasisCode.GroupeParametres
+        SelectDrc(CategorieOasis)
     End Sub
     Private Sub RadBtnMesurePreventive_Click(sender As Object, e As EventArgs) Handles RadBtnMesurePreventive.Click
-        Dim CategorieOasis = DrcDao.EnumCategorieOasisCode.Prevention
-        selectDrc(CategorieOasis)
+        Dim CategorieOasis = Drc.EnumCategorieOasisCode.Prevention
+        SelectDrc(CategorieOasis)
     End Sub
 
     'Sélection DRC à implémenter
-    Private Sub selectDrc(CategorieOasis As String)
+    Private Sub SelectDrc(CategorieOasis As String)
         Dim SelectedDrcId As Integer
         Cursor.Current = Cursors.WaitCursor
 
@@ -139,16 +138,17 @@ Public Class RadFDrcStandardTypeActiviteListe
                 SelectedDrcId = vFDrcSelecteur.SelectedDrcId
                 If SelectedDrcId <> 0 Then
                     'Ajout de l'occurrence choisie (contrôle que cette DORC n'est pas déjà associée)
-                    Dim drcStandard As DrcStandard = New DrcStandard
-                    drcStandard.TypeActivite = TypeActivite
-                    drcStandard.DrcId = SelectedDrcId
+                    Dim drcStandard As DrcStandard = New DrcStandard With {
+                        .TypeActivite = TypeActivite,
+                        .DrcId = SelectedDrcId
+                    }
                     Dim drcSelected As Drc = New Drc
                     drcdao.GetDrc(drcSelected, SelectedDrcId)
                     drcStandard.CategorieOasis = drcSelected.CategorieOasisId
                     Try
                         If drcStandardDao.CreationDrcStandard(drcStandard) = True Then
-                            If TypeActivite = EpisodeDao.EnumTypeActiviteEpisodeCode.PREVENTION_ENFANT_PRE_SCOLAIRE Or
-                                TypeActivite = EpisodeDao.EnumTypeActiviteEpisodeCode.PREVENTION_ENFANT_SCOLAIRE Then
+                            If TypeActivite = Episode.EnumTypeActiviteEpisodeCode.PREVENTION_ENFANT_PRE_SCOLAIRE Or
+                                TypeActivite = Episode.EnumTypeActiviteEpisodeCode.PREVENTION_ENFANT_SCOLAIRE Then
                                 'Récupérer le dernier DRC standard créé
                                 Dim DrcStandardIdCreated As Integer = drcStandardDao.GetDrcStandardCreated(drcStandard)
                                 Using vRadFDrcStandardTypeActiviteDetail As New RadFDrcStandardTypeActiviteDetail
@@ -160,7 +160,7 @@ Public Class RadFDrcStandardTypeActiviteListe
                             ChargementDrc()
                         End If
                     Catch ex As Exception
-                        CreateLog(ex.ToString, Me.Name, LogDao.EnumTypeLog.ERREUR.ToString)
+                        CreateLog(ex.ToString, Me.Name, Log.EnumTypeLog.ERREUR.ToString, userLog)
                         If ex.Message.StartsWith("Collision") = True Then
                             MessageBox.Show("La DRC sélectionnée existe déjà pour le type d'activité d'épisode")
                         End If
@@ -177,7 +177,7 @@ Public Class RadFDrcStandardTypeActiviteListe
     Private Sub RadBtnSuiviGrossesse_Click(sender As Object, e As EventArgs) Handles RadBtnSuiviGrossesse.Click
         Cursor.Current = Cursors.WaitCursor
         RadGridViewDrcAsso.Rows.Clear()
-        TypeActivite = EpisodeDao.EnumTypeActiviteEpisodeCode.PREVENTION_SUIVI_GROSSESSE
+        TypeActivite = Episode.EnumTypeActiviteEpisodeCode.PREVENTION_SUIVI_GROSSESSE
         ChargementDrc()
         GestionBtnSelection()
         RadBtnSuiviGrossesse.ForeColor = Color.Red
@@ -189,7 +189,7 @@ Public Class RadFDrcStandardTypeActiviteListe
     Private Sub RadBtnSuiviGynecologique_Click(sender As Object, e As EventArgs) Handles RadBtnSuiviGynecologique.Click
         Cursor.Current = Cursors.WaitCursor
         RadGridViewDrcAsso.Rows.Clear()
-        TypeActivite = EpisodeDao.EnumTypeActiviteEpisodeCode.PREVENTION_SUIVI_GYNECOLOGIQUE
+        TypeActivite = Episode.EnumTypeActiviteEpisodeCode.PREVENTION_SUIVI_GYNECOLOGIQUE
         ChargementDrc()
         GestionBtnSelection()
         RadBtnSuiviGynecologique.ForeColor = Color.Red
@@ -201,7 +201,7 @@ Public Class RadFDrcStandardTypeActiviteListe
     Private Sub RadBtnSuiviEnfantPreScolaire_Click(sender As Object, e As EventArgs) Handles RadBtnSuiviEnfantPreScolaire.Click
         Cursor.Current = Cursors.WaitCursor
         RadGridViewDrcAsso.Rows.Clear()
-        TypeActivite = EpisodeDao.EnumTypeActiviteEpisodeCode.PREVENTION_ENFANT_PRE_SCOLAIRE
+        TypeActivite = Episode.EnumTypeActiviteEpisodeCode.PREVENTION_ENFANT_PRE_SCOLAIRE
         ChargementDrc()
         GestionBtnSelection()
         RadBtnSuiviEnfantPreScolaire.ForeColor = Color.Red
@@ -213,7 +213,7 @@ Public Class RadFDrcStandardTypeActiviteListe
     Private Sub RadBtnSuiviEnfantScolaire_Click(sender As Object, e As EventArgs) Handles RadBtnSuiviEnfantScolaire.Click
         Cursor.Current = Cursors.WaitCursor
         RadGridViewDrcAsso.Rows.Clear()
-        TypeActivite = EpisodeDao.EnumTypeActiviteEpisodeCode.PREVENTION_ENFANT_SCOLAIRE
+        TypeActivite = Episode.EnumTypeActiviteEpisodeCode.PREVENTION_ENFANT_SCOLAIRE
         ChargementDrc()
         GestionBtnSelection()
         RadBtnSuiviEnfantScolaire.ForeColor = Color.Red
@@ -225,7 +225,7 @@ Public Class RadFDrcStandardTypeActiviteListe
     Private Sub RadBtnPathologieAigue_Click(sender As Object, e As EventArgs) Handles RadBtnPathologieAigue.Click
         Cursor.Current = Cursors.WaitCursor
         RadGridViewDrcAsso.Rows.Clear()
-        TypeActivite = EpisodeDao.EnumTypeActiviteEpisodeCode.PATHOLOGIE_AIGUE
+        TypeActivite = Episode.EnumTypeActiviteEpisodeCode.PATHOLOGIE_AIGUE
         ChargementDrc()
         GestionBtnSelection()
         RadBtnPathologieAigue.ForeColor = Color.Red
@@ -251,14 +251,14 @@ Public Class RadFDrcStandardTypeActiviteListe
 
     'Appel gestion DRC Standard
     Private Sub RadGridViewDrcAsso_CellDoubleClick(sender As Object, e As Telerik.WinControls.UI.GridViewCellEventArgs) Handles RadGridViewDrcAsso.CellDoubleClick
-        modifierDRCStandard()
+        ModifierDRCStandard()
     End Sub
 
     Private Sub RadBtnModifier_Click(sender As Object, e As EventArgs) Handles RadBtnModifier.Click
-        modifierDRCStandard()
+        ModifierDRCStandard()
     End Sub
 
-    Private Sub modifierDRCStandard()
+    Private Sub ModifierDRCStandard()
         If RadGridViewDrcAsso.CurrentRow IsNot Nothing Then
             Dim aRow As Integer = Me.RadGridViewDrcAsso.Rows.IndexOf(Me.RadGridViewDrcAsso.CurrentRow)
             If aRow >= 0 Then
