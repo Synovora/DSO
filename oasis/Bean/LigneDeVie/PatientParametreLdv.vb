@@ -13,6 +13,7 @@
     Private _activiteSocial As Boolean
     Private _profilMedical As Boolean
     Private _profilParamedical As Boolean
+    Private _profilPatient
     Private _parametre1 As Long
     Private _parametre2 As Long
     Private _parametre3 As Long
@@ -207,6 +208,15 @@
         End Get
         Set(value As Boolean)
             _typeParametre = value
+        End Set
+    End Property
+
+    Public Property ProfilPatient As Object
+        Get
+            Return _profilPatient
+        End Get
+        Set(value As Object)
+            _profilPatient = value
         End Set
     End Property
 End Class
