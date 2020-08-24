@@ -137,9 +137,9 @@ Public Class RadFContextedetailEdit
         CodeResultat = EnumResultat.AttenteAction
 
         If ConclusionEpisode = True Then
-            AfficheTitleForm(Me, "Détail contexte de conclusion d'épisode", userLog)
+            afficheTitleForm(Me, "Détail contexte de conclusion d'épisode")
         Else
-            AfficheTitleForm(Me, "Détail contexte", userLog)
+            afficheTitleForm(Me, "Détail contexte")
         End If
 
         InitZone()
@@ -171,8 +171,8 @@ Public Class RadFContextedetailEdit
             RadValidation.Show()
 
             'Catégorie
-            'CbxCategorieContexte.Text = ContexteCourrier.EnumParcoursBaseItem.Medical
-            contexteUpdate.CategorieContexte = ContexteCourrier.EnumParcoursBaseCode.Medical
+            'CbxCategorieContexte.Text = ContexteDao.EnumParcoursBaseItem.Medical
+            contexteUpdate.CategorieContexte = ContexteDao.EnumParcoursBaseCode.Medical
             RadioBtnMedical.Checked = True
 
             'Dénomination DRC
@@ -203,7 +203,7 @@ Public Class RadFContextedetailEdit
             LblPublication.Hide()
             contexteUpdate.StatutAffichage = "P"
             If ConclusionEpisode = True Then
-                If Episode.TypeActivite <> Episode.EnumTypeActiviteEpisodeCode.PATHOLOGIE_AIGUE Then
+                If Episode.TypeActivite <> EpisodeDao.EnumTypeActiviteEpisodeCode.PATHOLOGIE_AIGUE Then
                     ChkCache.Checked = True
                     ChkCache.ForeColor = Color.Red
                     LblPublication.Text = "Contexte masqué"
@@ -252,22 +252,22 @@ Public Class RadFContextedetailEdit
         contexteRead.AldDateDebut = MaxDate
         contexteRead.AldDateFin = MaxDate
         contexteRead.AldDateDemande = MaxDate
-        contexteUpdate = contexteReadDao.Clone(contexteRead)
+        contexteUpdate = contexteReadDao.CloneAntecedent(contexteRead)
 
         Dim dateDebut, dateFin, dateCreation, dateModification As Date
         Dim ordreAffichage As Integer
         Dim dateJouraComparer As New Date(Date.Now.Year, Date.Now.Month, Date.Now.Day, 0, 0, 0)
 
         Select Case contexteRead.CategorieContexte
-            Case ContexteCourrier.EnumParcoursBaseCode.Medical
-                'CbxCategorieContexte.Text = ContexteCourrier.EnumParcoursBaseItem.Medical
+            Case ContexteDao.EnumParcoursBaseCode.Medical
+                'CbxCategorieContexte.Text = ContexteDao.EnumParcoursBaseItem.Medical
                 RadioBtnMedical.Checked = True
-            Case ContexteCourrier.EnumParcoursBaseCode.BioEnvironnemental
-                'CbxCategorieContexte.Text = ContexteCourrier.EnumParcoursBaseItem.BioEnvironnemental
+            Case ContexteDao.EnumParcoursBaseCode.BioEnvironnemental
+                'CbxCategorieContexte.Text = ContexteDao.EnumParcoursBaseItem.BioEnvironnemental
                 RadioBtnBioEnvironnemental.Checked = True
             Case Else
-                'CbxCategorieContexte.Text = ContexteCourrier.EnumParcoursBaseItem.Medical
-                contexteUpdate.CategorieContexte = ContexteCourrier.EnumParcoursBaseCode.Medical
+                'CbxCategorieContexte.Text = ContexteDao.EnumParcoursBaseItem.Medical
+                contexteUpdate.CategorieContexte = ContexteDao.EnumParcoursBaseCode.Medical
                 RadioBtnMedical.Checked = True
         End Select
 
@@ -419,7 +419,7 @@ Public Class RadFContextedetailEdit
     Private Sub RadBtnSupprimer_Click(sender As Object, e As EventArgs) Handles RadBtnSupprimer.Click
         If MsgBox("Attention, confirmez-vous l'annulation du contexte", MsgBoxStyle.YesNo, "") = MsgBoxResult.Yes Then
             'Annulation contexte
-            If contexteDao.AnnulationContexte(contexteUpdate, ContexteHistoACreer, userLog) = True Then
+            If contexteDao.AnnulationContexte(contexteUpdate, ContexteHistoACreer) = True Then
                 CodeResultat = EnumResultat.AnnulationOK
                 Try
                     Dim form As New RadFNotification()
@@ -464,7 +464,7 @@ Public Class RadFContextedetailEdit
         Select Case Traitement
             Case EnumTraitement.Creation
                 If ValidationContexte() = True Then
-                    If contexteDao.CreationContexte(contexteUpdate, ContexteHistoACreer, userLog, ConclusionEpisode, Episode) = True Then
+                    If contexteDao.CreationContexte(contexteUpdate, ContexteHistoACreer, ConclusionEpisode, Episode) = True Then
                         If ConclusionEpisode = True Then
                             Dim episodeDao As New EpisodeDao
                             episodeDao.MajEpisodeConclusionMedicale(Episode.Id)
@@ -487,7 +487,7 @@ Public Class RadFContextedetailEdit
                 End If
             Case EnumTraitement.Modification
                 If ValidationContexte() = True Then
-                    If contexteDao.ModificationContexte(contexteUpdate, ContexteHistoACreer, userLog) = True Then
+                    If contexteDao.ModificationContexte(contexteUpdate, ContexteHistoACreer) = True Then
                         CodeResultat = EnumResultat.ModificationOK
                         Try
                             Dim form As New RadFNotification()
@@ -609,8 +609,8 @@ Public Class RadFContextedetailEdit
     'Initialisation des zones de saisie
     Private Sub InitZone()
         'CbxCategorieContexte.Items.Clear()
-        'CbxCategorieContexte.Items.Add(ContexteCourrier.EnumParcoursBaseItem.Medical)
-        'CbxCategorieContexte.Items.Add(ContexteCourrier.EnumParcoursBaseItem.BioEnvironnemental)
+        'CbxCategorieContexte.Items.Add(ContexteDao.EnumParcoursBaseItem.Medical)
+        'CbxCategorieContexte.Items.Add(ContexteDao.EnumParcoursBaseItem.BioEnvironnemental)
 
         Me.ContexteTransformeEnAntecedent = False
         TxtDrcId.Text = ""
@@ -671,12 +671,12 @@ Public Class RadFContextedetailEdit
     '======================================================
 
     Private Sub RadioBtnMedical_CheckedChanged(sender As Object, e As EventArgs) Handles RadioBtnMedical.CheckedChanged
-        contexteUpdate.CategorieContexte = ContexteCourrier.EnumParcoursBaseCode.Medical
+        contexteUpdate.CategorieContexte = ContexteDao.EnumParcoursBaseCode.Medical
         GestionAffichageBoutonValidation()
     End Sub
 
     Private Sub RadioBtnBioEnvironnemental_CheckedChanged(sender As Object, e As EventArgs) Handles RadioBtnBioEnvironnemental.CheckedChanged
-        contexteUpdate.CategorieContexte = ContexteCourrier.EnumParcoursBaseCode.BioEnvironnemental
+        contexteUpdate.CategorieContexte = ContexteDao.EnumParcoursBaseCode.BioEnvironnemental
         GestionAffichageBoutonValidation()
     End Sub
 
@@ -820,7 +820,7 @@ Public Class RadFContextedetailEdit
             RadBtnSupprimer.Enabled = False
         End If
 
-        If outils.AccesFonctionMedicaleSynthese(SelectedPatient, userLog) = False Then
+        If outils.AccesFonctionMedicaleSynthese(SelectedPatient) = False Then
             RadBtnDrcSelect.Hide()
             RadBtnRecupereDrc.Hide()
             RadBtnSupprimer.Hide()

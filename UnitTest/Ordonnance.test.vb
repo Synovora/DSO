@@ -1,7 +1,6 @@
 ﻿Imports DeepEqual.Syntax
 Imports Nethereum.Signer
 Imports Oasis_WF
-Imports Oasis_Common
 
 <TestClass()> Public Class TestUtilisateur
     <TestMethod()> Public Sub TestUpdatePk()
@@ -32,7 +31,7 @@ End Class
         Dim ordonnanceSerialized As Byte() = ordonnance.Serialize()
 
         Console.WriteLine(BitConverter.ToString(ordonnanceSerialized))
-        Dim ordonnance2 As Ordonnance = ordonnance.Deserialize(ordonnanceSerialized)
+        Dim ordonnance2 As Ordonnance = Ordonnance.Deserialize(ordonnanceSerialized)
 
         ordonnance.ShouldDeepEqual(ordonnance2)
     End Sub
@@ -41,7 +40,6 @@ End Class
 <TestClass()> Public Class TestOrdonnanceDetail
 
     Public Shared Function GenerateOrdonnanceDetail() As OrdonnanceDetail
-        Dim patientDao As New PatientDao
         Dim ordonnanceDetail As New OrdonnanceDetail
         'ordonnanceDetail.LigneId = 1337
         ordonnanceDetail.Traitement = True
@@ -80,7 +78,7 @@ End Class
         Dim ordonnanceSerialized As Byte() = ordonnanceDetail.Serialize()
 
         Console.WriteLine(BitConverter.ToString(ordonnanceSerialized))
-        Dim ordonnanceDetail2 As OrdonnanceDetail = ordonnanceDetail.Deserialize(ordonnanceSerialized)
+        Dim ordonnanceDetail2 As OrdonnanceDetail = OrdonnanceDetail.Deserialize(ordonnanceSerialized)
 
         ordonnanceDetail.ShouldDeepEqual(ordonnanceDetail2)
     End Sub

@@ -481,7 +481,7 @@ Public Class RadFTraitementFenetreTh
                 BaseSaisie = traitementDataReader("oa_traitement_posologie_base")
                 Select Case traitementDataReader("oa_traitement_posologie_base")
                     Case "J"
-                        CbxTraitement.Text = "Journalier"
+                        CbxTraitementBase.Text = "Journalier"
                         MontrerPosologieJournaliere()
                         If traitementDataReader("oa_traitement_posologie_matin") <> 0 Then
                             posologieMatin = Rythme
@@ -511,16 +511,16 @@ Public Class RadFTraitementFenetreTh
                             ChkPosologieApresMidi.Checked = False
                         End If
                     Case "H"
-                        CbxTraitement.Text = "Hebdomadaire"
+                        CbxTraitementBase.Text = "Hebdomadaire"
                         CacherPosologieJournaliere()
                     Case "M"
-                        CbxTraitement.Text = "Mensuel"
+                        CbxTraitementBase.Text = "Mensuel"
                         CacherPosologieJournaliere()
                     Case "A"
-                        CbxTraitement.Text = "Annuel"
+                        CbxTraitementBase.Text = "Annuel"
                         CacherPosologieJournaliere()
                     Case Else
-                        CbxTraitement.Text = ""
+                        CbxTraitementBase.Text = ""
                         CacherPosologieJournaliere()
                 End Select
             End If
@@ -692,7 +692,7 @@ Public Class RadFTraitementFenetreTh
             Rythme = 0
         End If
 
-        Select Case CbxTraitement.Text
+        Select Case CbxTraitementBase.Text
             Case "Journalier"
                 BaseSelection = "J"
             Case "Hebdomadaire"
@@ -765,7 +765,7 @@ Public Class RadFTraitementFenetreTh
     Private Sub InhiberZonesDeSaisie()
         RadBtnSupprimerFenetre.Visible = False
         RadBtnValidationFenetre.Visible = False
-        CbxTraitement.Enabled = False
+        CbxTraitementBase.Enabled = False
         NumTraitementRythme.Enabled = False
         NumNumeroOrdre.Enabled = False
         ChkPosologieMatin.Enabled = False
@@ -799,7 +799,7 @@ Public Class RadFTraitementFenetreTh
     'Détermination de la base traitement à partir du combo box
     Private Function DeterminationBaseTraitement() As Char
         Dim baseTraitement As Char
-        Select Case CbxTraitement.Text
+        Select Case CbxTraitementBase.Text
             Case "Journalier"
                 baseTraitement = "J"
             Case "Hebdomadaire"

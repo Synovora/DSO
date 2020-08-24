@@ -1,5 +1,4 @@
 ﻿Imports Oasis_Common
-Imports Telerik.WinControls.UI
 
 Public Class RadFWkfDemandeAvisHisto
     Private _selectedEpisodeId As Long
@@ -27,18 +26,11 @@ Public Class RadFWkfDemandeAvisHisto
     Dim tacheDT As DataTable
 
     Private Sub RadFWkfDemandeAvisHisto_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-        AfficheTitleForm(Me, "Historique des workflows de demande d'avis de l'épisode", userLog)
+        afficheTitleForm(Me, "Historique des workflows de demande d'avis de l'épisode")
 
         ChargementEtatCivil()
         ChargementHisto()
         Cursor.Current = Cursors.Default
-    End Sub
-
-    Private Sub RadFWkfDemandeAvisHisto_ToolTipTextNeeded(sender As Object, e As Telerik.WinControls.ToolTipTextNeededEventArgs) Handles RadHistoDataGridView.ToolTipTextNeeded
-        Dim cell As GridDataCellElement = TryCast(sender, GridDataCellElement)
-        If cell IsNot Nothing Then
-            e.ToolTipText = cell.Value.ToString()
-        End If
     End Sub
 
     Private Sub ChargementHisto()
@@ -72,25 +64,24 @@ Public Class RadFWkfDemandeAvisHisto
             RadHistoDataGridView.Rows(iGrid).Cells("destinataire").Value = histoWorkflow.Rows(i)("user_destinataire_fonction")
 
             RadHistoDataGridView.Rows(iGrid).Cells("commentaire").Value = histoWorkflow.Rows(i)("emetteur_commentaire")
-            'RadHistoDataGridView.Rows(iGrid).Cells("commentaire")
 
             RadHistoDataGridView.Rows(iGrid).Cells("dateCreation").Value = histoWorkflow.Rows(i)("horodate_creation").ToString()
             RadHistoDataGridView.Rows(iGrid).Cells("dateTraitement").Value = histoWorkflow.Rows(i)("horodate_cloture").ToString()
 
             Select Case histoWorkflow.Rows(i)("nature")
-                Case Tache.NatureTache.DEMANDE.ToString
+                Case TacheDao.NatureTache.DEMANDE.ToString
                     Select Case naturePrecedente
-                        Case Tache.NatureTache.COMPLEMENT.ToString
+                        Case TacheDao.NatureTache.COMPLEMENT.ToString
                             RadHistoDataGridView.Rows(iGrid).Cells("nature").Value = "Précision rendue"
-                        Case Tache.NatureTache.REPONSE.ToString
+                        Case TacheDao.NatureTache.REPONSE.ToString
                             RadHistoDataGridView.Rows(iGrid).Cells("nature").Value = "Relande de la demande d'avis"
                         Case Else
                             RadHistoDataGridView.Rows(iGrid).Cells("nature").Value = "Demande d'avis (début de workflow)"
                             RadHistoDataGridView.Rows(iGrid).Cells("nature").Style.ForeColor = Color.Blue
                     End Select
-                Case Tache.NatureTache.COMPLEMENT.ToString
+                Case TacheDao.NatureTache.COMPLEMENT.ToString
                     RadHistoDataGridView.Rows(iGrid).Cells("nature").Value = "Demande de précision"
-                Case Tache.NatureTache.REPONSE.ToString
+                Case TacheDao.NatureTache.REPONSE.ToString
                     RadHistoDataGridView.Rows(iGrid).Cells("nature").Value = "Demande d'avis rendue"
             End Select
 

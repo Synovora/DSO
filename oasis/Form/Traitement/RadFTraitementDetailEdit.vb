@@ -13,7 +13,6 @@ Public Class RadFTraitementDetailEdit
     Private privateContreIndication As Boolean
     Private privateCodeRetour As Boolean
     Private _positionGaucheDroite As Integer
-    Dim patientDao As New PatientDao
 
     Public Property SelectedPatient As Patient
         Get
@@ -137,7 +136,7 @@ Public Class RadFTraitementDetailEdit
         'Chargement de l'écran
         If SelectedTraitementId = 0 Then
             EditMode = "C" 'Création
-            AfficheTitleForm(Me, "Création traitement patient", userLog)
+            afficheTitleForm(Me, "Création traitement patient")
             LblstatutTraitement.Hide()
             RadPnlStatutTraitement.Hide()
             'Récupération du cis du médicament sélectionné
@@ -146,11 +145,11 @@ Public Class RadFTraitementDetailEdit
             ChargementMedoc()
             'Cacher la posologie journalière car la base n'a pas encore été saisie
             CacherPosologieJournaliere()
-            CbxTraitement.Text = Traitement.EnumBaseItem.JOURNALIER
-            CbxFractionMatin.Text = Traitement.EnumFraction.Non
-            CbxFractionMidi.Text = Traitement.EnumFraction.Non
-            CbxFractionApresMidi.Text = Traitement.EnumFraction.Non
-            CbxFractionSoir.Text = Traitement.EnumFraction.Non
+            CbxTraitementBase.Text = TraitementDao.EnumBaseItem.JOURNALIER
+            CbxFractionMatin.Text = TraitementDao.EnumFraction.Non
+            CbxFractionMidi.Text = TraitementDao.EnumFraction.Non
+            CbxFractionApresMidi.Text = TraitementDao.EnumFraction.Non
+            CbxFractionSoir.Text = TraitementDao.EnumFraction.Non
 
             '------Initialisation des dates
             'Initialisation de la date de début de traitement à aujourd'hui
@@ -181,7 +180,7 @@ Public Class RadFTraitementDetailEdit
             ActionEnCours = EnumAction.Creation
         Else
             EditMode = "M" 'Modification
-            AfficheTitleForm(Me, "Modification traitement patient", userLog)
+            afficheTitleForm(Me, "Modification traitement patient")
             LblstatutTraitement.Hide()
             RadPnlStatutTraitement.Hide()
             'Chargement du traitement à modifier
@@ -219,7 +218,7 @@ Public Class RadFTraitementDetailEdit
         LblALD.Hide()
         Dim StringTooltip As String
         Dim aldDao As New AldDao
-        StringTooltip = aldDao.DateFinALD(Me.SelectedPatient.PatientId)
+        StringTooltip = aldDao.DateFinALD(Me.SelectedPatient.patientId)
         If StringTooltip <> "" Then
             LblALD.Show()
             ToolTip.SetToolTip(LblALD, StringTooltip)
@@ -233,7 +232,7 @@ Public Class RadFTraitementDetailEdit
     End Sub
 
     Private Sub GetContreIndication()
-        Dim StringContreIndicationToolTip As String = patientDao.GetStringContreIndicationByPatient(SelectedPatient.PatientId)
+        Dim StringContreIndicationToolTip As String = PatientDao.GetStringContreIndicationByPatient(SelectedPatient.patientId)
         If StringContreIndicationToolTip = "" Then
             lblContreIndication.Hide()
         Else
@@ -243,7 +242,7 @@ Public Class RadFTraitementDetailEdit
     End Sub
 
     Private Sub GetAllergie()
-        Dim StringAllergieToolTip As String = patientDao.GetStringAllergieByPatient(SelectedPatient.PatientId)
+        Dim StringAllergieToolTip As String = PatientDao.GetStringAllergieByPatient(SelectedPatient.patientId)
         If StringAllergieToolTip = "" Then
             LblAllergie.Hide()
         Else
@@ -257,7 +256,7 @@ Public Class RadFTraitementDetailEdit
         Dim traitement As Traitement
 
         Try
-            traitement = traitementDao.GetTraitementById(SelectedTraitementId)
+            traitement = traitementDao.getTraitementById(SelectedTraitementId)
         Catch ex As Exception
             MessageBox.Show("Traitement : " + ex.Message, "Problème", MessageBoxButtons.OK, MessageBoxIcon.Error)
             Return
@@ -389,24 +388,24 @@ Public Class RadFTraitementDetailEdit
             NumRythmeMatin.Value = Rythme
             BaseSelection = traitement.PosologieBase
             Select Case traitement.FractionMatin
-                Case Traitement.EnumFraction.Non
-                    CbxFractionMatin.Text = Traitement.EnumFraction.Non
-                Case Traitement.EnumFraction.Quart
-                    CbxFractionMatin.Text = Traitement.EnumFraction.Quart
-                Case Traitement.EnumFraction.Demi
-                    CbxFractionMatin.Text = Traitement.EnumFraction.Demi
-                Case Traitement.EnumFraction.TroisQuart
-                    CbxFractionMatin.Text = Traitement.EnumFraction.TroisQuart
+                Case TraitementDao.EnumFraction.Non
+                    CbxFractionMatin.Text = TraitementDao.EnumFraction.Non
+                Case TraitementDao.EnumFraction.Quart
+                    CbxFractionMatin.Text = TraitementDao.EnumFraction.Quart
+                Case TraitementDao.EnumFraction.Demi
+                    CbxFractionMatin.Text = TraitementDao.EnumFraction.Demi
+                Case TraitementDao.EnumFraction.TroisQuart
+                    CbxFractionMatin.Text = TraitementDao.EnumFraction.TroisQuart
                 Case Else
-                    CbxFractionMatin.Text = Traitement.EnumFraction.Non
+                    CbxFractionMatin.Text = TraitementDao.EnumFraction.Non
             End Select
 
             Select Case BaseSelection
-                Case Traitement.EnumBaseCode.JOURNALIER
+                Case TraitementDao.EnumBaseCode.JOURNALIER
                     Select Case BaseSelection
-                        Case Traitement.EnumBaseCode.JOURNALIER
-                            Base = Traitement.EnumBaseItem.JOURNALIER & " : "
-                            CbxTraitement.Text = Traitement.EnumBaseItem.JOURNALIER
+                        Case TraitementDao.EnumBaseCode.JOURNALIER
+                            Base = TraitementDao.EnumBaseItem.JOURNALIER & " : "
+                            CbxTraitementBase.Text = TraitementDao.EnumBaseItem.JOURNALIER
                     End Select
                     MontrerPosologieJournaliere()
                     If traitement.PosologieMatin <> 0 Then
@@ -425,16 +424,16 @@ Public Class RadFTraitementDetailEdit
                         NumRythmeMidi.Value = 0
                     End If
                     Select Case traitement.FractionMidi
-                        Case Traitement.EnumFraction.Non
-                            CbxFractionMidi.Text = Traitement.EnumFraction.Non
-                        Case Traitement.EnumFraction.Quart
-                            CbxFractionMidi.Text = Traitement.EnumFraction.Quart
-                        Case Traitement.EnumFraction.Demi
-                            CbxFractionMidi.Text = Traitement.EnumFraction.Demi
-                        Case Traitement.EnumFraction.TroisQuart
-                            CbxFractionMidi.Text = Traitement.EnumFraction.TroisQuart
+                        Case TraitementDao.EnumFraction.Non
+                            CbxFractionMidi.Text = TraitementDao.EnumFraction.Non
+                        Case TraitementDao.EnumFraction.Quart
+                            CbxFractionMidi.Text = TraitementDao.EnumFraction.Quart
+                        Case TraitementDao.EnumFraction.Demi
+                            CbxFractionMidi.Text = TraitementDao.EnumFraction.Demi
+                        Case TraitementDao.EnumFraction.TroisQuart
+                            CbxFractionMidi.Text = TraitementDao.EnumFraction.TroisQuart
                         Case Else
-                            CbxFractionMidi.Text = Traitement.EnumFraction.Non
+                            CbxFractionMidi.Text = TraitementDao.EnumFraction.Non
                     End Select
                     If traitement.PosologieApresMidi <> 0 Then
                         posologieApresMidi = traitement.PosologieApresMidi
@@ -444,16 +443,16 @@ Public Class RadFTraitementDetailEdit
                         NumRythmeApresMidi.Value = 0
                     End If
                     Select Case traitement.FractionApresMidi
-                        Case Traitement.EnumFraction.Non
-                            CbxFractionApresMidi.Text = Traitement.EnumFraction.Non
-                        Case Traitement.EnumFraction.Quart
-                            CbxFractionApresMidi.Text = Traitement.EnumFraction.Quart
-                        Case Traitement.EnumFraction.Demi
-                            CbxFractionApresMidi.Text = Traitement.EnumFraction.Demi
-                        Case Traitement.EnumFraction.TroisQuart
-                            CbxFractionApresMidi.Text = Traitement.EnumFraction.TroisQuart
+                        Case TraitementDao.EnumFraction.Non
+                            CbxFractionApresMidi.Text = TraitementDao.EnumFraction.Non
+                        Case TraitementDao.EnumFraction.Quart
+                            CbxFractionApresMidi.Text = TraitementDao.EnumFraction.Quart
+                        Case TraitementDao.EnumFraction.Demi
+                            CbxFractionApresMidi.Text = TraitementDao.EnumFraction.Demi
+                        Case TraitementDao.EnumFraction.TroisQuart
+                            CbxFractionApresMidi.Text = TraitementDao.EnumFraction.TroisQuart
                         Case Else
-                            CbxFractionApresMidi.Text = Traitement.EnumFraction.Non
+                            CbxFractionApresMidi.Text = TraitementDao.EnumFraction.Non
                     End Select
                     If traitement.PosologieSoir <> 0 Then
                         posologieSoir = traitement.PosologieSoir
@@ -463,36 +462,36 @@ Public Class RadFTraitementDetailEdit
                         NumRythmeSoir.Value = 0
                     End If
                     Select Case traitement.FractionSoir
-                        Case Traitement.EnumFraction.Non
-                            CbxFractionSoir.Text = Traitement.EnumFraction.Non
-                        Case Traitement.EnumFraction.Quart
-                            CbxFractionSoir.Text = Traitement.EnumFraction.Quart
-                        Case Traitement.EnumFraction.Demi
-                            CbxFractionSoir.Text = Traitement.EnumFraction.Demi
-                        Case Traitement.EnumFraction.TroisQuart
-                            CbxFractionSoir.Text = Traitement.EnumFraction.TroisQuart
+                        Case TraitementDao.EnumFraction.Non
+                            CbxFractionSoir.Text = TraitementDao.EnumFraction.Non
+                        Case TraitementDao.EnumFraction.Quart
+                            CbxFractionSoir.Text = TraitementDao.EnumFraction.Quart
+                        Case TraitementDao.EnumFraction.Demi
+                            CbxFractionSoir.Text = TraitementDao.EnumFraction.Demi
+                        Case TraitementDao.EnumFraction.TroisQuart
+                            CbxFractionSoir.Text = TraitementDao.EnumFraction.TroisQuart
                         Case Else
-                            CbxFractionSoir.Text = Traitement.EnumFraction.Non
+                            CbxFractionSoir.Text = TraitementDao.EnumFraction.Non
                     End Select
-                Case Traitement.EnumBaseCode.HEBDOMADAIRE
-                    Base = Traitement.EnumBaseItem.HEBDOMADAIRE & " : "
-                    CbxTraitement.Text = Traitement.EnumBaseItem.HEBDOMADAIRE
+                Case TraitementDao.EnumBaseCode.HEBDOMADAIRE
+                    Base = TraitementDao.EnumBaseItem.HEBDOMADAIRE & " : "
+                    CbxTraitementBase.Text = TraitementDao.EnumBaseItem.HEBDOMADAIRE
                     CacherPosologieJournaliere()
-                Case Traitement.EnumBaseCode.MENSUEL
-                    Base = Traitement.EnumBaseItem.MENSUEL & " : "
-                    CbxTraitement.Text = Traitement.EnumBaseItem.MENSUEL
+                Case TraitementDao.EnumBaseCode.MENSUEL
+                    Base = TraitementDao.EnumBaseItem.MENSUEL & " : "
+                    CbxTraitementBase.Text = TraitementDao.EnumBaseItem.MENSUEL
                     CacherPosologieJournaliere()
-                Case Traitement.EnumBaseCode.ANNUEL
-                    Base = Traitement.EnumBaseItem.ANNUEL & " : "
-                    CbxTraitement.Text = Traitement.EnumBaseItem.ANNUEL
+                Case TraitementDao.EnumBaseCode.ANNUEL
+                    Base = TraitementDao.EnumBaseItem.ANNUEL & " : "
+                    CbxTraitementBase.Text = TraitementDao.EnumBaseItem.ANNUEL
                     CacherPosologieJournaliere()
-                Case Traitement.EnumBaseCode.CONDITIONNEL
-                    Base = Traitement.EnumBaseItem.CONDITIONNEL & " : "
-                    CbxTraitement.Text = Traitement.EnumBaseItem.CONDITIONNEL
+                Case TraitementDao.EnumBaseCode.CONDITIONNEL
+                    Base = TraitementDao.EnumBaseItem.CONDITIONNEL & " : "
+                    CbxTraitementBase.Text = TraitementDao.EnumBaseItem.CONDITIONNEL
                     CacherPosologieJournaliere()
                 Case Else
                     Base = "Base inconnue ! "
-                    CbxTraitement.Text = ""
+                    CbxTraitementBase.Text = ""
                     CacherPosologieJournaliere()
             End Select
 
@@ -581,7 +580,7 @@ Public Class RadFTraitementDetailEdit
         End If
 
         Dim dt As DataTable
-        dt = TheriaqueDao.GetSpecialiteByArgument(SelectedMedicamentId.ToString, TheriaqueDao.EnumGetSpecialite.ID_THERIAQUE, TheriaqueDao.EnumMonoVir.NULL)
+        dt = TheriaqueDao.getSpecialiteByArgument(SelectedMedicamentId.ToString, TheriaqueDao.EnumGetSpecialite.ID_THERIAQUE, TheriaqueDao.EnumMonoVir.NULL)
         If dt.Rows.Count > 0 Then
             LblMedicamentDCI.Text = dt.Rows(0)("SP_NOM")
             LblMedicamentDCI.Text = LblMedicamentDCI.Text.Replace(" §", "")
@@ -744,31 +743,31 @@ Public Class RadFTraitementDetailEdit
         Dim messageErreur5 As String = ""
 
         'Base obligatoire
-        If CbxTraitement.Text = "" Then
+        If CbxTraitementBase.Text = "" Then
             Valide = False
-            LblTraitement.ForeColor = Color.Red
+            LblTraitementBase.ForeColor = Color.Red
             messageErreur1 = "- La saisie de la Base de la posologie est obligatoire"
         Else
-            Select Case CbxTraitement.Text
-                Case Traitement.EnumBaseItem.JOURNALIER, Traitement.EnumBaseItem.HEBDOMADAIRE, Traitement.EnumBaseItem.MENSUEL, Traitement.EnumBaseItem.ANNUEL, Traitement.EnumBaseItem.CONDITIONNEL
-                    LblTraitement.ForeColor = Color.Black
+            Select Case CbxTraitementBase.Text
+                Case TraitementDao.EnumBaseItem.JOURNALIER, TraitementDao.EnumBaseItem.HEBDOMADAIRE, TraitementDao.EnumBaseItem.MENSUEL, TraitementDao.EnumBaseItem.ANNUEL, TraitementDao.EnumBaseItem.CONDITIONNEL
+                    LblTraitementBase.ForeColor = Color.Black
                 Case Else
-                    LblTraitement.ForeColor = Color.Red
+                    LblTraitementBase.ForeColor = Color.Red
                     Valide = False
                     messageErreur1 = "- La saisie de la Base de la posologie est obligatoire"
             End Select
         End If
 
         'Si rythme journalier, une posologie matin, midi, après-midi ou soir est requise
-        If CbxTraitement.Text = Traitement.EnumBaseItem.JOURNALIER Then
+        If CbxTraitementBase.Text = TraitementDao.EnumBaseItem.JOURNALIER Then
             If NumRythmeMatin.Value = 0 AndAlso
                 NumRythmeMidi.Value = 0 AndAlso
                 NumRythmeApresMidi.Value = 0 AndAlso
                 NumRythmeSoir.Value = 0 AndAlso
-                CbxFractionMatin.Text = Traitement.EnumFraction.Non AndAlso
-                CbxFractionMidi.Text = Traitement.EnumFraction.Non AndAlso
-                CbxFractionApresMidi.Text = Traitement.EnumFraction.Non AndAlso
-                CbxFractionSoir.Text = Traitement.EnumFraction.Non Then
+                CbxFractionMatin.Text = TraitementDao.EnumFraction.Non AndAlso
+                CbxFractionMidi.Text = TraitementDao.EnumFraction.Non AndAlso
+                CbxFractionApresMidi.Text = TraitementDao.EnumFraction.Non AndAlso
+                CbxFractionSoir.Text = TraitementDao.EnumFraction.Non Then
                 LblTraitementRythme.ForeColor = Color.Red
                 Valide = False
                 messageErreur2 = "- La saisie des périodes d'application (matin, midi, après-mid ou soir) de la posologie journalière est obligatoire"
@@ -778,7 +777,7 @@ Public Class RadFTraitementDetailEdit
         Else
             'Rythme obligatoire
             If NumRythmeMatin.Value = 0 AndAlso
-                CbxFractionMatin.Text = Traitement.EnumFraction.Non Then
+                CbxFractionMatin.Text = TraitementDao.EnumFraction.Non Then
                 LblTraitementRythme.ForeColor = Color.Red
                 Valide = False
                 messageErreur3 = "- La saisie du rythme de la posologie est obligatoire"
@@ -802,10 +801,10 @@ Public Class RadFTraitementDetailEdit
         End If
 
         'Si la base est 'Conditionnel', le commentaire de la posologie est obligatoire
-        If CbxTraitement.Text = Traitement.EnumBaseItem.CONDITIONNEL Then
+        If CbxTraitementBase.Text = TraitementDao.EnumBaseItem.CONDITIONNEL Then
             If TxtTraitementPosologieCommentaire.Text = "" Then
                 Valide = False
-                messageErreur5 = "- Le commentaire de la posologie est obligatoire quand la base est : '" & Traitement.EnumBaseItem.CONDITIONNEL & "'"
+                messageErreur5 = "- Le commentaire de la posologie est obligatoire quand la base est : '" & TraitementDao.EnumBaseItem.CONDITIONNEL & "'"
             End If
         End If
 
@@ -891,39 +890,38 @@ Public Class RadFTraitementDetailEdit
         Dim codeRetour As Boolean
 
         'Définition de la base du traitement
-        Dim baseTraitement As Char = traitementDao.GetBaseCodeByItem(CbxTraitement.Text)
+        Dim baseTraitement As Char = traitementDao.GetBaseCodeByItem(CbxTraitementBase.Text)
 
-        Dim traitementaCreer As New Traitement With {
-            .TraitementId = SelectedTraitementId,
-            .PatientId = SelectedPatient.PatientId,
-            .MedicamentId = medicament_selecteur_cis,
-            .MedicamentDci = LblMedicamentDCI.Text,
-            .DenominationLongue = LblMedicamentDenominationLongue.Text,
-            .Allergie = False,
-            .ContreIndication = False,
-            .PosologieBase = traitementDao.GetBaseCodeByItem(CbxTraitement.Text),
-            .PosologieRythme = NumRythmeMatin.Value,
-            .PosologieMatin = NumRythmeMatin.Value,
-            .PosologieMidi = NumRythmeMidi.Value,
-            .PosologieApresMidi = NumRythmeApresMidi.Value,
-            .PosologieSoir = NumRythmeSoir.Value,
-            .FractionMatin = CbxFractionMatin.Text,
-            .FractionMidi = CbxFractionMidi.Text,
-            .FractionApresMidi = CbxFractionApresMidi.Text,
-            .FractionSoir = CbxFractionSoir.Text,
-            .DateModification = Date.Now.Date,
-            .OrdreAffichage = NumNumeroOrdre.Value,
-            .UserCreation = userLog.UtilisateurId,
-            .DateCreation = Date.Now(),
-            .PosologieCommentaire = TxtTraitementPosologieCommentaire.Text,
-            .Commentaire = TxtTraitementCommentaire.Text,
-            .DateDebut = DteTraitementDateDebut.Value,
-            .DateFin = DteTraitementDateFin.Value,
-            .MedicamentMonographie = medicamentMonographie,
-            .ClasseAtc = classeAtc
-        }
+        Dim traitementaCreer As New Traitement
+        traitementaCreer.TraitementId = SelectedTraitementId
+        traitementaCreer.PatientId = SelectedPatient.patientId
+        traitementaCreer.MedicamentId = medicament_selecteur_cis
+        traitementaCreer.MedicamentDci = LblMedicamentDCI.Text
+        traitementaCreer.DenominationLongue = LblMedicamentDenominationLongue.Text
+        traitementaCreer.Allergie = False
+        traitementaCreer.ContreIndication = False
+        traitementaCreer.PosologieBase = traitementDao.GetBaseCodeByItem(CbxTraitementBase.Text)
+        traitementaCreer.PosologieRythme = NumRythmeMatin.Value
+        traitementaCreer.PosologieMatin = NumRythmeMatin.Value
+        traitementaCreer.PosologieMidi = NumRythmeMidi.Value
+        traitementaCreer.PosologieApresMidi = NumRythmeApresMidi.Value
+        traitementaCreer.PosologieSoir = NumRythmeSoir.Value
+        traitementaCreer.FractionMatin = CbxFractionMatin.Text
+        traitementaCreer.FractionMidi = CbxFractionMidi.Text
+        traitementaCreer.FractionApresMidi = CbxFractionApresMidi.Text
+        traitementaCreer.FractionSoir = CbxFractionSoir.Text
+        traitementaCreer.DateModification = Date.Now.Date
+        traitementaCreer.OrdreAffichage = NumNumeroOrdre.Value
+        traitementaCreer.UserCreation = userLog.UtilisateurId
+        traitementaCreer.DateCreation = Date.Now()
+        traitementaCreer.PosologieCommentaire = TxtTraitementPosologieCommentaire.Text
+        traitementaCreer.Commentaire = TxtTraitementCommentaire.Text
+        traitementaCreer.DateDebut = DteTraitementDateDebut.Value
+        traitementaCreer.DateFin = DteTraitementDateFin.Value
+        traitementaCreer.MedicamentMonographie = medicamentMonographie
+        traitementaCreer.ClasseAtc = classeAtc
 
-        codeRetour = traitementDao.CreationTraitement(traitementaCreer, TraitementHistoACreer, userLog)
+        codeRetour = traitementDao.CreationTraitement(traitementaCreer, TraitementHistoACreer)
         If codeRetour = True Then
             Dim form As New RadFNotification()
             form.Message = "Traitement patient créé"
@@ -942,15 +940,15 @@ Public Class RadFTraitementDetailEdit
         Dim codeRetour As Boolean = True
 
         'Définition de la base du traitement
-        Dim baseTraitement As Char = traitementDao.GetBaseCodeByItem(CbxTraitement.Text)
+        Dim baseTraitement As Char = traitementDao.GetBaseCodeByItem(CbxTraitementBase.Text)
 
         Dim traitementaModifier As New Traitement
         traitementaModifier.TraitementId = SelectedTraitementId
         traitementaModifier.MedicamentId = medicament_selecteur_cis
         traitementaModifier.MedicamentDci = LblMedicamentDCI.Text
         traitementaModifier.DenominationLongue = LblMedicamentDenominationLongue.Text
-        traitementaModifier.PatientId = SelectedPatient.PatientId
-        traitementaModifier.PosologieBase = traitementDao.GetBaseCodeByItem(CbxTraitement.Text)
+        traitementaModifier.PatientId = SelectedPatient.patientId
+        traitementaModifier.PosologieBase = traitementDao.GetBaseCodeByItem(CbxTraitementBase.Text)
         traitementaModifier.PosologieRythme = NumRythmeMatin.Value
         traitementaModifier.PosologieMatin = NumRythmeMatin.Value
         traitementaModifier.PosologieMidi = NumRythmeMidi.Value
@@ -969,7 +967,7 @@ Public Class RadFTraitementDetailEdit
         traitementaModifier.DateDebut = DteTraitementDateDebut.Value
         traitementaModifier.DateFin = DteTraitementDateFin.Value
 
-        codeRetour = traitementDao.ModificationTraitement(traitementaModifier, TraitementHistoACreer, userLog)
+        codeRetour = traitementDao.ModificationTraitement(traitementaModifier, TraitementHistoACreer)
         If codeRetour = True Then
             Dim form As New RadFNotification()
             form.Message = "Traitement patient modifié"
@@ -1002,7 +1000,7 @@ Public Class RadFTraitementDetailEdit
 
         Dim traitementaArreter As New Traitement
         traitementaArreter.TraitementId = SelectedTraitementId
-        traitementaArreter.PatientId = SelectedPatient.PatientId
+        traitementaArreter.PatientId = SelectedPatient.patientId
         traitementaArreter.DateModification = Date.Now.Date
         traitementaArreter.UserModification = userLog.UtilisateurId
         traitementaArreter.DateModification = Date.Now()
@@ -1011,7 +1009,7 @@ Public Class RadFTraitementDetailEdit
         traitementaArreter.Allergie = allergie
         traitementaArreter.ContreIndication = contreIndication
 
-        codeRetour = traitementDao.ArretTraitement(traitementaArreter, TraitementHistoACreer, userLog)
+        codeRetour = traitementDao.ArretTraitement(traitementaArreter, TraitementHistoACreer)
 
         'Déclaration de traitement arrêté pour contre-indication
         If contreIndication = 1 Then
@@ -1049,14 +1047,14 @@ Public Class RadFTraitementDetailEdit
 
         Dim traitementaAnnuler As New Traitement
         traitementaAnnuler.TraitementId = SelectedTraitementId
-        traitementaAnnuler.PatientId = SelectedPatient.PatientId
+        traitementaAnnuler.PatientId = SelectedPatient.patientId
         traitementaAnnuler.DateModification = Date.Now.Date
         traitementaAnnuler.UserModification = userLog.UtilisateurId
         traitementaAnnuler.DateModification = Date.Now()
         traitementaAnnuler.AnnulationCommentaire = TxtCommentaireAnnulation.Text
         traitementaAnnuler.DateFin = DteTraitementDateFin.Value
 
-        codeRetour = traitementDao.AnnulationTraitement(traitementaAnnuler, TraitementHistoACreer, userLog)
+        codeRetour = traitementDao.AnnulationTraitement(traitementaAnnuler, TraitementHistoACreer)
         If codeRetour = True Then
             Dim form As New RadFNotification()
             form.Message = "Traitement patient annulé"
@@ -1075,10 +1073,10 @@ Public Class RadFTraitementDetailEdit
 
         Dim traitementaAnnuler As New Traitement
         traitementaAnnuler.TraitementId = SelectedTraitementId
-        traitementaAnnuler.PatientId = SelectedPatient.PatientId
+        traitementaAnnuler.PatientId = SelectedPatient.patientId
         traitementaAnnuler.UserModification = userLog.UtilisateurId
 
-        codeRetour = traitementDao.SuppressionTraitement(traitementaAnnuler, TraitementHistoACreer, userLog)
+        codeRetour = traitementDao.SuppressionTraitement(traitementaAnnuler, TraitementHistoACreer)
         If codeRetour = True Then
             Dim form As New RadFNotification()
             form.Message = "Traitement patient supprimé"
@@ -1128,7 +1126,7 @@ Public Class RadFTraitementDetailEdit
         Dim BaseSelection As Char
         Dim PosologieMatin, PosologieMidi, PosologieApresMidi, PosologieSoir As Integer
 
-        BaseSelection = traitementDao.GetBaseCodeByItem(CbxTraitement.Text)
+        BaseSelection = traitementDao.GetBaseCodeByItem(CbxTraitementBase.Text)
 
         If NumRythmeMatin.Value <> 0 Then
             Rythme = NumRythmeMatin.Value
@@ -1145,36 +1143,36 @@ Public Class RadFTraitementDetailEdit
     End Sub
 
     Private Sub InitZone()
-        CbxTraitement.Items.Clear()
-        CbxTraitement.Items.Add(Traitement.EnumBaseItem.JOURNALIER)
-        CbxTraitement.Items.Add(Traitement.EnumBaseItem.HEBDOMADAIRE)
-        CbxTraitement.Items.Add(Traitement.EnumBaseItem.MENSUEL)
-        CbxTraitement.Items.Add(Traitement.EnumBaseItem.ANNUEL)
-        CbxTraitement.Items.Add(Traitement.EnumBaseItem.CONDITIONNEL)
+        CbxTraitementBase.Items.Clear()
+        CbxTraitementBase.Items.Add(TraitementDao.EnumBaseItem.JOURNALIER)
+        CbxTraitementBase.Items.Add(TraitementDao.EnumBaseItem.HEBDOMADAIRE)
+        CbxTraitementBase.Items.Add(TraitementDao.EnumBaseItem.MENSUEL)
+        CbxTraitementBase.Items.Add(TraitementDao.EnumBaseItem.ANNUEL)
+        CbxTraitementBase.Items.Add(TraitementDao.EnumBaseItem.CONDITIONNEL)
 
         CbxFractionMatin.Items.Clear()
-        CbxFractionMatin.Items.Add(Traitement.EnumFraction.Non)
-        CbxFractionMatin.Items.Add(Traitement.EnumFraction.Quart)
-        CbxFractionMatin.Items.Add(Traitement.EnumFraction.Demi)
-        CbxFractionMatin.Items.Add(Traitement.EnumFraction.TroisQuart)
+        CbxFractionMatin.Items.Add(TraitementDao.EnumFraction.Non)
+        CbxFractionMatin.Items.Add(TraitementDao.EnumFraction.Quart)
+        CbxFractionMatin.Items.Add(TraitementDao.EnumFraction.Demi)
+        CbxFractionMatin.Items.Add(TraitementDao.EnumFraction.TroisQuart)
 
         CbxFractionMidi.Items.Clear()
-        CbxFractionMidi.Items.Add(Traitement.EnumFraction.Non)
-        CbxFractionMidi.Items.Add(Traitement.EnumFraction.Quart)
-        CbxFractionMidi.Items.Add(Traitement.EnumFraction.Demi)
-        CbxFractionMidi.Items.Add(Traitement.EnumFraction.TroisQuart)
+        CbxFractionMidi.Items.Add(TraitementDao.EnumFraction.Non)
+        CbxFractionMidi.Items.Add(TraitementDao.EnumFraction.Quart)
+        CbxFractionMidi.Items.Add(TraitementDao.EnumFraction.Demi)
+        CbxFractionMidi.Items.Add(TraitementDao.EnumFraction.TroisQuart)
 
         CbxFractionApresMidi.Items.Clear()
-        CbxFractionApresMidi.Items.Add(Traitement.EnumFraction.Non)
-        CbxFractionApresMidi.Items.Add(Traitement.EnumFraction.Quart)
-        CbxFractionApresMidi.Items.Add(Traitement.EnumFraction.Demi)
-        CbxFractionApresMidi.Items.Add(Traitement.EnumFraction.TroisQuart)
+        CbxFractionApresMidi.Items.Add(TraitementDao.EnumFraction.Non)
+        CbxFractionApresMidi.Items.Add(TraitementDao.EnumFraction.Quart)
+        CbxFractionApresMidi.Items.Add(TraitementDao.EnumFraction.Demi)
+        CbxFractionApresMidi.Items.Add(TraitementDao.EnumFraction.TroisQuart)
 
         CbxFractionSoir.Items.Clear()
-        CbxFractionSoir.Items.Add(Traitement.EnumFraction.Non)
-        CbxFractionSoir.Items.Add(Traitement.EnumFraction.Quart)
-        CbxFractionSoir.Items.Add(Traitement.EnumFraction.Demi)
-        CbxFractionSoir.Items.Add(Traitement.EnumFraction.TroisQuart)
+        CbxFractionSoir.Items.Add(TraitementDao.EnumFraction.Non)
+        CbxFractionSoir.Items.Add(TraitementDao.EnumFraction.Quart)
+        CbxFractionSoir.Items.Add(TraitementDao.EnumFraction.Demi)
+        CbxFractionSoir.Items.Add(TraitementDao.EnumFraction.TroisQuart)
 
         ActionEnCours = EnumAction.Sans
         Me.CodeRetour = False
@@ -1197,7 +1195,7 @@ Public Class RadFTraitementDetailEdit
 
     Private Sub DroitAcces()
         'Si l'utilisateur n'a pas les droits requis ou que le traitement a été arrêté, les zones de saisie ne sont pas modifiables 
-        If outils.AccesFonctionMedicaleSynthese(SelectedPatient, userLog) = False Then
+        If outils.AccesFonctionMedicaleSynthese(SelectedPatient) = False Then
             Me.Text = "Visualisation détail traitement patient"
             LblstatutTraitement.Text = "Visualisation détail traitement patient"
             LblstatutTraitement.Hide()
@@ -1253,7 +1251,7 @@ Public Class RadFTraitementDetailEdit
         RadBtnArretTraitement.Visible = False
         RadBtnSupprimerTraitement.Visible = False
         RadBtnValidation.Visible = False
-        CbxTraitement.Enabled = False
+        CbxTraitementBase.Enabled = False
         NumRythmeMatin.Enabled = False
         NumNumeroOrdre.Enabled = False
         NumRythmeMatin.Enabled = False
@@ -1291,17 +1289,17 @@ Public Class RadFTraitementDetailEdit
         LblRythmeMidi.Show()
         NumRythmeMidi.Value = 0
         CbxFractionMidi.Show()
-        CbxFractionMidi.Text = Traitement.EnumFraction.Non
+        CbxFractionMidi.Text = TraitementDao.EnumFraction.Non
         NumRythmeApresMidi.Show()
         LblRythmeApresMidi.Show()
         NumRythmeApresMidi.Value = 0
         CbxFractionApresMidi.Show()
-        CbxFractionApresMidi.Text = Traitement.EnumFraction.Non
+        CbxFractionApresMidi.Text = TraitementDao.EnumFraction.Non
         NumRythmeSoir.Show()
         LblRythmeSoir.Show()
         NumRythmeSoir.Value = 0
         CbxFractionSoir.Show()
-        CbxFractionSoir.Text = Traitement.EnumFraction.Non
+        CbxFractionSoir.Text = TraitementDao.EnumFraction.Non
     End Sub
 
 
@@ -1334,9 +1332,9 @@ Public Class RadFTraitementDetailEdit
     End Sub
 
     'Traitement de l'affichage des zones liées à la base de la posologie quand celle-ci est modifiée
-    Private Sub CbxTraitement_TextChanged(sender As Object, e As EventArgs) Handles CbxTraitement.TextChanged
+    Private Sub CbxTraitementBase_TextChanged(sender As Object, e As EventArgs) Handles CbxTraitementBase.TextChanged
         'Gestion l'affichage des zones de saisie de la posologie journalière
-        If CbxTraitement.Text = Traitement.EnumBaseItem.JOURNALIER Then
+        If CbxTraitementBase.Text = TraitementDao.EnumBaseItem.JOURNALIER Then
             MontrerPosologieJournaliere()
         Else
             CacherPosologieJournaliere()
@@ -1435,7 +1433,7 @@ Public Class RadFTraitementDetailEdit
     'Détermination de la base traitement à partir du combo box
     Private Function DeterminationBaseTraitement() As Char
         Dim baseTraitement As Char
-        baseTraitement = traitementDao.GetBaseCodeByItem(CbxTraitement.Text)
+        baseTraitement = traitementDao.GetBaseCodeByItem(CbxTraitementBase.Text)
 
         Return baseTraitement
     End Function
@@ -1446,7 +1444,7 @@ Public Class RadFTraitementDetailEdit
         Dim PosologieMatinString, PosologieMidiString, PosologieApresMidiString, PosologieSoirString As String
         Posologie = ""
 
-        If CbxFractionMatin.Text <> "" AndAlso CbxFractionMatin.Text <> Traitement.EnumFraction.Non Then
+        If CbxFractionMatin.Text <> "" AndAlso CbxFractionMatin.Text <> TraitementDao.EnumFraction.Non Then
             If PosologieMatin <> 0 Then
                 PosologieMatinString = PosologieMatin.ToString & "+" & CbxFractionMatin.Text
             Else
@@ -1460,7 +1458,7 @@ Public Class RadFTraitementDetailEdit
             End If
         End If
 
-        If CbxFractionMidi.Text <> "" AndAlso CbxFractionMidi.Text <> Traitement.EnumFraction.Non Then
+        If CbxFractionMidi.Text <> "" AndAlso CbxFractionMidi.Text <> TraitementDao.EnumFraction.Non Then
             If PosologieMidi <> 0 Then
                 PosologieMidiString = PosologieMidi.ToString & "+" & CbxFractionMidi.Text
             Else
@@ -1475,7 +1473,7 @@ Public Class RadFTraitementDetailEdit
         End If
 
         PosologieApresMidiString = ""
-        If CbxFractionApresMidi.Text <> "" AndAlso CbxFractionApresMidi.Text <> Traitement.EnumFraction.Non Then
+        If CbxFractionApresMidi.Text <> "" AndAlso CbxFractionApresMidi.Text <> TraitementDao.EnumFraction.Non Then
             If PosologieApresMidi <> 0 Then
                 PosologieApresMidiString = PosologieApresMidi.ToString & "+" & CbxFractionApresMidi.Text
             Else
@@ -1487,7 +1485,7 @@ Public Class RadFTraitementDetailEdit
             End If
         End If
 
-        If CbxFractionSoir.Text <> "" AndAlso CbxFractionSoir.Text <> Traitement.EnumFraction.Non Then
+        If CbxFractionSoir.Text <> "" AndAlso CbxFractionSoir.Text <> TraitementDao.EnumFraction.Non Then
             If PosologieSoir <> 0 Then
                 PosologieSoirString = PosologieSoir.ToString & "+" & CbxFractionSoir.Text
             Else
@@ -1502,7 +1500,7 @@ Public Class RadFTraitementDetailEdit
         End If
 
         Select Case BaseSelection
-            Case Traitement.EnumBaseCode.JOURNALIER
+            Case TraitementDao.EnumBaseCode.JOURNALIER
                 Base = ""
                 If PosologieMatin <> 0 OrElse
                     PosologieMidi <> 0 OrElse
@@ -1512,7 +1510,7 @@ Public Class RadFTraitementDetailEdit
                     CbxFractionMidi.Text <> "" OrElse
                     CbxFractionApresMidi.Text <> "" OrElse
                     CbxFractionSoir.Text <> "" Then
-                    If PosologieApresMidi <> 0 OrElse CbxFractionApresMidi.Text <> Traitement.EnumFraction.Non Then
+                    If PosologieApresMidi <> 0 OrElse CbxFractionApresMidi.Text <> TraitementDao.EnumFraction.Non Then
                         Posologie = Base + PosologieMatinString + ". " + PosologieMidiString + ". " + PosologieApresMidiString + ". " + PosologieSoirString
                     Else
                         Posologie = Base + " " + PosologieMatinString + ". " + PosologieMidiString + ". " + PosologieSoirString
@@ -1521,7 +1519,7 @@ Public Class RadFTraitementDetailEdit
             Case Else
                 If Rythme <> 0 Or CbxFractionMatin.Text <> "" Then
                     Dim RythmeString As String = ""
-                    If CbxFractionMatin.Text <> "" AndAlso CbxFractionMatin.Text <> Traitement.EnumFraction.Non Then
+                    If CbxFractionMatin.Text <> "" AndAlso CbxFractionMatin.Text <> TraitementDao.EnumFraction.Non Then
                         If Rythme <> 0 Then
                             RythmeString = Rythme.ToString & "+" & CbxFractionMatin.Text
                         Else

@@ -1,6 +1,4 @@
-﻿Imports Oasis_Common
-
-Public Class RadFAllergieEtCISuppressionDetail
+﻿Public Class RadFAllergieEtCISuppressionDetail
     Private _selectedTraitement As Traitement
     Private _codeRetour As Boolean
     Private _SelectedPatient As Patient
@@ -62,10 +60,10 @@ Public Class RadFAllergieEtCISuppressionDetail
 
     Private Sub ChargementMedicament()
         medicament = medicamentDao.GetMedicamentById(SelectedTraitement.MedicamentId)
-        LblMedicamentDCI.Text = medicament.MedicamentDci
-        LblMedicamentForme.Text = medicament.Forme
-        LblMedicamentAdministration.Text = medicament.VoieAdministration
-        LblMedicamentTitulaire.Text = medicament.Titulaire
+        LblMedicamentDCI.Text = Medicament.MedicamentDci
+        LblMedicamentForme.Text = Medicament.Forme
+        LblMedicamentAdministration.Text = Medicament.VoieAdministration
+        LblMedicamentTitulaire.Text = Medicament.Titulaire
     End Sub
 
     Private Sub ChargerZonesArret()
@@ -99,7 +97,7 @@ Public Class RadFAllergieEtCISuppressionDetail
         If SelectedTraitement.DateFin = Nothing Then
             SelectedTraitement.DateFin = Date.MaxValue
         End If
-        traitementDao.ArretTraitement(SelectedTraitement, traitementHistoACreer, userLog)
+        traitementDao.ArretTraitement(SelectedTraitement, traitementHistoACreer)
         CodeRetour = True
         Close()
     End Sub

@@ -1,7 +1,6 @@
 ﻿Imports System.IO
 
 Public Class Ordonnance
-
     Property Id As Long
     Property PatientId As Long
     Property EpisodeId As Long

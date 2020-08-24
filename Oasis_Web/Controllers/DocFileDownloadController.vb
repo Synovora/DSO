@@ -9,7 +9,8 @@ Namespace Controllers
     Public Class DocFileDownloadController
         Inherits ApiController
 
-        Public Function PostValue(<FromBody()> ByVal downloadRequest As DownloadRequest) As HttpResponseMessage
+
+        Public Function postValue(<FromBody()> ByVal downloadRequest As DownloadRequest) As HttpResponseMessage
             Try
                 ' --- verification droits
                 verifPassword(downloadRequest.LoginRequest.login, downloadRequest.LoginRequest.password)
@@ -31,9 +32,8 @@ Namespace Controllers
                 Dim bytes As Byte() = File.ReadAllBytes(filePath)
                 response.Content = New ByteArrayContent(bytes)
                 response.Content.Headers.ContentLength = bytes.LongLength
-                response.Content.Headers.ContentDisposition = New ContentDispositionHeaderValue("attachment") With {
-                    .FileName = downloadRequest.FileName
-                }
+                response.Content.Headers.ContentDisposition = New ContentDispositionHeaderValue("attachment")
+                response.Content.Headers.ContentDisposition.FileName = downloadRequest.FileName
                 response.Content.Headers.ContentType = New MediaTypeHeaderValue(MimeMapping.GetMimeMapping(downloadRequest.FileName))
                 Return response
 

@@ -53,13 +53,12 @@ Public Class RadFListeIntervenantSansRDV
     End Sub
 
     Private Sub DetailParcours()
-        Dim patientDao As New PatientDao
         If RadGridView.CurrentRow IsNot Nothing Then
             Dim aRow As Integer = Me.RadGridView.Rows.IndexOf(Me.RadGridView.CurrentRow)
             If aRow >= 0 Then
                 Dim ParcoursId As Integer = RadGridView.Rows(aRow).Cells("oa_parcours_Id").Value
                 Dim PatientId As Integer = RadGridView.Rows(aRow).Cells("oa_parcours_patient_id").Value
-                Dim patient As Patient = patientDao.GetPatient(PatientId)
+                Dim patient As Patient = PatientDao.GetPatientById(PatientId)
                 Me.Enabled = False
                 Cursor.Current = Cursors.WaitCursor
 

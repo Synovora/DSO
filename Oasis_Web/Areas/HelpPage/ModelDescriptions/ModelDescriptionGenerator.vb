@@ -75,7 +75,7 @@ Namespace Areas.HelpPage.ModelDescriptions
             {GetType([Boolean]), "boolean"}
         }
 
-        Private ReadOnly _documentationProvider As Lazy(Of IModelDocumentationProvider)
+        Private _documentationProvider As Lazy(Of IModelDocumentationProvider)
 
         Public Sub New(config As HttpConfiguration)
             If config Is Nothing Then

@@ -1,5 +1,4 @@
 ﻿Imports Oasis_Common
-
 Public Class RadFDrcActePMAssocieEdit
     Private _drcId As Long
 
@@ -12,9 +11,9 @@ Public Class RadFDrcActePMAssocieEdit
         End Set
     End Property
 
-    ReadOnly drcActeParamedicalAssoDao As New DrcActeParamedicalAssoDao
-    ReadOnly drcdao As New DrcDao
-    ReadOnly ListDrcAssocie As List(Of Long) = New List(Of Long)
+    Dim drcActeParamedicalAssoDao As New DrcActeParamedicalAssoDao
+    Dim drcdao As New DrcDao
+    Dim ListDrcAssocie As List(Of Long) = New List(Of Long)
 
     Private Sub RadFDrcActePMAssocieEdit_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         Dim drc As New Drc
@@ -30,7 +29,7 @@ Public Class RadFDrcActePMAssocieEdit
 
         Dim DrcDataTable As DataTable
         Dim ActeParamedicalDrcId As Long
-        DrcDataTable = drcActeParamedicalAssoDao.GetAllActeParamedicalAssoByProtocoleCollaboratifId(ProtocoleCollaboratifDrcId)
+        DrcDataTable = drcActeParamedicalAssoDao.getAllActeParamedicalAssoByProtocoleCollaboratifId(ProtocoleCollaboratifDrcId)
         Dim iGrid As Integer = -1 'Indice pour alimenter la Grid qui peut comporter moins d'occurrences que le DataTable
         Dim rowCount As Integer = DrcDataTable.Rows.Count - 1
         'Parcours du DataTable pour alimenter les colonnes du DataGridView
@@ -62,7 +61,7 @@ Public Class RadFDrcActePMAssocieEdit
         DrcDataGridView.Rows.Clear()
 
         Dim drcDataTable As DataTable
-        Dim CategorieOasis As Integer = Drc.EnumCategorieOasisCode.ActeParamedical
+        Dim CategorieOasis As Integer = DrcDao.EnumCategorieOasisCode.ActeParamedical
         Dim SelectAld As Boolean = False
         drcDataTable = drcdao.GetAllDrcByCategorieAndGenre("", 0, CategorieOasis, SelectAld, "")
 
@@ -131,17 +130,16 @@ Public Class RadFDrcActePMAssocieEdit
                 'Sélection de la DRC et association avec le protoole collaboratif
                 If SelectedDrcId <> 0 Then
                     'Ajout de l'occurrence choisie (contrôle que cette DORC n'est pas déjà associée)
-                    Dim drcActeParamedicalAsso As DrcActeParamedicalAsso = New DrcActeParamedicalAsso With {
-                        .ProtocleCollabaratifDrcId = ProtocoleCollaboratifDrcId,
-                        .ActeParamedicalDrcId = SelectedDrcId
-                    }
+                    Dim drcActeParamedicalAsso As DrcActeParamedicalAsso = New DrcActeParamedicalAsso
+                    drcActeParamedicalAsso.ProtocleCollabaratifDrcId = ProtocoleCollaboratifDrcId
+                    drcActeParamedicalAsso.ActeParamedicalDrcId = SelectedDrcId
                     Try
                         If drcActeParamedicalAssoDao.CreateDrcActeParamedicalAsso(drcActeParamedicalAsso) = True Then
                             ChargementActePMAssocies()
                             ChargementDrc()
                         End If
                     Catch ex As Exception
-                        CreateLog(ex.ToString, Me.Name, Log.EnumTypeLog.ERREUR.ToString, userLog)
+                        CreateLog(ex.ToString, Me.Name, LogDao.EnumTypeLog.ERREUR.ToString)
                         If ex.Message.StartsWith("Collisio") = True Then
                             MessageBox.Show("L'acte médical sélectionné existe déjà pour le protocole collaboratif")
                         End If

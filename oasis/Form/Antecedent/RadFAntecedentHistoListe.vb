@@ -345,7 +345,7 @@ Public Class RadFAntecedentHistoListe
             ALDId = Coalesce(antecedentHistoDataTable.Rows(i)("oa_antecedent_ald_id"), 0)
             If ALDId <> 0 Then
                 RadAntecedentDataGridView.Rows(iGrid).Cells("oa_antecedent_ald_id").Value = ALDId.ToString
-                ald = alddao.GetAldById(ALDId)
+                ald = alddao.getAldById(ALDId)
                 RadAntecedentDataGridView.Rows(iGrid).Cells("oa_ald_description").Value = ald.AldDescription
 
                 ALDCim10Id = Coalesce(antecedentHistoDataTable.Rows(i)("oa_antecedent_ald_cim_10_id"), 0)

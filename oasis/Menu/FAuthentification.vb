@@ -145,11 +145,11 @@ Public Class FAuthentificattion
                 .password = "a"
         }
 
-        If StandardDao.IsConnectionStringFixed() = False Then
+        If StandardDao.isConnectionStringFixed() = False Then
             Me.Cursor = Cursors.WaitCursor
             Try
                 Using apiOasis As New ApiOasis()
-                    StandardDao.FixConnectionString(apiOasis.loginRest(loginRequestLog))
+                    StandardDao.fixConnectionString(apiOasis.loginRest(loginRequestLog))
                 End Using
 
             Catch ex As Exception
@@ -201,7 +201,6 @@ Public Class FAuthentificattion
     End Sub
 
     Private Sub BtnTheriaque_Click(sender As Object, e As EventArgs) Handles BtnTheriaque.Click
-        Dim patientDao As New PatientDao
         'Using form As New FrmTestDynamiqueDocument
         'Form.ShowDialog()
         'End Using
@@ -210,9 +209,9 @@ Public Class FAuthentificattion
         Cursor.Current = Cursors.WaitCursor
         Try
             Dim print As New PrtSynthese
-            Dim selectedPatient As Patient = patientDao.GetPatient(1)
+            Dim selectedPatient As Patient = PatientDao.GetPatientById(1)
             print.SelectedPatient = selectedPatient
-            print.PrintDocument()
+            print.printDocument()
         Catch ex As Exception
             MsgBox(ex.Message())
         End Try

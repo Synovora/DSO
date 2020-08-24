@@ -1,5 +1,4 @@
 ﻿Imports System.IO
-Imports Oasis_Common
 Imports Telerik.WinControls.UI
 Imports Telerik.WinForms.Documents.FormatProviders.OpenXml.Docx
 Imports Telerik.WinForms.Documents.Model
@@ -20,7 +19,7 @@ Public Class FrmAdminTemplateSousEpisode
         ' -- listes de references
         lstSousEpisodeType = sousEpisodeTypeDao.getLstSousEpisodeType()
         lstSousEpisodeSousType = sousEpisodeSousTypeDao.getLstSousEpisodeSousType()
-        InitOneShot()
+        initOneShot()
 
     End Sub
 
@@ -32,7 +31,7 @@ Public Class FrmAdminTemplateSousEpisode
             Me.Cursor = Cursors.WaitCursor
             Me.Enabled = False
             Dim lstSousEpisodeFusion As List(Of SousEpisodeFusion) = constitueFusion()
-            Dim tbl = Telecharger_model(sousType)
+            Dim tbl = telecharger_model(sousType)
             Dim ins = New MemoryStream(tbl)
             Dim provider = New DocxFormatProvider()
 
@@ -74,10 +73,10 @@ Public Class FrmAdminTemplateSousEpisode
         End If
     End Sub
 
-    Private Function Telecharger_model(sousEpisodeSousType As SousEpisodeSousType) As Byte()
+    Private Function telecharger_model(sousEpisodeSousType As SousEpisodeSousType) As Byte()
         Dim tbl As Byte() = {}
         Try
-            tbl = sousEpisodeSousType.getContenuModel(loginRequestLog)
+            tbl = sousEpisodeSousType.getContenuModel()
             Return tbl
         Catch err As Exception
             If err IsNot Nothing AndAlso err.Message IsNot Nothing AndAlso err.Message.Contains("Fichier demandé inexistant") Then
@@ -87,7 +86,7 @@ Public Class FrmAdminTemplateSousEpisode
         End Try
     End Function
 
-    Private Sub InitOneShot()
+    Private Sub initOneShot()
 
         Me.DropDownType.Items.Clear()
         For Each sousEpisodeType As SousEpisodeType In lstSousEpisodeType
@@ -192,12 +191,12 @@ Public Class FrmAdminTemplateSousEpisode
                     If isSautLigneAvant Then .Sous_Type_Libelle_Detail_ALD += vbCrLf
                     .Sous_Type_Libelle_Detail_ALD += (detail.Libelle & vbCrLf)
                     If isSautLigneAvant Then .Sous_Type_Libelle_Detail_commentaire_ALD += vbCrLf
-                    .Sous_Type_Libelle_Detail_commentaire_ALD += (detail.Commentaire & vbCrLf)
+                    .Sous_Type_Libelle_Detail_commentaire_ALD += (detail.commentaire & vbCrLf)
 
                     If isSautLigneAvant Then .Sous_Type_Libelle_Detail_Non_ALD += vbCrLf
                     .Sous_Type_Libelle_Detail_Non_ALD += (detail.Libelle & vbCrLf)
                     If isSautLigneAvant Then .Sous_Type_Libelle_Detail_commentaire_non_ALD += vbCrLf
-                    .Sous_Type_Libelle_Detail_commentaire_non_ALD += (detail.Commentaire & vbCrLf)
+                    .Sous_Type_Libelle_Detail_commentaire_non_ALD += (detail.commentaire & vbCrLf)
                 Next
             End If
         End With

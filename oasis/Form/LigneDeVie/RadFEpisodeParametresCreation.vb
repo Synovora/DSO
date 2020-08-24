@@ -23,7 +23,7 @@ Public Class RadFEpisodeParametresCreation
         End Set
     End Property
 
-    ReadOnly episodeDao As New EpisodeDao
+    Dim episodeDao As New EpisodeDao
 
     Private Sub RadFEpisodeParametresCreation_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         Me.CodeRetour = False
@@ -72,20 +72,20 @@ Public Class RadFEpisodeParametresCreation
                 End If
             End If
 
-            Dim episode As New Episode With {
-                .Commentaire = TxtCommentaire.Text,
-                .DateCreation = NumDateRV.Value.Date.AddHours(NumheureRV.Value).AddMinutes(Minutes),
-                .UserCreation = userLog.UtilisateurId,
-                .PatientId = SelectedPatient.PatientId,
-                .Type = Episode.EnumTypeEpisode.PARAMETRE.ToString,
-                .TypeActivite = Episode.EnumTypeEpisode.PARAMETRE.ToString,
-                .DescriptionActivite = "",
-                .TypeProfil = userLog.TypeProfil,
-                .Etat = Episode.EnumEtatEpisode.CLOTURE.ToString
-            }
+
+            Dim episode As New Episode
+            episode.Commentaire = TxtCommentaire.Text
+            episode.DateCreation = NumDateRV.Value.Date.AddHours(NumheureRV.Value).AddMinutes(Minutes)
+            episode.UserCreation = userLog.UtilisateurId
+            episode.PatientId = SelectedPatient.patientId
+            episode.Type = EpisodeDao.EnumTypeEpisode.PARAMETRE.ToString
+            episode.TypeActivite = EpisodeDao.EnumTypeEpisode.PARAMETRE.ToString
+            episode.DescriptionActivite = ""
+            episode.TypeProfil = userLog.TypeProfil
+            episode.Etat = EpisodeDao.EnumEtatEpisode.CLOTURE.ToString
 
             Dim episodeId As Long
-            episodeId = episodeDao.CreateEpisode(episode, userLog.UtilisateurId)
+            episodeId = episodeDao.CreateEpisode(episode)
             If episodeId <> 0 Then
                 'Création parametres aigus standards
                 Dim ListGroupeParam = New List(Of Long)
@@ -93,7 +93,7 @@ Public Class RadFEpisodeParametresCreation
                 'Groupe de paramètres Protocole standard pathologie aiguë
                 Dim DrcStandardDatatable As DataTable
                 Dim drcStandardDao As New DrcStandardDao
-                DrcStandardDatatable = drcStandardDao.getAllDrcByTypeActivite(Episode.EnumTypeActiviteEpisodeCode.PATHOLOGIE_AIGUE)
+                DrcStandardDatatable = drcStandardDao.getAllDrcByTypeActivite(EpisodeDao.EnumTypeActiviteEpisodeCode.PATHOLOGIE_AIGUE)
                 Dim i As Integer
                 Dim drcId As Long
                 Dim categorieOasis As Integer
@@ -102,7 +102,7 @@ Public Class RadFEpisodeParametresCreation
                     drcId = DrcStandardDatatable.Rows(i)("drc_id")
                     categorieOasis = DrcStandardDatatable.Rows(i)("categorie_oasis")
                     Select Case categorieOasis
-                        Case Drc.EnumCategorieOasisCode.GroupeParametres
+                        Case DrcDao.EnumCategorieOasisCode.GroupeParametres
                             If Not ListGroupeParam.Contains(drcId) Then
                                 ListGroupeParam.Add(drcId)
                             End If
@@ -114,7 +114,7 @@ Public Class RadFEpisodeParametresCreation
                 Dim ParamDt As DataTable
                 'Lecture groupe de paramètres
                 For i = 0 To ListGroupeParam.Count - 1
-                    ParamDt = parametreDrcDao.GetParametresByDrcId(ListGroupeParam.Item(i))
+                    ParamDt = parametreDrcDao.getParametresByDrcId(ListGroupeParam.Item(i))
                     rowCount = ParamDt.Rows.Count - 1
                     For J = 0 To rowCount Step 1
                         Dim ParamId As Integer = Coalesce(ParamDt.Rows(J)("parametre_id"), 0)
@@ -130,18 +130,17 @@ Public Class RadFEpisodeParametresCreation
                 For i = 0 To ListParam.Count - 1
                     parametre = parametreDao.GetParametreById(ListParam.Item(i))
                     'Creation
-                    Dim episodeParametre As EpisodeParametre = New EpisodeParametre With {
-                        .EpisodeId = episodeId,
-                        .ParametreId = parametre.Id,
-                        .PatientId = episode.PatientId,
-                        .Entier = parametre.Entier,
-                        .Decimal = parametre.Decimal,
-                        .Unite = parametre.Unite,
-                        .Ordre = parametre.Ordre,
-                        .Description = parametre.Description,
-                        .Valeur = 0,
-                        .Inactif = False
-                    }
+                    Dim episodeParametre As EpisodeParametre = New EpisodeParametre
+                    episodeParametre.EpisodeId = episodeId
+                    episodeParametre.ParametreId = parametre.Id
+                    episodeParametre.PatientId = episode.PatientId
+                    episodeParametre.Entier = parametre.Entier
+                    episodeParametre.Decimal = parametre.Decimal
+                    episodeParametre.Unite = parametre.Unite
+                    episodeParametre.Ordre = parametre.Ordre
+                    episodeParametre.Description = parametre.Description
+                    episodeParametre.Valeur = 0
+                    episodeParametre.Inactif = False
                     episodeParametreDao.CreateEpisodeParametre(episodeParametre)
                 Next
 

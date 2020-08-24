@@ -1,6 +1,4 @@
-﻿Imports Oasis_Common
-
-Public Class RadFActeParamedicalTest
+﻿Public Class RadFActeParamedicalTest
     Private _selectedPatient As Patient
 
     Public Property SelectedPatient As Patient

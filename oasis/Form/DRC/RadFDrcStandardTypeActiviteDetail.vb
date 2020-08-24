@@ -1,6 +1,4 @@
-﻿Imports Oasis_Common
-
-Public Class RadFDrcStandardTypeActiviteDetail
+﻿Public Class RadFDrcStandardTypeActiviteDetail
     Private _DrcStandardId As Long
     Private _codeRetour As Boolean
 
@@ -40,8 +38,8 @@ Public Class RadFDrcStandardTypeActiviteDetail
         TxtCategorieOasis.Text = drcDao.GetItemCategorieOasisByCode(drcStandard.CategorieOasis)
         NumAgeMin.Value = drcStandard.AgeMin
         NumAgeMax.Value = drcStandard.AgeMax
-        If Not (drcStandard.TypeActivite = Episode.EnumTypeActiviteEpisodeCode.PREVENTION_ENFANT_PRE_SCOLAIRE Or
-            drcStandard.TypeActivite = Episode.EnumTypeActiviteEpisodeCode.PREVENTION_ENFANT_SCOLAIRE) Then
+        If Not (drcStandard.TypeActivite = EpisodeDao.EnumTypeActiviteEpisodeCode.PREVENTION_ENFANT_PRE_SCOLAIRE Or
+            drcStandard.TypeActivite = EpisodeDao.EnumTypeActiviteEpisodeCode.PREVENTION_ENFANT_SCOLAIRE) Then
             LblAgeMin.Hide()
             NumAgeMin.Hide()
             LblAgeMax.Hide()
@@ -53,9 +51,9 @@ Public Class RadFDrcStandardTypeActiviteDetail
         End If
 
         Select Case drcStandard.TypeActivite
-            Case Episode.EnumTypeActiviteEpisodeCode.PREVENTION_ENFANT_SCOLAIRE
+            Case EpisodeDao.EnumTypeActiviteEpisodeCode.PREVENTION_ENFANT_SCOLAIRE
                 LblAgeUnite.Text = "(Age exprimé en année)"
-            Case Episode.EnumTypeActiviteEpisodeCode.PREVENTION_ENFANT_PRE_SCOLAIRE
+            Case EpisodeDao.EnumTypeActiviteEpisodeCode.PREVENTION_ENFANT_PRE_SCOLAIRE
                 LblAgeUnite.Text = "(Age exprimé en mois)"
             Case Else
                 LblAgeUnite.Text = ""
@@ -70,7 +68,7 @@ Public Class RadFDrcStandardTypeActiviteDetail
         If drcStandard.AgeMin > drcStandard.AgeMax Then
             MessageBox.Show("L'âge min doit être inférieur à la l'âge max")
         Else
-            If drcStandardDao.ModificationDrcStandard(drcStandard, userLog) = True Then
+            If drcStandardDao.ModificationDrcStandard(drcStandard) = True Then
                 MessageBox.Show("La DRC standard a été modifiée")
                 Close()
             End If
@@ -79,7 +77,7 @@ Public Class RadFDrcStandardTypeActiviteDetail
 
     Private Sub RadBtnAnnulation_Click(sender As Object, e As EventArgs) Handles RadBtnAnnulation.Click
         If MsgBox("Confirmation de l'annulation ", MsgBoxStyle.YesNo, "") = MsgBoxResult.Yes Then
-            If drcStandardDao.AnnulationDrcStandard(SelectedDrcStandardId, userLog) = True Then
+            If drcStandardDao.AnnulationDrcStandard(SelectedDrcStandardId) = True Then
                 MessageBox.Show("La DRC standard a été annulée")
                 CodeRetour = True
                 Close()

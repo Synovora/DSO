@@ -1,65 +1,105 @@
 ﻿Imports Oasis_Common
-
 Public Class RadFEpisodeObservationDetailEdit
-    Property SelectedEpisodeId As Long
-    Property SelectedPatient As Patient
-    Property SelectedObservationId As Long
-    Property CodeRetour As Boolean
+    Private _SelectedEpisodeId As Long
+    Private _SelectedPatient As Patient
+    Private _selectedObservationId As Long
+    Private _codeRetour As Boolean
+
+    Public Property SelectedEpisodeId As Long
+        Get
+            Return _SelectedEpisodeId
+        End Get
+        Set(value As Long)
+            _SelectedEpisodeId = value
+        End Set
+    End Property
+
+    Public Property SelectedPatient As Patient
+        Get
+            Return _SelectedPatient
+        End Get
+        Set(value As Patient)
+            _SelectedPatient = value
+        End Set
+    End Property
+
+    Public Property CodeRetour As Boolean
+        Get
+            Return _codeRetour
+        End Get
+        Set(value As Boolean)
+            _codeRetour = value
+        End Set
+    End Property
+
+    Public Property SelectedObservationId As Long
+        Get
+            Return _selectedObservationId
+        End Get
+        Set(value As Long)
+            _selectedObservationId = value
+        End Set
+    End Property
+
+    Enum EnumEditMode
+        Modification = 1
+        Creation = 2
+    End Enum
 
     Dim EditMode As Integer
 
-    ReadOnly episodeObservationDao As New EpisodeObservationDao
-    ReadOnly userDao As New UserDao
+    Dim episodeObservationDao As New EpisodeObservationDao
+    Dim userDao As New UserDao
 
     Dim episodeObservationRead As EpisodeObservation
     Dim episodeObservationUpdate As EpisodeObservation
     Dim user As New Utilisateur
 
     Private Sub RadFEpisodeObservationDetailEdit_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-        AfficheTitleForm(Me, "Observation libre", userLog)
+        afficheTitleForm(Me, "Observation libre")
         Me.Location = New Point(10, Screen.PrimaryScreen.WorkingArea.Height - Me.Height - 10)
         Me.CodeRetour = False
 
         CbxPresence.Items.Clear()
-        CbxPresence.Items.Add(EpisodeObservation.EnumNaturePresence.DISTANT.ToString)
-        CbxPresence.Items.Add(EpisodeObservation.EnumNaturePresence.PRESENTIEL.ToString)
+        CbxPresence.Items.Add(EpisodeObservationDao.EnumNaturePresence.DISTANT.ToString)
+        CbxPresence.Items.Add(EpisodeObservationDao.EnumNaturePresence.PRESENTIEL.ToString)
 
         If SelectedObservationId <> 0 Then
-            EditMode = EpisodeTypeActivite.EnumEditMode.Modification
+            EditMode = EnumEditMode.Modification
             episodeObservationRead = episodeObservationDao.GetEpisodeObservationById(SelectedObservationId)
             episodeObservationUpdate = episodeObservationRead.Clone()
             ChargementObservation()
             If userLog.UtilisateurId <> episodeObservationRead.UserCreation AndAlso userLog.UtilisateurAdmin = False Then
-                InhibeModificationObservation()
+                inhibeModificationObservation()
                 ToolTip.SetToolTip(Me.TxtObservation, "Observation non modifiable, seul l'auteur ou un administrateur peut la modifier")
             Else
                 Dim temps As Integer
                 temps = DateDiff(DateInterval.Hour, episodeObservationUpdate.DateCreation, Date.Now)
                 If temps > 24 AndAlso userLog.UtilisateurAdmin = False Then
-                    InhibeModificationObservation()
+                    inhibeModificationObservation()
                     ToolTip.SetToolTip(Me.TxtObservation, "Observation non modifiable car elle a été créée depuis plus de 24 heures, seul un administrateur peut la modifier")
                 Else
                     Select Case userLog.TypeProfil
                         Case ProfilDao.EnumProfilType.MEDICAL.ToString
                             If episodeObservationRead.TypeObservation <> ProfilDao.EnumProfilType.MEDICAL.ToString Then
-                                InhibeModificationObservation()
+                                inhibeModificationObservation()
                             End If
                         Case ProfilDao.EnumProfilType.PARAMEDICAL.ToString
                             If episodeObservationRead.TypeObservation <> ProfilDao.EnumProfilType.PARAMEDICAL.ToString Then
-                                InhibeModificationObservation()
+                                inhibeModificationObservation()
                             End If
                         Case Else
-                            InhibeModificationObservation()
+                            inhibeModificationObservation()
                     End Select
                 End If
             End If
         Else
-            EditMode = EpisodeTypeActivite.EnumEditMode.Creation
+            EditMode = EnumEditMode.Creation
             InitialisationCreation()
         End If
     End Sub
 
-    Private Sub InhibeModificationObservation()
+    Private Sub inhibeModificationObservation()
         RadBtnValidation.Hide()
         TxtObservation.ReadOnly = True
         CbxPresence.Enabled = False
@@ -77,7 +117,7 @@ Public Class RadFEpisodeObservationDetailEdit
     End Sub
 
     Private Sub GestionAffichageBoutonValidation()
-        If EditMode = EpisodeTypeActivite.EnumEditMode.Modification Then
+        If EditMode = EnumEditMode.Modification Then
             If episodeObservationDao.Compare(episodeObservationUpdate, episodeObservationRead) = False Then
                 RadBtnValidation.Enabled = True
             Else
@@ -116,17 +156,17 @@ Public Class RadFEpisodeObservationDetailEdit
 
         Select Case episodeObservationRead.NaturePresence
             Case ProfilDao.EnumProfilType.MEDICAL.ToString
-                CbxPresence.Text = EpisodeObservation.EnumNaturePresence.DISTANT.ToString
+                CbxPresence.Text = EpisodeObservationDao.EnumNaturePresence.DISTANT.ToString
             Case ProfilDao.EnumProfilType.PARAMEDICAL.ToString
-                CbxPresence.Text = EpisodeObservation.EnumNaturePresence.PRESENTIEL.ToString
+                CbxPresence.Text = EpisodeObservationDao.EnumNaturePresence.PRESENTIEL.ToString
             Case Else
                 Select Case userLog.TypeProfil
                     Case ProfilDao.EnumProfilType.MEDICAL.ToString
-                        episodeObservationUpdate.NaturePresence = EpisodeObservation.EnumNaturePresence.DISTANT.ToString
-                        CbxPresence.Text = EpisodeObservation.EnumNaturePresence.DISTANT.ToString
+                        episodeObservationUpdate.NaturePresence = EpisodeObservationDao.EnumNaturePresence.DISTANT.ToString
+                        CbxPresence.Text = EpisodeObservationDao.EnumNaturePresence.DISTANT.ToString
                     Case ProfilDao.EnumProfilType.PARAMEDICAL.ToString
-                        episodeObservationUpdate.NaturePresence = EpisodeObservation.EnumNaturePresence.PRESENTIEL.ToString
-                        CbxPresence.Text = EpisodeObservation.EnumNaturePresence.PRESENTIEL.ToString
+                        episodeObservationUpdate.NaturePresence = EpisodeObservationDao.EnumNaturePresence.PRESENTIEL.ToString
+                        CbxPresence.Text = EpisodeObservationDao.EnumNaturePresence.PRESENTIEL.ToString
                     Case Else
                         MessageBox.Show("Erreur, ce profil ne peut pas créer d'observation libre (" & userLog.TypeProfil & ")")
                         Close()
@@ -151,17 +191,17 @@ Public Class RadFEpisodeObservationDetailEdit
         episodeObservationUpdate = New EpisodeObservation
         episodeObservationUpdate.Id = 0
         episodeObservationUpdate.EpisodeId = SelectedEpisodeId
-        episodeObservationUpdate.PatientId = SelectedPatient.PatientId
+        episodeObservationUpdate.PatientId = SelectedPatient.patientId
         episodeObservationUpdate.UserCreation = userLog.UtilisateurId
         episodeObservationUpdate.TypeObservation = userLog.TypeProfil
-        episodeObservationUpdate.NatureObservation = EpisodeObservation.EnumNatureEpisodeObservation.LIBRE.ToString
+        episodeObservationUpdate.NatureObservation = EpisodeObservationDao.EnumNatureEpisodeObservation.LIBRE.ToString
         Select Case userLog.TypeProfil
             Case ProfilDao.EnumProfilType.MEDICAL.ToString
-                episodeObservationUpdate.NaturePresence = EpisodeObservation.EnumNaturePresence.DISTANT.ToString
-                CbxPresence.Text = EpisodeObservation.EnumNaturePresence.DISTANT.ToString
+                episodeObservationUpdate.NaturePresence = EpisodeObservationDao.EnumNaturePresence.DISTANT.ToString
+                CbxPresence.Text = EpisodeObservationDao.EnumNaturePresence.DISTANT.ToString
             Case ProfilDao.EnumProfilType.PARAMEDICAL.ToString
-                episodeObservationUpdate.NaturePresence = EpisodeObservation.EnumNaturePresence.PRESENTIEL.ToString
-                CbxPresence.Text = EpisodeObservation.EnumNaturePresence.PRESENTIEL.ToString
+                episodeObservationUpdate.NaturePresence = EpisodeObservationDao.EnumNaturePresence.PRESENTIEL.ToString
+                CbxPresence.Text = EpisodeObservationDao.EnumNaturePresence.PRESENTIEL.ToString
             Case Else
                 MessageBox.Show("Erreur, ce profil ne peut pas créer d'observation libre (" & userLog.TypeProfil & ")")
                 Close()
@@ -177,13 +217,13 @@ Public Class RadFEpisodeObservationDetailEdit
             MessageBox.Show("La saisie de l'observation est obligatoire!")
         Else
             Select Case EditMode
-                Case EpisodeTypeActivite.EnumEditMode.Creation
+                Case EnumEditMode.Creation
                     If episodeObservationDao.CreateEpisodeObservation(episodeObservationUpdate) = True Then
                         MessageBox.Show("Observation créée")
                         Me.CodeRetour = True
                         Close()
                     End If
-                Case EpisodeTypeActivite.EnumEditMode.Modification
+                Case EnumEditMode.Modification
                     If episodeObservationDao.ModificationEpisodeObservation(episodeObservationUpdate) = True Then
                         MessageBox.Show("Observation modifiée")
                         Me.CodeRetour = True

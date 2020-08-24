@@ -1,5 +1,4 @@
 ﻿Imports System.IO
-Imports Oasis_Common
 Imports Telerik.WinControls
 Imports Telerik.WinControls.UI
 Imports Telerik.WinForms.Documents
@@ -28,7 +27,7 @@ Public Class FrmAdminTemplateDocx
         Me.Cursor = Cursors.WaitCursor
         Try
             tbl = provider.Export(Me.RadRichTextEditor1.Document)
-            sousEpisodeSousType.writeContenuModel(tbl, loginRequestLog)
+            sousEpisodeSousType.writeContenuModel(tbl)
             ResetFlagChange()
             Notification.show("Sauvegarde modèle", "Sauvegarde effectuée avec succès !")
         Catch err As Exception
@@ -67,7 +66,7 @@ Public Class FrmAdminTemplateDocx
     End Sub
 
     Private Sub initCtrl()
-        AfficheTitleForm(Me, Me.Text, userLog)
+        afficheTitleForm(Me, Me.Text)
 
         'hide the default "Save as" button
         'Me.RichTextEditorRibbonBar1.BackstageControl.Items.Last().Visibility = ElementVisibility.Collapsed

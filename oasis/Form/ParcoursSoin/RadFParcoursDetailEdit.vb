@@ -89,14 +89,14 @@ Public Class RadFParcoursDetailEdit
     Dim EditMode As Integer
 
     Dim UtilisateurHisto As Utilisateur = New Utilisateur()
-    ReadOnly ParcoursDao As New ParcoursDao
+    Dim ParcoursDao As New ParcoursDao
     Dim ParcoursUpdate As New Parcours
     Dim parcoursRead As New Parcours
-    ReadOnly parcoursConsigneDao As New ParcoursConsigneDao
-    ReadOnly userDao As New UserDao
+    Dim parcoursConsigneDao As New ParcoursConsigneDao
+    Dim userDao As New UserDao
 
-    ReadOnly rordao As New RorDao
-    ReadOnly tacheDao As New TacheDao
+    Dim rordao As New RorDao
+    Dim tacheDao As New TacheDao
     Dim ror As Ror
     Dim specialite As Specialite
     Dim masquerIntervenant As Boolean = True
@@ -130,7 +130,7 @@ Public Class RadFParcoursDetailEdit
         Else
             'Création
             'Données spécialité
-            specialite = Table_specialite.GetSpecialiteById(Me.SelectedSpecialiteId)
+            specialite = Environnement.Table_specialite.GetSpecialiteById(Me.SelectedSpecialiteId)
             If SelectedSpecialiteId <> 0 Then
                 If SelectedSpecialiteId = EnumSpecialiteOasis.IDE Then
                     'FixeTailleEcranPourIDE()
@@ -206,7 +206,7 @@ Public Class RadFParcoursDetailEdit
     End Sub
 
     Private Sub Init()
-        AfficheTitleForm(Me, "Parcours de soin", userLog)
+        AfficheTitleForm(Me, "Parcours de soin")
         Me.Width = 980
         Me.Height = 650
         DureeRendezVous = 15
@@ -285,7 +285,7 @@ Public Class RadFParcoursDetailEdit
         End If
 
         'Données spécialité
-        specialite = Table_specialite.GetSpecialiteById(ParcoursUpdate.SpecialiteId)
+        specialite = Environnement.Table_specialite.GetSpecialiteById(ParcoursUpdate.SpecialiteId)
         If ParcoursUpdate.SpecialiteId = EnumSpecialiteOasis.IDE Then
             FixeTailleEcranPourIDE()
             ChargementConsigne()
@@ -398,8 +398,8 @@ Public Class RadFParcoursDetailEdit
             masquerIntervenant = False
             RadBtnModifRDV.Show()
             RadBtnModifRDV.Enabled = True
-            If tache.Nature = Tache.EnumNatureTacheCode.RDV_SPECIALISTE OrElse
-                tache.Nature = Tache.EnumNatureTacheCode.RDV Then
+            If tache.Nature = TacheDao.EnumNatureTacheCode.RDV_SPECIALISTE OrElse
+                tache.Nature = TacheDao.EnumNatureTacheCode.RDV Then
                 If tache.DateRendezVous.Date <= Date.Now.Date() Then
                     RadBtnClotureRDV.Show()
                     RadBtnClotureRDV.Enabled = True
@@ -413,17 +413,17 @@ Public Class RadFParcoursDetailEdit
             dateNext = tache.DateRendezVous
             If dateNext <> Nothing Then
                 Select Case tache.TypedemandeRendezVous
-                    Case Tache.EnumDemandeRendezVous.ANNEE.ToString
+                    Case TacheDao.TypeDemandeRendezVous.ANNEE.ToString
                         LblDateProchainRendezVous.Text = dateNext.ToString("yyyy")
-                    Case Tache.EnumDemandeRendezVous.ANNEEMOIS.ToString
+                    Case TacheDao.TypeDemandeRendezVous.ANNEEMOIS.ToString
                         LblDateProchainRendezVous.Text = dateNext.ToString("MM.yyyy")
                     Case Else
                         LblDateProchainRendezVous.Text = outils.FormatageDateAffichage(dateNext)
                 End Select
                 Select Case tache.Etat
-                    Case Tache.EtatTache.EN_COURS.ToString
+                    Case TacheDao.EtatTache.EN_COURS.ToString
                         LblDateNextType.Text = "(Rendez-vous prévisionnel, demande en cours de traitement)"
-                    Case Tache.EtatTache.EN_ATTENTE.ToString
+                    Case TacheDao.EtatTache.EN_ATTENTE.ToString
                         LblDateNextType.Text = "(Rendez-vous prévisionnel, demande en attente de traitement)"
                         RadBtnModifRDV.Show()
                         RadBtnModifRDV.Enabled = True
@@ -470,7 +470,7 @@ Public Class RadFParcoursDetailEdit
         Dim DateDebut, DateFin As Date
         Dim MaxDate As New Date(9998, 12, 31, 0, 0, 0)
 
-        ParcoursConsigneDataTable = parcoursConsigneDao.GetAllConsignebyParcoursId(SelectedParcoursId)
+        ParcoursConsigneDataTable = parcoursConsigneDao.getAllConsignebyParcoursId(SelectedParcoursId)
 
         Dim iGrid As Integer = -1 'Indice pour alimenter la Grid qui peut comporter moins d'occurrences que le DataTable
         Dim rowCount As Integer = ParcoursConsigneDataTable.Rows.Count - 1
@@ -499,7 +499,7 @@ Public Class RadFParcoursDetailEdit
                 RadParcoursConsigneDataGridView.Rows(iGrid).Cells("dateFin").Value = DateFin.ToString("dd.MM.yyyy")
             End If
 
-            If Coalesce(ParcoursConsigneDataTable.Rows(i)("activite_type_episode"), "") = Episode.EnumTypeActiviteEpisodeCode.SUIVI_CHRONIQUE Then
+            If Coalesce(ParcoursConsigneDataTable.Rows(i)("activite_type_episode"), "") = EpisodeDao.EnumTypeActiviteEpisodeCode.SUIVI_CHRONIQUE Then
                 RadParcoursConsigneDataGridView.Rows(iGrid).Cells("drcDescription").Style.ForeColor = Color.Red
                 RadParcoursConsigneDataGridView.Rows(iGrid).Cells("commentaire").Style.ForeColor = Color.Red
                 RadParcoursConsigneDataGridView.Rows(iGrid).Cells("dateDebut").Style.ForeColor = Color.Red
@@ -677,18 +677,17 @@ Public Class RadFParcoursDetailEdit
             Case EnumEditMode.Creation
                 'Création intervenant
                 If ValidationDonneeSaisie() = True Then
-                    ParcoursUpdate.Id = ParcoursDao.CreateIntervenantParcours(ParcoursUpdate, userLog)
+                    ParcoursUpdate.Id = ParcoursDao.CreateIntervenantParcours(ParcoursUpdate)
                     If ParcoursUpdate.Id <> 0 Then
                         Me.CodeRetour = True
-                        Dim form As New RadFNotification With {
-                            .Message = "Intervenant du parcours de soin créé"
-                        }
+                        Dim form As New RadFNotification()
+                        form.Message = "Intervenant du parcours de soin créé"
                         form.Show()
                         'Création automatique de demande de rendez-vous
                         If ParcoursUpdate.Rythme <> 0 AndAlso ParcoursUpdate.Base.Trim() <> "" Then
                             'Appel création demande de rendez-vous
                             Dim tacheDao As New TacheDao
-                            tacheDao.CreationAutomatiqueDeDemandeRendezVous(SelectedPatient, ParcoursUpdate, Date.Now(), userLog, True)
+                            tacheDao.CreationAutomatiqueDeDemandeRendezVous(SelectedPatient, ParcoursUpdate, Date.Now(), True)
                         End If
                         'Fermeture de l'écran en création après validation
                         Close()
@@ -703,16 +702,15 @@ Public Class RadFParcoursDetailEdit
                 If GbxIntervenant.Enabled = True Then
                     'Appel modification
                     If ValidationDonneeSaisie() = True Then
-                        If ParcoursDao.ModificationIntervenantParcours(ParcoursUpdate, userLog) = True Then
-                            Dim form As New RadFNotification With {
-                                .Message = "Intervenant du parcours de soin modifié"
-                            }
+                        If ParcoursDao.ModificationIntervenantParcours(ParcoursUpdate) = True Then
+                            Dim form As New RadFNotification()
+                            form.Message = "Intervenant du parcours de soin modifié"
                             form.Show()
                             'Création automatique de demande de rendez-vous
                             If parcoursRead.Rythme = 0 AndAlso parcoursRead.Base.Trim() = "" Then
                                 If ParcoursUpdate.Rythme <> 0 AndAlso ParcoursUpdate.Base.Trim() <> "" Then
                                     'Appel création demande de rendez-vous
-                                    If tacheDao.CreationAutomatiqueDeDemandeRendezVous(SelectedPatient, ParcoursUpdate, Date.Now(), userLog, True) = True Then
+                                    If tacheDao.CreationAutomatiqueDeDemandeRendezVous(SelectedPatient, ParcoursUpdate, Date.Now(), True) = True Then
                                         ChargementhistoriqueConsultation()
                                     End If
                                 End If
@@ -756,16 +754,15 @@ Public Class RadFParcoursDetailEdit
             tache = tacheDao.GetProchainRendezVousByPatientIdEtParcours(SelectedPatient.patientId, SelectedParcoursId)
             If tache.DateRendezVous <> Nothing Then
                 'Si un rendez-vous existe et que la tache est déjà attribuée > annulation impossible
-                If tache.Etat = Tache.EtatTache.EN_COURS.ToString Then
+                If tache.Etat = TacheDao.EtatTache.EN_COURS.ToString Then
                     MessageBox.Show("Rendez-vous déjà attribué, annulation impossible", "Alerte", MessageBoxButtons.OK, MessageBoxIcon.Warning)
                     AnnulationIntervevant = False
                 Else
                     If MsgBox("Un rendez-vous est planifié pour cet intervenant, confirmation de l'annulation", MsgBoxStyle.YesNo, "") = MsgBoxResult.Yes Then
                         Try
-                            If tacheDao.AnnulationTache(tache, userLog) = True Then
-                                Dim form As New RadFNotification With {
-                                    .Message = "Rendez-vous annulé"
-                                }
+                            If tacheDao.AnnulationTache(tache) = True Then
+                                Dim form As New RadFNotification()
+                                form.Message = "Rendez-vous annulé"
                                 form.Show()
                             Else
                                 MessageBox.Show("Problème de suppression du prochain rendez-vous, annulation impossible")
@@ -782,16 +779,15 @@ Public Class RadFParcoursDetailEdit
                 tache = tacheDao.GetProchaineDemandeRendezVousByPatientId(SelectedPatient.patientId, SelectedParcoursId)
                 If tache.DateRendezVous <> Nothing Then
                     'si la tache est attribuée annulation impossible
-                    If tache.Etat = Tache.EtatTache.EN_COURS.ToString Then
+                    If tache.Etat = TacheDao.EtatTache.EN_COURS.ToString Then
                         MessageBox.Show("Demande de rendez-vous déjà attribuée, annulation impossible", "Alerte", MessageBoxButtons.OK, MessageBoxIcon.Warning)
                         AnnulationIntervevant = False
                     Else
                         If MsgBox("Une demande de rendez-vous est planifiée pour cet intervenant, confirmation de l'annulation ", MsgBoxStyle.YesNo Or MsgBoxStyle.Exclamation, "Confirmation") = MsgBoxResult.Yes Then
                             'Suppression demande de rendez-vous
-                            If tacheDao.AnnulationTache(tache, userLog) = True Then
-                                Dim form As New RadFNotification With {
-                                    .Message = "Demande de rendez-vous annulée"
-                                }
+                            If tacheDao.AnnulationTache(tache) = True Then
+                                Dim form As New RadFNotification()
+                                form.Message = "Demande de rendez-vous annulée"
                                 form.Show()
                             Else
                                 MessageBox.Show("Problème de suppression de la demande de rendez-vous, annulation impossible")
@@ -806,11 +802,10 @@ Public Class RadFParcoursDetailEdit
 
             If AnnulationIntervevant = True Then
                 'Annulation de l'intervenant (inactif = True)
-                If ParcoursDao.AnnulationIntervenantParcours(ParcoursUpdate, userLog) = True Then
+                If ParcoursDao.AnnulationIntervenantParcours(ParcoursUpdate) = True Then
                     Me.CodeRetour = True
-                    Dim form As New RadFNotification With {
-                        .Message = "Intervenant annulé pour le parcours de soin du patient"
-                    }
+                    Dim form As New RadFNotification()
+                    form.Message = "Intervenant annulé pour le parcours de soin du patient"
                     form.Show()
                     Close()
                 End If
@@ -896,27 +891,27 @@ Public Class RadFParcoursDetailEdit
             Dim dateRendezVous As New DateTime(NumDateRV.Value.Year, NumDateRV.Value.Month, NumDateRV.Value.Day, NumheureRV.Value, minutesRV, 0)
             If NumDateRV.Value.Date < Date.Now().Date Then
                 'Clôture du rendez-vous
-                If CreationRendezVous(dateRendezVous, Tache.EtatTache.TERMINEE.ToString) = True Then
-                    Dim tache As Tache = tacheDao.GetProchainRendezVousByPatientIdEtParcours(SelectedPatient.PatientId, SelectedParcoursId)
+                If CreationRendezVous(dateRendezVous, TacheDao.EtatTache.TERMINEE.ToString) = True Then
+                    Dim tache As Tache = tacheDao.GetProchainRendezVousByPatientIdEtParcours(SelectedPatient.patientId, SelectedParcoursId)
                     MessageBox.Show("Rendez-vous programmé et clôturé pour le " & NumDateRV.Value.ToString("dd.MM.yyyy"), "Information", MessageBoxButtons.OK, MessageBoxIcon.Information)
                     'La clôture du rendez-vous génère automatiquement une demande de rendez-vous
-                    tacheDao.CreationAutomatiqueDeDemandeRendezVous(SelectedPatient, ParcoursUpdate, NumDateRV.Value, userLog)
+                    tacheDao.CreationAutomatiqueDeDemandeRendezVous(SelectedPatient, ParcoursUpdate, NumDateRV.Value)
                     'Si l'intervenant est masqué, il faut l'afficher par défaut
                     If ParcoursUpdate.Cacher = True Then
                         ParcoursUpdate.Cacher = False
-                        ParcoursDao.ModificationIntervenantParcours(ParcoursUpdate, userLog)
+                        ParcoursDao.ModificationIntervenantParcours(ParcoursUpdate)
                     End If
                     Me.CodeRetour = True
                     Close()
                 End If
             Else
-                If CreationRendezVous(dateRendezVous, Tache.EtatTache.EN_ATTENTE.ToString) = True Then
-                    Dim tache As Tache = tacheDao.GetProchainRendezVousByPatientIdEtParcours(SelectedPatient.PatientId, SelectedParcoursId)
+                If CreationRendezVous(dateRendezVous, TacheDao.EtatTache.EN_ATTENTE.ToString) = True Then
+                    Dim tache As Tache = tacheDao.GetProchainRendezVousByPatientIdEtParcours(SelectedPatient.patientId, SelectedParcoursId)
                     MessageBox.Show("Rendez-vous programmé pour le " & NumDateRV.Value.ToString("dd.MM.yyyy"), "Information", MessageBoxButtons.OK, MessageBoxIcon.Information)
                     'Si l'intervenant est masqué, il faut l'afficher par défaut
                     If ParcoursUpdate.Cacher = True Then
                         ParcoursUpdate.Cacher = False
-                        ParcoursDao.ModificationIntervenantParcours(ParcoursUpdate, userLog)
+                        ParcoursDao.ModificationIntervenantParcours(ParcoursUpdate)
                     End If
                     Me.CodeRetour = True
                     Close()
@@ -930,7 +925,7 @@ Public Class RadFParcoursDetailEdit
                     If RadChkDRVAnneeSeulement.Checked = True Then
                         'Création demande de rendez-vous pour une année donnée (AAAA)
                         Dim dateRendezVous As New DateTime(NumAn.Value, 1, 1, 0, 0, 0)
-                        If CreationDemandeRendezVous(dateRendezVous, Tache.EnumDemandeRendezVous.ANNEE.ToString) = True Then
+                        If CreationDemandeRendezVous(dateRendezVous, TacheDao.TypeDemandeRendezVous.ANNEE.ToString) = True Then
                             MessageBox.Show("demande de rendez-vous créée pour " & NumAn.Value.ToString, "Information", MessageBoxButtons.OK, MessageBoxIcon.Information)
                             Me.CodeRetour = True
                             Close()
@@ -941,7 +936,7 @@ Public Class RadFParcoursDetailEdit
                         Else
                             'Création demande de rendez-vous pour une période donnée (MM/AAAA)
                             Dim dateRendezVous As New DateTime(NumAn.Value, NumMois.Value, 1, 0, 0, 0)
-                            If CreationDemandeRendezVous(dateRendezVous, Tache.EnumDemandeRendezVous.ANNEEMOIS.ToString) = True Then
+                            If CreationDemandeRendezVous(dateRendezVous, TacheDao.TypeDemandeRendezVous.ANNEEMOIS.ToString) = True Then
                                 MessageBox.Show("Demande de rendez-vous créée pour " & NumMois.Value.ToString & "/" & NumAn.Value.ToString, "Information", MessageBoxButtons.OK, MessageBoxIcon.Information)
                                 Me.CodeRetour = True
                                 Close()
@@ -977,7 +972,7 @@ Public Class RadFParcoursDetailEdit
         Dim tacheDao As New TacheDao
 
         Dim tacheEmetteurEtDestinataire As TacheEmetteurEtDestinataire
-        tacheEmetteurEtDestinataire = tacheDao.SetTacheEmetteurEtDestinatiareBySpecialiteEtSousCategorie(ParcoursUpdate.SpecialiteId, ParcoursUpdate.SousCategorieId, userLog)
+        tacheEmetteurEtDestinataire = tacheDao.SetTacheEmetteurEtDestinatiareBySpecialiteEtSousCategorie(ParcoursUpdate.SpecialiteId, ParcoursUpdate.SousCategorieId)
 
         tache.ParentId = 0
         tache.EmetteurUserId = userLog.UtilisateurId
@@ -991,30 +986,30 @@ Public Class RadFParcoursDetailEdit
         tache.TraiteUserId = 0
         tache.TraiteFonctionId = tacheEmetteurEtDestinataire.TraiteFonctionId
         tache.DestinataireFonctionId = tacheEmetteurEtDestinataire.DestinataireFonctionId
-        tache.Priorite = Tache.EnumPriorite.BASSE
+        tache.Priorite = TacheDao.Priorite.BASSE
         tache.OrdreAffichage = 30
-        tache.Categorie = Tache.CategorieTache.SOIN.ToString
+        tache.Categorie = TacheDao.CategorieTache.SOIN.ToString
         'Si le destinataire du rendez-vous n'est pas Oasis, on déclare un rendez-vous de type Spécialiste
         If ParcoursUpdate.SousCategorieId = EnumSousCategoriePPS.IDE Or
            ParcoursUpdate.SousCategorieId = EnumSousCategoriePPS.medecinReferent Or
            ParcoursUpdate.SousCategorieId = EnumSousCategoriePPS.sageFemme Then
-            tache.Type = Tache.TypeTache.RDV.ToString
-            tache.Nature = Tache.NatureTache.RDV.ToString
+            tache.Type = TacheDao.TypeTache.RDV.ToString
+            tache.Nature = TacheDao.NatureTache.RDV.ToString
         Else
-            tache.Type = Tache.TypeTache.RDV_SPECIALISTE.ToString()
-            tache.Nature = Tache.NatureTache.RDV_SPECIALISTE.ToString
+            tache.Type = TacheDao.TypeTache.RDV_SPECIALISTE.ToString()
+            tache.Nature = TacheDao.NatureTache.RDV_SPECIALISTE.ToString
         End If
         tache.Duree = DureeRendezVous
         tache.EmetteurCommentaire = TxtRDVCommentaire.Text
         tache.HorodatageCreation = Date.Now()
         tache.Etat = etatRendezVous
-        If etatRendezVous = Tache.EtatTache.TERMINEE.ToString Then
+        If etatRendezVous = TacheDao.EtatTache.TERMINEE.ToString Then
             tache.Cloture = True
         End If
         tache.TypedemandeRendezVous = ""
         tache.DateRendezVous = dateRendezVous
 
-        If tacheDao.CreateTache(tache, userLog) = True Then
+        If tacheDao.CreateTache(tache) = True Then
             CodeRetour = True
         End If
 
@@ -1027,7 +1022,7 @@ Public Class RadFParcoursDetailEdit
         Dim tacheDao As New TacheDao
 
         Dim tacheEmetteurEtDestinataire As TacheEmetteurEtDestinataire
-        tacheEmetteurEtDestinataire = tacheDao.SetTacheEmetteurEtDestinatiareBySpecialiteEtSousCategorie(ParcoursUpdate.SpecialiteId, ParcoursUpdate.SousCategorieId, userLog)
+        tacheEmetteurEtDestinataire = tacheDao.SetTacheEmetteurEtDestinatiareBySpecialiteEtSousCategorie(ParcoursUpdate.SpecialiteId, ParcoursUpdate.SousCategorieId)
 
         tache.ParentId = 0
         tache.EmetteurUserId = userLog.UtilisateurId
@@ -1041,19 +1036,19 @@ Public Class RadFParcoursDetailEdit
         tache.TraiteUserId = 0
         tache.TraiteFonctionId = tacheEmetteurEtDestinataire.TraiteFonctionId
         tache.DestinataireFonctionId = tacheEmetteurEtDestinataire.DestinataireFonctionId
-        tache.Priorite = Tache.EnumPriorite.BASSE
+        tache.Priorite = TacheDao.Priorite.BASSE
         tache.OrdreAffichage = 20
-        tache.Categorie = Tache.CategorieTache.SOIN.ToString
-        tache.Type = Tache.TypeTache.RDV_DEMANDE.ToString
-        tache.Nature = Tache.NatureTache.RDV_DEMANDE.ToString
+        tache.Categorie = TacheDao.CategorieTache.SOIN.ToString
+        tache.Type = TacheDao.TypeTache.RDV_DEMANDE.ToString
+        tache.Nature = TacheDao.NatureTache.RDV_DEMANDE.ToString
         tache.Duree = DureeRendezVous
         tache.EmetteurCommentaire = TxtRDVCommentaire.Text
         tache.HorodatageCreation = Date.Now()
-        tache.Etat = Tache.EtatTache.EN_ATTENTE.ToString
+        tache.Etat = TacheDao.EtatTache.EN_ATTENTE.ToString
         tache.TypedemandeRendezVous = typedemandeRendezVous
         tache.DateRendezVous = dateRendezVous
 
-        If tacheDao.CreateTache(tache, userLog) = True Then
+        If tacheDao.CreateTache(tache) = True Then
             CodeRetour = True
         End If
 
@@ -1069,16 +1064,16 @@ Public Class RadFParcoursDetailEdit
         Dim TacheALiberer As Boolean = False
         If RendezVousPlanifieEnCours = True Then
             tache = tacheDao.GetProchainRendezVousByPatientIdEtParcours(SelectedPatient.patientId, SelectedParcoursId)
-            If tache.Id <> 0 AndAlso (tache.Nature = Tache.EnumNatureTacheCode.RDV Or tache.Nature = Tache.EnumNatureTacheCode.RDV_SPECIALISTE) Then
-                If tache.Etat = Tache.EtatTache.EN_ATTENTE.ToString OrElse
-                    (tache.Etat = Tache.EtatTache.EN_COURS.ToString And userLog.UtilisateurId = tache.TraiteUserId) Then
+            If tache.Id <> 0 AndAlso (tache.Nature = TacheDao.EnumNatureTacheCode.RDV Or tache.Nature = TacheDao.EnumNatureTacheCode.RDV_SPECIALISTE) Then
+                If tache.Etat = TacheDao.EtatTache.EN_ATTENTE.ToString OrElse
+                    (tache.Etat = TacheDao.EtatTache.EN_COURS.ToString And userLog.UtilisateurId = tache.TraiteUserId) Then
                     Cursor.Current = Cursors.WaitCursor
                     Me.Enabled = False
 
                     '--- Si la tâche est en attente on attribue la tâche à l'utilisateur
-                    If tache.Etat = Tache.EtatTache.EN_ATTENTE.ToString Then
+                    If tache.Etat = TacheDao.EtatTache.EN_ATTENTE.ToString Then
                         TacheALiberer = True
-                        tacheDao.AttribueTacheToUserLog(tache.Id, userLog)
+                        tacheDao.AttribueTacheToUserLog(tache.Id)
                     End If
 
                     Dim RDVisTranforme As Boolean = False
@@ -1119,16 +1114,16 @@ Public Class RadFParcoursDetailEdit
             End If
 
             tache = tacheDao.GetProchaineDemandeRendezVousByPatientId(SelectedPatient.patientId, SelectedParcoursId)
-            If tache.Id <> 0 AndAlso tache.Nature = Tache.EnumNatureTacheCode.RDV_DEMANDE Then
-                If tache.Etat = Tache.EtatTache.EN_ATTENTE.ToString OrElse
-                    (tache.Etat = Tache.EtatTache.EN_COURS.ToString And userLog.UtilisateurId = tache.TraiteUserId) Then
+            If tache.Id <> 0 AndAlso tache.Nature = TacheDao.EnumNatureTacheCode.RDV_DEMANDE Then
+                If tache.Etat = TacheDao.EtatTache.EN_ATTENTE.ToString OrElse
+                    (tache.Etat = TacheDao.EtatTache.EN_COURS.ToString And userLog.UtilisateurId = tache.TraiteUserId) Then
                     Cursor.Current = Cursors.WaitCursor
                     Me.Enabled = False
 
                     'Si la tâche est en attente on attribue la tâche à l'utilisateur
-                    If tache.Etat = Tache.EtatTache.EN_ATTENTE.ToString Then
+                    If tache.Etat = TacheDao.EtatTache.EN_ATTENTE.ToString Then
                         TacheALiberer = True
-                        tacheDao.AttribueTacheToUserLog(tache.Id, userLog)
+                        tacheDao.AttribueTacheToUserLog(tache.Id)
                     End If
 
                     Using form As New RadFTacheModificationDemandeRendezVous
@@ -1169,14 +1164,14 @@ Public Class RadFParcoursDetailEdit
             Dim tache As Tache
             tache = tacheDao.GetProchainRendezVousByPatientIdEtParcours(SelectedPatient.patientId, SelectedParcoursId)
             If tache.DateRendezVous.Date <= Date.Now.Date() Then
-                If tache.Id <> 0 AndAlso (tache.Nature = Tache.EnumNatureTacheCode.RDV_SPECIALISTE Or tache.Nature = Tache.EnumNatureTacheCode.RDV) Then
+                If tache.Id <> 0 AndAlso (tache.Nature = TacheDao.EnumNatureTacheCode.RDV_SPECIALISTE Or tache.Nature = TacheDao.EnumNatureTacheCode.RDV) Then
                     If MsgBox("Confirmation de la clôture du rendez-vous", MsgBoxStyle.YesNo, "") = MsgBoxResult.Yes Then
-                        If tacheDao.ClotureTache(tache.Id, True, userLog) = True Then
+                        If tacheDao.ClotureTache(tache.Id, True) = True Then
                             Me.RadDesktopAlert1.CaptionText = "Notification rendez-vous"
                             Me.RadDesktopAlert1.ContentText = "Rendez-vous clôturé"
                             Me.RadDesktopAlert1.Show()
                             Dim tacheDao As New TacheDao
-                            tacheDao.CreationAutomatiqueDeDemandeRendezVous(SelectedPatient, ParcoursUpdate, tache.DateRendezVous.Date, userLog)
+                            tacheDao.CreationAutomatiqueDeDemandeRendezVous(SelectedPatient, ParcoursUpdate, tache.DateRendezVous.Date)
                             ChargementhistoriqueConsultation()
                             Me.CodeRetour = True
                         End If
@@ -1194,38 +1189,38 @@ Public Class RadFParcoursDetailEdit
 
     'Ajouter un acte paramédical (consigne IDE)
     Private Sub RadBtnConsigne_Click(sender As Object, e As EventArgs) Handles RadBtnActeParamedical.Click
-        AjoutConsigneActeParamedical(Drc.EnumCategorieOasisCode.ActeParamedical)
+        AjoutConsigneActeParamedical(DrcDao.EnumCategorieOasisCode.ActeParamedical)
     End Sub
 
     Private Sub CréerUneConsigneParamédicaleToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles CréerUneConsigneParamédicaleToolStripMenuItem.Click
-        AjoutConsigneActeParamedical(Drc.EnumCategorieOasisCode.ActeParamedical)
+        AjoutConsigneActeParamedical(DrcDao.EnumCategorieOasisCode.ActeParamedical)
     End Sub
 
     'Ajouter un groupe de paramètres (consigne IDE)
     Private Sub RadBtnParametreConsigne_Click(sender As Object, e As EventArgs) Handles RadBtnParametreConsigne.Click
-        AjoutConsigneActeParamedical(Drc.EnumCategorieOasisCode.GroupeParametres)
+        AjoutConsigneActeParamedical(DrcDao.EnumCategorieOasisCode.GroupeParametres)
     End Sub
 
     Private Sub AjouterUnGroupeDeParamètresToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles AjouterUnGroupeDeParamètresToolStripMenuItem.Click
-        AjoutConsigneActeParamedical(Drc.EnumCategorieOasisCode.GroupeParametres)
+        AjoutConsigneActeParamedical(DrcDao.EnumCategorieOasisCode.GroupeParametres)
     End Sub
 
     'Ajouter un protocole collaboratif (consigne IDE)
     Private Sub AjouterUnProtocoleCollaboratifToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles AjouterUnProtocoleCollaboratifToolStripMenuItem.Click
-        AjoutConsigneActeParamedical(Drc.EnumCategorieOasisCode.ProtocoleCollaboratif)
+        AjoutConsigneActeParamedical(DrcDao.EnumCategorieOasisCode.ProtocoleCollaboratif)
     End Sub
 
     Private Sub RadBtnprotocoleConsigne_Click(sender As Object, e As EventArgs) Handles RadBtnprotocoleConsigne.Click
-        AjoutConsigneActeParamedical(Drc.EnumCategorieOasisCode.ProtocoleCollaboratif)
+        AjoutConsigneActeParamedical(DrcDao.EnumCategorieOasisCode.ProtocoleCollaboratif)
     End Sub
 
     'Ajouter une mesure préventive (Consigne IDE)
     Private Sub RadBtnMesurePreventive_Click(sender As Object, e As EventArgs) Handles RadBtnMesurePreventive.Click
-        AjoutConsigneActeParamedical(Drc.EnumCategorieOasisCode.Prevention)
+        AjoutConsigneActeParamedical(DrcDao.EnumCategorieOasisCode.Prevention)
     End Sub
 
     Private Sub AjouterUneMesurePréventiveToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles AjouterUneMesurePréventiveToolStripMenuItem.Click
-        AjoutConsigneActeParamedical(Drc.EnumCategorieOasisCode.Prevention)
+        AjoutConsigneActeParamedical(DrcDao.EnumCategorieOasisCode.Prevention)
     End Sub
 
     'Ajout consigne IDE
@@ -1408,7 +1403,7 @@ Public Class RadFParcoursDetailEdit
     End Sub
 
     Private Sub DroitAcces()
-        If outils.AccesFonctionMedicaleSynthese(SelectedPatient, userLog) = False Then
+        If outils.AccesFonctionMedicaleSynthese(SelectedPatient) = False Then
             RadBtnActeParamedical.Hide()
             RadBtnMesurePreventive.Hide()
             RadBtnParametreConsigne.Hide()

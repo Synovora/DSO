@@ -1,6 +1,4 @@
-﻿Imports Oasis_Common
-
-Public Class RadFEpisodeConsigneIdeDetail
+﻿Public Class RadFEpisodeConsigneIdeDetail
     Private _drcId As Long
     Private _denominationConsigneIde As String
     Private _codeRetour As Boolean
@@ -32,8 +30,8 @@ Public Class RadFEpisodeConsigneIdeDetail
         End Set
     End Property
 
-    ReadOnly drcdao As New DrcDao
-    ReadOnly drc As New Drc
+    Dim drcdao As New DrcDao
+    Dim drc As New Drc
 
     Private Sub RadFEpisodeConsigneIdeDetail_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         CodeRetour = False

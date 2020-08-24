@@ -1,6 +1,4 @@
-﻿Imports Oasis_Common
-
-Public Class RadFEpisodeProtocoleAiguDetail
+﻿Public Class RadFEpisodeProtocoleAiguDetail
     Private _episodeActeParamedicalId As Long
     Private _codeRetour As Boolean
 
@@ -35,14 +33,14 @@ Public Class RadFEpisodeProtocoleAiguDetail
 
     Private Sub ChargementObservation()
         episodeActeParamedical = episodeActeParamedicalDao.GetEpisodeActeParamedicalById(EpisodeActeParamedicalId)
-        drc = drcDao.GetDrcById(episodeActeParamedical.DrcId)
+        drc = drcDao.getDrcById(episodeActeParamedical.DrcId)
         TxtObservation.Text = episodeActeParamedical.Observation
         TxtGuide.Text = drc.Commentaire
         TxtReponseCommentee.Text = drc.ReponseCommentee
     End Sub
 
     Private Sub RadBtnValidation_Click(sender As Object, e As EventArgs) Handles RadBtnValidation.Click
-        If episodeActeParamedicalDao.ModificationEpisodeActeParamedicalObservation(EpisodeActeParamedicalId, TxtObservation.Text, userLog) = True Then
+        If episodeActeParamedicalDao.ModificationEpisodeActeParamedicalObservation(EpisodeActeParamedicalId, TxtObservation.Text) = True Then
             Dim form As New RadFNotification()
             form.Titre = "OBservation spécifique - Protocole aigu"
             form.Message = "Observation mise à jour"

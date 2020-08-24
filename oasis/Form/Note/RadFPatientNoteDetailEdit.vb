@@ -207,7 +207,7 @@ Public Class RadFPatientNoteDetailEdit
                 patientNoteModification.NoteId = SelectedNoteId
                 patientNoteModification.UserModification = UtilisateurConnecte.UtilisateurId
                 patientNoteModification.PatientNote = TxtNote.Text
-                If patientNoteVaccinDao.ModificationNote(patientNoteModification, userLog) = True Then
+                If patientNoteVaccinDao.ModificationNote(patientNoteModification) = True Then
                     'MessageBox.Show("Note patient modifiée")
                     Dim form As New RadFNotification()
                     form.Message = "Note vaccin patient modifiée"
@@ -290,7 +290,7 @@ Public Class RadFPatientNoteDetailEdit
                 patientNoteCreation.UserCreation = UtilisateurConnecte.UtilisateurId
                 patientNoteCreation.PatientNote = TxtNote.Text
 
-                If patientNoteVaccinDao.CreationNote(patientNoteCreation, userLog) = True Then
+                If patientNoteVaccinDao.CreationNote(patientNoteCreation) = True Then
                     'MessageBox.Show("Note patient créée")
                     Dim form As New RadFNotification()
                     form.Message = "Note vaccin patient créée"
@@ -371,7 +371,7 @@ Public Class RadFPatientNoteDetailEdit
                 Dim patientNoteSuppression As PatientNote = New PatientNote
                 patientNoteSuppression.NoteId = SelectedNoteId
                 patientNoteSuppression.UserModification = UtilisateurConnecte.UtilisateurId
-                If patientNoteVaccinDao.AnnulationNote(patientNoteSuppression, userLog) = True Then
+                If patientNoteVaccinDao.AnnulationNote(patientNoteSuppression) = True Then
                     'MessageBox.Show("Note patient supprimée")
                     Dim form As New RadFNotification()
                     form.Message = "Note vaccin patient supprimée"

@@ -44,7 +44,7 @@ Public Class RadFPPSHistoListe
     'Chargement de la Grid
     Private Sub ChargementHistorique()
         Dim ppsHistoDataTable As DataTable
-        ppsHistoDataTable = ppsHistoDao.GetAllPPSHistobyPPSId(SelectedPPSId)
+        ppsHistoDataTable = ppsHistoDao.getAllPPSHistobyPPSId(SelectedPPSId)
 
         Dim i As Integer
         Dim iGrid As Integer = -1 'Indice pour alimenter la Grid qui peut comporter moins d'occurrences que le DataTable
@@ -76,13 +76,13 @@ Public Class RadFPPSHistoListe
             'Nature historisation
             natureHisto = ppsHistoDataTable.Rows(i)("oa_pps_histo_etat_historisation")
             Select Case natureHisto
-                Case PpsHisto.EnumEtatPPSHisto.Creation
+                Case PPSHistoCreationDao.EnumEtatPPSHisto.Creation
                     ActionHistoString = "Creation PPS"
-                Case PpsHisto.EnumEtatPPSHisto.Modification
+                Case PPSHistoCreationDao.EnumEtatPPSHisto.Modification
                     ActionHistoString = "Modification PPS"
-                Case PpsHisto.EnumEtatPPSHisto.Annulation
+                Case PPSHistoCreationDao.EnumEtatPPSHisto.Annulation
                     ActionHistoString = "Annulation PPS"
-                Case PpsHisto.EnumEtatPPSHisto.Arret
+                Case PPSHistoCreationDao.EnumEtatPPSHisto.Arret
                     ActionHistoString = "Arrêt PPS"
                 Case Else
                     ActionHistoString = "Action inconnue"

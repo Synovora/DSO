@@ -53,7 +53,7 @@ Public Class RadFSelecteurALD
         Dim AldDataAdapter As SqlDataAdapter = New SqlDataAdapter()
         Dim AldDataTable As DataTable = New DataTable()
 
-        Dim conxn As New SqlConnection(GetConnectionString())
+        Dim conxn As New SqlConnection(outils.getConnectionString())
 
         Dim SQLString As String
         SQLString = getSQLStringDRC()

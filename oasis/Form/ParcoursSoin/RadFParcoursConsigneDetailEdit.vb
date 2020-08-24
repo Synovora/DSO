@@ -69,13 +69,14 @@ Public Class RadFParcoursConsigneDetailEdit
     End Enum
 
     Dim EditMode As Integer
-    ReadOnly drcdao As New DrcDao
-    ReadOnly parcoursConsigneDao As New ParcoursConsigneDao
+    Dim drcdao As New DrcDao
+    Dim parcoursConsigneDao As New ParcoursConsigneDao
     Dim parcoursConsigne As New ParcoursConsigne
-    ReadOnly episodeActiviteDao As New EpisodeTypeActiviteDao
-    ReadOnly episodeDao As New EpisodeDao
+    Dim episodeActiviteDao As New EpisodeTypeActiviteDao
+    Dim episodeActiviteDT As New DataTable
+    Dim episodeDao As New EpisodeDao
 
-    ReadOnly drc As New Drc
+    Dim drc As New Drc
     Dim DateDebut, DateFin As Date
     Dim LimiteAgeEnfantParm As Integer
 
@@ -88,7 +89,7 @@ Public Class RadFParcoursConsigneDetailEdit
         If SelectedConsigneId <> 0 Then
             EditMode = EnumEditMode.Modification
             'Modification
-            parcoursConsigne = parcoursConsigneDao.GetParcoursConsigneById(SelectedConsigneId)
+            parcoursConsigne = parcoursConsigneDao.getParcoursConsigneById(SelectedConsigneId)
             TxtCommentaire.Text = parcoursConsigne.Commentaire
             drcdao.GetDrc(drc, parcoursConsigne.DrcId)
             TxtDrcDescription.Text = drc.DrcLibelle
@@ -97,10 +98,10 @@ Public Class RadFParcoursConsigneDetailEdit
             CbxActiviteEpisode.Text = episodeDao.GetItemTypeActiviteByCode(parcoursConsigne.TypeEpisode)
 
             Select Case parcoursConsigne.TypeEpisode
-                Case Episode.EnumTypeActiviteEpisodeCode.PREVENTION_ENFANT_PRE_SCOLAIRE
+                Case EpisodeDao.EnumTypeActiviteEpisodeCode.PREVENTION_ENFANT_PRE_SCOLAIRE
                     LblAgeUnite.Text = "(Age exprimé en mois)"
                     AfficheAge()
-                Case Episode.EnumTypeActiviteEpisodeCode.PREVENTION_ENFANT_SCOLAIRE
+                Case EpisodeDao.EnumTypeActiviteEpisodeCode.PREVENTION_ENFANT_SCOLAIRE
                     LblAgeUnite.Text = "(Age exprimé en année)"
                     AfficheAge()
                 Case Else
@@ -174,7 +175,7 @@ Public Class RadFParcoursConsigneDetailEdit
         Else
             LimiteAgeEnfantParm = 16
             Dim Description As String = "Paramètre 'LimiteAgeEnfant' non défini dans le fichier App.config"
-            CreateLog(Description, Me.Name, Log.EnumTypeLog.ERREUR.ToString, userLog)
+            CreateLog(Description, Me.Name, LogDao.EnumTypeLog.ERREUR.ToString)
         End If
     End Sub
 
@@ -266,11 +267,11 @@ Public Class RadFParcoursConsigneDetailEdit
     Private Sub CbxActiviteEpisode_SelectedIndexChanged(sender As Object, e As EventArgs) Handles CbxActiviteEpisode.SelectedIndexChanged
         parcoursConsigne.TypeEpisode = episodeDao.GetCodeTypeActiviteByItem(CbxActiviteEpisode.Text)
         Select Case parcoursConsigne.TypeEpisode
-            Case Episode.EnumTypeActiviteEpisodeCode.PREVENTION_ENFANT_PRE_SCOLAIRE
+            Case EpisodeDao.EnumTypeActiviteEpisodeCode.PREVENTION_ENFANT_PRE_SCOLAIRE
                 AfficheAge()
                 LblAgeUnite.Text = "(Age exprimé en mois, de 0 à 40 mois)"
                 NumAgeMax.Maximum = 40
-            Case Episode.EnumTypeActiviteEpisodeCode.PREVENTION_ENFANT_SCOLAIRE
+            Case EpisodeDao.EnumTypeActiviteEpisodeCode.PREVENTION_ENFANT_SCOLAIRE
                 AfficheAge()
                 LblAgeUnite.Text = "(Age exprimé en année, de 0 à " & LimiteAgeEnfantParm & " ans)"
                 NumAgeMax.Maximum = LimiteAgeEnfantParm
@@ -287,15 +288,17 @@ Public Class RadFParcoursConsigneDetailEdit
         If ControleDonnees() = True Then
             Select Case EditMode
                 Case EnumEditMode.Modification
-                    parcoursConsigneDao.ModificationParcoursConsigne(parcoursConsigne)
-                    MessageBox.Show("Consigne paramédicale modifiée")
-                    CodeRetour = True
-                    Close()
+                    If parcoursConsigneDao.ModificationParcoursConsigne(parcoursConsigne) Then
+                        MessageBox.Show("Consigne paramédicale modifiée")
+                        CodeRetour = True
+                        Close()
+                    End If
                 Case EnumEditMode.Creation
-                    parcoursConsigneDao.CreateParcoursConsigne(parcoursConsigne)
-                    MessageBox.Show("Consigne paramédicale créée")
-                    CodeRetour = True
-                    Close()
+                    If parcoursConsigneDao.CreateParcoursConsigne(parcoursConsigne) Then
+                        MessageBox.Show("Consigne paramédicale créée")
+                        CodeRetour = True
+                        Close()
+                    End If
             End Select
         End If
     End Sub
@@ -304,10 +307,11 @@ Public Class RadFParcoursConsigneDetailEdit
     Private Sub RadBtnAnnulation_Click(sender As Object, e As EventArgs) Handles RadBtnAnnulation.Click
         CodeRetour = False
         If MsgBox("Confirmation de l'annulation ", MsgBoxStyle.YesNo, "") = MsgBoxResult.Yes Then
-            parcoursConsigneDao.AnnulationParcoursConsigne(parcoursConsigne)
-            MessageBox.Show("Consigne paramédicale annulée")
-            CodeRetour = True
-            Close()
+            If parcoursConsigneDao.AnnulationParcoursConsigne(parcoursConsigne) = True Then
+                MessageBox.Show("Consigne paramédicale annulée")
+                CodeRetour = True
+                Close()
+            End If
         End If
     End Sub
 

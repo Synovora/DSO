@@ -2,7 +2,6 @@
 Imports Nethereum.Signer
 
 Public Class Utilisateur
-
     Public Property UtilisateurId As Integer
     Public Property UtilisateurNom As String
     Public Property UtilisateurPrenom As String
@@ -25,6 +24,7 @@ Public Class Utilisateur
     Public Property UtilisateurClePrivee As String
     Public Property UtilisateurAddress As String
 
+
     Public Sub New()
         Me.UtilisateurId = 0
         Me.UtilisateurSiteId = 0
@@ -42,14 +42,24 @@ Public Class Utilisateur
         Me.UtilisateurAddress = ""
     End Sub
 
+    ''' <summary>
+    ''' 
+    ''' </summary>
+    ''' <param name="login"></param>
+    ''' <param name="pwd"></param>
+    ''' <returns></returns>
     Public Shared Function CryptePwd(login As String, pwd As String) As String
-        Dim UniEnc As New Text.UnicodeEncoding
+        Dim UniEnc As New System.Text.UnicodeEncoding
         Dim bitPass() As Byte = UniEnc.GetBytes("U23cGt'r8c" + login + pwd)
         Using sha As New SHA1CryptoServiceProvider
             Return Convert.ToBase64String(sha.ComputeHash(bitPass))
         End Using
     End Function
 
+    ''' <summary>
+    ''' 
+    ''' </summary>
+    ''' <returns></returns>
     Public Function CryptePwd() As String
         Me.Password = CryptePwd(UtilisateurLogin, Password)
         Return Password
@@ -70,7 +80,13 @@ Public Class Utilisateur
 
     Public Function Sign(data As Byte()) As String
         Dim signer As MessageSigner = New MessageSigner()
-        Return signer.HashAndSign(data, UtilisateurClePrivee)
+        Dim signature As String = signer.HashAndSign(data, UtilisateurClePrivee)
+
+        'Verification de la signature
+        'If signer.EcRecover(hash, signature) <> UtilisateurAddress Then
+        'signature = ""
+        'End 
+        Return signature
     End Function
 
 End Class

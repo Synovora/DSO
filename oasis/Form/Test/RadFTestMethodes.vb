@@ -1,6 +1,4 @@
-﻿Imports Oasis_Common
-
-Public Class RadFTestMethodes
+﻿Public Class RadFTestMethodes
 
     Dim parcoursDao As New ParcoursDao
     Dim contexteDao As New ContexteDao

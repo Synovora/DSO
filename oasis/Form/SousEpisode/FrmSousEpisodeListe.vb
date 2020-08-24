@@ -21,7 +21,7 @@ Public Class FrmSousEpisodeListe
         InitializeComponent()
 
         ' Ajoutez une initialisation quelconque après l'appel InitializeComponent().
-        AfficheTitleForm(Me, Me.Text, userLog)
+        afficheTitleForm(Me, Me.Text)
         ' -- episode en cours
         Me.episode = episode
         Me.patient = patient
@@ -208,7 +208,7 @@ Public Class FrmSousEpisodeListe
             Me.Cursor = Cursors.WaitCursor
             sousEpisodeReponse = sousEpisodeReponseDao.getById(gce.RowInfo.Cells("Id").Value)
 
-            Dim tbl As Byte() = sousEpisodeReponseDao.getContenu(episode.Id, sousEpisodeReponse, loginRequestLog)
+            Dim tbl As Byte() = sousEpisodeReponseDao.getContenu(episode.Id, sousEpisodeReponse)
             Me.Cursor = Cursors.Default
             'SaveFileDialog1.FileName = sousEpisodeReponse.NomFichier
             'Select Case (SaveFileDialog1.ShowDialog())

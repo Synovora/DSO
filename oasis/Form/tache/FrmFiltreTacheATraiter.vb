@@ -1,7 +1,6 @@
 ﻿
 
 Imports System.ComponentModel
-Imports Oasis_Common
 Imports Telerik.WinControls.Enumerations
 Imports Telerik.WinControls.UI
 
@@ -27,11 +26,11 @@ Public Class FrmFiltreTacheATraiter
         For Each us In filtreTache.LstUniteSanitaire
             ' - clone de 1er niveau
             Dim usanit As UniteSanitaire = us.Clone
-            filtreClone.AddUniteSanitaire(usanit)
+            filtreClone.addUniteSanitaire(usanit)
             ' -- clone de la liste des site selectionnés
             usanit.LstSite = New List(Of Site)
             For Each sitelu In us.LstSite
-                usanit.AddSite(sitelu)
+                usanit.addSite(sitelu)
             Next
         Next
         Return filtreClone
@@ -71,7 +70,7 @@ Public Class FrmFiltreTacheATraiter
         Me.RadTreeView1.CheckedMember = "IsActive"
         RadTreeView1.DataSource = lstUniteSite
 
-        RadTextBox1.Text = filtreTacheOrigine.ResumeFiltre
+        RadTextBox1.Text = filtreTacheOrigine.resumeFiltre
     End Sub
 
     Private Function isUniteSanitaireChecked(uniteS As UniteSanitaire) As ToggleState
@@ -106,14 +105,14 @@ Public Class FrmFiltreTacheATraiter
             usParent = DirectCast(itemUS.UniteSanitaireOuSite1, UniteSanitaire)
 
             If itemUS.IsActive <> ToggleState.Off Then ' indeterminate ossible que sur les unites sanitaire
-                filtreTache.AddUniteSanitaire(usParent)
+                filtreTache.addUniteSanitaire(usParent)
                 usParent.LstSite.Clear()
 
                 ' --- on depile les sites
                 For Each nodeS In node.Nodes
                     itemUS = DirectCast(nodeS.DataBoundItem, ItemUniteSite)
                     If itemUS.IsActive <> ToggleState.Off Then
-                        filtreTache.AddSiteToUniteSanitaire(usParent, DirectCast(itemUS.UniteSanitaireOuSite1, Site))
+                        filtreTache.addSiteToUniteSanitaire(usParent, DirectCast(itemUS.UniteSanitaireOuSite1, Site))
                     End If
                 Next
             End If
@@ -135,7 +134,7 @@ Public Class FrmFiltreTacheATraiter
 
     Private Sub RadTreeView1_NodeCheckedChanged(sender As Object, e As TreeNodeCheckedEventArgs) Handles RadTreeView1.NodeCheckedChanged
         construitFiltreNouveau()
-        Me.RadTextBox1.Text = filtreTacheNouveau.ResumeFiltre
+        Me.RadTextBox1.Text = filtreTacheNouveau.resumeFiltre
     End Sub
 
     Private Sub FrmFiltreTacheATraiter_FormClosing(sender As Object, e As FormClosingEventArgs) Handles MyBase.FormClosing

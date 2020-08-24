@@ -5,7 +5,7 @@ Public Class RadFEpisodeEnAttenteValidation
     Dim episodeDao As New EpisodeDao
 
     Private Sub RadFEpisodeEnAttenteValidation_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-        AfficheTitleForm(Me, "Episodes avec document(s) en attente de validation médicale", userLog)
+        afficheTitleForm(Me, "Episodes avec document(s) en attente de validation médicale")
         ChargementEpisode()
     End Sub
 
@@ -68,20 +68,19 @@ Public Class RadFEpisodeEnAttenteValidation
     End Sub
 
     Private Sub MasterTemplate_CellDoubleClick(sender As Object, e As Telerik.WinControls.UI.GridViewCellEventArgs) Handles RadGridViewEpisode.CellDoubleClick
-        Dim patientDao As New PatientDao
         If RadGridViewEpisode.CurrentRow IsNot Nothing Then
             Dim aRow As Integer = Me.RadGridViewEpisode.Rows.IndexOf(Me.RadGridViewEpisode.CurrentRow)
             If aRow >= 0 Then
                 Dim episodeId As Integer = RadGridViewEpisode.Rows(aRow).Cells("episode_id").Value
                 Dim patientId As Integer = RadGridViewEpisode.Rows(aRow).Cells("patient_id").Value
                 Dim patient As Patient
-                'patientDao.SetPatient(patient, patientId)
-                patient = patientDao.GetPatient(patientId)
+                'PatientDao.SetPatient(patient, patientId)
+                patient = PatientDao.getPatientById(patientId)
                 Me.Enabled = False
                 Cursor.Current = Cursors.WaitCursor
                 Using vRadFEpisodeDetail As New RadFEpisodeDetail
                     vRadFEpisodeDetail.SelectedEpisodeId = episodeId
-                    vRadFEpisodeDetail.SelectedPatient = patient
+                    vRadFEpisodeDetail.SelectedPatient = Patient
                     vRadFEpisodeDetail.RendezVousId = 0
                     vRadFEpisodeDetail.UtilisateurConnecte = userLog
                     vRadFEpisodeDetail.ShowDialog()

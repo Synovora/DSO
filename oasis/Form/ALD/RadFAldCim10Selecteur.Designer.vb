@@ -22,12 +22,10 @@ Partial Class RadFAldCim10Selecteur
     'Do not modify it using the code editor.
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
-        Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(RadFAldCim10Selecteur))
         Dim GridViewTextBoxColumn1 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
         Dim GridViewTextBoxColumn2 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
         Dim GridViewTextBoxColumn3 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
         Dim GridViewTextBoxColumn4 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
-        Dim SortDescriptor1 As Telerik.WinControls.Data.SortDescriptor = New Telerik.WinControls.Data.SortDescriptor()
         Dim TableViewDefinition1 As Telerik.WinControls.UI.TableViewDefinition = New Telerik.WinControls.UI.TableViewDefinition()
         Me.PnlSelection = New Telerik.WinControls.UI.RadGroupBox()
         Me.RadBtnSelection = New Telerik.WinControls.UI.RadButton()
@@ -51,7 +49,7 @@ Partial Class RadFAldCim10Selecteur
         Me.PnlSelection.Controls.Add(Me.LblCim10Code)
         Me.PnlSelection.Controls.Add(Me.LblCim10Description)
         Me.PnlSelection.HeaderText = "Code CIM10 sélectionné"
-        Me.PnlSelection.Location = New System.Drawing.Point(720, 12)
+        Me.PnlSelection.Location = New System.Drawing.Point(711, 93)
         Me.PnlSelection.Name = "PnlSelection"
         Me.PnlSelection.Size = New System.Drawing.Size(431, 135)
         Me.PnlSelection.TabIndex = 0
@@ -60,7 +58,7 @@ Partial Class RadFAldCim10Selecteur
         'RadBtnSelection
         '
         Me.RadBtnSelection.ForeColor = System.Drawing.Color.Black
-        Me.RadBtnSelection.Image = CType(resources.GetObject("RadBtnSelection.Image"), System.Drawing.Image)
+        Me.RadBtnSelection.Image = Global.Oasis_WF.My.Resources.Resources._select
         Me.RadBtnSelection.ImageAlignment = System.Drawing.ContentAlignment.MiddleCenter
         Me.RadBtnSelection.Location = New System.Drawing.Point(19, 87)
         Me.RadBtnSelection.Name = "RadBtnSelection"
@@ -93,7 +91,6 @@ Partial Class RadFAldCim10Selecteur
         Me.RadAldDataGridView.ForeColor = System.Drawing.Color.Black
         Me.RadAldDataGridView.ImeMode = System.Windows.Forms.ImeMode.NoControl
         Me.RadAldDataGridView.Location = New System.Drawing.Point(12, 12)
-        Me.RadAldDataGridView.Margin = New System.Windows.Forms.Padding(12)
         '
         '
         '
@@ -101,37 +98,30 @@ Partial Class RadFAldCim10Selecteur
         Me.RadAldDataGridView.MasterTemplate.AllowDeleteRow = False
         Me.RadAldDataGridView.MasterTemplate.AllowEditRow = False
         GridViewTextBoxColumn1.EnableExpressionEditor = False
-        GridViewTextBoxColumn1.FieldName = "AldCim10Id"
+        GridViewTextBoxColumn1.FieldName = "oa_ald_cim10_id"
         GridViewTextBoxColumn1.HeaderText = "Identifiant"
         GridViewTextBoxColumn1.IsVisible = False
-        GridViewTextBoxColumn1.MinWidth = 20
-        GridViewTextBoxColumn1.Name = "AldCim10Id"
+        GridViewTextBoxColumn1.Name = "oa_ald_cim10_id"
         GridViewTextBoxColumn2.EnableExpressionEditor = False
-        GridViewTextBoxColumn2.FieldName = "AldCim10AldCode"
-        GridViewTextBoxColumn2.HeaderText = "Code ALD"
-        GridViewTextBoxColumn2.MinWidth = 20
-        GridViewTextBoxColumn2.Name = "AldCim10AldCode"
-        GridViewTextBoxColumn2.SortOrder = Telerik.WinControls.UI.RadSortOrder.Ascending
+        GridViewTextBoxColumn2.FieldName = "oa_ald_cim10_ald_code"
+        GridViewTextBoxColumn2.HeaderText = "Cpde ALD"
+        GridViewTextBoxColumn2.Name = "oa_ald_cim10_ald_code"
         GridViewTextBoxColumn2.TextAlignment = System.Drawing.ContentAlignment.MiddleCenter
-        GridViewTextBoxColumn2.Width = 200
+        GridViewTextBoxColumn2.Width = 100
         GridViewTextBoxColumn3.EnableExpressionEditor = False
-        GridViewTextBoxColumn3.FieldName = "AldCim10Code"
+        GridViewTextBoxColumn3.FieldName = "oa_ald_cim10_code"
         GridViewTextBoxColumn3.HeaderText = "Code CIM10"
-        GridViewTextBoxColumn3.MinWidth = 20
-        GridViewTextBoxColumn3.Name = "AldCim10Code"
+        GridViewTextBoxColumn3.Name = "oa_ald_cim10_code"
         GridViewTextBoxColumn3.TextAlignment = System.Drawing.ContentAlignment.MiddleCenter
-        GridViewTextBoxColumn3.Width = 200
+        GridViewTextBoxColumn3.Width = 100
         GridViewTextBoxColumn4.EnableExpressionEditor = False
-        GridViewTextBoxColumn4.FieldName = "AldCim10Description"
+        GridViewTextBoxColumn4.FieldName = "oa_ald_cim10_description"
         GridViewTextBoxColumn4.HeaderText = "Dénomination"
-        GridViewTextBoxColumn4.MinWidth = 20
-        GridViewTextBoxColumn4.Name = "AldCim10Description"
-        GridViewTextBoxColumn4.TextAlignment = System.Drawing.ContentAlignment.MiddleCenter
-        GridViewTextBoxColumn4.Width = 500
+        GridViewTextBoxColumn4.HeaderTextAlignment = System.Drawing.ContentAlignment.MiddleLeft
+        GridViewTextBoxColumn4.Name = "oa_ald_cim10_description"
+        GridViewTextBoxColumn4.Width = 465
         Me.RadAldDataGridView.MasterTemplate.Columns.AddRange(New Telerik.WinControls.UI.GridViewDataColumn() {GridViewTextBoxColumn1, GridViewTextBoxColumn2, GridViewTextBoxColumn3, GridViewTextBoxColumn4})
         Me.RadAldDataGridView.MasterTemplate.EnableGrouping = False
-        SortDescriptor1.PropertyName = "AldCim10AldCode"
-        Me.RadAldDataGridView.MasterTemplate.SortDescriptors.AddRange(New Telerik.WinControls.Data.SortDescriptor() {SortDescriptor1})
         Me.RadAldDataGridView.MasterTemplate.ViewDefinition = TableViewDefinition1
         Me.RadAldDataGridView.Name = "RadAldDataGridView"
         Me.RadAldDataGridView.RightToLeft = System.Windows.Forms.RightToLeft.No
@@ -141,7 +131,7 @@ Partial Class RadFAldCim10Selecteur
         'RadBtnAbandonner
         '
         Me.RadBtnAbandonner.DialogResult = System.Windows.Forms.DialogResult.Cancel
-        Me.RadBtnAbandonner.Image = CType(resources.GetObject("RadBtnAbandonner.Image"), System.Drawing.Image)
+        Me.RadBtnAbandonner.Image = Global.Oasis_WF.My.Resources.Resources._exit
         Me.RadBtnAbandonner.Location = New System.Drawing.Point(1109, 328)
         Me.RadBtnAbandonner.Name = "RadBtnAbandonner"
         Me.RadBtnAbandonner.Size = New System.Drawing.Size(24, 24)
@@ -152,7 +142,7 @@ Partial Class RadFAldCim10Selecteur
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.CancelButton = Me.RadBtnAbandonner
-        Me.ClientSize = New System.Drawing.Size(1161, 364)
+        Me.ClientSize = New System.Drawing.Size(1145, 364)
         Me.Controls.Add(Me.RadBtnAbandonner)
         Me.Controls.Add(Me.RadAldDataGridView)
         Me.Controls.Add(Me.PnlSelection)

@@ -82,8 +82,8 @@ Partial Class RadFTraitementDetailEdit
         Me.Label14 = New System.Windows.Forms.Label()
         Me.TxtTraitementPosologieCommentaire = New System.Windows.Forms.TextBox()
         Me.LblTraitementRythme = New System.Windows.Forms.Label()
-        Me.LblTraitement = New System.Windows.Forms.Label()
-        Me.CbxTraitement = New System.Windows.Forms.ComboBox()
+        Me.LblTraitementBase = New System.Windows.Forms.Label()
+        Me.CbxTraitementBase = New System.Windows.Forms.ComboBox()
         Me.Label2 = New System.Windows.Forms.Label()
         Me.LblTraitementPosologie = New System.Windows.Forms.Label()
         Me.RadGroupBox4 = New Telerik.WinControls.UI.RadGroupBox()
@@ -621,8 +621,8 @@ Partial Class RadFTraitementDetailEdit
         Me.RadGroupBox3.Controls.Add(Me.Label14)
         Me.RadGroupBox3.Controls.Add(Me.TxtTraitementPosologieCommentaire)
         Me.RadGroupBox3.Controls.Add(Me.LblTraitementRythme)
-        Me.RadGroupBox3.Controls.Add(Me.LblTraitement)
-        Me.RadGroupBox3.Controls.Add(Me.CbxTraitement)
+        Me.RadGroupBox3.Controls.Add(Me.LblTraitementBase)
+        Me.RadGroupBox3.Controls.Add(Me.CbxTraitementBase)
         Me.RadGroupBox3.Controls.Add(Me.Label2)
         Me.RadGroupBox3.Controls.Add(Me.LblTraitementPosologie)
         Me.RadGroupBox3.GroupBoxStyle = Telerik.WinControls.UI.RadGroupBoxStyle.Office
@@ -777,24 +777,24 @@ Partial Class RadFTraitementDetailEdit
         Me.LblTraitementRythme.TabIndex = 61
         Me.LblTraitementRythme.Text = "Rythme :"
         '
-        'LblTraitement
+        'LblTraitementBase
         '
-        Me.LblTraitement.AutoSize = True
-        Me.LblTraitement.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.LblTraitement.Location = New System.Drawing.Point(13, 27)
-        Me.LblTraitement.Name = "LblTraitement"
-        Me.LblTraitement.Size = New System.Drawing.Size(43, 13)
-        Me.LblTraitement.TabIndex = 60
-        Me.LblTraitement.Text = "Base :"
+        Me.LblTraitementBase.AutoSize = True
+        Me.LblTraitementBase.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.LblTraitementBase.Location = New System.Drawing.Point(13, 27)
+        Me.LblTraitementBase.Name = "LblTraitementBase"
+        Me.LblTraitementBase.Size = New System.Drawing.Size(43, 13)
+        Me.LblTraitementBase.TabIndex = 60
+        Me.LblTraitementBase.Text = "Base :"
         '
-        'CbxTraitement
+        'CbxTraitementBase
         '
-        Me.CbxTraitement.FormattingEnabled = True
-        Me.CbxTraitement.Items.AddRange(New Object() {"Journalier", "Hebdomadaire", "Mensuel", "Annuel", "Conditionnel"})
-        Me.CbxTraitement.Location = New System.Drawing.Point(118, 24)
-        Me.CbxTraitement.Name = "CbxTraitement"
-        Me.CbxTraitement.Size = New System.Drawing.Size(121, 21)
-        Me.CbxTraitement.TabIndex = 5
+        Me.CbxTraitementBase.FormattingEnabled = True
+        Me.CbxTraitementBase.Items.AddRange(New Object() {"Journalier", "Hebdomadaire", "Mensuel", "Annuel", "Conditionnel"})
+        Me.CbxTraitementBase.Location = New System.Drawing.Point(118, 24)
+        Me.CbxTraitementBase.Name = "CbxTraitementBase"
+        Me.CbxTraitementBase.Size = New System.Drawing.Size(121, 21)
+        Me.CbxTraitementBase.TabIndex = 5
         '
         'Label2
         '
@@ -1428,8 +1428,8 @@ Partial Class RadFTraitementDetailEdit
     Friend WithEvents Label14 As Label
     Friend WithEvents TxtTraitementPosologieCommentaire As TextBox
     Friend WithEvents LblTraitementRythme As Label
-    Friend WithEvents LblTraitement As Label
-    Friend WithEvents CbxTraitement As ComboBox
+    Friend WithEvents LblTraitementBase As Label
+    Friend WithEvents CbxTraitementBase As ComboBox
     Friend WithEvents Label2 As Label
     Friend WithEvents LblTraitementPosologie As Label
     Friend WithEvents Label8 As Label

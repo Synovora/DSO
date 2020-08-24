@@ -71,10 +71,10 @@ Public Class RadFTraitementAllergieEtCI
         Select Case Me.AllergieOuContreIndication
             Case EnumAllergieOuContreIndication.Allergie
                 traitementDataTable = traitementDao.GetAllTraitementAllergiebyPatient(SelectedPatient.patientId)
-                AfficheTitleForm(Me, "Liste des allergies du patient", userLog)
+                afficheTitleForm(Me, "Liste des allergies du patient")
             Case EnumAllergieOuContreIndication.ContreIndication
-                traitementDataTable = traitementDao.GetAllTraitementCIbyPatient(SelectedPatient.patientId)
-                AfficheTitleForm(Me, "Liste des contre-indications", userLog)
+                traitementDataTable = traitementDao.getAllTraitementCIbyPatient(SelectedPatient.patientId)
+                afficheTitleForm(Me, "Liste des contre-indications")
             Case Else
                 Close()
                 Return
@@ -205,7 +205,7 @@ Public Class RadFTraitementAllergieEtCI
                 Dim TraitementId As Integer
                 TraitementId = RadTraitementDataGridView.Rows(aRow).Cells("TraitementId").Value
                 Dim traitement As Traitement
-                traitement = traitementDao.GetTraitementById(TraitementId)
+                traitement = traitementDao.getTraitementById(TraitementId)
                 Using form As New RadFAllergieEtCISuppressionDetail
                     form.SelectedTraitement = traitement
                     form.SelectedPatient = Me.SelectedPatient

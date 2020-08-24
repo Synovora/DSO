@@ -1,12 +1,6 @@
 ﻿Imports System.IO
 
 Public Class OrdonnanceDetail
-
-    Public Structure EnumDelivrance
-        Const A_DELIVRER = "A délivrer"
-        Const NE_PAS_DELIVRER = "Ne pas délivrer"
-    End Structure
-
     Property LigneId As Integer
     Property OrdonnanceId As Integer
     Property Traitement As Boolean

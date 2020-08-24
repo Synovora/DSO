@@ -1,7 +1,5 @@
 ﻿Imports System.Collections.Specialized
 Imports Telerik.WinControls.UI
-Imports Oasis_Common
-
 Public Class RadF_AllergieSelecteur
     Private _SelectedPatient As Patient
     Private _selectedSpecialiteId As Integer
@@ -43,7 +41,7 @@ Public Class RadF_AllergieSelecteur
     Dim RowCountATC1 As Integer
 
     Private Sub RadF_AllergieSelecteur_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-        AfficheTitleForm(Me, "Déclaration allergie - Sélection substance", userLog)
+        afficheTitleForm(Me, "Déclaration allergie - Sélection substance")
 
         Me.CodeRetour = False
         RadioBtnVirtuel.Checked = True
@@ -66,7 +64,6 @@ Public Class RadF_AllergieSelecteur
     End Sub
 
     Private Sub ChargementEtatCivil()
-        Dim patientDao As New PatientDao
         If SelectedPatient Is Nothing Then
             Exit Sub
         End If
@@ -97,7 +94,7 @@ Public Class RadF_AllergieSelecteur
         End If
 
         'Contre-indication
-        Dim StringContreIndicationToolTip As String = patientDao.GetStringContreIndicationByPatient(SelectedPatient.patientId)
+        Dim StringContreIndicationToolTip As String = PatientDao.GetStringContreIndicationByPatient(SelectedPatient.patientId)
         If StringContreIndicationToolTip = "" Then
             lblContreIndication.Hide()
         Else
@@ -106,7 +103,7 @@ Public Class RadF_AllergieSelecteur
         End If
 
         'Allergie
-        Dim StringAllergieToolTip As String = patientDao.GetStringAllergieByPatient(SelectedPatient.patientId)
+        Dim StringAllergieToolTip As String = PatientDao.GetStringAllergieByPatient(SelectedPatient.patientId)
         If StringAllergieToolTip = "" Then
             LblAllergie.Hide()
         Else
@@ -723,7 +720,7 @@ Public Class RadF_AllergieSelecteur
             'Dénomination substance père
             allergieSubstance.DenominationSubstancePere = ""
 
-            If allergieDao.CreationAllergie(allergieSubstance, userLog) = True Then
+            If allergieDao.CreationAllergie(allergieSubstance) = True Then
                 NombreCICreation += 1
             End If
         End While

@@ -8,12 +8,12 @@ Namespace Areas.HelpPage
     ''' This is used to identify the place where the sample should be applied.
     ''' </summary>
     Public Class HelpPageSampleKey
-        Private ReadOnly _actionName As String
-        Private ReadOnly _controllerName As String
-        Private ReadOnly _mediaType As MediaTypeHeaderValue
-        Private ReadOnly _parameterNames As HashSet(Of String)
-        Private ReadOnly _parameterType As Type
-        Private ReadOnly _sampleDirection As SampleDirection?
+        Private _actionName As String
+        Private _controllerName As String
+        Private _mediaType As MediaTypeHeaderValue
+        Private _parameterNames As HashSet(Of String)
+        Private _parameterType As Type
+        Private _sampleDirection As Nullable(Of SampleDirection)
 
         ''' <summary>
         ''' Creates a new <see cref="HelpPageSampleKey"/> based on media type.
