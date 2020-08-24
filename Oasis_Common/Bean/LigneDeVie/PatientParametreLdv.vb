@@ -13,6 +13,7 @@
     Property ActiviteSocial As Boolean
     Property ProfilMedical As Boolean
     Property ProfilParamedical As Boolean
+    Property ProfilPatient As Boolean
     Property Parametre1 As Long
     Property Parametre2 As Long
     Property Parametre3 As Long

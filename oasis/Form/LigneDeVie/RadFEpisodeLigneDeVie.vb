@@ -148,6 +148,7 @@ Public Class RadFEpisodeLigneDeVie
 
         ligneDeVie.ProfilMedical = True
         ligneDeVie.ProfilParamedical = True
+        ligneDeVie.ProfilPatient = True
 
         Dim Age As Integer = CalculAgeEnAnnee(SelectedPatient.PatientDateNaissance)
         If Age > limiteAgeEnfant Then
@@ -231,6 +232,7 @@ Public Class RadFEpisodeLigneDeVie
 
             ligneDeVie.ProfilMedical = patientParametreLdv.ProfilMedical
             ligneDeVie.ProfilParamedical = patientParametreLdv.ProfilParamedical
+            ligneDeVie.ProfilPatient = patientParametreLdv.ProfilPatient
 
             If patientParametreLdv.Parametre1 <> 0 Then
                 listeParametreaAfficher.Add(patientParametreLdv.Parametre1)
