@@ -24,7 +24,6 @@ Public Class RadFEpisodeConclusionContextePatient
     End Property
 
     Dim InitContextePublie As Boolean = False
-    Dim SelectedContexteId As Long = 0
 
     Dim SelectedPatient As Patient
 
@@ -35,13 +34,14 @@ Public Class RadFEpisodeConclusionContextePatient
         ChargementContexte()
     End Sub
 
-    Dim episodeContexteDao As New EpisodeContexteDao
-    Dim episodeDao As New EpisodeDao
+    ReadOnly episodeContexteDao As New EpisodeContexteDao
+    ReadOnly episodeDao As New EpisodeDao
 
-    Dim ListConclusion As List(Of Long) = New List(Of Long)
+    ReadOnly ListConclusion As List(Of Long) = New List(Of Long)
 
     Private Sub ChargementEtatCivil()
-        SelectedPatient = PatientDao.getPatientById(SelectedEpisode.PatientId)
+        Dim patientDao As New PatientDao
+        SelectedPatient = patientDao.GetPatient(SelectedEpisode.PatientId)
         LblPatientNIR.Text = SelectedPatient.PatientNir.ToString
         LblPatientPrenom.Text = SelectedPatient.PatientPrenom
         LblPatientNom.Text = SelectedPatient.PatientNom
@@ -53,7 +53,6 @@ Public Class RadFEpisodeConclusionContextePatient
 
     Private Sub ChargementContexte()
         RadContexteDataGridView.Rows.Clear()
-        SelectedContexteId = 0
 
         Dim contexteDataTable As DataTable
         Dim antecedentDao As AntecedentDao = New AntecedentDao
@@ -167,7 +166,7 @@ Public Class RadFEpisodeConclusionContextePatient
         RadConclusionGridView.Rows.Clear()
         ListConclusion.Clear()
 
-        If SelectedEpisode.Etat = EpisodeDao.EnumEtatEpisode.CLOTURE.ToString Then
+        If SelectedEpisode.Etat = Episode.EnumEtatEpisode.CLOTURE.ToString Then
             If dt.Rows.Count <= 1 Then
                 RadBtnSuppprimer.Enabled = False
             Else
@@ -252,14 +251,16 @@ Public Class RadFEpisodeConclusionContextePatient
                             CodeRetour = True
                             Select Case vFContexteDetailEdit.CodeResultat
                                 Case EnumResultat.AnnulationOK
-                                    Dim form As New RadFNotification()
-                                    form.Titre = "Notification contexte patient"
-                                    form.Message = "Contexte patient annulé"
+                                    Dim form As New RadFNotification With {
+                                        .Titre = "Notification contexte patient",
+                                        .Message = "Contexte patient annulé"
+                                    }
                                     form.Show()
                                 Case EnumResultat.ModificationOK
-                                    Dim form As New RadFNotification()
-                                    form.Titre = "Notification contexte patient"
-                                    form.Message = "Contexte patient modifié"
+                                    Dim form As New RadFNotification With {
+                                        .Titre = "Notification contexte patient",
+                                        .Message = "Contexte patient modifié"
+                                    }
                                     form.Show()
                             End Select
                             ChargementConclusion()
@@ -292,7 +293,7 @@ Public Class RadFEpisodeConclusionContextePatient
         Try
             Using vFDrcSelecteur As New RadFDRCSelecteur
                 vFDrcSelecteur.SelectedPatient = Me.SelectedPatient
-                vFDrcSelecteur.CategorieOasis = DrcDao.EnumCategorieOasisCode.Contexte
+                vFDrcSelecteur.CategorieOasis = Drc.EnumCategorieOasisCode.Contexte
                 vFDrcSelecteur.ShowDialog()
                 SelectedDrcId = vFDrcSelecteur.SelectedDrcId
                 'Si un médicament a été sélectionné, on appelle le Formulaire de création
@@ -308,9 +309,10 @@ Public Class RadFEpisodeConclusionContextePatient
                             'Si le traitement a été créé, on recharge la grid
                             If vFContexteDetailEdit.CodeRetour = True Then
                                 CodeRetour = True
-                                Dim form As New RadFNotification()
-                                form.Titre = "Notification contexte patient"
-                                form.Message = "Contexte patient créé"
+                                Dim form As New RadFNotification With {
+                                    .Titre = "Notification contexte patient",
+                                    .Message = "Contexte patient créé"
+                                }
                                 form.Show()
                                 ChargementConclusion()
                                 ChargementContexte()
@@ -335,13 +337,14 @@ Public Class RadFEpisodeConclusionContextePatient
                 Dim ContexteId As Integer = RadContexteDataGridView.Rows(aRow).Cells("ContexteId").Value
                 Me.Enabled = False
                 Cursor.Current = Cursors.WaitCursor
-                Dim episodeContexte As New EpisodeContexte
-                episodeContexte.ContexteId = ContexteId
-                episodeContexte.EpisodeId = SelectedEpisode.Id
-                episodeContexte.PatientId = SelectedEpisode.PatientId
-                episodeContexte.UserCreation = userLog.UtilisateurId
-                episodeContexte.DateCreation = Date.Now()
-                episodeContexteDao.CreateEpisodeContexte(episodeContexte)
+                Dim episodeContexte As New EpisodeContexte With {
+                    .ContexteId = ContexteId,
+                    .EpisodeId = SelectedEpisode.Id,
+                    .PatientId = SelectedEpisode.PatientId,
+                    .UserCreation = userLog.UtilisateurId,
+                    .DateCreation = Date.Now()
+                }
+                episodeContexteDao.CreateEpisodeContexte(episodeContexte, userLog)
                 ChargementConclusion()
                 ChargementContexte()
                 CodeRetour = True

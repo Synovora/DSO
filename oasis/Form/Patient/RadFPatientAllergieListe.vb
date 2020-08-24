@@ -27,7 +27,7 @@ Public Class RadFPatientAllergieListe
     Private Sub RadFPatientAllergieListe_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         ChargementPatient()
         ChargementAllergiesPatient()
-        If outils.AccesFonctionMedicaleSynthese(SelectedPatient) = False Then
+        If outils.AccesFonctionMedicaleSynthese(SelectedPatient, userLog) = False Then
             RadBtnAnnulerSubstance.Hide()
         End If
     End Sub
@@ -85,7 +85,7 @@ Public Class RadFPatientAllergieListe
     End Sub
 
     Private Sub RadBtnAnnulerSubstance_Click(sender As Object, e As EventArgs) Handles RadBtnAnnulerSubstance.Click
-        If outils.AccesFonctionMedicaleSynthese(SelectedPatient) = False Then
+        If outils.AccesFonctionMedicaleSynthese(SelectedPatient, userLog) = False Then
             Exit Sub
         End If
 
@@ -93,7 +93,7 @@ Public Class RadFPatientAllergieListe
             Dim aRow As Integer = Me.RadCISubstancePatientDataGridView.Rows.IndexOf(Me.RadCISubstancePatientDataGridView.CurrentRow)
             If aRow >= 0 Then
                 Dim AllergieId As Integer = RadCISubstancePatientDataGridView.Rows(aRow).Cells("allergie_id").Value
-                allergieDao.AnnulationAllergie(AllergieId)
+                allergieDao.AnnulationAllergie(AllergieId, userLog)
             End If
         End If
 

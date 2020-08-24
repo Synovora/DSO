@@ -1,4 +1,5 @@
 ﻿Imports System.IO
+Imports Oasis_Common
 Imports Telerik.WinControls
 Imports Telerik.WinControls.UI
 Imports Telerik.WinControls.UI.RichTextEditorRibbonUI
@@ -46,7 +47,7 @@ Public Class FrmEditDocxSousEpisode
 
     Private Sub FrmEditDocxSousEpisode_FormClosing(sender As Object, e As FormClosingEventArgs) Handles MyBase.FormClosing
         If isNotSigned Then
-            Dim choix = choixAction()
+            Dim choix = ChoixAction()
             Select Case choix
                 Case ActionDOC.RETOUR
                     e.Cancel = True : Return
@@ -101,7 +102,7 @@ Public Class FrmEditDocxSousEpisode
             End If
             tbl = provider.Export(Me.RadRichTextEditor1.Document)
             Dim sousEpisodeDao = New SousEpisodeDao
-            sousEpisodeDao.writeDocAndEventualySign(sousEpisode, tbl, signature, dateSign)
+            sousEpisodeDao.writeDocAndEventualySign(sousEpisode, tbl, signature, dateSign, userLog, loginRequestLog)
             ResetFlagChange()
             Notification.show("Sauvegarde", "Action effectuée avec succès !", 1)
         Catch err As Exception
@@ -126,7 +127,7 @@ Public Class FrmEditDocxSousEpisode
     ''' 
     ''' </summary>
     Private Sub initCtrl()
-        afficheTitleForm(Me, Me.Text)
+        AfficheTitleForm(Me, Me.Text, userLog)
 
         'hide the default "Save as" button
         'Me.RichTextEditorRibbonBar1.BackstageControl.Items.Last().Visibility = ElementVisibility.Collapsed
@@ -211,11 +212,11 @@ Public Class FrmEditDocxSousEpisode
     ''' 
     ''' </summary>
     ''' <returns></returns>
-    Private Function choixAction() As ActionDOC
+    Private Function ChoixAction() As ActionDOC
         Dim choix As ActionDOC
         Using frmAction As FrmActionDoc = New FrmActionDoc
             frmAction.Location = New Point(MousePosition.X - frmAction.Size.Width - 30, MousePosition.Y)
-            frmAction.BtnSigner.Visible = isNotSigned AndAlso SousEpisodeSousType.isUserLogAutorise(validationProfilType)
+            frmAction.BtnSigner.Visible = isNotSigned AndAlso SousEpisodeSousType.IsUserLogAutorise(validationProfilType, userLog)
 
             frmAction.ShowDialog()
             choix = frmAction.ActionChoisie

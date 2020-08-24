@@ -14,26 +14,25 @@ Public Class RadFDrcListe
 
     Dim selectedDrcId As Integer
     Dim selectedDrcLibelle As String
-    Dim categorieMajeureListe As Dictionary(Of Integer, String) = Table_categorie_majeure.GetCategorieMajeureListe()
+    ReadOnly categorieMajeureListe As Dictionary(Of Integer, String) = Table_categorie_majeure.GetCategorieMajeureListe()
 
     Dim drcDataTable As New DataTable
     Dim drcSynonymeDataTable As New DataTable
     Dim SelectAld As Boolean
-    Dim drcdao As New DrcDao
-    Dim alddao As New AldDao
-    Dim Ald As Ald
+    ReadOnly drcdao As New DrcDao
+    ReadOnly alddao As New AldDao
 
     Private Sub RadFDrcListe_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         CbxCategorieOasis.Items.Clear()
         CbxCategorieOasis.Items.Add("Toutes")
-        CbxCategorieOasis.Items.Add(DrcDao.EnumCategorieOasisItem.Contexte)
-        CbxCategorieOasis.Items.Add(DrcDao.EnumCategorieOasisItem.Objectif)
-        CbxCategorieOasis.Items.Add(DrcDao.EnumCategorieOasisItem.Prevention)
-        CbxCategorieOasis.Items.Add(DrcDao.EnumCategorieOasisItem.Strategie)
-        CbxCategorieOasis.Items.Add(DrcDao.EnumCategorieOasisItem.ActeParamedical)
-        CbxCategorieOasis.Items.Add(DrcDao.EnumCategorieOasisItem.GroupeParametres)
-        CbxCategorieOasis.Items.Add(DrcDao.EnumCategorieOasisItem.ProtocoleCollaboratif)
-        CbxCategorieOasis.Items.Add(DrcDao.EnumCategorieOasisItem.ProtocoleAigu)
+        CbxCategorieOasis.Items.Add(Drc.EnumCategorieOasisItem.Contexte)
+        CbxCategorieOasis.Items.Add(Drc.EnumCategorieOasisItem.Objectif)
+        CbxCategorieOasis.Items.Add(Drc.EnumCategorieOasisItem.Prevention)
+        CbxCategorieOasis.Items.Add(Drc.EnumCategorieOasisItem.Strategie)
+        CbxCategorieOasis.Items.Add(Drc.EnumCategorieOasisItem.ActeParamedical)
+        CbxCategorieOasis.Items.Add(Drc.EnumCategorieOasisItem.GroupeParametres)
+        CbxCategorieOasis.Items.Add(Drc.EnumCategorieOasisItem.ProtocoleCollaboratif)
+        CbxCategorieOasis.Items.Add(Drc.EnumCategorieOasisItem.ProtocoleAigu)
         CbxCategorieOasis.Text = "Toutes"
 
         RadGridLocalizationProvider.CurrentProvider = New FrenchRadGridViewLocalizationProvider()

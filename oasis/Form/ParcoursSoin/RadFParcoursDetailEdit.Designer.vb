@@ -1123,7 +1123,7 @@ Partial Class RadFParcoursDetailEdit
         Me.RadBtnprotocoleConsigne.Name = "RadBtnprotocoleConsigne"
         Me.RadBtnprotocoleConsigne.Size = New System.Drawing.Size(152, 24)
         Me.RadBtnprotocoleConsigne.TabIndex = 107
-        Me.RadBtnprotocoleConsigne.Text = "+ Démarche collaborative"
+        Me.RadBtnprotocoleConsigne.Text = "+ protocole collaboratif"
         '
         'RadDesktopAlert1
         '
@@ -1139,7 +1139,7 @@ Partial Class RadFParcoursDetailEdit
         Me.RadBtnMesurePreventive.Name = "RadBtnMesurePreventive"
         Me.RadBtnMesurePreventive.Size = New System.Drawing.Size(110, 24)
         Me.RadBtnMesurePreventive.TabIndex = 11
-        Me.RadBtnMesurePreventive.Text = "+ Prévention"
+        Me.RadBtnMesurePreventive.Text = "+ prévention"
         '
         'RadBtnTestParametre
         '

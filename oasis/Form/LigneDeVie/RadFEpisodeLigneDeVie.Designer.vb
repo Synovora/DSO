@@ -90,7 +90,6 @@ Partial Class RadFEpisodeLigneDeVie
         Me.RadBtnChart = New Telerik.WinControls.UI.RadButton()
         Me.RadBtnConfiguration = New Telerik.WinControls.UI.RadButton()
         Me.RadBtnCreationEpisodeParametre = New Telerik.WinControls.UI.RadButton()
-        Me.ChkProfilPatient = New System.Windows.Forms.CheckBox()
         CType(Me.RadBtnAbandon, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.RadBtnEpisode, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.RadGroupBoxEtatCivil, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -568,7 +567,6 @@ Partial Class RadFEpisodeLigneDeVie
         '
         Me.RadGbxFiltre.AccessibleRole = System.Windows.Forms.AccessibleRole.Grouping
         Me.RadGbxFiltre.BackColor = System.Drawing.SystemColors.GradientInactiveCaption
-        Me.RadGbxFiltre.Controls.Add(Me.ChkProfilPatient)
         Me.RadGbxFiltre.Controls.Add(Me.ChkTypeParametre)
         Me.RadGbxFiltre.Controls.Add(Me.ChkTypeConsultation)
         Me.RadGbxFiltre.Controls.Add(Me.ChkTypeVirtuel)
@@ -699,16 +697,6 @@ Partial Class RadFEpisodeLigneDeVie
         Me.RadBtnCreationEpisodeParametre.TabIndex = 27
         Me.RadBtnCreationEpisodeParametre.Text = "+ Episode de paramètres"
         '
-        'ChkProfilPatient
-        '
-        Me.ChkProfilPatient.AutoSize = True
-        Me.ChkProfilPatient.Location = New System.Drawing.Point(224, 67)
-        Me.ChkProfilPatient.Name = "ChkProfilPatient"
-        Me.ChkProfilPatient.Size = New System.Drawing.Size(62, 17)
-        Me.ChkProfilPatient.TabIndex = 17
-        Me.ChkProfilPatient.Text = "Patient"
-        Me.ChkProfilPatient.UseVisualStyleBackColor = True
-        '
         'RadFEpisodeLigneDeVie
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -808,6 +796,5 @@ Partial Class RadFEpisodeLigneDeVie
     Friend WithEvents RadBtnCreationEpisodeParametre As Telerik.WinControls.UI.RadButton
     Friend WithEvents ChkTypeParametre As CheckBox
     Friend WithEvents LblDateNaissance As Label
-    Friend WithEvents ChkProfilPatient As CheckBox
 End Class
 

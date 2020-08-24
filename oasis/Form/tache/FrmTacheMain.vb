@@ -22,7 +22,7 @@ Public Class FrmTacheMain
         ' Cet appel est requis par le concepteur.
         InitializeComponent()
 
-        afficheTitleForm(Me, Me.Text)
+        AfficheTitleForm(Me, Me.Text, userLog)
 
         ' Ajoutez une initialisation quelconque après l'appel InitializeComponent().
         Me.SplitContainerMain.Dock = DockStyle.Fill
@@ -163,11 +163,11 @@ Public Class FrmTacheMain
             If userLog.UtilisateurUniteSanitaireId <> 0 Then
                 uniteSanitaire = uniteSanitaireDao.getUniteSanitaireById(userLog.UtilisateurUniteSanitaireId)
                 If userLog.UtilisateurSiteId <> 0 Then
-                    uniteSanitaire.addSite(siteDao.getSiteById(userLog.UtilisateurSiteId))
+                    uniteSanitaire.AddSite(siteDao.getSiteById(userLog.UtilisateurSiteId))
                 Else
                     uniteSanitaire.LstSite = siteDao.getList(False, userLog.UtilisateurUniteSanitaireId)
                 End If
-                filterTache.addUniteSanitaire(uniteSanitaire)
+                filterTache.AddUniteSanitaire(uniteSanitaire)
             End If
 
         Catch err As Exception
@@ -226,7 +226,7 @@ Public Class FrmTacheMain
 
             Dim isMyTache As Boolean = RadioMesTachesEnCours.IsChecked
             Dim isWithNonAttribue = RadChkNonAttribuee.Checked
-            Dim data As DataTable = tacheDao.getAgendaMyRDV(dateDebut, dateFin, isMyTache, lstFonctionChoisie, filterTache, isWithNonAttribue)
+            Dim data As DataTable = tacheDao.GetAgendaMyRDV(dateDebut, dateFin, isMyTache, lstFonctionChoisie, filterTache, isWithNonAttribue, userLog)
 
             lstAppointments.Clear()
 
@@ -382,7 +382,7 @@ Public Class FrmTacheMain
     Private Sub RadTextBox1_ToolTipTextNeeded(sender As Object, e As Telerik.WinControls.ToolTipTextNeededEventArgs) Handles RadTextBox1.ToolTipTextNeeded
         Dim rtbe As RadTextBoxElement = DirectCast(Me.RadTextBox1.RootElement.Children(0), RadTextBoxElement)
         rtbe.TextBoxItem.AutoToolTip = True
-        rtbe.TextBoxItem.ToolTipText = filterTache.resumeFiltre
+        rtbe.TextBoxItem.ToolTipText = filterTache.ResumeFiltre
         Me.RadTextBox1.ShowItemToolTips = True
 
     End Sub
@@ -393,7 +393,7 @@ Public Class FrmTacheMain
 
     Private Sub refreshPanelFilter()
         Dim i As Integer, j As Integer
-        Me.RadTextBox1.Text = filterTache.resumeFiltre
+        Me.RadTextBox1.Text = filterTache.ResumeFiltre
         j = Me.RadTextBox1.Lines.Length
         If j <= 0 Then j = 1
         i = 50 + ((j + 1) * 14)
@@ -425,7 +425,7 @@ Public Class FrmTacheMain
             Me.Cursor = Cursors.WaitCursor
 
             Dim isMyTache As Boolean = RadioMesTachesEnCours.IsChecked
-            Dim data As DataTable = tacheDao.getAllTacheEnCours(isMyTache, lstFonctionChoisie, filterTache, RadChkNonAttribuee.IsChecked)
+            Dim data As DataTable = tacheDao.GetAllTacheEnCours(isMyTache, lstFonctionChoisie, filterTache, RadChkNonAttribuee.IsChecked, userLog)
             Dim numRowGrid As Integer = 0
             Dim exId As Long, index As Integer = -1, exPosit = 0
             Dim typeTache As String
@@ -538,16 +538,16 @@ Public Class FrmTacheMain
             Dim brush As Brush
             brush = Brushes.Transparent.Clone()
             Select Case e.Cell.RowElement.RowInfo.Cells("typetache").Value
-                Case TacheDao.TypeTache.RDV.ToString()
+                Case Tache.TypeTache.RDV.ToString()
                     brush.Dispose()
                     brush = Brushes.LightGreen.Clone()
-                Case TacheDao.TypeTache.RDV_DEMANDE.ToString(), TacheDao.TypeTache.REUNION_STAFF.ToString
+                Case Tache.TypeTache.RDV_DEMANDE.ToString(), Tache.TypeTache.REUNION_STAFF.ToString
                     brush.Dispose()
                     brush = Brushes.LightGray.Clone()
-                Case TacheDao.TypeTache.RDV_MISSION.ToString()
+                Case Tache.TypeTache.RDV_MISSION.ToString()
                     brush.Dispose()
                     brush = Brushes.LightSalmon.Clone()
-                Case TacheDao.TypeTache.RDV_SPECIALISTE.ToString()
+                Case Tache.TypeTache.RDV_SPECIALISTE.ToString()
                     brush.Dispose()
                     brush = New SolidBrush(Color.FromArgb(180, 160, 223))
             End Select
@@ -578,7 +578,7 @@ Public Class FrmTacheMain
     End Sub
 
     Private Sub prendreTacheATraiter(idTache As Long)
-        If tacheDao.attribueTacheToUserLog(idTache) Then
+        If tacheDao.AttribueTacheToUserLog(idTache, userLog) Then
             refreshGridTacheATraiter()
             refreshGridTacheEnCours()
         End If
@@ -714,7 +714,7 @@ Public Class FrmTacheMain
         Me.Cursor = Cursors.WaitCursor
         Try
             Dim isNotFinal As Boolean = RadioTacheEmiseEnCours.IsChecked
-            Dim data As DataTable = tacheDao.getAllTacheEmise(isNotFinal)
+            Dim data As DataTable = tacheDao.GetAllTacheEmise(isNotFinal, userLog)
             Dim numRowGrid As Integer = 0
 
             ' -- recup eventuelle precedente selectionnée

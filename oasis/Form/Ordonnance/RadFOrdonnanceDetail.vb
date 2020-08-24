@@ -99,50 +99,54 @@ Public Class RadFOrdonnanceDetail
     End Sub
 
     Private Sub ChargementDetail()
-        If SelectedOrdonnanceLigneId <> 0 Then
-            EditMode = EnumEditMode.Modification
-            ordonnanceDetail = ordonnanceDetailDao.getOrdonnanceLigneById(SelectedOrdonnanceLigneId)
-            NumDuree.Value = ordonnanceDetail.Duree
-            TxtCommentaire.Text = ordonnanceDetail.PosologieCommentaire
-            TxtPosologie.Text = ordonnanceDetail.Posologie
-        Else
-            EditMode = EnumEditMode.Creation
-            ordonnanceDetail = New OrdonnanceDetail
-            ordonnanceDetail.OrdonnanceId = SelectedOrdonnanceId
-            ordonnanceDetail.TraitementId = 0
-            ordonnanceDetail.Traitement = False
-            ordonnanceDetail.OrdreAffichage = 1000
-            ordonnanceDetail.Ald = Ald
-            ordonnanceDetail.ADelivrer = False
-            ordonnanceDetail.MedicamentCis = 0
-            ordonnanceDetail.MedicamentDci = ""
-            ordonnanceDetail.DateDebut = Date.MaxValue
-            ordonnanceDetail.DateFin = Date.MaxValue
-            ordonnanceDetail.Duree = 0
-            ordonnanceDetail.Posologie = 0
-            ordonnanceDetail.PosologieBase = ""
-            ordonnanceDetail.PosologieRythme = 0
-            ordonnanceDetail.PosologieMatin = 0
-            ordonnanceDetail.PosologieMidi = 0
-            ordonnanceDetail.PosologieApresMidi = 0
-            ordonnanceDetail.PosologieSoir = 0
-            ordonnanceDetail.FractionMatin = ""
-            ordonnanceDetail.FractionMidi = ""
-            ordonnanceDetail.FractionApresMidi = ""
-            ordonnanceDetail.FractionSoir = ""
-            ordonnanceDetail.PosologieCommentaire = ""
-            ordonnanceDetail.Commentaire = ""
-            ordonnanceDetail.Fenetre = False
-            ordonnanceDetail.FenetreDateDebut = Date.MaxValue
-            ordonnanceDetail.FenetreDateFin = Date.MaxValue
-            ordonnanceDetail.Inactif = False
-        End If
-        If ordonnanceDetail.TraitementId = 0 Then
-            LblLabelDuree.Hide()
-            NumDuree.Hide()
-            LblLabelPosologie.Hide()
-            TxtPosologie.Hide()
-        End If
+        Try
+            If SelectedOrdonnanceLigneId <> 0 Then
+                EditMode = EnumEditMode.Modification
+                ordonnanceDetail = ordonnanceDetailDao.GetOrdonnanceLigneById(SelectedOrdonnanceLigneId)
+                NumDuree.Value = ordonnanceDetail.Duree
+                TxtCommentaire.Text = ordonnanceDetail.PosologieCommentaire
+                TxtPosologie.Text = ordonnanceDetail.Posologie
+            Else
+                EditMode = EnumEditMode.Creation
+                ordonnanceDetail = New OrdonnanceDetail
+                ordonnanceDetail.OrdonnanceId = SelectedOrdonnanceId
+                ordonnanceDetail.TraitementId = 0
+                ordonnanceDetail.Traitement = False
+                ordonnanceDetail.OrdreAffichage = 1000
+                ordonnanceDetail.Ald = Ald
+                ordonnanceDetail.ADelivrer = False
+                ordonnanceDetail.MedicamentCis = 0
+                ordonnanceDetail.MedicamentDci = ""
+                ordonnanceDetail.DateDebut = Date.MaxValue
+                ordonnanceDetail.DateFin = Date.MaxValue
+                ordonnanceDetail.Duree = 0
+                ordonnanceDetail.Posologie = 0
+                ordonnanceDetail.PosologieBase = ""
+                ordonnanceDetail.PosologieRythme = 0
+                ordonnanceDetail.PosologieMatin = 0
+                ordonnanceDetail.PosologieMidi = 0
+                ordonnanceDetail.PosologieApresMidi = 0
+                ordonnanceDetail.PosologieSoir = 0
+                ordonnanceDetail.FractionMatin = ""
+                ordonnanceDetail.FractionMidi = ""
+                ordonnanceDetail.FractionApresMidi = ""
+                ordonnanceDetail.FractionSoir = ""
+                ordonnanceDetail.PosologieCommentaire = ""
+                ordonnanceDetail.Commentaire = ""
+                ordonnanceDetail.Fenetre = False
+                ordonnanceDetail.FenetreDateDebut = Date.MaxValue
+                ordonnanceDetail.FenetreDateFin = Date.MaxValue
+                ordonnanceDetail.Inactif = False
+            End If
+            If ordonnanceDetail.TraitementId = 0 Then
+                LblLabelDuree.Hide()
+                NumDuree.Hide()
+                LblLabelPosologie.Hide()
+                TxtPosologie.Hide()
+            End If
+        Catch ex As Exception
+            MsgBox(ex.Message())
+        End Try
     End Sub
 
     Private Sub ChargementEtatCivil()
@@ -186,30 +190,34 @@ Public Class RadFOrdonnanceDetail
     End Sub
 
     Private Sub RadBtnValidation_Click(sender As Object, e As EventArgs) Handles RadBtnValidation.Click
-        Dim CodeRetour As Boolean = True
-        If ordonnanceDetail.TraitementId = 0 Then
-            If TxtCommentaire.Text = "" Then
-                CodeRetour = False
-                MessageBox.Show("Saisie commentaire obligatoire")
+        Try
+            Dim CodeRetour As Boolean = True
+            If ordonnanceDetail.TraitementId = 0 Then
+                If TxtCommentaire.Text = "" Then
+                    CodeRetour = False
+                    MessageBox.Show("Saisie commentaire obligatoire")
+                End If
+            Else
+                If NumDuree.Value = 0 Then
+                    CodeRetour = False
+                    MessageBox.Show("Saisie durée obligatoire")
+                End If
+                If TxtPosologie.Text = "" Then
+                    CodeRetour = False
+                    MessageBox.Show("Saisie posologie obligatoire")
+                End If
             End If
-        Else
-            If NumDuree.Value = 0 Then
-                CodeRetour = False
-                MessageBox.Show("Saisie durée obligatoire")
+            If CodeRetour = True Then
+                Select Case EditMode
+                    Case EnumEditMode.Modification
+                        ordonnanceDetailDao.ModificationOrdonnanceDetail(SelectedOrdonnanceLigneId, TxtCommentaire.Text, NumDuree.Value, TxtPosologie.Text)
+                    Case EnumEditMode.Creation
+                        ordonnanceDetail.PosologieCommentaire = TxtCommentaire.Text
+                        ordonnanceDetailDao.CreationOrdonnanceDetail(ordonnanceDetail)
+                End Select
             End If
-            If TxtPosologie.Text = "" Then
-                CodeRetour = False
-                MessageBox.Show("Saisie posologie obligatoire")
-            End If
-        End If
-        If CodeRetour = True Then
-            Select Case EditMode
-                Case EnumEditMode.Modification
-                    ordonnanceDetailDao.ModificationOrdonnanceDetail(SelectedOrdonnanceLigneId, TxtCommentaire.Text, NumDuree.Value, TxtPosologie.Text)
-                Case EnumEditMode.Creation
-                    ordonnanceDetail.PosologieCommentaire = TxtCommentaire.Text
-                    ordonnanceDetailDao.CreationOrdonnanceDetail(ordonnanceDetail)
-            End Select
-        End If
+        Catch ex As Exception
+            MsgBox(ex.Message())
+        End Try
     End Sub
 End Class

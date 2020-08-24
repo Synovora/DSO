@@ -74,7 +74,7 @@ Public Class RadFEpisodeLigneDeVie
             RadBtnEpisode.Hide()
         End If
 
-        afficheTitleForm(Me, "Ligne de vie du patient")
+        AfficheTitleForm(Me, "Ligne de vie du patient", userLog)
         If userLog.TypeProfil = ProfilDao.EnumProfilType.MEDICAL.ToString OrElse userLog.TypeProfil = ProfilDao.EnumProfilType.PARAMEDICAL.ToString Then
         Else
             RadBtnCreationEpisodeParametre.Enabled = False
@@ -131,7 +131,6 @@ Public Class RadFEpisodeLigneDeVie
 
         ChkProfilMedical.Checked = True
         ChkProfilParamedical.Checked = True
-        ChkProfilPatient.Checked = True
 
         ligneDeVie.TypeConsultation = True
         ligneDeVie.TypeVirtuel = True
@@ -149,19 +148,19 @@ Public Class RadFEpisodeLigneDeVie
         ligneDeVie.ProfilMedical = True
         ligneDeVie.ProfilParamedical = True
 
-        Dim Age As Integer = outils.CalculAgeEnAnnee(SelectedPatient.PatientDateNaissance)
+        Dim Age As Integer = CalculAgeEnAnnee(SelectedPatient.PatientDateNaissance)
         If Age > limiteAgeEnfant Then
             ligneDeVie.ActivitePreventionEnfantPreScolaire = False
             ligneDeVie.ActivitePreventionEnfantScolaire = False
             ChkEnfantPreScolaire.Hide()
             ChkEnfantScolaire.Hide()
-            If SelectedPatient.PatientGenreId = PatientDao.EnumGenreId.Feminin OrElse Age >= AgeMinPreventionFemme Then
+            If SelectedPatient.PatientGenreId = Patient.EnumGenreId.Feminin OrElse Age >= AgeMinPreventionFemme Then
                 ChkSuiviGrossesse.Location = New Point(427, 44)
                 ChkSuiviGynecologique.Location = New Point(589, 44)
             End If
         End If
 
-        If SelectedPatient.PatientGenreId = PatientDao.EnumGenreId.Masculin OrElse Age < AgeMinPreventionFemme Then
+        If SelectedPatient.PatientGenreId = Patient.EnumGenreId.Masculin OrElse Age < AgeMinPreventionFemme Then
             ligneDeVie.ActiviteSuiviGrossesse = False
             ligneDeVie.ActiviteSuiviGyncologique = False
             ChkSuiviGrossesse.Hide()
@@ -214,7 +213,6 @@ Public Class RadFEpisodeLigneDeVie
 
             ChkProfilMedical.Checked = patientParametreLdv.ProfilMedical
             ChkProfilParamedical.Checked = patientParametreLdv.ProfilParamedical
-            ChkProfilPatient.Checked = patientParametreLdv.ProfilPatient
 
             ligneDeVie.TypeConsultation = patientParametreLdv.TypeConsultation
             ligneDeVie.TypeVirtuel = patientParametreLdv.TypeVirtuel
@@ -407,7 +405,7 @@ Public Class RadFEpisodeLigneDeVie
             RadGridViewEpisode.Rows(iGrid).Cells("episode_id").Value = dt.Rows(i)("episode_id")
             RadGridViewEpisode.Rows(iGrid).Cells("type").Value = Coalesce(dt.Rows(i)("type"), "")
 
-            If dt.Rows(i)("type_activite") = EpisodeDao.EnumTypeEpisode.PARAMETRE.ToString Then
+            If dt.Rows(i)("type_activite") = Episode.EnumTypeEpisode.PARAMETRE.ToString Then
                 RadGridViewEpisode.Rows(iGrid).Cells("type_activite").Value = "Prise de paramètres"
             Else
                 RadGridViewEpisode.Rows(iGrid).Cells("type_activite").Value = episodeDao.GetItemTypeActiviteByCode(Coalesce(dt.Rows(i)("type_activite"), ""))
@@ -504,7 +502,7 @@ Public Class RadFEpisodeLigneDeVie
 
             etatCode = Coalesce(dt.Rows(i)("etat"), "")
             Select Case etatCode
-                Case EpisodeDao.EnumEtatEpisode.EN_COURS.ToString
+                Case Episode.EnumEtatEpisode.EN_COURS.ToString
                     RadGridViewEpisode.Rows(iGrid).Cells("etat").Value = "En cours"
                     RadGridViewEpisode.Rows(iGrid).Cells("etat").Style.ForeColor = Color.Red
                     RadGridViewEpisode.Rows(iGrid).Cells("date_creation").Style.ForeColor = Color.Red
@@ -516,7 +514,7 @@ Public Class RadFEpisodeLigneDeVie
                     RadGridViewEpisode.Rows(iGrid).Cells("parametre3").Style.ForeColor = Color.Red
                     RadGridViewEpisode.Rows(iGrid).Cells("parametre4").Style.ForeColor = Color.Red
                     RadGridViewEpisode.Rows(iGrid).Cells("parametre5").Style.ForeColor = Color.Red
-                Case EpisodeDao.EnumEtatEpisode.CLOTURE.ToString
+                Case Episode.EnumEtatEpisode.CLOTURE.ToString
                     RadGridViewEpisode.Rows(iGrid).Cells("etat").Value = "Clôturé"
                 Case Else
                     RadGridViewEpisode.Rows(iGrid).Cells("etat").Value = "Inconnu !"
@@ -575,7 +573,7 @@ Public Class RadFEpisodeLigneDeVie
                     MessageBox.Show("Cet épisode est déjà ouvert dans l'écran qui a conduit à la consultation de la ligne de vie du patient")
                     Exit Sub
                 End If
-                If RadGridViewEpisode.Rows(aRow).Cells("type").Value = EpisodeDao.EnumTypeEpisode.PARAMETRE.ToString Then
+                If RadGridViewEpisode.Rows(aRow).Cells("type").Value = Episode.EnumTypeEpisode.PARAMETRE.ToString Then
                     Me.Enabled = False
                     Cursor.Current = Cursors.WaitCursor
 
@@ -620,44 +618,39 @@ Public Class RadFEpisodeLigneDeVie
     End Sub
 
     Private Sub OrdonnanceMédicaleToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles OrdonnanceMédicaleToolStripMenuItem.Click
-        If RadGridViewEpisode.CurrentRow IsNot Nothing Then
-            Dim aRow As Integer = Me.RadGridViewEpisode.Rows.IndexOf(Me.RadGridViewEpisode.CurrentRow)
-            If aRow >= 0 Then
-                Dim EpisodeId As Integer = RadGridViewEpisode.Rows(aRow).Cells("episode_Id").Value
-                Dim episode As Episode = episodeDao.GetEpisodeById(EpisodeId)
-                Me.Enabled = False
-                Cursor.Current = Cursors.WaitCursor
-                Dim OrdonnanceId As Long
-                Dim dt As DataTable
-                dt = ordonnanceDao.getOrdonnanceValidebyPatient(SelectedPatient.patientId, EpisodeId)
-                If dt.Rows.Count > 0 Then
-                    'Ordonnance existante
-                    OrdonnanceId = dt.Rows(0)("oa_ordonnance_id")
-                    AfficheOrdonnance(OrdonnanceId, episode)
-                Else
-                    If episode.Etat = EpisodeDao.EnumEtatEpisode.CLOTURE.ToString OrElse episode.Etat = EpisodeDao.EnumEtatEpisode.ANNULE.ToString Then
-                        If episode.DateModification.Date < Date.Now.Date Then
-                            MessageBox.Show("Il n'y a pas d'ordonnance de créée pour cet épisode clôturé !")
-                            Cursor.Current = Cursors.Default
-                            Me.Enabled = True
-                            Exit Sub
-                        End If
-                    End If
-                    OrdonnanceId = ordonnanceDao.CreateOrdonnance(SelectedPatient.patientId, EpisodeId)
-                    If OrdonnanceId <> 0 Then
-                        If ordonnanceDao.CreateNewOrdonnanceDetail(SelectedPatient.patientId, OrdonnanceId, episode) = True Then
-                            AfficheOrdonnance(OrdonnanceId, episode)
-                        Else
-                            'Erreur, l'ordonnance détail n'a pa été créée
-                        End If
+        Try
+            If RadGridViewEpisode.CurrentRow IsNot Nothing Then
+                Dim aRow As Integer = Me.RadGridViewEpisode.Rows.IndexOf(Me.RadGridViewEpisode.CurrentRow)
+                If aRow >= 0 Then
+                    Dim EpisodeId As Integer = RadGridViewEpisode.Rows(aRow).Cells("episode_Id").Value
+                    Dim episode As Episode = episodeDao.GetEpisodeById(EpisodeId)
+                    Me.Enabled = False
+                    Cursor.Current = Cursors.WaitCursor
+                    Dim ordonnances As List(Of Ordonnance) = ordonnanceDao.GetOrdonnanceValideByPatient(SelectedPatient.PatientId, EpisodeId)
+                    If ordonnances.Count > 0 Then
+                        AfficheOrdonnance(ordonnances(0).Id, episode)
                     Else
-                        'Erreur, l'ordonnance n'a pa été créée
+                        If episode.Etat = Episode.EnumEtatEpisode.CLOTURE.ToString OrElse episode.Etat = Episode.EnumEtatEpisode.ANNULE.ToString Then
+                            If episode.DateModification.Date < Date.Now.Date Then
+                                MessageBox.Show("Il n'y a pas d'ordonnance de créée pour cet épisode clôturé !")
+                                Cursor.Current = Cursors.Default
+                                Me.Enabled = True
+                                Exit Sub
+                            End If
+                        End If
+                        Dim OrdonnanceId = ordonnanceDao.CreateOrdonnance(SelectedPatient.PatientId, EpisodeId, userLog)
+                        If OrdonnanceId <> 0 Then
+                            ordonnanceDao.CreateNewOrdonnanceDetail(SelectedPatient.PatientId, OrdonnanceId, episode)
+                            AfficheOrdonnance(OrdonnanceId, episode)
+                        End If
                     End If
+                    Cursor.Current = Cursors.Default
+                    Me.Enabled = True
                 End If
-                Cursor.Current = Cursors.Default
-                Me.Enabled = True
             End If
-        End If
+        Catch ex As Exception
+            MsgBox(ex.Message())
+        End Try
     End Sub
 
     Private Sub AfficheOrdonnance(OrdonnanceId As Long, episode As Episode)
@@ -858,12 +851,6 @@ Public Class RadFEpisodeLigneDeVie
             ligneDeVie.ProfilParamedical = False
         End If
 
-        If ChkProfilPatient.Checked = True Then
-            ligneDeVie.ProfilPatient = True
-        Else
-            ligneDeVie.ProfilPatient = False
-        End If
-
         ChargementEpisode(ligneDeVie)
     End Sub
 
@@ -966,12 +953,6 @@ Public Class RadFEpisodeLigneDeVie
             patientParametreLdv.ProfilParamedical = False
         End If
 
-        If ChkProfilPatient.Checked = True Then
-            patientParametreLdv.ProfilPatient = True
-        Else
-            patientParametreLdv.ProfilPatient = False
-        End If
-
         patientParametreLdv.Parametre1 = Coalesce(Parametre1Id, 0)
         patientParametreLdv.Parametre2 = Coalesce(Parametre2Id, 0)
         patientParametreLdv.Parametre3 = Coalesce(Parametre3Id, 0)
@@ -979,14 +960,14 @@ Public Class RadFEpisodeLigneDeVie
         patientParametreLdv.Parametre5 = Coalesce(Parametre5Id, 0)
 
         If ConfigurationParametreExiste = True Then
-            patientParametreLdvDao.UpdateConfigurationParametre(patientParametreLdv)
+            patientParametreLdvDao.UpdateConfigurationParametre(patientParametreLdv, userLog)
             Dim form As New RadFNotification()
             form.Titre = "Notification configuration filtre et paramètre de la ligne de vie"
             form.Message = "Configuration filtre et paramètre modifiée"
             form.Show()
         Else
             ConfigurationParametreExiste = True
-            patientParametreLdvDao.CreateConfigurationParametre(patientParametreLdv)
+            patientParametreLdvDao.CreateConfigurationParametre(patientParametreLdv, userLog)
             Dim form As New RadFNotification()
             form.Titre = "Notification configuration filtre et paramètre de la ligne de vie"
             form.Message = "Configuration filtre et paramètre créée"

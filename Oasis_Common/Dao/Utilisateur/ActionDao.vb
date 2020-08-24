@@ -65,7 +65,7 @@ Public Class ActionDao
         End Using
     End Function
 
-    Friend Function getTraitementById(actionId As Long) As Action
+    Public Function getTraitementById(actionId As Long) As Action
         Dim action As Action
         Dim con As SqlConnection
 
@@ -131,7 +131,7 @@ Public Class ActionDao
             da.InsertCommand = cmd
             da.InsertCommand.ExecuteNonQuery()
         Catch ex As Exception
-            MessageBox.Show(ex.Message)
+            Throw New Exception(ex.Message)
             codeRetour = False
         Finally
             con.Close()

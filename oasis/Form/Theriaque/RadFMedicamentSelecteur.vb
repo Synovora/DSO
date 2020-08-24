@@ -40,7 +40,7 @@ Public Class RadFMedicamentSelecteur
     Dim PremierPassage As Boolean = False
 
     Private Sub RadFATCListe_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-        afficheTitleForm(Me, "Thériaque - Recherche médicament")
+        AfficheTitleForm(Me, "Thériaque - Recherche médicament", userLog)
         RadioBtnVirtuel.Checked = True
         ChargementEtatCivil()
         ChargementATC1()
@@ -101,7 +101,8 @@ Public Class RadFMedicamentSelecteur
     End Sub
 
     Private Sub GetContreIndication()
-        Dim StringContreIndicationToolTip As String = PatientDao.GetStringContreIndicationByPatient(SelectedPatient.patientId)
+        Dim patientDao As New PatientDao
+        Dim StringContreIndicationToolTip As String = patientDao.GetStringContreIndicationByPatient(SelectedPatient.patientId)
         If StringContreIndicationToolTip = "" Then
             lblContreIndication.Hide()
         Else
@@ -112,7 +113,8 @@ Public Class RadFMedicamentSelecteur
 
 
     Private Sub GetAllergie()
-        Dim StringAllergieToolTip As String = PatientDao.GetStringAllergieByPatient(SelectedPatient.patientId)
+        Dim patientDao As New PatientDao
+        Dim StringAllergieToolTip As String = patientDao.GetStringAllergieByPatient(SelectedPatient.patientId)
         If StringAllergieToolTip = "" Then
             LblAllergie.Hide()
         Else
@@ -167,17 +169,11 @@ Public Class RadFMedicamentSelecteur
                         Dim ResultatOk As Boolean = False
                         Dim ListATC As New StringCollection
                         Dim rowCount As Integer = dt.Rows.Count - 1
-                        Dim WorkATC As String
                         For i = 0 To rowCount Step 1
-                            WorkATC = Coalesce(dt.Rows(i)("SP_CATC_CODE_FK"), "")
-                            'Une spécialité sans ATC n'est pas traitée car ce n'est pas normal
-                            If WorkATC <> "" Then
-                                If ListATC.Contains(dt.Rows(i)("SP_CATC_CODE_FK")) = False Then
-                                    ListATC.Add(dt.Rows(i)("SP_CATC_CODE_FK"))
-                                End If
+                            If ListATC.Contains(dt.Rows(i)("SP_CATC_CODE_FK")) = False Then
+                                ListATC.Add(dt.Rows(i)("SP_CATC_CODE_FK"))
                             End If
                         Next
-
                         Dim EnumeratorATC As StringEnumerator = ListATC.GetEnumerator()
                         Dim RowsCount As Integer = 0
                         Dim iGrid As Integer = -1
@@ -441,6 +437,12 @@ Public Class RadFMedicamentSelecteur
             NombreOccurrencesLues = dt.Rows.Count
         End If
 
+        If NombreOccurrencesLues > 1 Then
+            LblOccurrencesLues.Text = NombreOccurrencesLues & " occurrences correspondant aux critères de recherche"
+        Else
+            LblOccurrencesLues.Text = NombreOccurrencesLues & " occurrence correspondant aux critères de recherche"
+        End If
+
         If ClearRows = True Then
             RadGridViewSpe.Rows.Clear()
             RadGridViewSpe.FilterDescriptors.Clear()
@@ -450,34 +452,21 @@ Public Class RadFMedicamentSelecteur
         End If
 
         Dim rowCount As Integer = dt.Rows.Count - 1
-        Dim WorkATC As String
 
         For i = 0 To rowCount Step 1
-            WorkATC = Coalesce(dt.Rows(i)("SP_CATC_CODE_FK"), "")
-            If WorkATC = "" Then
-                'Exclusion des spécialités sans ATC
-                NombreOccurrencesLues -= 1
-            Else
-                iGrid += 1
-                RadGridViewSpe.Rows.Add(iGrid)
+            iGrid += 1
+            RadGridViewSpe.Rows.Add(iGrid)
 
-                RadGridViewSpe.Rows(iGrid).Cells("SP_CODE_SQ_PK").Value = dt.Rows(i)("SP_CODE_SQ_PK")
-                RadGridViewSpe.Rows(iGrid).Cells("SP_CATC_CODE_FK").Value = dt.Rows(i)("SP_CATC_CODE_FK")
-                RadGridViewSpe.Rows(iGrid).Cells("SP_PR_CODE_FK").Value = dt.Rows(i)("SP_PR_CODE_FK")
-                RadGridViewSpe.Rows(iGrid).Cells("SP_NOM").Value = dt.Rows(i)("SP_NOM")
-                RadGridViewSpe.Rows(iGrid).Cells("SP_NOMCOMP").Value = dt.Rows(i)("SP_NOMCOMP")
-                RadGridViewSpe.Rows(iGrid).Cells("SP_NOMLONG").Value = dt.Rows(i)("SP_NOMLONG")
-                RadGridViewSpe.Rows(iGrid).Cells("SP_CIPUCD").Value = dt.Rows(i)("SP_CIPUCD")
-            End If
+            RadGridViewSpe.Rows(iGrid).Cells("SP_CODE_SQ_PK").Value = dt.Rows(i)("SP_CODE_SQ_PK")
+            RadGridViewSpe.Rows(iGrid).Cells("SP_CATC_CODE_FK").Value = dt.Rows(i)("SP_CATC_CODE_FK")
+            RadGridViewSpe.Rows(iGrid).Cells("SP_PR_CODE_FK").Value = dt.Rows(i)("SP_PR_CODE_FK")
+            RadGridViewSpe.Rows(iGrid).Cells("SP_NOM").Value = dt.Rows(i)("SP_NOM")
+            RadGridViewSpe.Rows(iGrid).Cells("SP_NOMCOMP").Value = dt.Rows(i)("SP_NOMCOMP")
+            RadGridViewSpe.Rows(iGrid).Cells("SP_NOMLONG").Value = dt.Rows(i)("SP_NOMLONG")
+            RadGridViewSpe.Rows(iGrid).Cells("SP_CIPUCD").Value = dt.Rows(i)("SP_CIPUCD")
         Next
 
-        If NombreOccurrencesLues > 1 Then
-            LblOccurrencesLues.Text = NombreOccurrencesLues & " occurrences correspondant aux critères de recherche"
-        Else
-            LblOccurrencesLues.Text = NombreOccurrencesLues & " occurrence correspondant aux critères de recherche"
-        End If
-
-        If NombreOccurrencesLues > 0 Then
+        If RadGridViewSpe.Rows.Count > 0 Then
             RadGridViewSpe.CurrentRow = RadGridViewSpe.ChildRows(0)
             RadGridViewSpe.TableElement.VScrollBar.Value = 0
             Dim CodeATC As String = RadGridViewSpe.Rows(0).Cells("SP_CATC_CODE_FK").Value
@@ -512,34 +501,28 @@ Public Class RadFMedicamentSelecteur
     Private Sub AfficheATC(CodeATC As String)
         Cursor.Current = Cursors.WaitCursor
         Dim codeATC1, codeATC2, codeATC3, codeATC4 As String
-        If CodeATC = Nothing Then
-            RadGridViewATC2.Rows.Clear()
-            RadGridViewATC3.Rows.Clear()
-            RadGridViewATC4.Rows.Clear()
-        Else
-            codeATC1 = CodeATC.Substring(0, 1)
-            ChargementATC1(codeATC1)
-            If CodeATC.Length >= 3 Then
-                codeATC2 = CodeATC.Substring(0, 3)
-                ChargementATC2(codeATC1, codeATC2)
-                If CodeATC.Length >= 4 Then
-                    codeATC3 = CodeATC.Substring(0, 4)
-                    ChargementATC3(codeATC2, codeATC3)
-                    If CodeATC.Length >= 5 Then
-                        codeATC4 = CodeATC.Substring(0, 5)
-                        ChargementATC4(codeATC3, codeATC4)
-                    Else
-                        RadGridViewATC4.Rows.Clear()
-                    End If
+        codeATC1 = CodeATC.Substring(0, 1)
+        ChargementATC1(codeATC1)
+        If CodeATC.Length >= 3 Then
+            codeATC2 = CodeATC.Substring(0, 3)
+            ChargementATC2(codeATC1, codeATC2)
+            If CodeATC.Length >= 4 Then
+                codeATC3 = CodeATC.Substring(0, 4)
+                ChargementATC3(codeATC2, codeATC3)
+                If CodeATC.Length >= 5 Then
+                    codeATC4 = CodeATC.Substring(0, 5)
+                    ChargementATC4(codeATC3, codeATC4)
                 Else
-                    RadGridViewATC3.Rows.Clear()
                     RadGridViewATC4.Rows.Clear()
                 End If
             Else
-                RadGridViewATC2.Rows.Clear()
                 RadGridViewATC3.Rows.Clear()
                 RadGridViewATC4.Rows.Clear()
             End If
+        Else
+            RadGridViewATC2.Rows.Clear()
+            RadGridViewATC3.Rows.Clear()
+            RadGridViewATC4.Rows.Clear()
         End If
         Cursor.Current = Cursors.Default
     End Sub

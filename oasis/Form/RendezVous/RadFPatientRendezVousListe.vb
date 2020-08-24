@@ -55,7 +55,7 @@ Public Class RadFPatientRendezVousListe
             parcoursId = Coalesce(RdvDataTable.Rows(i)("parcours_id"), 0)
             specialiteId = Coalesce(RdvDataTable.Rows(i)("oa_ror_specialite_id"), 0)
             If specialiteId <> 0 Then
-                RadGridViewRDV.Rows(iGrid).Cells("specialite").Value = Environnement.Table_specialite.GetSpecialiteDescription(specialiteId)
+                RadGridViewRDV.Rows(iGrid).Cells("specialite").Value = Table_specialite.GetSpecialiteDescription(specialiteId)
             Else
                 RadGridViewRDV.Rows(iGrid).Cells("specialite").Value = ""
             End If
@@ -65,9 +65,9 @@ Public Class RadFPatientRendezVousListe
             RadGridViewRDV.Rows(iGrid).Cells("nature").Value = tacheDao.GetItemNatureTacheByCode(RdvDataTable.Rows(i)("nature"))
 
             Select Case RdvDataTable.Rows(i)("etat")
-                Case TacheDao.EtatTache.EN_COURS.ToString
+                Case Tache.EtatTache.EN_COURS.ToString
                     RadGridViewRDV.Rows(iGrid).Cells("etat").Value = "En cours"
-                Case TacheDao.EtatTache.EN_ATTENTE.ToString
+                Case Tache.EtatTache.EN_ATTENTE.ToString
                     RadGridViewRDV.Rows(iGrid).Cells("etat").Value = "En attente"
             End Select
             dateRendezVous = CDate(RdvDataTable.Rows(i)("date_rendez_vous"))
@@ -75,16 +75,16 @@ Public Class RadFPatientRendezVousListe
             RadGridViewRDV.Rows(iGrid).Cells("traitePar").Value = RdvDataTable.Rows(i)("oa_utilisateur_prenom") & " " & RdvDataTable.Rows(i)("oa_utilisateur_nom")
 
             Select Case RdvDataTable.Rows(i)("nature")
-                Case TacheDao.EnumNatureTacheCode.RDV, TacheDao.EnumNatureTacheCode.RDV_SPECIALISTE
+                Case Tache.EnumNatureTacheCode.RDV, Tache.EnumNatureTacheCode.RDV_SPECIALISTE
                     RadGridViewRDV.Rows(iGrid).Cells("dateRendezVous").Value = dateRendezVous.ToString("dd.MM.yyyy")
                     RadGridViewRDV.Rows(iGrid).Cells("heureRendezVous").Value = dateRendezVous.ToString("HH:mm")
-                Case TacheDao.EnumNatureTacheCode.RDV_DEMANDE
+                Case Tache.EnumNatureTacheCode.RDV_DEMANDE
                     TypeDemandeRdv = Coalesce(RdvDataTable.Rows(i)("type_demande_rendez_vous"), "")
                     Select Case TypeDemandeRdv
-                        Case TacheDao.TypeDemandeRendezVous.ANNEE.ToString
+                        Case Tache.EnumDemandeRendezVous.ANNEE.ToString
                             dateRendezVous = CDate(RdvDataTable.Rows(i)("date_rendez_vous"))
                             RadGridViewRDV.Rows(iGrid).Cells("dateRendezVous").Value = dateRendezVous.ToString("yyyy")
-                        Case TacheDao.TypeDemandeRendezVous.ANNEEMOIS.ToString
+                        Case Tache.EnumDemandeRendezVous.ANNEEMOIS.ToString
                             RadGridViewRDV.Rows(iGrid).Cells("dateRendezVous").Value = dateRendezVous.ToString("MM.yyyy")
                         Case Else
                             RadGridViewRDV.Rows(iGrid).Cells("dateRendezVous").Value = outils.FormatageDateAffichage(dateRendezVous)
@@ -153,13 +153,13 @@ Public Class RadFPatientRendezVousListe
         aRow = Me.RadGridViewRDV.Rows.IndexOf(Me.RadGridViewRDV.CurrentRow)
         maxRow = RadGridViewRDV.Rows.Count - 1
         If aRow <= maxRow And aRow > -1 Then
-            If RadGridViewRDV.Rows(aRow).Cells("nature").Value = TacheDao.EnumNatureTacheItem.RDV OrElse
-                RadGridViewRDV.Rows(aRow).Cells("nature").Value = TacheDao.EnumNatureTacheItem.RDV_SPECIALISTE Then
+            If RadGridViewRDV.Rows(aRow).Cells("nature").Value = Tache.EnumNatureTacheItem.RDV OrElse
+                RadGridViewRDV.Rows(aRow).Cells("nature").Value = Tache.EnumNatureTacheItem.RDV_SPECIALISTE Then
                 Dim TacheId As Long = RadGridViewRDV.Rows(aRow).Cells("id").Value
                 tache = tacheDao.GetTacheById(TacheId)
                 ModificationRendezVous(tache)
             Else
-                If RadGridViewRDV.Rows(aRow).Cells("nature").Value = TacheDao.EnumNatureTacheItem.RDV_DEMANDE Then
+                If RadGridViewRDV.Rows(aRow).Cells("nature").Value = Tache.EnumNatureTacheItem.RDV_DEMANDE Then
                     Dim TacheId As Long = RadGridViewRDV.Rows(aRow).Cells("id").Value
                     tache = tacheDao.GetTacheById(TacheId)
                     ModificationDemandeRendezVous(tache)
@@ -172,15 +172,15 @@ Public Class RadFPatientRendezVousListe
         Dim TacheALiberer As Boolean = False
         If tache.Id <> 0 Then
             tache = tacheDao.GetTacheById(tache.Id)
-            If tache.Etat = TacheDao.EtatTache.EN_ATTENTE.ToString OrElse
-                    (tache.Etat = TacheDao.EtatTache.EN_COURS.ToString And userLog.UtilisateurId = tache.TraiteUserId) Then
+            If tache.Etat = Tache.EtatTache.EN_ATTENTE.ToString OrElse
+                    (tache.Etat = Tache.EtatTache.EN_COURS.ToString And userLog.UtilisateurId = tache.TraiteUserId) Then
                 Cursor.Current = Cursors.WaitCursor
                 Me.Enabled = False
 
                 'Si la tâche est en attente on attribue la tâche à l'utilisateur
-                If tache.Etat = TacheDao.EtatTache.EN_ATTENTE.ToString Then
+                If tache.Etat = Tache.EtatTache.EN_ATTENTE.ToString Then
                     TacheALiberer = True
-                    tacheDao.AttribueTacheToUserLog(tache.Id)
+                    tacheDao.AttribueTacheToUserLog(tache.Id, userLog)
                 End If
 
                 Using form As New RadFTacheModificationDemandeRendezVous
@@ -213,16 +213,16 @@ Public Class RadFPatientRendezVousListe
 
     Private Sub ModificationRendezVous(tache As Tache)
         Dim TacheALiberer As Boolean = False
-        If tache.Id <> 0 AndAlso (tache.Nature = TacheDao.EnumNatureTacheCode.RDV Or tache.Nature = TacheDao.EnumNatureTacheCode.RDV_SPECIALISTE) Then
+        If tache.Id <> 0 AndAlso (tache.Nature = Tache.EnumNatureTacheCode.RDV Or tache.Nature = Tache.EnumNatureTacheCode.RDV_SPECIALISTE) Then
             'Si la tache est en attente (disponible pour traitement) ou attribuée à l'utilisateur authentifié(userlog)
-            If tache.Etat = TacheDao.EtatTache.EN_ATTENTE.ToString OrElse
-            (tache.Etat = TacheDao.EtatTache.EN_COURS.ToString And userLog.UtilisateurId = tache.TraiteUserId) Then
+            If tache.Etat = Tache.EtatTache.EN_ATTENTE.ToString OrElse
+            (tache.Etat = Tache.EtatTache.EN_COURS.ToString And userLog.UtilisateurId = tache.TraiteUserId) Then
                 Cursor.Current = Cursors.WaitCursor
                 Me.Enabled = False
                 'Si la tâche est en attente on attribue la tâche à l'utilisateur
-                If tache.Etat = TacheDao.EtatTache.EN_ATTENTE.ToString Then
+                If tache.Etat = Tache.EtatTache.EN_ATTENTE.ToString Then
                     TacheALiberer = True
-                    tacheDao.AttribueTacheToUserLog(tache.Id)
+                    tacheDao.AttribueTacheToUserLog(tache.Id, userLog)
                 End If
 
                 Dim RDVisTranforme As Boolean = False
@@ -247,7 +247,7 @@ Public Class RadFPatientRendezVousListe
                 ChargementListeRendezvous()
                 Me.Enabled = True
             Else
-                Dim user As Utilisateur = UserDao.getUserById(tache.TraiteUserId)
+                Dim user As Utilisateur = userDao.getUserById(tache.TraiteUserId)
                 MessageBox.Show("Le rendez-vous n'est pas modifiable, il est attribué à : " & user.UtilisateurPrenom & " " & user.UtilisateurNom)
             End If
         End If
@@ -262,25 +262,25 @@ Public Class RadFPatientRendezVousListe
         aRow = Me.RadGridViewRDV.Rows.IndexOf(Me.RadGridViewRDV.CurrentRow)
         maxRow = RadGridViewRDV.Rows.Count - 1
         If aRow <= maxRow And aRow > -1 Then
-            If RadGridViewRDV.Rows(aRow).Cells("nature").Value = TacheDao.EnumNatureTacheItem.RDV OrElse
-                RadGridViewRDV.Rows(aRow).Cells("nature").Value = TacheDao.EnumNatureTacheItem.RDV_SPECIALISTE Then
+            If RadGridViewRDV.Rows(aRow).Cells("nature").Value = Tache.EnumNatureTacheItem.RDV OrElse
+                RadGridViewRDV.Rows(aRow).Cells("nature").Value = Tache.EnumNatureTacheItem.RDV_SPECIALISTE Then
                 Dim TacheId As Long = RadGridViewRDV.Rows(aRow).Cells("id").Value
                 tache = tacheDao.GetTacheById(TacheId)
-                If tache.Etat = TacheDao.EtatTache.EN_ATTENTE.ToString OrElse
-                (tache.Etat = TacheDao.EtatTache.EN_COURS.ToString And userLog.UtilisateurId = tache.TraiteUserId) Then
+                If tache.Etat = Tache.EtatTache.EN_ATTENTE.ToString OrElse
+                (tache.Etat = Tache.EtatTache.EN_COURS.ToString And userLog.UtilisateurId = tache.TraiteUserId) Then
 
                     Dim dateNext As Date = tache.DateRendezVous
                     If dateNext <> Nothing Then
                         If tache.DateRendezVous.Date <= Date.Now.Date() Then
 
                             'Si la tâche est en attente on attribue la tâche à l'utilisateur
-                            If tache.Etat = TacheDao.EtatTache.EN_ATTENTE.ToString Then
+                            If tache.Etat = Tache.EtatTache.EN_ATTENTE.ToString Then
                                 TacheALiberer = True
-                                tacheDao.AttribueTacheToUserLog(tache.Id)
+                                tacheDao.AttribueTacheToUserLog(tache.Id, userLog)
                             End If
 
                             If MsgBox("Confirmation de la clôture du rendez-vous", MsgBoxStyle.YesNo, "") = MsgBoxResult.Yes Then
-                                If tacheDao.ClotureTache(tache.Id, True) = True Then
+                                If tacheDao.ClotureTache(tache.Id, True, userLog) = True Then
                                     Me.RadDesktopAlert1.CaptionText = "Notification rendez-vous"
                                     Me.RadDesktopAlert1.ContentText = "Rendez-vous clôturé"
                                     Me.RadDesktopAlert1.Show()
@@ -288,9 +288,9 @@ Public Class RadFPatientRendezVousListe
                                     'Généreration d'une demande de rendez-vous suite à la cloture du rendez-vous en cours
                                     Dim parcoursId As Long = RadGridViewRDV.Rows(aRow).Cells("parcours_id").Value
                                     Dim parcoursDao As New ParcoursDao
-                                    Dim parcours As Parcours = parcoursDao.getParcoursById(parcoursId)
+                                    Dim parcours As Parcours = parcoursDao.GetParcoursById(parcoursId)
                                     If parcours.Rythme <> 0 Then
-                                        If tacheDao.CreationAutomatiqueDeDemandeRendezVous(SelectedPatient, parcours, tache.DateRendezVous.Date) = True Then
+                                        If tacheDao.CreationAutomatiqueDeDemandeRendezVous(SelectedPatient, parcours, tache.DateRendezVous.Date, userLog) = True Then
                                             Me.RadDesktopAlert1.CaptionText = "Notification demande de rendez-vous"
                                             Me.RadDesktopAlert1.ContentText = "Une demande de rendez-vous a été automatiquement générée pour cet intervenant"
                                             Me.RadDesktopAlert1.Show()
@@ -331,11 +331,11 @@ Public Class RadFPatientRendezVousListe
             Dim parcoursDao As New ParcoursDao
             Dim parcours As Parcours = parcoursDao.GetParcoursById(tache.ParcoursId)
             If parcours.Rythme = 0 Then
-                If RadGridViewRDV.Rows(aRow).Cells("nature").Value = TacheDao.EnumNatureTacheItem.RDV OrElse
-                RadGridViewRDV.Rows(aRow).Cells("nature").Value = TacheDao.EnumNatureTacheItem.RDV_SPECIALISTE Then
+                If RadGridViewRDV.Rows(aRow).Cells("nature").Value = Tache.EnumNatureTacheItem.RDV OrElse
+                RadGridViewRDV.Rows(aRow).Cells("nature").Value = Tache.EnumNatureTacheItem.RDV_SPECIALISTE Then
                     AnnulationRendezVous(tache)
                 Else
-                    If RadGridViewRDV.Rows(aRow).Cells("nature").Value = TacheDao.EnumNatureTacheItem.RDV_DEMANDE Then
+                    If RadGridViewRDV.Rows(aRow).Cells("nature").Value = Tache.EnumNatureTacheItem.RDV_DEMANDE Then
                         AnnulationdemandeRendezVous(tache)
                     End If
                 End If
@@ -348,17 +348,17 @@ Public Class RadFPatientRendezVousListe
     Private Sub AnnulationRendezVous(tache As Tache)
         Dim TacheALiberer As Boolean = False
         'Si la tache est en attente (disponible pour traitement) ou attribuée à l'utilisateur authentifié(userlog)
-        If tache.Etat = TacheDao.EtatTache.EN_ATTENTE.ToString OrElse
-            (tache.Etat = TacheDao.EtatTache.EN_COURS.ToString And userLog.UtilisateurId = tache.TraiteUserId) Then
+        If tache.Etat = Tache.EtatTache.EN_ATTENTE.ToString OrElse
+            (tache.Etat = Tache.EtatTache.EN_COURS.ToString And userLog.UtilisateurId = tache.TraiteUserId) Then
 
             'Si la tâche est en attente on attribue la tâche à l'utilisateur
-            If tache.Etat = TacheDao.EtatTache.EN_ATTENTE.ToString Then
-                tacheDao.AttribueTacheToUserLog(tache.Id)
+            If tache.Etat = Tache.EtatTache.EN_ATTENTE.ToString Then
+                tacheDao.AttribueTacheToUserLog(tache.Id, userLog)
                 TacheALiberer = True
             End If
 
             If MsgBox("Confirmation de l'annulation du rendez-vous", vbYesNo + vbExclamation, "Annulation rendez-vous") = MsgBoxResult.Yes Then
-                If tacheDao.AnnulationTache(tache.Id) = True Then
+                If tacheDao.AnnulationTache(tache.Id, userLog) = True Then
                     Me.RadDesktopAlert1.CaptionText = "Notification rendez-vous"
                     Me.RadDesktopAlert1.ContentText = "Rendez-vous annulé"
                     Me.RadDesktopAlert1.Show()
@@ -382,17 +382,17 @@ Public Class RadFPatientRendezVousListe
     Private Sub AnnulationdemandeRendezVous(tache As Tache)
         Dim TacheALiberer As Boolean = False
         'Si la tache est en attente (disponible pour traitement) ou attribuée à l'utilisateur authentifié(userlog)
-        If tache.Etat = TacheDao.EtatTache.EN_ATTENTE.ToString OrElse
-            (tache.Etat = TacheDao.EtatTache.EN_COURS.ToString And userLog.UtilisateurId = tache.TraiteUserId) Then
+        If tache.Etat = Tache.EtatTache.EN_ATTENTE.ToString OrElse
+            (tache.Etat = Tache.EtatTache.EN_COURS.ToString And userLog.UtilisateurId = tache.TraiteUserId) Then
 
             'Si la tâche est en attente on attribue la tâche à l'utilisateur
-            If tache.Etat = TacheDao.EtatTache.EN_ATTENTE.ToString Then
-                tacheDao.AttribueTacheToUserLog(tache.Id)
+            If tache.Etat = Tache.EtatTache.EN_ATTENTE.ToString Then
+                tacheDao.AttribueTacheToUserLog(tache.Id, userLog)
                 TacheALiberer = True
             End If
 
             If MsgBox("Confirmation de l'annulation de la demande de rendez-vous", MsgBoxStyle.YesNo, "") = MsgBoxResult.Yes Then
-                If tacheDao.AnnulationTache(tache.Id) = True Then
+                If tacheDao.AnnulationTache(tache.Id, userLog) = True Then
                     Me.RadDesktopAlert1.CaptionText = "Notification rendez-vous"
                     Me.RadDesktopAlert1.ContentText = "Demande de rendez-vous annulée"
                     Me.RadDesktopAlert1.Show()

@@ -1,5 +1,6 @@
 ﻿Imports System.Collections.Specialized
 Imports Telerik.WinControls.UI
+Imports Oasis_Common
 Public Class RadF_CI_ATC_Selecteur
     Private _SelectedPatient As Patient
     Private _selectedSpecialiteId As Integer
@@ -42,7 +43,7 @@ Public Class RadF_CI_ATC_Selecteur
     Dim RowCountATC1 As Integer
 
     Private Sub RadFATCListe_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-        afficheTitleForm(Me, "Déclaration contre-indication - Sélection Substance / Classe Thérapeutique")
+        AfficheTitleForm(Me, "Déclaration contre-indication - Sélection Substance / Classe Thérapeutique", userLog)
 
         Me.CodeRetour = False
         RadioBtnVirtuel.Checked = True
@@ -65,6 +66,7 @@ Public Class RadF_CI_ATC_Selecteur
     End Sub
 
     Private Sub ChargementEtatCivil()
+        Dim patientDao As New PatientDao
         If SelectedPatient Is Nothing Then
             Exit Sub
         End If
@@ -95,7 +97,7 @@ Public Class RadF_CI_ATC_Selecteur
         End If
 
         'Contre-indication
-        Dim StringContreIndicationToolTip As String = PatientDao.GetStringContreIndicationByPatient(SelectedPatient.patientId)
+        Dim StringContreIndicationToolTip As String = patientDao.GetStringContreIndicationByPatient(SelectedPatient.patientId)
         If StringContreIndicationToolTip = "" Then
             lblContreIndication.Hide()
         Else
@@ -104,7 +106,7 @@ Public Class RadF_CI_ATC_Selecteur
         End If
 
         'Allergie
-        Dim StringAllergieToolTip As String = PatientDao.GetStringAllergieByPatient(SelectedPatient.patientId)
+        Dim StringAllergieToolTip As String = patientDao.GetStringAllergieByPatient(SelectedPatient.patientId)
         If StringAllergieToolTip = "" Then
             LblAllergie.Hide()
         Else
@@ -774,7 +776,7 @@ Public Class RadF_CI_ATC_Selecteur
             contreIndicationATC.ATCId = ATCId
             contreIndicationATC.DenominationATC = ATCDenomination
 
-            If contreIndicationATCDao.CreationContreIndicationATC(contreIndicationATC) = True Then
+            If contreIndicationATCDao.CreationContreIndicationATC(contreIndicationATC, userLog) = True Then
                 NombreCICreation += 1
             End If
         End While
@@ -797,7 +799,7 @@ Public Class RadF_CI_ATC_Selecteur
             'Dénomination substance père
             contreIndicationSubstance.DenominationSubstancePere = ""
 
-            If contreIndicationSubstanceDao.CreationContreIndicationSubstance(contreIndicationSubstance) = True Then
+            If contreIndicationSubstanceDao.CreationContreIndicationSubstance(contreIndicationSubstance, userLog) = True Then
                 NombreCICreation += 1
             End If
         End While
