@@ -84,6 +84,7 @@ Namespace Oasis_Web.Controllers
         <Authorize>
         Public Function Logout() As ActionResult
             FormsAuthentication.SignOut()
+            Session.Abandon()
             Return RedirectToAction("Login", "Auth")
         End Function
     End Class
