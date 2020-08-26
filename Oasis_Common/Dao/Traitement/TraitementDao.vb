@@ -260,6 +260,7 @@ Public Class TraitementDao
         " oa_traitement_contre_indication FROM oasis.oa_traitement" &
         " WHERE (oa_traitement_annulation Is Null Or oa_traitement_annulation = '')" &
         " AND (oa_traitement_date_fin >= CONVERT(DATE, GETDATE()))" &
+        " AND (oa_traitement_date_debut <= CONVERT(DATE, GETDATE()))" &
         " AND (oa_traitement_arret is Null OR oa_traitement_arret <> 'A')" &
         " AND (oa_traitement_allergie is Null OR oa_traitement_allergie = 'False')" &
         " AND (oa_traitement_contre_indication is Null OR oa_traitement_contre_indication = 'False')" &

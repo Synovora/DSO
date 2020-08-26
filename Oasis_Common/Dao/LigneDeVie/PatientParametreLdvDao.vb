@@ -70,7 +70,7 @@ Public Class PatientParametreLdvDao
         " profil_medical, profil_paramedical, profil_patient, parametre1, parametre2, parametre3, parametre4, parametre5, user_modification, date_modification)" &
         " VALUES (@patientId, @activitePathologieAigue, @activitePreventionAutre, @activitePreventionEnfantPreScolaire, @activitePreventionEnfantScolaire," &
         " @activiteSuiviGrossesse, @activiteSuiviGynecologique, @activiteSocial, @activiteSuiviChronique, @typeConsultation, @typeVirtuel, @typeParametre," &
-        " @profilMedical, @profilParamedical, @Parametre1, @Parametre2, @Parametre3, @Parametre4, @Parametre5, @UserCreation, @dateCreation)"
+        " @profilMedical, @profilParamedical, @profilPatient, @Parametre1, @Parametre2, @Parametre3, @Parametre4, @Parametre5, @UserCreation, @dateCreation)"
 
         Dim cmd As New SqlCommand(SQLstring, con)
         With cmd.Parameters
@@ -88,7 +88,7 @@ Public Class PatientParametreLdvDao
             .AddWithValue("@typeParametre", patientparametreldv.TypeParametre)
             .AddWithValue("@profilMedical", patientparametreldv.ProfilMedical)
             .AddWithValue("@profilParamedical", patientparametreldv.ProfilParamedical)
-            .AddWithValue("@profilPatient", patientparametreldv.ProfilParamedical)
+            .AddWithValue("@profilPatient", patientparametreldv.ProfilPatient)
             .AddWithValue("@Parametre1", patientparametreldv.Parametre1)
             .AddWithValue("@Parametre2", patientparametreldv.Parametre2)
             .AddWithValue("@Parametre3", patientparametreldv.Parametre3)
