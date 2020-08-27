@@ -1568,12 +1568,14 @@ Partial Class RadFEpisodeDetail
         GridViewTextBoxColumn3.HeaderTextAlignment = System.Drawing.ContentAlignment.MiddleLeft
         GridViewTextBoxColumn3.Name = "drcDescription"
         GridViewTextBoxColumn3.ReadOnly = True
+        GridViewTextBoxColumn3.TextAlignment = System.Drawing.ContentAlignment.TopLeft
         GridViewTextBoxColumn3.Width = 189
         GridViewTextBoxColumn4.EnableExpressionEditor = False
         GridViewTextBoxColumn4.FieldName = "observationInput"
         GridViewTextBoxColumn4.HeaderText = "Observation"
         GridViewTextBoxColumn4.HeaderTextAlignment = System.Drawing.ContentAlignment.MiddleLeft
         GridViewTextBoxColumn4.Name = "observationInput"
+        GridViewTextBoxColumn4.TextAlignment = System.Drawing.ContentAlignment.TopLeft
         GridViewTextBoxColumn4.Width = 301
         GridViewTextBoxColumn5.EnableExpressionEditor = False
         GridViewTextBoxColumn5.FieldName = "dateDebut"

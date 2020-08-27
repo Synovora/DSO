@@ -53,7 +53,7 @@ Public Class EpisodeActeParamedicalDao
 
         SQLString = "SELECT E.oa_episode_acte_paramedical_id," &
             " E.drc_id, E.observation, E.type_observation, E.user_id, E.date_saisie_observation," &
-            " E.date_modification_observation, D.oa_drc_libelle, D.oa_drc_dur_prob_epis, D.oa_drc_oasis_categorie" &
+            " E.date_modification_observation, D.oa_drc_libelle, D.oa_drc_typ_epi, D.oa_drc_dur_prob_epis, D.oa_drc_oasis_categorie" &
             " FROM oasis.oa_episode_acte_paramedical E" &
             " LEFT JOIN oasis.oa_drc D ON E.drc_id = D.oa_drc_id" &
             " WHERE episode_id = " & episodeId.ToString &
