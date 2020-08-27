@@ -1025,7 +1025,7 @@ Public Class RadFEpisodeDetail
             RadObsSpeIdeDataGridView.Rows(iGrid).Cells("drcId").Value = acteParamedicalDataTable.Rows(i)("drc_id")
             If Coalesce(acteParamedicalDataTable.Rows(i)("oa_drc_oasis_categorie"), 0) = Drc.EnumCategorieOasisCode.ProtocoleAigu Then
                 Dim DrcDescription As String
-                DrcDescription = " ---> " & Coalesce(acteParamedicalDataTable.Rows(i)("oa_drc_libelle"), "") & vbCrLf & Coalesce(acteParamedicalDataTable.Rows(i)("oa_drc_dur_prob_epis"), "")
+                DrcDescription = "   (" & Coalesce(acteParamedicalDataTable.Rows(i)("oa_drc_libelle"), "") & ")" & vbCrLf & Coalesce(acteParamedicalDataTable.Rows(i)("oa_drc_dur_prob_epis"), "")
                 RadObsSpeIdeDataGridView.Rows(iGrid).Cells("drcDescription").Value = DrcDescription
                 RadObsSpeIdeDataGridView.Rows(iGrid).Cells("observationInput").Value = vbCrLf & Coalesce(acteParamedicalDataTable.Rows(i)("observation"), "")
             Else
