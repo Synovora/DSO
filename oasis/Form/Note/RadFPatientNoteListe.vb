@@ -135,11 +135,13 @@ Public Class RadFPatientNoteListe
             AfficheDateCreation = ""
             If NotePatientDataTable.Rows(i)("oa_patient_note_date_creation") IsNot DBNull.Value Then
                 dateCreation = NotePatientDataTable.Rows(i)("oa_patient_note_date_creation")
-                AfficheDateCreation = outils.FormatageDateAffichage(dateCreation, True)
+                'AfficheDateCreation = outils.FormatageDateAffichage(dateCreation, True)
+                AfficheDateCreation = dateCreation.ToString("dd.MM.yyyy")
             Else
                 If NotePatientDataTable.Rows(i)("oa_patient_note_date_creation") IsNot DBNull.Value Then
                     dateCreation = NotePatientDataTable.Rows(i)("oa_patient_note_date_creation")
-                    AfficheDateCreation = outils.FormatageDateAffichage(dateCreation, True)
+                    'AfficheDateCreation = outils.FormatageDateAffichage(dateCreation, True)
+                    AfficheDateCreation = dateCreation.ToString("dd.MM.yyyy")
                 End If
             End If
 
