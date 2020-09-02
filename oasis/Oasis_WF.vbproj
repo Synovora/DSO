@@ -22,6 +22,7 @@
     <IsWebBootstrapper>true</IsWebBootstrapper>
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
+    <TargetFrameworkProfile />
     <PublishUrl>ftp://ns3119889.ip-51-38-181.eu/</PublishUrl>
     <Install>true</Install>
     <InstallFrom>Web</InstallFrom>
@@ -34,17 +35,16 @@
     <MapFileExtensions>true</MapFileExtensions>
     <InstallUrl>http://ns3119889.ip-51-38-181.eu/clickonce/</InstallUrl>
     <UpdateUrl>http://ns3119889.ip-51-38-181.eu/clickonce/</UpdateUrl>
-    <ProductName>Oasis</ProductName>
+    <ProductName>DSO</ProductName>
     <PublisherName>Synovora</PublisherName>
     <SuiteName>Oasis</SuiteName>
     <CreateWebPageOnPublish>true</CreateWebPageOnPublish>
     <WebPage>publish.htm</WebPage>
-    <ApplicationRevision>48</ApplicationRevision>
+    <ApplicationRevision>58</ApplicationRevision>
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <PublishWizardCompleted>true</PublishWizardCompleted>
     <BootstrapperEnabled>true</BootstrapperEnabled>
-    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
