@@ -105,11 +105,11 @@ File: Main dark Css File
   color: #a6b0cf; }
 
 .noti-icon .badge {
-  position: absolute;
-  top: 12px; }
-.noti-icon .badge {
+    position: absolute;
     right: 5px;
+    top: 12px;
 }
+
 .notification-item .media {
   padding: 0.75rem 1rem; }
   .notification-item .media:hover {

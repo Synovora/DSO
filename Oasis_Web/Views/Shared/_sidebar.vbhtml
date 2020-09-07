@@ -12,7 +12,7 @@
                 <li>
                     <a href="@Url.Action("Index","Dashboard")" class="waves-effect">
                         <i class="bx bx-home-circle"></i>@*<span class="badge badge-pill badge-info float-right">3</span>*@
-                        <span>Tableau de Bord</span>
+                        <span>Accueil</span>
                     </a>
                 </li>
 

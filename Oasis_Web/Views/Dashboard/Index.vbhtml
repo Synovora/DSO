@@ -57,9 +57,9 @@ End Code
                             <p>Profil Patient N*@Request.Cookies("patientId").Value</p>
                         </div>
                     </div>
-                    <div class="col-5 align-self-end">
+                    @*<div class="col-5 align-self-end">
                         <img src="~/assets/images/profile-img.png" alt="" class="img-fluid">
-                    </div>
+                    </div>*@
                 </div>
             </div>
             <div class="card-body pt-0">
@@ -83,9 +83,9 @@ End Code
                                     <p class="text-muted mb-0">Traitements</p>
                                 </div>
                             </div>
-                            <div class="mt-4">
+                            @*<div class="mt-4">
                                 <a href="" class="btn btn-primary waves-effect waves-light btn-sm">Voir Profil <i class="mdi mdi-arrow-right ml-1"></i></a>
-                            </div>
+                            </div>*@
                         </div>
                     </div>
                 </div>

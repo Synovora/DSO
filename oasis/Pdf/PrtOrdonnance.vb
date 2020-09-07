@@ -23,7 +23,7 @@ Public Class PrtOrdonnance
     ReadOnly profilDao As New ProfilDao
     ReadOnly theriaqueDao As New TheriaqueDao
     ReadOnly aldDao As New AldDao
-    ReadOnly SIGN_URL As String = "https://localhost:44355/Sign/Check/"
+    ReadOnly SIGN_URL As String = "https://ns3119889.ip-51-38-181.eu/Sign/Check/"
 
     Dim ordonnance As Ordonnance
 

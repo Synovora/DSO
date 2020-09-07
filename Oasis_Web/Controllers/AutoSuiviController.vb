@@ -35,7 +35,9 @@ Namespace Oasis_Web.Controllers
             Dim patient = patientDao.GetPatient(Request.Cookies("patientId").Value)
             ViewBag.Patient = patient
             ViewBag.ParametresAutoSuivi = BuildAutoSuiviList(patient.PatientId)
-
+            For i As Integer = 0 To ViewBag.ParametresAutoSuivi.Count - 1
+                System.Diagnostics.Debug.WriteLine(ViewBag.ParametresAutoSuivi(i).Description.ToString() & ViewBag.ParametresAutoSuivi(i).Id.ToString())
+            Next i
             Return View()
         End Function
 
