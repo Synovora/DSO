@@ -23,7 +23,7 @@ End Section
     <div class="col-xl-8">
 <div Class="card" id="autoSuiviCard">
             <div Class="card-body">
-                <h4 Class="card-title mb-4 float-sm-left">Parametre d'Auto-Suivi</h4>
+                <h4 Class="card-title mb-4 float-sm-left">Parametre(s) d'Auto-Suivi</h4>
                 <div Class="clearfix"></div>
                 <div>
                     @Using (Html.BeginForm(Nothing, Nothing, FormMethod.Post, New With {.id = "__AjaxAntiForgeryForm"}))
@@ -38,9 +38,11 @@ End Section
                                     <div Class="">
                                         <div class="input-group">
                                             <input type="text" class="form-control" maxlength="11" id=@("ParametreAutoSuivi-" & ViewBag.ParametresAutoSuivi(i).Id) name=@ViewBag.ParametresAutoSuivi(i).Id placeholder="">
-                                            <div class="input-group-append">
+                                            @If (ViewBag.ParametresAutoSuivi(i).Description = "PAS") Then
+                                            @<div class="input-group-append">
                                                 <span class="input-group-text" id="validationTooltipUsernamePrepend">@ViewBag.ParametresAutoSuivi(i).Unite</span>
                                             </div>
+                                            End If
                                         </div>
                                     </div>
                                     @If (ViewBag.ParametresAutoSuivi(i).Description = "PAS") Then

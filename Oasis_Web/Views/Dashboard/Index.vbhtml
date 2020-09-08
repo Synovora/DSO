@@ -1,7 +1,7 @@
 ﻿@Imports Oasis_Common
 @Code
-    ViewBag.Title = "Dashboard"
-    ViewBag.pTitle = "Dashboard"
+    ViewBag.Title = "Accueil"
+    ViewBag.pTitle = "Accueil"
     ViewBag.pageTitle = "Synovora"
     Layout = "~/Views/Shared/_Layout.vbhtml"
 
