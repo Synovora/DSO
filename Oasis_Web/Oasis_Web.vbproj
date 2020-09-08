@@ -1611,6 +1611,7 @@
     <Content Include="Views\Pages\pages-pricing.cshtml" />
     <Content Include="Views\Pages\pages-starter.cshtml" />
     <Content Include="Views\Pages\pages-timeline.cshtml" />
+    <Content Include="Views\AutoSuivi\Index.vbhtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="favicon.ico" />
