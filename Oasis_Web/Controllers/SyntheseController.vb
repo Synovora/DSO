@@ -6,10 +6,11 @@ Imports System.Net.Http.Formatting
 Imports System.Web
 Imports System.Web.Http
 Imports System.Web.Mvc
+Imports Oasis_Web
 Imports Oasis_Common
 
 Namespace Oasis_Web.Controllers
-    Public Class Synthese
+    Public Class SyntheseController
         Inherits Controller
 
         ReadOnly parametreDao As New ParametreDao

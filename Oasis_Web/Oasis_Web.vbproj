@@ -192,12 +192,12 @@
     <Compile Include="Areas\HelpPage\SampleGeneration\TextSample.vb" />
     <Compile Include="Areas\HelpPage\XmlDocumentationProvider.vb" />
     <Compile Include="Constants.vb" />
-    <Compile Include="Controllers\SyntheseController.vb" />
     <Compile Include="Controllers\AutoSuiviController.vb" />
     <Compile Include="Controllers\DocFileUploadController.vb" />
     <Compile Include="Controllers\DocFileDownloadController.vb" />
     <Compile Include="Controllers\LoginController.vb" />
     <Compile Include="Controllers\SignController.vb" />
+    <Compile Include="Controllers\SyntheseController.vb" />
     <Compile Include="Global.asax.vb">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -1645,6 +1645,9 @@
   </ItemGroup>
   <ItemGroup>
     <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Views\Info\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

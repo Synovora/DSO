@@ -1,7 +1,7 @@
 ﻿@Imports Oasis_Common
 @Code
-    ViewBag.Title = "Auto-Suivi"
-    ViewBag.pTitle = "Auto-Suivi"
+    ViewBag.Title = "Synthese"
+    ViewBag.pTitle = "Synthese"
     ViewBag.pageTitle = "Synovora"
     Layout = "~/Views/Shared/_Layout.vbhtml"
 End Code
