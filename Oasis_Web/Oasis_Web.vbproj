@@ -192,6 +192,7 @@
     <Compile Include="Areas\HelpPage\SampleGeneration\TextSample.vb" />
     <Compile Include="Areas\HelpPage\XmlDocumentationProvider.vb" />
     <Compile Include="Constants.vb" />
+    <Compile Include="Controllers\SyntheseController.vb" />
     <Compile Include="Controllers\AutoSuiviController.vb" />
     <Compile Include="Controllers\DocFileUploadController.vb" />
     <Compile Include="Controllers\DocFileDownloadController.vb" />
@@ -1612,6 +1613,7 @@
     <Content Include="Views\Pages\pages-starter.cshtml" />
     <Content Include="Views\Pages\pages-timeline.cshtml" />
     <Content Include="Views\AutoSuivi\Index.vbhtml" />
+    <Content Include="Views\Synthese\Index.vbhtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="favicon.ico" />

@@ -17,6 +17,13 @@
                 </li>
 
                 <li>
+                    <a href="@Url.Action("Index", "Synthese")" class="waves-effect">
+                        <i class="bx bx-task"></i>@*<span class="badge badge-pill badge-info float-right">3</span>*@
+                    <span>Synthese</span>
+                    </a>
+                </li>
+
+                <li>
                     <a href="@Url.Action("Index", "AutoSuivi")" class="waves-effect">
                         <i class="bx bx-task"></i>@*<span class="badge badge-pill badge-info float-right">3</span>*@
                         <span>Auto-Suivi</span>
