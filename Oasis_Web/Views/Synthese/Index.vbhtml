@@ -8,65 +8,45 @@ End Code
 
 
 @Section Styles
-<!-- Sweet Alert-->
-<link href="~/assets/libs/sweetalert2/sweetalert2.min.css" rel="stylesheet" type="text/css" />
+    <!-- Sweet Alert-->
+    <link href="~/assets/libs/sweetalert2/sweetalert2.min.css" rel="stylesheet" type="text/css" />
 End Section
 
 <div class="row">
-    <div class="col-xl-4">
-        <div class="card">
+    <div class="col-xl-6">
+        <div class="card text-center">
             <div class="card-body">
-                <button Class="btn btn-primary btn-block waves-effect waves-light" id="btnParametreAutoSuiviAdd" disabled>Ajouter des paranetres d'auto-suivi</button>
+                <h5 class="font-size-15"><a href="#" class="text-dark">@ViewBag.patient.PatientPrenom @ViewBag.patient.PatientNom</a></h5>
+                <div class="row mb-3">
+                    <div class="col-md-6">
+                        <div>
+                            <p class="text-muted">Date de naissance: @ViewBag.patient.PatientDateNaissance.ToShortDateString()</p>
+                            <p class="text-muted">Genre: @ViewBag.patient.PatientGenre</p>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div>
+                            <p class="text-muted">Age: @ViewBag.patient.PatientAge</p>
+                            <p class="text-muted">NIR: @ViewBag.patient.PatientNir</p>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
-    <div class="col-xl-8">
-<div Class="card" id="autoSuiviCard">
+    <div class="col-xl-6">
+        <div Class="card" id="autoSuiviCard">
             <div Class="card-body">
-                <h4 Class="card-title mb-4 float-sm-left">Parametre(s) d'Auto-Suivi</h4>
+                <h4 Class="card-title mb-4 float-sm-left">Contexte</h4>
                 <div Class="clearfix"></div>
                 <div>
-                    @Using (Html.BeginForm(Nothing, Nothing, FormMethod.Post, New With {.id = "__AjaxAntiForgeryForm"}))
-                    @Html.AntiForgeryToken()
-                    End Using
-                    <form id="myDiv" Class="form-horizontal" data-url="@Url.Action("AutoSuiviValidate", "AutoSuivi" )">
+                    <form id="myDiv" Class="form-horizontal">
                         <div class="d-flex flex-column flex-wrap justify-flex-start">
-                            @For i As Integer = 0 To ViewBag.ParametresAutoSuivi.Count - 1
-                            @<div class="boxAutoSuiviItem d-flex flex-row justify-content-between lh-condensed">
-                                <h6 class="my-0">@(If(ViewBag.ParametresAutoSuivi(i).DescriptionPatient = "", ViewBag.ParametresAutoSuivi(i).Description, ViewBag.ParametresAutoSuivi(i).DescriptionPatient))</h6>
-                                <div Class="d-flex flex-row">
-                                    <div Class="">
-                                        <div class="input-group">
-                                            <input type="text" class="form-control" maxlength="11" id=@("ParametreAutoSuivi-" & ViewBag.ParametresAutoSuivi(i).Id) name=@ViewBag.ParametresAutoSuivi(i).Id placeholder="">
-                                            @If (ViewBag.ParametresAutoSuivi(i).Description = "PAS") Then
-                                            @<div class="input-group-append">
-                                                <span class="input-group-text" id="validationTooltipUsernamePrepend">@ViewBag.ParametresAutoSuivi(i).Unite</span>
-                                            </div>
-                                            End If
-                                        </div>
-                                    </div>
-                                    @If (ViewBag.ParametresAutoSuivi(i).Description = "PAS") Then
-                                    @<div Class="d-flex flex-row">
-                                        <div Class="" style="padding: 10px;">
-                                            <span> / </span>
-                                        </div>
-                                        <div Class="">
-                                            <div class="input-group">
-                                                <input type="text" class="form-control" maxlength="11" id=@("ParametreAutoSuivi-7") name="7" placeholder="">
-                                                <div class="input-group-append">
-                                                    <span class="input-group-text" id="validationTooltipUsernamePrepend">@ViewBag.ParametresAutoSuivi(i).Unite</span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    End If
+                            @For i As Integer = 0 To ViewBag.Contexts.Count - 1
+                                @<div class="boxAutoSuiviItem d-flex flex-row justify-content-between lh-condensed">
+                                    <h6 class="my-0">@ViewBag.Contexts(i)(1)</h6> <h6 class="my-0">@ViewBag.Contexts(i)(0)</h6>
                                 </div>
-                            </div>
                             Next
-                        </div>
-                        <div class="clearfix"></div>
-                        <div Class="mt-3">
-                            <button Class="btn btn-primary btn-block waves-effect waves-light" id="btnParametreAutoSuiviValidate">Valider</button>
                         </div>
                     </form>
                 </div>
@@ -74,15 +54,43 @@ End Section
         </div>
     </div>
 </div>
+<div class="row">
+    <div class="col-xl-12">
+        <div class="card">
+            <div class="card-body">
+                <h4 class="card-title">Antecedents</h4>
+                <div class="table-responsive">
+                    <table class="table mb-0">
+                        <thead>
+                            <tr>
+                                @*<th>#</th>*@
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @For i As Integer = 0 To ViewBag.Antecedents.Count - 1
+                                @<tr>
+                                    @*<th scope="row">@i</th>*@
+                                    <td>@ViewBag.Antecedents(i)(1)</td>
+                                </tr>
+                            Next
+                        </tbody>
+                    </table>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
 
 @Section Scripts
-<!-- Sweet Alerts js -->
-<script src="~/assets/libs/sweetalert2/sweetalert2.min.js"></script>
+    <!-- Sweet Alerts js -->
+    <script src="~/assets/libs/sweetalert2/sweetalert2.min.js"></script>
 
-<!-- Sweet alert init js-->
-<script src="~/assets/js/pages/sweet-alerts.init.js"></script>
+    <!-- Sweet alert init js-->
+    <script src="~/assets/js/pages/sweet-alerts.init.js"></script>
 
-<script src="~/assets/js/app.js"></script>
+    <script src="~/assets/js/app.js"></script>
 End section
 
 <script type="text/javascript">
