@@ -34,37 +34,20 @@ End Section
             </div>
         </div>
     </div>
-    <div class="col-xl-6">
-        <div Class="card" id="autoSuiviCard">
-            <div Class="card-body">
-                <h4 Class="card-title mb-4 float-sm-left">Contexte</h4>
-                <div Class="clearfix"></div>
-                <div>
-                    <form id="myDiv" Class="form-horizontal">
-                        <div class="d-flex flex-column flex-wrap justify-flex-start">
-                            @For i As Integer = 0 To ViewBag.Contexts.Count - 1
-                                @<div class="boxAutoSuiviItem d-flex flex-row justify-content-between lh-condensed">
-                                    <h6 class="my-0">@ViewBag.Contexts(i)(1)</h6> <h6 class="my-0">@ViewBag.Contexts(i)(0)</h6>
-                                </div>
-                            Next
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
 </div>
 <div class="row">
     <div class="col-xl-12">
         <div class="card">
             <div class="card-body">
                 <h4 class="card-title">Antecedents</h4>
+                <div Class="clearfix"></div>
                 <div class="table-responsive">
                     <table class="table mb-0">
                         <thead>
                             <tr>
                                 @*<th>#</th>*@
-                                <th></th>
+                                <th>Description</th>
+
                             </tr>
                         </thead>
                         <tbody>
@@ -77,7 +60,36 @@ End Section
                         </tbody>
                     </table>
                 </div>
-
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-xl-12">
+        <div Class="card">
+            <div Class="card-body">
+                <h4 Class="card-title mb-4">Contexte</h4>
+                <div Class="clearfix"></div>
+                <div class="table-responsive">
+                    <table class="table mb-0">
+                        <thead>
+                            <tr>
+                                @*<th>#</th>*@
+                                <th>Description</th>
+                                <th>Domaine</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @For i As Integer = 0 To ViewBag.Contexts.Count - 1
+                                @<tr>
+                                    @*<th scope="row">@i</th>*@
+                                    <td>@ViewBag.Contexts(i)(1)</td>
+                                    <td>@ViewBag.Contexts(i)(0)</td>
+                                </tr>
+                            Next
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
     </div>
