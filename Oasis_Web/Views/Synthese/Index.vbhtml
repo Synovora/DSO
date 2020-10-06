@@ -34,13 +34,12 @@ End Section
             </div>
         </div>
     </div>
-
     <div class="col-xl-6">
         <div class="card text-center">
             <div class="card-body">
                 <div class="text-center">
                     <button type="button" class="btn btn-primary btn-sm btn-rounded waves-effect waves-light" data-toggle="modal" data-target=".exampleModal">
-                        Vaccin
+                        Mes Vaccins
                     </button>
                 </div>
             </div>
@@ -154,7 +153,6 @@ End Section
                         </tbody>
                     </table>
                 </div>
-
             </div>
         </div>
     </div>
@@ -258,7 +256,6 @@ End section
         Swal.fire({
             title: "Etes-vous sure?",
             text: "Vous ne pourrez pas annuler cette action!",
-            //type: "info",
             showCancelButton: !0,
             confirmButtonColor: "#34c38f",
             cancelButtonColor: "#f46a6a",

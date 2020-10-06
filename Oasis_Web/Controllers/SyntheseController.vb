@@ -453,14 +453,14 @@ Namespace Oasis_Web.Controllers
                 End If
 
                 'Traitement du format d'affichage de la fin du traitement
-                If dateDebut = "31/12/2999" Then
+                If dateDebut = DateTime.Parse("31/12/2999") Then
                     tmp.Add("Date non définie")
                 Else
                     tmp.Add(FormatageDateAffichage(dateDebut, True))
                 End If
 
                 'Traitement du format d'affichage de modification du traitement
-                If dateModification = "01/01/1900" Then
+                If dateModification = DateTime.Parse("01/01/1900") Then
                     tmp.Add("Date non définie")
                 Else
                     tmp.Add(FormatageDateAffichage(dateModification, True))
