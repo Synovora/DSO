@@ -41,7 +41,19 @@ Namespace Oasis_Web.Controllers
             ViewBag.PPS = BuildPPS(patient.PatientId)
             ViewBag.PS = BuildPS(patient.PatientId)
             ViewBag.Vaccins = BuildVaccin(patient.PatientId)
+            ViewBag.Allergies = BuildAllergie(patient.PatientId)
+            ViewBag.ContreIndication = BuildContreIndication(patient.PatientId)
             Return View()
+        End Function
+
+        Private Function BuildAllergie(patientId As Integer)
+            Dim StringAllergieToolTip As String = patientDao.GetStringAllergieByPatient(patientId)
+            Return StringAllergieToolTip
+        End Function
+
+        Private Function BuildContreIndication(patientId As Integer)
+            Dim StringContreIndicationToolTip As String = patientDao.GetStringContreIndicationByPatient(patientId)
+            Return StringContreIndicationToolTip
         End Function
 
         Private Function BuildAntecedent(patientId As Integer) As List(Of List(Of String))
@@ -115,6 +127,19 @@ Namespace Oasis_Web.Controllers
                 End If
                 AldDemandeEnCours = Coalesce(antecedentDataTable.Rows(i)("oa_antecedent_ald_demande_en_cours"), False)
 
+                If antecedentCache = True Then
+                    tmp.Add("color: blue")
+                Else
+                    If AldValideOK = True Then
+                        tmp.Add("color: red;")
+                    Else
+                        If AldDemandeEnCours = True Then
+                            tmp.Add("color: orange;")
+                        Else
+                            tmp.Add("color: inherit;")
+                        End If
+                    End If
+                End If
 
                 'Alimentation du DataGridView
                 diagnostic = ""

@@ -36,7 +36,15 @@ End Section
     </div>
 
     <div class="col-xl-6">
-
+        <div class="card text-center">
+            <div class="card-body">
+                <div class="text-center">
+                    <button type="button" class="btn btn-primary btn-sm btn-rounded waves-effect waves-light" data-toggle="modal" data-target=".exampleModal">
+                        Vaccin
+                    </button>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
 <div class="row">
@@ -46,21 +54,15 @@ End Section
                 <h4 class="card-title">Antecedents</h4>
                 <div class="table-responsive">
                     <table class="table mb-0">
-                        <thead>
-                            <tr>
-                                <th></th>
-                            </tr>
-                        </thead>
                         <tbody>
                             @For i As Integer = 0 To ViewBag.Antecedents.Count - 1
                                 @<tr>
-                                    <td>@ViewBag.Antecedents(i)(1)</td>
+                                    <td style="@ViewBag.Antecedents(i)(0)">@ViewBag.Antecedents(i)(2)</td>
                                 </tr>
                             Next
                         </tbody>
                     </table>
                 </div>
-
             </div>
         </div>
     </div>
@@ -89,7 +91,6 @@ End Section
                         </tbody>
                     </table>
                 </div>
-
             </div>
         </div>
     </div>
@@ -103,65 +104,17 @@ End Section
                     <li class="nav-item">
                         <a class="nav-link" data-toggle="tab" href="#transactions-buy-tab" role="tab">Contres indications</a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" data-toggle="tab" href="#transactions-sell-tab" role="tab">Traitements arretes</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" data-toggle="tab" href="#vaccins" role="tab">Vaccins</a>
-                    </li>
                 </ul>
                 <div class="tab-content mt-4">
                     <div class="tab-pane active" id="transactions-all-tab" role="tabpanel">
                         <div class="table-responsive" data-simplebar style="max-height: 400px;">
-                            <table class="table table-centered table-nowrap">
-                                <thead>
-                                    <tr>
-                                        <th>ATC</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    @For i As Integer = 0 To ViewBag.Traitements.Count - 1
-                                        @<tr>
-                                            <td>@ViewBag.Traitements(i)(0)</td>
-                                        </tr>
-                                    Next
-                                </tbody>
-                            </table>
+                            @ViewBag.Allergies
                         </div>
                     </div>
                     <div class="tab-pane" id="transactions-buy-tab" role="tabpanel">
                         <div class="table-responsive" data-simplebar style="max-height: 400px;">
                             <table class="table table-centered table-nowrap">
-                                <thead>
-                                    <tr>
-                                        <th>Substance</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    @For i As Integer = 0 To ViewBag.Traitements.Count - 1
-                                        @<tr>
-                                            <td>@ViewBag.Traitements(i)(0)</td>
-                                        </tr>
-                                    Next
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                    <div class="tab-pane" id="vaccins" role="tabpanel">
-                        <div class="table-responsive" data-simplebar style="max-height: 400px;">
-                            <table class="table table-centered table-nowrap">
-                                <@*thead>
-                                    <tr>
-                                        <th>Substance</th>
-                                    </tr>
-                                </thead>*@
-                                <tbody>
-                                    @For i As Integer = 0 To ViewBag.Vaccins.Count - 1
-                                        @<tr>
-                                            <td>@ViewBag.Vaccins(i)(0)</td>
-                                        </tr>
-                                    Next
-                                </tbody>
+                                @ViewBag.ContreIndication
                             </table>
                         </div>
                     </div>
@@ -205,85 +158,92 @@ End Section
             </div>
         </div>
     </div>
-</div>
-<div class="row">
     <div class="col-xl-6">
         <div Class="card" id="autoSuiviCard">
             <div Class="card-body">
                 <h4 Class="card-title mb-4 float-sm-left">Contexte</h4>
-
-                <div class="col-xl-6">
-                    <div Class="card" id="autoSuiviCard">
-                        <div Class="card-body">
-                            <h4 Class="card-title mb-4 float-sm-left">Contexte</h4>
-
-                            <div Class="clearfix"></div>
-                            <div class="table-responsive">
-                                <table class="table mb-0">
-                                    <thead>
-                                        <tr>
-                                            @*<th>#</th>*@
-                                            <th>Description</th>
-
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        @For i As Integer = 0 To ViewBag.Antecedents.Count - 1
-                                            @<tr>
-                                                @*<th scope="row">@i</th>*@
-                                                <td>@ViewBag.Antecedents(i)(1)</td>
-                                            </tr>
-                                        Next
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-xl-6">
-
-                    <div class="card">
-                        <div class="card-body">
-                            <h4 class="card-title">Plan Personnalisé de Soin</h4>
-                            <div class="table-responsive">
-                                <table class="table mb-0">
-                                    <thead>
-                                        <tr>
-
-                                            @*<th>#</th>*@
-                                            <th></th>
-
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-
-                                        @For i As Integer = 0 To ViewBag.PPS.Count - 1
-
-                                            @<tr>
-
-                                                <td>@ViewBag.PPS(i)(0)</td>
-
-                                            </tr>
-                                        Next
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                    </div>
+                <div Class="clearfix"></div>
+                <div class="table-responsive">
+                    <table class="table mb-0">
+                        <thead>
+                            <tr>
+                                <th>Description</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @For i As Integer = 0 To ViewBag.Antecedents.Count - 1
+                                @<tr>
+                                    <td>@ViewBag.Antecedents(i)(1)</td>
+                                </tr>
+                            Next
+                        </tbody>
+                    </table>
                 </div>
             </div>
+        </div>
+    </div>
+    <div class="col-xl-6">
+        <div class="card">
+            <div class="card-body">
+                <h4 class="card-title">Plan Personnalisé de Soin</h4>
+                <div class="table-responsive">
+                    <table class="table mb-0">
+                        <tbody>
+                            @For i As Integer = 0 To ViewBag.PPS.Count - 1
+                                @<tr>
+                                    <td>@ViewBag.PPS(i)(0)</td>
+                                </tr>
+                            Next
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 
-            @Section Scripts
-                <!-- Sweet Alerts js -->
-                <script src="~/assets/libs/sweetalert2/sweetalert2.min.js"></script>
+<!-- Modal -->
+<div class="modal fade exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Mes Vaccins</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="table-responsive">
+                    <table class="table mb-0">
+                        <tbody>
+                            @For i As Integer = 0 To ViewBag.Vaccins.Count - 1
+                                @<tr>
+                                    <td>@ViewBag.Vaccins(i)(0)</td>
+                                </tr>
+                            Next
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
+            </div>
+        </div>
+    </div>
+</div>
 
-                <!-- Sweet alert init js-->
-                <script src="~/assets/js/pages/sweet-alerts.init.js"></script>
 
-                <script src="~/assets/js/app.js"></script>
-            End section
+@Section Scripts
+    <!-- Sweet Alerts js -->
+    <script src="~/assets/libs/sweetalert2/sweetalert2.min.js"></script>
 
-            <script type="text/javascript">
+    <!-- Sweet alert init js-->
+    <script src="~/assets/js/pages/sweet-alerts.init.js"></script>
+
+    <script src="~/assets/js/app.js"></script>
+End section
+
+<script type="text/javascript">
     var att = '@Session["AutoSuivi"]'
     console.log(att)
     if (att === true) {
@@ -328,4 +288,4 @@ End Section
         $("#autoSuiviCard").show();
         $("#btnParametreAutoSuiviAdd").attr("disabled", true);
     })
-            </script>
+</script>
