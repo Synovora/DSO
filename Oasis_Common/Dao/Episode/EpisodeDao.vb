@@ -447,6 +447,49 @@ Public Class EpisodeDao
         Return ParcoursDataTable
     End Function
 
+    Public Function GetAllEpisodeClosedByDate(closeDate As Date) As DataTable
+        Dim dateDebutRecherche As Date = closeDate.AddDays(1)
+        Dim SQLString As String = "SELECT E.episode_id, E.patient_id, E.[type], type_activite, type_profil, commentaire, user_creation, date_creation," &
+                    " U.oa_utilisateur_prenom, U.oa_utilisateur_nom, P.oa_patient_site_id, P.oa_patient_nom, P.oa_patient_INS, P.oa_patient_nir," &
+                    " P.oa_patient_prenom, P.oa_patient_date_naissance, TACHE.nature, TACHE.destinataire_fonction_id, TACHE.etat, TACHE.oa_r_fonction_designation," &
+                    " TACHE.oa_utilisateur_prenom, TACHE.oa_utilisateur_nom, TACHE.oa_r_fonction_type, TACHE.emetteur_commentaire, TACHE.priorite" &
+                    " FROM oasis.oa_episode E" &
+                    " LEFT JOIN oasis.oa_patient P ON P.oa_patient_id = E.patient_id" &
+                    " LEFT JOIN oasis.oa_utilisateur U ON U.oa_utilisateur_id = user_creation" &
+                    " OUTER APPLY (Select TOP (1) * FROM oasis.oasis.oa_tache" &
+                        " LEFT JOIN oasis.oasis.oa_r_fonction ON destinataire_fonction_id = oa_r_fonction_id" &
+                        " LEFT JOIN oasis.oasis.oa_utilisateur ON oa_utilisateur_id = traite_user_id" &
+                        " WHERE episode_Id = E.episode_id" &
+                        " AND (etat = '" & Tache.EtatTache.EN_ATTENTE.ToString() & "' OR etat = '" & Tache.EtatTache.EN_COURS.ToString() & "')" &
+                        " AND [type] = '" & Tache.TypeTache.AVIS_EPISODE.ToString() & "'" &
+                        " AND categorie = 'SOIN') AS TACHE" &
+                    " WHERE E.etat = '" & Episode.EnumEtatEpisode.CLOTURE.ToString & "'" &
+                    " AND E.date_modification <= '" & dateDebutRecherche.ToString("yyyy-MM-dd") & "'" &
+                    " AND E.date_modification >= '" & closeDate.Date.ToString("yyyy-MM-dd") & "'" &
+                    " AND (E.[type] = '" & Episode.EnumTypeEpisode.CONSULTATION.ToString & "' OR E.[type] = '" & Episode.EnumTypeEpisode.VIRTUEL.ToString & "')" &
+                    " AND (inactif = 'False' OR inactif is Null)" &
+                    " ORDER BY date_modification"
+
+        Dim ParcoursDataTable As DataTable = New DataTable()
+
+        Using con As SqlConnection = GetConnection()
+            Dim ParcoursDataAdapter As SqlDataAdapter = New SqlDataAdapter()
+            Using ParcoursDataAdapter
+                ParcoursDataAdapter.SelectCommand = New SqlCommand(SQLString, con)
+                Try
+                    ParcoursDataAdapter.Fill(ParcoursDataTable)
+                    Dim command As SqlCommand = con.CreateCommand()
+                Catch ex As Exception
+                    Throw ex
+                Finally
+                    con.Close()
+                End Try
+            End Using
+        End Using
+
+        Return ParcoursDataTable
+    End Function
+
     Public Function GetAllEpisodeEnAttenteValidation() As DataTable
         Dim SQLString As String
         SQLString = "SELECT E.episode_id, E.patient_id, E.[type], type_activite, date_creation," &
