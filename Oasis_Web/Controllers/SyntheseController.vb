@@ -294,6 +294,7 @@ Namespace Oasis_Web.Controllers
                 If traitementDataTable.Rows(i)("oa_traitement_fenetre_date_debut") IsNot DBNull.Value Then
                     FenetreDateDebut = traitementDataTable.Rows(i)("oa_traitement_fenetre_date_debut")
                 Else
+                    FenetreDateDebut = Date.ParseExact("31/12/2999", "dd/MM/yyyy", CultureInfo.InvariantCulture)
                 End If
 
                 If traitementDataTable.Rows(i)("oa_traitement_fenetre_date_fin") IsNot DBNull.Value Then

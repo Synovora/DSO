@@ -1595,13 +1595,13 @@
     <Content Include="Views\Shared\Layouts\_layout_preloader.cshtml" />
     <Content Include="Views\Shared\_BlankLayout.cshtml" />
     <Content Include="Views\Shared\_footer.vbhtml" />
-    <Content Include="Views\Shared\_head_css.cshtml" />
+    <None Include="Views\Shared\_head_css.vbhtml" />
     <Content Include="Views\Shared\_horizontal.cshtml" />
     <Content Include="Views\Shared\_Layout.vbhtml" />
     <Content Include="Views\Shared\_page_title.vbhtml" />
     <Content Include="Views\Shared\_right_sidebar.vbhtml" />
     <Content Include="Views\Shared\_sidebar.vbhtml" />
-    <Content Include="Views\Shared\_title_meta.cshtml" />
+    <None Include="Views\Shared\_title_meta.vbhtml" />
     <Content Include="Views\Shared\_topbar.vbhtml" />
     <Content Include="Views\Shared\_vendor_scripts.vbhtml" />
     <Content Include="Views\Pages\pages-404.cshtml" />
