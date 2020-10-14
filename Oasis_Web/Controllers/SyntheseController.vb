@@ -8,6 +8,7 @@ Imports System.Web.Http
 Imports System.Web.Mvc
 Imports Oasis_Web
 Imports Oasis_Common
+Imports System.Globalization
 
 Namespace Oasis_Web.Controllers
     Public Class SyntheseController
@@ -293,7 +294,6 @@ Namespace Oasis_Web.Controllers
                 If traitementDataTable.Rows(i)("oa_traitement_fenetre_date_debut") IsNot DBNull.Value Then
                     FenetreDateDebut = traitementDataTable.Rows(i)("oa_traitement_fenetre_date_debut")
                 Else
-                    FenetreDateDebut = New Date(2999, 12, 31, 0, 0, 0)
                 End If
 
                 If traitementDataTable.Rows(i)("oa_traitement_fenetre_date_fin") IsNot DBNull.Value Then
