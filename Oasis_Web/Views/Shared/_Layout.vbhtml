@@ -3,16 +3,16 @@
 
 <head>
 
-    @Html.Partial("~/Views/Shared/_title_meta.vbhtml")
+    @Html.Partial("~/Views/Shared/_title_meta.cshtml")
     @RenderSection("styles", False)
-    @Html.Partial("~/Views/Shared/_head_css.vbhtml")
+    @Html.Partial("~/Views/Shared/_head_css.cshtml")
 
 </head>
 
 <body data-sidebar="dark">
 
     <!-- Begin page -->
-    <div id="layout-wrapper">
+    <div id="layout-wrapper">cs
         @Html.Partial("~/Views/Shared/_topbar.vbhtml")
         @Html.Partial("~/Views/Shared/_sidebar.vbhtml")
 
