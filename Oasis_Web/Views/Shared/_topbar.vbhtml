@@ -381,7 +381,7 @@
                     @*@<button type="button" Class="btn header-item noti-icon right-bar-toggle waves-effect" onclick='location.href="javascript:document.getElementById(\"logoutForm\").submit()"'>*@
                 <a class="dropdown-item text-danger" href="javascript:logout()"><i class="bx bx-power-off font-size-16 align-middle mr-1 text-danger"></i> Se Deconnecter</a>
                     @*</button>*@
-                    @*End Using*@
+                    @*End Using*@Oasis-689
                 </div>
             </div>
 

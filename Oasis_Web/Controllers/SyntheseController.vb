@@ -252,21 +252,21 @@ Namespace Oasis_Web.Controllers
                 If traitementDataTable.Rows(i)("oa_traitement_date_fin") IsNot DBNull.Value Then
                     dateFin = traitementDataTable.Rows(i)("oa_traitement_date_fin")
                 Else
-                    dateFin = "31/12/2999"
+                    dateFin = New Date(2999, 12, 31, 0, 0, 0)
                 End If
 
                 'Date début
                 If traitementDataTable.Rows(i)("oa_traitement_date_debut") IsNot DBNull.Value Then
                     dateDebut = traitementDataTable.Rows(i)("oa_traitement_date_debut")
                 Else
-                    dateDebut = "01/01/1900"
+                    dateDebut = New Date(1900, 1, 1, 0, 0, 0)
                 End If
 
                 'Date création
                 If traitementDataTable.Rows(i)("oa_traitement_date_creation") IsNot DBNull.Value Then
                     dateCreation = traitementDataTable.Rows(i)("oa_traitement_date_creation")
                 Else
-                    dateCreation = "01/01/1900"
+                    dateCreation = New Date(1900, 1, 1, 0, 0, 0)
                 End If
 
                 'Date modification
@@ -293,13 +293,13 @@ Namespace Oasis_Web.Controllers
                 If traitementDataTable.Rows(i)("oa_traitement_fenetre_date_debut") IsNot DBNull.Value Then
                     FenetreDateDebut = traitementDataTable.Rows(i)("oa_traitement_fenetre_date_debut")
                 Else
-                    FenetreDateDebut = "31/12/2999"
+                    FenetreDateDebut = New Date(2999, 12, 31, 0, 0, 0)
                 End If
 
                 If traitementDataTable.Rows(i)("oa_traitement_fenetre_date_fin") IsNot DBNull.Value Then
                     FenetreDateFin = traitementDataTable.Rows(i)("oa_traitement_fenetre_date_fin")
                 Else
-                    FenetreDateFin = "01/01/1900"
+                    FenetreDateFin = New Date(1900, 1, 1, 0, 0, 0)
                 End If
 
                 Posologie = ""
@@ -552,7 +552,7 @@ Namespace Oasis_Web.Controllers
                 If PPSDataTable.Rows(i)("oa_pps_date_debut") IsNot DBNull.Value Then
                     dateDebut = PPSDataTable.Rows(i)("oa_pps_date_debut")
                 Else
-                    dateDebut = "01/01/1900"
+                    dateDebut = New Date(1900, 1, 1, 0, 0, 0)
                 End If
 
                 'Rythme
