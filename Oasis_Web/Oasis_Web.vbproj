@@ -1585,7 +1585,7 @@
     <Content Include="Views\Auth\auth-recoverpw.cshtml" />
     <Content Include="Views\Auth\auth-register.cshtml" />
     <Content Include="Views\Dashboard\Index.vbhtml" />
-    <Content Include="Views\Shared\Error.cshtml" />
+    <None Include="Views\Shared\Error.vbhtml" />
     <Content Include="Views\Shared\Layouts\_layout_boxed.cshtml" />
     <Content Include="Views\Shared\Layouts\_layout_colored_sidebar.cshtml" />
     <Content Include="Views\Shared\Layouts\_layout_compact_sidebar.cshtml" />
@@ -1593,10 +1593,10 @@
     <Content Include="Views\Shared\Layouts\_layout_icon_sidebar.cshtml" />
     <Content Include="Views\Shared\Layouts\_layout_light_sidebar.cshtml" />
     <Content Include="Views\Shared\Layouts\_layout_preloader.cshtml" />
-    <Content Include="Views\Shared\_BlankLayout.cshtml" />
+    <None Include="Views\Shared\_BlankLayout.vbhtml" />
     <Content Include="Views\Shared\_footer.vbhtml" />
     <None Include="Views\Shared\_head_css.vbhtml" />
-    <Content Include="Views\Shared\_horizontal.cshtml" />
+    <None Include="Views\Shared\_horizontal.vbhtml" />
     <Content Include="Views\Shared\_Layout.vbhtml" />
     <Content Include="Views\Shared\_page_title.vbhtml" />
     <Content Include="Views\Shared\_right_sidebar.vbhtml" />
