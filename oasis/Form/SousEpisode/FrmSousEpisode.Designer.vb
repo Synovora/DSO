@@ -253,7 +253,7 @@ Partial Class FrmSousEpisode
         Me.Label3.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label3.Location = New System.Drawing.Point(12, 76)
         Me.Label3.Name = "Label3"
-        Me.Label3.Size = New System.Drawing.Size(61, 13)
+        Me.Label3.Size = New System.Drawing.Size(114, 26)
         Me.Label3.TabIndex = 39
         Me.Label3.Text = "Signature"
         '
@@ -271,7 +271,7 @@ Partial Class FrmSousEpisode
         Me.Label1.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label1.Location = New System.Drawing.Point(12, 53)
         Me.Label1.Name = "Label1"
-        Me.Label1.Size = New System.Drawing.Size(128, 13)
+        Me.Label1.Size = New System.Drawing.Size(238, 26)
         Me.Label1.TabIndex = 37
         Me.Label1.Text = "Dernière Modification"
         '
@@ -289,7 +289,7 @@ Partial Class FrmSousEpisode
         Me.Label12.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label12.Location = New System.Drawing.Point(12, 30)
         Me.Label12.Name = "Label12"
-        Me.Label12.Size = New System.Drawing.Size(54, 13)
+        Me.Label12.Size = New System.Drawing.Size(102, 26)
         Me.Label12.TabIndex = 34
         Me.Label12.Text = "Création"
         '
@@ -323,7 +323,7 @@ Partial Class FrmSousEpisode
         Me.DropDownDestinataire.DropDownStyle = Telerik.WinControls.RadDropDownStyle.DropDownList
         Me.DropDownDestinataire.Location = New System.Drawing.Point(93, 81)
         Me.DropDownDestinataire.Name = "DropDownDestinataire"
-        Me.DropDownDestinataire.Size = New System.Drawing.Size(274, 20)
+        Me.DropDownDestinataire.Size = New System.Drawing.Size(274, 35)
         Me.DropDownDestinataire.TabIndex = 62
         Me.DropDownDestinataire.Visible = False
         '
@@ -333,7 +333,7 @@ Partial Class FrmSousEpisode
         Me.LblDestinataire.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.LblDestinataire.Location = New System.Drawing.Point(13, 84)
         Me.LblDestinataire.Name = "LblDestinataire"
-        Me.LblDestinataire.Size = New System.Drawing.Size(72, 13)
+        Me.LblDestinataire.Size = New System.Drawing.Size(131, 26)
         Me.LblDestinataire.TabIndex = 61
         Me.LblDestinataire.Text = "Intervenant"
         Me.LblDestinataire.Visible = False
@@ -363,7 +363,7 @@ Partial Class FrmSousEpisode
         Me.LblALD.ForeColor = System.Drawing.Color.Red
         Me.LblALD.Location = New System.Drawing.Point(372, 83)
         Me.LblALD.Name = "LblALD"
-        Me.LblALD.Size = New System.Drawing.Size(31, 13)
+        Me.LblALD.Size = New System.Drawing.Size(58, 26)
         Me.LblALD.TabIndex = 47
         Me.LblALD.Text = "ALD"
         '
@@ -373,7 +373,7 @@ Partial Class FrmSousEpisode
         Me.DropDownSousType.DropDownStyle = Telerik.WinControls.RadDropDownStyle.DropDownList
         Me.DropDownSousType.Location = New System.Drawing.Point(93, 52)
         Me.DropDownSousType.Name = "DropDownSousType"
-        Me.DropDownSousType.Size = New System.Drawing.Size(328, 20)
+        Me.DropDownSousType.Size = New System.Drawing.Size(328, 35)
         Me.DropDownSousType.TabIndex = 46
         '
         'Label6
@@ -382,7 +382,7 @@ Partial Class FrmSousEpisode
         Me.Label6.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label6.Location = New System.Drawing.Point(16, 56)
         Me.Label6.Name = "Label6"
-        Me.Label6.Size = New System.Drawing.Size(67, 13)
+        Me.Label6.Size = New System.Drawing.Size(125, 26)
         Me.Label6.TabIndex = 45
         Me.Label6.Text = "Sous-Type"
         '
@@ -392,7 +392,7 @@ Partial Class FrmSousEpisode
         Me.DropDownType.DropDownStyle = Telerik.WinControls.RadDropDownStyle.DropDownList
         Me.DropDownType.Location = New System.Drawing.Point(93, 23)
         Me.DropDownType.Name = "DropDownType"
-        Me.DropDownType.Size = New System.Drawing.Size(328, 20)
+        Me.DropDownType.Size = New System.Drawing.Size(328, 35)
         Me.DropDownType.TabIndex = 44
         '
         'Label5
@@ -401,7 +401,7 @@ Partial Class FrmSousEpisode
         Me.Label5.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label5.Location = New System.Drawing.Point(45, 28)
         Me.Label5.Name = "Label5"
-        Me.Label5.Size = New System.Drawing.Size(35, 13)
+        Me.Label5.Size = New System.Drawing.Size(63, 26)
         Me.Label5.TabIndex = 43
         Me.Label5.Text = "Type"
         '
@@ -446,7 +446,7 @@ Partial Class FrmSousEpisode
         Me.Label9.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label9.Location = New System.Drawing.Point(358, 27)
         Me.Label9.Name = "Label9"
-        Me.Label9.Size = New System.Drawing.Size(111, 13)
+        Me.Label9.Size = New System.Drawing.Size(205, 26)
         Me.Label9.TabIndex = 57
         Me.Label9.Text = "Réponse attendue"
         '
@@ -467,7 +467,7 @@ Partial Class FrmSousEpisode
         Me.LblDelai.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.LblDelai.Location = New System.Drawing.Point(534, 27)
         Me.LblDelai.Name = "LblDelai"
-        Me.LblDelai.Size = New System.Drawing.Size(122, 13)
+        Me.LblDelai.Size = New System.Drawing.Size(233, 26)
         Me.LblDelai.TabIndex = 58
         Me.LblDelai.Text = "Délai maxi (en jours)"
         Me.LblDelai.Visible = False
@@ -486,7 +486,7 @@ Partial Class FrmSousEpisode
         Me.TxtDelai.MaskType = Telerik.WinControls.UI.MaskType.Standard
         Me.TxtDelai.Name = "TxtDelai"
         Me.TxtDelai.PromptChar = Global.Microsoft.VisualBasic.ChrW(32)
-        Me.TxtDelai.Size = New System.Drawing.Size(24, 20)
+        Me.TxtDelai.Size = New System.Drawing.Size(24, 35)
         Me.TxtDelai.TabIndex = 60
         Me.TxtDelai.TabStop = False
         Me.TxtDelai.Text = "   "
@@ -734,7 +734,7 @@ Partial Class FrmSousEpisode
         '
         'FrmSousEpisode
         '
-        Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
+        Me.AutoScaleDimensions = New System.Drawing.SizeF(12.0!, 25.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.CancelButton = Me.BtnCancel
         Me.ClientSize = New System.Drawing.Size(1158, 570)

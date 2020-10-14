@@ -371,15 +371,15 @@
                     <i class="mdi mdi-chevron-down d-none d-xl-inline-block"></i>
                 </button>
                 <div class="dropdown-menu dropdown-menu-right">
-                    <a class="dropdown-item" href="#"><i class="bx bx-user font-size-16 align-middle mr-1"></i> Profile</a>
+                    @*<a class="dropdown-item" href="#"><i class="bx bx-user font-size-16 align-middle mr-1"></i> Profile</a>*@
                     @*<a class="dropdown-item" href="#"><i class="bx bx-wallet font-size-16 align-middle mr-1"></i> My Wallet</a>*@
-                    <a class="dropdown-item d-block" href="#"><span class="badge badge-success float-right">11</span><i class="bx bx-wrench font-size-16 align-middle mr-1"></i> Settings</a>
+                    @*<a class="dropdown-item d-block" href="#"><span class="badge badge-success float-right">11</span><i class="bx bx-wrench font-size-16 align-middle mr-1"></i> Settings</a>
                     <a class="dropdown-item" href="#"><i class="bx bx-lock-open font-size-16 align-middle mr-1"></i> Lock screen</a>
-                    <div class="dropdown-divider"></div>
+                    <div class="dropdown-divider"></div>*@
                     @*@Using (Html.BeginForm("Logout", "Auth", FormMethod.Post, New With {Key .id = "logoutForm"}))*@
 
                     @*@<button type="button" Class="btn header-item noti-icon right-bar-toggle waves-effect" onclick='location.href="javascript:document.getElementById(\"logoutForm\").submit()"'>*@
-                    <a class="dropdown-item text-danger" href="javascript:logout()"><i class="bx bx-power-off font-size-16 align-middle mr-1 text-danger"></i> Logout</a>
+                <a class="dropdown-item text-danger" href="javascript:logout()"><i class="bx bx-power-off font-size-16 align-middle mr-1 text-danger"></i> Se Deconnecter</a>
                     @*</button>*@
                     @*End Using*@
                 </div>

@@ -466,7 +466,7 @@ Public Class EpisodeDao
                     " WHERE E.etat = '" & Episode.EnumEtatEpisode.CLOTURE.ToString & "'" &
                     " AND E.date_modification <= '" & dateDebutRecherche.ToString("yyyy-MM-dd") & "'" &
                     " AND E.date_modification >= '" & closeDate.Date.ToString("yyyy-MM-dd") & "'" &
-                    " AND (E.[type] = '" & Episode.EnumTypeEpisode.CONSULTATION.ToString & "' OR E.[type] = '" & Episode.EnumTypeEpisode.VIRTUEL.ToString & "')" &
+                    " AND E.[type] = '" & Episode.EnumTypeEpisode.CONSULTATION.ToString & "'" &
                     " AND (inactif = 'False' OR inactif is Null)" &
                     " ORDER BY date_modification"
 
