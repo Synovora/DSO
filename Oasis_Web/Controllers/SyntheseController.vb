@@ -300,7 +300,7 @@ Namespace Oasis_Web.Controllers
                 If traitementDataTable.Rows(i)("oa_traitement_fenetre_date_fin") IsNot DBNull.Value Then
                     FenetreDateFin = traitementDataTable.Rows(i)("oa_traitement_fenetre_date_fin")
                 Else
-                    FenetreDateFin = New Date(1900, 1, 1, 0, 0, 0)
+                    FenetreDateFin = Date.ParseExact("01/01/1900", "dd/MM/yyyy", CultureInfo.InvariantCulture)
                 End If
 
                 Posologie = ""
@@ -454,14 +454,14 @@ Namespace Oasis_Web.Controllers
                 End If
 
                 'Traitement du format d'affichage de la fin du traitement
-                If dateDebut = DateTime.Parse("31/12/2999") Then
+                If dateDebut = Date.ParseExact("31/12/2999", "dd/MM/yyyy", CultureInfo.InvariantCulture) Then
                     tmp.Add("Date non définie")
                 Else
                     tmp.Add(FormatageDateAffichage(dateDebut, True))
                 End If
 
                 'Traitement du format d'affichage de modification du traitement
-                If dateModification = DateTime.Parse("01/01/1900") Then
+                If dateModification = Date.ParseExact("31/12/2999", "dd/MM/yyyy", CultureInfo.InvariantCulture) Then
                     tmp.Add("Date non définie")
                 Else
                     tmp.Add(FormatageDateAffichage(dateModification, True))
