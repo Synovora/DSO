@@ -1593,7 +1593,7 @@
     <Content Include="Views\Shared\Layouts\_layout_icon_sidebar.cshtml" />
     <Content Include="Views\Shared\Layouts\_layout_light_sidebar.cshtml" />
     <Content Include="Views\Shared\Layouts\_layout_preloader.cshtml" />
-    <None Include="Views\Shared\_BlankLayout.vbhtml" />
+    <None Include="Views\Shared\_BlankLayout.cshtml" />
     <Content Include="Views\Shared\_footer.vbhtml" />
     <None Include="Views\Shared\_head_css.cshtml" />
     <None Include="Views\Shared\_horizontal.vbhtml" />

@@ -16,7 +16,7 @@ End Section
     <div class="col-xl-4">
         <div class="card">
             <div class="card-body">
-                <button Class="btn btn-primary btn-block waves-effect waves-light" id="btnParametreAutoSuiviAdd" disabled>Ajouter des paranetres d'auto-suivi</button>
+                <button Class="btn btn-primary btn-block waves-effect waves-light" id="btnParametreAutoSuiviAdd" disabled>Ajouter des parametres d'auto-suivi</button>
             </div>
         </div>
     </div>
