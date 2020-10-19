@@ -49,48 +49,51 @@ Partial Class FrmEtatJournalier
         Me.RadGridView.ForeColor = System.Drawing.Color.Black
         Me.RadGridView.ImeMode = System.Windows.Forms.ImeMode.NoControl
         Me.RadGridView.Location = New System.Drawing.Point(24, 58)
-        Me.RadGridView.Margin = New System.Windows.Forms.Padding(6144)
+        Me.RadGridView.Margin = New System.Windows.Forms.Padding(98304)
         '
         '
         '
         Me.RadGridView.MasterTemplate.AllowAddNewRow = False
+        GridViewTextBoxColumn1.AllowGroup = False
+        GridViewTextBoxColumn1.AllowResize = False
+        GridViewTextBoxColumn1.AllowSort = False
         GridViewTextBoxColumn1.EnableExpressionEditor = False
         GridViewTextBoxColumn1.HeaderText = "Nom"
         GridViewTextBoxColumn1.HeaderTextAlignment = System.Drawing.ContentAlignment.BottomCenter
-        GridViewTextBoxColumn1.MinWidth = 400
+        GridViewTextBoxColumn1.MinWidth = 1600
         GridViewTextBoxColumn1.Name = "nom"
         GridViewTextBoxColumn1.SortOrder = Telerik.WinControls.UI.RadSortOrder.Ascending
-        GridViewTextBoxColumn1.Width = 400
+        GridViewTextBoxColumn1.Width = 6400
         GridViewTextBoxColumn2.EnableExpressionEditor = False
         GridViewTextBoxColumn2.HeaderText = "Prenom"
-        GridViewTextBoxColumn2.MinWidth = 400
+        GridViewTextBoxColumn2.MinWidth = 6400
         GridViewTextBoxColumn2.Name = "prenom"
-        GridViewTextBoxColumn2.Width = 400
+        GridViewTextBoxColumn2.Width = 6400
         GridViewTextBoxColumn3.EnableExpressionEditor = False
         GridViewTextBoxColumn3.HeaderText = "DN"
-        GridViewTextBoxColumn3.MinWidth = 400
+        GridViewTextBoxColumn3.MinWidth = 6400
         GridViewTextBoxColumn3.Name = "dn"
-        GridViewTextBoxColumn3.Width = 400
+        GridViewTextBoxColumn3.Width = 6400
         GridViewTextBoxColumn4.EnableExpressionEditor = False
         GridViewTextBoxColumn4.HeaderText = "NIR"
-        GridViewTextBoxColumn4.MinWidth = 400
+        GridViewTextBoxColumn4.MinWidth = 6400
         GridViewTextBoxColumn4.Name = "nir"
-        GridViewTextBoxColumn4.Width = 400
+        GridViewTextBoxColumn4.Width = 6400
         GridViewTextBoxColumn5.EnableExpressionEditor = False
         GridViewTextBoxColumn5.HeaderText = "Type"
-        GridViewTextBoxColumn5.MinWidth = 400
+        GridViewTextBoxColumn5.MinWidth = 6400
         GridViewTextBoxColumn5.Name = "type"
-        GridViewTextBoxColumn5.Width = 400
+        GridViewTextBoxColumn5.Width = 6400
         GridViewTextBoxColumn6.EnableExpressionEditor = False
         GridViewTextBoxColumn6.HeaderText = "site"
-        GridViewTextBoxColumn6.MinWidth = 400
+        GridViewTextBoxColumn6.MinWidth = 6400
         GridViewTextBoxColumn6.Name = "site"
-        GridViewTextBoxColumn6.Width = 400
+        GridViewTextBoxColumn6.Width = 6400
         GridViewTextBoxColumn7.EnableExpressionEditor = False
         GridViewTextBoxColumn7.HeaderText = "Episode Id"
-        GridViewTextBoxColumn7.MinWidth = 400
+        GridViewTextBoxColumn7.MinWidth = 6400
         GridViewTextBoxColumn7.Name = "episodeId"
-        GridViewTextBoxColumn7.Width = 400
+        GridViewTextBoxColumn7.Width = 6400
         Me.RadGridView.MasterTemplate.Columns.AddRange(New Telerik.WinControls.UI.GridViewDataColumn() {GridViewTextBoxColumn1, GridViewTextBoxColumn2, GridViewTextBoxColumn3, GridViewTextBoxColumn4, GridViewTextBoxColumn5, GridViewTextBoxColumn6, GridViewTextBoxColumn7})
         SortDescriptor1.PropertyName = "nom"
         Me.RadGridView.MasterTemplate.SortDescriptors.AddRange(New Telerik.WinControls.Data.SortDescriptor() {SortDescriptor1})

@@ -57,4 +57,8 @@ Public Class FrmEtatJournalier
         'exporter.RunExport(fileName)
 
     End Sub
+
+    Private Sub RadGridView_Click(sender As Object, e As EventArgs) Handles RadGridView.Click
+
+    End Sub
 End Class
