@@ -60,40 +60,40 @@ Partial Class FrmEtatJournalier
         GridViewTextBoxColumn1.EnableExpressionEditor = False
         GridViewTextBoxColumn1.HeaderText = "Nom"
         GridViewTextBoxColumn1.HeaderTextAlignment = System.Drawing.ContentAlignment.BottomCenter
-        GridViewTextBoxColumn1.MinWidth = 1600
+        GridViewTextBoxColumn1.MinWidth = 0
         GridViewTextBoxColumn1.Name = "nom"
         GridViewTextBoxColumn1.SortOrder = Telerik.WinControls.UI.RadSortOrder.Ascending
-        GridViewTextBoxColumn1.Width = 6400
+        GridViewTextBoxColumn1.Width = 120
         GridViewTextBoxColumn2.EnableExpressionEditor = False
         GridViewTextBoxColumn2.HeaderText = "Prenom"
-        GridViewTextBoxColumn2.MinWidth = 6400
+        GridViewTextBoxColumn2.MinWidth = 0
         GridViewTextBoxColumn2.Name = "prenom"
-        GridViewTextBoxColumn2.Width = 6400
+        GridViewTextBoxColumn2.Width = 150
         GridViewTextBoxColumn3.EnableExpressionEditor = False
         GridViewTextBoxColumn3.HeaderText = "DN"
-        GridViewTextBoxColumn3.MinWidth = 6400
+        GridViewTextBoxColumn3.MinWidth = 0
         GridViewTextBoxColumn3.Name = "dn"
-        GridViewTextBoxColumn3.Width = 6400
+        GridViewTextBoxColumn3.Width = 100
         GridViewTextBoxColumn4.EnableExpressionEditor = False
         GridViewTextBoxColumn4.HeaderText = "NIR"
-        GridViewTextBoxColumn4.MinWidth = 6400
+        GridViewTextBoxColumn4.MinWidth = 0
         GridViewTextBoxColumn4.Name = "nir"
-        GridViewTextBoxColumn4.Width = 6400
+        GridViewTextBoxColumn4.Width = 100
         GridViewTextBoxColumn5.EnableExpressionEditor = False
         GridViewTextBoxColumn5.HeaderText = "Type"
-        GridViewTextBoxColumn5.MinWidth = 6400
+        GridViewTextBoxColumn5.MinWidth = 0
         GridViewTextBoxColumn5.Name = "type"
-        GridViewTextBoxColumn5.Width = 6400
+        GridViewTextBoxColumn5.Width = 120
         GridViewTextBoxColumn6.EnableExpressionEditor = False
         GridViewTextBoxColumn6.HeaderText = "site"
-        GridViewTextBoxColumn6.MinWidth = 6400
+        GridViewTextBoxColumn6.MinWidth = 0
         GridViewTextBoxColumn6.Name = "site"
-        GridViewTextBoxColumn6.Width = 6400
+        GridViewTextBoxColumn6.Width = 150
         GridViewTextBoxColumn7.EnableExpressionEditor = False
-        GridViewTextBoxColumn7.HeaderText = "Episode Id"
-        GridViewTextBoxColumn7.MinWidth = 6400
+        GridViewTextBoxColumn7.HeaderText = "Id"
+        GridViewTextBoxColumn7.MinWidth = 0
         GridViewTextBoxColumn7.Name = "episodeId"
-        GridViewTextBoxColumn7.Width = 6400
+        GridViewTextBoxColumn7.Width = 60
         Me.RadGridView.MasterTemplate.Columns.AddRange(New Telerik.WinControls.UI.GridViewDataColumn() {GridViewTextBoxColumn1, GridViewTextBoxColumn2, GridViewTextBoxColumn3, GridViewTextBoxColumn4, GridViewTextBoxColumn5, GridViewTextBoxColumn6, GridViewTextBoxColumn7})
         SortDescriptor1.PropertyName = "nom"
         Me.RadGridView.MasterTemplate.SortDescriptors.AddRange(New Telerik.WinControls.Data.SortDescriptor() {SortDescriptor1})
@@ -101,7 +101,7 @@ Partial Class FrmEtatJournalier
         Me.RadGridView.Name = "RadGridView"
         Me.RadGridView.ReadOnly = True
         Me.RadGridView.RightToLeft = System.Windows.Forms.RightToLeft.No
-        Me.RadGridView.Size = New System.Drawing.Size(734, 766)
+        Me.RadGridView.Size = New System.Drawing.Size(842, 766)
         Me.RadGridView.TabIndex = 0
         Me.RadGridView.ThemeName = "ControlDefault"
         '
@@ -109,7 +109,7 @@ Partial Class FrmEtatJournalier
         '
         Me.RadDateTimePicker.Location = New System.Drawing.Point(24, 13)
         Me.RadDateTimePicker.Name = "RadDateTimePicker"
-        Me.RadDateTimePicker.Size = New System.Drawing.Size(328, 35)
+        Me.RadDateTimePicker.Size = New System.Drawing.Size(328, 20)
         Me.RadDateTimePicker.TabIndex = 1
         Me.RadDateTimePicker.TabStop = False
         Me.RadDateTimePicker.Text = "lundi 12 octobre 2020"
@@ -117,7 +117,7 @@ Partial Class FrmEtatJournalier
         '
         'RadButton
         '
-        Me.RadButton.Location = New System.Drawing.Point(616, 16)
+        Me.RadButton.Location = New System.Drawing.Point(725, 13)
         Me.RadButton.Name = "RadButton"
         Me.RadButton.Size = New System.Drawing.Size(141, 31)
         Me.RadButton.TabIndex = 2
@@ -125,9 +125,9 @@ Partial Class FrmEtatJournalier
         '
         'FrmEtatJournalier
         '
-        Me.AutoScaleDimensions = New System.Drawing.SizeF(12.0!, 25.0!)
+        Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(783, 851)
+        Me.ClientSize = New System.Drawing.Size(877, 851)
         Me.Controls.Add(Me.RadButton)
         Me.Controls.Add(Me.RadDateTimePicker)
         Me.Controls.Add(Me.RadGridView)
