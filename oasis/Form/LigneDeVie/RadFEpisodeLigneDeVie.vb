@@ -131,7 +131,6 @@ Public Class RadFEpisodeLigneDeVie
 
         ChkProfilMedical.Checked = True
         ChkProfilParamedical.Checked = True
-        ChkProfilPatient.Checked = True
 
         ligneDeVie.TypeConsultation = True
         ligneDeVie.TypeVirtuel = True
@@ -148,7 +147,6 @@ Public Class RadFEpisodeLigneDeVie
 
         ligneDeVie.ProfilMedical = True
         ligneDeVie.ProfilParamedical = True
-        ligneDeVie.ProfilPatient = True
 
         Dim Age As Integer = CalculAgeEnAnnee(SelectedPatient.PatientDateNaissance)
         If Age > limiteAgeEnfant Then
@@ -215,7 +213,6 @@ Public Class RadFEpisodeLigneDeVie
 
             ChkProfilMedical.Checked = patientParametreLdv.ProfilMedical
             ChkProfilParamedical.Checked = patientParametreLdv.ProfilParamedical
-            ChkProfilPatient.Checked = patientParametreLdv.ProfilPatient
 
             ligneDeVie.TypeConsultation = patientParametreLdv.TypeConsultation
             ligneDeVie.TypeVirtuel = patientParametreLdv.TypeVirtuel
@@ -232,7 +229,6 @@ Public Class RadFEpisodeLigneDeVie
 
             ligneDeVie.ProfilMedical = patientParametreLdv.ProfilMedical
             ligneDeVie.ProfilParamedical = patientParametreLdv.ProfilParamedical
-            ligneDeVie.ProfilPatient = patientParametreLdv.ProfilPatient
 
             If patientParametreLdv.Parametre1 <> 0 Then
                 listeParametreaAfficher.Add(patientParametreLdv.Parametre1)
@@ -855,12 +851,6 @@ Public Class RadFEpisodeLigneDeVie
             ligneDeVie.ProfilParamedical = False
         End If
 
-        If ChkProfilPatient.Checked = True Then
-            ligneDeVie.ProfilPatient = True
-        Else
-            ligneDeVie.ProfilPatient = False
-        End If
-
         ChargementEpisode(ligneDeVie)
     End Sub
 
@@ -961,12 +951,6 @@ Public Class RadFEpisodeLigneDeVie
             patientParametreLdv.ProfilParamedical = True
         Else
             patientParametreLdv.ProfilParamedical = False
-        End If
-
-        If ChkProfilPatient.Checked = True Then
-            patientParametreLdv.ProfilPatient = True
-        Else
-            patientParametreLdv.ProfilPatient = False
         End If
 
         patientParametreLdv.Parametre1 = Coalesce(Parametre1Id, 0)

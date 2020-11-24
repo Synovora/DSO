@@ -263,13 +263,6 @@ Public Class EpisodeDao
             RechercherprofilEpisode = True
             ProfilEpisodeString += ProfilDao.EnumProfilType.PARAMEDICAL.ToString & "'"
         End If
-        If ligneDeVie.ProfilPatient = True Then
-            If RechercherprofilEpisode = True Then
-                ProfilEpisodeString += ", '"
-            End If
-            RechercherprofilEpisode = True
-            ProfilEpisodeString += ProfilDao.EnumProfilType.PATIENT.ToString & "'"
-        End If
         If RechercherprofilEpisode = True Then
             ProfilEpisodeString += ")" & vbCrLf
         End If

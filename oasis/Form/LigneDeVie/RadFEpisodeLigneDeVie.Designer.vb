@@ -568,7 +568,6 @@ Partial Class RadFEpisodeLigneDeVie
         '
         Me.RadGbxFiltre.AccessibleRole = System.Windows.Forms.AccessibleRole.Grouping
         Me.RadGbxFiltre.BackColor = System.Drawing.SystemColors.GradientInactiveCaption
-        Me.RadGbxFiltre.Controls.Add(Me.ChkProfilPatient)
         Me.RadGbxFiltre.Controls.Add(Me.ChkTypeParametre)
         Me.RadGbxFiltre.Controls.Add(Me.ChkTypeConsultation)
         Me.RadGbxFiltre.Controls.Add(Me.ChkTypeVirtuel)
@@ -808,6 +807,5 @@ Partial Class RadFEpisodeLigneDeVie
     Friend WithEvents RadBtnCreationEpisodeParametre As Telerik.WinControls.UI.RadButton
     Friend WithEvents ChkTypeParametre As CheckBox
     Friend WithEvents LblDateNaissance As Label
-    Friend WithEvents ChkProfilPatient As CheckBox
 End Class
 
