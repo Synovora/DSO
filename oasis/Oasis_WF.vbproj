@@ -79,10 +79,10 @@
     <OptionInfer>On</OptionInfer>
   </PropertyGroup>
   <PropertyGroup>
-    <ManifestCertificateThumbprint>025BF59D185520D5C6DCC94ECCE48A28BC0F9B19</ManifestCertificateThumbprint>
+    <ManifestCertificateThumbprint>88D3DD4F26291B5A06254C2D3EEE79EFDF381459</ManifestCertificateThumbprint>
   </PropertyGroup>
   <PropertyGroup>
-    <ManifestKeyFile>Oasis_WF_TemporaryKey.pfx</ManifestKeyFile>
+    <ManifestKeyFile>Oasis_WF_1_TemporaryKey.pfx</ManifestKeyFile>
   </PropertyGroup>
   <PropertyGroup>
     <GenerateManifests>true</GenerateManifests>
@@ -1445,6 +1445,7 @@
     <None Include="oasisDataSet2.xss">
       <DependentUpon>oasisDataSet2.xsd</DependentUpon>
     </None>
+    <None Include="Oasis_WF_1_TemporaryKey.pfx" />
     <None Include="Oasis_WF_TemporaryKey.pfx" />
     <None Include="packages.config" />
     <None Include="RORDS.xsc">
