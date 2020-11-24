@@ -79,7 +79,6 @@ Partial Class RadFEpisodeLigneDeVie
         Me.LblParametre5 = New System.Windows.Forms.Label()
         Me.RadBtnParametre = New Telerik.WinControls.UI.RadButton()
         Me.RadGbxFiltre = New Telerik.WinControls.UI.RadGroupBox()
-        Me.ChkProfilPatient = New System.Windows.Forms.CheckBox()
         Me.ChkTypeParametre = New System.Windows.Forms.CheckBox()
         Me.RadGbxParametre = New Telerik.WinControls.UI.RadGroupBox()
         Me.LblLabelParametre = New System.Windows.Forms.Label()
@@ -91,6 +90,7 @@ Partial Class RadFEpisodeLigneDeVie
         Me.RadBtnChart = New Telerik.WinControls.UI.RadButton()
         Me.RadBtnConfiguration = New Telerik.WinControls.UI.RadButton()
         Me.RadBtnCreationEpisodeParametre = New Telerik.WinControls.UI.RadButton()
+        Me.ChkProfilPatient = New System.Windows.Forms.CheckBox()
         CType(Me.RadBtnAbandon, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.RadBtnEpisode, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.RadGroupBoxEtatCivil, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -302,6 +302,7 @@ Partial Class RadFEpisodeLigneDeVie
         GridViewTextBoxColumn3.Width = 170
         GridViewTextBoxColumn4.EnableExpressionEditor = False
         GridViewTextBoxColumn4.HeaderText = "Nature"
+        GridViewTextBoxColumn4.IsVisible = False
         GridViewTextBoxColumn4.Name = "type_profil"
         GridViewTextBoxColumn4.ReadOnly = True
         GridViewTextBoxColumn4.Width = 95
@@ -567,7 +568,6 @@ Partial Class RadFEpisodeLigneDeVie
         '
         Me.RadGbxFiltre.AccessibleRole = System.Windows.Forms.AccessibleRole.Grouping
         Me.RadGbxFiltre.BackColor = System.Drawing.SystemColors.GradientInactiveCaption
-        Me.RadGbxFiltre.Controls.Add(Me.ChkProfilPatient)
         Me.RadGbxFiltre.Controls.Add(Me.ChkTypeParametre)
         Me.RadGbxFiltre.Controls.Add(Me.ChkTypeConsultation)
         Me.RadGbxFiltre.Controls.Add(Me.ChkTypeVirtuel)
@@ -588,16 +588,6 @@ Partial Class RadFEpisodeLigneDeVie
         Me.RadGbxFiltre.Size = New System.Drawing.Size(1147, 91)
         Me.RadGbxFiltre.TabIndex = 23
         Me.RadGbxFiltre.Text = "Filtres d'affichage"
-        '
-        'ChkProfilPatient
-        '
-        Me.ChkProfilPatient.AutoSize = True
-        Me.ChkProfilPatient.Location = New System.Drawing.Point(224, 67)
-        Me.ChkProfilPatient.Name = "ChkProfilPatient"
-        Me.ChkProfilPatient.Size = New System.Drawing.Size(62, 17)
-        Me.ChkProfilPatient.TabIndex = 17
-        Me.ChkProfilPatient.Text = "Patient"
-        Me.ChkProfilPatient.UseVisualStyleBackColor = True
         '
         'ChkTypeParametre
         '
@@ -707,6 +697,16 @@ Partial Class RadFEpisodeLigneDeVie
         Me.RadBtnCreationEpisodeParametre.Size = New System.Drawing.Size(144, 24)
         Me.RadBtnCreationEpisodeParametre.TabIndex = 27
         Me.RadBtnCreationEpisodeParametre.Text = "+ Episode de paramètres"
+        '
+        'ChkProfilPatient
+        '
+        Me.ChkProfilPatient.AutoSize = True
+        Me.ChkProfilPatient.Location = New System.Drawing.Point(224, 67)
+        Me.ChkProfilPatient.Name = "ChkProfilPatient"
+        Me.ChkProfilPatient.Size = New System.Drawing.Size(62, 17)
+        Me.ChkProfilPatient.TabIndex = 17
+        Me.ChkProfilPatient.Text = "Patient"
+        Me.ChkProfilPatient.UseVisualStyleBackColor = True
         '
         'RadFEpisodeLigneDeVie
         '

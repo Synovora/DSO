@@ -192,10 +192,12 @@
     <Compile Include="Areas\HelpPage\SampleGeneration\TextSample.vb" />
     <Compile Include="Areas\HelpPage\XmlDocumentationProvider.vb" />
     <Compile Include="Constants.vb" />
+    <Compile Include="Controllers\AutoSuiviController.vb" />
     <Compile Include="Controllers\DocFileUploadController.vb" />
     <Compile Include="Controllers\DocFileDownloadController.vb" />
     <Compile Include="Controllers\LoginController.vb" />
     <Compile Include="Controllers\SignController.vb" />
+    <Compile Include="Controllers\SyntheseController.vb" />
     <Compile Include="Global.asax.vb">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -1461,7 +1463,8 @@
       <Generator>MyApplicationCodeGenerator</Generator>
       <LastGenOutput>Application.Designer.vb</LastGenOutput>
     </None>
-    <None Include="My Project\PublishProfiles\CustomProfile.pubxml" />
+    <None Include="My Project\PublishProfiles\FolderProfile.pubxml" />
+    <None Include="My Project\PublishProfiles\WebAppProfile.pubxml" />
     <None Include="My Project\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <CustomToolNamespace>My</CustomToolNamespace>
@@ -1578,11 +1581,11 @@
     <Content Include="Scripts\popper.js.map" />
     <Content Include="Scripts\popper-utils.min.js.map" />
     <Content Include="Scripts\popper-utils.js.map" />
-    <None Include="Views\Auth\login.vbhtml" />
+    <Content Include="Views\Auth\login.vbhtml" />
     <Content Include="Views\Auth\auth-recoverpw.cshtml" />
-    <Content Include="Views\Auth\auth-register.cshtml" />
-    <None Include="Views\Dashboard\Index.vbhtml" />
-    <Content Include="Views\Shared\Error.cshtml" />
+    <None Include="Views\Auth\auth-register.vbhtml" />
+    <Content Include="Views\Dashboard\Index.vbhtml" />
+    <None Include="Views\Shared\Error.vbhtml" />
     <Content Include="Views\Shared\Layouts\_layout_boxed.cshtml" />
     <Content Include="Views\Shared\Layouts\_layout_colored_sidebar.cshtml" />
     <Content Include="Views\Shared\Layouts\_layout_compact_sidebar.cshtml" />
@@ -1590,17 +1593,17 @@
     <Content Include="Views\Shared\Layouts\_layout_icon_sidebar.cshtml" />
     <Content Include="Views\Shared\Layouts\_layout_light_sidebar.cshtml" />
     <Content Include="Views\Shared\Layouts\_layout_preloader.cshtml" />
-    <Content Include="Views\Shared\_BlankLayout.cshtml" />
-    <None Include="Views\Shared\_footer.vbhtml" />
-    <Content Include="Views\Shared\_head_css.cshtml" />
-    <Content Include="Views\Shared\_horizontal.cshtml" />
-    <None Include="Views\Shared\_Layout.vbhtml" />
-    <None Include="Views\Shared\_page_title.vbhtml" />
-    <None Include="Views\Shared\_right_sidebar.vbhtml" />
-    <None Include="Views\Shared\_sidebar.vbhtml" />
-    <Content Include="Views\Shared\_title_meta.cshtml" />
-    <None Include="Views\Shared\_topbar.vbhtml" />
-    <None Include="Views\Shared\_vendor_scripts.vbhtml" />
+    <None Include="Views\Shared\_BlankLayout.cshtml" />
+    <Content Include="Views\Shared\_footer.vbhtml" />
+    <None Include="Views\Shared\_head_css.cshtml" />
+    <None Include="Views\Shared\_horizontal.vbhtml" />
+    <Content Include="Views\Shared\_Layout.vbhtml" />
+    <Content Include="Views\Shared\_page_title.vbhtml" />
+    <Content Include="Views\Shared\_right_sidebar.vbhtml" />
+    <Content Include="Views\Shared\_sidebar.vbhtml" />
+    <None Include="Views\Shared\_title_meta.cshtml" />
+    <Content Include="Views\Shared\_topbar.vbhtml" />
+    <Content Include="Views\Shared\_vendor_scripts.vbhtml" />
     <Content Include="Views\Pages\pages-404.cshtml" />
     <Content Include="Views\Pages\pages-500.cshtml" />
     <Content Include="Views\Pages\pages-comingsoon.cshtml" />
@@ -1609,14 +1612,16 @@
     <Content Include="Views\Pages\pages-pricing.cshtml" />
     <Content Include="Views\Pages\pages-starter.cshtml" />
     <Content Include="Views\Pages\pages-timeline.cshtml" />
+    <Content Include="Views\AutoSuivi\Index.vbhtml" />
+    <Content Include="Views\Synthese\Index.vbhtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
     <Content Include="Views\Home\Index.vbhtml" />
-    <None Include="Views\Sign\Check.vbhtml" />
-    <None Include="Views\Sign\Inactif.vbhtml" />
+    <Content Include="Views\Sign\Check.vbhtml" />
+    <Content Include="Views\Sign\Inactif.vbhtml" />
     <Content Include="Views\Web.config" />
     <Content Include="Views\_ViewStart.vbhtml" />
     <Content Include="Web.config" />
@@ -1640,6 +1645,9 @@
   </ItemGroup>
   <ItemGroup>
     <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Views\Info\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

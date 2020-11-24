@@ -19,32 +19,30 @@
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <Deterministic>true</Deterministic>
-    <IsWebBootstrapper>true</IsWebBootstrapper>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
-    <TargetFrameworkProfile />
-    <PublishUrl>ftp://ns3119889.ip-51-38-181.eu/</PublishUrl>
+    <PublishUrl>C:\inetpub\wwwroot\clickonce\</PublishUrl>
     <Install>true</Install>
-    <InstallFrom>Web</InstallFrom>
-    <UpdateEnabled>true</UpdateEnabled>
+    <InstallFrom>Disk</InstallFrom>
+    <UpdateEnabled>false</UpdateEnabled>
     <UpdateMode>Foreground</UpdateMode>
     <UpdateInterval>7</UpdateInterval>
     <UpdateIntervalUnits>Days</UpdateIntervalUnits>
     <UpdatePeriodically>false</UpdatePeriodically>
     <UpdateRequired>false</UpdateRequired>
     <MapFileExtensions>true</MapFileExtensions>
-    <InstallUrl>http://ns3119889.ip-51-38-181.eu/clickonce/</InstallUrl>
     <UpdateUrl>http://ns3119889.ip-51-38-181.eu/clickonce/</UpdateUrl>
-    <ProductName>DSO</ProductName>
+    <ProductName>Oasis</ProductName>
     <PublisherName>Synovora</PublisherName>
     <SuiteName>Oasis</SuiteName>
-    <CreateWebPageOnPublish>true</CreateWebPageOnPublish>
     <WebPage>publish.htm</WebPage>
-    <ApplicationRevision>106</ApplicationRevision>
+    <ApplicationRevision>53</ApplicationRevision>
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <PublishWizardCompleted>true</PublishWizardCompleted>
     <BootstrapperEnabled>true</BootstrapperEnabled>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -88,7 +86,7 @@
     <GenerateManifests>true</GenerateManifests>
   </PropertyGroup>
   <PropertyGroup>
-    <SignManifests>true</SignManifests>
+    <SignManifests>false</SignManifests>
   </PropertyGroup>
   <PropertyGroup>
     <TargetZone>LocalIntranet</TargetZone>
@@ -225,9 +223,9 @@
       <HintPath>..\lib\RCWF\2020.1.218.40\Telerik.WinControls.Themes.FluentDark.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Telerik.WinControls.Themes.Office2007Silver, Version=2020.1.218.40, Culture=neutral, PublicKeyToken=5bb2a467cbec794e, processorArchitecture=MSIL">
+    <Reference Include="Telerik.WinControls.Themes.Office2007Silver, Version=2020.2.616.40, Culture=neutral, PublicKeyToken=5bb2a467cbec794e, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\Windows\Microsoft.NET\assembly\GAC_MSIL\Telerik.WinControls.Themes.Office2007Silver\v4.0_2020.1.218.40__5bb2a467cbec794e\Telerik.WinControls.Themes.Office2007Silver.dll</HintPath>
+      <HintPath>C:\Program Files (x86)\Progress\Telerik UI for WinForms R2 2020\Bin40\Telerik.WinControls.Themes.Office2007Silver.dll</HintPath>
     </Reference>
     <Reference Include="Telerik.WinControls.Themes.Office2013Dark, Version=2020.1.218.40, Culture=neutral, PublicKeyToken=5bb2a467cbec794e, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -274,6 +272,12 @@
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Form\Episode\EpisodeUtils.vb" />
+    <Compile Include="Form\EtatJournalier\FrmEtatJournalier.Designer.vb">
+      <DependentUpon>FrmEtatJournalier.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Form\EtatJournalier\FrmEtatJournalier.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Form\RendezVous\RadFListeIntervenantSansRDV.Designer.vb">
       <DependentUpon>RadFListeIntervenantSansRDV.vb</DependentUpon>
     </Compile>
@@ -995,6 +999,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Form\DRC\RadFAutoSuivi.resx">
       <DependentUpon>RadFAutoSuivi.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form\EtatJournalier\FrmEtatJournalier.resx">
+      <DependentUpon>FrmEtatJournalier.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Form\RendezVous\RadFListeIntervenantSansRDV.resx">
       <DependentUpon>RadFListeIntervenantSansRDV.vb</DependentUpon>

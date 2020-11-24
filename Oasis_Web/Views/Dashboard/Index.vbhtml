@@ -1,7 +1,7 @@
 ﻿@Imports Oasis_Common
 @Code
-    ViewBag.Title = "Dashboard"
-    ViewBag.pTitle = "Dashboard"
+    ViewBag.Title = "Accueil"
+    ViewBag.pTitle = "Accueil"
     ViewBag.pageTitle = "Synovora"
     Layout = "~/Views/Shared/_Layout.vbhtml"
 
@@ -57,9 +57,9 @@ End Code
                             <p>Profil Patient N*@Request.Cookies("patientId").Value</p>
                         </div>
                     </div>
-                    <div class="col-5 align-self-end">
+                    @*<div class="col-5 align-self-end">
                         <img src="~/assets/images/profile-img.png" alt="" class="img-fluid">
-                    </div>
+                    </div>*@
                 </div>
             </div>
             <div class="card-body pt-0">
@@ -83,9 +83,9 @@ End Code
                                     <p class="text-muted mb-0">Traitements</p>
                                 </div>
                             </div>
-                            <div class="mt-4">
+                            @*<div class="mt-4">
                                 <a href="" class="btn btn-primary waves-effect waves-light btn-sm">Voir Profil <i class="mdi mdi-arrow-right ml-1"></i></a>
-                            </div>
+                            </div>*@
                         </div>
                     </div>
                 </div>
@@ -172,57 +172,6 @@ End Code
                 </div>*@
         </div>
         <!-- end row -->
-
-        <div class="card">
-            <div class="card-body">
-                <h4 class="card-title mb-4 float-sm-left">Paramatere d'Auto-Suivi</h4>
-                @*<div class="float-sm-right">
-                        <ul class="nav nav-pills">
-                            <li class="nav-item">
-                                <a class="nav-link" href="#">Week</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="#">Month</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link active" href="#">Year</a>
-                            </li>
-                        </ul>
-                    </div>*@
-                <div class="clearfix"></div>
-                <div>
-                    @Using (Html.BeginForm(Nothing, Nothing, FormMethod.Post, New With {.id = "__AjaxAntiForgeryForm"}))
-                        @Html.AntiForgeryToken()
-                    End Using
-                    <form id="myDiv" Class="form-horizontal" data-url="@Url.Action("AutoSuiviValidate", "Dashboard")">
-                        <div class="d-flex flex-column flex-wrap justify-flex-start">
-                            @For i As Integer = 0 To ViewBag.ParametresAutoSuivi.Count - 1
-                                @<div class="boxAutoSuiviItem d-flex flex-row justify-content-between lh-condensed">
-                                    <h6 class="my-0">@(If(ViewBag.ParametresAutoSuivi(i).DescriptionPatient = "", ViewBag.ParametresAutoSuivi(i).Description, ViewBag.ParametresAutoSuivi(i).DescriptionPatient))</h6>
-                                    <div Class="">
-                                        <div class="input-group">
-                                            <div class="input-group-prepend">
-                                                <span class="input-group-text" id="validationTooltipUsernamePrepend">@ViewBag.ParametresAutoSuivi(i).Unite</span>
-                                            </div>
-                                            <input type="text" class="form-control" maxlength="11" id=@("ParametreAutoSuivi-" & ViewBag.ParametresAutoSuivi(i).Id) name=@ViewBag.ParametresAutoSuivi(i).Id placeholder="">
-                                            @*<div class="invalid-tooltip">
-                                                    Please choose a unique and valid username.
-                                                </div>*@
-                                        </div>
-                                    </div>
-                                </div>
-                            Next
-                        </div>
-                        <div class="clearfix"></div>
-                        <div Class="mt-3">
-                            <button Class="btn btn-primary btn-block waves-effect waves-light" id="btnParametreAutoSuiviValidate" type="submit">Valider</button>
-                        </div>
-                    </form>
-                </div>
-                @*<div id="stacked-column-chart" class="apex-charts" dir="ltr">
-                    </div>*@
-            </div>
-        </div>
     </div>
 </div>
 <!-- end row -->

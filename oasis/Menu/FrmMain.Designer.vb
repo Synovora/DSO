@@ -32,6 +32,7 @@ Partial Class FrmMain
         Me.RadTileElement1 = New Telerik.WinControls.UI.RadTileElement()
         Me.RadTileElement2 = New Telerik.WinControls.UI.RadTileElement()
         Me.RadTileElement3 = New Telerik.WinControls.UI.RadTileElement()
+        Me.RadTileElement4 = New Telerik.WinControls.UI.RadTileElement()
         Me.TileGroupElement2 = New Telerik.WinControls.UI.TileGroupElement()
         Me.RadTileSpecialite = New Telerik.WinControls.UI.RadTileElement()
         Me.RadTileROR = New Telerik.WinControls.UI.RadTileElement()
@@ -129,7 +130,7 @@ Partial Class FrmMain
         '
         Me.TileGroupElement1.CellSize = New System.Drawing.Size(120, 100)
         Me.TileGroupElement1.DisabledTextRenderingHint = System.Drawing.Text.TextRenderingHint.SystemDefault
-        Me.TileGroupElement1.Items.AddRange(New Telerik.WinControls.RadItem() {Me.RadTileElement1, Me.RadTileElement2, Me.RadTileElement3})
+        Me.TileGroupElement1.Items.AddRange(New Telerik.WinControls.RadItem() {Me.RadTileElement1, Me.RadTileElement2, Me.RadTileElement3, Me.RadTileElement4})
         Me.TileGroupElement1.Name = "TileGroupElement1"
         Me.TileGroupElement1.RowsCount = 3
         Me.TileGroupElement1.Text = "Structure"
@@ -167,6 +168,13 @@ Partial Class FrmMain
         Me.RadTileElement3.Text = "Territoire"
         Me.RadTileElement3.TextRenderingHint = System.Drawing.Text.TextRenderingHint.SystemDefault
         Me.RadTileElement3.UseCompatibleTextRendering = False
+        '
+        'RadTileElement4
+        '
+        Me.RadTileElement4.ColSpan = 2
+        Me.RadTileElement4.Name = "RadTileElement4"
+        Me.RadTileElement4.Row = 2
+        Me.RadTileElement4.Text = "Etat Journalier"
         '
         'TileGroupElement2
         '
@@ -307,7 +315,7 @@ Partial Class FrmMain
         '
         'FrmMain
         '
-        Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
+        Me.AutoScaleDimensions = New System.Drawing.SizeF(12.0!, 25.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.CancelButton = Me.RadBtnAbandon
         Me.ClientSize = New System.Drawing.Size(1303, 569)
@@ -359,5 +367,6 @@ Partial Class FrmMain
     Friend WithEvents RadTileElementAPropos As Telerik.WinControls.UI.RadTileElement
     Friend WithEvents RadBtnAbandon As Telerik.WinControls.UI.RadButton
     Friend WithEvents RadTileElementTemplateSE As Telerik.WinControls.UI.RadTileElement
+    Friend WithEvents RadTileElement4 As Telerik.WinControls.UI.RadTileElement
 End Class
 

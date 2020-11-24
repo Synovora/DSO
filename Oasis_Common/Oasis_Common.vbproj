@@ -47,6 +47,7 @@
     <Reference Include="BouncyCastle.Crypto, Version=1.8.6.0, Culture=neutral, PublicKeyToken=0e99375e54769942">
       <HintPath>..\packages\BouncyCastle.1.8.6.1\lib\BouncyCastle.Crypto.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.CSharp" />
     <Reference Include="Nethereum.Hex, Version=3.8.0.0, Culture=neutral, PublicKeyToken=8768a594786aba4e, processorArchitecture=MSIL">
       <HintPath>..\packages\Nethereum.Hex.3.8.0\lib\net451\Nethereum.Hex.dll</HintPath>
     </Reference>
@@ -62,9 +63,8 @@
     <Reference Include="Nethereum.Util, Version=3.8.0.0, Culture=neutral, PublicKeyToken=8768a594786aba4e, processorArchitecture=MSIL">
       <HintPath>..\packages\Nethereum.Util.3.8.0\lib\net451\Nethereum.Util.dll</HintPath>
     </Reference>
-    <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Newtonsoft.Json.10.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
+    <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.12.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
@@ -114,6 +114,7 @@
     <Compile Include="Bean\Episode\EpisodeObservation.vb" />
     <Compile Include="Bean\Episode\EpisodeParametre.vb" />
     <Compile Include="Bean\Episode\EpisodeTypeActivite.vb" />
+    <Compile Include="Bean\EtatJournalier\EtatJournalier.vb" />
     <Compile Include="Bean\Internaute\InternautePermission.vb" />
     <Compile Include="Bean\Internaute\Internaute.vb" />
     <Compile Include="Bean\LigneDeVie\LigneDeVie.vb" />
@@ -190,6 +191,7 @@
     <Compile Include="Dao\Episode\EpisodeParametreDao.vb" />
     <Compile Include="Dao\Episode\EpisodeProtocoleCollaboratifDao.vb" />
     <Compile Include="Dao\Episode\EpisodeTypeActiviteDao.vb" />
+    <Compile Include="Dao\EtatJournalier\EtatJournalierDao.vb" />
     <Compile Include="Dao\General\ParametreOasisDao.vb" />
     <Compile Include="Dao\Internaute\InternautePermissionDao.vb" />
     <Compile Include="Dao\Internaute\InternauteDao.vb" />

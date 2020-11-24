@@ -1023,16 +1023,9 @@ Public Class RadFEpisodeDetail
             'Alimentation du DataGridView
             RadObsSpeIdeDataGridView.Rows(iGrid).Cells("episodeActeParamedicalId").Value = acteParamedicalDataTable.Rows(i)("oa_episode_acte_paramedical_id")
             RadObsSpeIdeDataGridView.Rows(iGrid).Cells("drcId").Value = acteParamedicalDataTable.Rows(i)("drc_id")
-            If Coalesce(acteParamedicalDataTable.Rows(i)("oa_drc_oasis_categorie"), 0) = Drc.EnumCategorieOasisCode.ProtocoleAigu Then
-                Dim DrcDescription As String
-                DrcDescription = "   (" & Coalesce(acteParamedicalDataTable.Rows(i)("oa_drc_libelle"), "") & ")" & vbCrLf & Coalesce(acteParamedicalDataTable.Rows(i)("oa_drc_dur_prob_epis"), "")
-                RadObsSpeIdeDataGridView.Rows(iGrid).Cells("drcDescription").Value = DrcDescription
-                RadObsSpeIdeDataGridView.Rows(iGrid).Cells("observationInput").Value = vbCrLf & Coalesce(acteParamedicalDataTable.Rows(i)("observation"), "")
-            Else
-                RadObsSpeIdeDataGridView.Rows(iGrid).Cells("drcDescription").Value = Coalesce(acteParamedicalDataTable.Rows(i)("oa_drc_libelle"), "")
-                RadObsSpeIdeDataGridView.Rows(iGrid).Cells("observationInput").Value = Coalesce(acteParamedicalDataTable.Rows(i)("observation"), "")
-            End If
+            RadObsSpeIdeDataGridView.Rows(iGrid).Cells("drcDescription").Value = Coalesce(acteParamedicalDataTable.Rows(i)("oa_drc_libelle"), "")
             RadObsSpeIdeDataGridView.Rows(iGrid).Cells("observation").Value = Coalesce(acteParamedicalDataTable.Rows(i)("observation"), "")
+            RadObsSpeIdeDataGridView.Rows(iGrid).Cells("observationInput").Value = Coalesce(acteParamedicalDataTable.Rows(i)("observation"), "")
             RadObsSpeIdeDataGridView.Rows(iGrid).Cells("drcCommentaire").Value = Coalesce(acteParamedicalDataTable.Rows(i)("oa_drc_dur_prob_epis"), "")
             RadObsSpeIdeDataGridView.Rows(iGrid).Cells("categorieOasis").Value = Coalesce(acteParamedicalDataTable.Rows(i)("oa_drc_oasis_categorie"), 0)
             If RadObsSpeIdeDataGridView.Rows(iGrid).Cells("categorieOasis").Value = Drc.EnumCategorieOasisCode.ProtocoleAigu Then

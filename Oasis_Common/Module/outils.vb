@@ -410,4 +410,13 @@ Public Module outils
         Public enTryID As IntPtr
     End Class
 
+
+    Function GetBase64UID()
+        Dim g As Guid = Guid.NewGuid()
+        Dim GuidString As String = Convert.ToBase64String(g.ToByteArray())
+        GuidString = GuidString.Replace("=", "")
+        GuidString = GuidString.Replace("+", "")
+        Return GuidString.Substring(0, 6)
+    End Function
+
 End Module

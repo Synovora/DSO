@@ -148,4 +148,19 @@ Public Class FrmMain
         End Try
 
     End Sub
+
+    Private Sub RadTileElement4_Click(sender As Object, e As EventArgs) Handles RadTileElement4.Click
+        Try
+            Me.Cursor = Cursors.WaitCursor
+            Me.Enabled = False
+            Using formT As New FrmEtatJournalier()
+                formT.ShowDialog()
+            End Using
+        Catch ex As Exception
+            MsgBox(ex.Message)
+        Finally
+            Me.Cursor = Cursors.Default
+            Me.Enabled = True
+        End Try
+    End Sub
 End Class

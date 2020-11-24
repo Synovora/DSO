@@ -127,7 +127,7 @@ Public Class RadFPatientNoteListe
                     Dim userDao As New UserDao
                     UtilisateurCreation = userDao.getUserById(NotePatientDataTable.Rows(i)("oa_patient_note_utilisateur_creation"))
                     'SetUtilisateur(utilisateurHisto, NotePatientDataTable.Rows(i)("oa_patient_note_utilisateur_creation"))
-                    Auteur = UtilisateurCreation.UtilisateurPrenom & " " & UtilisateurCreation.UtilisateurNom
+                    Auteur = Me.utilisateurHisto.UtilisateurPrenom & " " & Me.utilisateurHisto.UtilisateurNom
                 End If
             End If
 
@@ -135,13 +135,11 @@ Public Class RadFPatientNoteListe
             AfficheDateCreation = ""
             If NotePatientDataTable.Rows(i)("oa_patient_note_date_creation") IsNot DBNull.Value Then
                 dateCreation = NotePatientDataTable.Rows(i)("oa_patient_note_date_creation")
-                'AfficheDateCreation = outils.FormatageDateAffichage(dateCreation, True)
-                AfficheDateCreation = dateCreation.ToString("dd.MM.yyyy")
+                AfficheDateCreation = outils.FormatageDateAffichage(dateCreation)
             Else
                 If NotePatientDataTable.Rows(i)("oa_patient_note_date_creation") IsNot DBNull.Value Then
                     dateCreation = NotePatientDataTable.Rows(i)("oa_patient_note_date_creation")
-                    'AfficheDateCreation = outils.FormatageDateAffichage(dateCreation, True)
-                    AfficheDateCreation = dateCreation.ToString("dd.MM.yyyy")
+                    AfficheDateCreation = outils.FormatageDateAffichage(dateCreation)
                 End If
             End If
 

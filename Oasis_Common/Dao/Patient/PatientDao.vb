@@ -4,7 +4,7 @@ Imports System.Data.SqlClient
 Public Class PatientDao
     Inherits StandardDao
 
-    Private Function BuildBean(reader As SqlDataReader) As Patient
+    Shared Function BuildBean(reader As SqlDataReader) As Patient
         Dim patient As New Patient With {
             .PatientId = Convert.ToInt64(reader("oa_patient_id")),
             .PatientNir = Coalesce(reader("oa_patient_nir"), 0),
@@ -192,6 +192,33 @@ Public Class PatientDao
         }
 
         Return Cible
+    End Function
+
+    Public Function GetPatientByNIR(NIR As String) As Patient
+        Dim patient As New Patient
+        Dim con As SqlConnection = GetConnection()
+
+        If NIR Then
+            Try
+                Dim command As SqlCommand = con.CreateCommand()
+                command.CommandText =
+                    "SELECT * FROM oasis.oa_patient WHERE oa_patient_nir = @patientNIR"
+                command.Parameters.AddWithValue("@patientNIR", NIR)
+                Using reader As SqlDataReader = command.ExecuteReader()
+                    If reader.Read() Then
+                        patient = BuildBean(reader)
+                    Else
+                        Throw New ArgumentException("Patient inexistant !")
+                    End If
+                End Using
+
+            Catch ex As Exception
+                Throw ex
+            Finally
+                con.Close()
+            End Try
+        End If
+        Return patient
     End Function
 
     Public Function NonExistencePatientNIR(NIR As Int64, PatientId As Integer) As Boolean
