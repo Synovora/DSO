@@ -91,4 +91,16 @@ Public Class Patient
         Return newInstance
     End Function
 
+    Shared Function CalculModuloNIR(NIR As Int64) As Integer
+        Dim Reste As Integer
+        Reste = NIR Mod 97
+        Return 97 - Reste
+    End Function
+
+    Shared Function IsValidNIR(NIR As Int64) As Boolean
+        Dim calculedKey As Integer = CalculModuloNIR(NIR)
+        Dim key As Integer = NIR Mod 100
+        Return calculedKey = key
+    End Function
+
 End Class

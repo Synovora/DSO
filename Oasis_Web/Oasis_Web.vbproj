@@ -1583,7 +1583,7 @@
     <Content Include="Scripts\popper-utils.js.map" />
     <Content Include="Views\Auth\login.vbhtml" />
     <Content Include="Views\Auth\auth-recoverpw.cshtml" />
-    <Content Include="Views\Auth\auth-register.cshtml" />
+    <None Include="Views\Auth\auth-register.vbhtml" />
     <Content Include="Views\Dashboard\Index.vbhtml" />
     <None Include="Views\Shared\Error.vbhtml" />
     <Content Include="Views\Shared\Layouts\_layout_boxed.cshtml" />

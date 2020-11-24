@@ -5,7 +5,7 @@
 End Code
 
 <div>
-    @Using (Html.BeginForm())
+    @Using (Html.BeginForm("Login", "Auth", method:=FormMethod.Post))
 
         @Html.AntiForgeryToken()
         @<div Class="account-pages my-5 pt-sm-5">
@@ -37,7 +37,7 @@ End Code
                                     </a>
                                 </div>
                                 <div Class="p-2">
-                                    <form Class="form-horizontal" action="@Url.Action("Index")" method="post">
+                                    <form Class="form-horizontal" action="@Url.Action("Login", "Auth")" method="post">
 
                                         <div Class="form-group">
                                             <label for="username">Nom d'utilisateur</label>
