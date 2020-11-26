@@ -1,0 +1,1372 @@
+﻿<?xml version="1.0"?>
+<doc>
+<assembly>
+<name>
+Oasis_WF
+</name>
+</assembly>
+<members>
+<member name="T:Oasis_WF.My.Resources.FrenchRichTextBoxStrings">
+<summary>
+  A strongly-typed resource class, for looking up localized strings, etc.
+</summary>
+</member>
+<member name="P:Oasis_WF.My.Resources.FrenchRichTextBoxStrings.ResourceManager">
+<summary>
+  Returns the cached ResourceManager instance used by this class.
+</summary>
+</member>
+<member name="P:Oasis_WF.My.Resources.FrenchRichTextBoxStrings.Culture">
+<summary>
+  Overrides the current thread's CurrentUICulture property for all
+  resource lookups using this strongly typed resource class.
+</summary>
+</member>
+<member name="P:Oasis_WF.My.Resources.FrenchRichTextBoxStrings.RichTextBoxStrings">
+<summary>
+  Looks up a localized string similar to &lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;
+&lt;root&gt;
+  &lt;data name=&quot;Confirm&quot; xml:space=&quot;preserve&quot;&gt;
+    &lt;value&gt;OK&lt;/value&gt;
+  &lt;/data&gt;
+  &lt;data name=&quot;Fermer&quot; xml:space=&quot;preserve&quot;&gt;
+    &lt;value&gt;Close&lt;/value&gt;
+  &lt;/data&gt;
+  &lt;data name=&quot;Insérer&quot; xml:space=&quot;preserve&quot;&gt;
+    &lt;value&gt;Insert&lt;/value&gt;
+  &lt;/data&gt;
+  &lt;data name=&quot;Appliquer&quot; xml:space=&quot;preserve&quot;&gt;
+    &lt;value&gt;Apply&lt;/value&gt;
+  &lt;/data&gt;
+  &lt;data name=&quot;Abandonner&quot; xml:space=&quot;preserve&quot;&gt;
+    &lt;value&gt;Cancel&lt;/value&gt;
+  &lt;/data&gt;
+  &lt;data name=&quot;Ok&quot; xml:space=&quot;preserve&quot;&gt;
+    &lt; [rest of string was truncated]&quot;;.
+</summary>
+</member>
+<member name="T:Oasis_WF.My.Resources.Resources">
+<summary>
+  A strongly-typed resource class, for looking up localized strings, etc.
+</summary>
+</member>
+<member name="P:Oasis_WF.My.Resources.Resources.ResourceManager">
+<summary>
+  Returns the cached ResourceManager instance used by this class.
+</summary>
+</member>
+<member name="P:Oasis_WF.My.Resources.Resources.Culture">
+<summary>
+  Overrides the current thread's CurrentUICulture property for all
+  resource lookups using this strongly typed resource class.
+</summary>
+</member>
+<member name="P:Oasis_WF.My.Resources.Resources._exit">
+<summary>
+  Looks up a localized resource of type System.Drawing.Bitmap.
+</summary>
+</member>
+<member name="P:Oasis_WF.My.Resources.Resources._select">
+<summary>
+  Looks up a localized resource of type System.Drawing.Bitmap.
+</summary>
+</member>
+<member name="P:Oasis_WF.My.Resources.Resources.historique">
+<summary>
+  Looks up a localized resource of type System.Drawing.Bitmap.
+</summary>
+</member>
+<member name="P:Oasis_WF.My.Resources.Resources.Keys_icon">
+<summary>
+  Looks up a localized resource of type System.Drawing.Bitmap.
+</summary>
+</member>
+<member name="P:Oasis_WF.My.Resources.Resources.mail">
+<summary>
+  Looks up a localized resource of type System.Drawing.Bitmap.
+</summary>
+</member>
+<member name="P:Oasis_WF.My.Resources.Resources.modifier">
+<summary>
+  Looks up a localized resource of type System.Drawing.Bitmap.
+</summary>
+</member>
+<member name="P:Oasis_WF.My.Resources.Resources.print">
+<summary>
+  Looks up a localized resource of type System.Drawing.Bitmap.
+</summary>
+</member>
+<member name="P:Oasis_WF.My.Resources.Resources.rechercher">
+<summary>
+  Looks up a localized resource of type System.Drawing.Bitmap.
+</summary>
+</member>
+<member name="P:Oasis_WF.My.Resources.Resources.reload">
+<summary>
+  Looks up a localized resource of type System.Drawing.Bitmap.
+</summary>
+</member>
+<member name="P:Oasis_WF.My.Resources.Resources.supprimer">
+<summary>
+  Looks up a localized resource of type System.Drawing.Bitmap.
+</summary>
+</member>
+<member name="P:Oasis_WF.My.Resources.Resources.supprimer1">
+<summary>
+  Looks up a localized resource of type System.Drawing.Bitmap.
+</summary>
+</member>
+<member name="P:Oasis_WF.My.Resources.Resources.validation">
+<summary>
+  Looks up a localized resource of type System.Drawing.Bitmap.
+</summary>
+</member>
+<member name="P:Oasis_WF.My.Resources.Resources.validation2">
+<summary>
+  Looks up a localized resource of type System.Drawing.Bitmap.
+</summary>
+</member>
+<member name="T:Oasis_WF.DataSetDRC">
+<summary>
+Represents a strongly typed in-memory cache of data.
+</summary>
+</member>
+<member name="T:Oasis_WF.DataSetDRC.v_drcDataTable">
+<summary>
+Represents the strongly named DataTable class.
+</summary>
+</member>
+<member name="T:Oasis_WF.DataSetDRC.v_drc2DataTable">
+<summary>
+Represents the strongly named DataTable class.
+</summary>
+</member>
+<member name="T:Oasis_WF.DataSetDRC.v_drcRow">
+<summary>
+Represents strongly named DataRow class.
+</summary>
+</member>
+<member name="T:Oasis_WF.DataSetDRC.v_drc2Row">
+<summary>
+Represents strongly named DataRow class.
+</summary>
+</member>
+<member name="T:Oasis_WF.DataSetDRC.v_drcRowChangeEvent">
+<summary>
+Row event argument class
+</summary>
+</member>
+<member name="T:Oasis_WF.DataSetDRC.v_drc2RowChangeEvent">
+<summary>
+Row event argument class
+</summary>
+</member>
+<member name="T:Oasis_WF.DataSetDRCTableAdapters.v_drcTableAdapter">
+<summary>
+Represents the connection and commands used to retrieve and save data.
+</summary>
+</member>
+<member name="T:Oasis_WF.DataSetDRCTableAdapters.v_drc2TableAdapter">
+<summary>
+Represents the connection and commands used to retrieve and save data.
+</summary>
+</member>
+<member name="T:Oasis_WF.DataSetDRCTableAdapters.TableAdapterManager">
+<summary>
+TableAdapterManager is used to coordinate TableAdapters in the dataset to enable Hierarchical Update scenarios
+</summary>
+</member>
+<member name="M:Oasis_WF.DataSetDRCTableAdapters.TableAdapterManager.UpdateUpdatedRows(Oasis_WF.DataSetDRC,System.Collections.Generic.List{System.Data.DataRow},System.Collections.Generic.List{System.Data.DataRow})">
+<summary>
+Update rows in top-down order.
+</summary>
+</member>
+<member name="M:Oasis_WF.DataSetDRCTableAdapters.TableAdapterManager.UpdateInsertedRows(Oasis_WF.DataSetDRC,System.Collections.Generic.List{System.Data.DataRow})">
+<summary>
+Insert rows in top-down order.
+</summary>
+</member>
+<member name="M:Oasis_WF.DataSetDRCTableAdapters.TableAdapterManager.UpdateDeletedRows(Oasis_WF.DataSetDRC,System.Collections.Generic.List{System.Data.DataRow})">
+<summary>
+Delete rows in bottom-up order.
+</summary>
+</member>
+<member name="M:Oasis_WF.DataSetDRCTableAdapters.TableAdapterManager.GetRealUpdatedRows(System.Data.DataRow[],System.Collections.Generic.List{System.Data.DataRow})">
+<summary>
+Remove inserted rows that become updated rows after calling TableAdapter.Update(inserted rows) first
+</summary>
+</member>
+<member name="M:Oasis_WF.DataSetDRCTableAdapters.TableAdapterManager.UpdateAll(Oasis_WF.DataSetDRC)">
+<summary>
+Update all changes to the dataset.
+</summary>
+</member>
+<member name="T:Oasis_WF.DataSetDRCTableAdapters.TableAdapterManager.UpdateOrderOption">
+<summary>
+Update Order Option
+</summary>
+</member>
+<member name="T:Oasis_WF.DataSetDRCTableAdapters.TableAdapterManager.SelfReferenceComparer">
+<summary>
+Used to sort self-referenced table's rows
+</summary>
+</member>
+<member name="T:Oasis_WF.DataSetDrcSelecteur">
+<summary>
+Represents a strongly typed in-memory cache of data.
+</summary>
+</member>
+<member name="T:Oasis_WF.DataSetDrcSelecteur.v_drcDataTable">
+<summary>
+Represents the strongly named DataTable class.
+</summary>
+</member>
+<member name="T:Oasis_WF.DataSetDrcSelecteur.v_drc_2DataTable">
+<summary>
+Represents the strongly named DataTable class.
+</summary>
+</member>
+<member name="T:Oasis_WF.DataSetDrcSelecteur.v_drcRow">
+<summary>
+Represents strongly named DataRow class.
+</summary>
+</member>
+<member name="T:Oasis_WF.DataSetDrcSelecteur.v_drc_2Row">
+<summary>
+Represents strongly named DataRow class.
+</summary>
+</member>
+<member name="T:Oasis_WF.DataSetDrcSelecteur.v_drcRowChangeEvent">
+<summary>
+Row event argument class
+</summary>
+</member>
+<member name="T:Oasis_WF.DataSetDrcSelecteur.v_drc_2RowChangeEvent">
+<summary>
+Row event argument class
+</summary>
+</member>
+<member name="T:Oasis_WF.DataSetDrcSelecteurTableAdapters.v_drcTableAdapter">
+<summary>
+Represents the connection and commands used to retrieve and save data.
+</summary>
+</member>
+<member name="T:Oasis_WF.DataSetDrcSelecteurTableAdapters.v_drc_2TableAdapter">
+<summary>
+Represents the connection and commands used to retrieve and save data.
+</summary>
+</member>
+<member name="T:Oasis_WF.DataSetDrcSelecteurTableAdapters.TableAdapterManager">
+<summary>
+TableAdapterManager is used to coordinate TableAdapters in the dataset to enable Hierarchical Update scenarios
+</summary>
+</member>
+<member name="M:Oasis_WF.DataSetDrcSelecteurTableAdapters.TableAdapterManager.UpdateUpdatedRows(Oasis_WF.DataSetDrcSelecteur,System.Collections.Generic.List{System.Data.DataRow},System.Collections.Generic.List{System.Data.DataRow})">
+<summary>
+Update rows in top-down order.
+</summary>
+</member>
+<member name="M:Oasis_WF.DataSetDrcSelecteurTableAdapters.TableAdapterManager.UpdateInsertedRows(Oasis_WF.DataSetDrcSelecteur,System.Collections.Generic.List{System.Data.DataRow})">
+<summary>
+Insert rows in top-down order.
+</summary>
+</member>
+<member name="M:Oasis_WF.DataSetDrcSelecteurTableAdapters.TableAdapterManager.UpdateDeletedRows(Oasis_WF.DataSetDrcSelecteur,System.Collections.Generic.List{System.Data.DataRow})">
+<summary>
+Delete rows in bottom-up order.
+</summary>
+</member>
+<member name="M:Oasis_WF.DataSetDrcSelecteurTableAdapters.TableAdapterManager.GetRealUpdatedRows(System.Data.DataRow[],System.Collections.Generic.List{System.Data.DataRow})">
+<summary>
+Remove inserted rows that become updated rows after calling TableAdapter.Update(inserted rows) first
+</summary>
+</member>
+<member name="M:Oasis_WF.DataSetDrcSelecteurTableAdapters.TableAdapterManager.UpdateAll(Oasis_WF.DataSetDrcSelecteur)">
+<summary>
+Update all changes to the dataset.
+</summary>
+</member>
+<member name="T:Oasis_WF.DataSetDrcSelecteurTableAdapters.TableAdapterManager.UpdateOrderOption">
+<summary>
+Update Order Option
+</summary>
+</member>
+<member name="T:Oasis_WF.DataSetDrcSelecteurTableAdapters.TableAdapterManager.SelfReferenceComparer">
+<summary>
+Used to sort self-referenced table's rows
+</summary>
+</member>
+<member name="T:Oasis_WF.DataSetPatient">
+<summary>
+Represents a strongly typed in-memory cache of data.
+</summary>
+</member>
+<member name="T:Oasis_WF.DataSetPatient.oa_patientDataTable">
+<summary>
+Represents the strongly named DataTable class.
+</summary>
+</member>
+<member name="T:Oasis_WF.DataSetPatient.oa_patientRow">
+<summary>
+Represents strongly named DataRow class.
+</summary>
+</member>
+<member name="T:Oasis_WF.DataSetPatient.oa_patientRowChangeEvent">
+<summary>
+Row event argument class
+</summary>
+</member>
+<member name="T:Oasis_WF.DataSetPatientTableAdapters.oa_patientTableAdapter">
+<summary>
+Represents the connection and commands used to retrieve and save data.
+</summary>
+</member>
+<member name="T:Oasis_WF.DataSetPatientTableAdapters.TableAdapterManager">
+<summary>
+TableAdapterManager is used to coordinate TableAdapters in the dataset to enable Hierarchical Update scenarios
+</summary>
+</member>
+<member name="M:Oasis_WF.DataSetPatientTableAdapters.TableAdapterManager.UpdateUpdatedRows(Oasis_WF.DataSetPatient,System.Collections.Generic.List{System.Data.DataRow},System.Collections.Generic.List{System.Data.DataRow})">
+<summary>
+Update rows in top-down order.
+</summary>
+</member>
+<member name="M:Oasis_WF.DataSetPatientTableAdapters.TableAdapterManager.UpdateInsertedRows(Oasis_WF.DataSetPatient,System.Collections.Generic.List{System.Data.DataRow})">
+<summary>
+Insert rows in top-down order.
+</summary>
+</member>
+<member name="M:Oasis_WF.DataSetPatientTableAdapters.TableAdapterManager.UpdateDeletedRows(Oasis_WF.DataSetPatient,System.Collections.Generic.List{System.Data.DataRow})">
+<summary>
+Delete rows in bottom-up order.
+</summary>
+</member>
+<member name="M:Oasis_WF.DataSetPatientTableAdapters.TableAdapterManager.GetRealUpdatedRows(System.Data.DataRow[],System.Collections.Generic.List{System.Data.DataRow})">
+<summary>
+Remove inserted rows that become updated rows after calling TableAdapter.Update(inserted rows) first
+</summary>
+</member>
+<member name="M:Oasis_WF.DataSetPatientTableAdapters.TableAdapterManager.UpdateAll(Oasis_WF.DataSetPatient)">
+<summary>
+Update all changes to the dataset.
+</summary>
+</member>
+<member name="T:Oasis_WF.DataSetPatientTableAdapters.TableAdapterManager.UpdateOrderOption">
+<summary>
+Update Order Option
+</summary>
+</member>
+<member name="T:Oasis_WF.DataSetPatientTableAdapters.TableAdapterManager.SelfReferenceComparer">
+<summary>
+Used to sort self-referenced table's rows
+</summary>
+</member>
+<member name="T:Oasis_WF.dataSetUtilisateur">
+<summary>
+Represents a strongly typed in-memory cache of data.
+</summary>
+</member>
+<member name="T:Oasis_WF.dataSetUtilisateur.oa_r_profilDataTable">
+<summary>
+Represents the strongly named DataTable class.
+</summary>
+</member>
+<member name="T:Oasis_WF.dataSetUtilisateur.oa_siteDataTable">
+<summary>
+Represents the strongly named DataTable class.
+</summary>
+</member>
+<member name="T:Oasis_WF.dataSetUtilisateur.oa_unite_sanitaireDataTable">
+<summary>
+Represents the strongly named DataTable class.
+</summary>
+</member>
+<member name="T:Oasis_WF.dataSetUtilisateur.oa_utilisateurDataTable">
+<summary>
+Represents the strongly named DataTable class.
+</summary>
+</member>
+<member name="T:Oasis_WF.dataSetUtilisateur.v_user_fullDataTable">
+<summary>
+Represents the strongly named DataTable class.
+</summary>
+</member>
+<member name="T:Oasis_WF.dataSetUtilisateur.oa_r_profilRow">
+<summary>
+Represents strongly named DataRow class.
+</summary>
+</member>
+<member name="T:Oasis_WF.dataSetUtilisateur.oa_siteRow">
+<summary>
+Represents strongly named DataRow class.
+</summary>
+</member>
+<member name="T:Oasis_WF.dataSetUtilisateur.oa_unite_sanitaireRow">
+<summary>
+Represents strongly named DataRow class.
+</summary>
+</member>
+<member name="T:Oasis_WF.dataSetUtilisateur.oa_utilisateurRow">
+<summary>
+Represents strongly named DataRow class.
+</summary>
+</member>
+<member name="T:Oasis_WF.dataSetUtilisateur.v_user_fullRow">
+<summary>
+Represents strongly named DataRow class.
+</summary>
+</member>
+<member name="T:Oasis_WF.dataSetUtilisateur.oa_r_profilRowChangeEvent">
+<summary>
+Row event argument class
+</summary>
+</member>
+<member name="T:Oasis_WF.dataSetUtilisateur.oa_siteRowChangeEvent">
+<summary>
+Row event argument class
+</summary>
+</member>
+<member name="T:Oasis_WF.dataSetUtilisateur.oa_unite_sanitaireRowChangeEvent">
+<summary>
+Row event argument class
+</summary>
+</member>
+<member name="T:Oasis_WF.dataSetUtilisateur.oa_utilisateurRowChangeEvent">
+<summary>
+Row event argument class
+</summary>
+</member>
+<member name="T:Oasis_WF.dataSetUtilisateur.v_user_fullRowChangeEvent">
+<summary>
+Row event argument class
+</summary>
+</member>
+<member name="T:Oasis_WF.dataSetUtilisateurTableAdapters.oa_r_profilTableAdapter">
+<summary>
+Represents the connection and commands used to retrieve and save data.
+</summary>
+</member>
+<member name="T:Oasis_WF.dataSetUtilisateurTableAdapters.oa_siteTableAdapter">
+<summary>
+Represents the connection and commands used to retrieve and save data.
+</summary>
+</member>
+<member name="T:Oasis_WF.dataSetUtilisateurTableAdapters.oa_unite_sanitaireTableAdapter">
+<summary>
+Represents the connection and commands used to retrieve and save data.
+</summary>
+</member>
+<member name="T:Oasis_WF.dataSetUtilisateurTableAdapters.oa_utilisateurTableAdapter">
+<summary>
+Represents the connection and commands used to retrieve and save data.
+</summary>
+</member>
+<member name="T:Oasis_WF.dataSetUtilisateurTableAdapters.v_user_fullTableAdapter">
+<summary>
+Represents the connection and commands used to retrieve and save data.
+</summary>
+</member>
+<member name="T:Oasis_WF.dataSetUtilisateurTableAdapters.TableAdapterManager">
+<summary>
+TableAdapterManager is used to coordinate TableAdapters in the dataset to enable Hierarchical Update scenarios
+</summary>
+</member>
+<member name="M:Oasis_WF.dataSetUtilisateurTableAdapters.TableAdapterManager.UpdateUpdatedRows(Oasis_WF.dataSetUtilisateur,System.Collections.Generic.List{System.Data.DataRow},System.Collections.Generic.List{System.Data.DataRow})">
+<summary>
+Update rows in top-down order.
+</summary>
+</member>
+<member name="M:Oasis_WF.dataSetUtilisateurTableAdapters.TableAdapterManager.UpdateInsertedRows(Oasis_WF.dataSetUtilisateur,System.Collections.Generic.List{System.Data.DataRow})">
+<summary>
+Insert rows in top-down order.
+</summary>
+</member>
+<member name="M:Oasis_WF.dataSetUtilisateurTableAdapters.TableAdapterManager.UpdateDeletedRows(Oasis_WF.dataSetUtilisateur,System.Collections.Generic.List{System.Data.DataRow})">
+<summary>
+Delete rows in bottom-up order.
+</summary>
+</member>
+<member name="M:Oasis_WF.dataSetUtilisateurTableAdapters.TableAdapterManager.GetRealUpdatedRows(System.Data.DataRow[],System.Collections.Generic.List{System.Data.DataRow})">
+<summary>
+Remove inserted rows that become updated rows after calling TableAdapter.Update(inserted rows) first
+</summary>
+</member>
+<member name="M:Oasis_WF.dataSetUtilisateurTableAdapters.TableAdapterManager.UpdateAll(Oasis_WF.dataSetUtilisateur)">
+<summary>
+Update all changes to the dataset.
+</summary>
+</member>
+<member name="T:Oasis_WF.dataSetUtilisateurTableAdapters.TableAdapterManager.UpdateOrderOption">
+<summary>
+Update Order Option
+</summary>
+</member>
+<member name="T:Oasis_WF.dataSetUtilisateurTableAdapters.TableAdapterManager.SelfReferenceComparer">
+<summary>
+Used to sort self-referenced table's rows
+</summary>
+</member>
+<member name="T:Oasis_WF.DatSetDRC">
+<summary>
+Represents a strongly typed in-memory cache of data.
+</summary>
+</member>
+<member name="T:Oasis_WF.DatSetDRC.oa_drcDataTable">
+<summary>
+Represents the strongly named DataTable class.
+</summary>
+</member>
+<member name="T:Oasis_WF.DatSetDRC.oa_drcRow">
+<summary>
+Represents strongly named DataRow class.
+</summary>
+</member>
+<member name="T:Oasis_WF.DatSetDRC.oa_drcRowChangeEvent">
+<summary>
+Row event argument class
+</summary>
+</member>
+<member name="T:Oasis_WF.DatSetDRCTableAdapters.oa_drcTableAdapter">
+<summary>
+Represents the connection and commands used to retrieve and save data.
+</summary>
+</member>
+<member name="T:Oasis_WF.DatSetDRCTableAdapters.TableAdapterManager">
+<summary>
+TableAdapterManager is used to coordinate TableAdapters in the dataset to enable Hierarchical Update scenarios
+</summary>
+</member>
+<member name="M:Oasis_WF.DatSetDRCTableAdapters.TableAdapterManager.UpdateUpdatedRows(Oasis_WF.DatSetDRC,System.Collections.Generic.List{System.Data.DataRow},System.Collections.Generic.List{System.Data.DataRow})">
+<summary>
+Update rows in top-down order.
+</summary>
+</member>
+<member name="M:Oasis_WF.DatSetDRCTableAdapters.TableAdapterManager.UpdateInsertedRows(Oasis_WF.DatSetDRC,System.Collections.Generic.List{System.Data.DataRow})">
+<summary>
+Insert rows in top-down order.
+</summary>
+</member>
+<member name="M:Oasis_WF.DatSetDRCTableAdapters.TableAdapterManager.UpdateDeletedRows(Oasis_WF.DatSetDRC,System.Collections.Generic.List{System.Data.DataRow})">
+<summary>
+Delete rows in bottom-up order.
+</summary>
+</member>
+<member name="M:Oasis_WF.DatSetDRCTableAdapters.TableAdapterManager.GetRealUpdatedRows(System.Data.DataRow[],System.Collections.Generic.List{System.Data.DataRow})">
+<summary>
+Remove inserted rows that become updated rows after calling TableAdapter.Update(inserted rows) first
+</summary>
+</member>
+<member name="M:Oasis_WF.DatSetDRCTableAdapters.TableAdapterManager.UpdateAll(Oasis_WF.DatSetDRC)">
+<summary>
+Update all changes to the dataset.
+</summary>
+</member>
+<member name="T:Oasis_WF.DatSetDRCTableAdapters.TableAdapterManager.UpdateOrderOption">
+<summary>
+Update Order Option
+</summary>
+</member>
+<member name="T:Oasis_WF.DatSetDRCTableAdapters.TableAdapterManager.SelfReferenceComparer">
+<summary>
+Used to sort self-referenced table's rows
+</summary>
+</member>
+<member name="M:Oasis_WF.FrmSousEpisode.#ctor(Oasis_Common.Episode,Oasis_Common.Patient,Oasis_Common.SousEpisode,System.String,System.String,System.String)">
+ <summary>
+ 
+ </summary>
+ <param name="episode"></param>
+ <param name="patient"></param>
+ <param name="sousEpisode"></param>
+ <param name="userCreateNom"></param>
+ <param name="userUpdateNom"></param>
+ <param name="userValidateNom"></param>
+</member>
+<member name="M:Oasis_WF.FrmSousEpisode.DropDownType_SelectedIndexChanged(System.Object,Telerik.WinControls.UI.Data.PositionChangedEventArgs)">
+ <summary>
+ 
+ </summary>
+ <param name="sender"></param>
+ <param name="e"></param>
+</member>
+<member name="M:Oasis_WF.FrmSousEpisode.DropDownSousType_SelectedIndexChanged(System.Object,Telerik.WinControls.UI.Data.PositionChangedEventArgs)">
+ <summary>
+ 
+ </summary>
+ <param name="sender"></param>
+ <param name="e"></param>
+</member>
+<member name="M:Oasis_WF.FrmSousEpisode.ChkALD_ToggleStateChanged(System.Object,Telerik.WinControls.UI.StateChangedEventArgs)">
+ <summary>
+ 
+ </summary>
+ <param name="sender"></param>
+ <param name="args"></param>
+</member>
+<member name="M:Oasis_WF.FrmSousEpisode.ChkBReponseAttendue_ToggleStateChanged(System.Object,Telerik.WinControls.UI.StateChangedEventArgs)">
+ <summary>
+ 
+ </summary>
+ <param name="sender"></param>
+ <param name="args"></param>
+</member>
+<member name="M:Oasis_WF.FrmSousEpisode.BtnAjoutReponse_Click(System.Object,System.EventArgs)">
+ <summary>
+ 
+ </summary>
+ <param name="sender"></param>
+ <param name="e"></param>
+</member>
+<member name="M:Oasis_WF.FrmSousEpisode.gridReponse_CommandCellClick(System.Object,Telerik.WinControls.UI.GridViewCellEventArgs)">
+ <summary>
+ 
+ </summary>
+ <param name="sender"></param>
+ <param name="e"></param>
+</member>
+<member name="M:Oasis_WF.FrmSousEpisode.BtnValidate_Click(System.Object,System.EventArgs)">
+ <summary>
+ 
+ </summary>
+ <param name="sender"></param>
+ <param name="e"></param>
+</member>
+<member name="M:Oasis_WF.FrmSousEpisode.TelechargerReponse(Telerik.WinControls.UI.GridCommandCellElement)">
+ <summary>
+ 
+ </summary>
+ <param name="gce"></param>
+</member>
+<member name="M:Oasis_WF.FrmSousEpisode.setDefaultALDGrid">
+ <summary>
+ 
+ </summary>
+</member>
+<member name="M:Oasis_WF.FrmSousEpisode.initOneShot">
+ <summary>
+ 
+ </summary>
+</member>
+<member name="M:Oasis_WF.FrmSousEpisode.initControls">
+ <summary>
+ 
+ </summary>
+</member>
+<member name="M:Oasis_WF.FrmSousEpisode.refreshGrid">
+ <summary>
+ refresh du grid des reponses au sous-episode
+ </summary>
+</member>
+<member name="M:Oasis_WF.FrmSousEpisode.FiltreTypeByProfil(Oasis_Common.SousEpisodeType,System.Object)">
+ <summary>
+ 
+ </summary>
+ <param name="sousEpisodeType"></param>
+ <returns></returns>
+</member>
+<member name="M:Oasis_WF.FrmSousEpisode.initSousTypes(System.Int64)">
+ <summary>
+ 
+ </summary>
+ <param name="idType"></param>
+</member>
+<member name="M:Oasis_WF.FrmSousEpisode.initSousSousTypes(System.Int64)">
+ <summary>
+ 
+ </summary>
+ <param name="idSousType"></param>
+</member>
+<member name="M:Oasis_WF.FrmSousEpisode.initALDetReponse">
+ <summary>
+ 
+ </summary>
+</member>
+<member name="M:Oasis_WF.FrmSousEpisodeListe.#ctor(Oasis_Common.Episode,Oasis_Common.Patient)">
+ <summary>
+ 
+ </summary>
+ <param name="episode"></param>
+ <param name="patient"></param>
+</member>
+<member name="M:Oasis_WF.FrmSousEpisodeListe.refreshGrid">
+ <summary>
+ 
+ </summary>
+</member>
+<member name="M:Oasis_WF.FrmSousEpisodeListe.RadSousEpisodeGrid_CellFormatting(System.Object,Telerik.WinControls.UI.CellFormattingEventArgs)">
+ <summary>
+ 
+ </summary>
+ <param name="sender"></param>
+ <param name="e"></param>
+</member>
+<member name="M:Oasis_WF.FrmSousEpisodeListe.radGridView1_ViewCellFormatting(System.Object,Telerik.WinControls.UI.CellFormattingEventArgs)">
+ <summary>
+ permet avec les 2 methodes IsExpandable et RadSousEpisodeGrid_ChildViewExpanding de faire disparaitre le "+" su sous grid reponse si pas de reponse
+ </summary>
+ <param name="sender"></param>
+ <param name="e"></param>
+</member>
+<member name="M:Oasis_WF.FrmSousEpisodeListe.RadSousEpisodeGrid_SelectionChanged(System.Object,System.EventArgs)">
+ <summary>
+ 
+ </summary>
+ <param name="sender"></param>
+ <param name="e"></param>
+</member>
+<member name="M:Oasis_WF.FrmSousEpisodeListe.RadSousEpisodeGrid_RowSourceNeeded(System.Object,Telerik.WinControls.UI.GridViewRowSourceNeededEventArgs)">
+ <summary>
+ 
+ </summary>
+ <param name="sender"></param>
+ <param name="e"></param>
+</member>
+<member name="M:Oasis_WF.FrmSousEpisodeListe.subGridReponse_CommandCellClick(System.Object,System.EventArgs)">
+ <summary>
+ 
+ </summary>
+ <param name="sender"></param>
+ <param name="e"></param>
+</member>
+<member name="M:Oasis_WF.FrmSousEpisodeListe.refreshReponseSubGrid(Telerik.WinControls.UI.GridViewRowSourceNeededEventArgs)">
+ <summary>
+ 
+ </summary>
+ <param name="e"></param>
+</member>
+<member name="M:Oasis_WF.FrmSousEpisodeListe.BtnCreate_Click(System.Object,System.EventArgs)">
+ <summary>
+ 
+ </summary>
+ <param name="sender"></param>
+ <param name="e"></param>
+</member>
+<member name="M:Oasis_WF.FrmSousEpisodeListe.RadSousEpisodeGrid_MouseDoubleClick(System.Object,System.Windows.Forms.MouseEventArgs)">
+ <summary>
+ 
+ </summary>
+ <param name="sender"></param>
+ <param name="e"></param>
+</member>
+<member name="M:Oasis_WF.FrmSousEpisodeListe.BtnDetail_Click(System.Object,System.EventArgs)">
+ <summary>
+ 
+ </summary>
+ <param name="sender"></param>
+ <param name="e"></param>
+</member>
+<member name="M:Oasis_WF.FrmSousEpisodeListe.editSousEpisode">
+ <summary>
+ 
+ </summary>
+</member>
+<member name="M:Oasis_WF.FrmSousEpisodeListe.ficheSousEpisode(Oasis_Common.SousEpisode,System.String,System.String,System.String)">
+ <summary>
+ 
+ </summary>
+ <param name="sousEpisode"></param>
+ <param name="userCreateNom"></param>
+ <param name="userUpdateNom"></param>
+ <param name="userValidateNom"></param>
+</member>
+<member name="M:Oasis_WF.FrmTacheMain.initChkBoxFonction">
+ <summary>
+ creation dynamique et Initialisation des chkbox fonctions user
+ </summary>
+</member>
+<member name="M:Oasis_WF.FrmTacheMain.CheckFonction_PropertyChanged(System.Object,System.ComponentModel.PropertyChangedEventArgs)">
+ <summary>
+ Evenmentiel des Checkbox Fonction (abonnement de l'utilsateur pour filtrer tâches à traiter)
+ </summary>
+ <param name="sender"></param>
+ <param name="e"></param>
+</member>
+<member name="M:Oasis_WF.FrmFiltreTacheATraiter.construitFiltreNouveau">
+ <summary>
+ 
+ </summary>
+</member>
+<member name="M:Oasis_WF.FrmLogin.#ctor">
+ <summary>
+ 
+ </summary>
+</member>
+<member name="M:Oasis_WF.FrmLogin.ChgtPassword">
+ <summary>
+ 
+ </summary>
+ <returns></returns>
+</member>
+<member name="M:Oasis_WF.FrmLogin.BtnCancel_Click(System.Object,System.EventArgs)">
+ <summary>
+ 
+ </summary>
+ <param name="sender"></param>
+ <param name="e"></param>
+</member>
+<member name="M:Oasis_WF.FrmLogin.BtnValidate_Click(System.Object,System.EventArgs)">
+ <summary>
+ 
+ </summary>
+ <param name="sender"></param>
+ <param name="e"></param>
+</member>
+<member name="M:Oasis_WF.FrmLogin.LblChangePassword_Click(System.Object,System.EventArgs)">
+ <summary>
+ 
+ </summary>
+ <param name="sender"></param>
+ <param name="e"></param>
+</member>
+<member name="F:Oasis_WF.FrmAbout.components">
+ <summary>
+ Required designer variable.
+ </summary>
+</member>
+<member name="M:Oasis_WF.FrmAbout.Dispose(System.Boolean)">
+ <summary>
+ Clean up any resources being used.
+ </summary>
+</member>
+<member name="M:Oasis_WF.FrmAbout.InitializeComponent">
+ <summary>
+ Required method for Designer support - do not modify
+ the contents of this method with the code editor.
+ </summary>
+</member>
+<member name="M:Oasis_WF.FrmAdminTemplateSousEpisode.DropDownType_SelectedIndexChanged(System.Object,Telerik.WinControls.UI.Data.PositionChangedEventArgs)">
+ <summary>
+ 
+ </summary>
+ <param name="sender"></param>
+ <param name="e"></param>
+</member>
+<member name="M:Oasis_WF.FrmAdminTemplateSousEpisode.initSousTypes(System.Int64)">
+ <summary>
+ 
+ </summary>
+ <param name="idType"></param>
+</member>
+<member name="M:Oasis_WF.FrmEditDocxSousEpisode.initCtrl">
+ <summary>
+ 
+ </summary>
+</member>
+<member name="M:Oasis_WF.FrmEditDocxSousEpisode.HideCommandGroups">
+ <summary>
+ 
+ </summary>
+</member>
+<member name="M:Oasis_WF.FrmEditDocxSousEpisode.ChoixAction">
+ <summary>
+ 
+ </summary>
+ <returns></returns>
+</member>
+<member name="M:Oasis_WF.FrmEditDocxSousEpisode.ReplaceAllMatches(System.String,System.String)">
+ <summary>
+ 
+ </summary>
+ <param name="toSearch"></param>
+ <param name="toReplaceWith"></param>
+</member>
+<member name="T:Oasis_WF.DS_Ordonnance">
+<summary>
+Represents a strongly typed in-memory cache of data.
+</summary>
+</member>
+<member name="T:Oasis_WF.DS_Ordonnance.oa_patient_ordonnanceDataTable">
+<summary>
+Represents the strongly named DataTable class.
+</summary>
+</member>
+<member name="T:Oasis_WF.DS_Ordonnance.oa_patient_ordonnanceRow">
+<summary>
+Represents strongly named DataRow class.
+</summary>
+</member>
+<member name="T:Oasis_WF.DS_Ordonnance.oa_patient_ordonnanceRowChangeEvent">
+<summary>
+Row event argument class
+</summary>
+</member>
+<member name="T:Oasis_WF.DS_OrdonnanceTableAdapters.oa_patient_ordonnanceTableAdapter">
+<summary>
+Represents the connection and commands used to retrieve and save data.
+</summary>
+</member>
+<member name="T:Oasis_WF.DS_OrdonnanceTableAdapters.TableAdapterManager">
+<summary>
+TableAdapterManager is used to coordinate TableAdapters in the dataset to enable Hierarchical Update scenarios
+</summary>
+</member>
+<member name="M:Oasis_WF.DS_OrdonnanceTableAdapters.TableAdapterManager.UpdateUpdatedRows(Oasis_WF.DS_Ordonnance,System.Collections.Generic.List{System.Data.DataRow},System.Collections.Generic.List{System.Data.DataRow})">
+<summary>
+Update rows in top-down order.
+</summary>
+</member>
+<member name="M:Oasis_WF.DS_OrdonnanceTableAdapters.TableAdapterManager.UpdateInsertedRows(Oasis_WF.DS_Ordonnance,System.Collections.Generic.List{System.Data.DataRow})">
+<summary>
+Insert rows in top-down order.
+</summary>
+</member>
+<member name="M:Oasis_WF.DS_OrdonnanceTableAdapters.TableAdapterManager.UpdateDeletedRows(Oasis_WF.DS_Ordonnance,System.Collections.Generic.List{System.Data.DataRow})">
+<summary>
+Delete rows in bottom-up order.
+</summary>
+</member>
+<member name="M:Oasis_WF.DS_OrdonnanceTableAdapters.TableAdapterManager.GetRealUpdatedRows(System.Data.DataRow[],System.Collections.Generic.List{System.Data.DataRow})">
+<summary>
+Remove inserted rows that become updated rows after calling TableAdapter.Update(inserted rows) first
+</summary>
+</member>
+<member name="M:Oasis_WF.DS_OrdonnanceTableAdapters.TableAdapterManager.UpdateAll(Oasis_WF.DS_Ordonnance)">
+<summary>
+Update all changes to the dataset.
+</summary>
+</member>
+<member name="T:Oasis_WF.DS_OrdonnanceTableAdapters.TableAdapterManager.UpdateOrderOption">
+<summary>
+Update Order Option
+</summary>
+</member>
+<member name="T:Oasis_WF.DS_OrdonnanceTableAdapters.TableAdapterManager.SelfReferenceComparer">
+<summary>
+Used to sort self-referenced table's rows
+</summary>
+</member>
+<member name="T:Oasis_WF.DS_Specialite">
+<summary>
+Represents a strongly typed in-memory cache of data.
+</summary>
+</member>
+<member name="T:Oasis_WF.DS_Specialite.oa_r_specialiteDataTable">
+<summary>
+Represents the strongly named DataTable class.
+</summary>
+</member>
+<member name="T:Oasis_WF.DS_Specialite.oa_r_specialiteRow">
+<summary>
+Represents strongly named DataRow class.
+</summary>
+</member>
+<member name="T:Oasis_WF.DS_Specialite.oa_r_specialiteRowChangeEvent">
+<summary>
+Row event argument class
+</summary>
+</member>
+<member name="T:Oasis_WF.DS_SpecialiteTableAdapters.oa_r_specialiteTableAdapter">
+<summary>
+Represents the connection and commands used to retrieve and save data.
+</summary>
+</member>
+<member name="T:Oasis_WF.DS_SpecialiteTableAdapters.TableAdapterManager">
+<summary>
+TableAdapterManager is used to coordinate TableAdapters in the dataset to enable Hierarchical Update scenarios
+</summary>
+</member>
+<member name="M:Oasis_WF.DS_SpecialiteTableAdapters.TableAdapterManager.UpdateUpdatedRows(Oasis_WF.DS_Specialite,System.Collections.Generic.List{System.Data.DataRow},System.Collections.Generic.List{System.Data.DataRow})">
+<summary>
+Update rows in top-down order.
+</summary>
+</member>
+<member name="M:Oasis_WF.DS_SpecialiteTableAdapters.TableAdapterManager.UpdateInsertedRows(Oasis_WF.DS_Specialite,System.Collections.Generic.List{System.Data.DataRow})">
+<summary>
+Insert rows in top-down order.
+</summary>
+</member>
+<member name="M:Oasis_WF.DS_SpecialiteTableAdapters.TableAdapterManager.UpdateDeletedRows(Oasis_WF.DS_Specialite,System.Collections.Generic.List{System.Data.DataRow})">
+<summary>
+Delete rows in bottom-up order.
+</summary>
+</member>
+<member name="M:Oasis_WF.DS_SpecialiteTableAdapters.TableAdapterManager.GetRealUpdatedRows(System.Data.DataRow[],System.Collections.Generic.List{System.Data.DataRow})">
+<summary>
+Remove inserted rows that become updated rows after calling TableAdapter.Update(inserted rows) first
+</summary>
+</member>
+<member name="M:Oasis_WF.DS_SpecialiteTableAdapters.TableAdapterManager.UpdateAll(Oasis_WF.DS_Specialite)">
+<summary>
+Update all changes to the dataset.
+</summary>
+</member>
+<member name="T:Oasis_WF.DS_SpecialiteTableAdapters.TableAdapterManager.UpdateOrderOption">
+<summary>
+Update Order Option
+</summary>
+</member>
+<member name="T:Oasis_WF.DS_SpecialiteTableAdapters.TableAdapterManager.SelfReferenceComparer">
+<summary>
+Used to sort self-referenced table's rows
+</summary>
+</member>
+<member name="T:Oasis_WF.RORDS">
+<summary>
+Represents a strongly typed in-memory cache of data.
+</summary>
+</member>
+<member name="T:Oasis_WF.RORDS.v_rorDataTable">
+<summary>
+Represents the strongly named DataTable class.
+</summary>
+</member>
+<member name="T:Oasis_WF.RORDS.v_rorRow">
+<summary>
+Represents strongly named DataRow class.
+</summary>
+</member>
+<member name="T:Oasis_WF.RORDS.v_rorRowChangeEvent">
+<summary>
+Row event argument class
+</summary>
+</member>
+<member name="T:Oasis_WF.RORDSTableAdapters.v_rorTableAdapter">
+<summary>
+Represents the connection and commands used to retrieve and save data.
+</summary>
+</member>
+<member name="T:Oasis_WF.RORDSTableAdapters.TableAdapterManager">
+<summary>
+TableAdapterManager is used to coordinate TableAdapters in the dataset to enable Hierarchical Update scenarios
+</summary>
+</member>
+<member name="M:Oasis_WF.RORDSTableAdapters.TableAdapterManager.UpdateUpdatedRows(Oasis_WF.RORDS,System.Collections.Generic.List{System.Data.DataRow},System.Collections.Generic.List{System.Data.DataRow})">
+<summary>
+Update rows in top-down order.
+</summary>
+</member>
+<member name="M:Oasis_WF.RORDSTableAdapters.TableAdapterManager.UpdateInsertedRows(Oasis_WF.RORDS,System.Collections.Generic.List{System.Data.DataRow})">
+<summary>
+Insert rows in top-down order.
+</summary>
+</member>
+<member name="M:Oasis_WF.RORDSTableAdapters.TableAdapterManager.UpdateDeletedRows(Oasis_WF.RORDS,System.Collections.Generic.List{System.Data.DataRow})">
+<summary>
+Delete rows in bottom-up order.
+</summary>
+</member>
+<member name="M:Oasis_WF.RORDSTableAdapters.TableAdapterManager.GetRealUpdatedRows(System.Data.DataRow[],System.Collections.Generic.List{System.Data.DataRow})">
+<summary>
+Remove inserted rows that become updated rows after calling TableAdapter.Update(inserted rows) first
+</summary>
+</member>
+<member name="M:Oasis_WF.RORDSTableAdapters.TableAdapterManager.UpdateAll(Oasis_WF.RORDS)">
+<summary>
+Update all changes to the dataset.
+</summary>
+</member>
+<member name="T:Oasis_WF.RORDSTableAdapters.TableAdapterManager.UpdateOrderOption">
+<summary>
+Update Order Option
+</summary>
+</member>
+<member name="T:Oasis_WF.RORDSTableAdapters.TableAdapterManager.SelfReferenceComparer">
+<summary>
+Used to sort self-referenced table's rows
+</summary>
+</member>
+<member name="T:Oasis_WF.oasisDataSet">
+<summary>
+Represents a strongly typed in-memory cache of data.
+</summary>
+</member>
+<member name="T:Oasis_WF.oasisDataSet.v_drcDataTable">
+<summary>
+Represents the strongly named DataTable class.
+</summary>
+</member>
+<member name="T:Oasis_WF.oasisDataSet.v_drcRow">
+<summary>
+Represents strongly named DataRow class.
+</summary>
+</member>
+<member name="T:Oasis_WF.oasisDataSet.v_drcRowChangeEvent">
+<summary>
+Row event argument class
+</summary>
+</member>
+<member name="T:Oasis_WF.oasisDataSetTableAdapters.v_drcTableAdapter">
+<summary>
+Represents the connection and commands used to retrieve and save data.
+</summary>
+</member>
+<member name="T:Oasis_WF.oasisDataSetTableAdapters.TableAdapterManager">
+<summary>
+TableAdapterManager is used to coordinate TableAdapters in the dataset to enable Hierarchical Update scenarios
+</summary>
+</member>
+<member name="M:Oasis_WF.oasisDataSetTableAdapters.TableAdapterManager.UpdateUpdatedRows(Oasis_WF.oasisDataSet,System.Collections.Generic.List{System.Data.DataRow},System.Collections.Generic.List{System.Data.DataRow})">
+<summary>
+Update rows in top-down order.
+</summary>
+</member>
+<member name="M:Oasis_WF.oasisDataSetTableAdapters.TableAdapterManager.UpdateInsertedRows(Oasis_WF.oasisDataSet,System.Collections.Generic.List{System.Data.DataRow})">
+<summary>
+Insert rows in top-down order.
+</summary>
+</member>
+<member name="M:Oasis_WF.oasisDataSetTableAdapters.TableAdapterManager.UpdateDeletedRows(Oasis_WF.oasisDataSet,System.Collections.Generic.List{System.Data.DataRow})">
+<summary>
+Delete rows in bottom-up order.
+</summary>
+</member>
+<member name="M:Oasis_WF.oasisDataSetTableAdapters.TableAdapterManager.GetRealUpdatedRows(System.Data.DataRow[],System.Collections.Generic.List{System.Data.DataRow})">
+<summary>
+Remove inserted rows that become updated rows after calling TableAdapter.Update(inserted rows) first
+</summary>
+</member>
+<member name="M:Oasis_WF.oasisDataSetTableAdapters.TableAdapterManager.UpdateAll(Oasis_WF.oasisDataSet)">
+<summary>
+Update all changes to the dataset.
+</summary>
+</member>
+<member name="T:Oasis_WF.oasisDataSetTableAdapters.TableAdapterManager.UpdateOrderOption">
+<summary>
+Update Order Option
+</summary>
+</member>
+<member name="T:Oasis_WF.oasisDataSetTableAdapters.TableAdapterManager.SelfReferenceComparer">
+<summary>
+Used to sort self-referenced table's rows
+</summary>
+</member>
+<member name="T:Oasis_WF.oasisDataSet1">
+<summary>
+Represents a strongly typed in-memory cache of data.
+</summary>
+</member>
+<member name="T:Oasis_WF.oasisDataSet1.v_drcDataTable">
+<summary>
+Represents the strongly named DataTable class.
+</summary>
+</member>
+<member name="T:Oasis_WF.oasisDataSet1.v_drcRow">
+<summary>
+Represents strongly named DataRow class.
+</summary>
+</member>
+<member name="T:Oasis_WF.oasisDataSet1.v_drcRowChangeEvent">
+<summary>
+Row event argument class
+</summary>
+</member>
+<member name="T:Oasis_WF.oasisDataSet1TableAdapters.v_drcTableAdapter">
+<summary>
+Represents the connection and commands used to retrieve and save data.
+</summary>
+</member>
+<member name="T:Oasis_WF.oasisDataSet1TableAdapters.TableAdapterManager">
+<summary>
+TableAdapterManager is used to coordinate TableAdapters in the dataset to enable Hierarchical Update scenarios
+</summary>
+</member>
+<member name="M:Oasis_WF.oasisDataSet1TableAdapters.TableAdapterManager.UpdateUpdatedRows(Oasis_WF.oasisDataSet1,System.Collections.Generic.List{System.Data.DataRow},System.Collections.Generic.List{System.Data.DataRow})">
+<summary>
+Update rows in top-down order.
+</summary>
+</member>
+<member name="M:Oasis_WF.oasisDataSet1TableAdapters.TableAdapterManager.UpdateInsertedRows(Oasis_WF.oasisDataSet1,System.Collections.Generic.List{System.Data.DataRow})">
+<summary>
+Insert rows in top-down order.
+</summary>
+</member>
+<member name="M:Oasis_WF.oasisDataSet1TableAdapters.TableAdapterManager.UpdateDeletedRows(Oasis_WF.oasisDataSet1,System.Collections.Generic.List{System.Data.DataRow})">
+<summary>
+Delete rows in bottom-up order.
+</summary>
+</member>
+<member name="M:Oasis_WF.oasisDataSet1TableAdapters.TableAdapterManager.GetRealUpdatedRows(System.Data.DataRow[],System.Collections.Generic.List{System.Data.DataRow})">
+<summary>
+Remove inserted rows that become updated rows after calling TableAdapter.Update(inserted rows) first
+</summary>
+</member>
+<member name="M:Oasis_WF.oasisDataSet1TableAdapters.TableAdapterManager.UpdateAll(Oasis_WF.oasisDataSet1)">
+<summary>
+Update all changes to the dataset.
+</summary>
+</member>
+<member name="T:Oasis_WF.oasisDataSet1TableAdapters.TableAdapterManager.UpdateOrderOption">
+<summary>
+Update Order Option
+</summary>
+</member>
+<member name="T:Oasis_WF.oasisDataSet1TableAdapters.TableAdapterManager.SelfReferenceComparer">
+<summary>
+Used to sort self-referenced table's rows
+</summary>
+</member>
+<member name="T:Oasis_WF.oasisDataSet2">
+<summary>
+Represents a strongly typed in-memory cache of data.
+</summary>
+</member>
+<member name="T:Oasis_WF.oasisDataSet2.v_medocDataTable">
+<summary>
+Represents the strongly named DataTable class.
+</summary>
+</member>
+<member name="T:Oasis_WF.oasisDataSet2.v_medocRow">
+<summary>
+Represents strongly named DataRow class.
+</summary>
+</member>
+<member name="T:Oasis_WF.oasisDataSet2.v_medocRowChangeEvent">
+<summary>
+Row event argument class
+</summary>
+</member>
+<member name="T:Oasis_WF.oasisDataSet2TableAdapters.v_medocTableAdapter">
+<summary>
+Represents the connection and commands used to retrieve and save data.
+</summary>
+</member>
+<member name="T:Oasis_WF.oasisDataSet2TableAdapters.TableAdapterManager">
+<summary>
+TableAdapterManager is used to coordinate TableAdapters in the dataset to enable Hierarchical Update scenarios
+</summary>
+</member>
+<member name="M:Oasis_WF.oasisDataSet2TableAdapters.TableAdapterManager.UpdateUpdatedRows(Oasis_WF.oasisDataSet2,System.Collections.Generic.List{System.Data.DataRow},System.Collections.Generic.List{System.Data.DataRow})">
+<summary>
+Update rows in top-down order.
+</summary>
+</member>
+<member name="M:Oasis_WF.oasisDataSet2TableAdapters.TableAdapterManager.UpdateInsertedRows(Oasis_WF.oasisDataSet2,System.Collections.Generic.List{System.Data.DataRow})">
+<summary>
+Insert rows in top-down order.
+</summary>
+</member>
+<member name="M:Oasis_WF.oasisDataSet2TableAdapters.TableAdapterManager.UpdateDeletedRows(Oasis_WF.oasisDataSet2,System.Collections.Generic.List{System.Data.DataRow})">
+<summary>
+Delete rows in bottom-up order.
+</summary>
+</member>
+<member name="M:Oasis_WF.oasisDataSet2TableAdapters.TableAdapterManager.GetRealUpdatedRows(System.Data.DataRow[],System.Collections.Generic.List{System.Data.DataRow})">
+<summary>
+Remove inserted rows that become updated rows after calling TableAdapter.Update(inserted rows) first
+</summary>
+</member>
+<member name="M:Oasis_WF.oasisDataSet2TableAdapters.TableAdapterManager.UpdateAll(Oasis_WF.oasisDataSet2)">
+<summary>
+Update all changes to the dataset.
+</summary>
+</member>
+<member name="T:Oasis_WF.oasisDataSet2TableAdapters.TableAdapterManager.UpdateOrderOption">
+<summary>
+Update Order Option
+</summary>
+</member>
+<member name="T:Oasis_WF.oasisDataSet2TableAdapters.TableAdapterManager.SelfReferenceComparer">
+<summary>
+Used to sort self-referenced table's rows
+</summary>
+</member>
+<member name="M:Oasis_WF.OasisTextTools.AddSectionIntoDocument(Telerik.WinForms.Documents.Model.RadDocument,Telerik.WinForms.Documents.Model.Section)">
+ <summary>
+ ajoute une section au document, si le document est nothing, un document est instancié, dans tous les cas la fonction retourne un RadDocument
+ </summary>
+ <param name="document"></param>
+ <param name="section"></param>
+ <returns></returns>
+</member>
+<member name="M:Oasis_WF.OasisTextTools.CreateSection(Telerik.WinForms.Documents.Model.PageOrientation)">
+ <summary>
+ 
+ </summary>
+ <returns></returns>
+</member>
+<member name="M:Oasis_WF.OasisTextTools.CreateParagraphIntoSection(Telerik.WinForms.Documents.Model.Section,System.Double,Telerik.WinForms.Documents.Layout.RadTextAlignment)">
+ <summary>
+ 
+ </summary>
+ <param name="section"></param>
+ <param name="fontSize"></param>
+ <param name="textAlignment"></param>
+ <returns></returns>
+</member>
+<member name="T:Oasis_WF.UniteSanitaireDataSet">
+<summary>
+Represents a strongly typed in-memory cache of data.
+</summary>
+</member>
+<member name="T:Oasis_WF.UniteSanitaireDataSet.oa_siteDataTable">
+<summary>
+Represents the strongly named DataTable class.
+</summary>
+</member>
+<member name="T:Oasis_WF.UniteSanitaireDataSet.oa_unite_sanitaireDataTable">
+<summary>
+Represents the strongly named DataTable class.
+</summary>
+</member>
+<member name="T:Oasis_WF.UniteSanitaireDataSet.oa_siteRow">
+<summary>
+Represents strongly named DataRow class.
+</summary>
+</member>
+<member name="T:Oasis_WF.UniteSanitaireDataSet.oa_unite_sanitaireRow">
+<summary>
+Represents strongly named DataRow class.
+</summary>
+</member>
+<member name="T:Oasis_WF.UniteSanitaireDataSet.oa_siteRowChangeEvent">
+<summary>
+Row event argument class
+</summary>
+</member>
+<member name="T:Oasis_WF.UniteSanitaireDataSet.oa_unite_sanitaireRowChangeEvent">
+<summary>
+Row event argument class
+</summary>
+</member>
+<member name="T:Oasis_WF.UniteSanitaireDataSetTableAdapters.oa_siteTableAdapter">
+<summary>
+Represents the connection and commands used to retrieve and save data.
+</summary>
+</member>
+<member name="T:Oasis_WF.UniteSanitaireDataSetTableAdapters.oa_unite_sanitaireTableAdapter">
+<summary>
+Represents the connection and commands used to retrieve and save data.
+</summary>
+</member>
+<member name="T:Oasis_WF.UniteSanitaireDataSetTableAdapters.TableAdapterManager">
+<summary>
+TableAdapterManager is used to coordinate TableAdapters in the dataset to enable Hierarchical Update scenarios
+</summary>
+</member>
+<member name="M:Oasis_WF.UniteSanitaireDataSetTableAdapters.TableAdapterManager.UpdateUpdatedRows(Oasis_WF.UniteSanitaireDataSet,System.Collections.Generic.List{System.Data.DataRow},System.Collections.Generic.List{System.Data.DataRow})">
+<summary>
+Update rows in top-down order.
+</summary>
+</member>
+<member name="M:Oasis_WF.UniteSanitaireDataSetTableAdapters.TableAdapterManager.UpdateInsertedRows(Oasis_WF.UniteSanitaireDataSet,System.Collections.Generic.List{System.Data.DataRow})">
+<summary>
+Insert rows in top-down order.
+</summary>
+</member>
+<member name="M:Oasis_WF.UniteSanitaireDataSetTableAdapters.TableAdapterManager.UpdateDeletedRows(Oasis_WF.UniteSanitaireDataSet,System.Collections.Generic.List{System.Data.DataRow})">
+<summary>
+Delete rows in bottom-up order.
+</summary>
+</member>
+<member name="M:Oasis_WF.UniteSanitaireDataSetTableAdapters.TableAdapterManager.GetRealUpdatedRows(System.Data.DataRow[],System.Collections.Generic.List{System.Data.DataRow})">
+<summary>
+Remove inserted rows that become updated rows after calling TableAdapter.Update(inserted rows) first
+</summary>
+</member>
+<member name="M:Oasis_WF.UniteSanitaireDataSetTableAdapters.TableAdapterManager.UpdateAll(Oasis_WF.UniteSanitaireDataSet)">
+<summary>
+Update all changes to the dataset.
+</summary>
+</member>
+<member name="T:Oasis_WF.UniteSanitaireDataSetTableAdapters.TableAdapterManager.UpdateOrderOption">
+<summary>
+Update Order Option
+</summary>
+</member>
+<member name="T:Oasis_WF.UniteSanitaireDataSetTableAdapters.TableAdapterManager.SelfReferenceComparer">
+<summary>
+Used to sort self-referenced table's rows
+</summary>
+</member>
+</members>
+</doc>

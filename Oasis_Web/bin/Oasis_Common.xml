@@ -1,0 +1,354 @@
+﻿<?xml version="1.0"?>
+<doc>
+<assembly>
+<name>
+Oasis_Common
+</name>
+</assembly>
+<members>
+<member name="T:Oasis_Common.My.Resources.Resources">
+<summary>
+  A strongly-typed resource class, for looking up localized strings, etc.
+</summary>
+</member>
+<member name="P:Oasis_Common.My.Resources.Resources.ResourceManager">
+<summary>
+  Returns the cached ResourceManager instance used by this class.
+</summary>
+</member>
+<member name="P:Oasis_Common.My.Resources.Resources.Culture">
+<summary>
+  Overrides the current thread's CurrentUICulture property for all
+  resource lookups using this strongly typed resource class.
+</summary>
+</member>
+<member name="M:Oasis_Common.ApiOasis.loginRest(Oasis_Common.LoginRequest)">
+ <summary>
+ Login via api rest oasis
+ </summary>
+ <param name="loginRequest"></param>
+ <returns></returns>
+</member>
+<member name="M:Oasis_Common.ApiOasis.uploadFileRest(System.String,System.String,System.String,System.Byte[])">
+ <summary>
+ upload de fichier via api rest oasis
+ </summary>
+ <param name="login"></param>
+ <param name="password"></param>
+ <param name="srcFileName"></param>
+ <param name="contenu"></param>
+</member>
+<member name="M:Oasis_Common.ApiOasis.downloadFileRest(Oasis_Common.DownloadRequest)">
+ <summary>
+ download de fichier via api rest oasis
+ </summary>
+ <param name="downloadRequest"></param>
+ <returns></returns>
+</member>
+<member name="M:Oasis_Common.SousEpisodeSousType.#ctor(System.Data.DataRow)">
+
+</member>
+<member name="M:Oasis_Common.SousEpisodeSousType.IsUserLogRedactionAutorise(System.Object)">
+ <summary>
+ 
+ </summary>
+ <returns></returns>
+</member>
+<member name="M:Oasis_Common.SousEpisodeSousType.IsUserLogValidationAutorise(System.Object)">
+ <summary>
+ 
+ </summary>
+ <returns></returns>
+</member>
+<member name="M:Oasis_Common.SousEpisodeSousType.IsUserLogAutorise(System.String,System.Object)">
+ <summary>
+ 
+ </summary>
+ <param name="strProfil"></param>
+ <returns></returns>
+</member>
+<member name="M:Oasis_Common.SousEpisodeSousType.getListProfilsAutoriseList(System.String)">
+ <summary>
+ 
+ </summary>
+ <param name="profilsString"></param>
+ <returns></returns>
+</member>
+<member name="M:Oasis_Common.EpisodeParametreDao.AlimenteFusionDocumentParametres(Oasis_Common.SousEpisodeFusion,System.Int64,System.Int64)">
+ <summary>
+ 
+ </summary>
+ <param name="sousEpisodeFusion"></param>
+ <param name="idEpisode"></param>
+ <param name="idPatient"></param>
+</member>
+<member name="M:Oasis_Common.SousEpisodeDao.getById(System.Int64)">
+ <summary>
+ 
+ </summary>
+ <param name="idSousEpisode"></param>
+ <returns></returns>
+</member>
+<member name="M:Oasis_Common.SousEpisodeReponseDao.getLstSousEpisodeReponse(System.Int64,System.Int64)">
+ <summary>
+ 
+ </summary>
+ <param name="idSousEpisodeReponse"></param>
+ <returns></returns>
+</member>
+<member name="M:Oasis_Common.SousEpisodeReponseDao.getTableSousEpisodeReponse(System.Int64,System.Int64)">
+ <summary>
+ 
+ </summary>
+ <param name="idSousEpisode"></param>
+ <returns></returns>
+</member>
+<member name="M:Oasis_Common.SousEpisodeReponseDao.Create(Oasis_Common.SousEpisode,Oasis_Common.SousEpisodeReponse,System.String,System.Object)">
+ <summary>
+ 
+ </summary>
+ <param name="sousEpisode"></param>
+ <param name="sousEpisodeReponse"></param>
+ <param name="filenameSrc"></param>
+ <returns></returns>
+</member>
+<member name="M:Oasis_Common.SousEpisodeReponseDao.buildBean(System.Data.DataRow)">
+ <summary>
+ 
+ </summary>
+ <param name="row"></param>
+ <returns></returns>
+</member>
+<member name="M:Oasis_Common.SousEpisodeSousSousType.#ctor(System.Data.DataRow)">
+
+</member>
+<member name="M:Oasis_Common.SiegeDao.getSiegeById(System.Int32,System.Boolean)">
+ <summary>
+ retrouve un siege par son id
+ </summary>
+ <param name="id"></param>
+ <param name="isWithInactif"></param>
+ <returns></returns>
+</member>
+<member name="M:Oasis_Common.SiteDao.getSiteById(System.Int32,System.Boolean)">
+ <summary>
+ retrouve un site par son id
+ </summary>
+ <param name="id"></param>
+ <param name="isWithInactif"></param>
+ <returns></returns>
+</member>
+<member name="M:Oasis_Common.SiteDao.getList(System.Boolean,System.Int32)">
+ <summary>
+ 
+ </summary>
+ <param name="isWithInactif"></param>
+ <param name="uniteSanitaireId"></param>
+ <returns></returns>
+</member>
+<member name="M:Oasis_Common.SiteDao.buildBean(System.Data.SqlClient.SqlDataReader)">
+ <summary>
+ 
+ </summary>
+ <param name="reader"></param>
+ <returns></returns>
+</member>
+<member name="M:Oasis_Common.UniteSanitaireDao.getUniteSanitaireById(System.Int32,System.Boolean)">
+ <summary>
+ retrouve une unite sanitaire par son id
+ </summary>
+ <param name="id"></param>
+ <param name="isWithInactif"></param>
+ <returns></returns>
+</member>
+<member name="M:Oasis_Common.UniteSanitaireDao.getList(System.Boolean,System.Int32)">
+ <summary>
+ 
+ </summary>
+ <param name="isWithInactif"></param>
+ <param name="siegeId"></param>
+ <returns></returns>
+</member>
+<member name="M:Oasis_Common.UniteSanitaireDao.buildBean(System.Data.SqlClient.SqlDataReader)">
+ <summary>
+ 
+ </summary>
+ <param name="reader"></param>
+ <returns></returns>
+</member>
+<member name="M:Oasis_Common.TacheDao.GetAllTacheATraiter(System.Collections.Generic.List{Oasis_Common.Fonction},Oasis_Common.FiltreTache)">
+ <summary>
+ Liste des tache a traiter 
+ Attention : au moins une fonction dans la liste des fonction sinon pas de resultat
+ </summary>
+ <param name="lstFonction"></param>
+ <param name="filtreTache"></param>
+ <returns></returns>
+</member>
+<member name="M:Oasis_Common.TacheDao.GetAllTacheEnCours(System.Boolean,System.Collections.Generic.List{Oasis_Common.Fonction},Oasis_Common.FiltreTache,System.Boolean,Oasis_Common.Utilisateur)">
+ <summary>
+ donne les tache en cours pour un user ou pour les fonctions du profil d'un user
+ </summary>
+ <param name="isMyTache"></param>
+ <returns></returns>
+</member>
+<member name="M:Oasis_Common.TacheDao.GetAllTacheEmise(System.Boolean,Oasis_Common.Utilisateur)">
+ <summary>
+ tache emises (max 1000)
+ </summary>
+ <param name="isNotFinal"></param>
+ <returns></returns>
+</member>
+<member name="M:Oasis_Common.TacheDao.GetTacheById(System.Int32,System.Boolean)">
+ <summary>
+ retrouve une tache par son id
+ </summary>
+ <param name="id"></param>
+ <param name="isWithAnnule"></param>
+ <returns></returns>
+</member>
+<member name="M:Oasis_Common.TacheDao.GetTacheBeanAssocie(Oasis_Common.Tache)">
+ <summary>
+ recherche tous les bean associés à une tache (user , fonction, unité sanitaire  ...etc)
+ </summary>
+ <param name="tache"></param>
+ <returns></returns>
+</member>
+<member name="M:Oasis_Common.TacheDao.CreateRendezVous(Oasis_Common.Patient,Oasis_Common.Parcours,Oasis_Common.Tache.TypeTache,System.DateTime,System.Int32,System.String,Oasis_Common.Utilisateur,Oasis_Common.Tache)">
+ <summary>
+ Creation de rendez : insert simple ou on termine la demande (update) et insert du rdv
+ </summary>
+ <param name="patient"></param>
+ <param name="parcours"></param>
+ <param name="tacheParent"></param>
+</member>
+<member name="M:Oasis_Common.FonctionDao.GetList(System.Boolean,System.String)">
+ <summary>
+ 
+ </summary>
+ <param name="isWithInactif"></param>
+ <param name="profilId"></param>
+ <returns></returns>
+</member>
+<member name="M:Oasis_Common.FonctionDao.GetFonctionById(System.Int64)">
+ <summary>
+ retrouve une fonction par son id
+ </summary>
+ <param name="id"></param>
+ <returns></returns>
+</member>
+<member name="M:Oasis_Common.FonctionDao.BuildBean(System.Data.SqlClient.SqlDataReader)">
+ <summary>
+ 
+ </summary>
+ <param name="reader"></param>
+ <returns></returns>
+</member>
+<member name="M:Oasis_Common.ProfilDao.getListProfil">
+ <summary>
+ 
+ </summary>
+ <returns></returns>
+</member>
+<member name="M:Oasis_Common.ProfilDao.buildBean(System.Data.SqlClient.SqlConnection,System.Data.SqlClient.SqlDataReader)">
+ <summary>
+ 
+ </summary>
+ <param name="con"></param>
+ <param name="reader"></param>
+ <returns></returns>
+</member>
+<member name="M:Oasis_Common.UserDao.Create(Oasis_Common.Utilisateur)">
+ <summary>
+ 
+ </summary>
+ <param name="utilisateur"></param>
+ <returns></returns>
+</member>
+<member name="M:Oasis_Common.UserDao.getUserByLoginPassword(System.String,System.String)">
+ <summary>
+ 
+ </summary>
+ <param name="login"></param>
+ <param name="password"></param>
+ <returns></returns>
+</member>
+<member name="M:Oasis_Common.UserDao.getUserById(System.Int32)">
+ <summary>
+ retrouve un utilisateur par son id
+ </summary>
+ <param name="userId"></param>
+ <returns></returns>
+</member>
+<member name="M:Oasis_Common.UserDao.buildBean(System.Data.SqlClient.SqlDataReader)">
+ <summary>
+ 
+ </summary>
+ <param name="reader"></param>
+ <returns></returns>
+</member>
+<member name="M:Oasis_Common.UserDao.addFonctions(Oasis_Common.Utilisateur)">
+ <summary>
+ 
+ </summary>
+ <param name="user"></param>
+</member>
+<member name="M:Oasis_Common.UserDao.controlPassword(Oasis_Common.Utilisateur,System.String)">
+ <summary>
+ Controle de la cohérence du mot de passe
+ </summary>
+ <param name="user"></param>
+ <param name="password"></param>
+</member>
+<member name="M:Oasis_Common.UserDao.GetTableUtilisateurForGrid(System.Boolean)">
+ <summary>
+ 
+ </summary>
+ <param name="isInactif"></param>
+ <returns></returns>
+</member>
+<member name="M:Oasis_Common.UserDao.ActivationOuDesactivation(System.Int32,System.Boolean)">
+ <summary>
+ 
+ </summary>
+ <param name="idUser"></param>
+ <param name="isInactivation"></param>
+</member>
+<member name="M:Oasis_Common.ModuleUtilsBase.GetConnectionStringOasis">
+ <summary>
+ 
+ </summary>
+ <returns></returns>
+</member>
+<member name="M:Oasis_Common.ModuleUtilsBase.Coalesce(System.Object[])">
+ <summary>
+ 
+ </summary>
+ <param name="Parameters"></param>
+ <returns></returns>
+</member>
+<member name="M:Oasis_Common.ModuleUtilsBase.IsPermission(System.Boolean)">
+ <summary>
+ 
+ </summary>
+ <returns></returns>
+</member>
+<member name="M:Oasis_Common.ModuleUtilsBase.ResetPermission">
+ <summary>
+ 
+ </summary>
+</member>
+<member name="M:Oasis_Common.ModuleUtilsBase.ReadPermTry">
+ <summary>
+ 
+ </summary>
+ <returns></returns>
+</member>
+<member name="M:Oasis_Common.ModuleUtilsBase.WritePermTry(System.Int32)">
+ <summary>
+ 
+ </summary>
+ <param name="value"></param>
+</member>
+</members>
+</doc>
