@@ -85,7 +85,7 @@ Partial Class RadFDrcStandardTypeActiviteDetail
         '
         Me.LblAgeUnite.AutoSize = True
         Me.LblAgeUnite.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Bold)
-        Me.LblAgeUnite.Location = New System.Drawing.Point(330, 102)
+        Me.LblAgeUnite.Location = New System.Drawing.Point(387, 102)
         Me.LblAgeUnite.Name = "LblAgeUnite"
         Me.LblAgeUnite.Size = New System.Drawing.Size(125, 13)
         Me.LblAgeUnite.TabIndex = 23
@@ -94,15 +94,15 @@ Partial Class RadFDrcStandardTypeActiviteDetail
         'LblAgeMax
         '
         Me.LblAgeMax.AutoSize = True
-        Me.LblAgeMax.Location = New System.Drawing.Point(190, 101)
+        Me.LblAgeMax.Location = New System.Drawing.Point(207, 101)
         Me.LblAgeMax.Name = "LblAgeMax"
-        Me.LblAgeMax.Size = New System.Drawing.Size(50, 13)
+        Me.LblAgeMax.Size = New System.Drawing.Size(85, 13)
         Me.LblAgeMax.TabIndex = 22
-        Me.LblAgeMax.Text = "Age max"
+        Me.LblAgeMax.Text = "Age max (exclu)"
         '
         'NumAgeMax
         '
-        Me.NumAgeMax.Location = New System.Drawing.Point(246, 99)
+        Me.NumAgeMax.Location = New System.Drawing.Point(303, 99)
         Me.NumAgeMax.Maximum = New Decimal(New Integer() {120, 0, 0, 0})
         Me.NumAgeMax.Name = "NumAgeMax"
         Me.NumAgeMax.Size = New System.Drawing.Size(70, 20)
@@ -121,16 +121,16 @@ Partial Class RadFDrcStandardTypeActiviteDetail
         Me.LblAgeMin.AutoSize = True
         Me.LblAgeMin.Location = New System.Drawing.Point(11, 102)
         Me.LblAgeMin.Name = "LblAgeMin"
-        Me.LblAgeMin.Size = New System.Drawing.Size(49, 13)
+        Me.LblAgeMin.Size = New System.Drawing.Size(83, 13)
         Me.LblAgeMin.TabIndex = 19
-        Me.LblAgeMin.Text = "Age min"
+        Me.LblAgeMin.Text = "Age min (inclu)"
         '
         'Label12
         '
         Me.Label12.AutoSize = True
         Me.Label12.Location = New System.Drawing.Point(11, 76)
         Me.Label12.Name = "Label12"
-        Me.Label12.Size = New System.Drawing.Size(68, 13)
+        Me.Label12.Size = New System.Drawing.Size(69, 13)
         Me.Label12.TabIndex = 18
         Me.Label12.Text = "Type activité"
         '
