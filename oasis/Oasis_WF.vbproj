@@ -267,6 +267,15 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DS_Specialite.vb">
+      <DependentUpon>DS_Specialite.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="Form\AnnuaireProfessionnel\RadFAnnuaireProfessionnelSelect.Designer.vb">
+      <DependentUpon>RadFAnnuaireProfessionnelSelect.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Form\AnnuaireProfessionnel\RadFAnnuaireProfessionnelSelect.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Form\DRC\RadFAutoSuivi.Designer.vb">
       <DependentUpon>RadFAutoSuivi.vb</DependentUpon>
     </Compile>
@@ -1005,6 +1014,9 @@
     <Compile Include="Settings.vb" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Form\AnnuaireProfessionnel\RadFAnnuaireProfessionnelSelect.resx">
+      <DependentUpon>RadFAnnuaireProfessionnelSelect.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Form\DRC\RadFAutoSuivi.resx">
       <DependentUpon>RadFAutoSuivi.vb</DependentUpon>
     </EmbeddedResource>

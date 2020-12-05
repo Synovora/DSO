@@ -98,6 +98,7 @@
   <ItemGroup>
     <Compile Include="ApiRest\ApiOasis.vb" />
     <Compile Include="ApiRest\Class1.vb" />
+    <Compile Include="Bean\AnnuaireProfessionnel\annuaireProfessionnel.vb" />
     <Compile Include="Bean\Antecedent\AldCim10.vb" />
     <Compile Include="Bean\Antecedent\Ald.vb" />
     <Compile Include="Bean\Antecedent\Antecedent.vb" />
@@ -173,6 +174,7 @@
     <Compile Include="Dao\Agenda\AppointmentDao.vb" />
     <Compile Include="Dao\ALD\AldCim10Dao.vb" />
     <Compile Include="Dao\ALD\AldDao.vb" />
+    <Compile Include="Dao\AnnuaireProfessionnel\AnnuaireProfessionnelDao.vb" />
     <Compile Include="Dao\Antecedent\AntecedentAffectationDao.vb" />
     <Compile Include="Dao\Antecedent\AntecedentChangementOrdreDao.vb" />
     <Compile Include="Dao\Antecedent\AntecedentDao.vb" />
