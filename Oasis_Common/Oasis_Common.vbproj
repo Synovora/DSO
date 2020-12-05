@@ -99,6 +99,9 @@
     <Compile Include="ApiRest\ApiOasis.vb" />
     <Compile Include="ApiRest\Class1.vb" />
     <Compile Include="Bean\AnnuaireProfessionnel\annuaireProfessionnel.vb" />
+    <Compile Include="Bean\ANS_NOS\G15_ProfessionSante.vb" />
+    <Compile Include="Bean\ANS_NOS\R38_SpecialiteOrdinale.vb" />
+    <Compile Include="Bean\ANS_NOS\R40_CompetenceExclusive.vb" />
     <Compile Include="Bean\Antecedent\AldCim10.vb" />
     <Compile Include="Bean\Antecedent\Ald.vb" />
     <Compile Include="Bean\Antecedent\Antecedent.vb" />
@@ -175,6 +178,9 @@
     <Compile Include="Dao\ALD\AldCim10Dao.vb" />
     <Compile Include="Dao\ALD\AldDao.vb" />
     <Compile Include="Dao\AnnuaireProfessionnel\AnnuaireProfessionnelDao.vb" />
+    <Compile Include="Dao\ANS_NOS\G15_ProfessionSanteDao.vb" />
+    <Compile Include="Dao\ANS_NOS\R38_SpecialiteOrdinaleDao.vb" />
+    <Compile Include="Dao\ANS_NOS\R40_CompetenceExclusiveDao.vb" />
     <Compile Include="Dao\Antecedent\AntecedentAffectationDao.vb" />
     <Compile Include="Dao\Antecedent\AntecedentChangementOrdreDao.vb" />
     <Compile Include="Dao\Antecedent\AntecedentDao.vb" />

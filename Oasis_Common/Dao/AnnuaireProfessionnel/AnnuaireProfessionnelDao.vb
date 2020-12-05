@@ -64,7 +64,7 @@ Public Class AnnuaireProfessionnelDao
     End Function
 
     Public Function GetAnnuaireProfessionnelById(annuaireProfessionneld As Integer) As AnnuaireProfessionnel
-        Dim antecedent As AnnuaireProfessionnel
+        Dim annuaireProfessionnel As AnnuaireProfessionnel
         Dim con As SqlConnection = GetConnection()
         Try
             Dim command As SqlCommand = con.CreateCommand()
@@ -72,7 +72,7 @@ Public Class AnnuaireProfessionnelDao
             command.Parameters.AddWithValue("@id", annuaireProfessionneld)
             Using reader As SqlDataReader = command.ExecuteReader()
                 If reader.Read() Then
-                    antecedent = BuildBean(reader)
+                    annuaireProfessionnel = BuildBean(reader)
                 Else
                     Throw New ArgumentException("Professionnel de santé inexistant !")
                 End If
@@ -82,7 +82,7 @@ Public Class AnnuaireProfessionnelDao
         Finally
             con.Close()
         End Try
-        Return antecedent
+        Return annuaireProfessionnel
     End Function
 
 End Class
