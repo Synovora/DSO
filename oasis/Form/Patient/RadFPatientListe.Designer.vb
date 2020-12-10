@@ -74,6 +74,7 @@ Partial Class RadFPatientListe
         Me.RadPanel4 = New Telerik.WinControls.UI.RadPanel()
         Me.ToolTip = New System.Windows.Forms.ToolTip(Me.components)
         Me.RadDesktopAlert1 = New Telerik.WinControls.UI.RadDesktopAlert(Me.components)
+        Me.RadBtnWiki = New Telerik.WinControls.UI.RadButton()
         CType(Me.RadPnlSelectedPatient, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.RadPnlSelectedPatient.SuspendLayout()
         CType(Me.RadBtnLigneDeVie, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -104,6 +105,7 @@ Partial Class RadFPatientListe
         Me.RadPanel3.SuspendLayout()
         CType(Me.RadPanel4, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.RadPanel4.SuspendLayout()
+        CType(Me.RadBtnWiki, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
@@ -298,7 +300,7 @@ Partial Class RadFPatientListe
         '
         'RadBtnAdmin
         '
-        Me.RadBtnAdmin.Location = New System.Drawing.Point(1006, 17)
+        Me.RadBtnAdmin.Location = New System.Drawing.Point(1122, 17)
         Me.RadBtnAdmin.Name = "RadBtnAdmin"
         Me.RadBtnAdmin.Size = New System.Drawing.Size(124, 24)
         Me.RadBtnAdmin.TabIndex = 42
@@ -449,6 +451,7 @@ Partial Class RadFPatientListe
         '
         'RadPanel2
         '
+        Me.RadPanel2.Controls.Add(Me.RadBtnWiki)
         Me.RadPanel2.Controls.Add(Me.RadBtnIntervenantSansRdv)
         Me.RadPanel2.Controls.Add(Me.RadBtnRdvEnCours)
         Me.RadPanel2.Controls.Add(Me.RadBtnTache)
@@ -465,7 +468,7 @@ Partial Class RadFPatientListe
         '
         'RadBtnIntervenantSansRdv
         '
-        Me.RadBtnIntervenantSansRdv.Location = New System.Drawing.Point(644, 17)
+        Me.RadBtnIntervenantSansRdv.Location = New System.Drawing.Point(760, 17)
         Me.RadBtnIntervenantSansRdv.Name = "RadBtnIntervenantSansRdv"
         Me.RadBtnIntervenantSansRdv.Size = New System.Drawing.Size(175, 24)
         Me.RadBtnIntervenantSansRdv.TabIndex = 47
@@ -473,7 +476,7 @@ Partial Class RadFPatientListe
         '
         'RadBtnRdvEnCours
         '
-        Me.RadBtnRdvEnCours.Location = New System.Drawing.Point(825, 17)
+        Me.RadBtnRdvEnCours.Location = New System.Drawing.Point(941, 17)
         Me.RadBtnRdvEnCours.Name = "RadBtnRdvEnCours"
         Me.RadBtnRdvEnCours.Size = New System.Drawing.Size(175, 24)
         Me.RadBtnRdvEnCours.TabIndex = 46
@@ -548,6 +551,14 @@ Partial Class RadFPatientListe
         Me.RadDesktopAlert1.ScreenPosition = Telerik.WinControls.UI.AlertScreenPosition.TopCenter
         Me.RadDesktopAlert1.ThemeName = ""
         '
+        'RadBtnWiki
+        '
+        Me.RadBtnWiki.Location = New System.Drawing.Point(644, 17)
+        Me.RadBtnWiki.Name = "RadBtnWiki"
+        Me.RadBtnWiki.Size = New System.Drawing.Size(110, 24)
+        Me.RadBtnWiki.TabIndex = 48
+        Me.RadBtnWiki.Text = "WiKi tutoriel"
+        '
         'RadFPatientListe
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -599,6 +610,7 @@ Partial Class RadFPatientListe
         Me.RadPanel3.ResumeLayout(False)
         CType(Me.RadPanel4, System.ComponentModel.ISupportInitialize).EndInit()
         Me.RadPanel4.ResumeLayout(False)
+        CType(Me.RadBtnWiki, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
 
@@ -642,5 +654,6 @@ Partial Class RadFPatientListe
     Friend WithEvents RadBtnTache As Telerik.WinControls.UI.RadButton
     Friend WithEvents RadBtnRdvEnCours As Telerik.WinControls.UI.RadButton
     Friend WithEvents RadBtnIntervenantSansRdv As Telerik.WinControls.UI.RadButton
+    Friend WithEvents RadBtnWiki As Telerik.WinControls.UI.RadButton
 End Class
 

@@ -463,6 +463,7 @@ Partial Class RadFPatientContreIndicationListe
         '
         '
         Me.RootElement.ApplyShapeToControl = True
+        Me.ShowIcon = False
         Me.ShowInTaskbar = False
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
         Me.Text = "Liste des contre-indications du patient"

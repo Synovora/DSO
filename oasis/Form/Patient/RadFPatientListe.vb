@@ -1,6 +1,7 @@
 ﻿Imports Telerik.WinControls
 Imports Telerik.WinControls.UI.Localization
 Imports Oasis_Common
+Imports System.Configuration
 
 Public Class RadFPatientListe
     Private privateUtilisateurConnecte As Utilisateur
@@ -641,4 +642,16 @@ Public Class RadFPatientListe
         Me.Enabled = True
     End Sub
 
+    Private Sub RadBtnWiki_Click(sender As Object, e As EventArgs) Handles RadBtnWiki.Click
+        'Récupération de l'URL du WiKi dans les paramètres de l'application
+        Dim UriProcedureTutorielle As String = ConfigurationManager.AppSettings("UriProcedureTutorielle")
+        If UriProcedureTutorielle = "" Then
+            CreateLog("Paramètre application 'UriProcedureTutorielle' non trouvé !", "Procédure tutorielle", Log.EnumTypeLog.ERREUR.ToString, userLog)
+            UriProcedureTutorielle = "http://173.199.71.187/doku.php?id="
+        End If
+
+        Dim MonURL As String
+        MonURL = UriProcedureTutorielle
+        Process.Start(MonURL)
+    End Sub
 End Class

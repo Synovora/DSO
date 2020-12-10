@@ -88,18 +88,18 @@ Partial Class RadFActeParamedicalTest
         Me.Label1.AutoSize = True
         Me.Label1.Location = New System.Drawing.Point(12, 32)
         Me.Label1.Name = "Label1"
-        Me.Label1.Size = New System.Drawing.Size(68, 13)
+        Me.Label1.Size = New System.Drawing.Size(69, 13)
         Me.Label1.TabIndex = 3
         Me.Label1.Text = "Type activité"
         '
         'RadBtnValidation
         '
         Me.RadBtnValidation.Image = Global.Oasis_WF.My.Resources.Resources.validation2
-        Me.RadBtnValidation.ImageAlignment = System.Drawing.ContentAlignment.MiddleCenter
         Me.RadBtnValidation.Location = New System.Drawing.Point(12, 404)
         Me.RadBtnValidation.Name = "RadBtnValidation"
-        Me.RadBtnValidation.Size = New System.Drawing.Size(24, 24)
+        Me.RadBtnValidation.Size = New System.Drawing.Size(110, 24)
         Me.RadBtnValidation.TabIndex = 2
+        Me.RadBtnValidation.Text = "Valider"
         Me.ToolTip1.SetToolTip(Me.RadBtnValidation, "Lancement du test")
         '
         'RadFActeParamedicalTest

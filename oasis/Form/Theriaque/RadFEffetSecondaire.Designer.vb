@@ -289,6 +289,8 @@ Partial Class RadFEffetSecondaire
         '
         '
         Me.RootElement.ApplyShapeToControl = True
+        Me.ShowIcon = False
+        Me.ShowInTaskbar = False
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent
         Me.Text = "RadFEffetSecondaire"
         CType(Me.RadPanel1, System.ComponentModel.ISupportInitialize).EndInit()

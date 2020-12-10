@@ -49,6 +49,7 @@ Partial Class RadFTraitementDetailEdit
         Me.Label7 = New System.Windows.Forms.Label()
         Me.LblPatientAdresse1 = New System.Windows.Forms.Label()
         Me.RadGroupBox2 = New Telerik.WinControls.UI.RadGroupBox()
+        Me.RadBtnModifierMedicament = New Telerik.WinControls.UI.RadButton()
         Me.LblATC = New System.Windows.Forms.Label()
         Me.Label19 = New System.Windows.Forms.Label()
         Me.LblMedicamentTitulaire = New System.Windows.Forms.Label()
@@ -130,11 +131,11 @@ Partial Class RadFTraitementDetailEdit
         Me.RadBtnParmacodynamique = New Telerik.WinControls.UI.RadButton()
         Me.RadBtnEffetIndesirable = New Telerik.WinControls.UI.RadButton()
         Me.RadBtnSubstance = New Telerik.WinControls.UI.RadButton()
-        Me.RadBtnModifierMedicament = New Telerik.WinControls.UI.RadButton()
         CType(Me.RadGroupBox1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.RadGroupBox1.SuspendLayout()
         CType(Me.RadGroupBox2, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.RadGroupBox2.SuspendLayout()
+        CType(Me.RadBtnModifierMedicament, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.RadBtnValidation, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.RadBtnSupprimerTraitement, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.RadBtnHistorique, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -163,7 +164,6 @@ Partial Class RadFTraitementDetailEdit
         CType(Me.RadBtnParmacodynamique, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.RadBtnEffetIndesirable, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.RadBtnSubstance, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.RadBtnModifierMedicament, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
@@ -452,12 +452,20 @@ Partial Class RadFTraitementDetailEdit
         CType(Me.RadGroupBox2.GetChildAt(0).GetChildAt(1).GetChildAt(0), Telerik.WinControls.Primitives.FillPrimitive).BackColor = System.Drawing.SystemColors.ActiveCaption
         CType(Me.RadGroupBox2.GetChildAt(0).GetChildAt(1).GetChildAt(0), Telerik.WinControls.Primitives.FillPrimitive).SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.None
         '
+        'RadBtnModifierMedicament
+        '
+        Me.RadBtnModifierMedicament.Location = New System.Drawing.Point(1036, 21)
+        Me.RadBtnModifierMedicament.Name = "RadBtnModifierMedicament"
+        Me.RadBtnModifierMedicament.Size = New System.Drawing.Size(110, 24)
+        Me.RadBtnModifierMedicament.TabIndex = 70
+        Me.RadBtnModifierMedicament.Text = "Modifier"
+        '
         'LblATC
         '
         Me.LblATC.AutoSize = True
         Me.LblATC.Location = New System.Drawing.Point(147, 81)
         Me.LblATC.Name = "LblATC"
-        Me.LblATC.Size = New System.Drawing.Size(39, 13)
+        Me.LblATC.Size = New System.Drawing.Size(40, 13)
         Me.LblATC.TabIndex = 69
         Me.LblATC.Text = "LblATC"
         '
@@ -476,7 +484,7 @@ Partial Class RadFTraitementDetailEdit
         Me.LblMedicamentTitulaire.AutoSize = True
         Me.LblMedicamentTitulaire.Location = New System.Drawing.Point(967, 72)
         Me.LblMedicamentTitulaire.Name = "LblMedicamentTitulaire"
-        Me.LblMedicamentTitulaire.Size = New System.Drawing.Size(164, 13)
+        Me.LblMedicamentTitulaire.Size = New System.Drawing.Size(165, 13)
         Me.LblMedicamentTitulaire.TabIndex = 67
         Me.LblMedicamentTitulaire.Text = "ACCORD HEALTHCARE FRANCE"
         Me.LblMedicamentTitulaire.Visible = False
@@ -557,7 +565,7 @@ Partial Class RadFTraitementDetailEdit
         Me.LblMedicamentDCI.AutoSize = True
         Me.LblMedicamentDCI.Location = New System.Drawing.Point(147, 39)
         Me.LblMedicamentDCI.Name = "LblMedicamentDCI"
-        Me.LblMedicamentDCI.Size = New System.Drawing.Size(317, 13)
+        Me.LblMedicamentDCI.Size = New System.Drawing.Size(318, 13)
         Me.LblMedicamentDCI.TabIndex = 59
         Me.LblMedicamentDCI.Text = "TRAMADOL EG L.P. 200 mg, comprime a liberation prolongee"
         '
@@ -1276,14 +1284,6 @@ Partial Class RadFTraitementDetailEdit
         Me.RadBtnSubstance.TabIndex = 116
         Me.RadBtnSubstance.Text = "Substance"
         '
-        'RadBtnModifierMedicament
-        '
-        Me.RadBtnModifierMedicament.Location = New System.Drawing.Point(1036, 21)
-        Me.RadBtnModifierMedicament.Name = "RadBtnModifierMedicament"
-        Me.RadBtnModifierMedicament.Size = New System.Drawing.Size(110, 24)
-        Me.RadBtnModifierMedicament.TabIndex = 70
-        Me.RadBtnModifierMedicament.Text = "Modifier"
-        '
         'RadFTraitementDetailEdit
         '
         Me.AcceptButton = Me.RadBtnValidation
@@ -1326,6 +1326,7 @@ Partial Class RadFTraitementDetailEdit
         '
         '
         Me.RootElement.ApplyShapeToControl = True
+        Me.ShowIcon = False
         Me.ShowInTaskbar = False
         Me.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
@@ -1336,6 +1337,7 @@ Partial Class RadFTraitementDetailEdit
         CType(Me.RadGroupBox2, System.ComponentModel.ISupportInitialize).EndInit()
         Me.RadGroupBox2.ResumeLayout(False)
         Me.RadGroupBox2.PerformLayout()
+        CType(Me.RadBtnModifierMedicament, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.RadBtnValidation, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.RadBtnSupprimerTraitement, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.RadBtnHistorique, System.ComponentModel.ISupportInitialize).EndInit()
@@ -1370,7 +1372,6 @@ Partial Class RadFTraitementDetailEdit
         CType(Me.RadBtnParmacodynamique, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.RadBtnEffetIndesirable, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.RadBtnSubstance, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.RadBtnModifierMedicament, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
         Me.PerformLayout()

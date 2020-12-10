@@ -22,6 +22,7 @@ Partial Class RadFAnnuaireProfessionneldetail
     'Do not modify it using the code editor.
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
+        Me.components = New System.ComponentModel.Container()
         Dim GridViewTextBoxColumn1 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
         Dim GridViewTextBoxColumn2 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
         Dim TableViewDefinition1 As Telerik.WinControls.UI.TableViewDefinition = New Telerik.WinControls.UI.TableViewDefinition()
@@ -30,6 +31,8 @@ Partial Class RadFAnnuaireProfessionneldetail
         Dim GridViewTextBoxColumn5 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
         Dim GridViewTextBoxColumn6 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
         Dim GridViewTextBoxColumn7 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
+        Dim GridViewTextBoxColumn8 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
+        Dim GridViewTextBoxColumn9 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
         Dim TableViewDefinition2 As Telerik.WinControls.UI.TableViewDefinition = New Telerik.WinControls.UI.TableViewDefinition()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(RadFAnnuaireProfessionneldetail))
         Me.LblAdresse2 = New System.Windows.Forms.Label()
@@ -56,6 +59,8 @@ Partial Class RadFAnnuaireProfessionneldetail
         Me.LblSecteurActivite = New System.Windows.Forms.Label()
         Me.RadGroupBox3 = New Telerik.WinControls.UI.RadGroupBox()
         Me.RadGroupBox4 = New Telerik.WinControls.UI.RadGroupBox()
+        Me.ContextMenuStrip1 = New System.Windows.Forms.ContextMenuStrip(Me.components)
+        Me.DétailIntervenantPourCetteStructureToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         CType(Me.RadBtnAbandon, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.RadGridViewMail, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.RadGridViewMail.MasterTemplate, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -70,6 +75,7 @@ Partial Class RadFAnnuaireProfessionneldetail
         Me.RadGroupBox3.SuspendLayout()
         CType(Me.RadGroupBox4, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.RadGroupBox4.SuspendLayout()
+        Me.ContextMenuStrip1.SuspendLayout()
         CType(Me, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
@@ -172,6 +178,7 @@ Partial Class RadFAnnuaireProfessionneldetail
         'RadGridViewStructure
         '
         Me.RadGridViewStructure.BackColor = System.Drawing.Color.FromArgb(CType(CType(191, Byte), Integer), CType(CType(219, Byte), Integer), CType(CType(255, Byte), Integer))
+        Me.RadGridViewStructure.ContextMenuStrip = Me.ContextMenuStrip1
         Me.RadGridViewStructure.Cursor = System.Windows.Forms.Cursors.Default
         Me.RadGridViewStructure.Dock = System.Windows.Forms.DockStyle.Fill
         Me.RadGridViewStructure.Font = New System.Drawing.Font("Segoe UI", 8.25!)
@@ -182,6 +189,7 @@ Partial Class RadFAnnuaireProfessionneldetail
         '
         '
         Me.RadGridViewStructure.MasterTemplate.AllowAddNewRow = False
+        Me.RadGridViewStructure.MasterTemplate.AllowCellContextMenu = False
         Me.RadGridViewStructure.MasterTemplate.AllowDeleteRow = False
         Me.RadGridViewStructure.MasterTemplate.AllowEditRow = False
         GridViewTextBoxColumn3.EnableExpressionEditor = False
@@ -207,7 +215,15 @@ Partial Class RadFAnnuaireProfessionneldetail
         GridViewTextBoxColumn7.HeaderText = "DSO"
         GridViewTextBoxColumn7.Name = "dso"
         GridViewTextBoxColumn7.TextAlignment = System.Drawing.ContentAlignment.MiddleCenter
-        Me.RadGridViewStructure.MasterTemplate.Columns.AddRange(New Telerik.WinControls.UI.GridViewDataColumn() {GridViewTextBoxColumn3, GridViewTextBoxColumn4, GridViewTextBoxColumn5, GridViewTextBoxColumn6, GridViewTextBoxColumn7})
+        GridViewTextBoxColumn8.EnableExpressionEditor = False
+        GridViewTextBoxColumn8.HeaderText = "identifiant_national_pp"
+        GridViewTextBoxColumn8.IsVisible = False
+        GridViewTextBoxColumn8.Name = "identifiant_national_pp"
+        GridViewTextBoxColumn9.EnableExpressionEditor = False
+        GridViewTextBoxColumn9.HeaderText = "Cle_entree"
+        GridViewTextBoxColumn9.IsVisible = False
+        GridViewTextBoxColumn9.Name = "Cle_entree"
+        Me.RadGridViewStructure.MasterTemplate.Columns.AddRange(New Telerik.WinControls.UI.GridViewDataColumn() {GridViewTextBoxColumn3, GridViewTextBoxColumn4, GridViewTextBoxColumn5, GridViewTextBoxColumn6, GridViewTextBoxColumn7, GridViewTextBoxColumn8, GridViewTextBoxColumn9})
         Me.RadGridViewStructure.MasterTemplate.ShowFilteringRow = False
         Me.RadGridViewStructure.MasterTemplate.ShowRowHeaderColumn = False
         Me.RadGridViewStructure.MasterTemplate.ViewDefinition = TableViewDefinition2
@@ -388,6 +404,18 @@ Partial Class RadFAnnuaireProfessionneldetail
         Me.RadGroupBox4.TabIndex = 33
         Me.RadGroupBox4.Text = "Structures associées au professionnel de santé"
         '
+        'ContextMenuStrip1
+        '
+        Me.ContextMenuStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.DétailIntervenantPourCetteStructureToolStripMenuItem})
+        Me.ContextMenuStrip1.Name = "ContextMenuStrip1"
+        Me.ContextMenuStrip1.Size = New System.Drawing.Size(275, 26)
+        '
+        'DétailIntervenantPourCetteStructureToolStripMenuItem
+        '
+        Me.DétailIntervenantPourCetteStructureToolStripMenuItem.Name = "DétailIntervenantPourCetteStructureToolStripMenuItem"
+        Me.DétailIntervenantPourCetteStructureToolStripMenuItem.Size = New System.Drawing.Size(274, 22)
+        Me.DétailIntervenantPourCetteStructureToolStripMenuItem.Text = "Détail intervenant pour cette structure"
+        '
         'RadFAnnuaireProfessionneldetail
         '
         Me.AcceptButton = Me.RadBtnAbandon
@@ -427,6 +455,7 @@ Partial Class RadFAnnuaireProfessionneldetail
         Me.RadGroupBox3.ResumeLayout(False)
         CType(Me.RadGroupBox4, System.ComponentModel.ISupportInitialize).EndInit()
         Me.RadGroupBox4.ResumeLayout(False)
+        Me.ContextMenuStrip1.ResumeLayout(False)
         CType(Me, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
 
@@ -456,5 +485,7 @@ Partial Class RadFAnnuaireProfessionneldetail
     Friend WithEvents LblTelecopieLabel As Label
     Friend WithEvents LblTelephone As Label
     Friend WithEvents LblTelephoneLabel As Label
+    Friend WithEvents ContextMenuStrip1 As ContextMenuStrip
+    Friend WithEvents DétailIntervenantPourCetteStructureToolStripMenuItem As ToolStripMenuItem
 End Class
 

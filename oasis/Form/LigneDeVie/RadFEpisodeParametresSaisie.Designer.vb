@@ -365,7 +365,7 @@ Partial Class RadFEpisodeParametresSaisie
         Me.LblLabelTemperature.AutoSize = True
         Me.LblLabelTemperature.Location = New System.Drawing.Point(114, 39)
         Me.LblLabelTemperature.Name = "LblLabelTemperature"
-        Me.LblLabelTemperature.Size = New System.Drawing.Size(70, 13)
+        Me.LblLabelTemperature.Size = New System.Drawing.Size(71, 13)
         Me.LblLabelTemperature.TabIndex = 11
         Me.LblLabelTemperature.Text = "Température"
         '
@@ -401,7 +401,7 @@ Partial Class RadFEpisodeParametresSaisie
         Me.LblLabelTaille.AutoSize = True
         Me.LblLabelTaille.Location = New System.Drawing.Point(266, 20)
         Me.LblLabelTaille.Name = "LblLabelTaille"
-        Me.LblLabelTaille.Size = New System.Drawing.Size(32, 13)
+        Me.LblLabelTaille.Size = New System.Drawing.Size(33, 13)
         Me.LblLabelTaille.TabIndex = 7
         Me.LblLabelTaille.Text = "Taille"
         '
@@ -628,6 +628,7 @@ Partial Class RadFEpisodeParametresSaisie
         '
         '
         Me.RootElement.ApplyShapeToControl = True
+        Me.ShowIcon = False
         Me.ShowInTaskbar = False
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent
         Me.Text = "RadFEpisodeParametresSaisie"

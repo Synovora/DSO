@@ -200,16 +200,16 @@ Partial Class RadFDrcStandardTypeActiviteListe
         'RadBtnSupprimer
         '
         Me.RadBtnSupprimer.Image = Global.Oasis_WF.My.Resources.Resources.supprimer
-        Me.RadBtnSupprimer.ImageAlignment = System.Drawing.ContentAlignment.MiddleCenter
         Me.RadBtnSupprimer.Location = New System.Drawing.Point(12, 441)
         Me.RadBtnSupprimer.Name = "RadBtnSupprimer"
-        Me.RadBtnSupprimer.Size = New System.Drawing.Size(24, 24)
+        Me.RadBtnSupprimer.Size = New System.Drawing.Size(110, 24)
         Me.RadBtnSupprimer.TabIndex = 4
+        Me.RadBtnSupprimer.Text = "Valider"
         Me.ToolTip.SetToolTip(Me.RadBtnSupprimer, "Supprimer")
         '
         'RadBtnDRCDetail
         '
-        Me.RadBtnDRCDetail.Location = New System.Drawing.Point(42, 441)
+        Me.RadBtnDRCDetail.Location = New System.Drawing.Point(128, 441)
         Me.RadBtnDRCDetail.Name = "RadBtnDRCDetail"
         Me.RadBtnDRCDetail.Size = New System.Drawing.Size(110, 24)
         Me.RadBtnDRCDetail.TabIndex = 1
@@ -217,7 +217,7 @@ Partial Class RadFDrcStandardTypeActiviteListe
         '
         'RadBtnModifier
         '
-        Me.RadBtnModifier.Location = New System.Drawing.Point(158, 441)
+        Me.RadBtnModifier.Location = New System.Drawing.Point(244, 441)
         Me.RadBtnModifier.Name = "RadBtnModifier"
         Me.RadBtnModifier.Size = New System.Drawing.Size(118, 24)
         Me.RadBtnModifier.TabIndex = 2
@@ -267,6 +267,7 @@ Partial Class RadFDrcStandardTypeActiviteListe
         '
         '
         Me.RootElement.ApplyShapeToControl = True
+        Me.ShowIcon = False
         Me.ShowInTaskbar = False
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent
         Me.Text = "Gestion des DRC standards par type d'activité"

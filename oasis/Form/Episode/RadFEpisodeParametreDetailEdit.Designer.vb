@@ -40,19 +40,19 @@ Partial Class RadFEpisodeParametreDetailEdit
         Dim TableViewDefinition2 As Telerik.WinControls.UI.TableViewDefinition = New Telerik.WinControls.UI.TableViewDefinition()
         Me.RadBtnAbandon = New Telerik.WinControls.UI.RadButton()
         Me.ToolTip = New System.Windows.Forms.ToolTip(Me.components)
-        Me.RadGridViewParm = New Telerik.WinControls.UI.RadGridView()
         Me.RadBtnAjouter = New Telerik.WinControls.UI.RadButton()
-        Me.RadDesktopAlert1 = New Telerik.WinControls.UI.RadDesktopAlert(Me.components)
         Me.RadBtnSupprimer = New Telerik.WinControls.UI.RadButton()
+        Me.RadGridViewParm = New Telerik.WinControls.UI.RadGridView()
+        Me.RadDesktopAlert1 = New Telerik.WinControls.UI.RadDesktopAlert(Me.components)
         Me.RadBtnSuppprimer = New Telerik.WinControls.UI.RadButton()
         Me.RadBtnSelect = New Telerik.WinControls.UI.RadButton()
         Me.RadGridView1 = New Telerik.WinControls.UI.RadGridView()
         Me.RadBtnCacher = New Telerik.WinControls.UI.RadButton()
         CType(Me.RadBtnAbandon, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.RadGridViewParm, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.RadGridViewParm.MasterTemplate, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.RadBtnAjouter, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.RadBtnSupprimer, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.RadGridViewParm, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.RadGridViewParm.MasterTemplate, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.RadBtnSuppprimer, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.RadBtnSelect, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.RadGridView1, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -70,6 +70,27 @@ Partial Class RadFEpisodeParametreDetailEdit
         Me.RadBtnAbandon.Name = "RadBtnAbandon"
         Me.RadBtnAbandon.Size = New System.Drawing.Size(24, 24)
         Me.RadBtnAbandon.TabIndex = 0
+        '
+        'RadBtnAjouter
+        '
+        Me.RadBtnAjouter.ForeColor = System.Drawing.Color.Black
+        Me.RadBtnAjouter.Location = New System.Drawing.Point(12, 4)
+        Me.RadBtnAjouter.Name = "RadBtnAjouter"
+        Me.RadBtnAjouter.Size = New System.Drawing.Size(24, 24)
+        Me.RadBtnAjouter.TabIndex = 97
+        Me.RadBtnAjouter.TabStop = False
+        Me.RadBtnAjouter.Text = "+"
+        Me.ToolTip.SetToolTip(Me.RadBtnAjouter, "Ajouter des paramètres")
+        '
+        'RadBtnSupprimer
+        '
+        Me.RadBtnSupprimer.Image = Global.Oasis_WF.My.Resources.Resources.supprimer1
+        Me.RadBtnSupprimer.Location = New System.Drawing.Point(42, 4)
+        Me.RadBtnSupprimer.Name = "RadBtnSupprimer"
+        Me.RadBtnSupprimer.Size = New System.Drawing.Size(110, 24)
+        Me.RadBtnSupprimer.TabIndex = 97
+        Me.RadBtnSupprimer.Text = "Supprimer"
+        Me.ToolTip.SetToolTip(Me.RadBtnSupprimer, "Supprimer")
         '
         'RadGridViewParm
         '
@@ -156,17 +177,6 @@ Partial Class RadFEpisodeParametreDetailEdit
         Me.RadGridViewParm.Size = New System.Drawing.Size(459, 496)
         Me.RadGridViewParm.TabIndex = 5
         '
-        'RadBtnAjouter
-        '
-        Me.RadBtnAjouter.ForeColor = System.Drawing.Color.Black
-        Me.RadBtnAjouter.Location = New System.Drawing.Point(12, 4)
-        Me.RadBtnAjouter.Name = "RadBtnAjouter"
-        Me.RadBtnAjouter.Size = New System.Drawing.Size(24, 24)
-        Me.RadBtnAjouter.TabIndex = 97
-        Me.RadBtnAjouter.TabStop = False
-        Me.RadBtnAjouter.Text = "+"
-        Me.ToolTip.SetToolTip(Me.RadBtnAjouter, "Ajouter des paramètres")
-        '
         'RadDesktopAlert1
         '
         Me.RadDesktopAlert1.AutoCloseDelay = 5
@@ -174,16 +184,6 @@ Partial Class RadFEpisodeParametreDetailEdit
         Me.RadDesktopAlert1.Opacity = 0.9!
         Me.RadDesktopAlert1.ScreenPosition = Telerik.WinControls.UI.AlertScreenPosition.TopCenter
         Me.RadDesktopAlert1.ThemeName = ""
-        '
-        'RadBtnSupprimer
-        '
-        Me.RadBtnSupprimer.Image = Global.Oasis_WF.My.Resources.Resources.supprimer1
-        Me.RadBtnSupprimer.ImageAlignment = System.Drawing.ContentAlignment.MiddleCenter
-        Me.RadBtnSupprimer.Location = New System.Drawing.Point(42, 4)
-        Me.RadBtnSupprimer.Name = "RadBtnSupprimer"
-        Me.RadBtnSupprimer.Size = New System.Drawing.Size(24, 24)
-        Me.RadBtnSupprimer.TabIndex = 97
-        Me.ToolTip.SetToolTip(Me.RadBtnSupprimer, "Supprimer")
         '
         'RadBtnSuppprimer
         '
@@ -270,14 +270,15 @@ Partial Class RadFEpisodeParametreDetailEdit
         '
         '
         Me.RootElement.ApplyShapeToControl = True
+        Me.ShowIcon = False
         Me.ShowInTaskbar = False
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent
         Me.Text = "RadFParametreDetailEdit"
         CType(Me.RadBtnAbandon, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.RadGridViewParm.MasterTemplate, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.RadGridViewParm, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.RadBtnAjouter, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.RadBtnSupprimer, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.RadGridViewParm.MasterTemplate, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.RadGridViewParm, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.RadBtnSuppprimer, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.RadBtnSelect, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.RadGridView1.MasterTemplate, System.ComponentModel.ISupportInitialize).EndInit()

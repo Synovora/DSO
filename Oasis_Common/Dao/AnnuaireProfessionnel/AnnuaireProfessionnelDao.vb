@@ -129,7 +129,10 @@ Public Class AnnuaireProfessionnelDao
     End Function
 
     Public Function GetStruturesByProfessionnel(IdentifiantNational As String) As DataTable
-        Dim SQLString As String = "SELECT raison_sociale_site
+        Dim SQLString As String = "SELECT 
+            Cle_entree
+            ,identifiant_national_pp
+            ,raison_sociale_site
 	        ,identifiant_technique_structure
 	        ,indice_repetition_voie_coord_structure
 	        ,libelle_type_voie_coord_structure

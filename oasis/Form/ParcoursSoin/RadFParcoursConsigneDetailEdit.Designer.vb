@@ -431,7 +431,7 @@ Partial Class RadFParcoursConsigneDetailEdit
         Me.Label12.AutoSize = True
         Me.Label12.Location = New System.Drawing.Point(11, 136)
         Me.Label12.Name = "Label12"
-        Me.Label12.Size = New System.Drawing.Size(73, 13)
+        Me.Label12.Size = New System.Drawing.Size(74, 13)
         Me.Label12.TabIndex = 18
         Me.Label12.Text = "Type épisode"
         '
@@ -564,6 +564,7 @@ Partial Class RadFParcoursConsigneDetailEdit
         '
         '
         Me.RootElement.ApplyShapeToControl = True
+        Me.ShowIcon = False
         Me.ShowInTaskbar = False
         Me.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Show
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen

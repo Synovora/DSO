@@ -524,6 +524,7 @@ Partial Class RadFTraitementHistoListe
         '
         '
         Me.RootElement.ApplyShapeToControl = True
+        Me.ShowIcon = False
         Me.ShowInTaskbar = False
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
         Me.Text = "Historique des modifications du traitement"

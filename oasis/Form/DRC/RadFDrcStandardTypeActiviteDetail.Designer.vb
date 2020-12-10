@@ -184,28 +184,29 @@ Partial Class RadFDrcStandardTypeActiviteDetail
         '
         Me.RadBtnValidation.ForeColor = System.Drawing.Color.Black
         Me.RadBtnValidation.Image = Global.Oasis_WF.My.Resources.Resources.validation2
-        Me.RadBtnValidation.ImageAlignment = System.Drawing.ContentAlignment.MiddleCenter
         Me.RadBtnValidation.Location = New System.Drawing.Point(4, 159)
         Me.RadBtnValidation.Name = "RadBtnValidation"
-        Me.RadBtnValidation.Size = New System.Drawing.Size(24, 24)
+        Me.RadBtnValidation.Size = New System.Drawing.Size(110, 24)
         Me.RadBtnValidation.TabIndex = 9
+        Me.RadBtnValidation.Text = "Valider"
         Me.ToolTip.SetToolTip(Me.RadBtnValidation, "Valider les données saisies")
         '
         'RadBtnAnnulation
         '
         Me.RadBtnAnnulation.ForeColor = System.Drawing.Color.Black
         Me.RadBtnAnnulation.Image = Global.Oasis_WF.My.Resources.Resources.supprimer
-        Me.RadBtnAnnulation.Location = New System.Drawing.Point(34, 159)
+        Me.RadBtnAnnulation.Location = New System.Drawing.Point(120, 159)
         Me.RadBtnAnnulation.Name = "RadBtnAnnulation"
-        Me.RadBtnAnnulation.Size = New System.Drawing.Size(24, 24)
+        Me.RadBtnAnnulation.Size = New System.Drawing.Size(110, 24)
         Me.RadBtnAnnulation.TabIndex = 10
+        Me.RadBtnAnnulation.Text = "Supprimer"
         Me.ToolTip.SetToolTip(Me.RadBtnAnnulation, "Supprimer la DRC standard")
         '
         'RadBtnDrcDetail
         '
-        Me.RadBtnDrcDetail.Location = New System.Drawing.Point(64, 159)
+        Me.RadBtnDrcDetail.Location = New System.Drawing.Point(236, 159)
         Me.RadBtnDrcDetail.Name = "RadBtnDrcDetail"
-        Me.RadBtnDrcDetail.Size = New System.Drawing.Size(59, 24)
+        Me.RadBtnDrcDetail.Size = New System.Drawing.Size(110, 24)
         Me.RadBtnDrcDetail.TabIndex = 11
         Me.RadBtnDrcDetail.Text = "Détail"
         '
@@ -226,6 +227,7 @@ Partial Class RadFDrcStandardTypeActiviteDetail
         '
         '
         Me.RootElement.ApplyShapeToControl = True
+        Me.ShowIcon = False
         Me.ShowInTaskbar = False
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent
         Me.Text = "DRC Standard par type activité"

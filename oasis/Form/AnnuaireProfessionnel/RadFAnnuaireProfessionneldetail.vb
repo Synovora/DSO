@@ -12,6 +12,10 @@ Public Class RadFAnnuaireProfessionneldetail
     Private DataTableStructure As DataTable = New DataTable()
 
     Private Sub RadFAnnuaireProfessionneldetail_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        Chargement()
+    End Sub
+
+    Private Sub Chargement()
         If CleReferenceAnnuaire <> 0 Then
             Dim annuaireProfessionnel As AnnuaireProfessionnel
             Try
@@ -149,6 +153,7 @@ Public Class RadFAnnuaireProfessionneldetail
             RadGridViewStructure.Rows.Add(iGrid)
 
             'Alimentation du Grid
+            RadGridViewStructure.Rows(iGrid).Cells("Cle_entree").Value = Coalesce(DataTableStructure.Rows(i)("Cle_entree"), 0)
             RadGridViewStructure.Rows(iGrid).Cells("identifiant_technique_structure").Value = Coalesce(DataTableStructure.Rows(i)("identifiant_technique_structure"), "")
             RadGridViewStructure.Rows(iGrid).Cells("raison_sociale_site").Value = Coalesce(DataTableStructure.Rows(i)("raison_sociale_site"), "")
             RadGridViewStructure.Rows(iGrid).Cells("adresse").Value = Coalesce(DataTableStructure.Rows(i)("indice_repetition_voie_coord_structure"), "") &
@@ -176,5 +181,16 @@ Public Class RadFAnnuaireProfessionneldetail
 
     Private Sub RadBtnAbandon_Click(sender As Object, e As EventArgs) Handles RadBtnAbandon.Click
         Close()
+    End Sub
+
+    Private Sub DétailIntervenantPourCetteStructureToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles DétailIntervenantPourCetteStructureToolStripMenuItem.Click
+        If RadGridViewStructure.CurrentRow IsNot Nothing Then
+            Dim aRow As Integer = Me.RadGridViewStructure.Rows.IndexOf(Me.RadGridViewStructure.CurrentRow)
+            If aRow >= 0 Then
+                Reference = AnnuaireReferenceDao.EnumSourceAnnuaire.ANNUAIRE_NATIONAL
+                CleReferenceAnnuaire = RadGridViewStructure.Rows(aRow).Cells("Cle_entree").Value
+                Chargement()
+            End If
+        End If
     End Sub
 End Class

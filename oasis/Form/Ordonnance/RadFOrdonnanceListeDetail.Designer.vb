@@ -996,6 +996,7 @@ Partial Class RadFOrdonnanceListeDetail
         Me.CancelButton = Me.RadBtnAbandon
         Me.ClientSize = New System.Drawing.Size(1401, 643)
         Me.Controls.Add(Me.RadSplitContainer1)
+        Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
         Me.Name = "RadFOrdonnanceListeDetail"
         '
         '

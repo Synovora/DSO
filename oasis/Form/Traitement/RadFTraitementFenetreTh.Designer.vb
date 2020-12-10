@@ -372,7 +372,7 @@ Partial Class RadFTraitementFenetreTh
         Me.LblMedicamentTitulaire.AutoSize = True
         Me.LblMedicamentTitulaire.Location = New System.Drawing.Point(700, 63)
         Me.LblMedicamentTitulaire.Name = "LblMedicamentTitulaire"
-        Me.LblMedicamentTitulaire.Size = New System.Drawing.Size(164, 13)
+        Me.LblMedicamentTitulaire.Size = New System.Drawing.Size(165, 13)
         Me.LblMedicamentTitulaire.TabIndex = 67
         Me.LblMedicamentTitulaire.Text = "ACCORD HEALTHCARE FRANCE"
         Me.LblMedicamentTitulaire.Visible = False
@@ -455,7 +455,7 @@ Partial Class RadFTraitementFenetreTh
         Me.LblMedicamentDCI.AutoSize = True
         Me.LblMedicamentDCI.Location = New System.Drawing.Point(107, 50)
         Me.LblMedicamentDCI.Name = "LblMedicamentDCI"
-        Me.LblMedicamentDCI.Size = New System.Drawing.Size(317, 13)
+        Me.LblMedicamentDCI.Size = New System.Drawing.Size(318, 13)
         Me.LblMedicamentDCI.TabIndex = 59
         Me.LblMedicamentDCI.Text = "TRAMADOL EG L.P. 200 mg, comprime a liberation prolongee"
         '
@@ -835,22 +835,22 @@ Partial Class RadFTraitementFenetreTh
         '
         Me.RadBtnValidationFenetre.ForeColor = System.Drawing.Color.Black
         Me.RadBtnValidationFenetre.Image = Global.Oasis_WF.My.Resources.Resources.validation2
-        Me.RadBtnValidationFenetre.ImageAlignment = System.Drawing.ContentAlignment.MiddleCenter
         Me.RadBtnValidationFenetre.Location = New System.Drawing.Point(12, 722)
         Me.RadBtnValidationFenetre.Name = "RadBtnValidationFenetre"
-        Me.RadBtnValidationFenetre.Size = New System.Drawing.Size(24, 24)
+        Me.RadBtnValidationFenetre.Size = New System.Drawing.Size(110, 24)
         Me.RadBtnValidationFenetre.TabIndex = 52
+        Me.RadBtnValidationFenetre.Text = "Valider"
         Me.ToolTip.SetToolTip(Me.RadBtnValidationFenetre, "Valider")
         '
         'RadBtnSupprimerFenetre
         '
         Me.RadBtnSupprimerFenetre.ForeColor = System.Drawing.Color.Black
         Me.RadBtnSupprimerFenetre.Image = Global.Oasis_WF.My.Resources.Resources.supprimer
-        Me.RadBtnSupprimerFenetre.ImageAlignment = System.Drawing.ContentAlignment.MiddleCenter
-        Me.RadBtnSupprimerFenetre.Location = New System.Drawing.Point(42, 722)
+        Me.RadBtnSupprimerFenetre.Location = New System.Drawing.Point(128, 722)
         Me.RadBtnSupprimerFenetre.Name = "RadBtnSupprimerFenetre"
-        Me.RadBtnSupprimerFenetre.Size = New System.Drawing.Size(24, 24)
+        Me.RadBtnSupprimerFenetre.Size = New System.Drawing.Size(110, 24)
         Me.RadBtnSupprimerFenetre.TabIndex = 53
+        Me.RadBtnSupprimerFenetre.Text = "Supprimer"
         Me.ToolTip.SetToolTip(Me.RadBtnSupprimerFenetre, "Supprimer la fenêtre thérapeutique")
         '
         'RadBtnRetour
@@ -941,7 +941,7 @@ Partial Class RadFTraitementFenetreTh
         '
         'RadBtnSubstance
         '
-        Me.RadBtnSubstance.Location = New System.Drawing.Point(466, 722)
+        Me.RadBtnSubstance.Location = New System.Drawing.Point(634, 722)
         Me.RadBtnSubstance.Name = "RadBtnSubstance"
         Me.RadBtnSubstance.Size = New System.Drawing.Size(110, 24)
         Me.RadBtnSubstance.TabIndex = 120
@@ -949,7 +949,7 @@ Partial Class RadFTraitementFenetreTh
         '
         'RadBtnEffetIndesirable
         '
-        Me.RadBtnEffetIndesirable.Location = New System.Drawing.Point(336, 722)
+        Me.RadBtnEffetIndesirable.Location = New System.Drawing.Point(504, 722)
         Me.RadBtnEffetIndesirable.Name = "RadBtnEffetIndesirable"
         Me.RadBtnEffetIndesirable.Size = New System.Drawing.Size(124, 24)
         Me.RadBtnEffetIndesirable.TabIndex = 119
@@ -957,7 +957,7 @@ Partial Class RadFTraitementFenetreTh
         '
         'RadBtnParmacodynamique
         '
-        Me.RadBtnParmacodynamique.Location = New System.Drawing.Point(206, 722)
+        Me.RadBtnParmacodynamique.Location = New System.Drawing.Point(374, 722)
         Me.RadBtnParmacodynamique.Name = "RadBtnParmacodynamique"
         Me.RadBtnParmacodynamique.Size = New System.Drawing.Size(124, 24)
         Me.RadBtnParmacodynamique.TabIndex = 118
@@ -965,7 +965,7 @@ Partial Class RadFTraitementFenetreTh
         '
         'RadBtnPharmacocinetique
         '
-        Me.RadBtnPharmacocinetique.Location = New System.Drawing.Point(76, 722)
+        Me.RadBtnPharmacocinetique.Location = New System.Drawing.Point(244, 722)
         Me.RadBtnPharmacocinetique.Name = "RadBtnPharmacocinetique"
         Me.RadBtnPharmacocinetique.Size = New System.Drawing.Size(124, 24)
         Me.RadBtnPharmacocinetique.TabIndex = 117
@@ -1002,6 +1002,7 @@ Partial Class RadFTraitementFenetreTh
         '
         '
         Me.RootElement.ApplyShapeToControl = True
+        Me.ShowIcon = False
         Me.ShowInTaskbar = False
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
         Me.Text = "Fenêtre thérapeutique"

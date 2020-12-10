@@ -153,7 +153,7 @@ Partial Class RadFRorDetailEdit
         Me.Label3.AutoSize = True
         Me.Label3.Location = New System.Drawing.Point(12, 85)
         Me.Label3.Name = "Label3"
-        Me.Label3.Size = New System.Drawing.Size(29, 13)
+        Me.Label3.Size = New System.Drawing.Size(30, 13)
         Me.Label3.TabIndex = 13
         Me.Label3.Text = "Type"
         '
@@ -355,7 +355,7 @@ Partial Class RadFRorDetailEdit
         Me.Label12.AutoSize = True
         Me.Label12.Location = New System.Drawing.Point(12, 242)
         Me.Label12.Name = "Label12"
-        Me.Label12.Size = New System.Drawing.Size(60, 13)
+        Me.Label12.Size = New System.Drawing.Size(61, 13)
         Me.Label12.TabIndex = 111
         Me.Label12.Text = "Téléphone"
         '
@@ -472,6 +472,7 @@ Partial Class RadFRorDetailEdit
         '
         '
         Me.RootElement.ApplyShapeToControl = True
+        Me.ShowIcon = False
         Me.ShowInTaskbar = False
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
         Me.Text = "Intervenant / Structure"

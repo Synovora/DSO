@@ -58,6 +58,8 @@ Partial Class RadFDrcDetailEdit
         Me.RadBtnAbandonner = New Telerik.WinControls.UI.RadButton()
         Me.RadBtnParametre = New Telerik.WinControls.UI.RadButton()
         Me.RadGroupBox1 = New Telerik.WinControls.UI.RadGroupBox()
+        Me.LblWiki = New System.Windows.Forms.Label()
+        Me.TxtWiki = New System.Windows.Forms.TextBox()
         Me.Label1 = New System.Windows.Forms.Label()
         Me.TxtCommentaire = New System.Windows.Forms.TextBox()
         Me.RadGroupBox2 = New Telerik.WinControls.UI.RadGroupBox()
@@ -65,8 +67,6 @@ Partial Class RadFDrcDetailEdit
         Me.TxtReponseCommentee = New System.Windows.Forms.TextBox()
         Me.RadGbxReponse = New Telerik.WinControls.UI.RadGroupBox()
         Me.ToolTip = New System.Windows.Forms.ToolTip(Me.components)
-        Me.TxtWiki = New System.Windows.Forms.TextBox()
-        Me.LblWiki = New System.Windows.Forms.Label()
         CType(Me.NumAgeMax, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.NumAgeMin, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.RadBtnAnnuler, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -338,16 +338,16 @@ Partial Class RadFDrcDetailEdit
         '
         Me.RadBtnAnnuler.ForeColor = System.Drawing.Color.Black
         Me.RadBtnAnnuler.Image = Global.Oasis_WF.My.Resources.Resources.supprimer1
-        Me.RadBtnAnnuler.ImageAlignment = System.Drawing.ContentAlignment.MiddleCenter
-        Me.RadBtnAnnuler.Location = New System.Drawing.Point(42, 521)
+        Me.RadBtnAnnuler.Location = New System.Drawing.Point(128, 521)
         Me.RadBtnAnnuler.Name = "RadBtnAnnuler"
-        Me.RadBtnAnnuler.Size = New System.Drawing.Size(24, 24)
+        Me.RadBtnAnnuler.Size = New System.Drawing.Size(110, 24)
         Me.RadBtnAnnuler.TabIndex = 164
+        Me.RadBtnAnnuler.Text = "Supprimer"
         Me.ToolTip.SetToolTip(Me.RadBtnAnnuler, "Annulation de la DORC")
         '
         'RadBtnTransformer
         '
-        Me.RadBtnTransformer.Location = New System.Drawing.Point(72, 521)
+        Me.RadBtnTransformer.Location = New System.Drawing.Point(244, 521)
         Me.RadBtnTransformer.Name = "RadBtnTransformer"
         Me.RadBtnTransformer.Size = New System.Drawing.Size(149, 24)
         Me.RadBtnTransformer.TabIndex = 165
@@ -357,11 +357,11 @@ Partial Class RadFDrcDetailEdit
         '
         Me.RadBtnValidation.ForeColor = System.Drawing.Color.Black
         Me.RadBtnValidation.Image = Global.Oasis_WF.My.Resources.Resources.validation2
-        Me.RadBtnValidation.ImageAlignment = System.Drawing.ContentAlignment.MiddleCenter
         Me.RadBtnValidation.Location = New System.Drawing.Point(12, 521)
         Me.RadBtnValidation.Name = "RadBtnValidation"
-        Me.RadBtnValidation.Size = New System.Drawing.Size(24, 24)
+        Me.RadBtnValidation.Size = New System.Drawing.Size(110, 24)
         Me.RadBtnValidation.TabIndex = 166
+        Me.RadBtnValidation.Text = "Valider"
         Me.ToolTip.SetToolTip(Me.RadBtnValidation, "Validation des données saisies")
         '
         'RadBtnAbandonner
@@ -375,7 +375,7 @@ Partial Class RadFDrcDetailEdit
         '
         'RadBtnParametre
         '
-        Me.RadBtnParametre.Location = New System.Drawing.Point(227, 521)
+        Me.RadBtnParametre.Location = New System.Drawing.Point(399, 521)
         Me.RadBtnParametre.Name = "RadBtnParametre"
         Me.RadBtnParametre.Size = New System.Drawing.Size(110, 24)
         Me.RadBtnParametre.TabIndex = 168
@@ -402,6 +402,22 @@ Partial Class RadFDrcDetailEdit
         Me.RadGroupBox1.Size = New System.Drawing.Size(824, 250)
         Me.RadGroupBox1.TabIndex = 169
         Me.RadGroupBox1.Text = "DORC"
+        '
+        'LblWiki
+        '
+        Me.LblWiki.AutoSize = True
+        Me.LblWiki.Location = New System.Drawing.Point(9, 217)
+        Me.LblWiki.Name = "LblWiki"
+        Me.LblWiki.Size = New System.Drawing.Size(30, 13)
+        Me.LblWiki.TabIndex = 154
+        Me.LblWiki.Text = "Wiki"
+        '
+        'TxtWiki
+        '
+        Me.TxtWiki.Location = New System.Drawing.Point(144, 214)
+        Me.TxtWiki.Name = "TxtWiki"
+        Me.TxtWiki.Size = New System.Drawing.Size(143, 20)
+        Me.TxtWiki.TabIndex = 153
         '
         'Label1
         '
@@ -450,7 +466,7 @@ Partial Class RadFDrcDetailEdit
         '
         'RadBtnProtocole
         '
-        Me.RadBtnProtocole.Location = New System.Drawing.Point(343, 521)
+        Me.RadBtnProtocole.Location = New System.Drawing.Point(515, 521)
         Me.RadBtnProtocole.Name = "RadBtnProtocole"
         Me.RadBtnProtocole.Size = New System.Drawing.Size(146, 24)
         Me.RadBtnProtocole.TabIndex = 171
@@ -475,22 +491,6 @@ Partial Class RadFDrcDetailEdit
         Me.RadGbxReponse.Size = New System.Drawing.Size(522, 465)
         Me.RadGbxReponse.TabIndex = 173
         Me.RadGbxReponse.Text = "Réponse commentée"
-        '
-        'TxtWiki
-        '
-        Me.TxtWiki.Location = New System.Drawing.Point(144, 214)
-        Me.TxtWiki.Name = "TxtWiki"
-        Me.TxtWiki.Size = New System.Drawing.Size(143, 20)
-        Me.TxtWiki.TabIndex = 153
-        '
-        'LblWiki
-        '
-        Me.LblWiki.AutoSize = True
-        Me.LblWiki.Location = New System.Drawing.Point(9, 217)
-        Me.LblWiki.Name = "LblWiki"
-        Me.LblWiki.Size = New System.Drawing.Size(30, 13)
-        Me.LblWiki.TabIndex = 154
-        Me.LblWiki.Text = "Wiki"
         '
         'RadFDrcDetailEdit
         '
