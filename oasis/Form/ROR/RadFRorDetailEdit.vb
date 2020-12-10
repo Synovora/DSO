@@ -140,8 +140,8 @@ Public Class RadFRorDetailEdit
 
         ror.SpecialiteId = SelectedSpecialiteId
         ror.Nom = ""
-        ror.Type = "Intervenant"
-        CbxType.Text = "Intervenant"
+        ror.Type = Ror.EnumIntervenant.Intervenants
+        CbxType.Text = Ror.EnumIntervenant.Intervenants
         CbxType.Enabled = True
         ror.StructureNom = ""
         ror.Adresse1 = ""
@@ -158,6 +158,14 @@ Public Class RadFRorDetailEdit
         ror.Inactif = False
         ror.UserCreation = userLog.UtilisateurId
         ror.DateCreation = Date.Now()
+        ror.ExtractionAnnuaire = False
+        ror.IdentifiantNational = ""
+        ror.IdentifiantStructure = ""
+        ror.CodeModeExercice_r23 = ""
+        ror.CodeProfessionSante_g15 = ""
+        ror.CodeTypeSavoirFaire_r04 = ""
+        ror.CodeSavoirFaire = ""
+        ror.CleReferenceAnnuaire = 0
     End Sub
 
     Private Sub RadBtnAbandon_Click(sender As Object, e As EventArgs) Handles RadBtnAbandon.Click

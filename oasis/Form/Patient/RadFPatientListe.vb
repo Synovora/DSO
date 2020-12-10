@@ -295,7 +295,7 @@ Public Class RadFPatientListe
 
     Private Sub InitHabilitation()
         'Accès au menu Admin si l'utilisateur est autorisé
-        If UtilisateurConnecte.UtilisateurAdmin = False Then
+        If userLog.UtilisateurAdmin = False Then
             RadBtnAdmin.Hide()
             RadBtnRdvEnCours.Hide()
             RadBtnIntervenantSansRdv.Hide()
@@ -324,7 +324,7 @@ Public Class RadFPatientListe
             Using form As New RadFPatientDetailEdit
                 Me.SelectedPatient = patientDao.GetPatient(0)
                 form.SelectedPatientId = 0
-                form.UtilisateurConnecte = Me.UtilisateurConnecte
+                form.UtilisateurConnecte = userLog
                 form.SelectedPatient = Me.SelectedPatient
                 form.ShowDialog() 'Modal
                 'Si le patient a été créé, on recharge la grid
@@ -369,7 +369,7 @@ Public Class RadFPatientListe
                 Using form As New RadFPatientDetailEdit
                     form.SelectedPatientId = patientId
                     form.SelectedPatient = Me.SelectedPatient
-                    form.UtilisateurConnecte = Me.UtilisateurConnecte
+                    form.UtilisateurConnecte = userLog
                     form.ShowDialog()
                     'Si le patient a été modifié, on recharge la grid
                     If form.CodeRetour = True Then
@@ -415,7 +415,7 @@ Public Class RadFPatientListe
                     'patientDao.SetPatient(Me.SelectedPatient, patientId)
                     Me.SelectedPatient = patientDao.GetPatient(patientId)
                     form.SelectedPatient = Me.SelectedPatient
-                    form.UtilisateurConnecte = Me.UtilisateurConnecte
+                    form.UtilisateurConnecte = userLog
                     form.EcranPrecedent = EnumAccesEcranPrecedent.SANS
                     form.ShowDialog()
                 End Using
@@ -557,7 +557,7 @@ Public Class RadFPatientListe
         Using vadFEpisodeListe As New RadFEpisodeLigneDeVie
             Me.SelectedPatient = patientDao.GetPatient(patientId)
             vadFEpisodeListe.SelectedPatient = Me.SelectedPatient
-            vadFEpisodeListe.UtilisateurConnecte = Me.UtilisateurConnecte
+            vadFEpisodeListe.UtilisateurConnecte = userLog
             vadFEpisodeListe.EcranPrecedent = EnumAccesEcranPrecedent.SANS
             vadFEpisodeListe.ShowDialog()
         End Using

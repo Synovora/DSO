@@ -1,12 +1,4 @@
-﻿Public Class AnnuaireProfessionnel
-
-    Public Enum EnumTypeIdentifiant
-        ADELI = 0
-        RPPS = 8
-        FINESS = 3
-    End Enum
-
-
+﻿Public Class AnnuaireProfessionnelReference
     Property Cle_entree As Integer
     Property Typeidentifiant As Integer
     Property Identifiant As String

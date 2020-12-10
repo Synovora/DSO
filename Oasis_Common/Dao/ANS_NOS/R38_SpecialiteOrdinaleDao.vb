@@ -1,6 +1,6 @@
 ﻿Imports System.Data.SqlClient
 
-Public Class R38_SpecialiteOrdinaleDao
+Public Class NosSpecialiteOrdinaleDao
     Inherits StandardDao
 
     Private Function BuildBean(reader As SqlDataReader) As R38_SpecialiteOrdinale
@@ -12,13 +12,13 @@ Public Class R38_SpecialiteOrdinaleDao
         Return SpecialiteOrdinale
     End Function
 
-    Public Function GetAnnuaireProfessionnelById(annuaireProfessionneld As Integer) As R38_SpecialiteOrdinale
+    Public Function GetSpecialiteOrdinaleById(codeId As String) As R38_SpecialiteOrdinale
         Dim SpecialiteOrdinale As R38_SpecialiteOrdinale
         Dim con As SqlConnection = GetConnection()
         Try
             Dim command As SqlCommand = con.CreateCommand()
             command.CommandText = "SELECT * FROM oasis.ans_nos_r38_specialite_ordinale WHERE code = @id"
-            command.Parameters.AddWithValue("@id", annuaireProfessionneld)
+            command.Parameters.AddWithValue("@id", codeId)
             Using reader As SqlDataReader = command.ExecuteReader()
                 If reader.Read() Then
                     SpecialiteOrdinale = BuildBean(reader)

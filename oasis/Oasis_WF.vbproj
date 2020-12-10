@@ -270,6 +270,12 @@
     <Compile Include="DS_Specialite.vb">
       <DependentUpon>DS_Specialite.xsd</DependentUpon>
     </Compile>
+    <Compile Include="Form\AnnuaireProfessionnel\RadFAnnuaireProfessionneldetail.Designer.vb">
+      <DependentUpon>RadFAnnuaireProfessionneldetail.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Form\AnnuaireProfessionnel\RadFAnnuaireProfessionneldetail.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Form\AnnuaireProfessionnel\RadFAnnuaireProfessionnelSelect.Designer.vb">
       <DependentUpon>RadFAnnuaireProfessionnelSelect.vb</DependentUpon>
     </Compile>
@@ -1014,6 +1020,9 @@
     <Compile Include="Settings.vb" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Form\AnnuaireProfessionnel\RadFAnnuaireProfessionneldetail.resx">
+      <DependentUpon>RadFAnnuaireProfessionneldetail.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Form\AnnuaireProfessionnel\RadFAnnuaireProfessionnelSelect.resx">
       <DependentUpon>RadFAnnuaireProfessionnelSelect.vb</DependentUpon>
     </EmbeddedResource>

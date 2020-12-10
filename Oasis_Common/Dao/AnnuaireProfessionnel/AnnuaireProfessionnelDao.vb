@@ -85,4 +85,88 @@ Public Class AnnuaireProfessionnelDao
         Return annuaireProfessionnel
     End Function
 
+    Public Function GetProfessionnelSanteByNomAndCommune(CodeProfessionId As Integer, CodeSavoirFaireId As String, nomExercice As String, communeExercice As String, departementExercice As String) As DataTable
+        Dim SQLString As String = "SELECT Cle_entree, code_civilite_exercice, prenom_exercice, nom_exercice," &
+        " raison_sociale_site, libelle_commune_coord_structure, complement_point_geographique_coord_structure, numero_voie_coord_structure," &
+        " indice_repetition_voie_coord_structure, libelle_type_voie_coord_structure, libelle_voie_coord_structure, bureau_cedex_coord_structure" &
+        " FROM oasis.ans_annuaire_professionnel_sante"
+
+        Dim ClauseWhere As String = " WHERE code_profression = " & CodeProfessionId & " AND code_savoir_faire = '" & CodeSavoirFaireId & "'"
+
+        If nomExercice.Trim() <> "" Then
+            ClauseWhere += " AND nom_exercice LIKE '%" & nomExercice & "%'"
+        End If
+
+        If communeExercice.Trim() <> "" Then
+            ClauseWhere += " AND libelle_commune_coord_structure LIKE '%" & communeExercice & "%'"
+        End If
+
+        If departementExercice.Trim() <> "" Then
+            ClauseWhere += " AND code_postal_coord_structure LIKE '" & departementExercice & "%'"
+        End If
+
+        Dim ClauseOrderBy As String = " ORDER BY nom_exercice ASC;"
+
+        SQLString += ClauseWhere
+        SQLString += ClauseOrderBy
+
+        Using con As SqlConnection = GetConnection()
+            Dim TraitementDataAdapter As SqlDataAdapter = New SqlDataAdapter()
+            Using TraitementDataAdapter
+                TraitementDataAdapter.SelectCommand = New SqlCommand(SQLString, con)
+                Dim TraitementDataTable As DataTable = New DataTable()
+                Using TraitementDataTable
+                    Try
+                        TraitementDataAdapter.Fill(TraitementDataTable)
+                        Dim command As SqlCommand = con.CreateCommand()
+                    Catch ex As Exception
+                        Throw ex
+                    End Try
+                    Return TraitementDataTable
+                End Using
+            End Using
+        End Using
+    End Function
+
+    Public Function GetStruturesByProfessionnel(IdentifiantNational As String) As DataTable
+        Dim SQLString As String = "SELECT raison_sociale_site
+	        ,identifiant_technique_structure
+	        ,indice_repetition_voie_coord_structure
+	        ,libelle_type_voie_coord_structure
+	        ,libelle_voie_coord_structure
+	        ,code_postal_coord_structure
+            ,bureau_cedex_coord_structure
+	        ,libelle_commune_coord_structure
+	        ,CNTE.cnt" &
+        " FROM oasis.ans_annuaire_professionnel_sante A" &
+        " OUTER APPLY (
+	        SELECT COUNT(*) as cnt FROM oasis.ans_annuaire_professionnel_sante_reference REF
+	        WHERE REF.identifiant_national_pp = A.identifiant_national_pp
+	        AND REF.identifiant_technique_structure = A.identifiant_technique_structure) AS CNTE"
+
+        Dim ClauseWhere As String = " WHERE A.identifiant_national_pp = '" & IdentifiantNational.Trim & "'"
+
+        Dim ClauseOrderBy As String = " ORDER BY raison_sociale_site ASC;"
+
+        SQLString += ClauseWhere
+        SQLString += ClauseOrderBy
+
+        Using con As SqlConnection = GetConnection()
+            Dim TraitementDataAdapter As SqlDataAdapter = New SqlDataAdapter()
+            Using TraitementDataAdapter
+                TraitementDataAdapter.SelectCommand = New SqlCommand(SQLString, con)
+                Dim TraitementDataTable As DataTable = New DataTable()
+                Using TraitementDataTable
+                    Try
+                        TraitementDataAdapter.Fill(TraitementDataTable)
+                        Dim command As SqlCommand = con.CreateCommand()
+                    Catch ex As Exception
+                        Throw ex
+                    End Try
+                    Return TraitementDataTable
+                End Using
+            End Using
+        End Using
+    End Function
+
 End Class

@@ -1,6 +1,6 @@
 ﻿Imports System.Data.SqlClient
 
-Public Class G15_ProfessionSanteDao
+Public Class NosProfessionSanteDao
     Inherits StandardDao
 
     Private Function BuildBean(reader As SqlDataReader) As G15_ProfessionSante
@@ -12,7 +12,7 @@ Public Class G15_ProfessionSanteDao
         Return ProfessionSante
     End Function
 
-    Public Function GetAnnuaireProfessionnelById(annuaireProfessionneld As Integer) As G15_ProfessionSante
+    Public Function GetProfessionSanteById(annuaireProfessionneld As Integer) As G15_ProfessionSante
         Dim ProfessionSante As G15_ProfessionSante
         Dim con As SqlConnection = GetConnection()
         Try

@@ -34,6 +34,7 @@ Partial Class RadFSpecialiteSelecteur
         Dim GridViewCheckBoxColumn2 As Telerik.WinControls.UI.GridViewCheckBoxColumn = New Telerik.WinControls.UI.GridViewCheckBoxColumn()
         Dim GridViewCheckBoxColumn3 As Telerik.WinControls.UI.GridViewCheckBoxColumn = New Telerik.WinControls.UI.GridViewCheckBoxColumn()
         Dim TableViewDefinition1 As Telerik.WinControls.UI.TableViewDefinition = New Telerik.WinControls.UI.TableViewDefinition()
+        Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(RadFSpecialiteSelecteur))
         Me.RadSpecialiteDataGridView = New Telerik.WinControls.UI.RadGridView()
         Me.OarspecialiteBindingSource = New System.Windows.Forms.BindingSource(Me.components)
         Me.DS_Specialite = New Oasis_WF.DS_Specialite()
@@ -169,11 +170,12 @@ Partial Class RadFSpecialiteSelecteur
         'RadBtnAbandon
         '
         Me.RadBtnAbandon.DialogResult = System.Windows.Forms.DialogResult.Cancel
-        Me.RadBtnAbandon.Location = New System.Drawing.Point(786, 342)
+        Me.RadBtnAbandon.Image = Global.Oasis_WF.My.Resources.Resources._exit
+        Me.RadBtnAbandon.ImageAlignment = System.Drawing.ContentAlignment.MiddleCenter
+        Me.RadBtnAbandon.Location = New System.Drawing.Point(864, 342)
         Me.RadBtnAbandon.Name = "RadBtnAbandon"
-        Me.RadBtnAbandon.Size = New System.Drawing.Size(110, 24)
+        Me.RadBtnAbandon.Size = New System.Drawing.Size(32, 24)
         Me.RadBtnAbandon.TabIndex = 1
-        Me.RadBtnAbandon.Text = "Abandonner"
         '
         'RadBtnSelection
         '
@@ -188,7 +190,7 @@ Partial Class RadFSpecialiteSelecteur
         'RadGbxSelect
         '
         Me.RadGbxSelect.AccessibleRole = System.Windows.Forms.AccessibleRole.Grouping
-        Me.RadGbxSelect.BackColor = System.Drawing.SystemColors.ButtonHighlight
+        Me.RadGbxSelect.BackColor = System.Drawing.SystemColors.GradientInactiveCaption
         Me.RadGbxSelect.Controls.Add(Me.LblNature)
         Me.RadGbxSelect.Controls.Add(Me.LblSpecialite)
         Me.RadGbxSelect.Controls.Add(Me.RadBtnSelection)
@@ -203,16 +205,18 @@ Partial Class RadFSpecialiteSelecteur
         'LblNature
         '
         Me.LblNature.AutoSize = True
-        Me.LblNature.Location = New System.Drawing.Point(18, 82)
+        Me.LblNature.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Bold)
+        Me.LblNature.Location = New System.Drawing.Point(18, 70)
         Me.LblNature.Name = "LblNature"
-        Me.LblNature.Size = New System.Drawing.Size(42, 13)
+        Me.LblNature.Size = New System.Drawing.Size(43, 13)
         Me.LblNature.TabIndex = 4
         Me.LblNature.Text = "Nature"
         '
         'LblSpecialite
         '
         Me.LblSpecialite.AutoSize = True
-        Me.LblSpecialite.Location = New System.Drawing.Point(18, 45)
+        Me.LblSpecialite.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Bold)
+        Me.LblSpecialite.Location = New System.Drawing.Point(18, 44)
         Me.LblSpecialite.Name = "LblSpecialite"
         Me.LblSpecialite.Size = New System.Drawing.Size(56, 13)
         Me.LblSpecialite.TabIndex = 3
@@ -231,6 +235,7 @@ Partial Class RadFSpecialiteSelecteur
         Me.Controls.Add(Me.RadGbxSelect)
         Me.Controls.Add(Me.RadBtnAbandon)
         Me.Controls.Add(Me.RadSpecialiteDataGridView)
+        Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
         Me.MaximizeBox = False
         Me.MinimizeBox = False
         Me.Name = "RadFSpecialiteSelecteur"
@@ -239,7 +244,7 @@ Partial Class RadFSpecialiteSelecteur
         '
         Me.RootElement.ApplyShapeToControl = True
         Me.ShowInTaskbar = False
-        Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
+        Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent
         Me.Text = "Sélection d'une spécialité"
         CType(Me.RadSpecialiteDataGridView.MasterTemplate, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.RadSpecialiteDataGridView, System.ComponentModel.ISupportInitialize).EndInit()

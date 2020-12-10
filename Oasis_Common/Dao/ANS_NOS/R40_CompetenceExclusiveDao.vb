@@ -1,6 +1,6 @@
 ﻿Imports System.Data.SqlClient
 
-Public Class R40_CompetenceExclusiveDao
+Public Class NosCompetenceExclusiveDao
     Inherits StandardDao
 
     Private Function BuildBean(reader As SqlDataReader) As R40_CompetenceExclusive
@@ -12,13 +12,13 @@ Public Class R40_CompetenceExclusiveDao
         Return CompetenceExclusive
     End Function
 
-    Public Function GetAnnuaireProfessionnelById(annuaireProfessionneld As Integer) As R40_CompetenceExclusive
+    Public Function GetCompetenceExclusiveById(codeld As String) As R40_CompetenceExclusive
         Dim CompetenceExclusive As R40_CompetenceExclusive
         Dim con As SqlConnection = GetConnection()
         Try
             Dim command As SqlCommand = con.CreateCommand()
             command.CommandText = "SELECT * FROM oasis.ans_nos_r40_competence_exclusive WHERE code = @id"
-            command.Parameters.AddWithValue("@id", annuaireProfessionneld)
+            command.Parameters.AddWithValue("@id", codeld)
             Using reader As SqlDataReader = command.ExecuteReader()
                 If reader.Read() Then
                     CompetenceExclusive = BuildBean(reader)

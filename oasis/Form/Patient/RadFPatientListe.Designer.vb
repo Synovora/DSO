@@ -63,6 +63,7 @@ Partial Class RadFPatientListe
         Me.RadChkPatientNonOasis = New Telerik.WinControls.UI.RadRadioButton()
         Me.RadChkPatientOasis = New Telerik.WinControls.UI.RadRadioButton()
         Me.RadPanel2 = New Telerik.WinControls.UI.RadPanel()
+        Me.RadBtnIntervenantSansRdv = New Telerik.WinControls.UI.RadButton()
         Me.RadBtnRdvEnCours = New Telerik.WinControls.UI.RadButton()
         Me.RadBtnTache = New Telerik.WinControls.UI.RadButton()
         Me.RadButton1 = New Telerik.WinControls.UI.RadButton()
@@ -73,7 +74,6 @@ Partial Class RadFPatientListe
         Me.RadPanel4 = New Telerik.WinControls.UI.RadPanel()
         Me.ToolTip = New System.Windows.Forms.ToolTip(Me.components)
         Me.RadDesktopAlert1 = New Telerik.WinControls.UI.RadDesktopAlert(Me.components)
-        Me.RadBtnIntervenantSansRdv = New Telerik.WinControls.UI.RadButton()
         CType(Me.RadPnlSelectedPatient, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.RadPnlSelectedPatient.SuspendLayout()
         CType(Me.RadBtnLigneDeVie, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -93,6 +93,7 @@ Partial Class RadFPatientListe
         CType(Me.RadChkPatientOasis, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.RadPanel2, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.RadPanel2.SuspendLayout()
+        CType(Me.RadBtnIntervenantSansRdv, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.RadBtnRdvEnCours, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.RadBtnTache, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.RadButton1, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -103,14 +104,13 @@ Partial Class RadFPatientListe
         Me.RadPanel3.SuspendLayout()
         CType(Me.RadPanel4, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.RadPanel4.SuspendLayout()
-        CType(Me.RadBtnIntervenantSansRdv, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'RadPnlSelectedPatient
         '
         Me.RadPnlSelectedPatient.AccessibleRole = System.Windows.Forms.AccessibleRole.Grouping
-        Me.RadPnlSelectedPatient.BackColor = System.Drawing.Color.White
+        Me.RadPnlSelectedPatient.BackColor = System.Drawing.SystemColors.GradientInactiveCaption
         Me.RadPnlSelectedPatient.Controls.Add(Me.RadBtnLigneDeVie)
         Me.RadPnlSelectedPatient.Controls.Add(Me.LblPatientALD)
         Me.RadPnlSelectedPatient.Controls.Add(Me.TxtSite)
@@ -157,7 +157,7 @@ Partial Class RadFPatientListe
         '
         'TxtSite
         '
-        Me.TxtSite.BackColor = System.Drawing.Color.White
+        Me.TxtSite.BackColor = System.Drawing.SystemColors.GradientInactiveCaption
         Me.TxtSite.BorderStyle = System.Windows.Forms.BorderStyle.None
         Me.TxtSite.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.TxtSite.Location = New System.Drawing.Point(11, 166)
@@ -193,7 +193,7 @@ Partial Class RadFPatientListe
         '
         'TxtIdSelected
         '
-        Me.TxtIdSelected.BackColor = System.Drawing.Color.White
+        Me.TxtIdSelected.BackColor = System.Drawing.SystemColors.GradientInactiveCaption
         Me.TxtIdSelected.BorderStyle = System.Windows.Forms.BorderStyle.None
         Me.TxtIdSelected.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.TxtIdSelected.Location = New System.Drawing.Point(11, 31)
@@ -213,7 +213,7 @@ Partial Class RadFPatientListe
         '
         'TxtPrenomSelected
         '
-        Me.TxtPrenomSelected.BackColor = System.Drawing.Color.White
+        Me.TxtPrenomSelected.BackColor = System.Drawing.SystemColors.GradientInactiveCaption
         Me.TxtPrenomSelected.BorderStyle = System.Windows.Forms.BorderStyle.None
         Me.TxtPrenomSelected.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.TxtPrenomSelected.Location = New System.Drawing.Point(11, 85)
@@ -234,7 +234,7 @@ Partial Class RadFPatientListe
         '
         'TxtNirSelected
         '
-        Me.TxtNirSelected.BackColor = System.Drawing.Color.White
+        Me.TxtNirSelected.BackColor = System.Drawing.SystemColors.GradientInactiveCaption
         Me.TxtNirSelected.BorderStyle = System.Windows.Forms.BorderStyle.None
         Me.TxtNirSelected.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.TxtNirSelected.Location = New System.Drawing.Point(11, 58)
@@ -256,7 +256,7 @@ Partial Class RadFPatientListe
         '
         'TxtNomSelected
         '
-        Me.TxtNomSelected.BackColor = System.Drawing.Color.White
+        Me.TxtNomSelected.BackColor = System.Drawing.SystemColors.GradientInactiveCaption
         Me.TxtNomSelected.BorderStyle = System.Windows.Forms.BorderStyle.None
         Me.TxtNomSelected.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.TxtNomSelected.Location = New System.Drawing.Point(11, 112)
@@ -463,6 +463,14 @@ Partial Class RadFPatientListe
         Me.RadPanel2.Size = New System.Drawing.Size(1456, 44)
         Me.RadPanel2.TabIndex = 44
         '
+        'RadBtnIntervenantSansRdv
+        '
+        Me.RadBtnIntervenantSansRdv.Location = New System.Drawing.Point(644, 17)
+        Me.RadBtnIntervenantSansRdv.Name = "RadBtnIntervenantSansRdv"
+        Me.RadBtnIntervenantSansRdv.Size = New System.Drawing.Size(175, 24)
+        Me.RadBtnIntervenantSansRdv.TabIndex = 47
+        Me.RadBtnIntervenantSansRdv.Text = "Intervenants sans rendez-vous"
+        '
         'RadBtnRdvEnCours
         '
         Me.RadBtnRdvEnCours.Location = New System.Drawing.Point(825, 17)
@@ -540,14 +548,6 @@ Partial Class RadFPatientListe
         Me.RadDesktopAlert1.ScreenPosition = Telerik.WinControls.UI.AlertScreenPosition.TopCenter
         Me.RadDesktopAlert1.ThemeName = ""
         '
-        'RadBtnIntervenantSansRdv
-        '
-        Me.RadBtnIntervenantSansRdv.Location = New System.Drawing.Point(644, 17)
-        Me.RadBtnIntervenantSansRdv.Name = "RadBtnIntervenantSansRdv"
-        Me.RadBtnIntervenantSansRdv.Size = New System.Drawing.Size(175, 24)
-        Me.RadBtnIntervenantSansRdv.TabIndex = 47
-        Me.RadBtnIntervenantSansRdv.Text = "Intervenants sans rendez-vous"
-        '
         'RadFPatientListe
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -588,6 +588,7 @@ Partial Class RadFPatientListe
         CType(Me.RadChkPatientOasis, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.RadPanel2, System.ComponentModel.ISupportInitialize).EndInit()
         Me.RadPanel2.ResumeLayout(False)
+        CType(Me.RadBtnIntervenantSansRdv, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.RadBtnRdvEnCours, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.RadBtnTache, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.RadButton1, System.ComponentModel.ISupportInitialize).EndInit()
@@ -598,7 +599,6 @@ Partial Class RadFPatientListe
         Me.RadPanel3.ResumeLayout(False)
         CType(Me.RadPanel4, System.ComponentModel.ISupportInitialize).EndInit()
         Me.RadPanel4.ResumeLayout(False)
-        CType(Me.RadBtnIntervenantSansRdv, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
 

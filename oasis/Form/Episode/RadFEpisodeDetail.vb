@@ -1133,12 +1133,10 @@ Public Class RadFEpisodeDetail
                 Dim categorieOasis As Integer = RadObsSpeIdeDataGridView.Rows(aRow).Cells("categorieOasis").Value
                 Me.Enabled = False
                 Cursor.Current = Cursors.WaitCursor
-                Dim commentaireDrc As String = RadObsSpeIdeDataGridView.Rows(aRow).Cells("drcCommentaire").Value
-                Dim descriptionDrc As String = RadObsSpeIdeDataGridView.Rows(aRow).Cells("drcDescription").Value
+                Dim DrcId As Long = RadObsSpeIdeDataGridView.Rows(aRow).Cells("drcId").Value
                 Try
                     Using form As New RadFDrcAideEnLigne
-                        form.commentaireDrc = commentaireDrc
-                        form.descriptionDrc = descriptionDrc
+                        form.drcId = DrcId
                         form.ShowDialog()
                     End Using
                 Catch ex As Exception

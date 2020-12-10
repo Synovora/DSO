@@ -65,16 +65,21 @@ Public Class RadFRorListe
 
     Dim RorIdDisplayed As Long
     Dim SpecialiteIdDisplayed As Long
-    Dim FiltreSpecialite As String
+    'Dim FiltreSpecialite As String
+
+    Dim specialiteDao As New SpecialiteDao
+    Dim rorDao As New RorDao
+
+    Private DataTableRor As DataTable = New DataTable()
 
     Sub RadFRorListe_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-        'cette ligne de code charge les données dans la table 'RORDS.v_ror'. Vous pouvez la déplacer ou la supprimer selon les besoins.
-        Me.V_rorTableAdapter.Fill(Me.RORDS.v_ror)
-
         If SpecialiteId <> 0 Then
-            FiltreSpecialite = " oa_ror_specialite_id = " & SpecialiteId.ToString & " and oa_ror_type = '" & TypeRor.Trim() & "'"
-            VrorBindingSource.Filter = FiltreSpecialite
-            LblSpecialiteFiltre.Text = Table_specialite.GetSpecialiteDescription(SpecialiteId)
+            'FiltreSpecialite = " oa_ror_specialite_id = " & SpecialiteId.ToString & " and oa_ror_type = '" & TypeRor.Trim() & "'"
+            'VrorBindingSource.Filter = FiltreSpecialite
+            ChargementRor()
+            Dim Specialite As Specialite
+            Specialite = specialiteDao.GetSpecialiteById(SpecialiteId)
+            LblSpecialiteFiltre.Text = Specialite.Description
         Else
             LblLabelSpecialite.Hide()
             LblSpecialiteFiltre.Hide()
@@ -82,8 +87,60 @@ Public Class RadFRorListe
             LblType.Hide()
         End If
 
+        InitHabilitation()
+
         CodeRetour = False
         GbxSelection.Hide()
+
+        Cursor.Current = Cursors.Default
+    End Sub
+
+    Sub ChargementRor()
+        Cursor.Current = Cursors.WaitCursor
+
+        DataTableRor.Rows.Clear()
+        RadGridViewRor.Rows.Clear()
+
+        Dim adresse As String
+        Dim ExtractionAnnuaireNational As Boolean
+
+        DataTableRor = rorDao.GetRorBySpecialiteAndType(SpecialiteId, TypeRor)
+
+        Dim i As Integer
+        Dim iGrid As Integer = -1 'Indice pour alimenter la Grid qui peut comporter moins d'occurrences que le DataTable
+        Dim rowCount As Integer = DataTableRor.Rows.Count - 1
+
+        For i = 0 To rowCount Step 1
+            iGrid += 1
+            'Ajout d'une ligne au DataGridView
+            RadGridViewRor.Rows.Add(iGrid)
+
+            'Alimentation du Grid
+            RadGridViewRor.Rows(iGrid).Cells("rorId").Value = DataTableRor.Rows(i)("oa_ror_id")
+            RadGridViewRor.Rows(iGrid).Cells("specialiteId").Value = Coalesce(DataTableRor.Rows(i)("oa_ror_specialite_id"), "")
+            RadGridViewRor.Rows(iGrid).Cells("specialiteDescription").Value = Coalesce(DataTableRor.Rows(i)("oa_r_specialite_description"), "")
+            RadGridViewRor.Rows(iGrid).Cells("nom").Value = Coalesce(DataTableRor.Rows(i)("oa_ror_nom"), "")
+            ExtractionAnnuaireNational = Coalesce(DataTableRor.Rows(i)("oa_ror_extraction_annuaire"), False)
+            If ExtractionAnnuaireNational = False Then
+                RadGridViewRor.Rows(iGrid).Cells("nom").Style.ForeColor = Color.Red
+            End If
+            RadGridViewRor.Rows(iGrid).Cells("type").Value = Coalesce(DataTableRor.Rows(i)("oa_ror_type"), "")
+            RadGridViewRor.Rows(iGrid).Cells("structure").Value = Coalesce(DataTableRor.Rows(i)("oa_ror_structure_nom"), "")
+            adresse = Coalesce(DataTableRor.Rows(i)("oa_ror_adresse1"), "").trim()
+            If adresse <> "" Then
+                adresse += " - "
+            End If
+            adresse += Coalesce(DataTableRor.Rows(i)("oa_ror_adresse2"), "").trim()
+            RadGridViewRor.Rows(iGrid).Cells("adresse").Value = adresse
+            RadGridViewRor.Rows(iGrid).Cells("codePostal").Value = Coalesce(DataTableRor.Rows(i)("oa_ror_code_postal"), "")
+            RadGridViewRor.Rows(iGrid).Cells("ville").Value = Coalesce(DataTableRor.Rows(i)("oa_ror_ville"), "")
+            RadGridViewRor.Rows(iGrid).Cells("cleAnnuaire").Value = Coalesce(DataTableRor.Rows(i)("oa_ror_cle_reference"), "")
+        Next
+
+        'Positionnement du grid sur la première occurrence
+        If RadGridViewRor.Rows.Count > 0 Then
+            RadGridViewRor.CurrentRow = RadGridViewRor.ChildRows(0)
+        End If
 
         Cursor.Current = Cursors.Default
     End Sub
@@ -117,7 +174,7 @@ Public Class RadFRorListe
                         vFRorDetailEdit.ShowDialog() 'Modal
                         'Si le traitement a été créé, on recharge la grid
                         If vFRorDetailEdit.CodeRetour = True Then
-                            Me.V_rorTableAdapter.Fill(Me.RORDS.v_ror)
+                            ChargementRor()
                         End If
                     End Using
                 End If
@@ -130,7 +187,7 @@ Public Class RadFRorListe
                 vFRorDetailEdit.ShowDialog() 'Modal
                 'Si le traitement a été créé, on recharge la grid
                 If vFRorDetailEdit.CodeRetour = True Then
-                    Me.V_rorTableAdapter.Fill(Me.RORDS.v_ror)
+                    ChargementRor()
                 End If
             End Using
         End If
@@ -146,15 +203,15 @@ Public Class RadFRorListe
     End Sub
 
     Private Sub ModificationIntervenant()
-        If RadGridView1.CurrentRow IsNot Nothing Then
-            Dim aRow As Integer = Me.RadGridView1.Rows.IndexOf(Me.RadGridView1.CurrentRow)
+        If RadGridViewRor.CurrentRow IsNot Nothing Then
+            Dim aRow As Integer = Me.RadGridViewRor.Rows.IndexOf(Me.RadGridViewRor.CurrentRow)
             If aRow >= 0 Then
-                Dim rorId As Integer = RadGridView1.Rows(aRow).Cells("oa_ror_id").Value
+                Dim rorId As Integer = RadGridViewRor.Rows(aRow).Cells("rorId").Value
                 Using vFRorDetailEdit As New RadFRorDetailEdit
                     vFRorDetailEdit.SelectedRorId = rorId
                     vFRorDetailEdit.ShowDialog() 'Modal
                     If vFRorDetailEdit.CodeRetour = True Then
-                        Me.V_rorTableAdapter.Fill(Me.RORDS.v_ror)
+                        ChargementRor()
                     End If
                 End Using
             End If
@@ -163,17 +220,17 @@ Public Class RadFRorListe
 
 
     'Sélection
-    Private Sub MasterTemplate_CellClick(sender As Object, e As GridViewCellEventArgs) Handles RadGridView1.CellClick
+    Private Sub MasterTemplate_CellClick(sender As Object, e As GridViewCellEventArgs) Handles RadGridViewRor.CellClick
         Selection()
     End Sub
 
     Private Sub Selection()
         If Selecteur = True Then
-            If RadGridView1.CurrentRow IsNot Nothing Then
-                Dim aRow As Integer = Me.RadGridView1.Rows.IndexOf(Me.RadGridView1.CurrentRow)
+            If RadGridViewRor.CurrentRow IsNot Nothing Then
+                Dim aRow As Integer = Me.RadGridViewRor.Rows.IndexOf(Me.RadGridViewRor.CurrentRow)
                 If aRow >= 0 Then
-                    RorIdDisplayed = RadGridView1.Rows(aRow).Cells("oa_ror_id").Value
-                    SpecialiteIdDisplayed = RadGridView1.Rows(aRow).Cells("oa_ror_specialite_id").Value
+                    RorIdDisplayed = RadGridViewRor.Rows(aRow).Cells("rorId").Value
+                    SpecialiteIdDisplayed = RadGridViewRor.Rows(aRow).Cells("specialiteId").Value
                     Dim ParcoursDataTable As DataTable
                     Dim parcoursDao As New ParcoursDao
                     Dim ExistRorId As Long
@@ -182,7 +239,7 @@ Public Class RadFRorListe
                     Dim specialiteExiste As Boolean = False
                     Dim IntervenantMasque As Boolean = False
                     Dim SpecialiteMasque As Boolean = False
-                    ParcoursDataTable = parcoursDao.getAllParcoursbyPatient(PatientId)
+                    ParcoursDataTable = parcoursDao.GetAllParcoursbyPatient(PatientId)
                     Dim rowCount As Integer = ParcoursDataTable.Rows.Count - 1
                     For i = 0 To rowCount Step 1
                         ExistRorId = Coalesce(ParcoursDataTable.Rows(i)("oa_parcours_ror_id"), 0)
@@ -221,11 +278,20 @@ Public Class RadFRorListe
                             End If
                             MessageBox.Show(messageSpecialite)
                         End If
-                        LblNom.Text = RadGridView1.Rows(aRow).Cells("oa_ror_nom").Value
-                        LblSpecialite.Text = RadGridView1.Rows(aRow).Cells("oa_r_specialite_description").Value
+                        LblNom.Text = RadGridViewRor.Rows(aRow).Cells("nom").Value
+                        LblSpecialite.Text = RadGridViewRor.Rows(aRow).Cells("specialiteDescription").Value
+                        LblStructure.Text = RadGridViewRor.Rows(aRow).Cells("structure").Value
+                        LblAdresse.Text = RadGridViewRor.Rows(aRow).Cells("adresse").Value
+                        LblVille.Text = RadGridViewRor.Rows(aRow).Cells("codePostal").Value & " " & RadGridViewRor.Rows(aRow).Cells("ville").Value
+
+                        If RadGridViewRor.Rows(aRow).Cells("cleAnnuaire").Value <> "" Then
+                            RadBtnDetail.Show()
+                        Else
+                            RadBtnDetail.Hide()
+                        End If
                         GbxSelection.Show()
                     End If
-                End If
+                    End If
             End If
         End If
     End Sub
@@ -240,7 +306,7 @@ Public Class RadFRorListe
         Close()
     End Sub
 
-    Private Sub RadGridView1_DoubleClick(sender As Object, e As EventArgs) Handles RadGridView1.DoubleClick
+    Private Sub RadGridView1_DoubleClick(sender As Object, e As EventArgs) Handles RadGridViewRor.DoubleClick
         Selection()
         SelectionRetour()
     End Sub
@@ -249,7 +315,55 @@ Public Class RadFRorListe
         RorIdDisplayed = 0
         LblNom.Text = ""
         LblSpecialite.Text = ""
+        LblStructure.Text = ""
+        LblAdresse.Text = ""
+        LblVille.Text = ""
         GbxSelection.Hide()
     End Sub
 
+    Private Sub RadBtnAnnuaireProf_Click(sender As Object, e As EventArgs) Handles RadBtnAnnuaireProf.Click
+        Dim specialite As Specialite
+        specialite = specialiteDao.GetSpecialiteById(SpecialiteId)
+        Try
+            Using form As New RadFAnnuaireProfessionnelSelect
+                form.InputSpecialiteId = specialite.SpecialiteId
+                form.InputCodeProfessionId = specialite.NosG15CodeProfession
+                form.InputTypeSavoirFaireId = specialite.NosR40TypeSavoirFaire
+                form.InputCodeSavoirFaireId = specialite.NosCodeSavoirFaire
+                form.ShowDialog()
+                If form.SelectedProfessionnelCle <> 0 Then
+                    ChargementRor()
+                End If
+            End Using
+        Catch ex As Exception
+            MsgBox(ex.Message())
+        End Try
+    End Sub
+
+    Private Sub InitHabilitation()
+        If userLog.UtilisateurAdmin = False Then
+            RadBtnModification.Hide()
+            RadBtnCreation.Hide()
+        End If
+    End Sub
+
+    Private Sub RadBtnDetail_Click(sender As Object, e As EventArgs) Handles RadBtnDetail.Click
+        If RorIdDisplayed <> 0 Then
+            Dim ror As Ror
+            ror = rorDao.getRorById(RorIdDisplayed)
+            If ror.CleReferenceAnnuaire <> 0 Then
+                Try
+                    Using form As New RadFAnnuaireProfessionneldetail
+                        form.CleReferenceAnnuaire = ror.CleReferenceAnnuaire
+                        form.Reference = AnnuaireReferenceDao.EnumSourceAnnuaire.ANNUAIRE_REFERENCE
+                        form.ShowDialog()
+                    End Using
+                Catch ex As Exception
+                    MessageBox.Show(ex.Message)
+                End Try
+            Else
+                MessageBox.Show("Option disponible uniquement pour les intervenants issus du répertoire national des professionnels de santé")
+            End If
+        End If
+    End Sub
 End Class
