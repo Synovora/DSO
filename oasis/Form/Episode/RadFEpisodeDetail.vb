@@ -1135,7 +1135,7 @@ Public Class RadFEpisodeDetail
                 Cursor.Current = Cursors.WaitCursor
                 Dim DrcId As Long = RadObsSpeIdeDataGridView.Rows(aRow).Cells("drcId").Value
                 Try
-                    Using form As New RadFDrcAideEnLigne
+                    Using form As New RadFTutoriel
                         form.drcId = DrcId
                         form.ShowDialog()
                     End Using

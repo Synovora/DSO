@@ -2,20 +2,38 @@
 Imports Oasis_Common
 Imports Telerik.WinControls.UI
 
-Public Class RadFDrcAideEnLigne
+Public Class RadFTutoriel
     Property drcId As Long
+    Property parametreId As Long
 
     Dim drc As Drc
+    Dim parametre As Parametre
+    Dim Wiki As String
+
     Dim drcDao As New DrcDao
+    Dim parametreDao As New ParametreDao
 
 
     Private Sub RadFDrcAideEnLigne_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-        drc = drcDao.GetDrcById(drcId)
+        If drcId <> 0 Then
+            drc = drcDao.GetDrcById(drcId)
 
-        TxtDescriptionDrc.Text = drc.DrcLibelle
-        TxtCommentaireDrc.Text = drc.Commentaire
+            TxtDescriptionDrc.Text = drc.DrcLibelle
+            TxtCommentaireDrc.Text = drc.Commentaire
+            Wiki = drc.Wiki
+        Else
+            If parametreId <> 0 Then
+                parametre = parametreDao.GetParametreById(parametreId)
+                TxtDescriptionDrc.Text = parametre.Description
+                TxtCommentaireDrc.Text = parametre.AideAssociee
+                Wiki = parametre.Wiki
+            Else
+                MessageBox.Show("Pas de tutoriel existant !")
+                Close()
+            End If
+        End If
 
-        If drc.Wiki <> "" Then
+        If Wiki <> "" Then
             'Récupération de l'URL du WiKi dans les paramètres de l'application
             Dim UriProcedureTutorielle As String = ConfigurationManager.AppSettings("UriProcedureTutorielle")
             If UriProcedureTutorielle = "" Then
@@ -23,7 +41,7 @@ Public Class RadFDrcAideEnLigne
                 UriProcedureTutorielle = "http://173.199.71.187/doku.php?id="
             End If
 
-            Dim Url_ProcvedureTutorielle As String = UriProcedureTutorielle & drc.Wiki
+            Dim Url_ProcvedureTutorielle As String = UriProcedureTutorielle & Wiki
             WebBrowser.Navigate(Url_ProcvedureTutorielle)
         Else
             SplitPanel5.Hide()

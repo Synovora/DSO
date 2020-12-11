@@ -1054,6 +1054,14 @@ Public Class RadFPatientDetailEdit
                     Dim MonURL As String
                     MonURL = "http://www.google.fr/maps/place/" + TxtAdresse1.Text + " " + TxtCodePostal.Text + " " + TxtVille.Text
                     Process.Start(MonURL)
+                    'Try
+                    'Using form As New RadFWebBrowser
+                    'Form.Url = MonURL
+                    'Form.ShowDialog()
+                    'End Using
+                    'Catch ex As Exception
+                    'MessageBox.Show(ex.Message)
+                    'End Try
                 End If
             End If
         End If

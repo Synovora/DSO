@@ -528,4 +528,23 @@ Public Class RadFEpisodeParametreDetailEdit
         End If
     End Sub
 
+    Private Sub TutorielToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles TutorielToolStripMenuItem.Click
+        If RadGridViewParm.CurrentRow IsNot Nothing Then
+            Dim aRow As Integer = Me.RadGridViewParm.Rows.IndexOf(Me.RadGridViewParm.CurrentRow)
+            If aRow >= 0 Then
+                Dim ParametreId As Integer = RadGridViewParm.Rows(aRow).Cells("parametre_id").Value
+                Me.Enabled = False
+                Cursor.Current = Cursors.WaitCursor
+                Try
+                    Using form As New RadFTutoriel
+                        form.parametreId = ParametreId
+                        form.ShowDialog()
+                    End Using
+                Catch ex As Exception
+                    MessageBox.Show(ex.Message)
+                End Try
+                Me.Enabled = True
+            End If
+        End If
+    End Sub
 End Class

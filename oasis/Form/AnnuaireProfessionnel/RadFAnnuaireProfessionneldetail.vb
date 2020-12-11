@@ -98,10 +98,12 @@ Public Class RadFAnnuaireProfessionneldetail
         End If
 
         If annuaireProfessionnel.emailCoordonneeStructure <> "" Then
+            TextEmailStructure.Show()
+            LblMailStructureLabel.Show()
             TextEmailStructure.Text = annuaireProfessionnel.emailCoordonneeStructure
         Else
             TextEmailStructure.Hide()
-            LblMailStructureLabel.Text = ""
+            LblMailStructureLabel.Hide()
         End If
     End Sub
 

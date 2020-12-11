@@ -189,11 +189,20 @@ Public Class RadFPPSDetailEdit
         TxtCommentaire.Text = PPSUpdate.Commentaire
 
         TxtDrcId.Text = PPSUpdate.DrcId
-        Dim Drc As Drc = New Drc()
-        If drcdao.GetDrc(Drc, TxtDrcId.Text) = True Then
-            TxtDrcDescription.Text = Drc.DrcLibelle
-        Else
-            TxtDrcDescription.Text = ""
+        Dim drc As Drc = New Drc()
+
+        'If drcdao.GetDrc(Drc, TxtDrcId.Text) = True Then
+        'TxtDrcDescription.Text = Drc.DrcLibelle
+        'Else
+        'TxtDrcDescription.Text = ""
+        'End If
+
+        drc = drcdao.GetDrcById(TxtDrcId.Text)
+        TxtDrcDescription.Text = drc.DrcLibelle
+
+        RadBtnTutoriel.Hide()
+        If drc.Commentaire <> "" Or drc.Wiki <> "" Then
+            RadBtnTutoriel.Show()
         End If
 
         SousCategoriePPs = PPSUpdate.SousCategorieId
@@ -536,14 +545,18 @@ Public Class RadFPPSDetailEdit
 
     Private Sub RadBtnTutoriel_Click(sender As Object, e As EventArgs) Handles RadBtnTutoriel.Click
         If EditMode = EnumEditMode.Modification Then
-            Try
-                Using form As New RadFDrcAideEnLigne
-                    form.drcId = PPSUpdate.DrcId
-                    form.ShowDialog()
-                End Using
-            Catch ex As Exception
-                MessageBox.Show(ex.Message)
-            End Try
+            Dim drc As Drc
+            drc = drcdao.GetDrcById(PPSUpdate.DrcId)
+            If drc.Commentaire <> "" Or drc.Wiki <> "" Then
+                Try
+                    Using form As New RadFTutoriel
+                        form.drcId = PPSUpdate.DrcId
+                        form.ShowDialog()
+                    End Using
+                Catch ex As Exception
+                    MessageBox.Show(ex.Message)
+                End Try
+            End If
         End If
     End Sub
 End Class

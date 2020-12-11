@@ -652,6 +652,14 @@ Public Class RadFPatientListe
 
         Dim MonURL As String
         MonURL = UriProcedureTutorielle
-        Process.Start(MonURL)
+        'Process.Start(MonURL)
+        Try
+            Using form As New RadFWebBrowser
+                form.Url = MonURL
+                form.ShowDialog()
+            End Using
+        Catch ex As Exception
+            MessageBox.Show(ex.Message)
+        End Try
     End Sub
 End Class
