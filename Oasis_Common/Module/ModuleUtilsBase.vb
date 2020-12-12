@@ -239,18 +239,4 @@ Public Module ModuleUtilsBase
         Return Age
     End Function
 
-    Function FormatTEL(ByVal num As String) As String
-        If num <> "" Then
-            If Len(num) = 10 Then
-                num = Format(num, "## ## ## ## ##")
-            Else
-                num = Format(num, "0# ## ## ## ##")
-            End If
-        Else
-            num = ""
-        End If
-
-        Return num
-    End Function
-
 End Module

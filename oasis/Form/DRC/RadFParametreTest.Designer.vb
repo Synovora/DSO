@@ -23,8 +23,8 @@ Partial Class RadFParametreTest
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
         Me.components = New System.ComponentModel.Container()
-        Dim GridViewTextBoxColumn1 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
-        Dim TableViewDefinition1 As Telerik.WinControls.UI.TableViewDefinition = New Telerik.WinControls.UI.TableViewDefinition()
+        Dim GridViewTextBoxColumn2 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
+        Dim TableViewDefinition2 As Telerik.WinControls.UI.TableViewDefinition = New Telerik.WinControls.UI.TableViewDefinition()
         Me.RadBtnValidation = New Telerik.WinControls.UI.RadButton()
         Me.Label1 = New System.Windows.Forms.Label()
         Me.CbxActiviteEpisode = New System.Windows.Forms.ComboBox()
@@ -44,9 +44,9 @@ Partial Class RadFParametreTest
         Me.RadBtnValidation.Image = Global.Oasis_WF.My.Resources.Resources.validation2
         Me.RadBtnValidation.Location = New System.Drawing.Point(12, 387)
         Me.RadBtnValidation.Name = "RadBtnValidation"
-        Me.RadBtnValidation.Size = New System.Drawing.Size(110, 24)
+        Me.RadBtnValidation.Size = New System.Drawing.Size(199, 24)
         Me.RadBtnValidation.TabIndex = 6
-        Me.RadBtnValidation.Text = "Valider"
+        Me.RadBtnValidation.Text = "Lancement de la génération"
         Me.ToolTip.SetToolTip(Me.RadBtnValidation, "Valider le test")
         '
         'Label1
@@ -90,13 +90,13 @@ Partial Class RadFParametreTest
         Me.RadGridViewParametre.MasterTemplate.AllowAddNewRow = False
         Me.RadGridViewParametre.MasterTemplate.AllowDeleteRow = False
         Me.RadGridViewParametre.MasterTemplate.AllowEditRow = False
-        GridViewTextBoxColumn1.EnableExpressionEditor = False
-        GridViewTextBoxColumn1.HeaderText = "Parametre"
-        GridViewTextBoxColumn1.HeaderTextAlignment = System.Drawing.ContentAlignment.MiddleLeft
-        GridViewTextBoxColumn1.Name = "parametre"
-        GridViewTextBoxColumn1.Width = 350
-        Me.RadGridViewParametre.MasterTemplate.Columns.AddRange(New Telerik.WinControls.UI.GridViewDataColumn() {GridViewTextBoxColumn1})
-        Me.RadGridViewParametre.MasterTemplate.ViewDefinition = TableViewDefinition1
+        GridViewTextBoxColumn2.EnableExpressionEditor = False
+        GridViewTextBoxColumn2.HeaderText = "Parametre"
+        GridViewTextBoxColumn2.HeaderTextAlignment = System.Drawing.ContentAlignment.MiddleLeft
+        GridViewTextBoxColumn2.Name = "parametre"
+        GridViewTextBoxColumn2.Width = 350
+        Me.RadGridViewParametre.MasterTemplate.Columns.AddRange(New Telerik.WinControls.UI.GridViewDataColumn() {GridViewTextBoxColumn2})
+        Me.RadGridViewParametre.MasterTemplate.ViewDefinition = TableViewDefinition2
         Me.RadGridViewParametre.Name = "RadGridViewParametre"
         Me.RadGridViewParametre.ReadOnly = True
         Me.RadGridViewParametre.RightToLeft = System.Windows.Forms.RightToLeft.No
@@ -126,7 +126,7 @@ Partial Class RadFParametreTest
         Me.ShowIcon = False
         Me.ShowInTaskbar = False
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent
-        Me.Text = "RadFParametreTest"
+        Me.Text = "Vérification des paramètres générés"
         CType(Me.RadBtnValidation, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.RadBtnAbandon, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.RadGridViewParametre.MasterTemplate, System.ComponentModel.ISupportInitialize).EndInit()

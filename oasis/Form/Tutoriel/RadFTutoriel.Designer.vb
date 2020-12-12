@@ -30,10 +30,10 @@ Partial Class RadFTutoriel
         Me.RadSplitContainer1 = New Telerik.WinControls.UI.RadSplitContainer()
         Me.SplitPanel1 = New Telerik.WinControls.UI.SplitPanel()
         Me.SplitPanel2 = New Telerik.WinControls.UI.SplitPanel()
-        Me.SplitPanel3 = New Telerik.WinControls.UI.SplitPanel()
         Me.RadSplitContainer2 = New Telerik.WinControls.UI.RadSplitContainer()
         Me.SplitPanel4 = New Telerik.WinControls.UI.SplitPanel()
         Me.SplitPanel5 = New Telerik.WinControls.UI.SplitPanel()
+        Me.SplitPanel3 = New Telerik.WinControls.UI.SplitPanel()
         CType(Me.RadBtnAbandonner, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.RadSplitContainer1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.RadSplitContainer1.SuspendLayout()
@@ -41,14 +41,14 @@ Partial Class RadFTutoriel
         Me.SplitPanel1.SuspendLayout()
         CType(Me.SplitPanel2, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SplitPanel2.SuspendLayout()
-        CType(Me.SplitPanel3, System.ComponentModel.ISupportInitialize).BeginInit()
-        Me.SplitPanel3.SuspendLayout()
         CType(Me.RadSplitContainer2, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.RadSplitContainer2.SuspendLayout()
         CType(Me.SplitPanel4, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SplitPanel4.SuspendLayout()
         CType(Me.SplitPanel5, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SplitPanel5.SuspendLayout()
+        CType(Me.SplitPanel3, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.SplitPanel3.SuspendLayout()
         CType(Me, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
@@ -138,22 +138,6 @@ Partial Class RadFTutoriel
         Me.SplitPanel2.TabStop = False
         Me.SplitPanel2.Text = "SplitPanel2"
         '
-        'SplitPanel3
-        '
-        Me.SplitPanel3.Controls.Add(Me.RadBtnAbandonner)
-        Me.SplitPanel3.Location = New System.Drawing.Point(0, 728)
-        Me.SplitPanel3.Name = "SplitPanel3"
-        '
-        '
-        '
-        Me.SplitPanel3.RootElement.MinSize = New System.Drawing.Size(25, 25)
-        Me.SplitPanel3.Size = New System.Drawing.Size(1484, 37)
-        Me.SplitPanel3.SizeInfo.AutoSizeScale = New System.Drawing.SizeF(0!, -0.2844562!)
-        Me.SplitPanel3.SizeInfo.SplitterCorrection = New System.Drawing.Size(0, -127)
-        Me.SplitPanel3.TabIndex = 2
-        Me.SplitPanel3.TabStop = False
-        Me.SplitPanel3.Text = "SplitPanel3"
-        '
         'RadSplitContainer2
         '
         Me.RadSplitContainer2.Controls.Add(Me.SplitPanel4)
@@ -201,7 +185,23 @@ Partial Class RadFTutoriel
         Me.SplitPanel5.TabStop = False
         Me.SplitPanel5.Text = "SplitPanel5"
         '
-        'RadFDrcAideEnLigne
+        'SplitPanel3
+        '
+        Me.SplitPanel3.Controls.Add(Me.RadBtnAbandonner)
+        Me.SplitPanel3.Location = New System.Drawing.Point(0, 728)
+        Me.SplitPanel3.Name = "SplitPanel3"
+        '
+        '
+        '
+        Me.SplitPanel3.RootElement.MinSize = New System.Drawing.Size(25, 25)
+        Me.SplitPanel3.Size = New System.Drawing.Size(1484, 37)
+        Me.SplitPanel3.SizeInfo.AutoSizeScale = New System.Drawing.SizeF(0!, -0.2844562!)
+        Me.SplitPanel3.SizeInfo.SplitterCorrection = New System.Drawing.Size(0, -127)
+        Me.SplitPanel3.TabIndex = 2
+        Me.SplitPanel3.TabStop = False
+        Me.SplitPanel3.Text = "SplitPanel3"
+        '
+        'RadFTutoriel
         '
         Me.AcceptButton = Me.RadBtnAbandonner
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -210,7 +210,7 @@ Partial Class RadFTutoriel
         Me.ClientSize = New System.Drawing.Size(1484, 765)
         Me.Controls.Add(Me.RadSplitContainer1)
         Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
-        Me.Name = "RadFDrcAideEnLigne"
+        Me.Name = "RadFTutoriel"
         '
         '
         '
@@ -218,7 +218,7 @@ Partial Class RadFTutoriel
         Me.ShowIcon = False
         Me.ShowInTaskbar = False
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent
-        Me.Text = "Aide en ligne"
+        Me.Text = "Tutoriel"
         CType(Me.RadBtnAbandonner, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.RadSplitContainer1, System.ComponentModel.ISupportInitialize).EndInit()
         Me.RadSplitContainer1.ResumeLayout(False)
@@ -227,8 +227,6 @@ Partial Class RadFTutoriel
         Me.SplitPanel1.PerformLayout()
         CType(Me.SplitPanel2, System.ComponentModel.ISupportInitialize).EndInit()
         Me.SplitPanel2.ResumeLayout(False)
-        CType(Me.SplitPanel3, System.ComponentModel.ISupportInitialize).EndInit()
-        Me.SplitPanel3.ResumeLayout(False)
         CType(Me.RadSplitContainer2, System.ComponentModel.ISupportInitialize).EndInit()
         Me.RadSplitContainer2.ResumeLayout(False)
         CType(Me.SplitPanel4, System.ComponentModel.ISupportInitialize).EndInit()
@@ -236,6 +234,8 @@ Partial Class RadFTutoriel
         Me.SplitPanel4.PerformLayout()
         CType(Me.SplitPanel5, System.ComponentModel.ISupportInitialize).EndInit()
         Me.SplitPanel5.ResumeLayout(False)
+        CType(Me.SplitPanel3, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.SplitPanel3.ResumeLayout(False)
         CType(Me, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
 

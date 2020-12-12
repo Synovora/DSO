@@ -16,6 +16,9 @@ Public Class RadFAnnuaireProfessionneldetail
     End Sub
 
     Private Sub Chargement()
+
+        AfficheTitleForm(Me, "Détail professionnel de santé", userLog)
+
         If CleReferenceAnnuaire <> 0 Then
             Dim annuaireProfessionnel As AnnuaireProfessionnel
             Try

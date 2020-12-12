@@ -73,6 +73,8 @@ Public Class RadFRorListe
     Private DataTableRor As DataTable = New DataTable()
 
     Sub RadFRorListe_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        AfficheTitleForm(Me, "Sélection professionnel de santé", userLog)
+
         If SpecialiteId <> 0 Then
             'FiltreSpecialite = " oa_ror_specialite_id = " & SpecialiteId.ToString & " and oa_ror_type = '" & TypeRor.Trim() & "'"
             'VrorBindingSource.Filter = FiltreSpecialite

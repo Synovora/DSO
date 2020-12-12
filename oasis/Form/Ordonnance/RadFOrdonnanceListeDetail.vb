@@ -99,8 +99,10 @@ Public Class RadFOrdonnanceListeDetail
     Dim TraitementALD As Boolean
 
     Private Sub RadFOrdonnanceDetailEdit_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        AfficheTitleForm(Me, "Ordonnance", userLog)
+
         'Si patient Non ALD, on cache la partie concernant les traitements ALD
-        If aldDao.IsPatientALD(Me.SelectedPatient.patientId) = False Then
+        If aldDao.IsPatientALD(Me.SelectedPatient.PatientId) = False Then
             SplitPanel3.Hide()
             Me.RadSplitContainer1.MoveSplitter(Me.RadSplitContainer1.Splitters(2), RadDirection.Up)
             RadGbxTraitement.Text = "Prescription"
