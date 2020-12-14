@@ -200,16 +200,35 @@ Public Class RorDao
         Dim codeRetour As Boolean = True
         Dim con As SqlConnection = GetConnection()
         Dim dateModification As Date = Date.Now.Date
-        Dim SQLstring As String = "update oasis.oa_ror set" &
-        " oa_ror_specialite_id = @specialiteId, oa_ror_nom = @nom, oa_ror_type = @type, oa_ror_structure_id = @structureId," &
-        " oa_ror_structure_nom = @structureNom, oa_ror_adresse1 = @adresse1, oa_ror_adresse2 = @adresse2," &
-        " oa_ror_code_postal = @codePostal, oa_ror_ville = @ville, oa_ror_code = @code, oa_ror_telephone = @telephone, oa_ror_email = @email, oa_ror_commentaire = @commentaire, oa_ror_rpps = @rpps," &
-        " oa_ror_finess = @finess, oa_ror_adeli = @adeli, oa_ror_inactif = @inactif," &
-        " oa_ror_user_modification = @userModification, oa_ror_date_modification = @dateModification," &
-        " oa_ror_extraction_annuaire = @extractionAnnuaire, oa_ror_identifiant_national_pp = @identifiantNational, , oa_ror_identifiant_technique_structure = @identifiantStructure," &
-        " oa_ror_code_nos_r23_mode_exercice = @codeModeExercice, oa_ror_code_nos_g15_profession_sante = @codeProfessionSante, , oa_ror_code_nos_r04_type_savoir_faire = @codeTypeSavoirFaire," &
-        " oa_ror_code_savoir_faire = @codeSavoirFaire, oa_ror_cle_reference = @cleReference" &
-        " where oa_ror_id = @Id"
+        Dim SQLstring As String = "UPDATE oasis.oa_ror SET" &
+        " oa_ror_specialite_id = @specialiteId," &
+        " oa_ror_nom = @nom," &
+        " oa_ror_type = @type," &
+        " oa_ror_structure_id = @structureId," &
+        " oa_ror_structure_nom = @structureNom," &
+        " oa_ror_adresse1 = @adresse1," &
+        " oa_ror_adresse2 = @adresse2," &
+        " oa_ror_code_postal = @codePostal," &
+        " oa_ror_ville = @ville," &
+        " oa_ror_code = @code," &
+        " oa_ror_telephone = @telephone," &
+        " oa_ror_email = @email," &
+        " oa_ror_commentaire = @commentaire," &
+        " oa_ror_rpps = @rpps," &
+        " oa_ror_finess = @finess," &
+        " oa_ror_adeli = @adeli," &
+        " oa_ror_inactif = @inactif," &
+        " oa_ror_user_modification = @userModification," &
+        " oa_ror_date_modification = @dateModification," &
+        " oa_ror_extraction_annuaire = @extractionAnnuaire," &
+        " oa_ror_identifiant_national_pp = @identifiantNational," &
+        " oa_ror_identifiant_technique_structure = @identifiantStructure," &
+        " oa_ror_code_nos_r23_mode_exercice = @codeModeExercice," &
+        " oa_ror_code_nos_g15_profession_sante = @codeProfessionSante," &
+        " oa_ror_code_nos_r04_type_savoir_faire = @codeTypeSavoirFaire," &
+        " oa_ror_code_savoir_faire = @codeSavoirFaire," &
+        " oa_ror_cle_reference = @cleReference" &
+        " WHERE oa_ror_id = @Id"
 
         Dim cmd As New SqlCommand(SQLstring, con)
 

@@ -38,6 +38,8 @@ Partial Class RadFPatientRendezVousListe
         Dim TableViewDefinition1 As Telerik.WinControls.UI.TableViewDefinition = New Telerik.WinControls.UI.TableViewDefinition()
         Me.RadDesktopAlert1 = New Telerik.WinControls.UI.RadDesktopAlert(Me.components)
         Me.RadGridViewRDV = New Telerik.WinControls.UI.RadGridView()
+        Me.ContextMenuStripIntervenant = New System.Windows.Forms.ContextMenuStrip(Me.components)
+        Me.DetailIntervenantToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.RadGroupBoxEtatCivil = New Telerik.WinControls.UI.RadGroupBox()
         Me.LblALD = New System.Windows.Forms.Label()
         Me.Label13 = New System.Windows.Forms.Label()
@@ -68,6 +70,7 @@ Partial Class RadFPatientRendezVousListe
         Me.RadBtnCloture = New Telerik.WinControls.UI.RadButton()
         CType(Me.RadGridViewRDV, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.RadGridViewRDV.MasterTemplate, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.ContextMenuStripIntervenant.SuspendLayout()
         CType(Me.RadGroupBoxEtatCivil, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.RadGroupBoxEtatCivil.SuspendLayout()
         CType(Me.RadBtnModifRDV, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -81,6 +84,7 @@ Partial Class RadFPatientRendezVousListe
         'RadGridViewRDV
         '
         Me.RadGridViewRDV.BackColor = System.Drawing.Color.FromArgb(CType(CType(191, Byte), Integer), CType(CType(219, Byte), Integer), CType(CType(255, Byte), Integer))
+        Me.RadGridViewRDV.ContextMenuStrip = Me.ContextMenuStripIntervenant
         Me.RadGridViewRDV.Cursor = System.Windows.Forms.Cursors.Default
         Me.RadGridViewRDV.Font = New System.Drawing.Font("Segoe UI", 8.25!)
         Me.RadGridViewRDV.ForeColor = System.Drawing.Color.Black
@@ -90,6 +94,7 @@ Partial Class RadFPatientRendezVousListe
         '
         '
         Me.RadGridViewRDV.MasterTemplate.AllowAddNewRow = False
+        Me.RadGridViewRDV.MasterTemplate.AllowCellContextMenu = False
         Me.RadGridViewRDV.MasterTemplate.AllowDeleteRow = False
         Me.RadGridViewRDV.MasterTemplate.AllowEditRow = False
         GridViewTextBoxColumn1.EnableExpressionEditor = False
@@ -156,6 +161,18 @@ Partial Class RadFPatientRendezVousListe
         Me.RadGridViewRDV.ShowGroupPanel = False
         Me.RadGridViewRDV.Size = New System.Drawing.Size(1326, 389)
         Me.RadGridViewRDV.TabIndex = 0
+        '
+        'ContextMenuStripIntervenant
+        '
+        Me.ContextMenuStripIntervenant.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.DetailIntervenantToolStripMenuItem})
+        Me.ContextMenuStripIntervenant.Name = "ContextMenuStripMail"
+        Me.ContextMenuStripIntervenant.Size = New System.Drawing.Size(168, 26)
+        '
+        'DetailIntervenantToolStripMenuItem
+        '
+        Me.DetailIntervenantToolStripMenuItem.Name = "DetailIntervenantToolStripMenuItem"
+        Me.DetailIntervenantToolStripMenuItem.Size = New System.Drawing.Size(167, 22)
+        Me.DetailIntervenantToolStripMenuItem.Text = "Détail intervenant"
         '
         'RadGroupBoxEtatCivil
         '
@@ -460,6 +477,7 @@ Partial Class RadFPatientRendezVousListe
         Me.Text = "Liste des rendez vous du patient"
         CType(Me.RadGridViewRDV.MasterTemplate, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.RadGridViewRDV, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.ContextMenuStripIntervenant.ResumeLayout(False)
         CType(Me.RadGroupBoxEtatCivil, System.ComponentModel.ISupportInitialize).EndInit()
         Me.RadGroupBoxEtatCivil.ResumeLayout(False)
         Me.RadGroupBoxEtatCivil.PerformLayout()
@@ -503,5 +521,7 @@ Partial Class RadFPatientRendezVousListe
     Friend WithEvents RadBtnRefresh As Telerik.WinControls.UI.RadButton
     Friend WithEvents RadBtnAbandon As Telerik.WinControls.UI.RadButton
     Friend WithEvents RadBtnCloture As Telerik.WinControls.UI.RadButton
+    Friend WithEvents ContextMenuStripIntervenant As ContextMenuStrip
+    Friend WithEvents DetailIntervenantToolStripMenuItem As ToolStripMenuItem
 End Class
 

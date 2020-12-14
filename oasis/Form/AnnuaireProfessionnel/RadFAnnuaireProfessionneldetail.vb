@@ -103,10 +103,12 @@ Public Class RadFAnnuaireProfessionneldetail
         If annuaireProfessionnel.emailCoordonneeStructure <> "" Then
             TextEmailStructure.Show()
             LblMailStructureLabel.Show()
+            RadBtnMail.Show()
             TextEmailStructure.Text = annuaireProfessionnel.emailCoordonneeStructure
         Else
             TextEmailStructure.Hide()
             LblMailStructureLabel.Hide()
+            RadBtnMail.Hide()
         End If
     End Sub
 
@@ -197,5 +199,33 @@ Public Class RadFAnnuaireProfessionneldetail
                 Chargement()
             End If
         End If
+    End Sub
+
+    Private Sub EnvoyerUnMailToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles EnvoyerUnMailToolStripMenuItem.Click
+        If RadGridViewMail.CurrentRow IsNot Nothing Then
+            Dim aRow As Integer = Me.RadGridViewMail.Rows.IndexOf(Me.RadGridViewMail.CurrentRow)
+            If aRow >= 0 Then
+                Dim mailAdresse = RadGridViewMail.Rows(aRow).Cells("adresse_bal").Value
+                EnvoyerMail(mailAdresse)
+            End If
+        End If
+    End Sub
+
+    Private Sub RadBtnMail_Click(sender As Object, e As EventArgs) Handles RadBtnMail.Click
+        If TextEmailStructure.Text <> "" Then
+            EnvoyerMail(TextEmailStructure.Text)
+        End If
+    End Sub
+
+    Private Sub EnvoyerMail(mailAdresse As String)
+        Try
+            Dim form As New RadFMailEdit
+            form.sendMailTo = mailAdresse
+            form.sendMailFrom = userLog.UtilisateurMail
+            form.sendMailsender = userLog.UtilisateurPrenom & " " & userLog.UtilisateurNom
+            form.Show()
+        Catch ex As Exception
+            MessageBox.Show(ex.Message)
+        End Try
     End Sub
 End Class

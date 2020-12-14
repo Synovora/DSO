@@ -288,6 +288,12 @@
     <Compile Include="Form\DRC\RadFAutoSuivi.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="Form\Mail\RadFMailEdit.Designer.vb">
+      <DependentUpon>RadFMailEdit.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Form\Mail\RadFMailEdit.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Form\Tutoriel\RadFTutoriel.Designer.vb">
       <DependentUpon>RadFTutoriel.vb</DependentUpon>
     </Compile>
@@ -1034,6 +1040,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Form\DRC\RadFAutoSuivi.resx">
       <DependentUpon>RadFAutoSuivi.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form\Mail\RadFMailEdit.resx">
+      <DependentUpon>RadFMailEdit.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Form\Tutoriel\RadFTutoriel.resx">
       <DependentUpon>RadFTutoriel.vb</DependentUpon>

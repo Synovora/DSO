@@ -53,6 +53,15 @@ Public Class RadFRorDetailEdit
     Dim rorDao As New RorDao
 
     Private Sub RadFRorDetailEdit_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        TxtAdeli.Hide()
+        TxtFiness.Hide()
+        TxtRPPS.Hide()
+        LblAdeli.Hide()
+        LblFiness.Hide()
+        LblRpps.Hide()
+        RadBtnAnnuler.Hide()
+        RadBtnMail.Hide()
+
         If SelectedRorId = 0 Then
             EditMode = EnumEditMode.Creation
             If SelectedSpecialiteId <> 0 Then
@@ -83,6 +92,10 @@ Public Class RadFRorDetailEdit
         TxtRPPS.Text = ror.Rpps
         TxtFiness.Text = ror.Finess
         TxtAdeli.Text = ror.Adeli
+
+        If ror.Email <> "" Then
+            RadBtnMail.Show()
+        End If
 
         If ror.DateCreation <> Nothing Then
             dateCreation = ror.DateCreation
@@ -203,6 +216,7 @@ Public Class RadFRorDetailEdit
         Dim MessageErreur4 As String = ""
         Dim MessageErreur5 As String = ""
         Dim MessageErreur6 As String = ""
+        Dim MessageErreur7 As String = ""
         Dim MessageErreur As String = ""
 
         If TxtNomIntervenant.Text = "" Then
@@ -243,6 +257,13 @@ Public Class RadFRorDetailEdit
             End If
         End If
 
+        If TxtEmail.Text <> "" Then
+            If ModuleUtilsBase.IsValidEmail(TxtEmail.Text) = False Then
+                Valide = False
+                MessageErreur7 = "L'email n'est pas valide"
+            End If
+        End If
+
         'Préparation de l'affichage des erreurs
         If Valide = False Then
             If MessageErreur1 <> "" Then
@@ -262,11 +283,15 @@ Public Class RadFRorDetailEdit
             End If
 
             If MessageErreur5 <> "" Then
-                MessageErreur = MessageErreur & MessageErreur4 & vbCrLf
+                MessageErreur = MessageErreur & MessageErreur5 & vbCrLf
             End If
 
             If MessageErreur6 <> "" Then
-                MessageErreur = MessageErreur & MessageErreur4 & vbCrLf
+                MessageErreur = MessageErreur & MessageErreur6 & vbCrLf
+            End If
+
+            If MessageErreur7 <> "" Then
+                MessageErreur = MessageErreur & MessageErreur7 & vbCrLf
             End If
 
             MessageErreur = MessageErreur & vbCrLf & "/!\ données incorrectes"
@@ -323,6 +348,15 @@ Public Class RadFRorDetailEdit
 
     Private Sub TxtEmail_TextChanged(sender As Object, e As EventArgs) Handles TxtEmail.TextChanged
         ror.Email = TxtEmail.Text
+        If ror.Email <> "" Then
+            If ModuleUtilsBase.IsValidEmail(TxtEmail.Text) = True Then
+                RadBtnMail.Show()
+            Else
+                RadBtnMail.Hide()
+            End If
+        Else
+            RadBtnMail.Hide()
+        End If
     End Sub
 
     Private Sub TxtCommentaire_TextChanged(sender As Object, e As EventArgs) Handles TxtCommentaire.TextChanged
@@ -357,5 +391,21 @@ Public Class RadFRorDetailEdit
                 TxtAdeli.Text = ror.Adeli
             End If
         End If
+    End Sub
+
+    Private Sub RadBtnAnnuler_Click(sender As Object, e As EventArgs) Handles RadBtnAnnuler.Click
+
+    End Sub
+
+    Private Sub RadBtnMail_Click(sender As Object, e As EventArgs) Handles RadBtnMail.Click
+        Try
+            Dim form As New RadFMailEdit
+            form.sendMailTo = TxtEmail.Text
+            form.sendMailFrom = userLog.UtilisateurMail
+            form.sendMailsender = userLog.UtilisateurPrenom & " " & userLog.UtilisateurNom
+            form.Show()
+        Catch ex As Exception
+            MessageBox.Show(ex.Message)
+        End Try
     End Sub
 End Class

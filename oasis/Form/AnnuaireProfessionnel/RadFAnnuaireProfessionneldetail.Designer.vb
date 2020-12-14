@@ -43,6 +43,8 @@ Partial Class RadFAnnuaireProfessionneldetail
         Me.RadBtnAbandon = New Telerik.WinControls.UI.RadButton()
         Me.RadGridViewMail = New Telerik.WinControls.UI.RadGridView()
         Me.RadGridViewStructure = New Telerik.WinControls.UI.RadGridView()
+        Me.ContextMenuStripStructure = New System.Windows.Forms.ContextMenuStrip(Me.components)
+        Me.DétailIntervenantPourCetteStructureToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.RadGroupBox1 = New Telerik.WinControls.UI.RadGroupBox()
         Me.LblIdentifiant = New System.Windows.Forms.Label()
         Me.LblRPPS_ADELI = New System.Windows.Forms.Label()
@@ -59,13 +61,15 @@ Partial Class RadFAnnuaireProfessionneldetail
         Me.LblSecteurActivite = New System.Windows.Forms.Label()
         Me.RadGroupBox3 = New Telerik.WinControls.UI.RadGroupBox()
         Me.RadGroupBox4 = New Telerik.WinControls.UI.RadGroupBox()
-        Me.ContextMenuStrip1 = New System.Windows.Forms.ContextMenuStrip(Me.components)
-        Me.DétailIntervenantPourCetteStructureToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.ContextMenuStripMail = New System.Windows.Forms.ContextMenuStrip(Me.components)
+        Me.EnvoyerUnMailToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.RadBtnMail = New Telerik.WinControls.UI.RadButton()
         CType(Me.RadBtnAbandon, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.RadGridViewMail, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.RadGridViewMail.MasterTemplate, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.RadGridViewStructure, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.RadGridViewStructure.MasterTemplate, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.ContextMenuStripStructure.SuspendLayout()
         CType(Me.RadGroupBox1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.RadGroupBox1.SuspendLayout()
         CType(Me.RadGroupBox2, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -75,7 +79,8 @@ Partial Class RadFAnnuaireProfessionneldetail
         Me.RadGroupBox3.SuspendLayout()
         CType(Me.RadGroupBox4, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.RadGroupBox4.SuspendLayout()
-        Me.ContextMenuStrip1.SuspendLayout()
+        Me.ContextMenuStripMail.SuspendLayout()
+        CType(Me.RadBtnMail, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
@@ -143,6 +148,7 @@ Partial Class RadFAnnuaireProfessionneldetail
         'RadGridViewMail
         '
         Me.RadGridViewMail.BackColor = System.Drawing.Color.FromArgb(CType(CType(191, Byte), Integer), CType(CType(219, Byte), Integer), CType(CType(255, Byte), Integer))
+        Me.RadGridViewMail.ContextMenuStrip = Me.ContextMenuStripMail
         Me.RadGridViewMail.Cursor = System.Windows.Forms.Cursors.Default
         Me.RadGridViewMail.Dock = System.Windows.Forms.DockStyle.Fill
         Me.RadGridViewMail.Font = New System.Drawing.Font("Segoe UI", 8.25!)
@@ -153,6 +159,7 @@ Partial Class RadFAnnuaireProfessionneldetail
         '
         '
         Me.RadGridViewMail.MasterTemplate.AllowAddNewRow = False
+        Me.RadGridViewMail.MasterTemplate.AllowCellContextMenu = False
         Me.RadGridViewMail.MasterTemplate.AllowDeleteRow = False
         Me.RadGridViewMail.MasterTemplate.AllowEditRow = False
         GridViewTextBoxColumn1.EnableExpressionEditor = False
@@ -178,7 +185,7 @@ Partial Class RadFAnnuaireProfessionneldetail
         'RadGridViewStructure
         '
         Me.RadGridViewStructure.BackColor = System.Drawing.Color.FromArgb(CType(CType(191, Byte), Integer), CType(CType(219, Byte), Integer), CType(CType(255, Byte), Integer))
-        Me.RadGridViewStructure.ContextMenuStrip = Me.ContextMenuStrip1
+        Me.RadGridViewStructure.ContextMenuStrip = Me.ContextMenuStripStructure
         Me.RadGridViewStructure.Cursor = System.Windows.Forms.Cursors.Default
         Me.RadGridViewStructure.Dock = System.Windows.Forms.DockStyle.Fill
         Me.RadGridViewStructure.Font = New System.Drawing.Font("Segoe UI", 8.25!)
@@ -233,6 +240,18 @@ Partial Class RadFAnnuaireProfessionneldetail
         Me.RadGridViewStructure.Size = New System.Drawing.Size(1005, 190)
         Me.RadGridViewStructure.TabIndex = 29
         '
+        'ContextMenuStripStructure
+        '
+        Me.ContextMenuStripStructure.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.DétailIntervenantPourCetteStructureToolStripMenuItem})
+        Me.ContextMenuStripStructure.Name = "ContextMenuStrip1"
+        Me.ContextMenuStripStructure.Size = New System.Drawing.Size(275, 26)
+        '
+        'DétailIntervenantPourCetteStructureToolStripMenuItem
+        '
+        Me.DétailIntervenantPourCetteStructureToolStripMenuItem.Name = "DétailIntervenantPourCetteStructureToolStripMenuItem"
+        Me.DétailIntervenantPourCetteStructureToolStripMenuItem.Size = New System.Drawing.Size(274, 22)
+        Me.DétailIntervenantPourCetteStructureToolStripMenuItem.Text = "Détail intervenant pour cette structure"
+        '
         'RadGroupBox1
         '
         Me.RadGroupBox1.AccessibleRole = System.Windows.Forms.AccessibleRole.Grouping
@@ -245,7 +264,7 @@ Partial Class RadFAnnuaireProfessionneldetail
         Me.RadGroupBox1.HeaderText = "Professionnel de santé"
         Me.RadGroupBox1.Location = New System.Drawing.Point(12, 12)
         Me.RadGroupBox1.Name = "RadGroupBox1"
-        Me.RadGroupBox1.Size = New System.Drawing.Size(419, 192)
+        Me.RadGroupBox1.Size = New System.Drawing.Size(371, 192)
         Me.RadGroupBox1.TabIndex = 30
         Me.RadGroupBox1.Text = "Professionnel de santé"
         '
@@ -290,6 +309,7 @@ Partial Class RadFAnnuaireProfessionneldetail
         'RadGroupBox2
         '
         Me.RadGroupBox2.AccessibleRole = System.Windows.Forms.AccessibleRole.Grouping
+        Me.RadGroupBox2.Controls.Add(Me.RadBtnMail)
         Me.RadGroupBox2.Controls.Add(Me.LblTelecopie)
         Me.RadGroupBox2.Controls.Add(Me.LblTelecopieLabel)
         Me.RadGroupBox2.Controls.Add(Me.LblTelephone)
@@ -302,9 +322,9 @@ Partial Class RadFAnnuaireProfessionneldetail
         Me.RadGroupBox2.Controls.Add(Me.LblAdresse1)
         Me.RadGroupBox2.Controls.Add(Me.LblAdresse2)
         Me.RadGroupBox2.HeaderText = "Structure"
-        Me.RadGroupBox2.Location = New System.Drawing.Point(452, 12)
+        Me.RadGroupBox2.Location = New System.Drawing.Point(389, 12)
         Me.RadGroupBox2.Name = "RadGroupBox2"
-        Me.RadGroupBox2.Size = New System.Drawing.Size(571, 192)
+        Me.RadGroupBox2.Size = New System.Drawing.Size(630, 192)
         Me.RadGroupBox2.TabIndex = 31
         Me.RadGroupBox2.Text = "Structure"
         '
@@ -351,7 +371,7 @@ Partial Class RadFAnnuaireProfessionneldetail
         Me.TextEmailStructure.Location = New System.Drawing.Point(109, 115)
         Me.TextEmailStructure.Name = "TextEmailStructure"
         Me.TextEmailStructure.ReadOnly = True
-        Me.TextEmailStructure.Size = New System.Drawing.Size(458, 20)
+        Me.TextEmailStructure.Size = New System.Drawing.Size(395, 20)
         Me.TextEmailStructure.TabIndex = 31
         '
         'LblMailStructureLabel
@@ -404,17 +424,25 @@ Partial Class RadFAnnuaireProfessionneldetail
         Me.RadGroupBox4.TabIndex = 33
         Me.RadGroupBox4.Text = "Structures associées au professionnel de santé"
         '
-        'ContextMenuStrip1
+        'ContextMenuStripMail
         '
-        Me.ContextMenuStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.DétailIntervenantPourCetteStructureToolStripMenuItem})
-        Me.ContextMenuStrip1.Name = "ContextMenuStrip1"
-        Me.ContextMenuStrip1.Size = New System.Drawing.Size(275, 26)
+        Me.ContextMenuStripMail.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.EnvoyerUnMailToolStripMenuItem})
+        Me.ContextMenuStripMail.Name = "ContextMenuStripMail"
+        Me.ContextMenuStripMail.Size = New System.Drawing.Size(160, 26)
         '
-        'DétailIntervenantPourCetteStructureToolStripMenuItem
+        'EnvoyerUnMailToolStripMenuItem
         '
-        Me.DétailIntervenantPourCetteStructureToolStripMenuItem.Name = "DétailIntervenantPourCetteStructureToolStripMenuItem"
-        Me.DétailIntervenantPourCetteStructureToolStripMenuItem.Size = New System.Drawing.Size(274, 22)
-        Me.DétailIntervenantPourCetteStructureToolStripMenuItem.Text = "Détail intervenant pour cette structure"
+        Me.EnvoyerUnMailToolStripMenuItem.Name = "EnvoyerUnMailToolStripMenuItem"
+        Me.EnvoyerUnMailToolStripMenuItem.Size = New System.Drawing.Size(159, 22)
+        Me.EnvoyerUnMailToolStripMenuItem.Text = "Envoyer un mail"
+        '
+        'RadBtnMail
+        '
+        Me.RadBtnMail.Location = New System.Drawing.Point(510, 113)
+        Me.RadBtnMail.Name = "RadBtnMail"
+        Me.RadBtnMail.Size = New System.Drawing.Size(110, 24)
+        Me.RadBtnMail.TabIndex = 36
+        Me.RadBtnMail.Text = "Envoyer mail"
         '
         'RadFAnnuaireProfessionneldetail
         '
@@ -444,6 +472,7 @@ Partial Class RadFAnnuaireProfessionneldetail
         CType(Me.RadGridViewMail, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.RadGridViewStructure.MasterTemplate, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.RadGridViewStructure, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.ContextMenuStripStructure.ResumeLayout(False)
         CType(Me.RadGroupBox1, System.ComponentModel.ISupportInitialize).EndInit()
         Me.RadGroupBox1.ResumeLayout(False)
         Me.RadGroupBox1.PerformLayout()
@@ -455,7 +484,8 @@ Partial Class RadFAnnuaireProfessionneldetail
         Me.RadGroupBox3.ResumeLayout(False)
         CType(Me.RadGroupBox4, System.ComponentModel.ISupportInitialize).EndInit()
         Me.RadGroupBox4.ResumeLayout(False)
-        Me.ContextMenuStrip1.ResumeLayout(False)
+        Me.ContextMenuStripMail.ResumeLayout(False)
+        CType(Me.RadBtnMail, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
 
@@ -485,7 +515,10 @@ Partial Class RadFAnnuaireProfessionneldetail
     Friend WithEvents LblTelecopieLabel As Label
     Friend WithEvents LblTelephone As Label
     Friend WithEvents LblTelephoneLabel As Label
-    Friend WithEvents ContextMenuStrip1 As ContextMenuStrip
+    Friend WithEvents ContextMenuStripStructure As ContextMenuStrip
     Friend WithEvents DétailIntervenantPourCetteStructureToolStripMenuItem As ToolStripMenuItem
+    Friend WithEvents ContextMenuStripMail As ContextMenuStrip
+    Friend WithEvents EnvoyerUnMailToolStripMenuItem As ToolStripMenuItem
+    Friend WithEvents RadBtnMail As Telerik.WinControls.UI.RadButton
 End Class
 

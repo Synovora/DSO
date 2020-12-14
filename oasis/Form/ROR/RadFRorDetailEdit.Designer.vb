@@ -38,9 +38,9 @@ Partial Class RadFRorDetailEdit
         Me.Label6 = New System.Windows.Forms.Label()
         Me.Label7 = New System.Windows.Forms.Label()
         Me.Label8 = New System.Windows.Forms.Label()
-        Me.Label9 = New System.Windows.Forms.Label()
-        Me.Label10 = New System.Windows.Forms.Label()
-        Me.Label11 = New System.Windows.Forms.Label()
+        Me.LblRpps = New System.Windows.Forms.Label()
+        Me.LblFiness = New System.Windows.Forms.Label()
+        Me.LblAdeli = New System.Windows.Forms.Label()
         Me.RadBtnAbandon = New Telerik.WinControls.UI.RadButton()
         Me.RadBtnValider = New Telerik.WinControls.UI.RadButton()
         Me.RadBtnAnnuler = New Telerik.WinControls.UI.RadButton()
@@ -63,10 +63,12 @@ Partial Class RadFRorDetailEdit
         Me.TxtRPPS = New System.Windows.Forms.TextBox()
         Me.TxtFiness = New System.Windows.Forms.TextBox()
         Me.TxtAdeli = New System.Windows.Forms.TextBox()
+        Me.RadBtnMail = New Telerik.WinControls.UI.RadButton()
         CType(Me.RadBtnAbandon, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.RadBtnValider, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.RadBtnAnnuler, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.RadBtnSpecialite, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.RadBtnMail, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
@@ -202,32 +204,32 @@ Partial Class RadFRorDetailEdit
         Me.Label8.TabIndex = 18
         Me.Label8.Text = "Ville"
         '
-        'Label9
+        'LblRpps
         '
-        Me.Label9.AutoSize = True
-        Me.Label9.Location = New System.Drawing.Point(12, 370)
-        Me.Label9.Name = "Label9"
-        Me.Label9.Size = New System.Drawing.Size(32, 13)
-        Me.Label9.TabIndex = 19
-        Me.Label9.Text = "RPPS"
+        Me.LblRpps.AutoSize = True
+        Me.LblRpps.Location = New System.Drawing.Point(12, 370)
+        Me.LblRpps.Name = "LblRpps"
+        Me.LblRpps.Size = New System.Drawing.Size(32, 13)
+        Me.LblRpps.TabIndex = 19
+        Me.LblRpps.Text = "RPPS"
         '
-        'Label10
+        'LblFiness
         '
-        Me.Label10.AutoSize = True
-        Me.Label10.Location = New System.Drawing.Point(12, 396)
-        Me.Label10.Name = "Label10"
-        Me.Label10.Size = New System.Drawing.Size(42, 13)
-        Me.Label10.TabIndex = 20
-        Me.Label10.Text = "FINESS"
+        Me.LblFiness.AutoSize = True
+        Me.LblFiness.Location = New System.Drawing.Point(12, 396)
+        Me.LblFiness.Name = "LblFiness"
+        Me.LblFiness.Size = New System.Drawing.Size(42, 13)
+        Me.LblFiness.TabIndex = 20
+        Me.LblFiness.Text = "FINESS"
         '
-        'Label11
+        'LblAdeli
         '
-        Me.Label11.AutoSize = True
-        Me.Label11.Location = New System.Drawing.Point(12, 422)
-        Me.Label11.Name = "Label11"
-        Me.Label11.Size = New System.Drawing.Size(36, 13)
-        Me.Label11.TabIndex = 21
-        Me.Label11.Text = "ADELI"
+        Me.LblAdeli.AutoSize = True
+        Me.LblAdeli.Location = New System.Drawing.Point(12, 422)
+        Me.LblAdeli.Name = "LblAdeli"
+        Me.LblAdeli.Size = New System.Drawing.Size(36, 13)
+        Me.LblAdeli.TabIndex = 21
+        Me.LblAdeli.Text = "ADELI"
         '
         'RadBtnAbandon
         '
@@ -401,6 +403,7 @@ Partial Class RadFRorDetailEdit
         '
         'TxtRPPS
         '
+        Me.TxtRPPS.Enabled = False
         Me.TxtRPPS.Location = New System.Drawing.Point(105, 367)
         Me.TxtRPPS.Name = "TxtRPPS"
         Me.TxtRPPS.Size = New System.Drawing.Size(100, 20)
@@ -408,6 +411,7 @@ Partial Class RadFRorDetailEdit
         '
         'TxtFiness
         '
+        Me.TxtFiness.Enabled = False
         Me.TxtFiness.Location = New System.Drawing.Point(105, 393)
         Me.TxtFiness.Name = "TxtFiness"
         Me.TxtFiness.Size = New System.Drawing.Size(100, 20)
@@ -415,10 +419,19 @@ Partial Class RadFRorDetailEdit
         '
         'TxtAdeli
         '
+        Me.TxtAdeli.Enabled = False
         Me.TxtAdeli.Location = New System.Drawing.Point(105, 419)
         Me.TxtAdeli.Name = "TxtAdeli"
         Me.TxtAdeli.Size = New System.Drawing.Size(100, 20)
         Me.TxtAdeli.TabIndex = 119
+        '
+        'RadBtnMail
+        '
+        Me.RadBtnMail.Location = New System.Drawing.Point(738, 264)
+        Me.RadBtnMail.Name = "RadBtnMail"
+        Me.RadBtnMail.Size = New System.Drawing.Size(131, 24)
+        Me.RadBtnMail.TabIndex = 120
+        Me.RadBtnMail.Text = "Envoyer mail"
         '
         'RadFRorDetailEdit
         '
@@ -426,6 +439,7 @@ Partial Class RadFRorDetailEdit
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.CancelButton = Me.RadBtnAbandon
         Me.ClientSize = New System.Drawing.Size(874, 537)
+        Me.Controls.Add(Me.RadBtnMail)
         Me.Controls.Add(Me.TxtAdeli)
         Me.Controls.Add(Me.TxtFiness)
         Me.Controls.Add(Me.TxtRPPS)
@@ -448,9 +462,9 @@ Partial Class RadFRorDetailEdit
         Me.Controls.Add(Me.RadBtnAnnuler)
         Me.Controls.Add(Me.RadBtnValider)
         Me.Controls.Add(Me.RadBtnAbandon)
-        Me.Controls.Add(Me.Label11)
-        Me.Controls.Add(Me.Label10)
-        Me.Controls.Add(Me.Label9)
+        Me.Controls.Add(Me.LblAdeli)
+        Me.Controls.Add(Me.LblFiness)
+        Me.Controls.Add(Me.LblRpps)
         Me.Controls.Add(Me.Label8)
         Me.Controls.Add(Me.Label7)
         Me.Controls.Add(Me.Label6)
@@ -480,6 +494,7 @@ Partial Class RadFRorDetailEdit
         CType(Me.RadBtnValider, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.RadBtnAnnuler, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.RadBtnSpecialite, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.RadBtnMail, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
         Me.PerformLayout()
@@ -502,9 +517,9 @@ Partial Class RadFRorDetailEdit
     Friend WithEvents Label6 As Label
     Friend WithEvents Label7 As Label
     Friend WithEvents Label8 As Label
-    Friend WithEvents Label9 As Label
-    Friend WithEvents Label10 As Label
-    Friend WithEvents Label11 As Label
+    Friend WithEvents LblRpps As Label
+    Friend WithEvents LblFiness As Label
+    Friend WithEvents LblAdeli As Label
     Friend WithEvents RadBtnAbandon As Telerik.WinControls.UI.RadButton
     Friend WithEvents RadBtnValider As Telerik.WinControls.UI.RadButton
     Friend WithEvents RadBtnAnnuler As Telerik.WinControls.UI.RadButton
@@ -527,5 +542,6 @@ Partial Class RadFRorDetailEdit
     Friend WithEvents TxtRPPS As TextBox
     Friend WithEvents TxtFiness As TextBox
     Friend WithEvents TxtAdeli As TextBox
+    Friend WithEvents RadBtnMail As Telerik.WinControls.UI.RadButton
 End Class
 
