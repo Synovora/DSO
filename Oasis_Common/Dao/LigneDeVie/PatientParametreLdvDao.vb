@@ -65,12 +65,50 @@ Public Class PatientParametreLdvDao
         Dim SQLstring As String =
         "IF Not EXISTS (SELECT 1 FROM oasis.oa_patient_parametre_ldv WHERE patient_id = @patientId)" &
         " INSERT INTO oasis.oa_patient_parametre_ldv" &
-        " (patient_id, activite_pathologie_aigue, activite_prevention_autre, activite_prevention_enfant_pre_scolaire, activite_prevention_enfant_scolaire," &
-        " activite_suivi_grossesse, activite_suivi_gynecologique, activite_social, activite_suivi_chronique, type_consultation, type_virtuel, type_parametre," &
-        " profil_medical, profil_paramedical, profil_patient, parametre1, parametre2, parametre3, parametre4, parametre5, user_modification, date_modification)" &
-        " VALUES (@patientId, @activitePathologieAigue, @activitePreventionAutre, @activitePreventionEnfantPreScolaire, @activitePreventionEnfantScolaire," &
-        " @activiteSuiviGrossesse, @activiteSuiviGynecologique, @activiteSocial, @activiteSuiviChronique, @typeConsultation, @typeVirtuel, @typeParametre," &
-        " @profilMedical, @profilParamedical, @Parametre1, @Parametre2, @Parametre3, @Parametre4, @Parametre5, @UserCreation, @dateCreation)"
+        " (patient_id," &
+        " activite_pathologie_aigue," &
+        " activite_prevention_autre," &
+        " activite_prevention_enfant_pre_scolaire," &
+        " activite_prevention_enfant_scolaire," &
+        " activite_suivi_grossesse," &
+        " activite_suivi_gynecologique," &
+        " activite_social," &
+        " activite_suivi_chronique," &
+        " type_consultation," &
+        " type_virtuel," &
+        " type_parametre," &
+        " profil_medical," &
+        " profil_paramedical," &
+        " profil_patient," &
+        " parametre1," &
+        " parametre2," &
+        " parametre3," &
+        " parametre4," &
+        " parametre5," &
+        " user_modification," &
+        " date_modification)" &
+        " VALUES (@patientId," &
+        " @activitePathologieAigue," &
+        " @activitePreventionAutre," &
+        " @activitePreventionEnfantPreScolaire," &
+        " @activitePreventionEnfantScolaire," &
+        " @activiteSuiviGrossesse," &
+        " @activiteSuiviGynecologique," &
+        " @activiteSocial," &
+        " @activiteSuiviChronique," &
+        " @typeConsultation," &
+        " @typeVirtuel," &
+        " @typeParametre," &
+        " @profilMedical," &
+        " @profilParamedical," &
+        " @ProfilPatient," &
+        " @Parametre1," &
+        " @Parametre2," &
+        " @Parametre3," &
+        " @Parametre4," &
+        " @Parametre5," &
+        " @UserCreation," &
+        " @dateCreation)"
 
         Dim cmd As New SqlCommand(SQLstring, con)
         With cmd.Parameters

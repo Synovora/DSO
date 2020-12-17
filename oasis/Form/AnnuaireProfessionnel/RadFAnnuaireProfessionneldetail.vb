@@ -51,8 +51,17 @@ Public Class RadFAnnuaireProfessionneldetail
         LblPrenomNom.Text = annuaireEtatCivil.Nom
         LblProfessionSavoirFaire.Text = annuaireEtatCivil.Profession
         LblRaisonSociale.Text = annuaireEtatCivil.RaisonSociale
+        'TODO: Si la raison sociale n'est pas renseignée, recherche si raison sociale existe en complément
+        If annuaireEtatCivil.RaisonSociale = "" Then
+
+        End If
+
         LblAdresse1.Text = annuaireEtatCivil.Adresse1
         LblAdresse2.Text = annuaireEtatCivil.Adresse2
+        'TODO: Si adresse 1 et 2 ne sont pas renseignées, recherche si adresse 1 et 2 existent en complément
+        If annuaireEtatCivil.Adresse1 = "" AndAlso annuaireEtatCivil.Adresse2 = "" Then
+
+        End If
 
         LblTelephoneLabel.Text = ""
         LblTelephone.Text = ""
@@ -68,12 +77,20 @@ Public Class RadFAnnuaireProfessionneldetail
                 LblTelephone.Text = annuaireProfessionnel.Telephone2CoordonneeStructure.Trim
             End If
         End If
+        'TODO: Si telephone non renseigné, recherche si existe en complément
+        If LblTelephone.Text = "" Then
+
+        End If
 
         LblTelecopieLabel.Text = ""
         LblTelecopie.Text = ""
         If annuaireProfessionnel.TelepcopieCoordonneeStructure.Trim <> "" Then
             LblTelecopieLabel.Text = "Télécopie :"
             LblTelecopie.Text = annuaireProfessionnel.TelepcopieCoordonneeStructure.Trim
+        End If
+        'TODO: Si télécopie non renseignée, recherche si existe en complément
+        If LblTelecopie.Text = "" Then
+
         End If
 
         LblIdentifiant.Text = annuaireProfessionnel.Identifiant
@@ -106,6 +123,8 @@ Public Class RadFAnnuaireProfessionneldetail
             RadBtnMail.Show()
             TextEmailStructure.Text = annuaireProfessionnel.emailCoordonneeStructure
         Else
+            'Si email structure non renseigné, recherche si existe en complément
+
             TextEmailStructure.Hide()
             LblMailStructureLabel.Hide()
             RadBtnMail.Hide()

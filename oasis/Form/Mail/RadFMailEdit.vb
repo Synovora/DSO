@@ -38,18 +38,24 @@ Public Class RadFMailEdit
         End If
 
         'Contrôle mail sendMailBc
+        If TxtSendMailBc.Text <> "" Then
+            If ModuleUtilsBase.IsValidEmail(TxtSendMailBc.Text) = False Then
+                MessageBox.Show("Erreur : Le mail en Cci n'est pas valide")
+                validation = False
+            End If
+        End If
 
         'Contrôle mail sendMailFrom
 
         'Contrôle sujet est renseignée
         If TxtSendMailSubject.Text = "" Then
-            MessageBox.Show("Erreur : Le sujet est obligatoire")
+            MessageBox.Show("Erreur : Le sujet est obligatoire !")
             validation = False
         End If
 
         'Contrôle message est renseignée
         If TxtSendMailMessage.Text = "" Then
-            MessageBox.Show("Erreur : Le sujet est obligatoire")
+            MessageBox.Show("Erreur : Le message ne doit pas être vide !")
             validation = False
         End If
 
@@ -71,6 +77,7 @@ Public Class RadFMailEdit
         mail.sendMailSender = sendMailsender
         mail.sendMailSubject = TxtSendMailSubject.Text
         mail.sendMailMessage = TxtSendMailMessage.Text
+        mail.sendMailPath = ""
 
         Dim mailDao As New MailDao
         If mailDao.CreateMail(mail, userLog) = True Then

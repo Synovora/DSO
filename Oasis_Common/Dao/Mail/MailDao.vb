@@ -12,6 +12,7 @@ Public Class MailDao
             .sendMailSender = reader("sendMailSender"),
             .sendMailSubject = reader("sendMailSubject"),
             .sendMailMessage = reader("sendMailMessage"),
+            .sendMailPath = reader("sendMailPath"),
             .dateCreation = reader("date_creation"),
             .userCreation = reader("user_creation"),
             .sendMailSent = reader("sendMailSent")
@@ -50,9 +51,9 @@ Public Class MailDao
         Dim dateCreation As Date = Date.Now.Date
 
         Dim SQLstring As String = "INSERT INTO oasis.send_mail_trigger " &
-        " (sendMailTo, sendMailCc, sendMailBcc, sendMailFrom, sendMailSender, sendMailSubject, sendMailMessage, sendMailSent, date_creation, user_creation)" &
+        " (sendMailTo, sendMailCc, sendMailBcc, sendMailFrom, sendMailSender, sendMailSubject, sendMailMessage, sendMailPath, sendMailSent, date_creation, user_creation)" &
         " VALUES " &
-        " (@sendMailTo, @sendMailCc, @sendMailBcc, @sendMailFrom, @sendMailSender, @sendMailSubject, @sendMailMessage, @sendMailSent, @date_creation, @user_creation)"
+        " (@sendMailTo, @sendMailCc, @sendMailBcc, @sendMailFrom, @sendMailSender, @sendMailSubject, @sendMailMessage, @sendMailPath, @sendMailSent, @date_creation, @user_creation)"
 
         Dim cmd As New SqlCommand(SQLstring, con)
         With cmd.Parameters
@@ -63,6 +64,7 @@ Public Class MailDao
             .AddWithValue("@sendMailSender", mail.sendMailSender)
             .AddWithValue("@sendMailSubject", mail.sendMailSubject)
             .AddWithValue("@sendMailMessage", mail.sendMailMessage)
+            .AddWithValue("@sendMailPath", mail.sendMailPath)
             .AddWithValue("@sendMailSent", "")
             .AddWithValue("@date_creation", Date.Now.ToString("yyyy-MM-dd HH:mm:ss"))
             .AddWithValue("@user_creation", userLog.UtilisateurId)

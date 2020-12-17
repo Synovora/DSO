@@ -101,6 +101,7 @@
     <Compile Include="Bean\AnnuaireProfessionnel\AnnuaireEtatCivil.vb" />
     <Compile Include="Bean\AnnuaireProfessionnel\annuaireProfessionnel.vb" />
     <Compile Include="Bean\AnnuaireProfessionnel\AnnuaireProfessionnelReference.vb" />
+    <Compile Include="Bean\AnnuaireProfessionnel\AnnuaireProfessionnelReferenceComplement.vb" />
     <Compile Include="Bean\ANS_NOS\G15_ProfessionSante.vb" />
     <Compile Include="Bean\ANS_NOS\R38_SpecialiteOrdinale.vb" />
     <Compile Include="Bean\ANS_NOS\R40_CompetenceExclusive.vb" />
@@ -182,6 +183,7 @@
     <Compile Include="Dao\ALD\AldDao.vb" />
     <Compile Include="Dao\AnnuaireProfessionnel\AnnuaireProfessionnelBalDao.vb" />
     <Compile Include="Dao\AnnuaireProfessionnel\AnnuaireProfessionnelDao.vb" />
+    <Compile Include="Dao\AnnuaireProfessionnel\AnnuaireProfessionnelSanteComplementDao.vb" />
     <Compile Include="Dao\AnnuaireProfessionnel\AnnuaireReferenceDao.vb" />
     <Compile Include="Dao\ANS_NOS\G15_ProfessionSanteDao.vb" />
     <Compile Include="Dao\ANS_NOS\R38_SpecialiteOrdinaleDao.vb" />
