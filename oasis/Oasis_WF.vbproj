@@ -33,13 +33,13 @@
     <UpdatePeriodically>false</UpdatePeriodically>
     <UpdateRequired>false</UpdateRequired>
     <MapFileExtensions>true</MapFileExtensions>
-    <InstallUrl>https://ns3119889.ip-51-38-181.eu/clickonce/</InstallUrl>
+    <InstallUrl>http://ns3119889.ip-51-38-181.eu/clickonce/</InstallUrl>
     <UpdateUrl>http://ns3119889.ip-51-38-181.eu/clickonce/</UpdateUrl>
     <ProductName>Oasis</ProductName>
     <PublisherName>Synovora</PublisherName>
     <SuiteName>Oasis</SuiteName>
     <WebPage>publish.htm</WebPage>
-    <ApplicationRevision>122</ApplicationRevision>
+    <ApplicationRevision>126</ApplicationRevision>
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <PublishWizardCompleted>true</PublishWizardCompleted>
@@ -185,6 +185,8 @@
       <HintPath>..\packages\System.Drawing.Common.4.7.0\lib\net461\System.Drawing.Common.dll</HintPath>
     </Reference>
     <Reference Include="System.Numerics" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.ServiceModel" />
     <Reference Include="System.ServiceProcess" />
     <Reference Include="System.Web.Extensions" />
     <Reference Include="System.Windows.Forms" />
@@ -267,6 +269,11 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Connected Services\ServiceReference1\Reference.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
     <Compile Include="DS_Specialite.vb">
       <DependentUpon>DS_Specialite.xsd</DependentUpon>
     </Compile>
@@ -1382,6 +1389,50 @@
   <ItemGroup>
     <None Include=".editorconfig" />
     <None Include="App.config" />
+    <None Include="Connected Services\ServiceReference1\.editorconfig" />
+    <None Include="Connected Services\ServiceReference1\INSi_RECSANS_INS.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\ServiceReference1\INSi_RECVITALE_INS.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\ServiceReference1\INSi_RESULTAT_INS.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\ServiceReference1\Oasis_WF.ServiceReference1.rechercherInsAvecCarteVitaleResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\ServiceReference1\Oasis_WF.ServiceReference1.rechercherInsAvecTraitsIdentiteResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\ServiceReference1\Oasis_WF.ServiceReference1.Resultat.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\ServiceReference1\ROOT_ctxbam_CTXBAM_V01_02.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\ServiceReference1\ROOT_ctxlps_CTXLPS_V01_00.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\ServiceReference1\saml-schema-assertion-2.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\ServiceReference1\schema_faultSOAP_V01_01.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\ServiceReference1\Security.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\ServiceReference1\ServiceIdentiteCertifiee-v1.wsdl" />
+    <None Include="Connected Services\ServiceReference1\ws-addr.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\ServiceReference1\xenc-schema.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\ServiceReference1\xmldsig-core-schema.xsd">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="DataSetDRC.xsc">
       <DependentUpon>DataSetDRC.xsd</DependentUpon>
     </None>
@@ -1541,6 +1592,12 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
+    <None Include="Connected Services\ServiceReference1\configuration91.svcinfo" />
+    <None Include="Connected Services\ServiceReference1\configuration.svcinfo" />
+    <None Include="Connected Services\ServiceReference1\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.vb</LastGenOutput>
+    </None>
     <Content Include="dso16%281%29.ico" />
     <Content Include="Resources\Aha-Soft-People-User-group.ico" />
     <None Include="Resources\historique.png" />
@@ -1575,6 +1632,12 @@
     <Analyzer Include="..\packages\Microsoft.NetCore.Analyzers.3.3.0\analyzers\dotnet\vb\Microsoft.NetCore.VisualBasic.Analyzers.dll" />
     <Analyzer Include="..\packages\Microsoft.NetFramework.Analyzers.3.3.0\analyzers\dotnet\vb\Microsoft.NetFramework.Analyzers.dll" />
     <Analyzer Include="..\packages\Microsoft.NetFramework.Analyzers.3.3.0\analyzers\dotnet\vb\Microsoft.NetFramework.VisualBasic.Analyzers.dll" />
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Connected Services\" />
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadataStorage Include="Connected Services\ServiceReference1\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

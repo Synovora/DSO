@@ -261,9 +261,16 @@ Public Class ContexteDao
         Return codeRetour
     End Function
 
-    Public Function ModificationContexte(contexte As Antecedent, contexteHistoACreer As AntecedentHisto, userLog As Utilisateur) As Boolean
+    Public Function ModificationContexte(contexte As Antecedent, contexteHistoACreer As AntecedentHisto, userLog As Utilisateur, Description As String, DrcId As Long) As Boolean
         Dim da As SqlDataAdapter = New SqlDataAdapter()
         Dim codeRetour As Boolean = True
+        Dim dateModification As Date
+
+        If Description <> contexte.Description OrElse DrcId <> contexte.DrcId Then
+            dateModification = DateTime.Now
+        Else
+            dateModification = contexte.DateModification
+        End If
 
         Dim SQLstring As String = "UPDATE oasis.oa_antecedent SET" &
             " oa_antecedent_date_modification = @dateModification," &
@@ -284,7 +291,7 @@ Public Class ContexteDao
 
         With cmd.Parameters
             .AddWithValue("@utilisateurModification", userLog.UtilisateurId.ToString)
-            .AddWithValue("@dateModification", DateTime.Now)
+            .AddWithValue("@dateModification", dateModification)
             .AddWithValue("@drcId", contexte.DrcId)
             .AddWithValue("@categorieContexte", contexte.CategorieContexte)
             .AddWithValue("@description", contexte.Description)
@@ -325,7 +332,9 @@ Public Class ContexteDao
             AntecedentHistoCreationDao.CreationAntecedentHisto(contexteHistoACreer, userLog, AntecedentHistoCreationDao.EnumEtatAntecedentHisto.ModificationAntecedent)
 
             'Mise à jour de la date de mise à jour de la synthèse (table patient)
-            patientDao.ModificationDateMajSynthesePatient(contexte.PatientId, userLog)
+            If Description <> contexte.Description OrElse DrcId <> contexte.DrcId Then
+                patientDao.ModificationDateMajSynthesePatient(contexte.PatientId, userLog)
+            End If
         End If
 
         Return codeRetour

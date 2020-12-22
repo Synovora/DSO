@@ -175,7 +175,7 @@ Public Class RadFRorDetailEdit
         ror.IdentifiantNational = ""
         ror.IdentifiantStructure = ""
         ror.CodeModeExercice_r23 = ""
-        ror.CodeProfessionSante_g15 = ""
+        ror.CodeProfessionSante_g15 = 0
         ror.CodeTypeSavoirFaire_r04 = ""
         ror.CodeSavoirFaire = ""
         ror.CleReferenceAnnuaire = 0

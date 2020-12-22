@@ -2498,6 +2498,12 @@ Public Class RadFEpisodeDetail
         ChargementObservationLibre()
         ChargementConclusion()
         ControleEpisodeCloture()
+        'Synthèse - 19/12/2020
+        ChargementAntecedent()
+        ChargementTraitement()
+        ChargementParcoursDeSoin()
+        ChargementContexte()
+        ChargementPPS()
         Cursor.Current = Cursors.Default
     End Sub
 
