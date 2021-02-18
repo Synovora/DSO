@@ -1,5 +1,6 @@
 ﻿
 Imports System.Configuration
+Imports System.Diagnostics
 Imports System.IO
 Imports Oasis_Common
 Imports Telerik.WinControls

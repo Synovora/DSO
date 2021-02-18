@@ -180,6 +180,8 @@ Public Class FrmAdminTemplateSousEpisode
             .Contexte = "Ex. de contexte sur 3 lignes" & vbCrLf & "Ligne 2" & vbCrLf & "Ligne 3"
             .Traitement = "Ex. de traitement sur 3 lignes" & vbCrLf & "Ligne 2" & vbCrLf & "Ligne 3"
 
+            .Reference = "Nan"
+
             Dim sousType = TryCast(Me.DropDownSousType.SelectedItem.Value, SousEpisodeSousType)
             .ALD_Sans_FaireFaire = sousType.Commentaire
             .ALD_Avec_FaireFaire = sousType.Commentaire

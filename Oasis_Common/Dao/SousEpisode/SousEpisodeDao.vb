@@ -29,6 +29,8 @@ Public Class SousEpisodeDao
             "     SE.validate_user_id, " & vbCrLf &
             "     SE.horodate_validate, " & vbCrLf &
             "	  SE.commentaire, " & vbCrLf &
+            "	  SE.signature, " & vbCrLf &
+            "	  SE.reference, " & vbCrLf &
             "	  SE.is_ald, " & vbCrLf &
             "	  SE.is_reponse, " & vbCrLf &
             "	  SE.delai_since_validation, " & vbCrLf &
@@ -153,6 +155,16 @@ Public Class SousEpisodeDao
 
     End Sub
 
+    Public Function GenerateRandomString(ByRef len As Integer) As String
+        Dim rand As New Random()
+        Dim allowableChars() As Char = "ABCDEFGHIJKLOMNOPQRSTUVWXYZ0123456789".ToCharArray()
+        Dim final As String = String.Empty
+        For i As Integer = 0 To len - 1
+            final += allowableChars(rand.Next(allowableChars.Length - 1))
+        Next
+        Return final
+    End Function
+
     Public Function Create(sousEpisode As SousEpisode) As Boolean
         Dim da As SqlDataAdapter = New SqlDataAdapter()
         Dim codeRetour As Boolean = True
@@ -161,12 +173,14 @@ Public Class SousEpisodeDao
         con = GetConnection()
         Dim transaction As SqlClient.SqlTransaction = con.BeginTransaction
 
+        Dim reference As String = GenerateRandomString(6)
+
         Try
             Dim SQLstring As String = "INSERT INTO oasis.oa_sous_episode " &
                     "(episode_id , id_intervenant, id_sous_episode_type , id_sous_episode_sous_type , create_user_id , horodate_creation , " &
-                    " commentaire , is_ald , is_reponse, delai_since_validation )" &
+                    " commentaire , is_ald , is_reponse, delai_since_validation, reference )" &
             " VALUES (@episode_id, @id_intervenant, @id_sous_episode_type, @id_sous_episode_sous_type, @create_user_id, @horodate_creation, " &
-                     " @commentaire, @is_ald, @is_reponse, @delai_since_validation); SELECT SCOPE_IDENTITY()"
+                     " @commentaire, @is_ald, @is_reponse, @delai_since_validation, @reference); SELECT SCOPE_IDENTITY()"
 
             sousEpisode.HorodateCreation = DateTime.Now
             Dim cmd As New SqlCommand(SQLstring, con, transaction)
@@ -182,10 +196,13 @@ Public Class SousEpisodeDao
                 .AddWithValue("@is_ald", sousEpisode.IsALD)
                 .AddWithValue("@is_reponse", sousEpisode.IsReponse)
                 .AddWithValue("@delai_since_validation", sousEpisode.DelaiSinceValidation)
+                .AddWithValue("@reference", reference)
             End With
 
             da.InsertCommand = cmd
             sousEpisode.Id = da.InsertCommand.ExecuteScalar()
+
+            Console.WriteLine("ref created:" & reference)
 
             ' -- on fixe les idSousEpisode de la table fille (details)
             If sousEpisode.lstDetail.Count > 0 Then
@@ -222,11 +239,11 @@ Public Class SousEpisodeDao
         Dim da As SqlDataAdapter = New SqlDataAdapter()
         Dim con As SqlConnection = GetConnection()
         Dim transaction As SqlTransaction = con.BeginTransaction
-
         Try
             ' -- 1 : enregistrement en base si signataure
             If String.IsNullOrEmpty(signature) = False Then
                 dateSignature = DateTime.Now
+
                 Dim SQLstring As String = "UPDATE oasis.oa_sous_episode " &
                                       "SET validate_user_id = @ValidateUserId, horodate_validate = @HoroDateValidate, signature = @Signature " &
                                       "WHERE id=@Id"
@@ -238,8 +255,6 @@ Public Class SousEpisodeDao
                     .AddWithValue("@id", sousEpisode.Id)
                     .AddWithValue("@Signature", signature)
                 End With
-
-                Console.WriteLine("@Signature: " & signature)
 
                 da.UpdateCommand = cmd
                 Dim nb As Integer = da.UpdateCommand.ExecuteNonQuery()

@@ -6,6 +6,7 @@ Imports Telerik.WinControls.UI.Localization
 Imports Oasis_Common
 Imports System.IO
 Imports Telerik.WinForms.Documents.FormatProviders.Pdf
+Imports System.Diagnostics
 
 Public Class RadFSynthese
     Private privateSelectedPatient As Patient

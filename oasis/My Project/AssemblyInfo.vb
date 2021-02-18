@@ -35,4 +35,4 @@ Imports System.Runtime.InteropServices
 <Assembly: AssemblyVersion("1.0.1.188")>
 <Assembly: AssemblyFileVersion("1.0.0.0")>
 <Assembly: NeutralResourcesLanguage("fr-FR")>
-<Assembly: DebuggerDisplay("{ToString}", Target:=GetType(Date))>
+'<Assembly: DebuggerDisplay("{ToString}", Target:=GetType(Date))>
