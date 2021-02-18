@@ -16,7 +16,9 @@ Public Class ParametreDao
             .ValeurMax = Coalesce(reader("valeur_max"), 0),
             .Ordre = Coalesce(reader("ordre"), 0),
             .Inactif = Coalesce(reader("inactif"), False),
-            .ExclusionAutoSuivi = Coalesce(reader("exclusion_auto_suivi"), False)
+            .ExclusionAutoSuivi = Coalesce(reader("exclusion_auto_suivi"), False),
+            .AideAssociee = Coalesce(reader("aide_associee"), ""),
+            .Wiki = Coalesce(reader("wiki"), "")
         }
         Return parametre
     End Function

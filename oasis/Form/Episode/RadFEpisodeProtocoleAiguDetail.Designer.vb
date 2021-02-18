@@ -46,11 +46,11 @@ Partial Class RadFEpisodeProtocoleAiguDetail
         'RadBtnValidation
         '
         Me.RadBtnValidation.Image = Global.Oasis_WF.My.Resources.Resources.validation2
-        Me.RadBtnValidation.ImageAlignment = System.Drawing.ContentAlignment.MiddleCenter
         Me.RadBtnValidation.Location = New System.Drawing.Point(14, 318)
         Me.RadBtnValidation.Name = "RadBtnValidation"
-        Me.RadBtnValidation.Size = New System.Drawing.Size(24, 24)
+        Me.RadBtnValidation.Size = New System.Drawing.Size(110, 24)
         Me.RadBtnValidation.TabIndex = 5
+        Me.RadBtnValidation.Text = "Valider"
         Me.ToolTip.SetToolTip(Me.RadBtnValidation, "Valider")
         '
         'RadBtnAbandon
@@ -150,6 +150,7 @@ Partial Class RadFEpisodeProtocoleAiguDetail
         '
         '
         Me.RootElement.ApplyShapeToControl = True
+        Me.ShowIcon = False
         Me.ShowInTaskbar = False
         Me.Text = "Episode : Saisie protocole pathologie aigu"
         CType(Me.RadBtnValidation, System.ComponentModel.ISupportInitialize).EndInit()

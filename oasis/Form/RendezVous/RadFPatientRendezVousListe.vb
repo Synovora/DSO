@@ -15,6 +15,7 @@ Public Class RadFPatientRendezVousListe
 
     Dim userDao As New UserDao
     Dim tacheDao As New TacheDao
+    Dim rorDao As New RorDao
     Dim tache As Tache
 
     Private Sub RadFPatientRendezVousListe_Load(sender As Object, e As EventArgs) Handles MyBase.Load
@@ -425,4 +426,34 @@ Public Class RadFPatientRendezVousListe
         Close()
     End Sub
 
+    Private Sub DetailIntervenantToolStripMenuItem_Click_1(sender As Object, e As EventArgs) Handles DetailIntervenantToolStripMenuItem.Click
+        If RadGridViewRDV.CurrentRow IsNot Nothing Then
+            Dim aRow As Integer = Me.RadGridViewRDV.Rows.IndexOf(Me.RadGridViewRDV.CurrentRow)
+            If aRow >= 0 Then
+                Dim rorId As Long = RadGridViewRDV.Rows(aRow).Cells("ror_id").Value
+                Dim ror As Ror
+                ror = rorDao.getRorById(rorId)
+                If ror.ExtractionAnnuaire = True Then
+                    Try
+                        Using form As New RadFAnnuaireProfessionneldetail
+                            form.CleReferenceAnnuaire = ror.CleReferenceAnnuaire
+                            form.Reference = AnnuaireReferenceDao.EnumSourceAnnuaire.ANNUAIRE_REFERENCE
+                            form.ShowDialog()
+                        End Using
+                    Catch ex As Exception
+                        MessageBox.Show(ex.Message)
+                    End Try
+                Else
+                    Try
+                        Using vFRorDetailEdit As New RadFRorDetailEdit
+                            vFRorDetailEdit.SelectedRorId = rorId
+                            vFRorDetailEdit.ShowDialog() 'Modal
+                        End Using
+                    Catch ex As Exception
+                        MessageBox.Show(ex.Message)
+                    End Try
+                End If
+            End If
+        End If
+    End Sub
 End Class

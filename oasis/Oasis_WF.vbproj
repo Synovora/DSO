@@ -26,7 +26,7 @@
     <PublishUrl>ftp://ns3119889.ip-51-38-181.eu/</PublishUrl>
     <Install>true</Install>
     <InstallFrom>Web</InstallFrom>
-    <UpdateEnabled>true</UpdateEnabled>
+    <UpdateEnabled>false</UpdateEnabled>
     <UpdateMode>Foreground</UpdateMode>
     <UpdateInterval>7</UpdateInterval>
     <UpdateIntervalUnits>Days</UpdateIntervalUnits>
@@ -40,7 +40,7 @@
     <SuiteName>Oasis</SuiteName>
     <CreateWebPageOnPublish>true</CreateWebPageOnPublish>
     <WebPage>publish.htm</WebPage>
-    <ApplicationRevision>143</ApplicationRevision>
+    <ApplicationRevision>135</ApplicationRevision>
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <PublishWizardCompleted>true</PublishWizardCompleted>
@@ -186,6 +186,8 @@
       <HintPath>..\packages\System.Drawing.Common.4.7.0\lib\net461\System.Drawing.Common.dll</HintPath>
     </Reference>
     <Reference Include="System.Numerics" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.ServiceModel" />
     <Reference Include="System.ServiceProcess" />
     <Reference Include="System.Web.Extensions" />
     <Reference Include="System.Windows.Forms" />
@@ -196,47 +198,58 @@
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="System.Net.Http" />
     <Reference Include="Telerik.WinControls, Version=2020.3.1020.40, Culture=neutral, PublicKeyToken=5bb2a467cbec794e, processorArchitecture=MSIL">
-      <HintPath>..\lib\RCWF\2020.3.1020.40.Trial\Telerik.WinControls.dll</HintPath>
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\lib\RCWF\2020.3.1020.40\Telerik.WinControls.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Telerik.WinControls.ChartView, Version=2020.3.1020.40, Culture=neutral, PublicKeyToken=5bb2a467cbec794e, processorArchitecture=MSIL">
-      <HintPath>..\lib\RCWF\2020.3.1020.40.Trial\Telerik.WinControls.ChartView.dll</HintPath>
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\lib\RCWF\2020.3.1020.40\Telerik.WinControls.ChartView.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Telerik.WinControls.GridView, Version=2020.3.1020.40, Culture=neutral, PublicKeyToken=5bb2a467cbec794e, processorArchitecture=MSIL">
-      <HintPath>..\lib\RCWF\2020.3.1020.40.Trial\Telerik.WinControls.GridView.dll</HintPath>
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\lib\RCWF\2020.3.1020.40\Telerik.WinControls.GridView.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Telerik.WinControls.RichTextEditor, Version=2020.3.1020.40, Culture=neutral, PublicKeyToken=5bb2a467cbec794e, processorArchitecture=MSIL">
-      <HintPath>..\lib\RCWF\2020.3.1020.40.Trial\Telerik.WinControls.RichTextEditor.dll</HintPath>
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\lib\RCWF\2020.3.1020.40\Telerik.WinControls.RichTextEditor.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Telerik.WinControls.Scheduler, Version=2020.3.1020.40, Culture=neutral, PublicKeyToken=5bb2a467cbec794e, processorArchitecture=MSIL">
-      <HintPath>..\lib\RCWF\2020.3.1020.40.Trial\Telerik.WinControls.Scheduler.dll</HintPath>
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\lib\RCWF\2020.3.1020.40\Telerik.WinControls.Scheduler.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Telerik.WinControls.Themes.FluentDark, Version=2020.3.1020.40, Culture=neutral, PublicKeyToken=5bb2a467cbec794e, processorArchitecture=MSIL">
-      <HintPath>..\lib\RCWF\2020.3.1020.40.Trial\Telerik.WinControls.Themes.FluentDark.dll</HintPath>
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\lib\RCWF\2020.3.1020.40\Telerik.WinControls.Themes.FluentDark.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Telerik.WinControls.Themes.Office2007Silver, Version=2020.3.1020.40, Culture=neutral, PublicKeyToken=5bb2a467cbec794e, processorArchitecture=MSIL">
-      <HintPath>..\lib\RCWF\2020.3.1020.40.Trial\Telerik.WinControls.Themes.Office2007Silver.dll</HintPath>
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\lib\RCWF\2020.3.1020.40\Telerik.WinControls.Themes.Office2007Silver.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Telerik.WinControls.Themes.Office2013Dark, Version=2020.3.1020.40, Culture=neutral, PublicKeyToken=5bb2a467cbec794e, processorArchitecture=MSIL">
-      <HintPath>..\lib\RCWF\2020.3.1020.40.Trial\Telerik.WinControls.Themes.Office2013Dark.dll</HintPath>
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\lib\RCWF\2020.3.1020.40\Telerik.WinControls.Themes.Office2013Dark.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Telerik.WinControls.Themes.VisualStudio2012Dark, Version=2020.3.1020.40, Culture=neutral, PublicKeyToken=5bb2a467cbec794e, processorArchitecture=MSIL">
-      <HintPath>..\lib\RCWF\2020.3.1020.40.Trial\Telerik.WinControls.Themes.VisualStudio2012Dark.dll</HintPath>
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\lib\RCWF\2020.3.1020.40\Telerik.WinControls.Themes.VisualStudio2012Dark.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Telerik.WinControls.UI, Version=2020.3.1020.40, Culture=neutral, PublicKeyToken=5bb2a467cbec794e, processorArchitecture=MSIL">
-      <HintPath>..\lib\RCWF\2020.3.1020.40.Trial\Telerik.WinControls.UI.dll</HintPath>
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\lib\RCWF\2020.3.1020.40\Telerik.WinControls.UI.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="TelerikCommon, Version=2020.3.1020.40, Culture=neutral, PublicKeyToken=5bb2a467cbec794e, processorArchitecture=MSIL">
-      <HintPath>..\lib\RCWF\2020.3.1020.40.Trial\TelerikCommon.dll</HintPath>
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\lib\RCWF\2020.3.1020.40\TelerikCommon.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="WindowsBase" />
@@ -256,10 +269,37 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DS_Specialite.vb">
+      <DependentUpon>DS_Specialite.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="Form\AnnuaireProfessionnel\RadFAnnuaireProfessionneldetail.Designer.vb">
+      <DependentUpon>RadFAnnuaireProfessionneldetail.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Form\AnnuaireProfessionnel\RadFAnnuaireProfessionneldetail.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form\AnnuaireProfessionnel\RadFAnnuaireProfessionnelSelect.Designer.vb">
+      <DependentUpon>RadFAnnuaireProfessionnelSelect.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Form\AnnuaireProfessionnel\RadFAnnuaireProfessionnelSelect.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Form\DRC\RadFAutoSuivi.Designer.vb">
       <DependentUpon>RadFAutoSuivi.vb</DependentUpon>
     </Compile>
     <Compile Include="Form\DRC\RadFAutoSuivi.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form\Mail\RadFMailEdit.Designer.vb">
+      <DependentUpon>RadFMailEdit.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Form\Mail\RadFMailEdit.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form\Tutoriel\RadFTutoriel.Designer.vb">
+      <DependentUpon>RadFTutoriel.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Form\Tutoriel\RadFTutoriel.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Form\Episode\EpisodeUtils.vb" />
@@ -539,6 +579,12 @@
       <DependentUpon>RadFDeclarationAllergieEtCIDetail.vb</DependentUpon>
     </Compile>
     <Compile Include="Form\Traitement\RadFDeclarationAllergieEtCIDetail.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form\Tutoriel\RadFWebBrowser.Designer.vb">
+      <DependentUpon>RadFWebBrowser.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Form\Tutoriel\RadFWebBrowser.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Form\utilisateur\FrmChangePassword.Designer.vb">
@@ -988,8 +1034,20 @@
     <Compile Include="Settings.vb" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Form\AnnuaireProfessionnel\RadFAnnuaireProfessionneldetail.resx">
+      <DependentUpon>RadFAnnuaireProfessionneldetail.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form\AnnuaireProfessionnel\RadFAnnuaireProfessionnelSelect.resx">
+      <DependentUpon>RadFAnnuaireProfessionnelSelect.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Form\DRC\RadFAutoSuivi.resx">
       <DependentUpon>RadFAutoSuivi.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form\Mail\RadFMailEdit.resx">
+      <DependentUpon>RadFMailEdit.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form\Tutoriel\RadFTutoriel.resx">
+      <DependentUpon>RadFTutoriel.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Form\EtatJournalier\FrmEtatJournalier.resx">
       <DependentUpon>FrmEtatJournalier.vb</DependentUpon>
@@ -1116,6 +1174,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Form\Traitement\RadFDeclarationAllergieEtCIDetail.resx">
       <DependentUpon>RadFDeclarationAllergieEtCIDetail.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form\Tutoriel\RadFWebBrowser.resx">
+      <DependentUpon>RadFWebBrowser.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Form\utilisateur\FrmChangePassword.resx">
       <DependentUpon>FrmChangePassword.vb</DependentUpon>
@@ -1516,6 +1577,9 @@
     <Analyzer Include="..\packages\Microsoft.NetCore.Analyzers.3.3.0\analyzers\dotnet\vb\Microsoft.NetCore.VisualBasic.Analyzers.dll" />
     <Analyzer Include="..\packages\Microsoft.NetFramework.Analyzers.3.3.0\analyzers\dotnet\vb\Microsoft.NetFramework.Analyzers.dll" />
     <Analyzer Include="..\packages\Microsoft.NetFramework.Analyzers.3.3.0\analyzers\dotnet\vb\Microsoft.NetFramework.VisualBasic.Analyzers.dll" />
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Connected Services\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

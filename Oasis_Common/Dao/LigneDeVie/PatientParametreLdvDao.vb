@@ -19,6 +19,7 @@ Public Class PatientParametreLdvDao
             .TypeParametre = Coalesce(reader("type_parametre"), False),
             .ProfilMedical = Coalesce(reader("profil_medical"), False),
             .ProfilParamedical = Coalesce(reader("profil_paramedical"), False),
+            .ProfilPatient = Coalesce(reader("profil_patient"), False),
             .Parametre1 = Coalesce(reader("parametre1"), 0),
             .Parametre2 = Coalesce(reader("parametre2"), 0),
             .Parametre3 = Coalesce(reader("parametre3"), 0),
@@ -64,12 +65,50 @@ Public Class PatientParametreLdvDao
         Dim SQLstring As String =
         "IF Not EXISTS (SELECT 1 FROM oasis.oa_patient_parametre_ldv WHERE patient_id = @patientId)" &
         " INSERT INTO oasis.oa_patient_parametre_ldv" &
-        " (patient_id, activite_pathologie_aigue, activite_prevention_autre, activite_prevention_enfant_pre_scolaire, activite_prevention_enfant_scolaire," &
-        " activite_suivi_grossesse, activite_suivi_gynecologique, activite_social, activite_suivi_chronique, type_consultation, type_virtuel, type_parametre," &
-        " profil_medical, profil_paramedical, parametre1, parametre2, parametre3, parametre4, parametre5, user_modification, date_modification)" &
-        " VALUES (@patientId, @activitePathologieAigue, @activitePreventionAutre, @activitePreventionEnfantPreScolaire, @activitePreventionEnfantScolaire," &
-        " @activiteSuiviGrossesse, @activiteSuiviGynecologique, @activiteSocial, @activiteSuiviChronique, @typeConsultation, @typeVirtuel, @typeParametre," &
-        " @profilMedical, @profilParamedical, @Parametre1, @Parametre2, @Parametre3, @Parametre4, @Parametre5, @UserCreation, @dateCreation)"
+        " (patient_id," &
+        " activite_pathologie_aigue," &
+        " activite_prevention_autre," &
+        " activite_prevention_enfant_pre_scolaire," &
+        " activite_prevention_enfant_scolaire," &
+        " activite_suivi_grossesse," &
+        " activite_suivi_gynecologique," &
+        " activite_social," &
+        " activite_suivi_chronique," &
+        " type_consultation," &
+        " type_virtuel," &
+        " type_parametre," &
+        " profil_medical," &
+        " profil_paramedical," &
+        " profil_patient," &
+        " parametre1," &
+        " parametre2," &
+        " parametre3," &
+        " parametre4," &
+        " parametre5," &
+        " user_modification," &
+        " date_modification)" &
+        " VALUES (@patientId," &
+        " @activitePathologieAigue," &
+        " @activitePreventionAutre," &
+        " @activitePreventionEnfantPreScolaire," &
+        " @activitePreventionEnfantScolaire," &
+        " @activiteSuiviGrossesse," &
+        " @activiteSuiviGynecologique," &
+        " @activiteSocial," &
+        " @activiteSuiviChronique," &
+        " @typeConsultation," &
+        " @typeVirtuel," &
+        " @typeParametre," &
+        " @profilMedical," &
+        " @profilParamedical," &
+        " @ProfilPatient," &
+        " @Parametre1," &
+        " @Parametre2," &
+        " @Parametre3," &
+        " @Parametre4," &
+        " @Parametre5," &
+        " @UserCreation," &
+        " @dateCreation)"
 
         Dim cmd As New SqlCommand(SQLstring, con)
         With cmd.Parameters
@@ -135,6 +174,7 @@ Public Class PatientParametreLdvDao
         " type_parametre = @typeParametre," &
         " profil_medical = @profilMedical," &
         " profil_paramedical = @profilParamedical," &
+        " profil_patient = @profilPatient," &
         " parametre1 = @Parametre1," &
         " parametre2 = @Parametre2," &
         " parametre3 = @Parametre3," &
@@ -161,6 +201,7 @@ Public Class PatientParametreLdvDao
             .AddWithValue("@typeParametre", patientParametreLdv.TypeParametre)
             .AddWithValue("@profilMedical", patientParametreLdv.ProfilMedical)
             .AddWithValue("@profilParamedical", patientParametreLdv.ProfilParamedical)
+            .AddWithValue("@profilPatient", patientParametreLdv.ProfilPatient)
             .AddWithValue("@Parametre1", patientParametreLdv.Parametre1)
             .AddWithValue("@Parametre2", patientParametreLdv.Parametre2)
             .AddWithValue("@Parametre3", patientParametreLdv.Parametre3)

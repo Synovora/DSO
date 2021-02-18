@@ -77,6 +77,8 @@
       <HintPath>..\packages\Microsoft.AspNet.WebApi.Client.5.2.7\lib\net45\System.Net.Http.Formatting.dll</HintPath>
     </Reference>
     <Reference Include="System.Numerics" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.ServiceModel" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
     <Reference Include="System.Core" />
@@ -98,6 +100,13 @@
   <ItemGroup>
     <Compile Include="ApiRest\ApiOasis.vb" />
     <Compile Include="ApiRest\Class1.vb" />
+    <Compile Include="Bean\AnnuaireProfessionnel\AnnuaireEtatCivil.vb" />
+    <Compile Include="Bean\AnnuaireProfessionnel\annuaireProfessionnel.vb" />
+    <Compile Include="Bean\AnnuaireProfessionnel\AnnuaireProfessionnelReference.vb" />
+    <Compile Include="Bean\AnnuaireProfessionnel\AnnuaireProfessionnelReferenceComplement.vb" />
+    <Compile Include="Bean\ANS_NOS\G15_ProfessionSante.vb" />
+    <Compile Include="Bean\ANS_NOS\R38_SpecialiteOrdinale.vb" />
+    <Compile Include="Bean\ANS_NOS\R40_CompetenceExclusive.vb" />
     <Compile Include="Bean\Antecedent\AldCim10.vb" />
     <Compile Include="Bean\Antecedent\Ald.vb" />
     <Compile Include="Bean\Antecedent\Antecedent.vb" />
@@ -120,6 +129,7 @@
     <Compile Include="Bean\LigneDeVie\LigneDeVie.vb" />
     <Compile Include="Bean\LigneDeVie\PatientParametreLdv.vb" />
     <Compile Include="Bean\Log\Log.vb" />
+    <Compile Include="Bean\Mail\Mail.vb" />
     <Compile Include="Bean\Medicament\Medicament.vb" />
     <Compile Include="Bean\Ordonnance\Ordonnance.vb" />
     <Compile Include="Bean\Ordonnance\OrdonnanceDetail.vb" />
@@ -173,6 +183,13 @@
     <Compile Include="Dao\Agenda\AppointmentDao.vb" />
     <Compile Include="Dao\ALD\AldCim10Dao.vb" />
     <Compile Include="Dao\ALD\AldDao.vb" />
+    <Compile Include="Dao\AnnuaireProfessionnel\AnnuaireProfessionnelBalDao.vb" />
+    <Compile Include="Dao\AnnuaireProfessionnel\AnnuaireProfessionnelDao.vb" />
+    <Compile Include="Dao\AnnuaireProfessionnel\AnnuaireProfessionnelSanteComplementDao.vb" />
+    <Compile Include="Dao\AnnuaireProfessionnel\AnnuaireReferenceDao.vb" />
+    <Compile Include="Dao\ANS_NOS\G15_ProfessionSanteDao.vb" />
+    <Compile Include="Dao\ANS_NOS\R38_SpecialiteOrdinaleDao.vb" />
+    <Compile Include="Dao\ANS_NOS\R40_CompetenceExclusiveDao.vb" />
     <Compile Include="Dao\Antecedent\AntecedentAffectationDao.vb" />
     <Compile Include="Dao\Antecedent\AntecedentChangementOrdreDao.vb" />
     <Compile Include="Dao\Antecedent\AntecedentDao.vb" />
@@ -197,6 +214,7 @@
     <Compile Include="Dao\Internaute\InternauteDao.vb" />
     <Compile Include="Dao\LigneDeVie\PatientParametreLdvDao.vb" />
     <Compile Include="Dao\Log\LogDao.vb" />
+    <Compile Include="Dao\Mail\MailDao.vb" />
     <Compile Include="Dao\Medicament\MedicamentDao.vb" />
     <Compile Include="Dao\Ordonnance\OrdonnanceDao.vb" />
     <Compile Include="Dao\Ordonnance\OrdonnanceDetailDao.vb" />
@@ -206,6 +224,7 @@
     <Compile Include="Dao\Parcours\ParcoursConsigneDao.vb" />
     <Compile Include="Dao\Parcours\ParcoursDao.vb" />
     <Compile Include="Dao\Parcours\ParcoursHistoDao.vb" />
+    <Compile Include="Dao\Parcours\SpecialiteDao.vb" />
     <Compile Include="Dao\Patient\PatientDao.vb" />
     <Compile Include="Dao\Patient\PatientNoteDao.vb" />
     <Compile Include="Dao\Patient\PatientNoteDirectiveDao.vb" />
@@ -280,6 +299,8 @@
     </None>
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <WCFMetadata Include="Connected Services\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
 </Project>

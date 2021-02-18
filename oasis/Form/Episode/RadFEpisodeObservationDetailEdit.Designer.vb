@@ -25,13 +25,13 @@ Partial Class RadFEpisodeObservationDetailEdit
         Me.components = New System.ComponentModel.Container()
         Me.RadBtnAbandon = New Telerik.WinControls.UI.RadButton()
         Me.ToolTip = New System.Windows.Forms.ToolTip(Me.components)
+        Me.RadBtnValidation = New Telerik.WinControls.UI.RadButton()
         Me.LblModificationObs = New System.Windows.Forms.Label()
         Me.LblCreationObs2 = New System.Windows.Forms.Label()
         Me.LblUtilisateurCreation = New System.Windows.Forms.Label()
         Me.LblCreationObs1 = New System.Windows.Forms.Label()
         Me.LblObsDateCreation = New System.Windows.Forms.Label()
         Me.LblObsDateModification = New System.Windows.Forms.Label()
-        Me.RadBtnValidation = New Telerik.WinControls.UI.RadButton()
         Me.RadGroupBox2 = New Telerik.WinControls.UI.RadGroupBox()
         Me.CbxPresence = New System.Windows.Forms.ComboBox()
         Me.Label8 = New System.Windows.Forms.Label()
@@ -56,6 +56,17 @@ Partial Class RadFEpisodeObservationDetailEdit
         Me.RadBtnAbandon.Size = New System.Drawing.Size(24, 24)
         Me.RadBtnAbandon.TabIndex = 44
         Me.ToolTip.SetToolTip(Me.RadBtnAbandon, "Abandon")
+        '
+        'RadBtnValidation
+        '
+        Me.RadBtnValidation.DialogResult = System.Windows.Forms.DialogResult.Cancel
+        Me.RadBtnValidation.Image = Global.Oasis_WF.My.Resources.Resources.validation2
+        Me.RadBtnValidation.Location = New System.Drawing.Point(4, 204)
+        Me.RadBtnValidation.Name = "RadBtnValidation"
+        Me.RadBtnValidation.Size = New System.Drawing.Size(110, 24)
+        Me.RadBtnValidation.TabIndex = 45
+        Me.RadBtnValidation.Text = "Valider"
+        Me.ToolTip.SetToolTip(Me.RadBtnValidation, "Valider")
         '
         'LblModificationObs
         '
@@ -113,17 +124,6 @@ Partial Class RadFEpisodeObservationDetailEdit
         Me.LblObsDateModification.Size = New System.Drawing.Size(61, 13)
         Me.LblObsDateModification.TabIndex = 88
         Me.LblObsDateModification.Text = "02.10.2019"
-        '
-        'RadBtnValidation
-        '
-        Me.RadBtnValidation.DialogResult = System.Windows.Forms.DialogResult.Cancel
-        Me.RadBtnValidation.Image = Global.Oasis_WF.My.Resources.Resources.validation2
-        Me.RadBtnValidation.ImageAlignment = System.Drawing.ContentAlignment.MiddleCenter
-        Me.RadBtnValidation.Location = New System.Drawing.Point(4, 204)
-        Me.RadBtnValidation.Name = "RadBtnValidation"
-        Me.RadBtnValidation.Size = New System.Drawing.Size(24, 24)
-        Me.RadBtnValidation.TabIndex = 45
-        Me.ToolTip.SetToolTip(Me.RadBtnValidation, "Valider")
         '
         'RadGroupBox2
         '
@@ -223,6 +223,7 @@ Partial Class RadFEpisodeObservationDetailEdit
         '
         '
         Me.RootElement.ApplyShapeToControl = True
+        Me.ShowIcon = False
         Me.ShowInTaskbar = False
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
         Me.Text = "RadFEpisodeObservationDetailEdit"

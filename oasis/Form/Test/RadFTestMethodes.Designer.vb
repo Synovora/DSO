@@ -22,50 +22,20 @@ Partial Class RadFTestMethodes
     'Do not modify it using the code editor.
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
-        Me.RadBtnIntervenant = New Telerik.WinControls.UI.RadButton()
-        Me.RadBtnTraitement = New Telerik.WinControls.UI.RadButton()
-        Me.RadBtnAntecedent = New Telerik.WinControls.UI.RadButton()
-        Me.RadBtnContexte = New Telerik.WinControls.UI.RadButton()
+        Me.RadBtnTest = New Telerik.WinControls.UI.RadButton()
         Me.RadBtnAbandon = New Telerik.WinControls.UI.RadButton()
-        CType(Me.RadBtnIntervenant, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.RadBtnTraitement, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.RadBtnAntecedent, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.RadBtnContexte, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.RadBtnTest, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.RadBtnAbandon, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
-        'RadBtnIntervenant
+        'RadBtnTest
         '
-        Me.RadBtnIntervenant.Location = New System.Drawing.Point(46, 60)
-        Me.RadBtnIntervenant.Name = "RadBtnIntervenant"
-        Me.RadBtnIntervenant.Size = New System.Drawing.Size(110, 24)
-        Me.RadBtnIntervenant.TabIndex = 0
-        Me.RadBtnIntervenant.Text = "Intervenant Patient"
-        '
-        'RadBtnTraitement
-        '
-        Me.RadBtnTraitement.Location = New System.Drawing.Point(46, 90)
-        Me.RadBtnTraitement.Name = "RadBtnTraitement"
-        Me.RadBtnTraitement.Size = New System.Drawing.Size(110, 24)
-        Me.RadBtnTraitement.TabIndex = 1
-        Me.RadBtnTraitement.Text = "Traitement"
-        '
-        'RadBtnAntecedent
-        '
-        Me.RadBtnAntecedent.Location = New System.Drawing.Point(46, 120)
-        Me.RadBtnAntecedent.Name = "RadBtnAntecedent"
-        Me.RadBtnAntecedent.Size = New System.Drawing.Size(110, 24)
-        Me.RadBtnAntecedent.TabIndex = 2
-        Me.RadBtnAntecedent.Text = "Antécédent"
-        '
-        'RadBtnContexte
-        '
-        Me.RadBtnContexte.Location = New System.Drawing.Point(46, 150)
-        Me.RadBtnContexte.Name = "RadBtnContexte"
-        Me.RadBtnContexte.Size = New System.Drawing.Size(110, 24)
-        Me.RadBtnContexte.TabIndex = 3
-        Me.RadBtnContexte.Text = "Contexte"
+        Me.RadBtnTest.Location = New System.Drawing.Point(46, 60)
+        Me.RadBtnTest.Name = "RadBtnTest"
+        Me.RadBtnTest.Size = New System.Drawing.Size(110, 24)
+        Me.RadBtnTest.TabIndex = 0
+        Me.RadBtnTest.Text = "Send message"
         '
         'RadBtnAbandon
         '
@@ -81,30 +51,21 @@ Partial Class RadFTestMethodes
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(401, 270)
         Me.Controls.Add(Me.RadBtnAbandon)
-        Me.Controls.Add(Me.RadBtnContexte)
-        Me.Controls.Add(Me.RadBtnAntecedent)
-        Me.Controls.Add(Me.RadBtnTraitement)
-        Me.Controls.Add(Me.RadBtnIntervenant)
+        Me.Controls.Add(Me.RadBtnTest)
         Me.Name = "RadFTestMethodes"
         '
         '
         '
         Me.RootElement.ApplyShapeToControl = True
         Me.Text = "RadFTestMethodes"
-        CType(Me.RadBtnIntervenant, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.RadBtnTraitement, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.RadBtnAntecedent, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.RadBtnContexte, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.RadBtnTest, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.RadBtnAbandon, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
 
     End Sub
 
-    Friend WithEvents RadBtnIntervenant As Telerik.WinControls.UI.RadButton
-    Friend WithEvents RadBtnTraitement As Telerik.WinControls.UI.RadButton
-    Friend WithEvents RadBtnAntecedent As Telerik.WinControls.UI.RadButton
-    Friend WithEvents RadBtnContexte As Telerik.WinControls.UI.RadButton
+    Friend WithEvents RadBtnTest As Telerik.WinControls.UI.RadButton
     Friend WithEvents RadBtnAbandon As Telerik.WinControls.UI.RadButton
 End Class
 

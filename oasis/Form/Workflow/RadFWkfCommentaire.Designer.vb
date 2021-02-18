@@ -94,6 +94,8 @@ Partial Class RadFWkfCommentaire
         '
         '
         Me.RootElement.ApplyShapeToControl = True
+        Me.ShowIcon = False
+        Me.ShowInTaskbar = False
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent
         Me.Text = "RadFWkfCommentaire"
         CType(Me.RadGridViewWkfCommentaire.MasterTemplate, System.ComponentModel.ISupportInitialize).EndInit()

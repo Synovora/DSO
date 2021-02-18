@@ -1372,16 +1372,30 @@ Public Class RadFParcoursDetailEdit
 
     'Visualisation détail intervenant (ROR)
     Private Sub RadBtnRorDetail_Click(sender As Object, e As EventArgs) Handles RadBtnRorDetail.Click
-        Using vFRorDetailEdit As New RadFRorDetailEdit
-            vFRorDetailEdit.SelectedRorId = ParcoursUpdate.RorId
-            vFRorDetailEdit.ShowDialog() 'Modal
-            If vFRorDetailEdit.CodeRetour = True Then
-                ror = rordao.getRorById(ParcoursUpdate.RorId)
-                TxtNomIntervenant.Text = ror.Nom
-                TxtTypeIntervenant.Text = ror.Type
-                TxtNomStructure.Text = ror.StructureNom
-            End If
-        End Using
+        Dim ror As Ror
+        ror = rordao.getRorById(ParcoursUpdate.RorId)
+        If ror.ExtractionAnnuaire = True Then
+            Try
+                Using form As New RadFAnnuaireProfessionneldetail
+                    form.CleReferenceAnnuaire = ror.CleReferenceAnnuaire
+                    form.Reference = AnnuaireReferenceDao.EnumSourceAnnuaire.ANNUAIRE_REFERENCE
+                    form.ShowDialog()
+                End Using
+            Catch ex As Exception
+                MessageBox.Show(ex.Message)
+            End Try
+        Else
+            Using vFRorDetailEdit As New RadFRorDetailEdit
+                vFRorDetailEdit.SelectedRorId = ParcoursUpdate.RorId
+                vFRorDetailEdit.ShowDialog() 'Modal
+                If vFRorDetailEdit.CodeRetour = True Then
+                    ror = rordao.getRorById(ParcoursUpdate.RorId)
+                    TxtNomIntervenant.Text = ror.Nom
+                    TxtTypeIntervenant.Text = ror.Type
+                    TxtNomStructure.Text = ror.StructureNom
+                End If
+            End Using
+        End If
     End Sub
 
     Private Sub FixeTailleEcranPourIDE()

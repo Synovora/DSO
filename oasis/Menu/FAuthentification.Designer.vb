@@ -33,7 +33,7 @@ Partial Class FAuthentificattion
         Me.BtnListePatient = New System.Windows.Forms.Button()
         Me.BtnAdmin = New System.Windows.Forms.Button()
         Me.RadDesktopAlert1 = New Telerik.WinControls.UI.RadDesktopAlert(Me.components)
-        Me.BtnTheriaque = New System.Windows.Forms.Button()
+        Me.BtnTest = New System.Windows.Forms.Button()
         Me.BtnTemplateSsEpisode = New System.Windows.Forms.Button()
         Me.BtnLogin = New System.Windows.Forms.Button()
         Me.BtnDebloque = New System.Windows.Forms.Button()
@@ -133,14 +133,14 @@ Partial Class FAuthentificattion
         '
         Me.RadDesktopAlert1.AutoCloseDelay = 5
         '
-        'BtnTheriaque
+        'BtnTest
         '
-        Me.BtnTheriaque.Location = New System.Drawing.Point(20, 238)
-        Me.BtnTheriaque.Name = "BtnTheriaque"
-        Me.BtnTheriaque.Size = New System.Drawing.Size(117, 23)
-        Me.BtnTheriaque.TabIndex = 16
-        Me.BtnTheriaque.Text = "Test"
-        Me.BtnTheriaque.UseVisualStyleBackColor = True
+        Me.BtnTest.Location = New System.Drawing.Point(20, 238)
+        Me.BtnTest.Name = "BtnTest"
+        Me.BtnTest.Size = New System.Drawing.Size(117, 23)
+        Me.BtnTest.TabIndex = 16
+        Me.BtnTest.Text = "Test"
+        Me.BtnTest.UseVisualStyleBackColor = True
         '
         'BtnTemplateSsEpisode
         '
@@ -188,7 +188,7 @@ Partial Class FAuthentificattion
         Me.Controls.Add(Me.BtnDebloque)
         Me.Controls.Add(Me.BtnLogin)
         Me.Controls.Add(Me.BtnTemplateSsEpisode)
-        Me.Controls.Add(Me.BtnTheriaque)
+        Me.Controls.Add(Me.BtnTest)
         Me.Controls.Add(Me.BtnAdmin)
         Me.Controls.Add(Me.BtnListePatient)
         Me.Controls.Add(Me.BtnAbandon)
@@ -219,7 +219,7 @@ Partial Class FAuthentificattion
     Friend WithEvents BtnListePatient As Button
     Friend WithEvents BtnAdmin As Button
     Friend WithEvents RadDesktopAlert1 As Telerik.WinControls.UI.RadDesktopAlert
-    Friend WithEvents BtnTheriaque As Button
+    Friend WithEvents BtnTest As Button
     Friend WithEvents BtnTemplateSsEpisode As Button
     Friend WithEvents BtnLogin As Button
     Friend WithEvents BtnDebloque As Button

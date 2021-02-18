@@ -544,7 +544,7 @@ Partial Class RadFDRCSelecteur
         Me.LblDrcLibelle.AutoSize = True
         Me.LblDrcLibelle.Location = New System.Drawing.Point(115, 34)
         Me.LblDrcLibelle.Name = "LblDrcLibelle"
-        Me.LblDrcLibelle.Size = New System.Drawing.Size(45, 13)
+        Me.LblDrcLibelle.Size = New System.Drawing.Size(44, 13)
         Me.LblDrcLibelle.TabIndex = 10
         Me.LblDrcLibelle.Text = "Brûlure"
         '
@@ -720,6 +720,7 @@ Partial Class RadFDRCSelecteur
         '
         '
         Me.RootElement.ApplyShapeToControl = True
+        Me.ShowIcon = False
         Me.ShowInTaskbar = False
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
         Me.Text = "Sélecteur DRC/ORC"

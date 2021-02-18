@@ -19,6 +19,7 @@
     Property AffichageSynthese As Boolean
     Property Commentaire As String
     Property DateDebut As Date
+    Property DateFin As Date
     Property Arret As Boolean
     Property ArretCommentaire As String
     Property Inactif As Boolean
@@ -40,6 +41,7 @@
         AffichageSynthese = False
         Commentaire = ""
         DateDebut = Nothing
+        DateFin = Nothing
         Arret = False
         ArretCommentaire = ""
         Inactif = False

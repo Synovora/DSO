@@ -20,5 +20,7 @@
     Property Inactif As Boolean
     Property DescriptionPatient As String
     Property ExclusionAutoSuivi As String
+    Property AideAssociee As String
+    Property Wiki As String
 
 End Class

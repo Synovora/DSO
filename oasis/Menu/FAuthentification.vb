@@ -200,24 +200,21 @@ Public Class FAuthentificattion
 
     End Sub
 
-    Private Sub BtnTheriaque_Click(sender As Object, e As EventArgs) Handles BtnTheriaque.Click
-        Dim patientDao As New PatientDao
-        'Using form As New FrmTestDynamiqueDocument
-        'Form.ShowDialog()
-        'End Using
-        'Return
-        InitAppelForm()
-        Cursor.Current = Cursors.WaitCursor
+    Private Sub BtnTheriaque_Click(sender As Object, e As EventArgs) Handles BtnTest.Click
         Try
-            Dim print As New PrtSynthese
-            Dim selectedPatient As Patient = patientDao.GetPatient(1)
-            print.SelectedPatient = selectedPatient
-            print.PrintDocument()
+            InitAppelForm()
+            Application.DoEvents()
+            Me.Cursor = Cursors.WaitCursor
+            Me.Enabled = False
+            Using form As New RadFTestMethodes
+                form.ShowDialog()
+            End Using
         Catch ex As Exception
-            MsgBox(ex.Message())
+            MsgBox(ex.Message)
+        Finally
+            Me.Cursor = Cursors.Default
+            Me.Enabled = True
         End Try
-        Cursor.Current = Cursors.Default
-
     End Sub
 
     Private Sub BtnTemplateSsEpisode_Click(sender As Object, e As EventArgs) Handles BtnTemplateSsEpisode.Click

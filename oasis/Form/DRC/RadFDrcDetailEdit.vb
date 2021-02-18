@@ -118,6 +118,7 @@ Public Class RadFDrcDetailEdit
             LblDRCId.Hide()
             TxtLibelle.Text = ""
             TxtCommentaire.Text = ""
+            TxtWiki.Text = ""
             'Inhiber boutons d'action de mise à jour
             LblDateCreation.Hide()
             LblLabelDateCreation.Hide()
@@ -145,6 +146,7 @@ Public Class RadFDrcDetailEdit
             RadBtnTransformer.Hide()
         End If
         TxtCommentaire.Text = drc.Commentaire
+        TxtWiki.Text = drc.Wiki
         TxtReponseCommentee.Text = drc.ReponseCommentee
 
         'Date et utilisateur création
@@ -240,6 +242,7 @@ Public Class RadFDrcDetailEdit
         " oa_drc_utilisateur_modification = @utilisateurModification," &
         " oa_drc_libelle = @description," &
         " oa_drc_dur_prob_epis = @commentaire," &
+        " oa_drc_url = @wiki," &
         " oa_drc_typ_epi = @reponseCommentee," &
         " oa_drc_oasis_categorie = @categorieOasis," &
         " oa_drc_categorie_majeure_id = @categorieMajeureId," &
@@ -278,6 +281,7 @@ Public Class RadFDrcDetailEdit
             .AddWithValue("@dateModification", DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss"))
             .AddWithValue("@description", TxtLibelle.Text)
             .AddWithValue("@commentaire", TxtCommentaire.Text)
+            .AddWithValue("@wiki", TxtWiki.Text)
             .AddWithValue("@reponseCommentee", TxtReponseCommentee.Text)
             .AddWithValue("@categorieOasis", categorieOasis)
             .AddWithValue("@categorieMajeureId", categorieMajeureId)
@@ -350,11 +354,11 @@ Public Class RadFDrcDetailEdit
         Dim drcId, categorieOasis, categorieMajeureId, sexe As Integer
 
         Dim SQLstring As String = "insert into oasis.oa_drc" &
-        " (oa_drc_id, oa_drc_libelle, oa_drc_dur_prob_epis, oa_drc_typ_epi, oa_drc_utilisateur_creation," &
+        " (oa_drc_id, oa_drc_libelle, oa_drc_dur_prob_epis, oa_drc_url, oa_drc_typ_epi, oa_drc_utilisateur_creation," &
         " oa_drc_date_creation, oa_drc_oasis_categorie, oa_drc_categorie_majeure_id," &
         " oa_drc_sexe, oa_drc_age_min, oa_drc_age_max, oa_drc_oasis," &
         " oa_drc_code_cim_defaut, oa_drc_code_cisp_defaut, oa_drc_ald_id, oa_drc_ald_code)" &
-        " VALUES (@drcId, @description, @commentaire, @reponseCommentee, @utilisateurCreation," &
+        " VALUES (@drcId, @description, @commentaire, @wiki, @reponseCommentee, @utilisateurCreation," &
         " @dateCreation, @categorieOasis, @categorieMajeureId," &
         " @sexe, @ageMin, @ageMax, @drcOasis," &
         " @cim10Code, @cispCode, @aldId, @aldCode)"
@@ -386,6 +390,7 @@ Public Class RadFDrcDetailEdit
             .AddWithValue("@utilisateurCreation", userLog.UtilisateurId.ToString)
             .AddWithValue("@description", TxtLibelle.Text)
             .AddWithValue("@commentaire", TxtCommentaire.Text)
+            .AddWithValue("@wiki", TxtWiki.Text)
             .AddWithValue("@reponseCommentee", TxtReponseCommentee.Text)
             .AddWithValue("@categorieOasis", categorieOasis)
             .AddWithValue("@categorieMajeureId", categorieMajeureId)

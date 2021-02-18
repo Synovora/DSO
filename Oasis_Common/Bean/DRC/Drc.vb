@@ -46,6 +46,7 @@ Public Class Drc
     Property AldId As Integer
     Property AldCode As String
     Property Commentaire As String
+    Property Wiki As String
     Property ReponseCommentee As String
     Property DateCreation As Date
     Property UserCreation As Long
@@ -82,6 +83,7 @@ Public Class Drc
                 Me.AldId = Coalesce(DrcDataReader("oa_drc_ald_id"), 0)
                 Me.AldCode = Coalesce(DrcDataReader("oa_drc_ald_code"), "")
                 Me.Commentaire = Coalesce(DrcDataReader("oa_drc_dur_prob_epis"), "")
+                Me.Wiki = Coalesce(DrcDataReader("oa_drc_url"), "")
                 Me.ReponseCommentee = Coalesce(DrcDataReader("oa_drc_typ_epi"), "")
                 Me.DateCreation = Coalesce(DrcDataReader("oa_drc_date_creation"), Nothing)
                 Me.UserCreation = Coalesce(DrcDataReader("oa_drc_utilisateur_creation"), 0)
@@ -111,6 +113,7 @@ Public Class Drc
         Me.AldId = 0
         Me.AldCode = ""
         Me.Commentaire = ""
+        Me.Wiki = ""
         Me.ReponseCommentee = ""
         Me.DateCreation = Nothing
         Me.UserCreation = 0

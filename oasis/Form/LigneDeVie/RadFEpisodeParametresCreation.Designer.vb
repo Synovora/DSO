@@ -69,11 +69,11 @@ Partial Class RadFEpisodeParametresCreation
         'RadBtnValidation
         '
         Me.RadBtnValidation.Image = Global.Oasis_WF.My.Resources.Resources.validation2
-        Me.RadBtnValidation.ImageAlignment = System.Drawing.ContentAlignment.MiddleCenter
         Me.RadBtnValidation.Location = New System.Drawing.Point(12, 180)
         Me.RadBtnValidation.Name = "RadBtnValidation"
-        Me.RadBtnValidation.Size = New System.Drawing.Size(24, 24)
+        Me.RadBtnValidation.Size = New System.Drawing.Size(110, 24)
         Me.RadBtnValidation.TabIndex = 1
+        Me.RadBtnValidation.Text = "Valider"
         Me.ToolTip1.SetToolTip(Me.RadBtnValidation, "Validation de la création de l'épisode de paramètres")
         '
         'RadGroupBoxEtatCivil

@@ -4,7 +4,7 @@
     <xs:appinfo source="urn:schemas-microsoft-com:xml-msdatasource">
       <DataSource DefaultConnectionIndex="0" FunctionsComponentName="QueriesTableAdapter" Modifier="AutoLayout, AnsiClass, Class, Public" SchemaSerializationMode="IncludeSchema" xmlns="urn:schemas-microsoft-com:xml-msdatasource">
         <Connections>
-          <Connection AppSettingsObjectName="MySettings" AppSettingsPropertyName="oasisConnection" ConnectionStringObject="" IsAppSettingsProperty="true" Modifier="Assembly" Name="oasisConnection (MySettings)" ParameterPrefix="@" PropertyReference="ApplicationSettings.Oasis_WF.My.MySettings.GlobalReference.Default.oasisConnection" Provider="System.Data.SqlClient" />
+          <Connection AppSettingsObjectName="MySettings" AppSettingsPropertyName="oasisConnection" IsAppSettingsProperty="true" Modifier="Assembly" Name="oasisConnection (MySettings)" ParameterPrefix="@" PropertyReference="ApplicationSettings.Oasis_WF.My.MySettings.GlobalReference.Default.oasisConnection" Provider="System.Data.SqlClient" />
         </Connections>
         <Tables>
           <TableAdapter BaseClass="System.ComponentModel.Component" DataAccessorModifier="AutoLayout, AnsiClass, Class, Public" DataAccessorName="oa_r_specialiteTableAdapter" GeneratorDataComponentClassName="oa_r_specialiteTableAdapter" Name="oa_r_specialite" UserDataComponentName="oa_r_specialiteTableAdapter">
@@ -114,21 +114,21 @@ SELECT oa_r_specialite_id, oa_specialite_code, oa_r_specialite_description, oa_r
   <xs:element name="DS_Specialite" msdata:IsDataSet="true" msdata:UseCurrentLocale="true" msprop:EnableTableAdapterManager="True" msprop:Generator_DataSetName="DS_Specialite" msprop:Generator_UserDSName="DS_Specialite">
     <xs:complexType>
       <xs:choice minOccurs="0" maxOccurs="unbounded">
-        <xs:element name="oa_r_specialite" msprop:Generator_TableClassName="oa_r_specialiteDataTable" msprop:Generator_TableVarName="tableoa_r_specialite" msprop:Generator_TablePropName="oa_r_specialite" msprop:Generator_RowDeletingName="oa_r_specialiteRowDeleting" msprop:Generator_RowChangingName="oa_r_specialiteRowChanging" msprop:Generator_RowEvHandlerName="oa_r_specialiteRowChangeEventHandler" msprop:Generator_RowDeletedName="oa_r_specialiteRowDeleted" msprop:Generator_UserTableName="oa_r_specialite" msprop:Generator_RowChangedName="oa_r_specialiteRowChanged" msprop:Generator_RowEvArgName="oa_r_specialiteRowChangeEvent" msprop:Generator_RowClassName="oa_r_specialiteRow">
+        <xs:element name="oa_r_specialite" msprop:Generator_TableClassName="oa_r_specialiteDataTable" msprop:Generator_TableVarName="tableoa_r_specialite" msprop:Generator_RowChangedName="oa_r_specialiteRowChanged" msprop:Generator_TablePropName="oa_r_specialite" msprop:Generator_RowDeletingName="oa_r_specialiteRowDeleting" msprop:Generator_RowChangingName="oa_r_specialiteRowChanging" msprop:Generator_RowEvHandlerName="oa_r_specialiteRowChangeEventHandler" msprop:Generator_RowDeletedName="oa_r_specialiteRowDeleted" msprop:Generator_RowClassName="oa_r_specialiteRow" msprop:Generator_UserTableName="oa_r_specialite" msprop:Generator_RowEvArgName="oa_r_specialiteRowChangeEvent">
           <xs:complexType>
             <xs:sequence>
               <xs:element name="oa_r_specialite_id" msdata:ReadOnly="true" msdata:AutoIncrement="true" msdata:AutoIncrementSeed="-1" msdata:AutoIncrementStep="-1" msprop:Generator_ColumnVarNameInTable="columnoa_r_specialite_id" msprop:Generator_ColumnPropNameInRow="oa_r_specialite_id" msprop:Generator_ColumnPropNameInTable="oa_r_specialite_idColumn" msprop:Generator_UserColumnName="oa_r_specialite_id" type="xs:int" />
               <xs:element name="oa_specialite_code" msprop:Generator_ColumnVarNameInTable="columnoa_specialite_code" msprop:Generator_ColumnPropNameInRow="oa_specialite_code" msprop:Generator_ColumnPropNameInTable="oa_specialite_codeColumn" msprop:Generator_UserColumnName="oa_specialite_code" minOccurs="0">
                 <xs:simpleType>
                   <xs:restriction base="xs:string">
-                    <xs:maxLength value="25" />
+                    <xs:maxLength value="50" />
                   </xs:restriction>
                 </xs:simpleType>
               </xs:element>
               <xs:element name="oa_r_specialite_description" msprop:Generator_ColumnVarNameInTable="columnoa_r_specialite_description" msprop:Generator_ColumnPropNameInRow="oa_r_specialite_description" msprop:Generator_ColumnPropNameInTable="oa_r_specialite_descriptionColumn" msprop:Generator_UserColumnName="oa_r_specialite_description" minOccurs="0">
                 <xs:simpleType>
                   <xs:restriction base="xs:string">
-                    <xs:maxLength value="45" />
+                    <xs:maxLength value="100" />
                   </xs:restriction>
                 </xs:simpleType>
               </xs:element>

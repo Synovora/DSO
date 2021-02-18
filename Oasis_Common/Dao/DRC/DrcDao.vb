@@ -41,6 +41,7 @@ Public Class DrcDao
             instanceDrc.AldId = Coalesce(drcDataReader("oa_drc_ald_id"), 0)
             instanceDrc.AldCode = Coalesce(drcDataReader("oa_drc_ald_code"), "")
             instanceDrc.Commentaire = Coalesce(drcDataReader("oa_drc_dur_prob_epis"), "")
+            instanceDrc.Wiki = Coalesce(drcDataReader("oa_drc_url"), "")
             instanceDrc.ReponseCommentee = Coalesce(drcDataReader("oa_drc_typ_epi"), "")
             instanceDrc.DateCreation = Coalesce(drcDataReader("oa_drc_date_creation"), Nothing)
             instanceDrc.UserCreation = Coalesce(drcDataReader("oa_drc_utilisateur_creation"), 0)
@@ -92,6 +93,7 @@ Public Class DrcDao
             .AldId = Coalesce(reader("oa_drc_ald_id"), 0),
             .AldCode = Coalesce(reader("oa_drc_ald_code"), ""),
             .Commentaire = Coalesce(reader("oa_drc_dur_prob_epis"), ""),
+            .Wiki = Coalesce(reader("oa_drc_url"), ""),
             .ReponseCommentee = Coalesce(reader("oa_drc_typ_epi"), ""),
             .DateCreation = Coalesce(reader("oa_drc_date_creation"), Nothing),
             .UserCreation = Coalesce(reader("oa_drc_utilisateur_creation"), 0),
