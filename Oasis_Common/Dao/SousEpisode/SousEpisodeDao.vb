@@ -165,6 +165,10 @@ Public Class SousEpisodeDao
         Return final
     End Function
 
+    Public Function FormatPrenom(prenom As String) As String
+        Return prenom.Substring(0, 5).PadRight(5, "X").ToUpper()
+    End Function
+
     Public Function Create(sousEpisode As SousEpisode) As Boolean
         Dim da As SqlDataAdapter = New SqlDataAdapter()
         Dim codeRetour As Boolean = True
@@ -174,7 +178,11 @@ Public Class SousEpisodeDao
         Dim transaction As SqlClient.SqlTransaction = con.BeginTransaction
 
         Dim reference As String = GenerateRandomString(6)
-
+        Dim episodeDao As New EpisodeDao
+        Dim patientDao As New PatientDao
+        Dim episode As Episode = episodeDao.GetEpisodeById(sousEpisode.EpisodeId)
+        Dim patient As Patient = patientDao.GetPatient(episode.PatientId)
+        reference = FormatPrenom(patient.PatientPrenom) & "-" & reference
         Try
             Dim SQLstring As String = "INSERT INTO oasis.oa_sous_episode " &
                     "(episode_id , id_intervenant, id_sous_episode_type , id_sous_episode_sous_type , create_user_id , horodate_creation , " &
