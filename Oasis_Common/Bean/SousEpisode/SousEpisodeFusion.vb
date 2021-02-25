@@ -57,6 +57,8 @@
     Public Property Signataire_Fonction_ALD As String
     Public Property Signature_Date As String
 
+    Public Property Reference As String
+
     Public Property Intervenant_Destinataire As String
     Public Property Contexte As String
     Public Property Antecedent As String

@@ -2,6 +2,7 @@
 Imports Telerik.WinControls.UI.Localization
 Imports Oasis_Common
 Imports Telerik.WinControls.UI
+Imports System.Diagnostics
 
 Public Class RadFPatientDetailEdit
     Private privateSelectedPatientId As Integer
@@ -188,7 +189,7 @@ Public Class RadFPatientDetailEdit
         patientRead = patientDao.GetPatient(SelectedPatientId)
         patientUpdate = patientDao.ClonePatient(patientRead)
 
-        LblIdentifiantOasis.Text = patientUpdate.patientId
+        LblIdentifiantOasis.Text = patientUpdate.PatientId
         TxtPrenom.Text = patientUpdate.PatientPrenom
         TxtNom.Text = patientUpdate.PatientNom
 
@@ -586,7 +587,7 @@ Public Class RadFPatientDetailEdit
     Private Function DeclarationSortie() As Boolean
         Dim codeRetour As Boolean = False
 
-        If patientDao.DeclarationSortie(patientUpdate) = True Then
+        If PatientDao.DeclarationSortie(patientUpdate) = True Then
             codeRetour = True
             Dim form As New RadFNotification With {
                 .Message = "Déclaration de sortie du patient effectuée"
@@ -855,7 +856,7 @@ Public Class RadFPatientDetailEdit
     'Chargement de la Grid Notes patient
     Private Sub ChargementNotesPatient()
         Dim patientNoteDao As New PatientNoteDao
-        Dim dt As DataTable = patientNoteDao.getAllNotebyPatient(patientUpdate.patientId)
+        Dim dt As DataTable = patientNoteDao.getAllNotebyPatient(patientUpdate.PatientId)
 
         'Déclaration des variables pour réaliser le parcours du DataTable pour alimenter le DataGridView
         Dim i As Integer

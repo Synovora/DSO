@@ -120,7 +120,6 @@ Public Class FrmEditDocxSousEpisode
         ReplaceAllMatches("@Signataire_Fonction", userLog.UtilisateurProfilId.ToLower.Trim.Replace("_", " "))
         ReplaceAllMatches("@Signataire_PrenomNom", userLog.UtilisateurPrenom.Trim & " " & userLog.UtilisateurNom.Trim)
         ReplaceAllMatches("@Signature_Date", dateSign.ToString("dd MMM yyyy"))
-        'ReplaceAllMatches("@Signature", signature)
     End Sub
 
     ''' <summary>

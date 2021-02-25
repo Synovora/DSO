@@ -1,4 +1,5 @@
 ﻿Imports System.Configuration
+Imports System.Diagnostics
 Imports System.IO
 Imports Oasis_Common
 Imports Telerik.WinControls
@@ -261,7 +262,7 @@ Public Class FrmSousEpisode
         isCreation = If(sousEpisode.Id = 0, True, False)
         ' -- le patient est il en ALD
         Dim aldDO = New AldDao()
-        isPatientALD = aldDO.IsPatientALD(patient.patientId)
+        isPatientALD = aldDO.IsPatientALD(patient.PatientId)
 
         ' -- init des details du bean SousEpisode
         If Not isCreation Then
@@ -270,7 +271,7 @@ Public Class FrmSousEpisode
         End If
 
         ' -- listes de references
-        lstIntervenant = parcoursDao.GetListOfIntervenantNonOasisByPatient(patient.patientId)
+        lstIntervenant = parcoursDao.GetListOfIntervenantNonOasisByPatient(patient.PatientId)
         lstSousEpisodeType = sousEpisodeTypeDao.getLstSousEpisodeType()
         lstSousEpisodeSousType = sousEpisodeSousTypeDao.getLstSousEpisodeSousType()
         lstSousEpisodeSousSousType = sousEpisodeSousSousTypeDao.getLstSousEpisodeSousSousType()
@@ -456,7 +457,6 @@ Public Class FrmSousEpisode
                 End If
                 ins.Dispose()
                 tbl = Nothing
-                'frm.ReplaceAllMatches("toto", "titi")
                 frm.ShowDialog()
                 Dim isNotSignedNew = (sousEpisode.HorodateValidate = Nothing)
                 If isNotSignedNew = False AndAlso isNotSignedNew <> isNotSigned Then
@@ -541,6 +541,9 @@ Public Class FrmSousEpisode
                         New IntervenantParcours,
                        TryCast(Me.DropDownDestinataire.SelectedItem.Value, IntervenantParcours))
 
+        'update Sous-Episode
+        sousEpisode = sousEpisodeDao.getById(sousEpisode.Id)
+
         With sousEF
 
             .USNom = uniteSanitaire.Oa_unite_sanitaire_description
@@ -579,6 +582,10 @@ Public Class FrmSousEpisode
             .Episode_DateHeure = episode.DateCreation.ToString("dd MMMM yyyy à hh:mm")
             .Type_Libelle = Me.DropDownType.SelectedItem.Text
             .Sous_Type_Libelle = sousType.Libelle
+
+            ' -- Ajout de la Reference
+            Console.WriteLine("Ajout de la ref" & sousEpisode.Reference)
+            .Reference = sousEpisode.Reference
 
             ' -- recherche des sous-type_detail (sousoustype)
             Dim isWithALD = False, isWithNonAld = False, isOnlyOne = False, nbSelected = 0
