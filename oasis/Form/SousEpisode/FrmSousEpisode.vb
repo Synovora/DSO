@@ -1,4 +1,5 @@
 ﻿Imports System.Configuration
+Imports System.Diagnostics
 Imports System.IO
 Imports Oasis_Common
 Imports Telerik.WinControls
@@ -261,7 +262,7 @@ Public Class FrmSousEpisode
         isCreation = If(sousEpisode.Id = 0, True, False)
         ' -- le patient est il en ALD
         Dim aldDO = New AldDao()
-        isPatientALD = aldDO.IsPatientALD(patient.patientId)
+        isPatientALD = aldDO.IsPatientALD(patient.PatientId)
 
         ' -- init des details du bean SousEpisode
         If Not isCreation Then
@@ -270,7 +271,7 @@ Public Class FrmSousEpisode
         End If
 
         ' -- listes de references
-        lstIntervenant = parcoursDao.GetListOfIntervenantNonOasisByPatient(patient.patientId)
+        lstIntervenant = parcoursDao.GetListOfIntervenantNonOasisByPatient(patient.PatientId)
         lstSousEpisodeType = sousEpisodeTypeDao.getLstSousEpisodeType()
         lstSousEpisodeSousType = sousEpisodeSousTypeDao.getLstSousEpisodeSousType()
         lstSousEpisodeSousSousType = sousEpisodeSousSousTypeDao.getLstSousEpisodeSousSousType()

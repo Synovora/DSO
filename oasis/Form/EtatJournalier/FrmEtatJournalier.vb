@@ -5,6 +5,7 @@ Imports Telerik.WinControls.UI.Export
 Imports Telerik.WinControls.UI
 Imports Telerik.WinControls
 Imports System.IO
+Imports System.Diagnostics
 
 Public Class FrmEtatJournalier
     ReadOnly episodeDao As New EpisodeDao
