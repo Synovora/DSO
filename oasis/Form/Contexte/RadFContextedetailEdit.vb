@@ -487,7 +487,7 @@ Public Class RadFContextedetailEdit
                 End If
             Case EnumTraitement.Modification
                 If ValidationContexte() = True Then
-                    If contexteDao.ModificationContexte(contexteUpdate, ContexteHistoACreer, userLog) = True Then
+                    If contexteDao.ModificationContexte(contexteUpdate, ContexteHistoACreer, userLog, contexteRead.Description, contexteRead.DrcId) = True Then
                         CodeResultat = EnumResultat.ModificationOK
                         Try
                             Dim form As New RadFNotification()

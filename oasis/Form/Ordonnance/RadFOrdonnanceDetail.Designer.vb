@@ -402,7 +402,7 @@ Partial Class RadFOrdonnanceDetail
         '
         Me.RadBtnValidation.DialogResult = System.Windows.Forms.DialogResult.Cancel
         Me.RadBtnValidation.Image = Global.Oasis_WF.My.Resources.Resources.validation2
-        Me.RadBtnValidation.Location = New System.Drawing.Point(1159, 254)
+        Me.RadBtnValidation.Location = New System.Drawing.Point(8, 254)
         Me.RadBtnValidation.Name = "RadBtnValidation"
         Me.RadBtnValidation.Size = New System.Drawing.Size(110, 24)
         Me.RadBtnValidation.TabIndex = 6
@@ -425,6 +425,7 @@ Partial Class RadFOrdonnanceDetail
         '
         '
         Me.RootElement.ApplyShapeToControl = True
+        Me.ShowIcon = False
         Me.ShowInTaskbar = False
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent
         Me.Text = "Ligne d'ordonnance"

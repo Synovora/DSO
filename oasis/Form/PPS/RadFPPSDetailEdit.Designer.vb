@@ -75,6 +75,7 @@ Partial Class RadFPPSDetailEdit
         Me.RadGbxAnnulation = New Telerik.WinControls.UI.RadGroupBox()
         Me.RadBtnConfirmationAnnulation = New Telerik.WinControls.UI.RadButton()
         Me.RadBtnAbandonner = New Telerik.WinControls.UI.RadButton()
+        Me.RadBtnTutoriel = New Telerik.WinControls.UI.RadButton()
         CType(Me.RadGroupBoxEtatCivil, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.RadGroupBoxEtatCivil.SuspendLayout()
         CType(Me.RadGroupBox1, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -89,6 +90,7 @@ Partial Class RadFPPSDetailEdit
         Me.RadGbxAnnulation.SuspendLayout()
         CType(Me.RadBtnConfirmationAnnulation, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.RadBtnAbandonner, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.RadBtnTutoriel, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
@@ -372,7 +374,7 @@ Partial Class RadFPPSDetailEdit
         Me.LblTypeStrategie.AutoSize = True
         Me.LblTypeStrategie.Location = New System.Drawing.Point(11, 30)
         Me.LblTypeStrategie.Name = "LblTypeStrategie"
-        Me.LblTypeStrategie.Size = New System.Drawing.Size(77, 13)
+        Me.LblTypeStrategie.Size = New System.Drawing.Size(78, 13)
         Me.LblTypeStrategie.TabIndex = 81
         Me.LblTypeStrategie.Text = "Type stratégie"
         '
@@ -613,6 +615,14 @@ Partial Class RadFPPSDetailEdit
         Me.RadBtnAbandonner.Size = New System.Drawing.Size(24, 24)
         Me.RadBtnAbandonner.TabIndex = 96
         '
+        'RadBtnTutoriel
+        '
+        Me.RadBtnTutoriel.Location = New System.Drawing.Point(537, 422)
+        Me.RadBtnTutoriel.Name = "RadBtnTutoriel"
+        Me.RadBtnTutoriel.Size = New System.Drawing.Size(110, 24)
+        Me.RadBtnTutoriel.TabIndex = 103
+        Me.RadBtnTutoriel.Text = "Tutoriel"
+        '
         'RadFPPSDetailEdit
         '
         Me.AcceptButton = Me.RadBtnValidation
@@ -620,6 +630,7 @@ Partial Class RadFPPSDetailEdit
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.CancelButton = Me.RadBtnAbandonner
         Me.ClientSize = New System.Drawing.Size(1031, 455)
+        Me.Controls.Add(Me.RadBtnTutoriel)
         Me.Controls.Add(Me.RadBtnHistorique)
         Me.Controls.Add(Me.RadBtnAbandonner)
         Me.Controls.Add(Me.RadBtnValidation)
@@ -642,6 +653,7 @@ Partial Class RadFPPSDetailEdit
         '
         '
         Me.RootElement.ApplyShapeToControl = True
+        Me.ShowIcon = False
         Me.ShowInTaskbar = False
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
         Me.Text = "Mesure préventive"
@@ -662,6 +674,7 @@ Partial Class RadFPPSDetailEdit
         Me.RadGbxAnnulation.PerformLayout()
         CType(Me.RadBtnConfirmationAnnulation, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.RadBtnAbandonner, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.RadBtnTutoriel, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
         Me.PerformLayout()
@@ -720,5 +733,6 @@ Partial Class RadFPPSDetailEdit
     Friend WithEvents LblTypeStrategie As Label
     Friend WithEvents RadBtnRecupereDrc As Telerik.WinControls.UI.RadButton
     Friend WithEvents RadBtnHistorique As Telerik.WinControls.UI.RadButton
+    Friend WithEvents RadBtnTutoriel As Telerik.WinControls.UI.RadButton
 End Class
 

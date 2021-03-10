@@ -22,6 +22,7 @@ Public Class SousEpisode
     Property isInactif As Boolean
     Property lstDetail As List(Of SousEpisodeDetailSousType)
     Property Signature As String
+    Property Reference As String
 
     Public Sub New()
     End Sub
@@ -52,6 +53,10 @@ Public Class SousEpisode
         Me.IsReponseRecue = Coalesce(row("is_reponse_recue"), False)
         Me.HorodateLastRecu = Coalesce(row("horodate_last_recu"), Nothing)
         Me.isInactif = Coalesce(row("is_inactif"), False)
+
+        Me.Signature = Coalesce(row("signature"), "NaN")
+        Me.Reference = Coalesce(row("reference"), "NaN")
+        Console.WriteLine("Build bean: " & row("reference"))
 
     End Sub
 

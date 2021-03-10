@@ -66,7 +66,7 @@ Partial Class RadFEpisodeDetailCreation
         Me.Label1.AutoSize = True
         Me.Label1.Location = New System.Drawing.Point(12, 72)
         Me.Label1.Name = "Label1"
-        Me.Label1.Size = New System.Drawing.Size(97, 13)
+        Me.Label1.Size = New System.Drawing.Size(98, 13)
         Me.Label1.TabIndex = 2
         Me.Label1.Text = "Type consultation"
         '
@@ -75,7 +75,7 @@ Partial Class RadFEpisodeDetailCreation
         Me.Label2.AutoSize = True
         Me.Label2.Location = New System.Drawing.Point(12, 99)
         Me.Label2.Name = "Label2"
-        Me.Label2.Size = New System.Drawing.Size(68, 13)
+        Me.Label2.Size = New System.Drawing.Size(69, 13)
         Me.Label2.TabIndex = 3
         Me.Label2.Text = "Type activité"
         '
@@ -245,11 +245,11 @@ Partial Class RadFEpisodeDetailCreation
         'RadBtnValidation
         '
         Me.RadBtnValidation.Image = Global.Oasis_WF.My.Resources.Resources.validation2
-        Me.RadBtnValidation.ImageAlignment = System.Drawing.ContentAlignment.MiddleCenter
         Me.RadBtnValidation.Location = New System.Drawing.Point(12, 220)
         Me.RadBtnValidation.Name = "RadBtnValidation"
-        Me.RadBtnValidation.Size = New System.Drawing.Size(24, 24)
+        Me.RadBtnValidation.Size = New System.Drawing.Size(110, 24)
         Me.RadBtnValidation.TabIndex = 10
+        Me.RadBtnValidation.Text = "Valider"
         Me.ToolTip.SetToolTip(Me.RadBtnValidation, "Valider")
         '
         'RadioBtnConsultation
@@ -299,6 +299,7 @@ Partial Class RadFEpisodeDetailCreation
         '
         '
         Me.RootElement.ApplyShapeToControl = True
+        Me.ShowIcon = False
         Me.ShowInTaskbar = False
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
         Me.Text = "RadFEpisodeDetailCreation"

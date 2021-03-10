@@ -364,7 +364,7 @@ Partial Class RadFDeclarationAllergieEtCIDetail
         Me.LblMedicamentTitulaire.AutoSize = True
         Me.LblMedicamentTitulaire.Location = New System.Drawing.Point(874, 18)
         Me.LblMedicamentTitulaire.Name = "LblMedicamentTitulaire"
-        Me.LblMedicamentTitulaire.Size = New System.Drawing.Size(164, 13)
+        Me.LblMedicamentTitulaire.Size = New System.Drawing.Size(165, 13)
         Me.LblMedicamentTitulaire.TabIndex = 67
         Me.LblMedicamentTitulaire.Text = "ACCORD HEALTHCARE FRANCE"
         Me.LblMedicamentTitulaire.Visible = False
@@ -445,7 +445,7 @@ Partial Class RadFDeclarationAllergieEtCIDetail
         Me.LblMedicamentDCI.AutoSize = True
         Me.LblMedicamentDCI.Location = New System.Drawing.Point(151, 39)
         Me.LblMedicamentDCI.Name = "LblMedicamentDCI"
-        Me.LblMedicamentDCI.Size = New System.Drawing.Size(317, 13)
+        Me.LblMedicamentDCI.Size = New System.Drawing.Size(318, 13)
         Me.LblMedicamentDCI.TabIndex = 59
         Me.LblMedicamentDCI.Text = "TRAMADOL EG L.P. 200 mg, comprime a liberation prolongee"
         '
@@ -549,6 +549,8 @@ Partial Class RadFDeclarationAllergieEtCIDetail
         '
         '
         Me.RootElement.ApplyShapeToControl = True
+        Me.ShowIcon = False
+        Me.ShowInTaskbar = False
         Me.Text = "RadFDeclarationAllergieEtCIDetail"
         CType(Me.RadGroupBox1, System.ComponentModel.ISupportInitialize).EndInit()
         Me.RadGroupBox1.ResumeLayout(False)

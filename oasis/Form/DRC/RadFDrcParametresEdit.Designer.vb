@@ -101,11 +101,11 @@ Partial Class RadFDrcParametresEdit
         'RadBtnValidation
         '
         Me.RadBtnValidation.Image = Global.Oasis_WF.My.Resources.Resources.validation2
-        Me.RadBtnValidation.ImageAlignment = System.Drawing.ContentAlignment.MiddleCenter
         Me.RadBtnValidation.Location = New System.Drawing.Point(12, 586)
         Me.RadBtnValidation.Name = "RadBtnValidation"
-        Me.RadBtnValidation.Size = New System.Drawing.Size(24, 24)
+        Me.RadBtnValidation.Size = New System.Drawing.Size(110, 24)
         Me.RadBtnValidation.TabIndex = 2
+        Me.RadBtnValidation.Text = "Valider"
         Me.ToolTip.SetToolTip(Me.RadBtnValidation, "Valider")
         '
         'LblDrcDenomination
@@ -144,6 +144,7 @@ Partial Class RadFDrcParametresEdit
         '
         '
         Me.RootElement.ApplyShapeToControl = True
+        Me.ShowIcon = False
         Me.ShowInTaskbar = False
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent
         Me.Text = "Saisie paramètres de la DRC"

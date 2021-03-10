@@ -54,11 +54,11 @@ Partial Class RadFEpisodeActeParamedicalDetailEdit
         'RadBtnValidation
         '
         Me.RadBtnValidation.Image = Global.Oasis_WF.My.Resources.Resources.validation2
-        Me.RadBtnValidation.ImageAlignment = System.Drawing.ContentAlignment.MiddleCenter
         Me.RadBtnValidation.Location = New System.Drawing.Point(12, 154)
         Me.RadBtnValidation.Name = "RadBtnValidation"
-        Me.RadBtnValidation.Size = New System.Drawing.Size(24, 24)
+        Me.RadBtnValidation.Size = New System.Drawing.Size(110, 24)
         Me.RadBtnValidation.TabIndex = 2
+        Me.RadBtnValidation.Text = "Valider"
         Me.ToolTip.SetToolTip(Me.RadBtnValidation, "Valider")
         '
         'RadFEpisodeActeParamedicalDetailEdit
@@ -77,6 +77,7 @@ Partial Class RadFEpisodeActeParamedicalDetailEdit
         '
         '
         Me.RootElement.ApplyShapeToControl = True
+        Me.ShowIcon = False
         Me.ShowInTaskbar = False
         Me.Text = "Saisie observation"
         CType(Me.RadBtnAbandon, System.ComponentModel.ISupportInitialize).EndInit()

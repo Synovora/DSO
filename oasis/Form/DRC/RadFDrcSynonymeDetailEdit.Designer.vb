@@ -88,22 +88,22 @@ Partial Class RadFDrcSynonymeDetailEdit
         '
         Me.RadBtnAnnuler.ForeColor = System.Drawing.Color.Black
         Me.RadBtnAnnuler.Image = Global.Oasis_WF.My.Resources.Resources.supprimer1
-        Me.RadBtnAnnuler.ImageAlignment = System.Drawing.ContentAlignment.MiddleCenter
-        Me.RadBtnAnnuler.Location = New System.Drawing.Point(38, 89)
+        Me.RadBtnAnnuler.Location = New System.Drawing.Point(124, 89)
         Me.RadBtnAnnuler.Name = "RadBtnAnnuler"
-        Me.RadBtnAnnuler.Size = New System.Drawing.Size(24, 24)
+        Me.RadBtnAnnuler.Size = New System.Drawing.Size(110, 24)
         Me.RadBtnAnnuler.TabIndex = 58
+        Me.RadBtnAnnuler.Text = "Supprimer"
         Me.ToolTip.SetToolTip(Me.RadBtnAnnuler, "Supprimer")
         '
         'RadBtnValidation
         '
         Me.RadBtnValidation.ForeColor = System.Drawing.Color.Black
         Me.RadBtnValidation.Image = Global.Oasis_WF.My.Resources.Resources.validation2
-        Me.RadBtnValidation.ImageAlignment = System.Drawing.ContentAlignment.MiddleCenter
         Me.RadBtnValidation.Location = New System.Drawing.Point(8, 89)
         Me.RadBtnValidation.Name = "RadBtnValidation"
-        Me.RadBtnValidation.Size = New System.Drawing.Size(24, 24)
+        Me.RadBtnValidation.Size = New System.Drawing.Size(110, 24)
         Me.RadBtnValidation.TabIndex = 59
+        Me.RadBtnValidation.Text = "Valider"
         Me.ToolTip.SetToolTip(Me.RadBtnValidation, "Valider")
         '
         'RadBtnAbandonner
@@ -138,6 +138,7 @@ Partial Class RadFDrcSynonymeDetailEdit
         '
         '
         Me.RootElement.ApplyShapeToControl = True
+        Me.ShowIcon = False
         Me.ShowInTaskbar = False
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
         Me.Text = "Détail synonyme DRC"

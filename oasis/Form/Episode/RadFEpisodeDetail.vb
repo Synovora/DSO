@@ -1123,8 +1123,32 @@ Public Class RadFEpisodeDetail
         End If
     End Sub
 
-    'Saisie observation spécifique via l'écran dédié selon le type de la DORC
 
+    'Aide en ligne procédure collaborative
+    Private Sub AideEnLigneToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles AideEnLigneToolStripMenuItem.Click
+        If RadObsSpeIdeDataGridView.CurrentRow IsNot Nothing Then
+            Dim aRow As Integer = Me.RadObsSpeIdeDataGridView.Rows.IndexOf(Me.RadObsSpeIdeDataGridView.CurrentRow)
+            If aRow >= 0 Then
+                Dim episodeActeParamedicalId As Integer = RadObsSpeIdeDataGridView.Rows(aRow).Cells("episodeActeParamedicalId").Value
+                Dim categorieOasis As Integer = RadObsSpeIdeDataGridView.Rows(aRow).Cells("categorieOasis").Value
+                Me.Enabled = False
+                Cursor.Current = Cursors.WaitCursor
+                Dim DrcId As Long = RadObsSpeIdeDataGridView.Rows(aRow).Cells("drcId").Value
+                Try
+                    Using form As New RadFTutoriel
+                        form.drcId = DrcId
+                        form.ShowDialog()
+                    End Using
+                Catch ex As Exception
+                    MessageBox.Show(ex.Message)
+                End Try
+                Me.Enabled = True
+            End If
+        End If
+    End Sub
+
+
+    'Saisie observation spécifique via l'écran dédié selon le type de la DORC
     Private Sub RadMenuItemObsSpeIdeSaisieObservation_Click(sender As Object, e As EventArgs) Handles RadMenuItemObsSpeIdeSaisieObservation.Click
         SaisieObservation()
     End Sub
@@ -2474,6 +2498,12 @@ Public Class RadFEpisodeDetail
         ChargementObservationLibre()
         ChargementConclusion()
         ControleEpisodeCloture()
+        'Synthèse - 19/12/2020
+        ChargementAntecedent()
+        ChargementTraitement()
+        ChargementParcoursDeSoin()
+        ChargementContexte()
+        ChargementPPS()
         Cursor.Current = Cursors.Default
     End Sub
 
@@ -5112,6 +5142,7 @@ Public Class RadFEpisodeDetail
     Private Sub RadPanel12_Paint(sender As Object, e As PaintEventArgs) Handles RadPanel12.Paint
 
     End Sub
+
 
     '===========================================================
     '======================= Droits d'accès ====================

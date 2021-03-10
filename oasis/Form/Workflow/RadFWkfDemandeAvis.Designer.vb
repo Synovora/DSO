@@ -29,6 +29,7 @@ Partial Class RadFWkfDemandeAvis
         Me.LblPatientAge = New System.Windows.Forms.Label()
         Me.ToolTip = New System.Windows.Forms.ToolTip(Me.components)
         Me.RadBtnMessagePrecedent = New Telerik.WinControls.UI.RadButton()
+        Me.RadBtnValidation = New Telerik.WinControls.UI.RadButton()
         Me.LblLabelTypeTache = New System.Windows.Forms.Label()
         Me.TxtCommentaireDemande = New System.Windows.Forms.TextBox()
         Me.LblPriorite = New System.Windows.Forms.Label()
@@ -48,10 +49,10 @@ Partial Class RadFWkfDemandeAvis
         Me.CheckBox1 = New System.Windows.Forms.CheckBox()
         Me.CheckBox2 = New System.Windows.Forms.CheckBox()
         Me.RadBtnAbandon = New Telerik.WinControls.UI.RadButton()
-        Me.RadBtnValidation = New Telerik.WinControls.UI.RadButton()
         CType(Me.RadGroupBoxEtatCivil, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.RadGroupBoxEtatCivil.SuspendLayout()
         CType(Me.RadBtnMessagePrecedent, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.RadBtnValidation, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.RadPanelDestinataire, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.RadPanelDestinataire.SuspendLayout()
         CType(Me.RadBtnEpisode, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -59,7 +60,6 @@ Partial Class RadFWkfDemandeAvis
         CType(Me.RadBtnSynthèse, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.RadBtnLigneDeVie, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.RadBtnAbandon, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.RadBtnValidation, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
@@ -115,6 +115,17 @@ Partial Class RadFWkfDemandeAvis
         Me.RadBtnMessagePrecedent.TabIndex = 27
         Me.RadBtnMessagePrecedent.Text = ">"
         Me.ToolTip.SetToolTip(Me.RadBtnMessagePrecedent, "Consulter les messages précédents")
+        '
+        'RadBtnValidation
+        '
+        Me.RadBtnValidation.ForeColor = System.Drawing.Color.Black
+        Me.RadBtnValidation.Image = Global.Oasis_WF.My.Resources.Resources.validation2
+        Me.RadBtnValidation.Location = New System.Drawing.Point(3, 248)
+        Me.RadBtnValidation.Name = "RadBtnValidation"
+        Me.RadBtnValidation.Size = New System.Drawing.Size(110, 24)
+        Me.RadBtnValidation.TabIndex = 5
+        Me.RadBtnValidation.Text = "Valider"
+        Me.ToolTip.SetToolTip(Me.RadBtnValidation, "Valider")
         '
         'LblLabelTypeTache
         '
@@ -228,7 +239,7 @@ Partial Class RadFWkfDemandeAvis
         '
         'RadBtnEpisode
         '
-        Me.RadBtnEpisode.Location = New System.Drawing.Point(33, 248)
+        Me.RadBtnEpisode.Location = New System.Drawing.Point(119, 248)
         Me.RadBtnEpisode.Name = "RadBtnEpisode"
         Me.RadBtnEpisode.Size = New System.Drawing.Size(97, 24)
         Me.RadBtnEpisode.TabIndex = 22
@@ -236,7 +247,7 @@ Partial Class RadFWkfDemandeAvis
         '
         'RadBtnSousEpisode
         '
-        Me.RadBtnSousEpisode.Location = New System.Drawing.Point(136, 248)
+        Me.RadBtnSousEpisode.Location = New System.Drawing.Point(222, 248)
         Me.RadBtnSousEpisode.Name = "RadBtnSousEpisode"
         Me.RadBtnSousEpisode.Size = New System.Drawing.Size(97, 24)
         Me.RadBtnSousEpisode.TabIndex = 23
@@ -244,7 +255,7 @@ Partial Class RadFWkfDemandeAvis
         '
         'RadBtnSynthèse
         '
-        Me.RadBtnSynthèse.Location = New System.Drawing.Point(239, 248)
+        Me.RadBtnSynthèse.Location = New System.Drawing.Point(325, 248)
         Me.RadBtnSynthèse.Name = "RadBtnSynthèse"
         Me.RadBtnSynthèse.Size = New System.Drawing.Size(97, 24)
         Me.RadBtnSynthèse.TabIndex = 24
@@ -252,7 +263,7 @@ Partial Class RadFWkfDemandeAvis
         '
         'RadBtnLigneDeVie
         '
-        Me.RadBtnLigneDeVie.Location = New System.Drawing.Point(342, 248)
+        Me.RadBtnLigneDeVie.Location = New System.Drawing.Point(428, 248)
         Me.RadBtnLigneDeVie.Name = "RadBtnLigneDeVie"
         Me.RadBtnLigneDeVie.Size = New System.Drawing.Size(97, 24)
         Me.RadBtnLigneDeVie.TabIndex = 25
@@ -300,17 +311,6 @@ Partial Class RadFWkfDemandeAvis
         Me.RadBtnAbandon.Size = New System.Drawing.Size(24, 24)
         Me.RadBtnAbandon.TabIndex = 4
         '
-        'RadBtnValidation
-        '
-        Me.RadBtnValidation.ForeColor = System.Drawing.Color.Black
-        Me.RadBtnValidation.Image = Global.Oasis_WF.My.Resources.Resources.validation2
-        Me.RadBtnValidation.ImageAlignment = System.Drawing.ContentAlignment.MiddleCenter
-        Me.RadBtnValidation.Location = New System.Drawing.Point(3, 248)
-        Me.RadBtnValidation.Name = "RadBtnValidation"
-        Me.RadBtnValidation.Size = New System.Drawing.Size(24, 24)
-        Me.RadBtnValidation.TabIndex = 5
-        Me.ToolTip.SetToolTip(Me.RadBtnValidation, "Valider")
-        '
         'RadFWkfDemandeAvis
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -343,6 +343,7 @@ Partial Class RadFWkfDemandeAvis
         '
         '
         Me.RootElement.ApplyShapeToControl = True
+        Me.ShowIcon = False
         Me.ShowInTaskbar = False
         Me.StartPosition = System.Windows.Forms.FormStartPosition.Manual
         Me.Text = "RadFWkfDemandeAvis"
@@ -350,6 +351,7 @@ Partial Class RadFWkfDemandeAvis
         Me.RadGroupBoxEtatCivil.ResumeLayout(False)
         Me.RadGroupBoxEtatCivil.PerformLayout()
         CType(Me.RadBtnMessagePrecedent, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.RadBtnValidation, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.RadPanelDestinataire, System.ComponentModel.ISupportInitialize).EndInit()
         Me.RadPanelDestinataire.ResumeLayout(False)
         Me.RadPanelDestinataire.PerformLayout()
@@ -358,7 +360,6 @@ Partial Class RadFWkfDemandeAvis
         CType(Me.RadBtnSynthèse, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.RadBtnLigneDeVie, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.RadBtnAbandon, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.RadBtnValidation, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
         Me.PerformLayout()

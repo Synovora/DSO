@@ -23,41 +23,44 @@ Partial Class RadFEpisodeParametreDetailEdit
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
         Me.components = New System.ComponentModel.Container()
-        Dim GridViewTextBoxColumn1 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
-        Dim GridViewTextBoxColumn2 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
-        Dim GridViewTextBoxColumn3 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
-        Dim GridViewTextBoxColumn4 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
-        Dim GridViewTextBoxColumn5 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
-        Dim GridViewMaskBoxColumn1 As Telerik.WinControls.UI.GridViewMaskBoxColumn = New Telerik.WinControls.UI.GridViewMaskBoxColumn()
-        Dim GridViewTextBoxColumn6 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
-        Dim GridViewTextBoxColumn7 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
-        Dim GridViewTextBoxColumn8 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
-        Dim GridViewTextBoxColumn9 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
-        Dim TableViewDefinition1 As Telerik.WinControls.UI.TableViewDefinition = New Telerik.WinControls.UI.TableViewDefinition()
-        Dim GridViewTextBoxColumn10 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
-        Dim GridViewTextBoxColumn11 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
-        Dim GridViewTextBoxColumn12 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
-        Dim TableViewDefinition2 As Telerik.WinControls.UI.TableViewDefinition = New Telerik.WinControls.UI.TableViewDefinition()
+        Dim GridViewTextBoxColumn25 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
+        Dim GridViewTextBoxColumn26 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
+        Dim GridViewTextBoxColumn27 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
+        Dim GridViewTextBoxColumn28 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
+        Dim GridViewTextBoxColumn29 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
+        Dim GridViewMaskBoxColumn3 As Telerik.WinControls.UI.GridViewMaskBoxColumn = New Telerik.WinControls.UI.GridViewMaskBoxColumn()
+        Dim GridViewTextBoxColumn30 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
+        Dim GridViewTextBoxColumn31 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
+        Dim GridViewTextBoxColumn32 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
+        Dim GridViewTextBoxColumn33 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
+        Dim TableViewDefinition5 As Telerik.WinControls.UI.TableViewDefinition = New Telerik.WinControls.UI.TableViewDefinition()
+        Dim GridViewTextBoxColumn34 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
+        Dim GridViewTextBoxColumn35 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
+        Dim GridViewTextBoxColumn36 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
+        Dim TableViewDefinition6 As Telerik.WinControls.UI.TableViewDefinition = New Telerik.WinControls.UI.TableViewDefinition()
         Me.RadBtnAbandon = New Telerik.WinControls.UI.RadButton()
         Me.ToolTip = New System.Windows.Forms.ToolTip(Me.components)
-        Me.RadGridViewParm = New Telerik.WinControls.UI.RadGridView()
         Me.RadBtnAjouter = New Telerik.WinControls.UI.RadButton()
-        Me.RadDesktopAlert1 = New Telerik.WinControls.UI.RadDesktopAlert(Me.components)
         Me.RadBtnSupprimer = New Telerik.WinControls.UI.RadButton()
+        Me.RadGridViewParm = New Telerik.WinControls.UI.RadGridView()
+        Me.RadDesktopAlert1 = New Telerik.WinControls.UI.RadDesktopAlert(Me.components)
         Me.RadBtnSuppprimer = New Telerik.WinControls.UI.RadButton()
         Me.RadBtnSelect = New Telerik.WinControls.UI.RadButton()
         Me.RadGridView1 = New Telerik.WinControls.UI.RadGridView()
         Me.RadBtnCacher = New Telerik.WinControls.UI.RadButton()
+        Me.ContextMenuStrip1 = New System.Windows.Forms.ContextMenuStrip(Me.components)
+        Me.TutorielToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         CType(Me.RadBtnAbandon, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.RadGridViewParm, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.RadGridViewParm.MasterTemplate, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.RadBtnAjouter, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.RadBtnSupprimer, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.RadGridViewParm, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.RadGridViewParm.MasterTemplate, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.RadBtnSuppprimer, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.RadBtnSelect, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.RadGridView1, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.RadGridView1.MasterTemplate, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.RadBtnCacher, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.ContextMenuStrip1.SuspendLayout()
         CType(Me, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
@@ -71,91 +74,6 @@ Partial Class RadFEpisodeParametreDetailEdit
         Me.RadBtnAbandon.Size = New System.Drawing.Size(24, 24)
         Me.RadBtnAbandon.TabIndex = 0
         '
-        'RadGridViewParm
-        '
-        Me.RadGridViewParm.BackColor = System.Drawing.Color.FromArgb(CType(CType(191, Byte), Integer), CType(CType(219, Byte), Integer), CType(CType(255, Byte), Integer))
-        Me.RadGridViewParm.Cursor = System.Windows.Forms.Cursors.Default
-        Me.RadGridViewParm.Font = New System.Drawing.Font("Segoe UI", 8.25!)
-        Me.RadGridViewParm.ForeColor = System.Drawing.Color.Black
-        Me.RadGridViewParm.ImeMode = System.Windows.Forms.ImeMode.NoControl
-        Me.RadGridViewParm.Location = New System.Drawing.Point(12, 34)
-        '
-        '
-        '
-        Me.RadGridViewParm.MasterTemplate.AllowAddNewRow = False
-        Me.RadGridViewParm.MasterTemplate.AllowDeleteRow = False
-        GridViewTextBoxColumn1.EnableExpressionEditor = False
-        GridViewTextBoxColumn1.FieldName = "episode_parametre_id"
-        GridViewTextBoxColumn1.HeaderText = "episode_parametre_id"
-        GridViewTextBoxColumn1.IsVisible = False
-        GridViewTextBoxColumn1.Name = "episode_parametre_id"
-        GridViewTextBoxColumn2.EnableExpressionEditor = False
-        GridViewTextBoxColumn2.FieldName = "parametre_id"
-        GridViewTextBoxColumn2.HeaderText = "parametre_id"
-        GridViewTextBoxColumn2.IsVisible = False
-        GridViewTextBoxColumn2.Name = "parametre_id"
-        GridViewTextBoxColumn3.EnableExpressionEditor = False
-        GridViewTextBoxColumn3.FieldName = "description"
-        GridViewTextBoxColumn3.HeaderText = "description"
-        GridViewTextBoxColumn3.HeaderTextAlignment = System.Drawing.ContentAlignment.MiddleLeft
-        GridViewTextBoxColumn3.Name = "description"
-        GridViewTextBoxColumn3.ReadOnly = True
-        GridViewTextBoxColumn3.Width = 250
-        GridViewTextBoxColumn4.EnableExpressionEditor = False
-        GridViewTextBoxColumn4.FieldName = "entier"
-        GridViewTextBoxColumn4.HeaderText = "entier"
-        GridViewTextBoxColumn4.IsVisible = False
-        GridViewTextBoxColumn4.Name = "entier"
-        GridViewTextBoxColumn4.TextAlignment = System.Drawing.ContentAlignment.MiddleCenter
-        GridViewTextBoxColumn5.EnableExpressionEditor = False
-        GridViewTextBoxColumn5.FieldName = "decimal"
-        GridViewTextBoxColumn5.HeaderText = "decimal"
-        GridViewTextBoxColumn5.IsVisible = False
-        GridViewTextBoxColumn5.Name = "decimal"
-        GridViewTextBoxColumn5.TextAlignment = System.Drawing.ContentAlignment.MiddleCenter
-        GridViewMaskBoxColumn1.DataType = GetType(Decimal)
-        GridViewMaskBoxColumn1.EnableExpressionEditor = False
-        GridViewMaskBoxColumn1.FieldName = "valeurInput"
-        GridViewMaskBoxColumn1.FormatInfo = New System.Globalization.CultureInfo("fr-FR")
-        GridViewMaskBoxColumn1.HeaderText = "valeur"
-        GridViewMaskBoxColumn1.Mask = "G"
-        GridViewMaskBoxColumn1.MaskType = Telerik.WinControls.UI.MaskType.Numeric
-        GridViewMaskBoxColumn1.Name = "valeurInput"
-        GridViewMaskBoxColumn1.TextAlignment = System.Drawing.ContentAlignment.MiddleCenter
-        GridViewMaskBoxColumn1.Width = 70
-        GridViewTextBoxColumn6.EnableExpressionEditor = False
-        GridViewTextBoxColumn6.FieldName = "unite"
-        GridViewTextBoxColumn6.HeaderText = "Unité"
-        GridViewTextBoxColumn6.HeaderTextAlignment = System.Drawing.ContentAlignment.MiddleLeft
-        GridViewTextBoxColumn6.Name = "unite"
-        GridViewTextBoxColumn6.ReadOnly = True
-        GridViewTextBoxColumn6.Width = 80
-        GridViewTextBoxColumn7.EnableExpressionEditor = False
-        GridViewTextBoxColumn7.FieldName = "valeur"
-        GridViewTextBoxColumn7.HeaderText = "valeur"
-        GridViewTextBoxColumn7.IsVisible = False
-        GridViewTextBoxColumn7.Name = "valeur"
-        GridViewTextBoxColumn8.EnableExpressionEditor = False
-        GridViewTextBoxColumn8.FieldName = "parametre_ajoute"
-        GridViewTextBoxColumn8.IsVisible = False
-        GridViewTextBoxColumn8.Name = "parametre_ajoute"
-        GridViewTextBoxColumn8.TextAlignment = System.Drawing.ContentAlignment.MiddleCenter
-        GridViewTextBoxColumn8.Width = 20
-        GridViewTextBoxColumn9.EnableExpressionEditor = False
-        GridViewTextBoxColumn9.FieldName = "ajoute"
-        GridViewTextBoxColumn9.HeaderText = "+"
-        GridViewTextBoxColumn9.Name = "ajoute"
-        GridViewTextBoxColumn9.TextAlignment = System.Drawing.ContentAlignment.MiddleCenter
-        GridViewTextBoxColumn9.Width = 15
-        Me.RadGridViewParm.MasterTemplate.Columns.AddRange(New Telerik.WinControls.UI.GridViewDataColumn() {GridViewTextBoxColumn1, GridViewTextBoxColumn2, GridViewTextBoxColumn3, GridViewTextBoxColumn4, GridViewTextBoxColumn5, GridViewMaskBoxColumn1, GridViewTextBoxColumn6, GridViewTextBoxColumn7, GridViewTextBoxColumn8, GridViewTextBoxColumn9})
-        Me.RadGridViewParm.MasterTemplate.ShowFilteringRow = False
-        Me.RadGridViewParm.MasterTemplate.ViewDefinition = TableViewDefinition1
-        Me.RadGridViewParm.Name = "RadGridViewParm"
-        Me.RadGridViewParm.RightToLeft = System.Windows.Forms.RightToLeft.No
-        Me.RadGridViewParm.ShowGroupPanel = False
-        Me.RadGridViewParm.Size = New System.Drawing.Size(459, 496)
-        Me.RadGridViewParm.TabIndex = 5
-        '
         'RadBtnAjouter
         '
         Me.RadBtnAjouter.ForeColor = System.Drawing.Color.Black
@@ -167,6 +85,103 @@ Partial Class RadFEpisodeParametreDetailEdit
         Me.RadBtnAjouter.Text = "+"
         Me.ToolTip.SetToolTip(Me.RadBtnAjouter, "Ajouter des paramètres")
         '
+        'RadBtnSupprimer
+        '
+        Me.RadBtnSupprimer.Image = Global.Oasis_WF.My.Resources.Resources.supprimer1
+        Me.RadBtnSupprimer.Location = New System.Drawing.Point(42, 4)
+        Me.RadBtnSupprimer.Name = "RadBtnSupprimer"
+        Me.RadBtnSupprimer.Size = New System.Drawing.Size(110, 24)
+        Me.RadBtnSupprimer.TabIndex = 97
+        Me.RadBtnSupprimer.Text = "Supprimer"
+        Me.ToolTip.SetToolTip(Me.RadBtnSupprimer, "Supprimer")
+        '
+        'RadGridViewParm
+        '
+        Me.RadGridViewParm.BackColor = System.Drawing.Color.FromArgb(CType(CType(191, Byte), Integer), CType(CType(219, Byte), Integer), CType(CType(255, Byte), Integer))
+        Me.RadGridViewParm.ContextMenuStrip = Me.ContextMenuStrip1
+        Me.RadGridViewParm.Cursor = System.Windows.Forms.Cursors.Default
+        Me.RadGridViewParm.Font = New System.Drawing.Font("Segoe UI", 8.25!)
+        Me.RadGridViewParm.ForeColor = System.Drawing.Color.Black
+        Me.RadGridViewParm.ImeMode = System.Windows.Forms.ImeMode.NoControl
+        Me.RadGridViewParm.Location = New System.Drawing.Point(12, 34)
+        '
+        '
+        '
+        Me.RadGridViewParm.MasterTemplate.AllowAddNewRow = False
+        Me.RadGridViewParm.MasterTemplate.AllowCellContextMenu = False
+        Me.RadGridViewParm.MasterTemplate.AllowDeleteRow = False
+        GridViewTextBoxColumn25.EnableExpressionEditor = False
+        GridViewTextBoxColumn25.FieldName = "episode_parametre_id"
+        GridViewTextBoxColumn25.HeaderText = "episode_parametre_id"
+        GridViewTextBoxColumn25.IsVisible = False
+        GridViewTextBoxColumn25.Name = "episode_parametre_id"
+        GridViewTextBoxColumn26.EnableExpressionEditor = False
+        GridViewTextBoxColumn26.FieldName = "parametre_id"
+        GridViewTextBoxColumn26.HeaderText = "parametre_id"
+        GridViewTextBoxColumn26.IsVisible = False
+        GridViewTextBoxColumn26.Name = "parametre_id"
+        GridViewTextBoxColumn27.EnableExpressionEditor = False
+        GridViewTextBoxColumn27.FieldName = "description"
+        GridViewTextBoxColumn27.HeaderText = "description"
+        GridViewTextBoxColumn27.HeaderTextAlignment = System.Drawing.ContentAlignment.MiddleLeft
+        GridViewTextBoxColumn27.Name = "description"
+        GridViewTextBoxColumn27.ReadOnly = True
+        GridViewTextBoxColumn27.Width = 250
+        GridViewTextBoxColumn28.EnableExpressionEditor = False
+        GridViewTextBoxColumn28.FieldName = "entier"
+        GridViewTextBoxColumn28.HeaderText = "entier"
+        GridViewTextBoxColumn28.IsVisible = False
+        GridViewTextBoxColumn28.Name = "entier"
+        GridViewTextBoxColumn28.TextAlignment = System.Drawing.ContentAlignment.MiddleCenter
+        GridViewTextBoxColumn29.EnableExpressionEditor = False
+        GridViewTextBoxColumn29.FieldName = "decimal"
+        GridViewTextBoxColumn29.HeaderText = "decimal"
+        GridViewTextBoxColumn29.IsVisible = False
+        GridViewTextBoxColumn29.Name = "decimal"
+        GridViewTextBoxColumn29.TextAlignment = System.Drawing.ContentAlignment.MiddleCenter
+        GridViewMaskBoxColumn3.DataType = GetType(Decimal)
+        GridViewMaskBoxColumn3.EnableExpressionEditor = False
+        GridViewMaskBoxColumn3.FieldName = "valeurInput"
+        GridViewMaskBoxColumn3.FormatInfo = New System.Globalization.CultureInfo("fr-FR")
+        GridViewMaskBoxColumn3.HeaderText = "valeur"
+        GridViewMaskBoxColumn3.Mask = "G"
+        GridViewMaskBoxColumn3.MaskType = Telerik.WinControls.UI.MaskType.Numeric
+        GridViewMaskBoxColumn3.Name = "valeurInput"
+        GridViewMaskBoxColumn3.TextAlignment = System.Drawing.ContentAlignment.MiddleCenter
+        GridViewMaskBoxColumn3.Width = 70
+        GridViewTextBoxColumn30.EnableExpressionEditor = False
+        GridViewTextBoxColumn30.FieldName = "unite"
+        GridViewTextBoxColumn30.HeaderText = "Unité"
+        GridViewTextBoxColumn30.HeaderTextAlignment = System.Drawing.ContentAlignment.MiddleLeft
+        GridViewTextBoxColumn30.Name = "unite"
+        GridViewTextBoxColumn30.ReadOnly = True
+        GridViewTextBoxColumn30.Width = 80
+        GridViewTextBoxColumn31.EnableExpressionEditor = False
+        GridViewTextBoxColumn31.FieldName = "valeur"
+        GridViewTextBoxColumn31.HeaderText = "valeur"
+        GridViewTextBoxColumn31.IsVisible = False
+        GridViewTextBoxColumn31.Name = "valeur"
+        GridViewTextBoxColumn32.EnableExpressionEditor = False
+        GridViewTextBoxColumn32.FieldName = "parametre_ajoute"
+        GridViewTextBoxColumn32.IsVisible = False
+        GridViewTextBoxColumn32.Name = "parametre_ajoute"
+        GridViewTextBoxColumn32.TextAlignment = System.Drawing.ContentAlignment.MiddleCenter
+        GridViewTextBoxColumn32.Width = 20
+        GridViewTextBoxColumn33.EnableExpressionEditor = False
+        GridViewTextBoxColumn33.FieldName = "ajoute"
+        GridViewTextBoxColumn33.HeaderText = "+"
+        GridViewTextBoxColumn33.Name = "ajoute"
+        GridViewTextBoxColumn33.TextAlignment = System.Drawing.ContentAlignment.MiddleCenter
+        GridViewTextBoxColumn33.Width = 15
+        Me.RadGridViewParm.MasterTemplate.Columns.AddRange(New Telerik.WinControls.UI.GridViewDataColumn() {GridViewTextBoxColumn25, GridViewTextBoxColumn26, GridViewTextBoxColumn27, GridViewTextBoxColumn28, GridViewTextBoxColumn29, GridViewMaskBoxColumn3, GridViewTextBoxColumn30, GridViewTextBoxColumn31, GridViewTextBoxColumn32, GridViewTextBoxColumn33})
+        Me.RadGridViewParm.MasterTemplate.ShowFilteringRow = False
+        Me.RadGridViewParm.MasterTemplate.ViewDefinition = TableViewDefinition5
+        Me.RadGridViewParm.Name = "RadGridViewParm"
+        Me.RadGridViewParm.RightToLeft = System.Windows.Forms.RightToLeft.No
+        Me.RadGridViewParm.ShowGroupPanel = False
+        Me.RadGridViewParm.Size = New System.Drawing.Size(459, 496)
+        Me.RadGridViewParm.TabIndex = 5
+        '
         'RadDesktopAlert1
         '
         Me.RadDesktopAlert1.AutoCloseDelay = 5
@@ -174,16 +189,6 @@ Partial Class RadFEpisodeParametreDetailEdit
         Me.RadDesktopAlert1.Opacity = 0.9!
         Me.RadDesktopAlert1.ScreenPosition = Telerik.WinControls.UI.AlertScreenPosition.TopCenter
         Me.RadDesktopAlert1.ThemeName = ""
-        '
-        'RadBtnSupprimer
-        '
-        Me.RadBtnSupprimer.Image = Global.Oasis_WF.My.Resources.Resources.supprimer1
-        Me.RadBtnSupprimer.ImageAlignment = System.Drawing.ContentAlignment.MiddleCenter
-        Me.RadBtnSupprimer.Location = New System.Drawing.Point(42, 4)
-        Me.RadBtnSupprimer.Name = "RadBtnSupprimer"
-        Me.RadBtnSupprimer.Size = New System.Drawing.Size(24, 24)
-        Me.RadBtnSupprimer.TabIndex = 97
-        Me.ToolTip.SetToolTip(Me.RadBtnSupprimer, "Supprimer")
         '
         'RadBtnSuppprimer
         '
@@ -217,25 +222,25 @@ Partial Class RadFEpisodeParametreDetailEdit
         Me.RadGridView1.MasterTemplate.AllowAddNewRow = False
         Me.RadGridView1.MasterTemplate.AllowDeleteRow = False
         Me.RadGridView1.MasterTemplate.AllowEditRow = False
-        GridViewTextBoxColumn10.EnableExpressionEditor = False
-        GridViewTextBoxColumn10.FieldName = "id"
-        GridViewTextBoxColumn10.HeaderText = "id"
-        GridViewTextBoxColumn10.IsVisible = False
-        GridViewTextBoxColumn10.Name = "id"
-        GridViewTextBoxColumn11.EnableExpressionEditor = False
-        GridViewTextBoxColumn11.FieldName = "description"
-        GridViewTextBoxColumn11.HeaderText = "Description"
-        GridViewTextBoxColumn11.HeaderTextAlignment = System.Drawing.ContentAlignment.MiddleLeft
-        GridViewTextBoxColumn11.Name = "description"
-        GridViewTextBoxColumn11.Width = 200
-        GridViewTextBoxColumn12.EnableExpressionEditor = False
-        GridViewTextBoxColumn12.FieldName = "unite"
-        GridViewTextBoxColumn12.HeaderText = "Unité"
-        GridViewTextBoxColumn12.Name = "unite"
-        GridViewTextBoxColumn12.TextAlignment = System.Drawing.ContentAlignment.MiddleCenter
-        GridViewTextBoxColumn12.Width = 65
-        Me.RadGridView1.MasterTemplate.Columns.AddRange(New Telerik.WinControls.UI.GridViewDataColumn() {GridViewTextBoxColumn10, GridViewTextBoxColumn11, GridViewTextBoxColumn12})
-        Me.RadGridView1.MasterTemplate.ViewDefinition = TableViewDefinition2
+        GridViewTextBoxColumn34.EnableExpressionEditor = False
+        GridViewTextBoxColumn34.FieldName = "id"
+        GridViewTextBoxColumn34.HeaderText = "id"
+        GridViewTextBoxColumn34.IsVisible = False
+        GridViewTextBoxColumn34.Name = "id"
+        GridViewTextBoxColumn35.EnableExpressionEditor = False
+        GridViewTextBoxColumn35.FieldName = "description"
+        GridViewTextBoxColumn35.HeaderText = "Description"
+        GridViewTextBoxColumn35.HeaderTextAlignment = System.Drawing.ContentAlignment.MiddleLeft
+        GridViewTextBoxColumn35.Name = "description"
+        GridViewTextBoxColumn35.Width = 200
+        GridViewTextBoxColumn36.EnableExpressionEditor = False
+        GridViewTextBoxColumn36.FieldName = "unite"
+        GridViewTextBoxColumn36.HeaderText = "Unité"
+        GridViewTextBoxColumn36.Name = "unite"
+        GridViewTextBoxColumn36.TextAlignment = System.Drawing.ContentAlignment.MiddleCenter
+        GridViewTextBoxColumn36.Width = 65
+        Me.RadGridView1.MasterTemplate.Columns.AddRange(New Telerik.WinControls.UI.GridViewDataColumn() {GridViewTextBoxColumn34, GridViewTextBoxColumn35, GridViewTextBoxColumn36})
+        Me.RadGridView1.MasterTemplate.ViewDefinition = TableViewDefinition6
         Me.RadGridView1.Name = "RadGridView1"
         Me.RadGridView1.RightToLeft = System.Windows.Forms.RightToLeft.No
         Me.RadGridView1.ShowGroupPanel = False
@@ -249,6 +254,18 @@ Partial Class RadFEpisodeParametreDetailEdit
         Me.RadBtnCacher.Size = New System.Drawing.Size(110, 24)
         Me.RadBtnCacher.TabIndex = 101
         Me.RadBtnCacher.Text = "Cacher"
+        '
+        'ContextMenuStrip1
+        '
+        Me.ContextMenuStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.TutorielToolStripMenuItem})
+        Me.ContextMenuStrip1.Name = "ContextMenuStrip1"
+        Me.ContextMenuStrip1.Size = New System.Drawing.Size(115, 26)
+        '
+        'TutorielToolStripMenuItem
+        '
+        Me.TutorielToolStripMenuItem.Name = "TutorielToolStripMenuItem"
+        Me.TutorielToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
+        Me.TutorielToolStripMenuItem.Text = "Tutoriel"
         '
         'RadFEpisodeParametreDetailEdit
         '
@@ -270,19 +287,21 @@ Partial Class RadFEpisodeParametreDetailEdit
         '
         '
         Me.RootElement.ApplyShapeToControl = True
+        Me.ShowIcon = False
         Me.ShowInTaskbar = False
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent
         Me.Text = "RadFParametreDetailEdit"
         CType(Me.RadBtnAbandon, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.RadGridViewParm.MasterTemplate, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.RadGridViewParm, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.RadBtnAjouter, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.RadBtnSupprimer, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.RadGridViewParm.MasterTemplate, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.RadGridViewParm, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.RadBtnSuppprimer, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.RadBtnSelect, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.RadGridView1.MasterTemplate, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.RadGridView1, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.RadBtnCacher, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.ContextMenuStrip1.ResumeLayout(False)
         CType(Me, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
 
@@ -298,5 +317,7 @@ Partial Class RadFEpisodeParametreDetailEdit
     Friend WithEvents RadBtnSelect As Telerik.WinControls.UI.RadButton
     Friend WithEvents RadGridView1 As Telerik.WinControls.UI.RadGridView
     Friend WithEvents RadBtnCacher As Telerik.WinControls.UI.RadButton
+    Friend WithEvents ContextMenuStrip1 As ContextMenuStrip
+    Friend WithEvents TutorielToolStripMenuItem As ToolStripMenuItem
 End Class
 

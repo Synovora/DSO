@@ -30,6 +30,7 @@ Partial Class RadFOrdonnanceListe
         Dim GridViewTextBoxColumn5 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
         Dim GridViewTextBoxColumn6 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
         Dim TableViewDefinition1 As Telerik.WinControls.UI.TableViewDefinition = New Telerik.WinControls.UI.TableViewDefinition()
+        Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(RadFOrdonnanceListe))
         Me.RadGroupBoxEtatCivil = New Telerik.WinControls.UI.RadGroupBox()
         Me.LblALD = New System.Windows.Forms.Label()
         Me.Label13 = New System.Windows.Forms.Label()
@@ -419,7 +420,7 @@ Partial Class RadFOrdonnanceListe
         '
         'RadBtnCreation
         '
-        Me.RadBtnCreation.Location = New System.Drawing.Point(1003, 553)
+        Me.RadBtnCreation.Location = New System.Drawing.Point(360, 553)
         Me.RadBtnCreation.Name = "RadBtnCreation"
         Me.RadBtnCreation.Size = New System.Drawing.Size(110, 24)
         Me.RadBtnCreation.TabIndex = 4
@@ -428,7 +429,7 @@ Partial Class RadFOrdonnanceListe
         'RadBtnModifier
         '
         Me.RadBtnModifier.Image = Global.Oasis_WF.My.Resources.Resources.modifier
-        Me.RadBtnModifier.Location = New System.Drawing.Point(887, 553)
+        Me.RadBtnModifier.Location = New System.Drawing.Point(244, 553)
         Me.RadBtnModifier.Name = "RadBtnModifier"
         Me.RadBtnModifier.Size = New System.Drawing.Size(110, 24)
         Me.RadBtnModifier.TabIndex = 5
@@ -436,7 +437,7 @@ Partial Class RadFOrdonnanceListe
         '
         'RadBtnRenouveler
         '
-        Me.RadBtnRenouveler.Location = New System.Drawing.Point(655, 553)
+        Me.RadBtnRenouveler.Location = New System.Drawing.Point(12, 553)
         Me.RadBtnRenouveler.Name = "RadBtnRenouveler"
         Me.RadBtnRenouveler.Size = New System.Drawing.Size(110, 24)
         Me.RadBtnRenouveler.TabIndex = 7
@@ -445,7 +446,7 @@ Partial Class RadFOrdonnanceListe
         'RadBtnSupprimer
         '
         Me.RadBtnSupprimer.Image = Global.Oasis_WF.My.Resources.Resources.supprimer1
-        Me.RadBtnSupprimer.Location = New System.Drawing.Point(771, 553)
+        Me.RadBtnSupprimer.Location = New System.Drawing.Point(128, 553)
         Me.RadBtnSupprimer.Name = "RadBtnSupprimer"
         Me.RadBtnSupprimer.Size = New System.Drawing.Size(110, 24)
         Me.RadBtnSupprimer.TabIndex = 9
@@ -464,6 +465,7 @@ Partial Class RadFOrdonnanceListe
         Me.Controls.Add(Me.RadOrdonnanceDataGridView)
         Me.Controls.Add(Me.RadBtnAbandon)
         Me.Controls.Add(Me.RadGroupBoxEtatCivil)
+        Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
         Me.Name = "RadFOrdonnanceListe"
         '
         '

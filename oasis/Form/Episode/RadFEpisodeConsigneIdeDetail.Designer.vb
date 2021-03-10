@@ -83,7 +83,7 @@ Partial Class RadFEpisodeConsigneIdeDetail
         '
         'RadBtnCopierDenomination
         '
-        Me.RadBtnCopierDenomination.Location = New System.Drawing.Point(138, 146)
+        Me.RadBtnCopierDenomination.Location = New System.Drawing.Point(224, 146)
         Me.RadBtnCopierDenomination.Name = "RadBtnCopierDenomination"
         Me.RadBtnCopierDenomination.Size = New System.Drawing.Size(140, 24)
         Me.RadBtnCopierDenomination.TabIndex = 5
@@ -92,11 +92,11 @@ Partial Class RadFEpisodeConsigneIdeDetail
         'RadBtnValidation
         '
         Me.RadBtnValidation.Image = Global.Oasis_WF.My.Resources.Resources.validation2
-        Me.RadBtnValidation.ImageAlignment = System.Drawing.ContentAlignment.MiddleCenter
         Me.RadBtnValidation.Location = New System.Drawing.Point(108, 146)
         Me.RadBtnValidation.Name = "RadBtnValidation"
-        Me.RadBtnValidation.Size = New System.Drawing.Size(24, 24)
+        Me.RadBtnValidation.Size = New System.Drawing.Size(110, 24)
         Me.RadBtnValidation.TabIndex = 6
+        Me.RadBtnValidation.Text = "Valider"
         Me.ToolTip.SetToolTip(Me.RadBtnValidation, "Valider")
         '
         'RadFEpisodeConsigneIdeDetail
@@ -116,6 +116,7 @@ Partial Class RadFEpisodeConsigneIdeDetail
         '
         '
         Me.RootElement.ApplyShapeToControl = True
+        Me.ShowIcon = False
         Me.Text = "RadFEpisodeConsigneIdeDetail"
         CType(Me.RadBtnAbandon, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.RadBtnCopierDenomination, System.ComponentModel.ISupportInitialize).EndInit()

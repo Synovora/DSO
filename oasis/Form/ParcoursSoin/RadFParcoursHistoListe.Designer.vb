@@ -434,6 +434,7 @@ Partial Class RadFParcoursHistoListe
         '
         '
         Me.RootElement.ApplyShapeToControl = True
+        Me.ShowIcon = False
         Me.ShowInTaskbar = False
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
         Me.Text = "RadFParcoursHistoListe"

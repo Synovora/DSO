@@ -1,9 +1,9 @@
-﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
+﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()>
 Partial Class RadFRorListe
     Inherits Telerik.WinControls.UI.RadForm
 
     'Form overrides dispose to clean up the component list.
-    <System.Diagnostics.DebuggerNonUserCode()> _
+    <System.Diagnostics.DebuggerNonUserCode()>
     Protected Overrides Sub Dispose(ByVal disposing As Boolean)
         Try
             If disposing AndAlso components IsNot Nothing Then
@@ -20,57 +20,66 @@ Partial Class RadFRorListe
     'NOTE: The following procedure is required by the Windows Form Designer
     'It can be modified using the Windows Form Designer.  
     'Do not modify it using the code editor.
-    <System.Diagnostics.DebuggerStepThrough()> _
+    <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
         Me.components = New System.ComponentModel.Container()
-        Dim GridViewDecimalColumn1 As Telerik.WinControls.UI.GridViewDecimalColumn = New Telerik.WinControls.UI.GridViewDecimalColumn()
-        Dim GridViewTextBoxColumn1 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
-        Dim GridViewDecimalColumn2 As Telerik.WinControls.UI.GridViewDecimalColumn = New Telerik.WinControls.UI.GridViewDecimalColumn()
-        Dim GridViewTextBoxColumn2 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
-        Dim GridViewTextBoxColumn3 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
-        Dim GridViewDecimalColumn3 As Telerik.WinControls.UI.GridViewDecimalColumn = New Telerik.WinControls.UI.GridViewDecimalColumn()
-        Dim GridViewTextBoxColumn4 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
-        Dim GridViewTextBoxColumn5 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
-        Dim GridViewTextBoxColumn6 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
-        Dim TableViewDefinition1 As Telerik.WinControls.UI.TableViewDefinition = New Telerik.WinControls.UI.TableViewDefinition()
+        Dim GridViewTextBoxColumn41 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
+        Dim GridViewTextBoxColumn42 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
+        Dim GridViewTextBoxColumn43 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
+        Dim GridViewTextBoxColumn44 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
+        Dim GridViewTextBoxColumn45 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
+        Dim GridViewTextBoxColumn46 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
+        Dim GridViewTextBoxColumn47 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
+        Dim GridViewTextBoxColumn48 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
+        Dim GridViewTextBoxColumn49 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
+        Dim GridViewTextBoxColumn50 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
+        Dim TableViewDefinition5 As Telerik.WinControls.UI.TableViewDefinition = New Telerik.WinControls.UI.TableViewDefinition()
+        Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(RadFRorListe))
         Me.RadPanel1 = New Telerik.WinControls.UI.RadPanel()
         Me.LblType = New System.Windows.Forms.Label()
         Me.lblLabelType = New System.Windows.Forms.Label()
         Me.LblSpecialiteFiltre = New System.Windows.Forms.Label()
         Me.LblLabelSpecialite = New System.Windows.Forms.Label()
         Me.RadPanel2 = New Telerik.WinControls.UI.RadPanel()
-        Me.RadGridView1 = New Telerik.WinControls.UI.RadGridView()
-        Me.ContextMenuStrip1 = New System.Windows.Forms.ContextMenuStrip(Me.components)
-        Me.CréationNouvelIntervenantToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-        Me.ModificationIntervenantToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-        Me.VrorBindingSource = New System.Windows.Forms.BindingSource(Me.components)
-        Me.RORDS = New Oasis_WF.RORDS()
-        Me.RadBtnCreation = New Telerik.WinControls.UI.RadButton()
-        Me.RadPanel3 = New Telerik.WinControls.UI.RadPanel()
-        Me.RadBtnModification = New Telerik.WinControls.UI.RadButton()
         Me.GbxSelection = New Telerik.WinControls.UI.RadGroupBox()
+        Me.LblVille = New System.Windows.Forms.Label()
+        Me.LblAdresse = New System.Windows.Forms.Label()
+        Me.LblStructure = New System.Windows.Forms.Label()
         Me.LblSpecialite = New System.Windows.Forms.Label()
         Me.LblNom = New System.Windows.Forms.Label()
         Me.RadBtnSelection = New Telerik.WinControls.UI.RadButton()
+        Me.RadBtnAnnuaireProf = New Telerik.WinControls.UI.RadButton()
+        Me.RadGridViewRor = New Telerik.WinControls.UI.RadGridView()
+        Me.ContextMenuStrip1 = New System.Windows.Forms.ContextMenuStrip(Me.components)
+        Me.CréationNouvelIntervenantToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.ModificationIntervenantToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.RadBtnCreation = New Telerik.WinControls.UI.RadButton()
+        Me.VrorBindingSource = New System.Windows.Forms.BindingSource(Me.components)
+        Me.RORDS = New Oasis_WF.RORDS()
+        Me.RadPanel3 = New Telerik.WinControls.UI.RadPanel()
+        Me.RadBtnModification = New Telerik.WinControls.UI.RadButton()
         Me.RadBtnAbandon = New Telerik.WinControls.UI.RadButton()
         Me.V_rorTableAdapter = New Oasis_WF.RORDSTableAdapters.v_rorTableAdapter()
+        Me.RadBtnDetail = New Telerik.WinControls.UI.RadButton()
         CType(Me.RadPanel1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.RadPanel1.SuspendLayout()
         CType(Me.RadPanel2, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.RadPanel2.SuspendLayout()
-        CType(Me.RadGridView1, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.RadGridView1.MasterTemplate, System.ComponentModel.ISupportInitialize).BeginInit()
-        Me.ContextMenuStrip1.SuspendLayout()
-        CType(Me.VrorBindingSource, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.RORDS, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.RadBtnCreation, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.RadPanel3, System.ComponentModel.ISupportInitialize).BeginInit()
-        Me.RadPanel3.SuspendLayout()
-        CType(Me.RadBtnModification, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.GbxSelection, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.GbxSelection.SuspendLayout()
         CType(Me.RadBtnSelection, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.RadBtnAnnuaireProf, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.RadGridViewRor, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.RadGridViewRor.MasterTemplate, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.ContextMenuStrip1.SuspendLayout()
+        CType(Me.RadBtnCreation, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.VrorBindingSource, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.RORDS, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.RadPanel3, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.RadPanel3.SuspendLayout()
+        CType(Me.RadBtnModification, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.RadBtnAbandon, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.RadBtnDetail, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
@@ -83,7 +92,7 @@ Partial Class RadFRorListe
         Me.RadPanel1.Dock = System.Windows.Forms.DockStyle.Top
         Me.RadPanel1.Location = New System.Drawing.Point(0, 0)
         Me.RadPanel1.Name = "RadPanel1"
-        Me.RadPanel1.Size = New System.Drawing.Size(1097, 48)
+        Me.RadPanel1.Size = New System.Drawing.Size(1806, 48)
         Me.RadPanel1.TabIndex = 0
         '
         'LblType
@@ -128,109 +137,179 @@ Partial Class RadFRorListe
         '
         'RadPanel2
         '
-        Me.RadPanel2.Controls.Add(Me.RadGridView1)
+        Me.RadPanel2.Controls.Add(Me.GbxSelection)
+        Me.RadPanel2.Controls.Add(Me.RadBtnAnnuaireProf)
+        Me.RadPanel2.Controls.Add(Me.RadGridViewRor)
         Me.RadPanel2.Controls.Add(Me.RadBtnCreation)
         Me.RadPanel2.Dock = System.Windows.Forms.DockStyle.Fill
         Me.RadPanel2.Location = New System.Drawing.Point(0, 48)
         Me.RadPanel2.Name = "RadPanel2"
-        Me.RadPanel2.Size = New System.Drawing.Size(1097, 503)
+        Me.RadPanel2.Size = New System.Drawing.Size(1806, 485)
         Me.RadPanel2.TabIndex = 1
         '
-        'RadGridView1
+        'GbxSelection
         '
-        Me.RadGridView1.BackColor = System.Drawing.Color.FromArgb(CType(CType(191, Byte), Integer), CType(CType(219, Byte), Integer), CType(CType(255, Byte), Integer))
-        Me.RadGridView1.ContextMenuStrip = Me.ContextMenuStrip1
-        Me.RadGridView1.Cursor = System.Windows.Forms.Cursors.Default
-        Me.RadGridView1.Font = New System.Drawing.Font("Segoe UI", 8.25!)
-        Me.RadGridView1.ForeColor = System.Drawing.Color.Black
-        Me.RadGridView1.ImeMode = System.Windows.Forms.ImeMode.NoControl
-        Me.RadGridView1.Location = New System.Drawing.Point(0, 47)
+        Me.GbxSelection.AccessibleRole = System.Windows.Forms.AccessibleRole.Grouping
+        Me.GbxSelection.BackColor = System.Drawing.SystemColors.GradientInactiveCaption
+        Me.GbxSelection.Controls.Add(Me.RadBtnDetail)
+        Me.GbxSelection.Controls.Add(Me.LblVille)
+        Me.GbxSelection.Controls.Add(Me.LblAdresse)
+        Me.GbxSelection.Controls.Add(Me.LblStructure)
+        Me.GbxSelection.Controls.Add(Me.LblSpecialite)
+        Me.GbxSelection.Controls.Add(Me.LblNom)
+        Me.GbxSelection.Controls.Add(Me.RadBtnSelection)
+        Me.GbxSelection.Dock = System.Windows.Forms.DockStyle.Right
+        Me.GbxSelection.GroupBoxStyle = Telerik.WinControls.UI.RadGroupBoxStyle.Office
+        Me.GbxSelection.HeaderText = "Professionnel de santé sélectionné"
+        Me.GbxSelection.Location = New System.Drawing.Point(1350, 0)
+        Me.GbxSelection.Name = "GbxSelection"
+        Me.GbxSelection.Size = New System.Drawing.Size(456, 485)
+        Me.GbxSelection.TabIndex = 2
+        Me.GbxSelection.Text = "Professionnel de santé sélectionné"
+        '
+        'LblVille
+        '
+        Me.LblVille.AutoSize = True
+        Me.LblVille.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Bold)
+        Me.LblVille.Location = New System.Drawing.Point(10, 131)
+        Me.LblVille.Name = "LblVille"
+        Me.LblVille.Size = New System.Drawing.Size(106, 13)
+        Me.LblVille.TabIndex = 5
+        Me.LblVille.Text = "Code postal et ville"
+        '
+        'LblAdresse
+        '
+        Me.LblAdresse.AutoSize = True
+        Me.LblAdresse.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Bold)
+        Me.LblAdresse.Location = New System.Drawing.Point(10, 106)
+        Me.LblAdresse.Name = "LblAdresse"
+        Me.LblAdresse.Size = New System.Drawing.Size(48, 13)
+        Me.LblAdresse.TabIndex = 4
+        Me.LblAdresse.Text = "Adresse"
+        '
+        'LblStructure
+        '
+        Me.LblStructure.AutoSize = True
+        Me.LblStructure.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Bold)
+        Me.LblStructure.Location = New System.Drawing.Point(9, 81)
+        Me.LblStructure.Name = "LblStructure"
+        Me.LblStructure.Size = New System.Drawing.Size(54, 13)
+        Me.LblStructure.TabIndex = 3
+        Me.LblStructure.Text = "Structure"
+        '
+        'LblSpecialite
+        '
+        Me.LblSpecialite.AutoSize = True
+        Me.LblSpecialite.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Bold)
+        Me.LblSpecialite.Location = New System.Drawing.Point(9, 56)
+        Me.LblSpecialite.MaximumSize = New System.Drawing.Size(450, 13)
+        Me.LblSpecialite.Name = "LblSpecialite"
+        Me.LblSpecialite.Size = New System.Drawing.Size(56, 13)
+        Me.LblSpecialite.TabIndex = 2
+        Me.LblSpecialite.Text = "Spécialité"
+        '
+        'LblNom
+        '
+        Me.LblNom.AutoSize = True
+        Me.LblNom.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Bold)
+        Me.LblNom.Location = New System.Drawing.Point(9, 31)
+        Me.LblNom.MaximumSize = New System.Drawing.Size(450, 13)
+        Me.LblNom.Name = "LblNom"
+        Me.LblNom.Size = New System.Drawing.Size(33, 13)
+        Me.LblNom.TabIndex = 1
+        Me.LblNom.Text = "Nom"
+        '
+        'RadBtnSelection
+        '
+        Me.RadBtnSelection.Image = Global.Oasis_WF.My.Resources.Resources._select
+        Me.RadBtnSelection.Location = New System.Drawing.Point(12, 285)
+        Me.RadBtnSelection.Name = "RadBtnSelection"
+        Me.RadBtnSelection.Size = New System.Drawing.Size(110, 24)
+        Me.RadBtnSelection.TabIndex = 0
+        Me.RadBtnSelection.Text = "Sélection"
+        '
+        'RadBtnAnnuaireProf
+        '
+        Me.RadBtnAnnuaireProf.Location = New System.Drawing.Point(3, 17)
+        Me.RadBtnAnnuaireProf.Name = "RadBtnAnnuaireProf"
+        Me.RadBtnAnnuaireProf.Size = New System.Drawing.Size(251, 24)
+        Me.RadBtnAnnuaireProf.TabIndex = 2
+        Me.RadBtnAnnuaireProf.Text = "Répertoire national des professionnels de santé" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10)
+        '
+        'RadGridViewRor
+        '
+        Me.RadGridViewRor.BackColor = System.Drawing.Color.FromArgb(CType(CType(191, Byte), Integer), CType(CType(219, Byte), Integer), CType(CType(255, Byte), Integer))
+        Me.RadGridViewRor.ContextMenuStrip = Me.ContextMenuStrip1
+        Me.RadGridViewRor.Cursor = System.Windows.Forms.Cursors.Default
+        Me.RadGridViewRor.Font = New System.Drawing.Font("Segoe UI", 8.25!)
+        Me.RadGridViewRor.ForeColor = System.Drawing.Color.Black
+        Me.RadGridViewRor.ImeMode = System.Windows.Forms.ImeMode.NoControl
+        Me.RadGridViewRor.Location = New System.Drawing.Point(0, 47)
         '
         '
         '
-        Me.RadGridView1.MasterTemplate.AllowAddNewRow = False
-        Me.RadGridView1.MasterTemplate.AllowCellContextMenu = False
-        Me.RadGridView1.MasterTemplate.AllowColumnReorder = False
-        Me.RadGridView1.MasterTemplate.AllowDeleteRow = False
-        Me.RadGridView1.MasterTemplate.AllowEditRow = False
-        GridViewDecimalColumn1.DataType = GetType(Long)
-        GridViewDecimalColumn1.EnableExpressionEditor = False
-        GridViewDecimalColumn1.FieldName = "oa_ror_id"
-        GridViewDecimalColumn1.HeaderText = "oa_ror_id"
-        GridViewDecimalColumn1.IsAutoGenerated = True
-        GridViewDecimalColumn1.IsVisible = False
-        GridViewDecimalColumn1.Name = "oa_ror_id"
-        GridViewTextBoxColumn1.EnableExpressionEditor = False
-        GridViewTextBoxColumn1.FieldName = "oa_ror_nom"
-        GridViewTextBoxColumn1.HeaderText = "Nom"
-        GridViewTextBoxColumn1.HeaderTextAlignment = System.Drawing.ContentAlignment.MiddleLeft
-        GridViewTextBoxColumn1.IsAutoGenerated = True
-        GridViewTextBoxColumn1.Name = "oa_ror_nom"
-        GridViewTextBoxColumn1.Width = 250
-        GridViewDecimalColumn2.DataType = GetType(Long)
-        GridViewDecimalColumn2.EnableExpressionEditor = False
-        GridViewDecimalColumn2.FieldName = "oa_ror_specialite_id"
-        GridViewDecimalColumn2.HeaderText = "Spécialité"
-        GridViewDecimalColumn2.IsAutoGenerated = True
-        GridViewDecimalColumn2.IsVisible = False
-        GridViewDecimalColumn2.Name = "oa_ror_specialite_id"
-        GridViewTextBoxColumn2.EnableExpressionEditor = False
-        GridViewTextBoxColumn2.FieldName = "oa_r_specialite_description"
-        GridViewTextBoxColumn2.HeaderText = "Spécialité"
-        GridViewTextBoxColumn2.HeaderTextAlignment = System.Drawing.ContentAlignment.MiddleLeft
-        GridViewTextBoxColumn2.IsAutoGenerated = True
-        GridViewTextBoxColumn2.Name = "oa_r_specialite_description"
-        GridViewTextBoxColumn2.Width = 200
-        GridViewTextBoxColumn3.EnableExpressionEditor = False
-        GridViewTextBoxColumn3.FieldName = "oa_ror_Type"
-        GridViewTextBoxColumn3.HeaderText = "Nature"
-        GridViewTextBoxColumn3.IsAutoGenerated = True
-        GridViewTextBoxColumn3.Name = "oa_ror_Type"
-        GridViewTextBoxColumn3.TextAlignment = System.Drawing.ContentAlignment.MiddleCenter
-        GridViewTextBoxColumn3.Width = 100
-        GridViewDecimalColumn3.AllowFiltering = False
-        GridViewDecimalColumn3.DataType = GetType(Long)
-        GridViewDecimalColumn3.EnableExpressionEditor = False
-        GridViewDecimalColumn3.FieldName = "oa_ror_Structure_id"
-        GridViewDecimalColumn3.HeaderText = "Id. Structure"
-        GridViewDecimalColumn3.IsAutoGenerated = True
-        GridViewDecimalColumn3.IsVisible = False
-        GridViewDecimalColumn3.Name = "oa_ror_Structure_id"
-        GridViewDecimalColumn3.TextAlignment = System.Drawing.ContentAlignment.MiddleCenter
-        GridViewDecimalColumn3.Width = 70
-        GridViewTextBoxColumn4.EnableExpressionEditor = False
-        GridViewTextBoxColumn4.FieldName = "oa_ror_adresse1"
-        GridViewTextBoxColumn4.HeaderText = "Adresse"
-        GridViewTextBoxColumn4.HeaderTextAlignment = System.Drawing.ContentAlignment.MiddleLeft
-        GridViewTextBoxColumn4.IsAutoGenerated = True
-        GridViewTextBoxColumn4.Name = "oa_ror_adresse1"
-        GridViewTextBoxColumn4.Width = 250
-        GridViewTextBoxColumn5.EnableExpressionEditor = False
-        GridViewTextBoxColumn5.FieldName = "oa_ror_code_postal"
-        GridViewTextBoxColumn5.HeaderText = "Code postal"
-        GridViewTextBoxColumn5.IsAutoGenerated = True
-        GridViewTextBoxColumn5.Name = "oa_ror_code_postal"
-        GridViewTextBoxColumn5.TextAlignment = System.Drawing.ContentAlignment.MiddleCenter
-        GridViewTextBoxColumn5.Width = 75
-        GridViewTextBoxColumn6.EnableExpressionEditor = False
-        GridViewTextBoxColumn6.FieldName = "oa_ror_ville"
-        GridViewTextBoxColumn6.HeaderText = "Ville"
-        GridViewTextBoxColumn6.HeaderTextAlignment = System.Drawing.ContentAlignment.MiddleLeft
-        GridViewTextBoxColumn6.IsAutoGenerated = True
-        GridViewTextBoxColumn6.Name = "oa_ror_ville"
-        GridViewTextBoxColumn6.Width = 200
-        Me.RadGridView1.MasterTemplate.Columns.AddRange(New Telerik.WinControls.UI.GridViewDataColumn() {GridViewDecimalColumn1, GridViewTextBoxColumn1, GridViewDecimalColumn2, GridViewTextBoxColumn2, GridViewTextBoxColumn3, GridViewDecimalColumn3, GridViewTextBoxColumn4, GridViewTextBoxColumn5, GridViewTextBoxColumn6})
-        Me.RadGridView1.MasterTemplate.DataSource = Me.VrorBindingSource
-        Me.RadGridView1.MasterTemplate.EnableFiltering = True
-        Me.RadGridView1.MasterTemplate.EnableGrouping = False
-        Me.RadGridView1.MasterTemplate.ShowRowHeaderColumn = False
-        Me.RadGridView1.MasterTemplate.ViewDefinition = TableViewDefinition1
-        Me.RadGridView1.Name = "RadGridView1"
-        Me.RadGridView1.ReadOnly = True
-        Me.RadGridView1.RightToLeft = System.Windows.Forms.RightToLeft.No
-        Me.RadGridView1.ShowGroupPanel = False
-        Me.RadGridView1.Size = New System.Drawing.Size(1097, 456)
-        Me.RadGridView1.TabIndex = 0
+        Me.RadGridViewRor.MasterTemplate.AllowAddNewRow = False
+        Me.RadGridViewRor.MasterTemplate.AllowCellContextMenu = False
+        Me.RadGridViewRor.MasterTemplate.AllowColumnReorder = False
+        Me.RadGridViewRor.MasterTemplate.AllowDeleteRow = False
+        Me.RadGridViewRor.MasterTemplate.AllowEditRow = False
+        GridViewTextBoxColumn41.EnableExpressionEditor = False
+        GridViewTextBoxColumn41.HeaderText = "Nom"
+        GridViewTextBoxColumn41.HeaderTextAlignment = System.Drawing.ContentAlignment.MiddleLeft
+        GridViewTextBoxColumn41.Name = "nom"
+        GridViewTextBoxColumn41.Width = 200
+        GridViewTextBoxColumn42.EnableExpressionEditor = False
+        GridViewTextBoxColumn42.HeaderText = "Spécialité"
+        GridViewTextBoxColumn42.HeaderTextAlignment = System.Drawing.ContentAlignment.MiddleLeft
+        GridViewTextBoxColumn42.Name = "specialiteDescription"
+        GridViewTextBoxColumn42.Width = 200
+        GridViewTextBoxColumn43.EnableExpressionEditor = False
+        GridViewTextBoxColumn43.HeaderText = "Nature"
+        GridViewTextBoxColumn43.Name = "type"
+        GridViewTextBoxColumn43.Width = 75
+        GridViewTextBoxColumn44.EnableExpressionEditor = False
+        GridViewTextBoxColumn44.HeaderText = "Structure"
+        GridViewTextBoxColumn44.HeaderTextAlignment = System.Drawing.ContentAlignment.MiddleLeft
+        GridViewTextBoxColumn44.Name = "structure"
+        GridViewTextBoxColumn44.Width = 300
+        GridViewTextBoxColumn45.EnableExpressionEditor = False
+        GridViewTextBoxColumn45.HeaderText = "Adresse"
+        GridViewTextBoxColumn45.HeaderTextAlignment = System.Drawing.ContentAlignment.MiddleLeft
+        GridViewTextBoxColumn45.Name = "adresse"
+        GridViewTextBoxColumn45.Width = 300
+        GridViewTextBoxColumn46.EnableExpressionEditor = False
+        GridViewTextBoxColumn46.HeaderText = "Code postal"
+        GridViewTextBoxColumn46.Name = "codePostal"
+        GridViewTextBoxColumn46.TextAlignment = System.Drawing.ContentAlignment.MiddleCenter
+        GridViewTextBoxColumn46.Width = 70
+        GridViewTextBoxColumn47.EnableExpressionEditor = False
+        GridViewTextBoxColumn47.HeaderText = "Ville"
+        GridViewTextBoxColumn47.HeaderTextAlignment = System.Drawing.ContentAlignment.MiddleLeft
+        GridViewTextBoxColumn47.Name = "ville"
+        GridViewTextBoxColumn47.Width = 180
+        GridViewTextBoxColumn48.EnableExpressionEditor = False
+        GridViewTextBoxColumn48.HeaderText = "cleAnnuaire"
+        GridViewTextBoxColumn48.IsVisible = False
+        GridViewTextBoxColumn48.Name = "cleAnnuaire"
+        GridViewTextBoxColumn49.EnableExpressionEditor = False
+        GridViewTextBoxColumn49.HeaderText = "ror id"
+        GridViewTextBoxColumn49.IsVisible = False
+        GridViewTextBoxColumn49.Name = "rorId"
+        GridViewTextBoxColumn50.EnableExpressionEditor = False
+        GridViewTextBoxColumn50.HeaderText = "spécialite id"
+        GridViewTextBoxColumn50.IsVisible = False
+        GridViewTextBoxColumn50.Name = "specialiteId"
+        Me.RadGridViewRor.MasterTemplate.Columns.AddRange(New Telerik.WinControls.UI.GridViewDataColumn() {GridViewTextBoxColumn41, GridViewTextBoxColumn42, GridViewTextBoxColumn43, GridViewTextBoxColumn44, GridViewTextBoxColumn45, GridViewTextBoxColumn46, GridViewTextBoxColumn47, GridViewTextBoxColumn48, GridViewTextBoxColumn49, GridViewTextBoxColumn50})
+        Me.RadGridViewRor.MasterTemplate.EnableFiltering = True
+        Me.RadGridViewRor.MasterTemplate.EnableGrouping = False
+        Me.RadGridViewRor.MasterTemplate.ShowRowHeaderColumn = False
+        Me.RadGridViewRor.MasterTemplate.ViewDefinition = TableViewDefinition5
+        Me.RadGridViewRor.Name = "RadGridViewRor"
+        Me.RadGridViewRor.ReadOnly = True
+        Me.RadGridViewRor.RightToLeft = System.Windows.Forms.RightToLeft.No
+        Me.RadGridViewRor.ShowGroupPanel = False
+        Me.RadGridViewRor.Size = New System.Drawing.Size(1338, 456)
+        Me.RadGridViewRor.TabIndex = 0
         '
         'ContextMenuStrip1
         '
@@ -250,6 +329,14 @@ Partial Class RadFRorListe
         Me.ModificationIntervenantToolStripMenuItem.Size = New System.Drawing.Size(221, 22)
         Me.ModificationIntervenantToolStripMenuItem.Text = "Modification intervenant"
         '
+        'RadBtnCreation
+        '
+        Me.RadBtnCreation.Location = New System.Drawing.Point(260, 17)
+        Me.RadBtnCreation.Name = "RadBtnCreation"
+        Me.RadBtnCreation.Size = New System.Drawing.Size(169, 24)
+        Me.RadBtnCreation.TabIndex = 1
+        Me.RadBtnCreation.Text = "+ Création nouvel intervenant"
+        '
         'VrorBindingSource
         '
         Me.VrorBindingSource.DataMember = "v_ror"
@@ -260,84 +347,33 @@ Partial Class RadFRorListe
         Me.RORDS.DataSetName = "RORDS"
         Me.RORDS.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema
         '
-        'RadBtnCreation
-        '
-        Me.RadBtnCreation.Location = New System.Drawing.Point(3, 17)
-        Me.RadBtnCreation.Name = "RadBtnCreation"
-        Me.RadBtnCreation.Size = New System.Drawing.Size(169, 24)
-        Me.RadBtnCreation.TabIndex = 1
-        Me.RadBtnCreation.Text = "+ Création nouvel intervenant"
-        '
         'RadPanel3
         '
         Me.RadPanel3.Controls.Add(Me.RadBtnModification)
-        Me.RadPanel3.Controls.Add(Me.GbxSelection)
         Me.RadPanel3.Controls.Add(Me.RadBtnAbandon)
         Me.RadPanel3.Dock = System.Windows.Forms.DockStyle.Bottom
-        Me.RadPanel3.Location = New System.Drawing.Point(0, 464)
+        Me.RadPanel3.Location = New System.Drawing.Point(0, 485)
         Me.RadPanel3.Name = "RadPanel3"
-        Me.RadPanel3.Size = New System.Drawing.Size(1097, 87)
+        Me.RadPanel3.Size = New System.Drawing.Size(1806, 48)
         Me.RadPanel3.TabIndex = 2
         '
         'RadBtnModification
         '
+        Me.RadBtnModification.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
         Me.RadBtnModification.Image = Global.Oasis_WF.My.Resources.Resources.modifier
-        Me.RadBtnModification.Location = New System.Drawing.Point(705, 51)
+        Me.RadBtnModification.Location = New System.Drawing.Point(3, 14)
         Me.RadBtnModification.Name = "RadBtnModification"
         Me.RadBtnModification.Size = New System.Drawing.Size(110, 24)
         Me.RadBtnModification.TabIndex = 3
         Me.RadBtnModification.Text = "Modifier"
         '
-        'GbxSelection
-        '
-        Me.GbxSelection.AccessibleRole = System.Windows.Forms.AccessibleRole.Grouping
-        Me.GbxSelection.BackColor = System.Drawing.SystemColors.ButtonHighlight
-        Me.GbxSelection.Controls.Add(Me.LblSpecialite)
-        Me.GbxSelection.Controls.Add(Me.LblNom)
-        Me.GbxSelection.Controls.Add(Me.RadBtnSelection)
-        Me.GbxSelection.GroupBoxStyle = Telerik.WinControls.UI.RadGroupBoxStyle.Office
-        Me.GbxSelection.HeaderText = "Professionnel de santé sélectionné"
-        Me.GbxSelection.Location = New System.Drawing.Point(3, 3)
-        Me.GbxSelection.Name = "GbxSelection"
-        Me.GbxSelection.Size = New System.Drawing.Size(632, 81)
-        Me.GbxSelection.TabIndex = 2
-        Me.GbxSelection.Text = "Professionnel de santé sélectionné"
-        '
-        'LblSpecialite
-        '
-        Me.LblSpecialite.AutoSize = True
-        Me.LblSpecialite.Location = New System.Drawing.Point(9, 52)
-        Me.LblSpecialite.MaximumSize = New System.Drawing.Size(450, 13)
-        Me.LblSpecialite.Name = "LblSpecialite"
-        Me.LblSpecialite.Size = New System.Drawing.Size(40, 13)
-        Me.LblSpecialite.TabIndex = 2
-        Me.LblSpecialite.Text = "Label2"
-        '
-        'LblNom
-        '
-        Me.LblNom.AutoSize = True
-        Me.LblNom.Location = New System.Drawing.Point(9, 31)
-        Me.LblNom.MaximumSize = New System.Drawing.Size(450, 13)
-        Me.LblNom.Name = "LblNom"
-        Me.LblNom.Size = New System.Drawing.Size(427, 13)
-        Me.LblNom.TabIndex = 1
-        Me.LblNom.Text = "1234567890123456789012345678901234567890123456789012345678901234567890"
-        '
-        'RadBtnSelection
-        '
-        Me.RadBtnSelection.Image = Global.Oasis_WF.My.Resources.Resources._select
-        Me.RadBtnSelection.Location = New System.Drawing.Point(508, 41)
-        Me.RadBtnSelection.Name = "RadBtnSelection"
-        Me.RadBtnSelection.Size = New System.Drawing.Size(110, 24)
-        Me.RadBtnSelection.TabIndex = 0
-        Me.RadBtnSelection.Text = "Sélection"
-        '
         'RadBtnAbandon
         '
+        Me.RadBtnAbandon.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.RadBtnAbandon.DialogResult = System.Windows.Forms.DialogResult.Cancel
         Me.RadBtnAbandon.Image = Global.Oasis_WF.My.Resources.Resources._exit
         Me.RadBtnAbandon.ImageAlignment = System.Drawing.ContentAlignment.MiddleCenter
-        Me.RadBtnAbandon.Location = New System.Drawing.Point(1061, 51)
+        Me.RadBtnAbandon.Location = New System.Drawing.Point(1776, 14)
         Me.RadBtnAbandon.Name = "RadBtnAbandon"
         Me.RadBtnAbandon.Size = New System.Drawing.Size(24, 24)
         Me.RadBtnAbandon.TabIndex = 0
@@ -346,41 +382,53 @@ Partial Class RadFRorListe
         '
         Me.V_rorTableAdapter.ClearBeforeFill = True
         '
+        'RadBtnDetail
+        '
+        Me.RadBtnDetail.Location = New System.Drawing.Point(128, 285)
+        Me.RadBtnDetail.Name = "RadBtnDetail"
+        Me.RadBtnDetail.Size = New System.Drawing.Size(168, 24)
+        Me.RadBtnDetail.TabIndex = 24
+        Me.RadBtnDetail.Text = "Détail professionnel de santé"
+        '
         'RadFRorListe
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.CancelButton = Me.RadBtnAbandon
-        Me.ClientSize = New System.Drawing.Size(1097, 551)
+        Me.ClientSize = New System.Drawing.Size(1806, 533)
         Me.Controls.Add(Me.RadPanel3)
         Me.Controls.Add(Me.RadPanel2)
         Me.Controls.Add(Me.RadPanel1)
+        Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
         Me.Name = "RadFRorListe"
         '
         '
         '
         Me.RootElement.ApplyShapeToControl = True
         Me.ShowInTaskbar = False
-        Me.Text = "ROR Oasis"
+        Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent
+        Me.Text = "Référentiel interne des professionnel de santé"
         CType(Me.RadPanel1, System.ComponentModel.ISupportInitialize).EndInit()
         Me.RadPanel1.ResumeLayout(False)
         Me.RadPanel1.PerformLayout()
         CType(Me.RadPanel2, System.ComponentModel.ISupportInitialize).EndInit()
         Me.RadPanel2.ResumeLayout(False)
-        CType(Me.RadGridView1.MasterTemplate, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.RadGridView1, System.ComponentModel.ISupportInitialize).EndInit()
-        Me.ContextMenuStrip1.ResumeLayout(False)
-        CType(Me.VrorBindingSource, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.RORDS, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.RadBtnCreation, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.RadPanel3, System.ComponentModel.ISupportInitialize).EndInit()
-        Me.RadPanel3.ResumeLayout(False)
-        CType(Me.RadBtnModification, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.GbxSelection, System.ComponentModel.ISupportInitialize).EndInit()
         Me.GbxSelection.ResumeLayout(False)
         Me.GbxSelection.PerformLayout()
         CType(Me.RadBtnSelection, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.RadBtnAnnuaireProf, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.RadGridViewRor.MasterTemplate, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.RadGridViewRor, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.ContextMenuStrip1.ResumeLayout(False)
+        CType(Me.RadBtnCreation, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.VrorBindingSource, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.RORDS, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.RadPanel3, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.RadPanel3.ResumeLayout(False)
+        CType(Me.RadBtnModification, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.RadBtnAbandon, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.RadBtnDetail, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
 
@@ -390,7 +438,7 @@ Partial Class RadFRorListe
     Friend WithEvents RadPanel2 As Telerik.WinControls.UI.RadPanel
     Friend WithEvents RadPanel3 As Telerik.WinControls.UI.RadPanel
     Friend WithEvents RadBtnAbandon As Telerik.WinControls.UI.RadButton
-    Friend WithEvents RadGridView1 As Telerik.WinControls.UI.RadGridView
+    Friend WithEvents RadGridViewRor As Telerik.WinControls.UI.RadGridView
     Friend WithEvents RadBtnCreation As Telerik.WinControls.UI.RadButton
     Friend WithEvents RORDS As RORDS
     Friend WithEvents VrorBindingSource As BindingSource
@@ -407,5 +455,10 @@ Partial Class RadFRorListe
     Friend WithEvents CréationNouvelIntervenantToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents RadBtnModification As Telerik.WinControls.UI.RadButton
     Friend WithEvents ModificationIntervenantToolStripMenuItem As ToolStripMenuItem
+    Friend WithEvents RadBtnAnnuaireProf As Telerik.WinControls.UI.RadButton
+    Friend WithEvents LblVille As Label
+    Friend WithEvents LblAdresse As Label
+    Friend WithEvents LblStructure As Label
+    Friend WithEvents RadBtnDetail As Telerik.WinControls.UI.RadButton
 End Class
 

@@ -117,6 +117,7 @@ Public Class PpsDao
             .AffichageSynthese = Coalesce(reader("oa_pps_affichage_synthese"), False),
             .Commentaire = Coalesce(reader("oa_pps_commentaire"), ""),
             .DateDebut = Coalesce(reader("oa_pps_date_debut"), Nothing),
+            .DateFin = Coalesce(reader("oa_pps_date_fin"), Nothing),
             .Arret = Coalesce(reader("oa_pps_arret"), False),
             .ArretCommentaire = Coalesce(reader("oa_pps_commentaire_arret"), ""),
             .UserCreation = Coalesce(reader("oa_pps_utilisateur_creation"), 0),
@@ -410,6 +411,10 @@ Public Class PpsDao
         End If
 
         If source1.DateDebut <> source2.DateDebut Then
+            Return False
+        End If
+
+        If source1.DateFin <> source2.DateFin Then
             Return False
         End If
 

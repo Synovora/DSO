@@ -1,5 +1,10 @@
 ﻿Public Class Ror
 
+    Public Structure EnumIntervenant
+        Const Intervenants = "Intervenant"
+        Const Structures = "Structure"
+    End Structure
+
     Property Id As Long
     Property SpecialiteId As Long
     Property Nom As String
@@ -23,6 +28,15 @@
     Property DateCreation As Date
     Property UserModification As Long
     Property DateModification As Date
+    Property ExtractionAnnuaire As Boolean
+    Property IdentifiantNational As String
+    Property IdentifiantStructure As String
+    Property CodeModeExercice_r23 As String
+    Property CodeProfessionSante_g15 As Integer
+    Property CodeTypeSavoirFaire_r04 As String
+    Property CodeSavoirFaire As String
+    Property CleReferenceAnnuaire As Long
+
 
     Public Function Clone() As Ror
         Dim newInstance As Ror = DirectCast(Me.MemberwiseClone(), Ror)
