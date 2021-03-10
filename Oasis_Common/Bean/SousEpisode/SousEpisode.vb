@@ -23,6 +23,11 @@ Public Class SousEpisode
     Property lstDetail As List(Of SousEpisodeDetailSousType)
     Property Signature As String
     Property Reference As String
+    'Other Info
+    Property SousTypeLibelle As String
+    Property UserCreate As String
+    Property NbReponse As Long
+    Property NbReponseWaiting As Long
 
     Public Sub New()
     End Sub
@@ -56,7 +61,10 @@ Public Class SousEpisode
 
         Me.Signature = Coalesce(row("signature"), "NaN")
         Me.Reference = Coalesce(row("reference"), "NaN")
-        Console.WriteLine("Build bean: " & row("reference"))
+        Me.SousTypeLibelle = Coalesce(row("sous_type_libelle"), "")
+        Me.UserCreate = Coalesce(row("user_create"), "")
+        Me.NbReponse = Coalesce(row("nb_reponse"), 0)
+        Me.NbReponseWaiting = Coalesce(row("nb_reponse_waiting"), 0)
 
     End Sub
 

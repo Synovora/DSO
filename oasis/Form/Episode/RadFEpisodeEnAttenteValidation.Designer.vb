@@ -129,13 +129,14 @@ Partial Class RadFEpisodeEnAttenteValidation
         GridViewTextBoxColumn9.TextAlignment = System.Drawing.ContentAlignment.MiddleCenter
         GridViewTextBoxColumn9.Width = 80
         GridViewTextBoxColumn10.EnableExpressionEditor = False
-        GridViewTextBoxColumn10.HeaderText = "Sous-episode-reponse"
+        GridViewTextBoxColumn10.HeaderText = "Resultat"
         GridViewTextBoxColumn10.MinWidth = 20
         GridViewTextBoxColumn10.Name = "nombreSousEpisodeReponse"
         GridViewTextBoxColumn10.ReadOnly = True
         GridViewTextBoxColumn10.TextAlignment = System.Drawing.ContentAlignment.MiddleCenter
         GridViewTextBoxColumn10.Width = 80
         Me.RadGridViewEpisode.MasterTemplate.Columns.AddRange(New Telerik.WinControls.UI.GridViewDataColumn() {GridViewTextBoxColumn1, GridViewTextBoxColumn2, GridViewTextBoxColumn3, GridViewTextBoxColumn4, GridViewTextBoxColumn5, GridViewTextBoxColumn6, GridViewTextBoxColumn7, GridViewTextBoxColumn8, GridViewCheckBoxColumn1, GridViewTextBoxColumn9, GridViewTextBoxColumn10})
+        Me.RadGridViewEpisode.MasterTemplate.EnableFiltering = True
         Me.RadGridViewEpisode.MasterTemplate.ViewDefinition = TableViewDefinition1
         Me.RadGridViewEpisode.Name = "RadGridViewEpisode"
         Me.RadGridViewEpisode.RightToLeft = System.Windows.Forms.RightToLeft.No

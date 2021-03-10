@@ -882,47 +882,112 @@ Public Class RadFEpisodeDetail
     '=== Sous-épisodes
     '====================================================================================================================================
     Private Sub ChargementSousEpisode()
-        Dim dt As DataTable
-        dt = sousEpisodeDao.getTableSousEpisode(SelectedEpisodeId,, True)
-
         RadGridViewSousEpisode.Rows.Clear()
 
-        Dim iGrid As Integer = -1
-        Dim rowCount As Integer = dt.Rows.Count - 1
-        For i = 0 To rowCount Step 1
-            iGrid += 1
-            'Ajout d'une ligne au DataGridView
+
+        Dim sousEpisodeList = sousEpisodeDao.getLstSousEpisode(SelectedEpisodeId, , True)
+
+
+        'Dim dt As DataTable
+
+
+        'dt = sousEpisodeDao.getTableSousEpisode(SelectedEpisodeId,, True)
+
+        Dim sousEpisodeSousTypeDao As SousEpisodeSousTypeDao = New SousEpisodeSousTypeDao
+        Dim sousEpisodeSousSousTypeDao As SousEpisodeSousSousTypeDao = New SousEpisodeSousSousTypeDao
+
+        Dim lstSousEpisodeSousType = sousEpisodeSousTypeDao.getLstSousEpisodeSousType()
+        Dim lstSousEpisodeSousSousType = sousEpisodeSousSousTypeDao.getLstSousEpisodeSousSousType()
+
+        Dim iGrid As Integer = 0
+        For Each sousEpisode As SousEpisode In sousEpisodeList
+            Dim Text = ""
             RadGridViewSousEpisode.Rows.Add(iGrid)
-            RadGridViewSousEpisode.Rows(iGrid).Cells("id").Value = dt.Rows(i)("id")
-            RadGridViewSousEpisode.Rows(iGrid).Cells("sousType").Value = dt.Rows(i)("sous_type_libelle")
-            RadGridViewSousEpisode.Rows(iGrid).Cells("CreateUser").Value = dt.Rows(i)("user_create")
-            RadGridViewSousEpisode.Rows(iGrid).Cells("LastUpdateUser").Value = dt.Rows(i)("user_update")
-            RadGridViewSousEpisode.Rows(iGrid).Cells("ValidateUser").Value = dt.Rows(i)("user_validate")
-            RadGridViewSousEpisode.Rows(iGrid).Cells("isSigne").Value = Not IsDBNull(dt.Rows(i)("horodate_validate"))
-            RadGridViewSousEpisode.Rows(iGrid).Cells("isReponseRecue").Value = Coalesce(dt.Rows(i)("is_reponse_recue"), False)
-            If RadGridViewSousEpisode.Rows(iGrid).Cells("isReponseRecue").Value = True Then
+            RadGridViewSousEpisode.Rows(iGrid).Cells("id").Value = sousEpisode.Id
+            RadGridViewSousEpisode.Rows(iGrid).Cells("sousType").Value = sousEpisode.SousTypeLibelle
+            RadGridViewSousEpisode.Rows(iGrid).Cells("CreateUser").Value = sousEpisode.UserCreate
+            RadGridViewSousEpisode.Rows(iGrid).Cells("isSigne").Value = Not IsDBNull(sousEpisode.HorodateValidate)
+
+            If Not IsDBNull(sousEpisode.HorodateValidate) And (sousEpisode.NbReponseWaiting = 0 Or sousEpisode.IsReponse = False) Then
                 'Vert
                 RadGridViewSousEpisode.Rows(iGrid).Cells("sousType").Style.ForeColor = Color.Green
             Else
                 If RadGridViewSousEpisode.Rows(iGrid).Cells("isSigne").Value = True Then
                     'Noir
-
+                    RadGridViewSousEpisode.Rows(iGrid).Cells("sousType").Style.ForeColor = Color.Black
                 Else
                     'Rouge
                     RadGridViewSousEpisode.Rows(iGrid).Cells("sousType").Style.ForeColor = Color.Red
                 End If
             End If
-            ' -- on garnit le tag pour affichage tooltip
-            RadGridViewSousEpisode.Rows(iGrid).Tag = "Créé le " & dt.Rows(i)("horodate_creation") & " par " & dt.Rows(i)("user_create") & vbCrLf &
-                        If(IsDBNull(dt.Rows(i)("horodate_last_update")), "Non modifié.", "Modifié le " & dt.Rows(i)("horodate_last_update") & " par " & dt.Rows(i)("user_update")) & vbCrLf &
-                        If(IsDBNull(dt.Rows(i)("horodate_validate")), "Non Signé.", "Signé le " & dt.Rows(i)("horodate_validate") & " par " & dt.Rows(i)("user_validate")) & vbCrLf &
-                        If(Coalesce(dt.Rows(i)("is_ald"), False), " ... ALD" & vbCrLf, "") &
-                        If(Coalesce(dt.Rows(i)("is_reponse"), False) AndAlso Coalesce(dt.Rows(i)("is_reponse_recue"), False) = False,
-                                         " ... Résultat requis sous " & dt.Rows(i)("delai_since_validation") & " j à partir de la date de signature" & vbCrLf, "") &
-                        If(Coalesce(dt.Rows(i)("is_reponse_recue"), False) AndAlso Coalesce(dt.Rows(i)("is_reponse"), False),
-                                        " ... Dernier résultat reçu le  " & dt.Rows(i)("horodate_last_recu"),
-                                        If(Coalesce(dt.Rows(i)("is_reponse"), False), " ... Résultat NON reçu ..." & vbCrLf, ""))
+
+            For Each sousEpisodeSousType As SousEpisodeSousType In lstSousEpisodeSousType
+                If sousEpisodeSousType.Id <> sousEpisode.IdSousEpisodeSousType Then Continue For
+                For Each sousEpisodeSousSousType As SousEpisodeSousSousType In lstSousEpisodeSousSousType
+                    'If sousEpisodeSousSousType.IdSousEpisodeSousType <> dt.Rows(i)("id_sous_episode_sous_type") Then Continue For
+                    If sousEpisodeSousSousType.IdSousEpisodeSousType <> sousEpisodeSousType.Id Then Continue For
+                    'If sousEpisode.IsThisSousSousTypePresent(sousEpisodeSousSousType.Id) = False Then Continue For
+                    Text += sousEpisodeSousSousType.Libelle & vbCrLf
+                    Console.WriteLine(Text)
+                Next
+            Next
+
+            RadGridViewSousEpisode.Rows(iGrid).Cells("state").Value = If(sousEpisode.NbReponseWaiting = 0 And sousEpisode.NbReponse > 0, "v", If(sousEpisode.NbReponseWaiting > 1, "x", If(sousEpisode.NbReponseWaiting <> 0, "!", " ")))
+            RadGridViewSousEpisode.Rows(iGrid).Cells("sousType").Tag = Text
+            'RadGridViewSousEpisode.Rows(iGrid).Cells("state").Tag = "v = complet" & vbCrLf & "! = en attente de reception" & vbCrLf & "m = en attente de validation medicale" & vbCrLf & "x = en attente de validation"
+
+            iGrid += 1
         Next
+
+        'Dim iGrid As Integer = -1
+        'Dim rowCount As Integer = dt.Rows.Count - 1
+        'For i = 0 To rowCount Step 1
+        '    iGrid += 1
+        '    Dim Text = ""
+        '    'Ajout d'une ligne au DataGridView
+        '    RadGridViewSousEpisode.Rows.Add(iGrid)
+        '    RadGridViewSousEpisode.Rows(iGrid).Cells("id").Value = dt.Rows(i)("id")
+        '    RadGridViewSousEpisode.Rows(iGrid).Cells("sousType").Value = dt.Rows(i)("sous_type_libelle")
+        '    RadGridViewSousEpisode.Rows(iGrid).Cells("CreateUser").Value = dt.Rows(i)("user_create")
+        '    RadGridViewSousEpisode.Rows(iGrid).Cells("LastUpdateUser").Value = dt.Rows(i)("user_update")
+        '    RadGridViewSousEpisode.Rows(iGrid).Cells("ValidateUser").Value = dt.Rows(i)("user_validate")
+        '    RadGridViewSousEpisode.Rows(iGrid).Cells("isSigne").Value = Not IsDBNull(dt.Rows(i)("horodate_validate"))
+        '    RadGridViewSousEpisode.Rows(iGrid).Cells("isReponseRecue").Value = Coalesce(dt.Rows(i)("is_reponse_recue"), False)
+        '    If Not IsDBNull(dt.Rows(i)("horodate_validate")) And (dt.Rows(i)("nb_reponse_waiting") = 0 Or dt.Rows(i)("is_reponse") = False) Then
+        '        'Vert
+        '        RadGridViewSousEpisode.Rows(iGrid).Cells("sousType").Style.ForeColor = Color.Green
+        '    Else
+        '        If RadGridViewSousEpisode.Rows(iGrid).Cells("isSigne").Value = True Then
+        '            'Noir
+        '            RadGridViewSousEpisode.Rows(iGrid).Cells("sousType").Style.ForeColor = Color.Black
+        '        Else
+        '            'Rouge
+        '            RadGridViewSousEpisode.Rows(iGrid).Cells("sousType").Style.ForeColor = Color.Red
+        '        End If
+        '    End If
+        '    RadGridViewSousEpisode.Rows(iGrid).Cells("state").Value = If(dt.Rows(i)("nb_reponse_waiting") = 0 And dt.Rows(i)("nb_reponse") > 0, "v", If(dt.Rows(i)("nb_reponse_waiting") > 1, "x", If(dt.Rows(i)("nb_reponse_waiting") <> 0, "!", " ")))
+
+        '    For Each sousEpisodeSousType As SousEpisodeSousType In lstSousEpisodeSousType
+        '        If sousEpisodeSousType.Id <> dt.Rows(i)("id_sous_episode_sous_type") Then Continue For
+        '        For Each sousEpisodeSousSousType As SousEpisodeSousSousType In lstSousEpisodeSousSousType
+        '            If sousEpisodeSousSousType.IdSousEpisodeSousType <> dt.Rows(i)("id_sous_episode_sous_type") Then Continue For
+        '            If sousEpisodeSousSousType.IdSousEpisodeSousType <> sousEpisodeSousType.Id Then Continue For
+        '            Text += sousEpisodeSousSousType.Libelle & vbCrLf
+        '            Console.WriteLine(Text)
+        '        Next
+        '    Next
+
+        '    ' -- on garnit le tag pour affichage tooltip
+        '    RadGridViewSousEpisode.Rows(iGrid).Tag = "Créé le " & dt.Rows(i)("horodate_creation") & " par " & dt.Rows(i)("user_create") & vbCrLf &
+        '                If(IsDBNull(dt.Rows(i)("horodate_last_update")), "Non modifié.", "Modifié le " & dt.Rows(i)("horodate_last_update") & " par " & dt.Rows(i)("user_update")) & vbCrLf &
+        '                If(IsDBNull(dt.Rows(i)("horodate_validate")), "Non Signé.", "Signé le " & dt.Rows(i)("horodate_validate") & " par " & dt.Rows(i)("user_validate")) & vbCrLf &
+        '                If(Coalesce(dt.Rows(i)("is_ald"), False), " ... ALD" & vbCrLf, "") &
+        '                If(Coalesce(dt.Rows(i)("is_reponse"), False) AndAlso Coalesce(dt.Rows(i)("is_reponse_recue"), False) = False,
+        '                                 " ... Résultat requis sous " & dt.Rows(i)("delai_since_validation") & " j à partir de la date de signature" & vbCrLf, "") &
+        '                If(Coalesce(dt.Rows(i)("is_reponse_recue"), False) AndAlso Coalesce(dt.Rows(i)("is_reponse"), False),
+        '                                " ... Dernier résultat reçu le  " & dt.Rows(i)("horodate_last_recu"),
+        '                                If(Coalesce(dt.Rows(i)("is_reponse"), False), " ... Résultat NON reçu ..." & vbCrLf, "")) & vbCrLf & Text
+        'Next
 
         'Positionnement du grid sur la première occurrence
         If RadGridViewSousEpisode.Rows.Count > 0 Then
@@ -931,21 +996,10 @@ Public Class RadFEpisodeDetail
         End If
     End Sub
 
-    Private Sub RadGridViewSousEpisode_CellFormatting(sender As Object, e As CellFormattingEventArgs) Handles RadGridViewSousEpisode.CellFormatting
-        If TypeOf e.Row Is GridViewDataRowInfo Then
-            Try
-                If e.Row.Tag <> Nothing Then e.CellElement.ToolTipText = e.Row.Tag
-            Catch ex As Exception
-
-            End Try
-        End If
-        ' --- on enleve le carre des checkbox
-        Dim checkBoxCell As GridCheckBoxCellElement = TryCast(e.CellElement, GridCheckBoxCellElement)
-        If checkBoxCell IsNot Nothing Then
-            Dim editor As RadCheckBoxEditor = TryCast(checkBoxCell.Editor, RadCheckBoxEditor)
-            Dim element As RadCheckBoxEditorElement = TryCast(editor.EditorElement, RadCheckBoxEditorElement)
-            element.Checkmark.Border.Visibility = ElementVisibility.Collapsed
-            element.Checkmark.Fill.Visibility = ElementVisibility.Collapsed
+    Private Sub RadGridViewSousEpisode_ToolTipTextNeeded(sender As Object, e As ToolTipTextNeededEventArgs) Handles RadGridViewSousEpisode.ToolTipTextNeeded
+        Dim hoveredCell As GridDataCellElement = TryCast(sender, GridDataCellElement)
+        If hoveredCell IsNot Nothing AndAlso hoveredCell.ColumnInfo.Name = "state" Then
+            e.ToolTipText = "v = complet" & vbCrLf & "! = en attente de reception" & vbCrLf & "m = en attente de validation medicale" & vbCrLf & "x = en attente de validation"
         End If
     End Sub
 
@@ -5140,6 +5194,10 @@ Public Class RadFEpisodeDetail
     End Sub
 
     Private Sub RadPanel12_Paint(sender As Object, e As PaintEventArgs) Handles RadPanel12.Paint
+
+    End Sub
+
+    Private Sub RadGridViewSousEpisode_Click(sender As Object, e As EventArgs) Handles RadGridViewSousEpisode.Click
 
     End Sub
 

@@ -160,6 +160,8 @@ Public Class FrmSousEpisode
         Select Case gce.ColumnInfo.Name.ToLower
             Case "telecharger"
                 TelechargerReponse(gce)
+            Case "valider"
+                ValiderReponse(gce)
             Case "supprimer"
                 supprimer(gce)
         End Select
@@ -225,6 +227,13 @@ Public Class FrmSousEpisode
 
     End Sub
 
+    Private Sub validerReponse(gce As GridCommandCellElement)
+        If MsgBox("Etes-vous sur de vouloir valider ce fichier ?", MsgBoxStyle.YesNo Or MsgBoxStyle.DefaultButton2 Or MsgBoxStyle.Information, "Validation") = MsgBoxResult.Yes Then
+            sousEpisodeReponseDao.valider(gce.RowInfo.Cells("Id").Value)
+            refreshGrid()
+        End If
+    End Sub
+
     Private Sub supprimer(gce As GridCommandCellElement)
         If MsgBox("Etes-vous sur de vouloir supprimer ce fichier ?", MsgBoxStyle.YesNo Or MsgBoxStyle.DefaultButton2 Or MsgBoxStyle.Critical, "Suppression") = MsgBoxResult.Yes Then
             Dim isDernier As Boolean = Me.RadReponseGrid.Rows.Count < 2
@@ -253,6 +262,8 @@ Public Class FrmSousEpisode
         End If
 
     End Sub
+
+    'TODO: Paramedical / Medical
 
     ''' <summary>
     ''' 
@@ -388,7 +399,7 @@ Public Class FrmSousEpisode
                     .Cells("CreateUser").Value = row("user_create")
                     .Cells("commentaire").Value = row("commentaire")
                     .Cells("NomFichier").Value = row("nom_fichier")
-
+                    .Cells("NomFichier").Style.ForeColor = If(row("validate_state") = "v", Color.Green, If(row("validate_state") = "!", Color.Red, Color.Black))
                     ' -- on garnit le tag pour affichage tooltip
                     '                    RadTacheToTreatGrid.Rows.Last.Tag = " << " & .Cells("type").Value & " >>" & vbCrLf &
                     '                    If (Coalesce(row("is_ald"), False), " --> ALD" & vbCrLf, "") &
@@ -398,9 +409,7 @@ Public Class FrmSousEpisode
                     '                                " ------------------------------------------" & vbCrLf &
                     '                    row("commentaire") & vbCrLfThenThenThen
                 End With
-
                 numRowGrid += 1
-
             Next
             ' -- positionnement a la ligne la plus proche de la precedente
             If data.Rows.Count > 0 Then
@@ -704,6 +713,10 @@ Public Class FrmSousEpisode
         If e.Column.Name = "ChkALD" Then
             e.Row.Cells("ChkChoice").Value = e.Value
         End If
+    End Sub
+
+    Private Sub RadSousSousTypeGrid_Click(sender As Object, e As EventArgs) Handles RadSousSousTypeGrid.Click
+
     End Sub
 
     ''' <summary>

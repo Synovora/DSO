@@ -276,6 +276,18 @@
     <Import Include="Telerik.WinControls.Design" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Form\AnnuaireProfessionnel\RadFAnnuaireProfessionneldetail.Designer.vb">
+      <DependentUpon>RadFAnnuaireProfessionneldetail.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Form\AnnuaireProfessionnel\RadFAnnuaireProfessionneldetail.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form\AnnuaireProfessionnel\RadFAnnuaireProfessionnelSelect.Designer.vb">
+      <DependentUpon>RadFAnnuaireProfessionnelSelect.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Form\AnnuaireProfessionnel\RadFAnnuaireProfessionnelSelect.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Form\DRC\RadFAutoSuivi.Designer.vb">
       <DependentUpon>RadFAutoSuivi.vb</DependentUpon>
     </Compile>
@@ -287,6 +299,12 @@
       <DependentUpon>FrmEtatJournalier.vb</DependentUpon>
     </Compile>
     <Compile Include="Form\EtatJournalier\FrmEtatJournalier.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form\Mail\RadFMailEdit.Designer.vb">
+      <DependentUpon>RadFMailEdit.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Form\Mail\RadFMailEdit.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Form\RendezVous\RadFListeIntervenantSansRDV.Designer.vb">
@@ -559,6 +577,18 @@
       <DependentUpon>RadFDeclarationAllergieEtCIDetail.vb</DependentUpon>
     </Compile>
     <Compile Include="Form\Traitement\RadFDeclarationAllergieEtCIDetail.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form\Tutoriel\RadFTutoriel.Designer.vb">
+      <DependentUpon>RadFTutoriel.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Form\Tutoriel\RadFTutoriel.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form\Tutoriel\RadFWebBrowser.Designer.vb">
+      <DependentUpon>RadFWebBrowser.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Form\Tutoriel\RadFWebBrowser.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Form\utilisateur\FrmChangePassword.Designer.vb">
@@ -1008,11 +1038,20 @@
     <Compile Include="Settings.vb" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Form\AnnuaireProfessionnel\RadFAnnuaireProfessionneldetail.resx">
+      <DependentUpon>RadFAnnuaireProfessionneldetail.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form\AnnuaireProfessionnel\RadFAnnuaireProfessionnelSelect.resx">
+      <DependentUpon>RadFAnnuaireProfessionnelSelect.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Form\DRC\RadFAutoSuivi.resx">
       <DependentUpon>RadFAutoSuivi.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Form\EtatJournalier\FrmEtatJournalier.resx">
       <DependentUpon>FrmEtatJournalier.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form\Mail\RadFMailEdit.resx">
+      <DependentUpon>RadFMailEdit.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Form\RendezVous\RadFListeIntervenantSansRDV.resx">
       <DependentUpon>RadFListeIntervenantSansRDV.vb</DependentUpon>
@@ -1136,6 +1175,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Form\Traitement\RadFDeclarationAllergieEtCIDetail.resx">
       <DependentUpon>RadFDeclarationAllergieEtCIDetail.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form\Tutoriel\RadFTutoriel.resx">
+      <DependentUpon>RadFTutoriel.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form\Tutoriel\RadFWebBrowser.resx">
+      <DependentUpon>RadFWebBrowser.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Form\utilisateur\FrmChangePassword.resx">
       <DependentUpon>FrmChangePassword.vb</DependentUpon>
