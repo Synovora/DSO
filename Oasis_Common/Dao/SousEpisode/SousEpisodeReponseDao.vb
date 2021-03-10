@@ -128,8 +128,8 @@ Public Class SousEpisodeReponseDao
 
         Try
             Dim SQLstring As String = "INSERT INTO oasis.oa_sous_episode_reponse " &
-                    "(id_sous_episode, create_user_id, horodate_creation, nom_fichier, commentaire)" &
-            " VALUES (@id_sous_episode, @CreateUser, @dateCreation, @NomFichier , @Commentaire); SELECT SCOPE_IDENTITY()"
+                    "(id_sous_episode, create_user_id, horodate_creation, nom_fichier, commentaire, validate_state, episode_id)" &
+            " VALUES (@id_sous_episode, @CreateUser, @dateCreation, @NomFichier , @Commentaire, @ValidateState, (SELECT episode_id FROM oasis.oa_sous_episode WHERE id = @id_sous_episode)); SELECT SCOPE_IDENTITY()"
 
             Dim cmd As New SqlCommand(SQLstring, con, transaction)
             With cmd.Parameters
@@ -138,6 +138,7 @@ Public Class SousEpisodeReponseDao
                 .AddWithValue("@dateCreation", sousEpisodeReponse.HorodateCreation)
                 .AddWithValue("@NomFichier", sousEpisodeReponse.NomFichier)
                 .AddWithValue("@Commentaire", sousEpisodeReponse.Commentaire)
+                .AddWithValue("@ValidateState", "!")
             End With
 
             da.InsertCommand = cmd
