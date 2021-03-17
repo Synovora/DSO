@@ -509,7 +509,7 @@ Public Class EpisodeDao
                         " AND horodate_validate is NULL) AS SSP(TotalSSP)" &
                     " OUTER APPLY (Select COUNT(*) FROM oasis.oasis.oa_sous_episode_reponse SER" &
                         " WHERE SER.episode_id = E.episode_id" &
-                        " AND validate_state = '!') AS SER(totalSER)" &
+                        " AND (validate_state = '!' Or validate_state = 'm')) AS SER(totalSER)" &
                     " WHERE (E.etat = '" & Episode.EnumEtatEpisode.EN_COURS.ToString & "' OR E.etat = '" & Episode.EnumEtatEpisode.CLOTURE.ToString & "')" &
                     " AND (E.[type] = '" & Episode.EnumTypeEpisode.CONSULTATION.ToString & "' OR E.[type] = '" & Episode.EnumTypeEpisode.VIRTUEL.ToString & "')" &
                     " AND (inactif = 'False' OR inactif is Null)" &

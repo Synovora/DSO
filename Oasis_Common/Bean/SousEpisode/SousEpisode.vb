@@ -28,6 +28,7 @@ Public Class SousEpisode
     Property UserCreate As String
     Property NbReponse As Long
     Property NbReponseWaiting As Long
+    Property NbMedReponseWaiting As Long
 
     Public Sub New()
     End Sub
@@ -46,8 +47,8 @@ Public Class SousEpisode
         Me.LastUpdateUserId = Coalesce(row("last_update_user_id"), 0)
         Me.HorodateLastUpdate = Coalesce(row("horodate_last_update"), Nothing)
 
-        Me.ValidateUserId = Coalesce(row("Validate_user_id"), 0)
-        Me.HorodateValidate = Coalesce(row("horodate_Validate"), Nothing)
+        Me.ValidateUserId = Coalesce(row("validate_user_id"), 0)
+        Me.HorodateValidate = Coalesce(row("horodate_validate"), Nothing)
 
         Me.Commentaire = Coalesce(row("commentaire"), "")
 
@@ -65,6 +66,7 @@ Public Class SousEpisode
         Me.UserCreate = Coalesce(row("user_create"), "")
         Me.NbReponse = Coalesce(row("nb_reponse"), 0)
         Me.NbReponseWaiting = Coalesce(row("nb_reponse_waiting"), 0)
+        Me.NbMedReponseWaiting = Coalesce(row("nb_med_reponse_waiting"), 0)
 
     End Sub
 

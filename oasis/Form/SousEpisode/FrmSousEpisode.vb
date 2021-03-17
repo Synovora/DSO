@@ -8,6 +8,7 @@ Imports Telerik.WinControls.UI
 Imports Telerik.WinForms.Documents.FormatProviders.OpenXml.Docx
 Imports Telerik.WinForms.Documents.Model
 
+
 Public Class FrmSousEpisode
 
     Dim sousEpisodeDao As SousEpisodeDao = New SousEpisodeDao
@@ -161,7 +162,9 @@ Public Class FrmSousEpisode
             Case "telecharger"
                 TelechargerReponse(gce)
             Case "valider"
-                ValiderReponse(gce)
+                validerReponse(gce)
+            Case "askvalider"
+                askValiderReponse(gce)
             Case "supprimer"
                 supprimer(gce)
         End Select
@@ -227,9 +230,16 @@ Public Class FrmSousEpisode
 
     End Sub
 
+    Private Sub askValiderReponse(gce As GridCommandCellElement)
+        If MsgBox("Etes-vous sur de vouloir demander une validation medicale de ce fichier ?", MsgBoxStyle.YesNo Or MsgBoxStyle.DefaultButton2 Or MsgBoxStyle.Information, "Validation") = MsgBoxResult.Yes Then
+            sousEpisodeReponseDao.askValider(gce.RowInfo.Cells("Id").Value, userLog)
+            refreshGrid()
+        End If
+    End Sub
+
     Private Sub validerReponse(gce As GridCommandCellElement)
         If MsgBox("Etes-vous sur de vouloir valider ce fichier ?", MsgBoxStyle.YesNo Or MsgBoxStyle.DefaultButton2 Or MsgBoxStyle.Information, "Validation") = MsgBoxResult.Yes Then
-            sousEpisodeReponseDao.valider(gce.RowInfo.Cells("Id").Value)
+            sousEpisodeReponseDao.valider(gce.RowInfo.Cells("Id").Value, userLog)
             refreshGrid()
         End If
     End Sub
@@ -325,7 +335,20 @@ Public Class FrmSousEpisode
 
         '-- handler sur boutons grid reponse
         AddHandler RadReponseGrid.CommandCellClick, AddressOf gridReponse_CommandCellClick
+        AddHandler RadReponseGrid.CellFormatting, AddressOf RadReponseGrid_CellFormatting
 
+    End Sub
+
+    Private Sub RadReponseGrid_CellFormatting(ByVal sender As Object, ByVal e As CellFormattingEventArgs)
+        e.CellElement.Enabled = True
+
+        If e.RowIndex > -1 AndAlso e.Column.Name = "Valider" Or e.Column.Name = "AskValider" Then
+            If (e.Row.Cells("NomFichier").Style.ForeColor) = Color.Green Or (e.Column.Name = "AskValider" And (e.Row.Cells("NomFichier").Style.ForeColor) = Color.Orange) Then
+                e.CellElement.Enabled = False
+            Else
+                e.CellElement.Enabled = True
+            End If
+        End If
     End Sub
     ''' <summary>
     ''' 
@@ -399,7 +422,11 @@ Public Class FrmSousEpisode
                     .Cells("CreateUser").Value = row("user_create")
                     .Cells("commentaire").Value = row("commentaire")
                     .Cells("NomFichier").Value = row("nom_fichier")
-                    .Cells("NomFichier").Style.ForeColor = If(row("validate_state") = "v", Color.Green, If(row("validate_state") = "!", Color.Red, Color.Black))
+                    .Cells("NomFichier").Style.ForeColor = If(row("validate_state") = "v", Color.Green, If(row("validate_state") = "!", Color.Red, If(row("validate_state") = "m", Color.Orange, Color.Black)))
+                    '.Cells("Valider").Value = "Tests"
+                    .Cells("AskValider").ColumnInfo.IsVisible = If(userLog.TypeProfil = ProfilDao.EnumProfilType.PARAMEDICAL.ToString, True, False)
+
+                    'userLog.TypeProfil = ProfilDao.EnumProfilType.PARAMEDICAL.ToString
                     ' -- on garnit le tag pour affichage tooltip
                     '                    RadTacheToTreatGrid.Rows.Last.Tag = " << " & .Cells("type").Value & " >>" & vbCrLf &
                     '                    If (Coalesce(row("is_ald"), False), " --> ALD" & vbCrLf, "") &

@@ -71,7 +71,7 @@ Public Class SousEpisodeReponseDao
         End Using
     End Function
 
-    Public Sub valider(sousEpisodeReponseId As Long)
+    Public Sub valider(sousEpisodeReponseId As Long, userLog As Utilisateur)
         Dim da As SqlDataAdapter = New SqlDataAdapter()
         Dim codeRetour As Boolean = True
         Dim con As SqlConnection
@@ -84,7 +84,41 @@ Public Class SousEpisodeReponseDao
             Dim cmd = New SqlCommand(SQLstring, con, transaction)
             With cmd.Parameters
                 .AddWithValue("@id", sousEpisodeReponseId)
-                .AddWithValue("@validateUserId", 0)
+                .AddWithValue("@validateUserId", userLog.UtilisateurId)
+                .AddWithValue("@validateDate", DateTime.Now)
+            End With
+            da.UpdateCommand = cmd
+            Dim nbUpdate = da.UpdateCommand.ExecuteNonQuery()
+            If nbUpdate <> 1 Then
+                Throw New Exception("Problème : Enregistrements mouvementés : " & nbUpdate & " au lieu de 1 !")
+            End If
+
+            transaction.Commit()
+
+        Catch ex As Exception
+            transaction.Rollback()
+            Throw New Exception(ex.Message)
+            codeRetour = False
+        Finally
+            transaction.Dispose()
+            con.Close()
+        End Try
+    End Sub
+
+    Public Sub askValider(sousEpisodeReponseId As Long, userLog As Utilisateur)
+        Dim da As SqlDataAdapter = New SqlDataAdapter()
+        Dim codeRetour As Boolean = True
+        Dim con As SqlConnection
+
+        con = GetConnection()
+        Dim transaction As SqlClient.SqlTransaction = con.BeginTransaction
+
+        Try
+            Dim SQLstring = "UPDATE oasis.oa_sous_episode_reponse SET validate_state = 'm', validate_user_id = @validateUserId, validate_date = @validateDate WHERE id = @id"
+            Dim cmd = New SqlCommand(SQLstring, con, transaction)
+            With cmd.Parameters
+                .AddWithValue("@id", sousEpisodeReponseId)
+                .AddWithValue("@validateUserId", userLog.UtilisateurId)
                 .AddWithValue("@validateDate", DateTime.Now)
             End With
             da.UpdateCommand = cmd

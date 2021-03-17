@@ -878,6 +878,16 @@ Public Class RadFEpisodeDetail
         Me.Enabled = True
     End Sub
 
+    Private Sub RadGridViewSousEpisode_ToolTipTextNeeded(sender As Object, e As ToolTipTextNeededEventArgs) Handles RadGridViewSousEpisode.ToolTipTextNeeded
+        Dim hoveredCell As GridDataCellElement = TryCast(sender, GridDataCellElement)
+        If hoveredCell IsNot Nothing AndAlso hoveredCell.ColumnInfo.Name = "state" Then
+            e.ToolTipText = "v = complet" & vbCrLf & "! = en attente de reception" & vbCrLf & "m = en attente de validation medicale" & vbCrLf & "x = en attente de validation"
+        End If
+        If hoveredCell IsNot Nothing AndAlso hoveredCell.ColumnInfo.Name = "sousType" Then
+            e.ToolTipText = hoveredCell.RowInfo.Cells("sousType").Tag
+        End If
+    End Sub
+
     '====================================================================================================================================
     '=== Sous-épisodes
     '====================================================================================================================================
@@ -893,6 +903,7 @@ Public Class RadFEpisodeDetail
 
         'dt = sousEpisodeDao.getTableSousEpisode(SelectedEpisodeId,, True)
 
+        Dim sousEpisodeDetailSousTypeDao As SousEpisodeDetailSousTypeDao = New SousEpisodeDetailSousTypeDao
         Dim sousEpisodeSousTypeDao As SousEpisodeSousTypeDao = New SousEpisodeSousTypeDao
         Dim sousEpisodeSousSousTypeDao As SousEpisodeSousSousTypeDao = New SousEpisodeSousSousTypeDao
 
@@ -907,34 +918,35 @@ Public Class RadFEpisodeDetail
             RadGridViewSousEpisode.Rows(iGrid).Cells("sousType").Value = sousEpisode.SousTypeLibelle
             RadGridViewSousEpisode.Rows(iGrid).Cells("CreateUser").Value = sousEpisode.UserCreate
             RadGridViewSousEpisode.Rows(iGrid).Cells("isSigne").Value = Not IsDBNull(sousEpisode.HorodateValidate)
+            RadGridViewSousEpisode.Rows(iGrid).Cells("isReponseRecue").Value = sousEpisode.IsReponseRecue
+            sousEpisode.lstDetail = sousEpisodeDetailSousTypeDao.getLstSousEpisodeDetailSousType(sousEpisode.Id)
 
-            If Not IsDBNull(sousEpisode.HorodateValidate) And (sousEpisode.NbReponseWaiting = 0 Or sousEpisode.IsReponse = False) Then
-                'Vert
-                RadGridViewSousEpisode.Rows(iGrid).Cells("sousType").Style.ForeColor = Color.Green
-            Else
-                If RadGridViewSousEpisode.Rows(iGrid).Cells("isSigne").Value = True Then
+            If Not IsDBNull(sousEpisode.HorodateValidate) Then
+                If (sousEpisode.NbReponseWaiting = 0 And sousEpisode.NbMedReponseWaiting = 0 And sousEpisode.NbReponse <> 0) Or sousEpisode.IsReponse = False Then
+                    'Vert
+                    RadGridViewSousEpisode.Rows(iGrid).Cells("sousType").Style.ForeColor = Color.Green
+                Else
                     'Noir
                     RadGridViewSousEpisode.Rows(iGrid).Cells("sousType").Style.ForeColor = Color.Black
-                Else
-                    'Rouge
-                    RadGridViewSousEpisode.Rows(iGrid).Cells("sousType").Style.ForeColor = Color.Red
                 End If
+            Else
+                'Rouge
+                RadGridViewSousEpisode.Rows(iGrid).Cells("sousType").Style.ForeColor = Color.Red
             End If
 
             For Each sousEpisodeSousType As SousEpisodeSousType In lstSousEpisodeSousType
                 If sousEpisodeSousType.Id <> sousEpisode.IdSousEpisodeSousType Then Continue For
                 For Each sousEpisodeSousSousType As SousEpisodeSousSousType In lstSousEpisodeSousSousType
-                    'If sousEpisodeSousSousType.IdSousEpisodeSousType <> dt.Rows(i)("id_sous_episode_sous_type") Then Continue For
                     If sousEpisodeSousSousType.IdSousEpisodeSousType <> sousEpisodeSousType.Id Then Continue For
-                    'If sousEpisode.IsThisSousSousTypePresent(sousEpisodeSousSousType.Id) = False Then Continue For
+                    If sousEpisode.IsThisSousSousTypePresent(sousEpisodeSousSousType.Id) = False Then Continue For
                     Text += sousEpisodeSousSousType.Libelle & vbCrLf
-                    Console.WriteLine(Text)
                 Next
             Next
 
-            RadGridViewSousEpisode.Rows(iGrid).Cells("state").Value = If(sousEpisode.NbReponseWaiting = 0 And sousEpisode.NbReponse > 0, "v", If(sousEpisode.NbReponseWaiting > 1, "x", If(sousEpisode.NbReponseWaiting <> 0, "!", " ")))
             RadGridViewSousEpisode.Rows(iGrid).Cells("sousType").Tag = Text
-            'RadGridViewSousEpisode.Rows(iGrid).Cells("state").Tag = "v = complet" & vbCrLf & "! = en attente de reception" & vbCrLf & "m = en attente de validation medicale" & vbCrLf & "x = en attente de validation"
+            RadGridViewSousEpisode.Rows(iGrid).Cells("state").Value = If(sousEpisode.IsReponse = False, "", If(sousEpisode.NbReponse = 0, "!", If(sousEpisode.NbMedReponseWaiting > 0, "m", If(sousEpisode.NbReponseWaiting = 0, "v", "x"))))
+
+            Console.WriteLine(Text)
 
             iGrid += 1
         Next
@@ -993,13 +1005,6 @@ Public Class RadFEpisodeDetail
         If RadGridViewSousEpisode.Rows.Count > 0 Then
             RadGridViewSousEpisode.CurrentRow = RadGridViewSousEpisode.ChildRows(0)
             RadGridViewSousEpisode.TableElement.VScrollBar.Value = 0
-        End If
-    End Sub
-
-    Private Sub RadGridViewSousEpisode_ToolTipTextNeeded(sender As Object, e As ToolTipTextNeededEventArgs) Handles RadGridViewSousEpisode.ToolTipTextNeeded
-        Dim hoveredCell As GridDataCellElement = TryCast(sender, GridDataCellElement)
-        If hoveredCell IsNot Nothing AndAlso hoveredCell.ColumnInfo.Name = "state" Then
-            e.ToolTipText = "v = complet" & vbCrLf & "! = en attente de reception" & vbCrLf & "m = en attente de validation medicale" & vbCrLf & "x = en attente de validation"
         End If
     End Sub
 
