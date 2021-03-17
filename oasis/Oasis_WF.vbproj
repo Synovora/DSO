@@ -513,6 +513,12 @@
     <Compile Include="Form\RendezVous\RadFTacheModificationRendezVous.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="Form\SousEpisode\FrmSousEpisodeReponseAttribution.Designer.vb">
+      <DependentUpon>FrmSousEpisodeReponseAttribution.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Form\SousEpisode\FrmSousEpisodeReponseAttribution.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Form\SousEpisode\FrmTestDynamiqueDocument.Designer.vb">
       <DependentUpon>FrmTestDynamiqueDocument.vb</DependentUpon>
     </Compile>
@@ -1142,6 +1148,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Form\RendezVous\RadFTacheModificationRendezVous.resx">
       <DependentUpon>RadFTacheModificationRendezVous.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form\SousEpisode\FrmSousEpisodeReponseAttribution.resx">
+      <DependentUpon>FrmSousEpisodeReponseAttribution.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Form\SousEpisode\FrmTestDynamiqueDocument.resx">
       <DependentUpon>FrmTestDynamiqueDocument.vb</DependentUpon>
