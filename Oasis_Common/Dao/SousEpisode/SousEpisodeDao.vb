@@ -165,7 +165,7 @@ Public Class SousEpisodeDao
     End Function
 
     Public Function FormatPrenom(prenom As String) As String
-        Return prenom.Substring(0, 5).PadRight(5, "X").ToUpper()
+        Return prenom.PadRight(5, "X").Substring(0, 5).ToUpper()
     End Function
 
     Public Function Create(sousEpisode As SousEpisode) As Boolean

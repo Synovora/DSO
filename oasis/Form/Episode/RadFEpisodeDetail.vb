@@ -917,11 +917,11 @@ Public Class RadFEpisodeDetail
             RadGridViewSousEpisode.Rows(iGrid).Cells("id").Value = sousEpisode.Id
             RadGridViewSousEpisode.Rows(iGrid).Cells("sousType").Value = sousEpisode.SousTypeLibelle
             RadGridViewSousEpisode.Rows(iGrid).Cells("CreateUser").Value = sousEpisode.UserCreate
-            RadGridViewSousEpisode.Rows(iGrid).Cells("isSigne").Value = Not IsDBNull(sousEpisode.HorodateValidate)
+            RadGridViewSousEpisode.Rows(iGrid).Cells("isSigne").Value = If(sousEpisode.HorodateValidate = Nothing, False, True)
             RadGridViewSousEpisode.Rows(iGrid).Cells("isReponseRecue").Value = sousEpisode.IsReponseRecue
             sousEpisode.lstDetail = sousEpisodeDetailSousTypeDao.getLstSousEpisodeDetailSousType(sousEpisode.Id)
 
-            If Not IsDBNull(sousEpisode.HorodateValidate) Then
+            If sousEpisode.HorodateValidate <> Nothing Then
                 If (sousEpisode.NbReponseWaiting = 0 And sousEpisode.NbMedReponseWaiting = 0 And sousEpisode.NbReponse <> 0) Or sousEpisode.IsReponse = False Then
                     'Vert
                     RadGridViewSousEpisode.Rows(iGrid).Cells("sousType").Style.ForeColor = Color.Green
@@ -946,7 +946,7 @@ Public Class RadFEpisodeDetail
             RadGridViewSousEpisode.Rows(iGrid).Cells("sousType").Tag = Text
             RadGridViewSousEpisode.Rows(iGrid).Cells("state").Value = If(sousEpisode.IsReponse = False, "", If(sousEpisode.NbReponse = 0, "!", If(sousEpisode.NbMedReponseWaiting > 0, "m", If(sousEpisode.NbReponseWaiting = 0, "v", "x"))))
 
-            Console.WriteLine(Text)
+            Console.WriteLine(Text, Not IsDBNull(sousEpisode.HorodateValidate))
 
             iGrid += 1
         Next
