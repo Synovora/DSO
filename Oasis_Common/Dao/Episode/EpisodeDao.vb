@@ -495,7 +495,7 @@ Public Class EpisodeDao
         Dim SQLString As String
         SQLString = "SELECT E.episode_id, E.patient_id, E.[type], type_activite, date_creation," &
                     " P.oa_patient_site_id, S.oa_site_description, P.oa_patient_nom, P.oa_patient_prenom, P.oa_patient_date_naissance," &
-                    " ORDO.oa_ordonnance_id, SSP.TotalSSP" &
+                    " ORDO.oa_ordonnance_id, SSP.TotalSSP, SER.totalSER" &
                     " FROM oasis.oa_episode E" &
                     " LEFT JOIN oasis.oa_patient P ON P.oa_patient_id = E.patient_id" &
                     " LEFT JOIN oasis.oa_site S ON P.oa_patient_site_id = S.oa_site_id" &
@@ -507,6 +507,9 @@ Public Class EpisodeDao
                         " WHERE SP.episode_id = E.episode_id" &
                         " AND is_inactif = 'False'" &
                         " AND horodate_validate is NULL) AS SSP(TotalSSP)" &
+                    " OUTER APPLY (Select COUNT(*) FROM oasis.oasis.oa_sous_episode_reponse SER" &
+                        " WHERE SER.episode_id = E.episode_id" &
+                        " AND (validate_state = '!' Or validate_state = 'm')) AS SER(totalSER)" &
                     " WHERE (E.etat = '" & Episode.EnumEtatEpisode.EN_COURS.ToString & "' OR E.etat = '" & Episode.EnumEtatEpisode.CLOTURE.ToString & "')" &
                     " AND (E.[type] = '" & Episode.EnumTypeEpisode.CONSULTATION.ToString & "' OR E.[type] = '" & Episode.EnumTypeEpisode.VIRTUEL.ToString & "')" &
                     " AND (inactif = 'False' OR inactif is Null)" &

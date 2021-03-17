@@ -32,6 +32,7 @@ Partial Class RadFEpisodeEnAttenteValidation
         Dim GridViewTextBoxColumn8 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
         Dim GridViewCheckBoxColumn1 As Telerik.WinControls.UI.GridViewCheckBoxColumn = New Telerik.WinControls.UI.GridViewCheckBoxColumn()
         Dim GridViewTextBoxColumn9 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
+        Dim GridViewTextBoxColumn10 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
         Dim TableViewDefinition1 As Telerik.WinControls.UI.TableViewDefinition = New Telerik.WinControls.UI.TableViewDefinition()
         Me.RadBtnRefresh = New Telerik.WinControls.UI.RadButton()
         Me.RadBtnAbandon = New Telerik.WinControls.UI.RadButton()
@@ -47,7 +48,7 @@ Partial Class RadFEpisodeEnAttenteValidation
         '
         Me.RadBtnRefresh.Image = Global.Oasis_WF.My.Resources.Resources.reload
         Me.RadBtnRefresh.ImageAlignment = System.Drawing.ContentAlignment.MiddleCenter
-        Me.RadBtnRefresh.Location = New System.Drawing.Point(843, 437)
+        Me.RadBtnRefresh.Location = New System.Drawing.Point(909, 434)
         Me.RadBtnRefresh.Name = "RadBtnRefresh"
         Me.RadBtnRefresh.Size = New System.Drawing.Size(27, 24)
         Me.RadBtnRefresh.TabIndex = 45
@@ -57,7 +58,7 @@ Partial Class RadFEpisodeEnAttenteValidation
         Me.RadBtnAbandon.DialogResult = System.Windows.Forms.DialogResult.Cancel
         Me.RadBtnAbandon.Image = Global.Oasis_WF.My.Resources.Resources._exit
         Me.RadBtnAbandon.ImageAlignment = System.Drawing.ContentAlignment.MiddleCenter
-        Me.RadBtnAbandon.Location = New System.Drawing.Point(876, 437)
+        Me.RadBtnAbandon.Location = New System.Drawing.Point(942, 434)
         Me.RadBtnAbandon.Name = "RadBtnAbandon"
         Me.RadBtnAbandon.Size = New System.Drawing.Size(24, 24)
         Me.RadBtnAbandon.TabIndex = 44
@@ -69,7 +70,7 @@ Partial Class RadFEpisodeEnAttenteValidation
         Me.RadGridViewEpisode.Font = New System.Drawing.Font("Segoe UI", 8.25!)
         Me.RadGridViewEpisode.ForeColor = System.Drawing.Color.Black
         Me.RadGridViewEpisode.ImeMode = System.Windows.Forms.ImeMode.NoControl
-        Me.RadGridViewEpisode.Location = New System.Drawing.Point(4, 14)
+        Me.RadGridViewEpisode.Location = New System.Drawing.Point(3, 12)
         '
         '
         '
@@ -114,22 +115,33 @@ Partial Class RadFEpisodeEnAttenteValidation
         GridViewTextBoxColumn8.IsVisible = False
         GridViewTextBoxColumn8.Name = "patient_id"
         GridViewCheckBoxColumn1.EnableExpressionEditor = False
-        GridViewCheckBoxColumn1.HeaderText = "ordonnance"
+        GridViewCheckBoxColumn1.HeaderText = "Ordonnance"
         GridViewCheckBoxColumn1.MinWidth = 20
         GridViewCheckBoxColumn1.Name = "ordonnance"
+        GridViewCheckBoxColumn1.ReadOnly = True
         GridViewCheckBoxColumn1.TextAlignment = System.Drawing.ContentAlignment.MiddleCenter
-        GridViewCheckBoxColumn1.Width = 70
+        GridViewCheckBoxColumn1.Width = 80
         GridViewTextBoxColumn9.EnableExpressionEditor = False
         GridViewTextBoxColumn9.HeaderText = "Sous-épisode"
+        GridViewTextBoxColumn9.MinWidth = 20
         GridViewTextBoxColumn9.Name = "nombreSousEpisode"
+        GridViewTextBoxColumn9.ReadOnly = True
         GridViewTextBoxColumn9.TextAlignment = System.Drawing.ContentAlignment.MiddleCenter
         GridViewTextBoxColumn9.Width = 80
-        Me.RadGridViewEpisode.MasterTemplate.Columns.AddRange(New Telerik.WinControls.UI.GridViewDataColumn() {GridViewTextBoxColumn1, GridViewTextBoxColumn2, GridViewTextBoxColumn3, GridViewTextBoxColumn4, GridViewTextBoxColumn5, GridViewTextBoxColumn6, GridViewTextBoxColumn7, GridViewTextBoxColumn8, GridViewCheckBoxColumn1, GridViewTextBoxColumn9})
+        GridViewTextBoxColumn10.EnableExpressionEditor = False
+        GridViewTextBoxColumn10.HeaderText = "Resultat"
+        GridViewTextBoxColumn10.MinWidth = 20
+        GridViewTextBoxColumn10.Name = "nombreSousEpisodeReponse"
+        GridViewTextBoxColumn10.ReadOnly = True
+        GridViewTextBoxColumn10.TextAlignment = System.Drawing.ContentAlignment.MiddleCenter
+        GridViewTextBoxColumn10.Width = 80
+        Me.RadGridViewEpisode.MasterTemplate.Columns.AddRange(New Telerik.WinControls.UI.GridViewDataColumn() {GridViewTextBoxColumn1, GridViewTextBoxColumn2, GridViewTextBoxColumn3, GridViewTextBoxColumn4, GridViewTextBoxColumn5, GridViewTextBoxColumn6, GridViewTextBoxColumn7, GridViewTextBoxColumn8, GridViewCheckBoxColumn1, GridViewTextBoxColumn9, GridViewTextBoxColumn10})
+        Me.RadGridViewEpisode.MasterTemplate.EnableFiltering = True
         Me.RadGridViewEpisode.MasterTemplate.ViewDefinition = TableViewDefinition1
         Me.RadGridViewEpisode.Name = "RadGridViewEpisode"
         Me.RadGridViewEpisode.RightToLeft = System.Windows.Forms.RightToLeft.No
         Me.RadGridViewEpisode.ShowGroupPanel = False
-        Me.RadGridViewEpisode.Size = New System.Drawing.Size(896, 414)
+        Me.RadGridViewEpisode.Size = New System.Drawing.Size(963, 414)
         Me.RadGridViewEpisode.TabIndex = 43
         '
         'RadFEpisodeEnAttenteValidation
@@ -137,7 +149,7 @@ Partial Class RadFEpisodeEnAttenteValidation
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.CancelButton = Me.RadBtnAbandon
-        Me.ClientSize = New System.Drawing.Size(907, 473)
+        Me.ClientSize = New System.Drawing.Size(973, 460)
         Me.Controls.Add(Me.RadBtnRefresh)
         Me.Controls.Add(Me.RadBtnAbandon)
         Me.Controls.Add(Me.RadGridViewEpisode)

@@ -12,10 +12,9 @@ Public Class SousEpisodeDao
         Return lst
     End Function
 
-    Public Function getTableSousEpisode(idEpisode As Long, Optional idSousEpisode As Long = 0, Optional isComplete As Boolean = False, Optional isWithInactif As Boolean = False) As DataTable
-        Dim SQLString As String
-        'Console.WriteLine("----------> getTableSousEpisode")
-        SQLString =
+
+    Public Function getTableSousEpisode(idEpisode As Long, Optional idSousEpisode As Long = 0, Optional isComplete As Boolean = True, Optional isWithInactif As Boolean = False) As DataTable
+        Dim SQLString =
             "SELECT " & vbCrLf &
             "	  SE.id, " & vbCrLf &
             "     SE.episode_id, " & vbCrLf &
@@ -47,7 +46,9 @@ Public Class SousEpisodeDao
             "S.libelle as sous_type_libelle, " & vbCrLf &
             "S.redaction_profil_types, " & vbCrLf &
             "S.validation_profil_types, " & vbCrLf &
-            "(SELECT COUNT(*) FROM oasis.oa_sous_episode_reponse SER WHERE SER.id_sous_episode = SE.id ) as nb_reponse " & vbCrLf
+            "(SELECT COUNT(*) FROM oasis.oa_sous_episode_reponse SER WHERE SER.id_sous_episode = SE.id AND SER.validate_state = '!' ) AS nb_reponse_waiting, " & vbCrLf &
+            "(SELECT COUNT(*) FROM oasis.oa_sous_episode_reponse SER WHERE SER.id_sous_episode = SE.id AND SER.validate_state = 'm' ) AS nb_med_reponse_waiting, " & vbCrLf &
+            "(SELECT COUNT(*) FROM oasis.oa_sous_episode_reponse SER WHERE SER.id_sous_episode = SE.id ) AS nb_reponse " & vbCrLf
         End If
 
         SQLString += "FROM [oasis].[oa_sous_episode] SE " & vbCrLf
@@ -76,8 +77,6 @@ Public Class SousEpisodeDao
         End If
 
         SQLString += "ORDER by SE.id DESC"
-
-        'Console.WriteLine(SQLString)
 
         Using con As SqlConnection = GetConnection()
 

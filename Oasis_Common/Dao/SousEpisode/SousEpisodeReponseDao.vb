@@ -24,9 +24,7 @@ Public Class SousEpisodeReponseDao
     ''' <param name="idSousEpisode"></param>
     ''' <returns></returns>
     Public Function getTableSousEpisodeReponse(Optional idSousEpisode As Long = 0, Optional idSousEpisodeReponse As Long = 0) As DataTable
-        Dim SQLString As String
-        'Console.WriteLine("----------> getAllTacheEnCours")
-        SQLString =
+        Dim SQLString =
             "SELECT " & vbCrLf &
             "	  SER.id, " & vbCrLf &
             "     SER.id_sous_episode, " & vbCrLf &
@@ -34,6 +32,10 @@ Public Class SousEpisodeReponseDao
             "     SER.horodate_creation, " & vbCrLf &
             "	  SER.nom_fichier, " & vbCrLf &
             "	  SER.commentaire, " & vbCrLf &
+            "	  SER.validate_state, " & vbCrLf &
+            "	  SER.validate_user_id, " & vbCrLf &
+            "	  SER.validate_date, " & vbCrLf &
+            "	  SER.episode_id, " & vbCrLf &
             "     UC.oa_utilisateur_prenom + ' ' + UC.oa_utilisateur_nom as user_create " & vbCrLf &
             "FROM oasis.oa_sous_episode_reponse SER " & vbCrLf &
             "JOIN oasis.oa_utilisateur UC ON UC.oa_utilisateur_id = SER.create_user_id " & vbCrLf &
@@ -44,7 +46,6 @@ Public Class SousEpisodeReponseDao
         If idSousEpisodeReponse <> 0 Then
             SQLString += "AND id = @id"
         End If
-        'Console.WriteLine(SQLString)
 
         Using con As SqlConnection = GetConnection()
 
@@ -70,6 +71,75 @@ Public Class SousEpisodeReponseDao
         End Using
     End Function
 
+    Public Sub valider(sousEpisodeReponseId As Long, userLog As Utilisateur)
+        Dim da As SqlDataAdapter = New SqlDataAdapter()
+        Dim codeRetour As Boolean = True
+        Dim con As SqlConnection
+
+        con = GetConnection()
+        Dim transaction As SqlClient.SqlTransaction = con.BeginTransaction
+
+        Try
+            Dim SQLstring = "UPDATE oasis.oa_sous_episode_reponse SET validate_state = 'v', validate_user_id = @validateUserId, validate_date = @validateDate WHERE id = @id"
+            Dim cmd = New SqlCommand(SQLstring, con, transaction)
+            With cmd.Parameters
+                .AddWithValue("@id", sousEpisodeReponseId)
+                .AddWithValue("@validateUserId", userLog.UtilisateurId)
+                .AddWithValue("@validateDate", DateTime.Now)
+            End With
+            da.UpdateCommand = cmd
+            Dim nbUpdate = da.UpdateCommand.ExecuteNonQuery()
+            If nbUpdate <> 1 Then
+                Throw New Exception("Problème : Enregistrements mouvementés : " & nbUpdate & " au lieu de 1 !")
+            End If
+
+            transaction.Commit()
+
+        Catch ex As Exception
+            transaction.Rollback()
+            Throw New Exception(ex.Message)
+            codeRetour = False
+        Finally
+            transaction.Dispose()
+            con.Close()
+        End Try
+    End Sub
+
+    Public Sub askValider(sousEpisodeReponseId As Long, userLog As Utilisateur)
+        Dim da As SqlDataAdapter = New SqlDataAdapter()
+        Dim codeRetour As Boolean = True
+        Dim con As SqlConnection
+
+        con = GetConnection()
+        Dim transaction As SqlClient.SqlTransaction = con.BeginTransaction
+
+        Try
+            Dim SQLstring = "UPDATE oasis.oa_sous_episode_reponse SET validate_state = 'm', validate_user_id = @validateUserId, validate_date = @validateDate WHERE id = @id"
+            Dim cmd = New SqlCommand(SQLstring, con, transaction)
+            With cmd.Parameters
+                .AddWithValue("@id", sousEpisodeReponseId)
+                .AddWithValue("@validateUserId", userLog.UtilisateurId)
+                .AddWithValue("@validateDate", DateTime.Now)
+            End With
+            da.UpdateCommand = cmd
+            Dim nbUpdate = da.UpdateCommand.ExecuteNonQuery()
+            If nbUpdate <> 1 Then
+                Throw New Exception("Problème : Enregistrements mouvementés : " & nbUpdate & " au lieu de 1 !")
+            End If
+
+            transaction.Commit()
+
+        Catch ex As Exception
+            transaction.Rollback()
+            Throw New Exception(ex.Message)
+            codeRetour = False
+        Finally
+            transaction.Dispose()
+            con.Close()
+        End Try
+    End Sub
+
+    'TODO check SousEpisode -> SousEpisodeResponse
     Public Sub delete(sousEpisode As SousEpisode, idReponseRecue As Long, isDernier As Boolean)
         Dim da As SqlDataAdapter = New SqlDataAdapter()
         Dim codeRetour As Boolean = True
@@ -107,10 +177,8 @@ Public Class SousEpisodeReponseDao
             transaction.Dispose()
             con.Close()
         End Try
-
-
-
     End Sub
+
     ''' <summary>
     ''' 
     ''' </summary>
@@ -128,8 +196,8 @@ Public Class SousEpisodeReponseDao
 
         Try
             Dim SQLstring As String = "INSERT INTO oasis.oa_sous_episode_reponse " &
-                    "(id_sous_episode, create_user_id, horodate_creation, nom_fichier, commentaire)" &
-            " VALUES (@id_sous_episode, @CreateUser, @dateCreation, @NomFichier , @Commentaire); SELECT SCOPE_IDENTITY()"
+                    "(id_sous_episode, create_user_id, horodate_creation, nom_fichier, commentaire, validate_state, episode_id)" &
+            " VALUES (@id_sous_episode, @CreateUser, @dateCreation, @NomFichier , @Commentaire, @ValidateState, (SELECT episode_id FROM oasis.oa_sous_episode WHERE id = @id_sous_episode)); SELECT SCOPE_IDENTITY()"
 
             Dim cmd As New SqlCommand(SQLstring, con, transaction)
             With cmd.Parameters
@@ -138,6 +206,7 @@ Public Class SousEpisodeReponseDao
                 .AddWithValue("@dateCreation", sousEpisodeReponse.HorodateCreation)
                 .AddWithValue("@NomFichier", sousEpisodeReponse.NomFichier)
                 .AddWithValue("@Commentaire", sousEpisodeReponse.Commentaire)
+                .AddWithValue("@ValidateState", "!")
             End With
 
             da.InsertCommand = cmd

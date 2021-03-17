@@ -28,6 +28,8 @@ Partial Class FrmSousEpisode
         Dim GridViewTextBoxColumn4 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
         Dim GridViewCommandColumn1 As Telerik.WinControls.UI.GridViewCommandColumn = New Telerik.WinControls.UI.GridViewCommandColumn()
         Dim GridViewCommandColumn2 As Telerik.WinControls.UI.GridViewCommandColumn = New Telerik.WinControls.UI.GridViewCommandColumn()
+        Dim GridViewCommandColumn3 As Telerik.WinControls.UI.GridViewCommandColumn = New Telerik.WinControls.UI.GridViewCommandColumn()
+        Dim GridViewCommandColumn4 As Telerik.WinControls.UI.GridViewCommandColumn = New Telerik.WinControls.UI.GridViewCommandColumn()
         Dim GridViewTextBoxColumn5 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
         Dim GridViewTextBoxColumn6 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
         Dim TableViewDefinition1 As Telerik.WinControls.UI.TableViewDefinition = New Telerik.WinControls.UI.TableViewDefinition()
@@ -253,7 +255,7 @@ Partial Class FrmSousEpisode
         Me.Label3.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label3.Location = New System.Drawing.Point(12, 76)
         Me.Label3.Name = "Label3"
-        Me.Label3.Size = New System.Drawing.Size(114, 26)
+        Me.Label3.Size = New System.Drawing.Size(61, 13)
         Me.Label3.TabIndex = 39
         Me.Label3.Text = "Signature"
         '
@@ -271,7 +273,7 @@ Partial Class FrmSousEpisode
         Me.Label1.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label1.Location = New System.Drawing.Point(12, 53)
         Me.Label1.Name = "Label1"
-        Me.Label1.Size = New System.Drawing.Size(238, 26)
+        Me.Label1.Size = New System.Drawing.Size(128, 13)
         Me.Label1.TabIndex = 37
         Me.Label1.Text = "Dernière Modification"
         '
@@ -289,7 +291,7 @@ Partial Class FrmSousEpisode
         Me.Label12.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label12.Location = New System.Drawing.Point(12, 30)
         Me.Label12.Name = "Label12"
-        Me.Label12.Size = New System.Drawing.Size(102, 26)
+        Me.Label12.Size = New System.Drawing.Size(54, 13)
         Me.Label12.TabIndex = 34
         Me.Label12.Text = "Création"
         '
@@ -323,7 +325,7 @@ Partial Class FrmSousEpisode
         Me.DropDownDestinataire.DropDownStyle = Telerik.WinControls.RadDropDownStyle.DropDownList
         Me.DropDownDestinataire.Location = New System.Drawing.Point(93, 81)
         Me.DropDownDestinataire.Name = "DropDownDestinataire"
-        Me.DropDownDestinataire.Size = New System.Drawing.Size(274, 35)
+        Me.DropDownDestinataire.Size = New System.Drawing.Size(274, 20)
         Me.DropDownDestinataire.TabIndex = 62
         Me.DropDownDestinataire.Visible = False
         '
@@ -333,7 +335,7 @@ Partial Class FrmSousEpisode
         Me.LblDestinataire.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.LblDestinataire.Location = New System.Drawing.Point(13, 84)
         Me.LblDestinataire.Name = "LblDestinataire"
-        Me.LblDestinataire.Size = New System.Drawing.Size(131, 26)
+        Me.LblDestinataire.Size = New System.Drawing.Size(72, 13)
         Me.LblDestinataire.TabIndex = 61
         Me.LblDestinataire.Text = "Intervenant"
         Me.LblDestinataire.Visible = False
@@ -363,7 +365,7 @@ Partial Class FrmSousEpisode
         Me.LblALD.ForeColor = System.Drawing.Color.Red
         Me.LblALD.Location = New System.Drawing.Point(372, 83)
         Me.LblALD.Name = "LblALD"
-        Me.LblALD.Size = New System.Drawing.Size(58, 26)
+        Me.LblALD.Size = New System.Drawing.Size(31, 13)
         Me.LblALD.TabIndex = 47
         Me.LblALD.Text = "ALD"
         '
@@ -373,7 +375,7 @@ Partial Class FrmSousEpisode
         Me.DropDownSousType.DropDownStyle = Telerik.WinControls.RadDropDownStyle.DropDownList
         Me.DropDownSousType.Location = New System.Drawing.Point(93, 52)
         Me.DropDownSousType.Name = "DropDownSousType"
-        Me.DropDownSousType.Size = New System.Drawing.Size(328, 35)
+        Me.DropDownSousType.Size = New System.Drawing.Size(328, 20)
         Me.DropDownSousType.TabIndex = 46
         '
         'Label6
@@ -382,7 +384,7 @@ Partial Class FrmSousEpisode
         Me.Label6.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label6.Location = New System.Drawing.Point(16, 56)
         Me.Label6.Name = "Label6"
-        Me.Label6.Size = New System.Drawing.Size(125, 26)
+        Me.Label6.Size = New System.Drawing.Size(67, 13)
         Me.Label6.TabIndex = 45
         Me.Label6.Text = "Sous-Type"
         '
@@ -392,7 +394,7 @@ Partial Class FrmSousEpisode
         Me.DropDownType.DropDownStyle = Telerik.WinControls.RadDropDownStyle.DropDownList
         Me.DropDownType.Location = New System.Drawing.Point(93, 23)
         Me.DropDownType.Name = "DropDownType"
-        Me.DropDownType.Size = New System.Drawing.Size(328, 35)
+        Me.DropDownType.Size = New System.Drawing.Size(328, 20)
         Me.DropDownType.TabIndex = 44
         '
         'Label5
@@ -401,7 +403,7 @@ Partial Class FrmSousEpisode
         Me.Label5.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label5.Location = New System.Drawing.Point(45, 28)
         Me.Label5.Name = "Label5"
-        Me.Label5.Size = New System.Drawing.Size(63, 26)
+        Me.Label5.Size = New System.Drawing.Size(35, 13)
         Me.Label5.TabIndex = 43
         Me.Label5.Text = "Type"
         '
@@ -446,7 +448,7 @@ Partial Class FrmSousEpisode
         Me.Label9.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label9.Location = New System.Drawing.Point(358, 27)
         Me.Label9.Name = "Label9"
-        Me.Label9.Size = New System.Drawing.Size(205, 26)
+        Me.Label9.Size = New System.Drawing.Size(111, 13)
         Me.Label9.TabIndex = 57
         Me.Label9.Text = "Réponse attendue"
         '
@@ -467,7 +469,7 @@ Partial Class FrmSousEpisode
         Me.LblDelai.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.LblDelai.Location = New System.Drawing.Point(534, 27)
         Me.LblDelai.Name = "LblDelai"
-        Me.LblDelai.Size = New System.Drawing.Size(233, 26)
+        Me.LblDelai.Size = New System.Drawing.Size(122, 13)
         Me.LblDelai.TabIndex = 58
         Me.LblDelai.Text = "Délai maxi (en jours)"
         Me.LblDelai.Visible = False
@@ -486,7 +488,7 @@ Partial Class FrmSousEpisode
         Me.TxtDelai.MaskType = Telerik.WinControls.UI.MaskType.Standard
         Me.TxtDelai.Name = "TxtDelai"
         Me.TxtDelai.PromptChar = Global.Microsoft.VisualBasic.ChrW(32)
-        Me.TxtDelai.Size = New System.Drawing.Size(24, 35)
+        Me.TxtDelai.Size = New System.Drawing.Size(24, 20)
         Me.TxtDelai.TabIndex = 60
         Me.TxtDelai.TabStop = False
         Me.TxtDelai.Text = "   "
@@ -503,8 +505,13 @@ Partial Class FrmSousEpisode
         '
         'RadReponseGrid
         '
+        Me.RadReponseGrid.BackColor = System.Drawing.SystemColors.GradientInactiveCaption
+        Me.RadReponseGrid.Cursor = System.Windows.Forms.Cursors.Default
         Me.RadReponseGrid.Dock = System.Windows.Forms.DockStyle.Fill
         Me.RadReponseGrid.EnableCustomDrawing = True
+        Me.RadReponseGrid.Font = New System.Drawing.Font("Segoe UI", 8.25!)
+        Me.RadReponseGrid.ForeColor = System.Drawing.Color.Black
+        Me.RadReponseGrid.ImeMode = System.Windows.Forms.ImeMode.NoControl
         Me.RadReponseGrid.Location = New System.Drawing.Point(0, 0)
         '
         '
@@ -516,27 +523,32 @@ Partial Class FrmSousEpisode
         Me.RadReponseGrid.MasterTemplate.AllowEditRow = False
         Me.RadReponseGrid.MasterTemplate.AutoSizeColumnsMode = Telerik.WinControls.UI.GridViewAutoSizeColumnsMode.Fill
         GridViewTextBoxColumn1.DataType = GetType(Long)
+        GridViewTextBoxColumn1.EnableExpressionEditor = False
         GridViewTextBoxColumn1.FieldName = "id"
         GridViewTextBoxColumn1.HeaderText = "Id"
         GridViewTextBoxColumn1.IsVisible = False
         GridViewTextBoxColumn1.Name = "id"
         GridViewTextBoxColumn1.TextAlignment = System.Drawing.ContentAlignment.MiddleRight
         GridViewTextBoxColumn1.Width = 43
+        GridViewTextBoxColumn2.EnableExpressionEditor = False
         GridViewTextBoxColumn2.HeaderText = "IdSousEpisode"
         GridViewTextBoxColumn2.IsVisible = False
         GridViewTextBoxColumn2.Name = "IdSousEpisode"
         GridViewTextBoxColumn2.Width = 48
+        GridViewTextBoxColumn3.EnableExpressionEditor = False
         GridViewTextBoxColumn3.HeaderText = "Date"
         GridViewTextBoxColumn3.MaxWidth = 110
         GridViewTextBoxColumn3.MinWidth = 50
         GridViewTextBoxColumn3.Name = "HorodateCreation"
         GridViewTextBoxColumn3.RowSpan = 110
         GridViewTextBoxColumn3.TextAlignment = System.Drawing.ContentAlignment.MiddleCenter
-        GridViewTextBoxColumn3.Width = 66
+        GridViewTextBoxColumn3.Width = 83
+        GridViewTextBoxColumn4.EnableExpressionEditor = False
         GridViewTextBoxColumn4.HeaderText = "Nom du fichier"
         GridViewTextBoxColumn4.Name = "NomFichier"
-        GridViewTextBoxColumn4.Width = 238
+        GridViewTextBoxColumn4.Width = 231
         GridViewCommandColumn1.DefaultText = "Ouvrir"
+        GridViewCommandColumn1.EnableExpressionEditor = False
         GridViewCommandColumn1.HeaderText = "Ouvrir"
         GridViewCommandColumn1.ImageLayout = System.Windows.Forms.ImageLayout.Stretch
         GridViewCommandColumn1.MaxWidth = 75
@@ -545,27 +557,49 @@ Partial Class FrmSousEpisode
         GridViewCommandColumn1.TextAlignment = System.Drawing.ContentAlignment.MiddleCenter
         GridViewCommandColumn1.UseDefaultText = True
         GridViewCommandColumn1.Width = 75
-        GridViewCommandColumn2.DefaultText = "Supprimer"
-        GridViewCommandColumn2.HeaderText = "Supprimer"
-        GridViewCommandColumn2.ImageLayout = System.Windows.Forms.ImageLayout.Stretch
-        GridViewCommandColumn2.MaxWidth = 65
-        GridViewCommandColumn2.MinWidth = 65
-        GridViewCommandColumn2.Name = "Supprimer"
+        GridViewCommandColumn2.DefaultText = "Valider"
+        GridViewCommandColumn2.EnableExpressionEditor = False
+        GridViewCommandColumn2.HeaderText = "Valider"
+        GridViewCommandColumn2.MaxWidth = 75
+        GridViewCommandColumn2.MinWidth = 75
+        GridViewCommandColumn2.Name = "Valider"
+        GridViewCommandColumn2.TextAlignment = System.Drawing.ContentAlignment.MiddleCenter
         GridViewCommandColumn2.UseDefaultText = True
-        GridViewCommandColumn2.Width = 65
+        GridViewCommandColumn2.Width = 75
+        GridViewCommandColumn3.EnableExpressionEditor = False
+        GridViewCommandColumn3.HeaderText = "Validation Medicale"
+        GridViewCommandColumn3.IsVisible = False
+        GridViewCommandColumn3.MaxWidth = 75
+        GridViewCommandColumn3.MinWidth = 75
+        GridViewCommandColumn3.Name = "AskValider"
+        GridViewCommandColumn3.TextAlignment = System.Drawing.ContentAlignment.MiddleCenter
+        GridViewCommandColumn3.Width = 75
+        GridViewCommandColumn4.DefaultText = "Supprimer"
+        GridViewCommandColumn4.EnableExpressionEditor = False
+        GridViewCommandColumn4.HeaderText = "Supprimer"
+        GridViewCommandColumn4.ImageLayout = System.Windows.Forms.ImageLayout.Stretch
+        GridViewCommandColumn4.MaxWidth = 75
+        GridViewCommandColumn4.MinWidth = 75
+        GridViewCommandColumn4.Name = "Supprimer"
+        GridViewCommandColumn4.TextAlignment = System.Drawing.ContentAlignment.MiddleCenter
+        GridViewCommandColumn4.UseDefaultText = True
+        GridViewCommandColumn4.Width = 75
+        GridViewTextBoxColumn5.EnableExpressionEditor = False
         GridViewTextBoxColumn5.HeaderText = "Commentaire"
         GridViewTextBoxColumn5.Name = "Commentaire"
-        GridViewTextBoxColumn5.Width = 341
+        GridViewTextBoxColumn5.Width = 54
+        GridViewTextBoxColumn6.EnableExpressionEditor = False
         GridViewTextBoxColumn6.HeaderText = "Utilisateur"
         GridViewTextBoxColumn6.MinWidth = 60
         GridViewTextBoxColumn6.Name = "CreateUser"
-        GridViewTextBoxColumn6.Width = 67
-        Me.RadReponseGrid.MasterTemplate.Columns.AddRange(New Telerik.WinControls.UI.GridViewDataColumn() {GridViewTextBoxColumn1, GridViewTextBoxColumn2, GridViewTextBoxColumn3, GridViewTextBoxColumn4, GridViewCommandColumn1, GridViewCommandColumn2, GridViewTextBoxColumn5, GridViewTextBoxColumn6})
+        GridViewTextBoxColumn6.Width = 260
+        Me.RadReponseGrid.MasterTemplate.Columns.AddRange(New Telerik.WinControls.UI.GridViewDataColumn() {GridViewTextBoxColumn1, GridViewTextBoxColumn2, GridViewTextBoxColumn3, GridViewTextBoxColumn4, GridViewCommandColumn1, GridViewCommandColumn2, GridViewCommandColumn3, GridViewCommandColumn4, GridViewTextBoxColumn5, GridViewTextBoxColumn6})
         Me.RadReponseGrid.MasterTemplate.EnableGrouping = False
         Me.RadReponseGrid.MasterTemplate.EnableSorting = False
         Me.RadReponseGrid.MasterTemplate.ViewDefinition = TableViewDefinition1
         Me.RadReponseGrid.Name = "RadReponseGrid"
         Me.RadReponseGrid.ReadOnly = True
+        Me.RadReponseGrid.RightToLeft = System.Windows.Forms.RightToLeft.No
         Me.RadReponseGrid.Size = New System.Drawing.Size(868, 108)
         Me.RadReponseGrid.TabIndex = 58
         '
@@ -734,7 +768,7 @@ Partial Class FrmSousEpisode
         '
         'FrmSousEpisode
         '
-        Me.AutoScaleDimensions = New System.Drawing.SizeF(12.0!, 25.0!)
+        Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.CancelButton = Me.BtnCancel
         Me.ClientSize = New System.Drawing.Size(1158, 570)

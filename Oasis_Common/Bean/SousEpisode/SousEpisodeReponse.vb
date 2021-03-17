@@ -8,6 +8,10 @@ Public Class SousEpisodeReponse
     Property HorodateCreation As DateTime
     Property NomFichier As String
     Property Commentaire As String
+    Property ValidateState As String
+    Property ValidateUserId As Long
+    Property ValidateDate As DateTime
+    Property EpisodeId As Long
 
 
     Public Sub New()
@@ -22,6 +26,10 @@ Public Class SousEpisodeReponse
 
         Me.NomFichier = Coalesce(row("nom_fichier"), "")
         Me.Commentaire = Coalesce(row("commentaire"), "")
+        Me.ValidateState = Coalesce(row("validate_state"), "")
+        Me.ValidateUserId = Coalesce(row("validate_user_id"), "")
+        Me.ValidateDate = Coalesce(row("validate_date"), "")
+        Me.EpisodeId = Coalesce(row("episode_id"), "")
 
     End Sub
 
