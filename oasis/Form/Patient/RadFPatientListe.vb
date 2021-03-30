@@ -662,4 +662,21 @@ Public Class RadFPatientListe
             MessageBox.Show(ex.Message)
         End Try
     End Sub
+
+    Private Sub RadMailButton_Click(sender As Object, e As EventArgs) Handles RadMailButton.Click
+        Me.Cursor = Cursors.WaitCursor
+        Me.Enabled = False
+
+        Try
+            Using frm As New FrmSousEpisodeReponseAttribution
+                Me.SelectedPatient = patientDao.GetPatient(0)
+                frm.ShowDialog()
+            End Using
+        Catch ex As Exception
+            MessageBox.Show(ex.Message)
+        End Try
+
+        Me.Enabled = True
+        Me.Cursor = Cursors.Default
+    End Sub
 End Class
