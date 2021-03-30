@@ -40,29 +40,29 @@ Partial Class FrmSousEpisodeReponseAttribution
         Dim TableViewDefinition4 As Telerik.WinControls.UI.TableViewDefinition = New Telerik.WinControls.UI.TableViewDefinition()
         Me.RadButton2 = New Telerik.WinControls.UI.RadButton()
         Me.RadButton1 = New Telerik.WinControls.UI.RadButton()
-        Me.RadGridView1 = New Telerik.WinControls.UI.RadGridView()
+        Me.RadMailGridView = New Telerik.WinControls.UI.RadGridView()
         Me.RadGridView4 = New Telerik.WinControls.UI.RadGridView()
         Me.RadButton3 = New Telerik.WinControls.UI.RadButton()
         Me.RadGridView2 = New Telerik.WinControls.UI.RadGridView()
         Me.RadButton7 = New Telerik.WinControls.UI.RadButton()
         Me.RadGridView3 = New Telerik.WinControls.UI.RadGridView()
         Me.RadGroupBox1 = New Telerik.WinControls.UI.RadGroupBox()
-        Me.RadTextBox1 = New Telerik.WinControls.UI.RadTextBox()
-        Me.RadTextBox2 = New Telerik.WinControls.UI.RadTextBox()
-        Me.RadDateTimePicker1 = New Telerik.WinControls.UI.RadDateTimePicker()
-        Me.RadButtonTextBox1 = New Telerik.WinControls.UI.RadButtonTextBox()
-        Me.RadButton4 = New Telerik.WinControls.UI.RadButton()
         Me.RadButton5 = New Telerik.WinControls.UI.RadButton()
+        Me.RadButton4 = New Telerik.WinControls.UI.RadButton()
+        Me.RadButtonTextBox1 = New Telerik.WinControls.UI.RadButtonTextBox()
+        Me.RadDateTimePicker1 = New Telerik.WinControls.UI.RadDateTimePicker()
+        Me.RadTextBox2 = New Telerik.WinControls.UI.RadTextBox()
+        Me.RadTextBox1 = New Telerik.WinControls.UI.RadTextBox()
         Me.RadGroupBox2 = New Telerik.WinControls.UI.RadGroupBox()
+        Me.RadSeparator3 = New Telerik.WinControls.UI.RadSeparator()
         Me.RadGroupBox3 = New Telerik.WinControls.UI.RadGroupBox()
+        Me.RadSeparator2 = New Telerik.WinControls.UI.RadSeparator()
         Me.RadGroupBox4 = New Telerik.WinControls.UI.RadGroupBox()
         Me.RadSeparator1 = New Telerik.WinControls.UI.RadSeparator()
-        Me.RadSeparator2 = New Telerik.WinControls.UI.RadSeparator()
-        Me.RadSeparator3 = New Telerik.WinControls.UI.RadSeparator()
         CType(Me.RadButton2, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.RadButton1, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.RadGridView1, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.RadGridView1.MasterTemplate, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.RadMailGridView, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.RadMailGridView.MasterTemplate, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.RadGridView4, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.RadGridView4.MasterTemplate, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.RadButton3, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -73,21 +73,21 @@ Partial Class FrmSousEpisodeReponseAttribution
         CType(Me.RadGridView3.MasterTemplate, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.RadGroupBox1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.RadGroupBox1.SuspendLayout()
-        CType(Me.RadTextBox1, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.RadTextBox2, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.RadDateTimePicker1, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.RadButtonTextBox1, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.RadButton4, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.RadButton5, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.RadButton4, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.RadButtonTextBox1, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.RadDateTimePicker1, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.RadTextBox2, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.RadTextBox1, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.RadGroupBox2, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.RadGroupBox2.SuspendLayout()
+        CType(Me.RadSeparator3, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.RadGroupBox3, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.RadGroupBox3.SuspendLayout()
+        CType(Me.RadSeparator2, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.RadGroupBox4, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.RadGroupBox4.SuspendLayout()
         CType(Me.RadSeparator1, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.RadSeparator2, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.RadSeparator3, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
@@ -107,14 +107,14 @@ Partial Class FrmSousEpisodeReponseAttribution
         Me.RadButton1.TabIndex = 0
         Me.RadButton1.Text = "Supprimer"
         '
-        'RadGridView1
+        'RadMailGridView
         '
-        Me.RadGridView1.BackColor = System.Drawing.Color.FromArgb(CType(CType(191, Byte), Integer), CType(CType(219, Byte), Integer), CType(CType(255, Byte), Integer))
-        Me.RadGridView1.Cursor = System.Windows.Forms.Cursors.Default
-        Me.RadGridView1.Font = New System.Drawing.Font("Segoe UI", 8.25!)
-        Me.RadGridView1.ForeColor = System.Drawing.Color.Black
-        Me.RadGridView1.ImeMode = System.Windows.Forms.ImeMode.NoControl
-        Me.RadGridView1.Location = New System.Drawing.Point(6, 22)
+        Me.RadMailGridView.BackColor = System.Drawing.Color.FromArgb(CType(CType(191, Byte), Integer), CType(CType(219, Byte), Integer), CType(CType(255, Byte), Integer))
+        Me.RadMailGridView.Cursor = System.Windows.Forms.Cursors.Default
+        Me.RadMailGridView.Font = New System.Drawing.Font("Segoe UI", 8.25!)
+        Me.RadMailGridView.ForeColor = System.Drawing.Color.Black
+        Me.RadMailGridView.ImeMode = System.Windows.Forms.ImeMode.NoControl
+        Me.RadMailGridView.Location = New System.Drawing.Point(6, 22)
         '
         '
         '
@@ -124,9 +124,9 @@ Partial Class FrmSousEpisodeReponseAttribution
         GridViewTextBoxColumn1.Name = "column1"
         GridViewTextBoxColumn1.Width = 300
         GridViewTextBoxColumn2.EnableExpressionEditor = False
-        GridViewTextBoxColumn2.HeaderText = "De"
+        GridViewTextBoxColumn2.HeaderText = "Auteur"
         GridViewTextBoxColumn2.MinWidth = 80
-        GridViewTextBoxColumn2.Name = "column2"
+        GridViewTextBoxColumn2.Name = "auteur"
         GridViewTextBoxColumn2.Width = 150
         GridViewTextBoxColumn3.EnableExpressionEditor = False
         GridViewTextBoxColumn3.HeaderText = "Date"
@@ -134,12 +134,12 @@ Partial Class FrmSousEpisodeReponseAttribution
         GridViewTextBoxColumn3.Name = "column3"
         GridViewTextBoxColumn3.TextAlignment = System.Drawing.ContentAlignment.MiddleCenter
         GridViewTextBoxColumn3.Width = 80
-        Me.RadGridView1.MasterTemplate.Columns.AddRange(New Telerik.WinControls.UI.GridViewDataColumn() {GridViewTextBoxColumn1, GridViewTextBoxColumn2, GridViewTextBoxColumn3})
-        Me.RadGridView1.MasterTemplate.ViewDefinition = TableViewDefinition1
-        Me.RadGridView1.Name = "RadGridView1"
-        Me.RadGridView1.RightToLeft = System.Windows.Forms.RightToLeft.No
-        Me.RadGridView1.Size = New System.Drawing.Size(556, 297)
-        Me.RadGridView1.TabIndex = 2
+        Me.RadMailGridView.MasterTemplate.Columns.AddRange(New Telerik.WinControls.UI.GridViewDataColumn() {GridViewTextBoxColumn1, GridViewTextBoxColumn2, GridViewTextBoxColumn3})
+        Me.RadMailGridView.MasterTemplate.ViewDefinition = TableViewDefinition1
+        Me.RadMailGridView.Name = "RadMailGridView"
+        Me.RadMailGridView.RightToLeft = System.Windows.Forms.RightToLeft.No
+        Me.RadMailGridView.Size = New System.Drawing.Size(556, 297)
+        Me.RadMailGridView.TabIndex = 2
         '
         'RadGridView4
         '
@@ -261,19 +261,29 @@ Partial Class FrmSousEpisodeReponseAttribution
         Me.RadGroupBox1.TabIndex = 8
         Me.RadGroupBox1.Text = "Filtre"
         '
-        'RadTextBox1
+        'RadButton5
         '
-        Me.RadTextBox1.Location = New System.Drawing.Point(120, 21)
-        Me.RadTextBox1.Name = "RadTextBox1"
-        Me.RadTextBox1.Size = New System.Drawing.Size(183, 20)
-        Me.RadTextBox1.TabIndex = 0
+        Me.RadButton5.Location = New System.Drawing.Point(178, 100)
+        Me.RadButton5.Name = "RadButton5"
+        Me.RadButton5.Size = New System.Drawing.Size(167, 24)
+        Me.RadButton5.TabIndex = 5
+        Me.RadButton5.Text = "RadButton5"
         '
-        'RadTextBox2
+        'RadButton4
         '
-        Me.RadTextBox2.Location = New System.Drawing.Point(120, 47)
-        Me.RadTextBox2.Name = "RadTextBox2"
-        Me.RadTextBox2.Size = New System.Drawing.Size(183, 20)
-        Me.RadTextBox2.TabIndex = 1
+        Me.RadButton4.Location = New System.Drawing.Point(5, 100)
+        Me.RadButton4.Name = "RadButton4"
+        Me.RadButton4.Size = New System.Drawing.Size(167, 24)
+        Me.RadButton4.TabIndex = 4
+        Me.RadButton4.Text = "RadButton4"
+        '
+        'RadButtonTextBox1
+        '
+        Me.RadButtonTextBox1.Location = New System.Drawing.Point(212, 85)
+        Me.RadButtonTextBox1.Name = "RadButtonTextBox1"
+        Me.RadButtonTextBox1.Size = New System.Drawing.Size(0, 20)
+        Me.RadButtonTextBox1.TabIndex = 3
+        Me.RadButtonTextBox1.Text = "RadButtonTextBox1"
         '
         'RadDateTimePicker1
         '
@@ -286,29 +296,19 @@ Partial Class FrmSousEpisodeReponseAttribution
         Me.RadDateTimePicker1.Text = "22/03/2021"
         Me.RadDateTimePicker1.Value = New Date(2021, 3, 22, 23, 25, 54, 27)
         '
-        'RadButtonTextBox1
+        'RadTextBox2
         '
-        Me.RadButtonTextBox1.Location = New System.Drawing.Point(212, 85)
-        Me.RadButtonTextBox1.Name = "RadButtonTextBox1"
-        Me.RadButtonTextBox1.Size = New System.Drawing.Size(0, 5)
-        Me.RadButtonTextBox1.TabIndex = 3
-        Me.RadButtonTextBox1.Text = "RadButtonTextBox1"
+        Me.RadTextBox2.Location = New System.Drawing.Point(120, 47)
+        Me.RadTextBox2.Name = "RadTextBox2"
+        Me.RadTextBox2.Size = New System.Drawing.Size(183, 20)
+        Me.RadTextBox2.TabIndex = 1
         '
-        'RadButton4
+        'RadTextBox1
         '
-        Me.RadButton4.Location = New System.Drawing.Point(5, 100)
-        Me.RadButton4.Name = "RadButton4"
-        Me.RadButton4.Size = New System.Drawing.Size(167, 24)
-        Me.RadButton4.TabIndex = 4
-        Me.RadButton4.Text = "RadButton4"
-        '
-        'RadButton5
-        '
-        Me.RadButton5.Location = New System.Drawing.Point(178, 100)
-        Me.RadButton5.Name = "RadButton5"
-        Me.RadButton5.Size = New System.Drawing.Size(167, 24)
-        Me.RadButton5.TabIndex = 5
-        Me.RadButton5.Text = "RadButton5"
+        Me.RadTextBox1.Location = New System.Drawing.Point(120, 21)
+        Me.RadTextBox1.Name = "RadTextBox1"
+        Me.RadTextBox1.Size = New System.Drawing.Size(183, 20)
+        Me.RadTextBox1.TabIndex = 0
         '
         'RadGroupBox2
         '
@@ -322,6 +322,13 @@ Partial Class FrmSousEpisodeReponseAttribution
         Me.RadGroupBox2.Size = New System.Drawing.Size(360, 683)
         Me.RadGroupBox2.TabIndex = 9
         Me.RadGroupBox2.Text = "Episode"
+        '
+        'RadSeparator3
+        '
+        Me.RadSeparator3.Location = New System.Drawing.Point(5, 635)
+        Me.RadSeparator3.Name = "RadSeparator3"
+        Me.RadSeparator3.Size = New System.Drawing.Size(348, 11)
+        Me.RadSeparator3.TabIndex = 9
         '
         'RadGroupBox3
         '
@@ -337,11 +344,18 @@ Partial Class FrmSousEpisodeReponseAttribution
         Me.RadGroupBox3.TabIndex = 10
         Me.RadGroupBox3.Text = "Sous Episode"
         '
+        'RadSeparator2
+        '
+        Me.RadSeparator2.Location = New System.Drawing.Point(7, 598)
+        Me.RadSeparator2.Name = "RadSeparator2"
+        Me.RadSeparator2.Size = New System.Drawing.Size(198, 10)
+        Me.RadSeparator2.TabIndex = 8
+        '
         'RadGroupBox4
         '
         Me.RadGroupBox4.AccessibleRole = System.Windows.Forms.AccessibleRole.Grouping
         Me.RadGroupBox4.Controls.Add(Me.RadSeparator1)
-        Me.RadGroupBox4.Controls.Add(Me.RadGridView1)
+        Me.RadGroupBox4.Controls.Add(Me.RadMailGridView)
         Me.RadGroupBox4.Controls.Add(Me.RadButton1)
         Me.RadGroupBox4.HeaderText = "Mail"
         Me.RadGroupBox4.Location = New System.Drawing.Point(12, 12)
@@ -356,20 +370,6 @@ Partial Class FrmSousEpisodeReponseAttribution
         Me.RadSeparator1.Name = "RadSeparator1"
         Me.RadSeparator1.Size = New System.Drawing.Size(556, 10)
         Me.RadSeparator1.TabIndex = 3
-        '
-        'RadSeparator2
-        '
-        Me.RadSeparator2.Location = New System.Drawing.Point(7, 598)
-        Me.RadSeparator2.Name = "RadSeparator2"
-        Me.RadSeparator2.Size = New System.Drawing.Size(198, 10)
-        Me.RadSeparator2.TabIndex = 8
-        '
-        'RadSeparator3
-        '
-        Me.RadSeparator3.Location = New System.Drawing.Point(5, 635)
-        Me.RadSeparator3.Name = "RadSeparator3"
-        Me.RadSeparator3.Size = New System.Drawing.Size(348, 11)
-        Me.RadSeparator3.TabIndex = 9
         '
         'FrmSousEpisodeReponseAttribution
         '
@@ -389,8 +389,8 @@ Partial Class FrmSousEpisodeReponseAttribution
         Me.Text = "s"
         CType(Me.RadButton2, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.RadButton1, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.RadGridView1.MasterTemplate, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.RadGridView1, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.RadMailGridView.MasterTemplate, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.RadMailGridView, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.RadGridView4.MasterTemplate, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.RadGridView4, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.RadButton3, System.ComponentModel.ISupportInitialize).EndInit()
@@ -402,26 +402,26 @@ Partial Class FrmSousEpisodeReponseAttribution
         CType(Me.RadGroupBox1, System.ComponentModel.ISupportInitialize).EndInit()
         Me.RadGroupBox1.ResumeLayout(False)
         Me.RadGroupBox1.PerformLayout()
-        CType(Me.RadTextBox1, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.RadTextBox2, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.RadDateTimePicker1, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.RadButtonTextBox1, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.RadButton4, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.RadButton5, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.RadButton4, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.RadButtonTextBox1, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.RadDateTimePicker1, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.RadTextBox2, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.RadTextBox1, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.RadGroupBox2, System.ComponentModel.ISupportInitialize).EndInit()
         Me.RadGroupBox2.ResumeLayout(False)
+        CType(Me.RadSeparator3, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.RadGroupBox3, System.ComponentModel.ISupportInitialize).EndInit()
         Me.RadGroupBox3.ResumeLayout(False)
+        CType(Me.RadSeparator2, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.RadGroupBox4, System.ComponentModel.ISupportInitialize).EndInit()
         Me.RadGroupBox4.ResumeLayout(False)
         CType(Me.RadSeparator1, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.RadSeparator2, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.RadSeparator3, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
 
     End Sub
-    Friend WithEvents RadGridView1 As Telerik.WinControls.UI.RadGridView
+    Friend WithEvents RadMailGridView As Telerik.WinControls.UI.RadGridView
     Friend WithEvents RadButton2 As Telerik.WinControls.UI.RadButton
     Friend WithEvents RadButton1 As Telerik.WinControls.UI.RadButton
     Friend WithEvents RadGridView4 As Telerik.WinControls.UI.RadGridView

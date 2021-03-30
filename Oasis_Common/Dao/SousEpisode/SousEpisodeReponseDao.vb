@@ -47,6 +47,7 @@ Public Class SousEpisodeReponseDao
             SQLString += "AND id = @id"
         End If
 
+        Debug.WriteLine(SQLString)
         Using con As SqlConnection = GetConnection()
 
             Dim tacheDataAdapter As SqlDataAdapter = New SqlDataAdapter()
