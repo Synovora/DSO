@@ -906,6 +906,7 @@ Public Class RadFEpisodeDetail
         Dim sousEpisodeDetailSousTypeDao As SousEpisodeDetailSousTypeDao = New SousEpisodeDetailSousTypeDao
         Dim sousEpisodeSousTypeDao As SousEpisodeSousTypeDao = New SousEpisodeSousTypeDao
         Dim sousEpisodeSousSousTypeDao As SousEpisodeSousSousTypeDao = New SousEpisodeSousSousTypeDao
+        Dim rorDao As RorDao = New RorDao
 
         Dim lstSousEpisodeSousType = sousEpisodeSousTypeDao.getLstSousEpisodeSousType()
         Dim lstSousEpisodeSousSousType = sousEpisodeSousSousTypeDao.getLstSousEpisodeSousSousType()
@@ -942,6 +943,11 @@ Public Class RadFEpisodeDetail
                     Text += sousEpisodeSousSousType.Libelle & vbCrLf
                 Next
             Next
+            If sousEpisode.SousTypeLibelle = "Courrier" Then
+                Dim intervenant = rorDao.getRorById(sousEpisode.IdIntervenant)
+                Dim specialite = Table_specialite.GetSpecialiteDescription(intervenant.SpecialiteId)
+                Text = "Intervenant: " & intervenant.Nom & " - " & specialite
+            End If
 
             RadGridViewSousEpisode.Rows(iGrid).Cells("sousType").Tag = Text
             RadGridViewSousEpisode.Rows(iGrid).Cells("state").Value = If(sousEpisode.IsReponse = False, "", If(sousEpisode.NbReponse = 0, "!", If(sousEpisode.NbMedReponseWaiting > 0, "m", If(sousEpisode.NbReponseWaiting = 0, "v", "x"))))
