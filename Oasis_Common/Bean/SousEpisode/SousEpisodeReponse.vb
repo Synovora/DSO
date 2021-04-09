@@ -20,10 +20,8 @@ Public Class SousEpisodeReponse
     Public Sub New(row As DataRow)
         Me.Id = row("id")
         Me.IdSousEpisode = row("id_sous_episode")
-
         Me.CreateUserId = row("create_user_id")
         Me.HorodateCreation = row("horodate_creation")
-
         Me.NomFichier = Coalesce(row("nom_fichier"), "")
         Me.Commentaire = Coalesce(row("commentaire"), "")
         Me.ValidateState = Coalesce(row("validate_state"), "!")
