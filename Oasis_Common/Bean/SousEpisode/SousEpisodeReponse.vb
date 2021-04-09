@@ -26,10 +26,10 @@ Public Class SousEpisodeReponse
 
         Me.NomFichier = Coalesce(row("nom_fichier"), "")
         Me.Commentaire = Coalesce(row("commentaire"), "")
-        Me.ValidateState = Coalesce(row("validate_state"), "")
-        Me.ValidateUserId = Coalesce(row("validate_user_id"), "")
-        Me.ValidateDate = Coalesce(row("validate_date"), "")
-        Me.EpisodeId = Coalesce(row("episode_id"), "")
+        Me.ValidateState = Coalesce(row("validate_state"), "!")
+        Me.ValidateUserId = Coalesce(row("validate_user_id"), Nothing)
+        Me.ValidateDate = Coalesce(row("validate_date"), Nothing)
+        Me.EpisodeId = Coalesce(row("episode_id"), Nothing)
 
     End Sub
 
