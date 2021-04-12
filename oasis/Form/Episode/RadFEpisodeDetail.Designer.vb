@@ -1520,7 +1520,7 @@ Partial Class RadFEpisodeDetail
         Me.RadDropDownBtnObseSpeIde.Location = New System.Drawing.Point(8, 7)
         Me.RadDropDownBtnObseSpeIde.Name = "RadDropDownBtnObseSpeIde"
         Me.RadDropDownBtnObseSpeIde.Size = New System.Drawing.Size(37, 15)
-        Me.RadDropDownBtnObseSpeIde.SvgImageXml = Nothing
+        'Me.RadDropDownBtnObseSpeIde.SvgImageXml = Nothing
         Me.RadDropDownBtnObseSpeIde.TabIndex = 2
         Me.RadDropDownBtnObseSpeIde.Text = ">"
         Me.ToolTip.SetToolTip(Me.RadDropDownBtnObseSpeIde, "Gestion des observations spécifiques")
