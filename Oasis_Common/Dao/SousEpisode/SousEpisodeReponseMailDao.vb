@@ -14,7 +14,7 @@ Public Class SousEpisodeReponseMailDao
 
 
     Public Function GetTableSousEpisodeReponseMail() As DataTable
-        Dim SQLString = "SELECT * FROM oa_sous_episode_reponse"
+        Dim SQLString = "SELECT * FROM oasis.oa_sous_episode_reponse_mail"
         Using con As SqlConnection = GetConnection()
             Dim tacheDataAdapter As SqlDataAdapter = New SqlDataAdapter()
             Using tacheDataAdapter

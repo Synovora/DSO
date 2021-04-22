@@ -669,7 +669,7 @@ Public Class RadFPatientListe
 
         Try
             Using frm As New FrmSousEpisodeReponseAttribution
-                Me.SelectedPatient = patientDao.GetPatient(0)
+                'Me.SelectedPatient = patientDao.GetPatient(0)
                 frm.ShowDialog()
             End Using
         Catch ex As Exception

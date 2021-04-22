@@ -923,7 +923,7 @@ Public Class RadFEpisodeDetail
             sousEpisode.lstDetail = sousEpisodeDetailSousTypeDao.getLstSousEpisodeDetailSousType(sousEpisode.Id)
 
             If sousEpisode.HorodateValidate <> Nothing Then
-                If (sousEpisode.NbReponseWaiting = 0 And sousEpisode.NbMedReponseWaiting = 0 And sousEpisode.NbReponse <> 0) Or sousEpisode.IsReponse = False Then
+                If (sousEpisode.NbReponseWaiting = 0 And sousEpisode.NbMedReponseWaiting = 0 And sousEpisode.NbReponse <> 0) Then ' Or sousEpisode.IsReponse = False
                     'Vert
                     RadGridViewSousEpisode.Rows(iGrid).Cells("sousType").Style.ForeColor = Color.Green
                 Else

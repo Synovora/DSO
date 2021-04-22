@@ -4,6 +4,7 @@
     Property PatientId As Long
     Property Status As String
     Property Auteur As String
+    Property Objet As String
 
     Public Sub New()
     End Sub
@@ -14,6 +15,7 @@
         Me.PatientId = Coalesce(row("patient_id"), Nothing)
         Me.Status = row("status")
         Me.Auteur = row("auteur")
+        Me.Objet = Coalesce(row("objet"), "")
     End Sub
 
 End Class

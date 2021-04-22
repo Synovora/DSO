@@ -118,20 +118,27 @@ Partial Class FrmSousEpisodeReponseAttribution
         '
         '
         '
+        Me.RadMailGridView.MasterTemplate.AllowAddNewRow = False
+        Me.RadMailGridView.MasterTemplate.AllowDeleteRow = False
+        Me.RadMailGridView.MasterTemplate.AllowDragToGroup = False
+        Me.RadMailGridView.MasterTemplate.AllowEditRow = False
         GridViewTextBoxColumn1.EnableExpressionEditor = False
         GridViewTextBoxColumn1.HeaderText = "Objet"
         GridViewTextBoxColumn1.MinWidth = 100
-        GridViewTextBoxColumn1.Name = "column1"
+        GridViewTextBoxColumn1.Name = "objet"
+        GridViewTextBoxColumn1.ReadOnly = True
         GridViewTextBoxColumn1.Width = 300
         GridViewTextBoxColumn2.EnableExpressionEditor = False
         GridViewTextBoxColumn2.HeaderText = "Auteur"
         GridViewTextBoxColumn2.MinWidth = 80
         GridViewTextBoxColumn2.Name = "auteur"
+        GridViewTextBoxColumn2.ReadOnly = True
         GridViewTextBoxColumn2.Width = 150
         GridViewTextBoxColumn3.EnableExpressionEditor = False
         GridViewTextBoxColumn3.HeaderText = "Date"
         GridViewTextBoxColumn3.MinWidth = 50
-        GridViewTextBoxColumn3.Name = "column3"
+        GridViewTextBoxColumn3.Name = "date"
+        GridViewTextBoxColumn3.ReadOnly = True
         GridViewTextBoxColumn3.TextAlignment = System.Drawing.ContentAlignment.MiddleCenter
         GridViewTextBoxColumn3.Width = 80
         Me.RadMailGridView.MasterTemplate.Columns.AddRange(New Telerik.WinControls.UI.GridViewDataColumn() {GridViewTextBoxColumn1, GridViewTextBoxColumn2, GridViewTextBoxColumn3})
@@ -152,6 +159,9 @@ Partial Class FrmSousEpisodeReponseAttribution
         '
         '
         '
+        Me.RadGridView4.MasterTemplate.AllowAddNewRow = False
+        Me.RadGridView4.MasterTemplate.AllowDeleteRow = False
+        Me.RadGridView4.MasterTemplate.AllowEditRow = False
         GridViewTextBoxColumn4.EnableExpressionEditor = False
         GridViewTextBoxColumn4.HeaderText = "Date"
         GridViewTextBoxColumn4.Name = "column1"
@@ -189,6 +199,9 @@ Partial Class FrmSousEpisodeReponseAttribution
         '
         '
         '
+        Me.RadGridView2.MasterTemplate.AllowAddNewRow = False
+        Me.RadGridView2.MasterTemplate.AllowDeleteRow = False
+        Me.RadGridView2.MasterTemplate.AllowEditRow = False
         GridViewTextBoxColumn7.EnableExpressionEditor = False
         GridViewTextBoxColumn7.HeaderText = "Sous Type"
         GridViewTextBoxColumn7.MinWidth = 180
@@ -223,20 +236,23 @@ Partial Class FrmSousEpisodeReponseAttribution
         '
         '
         '
+        Me.RadGridView3.MasterTemplate.AllowAddNewRow = False
+        Me.RadGridView3.MasterTemplate.AllowDeleteRow = False
+        Me.RadGridView3.MasterTemplate.AllowEditRow = False
         GridViewTextBoxColumn8.EnableExpressionEditor = False
         GridViewTextBoxColumn8.HeaderText = "Prenom"
-        GridViewTextBoxColumn8.Name = "column1"
+        GridViewTextBoxColumn8.Name = "prenom"
         GridViewTextBoxColumn8.Width = 100
         GridViewTextBoxColumn9.EnableExpressionEditor = False
         GridViewTextBoxColumn9.HeaderText = "Nom"
-        GridViewTextBoxColumn9.Name = "column2"
+        GridViewTextBoxColumn9.Name = "nom"
         GridViewTextBoxColumn9.Width = 100
         GridViewTextBoxColumn10.EnableExpressionEditor = False
         GridViewTextBoxColumn10.HeaderText = "DDN"
-        GridViewTextBoxColumn10.Name = "column3"
+        GridViewTextBoxColumn10.Name = "ddn"
         GridViewTextBoxColumn11.EnableExpressionEditor = False
         GridViewTextBoxColumn11.HeaderText = "Site"
-        GridViewTextBoxColumn11.Name = "column4"
+        GridViewTextBoxColumn11.Name = "site"
         GridViewTextBoxColumn11.Width = 80
         Me.RadGridView3.MasterTemplate.Columns.AddRange(New Telerik.WinControls.UI.GridViewDataColumn() {GridViewTextBoxColumn8, GridViewTextBoxColumn9, GridViewTextBoxColumn10, GridViewTextBoxColumn11})
         Me.RadGridView3.MasterTemplate.ViewDefinition = TableViewDefinition4
@@ -386,7 +402,7 @@ Partial Class FrmSousEpisodeReponseAttribution
         '
         '
         Me.RootElement.ApplyShapeToControl = True
-        Me.Text = "s"
+        Me.Text = "none"
         CType(Me.RadButton2, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.RadButton1, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.RadMailGridView.MasterTemplate, System.ComponentModel.ISupportInitialize).EndInit()
