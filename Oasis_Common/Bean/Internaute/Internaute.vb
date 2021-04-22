@@ -3,9 +3,8 @@
 Public Class Internaute
 
     Public Property Id As Integer
-    Public Property PatientId As Integer
     Public Property Password As String
-    Public Property Patient As Patient
+    Public Property Username As String
 
     Public Shared Function CryptePwd(login As String, pwd As String) As String
         Dim UniEnc As New Text.UnicodeEncoding
@@ -16,7 +15,7 @@ Public Class Internaute
     End Function
 
     Public Function CryptePwd() As String
-        Me.Password = CryptePwd(PatientId.ToString(), Password)
+        Me.Password = CryptePwd(Username.ToString(), Password)
         Return Password
     End Function
 

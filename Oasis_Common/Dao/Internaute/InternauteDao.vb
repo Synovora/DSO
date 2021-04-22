@@ -10,14 +10,14 @@ Public Class InternauteDao
 
         Try
             Dim SQLstring As String = "INSERT INTO oasis.oa_internaute (" & vbCrLf &
-                                     " oa_internaute_patientId,  oa_internaute_password)" & vbCrLf &
+                                     " oa_internaute_username,  oa_internaute_password)" & vbCrLf &
                                      " VALUES (" & vbCrLf &
-                                     " @oa_internaute_patientId, @oa_internaute_password);"
+                                     " @oa_internaute_username, @oa_internaute_password);"
 
             Dim cmd As New SqlCommand(SQLstring, con, transaction)
             internaute.CryptePwd()
             With cmd.Parameters
-                .AddWithValue("@oa_internaute_patientId", internaute.PatientId)
+                .AddWithValue("@oa_internaute_username", internaute.Username)
                 .AddWithValue("@oa_internaute_password", internaute.Password)
             End With
 
@@ -36,17 +36,21 @@ Public Class InternauteDao
 
     End Sub
 
-    Public Function GetInternauteByLoginPassword(email As String, password As String) As Internaute
+    Public Function GetInternauteByLoginPassword(username As String, password As String) As Internaute
         Dim user As Internaute = Nothing
 
         Using con As SqlConnection = GetConnection()
             Dim command As SqlCommand = con.CreateCommand()
             Try
-                command.CommandText = "SELECT * FROM oasis.oa_internaute I FULL JOIN oasis.oa_patient P ON P.oa_patient_id = I.oa_internaute_patientId WHERE PGui.oa_patient_email = @oa_patient_email;"
-                command.Parameters.AddWithValue("@oa_patient_email", email)
+                'command.CommandText = "SELECT * FROM oasis.oa_internaute WHERE oa_internaute_username = '@oa_internaute_username';"
+                command.CommandText = "SELECT * FROM oasis.oa_internaute WHERE oa_internaute_username = 'AmandaRine';"
+                'command.Parameters.AddWithValue("@oa_internaute_username", username)
                 Using reader As SqlDataReader = command.ExecuteReader()
+                    Debug.WriteLine("-1")
                     If reader.Read() Then
+                        Debug.WriteLine("0")
                         user = BuildBean(reader)
+                        Debug.WriteLine("1")
                         ControlPassword(user, password)
                     Else
                         Throw New ArgumentException("Identifiant et/ou mot de passe erroné !")
@@ -80,7 +84,8 @@ Public Class InternauteDao
     End Function
 
     Private Sub ControlPassword(user As Internaute, password As String)
-        If user.Password = Internaute.CryptePwd(user.PatientId.ToString(), password) Then
+        Debug.WriteLine("ControlPassword", password)
+        If user.Password = Internaute.CryptePwd(user.Username.ToString(), password) Then
             user.Password = password
             Return
         End If
@@ -89,10 +94,9 @@ Public Class InternauteDao
 
     Public Function BuildBean(reader As SqlDataReader) As Internaute
         Dim user As New Internaute With {
-            .PatientId = reader("oa_internaute_patientId"),
+            .Username = reader("oa_internaute_username"),
             .Password = Coalesce(reader("oa_internaute_password"), ""),
-            .Id = Coalesce(reader("oa_internaute_id"), 0),
-            .Patient = Coalesce(PatientDao.BuildBean(reader), Nothing)
+            .Id = Coalesce(reader("oa_internaute_id"), 0)
         }
         Return user
     End Function

@@ -169,9 +169,9 @@ End Section
                             </tr>
                         </thead>
                         <tbody>
-                            @For i As Integer = 0 To ViewBag.Antecedents.Count - 1
+                            @For i As Integer = 0 To ViewBag.Contexts.Count - 1
                                 @<tr>
-                                    <td>@ViewBag.Antecedents(i)(1)</td>
+                                    <td>@ViewBag.Contexts(i)(1)</td>
                                 </tr>
                             Next
                         </tbody>

@@ -103,9 +103,10 @@ Namespace Oasis_Web.Controllers
                     Throw New ArgumentException("Les dates d'entrees et de sorties du patient ne sont pas correct.")
                 End If
 
-                Dim internaute As Internaute = New Internaute With {
-                    .PatientId = patient.PatientId
-                }
+                Dim internaute As Internaute = New Internaute
+                'With {
+                '.PatientId = patient.PatientId
+                '}
 
                 'Create User
                 Dim r As New Random

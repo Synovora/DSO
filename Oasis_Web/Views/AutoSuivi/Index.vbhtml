@@ -29,7 +29,7 @@ End Section
                     @Using (Html.BeginForm(Nothing, Nothing, FormMethod.Post, New With {.id = "__AjaxAntiForgeryForm"}))
                         @Html.AntiForgeryToken()
                     End Using
-                    <form id="myDiv" Class="form-horizontal" data-url="@Url.Action("AutoSuiviValidate", "AutoSuivi" )">
+                    <form id="myDiv" Class="form-horizontal" data-url="@Url.Action("AutoSuiviValidate", "AutoSuivi" )" autocomplete="off">
                         <div class="d-flex flex-column flex-wrap justify-flex-start">
                             @For i As Integer = 0 To ViewBag.ParametresAutoSuivi.Count - 1
                                 @<div class="boxAutoSuiviItem d-flex flex-row justify-content-between lh-condensed">
