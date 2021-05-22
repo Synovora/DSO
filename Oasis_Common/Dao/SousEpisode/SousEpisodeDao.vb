@@ -1,19 +1,157 @@
-﻿Imports System.Data.SqlClient
+﻿Imports System.Configuration
+Imports System.Data.SqlClient
 
 Public Class SousEpisodeDao
     Inherits StandardDao
 
-    Public Function getLstSousEpisode(idEpisode As Long, Optional idSousEpisode As Long = 0, Optional isWithInactif As Boolean = False) As List(Of SousEpisode)
-        Dim lst As List(Of SousEpisode) = New List(Of SousEpisode)
-        Dim data As DataTable = getTableSousEpisode(idEpisode, idSousEpisode, isWithInactif)
-        For Each row In data.Rows
-            lst.Add(buildBean(row))
-        Next
-        Return lst
+    Public Function GetLstSousEpisode(idEpisode As Long, Optional idSousEpisode As Long = 0, Optional isComplete As Boolean = False) As List(Of SousEpisode)
+        Dim con As SqlConnection = GetConnection()
+        Dim sousEpisodes As List(Of SousEpisode) = New List(Of SousEpisode)
+        Dim SQLString =
+            "SELECT " & vbCrLf &
+            "	  SE.id, " & vbCrLf &
+            "     SE.episode_id, " & vbCrLf &
+            "     SE.id_intervenant, " & vbCrLf &
+            "     SE.id_sous_episode_type, " & vbCrLf &
+            "     SE.id_sous_episode_sous_type, " & vbCrLf &
+            "     SE.create_user_id, " & vbCrLf &
+            "     SE.horodate_creation, " & vbCrLf &
+            "     SE.last_update_user_id, " & vbCrLf &
+            "     SE.horodate_last_update, " & vbCrLf &
+            "     SE.validate_user_id, " & vbCrLf &
+            "     SE.horodate_validate, " & vbCrLf &
+            "	  SE.commentaire, " & vbCrLf &
+            "	  SE.signature, " & vbCrLf &
+            "	  SE.reference, " & vbCrLf &
+            "	  SE.is_ald, " & vbCrLf &
+            "	  SE.is_reponse, " & vbCrLf &
+            "	  SE.delai_since_validation, " & vbCrLf &
+            "	  SE.is_reponse_recue, " & vbCrLf &
+            "	  SE.horodate_last_recu, " & vbCrLf &
+            "	  SE.is_inactif " & vbCrLf
+
+        If isComplete Then
+            SQLString += "" &
+            ",UC.oa_utilisateur_prenom + ' ' + UC.oa_utilisateur_nom as user_create,  " & vbCrLf &
+            "UU.oa_utilisateur_prenom + ' ' + UU.oa_utilisateur_nom as user_update, " & vbCrLf &
+            "UV.oa_utilisateur_prenom + ' ' + UV.oa_utilisateur_nom as user_validate, " & vbCrLf &
+            "T.libelle as type_libelle, " & vbCrLf &
+            "S.libelle as sous_type_libelle, " & vbCrLf &
+            "S.redaction_profil_types, " & vbCrLf &
+            "S.validation_profil_types, " & vbCrLf &
+            "(SELECT COUNT(*) FROM oasis.oa_sous_episode_reponse SER WHERE SER.id_sous_episode = SE.id AND SER.validate_state = '!' ) AS nb_reponse_waiting, " & vbCrLf &
+            "(SELECT COUNT(*) FROM oasis.oa_sous_episode_reponse SER WHERE SER.id_sous_episode = SE.id AND SER.validate_state = 'm' ) AS nb_med_reponse_waiting, " & vbCrLf &
+            "(SELECT COUNT(*) FROM oasis.oa_sous_episode_reponse SER WHERE SER.id_sous_episode = SE.id ) AS nb_reponse " & vbCrLf
+        End If
+
+        SQLString += "FROM [oasis].[oa_sous_episode] SE " & vbCrLf
+
+        If isComplete Then
+            SQLString += "" &
+            "Join oasis.oa_r_sous_episode_type T On T.id =SE.id_sous_episode_type " & vbCrLf &
+            "Join oasis.oa_r_sous_episode_sous_type S ON S.id =SE.id_sous_episode_sous_type " & vbCrLf &
+            "Join oasis.oa_utilisateur UC ON UC.oa_utilisateur_id =SE.create_user_id " & vbCrLf &
+            "Left Join oasis.oa_utilisateur UU ON UC.oa_utilisateur_id =SE.last_update_user_id " & vbCrLf &
+            "Left Join oasis.oa_utilisateur UV ON UV.oa_utilisateur_id =SE.validate_user_id " & vbCrLf
+        End If
+
+        SQLString += "WHERE 1=1 " & vbCrLf
+
+        If idEpisode <> 0 Then
+            SQLString += "AND SE.episode_id= @idEpisode " & vbCrLf
+        End If
+
+        If idSousEpisode <> 0 Then
+            SQLString += "AND SE.id= @idSousEpisode " & vbCrLf
+        End If
+
+        If isComplete = False Then
+            SQLString += "AND SE.is_inactif= @is_inactif " & vbCrLf
+        End If
+
+        SQLString += "ORDER by SE.id DESC"
+
+        Try
+            Dim command As SqlCommand = con.CreateCommand()
+            command.CommandText = SQLString
+            If idSousEpisode <> 0 Then command.Parameters.AddWithValue("@idSousEpisode", idSousEpisode)
+            If idEpisode <> 0 Then command.Parameters.AddWithValue("@idEpisode", idEpisode)
+            If isComplete = False Then command.Parameters.AddWithValue("@is_inactif", False)
+            Using reader As SqlDataReader = command.ExecuteReader()
+                While (reader.Read())
+                    sousEpisodes.Add(BuildBean(reader))
+                End While
+            End Using
+        Catch ex As Exception
+            Throw ex
+        Finally
+            con.Close()
+        End Try
+        Return sousEpisodes
+
+
     End Function
 
+    Public Function GetAllSousEpisodeByPatient(episodeId As Integer) As List(Of SousEpisode)
+        Dim con As SqlConnection = GetConnection()
+        Dim sousEpisodes As List(Of SousEpisode) = New List(Of SousEpisode)
+        Dim SQLString As String = "SELECT " & vbCrLf &
+            "	  SE.id, " & vbCrLf &
+            "     SE.episode_id, " & vbCrLf &
+            "     SE.id_intervenant, " & vbCrLf &
+            "     SE.id_sous_episode_type, " & vbCrLf &
+            "     SE.id_sous_episode_sous_type, " & vbCrLf &
+            "     SE.create_user_id, " & vbCrLf &
+            "     SE.horodate_creation, " & vbCrLf &
+            "     SE.last_update_user_id, " & vbCrLf &
+            "     SE.horodate_last_update, " & vbCrLf &
+            "     SE.validate_user_id, " & vbCrLf &
+            "     SE.horodate_validate, " & vbCrLf &
+            "	  SE.commentaire, " & vbCrLf &
+            "	  SE.signature, " & vbCrLf &
+            "	  SE.reference, " & vbCrLf &
+            "	  SE.is_ald, " & vbCrLf &
+            "	  SE.is_reponse, " & vbCrLf &
+            "	  SE.delai_since_validation, " & vbCrLf &
+            "	  SE.is_reponse_recue, " & vbCrLf &
+            "	  SE.horodate_last_recu, " & vbCrLf &
+            "	  SE.is_inactif " & vbCrLf &
+            ",UC.oa_utilisateur_prenom + ' ' + UC.oa_utilisateur_nom as user_create,  " & vbCrLf &
+            "UU.oa_utilisateur_prenom + ' ' + UU.oa_utilisateur_nom as user_update, " & vbCrLf &
+            "UV.oa_utilisateur_prenom + ' ' + UV.oa_utilisateur_nom as user_validate, " & vbCrLf &
+            "T.libelle as type_libelle, " & vbCrLf &
+            "S.libelle as sous_type_libelle, " & vbCrLf &
+            "S.redaction_profil_types, " & vbCrLf &
+            "S.validation_profil_types, " & vbCrLf &
+            "(SELECT COUNT(*) FROM oasis.oa_sous_episode_reponse SER WHERE SER.id_sous_episode = SE.id AND SER.validate_state = '!' ) AS nb_reponse_waiting, " & vbCrLf &
+            "(SELECT COUNT(*) FROM oasis.oa_sous_episode_reponse SER WHERE SER.id_sous_episode = SE.id AND SER.validate_state = 'm' ) AS nb_med_reponse_waiting, " & vbCrLf &
+            "(SELECT COUNT(*) FROM oasis.oa_sous_episode_reponse SER WHERE SER.id_sous_episode = SE.id ) AS nb_reponse " & vbCrLf &
+            "FROM [oasis].[oa_sous_episode] SE " & vbCrLf &
+            "Join oasis.oa_r_sous_episode_type T On T.id =SE.id_sous_episode_type " & vbCrLf &
+            "Join oasis.oa_r_sous_episode_sous_type S ON S.id =SE.id_sous_episode_sous_type " & vbCrLf &
+            "Join oasis.oa_utilisateur UC ON UC.oa_utilisateur_id =SE.create_user_id " & vbCrLf &
+            "Left Join oasis.oa_utilisateur UU ON UC.oa_utilisateur_id =SE.last_update_user_id " & vbCrLf &
+            "Left Join oasis.oa_utilisateur UV ON UV.oa_utilisateur_id =SE.validate_user_id " & vbCrLf &
+            "WHERE episode_id = @episodeId" & vbCrLf
 
-    Public Function getTableSousEpisode(idEpisode As Long, Optional idSousEpisode As Long = 0, Optional isComplete As Boolean = True, Optional isWithInactif As Boolean = False) As DataTable
+        Try
+            Dim command As SqlCommand = con.CreateCommand()
+            command.CommandText = SQLString
+            command.Parameters.AddWithValue("@episodeId", episodeId)
+            Using reader As SqlDataReader = command.ExecuteReader()
+                While (reader.Read())
+                    sousEpisodes.Add(BuildBean(reader))
+                End While
+            End Using
+        Catch ex As Exception
+            Throw ex
+        Finally
+            con.Close()
+        End Try
+        Return sousEpisodes
+    End Function
+
+    Public Function GetTableSousEpisode(idEpisode As Long, Optional idSousEpisode As Long = 0, Optional isComplete As Boolean = True, Optional isWithInactif As Boolean = False) As DataTable
         Dim SQLString =
             "SELECT " & vbCrLf &
             "	  SE.id, " & vbCrLf &
@@ -117,7 +255,7 @@ Public Class SousEpisodeDao
 
         ' --- on compte les evenements par sous type
         Try
-            Dim lst = getLstSousEpisode(selectedEpisodeId,, isWithInactif)
+            Dim lst = GetLstSousEpisode(selectedEpisodeId,, isWithInactif)
             For Each se In lst
                 Dim i As Integer
                 If dicCount.TryGetValue(se.IdSousEpisodeSousType, i) Then
@@ -389,18 +527,60 @@ Public Class SousEpisodeDao
         Return codeRetour
     End Function
 
-    ''' <summary>
-    ''' 
-    ''' </summary>
-    ''' <param name="idSousEpisode"></param>
-    ''' <returns></returns>
     Public Function getById(idSousEpisode As Long) As SousEpisode
-        Return getLstSousEpisode(0, idSousEpisode, True)(0)
+        Return GetLstSousEpisode(0, idSousEpisode, True)(0)
     End Function
 
-    Private Function buildBean(row As DataRow) As SousEpisode
-        Dim seType As New SousEpisode(row)
-        Return seType
+    'Public Function getById(idSousEpisode As Long) As SousEpisode
+    '    Dim sousEpisode As SousEpisode
+    '    Dim con As SqlConnection = GetConnection()
+    '    Try
+    '        Dim command As SqlCommand = con.CreateCommand()
+    '        command.CommandText = "SELECT * FROM oasis.oa_sous_episode WHERE id=@id"
+    '        command.Parameters.AddWithValue("@id", idSousEpisode)
+    '        Using reader As SqlDataReader = command.ExecuteReader()
+    '            If reader.Read() Then
+    '                sousEpisode = BuildBean(reader)
+    '            Else
+    '                Throw New ArgumentException("SousEpisode inexistant !")
+    '            End If
+    '        End Using
+    '    Catch ex As Exception
+    '        Throw ex
+    '    Finally
+    '        con.Close()
+    '    End Try
+    '    Return sousEpisode
+    'End Function
+
+    Private Function BuildBean(reader As SqlDataReader) As SousEpisode
+        Dim sousEpisode As New SousEpisode With {
+            .Id = reader("id"),
+            .IdIntervenant = Coalesce(reader("id_intervenant"), 0),
+            .IdSousEpisodeType = reader("id_sous_episode_type"),
+            .IdSousEpisodeSousType = reader("id_sous_episode_sous_type"),
+            .CreateUserId = reader("create_user_id"),
+            .HorodateCreation = reader("horodate_creation"),
+            .LastUpdateUserId = Coalesce(reader("last_update_user_id"), 0),
+            .HorodateLastUpdate = Coalesce(reader("horodate_last_update"), Nothing),
+            .ValidateUserId = Coalesce(reader("validate_user_id"), 0),
+            .HorodateValidate = Coalesce(reader("horodate_validate"), Nothing),
+            .Commentaire = Coalesce(reader("commentaire"), ""),
+            .IsALD = reader("is_ald"),
+            .IsReponse = Coalesce(reader("is_reponse"), False),
+            .DelaiSinceValidation = Coalesce(reader("delai_since_validation"), ConfigurationManager.AppSettings("DelaiDefautReponseSousEpisode")),
+            .IsReponseRecue = Coalesce(reader("is_reponse_recue"), False),
+            .HorodateLastRecu = Coalesce(reader("horodate_last_recu"), Nothing),
+            .isInactif = Coalesce(reader("is_inactif"), False),
+            .Signature = Coalesce(reader("signature"), "NaN"),
+            .Reference = Coalesce(reader("reference"), "NaN"),
+            .SousTypeLibelle = Coalesce(reader("sous_type_libelle"), ""),
+            .UserCreate = Coalesce(reader("user_create"), ""),
+            .NbReponse = Coalesce(reader("nb_reponse"), 0),
+            .NbReponseWaiting = Coalesce(reader("nb_reponse_waiting"), 0),
+            .NbMedReponseWaiting = Coalesce(reader("nb_med_reponse_waiting"), 0)
+            }
+        Return sousEpisode
     End Function
 
 End Class

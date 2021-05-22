@@ -47,7 +47,7 @@ Public Class FrmSousEpisodeListe
 
         Me.Cursor = Cursors.WaitCursor
         Try
-            Dim data As DataTable = sousEpisodeDao.getTableSousEpisode(episode.Id,, True)
+            Dim data As DataTable = sousEpisodeDao.GetTableSousEpisode(episode.Id,, True)
             Dim numRowGrid As Integer = 0
 
             ' -- recup eventuelle precedente selectionnée

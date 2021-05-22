@@ -175,6 +175,28 @@ Public Class EpisodeDao
         Return episode
     End Function
 
+    Public Function GetAllEpisodeByPatient(patientId As Integer) As List(Of Episode)
+        Dim con As SqlConnection = GetConnection()
+        Dim episodes As List(Of Episode) = New List(Of Episode)
+        Try
+            Dim command As SqlCommand = con.CreateCommand()
+            command.CommandText = "SELECT * FROM oasis.oa_episode" &
+                    " WHERE patient_id = @patientId" &
+                    " ORDER BY episode_id DESC"
+            command.Parameters.AddWithValue("@patientId", patientId)
+            Using reader As SqlDataReader = command.ExecuteReader()
+                While (reader.Read())
+                    episodes.Add(BuildBean(reader))
+                End While
+            End Using
+        Catch ex As Exception
+            Throw ex
+        Finally
+            con.Close()
+        End Try
+        Return episodes
+    End Function
+
     Public Function GetAllEpisodeByPatient(patientId As Long, dateDebut As Date, dateFin As Date, ligneDeVie As LigneDeVie) As DataTable
         Dim SQLString, ClauseWhereString, TypeEpisodeString, ActiviteEpisodeString, ProfilEpisodeString, OrderByString As String
         Dim Parametre1String, Parametre2String, Parametre3String, Parametre4String, Parametre5String As String

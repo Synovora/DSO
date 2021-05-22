@@ -895,7 +895,7 @@ Public Class RadFEpisodeDetail
         RadGridViewSousEpisode.Rows.Clear()
 
 
-        Dim sousEpisodeList = sousEpisodeDao.getLstSousEpisode(SelectedEpisodeId, , True)
+        Dim sousEpisodeList = sousEpisodeDao.GetLstSousEpisode(SelectedEpisodeId, , True)
 
 
         'Dim dt As DataTable
@@ -5202,14 +5202,6 @@ Public Class RadFEpisodeDetail
             drcIdConclusionIde = 128001
             CreateLog("Paramètre application 'drcIdConclusionIde' non trouvé !", "Episode", Log.EnumTypeLog.ERREUR.ToString, userLog)
         End If
-    End Sub
-
-    Private Sub RadPanel12_Paint(sender As Object, e As PaintEventArgs) Handles RadPanel12.Paint
-
-    End Sub
-
-    Private Sub RadGridViewSousEpisode_Click(sender As Object, e As EventArgs) Handles RadGridViewSousEpisode.Click
-
     End Sub
 
 

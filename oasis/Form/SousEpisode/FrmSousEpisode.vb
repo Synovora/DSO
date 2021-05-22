@@ -472,10 +472,11 @@ Public Class FrmSousEpisode
     Private Sub BtnEditerDocument_Click(sender As Object, e As EventArgs) Handles BtnEditerDocument.Click
         If Me.DropDownSousType.SelectedItem Is Nothing Then Return
         Dim sousType = (TryCast(Me.DropDownSousType.SelectedItem.Value, SousEpisodeSousType))
+        Console.WriteLine("BtnEditerDocument_Click")
         Try
             Me.Cursor = Cursors.WaitCursor
             Me.Enabled = False
-            Dim lstSousEpisodeFusion As List(Of SousEpisodeFusion) = constitueFusion()
+            Dim lstSousEpisodeFusion As List(Of SousEpisodeFusion) = Me.ConstitueFusion()
             Dim tbl = Telecharger_SousEpisodeDemande(sousType)
             Dim ins = New MemoryStream(tbl)
             Dim provider = New DocxFormatProvider()
@@ -554,7 +555,7 @@ Public Class FrmSousEpisode
         End Try
     End Function
 
-    Private Function constitueFusion() As List(Of SousEpisodeFusion)
+    Private Function ConstitueFusion() As List(Of SousEpisodeFusion)
         Dim lstFusion = New List(Of SousEpisodeFusion)(1)
         Dim sousEF As New SousEpisodeFusion
         Dim episodeParametreDao = New EpisodeParametreDao
@@ -579,9 +580,9 @@ Public Class FrmSousEpisode
 
         'update Sous-Episode
         sousEpisode = sousEpisodeDao.getById(sousEpisode.Id)
+        Console.WriteLine("sousEpisode: " & sousEpisode.Id)
 
         With sousEF
-
             .USNom = uniteSanitaire.Oa_unite_sanitaire_description
             .USAdr1 = uniteSanitaire.Oa_unite_sanitaire_adresse1
             .USAdr2 = uniteSanitaire.Oa_unite_sanitaire_adresse2
@@ -620,7 +621,6 @@ Public Class FrmSousEpisode
             .Sous_Type_Libelle = sousType.Libelle
 
             ' -- Ajout de la Reference
-            Console.WriteLine("Ajout de la ref" & sousEpisode.Reference)
             .Reference = sousEpisode.Reference
 
             ' -- recherche des sous-type_detail (sousoustype)

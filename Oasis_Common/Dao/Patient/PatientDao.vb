@@ -285,6 +285,38 @@ Public Class PatientDao
         Return ListePatientDataTable
     End Function
 
+    Public Function GetFilteredPatient(Prenom As String, Nom As String, NDD As Date) As List(Of Patient)
+        Dim con As SqlConnection = GetConnection()
+        Dim patients As List(Of Patient) = New List(Of Patient)
+        Dim SQLString As String = "SELECT * FROM oasis.oa_patient WHERE 1 = 1"
+
+        If Prenom <> Nothing Then
+            SQLString += "AND oa_patient_prenom LIKE '" & Prenom & "%'"
+        End If
+        If Nom <> Nothing Then
+            SQLString += "AND oa_patient_nom LIKE '" & Nom & "%'"
+        End If
+        If NDD <> Nothing Then
+            SQLString += "AND oa_patient_date_naissance LIKE '" & NDD & "'"
+        End If
+
+        Try
+            Dim command As SqlCommand = con.CreateCommand()
+            command.CommandText = SQLString
+            Using reader As SqlDataReader = command.ExecuteReader()
+                While (reader.Read())
+                    patients.Add(BuildBean(reader))
+                End While
+            End Using
+        Catch ex As Exception
+            Throw ex
+        Finally
+            con.Close()
+        End Try
+
+        Return patients
+    End Function
+
     Public Function GetAllPatient(Tous As Boolean, PatientOasis As Boolean) As DataTable
         Dim conxn As New SqlConnection(GetConnectionString())
         Dim da As SqlDataAdapter = New SqlDataAdapter()

@@ -5,6 +5,7 @@ Public Class RadFEpisodeDetailCreation
     Private _SelectedPatient As Patient
     Private _episodeId As Long
     Private _CodeRetour As Boolean
+    Property EpisodeType As Episode.EnumTypeEpisode
 
     Public Property SelectedPatient As Patient
         Get
@@ -54,6 +55,14 @@ Public Class RadFEpisodeDetailCreation
 
         Dim genre, enfant As String
         Dim agePatient As Integer = CalculAgeEnAnnee(SelectedPatient.PatientDateNaissance)
+
+        If EpisodeType = Episode.EnumTypeEpisode.VIRTUEL Then
+            RadioBtnVirtuel.Checked = True
+            RadioBtnConsultation.Checked = False
+        ElseIf EpisodeType = Episode.EnumTypeEpisode.CONSULTATION Then
+            RadioBtnConsultation.Checked = True
+            RadioBtnVirtuel.Checked = False
+        End If
 
         Dim listActivite As New List(Of String)
         episodeActiviteDT = episodeActiviteDao.GetAllEpisodeActivite

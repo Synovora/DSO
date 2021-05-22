@@ -130,7 +130,6 @@ Public Class RadFPatientListe
         End If
     End Sub
 
-
     Private Sub RadGridView1_CellClick(sender As Object, e As Telerik.WinControls.UI.GridViewCellEventArgs) Handles RadPatientGridView.CellClick
         SelectionPatient()
     End Sub
