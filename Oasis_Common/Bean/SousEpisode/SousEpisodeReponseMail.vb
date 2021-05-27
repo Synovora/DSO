@@ -5,6 +5,7 @@
     Property Status As String
     Property Auteur As String
     Property Objet As String
+    Property Corps As String
 
     Public Sub New()
     End Sub
@@ -16,6 +17,7 @@
         Me.Status = row("status")
         Me.Auteur = row("auteur")
         Me.Objet = Coalesce(row("objet"), "")
+        Me.Corps = Coalesce(If(row.Table.Columns.Contains("corps"), row("corps"), Nothing), "")
     End Sub
 
 End Class

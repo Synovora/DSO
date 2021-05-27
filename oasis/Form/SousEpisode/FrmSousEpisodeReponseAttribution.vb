@@ -1,4 +1,7 @@
-﻿Imports Oasis_Common
+﻿Imports System.Configuration
+Imports System.Diagnostics
+Imports System.IO
+Imports Oasis_Common
 Imports Telerik.WinControls
 Imports Telerik.WinControls.UI
 
@@ -11,9 +14,13 @@ Public Class FrmSousEpisodeReponseAttribution
     ReadOnly sousEpisodeSousTypeDao As New SousEpisodeSousTypeDao
     ReadOnly sousEpisodeSousSousTypeDao As New SousEpisodeSousSousTypeDao
     ReadOnly sousEpisodeDetailSousTypeDao As New SousEpisodeDetailSousTypeDao
+    ReadOnly sousEpisodeReponseMailAttachmentDao As New SousEpisodeReponseMailAttachmentDao
+    ReadOnly sousEpisodeReponseMailDao As New SousEpisodeReponseMailDao
+    ReadOnly sousEpisodeReponseDao As New SousEpisodeReponseDao
 
     Dim lstSousEpisodeSousType As List(Of SousEpisodeSousType)
     Dim lstSousEpisodeSousSousType As List(Of SousEpisodeSousSousType)
+    Dim lstMail As List(Of SousEpisodeReponseMail)
 
     Private Sub FrmSousEpisodeReponseAttribution_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         AfficheTitleForm(Me, "Liste des mails a traiter", userLog)
@@ -37,7 +44,7 @@ Public Class FrmSousEpisodeReponseAttribution
         Me.Cursor = Cursors.WaitCursor
         Dim sousEpisodeReponseMailDao As SousEpisodeReponseMailDao = New SousEpisodeReponseMailDao
         Try
-            Dim lstMail As List(Of SousEpisodeReponseMail) = sousEpisodeReponseMailDao.GetLstSousEpisodeReponseMail()
+            lstMail = sousEpisodeReponseMailDao.GetLstSousEpisodeReponseMail()
             Dim numRowGrid As Integer = 0
             ' -- recup eventuelle precedente selectionnée
             'If RadSousEpisodeGrid.Rows.Count > 0 AndAlso Not IsNothing(Me.RadSousEpisodeGrid.CurrentRow) Then
@@ -46,8 +53,12 @@ Public Class FrmSousEpisodeReponseAttribution
             'End If
             RadMailGridView.Rows.Clear()
             For Each mail In lstMail
+                If mail.Status = "processed" Then
+                    Continue For
+                End If
                 Dim newRow As GridViewRowInfo = RadMailGridView.Rows.NewRow()
                 With newRow
+                    .Cells("id").Value = mail.Id
                     .Cells("objet").Value = mail.Objet
                     .Cells("auteur").Value = mail.Auteur
                     .Cells("date").Value = mail.HorodateCreation.ToShortDateString
@@ -212,6 +223,69 @@ Public Class FrmSousEpisodeReponseAttribution
     '
     ' CELLCLICK
     '
+
+    Private Sub RadAttachmentGridView_CellClick(sender As Object, e As GridViewCellEventArgs) Handles RadAttachmentGridView.CellClick
+        'MessageBox.Show("Telecharger fichier " & gce.RowInfo.Cells("NomFichier").Value & " : " & gce.RowInfo.Cells("IdSousEpisode").Value & "_" & gce.RowInfo.Cells("Id").Value)
+        Try
+            Me.Cursor = Cursors.WaitCursor
+            Dim attachment = sousEpisodeReponseMailAttachmentDao.GetSousEpisodeReponseMailAttachmentById(RadAttachmentGridView.Rows(Me.RadAttachmentGridView.Rows.IndexOf(Me.RadAttachmentGridView.CurrentRow)).Cells("id").Value)
+
+            Dim tbl As Byte() = sousEpisodeReponseDao.getContenu(attachment.Filename, loginRequestLog)
+            'Me.Cursor = Cursors.Default
+            'SaveFileDialog1.FileName = sousEpisodeReponse.NomFichier
+            'Select Case (SaveFileDialog1.ShowDialog())
+            '    Case DialogResult.Abort, DialogResult.Cancel
+            '        Notification.show("Réponse Sous-épisode", "Téléchargement abandonné !")
+            '    Case DialogResult.OK, DialogResult
+            '        File.WriteAllBytes(SaveFileDialog1.FileName, tbl)
+            '        Notification.show("Réponse Sous-épisode", "Téléchargement de " & SaveFileDialog1.FileName & " Terminé !")
+            'End Select
+
+            Dim pathDownload = ConfigurationManager.AppSettings("CheminTelechargement")
+            If (Not System.IO.Directory.Exists(pathDownload)) Then
+                System.IO.Directory.CreateDirectory(pathDownload)
+            End If
+
+            File.WriteAllBytes(pathDownload & "\" & attachment.Filename, tbl)
+            Dim proc As New Process()
+            ' Nom du fichier dont l'extension est connue du shell à ouvrir 
+            Try
+                proc.StartInfo.FileName = pathDownload & "\" & attachment.Filename
+                proc.Start()
+                ' On libère les ressources 
+                proc.Close()
+                Notification.show("Lancement du logiciel associé", "Veuillez patienter pendant le lancement du logiciel associé à la visualisation de votre fichier !")
+            Catch err As Exception
+                MsgBox(err.Message() & vbCrLf & "Votre fichier est téléchargé et disponible dans le répertoire suivant : " & vbCrLf & pathDownload)
+            End Try
+        Catch Err As Exception
+            MsgBox(Err.Message())
+            Return
+        Finally
+            Me.Cursor = Cursors.Default
+        End Try
+    End Sub
+
+    Private Sub RadMailGridView_CellClick(sender As Object, e As GridViewCellEventArgs) Handles RadMailGridView.CellClick
+        RadAttachmentGridView.Rows.Clear()
+        Dim id As Integer = RadMailGridView.Rows(Me.RadMailGridView.Rows.IndexOf(Me.RadMailGridView.CurrentRow)).Cells("id").Value
+        Dim sousEpisodeReponseMail As SousEpisodeReponseMail = sousEpisodeReponseMailDao.GetSousEpisodeReponseMailById(id)
+
+        If sousEpisodeReponseMail IsNot Nothing Then
+            RadObjetTextBox.Text = sousEpisodeReponseMail.Objet
+            WebBrowser.DocumentText = sousEpisodeReponseMail.Corps
+        End If
+
+        Dim lstAttachment = sousEpisodeReponseMailAttachmentDao.GetSousEpisodeReponseMailAttachmentByMailId(sousEpisodeReponseMail.Id)
+        For Each attachment In lstAttachment
+            Dim newRow As GridViewRowInfo = RadAttachmentGridView.Rows.NewRow()
+            With newRow
+                .Cells("id").Value = attachment.Id
+                .Cells("filename").Value = attachment.Filename
+            End With
+            RadAttachmentGridView.Rows.Add(newRow)
+        Next
+    End Sub
 
     Private Sub RadGridViewPatient_CellClick(sender As Object, e As GridViewCellEventArgs) Handles RadGridViewPatient.CellClick
         Dim id As Integer = RadGridViewPatient.Rows(Me.RadGridViewPatient.Rows.IndexOf(Me.RadGridViewPatient.CurrentRow)).Cells("id").Value

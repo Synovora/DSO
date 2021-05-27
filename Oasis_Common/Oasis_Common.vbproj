@@ -149,6 +149,7 @@
     <Compile Include="Bean\PPS\PpsClass.vb" />
     <Compile Include="Bean\PPS\PpsHisto.vb" />
     <Compile Include="Bean\ROR\RorClass.vb" />
+    <Compile Include="Bean\SousEpisode\SousEpisodeReponseMailAttachment.vb" />
     <Compile Include="Bean\SousEpisode\SousEpisodeReponseMail.vb" />
     <Compile Include="Bean\SousEpisode\SousEpisode.vb" />
     <Compile Include="Bean\SousEpisode\SousEpisodeDetailSousType.vb" />
@@ -236,6 +237,7 @@
     <Compile Include="Dao\PPS\PPSHistoCreationDao.vb" />
     <Compile Include="Dao\PPS\PPSHistoDao.vb" />
     <Compile Include="Dao\ROR\RorDao.vb" />
+    <Compile Include="Dao\SousEpisode\SousEpisodeReponseMailAttachmentDao.vb" />
     <Compile Include="Dao\SousEpisode\SousEpisodeReponseMailDao.vb" />
     <Compile Include="Dao\SousEpisode\SousEpisodeDao.vb" />
     <Compile Include="Dao\SousEpisode\SousEpisodeDetailSousTypeDao.vb" />

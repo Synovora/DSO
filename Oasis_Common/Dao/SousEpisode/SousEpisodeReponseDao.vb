@@ -250,6 +250,19 @@ Public Class SousEpisodeReponseDao
         Return codeRetour
     End Function
 
+    Public Function getContenu(filename As String, loginRequestLog As LoginRequest) As Byte()
+
+        ' -- download
+        Using apiOasis As New ApiOasis()
+            Dim downloadRequest As New DownloadRequest With {
+               .LoginRequest = loginRequestLog,
+               .FileName = filename
+               }
+            Return apiOasis.downloadFileRest(downloadRequest)
+        End Using
+
+    End Function
+
     Public Function getContenu(idEpisode As Long, sousEpisodeReponse As SousEpisodeReponse, loginRequestLog As LoginRequest) As Byte()
         Dim filename = sousEpisodeReponse.GetFilenameServer(idEpisode)
         ' -- download

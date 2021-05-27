@@ -472,7 +472,6 @@ Public Class FrmSousEpisode
     Private Sub BtnEditerDocument_Click(sender As Object, e As EventArgs) Handles BtnEditerDocument.Click
         If Me.DropDownSousType.SelectedItem Is Nothing Then Return
         Dim sousType = (TryCast(Me.DropDownSousType.SelectedItem.Value, SousEpisodeSousType))
-        Console.WriteLine("BtnEditerDocument_Click")
         Try
             Me.Cursor = Cursors.WaitCursor
             Me.Enabled = False

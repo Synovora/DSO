@@ -56,13 +56,13 @@ Public Class RadFEpisodeDetailCreation
         Dim genre, enfant As String
         Dim agePatient As Integer = CalculAgeEnAnnee(SelectedPatient.PatientDateNaissance)
 
-        If EpisodeType = Episode.EnumTypeEpisode.VIRTUEL Then
-            RadioBtnVirtuel.Checked = True
-            RadioBtnConsultation.Checked = False
-        ElseIf EpisodeType = Episode.EnumTypeEpisode.CONSULTATION Then
-            RadioBtnConsultation.Checked = True
-            RadioBtnVirtuel.Checked = False
-        End If
+        'If EpisodeType = Episode.EnumTypeEpisode.VIRTUEL Then
+        '    RadioBtnVirtuel.Checked = True
+        '    RadioBtnConsultation.Checked = False
+        'ElseIf EpisodeType = Episode.EnumTypeEpisode.CONSULTATION Then
+        '    RadioBtnConsultation.Checked = True
+        '    RadioBtnVirtuel.Checked = False
+        'End If
 
         Dim listActivite As New List(Of String)
         episodeActiviteDT = episodeActiviteDao.GetAllEpisodeActivite
