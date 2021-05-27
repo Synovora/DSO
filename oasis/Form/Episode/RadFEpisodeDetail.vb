@@ -923,7 +923,7 @@ Public Class RadFEpisodeDetail
             sousEpisode.lstDetail = sousEpisodeDetailSousTypeDao.getLstSousEpisodeDetailSousType(sousEpisode.Id)
 
             If sousEpisode.HorodateValidate <> Nothing Then
-                If (sousEpisode.NbReponseWaiting = 0 And sousEpisode.NbMedReponseWaiting = 0 And sousEpisode.NbReponse <> 0) Then ' Or sousEpisode.IsReponse = False
+                If (sousEpisode.NbReponseWaiting = 0 And sousEpisode.NbMedReponseWaiting = 0 And sousEpisode.NbReponse <> 0) Then
                     'Vert
                     RadGridViewSousEpisode.Rows(iGrid).Cells("sousType").Style.ForeColor = Color.Green
                 Else
@@ -950,7 +950,7 @@ Public Class RadFEpisodeDetail
             End If
 
             RadGridViewSousEpisode.Rows(iGrid).Cells("sousType").Tag = Text
-            RadGridViewSousEpisode.Rows(iGrid).Cells("state").Value = If(sousEpisode.IsReponse = False, "", If(sousEpisode.NbReponse = 0, "!", If(sousEpisode.NbMedReponseWaiting > 0, "m", If(sousEpisode.NbReponseWaiting = 0, "v", "x"))))
+            RadGridViewSousEpisode.Rows(iGrid).Cells("state").Value = If(sousEpisode.NbReponse = 0, If(sousEpisode.IsReponse = False, "", "!"), If(sousEpisode.NbMedReponseWaiting > 0, "m", If(sousEpisode.NbReponseWaiting = 0, "v", "x")))
 
             Console.WriteLine(Text, Not IsDBNull(sousEpisode.HorodateValidate))
 
