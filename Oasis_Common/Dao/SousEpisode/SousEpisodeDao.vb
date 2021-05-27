@@ -556,6 +556,7 @@ Public Class SousEpisodeDao
     Private Function BuildBean(reader As SqlDataReader) As SousEpisode
         Dim sousEpisode As New SousEpisode With {
             .Id = reader("id"),
+            .EpisodeId = reader("episode_id"),
             .IdIntervenant = Coalesce(reader("id_intervenant"), 0),
             .IdSousEpisodeType = reader("id_sous_episode_type"),
             .IdSousEpisodeSousType = reader("id_sous_episode_sous_type"),

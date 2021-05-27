@@ -138,6 +138,7 @@ Public Class FrmSousEpisode
                     .NomFichier = Path.GetFileName(fileName)
                     .Commentaire = comment
                 End With
+                Console.WriteLine("EpisodeId" & sousEpisode.EpisodeId)
                 If sousEpisodeReponseDao.Create(sousEpisode, sousEpisodeReponse, fileName, loginRequestLog) = False Then
                     Notification.show("Ajout document", "ERREUR insertion du nouveau document !!!")
                 Else
