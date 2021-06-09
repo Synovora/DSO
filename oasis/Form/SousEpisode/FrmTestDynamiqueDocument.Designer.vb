@@ -28,10 +28,10 @@ Partial Class FrmTestDynamiqueDocument
         CType(Me, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
-        'RadButton1
+        'RadButtonDelete
         '
         Me.RadButton1.Location = New System.Drawing.Point(52, 100)
-        Me.RadButton1.Name = "RadButton1"
+        Me.RadButton1.Name = "RadButtonDelete"
         Me.RadButton1.Size = New System.Drawing.Size(188, 33)
         Me.RadButton1.TabIndex = 0
         Me.RadButton1.Text = "Création document"

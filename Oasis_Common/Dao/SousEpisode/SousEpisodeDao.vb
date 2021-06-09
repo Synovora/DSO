@@ -88,8 +88,6 @@ Public Class SousEpisodeDao
             con.Close()
         End Try
         Return sousEpisodes
-
-
     End Function
 
     Public Function GetAllSousEpisodeByPatient(episodeId As Integer) As List(Of SousEpisode)

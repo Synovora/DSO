@@ -1,4 +1,6 @@
-﻿Public Class SousEpisodeReponseMail
+﻿Imports System.Data.SqlClient
+
+Public Class SousEpisodeReponseMail
     Property Id As Long
     Property HorodateCreation As DateTime
     Property PatientId As Long
@@ -7,17 +9,14 @@
     Property Objet As String
     Property Corps As String
 
-    Public Sub New()
-    End Sub
-
-    Public Sub New(row As DataRow)
-        Me.Id = row("id")
-        Me.HorodateCreation = row("horodate_creation")
-        Me.PatientId = Coalesce(row("patient_id"), Nothing)
-        Me.Status = row("status")
-        Me.Auteur = row("auteur")
-        Me.Objet = Coalesce(row("objet"), "")
-        Me.Corps = Coalesce(If(row.Table.Columns.Contains("corps"), row("corps"), Nothing), "")
+    Public Sub New(reader As SqlDataReader)
+        Me.Id = reader("id")
+        Me.HorodateCreation = reader("horodate_creation")
+        Me.PatientId = Coalesce(reader("patient_id"), Nothing)
+        Me.Status = reader("status")
+        Me.Auteur = reader("auteur")
+        Me.Objet = Coalesce(reader("objet"), "")
+        Me.Corps = If(HasColumn(reader, "corps"), Coalesce(reader("corps"), ""), Nothing)
     End Sub
 
 End Class
