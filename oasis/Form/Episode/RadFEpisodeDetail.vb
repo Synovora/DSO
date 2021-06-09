@@ -905,15 +905,7 @@ Public Class RadFEpisodeDetail
     Private Sub ChargementSousEpisode()
         RadGridViewSousEpisode.Rows.Clear()
 
-
         Dim sousEpisodeList = sousEpisodeDao.GetLstSousEpisode(SelectedEpisodeId, , True)
-
-
-        'Dim dt As DataTable
-
-
-        'dt = sousEpisodeDao.getTableSousEpisode(SelectedEpisodeId,, True)
-
         Dim sousEpisodeDetailSousTypeDao As SousEpisodeDetailSousTypeDao = New SousEpisodeDetailSousTypeDao
         Dim sousEpisodeSousTypeDao As SousEpisodeSousTypeDao = New SousEpisodeSousTypeDao
         Dim sousEpisodeSousSousTypeDao As SousEpisodeSousSousTypeDao = New SousEpisodeSousSousTypeDao

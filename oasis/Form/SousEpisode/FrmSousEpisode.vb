@@ -281,7 +281,7 @@ Public Class FrmSousEpisode
     ''' </summary>
     Private Sub initOneShot()
         '  -- somme nous en mode creation (sinon mode update)
-        isCreation = If(sousEpisode.Id = 0, True, False)
+        isCreation = If(sousEpisode Is Nothing OrElse sousEpisode.Id = 0, True, False)
         ' -- le patient est il en ALD
         Dim aldDO = New AldDao()
         isPatientALD = aldDO.IsPatientALD(patient.PatientId)
@@ -307,7 +307,7 @@ Public Class FrmSousEpisode
                 Dim radListItem As New RadListDataItem(sousEpisodeType.Libelle, sousEpisodeType)
                 Me.DropDownType.Items.Add(radListItem)
                 'If TryCast(radListItem.Value, SousEpisodeType).Id = Me.sousEpisode.IdSousEpisodeType Then
-                If sousEpisodeType.Id = Me.sousEpisode.IdSousEpisodeType Then
+                If isCreation = False AndAlso sousEpisodeType.Id = Me.sousEpisode.IdSousEpisodeType Then
                     radListItem.Selected = True
                     ' -- init des sous types
                     initSousTypes(sousEpisodeType.Id)
@@ -355,7 +355,7 @@ Public Class FrmSousEpisode
     ''' 
     ''' </summary>
     Private Sub initControls()
-        isNotSigned = (sousEpisode.HorodateValidate = Nothing)
+        isNotSigned = If(sousEpisode Is Nothing OrElse sousEpisode.HorodateValidate = Nothing, False, True)
 
         With sousEpisode
             If .HorodateCreation = Nothing Then .HorodateCreation = DateTime.Now
@@ -608,6 +608,13 @@ Public Class FrmSousEpisode
             ' -- alimente automatiquement tous les parametres (poids, FC ..etc) 
             episodeParametreDao.AlimenteFusionDocumentParametres(sousEF, sousEpisode.EpisodeId, patient.PatientId)
 
+            .Patient_Prenom = patient.PatientPrenom
+            .Patient_Nom = patient.PatientNom
+            .Patient_Addresse_1 = patient.PatientAdresse1
+            .Patient_Addresse_2 = patient.PatientAdresse2
+            .Patient_Ville = patient.PatientVille
+            .Patient_Tel_1 = patient.PatientTel1
+            .Patient_Tel_2 = patient.PatientTel2
             .Patient_PrenomNom = patient.PatientPrenom & " " & patient.PatientNom
             .Patient_NIR = patient.PatientNir
             .Patient_Date_Naissance = patient.PatientDateNaissance.ToString("dd/MM/yyyy")
@@ -722,7 +729,7 @@ Public Class FrmSousEpisode
 
             Dim radListItemST As New RadListDataItem(sousEpisodeSousType.Libelle, sousEpisodeSousType)
             Me.DropDownSousType.Items.Add(radListItemST)
-            If sousEpisodeSousType.Id = sousEpisode.IdSousEpisodeSousType Then
+            If isCreation = False AndAlso sousEpisodeSousType.Id = sousEpisode.IdSousEpisodeSousType Then
                 radListItemST.Selected = True
                 'initSousSousTypes(sousEpisodeSousType.Id)
             End If
