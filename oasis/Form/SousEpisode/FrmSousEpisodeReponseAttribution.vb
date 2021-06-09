@@ -230,9 +230,8 @@ Public Class FrmSousEpisodeReponseAttribution
         Dim selectedPatient As Patient = patientDao.GetPatient(patientId)
         Dim episodeId As Integer = RadGridViewEpisode.Rows(Me.RadGridViewEpisode.Rows.IndexOf(Me.RadGridViewEpisode.CurrentRow)).Cells("id").Value
         Dim selectedEpisode As Episode = episodeDao.GetEpisodeById(episodeId)
-        Dim sousEpisode As SousEpisode = New SousEpisode
         Me.Enabled = False
-        Using frm = New FrmSousEpisode(selectedEpisode, selectedPatient, sousEpisode, "", "", "")
+        Using frm = New FrmSousEpisode(selectedEpisode, selectedPatient, New SousEpisode, "", "", "")
             frm.ShowDialog()
             frm.Dispose()
         End Using

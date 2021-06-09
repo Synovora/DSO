@@ -39,9 +39,9 @@ Public Class SousEpisodeDao
             "UV.oa_utilisateur_prenom + ' ' + UV.oa_utilisateur_nom as user_validate, " & vbCrLf &
             "S.redaction_profil_types, " & vbCrLf &
             "S.validation_profil_types, " & vbCrLf &
-            "(SELECT COUNT(*) FROM oasis.oa_sous_episode_reponse SER WHERE SER.id_sous_episode = SE.id AND SER.validate_state = '!' ) AS nb_reponse_waiting, " & vbCrLf &
-            "(SELECT COUNT(*) FROM oasis.oa_sous_episode_reponse SER WHERE SER.id_sous_episode = SE.id AND SER.validate_state = 'm' ) AS nb_med_reponse_waiting, " & vbCrLf &
-            "(SELECT COUNT(*) FROM oasis.oa_sous_episode_reponse SER WHERE SER.id_sous_episode = SE.id ) AS nb_reponse " & vbCrLf
+            "(SELECT COUNT(*) FROM oasis.oa_sous_episode_reponse SER WHERE SER.id_sous_episode = SE.id AND SER.validate_state = '!' AND SE.is_inactif = 'false' ) AS nb_reponse_waiting, " & vbCrLf &
+            "(SELECT COUNT(*) FROM oasis.oa_sous_episode_reponse SER WHERE SER.id_sous_episode = SE.id AND SER.validate_state = 'm' AND SE.is_inactif = 'false' ) AS nb_med_reponse_waiting, " & vbCrLf &
+            "(SELECT COUNT(*) FROM oasis.oa_sous_episode_reponse SER WHERE SER.id_sous_episode = SE.id AND SE.is_inactif = 'false' ) AS nb_reponse " & vbCrLf
         End If
 
         SQLString += "FROM [oasis].[oa_sous_episode] SE " & vbCrLf &
