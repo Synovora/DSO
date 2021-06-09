@@ -281,7 +281,7 @@ Public Class FrmSousEpisode
     ''' </summary>
     Private Sub initOneShot()
         '  -- somme nous en mode creation (sinon mode update)
-        isCreation = If(sousEpisode Is Nothing OrElse sousEpisode.Id = 0, True, False)
+        isCreation = If(sousEpisode.Id = 0, True, False)
         ' -- le patient est il en ALD
         Dim aldDO = New AldDao()
         isPatientALD = aldDO.IsPatientALD(patient.PatientId)
@@ -307,7 +307,7 @@ Public Class FrmSousEpisode
                 Dim radListItem As New RadListDataItem(sousEpisodeType.Libelle, sousEpisodeType)
                 Me.DropDownType.Items.Add(radListItem)
                 'If TryCast(radListItem.Value, SousEpisodeType).Id = Me.sousEpisode.IdSousEpisodeType Then
-                If isCreation = False AndAlso sousEpisodeType.Id = Me.sousEpisode.IdSousEpisodeType Then
+                If sousEpisodeType.Id = Me.sousEpisode.IdSousEpisodeType Then
                     radListItem.Selected = True
                     ' -- init des sous types
                     initSousTypes(sousEpisodeType.Id)
@@ -355,7 +355,7 @@ Public Class FrmSousEpisode
     ''' 
     ''' </summary>
     Private Sub initControls()
-        isNotSigned = If(sousEpisode Is Nothing OrElse sousEpisode.HorodateValidate = Nothing, False, True)
+        isNotSigned = (sousEpisode.HorodateValidate = Nothing)
 
         With sousEpisode
             If .HorodateCreation = Nothing Then .HorodateCreation = DateTime.Now
@@ -508,6 +508,8 @@ Public Class FrmSousEpisode
         Finally
             Me.Enabled = True
             Me.Cursor = Cursors.Default
+            Me.Close()
+
         End Try
 
     End Sub
@@ -747,10 +749,6 @@ Public Class FrmSousEpisode
         If e.Column.Name = "ChkALD" Then
             e.Row.Cells("ChkChoice").Value = e.Value
         End If
-    End Sub
-
-    Private Sub RadSousSousTypeGrid_Click(sender As Object, e As EventArgs) Handles RadSousSousTypeGrid.Click
-
     End Sub
 
     ''' <summary>

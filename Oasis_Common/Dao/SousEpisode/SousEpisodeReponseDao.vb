@@ -32,7 +32,7 @@ Public Class SousEpisodeReponseDao
             "     SER.horodate_creation, " & vbCrLf &
             "	  SER.nom_fichier, " & vbCrLf &
             "	  SER.commentaire, " & vbCrLf &
-            "	  SER.validate_state, " & vbCrLf &
+            "	  COALESCE(SER.validate_state,'') as validate_state, " & vbCrLf &
             "	  SER.validate_user_id, " & vbCrLf &
             "	  SER.validate_date, " & vbCrLf &
             "	  SER.episode_id, " & vbCrLf &
