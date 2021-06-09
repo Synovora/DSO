@@ -132,7 +132,7 @@ Public Class SousEpisodeDao
             "Left Join oasis.oa_utilisateur UV ON UV.oa_utilisateur_id =SE.validate_user_id " & vbCrLf &
             "WHERE episode_id = @episodeId" & vbCrLf
 
-        If isWithInactif = False Then
+        If isWithInactif = True Then
             SQLString += "AND SE.is_inactif= @is_inactif " & vbCrLf
         End If
 

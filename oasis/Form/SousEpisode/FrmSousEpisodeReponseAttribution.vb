@@ -228,7 +228,7 @@ Public Class FrmSousEpisodeReponseAttribution
     Private Sub RadButtonCSE_Click(sender As Object, e As EventArgs) Handles RadButtonCSE.Click
         Dim patientId As Integer = RadGridViewPatient.Rows(Me.RadGridViewPatient.Rows.IndexOf(Me.RadGridViewPatient.CurrentRow)).Cells("id").Value
         Dim selectedPatient As Patient = patientDao.GetPatient(patientId)
-        Dim episodeId As Integer = RadGridViewPatient.Rows(Me.RadGridViewPatient.Rows.IndexOf(Me.RadGridViewPatient.CurrentRow)).Cells("id").Value
+        Dim episodeId As Integer = RadGridViewEpisode.Rows(Me.RadGridViewEpisode.Rows.IndexOf(Me.RadGridViewEpisode.CurrentRow)).Cells("id").Value
         Dim selectedEpisode As Episode = episodeDao.GetEpisodeById(episodeId)
         Dim sousEpisode As SousEpisode = New SousEpisode
         Me.Enabled = False
@@ -316,7 +316,7 @@ Public Class FrmSousEpisodeReponseAttribution
         RadButtonCSE.Enabled = False
     End Sub
 
-    Private Sub RadGridViewEpisode_CellClick(sender As Object, e As GridViewCellEventArgs) Handles RadGridViewEpisode.CellDoubleClick
+    Private Sub RadGridViewEpisode_CellClick(sender As Object, e As GridViewCellEventArgs) Handles RadGridViewEpisode.CellClick
         Dim episodeId As Integer = RadGridViewEpisode.Rows(Me.RadGridViewEpisode.Rows.IndexOf(Me.RadGridViewEpisode.CurrentRow)).Cells("id").Value
         Dim sousEpisodes As List(Of SousEpisode) = sousEpisodeDao.GetAllSousEpisodeByPatient(episodeId)
         ChargementSousEpisodes(sousEpisodes)
