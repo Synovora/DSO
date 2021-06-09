@@ -214,11 +214,15 @@ Public Class FrmSousEpisodeReponseAttribution
     Private Sub RadButtonCEV_Click(sender As Object, e As EventArgs) Handles RadButtonCEV.Click
         Dim patientId As Integer = RadGridViewPatient.Rows(Me.RadGridViewPatient.Rows.IndexOf(Me.RadGridViewPatient.CurrentRow)).Cells("id").Value
         Dim selectedPatient As Patient = patientDao.GetPatient(patientId)
+        Me.Enabled = False
         Using vRadFEpisodeDetailCreation As New RadFEpisodeDetailCreation
             vRadFEpisodeDetailCreation.SelectedPatient = selectedPatient
             vRadFEpisodeDetailCreation.EpisodeType = Episode.EnumTypeEpisode.VIRTUEL
             vRadFEpisodeDetailCreation.ShowDialog()
         End Using
+        Me.Enabled = True
+        Dim episodes As List(Of Episode) = episodeDao.GetAllEpisodeByPatient(patientId)
+        ChargementEpisodes(episodes)
     End Sub
 
     Private Sub RadButtonCSE_Click(sender As Object, e As EventArgs) Handles RadButtonCSE.Click
@@ -226,11 +230,15 @@ Public Class FrmSousEpisodeReponseAttribution
         Dim selectedPatient As Patient = patientDao.GetPatient(patientId)
         Dim episodeId As Integer = RadGridViewPatient.Rows(Me.RadGridViewPatient.Rows.IndexOf(Me.RadGridViewPatient.CurrentRow)).Cells("id").Value
         Dim selectedEpisode As Episode = episodeDao.GetEpisodeById(episodeId)
-        Dim sousEpisode As SousEpisode
+        Dim sousEpisode As SousEpisode = New SousEpisode
+        Me.Enabled = False
         Using frm = New FrmSousEpisode(selectedEpisode, selectedPatient, sousEpisode, "", "", "")
             frm.ShowDialog()
             frm.Dispose()
         End Using
+        Me.Enabled = True
+        Dim sousEpisodes As List(Of SousEpisode) = sousEpisodeDao.GetAllSousEpisodeByPatient(episodeId)
+        ChargementSousEpisodes(sousEpisodes)
     End Sub
 
     '

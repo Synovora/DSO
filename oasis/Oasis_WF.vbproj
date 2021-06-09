@@ -24,7 +24,7 @@
     </NuGetPackageImportStamp>
     <TargetFrameworkProfile />
     <PublishUrl>ftp://ns3119889.ip-51-38-181.eu/</PublishUrl>
-    <Install>false</Install>
+    <Install>true</Install>
     <InstallFrom>Web</InstallFrom>
     <UpdateEnabled>true</UpdateEnabled>
     <UpdateMode>Foreground</UpdateMode>

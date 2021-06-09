@@ -4,7 +4,7 @@ Imports System.Data.SqlClient
 Public Class SousEpisodeDao
     Inherits StandardDao
 
-    Public Function GetLstSousEpisode(idEpisode As Long, Optional idSousEpisode As Long = 0, Optional isComplete As Boolean = False) As List(Of SousEpisode)
+    Public Function GetLstSousEpisode(idEpisode As Long, Optional idSousEpisode As Long = 0, Optional isComplete As Boolean = False, Optional isWithInactif As Boolean = False) As List(Of SousEpisode)
         Dim con As SqlConnection = GetConnection()
         Dim sousEpisodes As List(Of SousEpisode) = New List(Of SousEpisode)
         Dim SQLString =
@@ -65,7 +65,7 @@ Public Class SousEpisodeDao
             SQLString += "AND SE.id= @idSousEpisode " & vbCrLf
         End If
 
-        If isComplete = False Then
+        If isWithInactif = False Then
             SQLString += "AND SE.is_inactif= @is_inactif " & vbCrLf
         End If
 
@@ -76,7 +76,7 @@ Public Class SousEpisodeDao
             command.CommandText = SQLString
             If idSousEpisode <> 0 Then command.Parameters.AddWithValue("@idSousEpisode", idSousEpisode)
             If idEpisode <> 0 Then command.Parameters.AddWithValue("@idEpisode", idEpisode)
-            If isComplete = False Then command.Parameters.AddWithValue("@is_inactif", False)
+            command.Parameters.AddWithValue("@is_inactif", isWithInactif)
             Using reader As SqlDataReader = command.ExecuteReader()
                 While (reader.Read())
                     sousEpisodes.Add(BuildBean(reader))
@@ -90,7 +90,7 @@ Public Class SousEpisodeDao
         Return sousEpisodes
     End Function
 
-    Public Function GetAllSousEpisodeByPatient(episodeId As Integer) As List(Of SousEpisode)
+    Public Function GetAllSousEpisodeByPatient(episodeId As Integer, Optional isWithInactif As Boolean = False) As List(Of SousEpisode)
         Dim con As SqlConnection = GetConnection()
         Dim sousEpisodes As List(Of SousEpisode) = New List(Of SousEpisode)
         Dim SQLString As String = "SELECT " & vbCrLf &
@@ -132,10 +132,17 @@ Public Class SousEpisodeDao
             "Left Join oasis.oa_utilisateur UV ON UV.oa_utilisateur_id =SE.validate_user_id " & vbCrLf &
             "WHERE episode_id = @episodeId" & vbCrLf
 
+        If isWithInactif = False Then
+            SQLString += "AND SE.is_inactif= @is_inactif " & vbCrLf
+        End If
+
+        SQLString += "ORDER by SE.id DESC"
+
         Try
             Dim command As SqlCommand = con.CreateCommand()
             command.CommandText = SQLString
             command.Parameters.AddWithValue("@episodeId", episodeId)
+            command.Parameters.AddWithValue("@is_inactif", Not isWithInactif)
             Using reader As SqlDataReader = command.ExecuteReader()
                 While (reader.Read())
                     sousEpisodes.Add(BuildBean(reader))
@@ -247,13 +254,13 @@ Public Class SousEpisodeDao
         End Using
     End Function
 
-    Public Function ResumeSousEpisode(selectedEpisodeId As Long, Optional isWithInactif As Boolean = False) As String
+    Public Function ResumeSousEpisode(selectedEpisodeId As Long, Optional isComplete As Boolean = False) As String
         Dim str As String = ""
         Dim dicCount As New Dictionary(Of Long, Integer)
 
         ' --- on compte les evenements par sous type
         Try
-            Dim lst = GetLstSousEpisode(selectedEpisodeId,, isWithInactif)
+            Dim lst = GetLstSousEpisode(selectedEpisodeId,, isComplete)
             For Each se In lst
                 Dim i As Integer
                 If dicCount.TryGetValue(se.IdSousEpisodeSousType, i) Then
