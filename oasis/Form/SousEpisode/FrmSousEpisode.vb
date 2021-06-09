@@ -508,6 +508,8 @@ Public Class FrmSousEpisode
         Finally
             Me.Enabled = True
             Me.Cursor = Cursors.Default
+            Me.Close()
+
         End Try
 
     End Sub
@@ -747,10 +749,6 @@ Public Class FrmSousEpisode
         If e.Column.Name = "ChkALD" Then
             e.Row.Cells("ChkChoice").Value = e.Value
         End If
-    End Sub
-
-    Private Sub RadSousSousTypeGrid_Click(sender As Object, e As EventArgs) Handles RadSousSousTypeGrid.Click
-
     End Sub
 
     ''' <summary>

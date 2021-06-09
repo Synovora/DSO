@@ -5208,6 +5208,10 @@ Public Class RadFEpisodeDetail
         End If
     End Sub
 
+    Private Sub RadBtnAddSousEpisode_Click(sender As Object, e As EventArgs) Handles RadBtnAddSousEpisode.Click
+        FicheSousEpisode(New SousEpisode, userLog.UtilisateurPrenom + " " + userLog.UtilisateurNom, Nothing, Nothing)
+        RefreshButtonSousEpisodeProperties()
+    End Sub
 
     '===========================================================
     '======================= Droits d'accès ====================

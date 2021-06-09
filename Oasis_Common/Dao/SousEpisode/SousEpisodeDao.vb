@@ -4,7 +4,7 @@ Imports System.Data.SqlClient
 Public Class SousEpisodeDao
     Inherits StandardDao
 
-    Public Function GetLstSousEpisode(idEpisode As Long, Optional idSousEpisode As Long = 0, Optional isComplete As Boolean = False, Optional isWithInactif As Boolean = False) As List(Of SousEpisode)
+    Public Function GetLstSousEpisode(idEpisode As Long, Optional idSousEpisode As Long = 0, Optional isComplete As Boolean = True, Optional isWithInactif As Boolean = False) As List(Of SousEpisode)
         Dim con As SqlConnection = GetConnection()
         Dim sousEpisodes As List(Of SousEpisode) = New List(Of SousEpisode)
         Dim SQLString =
@@ -28,6 +28,8 @@ Public Class SousEpisodeDao
             "	  SE.delai_since_validation, " & vbCrLf &
             "	  SE.is_reponse_recue, " & vbCrLf &
             "	  SE.horodate_last_recu, " & vbCrLf &
+            "     T.libelle as type_libelle, " & vbCrLf &
+            "     S.libelle as sous_type_libelle, " & vbCrLf &
             "	  SE.is_inactif " & vbCrLf
 
         If isComplete Then
@@ -35,8 +37,6 @@ Public Class SousEpisodeDao
             ",UC.oa_utilisateur_prenom + ' ' + UC.oa_utilisateur_nom as user_create,  " & vbCrLf &
             "UU.oa_utilisateur_prenom + ' ' + UU.oa_utilisateur_nom as user_update, " & vbCrLf &
             "UV.oa_utilisateur_prenom + ' ' + UV.oa_utilisateur_nom as user_validate, " & vbCrLf &
-            "T.libelle as type_libelle, " & vbCrLf &
-            "S.libelle as sous_type_libelle, " & vbCrLf &
             "S.redaction_profil_types, " & vbCrLf &
             "S.validation_profil_types, " & vbCrLf &
             "(SELECT COUNT(*) FROM oasis.oa_sous_episode_reponse SER WHERE SER.id_sous_episode = SE.id AND SER.validate_state = '!' ) AS nb_reponse_waiting, " & vbCrLf &
@@ -44,12 +44,12 @@ Public Class SousEpisodeDao
             "(SELECT COUNT(*) FROM oasis.oa_sous_episode_reponse SER WHERE SER.id_sous_episode = SE.id ) AS nb_reponse " & vbCrLf
         End If
 
-        SQLString += "FROM [oasis].[oa_sous_episode] SE " & vbCrLf
+        SQLString += "FROM [oasis].[oa_sous_episode] SE " & vbCrLf &
+                     "JOIN oasis.oa_r_sous_episode_type T ON T.id =SE.id_sous_episode_type " & vbCrLf &
+                     "JOIN oasis.oa_r_sous_episode_sous_type S ON S.id =SE.id_sous_episode_sous_type " & vbCrLf
 
         If isComplete Then
             SQLString += "" &
-            "Join oasis.oa_r_sous_episode_type T On T.id =SE.id_sous_episode_type " & vbCrLf &
-            "Join oasis.oa_r_sous_episode_sous_type S ON S.id =SE.id_sous_episode_sous_type " & vbCrLf &
             "Join oasis.oa_utilisateur UC ON UC.oa_utilisateur_id =SE.create_user_id " & vbCrLf &
             "Left Join oasis.oa_utilisateur UU ON UC.oa_utilisateur_id =SE.last_update_user_id " & vbCrLf &
             "Left Join oasis.oa_utilisateur UV ON UV.oa_utilisateur_id =SE.validate_user_id " & vbCrLf
@@ -76,7 +76,7 @@ Public Class SousEpisodeDao
             command.CommandText = SQLString
             If idSousEpisode <> 0 Then command.Parameters.AddWithValue("@idSousEpisode", idSousEpisode)
             If idEpisode <> 0 Then command.Parameters.AddWithValue("@idEpisode", idEpisode)
-            command.Parameters.AddWithValue("@is_inactif", isWithInactif)
+            If isWithInactif = False Then command.Parameters.AddWithValue("@is_inactif", False)
             Using reader As SqlDataReader = command.ExecuteReader()
                 While (reader.Read())
                     sousEpisodes.Add(BuildBean(reader))
@@ -254,7 +254,7 @@ Public Class SousEpisodeDao
         End Using
     End Function
 
-    Public Function ResumeSousEpisode(selectedEpisodeId As Long, Optional isComplete As Boolean = False) As String
+    Public Function ResumeSousEpisode(selectedEpisodeId As Long, Optional isComplete As Boolean = True) As String
         Dim str As String = ""
         Dim dicCount As New Dictionary(Of Long, Integer)
 
