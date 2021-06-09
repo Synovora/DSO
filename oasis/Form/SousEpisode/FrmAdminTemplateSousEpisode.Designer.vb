@@ -60,10 +60,10 @@ Partial Class FrmAdminTemplateSousEpisode
         Me.RadButton2.TabIndex = 52
         Me.RadButton2.Text = "Abandonner"
         '
-        'RadButton1
+        'RadButtonDelete
         '
         Me.RadButton1.Location = New System.Drawing.Point(214, 114)
-        Me.RadButton1.Name = "RadButton1"
+        Me.RadButton1.Name = "RadButtonDelete"
         Me.RadButton1.Size = New System.Drawing.Size(83, 37)
         Me.RadButton1.TabIndex = 51
         Me.RadButton1.Text = "Editer"

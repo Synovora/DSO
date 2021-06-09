@@ -678,4 +678,5 @@ Public Class RadFPatientListe
         Me.Enabled = True
         Me.Cursor = Cursors.Default
     End Sub
+
 End Class
