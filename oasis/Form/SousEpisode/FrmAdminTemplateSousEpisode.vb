@@ -31,7 +31,7 @@ Public Class FrmAdminTemplateSousEpisode
         Try
             Me.Cursor = Cursors.WaitCursor
             Me.Enabled = False
-            Dim lstSousEpisodeFusion As List(Of SousEpisodeFusion) = constitueFusion()
+            Dim lstSousEpisodeFusion As List(Of SousEpisodeFusion) = ConstitueFusion()
             Dim tbl = Telecharger_model(sousType)
             Dim ins = New MemoryStream(tbl)
             Dim provider = New DocxFormatProvider()
@@ -125,7 +125,7 @@ Public Class FrmAdminTemplateSousEpisode
 
     End Sub
 
-    Private Function constitueFusion() As List(Of SousEpisodeFusion)
+    Private Function ConstitueFusion() As List(Of SousEpisodeFusion)
         Dim lstFusion = New List(Of SousEpisodeFusion)(1)
         Dim sousEF As New SousEpisodeFusion
         With sousEF
@@ -153,10 +153,17 @@ Public Class FrmAdminTemplateSousEpisode
             .IntervenantSpecialite = "Spécialité intervenant"
             .IntervenantStructure = "Structure Intervenant"
 
-            .Patient_PrenomNom = "Charles-Henri Dupond de la Motte"
-            .Patient_Date_Naissance = "20-02-1998"
-            .Patient_Age = "22 ans"
-            .Patient_NIR = "1980264000000"
+            .Patient_Prenom = "Na/N"
+            .Patient_Nom = "Na/N"
+            .Patient_Addresse_1 = "Na/N"
+            .Patient_Addresse_2 = "Na/N"
+            .Patient_Ville = "Na/N"
+            .Patient_Tel_1 = "Na/N"
+            .Patient_Tel_2 = "Na/N"
+            .Patient_PrenomNom = "Na/N"
+            .Patient_Date_Naissance = "Na/N"
+            .Patient_Age = "Na/N"
+            .Patient_NIR = "Na/N"
             .Type_Libelle = Me.DropDownType.SelectedItem.Text
             .Sous_Type_Libelle = Me.DropDownSousType.SelectedItem.Text
 

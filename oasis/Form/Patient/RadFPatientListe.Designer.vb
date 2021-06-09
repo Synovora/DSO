@@ -395,7 +395,7 @@ Partial Class RadFPatientListe
         '
         Me.ContextMenuStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.CréerLesIntervenantsOasisParDéfautToolStripMenuItem})
         Me.ContextMenuStrip1.Name = "ContextMenuStrip1"
-        Me.ContextMenuStrip1.Size = New System.Drawing.Size(276, 26)
+        Me.ContextMenuStrip1.Size = New System.Drawing.Size(276, 48)
         '
         'CréerLesIntervenantsOasisParDéfautToolStripMenuItem
         '

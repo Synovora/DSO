@@ -22,7 +22,7 @@ Public Class OrdonnanceDao
         Return ordonnance
     End Function
 
-    Public Function GetOrdonnaceById(OrdonnanceId As Integer) As Ordonnance
+    Public Function GetOrdonnaceById(OrdonnanceId As Long) As Ordonnance
         Dim ordonnance As Ordonnance
         Dim con As SqlConnection = GetConnection()
         Try
@@ -67,7 +67,7 @@ Public Class OrdonnanceDao
         Return ordonnance
     End Function
 
-    Public Function GetAllOrdonnanceByPatient(patientId As Integer) As List(Of Ordonnance)
+    Public Function GetAllOrdonnanceByPatient(patientId As Long) As List(Of Ordonnance)
         Dim con As SqlConnection = GetConnection()
         Dim ordonnances As List(Of Ordonnance) = New List(Of Ordonnance)
         Try
@@ -89,7 +89,7 @@ Public Class OrdonnanceDao
         Return ordonnances
     End Function
 
-    Public Function GetOrdonnanceValideByPatient(patientId As Integer, episodeId As Long) As List(Of Ordonnance)
+    Public Function GetOrdonnanceValideByPatient(patientId As Long, episodeId As Long) As List(Of Ordonnance)
         Dim con As SqlConnection = GetConnection()
         Dim ordonnances As List(Of Ordonnance) = New List(Of Ordonnance)
         Try
@@ -113,9 +113,9 @@ Public Class OrdonnanceDao
         Return ordonnances
     End Function
 
-    Public Function CreateOrdonnance(patientId As Integer, episodeId As Integer, userLog As Utilisateur) As Integer
+    Public Function CreateOrdonnance(patientId As Long, episodeId As Long, userLog As Utilisateur) As Long
         Dim da As SqlDataAdapter = New SqlDataAdapter()
-        Dim OrdonnanceId As Integer = 0
+        Dim OrdonnanceId As Long = 0
         Dim con As SqlConnection = GetConnection()
         Dim dateCreation As Date = Date.Now.Date
         Dim SQLstring As String = "INSERT into oasis.oa_patient_ordonnance" &
@@ -143,7 +143,7 @@ Public Class OrdonnanceDao
         Return OrdonnanceId
     End Function
 
-    Public Sub ModificationOrdonnanceCommentaire(OrdonnanceId As Integer, Commentaire As String)
+    Public Sub ModificationOrdonnanceCommentaire(OrdonnanceId As Long, Commentaire As String)
         Dim da As SqlDataAdapter = New SqlDataAdapter()
         Dim con As SqlConnection = GetConnection()
         Dim SQLstring As String = "UPDATE oasis.oa_patient_ordonnance SET" &
@@ -164,7 +164,7 @@ Public Class OrdonnanceDao
         End Try
     End Sub
 
-    Public Sub ModificationOrdonnanceRenouvellement(OrdonnanceId As Integer, Renouvellement As Integer)
+    Public Sub ModificationOrdonnanceRenouvellement(OrdonnanceId As Long, Renouvellement As Long)
         Dim da As SqlDataAdapter = New SqlDataAdapter()
         Dim con As SqlConnection = GetConnection()
         Dim SQLstring As String = "UPDATE oasis.oa_patient_ordonnance SET" &
@@ -185,7 +185,7 @@ Public Class OrdonnanceDao
         End Try
     End Sub
 
-    Public Sub AnnulerOrdonnance(OrdonnanceId As Integer)
+    Public Sub AnnulerOrdonnance(OrdonnanceId As Long)
         Dim da As SqlDataAdapter = New SqlDataAdapter()
         Dim con As SqlConnection = GetConnection()
         Dim SQLstring As String = "UPDATE oasis.oa_patient_ordonnance SET" &
@@ -206,7 +206,7 @@ Public Class OrdonnanceDao
         End Try
     End Sub
 
-    Public Sub ValidationOrdonnance(OrdonnanceId As Integer, userLog As Utilisateur)
+    Public Sub ValidationOrdonnance(OrdonnanceId As Long, userLog As Utilisateur)
         Try
             Dim ordonnanceDao As OrdonnanceDao = New OrdonnanceDao
             Dim ordonnanceDetailDao As OrdonnanceDetailDao = New OrdonnanceDetailDao
@@ -253,7 +253,7 @@ Public Class OrdonnanceDao
         End Try
     End Sub
 
-    Public Sub CreateNewOrdonnanceDetail(patientId As Integer, ordonnanceId As Integer, episode As Episode)
+    Public Sub CreateNewOrdonnanceDetail(patientId As Long, ordonnanceId As Long, episode As Episode)
         Console.WriteLine("CreateNewOrdonnanceDetail: " & ordonnanceId)
         Try
             Dim alddao As New AldDao
@@ -262,14 +262,14 @@ Public Class OrdonnanceDao
             Dim TraitementDataTable As DataTable
             Dim PatientAld As Boolean
             Dim FenetreTherapeutiqueEnCours As Boolean
-            Dim posologieMatin, posologieMidi, posologieApresMidi, posologieSoir As Integer
-            Dim Rythme As Integer
+            Dim posologieMatin, posologieMidi, posologieApresMidi, posologieSoir As Long
+            Dim Rythme As Long
 
             PatientAld = alddao.IsPatientALD(patientId)
             TraitementDataTable = TraitementDao.GetTraitementEnCoursbyPatient(patientId)
 
-            Dim i As Integer
-            Dim rowCount As Integer = TraitementDataTable.Rows.Count - 1
+            Dim i As Long
+            Dim rowCount As Long = TraitementDataTable.Rows.Count - 1
 
             Dim DateFin, DateDebut As Date
 
@@ -319,7 +319,7 @@ Public Class OrdonnanceDao
                     DateDebutCalcul = DateDebut
                 End If
 
-                Dim duree As Integer = outils.CalculDureeTraitementEnJour(DateDebutCalcul, DateFinCalcul)
+                Dim duree As Long = outils.CalculDureeTraitementEnJour(DateDebutCalcul, DateFinCalcul)
 
                 'Formatage de la posologie
                 Dim PosologieMatinString, PosologieMidiString, PosologieApresMidiString, PosologieSoirString As String
@@ -468,7 +468,7 @@ Public Class OrdonnanceDao
 
                 'Récupération de la période de non délivrance dans les paramètres de l'application
                 Dim PeriodeNonDelivranceStringAllergieString As String = ConfigurationManager.AppSettings("PeriodeNonDelivrance")
-                Dim PeriodeNonDelivrance As Integer
+                Dim PeriodeNonDelivrance As Long
                 If IsNumeric(PeriodeNonDelivranceStringAllergieString) Then
                     PeriodeNonDelivrance = CInt(PeriodeNonDelivranceStringAllergieString)
                 Else

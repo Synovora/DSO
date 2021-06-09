@@ -12,6 +12,7 @@ Public Class RadFEpisodeDetail
     Private _isRendezVousCloture As Boolean
     Private _UtilisateurConnecte As Utilisateur
     Private _ecranPrecedent As EnumAccesEcranPrecedent
+    Property Editable As Boolean = True
 
     Public Property SelectedEpisodeId As Long
         Get
@@ -142,6 +143,16 @@ Public Class RadFEpisodeDetail
     Dim RemoveEpisode As Boolean
 
     Private Sub RadFEpisodeDetail_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        ' EDITABLE MODE
+        If Editable = False Then
+            RadBtnCloture.Enabled = False
+            RadBtnAnnulerEpisode.Enabled = False
+            RadBtnGenProtocole.Enabled = False
+            RadBtnAddObsLibreIde.Enabled = False
+            RadBtnAddObsLibreMed.Enabled = False
+            RadBtnParametre.Enabled = False
+        End If
+
         'Contrôle d'accès aux écran Synthèse, épisode et ligne de vie
         Environnement.ControleAccesForm.AddFormToControl(EnumForm.EPISODE.ToString)
         If Environnement.ControleAccesForm.IsAccessToFormOK(EnumForm.LIGNE_DE_VIE.ToString) = False Then
@@ -173,7 +184,7 @@ Public Class RadFEpisodeDetail
         Dim actiondao As New ActionDao
         Dim action As New Action
         action.UtilisateurId = userLog.UtilisateurId
-        action.PatientId = SelectedPatient.patientId
+        action.PatientId = SelectedPatient.PatientId
         action.Fonction = ActionDao.EnumFonctionCode.EPISODE
         action.FonctionId = Me.SelectedEpisodeId
         action.Action = "Accès épisode patient n° " & SelectedEpisodeId
@@ -894,15 +905,7 @@ Public Class RadFEpisodeDetail
     Private Sub ChargementSousEpisode()
         RadGridViewSousEpisode.Rows.Clear()
 
-
         Dim sousEpisodeList = sousEpisodeDao.GetLstSousEpisode(SelectedEpisodeId, , True)
-
-
-        'Dim dt As DataTable
-
-
-        'dt = sousEpisodeDao.getTableSousEpisode(SelectedEpisodeId,, True)
-
         Dim sousEpisodeDetailSousTypeDao As SousEpisodeDetailSousTypeDao = New SousEpisodeDetailSousTypeDao
         Dim sousEpisodeSousTypeDao As SousEpisodeSousTypeDao = New SousEpisodeSousTypeDao
         Dim sousEpisodeSousSousTypeDao As SousEpisodeSousSousTypeDao = New SousEpisodeSousSousTypeDao

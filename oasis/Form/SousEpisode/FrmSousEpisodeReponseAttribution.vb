@@ -17,6 +17,7 @@ Public Class FrmSousEpisodeReponseAttribution
     ReadOnly sousEpisodeReponseMailAttachmentDao As New SousEpisodeReponseMailAttachmentDao
     ReadOnly sousEpisodeReponseMailDao As New SousEpisodeReponseMailDao
     ReadOnly sousEpisodeReponseDao As New SousEpisodeReponseDao
+    ReadOnly rorDao As New RorDao
 
     Dim lstSousEpisodeSousType As List(Of SousEpisodeSousType)
     Dim lstSousEpisodeSousSousType As List(Of SousEpisodeSousSousType)
@@ -28,7 +29,7 @@ Public Class FrmSousEpisodeReponseAttribution
         lstSousEpisodeSousType = sousEpisodeSousTypeDao.getLstSousEpisodeSousType()
         lstSousEpisodeSousSousType = sousEpisodeSousSousTypeDao.getLstSousEpisodeSousSousType()
 
-        refreshGrid()
+        ChargementMails()
         InitFrm()
     End Sub
 
@@ -40,7 +41,7 @@ Public Class FrmSousEpisodeReponseAttribution
         RadDateTimeDDN.CustomFormat = " "
     End Sub
 
-    Private Sub refreshGrid()
+    Private Sub ChargementMails()
         Me.Cursor = Cursors.WaitCursor
         Dim sousEpisodeReponseMailDao As SousEpisodeReponseMailDao = New SousEpisodeReponseMailDao
         Try
@@ -51,19 +52,19 @@ Public Class FrmSousEpisodeReponseAttribution
             '    exId = Me.RadSousEpisodeGrid.CurrentRow.Cells("IdSousEpisode").Value
             '    exPosit = Me.RadSousEpisodeGrid.CurrentRow.Index
             'End If
-            RadMailGridView.Rows.Clear()
+            RadGridViewMail.Rows.Clear()
             For Each mail In lstMail
                 If mail.Status = "processed" Then
                     Continue For
                 End If
-                Dim newRow As GridViewRowInfo = RadMailGridView.Rows.NewRow()
+                Dim newRow As GridViewRowInfo = RadGridViewMail.Rows.NewRow()
                 With newRow
                     .Cells("id").Value = mail.Id
                     .Cells("objet").Value = mail.Objet
                     .Cells("auteur").Value = mail.Auteur
                     .Cells("date").Value = mail.HorodateCreation.ToShortDateString
                 End With
-                RadMailGridView.Rows.Add(newRow)
+                RadGridViewMail.Rows.Add(newRow)
                 numRowGrid += 1
             Next
             Me.Cursor = Cursors.Default
@@ -72,6 +73,11 @@ Public Class FrmSousEpisodeReponseAttribution
         Finally
             Me.Cursor = Cursors.Default
         End Try
+
+        RadAttachmentGridView.Rows.Clear()
+        RadAttachmentGridView.DataSource = Nothing
+        RadAttachmentGridView.Refresh()
+        WebBrowser.DocumentText = ""
     End Sub
 
     Private Sub ChargementSousEpisodes(sousEpisodes As List(Of SousEpisode))
@@ -92,6 +98,13 @@ Public Class FrmSousEpisodeReponseAttribution
                     Text += sousEpisodeSousSousType.Libelle & vbCrLf
                 Next
             Next
+
+            If sousEpisode.SousTypeLibelle = "Courrier" Then
+                Dim intervenant = rorDao.getRorById(sousEpisode.IdIntervenant)
+                Dim specialite = Table_specialite.GetSpecialiteDescription(intervenant.SpecialiteId)
+                Text = "Intervenant: " & intervenant.Nom & " - " & specialite
+            End If
+
             RadGridViewSousEpisode.Rows(iGrid).Cells("sousType").Tag = Text
             iGrid += 1
         Next
@@ -199,25 +212,33 @@ Public Class FrmSousEpisodeReponseAttribution
     End Sub
 
     Private Sub RadButtonCEV_Click(sender As Object, e As EventArgs) Handles RadButtonCEV.Click
-        Dim id As Integer = RadGridViewPatient.Rows(Me.RadGridViewPatient.Rows.IndexOf(Me.RadGridViewPatient.CurrentRow)).Cells("id").Value
-        Dim selectedPatient As Patient = patientDao.GetPatient(id)
+        Dim patientId As Integer = RadGridViewPatient.Rows(Me.RadGridViewPatient.Rows.IndexOf(Me.RadGridViewPatient.CurrentRow)).Cells("id").Value
+        Dim selectedPatient As Patient = patientDao.GetPatient(patientId)
+        Me.Enabled = False
         Using vRadFEpisodeDetailCreation As New RadFEpisodeDetailCreation
             vRadFEpisodeDetailCreation.SelectedPatient = selectedPatient
             vRadFEpisodeDetailCreation.EpisodeType = Episode.EnumTypeEpisode.VIRTUEL
             vRadFEpisodeDetailCreation.ShowDialog()
         End Using
+        Me.Enabled = True
+        Dim episodes As List(Of Episode) = episodeDao.GetAllEpisodeByPatient(patientId)
+        ChargementEpisodes(episodes)
     End Sub
 
     Private Sub RadButtonCSE_Click(sender As Object, e As EventArgs) Handles RadButtonCSE.Click
         Dim patientId As Integer = RadGridViewPatient.Rows(Me.RadGridViewPatient.Rows.IndexOf(Me.RadGridViewPatient.CurrentRow)).Cells("id").Value
         Dim selectedPatient As Patient = patientDao.GetPatient(patientId)
-        Dim episodeId As Integer = RadGridViewPatient.Rows(Me.RadGridViewPatient.Rows.IndexOf(Me.RadGridViewPatient.CurrentRow)).Cells("id").Value
+        Dim episodeId As Integer = RadGridViewEpisode.Rows(Me.RadGridViewEpisode.Rows.IndexOf(Me.RadGridViewEpisode.CurrentRow)).Cells("id").Value
         Dim selectedEpisode As Episode = episodeDao.GetEpisodeById(episodeId)
-        Dim sousEpisode As SousEpisode
+        Dim sousEpisode As SousEpisode = New SousEpisode
+        Me.Enabled = False
         Using frm = New FrmSousEpisode(selectedEpisode, selectedPatient, sousEpisode, "", "", "")
             frm.ShowDialog()
             frm.Dispose()
         End Using
+        Me.Enabled = True
+        Dim sousEpisodes As List(Of SousEpisode) = sousEpisodeDao.GetAllSousEpisodeByPatient(episodeId)
+        ChargementSousEpisodes(sousEpisodes)
     End Sub
 
     '
@@ -266,9 +287,9 @@ Public Class FrmSousEpisodeReponseAttribution
         End Try
     End Sub
 
-    Private Sub RadMailGridView_CellClick(sender As Object, e As GridViewCellEventArgs) Handles RadMailGridView.CellClick
+    Private Sub RadMailGridView_CellClick(sender As Object, e As GridViewCellEventArgs) Handles RadGridViewMail.CellClick
         RadAttachmentGridView.Rows.Clear()
-        Dim id As Integer = RadMailGridView.Rows(Me.RadMailGridView.Rows.IndexOf(Me.RadMailGridView.CurrentRow)).Cells("id").Value
+        Dim id As Integer = RadGridViewMail.Rows(Me.RadGridViewMail.Rows.IndexOf(Me.RadGridViewMail.CurrentRow)).Cells("id").Value
         Dim sousEpisodeReponseMail As SousEpisodeReponseMail = sousEpisodeReponseMailDao.GetSousEpisodeReponseMailById(id)
 
         If sousEpisodeReponseMail IsNot Nothing Then
@@ -288,16 +309,16 @@ Public Class FrmSousEpisodeReponseAttribution
     End Sub
 
     Private Sub RadGridViewPatient_CellClick(sender As Object, e As GridViewCellEventArgs) Handles RadGridViewPatient.CellClick
-        Dim id As Integer = RadGridViewPatient.Rows(Me.RadGridViewPatient.Rows.IndexOf(Me.RadGridViewPatient.CurrentRow)).Cells("id").Value
-        Dim episodes As List(Of Episode) = episodeDao.GetAllEpisodeByPatient(id)
+        Dim patientId As Integer = RadGridViewPatient.Rows(Me.RadGridViewPatient.Rows.IndexOf(Me.RadGridViewPatient.CurrentRow)).Cells("id").Value
+        Dim episodes As List(Of Episode) = episodeDao.GetAllEpisodeByPatient(patientId)
         ChargementEpisodes(episodes)
         RadButtonCEV.Enabled = True
         RadButtonCSE.Enabled = False
     End Sub
 
     Private Sub RadGridViewEpisode_CellClick(sender As Object, e As GridViewCellEventArgs) Handles RadGridViewEpisode.CellClick
-        Dim id As Integer = RadGridViewEpisode.Rows(Me.RadGridViewEpisode.Rows.IndexOf(Me.RadGridViewEpisode.CurrentRow)).Cells("id").Value
-        Dim sousEpisodes As List(Of SousEpisode) = sousEpisodeDao.GetAllSousEpisodeByPatient(id)
+        Dim episodeId As Integer = RadGridViewEpisode.Rows(Me.RadGridViewEpisode.Rows.IndexOf(Me.RadGridViewEpisode.CurrentRow)).Cells("id").Value
+        Dim sousEpisodes As List(Of SousEpisode) = sousEpisodeDao.GetAllSousEpisodeByPatient(episodeId)
         ChargementSousEpisodes(sousEpisodes)
         RadButtonCSE.Enabled = True
     End Sub
@@ -324,4 +345,45 @@ Public Class FrmSousEpisodeReponseAttribution
         End If
     End Sub
 
+    Private Sub RadButtonDelete_Click(sender As Object, e As EventArgs) Handles RadButtonDelete.Click
+        Dim reponseMailId As Integer = RadGridViewMail.Rows(Me.RadGridViewMail.Rows.IndexOf(Me.RadGridViewMail.CurrentRow)).Cells("id").Value
+        sousEpisodeReponseMailDao.DeleteSousEpisodeReponseMailById(reponseMailId)
+        ChargementMails()
+    End Sub
+
+    '
+    ' MENUSTRIP
+    '
+
+    Private Sub VoirLepisodeToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles VoirLepisodeToolStripMenuItem.Click
+        If RadGridViewEpisode.CurrentRow IsNot Nothing Then
+            Dim episodeIndex As Integer = Me.RadGridViewEpisode.Rows.IndexOf(Me.RadGridViewEpisode.CurrentRow)
+            Dim patientIndex As Integer = Me.RadGridViewPatient.Rows.IndexOf(Me.RadGridViewPatient.CurrentRow)
+
+            If episodeIndex >= 0 And patientIndex >= 0 Then
+                Dim episodeId As Integer = RadGridViewEpisode.Rows(episodeIndex).Cells("id").Value
+                Dim patientId As Integer = RadGridViewPatient.Rows(patientIndex).Cells("id").Value
+
+                Dim patient = patientDao.GetPatient(patientId)
+
+                Me.Enabled = False
+                Cursor.Current = Cursors.WaitCursor
+
+                Try
+                    Using vRadFEpisodeDetail As New RadFEpisodeDetail
+                        vRadFEpisodeDetail.SelectedEpisodeId = episodeId
+                        vRadFEpisodeDetail.SelectedPatient = patient
+                        vRadFEpisodeDetail.RendezVousId = 0
+                        vRadFEpisodeDetail.UtilisateurConnecte = userLog
+                        vRadFEpisodeDetail.Editable = False
+                        vRadFEpisodeDetail.ShowDialog()
+                    End Using
+                Catch ex As Exception
+                    MessageBox.Show(ex.Message)
+                End Try
+
+                Me.Enabled = True
+            End If
+        End If
+    End Sub
 End Class

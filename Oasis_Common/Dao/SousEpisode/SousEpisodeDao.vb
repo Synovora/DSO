@@ -88,11 +88,9 @@ Public Class SousEpisodeDao
             con.Close()
         End Try
         Return sousEpisodes
-
-
     End Function
 
-    Public Function GetAllSousEpisodeByPatient(episodeId As Integer) As List(Of SousEpisode)
+    Public Function GetAllSousEpisodeByPatient(episodeId As Integer, Optional isWithInactif As Boolean = False) As List(Of SousEpisode)
         Dim con As SqlConnection = GetConnection()
         Dim sousEpisodes As List(Of SousEpisode) = New List(Of SousEpisode)
         Dim SQLString As String = "SELECT " & vbCrLf &
@@ -134,10 +132,17 @@ Public Class SousEpisodeDao
             "Left Join oasis.oa_utilisateur UV ON UV.oa_utilisateur_id =SE.validate_user_id " & vbCrLf &
             "WHERE episode_id = @episodeId" & vbCrLf
 
+        If isWithInactif = True Then
+            SQLString += "AND SE.is_inactif= @is_inactif " & vbCrLf
+        End If
+
+        SQLString += "ORDER by SE.id DESC"
+
         Try
             Dim command As SqlCommand = con.CreateCommand()
             command.CommandText = SQLString
             command.Parameters.AddWithValue("@episodeId", episodeId)
+            command.Parameters.AddWithValue("@is_inactif", Not isWithInactif)
             Using reader As SqlDataReader = command.ExecuteReader()
                 While (reader.Read())
                     sousEpisodes.Add(BuildBean(reader))

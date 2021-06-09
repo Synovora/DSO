@@ -100,7 +100,7 @@ Partial Class RadFSelecteurALD
         Me.BtnSelection.Name = "BtnSelection"
         Me.BtnSelection.Size = New System.Drawing.Size(24, 24)
         Me.BtnSelection.TabIndex = 3
-        Me.BtnSelection.Text = "RadButton1"
+        Me.BtnSelection.Text = "RadButtonDelete"
         '
         'LblAldCode
         '

@@ -1,4 +1,5 @@
 ﻿Imports System.Configuration
+Imports System.Data.Common
 Imports System.IO
 Imports System.Security.Cryptography
 Imports System.Text
@@ -42,6 +43,15 @@ Public Module ModuleUtilsBase
             End If
         Next
         Return Nothing
+    End Function
+
+    Public Function HasColumn(Reader As DbDataReader, ColumnName As String) As Boolean
+        For Each row As DataRow In Reader.GetSchemaTable().Rows
+            If row("ColumnName").ToString() = ColumnName Then
+                Return True
+            End If
+        Next
+        Return False
     End Function
 
     Public Function EncryptString(ByVal clearText As String) As String

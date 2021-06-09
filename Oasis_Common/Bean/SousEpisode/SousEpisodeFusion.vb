@@ -21,6 +21,13 @@
     Public Property IntervenantSpecialite
     Public Property IntervenantStructure
 
+    Public Property Patient_Prenom As String
+    Public Property Patient_Nom As String
+    Public Property Patient_Addresse_1 As String
+    Public Property Patient_Addresse_2 As String
+    Public Property Patient_Ville As String
+    Public Property Patient_Tel_1 As String
+    Public Property Patient_Tel_2 As String
     Public Property Patient_PrenomNom As String
     Public Property Patient_Date_Naissance As String
     Public Property Patient_NIR As String
