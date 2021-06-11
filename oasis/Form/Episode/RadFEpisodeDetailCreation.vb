@@ -56,14 +56,6 @@ Public Class RadFEpisodeDetailCreation
         Dim genre, enfant As String
         Dim agePatient As Integer = CalculAgeEnAnnee(SelectedPatient.PatientDateNaissance)
 
-        If EpisodeType = Episode.EnumTypeEpisode.VIRTUEL Then
-            RadioBtnVirtuel.Checked = True
-            RadioBtnConsultation.Checked = False
-        Else
-            RadioBtnConsultation.Checked = True
-            RadioBtnVirtuel.Checked = False
-        End If
-
         Dim listActivite As New List(Of String)
         episodeActiviteDT = episodeActiviteDao.GetAllEpisodeActivite
         Dim i As Integer
@@ -94,6 +86,14 @@ Public Class RadFEpisodeDetailCreation
         Next
 
         CbxEpisodeActivite.DataSource = listActivite
+
+        If EpisodeType = Episode.EnumTypeEpisode.VIRTUEL Then
+            RadioBtnVirtuel.Checked = True
+            RadioBtnConsultation.Checked = False
+        Else
+            RadioBtnConsultation.Checked = True
+            RadioBtnVirtuel.Checked = False
+        End If
 
         Me.CodeRetour = False
         ChargementEtatCivil()
