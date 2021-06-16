@@ -32,21 +32,20 @@ Partial Class FrmSousEpisodeReponseAttribution
         Dim GridViewTextBoxColumn6 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
         Dim GridViewTextBoxColumn7 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
         Dim GridViewTextBoxColumn8 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
-        Dim SortDescriptor1 As Telerik.WinControls.Data.SortDescriptor = New Telerik.WinControls.Data.SortDescriptor()
         Dim TableViewDefinition2 As Telerik.WinControls.UI.TableViewDefinition = New Telerik.WinControls.UI.TableViewDefinition()
         Dim GridViewTextBoxColumn9 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
-        Dim SortDescriptor2 As Telerik.WinControls.Data.SortDescriptor = New Telerik.WinControls.Data.SortDescriptor()
+        Dim SortDescriptor1 As Telerik.WinControls.Data.SortDescriptor = New Telerik.WinControls.Data.SortDescriptor()
         Dim TableViewDefinition3 As Telerik.WinControls.UI.TableViewDefinition = New Telerik.WinControls.UI.TableViewDefinition()
         Dim GridViewTextBoxColumn10 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
         Dim GridViewTextBoxColumn11 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
         Dim GridViewTextBoxColumn12 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
         Dim GridViewTextBoxColumn13 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
         Dim GridViewTextBoxColumn14 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
-        Dim SortDescriptor3 As Telerik.WinControls.Data.SortDescriptor = New Telerik.WinControls.Data.SortDescriptor()
+        Dim SortDescriptor2 As Telerik.WinControls.Data.SortDescriptor = New Telerik.WinControls.Data.SortDescriptor()
         Dim TableViewDefinition4 As Telerik.WinControls.UI.TableViewDefinition = New Telerik.WinControls.UI.TableViewDefinition()
         Dim GridViewTextBoxColumn15 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
         Dim GridViewTextBoxColumn16 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
-        Dim SortDescriptor4 As Telerik.WinControls.Data.SortDescriptor = New Telerik.WinControls.Data.SortDescriptor()
+        Dim SortDescriptor3 As Telerik.WinControls.Data.SortDescriptor = New Telerik.WinControls.Data.SortDescriptor()
         Dim TableViewDefinition5 As Telerik.WinControls.UI.TableViewDefinition = New Telerik.WinControls.UI.TableViewDefinition()
         Me.RadButtonAttribution = New Telerik.WinControls.UI.RadButton()
         Me.RadButtonDelete = New Telerik.WinControls.UI.RadButton()
@@ -211,7 +210,6 @@ Partial Class FrmSousEpisodeReponseAttribution
         GridViewTextBoxColumn5.EnableExpressionEditor = False
         GridViewTextBoxColumn5.HeaderText = "Date"
         GridViewTextBoxColumn5.Name = "date"
-        GridViewTextBoxColumn5.SortOrder = Telerik.WinControls.UI.RadSortOrder.Ascending
         GridViewTextBoxColumn5.Width = 80
         GridViewTextBoxColumn6.EnableExpressionEditor = False
         GridViewTextBoxColumn6.HeaderText = "Type"
@@ -227,8 +225,6 @@ Partial Class FrmSousEpisodeReponseAttribution
         GridViewTextBoxColumn8.Name = "id"
         Me.RadGridViewEpisode.MasterTemplate.Columns.AddRange(New Telerik.WinControls.UI.GridViewDataColumn() {GridViewTextBoxColumn5, GridViewTextBoxColumn6, GridViewTextBoxColumn7, GridViewTextBoxColumn8})
         Me.RadGridViewEpisode.MasterTemplate.ShowRowHeaderColumn = False
-        SortDescriptor1.PropertyName = "date"
-        Me.RadGridViewEpisode.MasterTemplate.SortDescriptors.AddRange(New Telerik.WinControls.Data.SortDescriptor() {SortDescriptor1})
         Me.RadGridViewEpisode.MasterTemplate.ViewDefinition = TableViewDefinition2
         Me.RadGridViewEpisode.Name = "RadGridViewEpisode"
         Me.RadGridViewEpisode.ReadOnly = True
@@ -281,8 +277,8 @@ Partial Class FrmSousEpisodeReponseAttribution
         GridViewTextBoxColumn9.Width = 180
         Me.RadGridViewSousEpisode.MasterTemplate.Columns.AddRange(New Telerik.WinControls.UI.GridViewDataColumn() {GridViewTextBoxColumn9})
         Me.RadGridViewSousEpisode.MasterTemplate.ShowRowHeaderColumn = False
-        SortDescriptor2.PropertyName = "column1"
-        Me.RadGridViewSousEpisode.MasterTemplate.SortDescriptors.AddRange(New Telerik.WinControls.Data.SortDescriptor() {SortDescriptor2})
+        SortDescriptor1.PropertyName = "column1"
+        Me.RadGridViewSousEpisode.MasterTemplate.SortDescriptors.AddRange(New Telerik.WinControls.Data.SortDescriptor() {SortDescriptor1})
         Me.RadGridViewSousEpisode.MasterTemplate.ViewDefinition = TableViewDefinition3
         Me.RadGridViewSousEpisode.Name = "RadGridViewSousEpisode"
         Me.RadGridViewSousEpisode.RightToLeft = System.Windows.Forms.RightToLeft.No
@@ -344,8 +340,8 @@ Partial Class FrmSousEpisodeReponseAttribution
         GridViewTextBoxColumn14.Name = "id"
         Me.RadGridViewPatient.MasterTemplate.Columns.AddRange(New Telerik.WinControls.UI.GridViewDataColumn() {GridViewTextBoxColumn10, GridViewTextBoxColumn11, GridViewTextBoxColumn12, GridViewTextBoxColumn13, GridViewTextBoxColumn14})
         Me.RadGridViewPatient.MasterTemplate.ShowRowHeaderColumn = False
-        SortDescriptor3.PropertyName = "prenom"
-        Me.RadGridViewPatient.MasterTemplate.SortDescriptors.AddRange(New Telerik.WinControls.Data.SortDescriptor() {SortDescriptor3})
+        SortDescriptor2.PropertyName = "prenom"
+        Me.RadGridViewPatient.MasterTemplate.SortDescriptors.AddRange(New Telerik.WinControls.Data.SortDescriptor() {SortDescriptor2})
         Me.RadGridViewPatient.MasterTemplate.ViewDefinition = TableViewDefinition4
         Me.RadGridViewPatient.Name = "RadGridViewPatient"
         Me.RadGridViewPatient.RightToLeft = System.Windows.Forms.RightToLeft.No
@@ -545,9 +541,9 @@ Partial Class FrmSousEpisodeReponseAttribution
         Me.RadAttachmentGridView.MasterTemplate.EnableSorting = False
         Me.RadAttachmentGridView.MasterTemplate.ShowColumnHeaders = False
         Me.RadAttachmentGridView.MasterTemplate.ShowFilteringRow = False
-        SortDescriptor4.Direction = System.ComponentModel.ListSortDirection.Descending
-        SortDescriptor4.PropertyName = "id"
-        Me.RadAttachmentGridView.MasterTemplate.SortDescriptors.AddRange(New Telerik.WinControls.Data.SortDescriptor() {SortDescriptor4})
+        SortDescriptor3.Direction = System.ComponentModel.ListSortDirection.Descending
+        SortDescriptor3.PropertyName = "id"
+        Me.RadAttachmentGridView.MasterTemplate.SortDescriptors.AddRange(New Telerik.WinControls.Data.SortDescriptor() {SortDescriptor3})
         Me.RadAttachmentGridView.MasterTemplate.ViewDefinition = TableViewDefinition5
         Me.RadAttachmentGridView.Name = "RadAttachmentGridView"
         Me.RadAttachmentGridView.RightToLeft = System.Windows.Forms.RightToLeft.No
