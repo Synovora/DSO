@@ -131,7 +131,7 @@ Public Class FrmSousEpisodeReponseAttribution
             RadGridViewEpisode.Rows(iGrid).Cells("id").Value = episode.Id
             RadGridViewEpisode.Rows(iGrid).Cells("date").Value = episode.DateCreation.ToShortDateString
             RadGridViewEpisode.Rows(iGrid).Cells("type").Value = episode.Type
-            RadGridViewEpisode.Rows(iGrid).Cells("conclusion").Value = episode.ConclusionMedConsigneDenomination
+            RadGridViewEpisode.Rows(iGrid).Cells("conclusion").Value = episode.ObservationMedical
             iGrid += 1
         Next
 
