@@ -36,7 +36,7 @@ Public Class RenameController
             End If
 
             'File.Move(oldPath, newPath)
-            Return response
+            Return Request.CreateResponse(HttpStatusCode.Accepted, "true")
 
         Catch e As ArgumentException
             Dim response = New HttpResponseMessage(HttpStatusCode.Unauthorized) With {
