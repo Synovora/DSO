@@ -56,6 +56,7 @@ Public Class ApiOasis
     End Function
 
     Public Function renameFileRest(renameRequest As RenameRequest) As String
+        Console.WriteLine(renameRequest.OldName & " " & renameRequest.NewName)
         Dim str = renameFile(renameRequest).GetAwaiter.GetResult()
         Return DecryptString(str)
 
@@ -121,7 +122,7 @@ Public Class ApiOasis
 
     Private Function renameFile(renameRequest As RenameRequest) As Task(Of String)
         initHttp(serveurDomain)
-
+        Console.WriteLine("initHttp")
         Dim response As HttpResponseMessage = client.PostAsJsonAsync("/api/rename", renameRequest).Result
         If response.StatusCode <> HttpStatusCode.Accepted Then
             If response.StatusCode = HttpStatusCode.Unauthorized Then

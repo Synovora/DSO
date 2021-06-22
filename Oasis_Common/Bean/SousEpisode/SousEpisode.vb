@@ -104,7 +104,7 @@ Public Class SousEpisode
     End Function
 
     Public Function RenameContenu(loginRequestLog As LoginRequest, oldName As String) As String
-        Dim filename = getFilenameServer()
+        Dim filename = GenerateFilename() & Path.GetExtension(oldName)
         Using apiOasis As New ApiOasis()
             Dim renameRequest As New RenameRequest With {
                .LoginRequest = loginRequestLog,
@@ -128,6 +128,9 @@ Public Class SousEpisode
     End Sub
     Private Function getFilenameServer() As String
         Return "Episode_" & Me.EpisodeId & "_SousEpisode_" & Me.Id & "_SousEpisodeSousType_" & Me.IdSousEpisodeSousType & ".DOCX"
+    End Function
+    Private Function GenerateFilename() As String
+        Return "Episode_" & Me.EpisodeId & "_SousEpisode_" & Me.Id & "_SousEpisodeSousType_" & Me.IdSousEpisodeSousType
     End Function
 
     Public Function Serialize() As Byte()

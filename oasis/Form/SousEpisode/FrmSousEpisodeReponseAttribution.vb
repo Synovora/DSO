@@ -89,6 +89,7 @@ Public Class FrmSousEpisodeReponseAttribution
             Dim Text = ""
             RadGridViewSousEpisode.Rows.Add(iGrid)
             RadGridViewSousEpisode.Rows(iGrid).Cells("sousType").Value = sousEpisode.SousTypeLibelle
+            RadGridViewSousEpisode.Rows(iGrid).Cells("id").Value = sousEpisode.Id
             sousEpisode.lstDetail = sousEpisodeDetailSousTypeDao.getLstSousEpisodeDetailSousType(sousEpisode.Id)
             For Each sousEpisodeSousType As SousEpisodeSousType In lstSousEpisodeSousType
                 If sousEpisodeSousType.Id <> sousEpisode.IdSousEpisodeSousType Then Continue For
@@ -422,6 +423,7 @@ Public Class FrmSousEpisodeReponseAttribution
 
         For Each item In RadAttachmentGridView.MasterView.ChildRows
             Dim unused = sousEpisode.RenameContenu(loginRequestLog, item.Cells("filename").Value)
+            Console.WriteLine(item.Cells("filename").Value & "renamed - " & unused)
         Next
 
         sousEpisodeReponseMailDao.ProcessSousEpisodeReponseMailById(reponseMailId)

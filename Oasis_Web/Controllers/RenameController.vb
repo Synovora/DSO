@@ -20,7 +20,6 @@ Public Class RenameController
     Public Async Function PostValue(<FromBody()> ByVal renameRequest As RenameRequest) As Task(Of HttpResponseMessage)
         Try
             verifPassword(renameRequest.LoginRequest.login, renameRequest.LoginRequest.password)
-            Dim fileuploadPath = ConfigurationManager.AppSettings("FileUploadLocation")
             Dim response As HttpResponseMessage = Request.CreateResponse(HttpStatusCode.Accepted)
 
             Dim oldPath = ConfigurationManager.AppSettings("FileUploadLocation") & "\" & renameRequest.OldName
