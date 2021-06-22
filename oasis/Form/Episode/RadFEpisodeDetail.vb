@@ -1024,7 +1024,7 @@ Public Class RadFEpisodeDetail
         Dim sousEpisode As SousEpisode
         Try
             Me.Cursor = Cursors.WaitCursor
-            sousEpisode = sousEpisodeDao.getById(Me.RadGridViewSousEpisode.CurrentRow.Cells("Id").Value)
+            sousEpisode = sousEpisodeDao.GetById(Me.RadGridViewSousEpisode.CurrentRow.Cells("Id").Value)
             Console.WriteLine("SE id:" & sousEpisode.EpisodeId)
         Catch err As Exception
             MsgBox(err.Message())

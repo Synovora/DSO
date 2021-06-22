@@ -215,11 +215,40 @@ Public Class FrmSousEpisodeReponseAttribution
         Dim patientId As Integer = RadGridViewPatient.Rows(Me.RadGridViewPatient.Rows.IndexOf(Me.RadGridViewPatient.CurrentRow)).Cells("id").Value
         Dim selectedPatient As Patient = patientDao.GetPatient(patientId)
         Me.Enabled = False
-        Using vRadFEpisodeDetailCreation As New RadFEpisodeDetailCreation
-            vRadFEpisodeDetailCreation.SelectedPatient = selectedPatient
-            vRadFEpisodeDetailCreation.EpisodeType = Episode.EnumTypeEpisode.VIRTUEL
-            vRadFEpisodeDetailCreation.ShowDialog()
-        End Using
+        Try
+            Using vRadFEpisodeDetailCreation As New RadFEpisodeDetailCreation
+                vRadFEpisodeDetailCreation.SelectedPatient = selectedPatient
+                vRadFEpisodeDetailCreation.EpisodeType = Episode.EnumTypeEpisode.VIRTUEL
+                vRadFEpisodeDetailCreation.ShowDialog()
+                If vRadFEpisodeDetailCreation.CodeRetour = True Then
+                    ChargementEpisodes(episodeDao.GetAllEpisodeByPatient(patientId))
+                    For Each item In RadGridViewEpisode.MasterView.ChildRows
+                        If item.Cells("id").Value = vRadFEpisodeDetailCreation.EpisodeId.ToString() Then
+                            item.IsSelected = True
+                        End If
+                    Next
+
+                    Dim selectedEpisode As Episode = episodeDao.GetEpisodeById(vRadFEpisodeDetailCreation.EpisodeId)
+                    Using frm = New FrmSousEpisode(selectedEpisode, selectedPatient, New SousEpisode, "", "", "")
+                        frm.ShowDialog()
+                        frm.Dispose()
+                        RadGridViewEpisode_CellClick(Nothing, Nothing)
+                        RadGridViewSousEpisode.MasterView.ChildRows.Last.IsSelected = True
+                        Using vRadFEpisodeDetail As New RadFEpisodeDetail
+                            vRadFEpisodeDetail.SelectedEpisodeId = vRadFEpisodeDetailCreation.EpisodeId
+                            vRadFEpisodeDetail.SelectedPatient = selectedPatient
+                            vRadFEpisodeDetail.RendezVousId = 0
+                            vRadFEpisodeDetail.UtilisateurConnecte = userLog
+                            vRadFEpisodeDetail.Editable = False
+                            vRadFEpisodeDetail.ShowDialog()
+                        End Using
+                        RadGridViewSousEpisode_CellClick(Nothing, Nothing)
+                    End Using
+                End If
+            End Using
+        Catch ex As Exception
+            MessageBox.Show(ex.Message)
+        End Try
         Me.Enabled = True
         Dim episodes As List(Of Episode) = episodeDao.GetAllEpisodeByPatient(patientId)
         ChargementEpisodes(episodes)
@@ -384,5 +413,17 @@ Public Class FrmSousEpisodeReponseAttribution
                 Me.Enabled = True
             End If
         End If
+    End Sub
+
+    Private Sub RadButtonAttribution_Click(sender As Object, e As EventArgs) Handles RadButtonAttribution.Click
+        Dim reponseMailId As Integer = RadGridViewMail.Rows(Me.RadGridViewMail.Rows.IndexOf(Me.RadGridViewMail.CurrentRow)).Cells("id").Value
+        Dim sousEpisodeId As Integer = RadGridViewSousEpisode.Rows(Me.RadGridViewSousEpisode.Rows.IndexOf(Me.RadGridViewSousEpisode.CurrentRow)).Cells("id").Value
+        Dim sousEpisode As SousEpisode = sousEpisodeDao.GetById(sousEpisodeId)
+
+        For Each item In RadAttachmentGridView.MasterView.ChildRows
+            Dim unused = sousEpisode.RenameContenu(loginRequestLog, item.Cells("filename").Value)
+        Next
+
+        sousEpisodeReponseMailDao.ProcessSousEpisodeReponseMailById(reponseMailId)
     End Sub
 End Class

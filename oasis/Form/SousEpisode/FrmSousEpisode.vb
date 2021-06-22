@@ -581,7 +581,7 @@ Public Class FrmSousEpisode
                        TryCast(Me.DropDownDestinataire.SelectedItem.Value, IntervenantParcours))
 
         'update Sous-Episode
-        sousEpisode = sousEpisodeDao.getById(sousEpisode.Id)
+        sousEpisode = sousEpisodeDao.GetById(sousEpisode.Id)
         Console.WriteLine("sousEpisode: " & sousEpisode.Id)
 
         With sousEF

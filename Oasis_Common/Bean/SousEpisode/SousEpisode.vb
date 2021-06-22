@@ -103,6 +103,19 @@ Public Class SousEpisode
 
     End Function
 
+    Public Function RenameContenu(loginRequestLog As LoginRequest, oldName As String) As String
+        Dim filename = getFilenameServer()
+        Using apiOasis As New ApiOasis()
+            Dim renameRequest As New RenameRequest With {
+               .LoginRequest = loginRequestLog,
+               .OldName = oldName,
+               .NewName = filename
+               }
+            Return apiOasis.renameFileRest(renameRequest)
+        End Using
+
+    End Function
+
     Public Sub WriteContenuModel(tblContenu As Byte(), loginRequestLog As Object)
         ' --- tentative d'upload
         Using apiOasis As New ApiOasis()

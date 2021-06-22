@@ -532,7 +532,7 @@ Public Class SousEpisodeDao
         Return codeRetour
     End Function
 
-    Public Function getById(idSousEpisode As Long) As SousEpisode
+    Public Function GetById(idSousEpisode As Long) As SousEpisode
         Return GetLstSousEpisode(0, idSousEpisode, True)(0)
     End Function
 

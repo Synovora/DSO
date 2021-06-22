@@ -324,7 +324,7 @@ Public Class FrmSousEpisodeListe
         Dim sousEpisode As SousEpisode
         Try
             Me.Cursor = Cursors.WaitCursor
-            sousEpisode = sousEpisodeDao.getById(Me.RadSousEpisodeGrid.CurrentRow.Cells("IdSousEpisode").Value)
+            sousEpisode = sousEpisodeDao.GetById(Me.RadSousEpisodeGrid.CurrentRow.Cells("IdSousEpisode").Value)
         Catch err As Exception
             MsgBox(err.Message())
             Return
