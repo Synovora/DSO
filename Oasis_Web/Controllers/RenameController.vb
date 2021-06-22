@@ -17,7 +17,7 @@ Public Class RenameController
     ''' 
     ''' </summary>
     ''' <returns></returns>
-    Public Async Function PostValue(<FromBody()> ByVal renameRequest As RenameRequest) As Task(Of HttpResponseMessage)
+    Public Function PostValue(<FromBody()> ByVal renameRequest As RenameRequest) As HttpResponseMessage
         Try
             verifPassword(renameRequest.LoginRequest.login, renameRequest.LoginRequest.password)
             Dim response As HttpResponseMessage = Request.CreateResponse(HttpStatusCode.Accepted)
@@ -35,7 +35,7 @@ Public Class RenameController
                 Return resp
             End If
 
-            File.Move(oldPath, newPath)
+            'File.Move(oldPath, newPath)
             Return response
 
         Catch e As ArgumentException
