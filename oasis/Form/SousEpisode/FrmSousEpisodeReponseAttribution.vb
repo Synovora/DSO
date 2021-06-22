@@ -421,14 +421,13 @@ Public Class FrmSousEpisodeReponseAttribution
         Dim sousEpisodeId As Integer = RadGridViewSousEpisode.Rows(Me.RadGridViewSousEpisode.Rows.IndexOf(Me.RadGridViewSousEpisode.CurrentRow)).Cells("id").Value
         Dim sousEpisode As SousEpisode = sousEpisodeDao.GetById(sousEpisodeId)
 
-        Console.WriteLine("reponseMailId:" & reponseMailId)
-        Console.WriteLine("sousEpisodeId:" & sousEpisodeId)
         For Each item In RadAttachmentGridView.MasterView.ChildRows
             Console.WriteLine(item.Cells("filename").Value)
-            Dim unused = sousEpisode.RenameContenu(loginRequestLog, item.Cells("filename").Value)
+            sousEpisode.RenameContenu(loginRequestLog, item.Cells("filename").Value)
             Console.WriteLine(item.Cells("filename").Value & "renamed - ")
         Next
 
-        'sousEpisodeReponseMailDao.ProcessSousEpisodeReponseMailById(reponseMailId)
+        sousEpisodeReponseMailDao.ProcessSousEpisodeReponseMailById(reponseMailId)
+        ChargementMails()
     End Sub
 End Class

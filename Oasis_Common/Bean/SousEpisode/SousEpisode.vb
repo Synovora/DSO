@@ -103,7 +103,7 @@ Public Class SousEpisode
 
     End Function
 
-    Public Function RenameContenu(loginRequestLog As LoginRequest, oldName As String) As String
+    Public Function RenameContenu(loginRequestLog As LoginRequest, oldName As String)
         Dim filename = GenerateFilename() & Path.GetExtension(oldName)
         Using apiOasis As New ApiOasis()
             Dim renameRequest As New RenameRequest With {
@@ -111,7 +111,7 @@ Public Class SousEpisode
                .OldName = oldName,
                .NewName = filename
                }
-            Return apiOasis.renameFileRest(renameRequest)
+            apiOasis.renameFileRest(renameRequest)
         End Using
 
     End Function

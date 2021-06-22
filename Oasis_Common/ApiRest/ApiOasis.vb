@@ -55,11 +55,9 @@ Public Class ApiOasis
         Return tblByte
     End Function
 
-    Public Function renameFileRest(renameRequest As RenameRequest) As String
+    Public Function renameFileRest(renameRequest As RenameRequest)
         Console.WriteLine(renameRequest.OldName & " " & renameRequest.NewName)
-        Dim str = renameFile(renameRequest).GetAwaiter.GetResult()
-        Return DecryptString(str)
-
+        renameFile(renameRequest).GetAwaiter.GetResult()
     End Function
 
 
@@ -120,7 +118,7 @@ Public Class ApiOasis
         Return response.Content.ReadAsByteArrayAsync()
     End Function
 
-    Private Function renameFile(renameRequest As RenameRequest)
+    Private Function renameFile(renameRequest As RenameRequest) As Task(Of String)
         initHttp(serveurDomain)
 
         Dim response As HttpResponseMessage = client.PostAsJsonAsync("/api/rename", renameRequest).Result
@@ -130,6 +128,7 @@ Public Class ApiOasis
             End If
             Throw New Exception(response.ReasonPhrase)
         End If
+        Return response.Content.ReadAsStringAsync()
     End Function
 
 
