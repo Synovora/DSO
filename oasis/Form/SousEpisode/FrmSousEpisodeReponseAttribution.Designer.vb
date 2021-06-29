@@ -46,7 +46,7 @@ Partial Class FrmSousEpisodeReponseAttribution
         Dim TableViewDefinition4 As Telerik.WinControls.UI.TableViewDefinition = New Telerik.WinControls.UI.TableViewDefinition()
         Dim GridViewTextBoxColumn16 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
         Dim GridViewTextBoxColumn17 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
-        Dim SortDescriptor3 As Telerik.WinControls.Data.SortDescriptor = New Telerik.WinControls.Data.SortDescriptor()
+        Dim GridViewTextBoxColumn18 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
         Dim TableViewDefinition5 As Telerik.WinControls.UI.TableViewDefinition = New Telerik.WinControls.UI.TableViewDefinition()
         Me.RadButtonAttribution = New Telerik.WinControls.UI.RadButton()
         Me.RadButtonDelete = New Telerik.WinControls.UI.RadButton()
@@ -79,6 +79,7 @@ Partial Class FrmSousEpisodeReponseAttribution
         Me.RadLabel1 = New Telerik.WinControls.UI.RadLabel()
         Me.RadObjetTextBox = New Telerik.WinControls.UI.RadTextBox()
         Me.RadSeparator1 = New Telerik.WinControls.UI.RadSeparator()
+        Me.BtnRefreshMail = New System.Windows.Forms.Button()
         CType(Me.RadButtonAttribution, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.RadButtonDelete, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.RadGridViewMail, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -148,8 +149,11 @@ Partial Class FrmSousEpisodeReponseAttribution
         '
         '
         Me.RadGridViewMail.MasterTemplate.AllowAddNewRow = False
+        Me.RadGridViewMail.MasterTemplate.AllowCellContextMenu = False
+        Me.RadGridViewMail.MasterTemplate.AllowColumnChooser = False
         Me.RadGridViewMail.MasterTemplate.AllowColumnHeaderContextMenu = False
         Me.RadGridViewMail.MasterTemplate.AllowColumnReorder = False
+        Me.RadGridViewMail.MasterTemplate.AllowColumnResize = False
         Me.RadGridViewMail.MasterTemplate.AllowDeleteRow = False
         Me.RadGridViewMail.MasterTemplate.AllowDragToGroup = False
         Me.RadGridViewMail.MasterTemplate.AllowEditRow = False
@@ -186,6 +190,7 @@ Partial Class FrmSousEpisodeReponseAttribution
         Me.RadGridViewMail.MasterTemplate.ViewDefinition = TableViewDefinition1
         Me.RadGridViewMail.Name = "RadGridViewMail"
         Me.RadGridViewMail.RightToLeft = System.Windows.Forms.RightToLeft.No
+        Me.RadGridViewMail.ShowGroupPanel = False
         Me.RadGridViewMail.Size = New System.Drawing.Size(556, 297)
         Me.RadGridViewMail.TabIndex = 2
         '
@@ -495,6 +500,7 @@ Partial Class FrmSousEpisodeReponseAttribution
         'RadGroupBox4
         '
         Me.RadGroupBox4.AccessibleRole = System.Windows.Forms.AccessibleRole.Grouping
+        Me.RadGroupBox4.Controls.Add(Me.BtnRefreshMail)
         Me.RadGroupBox4.Controls.Add(Me.WebBrowser)
         Me.RadGroupBox4.Controls.Add(Me.RadAttachmentGridView)
         Me.RadGroupBox4.Controls.Add(Me.RadLabel1)
@@ -534,7 +540,6 @@ Partial Class FrmSousEpisodeReponseAttribution
         GridViewTextBoxColumn16.HeaderText = "Id"
         GridViewTextBoxColumn16.IsVisible = False
         GridViewTextBoxColumn16.Name = "id"
-        GridViewTextBoxColumn16.SortOrder = Telerik.WinControls.UI.RadSortOrder.Descending
         GridViewTextBoxColumn17.AllowGroup = False
         GridViewTextBoxColumn17.AllowSort = False
         GridViewTextBoxColumn17.EnableExpressionEditor = False
@@ -543,13 +548,13 @@ Partial Class FrmSousEpisodeReponseAttribution
         GridViewTextBoxColumn17.Name = "filename"
         GridViewTextBoxColumn17.ReadOnly = True
         GridViewTextBoxColumn17.Width = 120
-        Me.RadAttachmentGridView.MasterTemplate.Columns.AddRange(New Telerik.WinControls.UI.GridViewDataColumn() {GridViewTextBoxColumn16, GridViewTextBoxColumn17})
+        GridViewTextBoxColumn18.EnableExpressionEditor = False
+        GridViewTextBoxColumn18.HeaderText = "localName"
+        GridViewTextBoxColumn18.Name = "localName"
+        Me.RadAttachmentGridView.MasterTemplate.Columns.AddRange(New Telerik.WinControls.UI.GridViewDataColumn() {GridViewTextBoxColumn16, GridViewTextBoxColumn17, GridViewTextBoxColumn18})
         Me.RadAttachmentGridView.MasterTemplate.EnableSorting = False
         Me.RadAttachmentGridView.MasterTemplate.ShowColumnHeaders = False
         Me.RadAttachmentGridView.MasterTemplate.ShowFilteringRow = False
-        SortDescriptor3.Direction = System.ComponentModel.ListSortDirection.Descending
-        SortDescriptor3.PropertyName = "id"
-        Me.RadAttachmentGridView.MasterTemplate.SortDescriptors.AddRange(New Telerik.WinControls.Data.SortDescriptor() {SortDescriptor3})
         Me.RadAttachmentGridView.MasterTemplate.ViewDefinition = TableViewDefinition5
         Me.RadAttachmentGridView.Name = "RadAttachmentGridView"
         Me.RadAttachmentGridView.RightToLeft = System.Windows.Forms.RightToLeft.No
@@ -578,6 +583,16 @@ Partial Class FrmSousEpisodeReponseAttribution
         Me.RadSeparator1.Name = "RadSeparator1"
         Me.RadSeparator1.Size = New System.Drawing.Size(556, 10)
         Me.RadSeparator1.TabIndex = 3
+        '
+        'BtnRefreshMail
+        '
+        Me.BtnRefreshMail.Font = New System.Drawing.Font("Segoe UI", 8.0!, System.Drawing.FontStyle.Bold)
+        Me.BtnRefreshMail.Location = New System.Drawing.Point(538, 653)
+        Me.BtnRefreshMail.Name = "BtnRefreshMail"
+        Me.BtnRefreshMail.Size = New System.Drawing.Size(24, 23)
+        Me.BtnRefreshMail.TabIndex = 9
+        Me.BtnRefreshMail.Text = "⟳"
+        Me.BtnRefreshMail.UseVisualStyleBackColor = True
         '
         'FrmSousEpisodeReponseAttribution
         '
@@ -670,5 +685,6 @@ Partial Class FrmSousEpisodeReponseAttribution
     Friend WithEvents WebBrowser As WebBrowser
     Friend WithEvents ContextMenuStrip1 As ContextMenuStrip
     Friend WithEvents VoirLepisodeToolStripMenuItem As ToolStripMenuItem
+    Friend WithEvents BtnRefreshMail As Button
 End Class
 

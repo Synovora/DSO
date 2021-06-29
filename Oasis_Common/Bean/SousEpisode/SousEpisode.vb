@@ -103,19 +103,6 @@ Public Class SousEpisode
 
     End Function
 
-    Public Function RenameContenu(loginRequestLog As LoginRequest, oldName As String)
-        Dim filename = GenerateFilename() & Path.GetExtension(oldName)
-        Using apiOasis As New ApiOasis()
-            Dim renameRequest As New RenameRequest With {
-               .LoginRequest = loginRequestLog,
-               .OldName = oldName,
-               .NewName = filename
-               }
-            apiOasis.renameFileRest(renameRequest)
-        End Using
-
-    End Function
-
     Public Sub WriteContenuModel(tblContenu As Byte(), loginRequestLog As Object)
         ' --- tentative d'upload
         Using apiOasis As New ApiOasis()
@@ -129,9 +116,7 @@ Public Class SousEpisode
     Private Function getFilenameServer() As String
         Return "Episode_" & Me.EpisodeId & "_SousEpisode_" & Me.Id & "_SousEpisodeSousType_" & Me.IdSousEpisodeSousType & ".DOCX"
     End Function
-    Private Function GenerateFilename() As String
-        Return "Episode_" & Me.EpisodeId & "_SousEpisode_" & Me.Id & "_SousEpisodeSousType_" & Me.IdSousEpisodeSousType
-    End Function
+
 
     Public Function Serialize() As Byte()
         Using m As MemoryStream = New MemoryStream()
