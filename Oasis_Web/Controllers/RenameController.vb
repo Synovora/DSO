@@ -22,8 +22,8 @@ Public Class RenameController
             verifPassword(renameRequest.LoginRequest.login, renameRequest.LoginRequest.password)
             Dim response As HttpResponseMessage = Request.CreateResponse(HttpStatusCode.Accepted)
 
-            Dim oldPath = ConfigurationManager.AppSettings("FileUploadLocation") & "\" & renameRequest.OldName.Replace(Chr(34), "")
-            Dim newPath = ConfigurationManager.AppSettings("FileUploadLocation") & "\" & renameRequest.NewName.Replace(Chr(34), "")
+            Dim oldPath = ConfigurationManager.AppSettings("FileUploadLocation") & "\" & renameRequest.OldName
+            Dim newPath = ConfigurationManager.AppSettings("FileUploadLocation") & "\" & renameRequest.NewName
 
             If Not File.Exists(oldPath) Then
                 response.StatusCode = HttpStatusCode.NotFound
@@ -36,6 +36,7 @@ Public Class RenameController
             End If
 
             File.Move(oldPath, newPath)
+
             Return Request.CreateResponse(HttpStatusCode.Accepted, "true")
 
         Catch e As ArgumentException
@@ -48,7 +49,7 @@ Public Class RenameController
         Catch e As Exception
             Dim response = New HttpResponseMessage(HttpStatusCode.InternalServerError) With {
                 .Content = New StringContent(e.Message),
-                .ReasonPhrase = "Erreur interne au server"
+                .ReasonPhrase = "Erreur interne au server: " & e.Message
             }
 
             Return response

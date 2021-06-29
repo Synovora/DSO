@@ -57,7 +57,7 @@ Public Class DocFileUploadController
         Catch e As Exception
             Dim resp = New HttpResponseMessage(HttpStatusCode.InternalServerError) With {
                 .Content = New StringContent(e.Message),
-                .ReasonPhrase = "Erreur interne au server"
+                .ReasonPhrase = "Erreur interne au server: " & e.Message
             }
 
             Return resp
