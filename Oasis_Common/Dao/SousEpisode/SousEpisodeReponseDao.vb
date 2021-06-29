@@ -187,6 +187,71 @@ Public Class SousEpisodeReponseDao
     ''' <param name="sousEpisodeReponse"></param>
     ''' <param name="filenameSrc"></param>
     ''' <returns></returns>
+    Public Function CreateByMoving(sousEpisode As SousEpisode, sousEpisodeReponse As SousEpisodeReponse, filenameSrc As String, loginRequestLog As Object) As Boolean
+        Dim da As SqlDataAdapter = New SqlDataAdapter()
+        Dim codeRetour As Boolean = True
+        Dim con As SqlConnection
+
+        con = GetConnection()
+        Dim transaction As SqlClient.SqlTransaction = con.BeginTransaction
+
+        Try
+            Dim SQLstring As String = "INSERT INTO oasis.oa_sous_episode_reponse " &
+                    "(id_sous_episode, create_user_id, horodate_creation, nom_fichier, commentaire, validate_state, episode_id)" &
+            " VALUES (@id_sous_episode, @CreateUser, @dateCreation, @NomFichier , @Commentaire, @ValidateState, (SELECT episode_id FROM oasis.oa_sous_episode WHERE id = @id_sous_episode)); SELECT SCOPE_IDENTITY()"
+
+            Dim cmd As New SqlCommand(SQLstring, con, transaction)
+            With cmd.Parameters
+                .AddWithValue("@id_sous_episode", sousEpisodeReponse.IdSousEpisode)
+                .AddWithValue("@CreateUser", sousEpisodeReponse.CreateUserId)
+                .AddWithValue("@dateCreation", sousEpisodeReponse.HorodateCreation)
+                .AddWithValue("@NomFichier", sousEpisodeReponse.NomFichier)
+                .AddWithValue("@Commentaire", sousEpisodeReponse.Commentaire)
+                .AddWithValue("@ValidateState", "!")
+            End With
+
+            da.InsertCommand = cmd
+            Dim idSEReponse = da.InsertCommand.ExecuteScalar()
+
+            ' --- Update du record pere
+            SQLstring = " UPDATE oasis.oa_sous_episode SET is_reponse_recue = 'true', horodate_last_recu = @dateCreation WHERE id = @id_sous_episode"
+            cmd = New SqlCommand(SQLstring, con, transaction)
+            With cmd.Parameters
+                .AddWithValue("@id_sous_episode", sousEpisodeReponse.IdSousEpisode)
+                .AddWithValue("@dateCreation", sousEpisodeReponse.HorodateCreation)
+            End With
+            da.UpdateCommand = cmd
+            Dim nbUpdate = da.UpdateCommand.ExecuteNonQuery()
+            If nbUpdate <> 1 Then
+                Throw New Exception("Problème : Enregistrements mouvementés : " & nbUpdate & " au lieu de 1 !")
+            End If
+
+            ' --- tentative de rename
+
+            Using apiOasis As New ApiOasis()
+                Dim renameRequest As New RenameRequest With {
+                   .LoginRequest = loginRequestLog,
+                   .OldName = filenameSrc,
+                   .NewName = sousEpisodeReponse.GetFilenameServer(sousEpisode.EpisodeId, idSEReponse)}
+                apiOasis.renameFileRest(renameRequest)
+            End Using
+            ' -- renane ok => on fixe l'id de la reponse
+            sousEpisodeReponse.Id = idSEReponse
+
+            transaction.Commit()
+
+        Catch ex As Exception
+            transaction.Rollback()
+            Throw New Exception(ex.Message)
+            codeRetour = False
+        Finally
+            transaction.Dispose()
+            con.Close()
+        End Try
+
+        Return codeRetour
+    End Function
+
     Public Function Create(sousEpisode As SousEpisode, sousEpisodeReponse As SousEpisodeReponse, filenameSrc As String, loginRequestLog As Object) As Boolean
         Dim da As SqlDataAdapter = New SqlDataAdapter()
         Dim codeRetour As Boolean = True
