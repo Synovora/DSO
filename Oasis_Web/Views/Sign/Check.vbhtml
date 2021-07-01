@@ -67,7 +67,7 @@ End Code
                     <div Class="row">
                         <div Class="col-md-6 mb-3">
                             <Label for="birthDate">Date de naissance</Label>
-                            <input type="text" Class="form-control" id="birthDate" placeholder="" value=@ViewBag.Patient.PatientDateNaissance required disabled>
+                            <input type="text" Class="form-control" id="birthDate" placeholder="" value=@Format(ViewBag.Patient.PatientDateNaissance, "dd/MM/yyyy") required disabled>
                             <div Class="invalid-feedback">
                                 Valid birthDate Is required.
                             </div>
@@ -107,7 +107,7 @@ End Code
                     <div Class="row">
                         <div Class="col-md-6 mb-3">
                             <Label for="date">Date</Label>
-                            <input type="text" Class="form-control" id="date" placeholder="" value=@ViewBag.Ordonnance.DateValidation required disabled>
+                            <input type="text" Class="form-control" id="date" placeholder="" value=@Format(ViewBag.Ordonnance.DateValidation, "dd/MM/yyyy") required disabled>
                         </div>
                         <div Class="col-md-6 mb-3">
                             <Label for="renouvelable">Renouvelable</Label>

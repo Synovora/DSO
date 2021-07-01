@@ -70,6 +70,28 @@ Public Class SousEpisodeReponseMailDao
         End Try
     End Function
 
+    Public Function ProcessSousEpisodeReponseMailById(id As Long)
+        Dim da As SqlDataAdapter = New SqlDataAdapter()
+        Dim con As SqlConnection = GetConnection()
+        Dim SQLstring As String = "UPDATE oasis.oa_sous_episode_reponse_mail SET" &
+        " status=@status" &
+        " WHERE id=@id"
+
+        Dim cmd As New SqlCommand(SQLstring, con)
+        With cmd.Parameters
+            .AddWithValue("@id", id)
+            .AddWithValue("@status", "processed")
+        End With
+        Try
+            da.UpdateCommand = cmd
+            da.UpdateCommand.ExecuteNonQuery()
+        Catch ex As Exception
+            Throw ex
+        Finally
+            con.Close()
+        End Try
+    End Function
+
     Public Function BuildBean(reader As SqlDataReader) As SousEpisodeReponseMail
         Dim seType As New SousEpisodeReponseMail(reader)
         Return seType

@@ -117,6 +117,7 @@ Public Class SousEpisode
         Return "Episode_" & Me.EpisodeId & "_SousEpisode_" & Me.Id & "_SousEpisodeSousType_" & Me.IdSousEpisodeSousType & ".DOCX"
     End Function
 
+
     Public Function Serialize() As Byte()
         Using m As MemoryStream = New MemoryStream()
             Using writer As BinaryWriter = New BinaryWriter(m)

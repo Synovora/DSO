@@ -178,6 +178,7 @@
     <Compile Include="Bean\Traitement\TraitementHistoClass.vb" />
     <Compile Include="Bean\Utilisateur\Action.vb" />
     <Compile Include="Bean\Utilisateur\Fonction.vb" />
+    <Compile Include="Bean\WebTech\RenameRequest.vb" />
     <Compile Include="Bean\WebTech\DownloadRequest.vb" />
     <Compile Include="Bean\WebTech\LoginRequest.vb" />
     <Compile Include="Bean\Utilisateur\Profil.vb" />

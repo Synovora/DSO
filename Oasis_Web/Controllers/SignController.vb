@@ -23,6 +23,7 @@ Namespace Controllers
                 If ordonnance.Inactif = True Then
                     Return View("~/Views/Sign/Inactif.vbhtml")
                 End If
+                'ordonnance.DateValidation.ToString("dd/MM/yyyy")
                 ViewBag.Ordonnance = ordonnance
                 Dim ordonnanceDetails = ordonnanceDetailDao.GetOrdonnanceLigneByOrdonnanceId(ordonnance.Id)
                 ViewBag.OrdonnanceDetail = ordonnanceDetails
@@ -37,8 +38,8 @@ Namespace Controllers
                     Return View()
                 End If
                 ViewBag.Patient = patient
-
-                Dim user = utilisateurDao.getUserById(ordonnance.UtilisateurCreation)
+                'patient.PatientDateNaissance.ToString
+                Dim user = utilisateurDao.getUserById(ordonnance.UserValidation)
                 If user Is Nothing Then
                     Return View()
                 End If

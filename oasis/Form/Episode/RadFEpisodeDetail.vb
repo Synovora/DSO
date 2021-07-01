@@ -955,8 +955,6 @@ Public Class RadFEpisodeDetail
             RadGridViewSousEpisode.Rows(iGrid).Cells("sousType").Tag = Text
             RadGridViewSousEpisode.Rows(iGrid).Cells("state").Value = If(sousEpisode.NbReponse = 0, If(sousEpisode.IsReponse = False, "", "!"), If(sousEpisode.NbMedReponseWaiting > 0, "m", If(sousEpisode.NbReponseWaiting = 0, "v", "x")))
 
-            Console.WriteLine(Text, Not IsDBNull(sousEpisode.HorodateValidate))
-
             iGrid += 1
         Next
 
@@ -1024,8 +1022,7 @@ Public Class RadFEpisodeDetail
         Dim sousEpisode As SousEpisode
         Try
             Me.Cursor = Cursors.WaitCursor
-            sousEpisode = sousEpisodeDao.getById(Me.RadGridViewSousEpisode.CurrentRow.Cells("Id").Value)
-            Console.WriteLine("SE id:" & sousEpisode.EpisodeId)
+            sousEpisode = sousEpisodeDao.GetById(Me.RadGridViewSousEpisode.CurrentRow.Cells("Id").Value)
         Catch err As Exception
             MsgBox(err.Message())
             Return
@@ -1168,7 +1165,6 @@ Public Class RadFEpisodeDetail
             Next
             If observationInput <> observation Then
                 'Mise à jour de l'observation
-                Console.WriteLine("Id : " & id.ToString & " Observation saisie : " & observationInput & " observation initiale : " & observation)
                 episodeActeParamedicalDao.ModificationEpisodeActeParamedicalObservation(id, observationInput, userLog)
                 MiseAJour = True
                 If rowInfo.Index() >= ObsRowCount Then
@@ -1497,7 +1493,6 @@ Public Class RadFEpisodeDetail
             Next
             If observationInput <> observation Then
                 'Mise à jour de l'observation
-                Console.WriteLine("Id : " & id.ToString & " Observation saisie : " & observationInput & " observation initiale : " & observation)
                 episodeActeParamedicalDao.ModificationEpisodeActeParamedicalObservation(id, observationInput, userLog)
                 MiseAJour = True
             End If

@@ -55,6 +55,11 @@ Public Class ApiOasis
         Return tblByte
     End Function
 
+    Public Function renameFileRest(renameRequest As RenameRequest)
+        Console.WriteLine(renameRequest.OldName & " " & renameRequest.NewName)
+        renameFile(renameRequest).GetAwaiter.GetResult()
+    End Function
+
 
     Private Sub init(_serveurDomain As String)
         ServicePointManager.ServerCertificateValidationCallback = AddressOf AcceptAllCertifications
@@ -111,6 +116,19 @@ Public Class ApiOasis
             Throw New Exception(response.ReasonPhrase)
         End If
         Return response.Content.ReadAsByteArrayAsync()
+    End Function
+
+    Private Function renameFile(renameRequest As RenameRequest) As Task(Of String)
+        initHttp(serveurDomain)
+
+        Dim response As HttpResponseMessage = client.PostAsJsonAsync("/api/rename", renameRequest).Result
+        If response.StatusCode <> HttpStatusCode.Accepted Then
+            If response.StatusCode = HttpStatusCode.Unauthorized Then
+                Throw New Exception("Identifiant et/ou mot de passe erroné !")
+            End If
+            Throw New Exception(response.ReasonPhrase)
+        End If
+        Return response.Content.ReadAsStringAsync()
     End Function
 
 

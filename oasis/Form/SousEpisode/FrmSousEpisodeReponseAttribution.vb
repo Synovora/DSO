@@ -78,6 +78,8 @@ Public Class FrmSousEpisodeReponseAttribution
         RadAttachmentGridView.DataSource = Nothing
         RadAttachmentGridView.Refresh()
         WebBrowser.DocumentText = ""
+
+        RadGridViewMail.ClearSelection()
     End Sub
 
     Private Sub ChargementSousEpisodes(sousEpisodes As List(Of SousEpisode))
@@ -89,6 +91,7 @@ Public Class FrmSousEpisodeReponseAttribution
             Dim Text = ""
             RadGridViewSousEpisode.Rows.Add(iGrid)
             RadGridViewSousEpisode.Rows(iGrid).Cells("sousType").Value = sousEpisode.SousTypeLibelle
+            RadGridViewSousEpisode.Rows(iGrid).Cells("id").Value = sousEpisode.Id
             sousEpisode.lstDetail = sousEpisodeDetailSousTypeDao.getLstSousEpisodeDetailSousType(sousEpisode.Id)
             For Each sousEpisodeSousType As SousEpisodeSousType In lstSousEpisodeSousType
                 If sousEpisodeSousType.Id <> sousEpisode.IdSousEpisodeSousType Then Continue For
@@ -215,11 +218,40 @@ Public Class FrmSousEpisodeReponseAttribution
         Dim patientId As Integer = RadGridViewPatient.Rows(Me.RadGridViewPatient.Rows.IndexOf(Me.RadGridViewPatient.CurrentRow)).Cells("id").Value
         Dim selectedPatient As Patient = patientDao.GetPatient(patientId)
         Me.Enabled = False
-        Using vRadFEpisodeDetailCreation As New RadFEpisodeDetailCreation
-            vRadFEpisodeDetailCreation.SelectedPatient = selectedPatient
-            vRadFEpisodeDetailCreation.EpisodeType = Episode.EnumTypeEpisode.VIRTUEL
-            vRadFEpisodeDetailCreation.ShowDialog()
-        End Using
+        Try
+            Using vRadFEpisodeDetailCreation As New RadFEpisodeDetailCreation
+                vRadFEpisodeDetailCreation.SelectedPatient = selectedPatient
+                vRadFEpisodeDetailCreation.EpisodeType = Episode.EnumTypeEpisode.VIRTUEL
+                vRadFEpisodeDetailCreation.ShowDialog()
+                If vRadFEpisodeDetailCreation.CodeRetour = True Then
+                    ChargementEpisodes(episodeDao.GetAllEpisodeByPatient(patientId))
+                    For Each item In RadGridViewEpisode.MasterView.ChildRows
+                        If item.Cells("id").Value = vRadFEpisodeDetailCreation.EpisodeId.ToString() Then
+                            item.IsSelected = True
+                        End If
+                    Next
+
+                    Dim selectedEpisode As Episode = episodeDao.GetEpisodeById(vRadFEpisodeDetailCreation.EpisodeId)
+                    Using frm = New FrmSousEpisode(selectedEpisode, selectedPatient, New SousEpisode, "", "", "")
+                        frm.ShowDialog()
+                        frm.Dispose()
+                        RadGridViewEpisode_CellClick(Nothing, Nothing)
+                        RadGridViewSousEpisode.MasterView.ChildRows.Last.IsSelected = True
+                        Using vRadFEpisodeDetail As New RadFEpisodeDetail
+                            vRadFEpisodeDetail.SelectedEpisodeId = vRadFEpisodeDetailCreation.EpisodeId
+                            vRadFEpisodeDetail.SelectedPatient = selectedPatient
+                            vRadFEpisodeDetail.RendezVousId = 0
+                            vRadFEpisodeDetail.UtilisateurConnecte = userLog
+                            vRadFEpisodeDetail.Editable = True
+                            vRadFEpisodeDetail.ShowDialog()
+                        End Using
+                        RadGridViewSousEpisode_CellClick(Nothing, Nothing)
+                    End Using
+                End If
+            End Using
+        Catch ex As Exception
+            MessageBox.Show(ex.Message)
+        End Try
         Me.Enabled = True
         Dim episodes As List(Of Episode) = episodeDao.GetAllEpisodeByPatient(patientId)
         ChargementEpisodes(episodes)
@@ -245,21 +277,11 @@ Public Class FrmSousEpisodeReponseAttribution
     '
 
     Private Sub RadAttachmentGridView_CellClick(sender As Object, e As GridViewCellEventArgs) Handles RadAttachmentGridView.CellClick
-        'MessageBox.Show("Telecharger fichier " & gce.RowInfo.Cells("NomFichier").Value & " : " & gce.RowInfo.Cells("IdSousEpisode").Value & "_" & gce.RowInfo.Cells("Id").Value)
         Try
             Me.Cursor = Cursors.WaitCursor
             Dim attachment = sousEpisodeReponseMailAttachmentDao.GetSousEpisodeReponseMailAttachmentById(RadAttachmentGridView.Rows(Me.RadAttachmentGridView.Rows.IndexOf(Me.RadAttachmentGridView.CurrentRow)).Cells("id").Value)
 
-            Dim tbl As Byte() = sousEpisodeReponseDao.getContenu(attachment.Filename, loginRequestLog)
-            'Me.Cursor = Cursors.Default
-            'SaveFileDialog1.FileName = sousEpisodeReponse.NomFichier
-            'Select Case (SaveFileDialog1.ShowDialog())
-            '    Case DialogResult.Abort, DialogResult.Cancel
-            '        Notification.show("Réponse Sous-épisode", "Téléchargement abandonné !")
-            '    Case DialogResult.OK, DialogResult
-            '        File.WriteAllBytes(SaveFileDialog1.FileName, tbl)
-            '        Notification.show("Réponse Sous-épisode", "Téléchargement de " & SaveFileDialog1.FileName & " Terminé !")
-            'End Select
+            Dim tbl As Byte() = sousEpisodeReponseDao.getContenu(attachment.GetLocalName(), loginRequestLog)
 
             Dim pathDownload = ConfigurationManager.AppSettings("CheminTelechargement")
             If (Not System.IO.Directory.Exists(pathDownload)) Then
@@ -268,11 +290,9 @@ Public Class FrmSousEpisodeReponseAttribution
 
             File.WriteAllBytes(pathDownload & "\" & attachment.Filename, tbl)
             Dim proc As New Process()
-            ' Nom du fichier dont l'extension est connue du shell à ouvrir 
             Try
                 proc.StartInfo.FileName = pathDownload & "\" & attachment.Filename
                 proc.Start()
-                ' On libère les ressources 
                 proc.Close()
                 Notification.show("Lancement du logiciel associé", "Veuillez patienter pendant le lancement du logiciel associé à la visualisation de votre fichier !")
             Catch err As Exception
@@ -302,6 +322,7 @@ Public Class FrmSousEpisodeReponseAttribution
             With newRow
                 .Cells("id").Value = attachment.Id
                 .Cells("filename").Value = attachment.Filename
+                .Cells("localName").Value = attachment.GetLocalName()
             End With
             RadAttachmentGridView.Rows.Add(newRow)
         Next
@@ -385,4 +406,31 @@ Public Class FrmSousEpisodeReponseAttribution
             End If
         End If
     End Sub
+
+    Private Sub RadButtonAttribution_Click(sender As Object, e As EventArgs) Handles RadButtonAttribution.Click
+        Dim reponseMailId As Integer = RadGridViewMail.Rows(Me.RadGridViewMail.Rows.IndexOf(Me.RadGridViewMail.CurrentRow)).Cells("id").Value
+        Dim sousEpisodeId As Integer = RadGridViewSousEpisode.Rows(Me.RadGridViewSousEpisode.Rows.IndexOf(Me.RadGridViewSousEpisode.CurrentRow)).Cells("id").Value
+        Dim sousEpisode As SousEpisode = sousEpisodeDao.GetById(sousEpisodeId)
+
+        For Each item In RadAttachmentGridView.MasterView.ChildRows
+            Dim sousEpisodeReponse As SousEpisodeReponse = New SousEpisodeReponse
+            With sousEpisodeReponse
+                .IdSousEpisode = sousEpisode.Id
+                .CreateUserId = userLog.UtilisateurId
+                .HorodateCreation = DateTime.Now
+                .NomFichier = Path.GetFileName(item.Cells("filename").Value)
+                .Commentaire = "reponse automatique attribuee"
+            End With
+            sousEpisodeReponseDao.CreateByMoving(sousEpisode, sousEpisodeReponse, item.Cells("localName").Value, loginRequestLog)
+        Next
+
+        sousEpisodeReponseMailDao.ProcessSousEpisodeReponseMailById(reponseMailId)
+        ChargementMails()
+        RadButtonReset_Click(Nothing, Nothing)
+    End Sub
+
+    Private Sub BtnRefreshMail_Click(sender As Object, e As EventArgs) Handles BtnRefreshMail.Click
+        ChargementMails()
+    End Sub
+
 End Class

@@ -1,4 +1,5 @@
-﻿Public Class SousEpisodeReponseMailAttachment
+﻿
+Public Class SousEpisodeReponseMailAttachment
     Property Id As Long
     Property MailId As Long
     Property Filename As String
@@ -14,4 +15,7 @@
         Me.Part = row("part")
     End Sub
 
+    Public Function GetLocalName()
+        Return MailId & "_" & Part & New IO.FileInfo(Filename).Extension
+    End Function
 End Class
