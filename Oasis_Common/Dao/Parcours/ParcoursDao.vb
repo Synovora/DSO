@@ -640,4 +640,45 @@ Public Class ParcoursDao
         Return True
     End Function
 
+
+    Public Function GetAllEmailParcoursbyPatient(patientId As Integer) As DataTable
+        Dim SQLString As String = "
+            WITH results AS (
+	            SELECT oa_ror_id, oa_r_specialite_description , oa_ror_nom,oa_ror_type, oa_ror_email,
+		               STRING_AGG(cast(adresse_bal as NVARCHAR(MAX)),',') email_bal
+	            FROM oasis.oa_patient_parcours
+	            INNER JOIN oasis.oa_ror ROR ON ROR.oa_ror_id = oa_parcours_ror_id and COALESCE(oa_ror_oasis,0) = 0
+	            LEFT JOIN oasis.oa_r_specialite ON oa_r_specialite_id = oa_patient_parcours.oa_parcours_specialite 
+	            LEFT JOIN oasis.ans_annuaire_professionnel_sante_bal ON identifiant_pp = CAST(oa_ror_rpps as CHAR)
+	            WHERE oa_parcours_patient_id = @idPatient
+	            AND COALESCE(oa_parcours_inactif,0) = 0
+	            GROUP BY oa_ror_id, oa_r_specialite_description, oa_ror_nom, oa_ror_type, oa_ror_email
+	            ) 
+            SELECT oa_ror_id, oa_r_specialite_description, oa_ror_nom,oa_ror_type, COALESCE(email_bal, oa_ror_email,'') email 
+            FROM results
+            ORDER BY oa_r_specialite_description , oa_ror_nom
+        "
+
+        Dim ParcoursDataTable As DataTable = New DataTable()
+
+        Using con As SqlConnection = GetConnection()
+            Dim ParcoursDataAdapter As SqlDataAdapter = New SqlDataAdapter()
+            Using ParcoursDataAdapter
+                ParcoursDataAdapter.SelectCommand = New SqlCommand(SQLString, con)
+                ParcoursDataAdapter.SelectCommand.Parameters.AddWithValue("@idPatient", patientId)
+                Try
+                    ParcoursDataAdapter.Fill(ParcoursDataTable)
+                    Dim command As SqlCommand = con.CreateCommand()
+                Catch ex As Exception
+                    Throw ex
+                Finally
+
+                End Try
+            End Using
+        End Using
+
+        Return ParcoursDataTable
+    End Function
+
+
 End Class

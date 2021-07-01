@@ -44,10 +44,16 @@
     <OptionInfer>On</OptionInfer>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="BouncyCastle.Crypto, Version=1.8.6.0, Culture=neutral, PublicKeyToken=0e99375e54769942">
-      <HintPath>..\packages\BouncyCastle.1.8.6.1\lib\BouncyCastle.Crypto.dll</HintPath>
+    <Reference Include="BouncyCastle.Crypto, Version=1.8.10.0, Culture=neutral, PublicKeyToken=0e99375e54769942, processorArchitecture=MSIL">
+      <HintPath>..\packages\Portable.BouncyCastle.1.8.10\lib\net40\BouncyCastle.Crypto.dll</HintPath>
+    </Reference>
+    <Reference Include="MailKit, Version=2.13.0.0, Culture=neutral, PublicKeyToken=4e064fe7c44a8f1b, processorArchitecture=MSIL">
+      <HintPath>..\packages\MailKit.2.13.0\lib\net47\MailKit.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="MimeKit, Version=2.13.0.0, Culture=neutral, PublicKeyToken=bede1c8a46c66814, processorArchitecture=MSIL">
+      <HintPath>..\packages\MimeKit.2.13.0\lib\net47\MimeKit.dll</HintPath>
+    </Reference>
     <Reference Include="Nethereum.Hex, Version=3.8.0.0, Culture=neutral, PublicKeyToken=8768a594786aba4e, processorArchitecture=MSIL">
       <HintPath>..\packages\Nethereum.Hex.3.8.0\lib\net451\Nethereum.Hex.dll</HintPath>
     </Reference>
@@ -67,6 +73,9 @@
       <HintPath>..\packages\Newtonsoft.Json.12.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.Buffers, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Buffers.4.5.1\lib\net461\System.Buffers.dll</HintPath>
+    </Reference>
     <Reference Include="System.Configuration" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
@@ -78,6 +87,7 @@
     </Reference>
     <Reference Include="System.Numerics" />
     <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
     <Reference Include="System.ServiceModel" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
@@ -138,6 +148,7 @@
     <Compile Include="Bean\Parametre\AutoSuivi.vb" />
     <Compile Include="Bean\Parametre\Parametre.vb" />
     <Compile Include="Bean\Parametre\ParametreDrc.vb" />
+    <Compile Include="Bean\Parametre\ParametreMail.vb" />
     <Compile Include="Bean\Parametre\ParametreTypeEpisodeDrc.vb" />
     <Compile Include="Bean\Parcours\IntervenantParcours.vb" />
     <Compile Include="Bean\Parcours\ParcoursClass.vb" />
@@ -183,6 +194,7 @@
     <Compile Include="Bean\WebTech\LoginRequest.vb" />
     <Compile Include="Bean\Utilisateur\Profil.vb" />
     <Compile Include="Bean\Utilisateur\UtilisateurClass.vb" />
+    <Compile Include="Bean\WebTech\MailOasis.vb" />
     <Compile Include="Dao\Agenda\AppointmentDao.vb" />
     <Compile Include="Dao\ALD\AldCim10Dao.vb" />
     <Compile Include="Dao\ALD\AldDao.vb" />
@@ -224,6 +236,7 @@
     <Compile Include="Dao\Parametre\AutoSuiviDao.vb" />
     <Compile Include="Dao\Parametre\ParametreDao.vb" />
     <Compile Include="Dao\Parametre\ParametreDrcDao.vb" />
+    <Compile Include="Dao\Parametre\ParametreMailDao.vb" />
     <Compile Include="Dao\Parcours\ParcoursConsigneDao.vb" />
     <Compile Include="Dao\Parcours\ParcoursDao.vb" />
     <Compile Include="Dao\Parcours\ParcoursHistoDao.vb" />
@@ -264,6 +277,7 @@
     <Compile Include="Dao\Utilisateur\FonctionDao.vb" />
     <Compile Include="Dao\Utilisateur\ProfilDao.vb" />
     <Compile Include="Dao\Utilisateur\UserDao.vb" />
+    <Compile Include="MailUtils\MailUtil.vb" />
     <Compile Include="Module\EnvironnementBase.vb" />
     <Compile Include="Module\ModuleUtilsBase.vb" />
     <Compile Include="Module\outils.vb" />

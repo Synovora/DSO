@@ -25,6 +25,7 @@ Public Class PatientDao
             .PatientCommentaireSortie = Coalesce(reader("oa_patient_commentaire_sortie"), ""),
             .PatientDateDeces = Coalesce((reader("oa_patient_date_deces")), Nothing),
             .PatientSiteId = Coalesce(reader("oa_patient_site_id"), 0),
+            .PatientSiegeId = Coalesce(reader("oa_patient_siege_id"), 0),
             .PatientInternet = Coalesce((reader("oa_patient_couverture_internet")), False),
             .PatientUniteSanitaireId = Coalesce((reader("oa_patient_unite_sanitaire_id")), 0),
             .PatientSyntheseDateMaj = Coalesce((reader("oa_patient_synthese_date_maj")), Nothing),
@@ -570,7 +571,7 @@ Public Class PatientDao
             .AddWithValue("@internet", patient.PatientInternet.ToString)
             .AddWithValue("@profession", patient.Profession)
             .AddWithValue("@pharmacienId", patient.PharmacienId.ToString)
-            .AddWithValue("@siegeId", "1")
+            .AddWithValue("@siegeId", userLog.UtilisateurSiegeId)
         End With
         Try
             da.InsertCommand = cmd

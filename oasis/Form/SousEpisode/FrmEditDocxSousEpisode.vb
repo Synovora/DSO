@@ -54,7 +54,7 @@ Public Class FrmEditDocxSousEpisode
                 Case ActionDOC.ENREGISTRER
                     enregister_and_sign(False)
                 Case ActionDOC.ENREGISTRER_ET_SIGNER
-                    If MsgBox("Etes-vous sur de vouloir signer ce sous-épisode ?", MsgBoxStyle.YesNo Or MsgBoxStyle.DefaultButton2 Or MsgBoxStyle.Critical, "Signature Sous-Episode") = MsgBoxResult.Yes Then
+                    If MsgBox("Etes-vous sur de vouloir signer ce sous-épisode ?", MsgBoxStyle.YesNo Or MsgBoxStyle.DefaultButton2 Or MsgBoxStyle.Question, "Signature Sous-Episode") = MsgBoxResult.Yes Then
                         enregister_and_sign(True)
                         isNotSigned = False
                         initCtrl()
@@ -102,7 +102,7 @@ Public Class FrmEditDocxSousEpisode
             End If
             tbl = provider.Export(Me.RadRichTextEditor1.Document)
             Dim sousEpisodeDao = New SousEpisodeDao
-            sousEpisodeDao.writeDocAndEventualySign(sousEpisode, tbl, signature, dateSign, userLog, loginRequestLog)
+            sousEpisodeDao.WriteDocAndEventualySign(sousEpisode, tbl, signature, dateSign, userLog, loginRequestLog)
             ResetFlagChange()
             Notification.show("Sauvegarde", "Action effectuée avec succès !", 1)
         Catch err As Exception
