@@ -32,46 +32,7 @@ Public Class PrtOrdonnance
 
     Public Sub PrintDocument()
         Try
-            ordonnance = ordonnanceDao.GetOrdonnaceById(SelectedOrdonnanceId)
-            If aldDao.IsPatientALD(SelectedPatient.PatientId) Then
-                PatientIsAld = True
-            End If
-
-            Dim section = EditTools.CreateSection()
-            Dim document = EditTools.AddSectionIntoDocument(Nothing, section)
-
-            PrintEntete(section)
-            PrintEtatCivil(section)
-            PrintEnteteALD(section)
-            EditTools.InsertFragmentToEditor(document)
-            EditTools.InsertFragmentToEditor(PrintOrdonnanceDetail(True))
-
-            'Si au moins un traitement ALD existe, il faut présenter la signature du praticien qui a validé l'ordonnance
-            Dim sectionAld = EditTools.CreateSection()
-            Dim documentAld = EditTools.AddSectionIntoDocument(Nothing, sectionAld)
-            If TraitementAldExiste = True Then
-                PrintBasPage(sectionAld)
-                EditTools.InsertFragmentToEditor(documentAld)
-            Else
-                EditTools.CreateParagraphIntoSection(sectionAld)
-                EditTools.AddNewLigne()
-                EditTools.AddNewLigne()
-                EditTools.AddNewLigne()
-                EditTools.AddNewLigne()
-                EditTools.InsertFragmentToEditor(documentAld)
-            End If
-
-            Dim sectionNonALD = EditTools.CreateSection()
-            Dim documentNonALD = EditTools.AddSectionIntoDocument(Nothing, sectionNonALD)
-            PrintEnteteNonALD(sectionNonALD)
-            EditTools.InsertFragmentToEditor(documentNonALD)
-            EditTools.InsertFragmentToEditor(PrintOrdonnanceDetail(False))
-
-            Dim sectionFin = EditTools.CreateSection()
-            Dim documentFin = EditTools.AddSectionIntoDocument(Nothing, sectionFin)
-            PrintBasPage(sectionFin)
-            EditTools.InsertFragmentToEditor(documentFin)
-
+            GenereDocument()
             EditTools.PrintPreview()
         Catch ex As Exception
             MsgBox(ex.Message())
@@ -79,6 +40,61 @@ Public Class PrtOrdonnance
             EditTools.Dispose()
         End Try
     End Sub
+
+    Public Function ExportDocumenttoPdfBytes() As Byte()
+
+        Try
+            GenereDocument()
+            Return EditTools.exportToPdf()
+        Finally
+            EditTools.Dispose()
+        End Try
+    End Function
+
+    Private Sub GenereDocument()
+
+        ordonnance = ordonnanceDao.GetOrdonnaceById(SelectedOrdonnanceId)
+        If aldDao.IsPatientALD(SelectedPatient.PatientId) Then
+            PatientIsAld = True
+        End If
+
+        Dim section = EditTools.CreateSection()
+        Dim document = EditTools.AddSectionIntoDocument(Nothing, section)
+
+        PrintEntete(section)
+        PrintEtatCivil(section)
+        PrintEnteteALD(section)
+        EditTools.InsertFragmentToEditor(document)
+        EditTools.InsertFragmentToEditor(PrintOrdonnanceDetail(True))
+
+        'Si au moins un traitement ALD existe, il faut présenter la signature du praticien qui a validé l'ordonnance
+        Dim sectionAld = EditTools.CreateSection()
+        Dim documentAld = EditTools.AddSectionIntoDocument(Nothing, sectionAld)
+        If TraitementAldExiste = True Then
+            PrintBasPage(sectionAld)
+            EditTools.InsertFragmentToEditor(documentAld)
+        Else
+            EditTools.CreateParagraphIntoSection(sectionAld)
+            EditTools.AddNewLigne()
+            EditTools.AddNewLigne()
+            EditTools.AddNewLigne()
+            EditTools.AddNewLigne()
+            EditTools.InsertFragmentToEditor(documentAld)
+        End If
+
+        Dim sectionNonALD = EditTools.CreateSection()
+        Dim documentNonALD = EditTools.AddSectionIntoDocument(Nothing, sectionNonALD)
+        PrintEnteteNonALD(sectionNonALD)
+        EditTools.InsertFragmentToEditor(documentNonALD)
+        EditTools.InsertFragmentToEditor(PrintOrdonnanceDetail(False))
+
+        Dim sectionFin = EditTools.CreateSection()
+        Dim documentFin = EditTools.AddSectionIntoDocument(Nothing, sectionFin)
+        PrintBasPage(sectionFin)
+        EditTools.InsertFragmentToEditor(documentFin)
+
+    End Sub
+
 
     Private Sub PrintEntete(section As Section)
         Dim site As Site

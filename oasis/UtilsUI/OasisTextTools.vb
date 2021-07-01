@@ -162,6 +162,16 @@ Public Class OasisTextTools
         Editor.PrintPreview()
     End Sub
 
+    Public Function exportToPdf() As Byte()
+        Dim pdfExportSettings As PdfExportSettings = New PdfExportSettings()
+        pdfExportSettings.ContentsDeflaterCompressionLevel = 9
+        pdfExportSettings.DrawPageBodyBackground = False
+        Dim pdfFormatProvider As PdfFormatProvider = New PdfFormatProvider()
+        pdfFormatProvider.ExportSettings = pdfExportSettings
+        Editor.LoadElementTree()
+        Return pdfFormatProvider.Export(Editor.Document)
+    End Function
+
     Public Sub Print()
         Editor.LoadElementTree()
         Editor.Print()
