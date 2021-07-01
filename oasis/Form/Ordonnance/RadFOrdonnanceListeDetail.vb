@@ -758,6 +758,7 @@ Public Class RadFOrdonnanceListeDetail
             NonALDContextMenuStrip.Enabled = False
             RadBtnValidation.Hide()
             RadBtnImprimer.Hide()
+            BtnMail.Hide()
             RadBtnAjoutLigne.Hide()
             NumRenouvellement.Enabled = False
             TxtCommentaire.Enabled = False
@@ -767,6 +768,7 @@ Public Class RadFOrdonnanceListeDetail
                 LblOrdonnanceValide.Show()
                 LblOrdonnanceValide2.Show()
                 RadBtnImprimer.Enabled = True
+                BtnMail.Enabled = True
                 ALDContextMenuStrip.Enabled = False
                 NonALDContextMenuStrip.Enabled = False
                 NumRenouvellement.Enabled = False
@@ -777,6 +779,7 @@ Public Class RadFOrdonnanceListeDetail
                 LblOrdonnanceValide2.Hide()
                 LblDateSignature.Hide()
                 RadBtnImprimer.Enabled = False
+                BtnMail.Enabled = False
                 If userLog.TypeProfil <> FonctionDao.EnumTypeFonction.MEDICAL.ToString Then
                     RadBtnValidation.Enabled = False
                 End If
@@ -822,5 +825,40 @@ Public Class RadFOrdonnanceListeDetail
             MessageBox.Show(ex.Message())
         End Try
         Cursor.Current = Cursors.Default
+    End Sub
+
+    Private Sub BtnMail_Click(sender As Object, e As EventArgs) Handles BtnMail.Click
+        ' -- 1) creation du tableau de byte représentant l'ordonnance en pdf
+        Cursor.Current = Cursors.WaitCursor
+        Dim tblByte As Byte()
+        Try
+            Dim printPdf As New PrtOrdonnance
+            printPdf.SelectedPatient = SelectedPatient
+            printPdf.SelectedOrdonnanceId = SelectedOrdonnanceId
+            tblByte = printPdf.ExportDocumenttoPdfBytes()
+
+        Catch ex As Exception
+            MessageBox.Show(ex.Message())
+            Return
+        Finally
+            Cursor.Current = Cursors.Default
+        End Try
+
+        Dim mailOasis As New MailOasis
+        mailOasis.Contenu = tblByte
+        mailOasis.Filename = "Ordonnance.pdf"
+
+        ' -- 2) lancement du formulaire de choix du destinataire
+        Try
+            Cursor.Current = Cursors.WaitCursor
+            Using frm = New FrmMailOrdonnance(SelectedPatient, ordonnance, mailOasis)
+                frm.ShowDialog()
+            End Using
+        Catch ex As Exception
+            MessageBox.Show(ex.Message)
+        Finally
+            Cursor.Current = Cursors.Default
+        End Try
+
     End Sub
 End Class

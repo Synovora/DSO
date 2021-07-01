@@ -196,6 +196,7 @@
     <Compile Include="Controllers\DocFileUploadController.vb" />
     <Compile Include="Controllers\DocFileDownloadController.vb" />
     <Compile Include="Controllers\LoginController.vb" />
+    <Compile Include="Controllers\SendMailController.vb" />
     <Compile Include="Controllers\SignController.vb" />
     <Compile Include="Controllers\SyntheseController.vb" />
     <Compile Include="Global.asax.vb">

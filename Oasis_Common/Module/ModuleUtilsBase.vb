@@ -94,12 +94,13 @@ Public Module ModuleUtilsBase
         Return memoryStream.ToArray()
     End Function
 
-    Public Sub verifPassword(login As String, password As String)
+    Public Function verifPassword(login As String, password As String) As Utilisateur
+
         Dim userDao As UserDao = New UserDao
         Dim userLog = userDao.getUserByLoginPassword(login, password)
-        Return
+        Return userLog
 
-    End Sub
+    End Function
 
     Public Function IsValidEmail(email As String) As Boolean
         Try

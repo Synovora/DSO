@@ -280,7 +280,7 @@ Public Class SousEpisodeDao
         Return str
     End Function
 
-    Public Sub resetReponseRecue(con As SqlConnection, sousEpisode As SousEpisode, transaction As SqlTransaction)
+    Public Sub ResetReponseRecue(con As SqlConnection, sousEpisode As SousEpisode, transaction As SqlTransaction)
         Dim da As SqlDataAdapter = New SqlDataAdapter()
         Dim SQLstring = " UPDATE oasis.oa_sous_episode SET is_reponse_recue = 'false', horodate_last_recu = @dateLastRecu WHERE id = @id"
         Dim cmd = New SqlCommand(SQLstring, con, transaction)
@@ -385,7 +385,7 @@ Public Class SousEpisodeDao
     End Function
 
 
-    Public Sub writeDocAndEventualySign(sousEpisode As SousEpisode, tbl As Byte(), signature As String, dateSignature As Date, userLog As Utilisateur, loginRequestLog As Object)
+    Public Sub WriteDocAndEventualySign(sousEpisode As SousEpisode, tbl As Byte(), signature As String, dateSignature As Date, userLog As Utilisateur, loginRequestLog As Object)
         Dim da As SqlDataAdapter = New SqlDataAdapter()
         Dim con As SqlConnection = GetConnection()
         Dim transaction As SqlTransaction = con.BeginTransaction

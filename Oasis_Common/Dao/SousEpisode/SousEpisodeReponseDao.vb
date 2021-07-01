@@ -47,7 +47,7 @@ Public Class SousEpisodeReponseDao
             SQLString += "AND id = @id"
         End If
 
-        Debug.WriteLine(SQLString)
+        'Debug.WriteLine(SQLString)
         Using con As SqlConnection = GetConnection()
 
             Dim tacheDataAdapter As SqlDataAdapter = New SqlDataAdapter()
@@ -165,7 +165,7 @@ Public Class SousEpisodeReponseDao
             If isDernier Then
                 ' -- update pere pour dire "pas de reponse recue"
                 Dim sousEpisodeDao As SousEpisodeDao = New SousEpisodeDao
-                sousEpisodeDao.resetReponseRecue(con, sousEpisode, transaction)
+                sousEpisodeDao.ResetReponseRecue(con, sousEpisode, transaction)
             End If
 
             transaction.Commit()

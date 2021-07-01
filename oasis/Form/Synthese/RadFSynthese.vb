@@ -2802,6 +2802,42 @@ Public Class RadFSynthese
         Environnement.ControleAccesForm.RemoveFormToControl(EnumForm.SYNTHESE.ToString)
     End Sub
 
+    Private Sub BtnMail_Click(sender As Object, e As EventArgs) Handles BtnMail.Click
+        ' -- 1) creation du tableau de byte représentant l'ordonnance en pdf
+        Cursor.Current = Cursors.WaitCursor
+        Me.Enabled = False
+        Dim tblByte As Byte()
+        Try
+            Dim printPdf As New PrtSynthese
+            printPdf.SelectedPatient = SelectedPatient
+            tblByte = printPdf.ExportDocumenttoPdfBytes()
+        Catch ex As Exception
+            MessageBox.Show(ex.Message())
+            Me.Enabled = True
+            Return
+        Finally
+            Cursor.Current = Cursors.Default
+        End Try
+
+        Dim mailOasis As New MailOasis
+        mailOasis.Contenu = tblByte
+        mailOasis.Filename = "SynthesePatient.pdf"
+
+        ' -- 2) lancement du formulaire de choix du destinataire
+        Try
+            Cursor.Current = Cursors.WaitCursor
+            Using frm = New FrmMailSousEpisodeOuSynthese(SelectedPatient, Nothing, mailOasis)
+                frm.ShowDialog()
+            End Using
+        Catch ex As Exception
+            MessageBox.Show(ex.Message)
+        Finally
+            Cursor.Current = Cursors.Default
+            Me.Enabled = True
+        End Try
+
+    End Sub
+
     Private Sub RadBtnSocial_Click(sender As Object, e As EventArgs) Handles RadBtnSocial.Click
         Me.Enabled = False
         Cursor.Current = Cursors.WaitCursor

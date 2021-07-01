@@ -373,6 +373,7 @@ Public Class FrmSousEpisode
         End If
         TxtDelai.Enabled = isCreation
         BtnAjoutReponse.Visible = isCreation = False AndAlso isNotSigned = False
+        BtnMail.Enabled = isCreation = False AndAlso isNotSigned = False
         BtnValidate.Visible = isCreation
 
         BtnEditerDocument.Visible = Not isCreation
@@ -749,6 +750,41 @@ Public Class FrmSousEpisode
         If e.Column.Name = "ChkALD" Then
             e.Row.Cells("ChkChoice").Value = e.Value
         End If
+    End Sub
+
+    Private Sub BtnMail_Click(sender As Object, e As EventArgs) Handles BtnMail.Click
+        ' -- 1) telechargement du sous-episode
+        Cursor.Current = Cursors.WaitCursor
+        If Me.DropDownSousType.SelectedItem Is Nothing Then Return
+        Dim sousType = (TryCast(Me.DropDownSousType.SelectedItem.Value, SousEpisodeSousType))
+        Dim tblByte As Byte()
+        Try
+            tblByte = Telecharger_SousEpisodeDemande(sousType)
+        Catch ex As Exception
+            MessageBox.Show(ex.Message())
+            Return
+        Finally
+            Cursor.Current = Cursors.Default
+        End Try
+
+        Dim mailOasis As New MailOasis
+        mailOasis.Contenu = tblByte
+        mailOasis.Filename = "SousEpidode.docx"
+
+        ' -- 2) lancement du formulaire de choix du destinataire
+        Me.Enabled = False
+        Try
+            Cursor.Current = Cursors.WaitCursor
+            Using frm = New FrmMailSousEpisodeOuSynthese(patient, sousEpisode, mailOasis)
+                frm.ShowDialog()
+            End Using
+        Catch ex As Exception
+            MessageBox.Show(ex.Message)
+        Finally
+            Cursor.Current = Cursors.Default
+            Me.Enabled = True
+        End Try
+
     End Sub
 
     ''' <summary>

@@ -5,43 +5,54 @@ Imports Oasis_Common
 Public Class PrtSynthese
     Public Property SelectedPatient As Patient
 
-    Dim EditTools As OasisTextTools
+    Dim EditTools As OasisTextTools = New OasisTextTools
 
     Dim aldDao As New AldDao
 
     Public Sub PrintDocument()
-        EditTools = New OasisTextTools
-
-        Dim section = EditTools.CreateSection()
-        Dim document = EditTools.AddSectionIntoDocument(Nothing, section)
-
         Try
-            PrintEntete(section)
-            PrintEtatCivil(section)
-            EditTools.InsertFragmentToEditor(document)
-
-            'EditTools.insertFragmentToEditor(PrintTitre("--- Antécédent ---"))
-            PrintAntecedent()
-
-            'EditTools.insertFragmentToEditor(PrintTitre("--- Traitement ---"))
-            PrintAllergie()
-            PrintTraitement()
-
-            'EditTools.insertFragmentToEditor(PrintTitre("--- Parcours de soin ---"))
-            PrintParcours()
-
-            'EditTools.insertFragmentToEditor(PrintTitre("--- Contexte ---"))
-            PrintContexte()
-
-            'EditTools.insertFragmentToEditor(PrintTitre("--- PPS ---"))
-            PrintPPS()
-
+            GenereDocument()
             EditTools.PrintPreview()
         Catch ex As Exception
             MsgBox(ex.Message())
         Finally
             EditTools.Dispose()
         End Try
+    End Sub
+
+    Public Function ExportDocumenttoPdfBytes() As Byte()
+        Try
+            GenereDocument()
+            Return EditTools.exportToPdf()
+        Finally
+            EditTools.Dispose()
+        End Try
+    End Function
+
+    Private Sub GenereDocument()
+
+        Dim section = EditTools.CreateSection()
+        Dim document = EditTools.AddSectionIntoDocument(Nothing, section)
+
+        PrintEntete(section)
+        PrintEtatCivil(section)
+        EditTools.InsertFragmentToEditor(document)
+
+        'EditTools.insertFragmentToEditor(PrintTitre("--- Antécédent ---"))
+        PrintAntecedent()
+
+        'EditTools.insertFragmentToEditor(PrintTitre("--- Traitement ---")) 
+        PrintAllergie()
+        PrintTraitement()
+
+        'EditTools.insertFragmentToEditor(PrintTitre("--- Parcours de soin ---"))
+        PrintParcours()
+
+        'EditTools.insertFragmentToEditor(PrintTitre("--- Contexte ---")) 
+        PrintContexte()
+
+        'EditTools.insertFragmentToEditor(PrintTitre("--- PPS ---")) 
+        PrintPPS()
     End Sub
 
     Private Sub PrintEntete(section As Section)

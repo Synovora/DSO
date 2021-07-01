@@ -55,6 +55,10 @@ Public Class ApiOasis
         Return tblByte
     End Function
 
+    Public Function sendMailRest(login As String, password As String, mailOasis As MailOasis) As String
+        Return sendMail(login, password, mailOasis).GetAwaiter.GetResult()
+    End Function
+
 
     Private Sub init(_serveurDomain As String)
         ServicePointManager.ServerCertificateValidationCallback = AddressOf AcceptAllCertifications
@@ -111,6 +115,33 @@ Public Class ApiOasis
             Throw New Exception(response.ReasonPhrase)
         End If
         Return response.Content.ReadAsByteArrayAsync()
+    End Function
+
+
+    Private Function sendMail(login As String, password As String, mailOasis As MailOasis) As Task(Of String)
+        initHttp(serveurDomain)
+
+        Dim formContent = New MultipartFormDataContent From {
+            {New StringContent(login), "login"},
+            {New StringContent(password), "password"},
+            {New StringContent(mailOasis.AliasFrom), "aliasFrom"},
+            {New StringContent(mailOasis.AdressTo), "adressTo"},
+            {New StringContent(mailOasis.Subject), "subject"},
+            {New StringContent(mailOasis.Body), "body"}
+        }
+
+        If (mailOasis.IsWithContenu()) Then
+            formContent.Add(New StreamContent(New MemoryStream(mailOasis.Contenu)), "filekey", mailOasis.Filename)
+        End If
+
+        Dim response As HttpResponseMessage = client.PostAsync("/api/sendMail", formContent).Result
+        If response.StatusCode <> HttpStatusCode.Accepted Then
+            If response.StatusCode = HttpStatusCode.Unauthorized Then
+                Throw New Exception("Identifiant et/ou mot de passe erroné !")
+            End If
+            Throw New Exception(response.ReasonPhrase)
+        End If
+        Return response.Content.ReadAsAsync(Of String)()
     End Function
 
 
