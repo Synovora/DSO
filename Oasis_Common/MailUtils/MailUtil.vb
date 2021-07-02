@@ -24,7 +24,10 @@ Public Class MailUtil
 
         With mimMessage
             .From.Add(New MailboxAddress(mailOasis.AliasFrom, Me.SMTPFrom))
-            .To.Add(MailboxAddress.Parse(mailOasis.AdressTo))
+            Dim tbl = mailOasis.AdressTo.Split(",")
+            For Each adr As String In tbl
+                .To.Add(MailboxAddress.Parse(adr))
+            Next
             .Subject = mailOasis.Subject
 
             Dim builder = New BodyBuilder()

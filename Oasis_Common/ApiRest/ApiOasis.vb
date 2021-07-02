@@ -144,7 +144,8 @@ Public Class ApiOasis
             {New StringContent(mailOasis.AliasFrom), "aliasFrom"},
             {New StringContent(mailOasis.AdressTo), "adressTo"},
             {New StringContent(mailOasis.Subject), "subject"},
-            {New StringContent(mailOasis.Body), "body"}
+            {New StringContent(mailOasis.Body), "body"},
+            {New StringContent(mailOasis.IsSousEpisode), "isSousEpisode"}
         }
 
         If (mailOasis.IsWithContenu()) Then

@@ -89,23 +89,30 @@ Public Class FrmMailSousEpisodeOuSynthese
     End Function
 
     Private Sub BtnValider_Click(sender As Object, e As EventArgs) Handles BtnValider.Click
+        Dim isDejaOk As Boolean = False
         Dim tbl As String() = TxtTo.Text.Split(",")
         If tbl.Length > 1 Then
-            MsgBox("Il y a plusieurs adresses email dans le champs destinataire ! " & vbCrLf & "Supprimer les adresses inutiles avant de valider.", MsgBoxStyle.Exclamation, "Attention")
-            Return
+            If MsgBox("Il y a plusieurs adresses email dans le champs destinataire ! " & vbCrLf & "Envoyer à tous ?", MsgBoxStyle.YesNo Or MsgBoxStyle.DefaultButton2 Or MsgBoxStyle.Question, "Attention") <> MsgBoxResult.Yes Then
+                Return
+            End If
+            isDejaOk = True
         End If
-        If IsValidEmail(TxtTo.Text) = False Then
-            MsgBox("Adresse destinataire incorrecte !", MsgBoxStyle.Exclamation, "Attention")
-            Return
-        End If
+        For Each adr In tbl
+            If IsValidEmail(adr) = False Then
+                MsgBox("Adresse destinataire """ & adr & """incorrecte !", MsgBoxStyle.Exclamation, "Attention")
+                Return
+            End If
+        Next
 
         If Trim(TxtObjet.Text) = "" Then
             MsgBox("L'objet ne peut être vide !", MsgBoxStyle.Exclamation, "Attention")
             Return
         End If
 
-        If MsgBox("Envoyer cet Email ?", MsgBoxStyle.YesNo Or MsgBoxStyle.DefaultButton2 Or MsgBoxStyle.Question, "Validation") <> MsgBoxResult.Yes Then
-            Return
+        If isDejaOk = False Then
+            If MsgBox("Envoyer cet Email ?", MsgBoxStyle.YesNo Or MsgBoxStyle.DefaultButton2 Or MsgBoxStyle.Question, "Validation") <> MsgBoxResult.Yes Then
+                Return
+            End If
         End If
 
         Try

@@ -131,8 +131,8 @@ Public Class PrtOrdonnance
 
             .CreateParagraphIntoSection(section,, RadTextAlignment.Right)
             Dim SiteDescription As String = Environnement.Table_site.GetSiteDescription(SelectedPatient.PatientSiteId)
-            Dim DateCreationOrdonnance As Date = ordonnance.DateCreation
-            .AddTexteLine(SiteDescription & ", le " & DateCreationOrdonnance.ToString("dd.MM.yyyy"))
+            Dim DateValidationOrdonnance As Date = ordonnance.DateValidation
+            .AddTexteLine(SiteDescription & ", le " & DateValidationOrdonnance.ToString("dd.MM.yyyy"))
         End With
     End Sub
 
