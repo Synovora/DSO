@@ -129,6 +129,17 @@ Public Class RadFContextedetailEdit
     Dim contexteUpdate As New Antecedent
 
     Private Sub RadFContextedetailEdit_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        'TODO: DELETE
+
+
+        RadGridViewChaineEpisode.Rows.Add(0)
+        '------------------- Alimentation du DataGridView
+        With RadGridViewChaineEpisode.Rows(0)
+            .Cells("id").Value = 0
+            .Cells("name").Value = "THIS IS A TEST"
+            .Cells("selected").Value = True
+        End With
+
         If PositionGaucheDroite = EnumPosition.Droite Then
             Me.Location = New Point(Screen.PrimaryScreen.WorkingArea.Width - Me.Width - 10, Screen.PrimaryScreen.WorkingArea.Height - Me.Height - 10)
         Else
@@ -163,7 +174,7 @@ Public Class RadFContextedetailEdit
             Traitement = EnumTraitement.Creation
             'EditMode = EnumEditMode.Creation
 
-            contexteUpdate.PatientId = SelectedPatient.patientId
+            contexteUpdate.PatientId = SelectedPatient.PatientId
             contexteUpdate.Type = "C"
             contexteUpdate.Niveau = 1
             contexteUpdate.Nature = "Patient"
@@ -858,4 +869,7 @@ Public Class RadFContextedetailEdit
         Me.Enabled = True
     End Sub
 
+    Private Sub RadGroupBox4_Click(sender As Object, e As EventArgs) Handles RadGroupBox4.Click
+
+    End Sub
 End Class
