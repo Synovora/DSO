@@ -44,6 +44,7 @@ Public Class SendMailController
                 mailOasis.AdressTo = .Item("adressTo")
                 mailOasis.Subject = .Item("subject")
                 mailOasis.Body = .Item("body")
+                mailOasis.IsSousEpisode = .Item("isSousEpisode")
             End With
 
             For Each fileData As MultipartFileData In provider.FileData
@@ -60,9 +61,9 @@ Public Class SendMailController
 
             Dim mailUtil = New MailUtil(parametreMail.GetSMTPServerUrl(),
                                        parametreMail.GetSMTPPort(),
-                                       parametreMail.GetSMTPUser(),
-                                       parametreMail.GetSMTPPassword(),
-                                       parametreMail.GetSMTPFrom()
+                                       parametreMail.GetSMTPUser(mailOasis.IsSousEpisode),
+                                       parametreMail.GetSMTPPassword(mailOasis.IsSousEpisode),
+                                       parametreMail.GetSMTPFrom(mailOasis.IsSousEpisode)
                                        )
             mailUtil.SendMail(user, mailOasis)
 
