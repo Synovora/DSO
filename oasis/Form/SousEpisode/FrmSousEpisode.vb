@@ -227,7 +227,6 @@ Public Class FrmSousEpisode
         Finally
             Me.Cursor = Cursors.Default
         End Try
-
     End Sub
 
     Private Sub askValiderReponse(gce As GridCommandCellElement)

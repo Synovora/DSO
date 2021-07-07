@@ -1,6 +1,7 @@
 ﻿Imports System.Configuration
 Imports System.Diagnostics
 Imports System.IO
+Imports MimeKit
 Imports Oasis_Common
 Imports Telerik.WinControls
 Imports Telerik.WinControls.UI
@@ -22,6 +23,7 @@ Public Class FrmSousEpisodeReponseAttribution
     Dim lstSousEpisodeSousType As List(Of SousEpisodeSousType)
     Dim lstSousEpisodeSousSousType As List(Of SousEpisodeSousSousType)
     Dim lstMail As List(Of SousEpisodeReponseMail)
+    Dim lstAttachment As List(Of SousEpisodeReponseMailAttachment)
 
     Private Sub FrmSousEpisodeReponseAttribution_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         AfficheTitleForm(Me, "Liste des mails a traiter", userLog)
@@ -307,25 +309,54 @@ Public Class FrmSousEpisodeReponseAttribution
     End Sub
 
     Private Sub RadMailGridView_CellClick(sender As Object, e As GridViewCellEventArgs) Handles RadGridViewMail.CellClick
+        'Clear
+        RadObjetTextBox.Clear()
         RadAttachmentGridView.Rows.Clear()
+        WebBrowser.DocumentText = ""
+
         Dim id As Integer = RadGridViewMail.Rows(Me.RadGridViewMail.Rows.IndexOf(Me.RadGridViewMail.CurrentRow)).Cells("id").Value
         Dim sousEpisodeReponseMail As SousEpisodeReponseMail = sousEpisodeReponseMailDao.GetSousEpisodeReponseMailById(id)
 
-        If sousEpisodeReponseMail IsNot Nothing Then
-            RadObjetTextBox.Text = sousEpisodeReponseMail.Objet
-            WebBrowser.DocumentText = sousEpisodeReponseMail.Corps
-        End If
+        Try
+            Me.Cursor = Cursors.WaitCursor
+            lstAttachment = sousEpisodeReponseMailAttachmentDao.GetSousEpisodeReponseMailAttachmentByMailId(sousEpisodeReponseMail.Id)
+            Dim attachment = lstAttachment(0)
 
-        Dim lstAttachment = sousEpisodeReponseMailAttachmentDao.GetSousEpisodeReponseMailAttachmentByMailId(sousEpisodeReponseMail.Id)
-        For Each attachment In lstAttachment
-            Dim newRow As GridViewRowInfo = RadAttachmentGridView.Rows.NewRow()
-            With newRow
-                .Cells("id").Value = attachment.Id
-                .Cells("filename").Value = attachment.Filename
-                .Cells("localName").Value = attachment.GetLocalName()
-            End With
-            RadAttachmentGridView.Rows.Add(newRow)
-        Next
+            Dim tbl As Byte() = sousEpisodeReponseDao.getContenu(attachment.GetLocalName(), loginRequestLog)
+
+            Dim pathDownload = ConfigurationManager.AppSettings("CheminTelechargement")
+            If (Not System.IO.Directory.Exists(pathDownload)) Then
+                System.IO.Directory.CreateDirectory(pathDownload)
+            End If
+            Dim path = pathDownload & "\" & attachment.Filename
+
+            File.WriteAllBytes(path, tbl)
+            Dim proc As New Process()
+            Try
+                Dim message = MimeMessage.Load(path)
+                RadObjetTextBox.Text = message.Subject
+                WebBrowser.DocumentText = If(message.HtmlBody, message.TextBody)
+
+                For Each attachment In lstAttachment.Skip(1)
+                    Dim newRow As GridViewRowInfo = RadAttachmentGridView.Rows.NewRow()
+                    With newRow
+                        .Cells("id").Value = attachment.Id
+                        .Cells("filename").Value = attachment.Filename
+                        .Cells("localName").Value = attachment.GetLocalName()
+                    End With
+                    RadAttachmentGridView.Rows.Add(newRow)
+                Next
+                RadButtonDelete.Enabled = True
+                RadButtonOpen.Enabled = True
+            Catch err As Exception
+                MsgBox(err.Message() & vbCrLf & "Votre fichier est téléchargé et disponible dans le répertoire suivant : " & vbCrLf & pathDownload)
+            End Try
+        Catch Err As Exception
+            MsgBox(Err.Message())
+            Return
+        Finally
+            Me.Cursor = Cursors.Default
+        End Try
     End Sub
 
     Private Sub RadGridViewPatient_CellClick(sender As Object, e As GridViewCellEventArgs) Handles RadGridViewPatient.CellClick
@@ -369,6 +400,36 @@ Public Class FrmSousEpisodeReponseAttribution
         Dim reponseMailId As Integer = RadGridViewMail.Rows(Me.RadGridViewMail.Rows.IndexOf(Me.RadGridViewMail.CurrentRow)).Cells("id").Value
         sousEpisodeReponseMailDao.DeleteSousEpisodeReponseMailById(reponseMailId)
         ChargementMails()
+    End Sub
+
+    Private Sub RadButtonOpen_Click(sender As Object, e As EventArgs) Handles RadButtonOpen.Click
+        Try
+            Me.Cursor = Cursors.WaitCursor
+            Dim attachment = lstAttachment(0)
+
+            Dim tbl As Byte() = sousEpisodeReponseDao.getContenu(attachment.GetLocalName(), loginRequestLog)
+
+            Dim pathDownload = ConfigurationManager.AppSettings("CheminTelechargement")
+            If (Not System.IO.Directory.Exists(pathDownload)) Then
+                System.IO.Directory.CreateDirectory(pathDownload)
+            End If
+
+            File.WriteAllBytes(pathDownload & "\" & attachment.Filename, tbl)
+            Dim proc As New Process()
+            Try
+                proc.StartInfo.FileName = pathDownload & "\" & attachment.Filename
+                proc.Start()
+                proc.Close()
+                Notification.show("Lancement du logiciel associé", "Veuillez patienter pendant le lancement du logiciel associé à la visualisation de votre fichier !")
+            Catch err As Exception
+                MsgBox(err.Message() & vbCrLf & "Votre fichier est téléchargé et disponible dans le répertoire suivant : " & vbCrLf & pathDownload)
+            End Try
+        Catch Err As Exception
+            MsgBox(Err.Message())
+            Return
+        Finally
+            Me.Cursor = Cursors.Default
+        End Try
     End Sub
 
     '
@@ -429,8 +490,7 @@ Public Class FrmSousEpisodeReponseAttribution
         RadButtonReset_Click(Nothing, Nothing)
     End Sub
 
-    Private Sub BtnRefreshMail_Click(sender As Object, e As EventArgs) Handles BtnRefreshMail.Click
+    Private Sub BtnRefreshMail_Click(sender As Object, e As EventArgs)
         ChargementMails()
     End Sub
-
 End Class

@@ -105,7 +105,8 @@ Public Class SousEpisodeSousType
     End Sub
 
     Private Function getFilenameServer() As String
-        Return "\Templates\SousEpisodeType_" & Me.IdSousEpisodeType & "_SousType_" & Me.Id & ".DOCX"
+        Dim folder = "\Templates"
+        Return folder & "\" & "SousEpisodeType_" & Me.IdSousEpisodeType & "_SousType_" & Me.Id & ".DOCX"
     End Function
 
 
