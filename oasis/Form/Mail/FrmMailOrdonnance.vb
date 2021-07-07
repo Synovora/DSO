@@ -25,6 +25,7 @@ Public Class FrmMailOrdonnance
         Me.patient = patient
         Me.ordonnance = ordonnance
         Me.mailOasis.IdSiege = patient.PatientSiegeId
+        Me.mailOasis.IsSousEpisode = False
 
         ' Ajoutez une initialisation quelconque après l'appel InitializeComponent().
         initFormulaire()

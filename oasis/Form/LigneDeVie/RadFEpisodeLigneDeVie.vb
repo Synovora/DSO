@@ -408,6 +408,7 @@ Public Class RadFEpisodeLigneDeVie
 
             RadGridViewEpisode.Rows(iGrid).Cells("episode_id").Value = dt.Rows(i)("episode_id")
             RadGridViewEpisode.Rows(iGrid).Cells("type").Value = Coalesce(dt.Rows(i)("type"), "")
+            RadGridViewEpisode.Rows(iGrid).Cells("nb_sous_episode").Value = If(dt.Rows(i)("nb_sous_episode") = "0", "", dt.Rows(i)("nb_sous_episode"))
 
             If dt.Rows(i)("type_activite") = Episode.EnumTypeEpisode.PARAMETRE.ToString Then
                 RadGridViewEpisode.Rows(iGrid).Cells("type_activite").Value = "Prise de paramètres"

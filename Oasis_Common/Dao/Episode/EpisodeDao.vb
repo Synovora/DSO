@@ -199,13 +199,15 @@ Public Class EpisodeDao
 
     Public Function GetAllEpisodeByPatient(patientId As Long, dateDebut As Date, dateFin As Date, ligneDeVie As LigneDeVie) As DataTable
         Dim SQLString, ClauseWhereString, TypeEpisodeString, ActiviteEpisodeString, ProfilEpisodeString, OrderByString As String
-        Dim Parametre1String, Parametre2String, Parametre3String, Parametre4String, Parametre5String As String
+        Dim Parametre1String, Parametre2String, Parametre3String, Parametre4String, Parametre5String As String, sousEpisodeQuery As String
         Dim RechercherTypeEpisode, RechercherActiviteEpisode, RechercherprofilEpisode As Boolean
         Dim dateDebutRecherche As Date = dateDebut.AddDays(1)
 
 
         SQLString = "SELECT E.episode_id, patient_id, type, type_activite, description_activite, type_profil," & vbCrLf &
                     " commentaire, date_creation, observation_paramedical, observation_medical, etat, ORDO.oa_ordonnance_id, ORDO.oa_ordonnance_date_validation" & vbCrLf
+
+        sousEpisodeQuery = ",(SELECT COUNT(*) FROM oasis.oa_sous_episode SE WHERE SE.episode_id = E.episode_id AND COALESCE(SE.is_inactif,'false')='false' ) AS nb_sous_episode" & vbCrLf
 
         Parametre1String = ""
         If ligneDeVie.ParametreId1 <> 0 Then
@@ -392,6 +394,7 @@ Public Class EpisodeDao
             SQLString += Parametre5String
         End If
 
+        SQLString += sousEpisodeQuery
         SQLString += ClauseWhereString
 
         If RechercherTypeEpisode = True Then
