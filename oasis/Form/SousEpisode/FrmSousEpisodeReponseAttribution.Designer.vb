@@ -49,7 +49,7 @@ Partial Class FrmSousEpisodeReponseAttribution
         Dim GridViewTextBoxColumn18 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
         Dim TableViewDefinition5 As Telerik.WinControls.UI.TableViewDefinition = New Telerik.WinControls.UI.TableViewDefinition()
         Me.RadButtonAttribution = New Telerik.WinControls.UI.RadButton()
-        Me.RadButtonDelete = New Telerik.WinControls.UI.RadButton()
+        Me.RadButtonOpen = New Telerik.WinControls.UI.RadButton()
         Me.RadGridViewMail = New Telerik.WinControls.UI.RadGridView()
         Me.RadGridViewEpisode = New Telerik.WinControls.UI.RadGridView()
         Me.ContextMenuStrip1 = New System.Windows.Forms.ContextMenuStrip(Me.components)
@@ -74,14 +74,17 @@ Partial Class FrmSousEpisodeReponseAttribution
         Me.RadGroupBox3 = New Telerik.WinControls.UI.RadGroupBox()
         Me.RadSeparator2 = New Telerik.WinControls.UI.RadSeparator()
         Me.RadGroupBox4 = New Telerik.WinControls.UI.RadGroupBox()
+        Me.RadButtonDelete = New Telerik.WinControls.UI.RadButton()
+        Me.BtnRefreshMail = New Telerik.WinControls.UI.RadButton()
         Me.WebBrowser = New System.Windows.Forms.WebBrowser()
         Me.RadAttachmentGridView = New Telerik.WinControls.UI.RadGridView()
         Me.RadLabel1 = New Telerik.WinControls.UI.RadLabel()
         Me.RadObjetTextBox = New Telerik.WinControls.UI.RadTextBox()
         Me.RadSeparator1 = New Telerik.WinControls.UI.RadSeparator()
-        Me.BtnRefreshMail = New System.Windows.Forms.Button()
+        Me.ToolTip1 = New System.Windows.Forms.ToolTip(Me.components)
+        Me.ToolTip2 = New System.Windows.Forms.ToolTip(Me.components)
         CType(Me.RadButtonAttribution, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.RadButtonDelete, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.RadButtonOpen, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.RadGridViewMail, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.RadGridViewMail.MasterTemplate, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.RadGridViewEpisode, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -112,6 +115,8 @@ Partial Class FrmSousEpisodeReponseAttribution
         CType(Me.RadSeparator2, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.RadGroupBox4, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.RadGroupBox4.SuspendLayout()
+        CType(Me.RadButtonDelete, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.BtnRefreshMail, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.RadAttachmentGridView, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.RadAttachmentGridView.MasterTemplate, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.RadLabel1, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -129,13 +134,14 @@ Partial Class FrmSousEpisodeReponseAttribution
         Me.RadButtonAttribution.TabIndex = 1
         Me.RadButtonAttribution.Text = "Attribuer"
         '
-        'RadButtonDelete
+        'RadButtonOpen
         '
-        Me.RadButtonDelete.Location = New System.Drawing.Point(6, 652)
-        Me.RadButtonDelete.Name = "RadButtonDelete"
-        Me.RadButtonDelete.Size = New System.Drawing.Size(114, 24)
-        Me.RadButtonDelete.TabIndex = 0
-        Me.RadButtonDelete.Text = "Supprimer"
+        Me.RadButtonOpen.Enabled = False
+        Me.RadButtonOpen.Location = New System.Drawing.Point(6, 652)
+        Me.RadButtonOpen.Name = "RadButtonOpen"
+        Me.RadButtonOpen.Size = New System.Drawing.Size(114, 24)
+        Me.RadButtonOpen.TabIndex = 0
+        Me.RadButtonOpen.Text = "Ouvrir"
         '
         'RadGridViewMail
         '
@@ -394,6 +400,7 @@ Partial Class FrmSousEpisodeReponseAttribution
         Me.RadButtonResetDate.Size = New System.Drawing.Size(25, 22)
         Me.RadButtonResetDate.TabIndex = 13
         Me.RadButtonResetDate.Text = "↺"
+        Me.ToolTip1.SetToolTip(Me.RadButtonResetDate, "Reinitialiser la date de naissance")
         '
         'RadLabelDDN
         '
@@ -500,6 +507,7 @@ Partial Class FrmSousEpisodeReponseAttribution
         'RadGroupBox4
         '
         Me.RadGroupBox4.AccessibleRole = System.Windows.Forms.AccessibleRole.Grouping
+        Me.RadGroupBox4.Controls.Add(Me.RadButtonDelete)
         Me.RadGroupBox4.Controls.Add(Me.BtnRefreshMail)
         Me.RadGroupBox4.Controls.Add(Me.WebBrowser)
         Me.RadGroupBox4.Controls.Add(Me.RadAttachmentGridView)
@@ -507,13 +515,31 @@ Partial Class FrmSousEpisodeReponseAttribution
         Me.RadGroupBox4.Controls.Add(Me.RadObjetTextBox)
         Me.RadGroupBox4.Controls.Add(Me.RadSeparator1)
         Me.RadGroupBox4.Controls.Add(Me.RadGridViewMail)
-        Me.RadGroupBox4.Controls.Add(Me.RadButtonDelete)
+        Me.RadGroupBox4.Controls.Add(Me.RadButtonOpen)
         Me.RadGroupBox4.HeaderText = "Mail"
         Me.RadGroupBox4.Location = New System.Drawing.Point(12, 12)
         Me.RadGroupBox4.Name = "RadGroupBox4"
         Me.RadGroupBox4.Size = New System.Drawing.Size(567, 684)
         Me.RadGroupBox4.TabIndex = 1
         Me.RadGroupBox4.Text = "Mail"
+        '
+        'RadButtonDelete
+        '
+        Me.RadButtonDelete.Enabled = False
+        Me.RadButtonDelete.Location = New System.Drawing.Point(126, 653)
+        Me.RadButtonDelete.Name = "RadButtonDelete"
+        Me.RadButtonDelete.Size = New System.Drawing.Size(114, 24)
+        Me.RadButtonDelete.TabIndex = 1
+        Me.RadButtonDelete.Text = "Supprimer"
+        '
+        'BtnRefreshMail
+        '
+        Me.BtnRefreshMail.Location = New System.Drawing.Point(537, 654)
+        Me.BtnRefreshMail.Name = "BtnRefreshMail"
+        Me.BtnRefreshMail.Size = New System.Drawing.Size(25, 22)
+        Me.BtnRefreshMail.TabIndex = 14
+        Me.BtnRefreshMail.Text = "↺"
+        Me.ToolTip2.SetToolTip(Me.BtnRefreshMail, "Rafraichir la liste des mails")
         '
         'WebBrowser
         '
@@ -584,16 +610,6 @@ Partial Class FrmSousEpisodeReponseAttribution
         Me.RadSeparator1.Size = New System.Drawing.Size(556, 10)
         Me.RadSeparator1.TabIndex = 3
         '
-        'BtnRefreshMail
-        '
-        Me.BtnRefreshMail.Font = New System.Drawing.Font("Segoe UI", 8.0!, System.Drawing.FontStyle.Bold)
-        Me.BtnRefreshMail.Location = New System.Drawing.Point(538, 653)
-        Me.BtnRefreshMail.Name = "BtnRefreshMail"
-        Me.BtnRefreshMail.Size = New System.Drawing.Size(24, 23)
-        Me.BtnRefreshMail.TabIndex = 9
-        Me.BtnRefreshMail.Text = "⟳"
-        Me.BtnRefreshMail.UseVisualStyleBackColor = True
-        '
         'FrmSousEpisodeReponseAttribution
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -612,7 +628,7 @@ Partial Class FrmSousEpisodeReponseAttribution
         Me.RootElement.ApplyShapeToControl = True
         Me.Text = "none"
         CType(Me.RadButtonAttribution, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.RadButtonDelete, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.RadButtonOpen, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.RadGridViewMail.MasterTemplate, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.RadGridViewMail, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.RadGridViewEpisode.MasterTemplate, System.ComponentModel.ISupportInitialize).EndInit()
@@ -645,6 +661,8 @@ Partial Class FrmSousEpisodeReponseAttribution
         CType(Me.RadGroupBox4, System.ComponentModel.ISupportInitialize).EndInit()
         Me.RadGroupBox4.ResumeLayout(False)
         Me.RadGroupBox4.PerformLayout()
+        CType(Me.RadButtonDelete, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.BtnRefreshMail, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.RadAttachmentGridView.MasterTemplate, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.RadAttachmentGridView, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.RadLabel1, System.ComponentModel.ISupportInitialize).EndInit()
@@ -656,7 +674,7 @@ Partial Class FrmSousEpisodeReponseAttribution
     End Sub
     Friend WithEvents RadGridViewMail As Telerik.WinControls.UI.RadGridView
     Friend WithEvents RadButtonAttribution As Telerik.WinControls.UI.RadButton
-    Friend WithEvents RadButtonDelete As Telerik.WinControls.UI.RadButton
+    Friend WithEvents RadButtonOpen As Telerik.WinControls.UI.RadButton
     Friend WithEvents RadGridViewEpisode As Telerik.WinControls.UI.RadGridView
     Friend WithEvents RadButtonCEV As Telerik.WinControls.UI.RadButton
     Friend WithEvents RadGridViewSousEpisode As Telerik.WinControls.UI.RadGridView
@@ -685,6 +703,9 @@ Partial Class FrmSousEpisodeReponseAttribution
     Friend WithEvents WebBrowser As WebBrowser
     Friend WithEvents ContextMenuStrip1 As ContextMenuStrip
     Friend WithEvents VoirLepisodeToolStripMenuItem As ToolStripMenuItem
-    Friend WithEvents BtnRefreshMail As Button
+    Friend WithEvents BtnRefreshMail As Telerik.WinControls.UI.RadButton
+    Friend WithEvents ToolTip1 As ToolTip
+    Friend WithEvents ToolTip2 As ToolTip
+    Friend WithEvents RadButtonDelete As Telerik.WinControls.UI.RadButton
 End Class
 

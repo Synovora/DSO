@@ -114,7 +114,8 @@ Public Class SousEpisode
 
     End Sub
     Private Function getFilenameServer() As String
-        Return "Episode_" & Me.EpisodeId & "_SousEpisode_" & Me.Id & "_SousEpisodeSousType_" & Me.IdSousEpisodeSousType & ".DOCX"
+        Dim folder = "SousEpisode"
+        Return folder & "\" & "Episode_" & Me.EpisodeId & "_SousEpisode_" & Me.Id & "_SousEpisodeSousType_" & Me.IdSousEpisodeSousType & ".DOCX"
     End Function
 
 

@@ -16,6 +16,7 @@ Public Class SousEpisodeReponseMailAttachment
     End Sub
 
     Public Function GetLocalName()
-        Return MailId & "_" & Part & New IO.FileInfo(Filename).Extension
+        Dim folder = "Mail"
+        Return folder & "\" & MailId & "_" & Part & New IO.FileInfo(Filename).Extension
     End Function
 End Class

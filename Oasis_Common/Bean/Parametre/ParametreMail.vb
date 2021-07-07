@@ -41,25 +41,25 @@ Public Class ParametreMail
         Return parseParameter("SMTPPort")
     End Function
 
-    Public Function GetSMTPUser() As String
+    Public Function GetSMTPUser(isSousEpisode As Boolean) As String
         If Me.TypeMailParam <> TypeMailParams.SMTP_PARAMETERS Then
             Throw New Exception("Pas de parametres technique SMTP sur ce type de paramètre")
         End If
-        Return parseParameter("SMTPUser")
+        Return parseParameter(If(isSousEpisode, "SMTPUserSousEpisode", "SMTPUser"))
     End Function
 
-    Public Function GetSMTPPassword() As String
+    Public Function GetSMTPPassword(isSousEpisode As Boolean) As String
         If Me.TypeMailParam <> TypeMailParams.SMTP_PARAMETERS Then
             Throw New Exception("Pas de parametres technique SMTP sur ce type de paramètre")
         End If
-        Return parseParameter("SMTPPassword")
+        Return parseParameter(If(isSousEpisode, "SMTPPasswordSousEpisode", "SMTPPassword"))
     End Function
 
-    Public Function GetSMTPFrom() As String
+    Public Function GetSMTPFrom(isSousEpisode As Boolean) As String
         If Me.TypeMailParam <> TypeMailParams.SMTP_PARAMETERS Then
             Throw New Exception("Pas de parametres technique SMTP sur ce type de paramètre")
         End If
-        Return parseParameter("SMTPFrom")
+        Return parseParameter(If(isSousEpisode, "SMTPFromSousEpisode", "SMTPFrom"))
     End Function
 
     ''' <summary>

@@ -2750,6 +2750,9 @@ Public Class RadFSynthese
         RadContexteDataGridView.Rows.Clear()
         'PPS
         RadPPSDataGridView.Rows.Clear()
+
+        RadBtnImprimer.Enabled = SelectedPatient.BlocageMedical
+        BtnMail.Enabled = SelectedPatient.BlocageMedical
     End Sub
 
     Private Sub GestionDroitsAcces()
@@ -2822,6 +2825,7 @@ Public Class RadFSynthese
         Dim mailOasis As New MailOasis
         mailOasis.Contenu = tblByte
         mailOasis.Filename = "SynthesePatient.pdf"
+        mailOasis.IsSousEpisode = False
 
         ' -- 2) lancement du formulaire de choix du destinataire
         Try

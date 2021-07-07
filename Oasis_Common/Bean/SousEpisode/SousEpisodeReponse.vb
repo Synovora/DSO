@@ -33,7 +33,8 @@ Public Class SousEpisodeReponse
 
     Public Function GetFilenameServer(idEpisode As Long, Optional idSEREponse As Long = 0) As String
         If idSEREponse = 0 Then idSEREponse = Me.Id
-        Return "Episode_" & idEpisode & "_SousEpisode_" & Me.IdSousEpisode & "_SousEpisodeReponse_" & idSEREponse & Path.GetExtension(Me.NomFichier)
+        Dim folder = "SousEpisodeReponse"
+        Return folder & "\" & "Episode_" & idEpisode & "_SousEpisode_" & Me.IdSousEpisode & "_SousEpisodeReponse_" & idSEREponse & Path.GetExtension(Me.NomFichier)
     End Function
 
 

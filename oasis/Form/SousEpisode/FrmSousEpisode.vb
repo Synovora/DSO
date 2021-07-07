@@ -227,7 +227,6 @@ Public Class FrmSousEpisode
         Finally
             Me.Cursor = Cursors.Default
         End Try
-
     End Sub
 
     Private Sub askValiderReponse(gce As GridCommandCellElement)
@@ -768,6 +767,7 @@ Public Class FrmSousEpisode
         Dim mailOasis As New MailOasis
         mailOasis.Contenu = tblByte
         mailOasis.Filename = "SousEpidode.docx"
+        mailOasis.IsSousEpisode = True
 
         ' -- 2) lancement du formulaire de choix du destinataire
         Me.Enabled = False
