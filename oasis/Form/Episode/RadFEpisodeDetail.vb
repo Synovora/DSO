@@ -2223,6 +2223,7 @@ Public Class RadFEpisodeDetail
                             vFContexteDetailEdit.UtilisateurConnecte = userLog
                             vFContexteDetailEdit.SelectedDrcId = 0
                             vFContexteDetailEdit.PositionGaucheDroite = EnumPosition.Gauche
+                            vFContexteDetailEdit.Episode = episode
                             vFContexteDetailEdit.ShowDialog()
                             If vFContexteDetailEdit.CodeRetour = True Then
                                 episodeDao.MajEpisodeConclusionMedicale(SelectedEpisodeId)
@@ -4484,6 +4485,7 @@ Public Class RadFEpisodeDetail
                         vFContexteDetailEdit.UtilisateurConnecte = Me.UtilisateurConnecte
                         vFContexteDetailEdit.SelectedDrcId = 0
                         vFContexteDetailEdit.PositionGaucheDroite = EnumPosition.Gauche
+                        vFContexteDetailEdit.Episode = episode
                         vFContexteDetailEdit.ShowDialog()
                         If vFContexteDetailEdit.CodeRetour = True Then
                             ChargementContexte()
@@ -4537,6 +4539,7 @@ Public Class RadFEpisodeDetail
                             vFContexteDetailEdit.SelectedDrcId = SelectedDrcId
                             vFContexteDetailEdit.SelectedContexteId = 0
                             vFContexteDetailEdit.PositionGaucheDroite = EnumPosition.Gauche
+                            vFContexteDetailEdit.Episode = episode
                             vFContexteDetailEdit.ShowDialog()
                             'Si le traitement a été créé, on recharge la grid
                             If vFContexteDetailEdit.CodeRetour = True Then

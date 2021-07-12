@@ -123,6 +123,8 @@
     <Compile Include="Bean\Antecedent\AntecedentCourrier.vb" />
     <Compile Include="Bean\Antecedent\AntecedentDeplacement.vb" />
     <Compile Include="Bean\Antecedent\AntecedentHisto.vb" />
+    <Compile Include="Bean\ChaineEpisode\RelationChaineEpisode.vb" />
+    <Compile Include="Bean\ChaineEpisode\ChaineEpisode.vb" />
     <Compile Include="Bean\Contexte\ContexteCourrier.vb" />
     <Compile Include="Bean\DRC\Drc.vb" />
     <Compile Include="Bean\DRC\DrcActeParamedicalAsso.vb" />
@@ -211,6 +213,7 @@
     <Compile Include="Dao\Antecedent\AntecedentDeplacementDao.vb" />
     <Compile Include="Dao\Antecedent\AntecedentHistoCreationDao.vb" />
     <Compile Include="Dao\Antecedent\AntecedentHistoDao.vb" />
+    <Compile Include="Dao\ChaineEpisode\ChaineEpisodeDao.vb" />
     <Compile Include="Dao\Contexte\ContexteDao.vb" />
     <Compile Include="Dao\DRC\DrcActeParamedicalAssoDao.vb" />
     <Compile Include="Dao\DRC\DrcDao.vb" />

@@ -123,23 +123,14 @@ Public Class RadFContextedetailEdit
     'Dim conxn As New SqlConnection(getConnectionString())
     Dim ControleAutorisationModification As Boolean = True
 
+    Dim chaineEpisodeDao As New ChaineEpisodeDao
     Dim contexteReadDao As New AntecedentDao
     Dim contexteDao As New ContexteDao
     Dim contexteRead As New Antecedent
     Dim contexteUpdate As New Antecedent
 
     Private Sub RadFContextedetailEdit_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-        'TODO: DELETE
-
-
-        RadGridViewChaineEpisode.Rows.Add(0)
-        '------------------- Alimentation du DataGridView
-        With RadGridViewChaineEpisode.Rows(0)
-            .Cells("id").Value = 0
-            .Cells("name").Value = "THIS IS A TEST"
-            .Cells("selected").Value = True
-        End With
-
+        RefreshChaineEpisode()
         If PositionGaucheDroite = EnumPosition.Droite Then
             Me.Location = New Point(Screen.PrimaryScreen.WorkingArea.Width - Me.Width - 10, Screen.PrimaryScreen.WorkingArea.Height - Me.Height - 10)
         Else
@@ -246,6 +237,20 @@ Public Class RadFContextedetailEdit
 
         Cursor.Current = Cursors.Default
     End Sub
+
+    Private Sub RefreshChaineEpisode()
+
+        Dim chaineEpsiodes = chaineEpisodeDao.GetListByPatient(SelectedPatient.PatientId)
+        Dim relationChaineEpisodes = chaineEpisodeDao.GetRelationListByPatient(SelectedPatient.PatientId)
+        RadGridViewChaineEpisode.Rows.Clear()
+        For Each chaineEpisode In chaineEpsiodes
+            RadGridViewChaineEpisode.Rows.Add(chaineEpsiodes.IndexOf(chaineEpisode))
+            RadGridViewChaineEpisode.Rows(chaineEpsiodes.IndexOf(chaineEpisode)).Cells("id").Value = chaineEpisode.Id
+            RadGridViewChaineEpisode.Rows(chaineEpsiodes.IndexOf(chaineEpisode)).Cells("name").Value = chaineEpisode.Antecedent.Description
+            RadGridViewChaineEpisode.Rows(chaineEpsiodes.IndexOf(chaineEpisode)).Cells("selected").Value = relationChaineEpisodes.Any(Function(myObject) myObject.ChaineId = chaineEpisode.Id)
+        Next
+    End Sub
+
 
     Private Sub ChargementEtatCivil()
         LblPatientNIR.Text = SelectedPatient.PatientNir.ToString
@@ -869,7 +874,19 @@ Public Class RadFContextedetailEdit
         Me.Enabled = True
     End Sub
 
-    Private Sub RadGroupBox4_Click(sender As Object, e As EventArgs) Handles RadGroupBox4.Click
-
+    Private Sub RadGridViewChaineEpisode_DoubleClick(sender As Object, e As EventArgs) Handles RadGridViewChaineEpisode.DoubleClick
+        Dim chainEpisodeId = RadGridViewChaineEpisode.Rows(Me.RadGridViewChaineEpisode.Rows.IndexOf(Me.RadGridViewChaineEpisode.CurrentRow)).Cells("id").Value
+        Dim isChecked = RadGridViewChaineEpisode.Rows(Me.RadGridViewChaineEpisode.Rows.IndexOf(Me.RadGridViewChaineEpisode.CurrentRow)).Cells("selected").Value
+        Dim relation As New RelationChaineEpisode With {
+            .Id = 0,
+            .ChaineId = chainEpisodeId,
+            .EpisodeId = Episode.Id
+        }
+        If (isChecked) Then
+            chaineEpisodeDao.DeleteRelation(relation)
+        Else
+            chaineEpisodeDao.AddRelation(relation)
+        End If
+        RefreshChaineEpisode()
     End Sub
 End Class

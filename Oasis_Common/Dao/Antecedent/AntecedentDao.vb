@@ -5,45 +5,45 @@ Public Class AntecedentDao
 
     ReadOnly patientDao As New PatientDao
 
-    Private Function BuildBean(reader As SqlDataReader) As Antecedent
-        Dim antecedent As New Antecedent With {
-            .Id = reader("oa_antecedent_id"),
-            .PatientId = Coalesce(reader("oa_antecedent_patient_id"), 0),
-            .Type = Coalesce(reader("oa_antecedent_type"), ""),
-            .DrcId = Coalesce(reader("oa_antecedent_drc_id"), 0),
-            .Description = Coalesce(reader("oa_antecedent_description"), ""),
-            .UserCreation = Coalesce(reader("oa_antecedent_utilisateur_creation"), 0),
-            .DateCreation = Coalesce(reader("oa_antecedent_date_creation"), Nothing),
-            .UserModification = Coalesce(reader("oa_antecedent_utilisateur_modification"), 0),
-            .DateModification = Coalesce(reader("oa_antecedent_date_modification"), Nothing),
-            .Diagnostic = Coalesce(reader("oa_antecedent_diagnostic"), 0),
-            .DateDebut = Coalesce(reader("oa_antecedent_date_debut"), Nothing),
-            .DateFin = Coalesce(reader("oa_antecedent_date_fin"), Nothing),
-            .AldId = Coalesce(reader("oa_antecedent_ald_id"), 0),
-            .AldCim10Id = Coalesce(reader("oa_antecedent_ald_cim_10_id"), 0),
-            .AldValide = Coalesce(reader("oa_antecedent_ald_valide"), False),
-            .AldDateDebut = Coalesce(reader("oa_antecedent_ald_date_debut"), Nothing),
-            .AldDateFin = Coalesce(reader("oa_antecedent_ald_date_fin"), Nothing),
-            .AldDemandeEnCours = Coalesce(reader("oa_antecedent_ald_demande_en_cours"), False),
-            .AldDateDemande = Coalesce(reader("oa_antecedent_ald_demande_date"), Nothing),
-            .Arret = Coalesce(reader("oa_antecedent_arret"), False),
-            .ArretCommentaire = Coalesce(reader("oa_antecedent_arret_commentaire"), ""),
-            .Nature = Coalesce(reader("oa_antecedent_nature"), ""),
-            .Priorite = Coalesce(reader("oa_antecedent_priorite"), 0),
-            .Niveau = Coalesce(reader("oa_antecedent_niveau"), 0),
-            .Niveau1Id = Coalesce(reader("oa_antecedent_id_niveau1"), 0),
-            .Niveau2Id = Coalesce(reader("oa_antecedent_id_niveau2"), 0),
-            .Ordre1 = Coalesce(reader("oa_antecedent_ordre_affichage1"), 0),
-            .Ordre2 = Coalesce(reader("oa_antecedent_ordre_affichage2"), 0),
-            .Ordre3 = Coalesce(reader("oa_antecedent_ordre_affichage3"), 0),
-            .StatutAffichage = Coalesce(reader("oa_antecedent_statut_affichage"), ""),
-            .StatutAffichageTransformation = Coalesce(reader("oa_antecedent_statut_affichage_transformation"), ""),
-            .CategorieContexte = Coalesce(reader("oa_antecedent_categorie_contexte"), ""),
-            .EpisodeId = Coalesce(reader("oa_episode_id"), 0),
-            .Inactif = Coalesce(reader("oa_antecedent_inactif"), False)
-        }
-        Return antecedent
-    End Function
+    'Private Function BuildBean(reader As SqlDataReader) As Antecedent
+    '    Dim antecedent As New Antecedent With {
+    '        .Id = reader("oa_antecedent_id"),
+    '        .PatientId = Coalesce(reader("oa_antecedent_patient_id"), 0),
+    '        .Type = Coalesce(reader("oa_antecedent_type"), ""),
+    '        .DrcId = Coalesce(reader("oa_antecedent_drc_id"), 0),
+    '        .Description = Coalesce(reader("oa_antecedent_description"), ""),
+    '        .UserCreation = Coalesce(reader("oa_antecedent_utilisateur_creation"), 0),
+    '        .DateCreation = Coalesce(reader("oa_antecedent_date_creation"), Nothing),
+    '        .UserModification = Coalesce(reader("oa_antecedent_utilisateur_modification"), 0),
+    '        .DateModification = Coalesce(reader("oa_antecedent_date_modification"), Nothing),
+    '        .Diagnostic = Coalesce(reader("oa_antecedent_diagnostic"), 0),
+    '        .DateDebut = Coalesce(reader("oa_antecedent_date_debut"), Nothing),
+    '        .DateFin = Coalesce(reader("oa_antecedent_date_fin"), Nothing),
+    '        .AldId = Coalesce(reader("oa_antecedent_ald_id"), 0),
+    '        .AldCim10Id = Coalesce(reader("oa_antecedent_ald_cim_10_id"), 0),
+    '        .AldValide = Coalesce(reader("oa_antecedent_ald_valide"), False),
+    '        .AldDateDebut = Coalesce(reader("oa_antecedent_ald_date_debut"), Nothing),
+    '        .AldDateFin = Coalesce(reader("oa_antecedent_ald_date_fin"), Nothing),
+    '        .AldDemandeEnCours = Coalesce(reader("oa_antecedent_ald_demande_en_cours"), False),
+    '        .AldDateDemande = Coalesce(reader("oa_antecedent_ald_demande_date"), Nothing),
+    '        .Arret = Coalesce(reader("oa_antecedent_arret"), False),
+    '        .ArretCommentaire = Coalesce(reader("oa_antecedent_arret_commentaire"), ""),
+    '        .Nature = Coalesce(reader("oa_antecedent_nature"), ""),
+    '        .Priorite = Coalesce(reader("oa_antecedent_priorite"), 0),
+    '        .Niveau = Coalesce(reader("oa_antecedent_niveau"), 0),
+    '        .Niveau1Id = Coalesce(reader("oa_antecedent_id_niveau1"), 0),
+    '        .Niveau2Id = Coalesce(reader("oa_antecedent_id_niveau2"), 0),
+    '        .Ordre1 = Coalesce(reader("oa_antecedent_ordre_affichage1"), 0),
+    '        .Ordre2 = Coalesce(reader("oa_antecedent_ordre_affichage2"), 0),
+    '        .Ordre3 = Coalesce(reader("oa_antecedent_ordre_affichage3"), 0),
+    '        .StatutAffichage = Coalesce(reader("oa_antecedent_statut_affichage"), ""),
+    '        .StatutAffichageTransformation = Coalesce(reader("oa_antecedent_statut_affichage_transformation"), ""),
+    '        .CategorieContexte = Coalesce(reader("oa_antecedent_categorie_contexte"), ""),
+    '        .EpisodeId = Coalesce(reader("oa_episode_id"), 0),
+    '        .Inactif = Coalesce(reader("oa_antecedent_inactif"), False)
+    '    }
+    '    Return antecedent
+    'End Function
 
     Public Function GetAntecedentById(antecedentId As Integer) As Antecedent
         Dim antecedent As Antecedent
@@ -212,6 +212,46 @@ Public Class AntecedentDao
         End If
 
         Return True
+    End Function
+
+    Public Function GetList() As List(Of Antecedent)
+        Dim con As SqlConnection = GetConnection()
+        Dim antecedents As List(Of Antecedent) = New List(Of Antecedent)
+
+        Try
+            Dim command As SqlCommand = con.CreateCommand()
+            command.CommandText = "SELECT * FROM oasis.oa_antecedent"
+            Using reader As SqlDataReader = command.ExecuteReader()
+                While (reader.Read())
+                    antecedents.Add(BuildBean(reader))
+                End While
+            End Using
+        Catch ex As Exception
+            Throw ex
+        Finally
+            con.Close()
+        End Try
+        Return antecedents
+    End Function
+
+    Public Function GetListByPatient(patientId As Integer) As List(Of Antecedent)
+        Dim con As SqlConnection = GetConnection()
+        Dim sousEpisodeReponseMails As List(Of Antecedent) = New List(Of Antecedent)
+
+        Try
+            Dim command As SqlCommand = con.CreateCommand()
+            command.CommandText = "SELECT * FROM oasis.oa_antecedent WHERE oa_antecedent_patient_id = " + patientId.ToString
+            Using reader As SqlDataReader = command.ExecuteReader()
+                While (reader.Read())
+                    sousEpisodeReponseMails.Add(BuildBean(reader))
+                End While
+            End Using
+        Catch ex As Exception
+            Throw ex
+        Finally
+            con.Close()
+        End Try
+        Return sousEpisodeReponseMails
     End Function
 
     Public Function GetAllAntecedentbyPatient(patientId As Integer, publication As Boolean, parPriorite As Boolean) As DataTable
@@ -511,15 +551,22 @@ Public Class AntecedentDao
 
         Dim dateCreation As Date = Date.Now.Date
 
-        Dim SQLstring As String = "insert into oasis.oa_antecedent (oa_antecedent_patient_id, oa_antecedent_type, oa_antecedent_drc_id, oa_antecedent_description," &
-        " oa_antecedent_date_creation, oa_antecedent_utilisateur_creation, oa_antecedent_utilisateur_modification, oa_antecedent_date_debut, oa_antecedent_niveau," &
-        " oa_antecedent_nature, oa_antecedent_statut_affichage, oa_antecedent_inactif, oa_antecedent_ordre_affichage1, oa_antecedent_ordre_affichage2," &
-        " oa_antecedent_ordre_affichage3, oa_antecedent_diagnostic," &
-        " oa_antecedent_ald_id, oa_antecedent_ald_cim_10_id, oa_antecedent_ald_valide, oa_antecedent_ald_date_debut," &
-        " oa_antecedent_ald_date_fin, oa_antecedent_ald_demande_en_cours, oa_antecedent_ald_demande_date)" &
-        " VALUES (@patientId, @type, @drcId, @description, @dateCreation, @utilisateurCreation," &
-        " @utilisateurModification, @dateDebut, @niveau, @nature, @publication, @inactif, @ordreAffichage1, @ordreAffichage2, @ordreAffichage3, @diagnostic," &
-        " @aldId, @aldCim10Id, @aldValide, @aldDateDebut, @aldDateFin, @aldDemandeEnCours, @aldDateDemande); SELECT SCOPE_IDENTITY()"
+        Dim SQLstring As String = "
+        BEGIN TRANSACTION
+            DECLARE @AntecedentId bigint;
+            INSERT into oasis.oa_antecedent (oa_antecedent_patient_id, oa_antecedent_type, oa_antecedent_drc_id, oa_antecedent_description,
+                oa_antecedent_date_creation, oa_antecedent_utilisateur_creation, oa_antecedent_utilisateur_modification, oa_antecedent_date_debut, oa_antecedent_niveau,
+                oa_antecedent_nature, oa_antecedent_statut_affichage, oa_antecedent_inactif, oa_antecedent_ordre_affichage1, oa_antecedent_ordre_affichage2,
+                oa_antecedent_ordre_affichage3, oa_antecedent_diagnostic,
+                oa_antecedent_ald_id, oa_antecedent_ald_cim_10_id, oa_antecedent_ald_valide, oa_antecedent_ald_date_debut,
+                oa_antecedent_ald_date_fin, oa_antecedent_ald_demande_en_cours, oa_antecedent_ald_demande_date)
+                VALUES (@patientId, @type, @drcId, @description, @dateCreation, @utilisateurCreation,
+                @utilisateurModification, @dateDebut, @niveau, @nature, @publication, @inactif, @ordreAffichage1, @ordreAffichage2, @ordreAffichage3, @diagnostic,
+                @aldId, @aldCim10Id, @aldValide, @aldDateDebut, @aldDateFin, @aldDemandeEnCours, @aldDateDemande);
+            SELECT @AntecedentId = SCOPE_IDENTITY();
+            INSERT INTO oasis.oa_chaine_episode (antecedent_id, actif) VALUES (@AntecedentId, 1);
+            SELECT @AntecedentId
+        COMMIT"
 
         Dim con As SqlConnection = GetConnection()
         Dim cmd As New SqlCommand(SQLstring, con)
@@ -817,5 +864,8 @@ Public Class AntecedentDao
         Return codeRetour
     End Function
 
+    Public Function BuildBean(reader As SqlDataReader) As Antecedent
+        Return New Antecedent(reader)
+    End Function
 
 End Class

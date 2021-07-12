@@ -2094,6 +2094,7 @@ Public Class RadFSynthese
                             Fom.SelectedDrcId = SelectedDrcId
                             Fom.SelectedContexteId = 0
                             Fom.PositionGaucheDroite = EnumPosition.Droite
+
                             Fom.ShowDialog()
                             'Si le traitement a été créé, on recharge la grid
                             If Fom.CodeRetour = True Then

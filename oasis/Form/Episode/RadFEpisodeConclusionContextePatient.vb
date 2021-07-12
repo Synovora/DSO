@@ -246,6 +246,7 @@ Public Class RadFEpisodeConclusionContextePatient
                         vFContexteDetailEdit.UtilisateurConnecte = userLog
                         vFContexteDetailEdit.SelectedDrcId = 0
                         vFContexteDetailEdit.PositionGaucheDroite = EnumPosition.Droite
+                        vFContexteDetailEdit.Episode = SelectedEpisode
                         vFContexteDetailEdit.ShowDialog() 'Modal
                         If vFContexteDetailEdit.CodeRetour = True Then
                             CodeRetour = True
@@ -305,6 +306,7 @@ Public Class RadFEpisodeConclusionContextePatient
                             vFContexteDetailEdit.SelectedDrcId = SelectedDrcId
                             vFContexteDetailEdit.SelectedContexteId = 0
                             vFContexteDetailEdit.PositionGaucheDroite = EnumPosition.Droite
+                            vFContexteDetailEdit.Episode = SelectedEpisode
                             vFContexteDetailEdit.ShowDialog()
                             'Si le traitement a été créé, on recharge la grid
                             If vFContexteDetailEdit.CodeRetour = True Then
