@@ -23,11 +23,11 @@ Partial Class RadFContextedetailEdit
     <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
         Me.components = New System.ComponentModel.Container()
-        Dim GridViewTextBoxColumn1 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
-        Dim GridViewTextBoxColumn2 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
-        Dim GridViewCheckBoxColumn1 As Telerik.WinControls.UI.GridViewCheckBoxColumn = New Telerik.WinControls.UI.GridViewCheckBoxColumn()
-        Dim SortDescriptor1 As Telerik.WinControls.Data.SortDescriptor = New Telerik.WinControls.Data.SortDescriptor()
-        Dim TableViewDefinition1 As Telerik.WinControls.UI.TableViewDefinition = New Telerik.WinControls.UI.TableViewDefinition()
+        Dim GridViewTextBoxColumn3 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
+        Dim GridViewTextBoxColumn4 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
+        Dim GridViewCheckBoxColumn2 As Telerik.WinControls.UI.GridViewCheckBoxColumn = New Telerik.WinControls.UI.GridViewCheckBoxColumn()
+        Dim SortDescriptor2 As Telerik.WinControls.Data.SortDescriptor = New Telerik.WinControls.Data.SortDescriptor()
+        Dim TableViewDefinition2 As Telerik.WinControls.UI.TableViewDefinition = New Telerik.WinControls.UI.TableViewDefinition()
         Me.RadGroupBoxEtatCivil = New Telerik.WinControls.UI.RadGroupBox()
         Me.LblALD = New System.Windows.Forms.Label()
         Me.Label13 = New System.Windows.Forms.Label()
@@ -838,26 +838,26 @@ Partial Class RadFContextedetailEdit
         Me.RadGridViewChaineEpisode.MasterTemplate.AllowEditRow = False
         Me.RadGridViewChaineEpisode.MasterTemplate.AllowRowHeaderContextMenu = False
         Me.RadGridViewChaineEpisode.MasterTemplate.AllowRowResize = False
-        GridViewTextBoxColumn1.EnableExpressionEditor = False
-        GridViewTextBoxColumn1.HeaderText = "column1"
-        GridViewTextBoxColumn1.IsVisible = False
-        GridViewTextBoxColumn1.Name = "id"
-        GridViewTextBoxColumn2.EnableExpressionEditor = False
-        GridViewTextBoxColumn2.HeaderText = "nom"
-        GridViewTextBoxColumn2.MinWidth = 250
-        GridViewTextBoxColumn2.Name = "name"
-        GridViewTextBoxColumn2.SortOrder = Telerik.WinControls.UI.RadSortOrder.Ascending
-        GridViewTextBoxColumn2.Width = 250
-        GridViewCheckBoxColumn1.EnableExpressionEditor = False
-        GridViewCheckBoxColumn1.HeaderText = "selectionne"
-        GridViewCheckBoxColumn1.MinWidth = 50
-        GridViewCheckBoxColumn1.Name = "selected"
-        GridViewCheckBoxColumn1.ReadOnly = True
-        Me.RadGridViewChaineEpisode.MasterTemplate.Columns.AddRange(New Telerik.WinControls.UI.GridViewDataColumn() {GridViewTextBoxColumn1, GridViewTextBoxColumn2, GridViewCheckBoxColumn1})
+        GridViewTextBoxColumn3.EnableExpressionEditor = False
+        GridViewTextBoxColumn3.HeaderText = "column1"
+        GridViewTextBoxColumn3.IsVisible = False
+        GridViewTextBoxColumn3.Name = "id"
+        GridViewTextBoxColumn4.EnableExpressionEditor = False
+        GridViewTextBoxColumn4.HeaderText = "nom"
+        GridViewTextBoxColumn4.MinWidth = 250
+        GridViewTextBoxColumn4.Name = "name"
+        GridViewTextBoxColumn4.SortOrder = Telerik.WinControls.UI.RadSortOrder.Ascending
+        GridViewTextBoxColumn4.Width = 250
+        GridViewCheckBoxColumn2.EnableExpressionEditor = False
+        GridViewCheckBoxColumn2.HeaderText = "selectionne"
+        GridViewCheckBoxColumn2.MinWidth = 50
+        GridViewCheckBoxColumn2.Name = "selected"
+        GridViewCheckBoxColumn2.ReadOnly = True
+        Me.RadGridViewChaineEpisode.MasterTemplate.Columns.AddRange(New Telerik.WinControls.UI.GridViewDataColumn() {GridViewTextBoxColumn3, GridViewCheckBoxColumn2, GridViewTextBoxColumn4})
         Me.RadGridViewChaineEpisode.MasterTemplate.ShowRowHeaderColumn = False
-        SortDescriptor1.PropertyName = "name"
-        Me.RadGridViewChaineEpisode.MasterTemplate.SortDescriptors.AddRange(New Telerik.WinControls.Data.SortDescriptor() {SortDescriptor1})
-        Me.RadGridViewChaineEpisode.MasterTemplate.ViewDefinition = TableViewDefinition1
+        SortDescriptor2.PropertyName = "name"
+        Me.RadGridViewChaineEpisode.MasterTemplate.SortDescriptors.AddRange(New Telerik.WinControls.Data.SortDescriptor() {SortDescriptor2})
+        Me.RadGridViewChaineEpisode.MasterTemplate.ViewDefinition = TableViewDefinition2
         Me.RadGridViewChaineEpisode.Name = "RadGridViewChaineEpisode"
         Me.RadGridViewChaineEpisode.RightToLeft = System.Windows.Forms.RightToLeft.No
         Me.RadGridViewChaineEpisode.ShowGroupPanel = False

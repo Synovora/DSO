@@ -1,5 +1,5 @@
-﻿Imports System.Data.SqlClient
-Imports Oasis_Common
+﻿Imports Oasis_Common
+
 Public Class RadFContextedetailEdit
     Private privateSelectedPatient As Patient
     Private privateUtilisateurConnecte As Utilisateur
@@ -239,9 +239,8 @@ Public Class RadFContextedetailEdit
     End Sub
 
     Private Sub RefreshChaineEpisode()
-
-        Dim chaineEpsiodes = chaineEpisodeDao.GetListByPatient(SelectedPatient.PatientId)
-        Dim relationChaineEpisodes = chaineEpisodeDao.GetRelationListByPatient(SelectedPatient.PatientId)
+        Dim chaineEpsiodes = chaineEpisodeDao.GetListByPatient(SelectedPatient.PatientId, 0,)
+        Dim relationChaineEpisodes = chaineEpisodeDao.GetList(SelectedContexteId)
         RadGridViewChaineEpisode.Rows.Clear()
         For Each chaineEpisode In chaineEpsiodes
             RadGridViewChaineEpisode.Rows.Add(chaineEpsiodes.IndexOf(chaineEpisode))
@@ -253,7 +252,7 @@ Public Class RadFContextedetailEdit
 
 
     Private Sub ChargementEtatCivil()
-        LblPatientNIR.Text = SelectedPatient.PatientNir.ToString
+        LblPatientNIR.Text = SelectedPatient.PatientNir
         LblPatientPrenom.Text = SelectedPatient.PatientPrenom
         LblPatientNom.Text = SelectedPatient.PatientNom
         LblPatientAge.Text = SelectedPatient.PatientAge
@@ -877,15 +876,16 @@ Public Class RadFContextedetailEdit
     Private Sub RadGridViewChaineEpisode_DoubleClick(sender As Object, e As EventArgs) Handles RadGridViewChaineEpisode.DoubleClick
         Dim chainEpisodeId = RadGridViewChaineEpisode.Rows(Me.RadGridViewChaineEpisode.Rows.IndexOf(Me.RadGridViewChaineEpisode.CurrentRow)).Cells("id").Value
         Dim isChecked = RadGridViewChaineEpisode.Rows(Me.RadGridViewChaineEpisode.Rows.IndexOf(Me.RadGridViewChaineEpisode.CurrentRow)).Cells("selected").Value
-        Dim relation As New RelationChaineEpisode With {
+        Dim chaineEpisode As New ChaineEpisode With {
             .Id = 0,
             .ChaineId = chainEpisodeId,
-            .EpisodeId = Episode.Id
+            .AntecedentId = SelectedContexteId,
+            .Actif = True
         }
         If (isChecked) Then
-            chaineEpisodeDao.DeleteRelation(relation)
+            chaineEpisodeDao.Delete(chaineEpisode)
         Else
-            chaineEpisodeDao.AddRelation(relation)
+            chaineEpisodeDao.Create(chaineEpisode)
         End If
         RefreshChaineEpisode()
     End Sub

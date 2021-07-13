@@ -32,6 +32,11 @@ Partial Class RadFEpisodeConclusionContextePatient
         Dim GridViewTextBoxColumn6 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
         Dim GridViewTextBoxColumn7 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
         Dim TableViewDefinition2 As Telerik.WinControls.UI.TableViewDefinition = New Telerik.WinControls.UI.TableViewDefinition()
+        Dim GridViewTextBoxColumn8 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
+        Dim GridViewTextBoxColumn9 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
+        Dim GridViewCheckBoxColumn1 As Telerik.WinControls.UI.GridViewCheckBoxColumn = New Telerik.WinControls.UI.GridViewCheckBoxColumn()
+        Dim SortDescriptor1 As Telerik.WinControls.Data.SortDescriptor = New Telerik.WinControls.Data.SortDescriptor()
+        Dim TableViewDefinition3 As Telerik.WinControls.UI.TableViewDefinition = New Telerik.WinControls.UI.TableViewDefinition()
         Me.RadGroupBoxEtatCivil = New Telerik.WinControls.UI.RadGroupBox()
         Me.LblDateNaissance = New System.Windows.Forms.Label()
         Me.Label13 = New System.Windows.Forms.Label()
@@ -55,6 +60,10 @@ Partial Class RadFEpisodeConclusionContextePatient
         Me.RadBtnSuppprimer = New Telerik.WinControls.UI.RadButton()
         Me.RadBtnSelect = New Telerik.WinControls.UI.RadButton()
         Me.ToolTip = New System.Windows.Forms.ToolTip(Me.components)
+        Me.RadGroupBox3 = New Telerik.WinControls.UI.RadGroupBox()
+        Me.RadioButtonTous = New System.Windows.Forms.RadioButton()
+        Me.RadioButtonNonMasque = New System.Windows.Forms.RadioButton()
+        Me.RadGridViewChaineEpisode = New Telerik.WinControls.UI.RadGridView()
         CType(Me.RadGroupBoxEtatCivil, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.RadGroupBoxEtatCivil.SuspendLayout()
         CType(Me.RadContexteDataGridView, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -68,6 +77,10 @@ Partial Class RadFEpisodeConclusionContextePatient
         CType(Me.RadConclusionGridView.MasterTemplate, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.RadBtnSuppprimer, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.RadBtnSelect, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.RadGroupBox3, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.RadGroupBox3.SuspendLayout()
+        CType(Me.RadGridViewChaineEpisode, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.RadGridViewChaineEpisode.MasterTemplate, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
@@ -244,7 +257,7 @@ Partial Class RadFEpisodeConclusionContextePatient
         Me.RadContexteDataGridView.Name = "RadContexteDataGridView"
         Me.RadContexteDataGridView.RightToLeft = System.Windows.Forms.RightToLeft.No
         Me.RadContexteDataGridView.ShowGroupPanel = False
-        Me.RadContexteDataGridView.Size = New System.Drawing.Size(494, 347)
+        Me.RadContexteDataGridView.Size = New System.Drawing.Size(494, 354)
         Me.RadContexteDataGridView.TabIndex = 4
         '
         'ContextMenuStrip1
@@ -288,7 +301,7 @@ Partial Class RadFEpisodeConclusionContextePatient
         Me.RadBtnAbandon.DialogResult = System.Windows.Forms.DialogResult.Cancel
         Me.RadBtnAbandon.Image = Global.Oasis_WF.My.Resources.Resources._exit
         Me.RadBtnAbandon.ImageAlignment = System.Drawing.ContentAlignment.MiddleCenter
-        Me.RadBtnAbandon.Location = New System.Drawing.Point(1119, 466)
+        Me.RadBtnAbandon.Location = New System.Drawing.Point(1439, 473)
         Me.RadBtnAbandon.Name = "RadBtnAbandon"
         Me.RadBtnAbandon.Size = New System.Drawing.Size(24, 24)
         Me.RadBtnAbandon.TabIndex = 38
@@ -335,7 +348,7 @@ Partial Class RadFEpisodeConclusionContextePatient
         Me.RadConclusionGridView.Name = "RadConclusionGridView"
         Me.RadConclusionGridView.RightToLeft = System.Windows.Forms.RightToLeft.No
         Me.RadConclusionGridView.ShowGroupPanel = False
-        Me.RadConclusionGridView.Size = New System.Drawing.Size(553, 347)
+        Me.RadConclusionGridView.Size = New System.Drawing.Size(553, 354)
         Me.RadConclusionGridView.TabIndex = 39
         '
         'RadBtnSuppprimer
@@ -356,12 +369,100 @@ Partial Class RadFEpisodeConclusionContextePatient
         Me.RadBtnSelect.TabIndex = 40
         Me.RadBtnSelect.Text = "<<< Ajouter"
         '
+        'RadGroupBox3
+        '
+        Me.RadGroupBox3.AccessibleRole = System.Windows.Forms.AccessibleRole.Grouping
+        Me.RadGroupBox3.Controls.Add(Me.RadioButtonTous)
+        Me.RadGroupBox3.Controls.Add(Me.RadioButtonNonMasque)
+        Me.RadGroupBox3.Controls.Add(Me.RadGridViewChaineEpisode)
+        Me.RadGroupBox3.HeaderText = "Chaine d'episode"
+        Me.RadGroupBox3.Location = New System.Drawing.Point(1149, 12)
+        Me.RadGroupBox3.Name = "RadGroupBox3"
+        Me.RadGroupBox3.Size = New System.Drawing.Size(314, 455)
+        Me.RadGroupBox3.TabIndex = 77
+        Me.RadGroupBox3.Text = "Chaine d'episode"
+        CType(Me.RadGroupBox3.GetChildAt(0).GetChildAt(1), Telerik.WinControls.UI.GroupBoxHeader).GroupBoxStyle = Telerik.WinControls.UI.RadGroupBoxStyle.Standard
+        CType(Me.RadGroupBox3.GetChildAt(0).GetChildAt(1).GetChildAt(0), Telerik.WinControls.Primitives.FillPrimitive).BackColor = System.Drawing.SystemColors.ActiveCaption
+        CType(Me.RadGroupBox3.GetChildAt(0).GetChildAt(1).GetChildAt(0), Telerik.WinControls.Primitives.FillPrimitive).SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.None
+        '
+        'RadioButtonTous
+        '
+        Me.RadioButtonTous.AutoSize = True
+        Me.RadioButtonTous.Location = New System.Drawing.Point(108, 22)
+        Me.RadioButtonTous.Name = "RadioButtonTous"
+        Me.RadioButtonTous.Size = New System.Drawing.Size(49, 17)
+        Me.RadioButtonTous.TabIndex = 2
+        Me.RadioButtonTous.TabStop = True
+        Me.RadioButtonTous.Text = "Tous"
+        Me.RadioButtonTous.UseVisualStyleBackColor = True
+        '
+        'RadioButtonNonMasque
+        '
+        Me.RadioButtonNonMasque.AutoSize = True
+        Me.RadioButtonNonMasque.Location = New System.Drawing.Point(6, 22)
+        Me.RadioButtonNonMasque.Name = "RadioButtonNonMasque"
+        Me.RadioButtonNonMasque.Size = New System.Drawing.Size(95, 17)
+        Me.RadioButtonNonMasque.TabIndex = 1
+        Me.RadioButtonNonMasque.TabStop = True
+        Me.RadioButtonNonMasque.Text = "Non masques"
+        Me.RadioButtonNonMasque.UseVisualStyleBackColor = True
+        '
+        'RadGridViewChaineEpisode
+        '
+        Me.RadGridViewChaineEpisode.BackColor = System.Drawing.Color.FromArgb(CType(CType(191, Byte), Integer), CType(CType(219, Byte), Integer), CType(CType(255, Byte), Integer))
+        Me.RadGridViewChaineEpisode.Cursor = System.Windows.Forms.Cursors.Default
+        Me.RadGridViewChaineEpisode.Font = New System.Drawing.Font("Segoe UI", 8.25!)
+        Me.RadGridViewChaineEpisode.ForeColor = System.Drawing.Color.Black
+        Me.RadGridViewChaineEpisode.ImeMode = System.Windows.Forms.ImeMode.NoControl
+        Me.RadGridViewChaineEpisode.Location = New System.Drawing.Point(5, 45)
+        '
+        '
+        '
+        Me.RadGridViewChaineEpisode.MasterTemplate.AllowAddNewRow = False
+        Me.RadGridViewChaineEpisode.MasterTemplate.AllowCellContextMenu = False
+        Me.RadGridViewChaineEpisode.MasterTemplate.AllowColumnChooser = False
+        Me.RadGridViewChaineEpisode.MasterTemplate.AllowColumnHeaderContextMenu = False
+        Me.RadGridViewChaineEpisode.MasterTemplate.AllowColumnReorder = False
+        Me.RadGridViewChaineEpisode.MasterTemplate.AllowColumnResize = False
+        Me.RadGridViewChaineEpisode.MasterTemplate.AllowDeleteRow = False
+        Me.RadGridViewChaineEpisode.MasterTemplate.AllowDragToGroup = False
+        Me.RadGridViewChaineEpisode.MasterTemplate.AllowEditRow = False
+        Me.RadGridViewChaineEpisode.MasterTemplate.AllowRowHeaderContextMenu = False
+        Me.RadGridViewChaineEpisode.MasterTemplate.AllowRowResize = False
+        GridViewTextBoxColumn8.EnableExpressionEditor = False
+        GridViewTextBoxColumn8.HeaderText = "id"
+        GridViewTextBoxColumn8.IsVisible = False
+        GridViewTextBoxColumn8.Name = "id"
+        GridViewTextBoxColumn8.SortOrder = Telerik.WinControls.UI.RadSortOrder.Ascending
+        GridViewTextBoxColumn9.EnableExpressionEditor = False
+        GridViewTextBoxColumn9.HeaderText = "nom"
+        GridViewTextBoxColumn9.MinWidth = 250
+        GridViewTextBoxColumn9.Name = "name"
+        GridViewTextBoxColumn9.ReadOnly = True
+        GridViewTextBoxColumn9.Width = 250
+        GridViewCheckBoxColumn1.EnableExpressionEditor = False
+        GridViewCheckBoxColumn1.HeaderText = "selectionne"
+        GridViewCheckBoxColumn1.MinWidth = 50
+        GridViewCheckBoxColumn1.Name = "selected"
+        GridViewCheckBoxColumn1.ReadOnly = True
+        Me.RadGridViewChaineEpisode.MasterTemplate.Columns.AddRange(New Telerik.WinControls.UI.GridViewDataColumn() {GridViewTextBoxColumn8, GridViewCheckBoxColumn1, GridViewTextBoxColumn9})
+        Me.RadGridViewChaineEpisode.MasterTemplate.ShowRowHeaderColumn = False
+        SortDescriptor1.PropertyName = "id"
+        Me.RadGridViewChaineEpisode.MasterTemplate.SortDescriptors.AddRange(New Telerik.WinControls.Data.SortDescriptor() {SortDescriptor1})
+        Me.RadGridViewChaineEpisode.MasterTemplate.ViewDefinition = TableViewDefinition3
+        Me.RadGridViewChaineEpisode.Name = "RadGridViewChaineEpisode"
+        Me.RadGridViewChaineEpisode.RightToLeft = System.Windows.Forms.RightToLeft.No
+        Me.RadGridViewChaineEpisode.ShowGroupPanel = False
+        Me.RadGridViewChaineEpisode.Size = New System.Drawing.Size(304, 405)
+        Me.RadGridViewChaineEpisode.TabIndex = 0
+        '
         'RadFEpisodeConclusionContextePatient
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.CancelButton = Me.RadBtnAbandon
-        Me.ClientSize = New System.Drawing.Size(1150, 495)
+        Me.ClientSize = New System.Drawing.Size(1469, 497)
+        Me.Controls.Add(Me.RadGroupBox3)
         Me.Controls.Add(Me.RadBtnSuppprimer)
         Me.Controls.Add(Me.RadBtnSelect)
         Me.Controls.Add(Me.RadConclusionGridView)
@@ -396,6 +497,11 @@ Partial Class RadFEpisodeConclusionContextePatient
         CType(Me.RadConclusionGridView, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.RadBtnSuppprimer, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.RadBtnSelect, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.RadGroupBox3, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.RadGroupBox3.ResumeLayout(False)
+        Me.RadGroupBox3.PerformLayout()
+        CType(Me.RadGridViewChaineEpisode.MasterTemplate, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.RadGridViewChaineEpisode, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
         Me.PerformLayout()
@@ -425,5 +531,9 @@ Partial Class RadFEpisodeConclusionContextePatient
     Friend WithEvents RadBtnSuppprimer As Telerik.WinControls.UI.RadButton
     Friend WithEvents RadBtnSelect As Telerik.WinControls.UI.RadButton
     Friend WithEvents ToolTip As ToolTip
+    Friend WithEvents RadGroupBox3 As Telerik.WinControls.UI.RadGroupBox
+    Friend WithEvents RadioButtonTous As RadioButton
+    Friend WithEvents RadioButtonNonMasque As RadioButton
+    Friend WithEvents RadGridViewChaineEpisode As Telerik.WinControls.UI.RadGridView
 End Class
 

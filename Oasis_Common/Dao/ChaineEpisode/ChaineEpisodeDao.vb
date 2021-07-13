@@ -3,17 +3,53 @@
 Public Class ChaineEpisodeDao
     Inherits StandardDao
 
-
-    Public Function GetListByPatient(patientId As Integer) As List(Of ChaineEpisode)
+    Public Function GetList(Optional antecedentId As Long = Nothing, Optional chaineId As Long = Nothing) As List(Of ChaineEpisode)
         Dim con As SqlConnection = GetConnection()
         Dim chaineEpisodes As List(Of ChaineEpisode) = New List(Of ChaineEpisode)
 
         Try
             Dim command As SqlCommand = con.CreateCommand()
             command.CommandText = "
-            Select * From oasis.oa_chaine_episode, oasis.oa_antecedent
-            Where oasis.oa_chaine_episode.id = oasis.oa_antecedent.oa_antecedent_id
-            And oasis.oa_antecedent.oa_antecedent_patient_id = " + patientId.ToString
+            SELECT * From oasis.oa_chaine_episode, oasis.oa_antecedent" & vbCrLf &
+            "WHERE oasis.oa_chaine_episode.antecedent_id = oasis.oa_antecedent.oa_antecedent_id " & vbCrLf
+            If chaineId Then
+                command.CommandText += "AND oasis.oa_chaine_episode.chaine_id = " & If(chaineId = 0, "NULL", CStr(chaineId)) & vbCrLf
+            End If
+            If antecedentId Then
+                command.CommandText += "AND oasis.oa_chaine_episode.antecedent_id = " & If(antecedentId = 0, "NULL", CStr(antecedentId)) & vbCrLf
+            End If
+
+            Using reader As SqlDataReader = command.ExecuteReader()
+                While (reader.Read())
+                    chaineEpisodes.Add(BuildBean(reader))
+                End While
+            End Using
+        Catch ex As Exception
+            Throw ex
+        Finally
+            con.Close()
+        End Try
+
+        Return chaineEpisodes
+    End Function
+
+    Public Function GetListByPatient(patientId As Integer, Optional chaineId As Long = Nothing, Optional antecedentId As Long = Nothing) As List(Of ChaineEpisode)
+        Dim con As SqlConnection = GetConnection()
+        Dim chaineEpisodes As List(Of ChaineEpisode) = New List(Of ChaineEpisode)
+
+        Try
+            Dim command As SqlCommand = con.CreateCommand()
+            command.CommandText = "
+            SELECT * From oasis.oa_chaine_episode, oasis.oa_antecedent
+            WHERE oasis.oa_chaine_episode.id = oasis.oa_antecedent.oa_antecedent_id
+            AND oasis.oa_antecedent.oa_antecedent_patient_id = " + patientId.ToString
+            If chaineId Then
+                command.CommandText += "AND oasis.oa_chaine_episode.chaine_id = " + If(chaineId = 0, "NULL", CStr(chaineId))
+            End If
+            If antecedentId Then
+                command.CommandText += "AND oasis.oa_chaine_episode.antecedent_id = " + If(antecedentId = 0, "NULL", CStr(antecedentId))
+            End If
+
             Using reader As SqlDataReader = command.ExecuteReader()
                 While (reader.Read())
                     chaineEpisodes.Add(BuildBean(reader))
@@ -89,6 +125,26 @@ Public Class ChaineEpisodeDao
 
         Return codeRetour
     End Function
+
+    Public Sub Delete(chaineEpisode As ChaineEpisode)
+        Dim da As SqlDataAdapter = New SqlDataAdapter()
+        Dim con As SqlConnection = GetConnection()
+        Dim SQLstring As String = "DELETE FROM oasis.oa_chaine_episode WHERE chaine_id=@chaine_id AND antecedent_id=@antecedent_id"
+
+        Dim cmd As New SqlCommand(SQLstring, con)
+        With cmd.Parameters
+            .AddWithValue("@chaine_id", chaineEpisode.ChaineId)
+            .AddWithValue("@antecedent_id", chaineEpisode.AntecedentId)
+        End With
+        Try
+            da.UpdateCommand = cmd
+            da.UpdateCommand.ExecuteNonQuery()
+        Catch ex As Exception
+            Throw ex
+        Finally
+            con.Close()
+        End Try
+    End Sub
 
     Public Function AddRelation(relationChaineEpisode As RelationChaineEpisode) As Boolean
         Dim da As SqlDataAdapter = New SqlDataAdapter()

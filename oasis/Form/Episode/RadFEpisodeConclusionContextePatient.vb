@@ -26,12 +26,14 @@ Public Class RadFEpisodeConclusionContextePatient
     Dim InitContextePublie As Boolean = False
 
     Dim SelectedPatient As Patient
+    Dim chaineEpisodeDao As New ChaineEpisodeDao
 
     Private Sub RadFEpisodeSelecteurContextePatient_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         ChargementEtatCivil()
         RadChkContextePublie.Checked = True
         ChargementConclusion()
         ChargementContexte()
+        RefreshChaineEpisode()
     End Sub
 
     ReadOnly episodeContexteDao As New EpisodeContexteDao
@@ -376,6 +378,34 @@ Public Class RadFEpisodeConclusionContextePatient
 
     Private Sub RadFEpisodeConclusionContextePatient_FormClosed(sender As Object, e As FormClosedEventArgs) Handles MyBase.FormClosed
         episodeDao.MajEpisodeConclusionMedicale(SelectedEpisode.Id)
+    End Sub
+
+    Private Sub RadGridViewChaineEpisode_DoubleClick(sender As Object, e As EventArgs) Handles RadGridViewChaineEpisode.DoubleClick
+        Dim chainEpisodeId = RadGridViewChaineEpisode.Rows(Me.RadGridViewChaineEpisode.Rows.IndexOf(Me.RadGridViewChaineEpisode.CurrentRow)).Cells("id").Value
+        Dim isChecked = RadGridViewChaineEpisode.Rows(Me.RadGridViewChaineEpisode.Rows.IndexOf(Me.RadGridViewChaineEpisode.CurrentRow)).Cells("selected").Value
+        Dim relation As New RelationChaineEpisode With {
+            .Id = 0,
+            .ChaineId = chainEpisodeId,
+            .EpisodeId = SelectedEpisode.Id
+        }
+        If (isChecked) Then
+            chaineEpisodeDao.DeleteRelation(relation)
+        Else
+            chaineEpisodeDao.AddRelation(relation)
+        End If
+        RefreshChaineEpisode()
+    End Sub
+
+    Private Sub RefreshChaineEpisode()
+        Dim chaineEpsiodes = chaineEpisodeDao.GetListByPatient(SelectedPatient.PatientId)
+        Dim relationChaineEpisodes = chaineEpisodeDao.GetRelationListByPatient(SelectedPatient.PatientId)
+        RadGridViewChaineEpisode.Rows.Clear()
+        For Each chaineEpisode In chaineEpsiodes
+            RadGridViewChaineEpisode.Rows.Add(chaineEpsiodes.IndexOf(chaineEpisode))
+            RadGridViewChaineEpisode.Rows(chaineEpsiodes.IndexOf(chaineEpisode)).Cells("id").Value = chaineEpisode.Id
+            RadGridViewChaineEpisode.Rows(chaineEpsiodes.IndexOf(chaineEpisode)).Cells("name").Value = chaineEpisode.Antecedent.Description
+            RadGridViewChaineEpisode.Rows(chaineEpsiodes.IndexOf(chaineEpisode)).Cells("selected").Value = relationChaineEpisodes.Any(Function(myObject) myObject.ChaineId = chaineEpisode.Id)
+        Next
     End Sub
 
 End Class
