@@ -33,7 +33,7 @@ Public Class ChaineEpisodeDao
         Return chaineEpisodes
     End Function
 
-    Public Function GetListByPatient(patientId As Integer, Optional chaineId As Long = Nothing, Optional antecedentId As Long = Nothing) As List(Of ChaineEpisode)
+    Public Function GetListByPatient(patientId As Integer, Optional chaineId As Long = Nothing, Optional antecedentId As Long = Nothing, Optional other As String = Nothing) As List(Of ChaineEpisode)
         Dim con As SqlConnection = GetConnection()
         Dim chaineEpisodes As List(Of ChaineEpisode) = New List(Of ChaineEpisode)
 
@@ -41,14 +41,19 @@ Public Class ChaineEpisodeDao
             Dim command As SqlCommand = con.CreateCommand()
             command.CommandText = "
             SELECT * From oasis.oa_chaine_episode, oasis.oa_antecedent
-            WHERE oasis.oa_chaine_episode.id = oasis.oa_antecedent.oa_antecedent_id
+            WHERE oasis.oa_chaine_episode.antecedent_id = oasis.oa_antecedent.oa_antecedent_id
             AND oasis.oa_antecedent.oa_antecedent_patient_id = " + patientId.ToString
-            If chaineId Then
+            If chaineId <> Nothing Then
                 command.CommandText += "AND oasis.oa_chaine_episode.chaine_id = " + If(chaineId = 0, "NULL", CStr(chaineId))
             End If
-            If antecedentId Then
+            If antecedentId <> Nothing Then
                 command.CommandText += "AND oasis.oa_chaine_episode.antecedent_id = " + If(antecedentId = 0, "NULL", CStr(antecedentId))
             End If
+
+            If other <> Nothing Then
+                command.CommandText += other
+            End If
+            Debug.WriteLine(GetSqlCommandTextForLogs(command))
 
             Using reader As SqlDataReader = command.ExecuteReader()
                 While (reader.Read())
@@ -199,6 +204,7 @@ Public Class ChaineEpisodeDao
         End Try
     End Sub
 
+    'TODO: FIX error
     Public Function GetRelationListByPatient(patientId As Integer) As List(Of RelationChaineEpisode)
         Dim con As SqlConnection = GetConnection()
         Dim relationChaineEpisodes As List(Of RelationChaineEpisode) = New List(Of RelationChaineEpisode)
@@ -224,13 +230,36 @@ Public Class ChaineEpisodeDao
         Return relationChaineEpisodes
     End Function
 
+    Public Function GetRelationListByEpisode(episode As Episode) As List(Of RelationChaineEpisode)
+        Dim con As SqlConnection = GetConnection()
+        Dim relationChaineEpisodes As List(Of RelationChaineEpisode) = New List(Of RelationChaineEpisode)
+
+        Try
+            Dim command As SqlCommand = con.CreateCommand()
+            command.CommandText = "
+            SELECT oasis.oa_relation_chaine_episode.* From oasis.oa_relation_chaine_episode
+            WHERE  oasis.oa_relation_chaine_episode.episode_id = " + episode.Id.ToString
+            Using reader As SqlDataReader = command.ExecuteReader()
+                While (reader.Read())
+                    relationChaineEpisodes.Add(BuildBeanR(reader))
+                End While
+            End Using
+        Catch ex As Exception
+            Throw ex
+        Finally
+            con.Close()
+        End Try
+
+        Return relationChaineEpisodes
+    End Function
+
     'Public Function GetLstSousEpisodeReponseMail() As List(Of SousEpisodeReponseMail)
     '    Dim con As SqlConnection = GetConnection()
     '    Dim sousEpisodeReponseMails As List(Of SousEpisodeReponseMail) = New List(Of SousEpisodeReponseMail)
 
     '    Try
     '        Dim command As SqlCommand = con.CreateCommand()
-    '        command.CommandText = "SELECT id, auteur, objet, status, horodate_creation, patient_id FROM oasis.oa_sous_episode_reponse_mail WHERE status='unprocessed'"
+    '        command.CommandText = "Select id, auteur, objet, status, horodate_creation, patient_id FROM oasis.oa_sous_episode_reponse_mail WHERE status='unprocessed'"
     '        Using reader As SqlDataReader = command.ExecuteReader()
     '            While (reader.Read())
     '                sousEpisodeReponseMails.Add(BuildBean(reader))

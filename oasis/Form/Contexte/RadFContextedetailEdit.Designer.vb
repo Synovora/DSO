@@ -23,11 +23,22 @@ Partial Class RadFContextedetailEdit
     <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
         Me.components = New System.ComponentModel.Container()
+        Dim GridViewCheckBoxColumn1 As Telerik.WinControls.UI.GridViewCheckBoxColumn = New Telerik.WinControls.UI.GridViewCheckBoxColumn()
+        Dim GridViewTextBoxColumn1 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
+        Dim GridViewTextBoxColumn2 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
         Dim GridViewTextBoxColumn3 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
         Dim GridViewTextBoxColumn4 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
-        Dim GridViewCheckBoxColumn2 As Telerik.WinControls.UI.GridViewCheckBoxColumn = New Telerik.WinControls.UI.GridViewCheckBoxColumn()
-        Dim SortDescriptor2 As Telerik.WinControls.Data.SortDescriptor = New Telerik.WinControls.Data.SortDescriptor()
-        Dim TableViewDefinition2 As Telerik.WinControls.UI.TableViewDefinition = New Telerik.WinControls.UI.TableViewDefinition()
+        Dim GridViewTextBoxColumn5 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
+        Dim GridViewTextBoxColumn6 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
+        Dim GridViewTextBoxColumn7 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
+        Dim GridViewTextBoxColumn8 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
+        Dim GridViewTextBoxColumn9 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
+        Dim GridViewTextBoxColumn10 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
+        Dim GridViewTextBoxColumn11 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
+        Dim GridViewTextBoxColumn12 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
+        Dim GridViewTextBoxColumn13 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
+        Dim GridViewTextBoxColumn14 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
+        Dim TableViewDefinition1 As Telerik.WinControls.UI.TableViewDefinition = New Telerik.WinControls.UI.TableViewDefinition()
         Me.RadGroupBoxEtatCivil = New Telerik.WinControls.UI.RadGroupBox()
         Me.LblALD = New System.Windows.Forms.Label()
         Me.Label13 = New System.Windows.Forms.Label()
@@ -93,9 +104,9 @@ Partial Class RadFContextedetailEdit
         Me.RadDtnAbandon = New Telerik.WinControls.UI.RadButton()
         Me.RadGroupBox2 = New Telerik.WinControls.UI.RadGroupBox()
         Me.RadGroupBox3 = New Telerik.WinControls.UI.RadGroupBox()
-        Me.RadioButtonTous = New System.Windows.Forms.RadioButton()
-        Me.RadioButtonNonMasque = New System.Windows.Forms.RadioButton()
         Me.RadGridViewChaineEpisode = New Telerik.WinControls.UI.RadGridView()
+        Me.RadChkTous = New Telerik.WinControls.UI.RadCheckBox()
+        Me.RadChkPublie = New Telerik.WinControls.UI.RadCheckBox()
         CType(Me.RadGroupBoxEtatCivil, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.RadGroupBoxEtatCivil.SuspendLayout()
         CType(Me.GbxPrincipal, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -118,6 +129,8 @@ Partial Class RadFContextedetailEdit
         Me.RadGroupBox3.SuspendLayout()
         CType(Me.RadGridViewChaineEpisode, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.RadGridViewChaineEpisode.MasterTemplate, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.RadChkTous, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.RadChkPublie, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
@@ -781,40 +794,18 @@ Partial Class RadFContextedetailEdit
         'RadGroupBox3
         '
         Me.RadGroupBox3.AccessibleRole = System.Windows.Forms.AccessibleRole.Grouping
-        Me.RadGroupBox3.Controls.Add(Me.RadioButtonTous)
-        Me.RadGroupBox3.Controls.Add(Me.RadioButtonNonMasque)
         Me.RadGroupBox3.Controls.Add(Me.RadGridViewChaineEpisode)
-        Me.RadGroupBox3.HeaderText = "Chaine d'episode"
+        Me.RadGroupBox3.Controls.Add(Me.RadChkTous)
+        Me.RadGroupBox3.Controls.Add(Me.RadChkPublie)
+        Me.RadGroupBox3.HeaderText = "Antecedents"
         Me.RadGroupBox3.Location = New System.Drawing.Point(966, 12)
         Me.RadGroupBox3.Name = "RadGroupBox3"
         Me.RadGroupBox3.Size = New System.Drawing.Size(314, 455)
         Me.RadGroupBox3.TabIndex = 76
-        Me.RadGroupBox3.Text = "Chaine d'episode"
+        Me.RadGroupBox3.Text = "Antecedents"
         CType(Me.RadGroupBox3.GetChildAt(0).GetChildAt(1), Telerik.WinControls.UI.GroupBoxHeader).GroupBoxStyle = Telerik.WinControls.UI.RadGroupBoxStyle.Standard
         CType(Me.RadGroupBox3.GetChildAt(0).GetChildAt(1).GetChildAt(0), Telerik.WinControls.Primitives.FillPrimitive).BackColor = System.Drawing.SystemColors.ActiveCaption
         CType(Me.RadGroupBox3.GetChildAt(0).GetChildAt(1).GetChildAt(0), Telerik.WinControls.Primitives.FillPrimitive).SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.None
-        '
-        'RadioButtonTous
-        '
-        Me.RadioButtonTous.AutoSize = True
-        Me.RadioButtonTous.Location = New System.Drawing.Point(108, 22)
-        Me.RadioButtonTous.Name = "RadioButtonTous"
-        Me.RadioButtonTous.Size = New System.Drawing.Size(49, 17)
-        Me.RadioButtonTous.TabIndex = 2
-        Me.RadioButtonTous.TabStop = True
-        Me.RadioButtonTous.Text = "Tous"
-        Me.RadioButtonTous.UseVisualStyleBackColor = True
-        '
-        'RadioButtonNonMasque
-        '
-        Me.RadioButtonNonMasque.AutoSize = True
-        Me.RadioButtonNonMasque.Location = New System.Drawing.Point(6, 22)
-        Me.RadioButtonNonMasque.Name = "RadioButtonNonMasque"
-        Me.RadioButtonNonMasque.Size = New System.Drawing.Size(95, 17)
-        Me.RadioButtonNonMasque.TabIndex = 1
-        Me.RadioButtonNonMasque.TabStop = True
-        Me.RadioButtonNonMasque.Text = "Non masques"
-        Me.RadioButtonNonMasque.UseVisualStyleBackColor = True
         '
         'RadGridViewChaineEpisode
         '
@@ -823,46 +814,131 @@ Partial Class RadFContextedetailEdit
         Me.RadGridViewChaineEpisode.Font = New System.Drawing.Font("Segoe UI", 8.25!)
         Me.RadGridViewChaineEpisode.ForeColor = System.Drawing.Color.Black
         Me.RadGridViewChaineEpisode.ImeMode = System.Windows.Forms.ImeMode.NoControl
-        Me.RadGridViewChaineEpisode.Location = New System.Drawing.Point(5, 45)
+        Me.RadGridViewChaineEpisode.Location = New System.Drawing.Point(4, 45)
         '
         '
         '
         Me.RadGridViewChaineEpisode.MasterTemplate.AllowAddNewRow = False
         Me.RadGridViewChaineEpisode.MasterTemplate.AllowCellContextMenu = False
-        Me.RadGridViewChaineEpisode.MasterTemplate.AllowColumnChooser = False
         Me.RadGridViewChaineEpisode.MasterTemplate.AllowColumnHeaderContextMenu = False
         Me.RadGridViewChaineEpisode.MasterTemplate.AllowColumnReorder = False
-        Me.RadGridViewChaineEpisode.MasterTemplate.AllowColumnResize = False
         Me.RadGridViewChaineEpisode.MasterTemplate.AllowDeleteRow = False
         Me.RadGridViewChaineEpisode.MasterTemplate.AllowDragToGroup = False
         Me.RadGridViewChaineEpisode.MasterTemplate.AllowEditRow = False
-        Me.RadGridViewChaineEpisode.MasterTemplate.AllowRowHeaderContextMenu = False
-        Me.RadGridViewChaineEpisode.MasterTemplate.AllowRowResize = False
+        GridViewCheckBoxColumn1.EnableExpressionEditor = False
+        GridViewCheckBoxColumn1.MinWidth = 20
+        GridViewCheckBoxColumn1.Name = "selected"
+        GridViewCheckBoxColumn1.Width = 30
+        GridViewTextBoxColumn1.AllowGroup = False
+        GridViewTextBoxColumn1.AllowResize = False
+        GridViewTextBoxColumn1.AllowSort = False
+        GridViewTextBoxColumn1.EnableExpressionEditor = False
+        GridViewTextBoxColumn1.FieldName = "antecedent"
+        GridViewTextBoxColumn1.HeaderText = "Antécédent"
+        GridViewTextBoxColumn1.HeaderTextAlignment = System.Drawing.ContentAlignment.MiddleLeft
+        GridViewTextBoxColumn1.Name = "antecedent"
+        GridViewTextBoxColumn1.VisibleInColumnChooser = False
+        GridViewTextBoxColumn1.Width = 975
+        GridViewTextBoxColumn2.AllowGroup = False
+        GridViewTextBoxColumn2.AllowResize = False
+        GridViewTextBoxColumn2.AllowSort = False
+        GridViewTextBoxColumn2.EnableExpressionEditor = False
+        GridViewTextBoxColumn2.FieldName = "antecedentDescription"
+        GridViewTextBoxColumn2.HeaderText = "Description"
+        GridViewTextBoxColumn2.IsVisible = False
+        GridViewTextBoxColumn2.Name = "antecedentDescription"
+        GridViewTextBoxColumn2.VisibleInColumnChooser = False
         GridViewTextBoxColumn3.EnableExpressionEditor = False
-        GridViewTextBoxColumn3.HeaderText = "column1"
+        GridViewTextBoxColumn3.FieldName = "antecedentId"
+        GridViewTextBoxColumn3.HeaderText = "Id."
         GridViewTextBoxColumn3.IsVisible = False
-        GridViewTextBoxColumn3.Name = "id"
+        GridViewTextBoxColumn3.Name = "antecedentId"
+        GridViewTextBoxColumn4.AllowGroup = False
+        GridViewTextBoxColumn4.AllowResize = False
+        GridViewTextBoxColumn4.AllowSort = False
         GridViewTextBoxColumn4.EnableExpressionEditor = False
-        GridViewTextBoxColumn4.HeaderText = "nom"
-        GridViewTextBoxColumn4.MinWidth = 250
-        GridViewTextBoxColumn4.Name = "name"
-        GridViewTextBoxColumn4.SortOrder = Telerik.WinControls.UI.RadSortOrder.Ascending
-        GridViewTextBoxColumn4.Width = 250
-        GridViewCheckBoxColumn2.EnableExpressionEditor = False
-        GridViewCheckBoxColumn2.HeaderText = "selectionne"
-        GridViewCheckBoxColumn2.MinWidth = 50
-        GridViewCheckBoxColumn2.Name = "selected"
-        GridViewCheckBoxColumn2.ReadOnly = True
-        Me.RadGridViewChaineEpisode.MasterTemplate.Columns.AddRange(New Telerik.WinControls.UI.GridViewDataColumn() {GridViewTextBoxColumn3, GridViewCheckBoxColumn2, GridViewTextBoxColumn4})
+        GridViewTextBoxColumn4.FieldName = "antecedentDrcId"
+        GridViewTextBoxColumn4.HeaderText = "Drc Id."
+        GridViewTextBoxColumn4.IsVisible = False
+        GridViewTextBoxColumn4.Name = "antecedentDrcId"
+        GridViewTextBoxColumn4.VisibleInColumnChooser = False
+        GridViewTextBoxColumn5.AllowGroup = False
+        GridViewTextBoxColumn5.AllowResize = False
+        GridViewTextBoxColumn5.AllowSort = False
+        GridViewTextBoxColumn5.EnableExpressionEditor = False
+        GridViewTextBoxColumn5.FieldName = "antecedentNiveau"
+        GridViewTextBoxColumn5.HeaderText = "Niveau"
+        GridViewTextBoxColumn5.IsVisible = False
+        GridViewTextBoxColumn5.Name = "antecedentNiveau"
+        GridViewTextBoxColumn5.VisibleInColumnChooser = False
+        GridViewTextBoxColumn6.AllowGroup = False
+        GridViewTextBoxColumn6.AllowResize = False
+        GridViewTextBoxColumn6.AllowSort = False
+        GridViewTextBoxColumn6.EnableExpressionEditor = False
+        GridViewTextBoxColumn6.FieldName = "antecedentPereId"
+        GridViewTextBoxColumn6.HeaderText = "Id. Père"
+        GridViewTextBoxColumn6.IsVisible = False
+        GridViewTextBoxColumn6.Name = "antecedentPereId"
+        GridViewTextBoxColumn6.VisibleInColumnChooser = False
+        GridViewTextBoxColumn7.EnableExpressionEditor = False
+        GridViewTextBoxColumn7.FieldName = "antecedentAld"
+        GridViewTextBoxColumn7.HeaderText = "antecedentAld"
+        GridViewTextBoxColumn7.IsVisible = False
+        GridViewTextBoxColumn7.Name = "antecedentAld"
+        GridViewTextBoxColumn8.EnableExpressionEditor = False
+        GridViewTextBoxColumn8.HeaderText = "Ordre affichage"
+        GridViewTextBoxColumn8.IsVisible = False
+        GridViewTextBoxColumn8.Name = "ordreAffichage1"
+        GridViewTextBoxColumn9.EnableExpressionEditor = False
+        GridViewTextBoxColumn9.HeaderText = "column1"
+        GridViewTextBoxColumn9.IsVisible = False
+        GridViewTextBoxColumn9.Name = "ordreAffichage2"
+        GridViewTextBoxColumn10.EnableExpressionEditor = False
+        GridViewTextBoxColumn10.HeaderText = "column1"
+        GridViewTextBoxColumn10.IsVisible = False
+        GridViewTextBoxColumn10.Name = "ordreAffichage3"
+        GridViewTextBoxColumn11.EnableExpressionEditor = False
+        GridViewTextBoxColumn11.HeaderText = "column1"
+        GridViewTextBoxColumn11.IsVisible = False
+        GridViewTextBoxColumn11.Name = "antecedentIdPrecedent"
+        GridViewTextBoxColumn12.EnableExpressionEditor = False
+        GridViewTextBoxColumn12.HeaderText = "column1"
+        GridViewTextBoxColumn12.IsVisible = False
+        GridViewTextBoxColumn12.Name = "antecedentIdNiveau1"
+        GridViewTextBoxColumn13.EnableExpressionEditor = False
+        GridViewTextBoxColumn13.HeaderText = "column1"
+        GridViewTextBoxColumn13.IsVisible = False
+        GridViewTextBoxColumn13.Name = "antecedentIdNiveau2"
+        GridViewTextBoxColumn14.EnableExpressionEditor = False
+        GridViewTextBoxColumn14.HeaderText = "id"
+        GridViewTextBoxColumn14.IsVisible = False
+        GridViewTextBoxColumn14.Name = "id"
+        Me.RadGridViewChaineEpisode.MasterTemplate.Columns.AddRange(New Telerik.WinControls.UI.GridViewDataColumn() {GridViewCheckBoxColumn1, GridViewTextBoxColumn1, GridViewTextBoxColumn2, GridViewTextBoxColumn3, GridViewTextBoxColumn4, GridViewTextBoxColumn5, GridViewTextBoxColumn6, GridViewTextBoxColumn7, GridViewTextBoxColumn8, GridViewTextBoxColumn9, GridViewTextBoxColumn10, GridViewTextBoxColumn11, GridViewTextBoxColumn12, GridViewTextBoxColumn13, GridViewTextBoxColumn14})
+        Me.RadGridViewChaineEpisode.MasterTemplate.ShowColumnHeaders = False
         Me.RadGridViewChaineEpisode.MasterTemplate.ShowRowHeaderColumn = False
-        SortDescriptor2.PropertyName = "name"
-        Me.RadGridViewChaineEpisode.MasterTemplate.SortDescriptors.AddRange(New Telerik.WinControls.Data.SortDescriptor() {SortDescriptor2})
-        Me.RadGridViewChaineEpisode.MasterTemplate.ViewDefinition = TableViewDefinition2
+        Me.RadGridViewChaineEpisode.MasterTemplate.ViewDefinition = TableViewDefinition1
         Me.RadGridViewChaineEpisode.Name = "RadGridViewChaineEpisode"
+        Me.RadGridViewChaineEpisode.ReadOnly = True
         Me.RadGridViewChaineEpisode.RightToLeft = System.Windows.Forms.RightToLeft.No
         Me.RadGridViewChaineEpisode.ShowGroupPanel = False
-        Me.RadGridViewChaineEpisode.Size = New System.Drawing.Size(304, 405)
-        Me.RadGridViewChaineEpisode.TabIndex = 0
+        Me.RadGridViewChaineEpisode.Size = New System.Drawing.Size(305, 405)
+        Me.RadGridViewChaineEpisode.TabIndex = 3
+        '
+        'RadChkTous
+        '
+        Me.RadChkTous.Location = New System.Drawing.Point(107, 20)
+        Me.RadChkTous.Name = "RadChkTous"
+        Me.RadChkTous.Size = New System.Drawing.Size(44, 18)
+        Me.RadChkTous.TabIndex = 5
+        Me.RadChkTous.Text = "Tous"
+        '
+        'RadChkPublie
+        '
+        Me.RadChkPublie.Location = New System.Drawing.Point(5, 21)
+        Me.RadChkPublie.Name = "RadChkPublie"
+        Me.RadChkPublie.Size = New System.Drawing.Size(96, 18)
+        Me.RadChkPublie.TabIndex = 4
+        Me.RadChkPublie.Text = "Non masqué(s)"
         '
         'RadFContextedetailEdit
         '
@@ -935,6 +1011,8 @@ Partial Class RadFContextedetailEdit
         Me.RadGroupBox3.PerformLayout()
         CType(Me.RadGridViewChaineEpisode.MasterTemplate, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.RadGridViewChaineEpisode, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.RadChkTous, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.RadChkPublie, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
         Me.PerformLayout()
@@ -1006,7 +1084,7 @@ Partial Class RadFContextedetailEdit
     Friend WithEvents RadioBtnBioEnvironnemental As RadioButton
     Friend WithEvents RadioBtnMedical As RadioButton
     Friend WithEvents RadGroupBox3 As Telerik.WinControls.UI.RadGroupBox
-    Friend WithEvents RadioButtonTous As RadioButton
-    Friend WithEvents RadioButtonNonMasque As RadioButton
     Friend WithEvents RadGridViewChaineEpisode As Telerik.WinControls.UI.RadGridView
+    Friend WithEvents RadChkTous As Telerik.WinControls.UI.RadCheckBox
+    Friend WithEvents RadChkPublie As Telerik.WinControls.UI.RadCheckBox
 End Class
