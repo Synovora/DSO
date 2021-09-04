@@ -34,6 +34,8 @@
     Property Categorie As String
     Property Inactif As Boolean
 
+    Property ChaineEpisodeDateFin As Date
+
     Sub New()
         InitInstance()
     End Sub

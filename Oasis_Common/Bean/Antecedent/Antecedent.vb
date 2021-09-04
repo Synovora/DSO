@@ -47,6 +47,7 @@ Public Class Antecedent
     Property CategorieContexte As String
     Property EpisodeId As Long
     Property Inactif As Boolean
+    Property ChaineEpisodeDateFin As Date
 
     Public Function Clone() As Antecedent
         Dim newInstance As Antecedent = DirectCast(Me.MemberwiseClone(), Antecedent)
@@ -91,6 +92,11 @@ Public Class Antecedent
         Me.CategorieContexte = Coalesce(reader("oa_antecedent_categorie_contexte"), Nothing)
         Me.EpisodeId = Coalesce(reader("oa_episode_id"), Nothing)
         Me.Inactif = Coalesce(reader("oa_antecedent_inactif"), Nothing)
+        Me.ChaineEpisodeDateFin = Coalesce(reader("oa_chaine_episode_date_fin"), Nothing)
     End Sub
+
+    Public Function isChaineEpisodeEnable() As Boolean
+        Return If(Me.ChaineEpisodeDateFin > Date.Now(), True, False)
+    End Function
 
 End Class

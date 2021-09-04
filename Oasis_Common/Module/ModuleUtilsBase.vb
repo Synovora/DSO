@@ -40,6 +40,15 @@ Public Module ModuleUtilsBase
         Return text
     End Function
 
+    Public Function N2N(ByVal ParamArray Parameters As Object()) As Object
+        For Each Parameter As Object In Parameters
+            If Not Parameter Is Nothing AndAlso Parameter <> Nothing Then
+                Return Parameter
+            End If
+        Next
+        Return DBNull.Value
+    End Function
+
     ''' <summary>
     ''' 
     ''' </summary>

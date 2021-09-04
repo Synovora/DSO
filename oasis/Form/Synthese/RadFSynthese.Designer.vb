@@ -165,6 +165,7 @@ Partial Class RadFSynthese
         Me.Panel2 = New System.Windows.Forms.Panel()
         Me.RadButtonAbandon = New Telerik.WinControls.UI.RadButton()
         Me.BtnMail = New Telerik.WinControls.UI.RadButton()
+        Me.ChkChaineEpisodeActive = New Telerik.WinControls.UI.RadCheckBox()
         CType(Me.RadGroupBoxEtatCivil, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.RadGroupBoxEtatCivil.SuspendLayout()
         Me.EtatCivilContextMenuStrip.SuspendLayout()
@@ -226,6 +227,7 @@ Partial Class RadFSynthese
         CType(Me.RadBtnLeft, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.RadButtonAbandon, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.BtnMail, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.ChkChaineEpisodeActive, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
@@ -1440,12 +1442,21 @@ Partial Class RadFSynthese
         Me.BtnMail.TabIndex = 64
         Me.BtnMail.Text = "Envoyer par email"
         '
+        'ChkChaineEpisodeActive
+        '
+        Me.ChkChaineEpisodeActive.Location = New System.Drawing.Point(760, 44)
+        Me.ChkChaineEpisodeActive.Name = "ChkChaineEpisodeActive"
+        Me.ChkChaineEpisodeActive.Size = New System.Drawing.Size(119, 18)
+        Me.ChkChaineEpisodeActive.TabIndex = 6
+        Me.ChkChaineEpisodeActive.Text = "Pathologie en cours"
+        '
         'RadFSynthese
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.CancelButton = Me.RadButtonAbandon
         Me.ClientSize = New System.Drawing.Size(1024, 947)
+        Me.Controls.Add(Me.ChkChaineEpisodeActive)
         Me.Controls.Add(Me.BtnMail)
         Me.Controls.Add(Me.Panel2)
         Me.Controls.Add(Me.Panel1)
@@ -1555,6 +1566,7 @@ Partial Class RadFSynthese
         CType(Me.RadBtnLeft, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.RadButtonAbandon, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.BtnMail, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.ChkChaineEpisodeActive, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
         Me.PerformLayout()
@@ -1659,5 +1671,6 @@ Partial Class RadFSynthese
     Friend WithEvents Panel1 As Panel
     Friend WithEvents Panel2 As Panel
     Friend WithEvents BtnMail As Telerik.WinControls.UI.RadButton
+    Friend WithEvents ChkChaineEpisodeActive As Telerik.WinControls.UI.RadCheckBox
 End Class
 

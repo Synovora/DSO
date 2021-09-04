@@ -15,65 +15,54 @@ Public Class AntecedentHistoCreationDao
         Dim da As SqlDataAdapter = New SqlDataAdapter()
         Dim codeRetour As Boolean = True
         Dim dateCreation As DateTime = Date.Now.Date
-        Dim Arret, Inactif As Integer
 
-        If AntecedentHistoACreer.Arret = True Then
-            Arret = 1
-        Else
-            Arret = 0
-        End If
+        Dim cmd As New SqlCommand("insert into oasis.oa_antecedent_histo (oa_antecedent_histo_date_historisation, oa_antecedent_histo_utilisateur_historisation," & vbCrLf &
+        " oa_antecedent_histo_etat_historisation, oa_antecedent_id, oa_antecedent_patient_id, oa_antecedent_type, oa_antecedent_drc_id, oa_antecedent_description," & vbCrLf &
+        " oa_antecedent_date_debut, oa_antecedent_date_fin, oa_antecedent_arret, oa_antecedent_arret_commentaire, oa_antecedent_nature," & vbCrLf &
+        " oa_antecedent_niveau, oa_antecedent_id_niveau1, oa_antecedent_id_niveau2, oa_antecedent_ordre_affichage1, oa_antecedent_ordre_affichage2, oa_antecedent_ordre_affichage3," & vbCrLf &
+        " oa_antecedent_statut_affichage, oa_antecedent_categorie_contexte, oa_antecedent_inactif, oa_antecedent_diagnostic, oa_antecedent_ald_id, oa_antecedent_ald_cim_10_id," & vbCrLf &
+        " oa_antecedent_ald_valide, oa_antecedent_ald_date_debut, oa_antecedent_ald_date_fin, oa_antecedent_ald_demande_en_cours, oa_antecedent_ald_demande_date, oa_chaine_episode_date_fin)" & vbCrLf &
+        " VALUES (@dateHistorisation, @utilisateurHistorisation, @etatHistorisation, @antecedentId, @patientId, @type, @drcId, @description, @dateDebut," & vbCrLf &
+        " @dateFin, @arret, @arretCommentaire, @nature, @niveau, @antecedentId1, @antecedentId2, @ordreAffichage1, @ordreAffichage2, @ordreAffichage3, @statutAffichage," & vbCrLf &
+        " @categorie, @inactif, @diagnostic, @aldId, @aldCim10Id, @aldValide, @alddateDebut, @aldDateFin, @aldDemandeEnCours, @aldDateDemande, @chaineEpisodeDateFin);", conxn)
 
-        If AntecedentHistoACreer.Inactif = True Then
-            Inactif = 1
-        Else
-            Inactif = 0
-        End If
-
-        Dim SQLstring As String = "insert into oasis.oa_antecedent_histo (oa_antecedent_histo_date_historisation, oa_antecedent_histo_utilisateur_historisation," &
-        " oa_antecedent_histo_etat_historisation, oa_antecedent_id, oa_antecedent_patient_id, oa_antecedent_type, oa_antecedent_drc_id, oa_antecedent_description," &
-        " oa_antecedent_date_debut, oa_antecedent_date_fin, oa_antecedent_arret, oa_antecedent_arret_commentaire, oa_antecedent_nature," &
-        " oa_antecedent_niveau, oa_antecedent_id_niveau1, oa_antecedent_id_niveau2, oa_antecedent_ordre_affichage1, oa_antecedent_ordre_affichage2, oa_antecedent_ordre_affichage3," &
-        " oa_antecedent_statut_affichage, oa_antecedent_categorie_contexte, oa_antecedent_inactif, oa_antecedent_diagnostic, oa_antecedent_ald_id, oa_antecedent_ald_cim_10_id," &
-        " oa_antecedent_ald_valide, oa_antecedent_ald_date_debut, oa_antecedent_ald_date_fin, oa_antecedent_ald_demande_en_cours, oa_antecedent_ald_demande_date)" &
-        " VALUES (@dateHistorisation, @utilisateurHistorisation, @etatHistorisation, @antecedentId, @patientId, @type, @drcId, @description, @dateDebut," &
-        " @dateFin, @arret, @arretCommentaire, @nature, @niveau, @antecedentId1, @antecedentId2, @ordreAffichage1, @ordreAffichage2, @ordreAffichage3, @statutAffichage," &
-        " @categorie, @inactif, @diagnostic, @aldId, @aldCim10Id, @aldValide, @alddateDebut, @aldDateFin, @aldDemandeEnCours, @aldDateDemande);"
-
-        Dim cmd As New SqlCommand(SQLstring, conxn)
 
         With cmd.Parameters
             .AddWithValue("@dateHistorisation", DateTime.Now().ToString("yyyy-MM-dd HH:mm:ss"))
             .AddWithValue("@utilisateurHistorisation", UtilisateurConnecte.UtilisateurId.ToString)
             .AddWithValue("@etatHistorisation", EtatHistorisation.ToString)
-            .AddWithValue("@antecedentId", AntecedentHistoACreer.AntecedentId.ToString)
-            .AddWithValue("@patientId", AntecedentHistoACreer.PatientId.ToString)
-            .AddWithValue("@type", AntecedentHistoACreer.Type)
-            .AddWithValue("@drcId", AntecedentHistoACreer.DrcId.ToString)
-            .AddWithValue("@description", AntecedentHistoACreer.Description)
-            .AddWithValue("@dateDebut", AntecedentHistoACreer.DateDebut.ToString("yyyy-MM-dd HH:mm:ss"))
-            .AddWithValue("@dateFin", AntecedentHistoACreer.DateFin.ToString("yyyy-MM-dd HH:mm:ss"))
-            .AddWithValue("@arret", Arret.ToString)
-            .AddWithValue("@arretCommentaire", AntecedentHistoACreer.ArretCommentaire)
-            .AddWithValue("@nature", AntecedentHistoACreer.Nature)
-            .AddWithValue("@niveau", AntecedentHistoACreer.Niveau)
-            .AddWithValue("@antecedentId1", AntecedentHistoACreer.Niveau1Id)
-            .AddWithValue("@antecedentId2", AntecedentHistoACreer.Niveau2Id)
-            .AddWithValue("@ordreAffichage1", AntecedentHistoACreer.Ordre1.ToString)
-            .AddWithValue("@ordreAffichage2", AntecedentHistoACreer.Ordre2.ToString)
-            .AddWithValue("@ordreAffichage3", AntecedentHistoACreer.Ordre3.ToString)
-            .AddWithValue("@statutAffichage", AntecedentHistoACreer.StatutAffichage.ToString)
-            .AddWithValue("@categorie", AntecedentHistoACreer.Categorie)
-            .AddWithValue("@inactif", Inactif.ToString)
-            .AddWithValue("@diagnostic", AntecedentHistoACreer.Diagnostic)
-            .AddWithValue("@aldId", AntecedentHistoACreer.AldId)
-            .AddWithValue("@aldCim10Id", AntecedentHistoACreer.AldCim10Id)
-            .AddWithValue("@aldValide", AntecedentHistoACreer.AldValide)
-            .AddWithValue("@alddateDebut", AntecedentHistoACreer.AldDateDebut)
-            .AddWithValue("@alddateFin", AntecedentHistoACreer.AldDateFin)
-            .AddWithValue("@aldDemandeEnCours", AntecedentHistoACreer.AldDemandeEnCours)
-            .AddWithValue("@aldDateDemande", AntecedentHistoACreer.AldDateDemande)
+            .AddWithValue("@antecedentId", N2N(AntecedentHistoACreer.AntecedentId.ToString))
+            .AddWithValue("@patientId", N2N(AntecedentHistoACreer.PatientId.ToString))
+            .AddWithValue("@type", N2N(AntecedentHistoACreer.Type))
+            .AddWithValue("@drcId", N2N(AntecedentHistoACreer.DrcId.ToString))
+            .AddWithValue("@description", N2N(AntecedentHistoACreer.Description))
+            .AddWithValue("@dateDebut", N2N(AntecedentHistoACreer.DateDebut.ToString("yyyy-MM-dd HH:mm:ss")))
+            .AddWithValue("@dateFin", N2N(AntecedentHistoACreer.DateFin.ToString("yyyy-MM-dd HH:mm:ss")))
+            .AddWithValue("@arret", N2N(If(AntecedentHistoACreer.Arret = True, "1", "0")))
+            .AddWithValue("@arretCommentaire", N2N(AntecedentHistoACreer.ArretCommentaire))
+            .AddWithValue("@nature", N2N(AntecedentHistoACreer.Nature))
+            .AddWithValue("@niveau", N2N(AntecedentHistoACreer.Niveau))
+            .AddWithValue("@antecedentId1", N2N(AntecedentHistoACreer.Niveau1Id))
+            .AddWithValue("@antecedentId2", N2N(AntecedentHistoACreer.Niveau2Id))
+            .AddWithValue("@ordreAffichage1", N2N(AntecedentHistoACreer.Ordre1.ToString))
+            .AddWithValue("@ordreAffichage2", N2N(AntecedentHistoACreer.Ordre2.ToString))
+            .AddWithValue("@ordreAffichage3", N2N(AntecedentHistoACreer.Ordre3.ToString))
+            .AddWithValue("@statutAffichage", N2N(AntecedentHistoACreer.StatutAffichage.ToString))
+            .AddWithValue("@categorie", N2N(AntecedentHistoACreer.Categorie))
+            .AddWithValue("@inactif", N2N(If(AntecedentHistoACreer.Inactif = True, "1", "0")))
+            .AddWithValue("@diagnostic", N2N(AntecedentHistoACreer.Diagnostic))
+            .AddWithValue("@aldId", N2N(AntecedentHistoACreer.AldId))
+            .AddWithValue("@aldCim10Id", N2N(AntecedentHistoACreer.AldCim10Id))
+            .AddWithValue("@aldValide", N2N(AntecedentHistoACreer.AldValide))
+            .AddWithValue("@alddateDebut", N2N(AntecedentHistoACreer.AldDateDebut))
+            .AddWithValue("@alddateFin", N2N(AntecedentHistoACreer.AldDateFin))
+            .AddWithValue("@aldDemandeEnCours", N2N(AntecedentHistoACreer.AldDemandeEnCours))
+            .AddWithValue("@aldDateDemande", N2N(AntecedentHistoACreer.AldDateDemande))
+            .AddWithValue("@chaineEpisodeDateFin", N2N(AntecedentHistoACreer.ChaineEpisodeDateFin))
         End With
-
+        If AntecedentHistoACreer.ChaineEpisodeDateFin = Nothing Then
+            Debug.WriteLine("ok")
+        End If
         Try
             conxn.Open()
             da.InsertCommand = cmd
@@ -89,7 +78,6 @@ Public Class AntecedentHistoCreationDao
     End Function
 
     Public Shared Function InitAntecedentHistorisation(antecedent As Antecedent, UtilisateurConnecte As Utilisateur, AntecedentHistoACreer As AntecedentHisto)
-        'Initialisation classe Historisation antecedent
         AntecedentHistoACreer.HistorisationDate = Date.Now()
         AntecedentHistoACreer.UtilisateurId = UtilisateurConnecte.UtilisateurId
         AntecedentHistoACreer.Etat = 0
@@ -124,6 +112,7 @@ Public Class AntecedentHistoCreationDao
         AntecedentHistoACreer.AldDateFin = antecedent.AldDateFin
         AntecedentHistoACreer.AldDemandeEnCours = antecedent.AldDemandeEnCours
         AntecedentHistoACreer.AldDateDemande = antecedent.AldDateDemande
+        AntecedentHistoACreer.ChaineEpisodeDateFin = antecedent.ChaineEpisodeDateFin
     End Function
 
     Public Shared Function InitClasseAntecedentHistorisation(antecedentDataReader As SqlDataReader, UtilisateurConnecte As Utilisateur, AntecedentHistoACreer As AntecedentHisto)
@@ -242,6 +231,7 @@ Public Class AntecedentHistoCreationDao
         AntecedentHistoACreer.AldDateFin = Coalesce(antecedentDataReader("oa_antecedent_ald_date_fin"), Date.Now())
         AntecedentHistoACreer.AldDemandeEnCours = Coalesce(antecedentDataReader("oa_antecedent_ald_demande_en_cours"), False)
         AntecedentHistoACreer.AldDateDemande = Coalesce(antecedentDataReader("oa_antecedent_ald_demande_date"), Date.Now())
+        AntecedentHistoACreer.ChaineEpisodeDateFin = Coalesce(antecedentDataReader("oa_chaine_episode_date_fin"), Nothing)
     End Function
 
 End Class

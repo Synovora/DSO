@@ -825,6 +825,7 @@ Partial Class RadFContextedetailEdit
         Me.RadGridViewChaineEpisode.MasterTemplate.AllowDeleteRow = False
         Me.RadGridViewChaineEpisode.MasterTemplate.AllowDragToGroup = False
         Me.RadGridViewChaineEpisode.MasterTemplate.AllowEditRow = False
+        GridViewCheckBoxColumn1.EditMode = Telerik.WinControls.UI.EditMode.OnValueChange
         GridViewCheckBoxColumn1.EnableExpressionEditor = False
         GridViewCheckBoxColumn1.MinWidth = 20
         GridViewCheckBoxColumn1.Name = "selected"

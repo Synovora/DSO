@@ -95,6 +95,8 @@ Partial Class RadFAntecedentDetailEdit
         Me.Label11 = New System.Windows.Forms.Label()
         Me.RadGroupBox1 = New Telerik.WinControls.UI.RadGroupBox()
         Me.GbxStatutAffichage = New Telerik.WinControls.UI.RadGroupBox()
+        Me.Label1 = New System.Windows.Forms.Label()
+        Me.DteChaineEpisodeDateFin = New System.Windows.Forms.DateTimePicker()
         CType(Me.RadGroupBoxEtatCivil, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.RadGroupBoxEtatCivil.SuspendLayout()
         CType(Me.RadBtnRecupereDrc, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -399,7 +401,7 @@ Partial Class RadFAntecedentDetailEdit
         '
         Me.Label7.AutoSize = True
         Me.Label7.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label7.Location = New System.Drawing.Point(12, 354)
+        Me.Label7.Location = New System.Drawing.Point(9, 354)
         Me.Label7.Name = "Label7"
         Me.Label7.Size = New System.Drawing.Size(70, 13)
         Me.Label7.TabIndex = 58
@@ -416,7 +418,7 @@ Partial Class RadFAntecedentDetailEdit
         '
         Me.Label8.AutoSize = True
         Me.Label8.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label8.Location = New System.Drawing.Point(12, 439)
+        Me.Label8.Location = New System.Drawing.Point(9, 439)
         Me.Label8.Name = "Label8"
         Me.Label8.Size = New System.Drawing.Size(71, 13)
         Me.Label8.TabIndex = 56
@@ -503,7 +505,7 @@ Partial Class RadFAntecedentDetailEdit
         '
         Me.LblModificationAntecedent1.AutoSize = True
         Me.LblModificationAntecedent1.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.LblModificationAntecedent1.Location = New System.Drawing.Point(333, 521)
+        Me.LblModificationAntecedent1.Location = New System.Drawing.Point(322, 550)
         Me.LblModificationAntecedent1.Name = "LblModificationAntecedent1"
         Me.LblModificationAntecedent1.Size = New System.Drawing.Size(70, 13)
         Me.LblModificationAntecedent1.TabIndex = 85
@@ -513,7 +515,7 @@ Partial Class RadFAntecedentDetailEdit
         '
         Me.LblModificationAntecedent2.AutoSize = True
         Me.LblModificationAntecedent2.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.LblModificationAntecedent2.Location = New System.Drawing.Point(469, 521)
+        Me.LblModificationAntecedent2.Location = New System.Drawing.Point(458, 550)
         Me.LblModificationAntecedent2.Name = "LblModificationAntecedent2"
         Me.LblModificationAntecedent2.Size = New System.Drawing.Size(25, 13)
         Me.LblModificationAntecedent2.TabIndex = 84
@@ -523,7 +525,7 @@ Partial Class RadFAntecedentDetailEdit
         '
         Me.LblCreationAntecedent2.AutoSize = True
         Me.LblCreationAntecedent2.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.LblCreationAntecedent2.Location = New System.Drawing.Point(149, 521)
+        Me.LblCreationAntecedent2.Location = New System.Drawing.Point(138, 550)
         Me.LblCreationAntecedent2.Name = "LblCreationAntecedent2"
         Me.LblCreationAntecedent2.Size = New System.Drawing.Size(25, 13)
         Me.LblCreationAntecedent2.TabIndex = 83
@@ -532,7 +534,7 @@ Partial Class RadFAntecedentDetailEdit
         'LblUtilisateurModification
         '
         Me.LblUtilisateurModification.AutoSize = True
-        Me.LblUtilisateurModification.Location = New System.Drawing.Point(500, 521)
+        Me.LblUtilisateurModification.Location = New System.Drawing.Point(489, 550)
         Me.LblUtilisateurModification.Name = "LblUtilisateurModification"
         Me.LblUtilisateurModification.Size = New System.Drawing.Size(144, 13)
         Me.LblUtilisateurModification.TabIndex = 82
@@ -541,7 +543,7 @@ Partial Class RadFAntecedentDetailEdit
         'LblUtilisateurCreation
         '
         Me.LblUtilisateurCreation.AutoSize = True
-        Me.LblUtilisateurCreation.Location = New System.Drawing.Point(180, 521)
+        Me.LblUtilisateurCreation.Location = New System.Drawing.Point(169, 550)
         Me.LblUtilisateurCreation.Name = "LblUtilisateurCreation"
         Me.LblUtilisateurCreation.Size = New System.Drawing.Size(121, 13)
         Me.LblUtilisateurCreation.TabIndex = 81
@@ -551,7 +553,7 @@ Partial Class RadFAntecedentDetailEdit
         '
         Me.LblCreationAntecedent1.AutoSize = True
         Me.LblCreationAntecedent1.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.LblCreationAntecedent1.Location = New System.Drawing.Point(20, 521)
+        Me.LblCreationAntecedent1.Location = New System.Drawing.Point(9, 550)
         Me.LblCreationAntecedent1.Name = "LblCreationAntecedent1"
         Me.LblCreationAntecedent1.Size = New System.Drawing.Size(55, 13)
         Me.LblCreationAntecedent1.TabIndex = 78
@@ -560,7 +562,7 @@ Partial Class RadFAntecedentDetailEdit
         'LblAntecedentDateCreation
         '
         Me.LblAntecedentDateCreation.AutoSize = True
-        Me.LblAntecedentDateCreation.Location = New System.Drawing.Point(82, 521)
+        Me.LblAntecedentDateCreation.Location = New System.Drawing.Point(71, 550)
         Me.LblAntecedentDateCreation.Name = "LblAntecedentDateCreation"
         Me.LblAntecedentDateCreation.Size = New System.Drawing.Size(61, 13)
         Me.LblAntecedentDateCreation.TabIndex = 79
@@ -569,7 +571,7 @@ Partial Class RadFAntecedentDetailEdit
         'LblAntecedentDateModification
         '
         Me.LblAntecedentDateModification.AutoSize = True
-        Me.LblAntecedentDateModification.Location = New System.Drawing.Point(402, 521)
+        Me.LblAntecedentDateModification.Location = New System.Drawing.Point(391, 550)
         Me.LblAntecedentDateModification.Name = "LblAntecedentDateModification"
         Me.LblAntecedentDateModification.Size = New System.Drawing.Size(61, 13)
         Me.LblAntecedentDateModification.TabIndex = 80
@@ -598,7 +600,7 @@ Partial Class RadFAntecedentDetailEdit
         '
         Me.RadBtnValidation.ForeColor = System.Drawing.Color.Black
         Me.RadBtnValidation.Image = Global.Oasis_WF.My.Resources.Resources.validation2
-        Me.RadBtnValidation.Location = New System.Drawing.Point(14, 562)
+        Me.RadBtnValidation.Location = New System.Drawing.Point(12, 583)
         Me.RadBtnValidation.Name = "RadBtnValidation"
         Me.RadBtnValidation.Size = New System.Drawing.Size(110, 24)
         Me.RadBtnValidation.TabIndex = 80
@@ -609,7 +611,7 @@ Partial Class RadFAntecedentDetailEdit
         '
         Me.RadBtnAbandon.DialogResult = System.Windows.Forms.DialogResult.Cancel
         Me.RadBtnAbandon.Image = Global.Oasis_WF.My.Resources.Resources._exit
-        Me.RadBtnAbandon.Location = New System.Drawing.Point(940, 562)
+        Me.RadBtnAbandon.Location = New System.Drawing.Point(940, 583)
         Me.RadBtnAbandon.Name = "RadBtnAbandon"
         Me.RadBtnAbandon.Size = New System.Drawing.Size(24, 24)
         Me.RadBtnAbandon.TabIndex = 90
@@ -619,7 +621,7 @@ Partial Class RadFAntecedentDetailEdit
         '
         Me.RadBtnSupprimer.ForeColor = System.Drawing.Color.Black
         Me.RadBtnSupprimer.Image = Global.Oasis_WF.My.Resources.Resources.supprimer1
-        Me.RadBtnSupprimer.Location = New System.Drawing.Point(130, 562)
+        Me.RadBtnSupprimer.Location = New System.Drawing.Point(128, 583)
         Me.RadBtnSupprimer.Name = "RadBtnSupprimer"
         Me.RadBtnSupprimer.Size = New System.Drawing.Size(110, 24)
         Me.RadBtnSupprimer.TabIndex = 75
@@ -629,7 +631,7 @@ Partial Class RadFAntecedentDetailEdit
         'RadBtnHistorique
         '
         Me.RadBtnHistorique.Image = CType(resources.GetObject("RadBtnHistorique.Image"), System.Drawing.Image)
-        Me.RadBtnHistorique.Location = New System.Drawing.Point(246, 562)
+        Me.RadBtnHistorique.Location = New System.Drawing.Point(244, 583)
         Me.RadBtnHistorique.Name = "RadBtnHistorique"
         Me.RadBtnHistorique.Size = New System.Drawing.Size(110, 24)
         Me.RadBtnHistorique.TabIndex = 92
@@ -827,13 +829,32 @@ Partial Class RadFAntecedentDetailEdit
         CType(Me.GbxStatutAffichage.GetChildAt(0).GetChildAt(1).GetChildAt(0), Telerik.WinControls.Primitives.FillPrimitive).BackColor = System.Drawing.SystemColors.ActiveCaption
         CType(Me.GbxStatutAffichage.GetChildAt(0).GetChildAt(1).GetChildAt(0), Telerik.WinControls.Primitives.FillPrimitive).SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.None
         '
+        'Label1
+        '
+        Me.Label1.AutoSize = True
+        Me.Label1.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label1.Location = New System.Drawing.Point(9, 521)
+        Me.Label1.Name = "Label1"
+        Me.Label1.Size = New System.Drawing.Size(230, 13)
+        Me.Label1.TabIndex = 97
+        Me.Label1.Text = "Date de clôture de la chaîne d’épisode"
+        '
+        'DteChaineEpisodeDateFin
+        '
+        Me.DteChaineEpisodeDateFin.Location = New System.Drawing.Point(252, 515)
+        Me.DteChaineEpisodeDateFin.Name = "DteChaineEpisodeDateFin"
+        Me.DteChaineEpisodeDateFin.Size = New System.Drawing.Size(200, 20)
+        Me.DteChaineEpisodeDateFin.TabIndex = 96
+        '
         'RadFAntecedentDetailEdit
         '
         Me.AcceptButton = Me.RadBtnValidation
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.CancelButton = Me.RadBtnAbandon
-        Me.ClientSize = New System.Drawing.Size(977, 594)
+        Me.ClientSize = New System.Drawing.Size(977, 619)
+        Me.Controls.Add(Me.Label1)
+        Me.Controls.Add(Me.DteChaineEpisodeDateFin)
         Me.Controls.Add(Me.GbxStatutAffichage)
         Me.Controls.Add(Me.RadGroupBox1)
         Me.Controls.Add(Me.TxtAntecedentDescription)
@@ -968,5 +989,7 @@ Partial Class RadFAntecedentDetailEdit
     Friend WithEvents RadBtnHistorique As Telerik.WinControls.UI.RadButton
     Friend WithEvents RadGroupBox1 As Telerik.WinControls.UI.RadGroupBox
     Friend WithEvents GbxStatutAffichage As Telerik.WinControls.UI.RadGroupBox
+    Friend WithEvents Label1 As Label
+    Friend WithEvents DteChaineEpisodeDateFin As DateTimePicker
 End Class
 

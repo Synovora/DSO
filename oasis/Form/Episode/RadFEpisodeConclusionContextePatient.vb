@@ -40,6 +40,7 @@ Public Class RadFEpisodeConclusionContextePatient
 
     ReadOnly episodeContexteDao As New EpisodeContexteDao
     ReadOnly episodeDao As New EpisodeDao
+    ReadOnly antecedentDao As New AntecedentDao
 
     ReadOnly ListConclusion As List(Of Long) = New List(Of Long)
 
@@ -424,24 +425,24 @@ Public Class RadFEpisodeConclusionContextePatient
         End If
         filter += " AND (oasis.oa_antecedent.oa_antecedent_inactif = '0' OR oasis.oa_antecedent.oa_antecedent_inactif is Null) ORDER BY oasis.oa_antecedent.oa_antecedent_ordre_affichage1, oasis.oa_antecedent.oa_antecedent_ordre_affichage2, oasis.oa_antecedent.oa_antecedent_ordre_affichage3;"
 
-        Dim chaineEpsiodes = chaineEpisodeDao.GetListByPatient(SelectedPatient.PatientId, 0, 0, " AND oasis.oa_antecedent.oa_antecedent_type = 'A'" & filter)
+        Dim antecedents = antecedentDao.GetListByPatient(SelectedPatient.PatientId, " AND oasis.oa_antecedent.oa_antecedent_type = 'A'" & filter)
 
         RadGridViewChaineEpisodeAntecedent.Rows.Clear()
-        For Each chaineEpisode In chaineEpsiodes
-            RadGridViewChaineEpisodeAntecedent.Rows.Add(chaineEpsiodes.IndexOf(chaineEpisode))
-            RadGridViewChaineEpisodeAntecedent.Rows(chaineEpsiodes.IndexOf(chaineEpisode)).Cells("id").Value = chaineEpisode.Id
-            RadGridViewChaineEpisodeAntecedent.Rows(chaineEpsiodes.IndexOf(chaineEpisode)).Cells("name").Value = chaineEpisode.Antecedent.Description
-            RadGridViewChaineEpisodeAntecedent.Rows(chaineEpsiodes.IndexOf(chaineEpisode)).Cells("selected").Value = relationChaineEpisodes.Any(Function(myObject) myObject.ChaineId = chaineEpisode.Id)
+        For Each antecedent In antecedents
+            RadGridViewChaineEpisodeAntecedent.Rows.Add(antecedents.IndexOf(antecedent))
+            RadGridViewChaineEpisodeAntecedent.Rows(antecedents.IndexOf(antecedent)).Cells("id").Value = antecedent.Id
+            RadGridViewChaineEpisodeAntecedent.Rows(antecedents.IndexOf(antecedent)).Cells("name").Value = antecedent.Description
+            RadGridViewChaineEpisodeAntecedent.Rows(antecedents.IndexOf(antecedent)).Cells("selected").Value = relationChaineEpisodes.Any(Function(myObject) myObject.ChaineId = antecedent.Id)
         Next
 
-        chaineEpsiodes = chaineEpisodeDao.GetListByPatient(SelectedPatient.PatientId, 0, 0, " AND oasis.oa_antecedent.oa_antecedent_type = 'C' AND (oasis.oa_antecedent.oa_antecedent_arret = '0' OR oasis.oa_antecedent.oa_antecedent_arret is Null) " & filter)
+        antecedents = antecedentDao.GetListByPatient(SelectedPatient.PatientId, " AND oasis.oa_antecedent.oa_antecedent_type = 'C' AND (oasis.oa_antecedent.oa_antecedent_arret = '0' OR oasis.oa_antecedent.oa_antecedent_arret is Null) " & filter)
 
         RadGridViewChaineEpisodeContexte.Rows.Clear()
-        For Each chaineEpisode In chaineEpsiodes
-            RadGridViewChaineEpisodeContexte.Rows.Add(chaineEpsiodes.IndexOf(chaineEpisode))
-            RadGridViewChaineEpisodeContexte.Rows(chaineEpsiodes.IndexOf(chaineEpisode)).Cells("id").Value = chaineEpisode.Id
-            RadGridViewChaineEpisodeContexte.Rows(chaineEpsiodes.IndexOf(chaineEpisode)).Cells("name").Value = chaineEpisode.Antecedent.Description
-            RadGridViewChaineEpisodeContexte.Rows(chaineEpsiodes.IndexOf(chaineEpisode)).Cells("selected").Value = relationChaineEpisodes.Any(Function(myObject) myObject.ChaineId = chaineEpisode.Id)
+        For Each antecedent In antecedents
+            RadGridViewChaineEpisodeContexte.Rows.Add(antecedents.IndexOf(antecedent))
+            RadGridViewChaineEpisodeContexte.Rows(antecedents.IndexOf(antecedent)).Cells("id").Value = antecedent.Id
+            RadGridViewChaineEpisodeContexte.Rows(antecedents.IndexOf(antecedent)).Cells("name").Value = antecedent.Description
+            RadGridViewChaineEpisodeContexte.Rows(antecedents.IndexOf(antecedent)).Cells("selected").Value = relationChaineEpisodes.Any(Function(myObject) myObject.ChaineId = antecedent.Id)
         Next
     End Sub
 

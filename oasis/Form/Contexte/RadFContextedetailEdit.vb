@@ -11,6 +11,8 @@ Public Class RadFContextedetailEdit
     Private _positionGaucheDroite As Integer
     Private _conclusionEpisode As Boolean
     Private _episode As Episode
+    Property antecedents As List(Of Antecedent)
+    Property relationChaineEpisodes As List(Of ChaineEpisode)
 
     Dim InitPublie As Boolean
 
@@ -125,6 +127,7 @@ Public Class RadFContextedetailEdit
     'Dim conxn As New SqlConnection(getConnectionString())
     Dim ControleAutorisationModification As Boolean = True
 
+    Dim antecedentDao As New AntecedentDao
     Dim chaineEpisodeDao As New ChaineEpisodeDao
     Dim contexteReadDao As New AntecedentDao
     Dim contexteDao As New ContexteDao
@@ -242,14 +245,14 @@ Public Class RadFContextedetailEdit
     End Sub
 
     Private Sub RefreshChaineEpisode()
-        Dim chaineEpsiodes
         Dim filter = " AND oasis.oa_antecedent.oa_antecedent_type = 'A' AND (oasis.oa_antecedent.oa_antecedent_inactif = '0' OR oasis.oa_antecedent.oa_antecedent_inactif is Null)"
+
         If RadChkPublie.Checked = False Then
-            chaineEpsiodes = chaineEpisodeDao.GetListByPatient(SelectedPatient.PatientId, 0, 0, filter & " AND (oasis.oa_antecedent.oa_antecedent_statut_affichage = 'P' OR oasis.oa_antecedent.oa_antecedent_statut_affichage = 'C') ORDER BY oasis.oa_antecedent.oa_antecedent_ordre_affichage1, oasis.oa_antecedent.oa_antecedent_ordre_affichage2, oasis.oa_antecedent.oa_antecedent_ordre_affichage3;")
+            antecedents = antecedentDao.GetListByPatient(SelectedPatient.PatientId, filter & " AND (oasis.oa_antecedent.oa_antecedent_statut_affichage = 'P' OR oasis.oa_antecedent.oa_antecedent_statut_affichage = 'C') ORDER BY oasis.oa_antecedent.oa_antecedent_ordre_affichage1, oasis.oa_antecedent.oa_antecedent_ordre_affichage2, oasis.oa_antecedent.oa_antecedent_ordre_affichage3;")
         Else
-            chaineEpsiodes = chaineEpisodeDao.GetListByPatient(SelectedPatient.PatientId, 0, 0, filter & " AND oasis.oa_antecedent.oa_antecedent_statut_affichage = 'P' ORDER BY oasis.oa_antecedent.oa_antecedent_ordre_affichage1, oasis.oa_antecedent.oa_antecedent_ordre_affichage2, oasis.oa_antecedent.oa_antecedent_ordre_affichage3;")
+            antecedents = antecedentDao.GetListByPatient(SelectedPatient.PatientId, filter & " AND oasis.oa_antecedent.oa_antecedent_statut_affichage = 'P' ORDER BY oasis.oa_antecedent.oa_antecedent_ordre_affichage1, oasis.oa_antecedent.oa_antecedent_ordre_affichage2, oasis.oa_antecedent.oa_antecedent_ordre_affichage3;")
         End If
-        Dim relationChaineEpisodes = chaineEpisodeDao.GetList(SelectedContexteId)
+        relationChaineEpisodes = chaineEpisodeDao.GetList(SelectedContexteId)
 
         RadGridViewChaineEpisode.Rows.Clear()
 
@@ -264,8 +267,8 @@ Public Class RadFContextedetailEdit
         antecedentIdPrecedent2 = 0
 
         'Parcours du DataTable pour alimenter le DataGridView
-        For Each chaineEpsiode In chaineEpsiodes
-            Select Case chaineEpsiode.Antecedent.Niveau
+        For Each antecedent In antecedents
+            Select Case antecedent.Niveau
                 Case 1
                     indentation = ""
                 Case 2
@@ -277,44 +280,44 @@ Public Class RadFContextedetailEdit
             End Select
 
             AfficheDateModification = ""
-            If chaineEpsiode.Antecedent.DateModification <> Nothing Then
-                dateDateModification = chaineEpsiode.Antecedent.DateModification
+            If antecedent.DateModification <> Nothing Then
+                dateDateModification = antecedent.DateModification
                 AfficheDateModification = " (" + FormatageDateAffichage(dateDateModification) + ")"
             Else
-                If chaineEpsiode.Antecedent.DateCreation <> Nothing Then
-                    dateDateModification = chaineEpsiode.Antecedent.DateCreation
+                If antecedent.DateCreation <> Nothing Then
+                    dateDateModification = antecedent.DateCreation
                     AfficheDateModification = " (" + FormatageDateAffichage(dateDateModification) + ")"
                 End If
             End If
 
             'Identification si l'antécédent est caché
             antecedentCache = False
-            If chaineEpsiode.Antecedent.StatutAffichage <> Nothing Then
-                If chaineEpsiode.Antecedent.StatutAffichage = "C" Then
+            If antecedent.StatutAffichage <> Nothing Then
+                If antecedent.StatutAffichage = "C" Then
                     antecedentCache = True
                 End If
             End If
 
-            AldValide = Coalesce(chaineEpsiode.Antecedent.AldValide, False)
-            AldDateFin = Coalesce(chaineEpsiode.Antecedent.AldDateFin, Nothing)
+            AldValide = Coalesce(antecedent.AldValide, False)
+            AldDateFin = Coalesce(antecedent.AldDateFin, Nothing)
             AldValideOK = False
             If AldValide = True Then
                 If AldDateFin > Date.Now() Then
                     AldValideOK = True
                 End If
             End If
-            AldDemandeEnCours = Coalesce(chaineEpsiode.Antecedent.AldDemandeEnCours, False)
+            AldDemandeEnCours = Coalesce(antecedent.AldDemandeEnCours, False)
 
             iGrid += 1
             'Ajout d'une ligne au DataGridView
             RadGridViewChaineEpisode.Rows.Add(iGrid)
             'Alimentation du DataGridView
             diagnostic = ""
-            If chaineEpsiode.Antecedent.Diagnostic <> Nothing Then
-                If CInt(chaineEpsiode.Antecedent.Diagnostic) = 2 Then
+            If antecedent.Diagnostic <> Nothing Then
+                If CInt(antecedent.Diagnostic) = 2 Then
                     diagnostic = "Suspicion de : "
                 Else
-                    If CInt(chaineEpsiode.Antecedent.Diagnostic) = 3 Then
+                    If CInt(antecedent.Diagnostic) = 3 Then
                         diagnostic = "Notion de : "
                     End If
                 End If
@@ -323,12 +326,12 @@ Public Class RadFContextedetailEdit
             Dim antecedentDescription As String
 
             '===== Affichage antécédent
-            If chaineEpsiode.Antecedent.Description = Nothing Or chaineEpsiode.Antecedent.Description = "" Then
+            If antecedent.Description = Nothing Or antecedent.Description = "" Then
                 antecedentDescription = ""
             Else
-                antecedentDescription = chaineEpsiode.Antecedent.Description
+                antecedentDescription = antecedent.Description
                 antecedentDescription = Replace(antecedentDescription, vbCrLf, " ")
-                RadGridViewChaineEpisode.Rows(iGrid).Cells("antecedentDescription").Value = chaineEpsiode.Antecedent.Description
+                RadGridViewChaineEpisode.Rows(iGrid).Cells("antecedentDescription").Value = antecedent.Description
             End If
 
             Dim DescriptionDrcAld As String = ""
@@ -357,36 +360,36 @@ Public Class RadFContextedetailEdit
                 RadGridViewChaineEpisode.Rows(iGrid).Cells("antecedentAld").Value = ""
             End If
 
-            RadGridViewChaineEpisode.Rows(iGrid).Cells("id").Value = chaineEpsiode.Id
-            RadGridViewChaineEpisode.Rows(iGrid).Cells("antecedentId").Value = chaineEpsiode.Antecedent.Id
-            RadGridViewChaineEpisode.Rows(iGrid).Cells("selected").Value = relationChaineEpisodes.Any(Function(myObject) myObject.ChaineId = chaineEpsiode.Id)
-            RadGridViewChaineEpisode.Rows(iGrid).Cells("antecedentDrcId").Value = chaineEpsiode.Antecedent.DrcId
-            RadGridViewChaineEpisode.Rows(iGrid).Cells("antecedentNiveau").Value = chaineEpsiode.Antecedent.Niveau
-            RadGridViewChaineEpisode.Rows(iGrid).Cells("ordreAffichage1").Value = Coalesce(chaineEpsiode.Antecedent.Ordre1, 0)
-            RadGridViewChaineEpisode.Rows(iGrid).Cells("ordreAffichage2").Value = Coalesce(chaineEpsiode.Antecedent.Ordre2, 0)
-            RadGridViewChaineEpisode.Rows(iGrid).Cells("ordreAffichage3").Value = Coalesce(chaineEpsiode.Antecedent.Ordre3, 0)
-            RadGridViewChaineEpisode.Rows(iGrid).Cells("antecedentIdNiveau1").Value = Coalesce(chaineEpsiode.Antecedent.Niveau1Id, 0)
-            RadGridViewChaineEpisode.Rows(iGrid).Cells("antecedentIdNiveau2").Value = Coalesce(chaineEpsiode.Antecedent.Niveau2Id, 0)
+            RadGridViewChaineEpisode.Rows(iGrid).Cells("id").Value = antecedent.Id
+            RadGridViewChaineEpisode.Rows(iGrid).Cells("antecedentId").Value = antecedent.Id
+            RadGridViewChaineEpisode.Rows(iGrid).Cells("selected").Value = relationChaineEpisodes.Any(Function(myObject) myObject.ChaineId = antecedent.Id)
+            RadGridViewChaineEpisode.Rows(iGrid).Cells("antecedentDrcId").Value = antecedent.DrcId
+            RadGridViewChaineEpisode.Rows(iGrid).Cells("antecedentNiveau").Value = antecedent.Niveau
+            RadGridViewChaineEpisode.Rows(iGrid).Cells("ordreAffichage1").Value = Coalesce(antecedent.Ordre1, 0)
+            RadGridViewChaineEpisode.Rows(iGrid).Cells("ordreAffichage2").Value = Coalesce(antecedent.Ordre2, 0)
+            RadGridViewChaineEpisode.Rows(iGrid).Cells("ordreAffichage3").Value = Coalesce(antecedent.Ordre3, 0)
+            RadGridViewChaineEpisode.Rows(iGrid).Cells("antecedentIdNiveau1").Value = Coalesce(antecedent.Niveau1Id, 0)
+            RadGridViewChaineEpisode.Rows(iGrid).Cells("antecedentIdNiveau2").Value = Coalesce(antecedent.Niveau2Id, 0)
 
             'Déplacement horizontal, détermination de l'antécédent précédent
-            Select Case chaineEpsiode.Antecedent.Niveau
+            Select Case antecedent.Niveau
                 Case 1
                     RadGridViewChaineEpisode.Rows(iGrid).Cells("antecedentIdPrecedent").Value = antecedentIdPrecedent1
-                    antecedentIdPrecedent1 = chaineEpsiode.Antecedent.Id
+                    antecedentIdPrecedent1 = antecedent.Id
                     antecedentIdPrecedent2 = 0
                 Case 2
                     RadGridViewChaineEpisode.Rows(iGrid).Cells("antecedentIdPrecedent").Value = antecedentIdPrecedent2
-                    antecedentIdPrecedent2 = chaineEpsiode.Antecedent.Id
+                    antecedentIdPrecedent2 = antecedent.Id
                 Case 3
                     'Non concerné
             End Select
 
             'Déplacement vertical, détermination de l'antécédent pere si niveau 2 et 3
-            Select Case CInt(chaineEpsiode.Antecedent.Niveau)
+            Select Case CInt(antecedent.Niveau)
                 Case 2
-                    RadGridViewChaineEpisode.Rows(iGrid).Cells("antecedentPereId").Value = chaineEpsiode.Antecedent.Niveau1Id
+                    RadGridViewChaineEpisode.Rows(iGrid).Cells("antecedentPereId").Value = antecedent.Niveau1Id
                 Case 3
-                    RadGridViewChaineEpisode.Rows(iGrid).Cells("antecedentPereId").Value = chaineEpsiode.Antecedent.Niveau2Id
+                    RadGridViewChaineEpisode.Rows(iGrid).Cells("antecedentPereId").Value = antecedent.Niveau2Id
                 Case Else
                     RadGridViewChaineEpisode.Rows(iGrid).Cells("antecedentPereId").Value = 0
             End Select
@@ -628,12 +631,25 @@ Public Class RadFContextedetailEdit
         Select Case Traitement
             Case EnumTraitement.Creation
                 If ValidationContexte() = True Then
-                    If contexteDao.CreationContexte(contexteUpdate, ContexteHistoACreer, userLog, ConclusionEpisode, Episode) = True Then
+                    Dim contextId = contexteDao.CreationContexte(contexteUpdate, ContexteHistoACreer, userLog, ConclusionEpisode, Episode)
+
+                    If contextId <> 0 Then
                         If ConclusionEpisode = True Then
                             Dim episodeDao As New EpisodeDao
                             episodeDao.MajEpisodeConclusionMedicale(Episode.Id)
                         End If
                         CodeResultat = EnumResultat.CreationOK
+
+                        For Each row In RadGridViewChaineEpisode.Rows
+                            If row.Cells("selected").Value = True Then
+                                chaineEpisodeDao.Create(New ChaineEpisode With {
+                                .Id = 0,
+                                .ChaineId = row.Cells("id").Value,
+                                .AntecedentId = contextId
+                            })
+                            End If
+                        Next
+
                         Try
                             Dim form As New RadFNotification()
                             form.Titre = "Notification contexte patient"
@@ -653,6 +669,26 @@ Public Class RadFContextedetailEdit
                 If ValidationContexte() = True Then
                     If contexteDao.ModificationContexte(contexteUpdate, ContexteHistoACreer, userLog, contexteRead.Description, contexteRead.DrcId) = True Then
                         CodeResultat = EnumResultat.ModificationOK
+
+                        For Each row In RadGridViewChaineEpisode.Rows
+                            Dim chaineId As Long = row.Cells("id").Value
+                            Dim isRelationExist As Boolean = relationChaineEpisodes.Any(Function(myObject) myObject.ChaineId = chaineId)
+
+                            If row.Cells("selected").Value = True AndAlso isRelationExist = False Then
+                                chaineEpisodeDao.Create(New ChaineEpisode With {
+                                        .Id = 0,
+                                        .ChaineId = chaineId,
+                                        .AntecedentId = SelectedContexteId
+                                    })
+                            ElseIf row.Cells("selected").Value = False AndAlso isRelationExist = True Then
+                                chaineEpisodeDao.Delete(New ChaineEpisode With {
+                                        .Id = 0,
+                                        .ChaineId = chaineId,
+                                        .AntecedentId = SelectedContexteId
+                                    })
+                            End If
+                        Next
+
                         Try
                             Dim form As New RadFNotification()
                             form.Titre = "Notification contexte patient"
@@ -772,10 +808,6 @@ Public Class RadFContextedetailEdit
 
     'Initialisation des zones de saisie
     Private Sub InitZone()
-        'CbxCategorieContexte.Items.Clear()
-        'CbxCategorieContexte.Items.Add(ContexteCourrier.EnumParcoursBaseItem.Medical)
-        'CbxCategorieContexte.Items.Add(ContexteCourrier.EnumParcoursBaseItem.BioEnvironnemental)
-
         Me.ContexteTransformeEnAntecedent = False
         TxtDrcId.Text = ""
         TxtContexteDescription.Text = ""
@@ -989,7 +1021,6 @@ Public Class RadFContextedetailEdit
             RadBtnRecupereDrc.Hide()
             RadBtnSupprimer.Hide()
             RadBtnTransformer.Hide()
-            'CbxCategorieContexte.Enabled = False
             RadioBtnMedical.Enabled = False
             RadioBtnBioEnvironnemental.Enabled = False
             TxtContexteDescription.Enabled = False
@@ -1023,20 +1054,13 @@ Public Class RadFContextedetailEdit
     End Sub
 
     Private Sub RadGridViewChaineEpisode_Click(sender As Object, e As EventArgs) Handles RadGridViewChaineEpisode.Click
-        Dim chainEpisodeId = RadGridViewChaineEpisode.Rows(Me.RadGridViewChaineEpisode.Rows.IndexOf(Me.RadGridViewChaineEpisode.CurrentRow)).Cells("id").Value
+        RadValidation.Enabled = True
         Dim isChecked = RadGridViewChaineEpisode.Rows(Me.RadGridViewChaineEpisode.Rows.IndexOf(Me.RadGridViewChaineEpisode.CurrentRow)).Cells("selected").Value
-        Dim chaineEpisode As New ChaineEpisode With {
-            .Id = 0,
-            .ChaineId = chainEpisodeId,
-            .AntecedentId = SelectedContexteId,
-            .Actif = True
-        }
         If (isChecked) Then
-            chaineEpisodeDao.Delete(chaineEpisode)
+            Me.RadGridViewChaineEpisode.CurrentRow.Cells("selected").Value = False
         Else
-            chaineEpisodeDao.Create(chaineEpisode)
+            Me.RadGridViewChaineEpisode.CurrentRow.Cells("selected").Value = True
         End If
-        RefreshChaineEpisode()
     End Sub
 
     Private Sub RadChkPublie_ToggleStateChanged(sender As Object, args As Telerik.WinControls.UI.StateChangedEventArgs) Handles RadChkPublie.ToggleStateChanged

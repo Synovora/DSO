@@ -1,4 +1,5 @@
-﻿Imports System.Data.SqlClient
+﻿Imports System.Configuration
+Imports System.Data.SqlClient
 Imports Oasis_Common.AntecedentHistoCreationDao
 
 Public Class ContexteDao
@@ -71,55 +72,53 @@ Public Class ContexteDao
 
     Public Function TransformationEnAntecedent(contexteId As Integer, ContexteHistoACreer As AntecedentHisto, Description As String, Publication As String, user As Utilisateur) As Boolean
         Dim da As SqlDataAdapter = New SqlDataAdapter()
-        Dim codeRetour As Boolean = True
-
-        Dim dateModification As Date = Date.Now.Date
-
-        Dim SQLString As String = "UPDATE oasis.oa_antecedent SET" &
-            " oa_antecedent_type = 'A'," &
-            " oa_antecedent_description = @description," &
-            " oa_antecedent_date_modification = @dateModification," &
-            " oa_antecedent_utilisateur_modification = @utilisateurModification," &
-            " oa_antecedent_date_fin = @dateFin," &
-            " oa_antecedent_nature = @nature," &
-            " oa_antecedent_priorite = @priorite," &
-            " oa_antecedent_statut_affichage = @publication," &
-            " oa_antecedent_niveau = @niveau," &
-            " oa_antecedent_id_niveau1 = @idNiveau1," &
-            " oa_antecedent_id_niveau2 = @idNiveau2," &
-            " oa_antecedent_ordre_affichage1 = @ordreAffichage1," &
-            " oa_antecedent_ordre_affichage2 = @ordreAffichage2," &
-            " oa_antecedent_ordre_affichage3 = @ordreAffichage3" &
-            " WHERE oa_antecedent_id = @antecedentId"
-
         Dim con As SqlConnection = GetConnection()
-        Dim cmd As New SqlCommand(SQLString, con)
-
-        With cmd.Parameters
-            .AddWithValue("@utilisateurModification", 1)
-            .AddWithValue("@description", Description)
-            .AddWithValue("@dateModification", DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss"))
-            .AddWithValue("@dateFin", New Date(2999, 12, 31, 0, 0, 0).ToString("yyyy-MM-dd HH:mm:ss"))
-            .AddWithValue("@nature", "")
-            .AddWithValue("@priorite", 0)
-            .AddWithValue("@publication", Publication)
-            .AddWithValue("@niveau", 1)
-            .AddWithValue("@idNiveau1", 0)
-            .AddWithValue("@idNiveau2", 0)
-            .AddWithValue("@ordreAffichage1", 990)
-            .AddWithValue("@ordreAffichage2", 0)
-            .AddWithValue("@ordreAffichage3", 0)
-            .AddWithValue("@antecedentId", contexteId.ToString)
-        End With
+        Dim codeRetour As Boolean
 
         Try
+            Dim cmd As New SqlCommand("UPDATE oasis.oa_antecedent SET" &
+                " oa_antecedent_type = 'A'," &
+                " oa_antecedent_description = @description," &
+                " oa_antecedent_date_modification = @dateModification," &
+                " oa_antecedent_utilisateur_modification = @utilisateurModification," &
+                " oa_antecedent_date_fin = @dateFin," &
+                " oa_antecedent_nature = @nature," &
+                " oa_antecedent_priorite = @priorite," &
+                " oa_antecedent_statut_affichage = @publication," &
+                " oa_antecedent_niveau = @niveau," &
+                " oa_antecedent_id_niveau1 = @idNiveau1," &
+                " oa_antecedent_id_niveau2 = @idNiveau2," &
+                " oa_antecedent_ordre_affichage1 = @ordreAffichage1," &
+                " oa_antecedent_ordre_affichage2 = @ordreAffichage2," &
+                " oa_antecedent_ordre_affichage3 = @ordreAffichage3," &
+                " oa_chaine_episode_date_fin = @chaineEpisodeDateFin" &
+                " WHERE oa_antecedent_id = @antecedentId", con)
+
+            With cmd.Parameters
+                .AddWithValue("@utilisateurModification", 1)
+                .AddWithValue("@description", Description)
+                .AddWithValue("@dateModification", DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss"))
+                .AddWithValue("@dateFin", New Date(2999, 12, 31, 0, 0, 0).ToString("yyyy-MM-dd HH:mm:ss"))
+                .AddWithValue("@nature", "")
+                .AddWithValue("@priorite", 0)
+                .AddWithValue("@publication", Publication)
+                .AddWithValue("@niveau", 1)
+                .AddWithValue("@idNiveau1", 0)
+                .AddWithValue("@idNiveau2", 0)
+                .AddWithValue("@ordreAffichage1", 990)
+                .AddWithValue("@ordreAffichage2", 0)
+                .AddWithValue("@ordreAffichage3", 0)
+                .AddWithValue("@antecedentId", contexteId.ToString)
+                .AddWithValue("@chaineEpisodeDateFin", Date.Now().AddMonths(Coalesce(ConfigurationManager.AppSettings("ChaineEpisodePeriode"), 0)))
+            End With
+
             da.UpdateCommand = cmd
             da.UpdateCommand.ExecuteNonQuery()
         Catch ex As Exception
             Throw New Exception(ex.Message)
-            codeRetour = False
         Finally
             con.Close()
+            codeRetour = True
         End Try
 
         If codeRetour = True Then
@@ -143,9 +142,8 @@ Public Class ContexteDao
         Return codeRetour
     End Function
 
-    Public Function CreationContexte(contexte As Antecedent, contexteHistoACreer As AntecedentHisto, userLog As Utilisateur, Optional conclusionEpisode As Boolean = False, Optional episode As Episode = Nothing) As Boolean
+    Public Function CreationContexte(contexte As Antecedent, contexteHistoACreer As AntecedentHisto, userLog As Utilisateur, Optional conclusionEpisode As Boolean = False, Optional episode As Episode = Nothing) As Long
         Dim da As SqlDataAdapter = New SqlDataAdapter()
-        Dim codeRetour As Boolean = True
         Dim contexteId As Long
 
         Dim SQLstring As String = "INSERT INTO oasis.oa_antecedent" &
@@ -193,14 +191,14 @@ Public Class ContexteDao
             contexteId = da.InsertCommand.ExecuteScalar()
         Catch ex As Exception
             Throw New Exception(ex.Message)
-            codeRetour = False
+            Return 0
         Finally
             con.Close()
         End Try
 
         Dim ContexteConclusionEpisodeId As Long
 
-        If codeRetour = True Then
+        If contexteId <> 0 Then
             'Mise à jour des données dans l'instance de la classe Historisation antecedent
             contexteHistoACreer.AntecedentId = contexteId 'Récupération du contexte créé
             contexteHistoACreer.HistorisationDate = DateTime.Now()
@@ -258,7 +256,7 @@ Public Class ContexteDao
             patientDao.ModificationDateMajSynthesePatient(contexte.PatientId, userLog)
         End If
 
-        Return codeRetour
+        Return contexteId
     End Function
 
     Public Function ModificationContexte(contexte As Antecedent, contexteHistoACreer As AntecedentHisto, userLog As Utilisateur, Description As String, DrcId As Long) As Boolean

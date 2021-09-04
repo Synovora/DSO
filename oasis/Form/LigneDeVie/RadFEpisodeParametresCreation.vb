@@ -139,7 +139,7 @@ Public Class RadFEpisodeParametresCreation
                         .Unite = parametre.Unite,
                         .Ordre = parametre.Ordre,
                         .Description = parametre.Description,
-                        .Valeur = 0,
+                        .Valeur = Nothing,
                         .Inactif = False
                     }
                     episodeParametreDao.CreateEpisodeParametre(episodeParametre)

@@ -1,4 +1,5 @@
-﻿Imports Oasis_Common
+﻿Imports System.Configuration
+Imports Oasis_Common
 Imports Telerik.WinControls.UI.Localization
 
 Public Class RadFAntecedentDetailEdit
@@ -108,10 +109,10 @@ Public Class RadFAntecedentDetailEdit
 
     Private Sub RadFAntecedentDetailEdit_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         RadGridLocalizationProvider.CurrentProvider = New FrenchRadGridViewLocalizationProvider()
-        If positionGaucheDroite = EnumPosition.Droite Then
+        If PositionGaucheDroite = EnumPosition.Droite Then
             Me.Location = New Point(Screen.PrimaryScreen.WorkingArea.Width - Me.Width - 10, Screen.PrimaryScreen.WorkingArea.Height - Me.Height - 10)
         Else
-            Me.Location = New Point( 10, Screen.PrimaryScreen.WorkingArea.Height - Me.Height - 10)
+            Me.Location = New Point(10, Screen.PrimaryScreen.WorkingArea.Height - Me.Height - 10)
         End If
 
         InitZone()
@@ -129,7 +130,7 @@ Public Class RadFAntecedentDetailEdit
             EditMode = EnumEditMode.Creation
             EditAction = EnumAction.Creation
             RadBtnHistorique.Hide()
-            antecedentUpdate.PatientId = SelectedPatient.patientId
+            antecedentUpdate.PatientId = SelectedPatient.PatientId
             'Dénomination DRC
             TxtDrcId.Text = Me.SelectedDrcId
             If Me.SelectedDrcId <> 0 Then
@@ -160,12 +161,15 @@ Public Class RadFAntecedentDetailEdit
             GestionAffichageZoneDeclarationAld()
 
             'Date début
-            'DteDateDebut.Value = Date.Now
-            'antecedentUpdate.DateDebut = Date.Now()
             DteDateDebut.Format = DateTimePickerFormat.Custom
             DteDateDebut.CustomFormat = " "
             DteDateDebut.Value = DteDateDebut.MinDate
             antecedentUpdate.DateDebut = DteDateDebut.MinDate
+
+            'DteChaineEpisodeDateFin.Format = DateTimePickerFormat.Custom
+            'DteChaineEpisodeDateFin.CustomFormat = " "
+            DteChaineEpisodeDateFin.Value = Date.Now().AddMonths(Coalesce(ConfigurationManager.AppSettings("ChaineEpisodePeriode"), 0))
+            antecedentUpdate.ChaineEpisodeDateFin = DteChaineEpisodeDateFin.Value
 
             'Publication
             ChkPublie.Checked = True
@@ -230,7 +234,7 @@ Public Class RadFAntecedentDetailEdit
         LblALD.Hide()
         Dim StringTooltip As String
         Dim aldDao As New AldDao
-        StringTooltip = aldDao.DateFinALD(Me.SelectedPatient.patientId)
+        StringTooltip = aldDao.DateFinALD(Me.SelectedPatient.PatientId)
         If StringTooltip <> "" Then
             LblALD.Show()
             ToolTip1.SetToolTip(LblALD, StringTooltip)
@@ -265,6 +269,13 @@ Public Class RadFAntecedentDetailEdit
         If dateDebut = DteDateDebut.MinDate Then
             DteDateDebut.Format = DateTimePickerFormat.Custom
             DteDateDebut.CustomFormat = " "
+        End If
+
+        'Récupération de la date de cloture de la chaine d'episode
+        DteChaineEpisodeDateFin.Value = If(antecedentRead.ChaineEpisodeDateFin = Nothing, DteChaineEpisodeDateFin.MinDate, antecedentRead.ChaineEpisodeDateFin)
+        If DteChaineEpisodeDateFin.Value = DteChaineEpisodeDateFin.MinDate Then
+            DteChaineEpisodeDateFin.Format = DateTimePickerFormat.Custom
+            DteChaineEpisodeDateFin.CustomFormat = " "
         End If
 
         'Statut affichage de l'antécédent
@@ -356,7 +367,7 @@ Public Class RadFAntecedentDetailEdit
         'AntecedentAldCim10Id = antecedentRead.AldCim10Id
         If antecedentRead.AldCim10Id <> 0 Then
             Dim aldCim10 As AldCim10
-            aldCim10 = AldCim10Dao.GetAldCim10ById(antecedentRead.AldCim10Id)
+            aldCim10 = aldCim10Dao.GetAldCim10ById(antecedentRead.AldCim10Id)
             TxtAldCim10Code.Text = aldCim10.AldCim10AldCode
             Lblcim10Description.Text = aldCim10.AldCim10Description
         Else
@@ -610,7 +621,7 @@ Public Class RadFAntecedentDetailEdit
                     'AntecedentAldCim10Id = SelectedAldCim10Id
                     antecedentUpdate.AldCim10Id = vFAldCim10Selecteur.SelectedAldCim10Id
                     Dim aldCim10 As New AldCim10
-                    aldCim10 = AldCim10Dao.GetAldCim10ById(vFAldCim10Selecteur.SelectedAldCim10Id)
+                    aldCim10 = aldCim10Dao.GetAldCim10ById(vFAldCim10Selecteur.SelectedAldCim10Id)
                     TxtAldCim10Code.Text = aldCim10.AldCim10Code
                     Lblcim10Description.Text = aldCim10.AldCim10Description
                 End If
@@ -647,6 +658,18 @@ Public Class RadFAntecedentDetailEdit
         If DteDateDebut.Value = DteDateDebut.MinDate Then
             DteDateDebut.Value = Date.Now()
             DteDateDebut.Format = DateTimePickerFormat.Long
+        End If
+    End Sub
+
+    Private Sub DteChaineEpisodeDateFin_ValueChanged(sender As Object, e As EventArgs) Handles DteChaineEpisodeDateFin.ValueChanged
+        antecedentUpdate.ChaineEpisodeDateFin = DteChaineEpisodeDateFin.Value
+        GestionAffichageBoutonValidation()
+    End Sub
+
+    Private Sub DteChaineEpisodeDateFin_DropDown(sender As Object, e As EventArgs) Handles DteChaineEpisodeDateFin.DropDown
+        If DteChaineEpisodeDateFin.Value = DteChaineEpisodeDateFin.MinDate Then
+            DteChaineEpisodeDateFin.Value = Date.Now()
+            DteChaineEpisodeDateFin.Format = DateTimePickerFormat.Long
         End If
     End Sub
 
@@ -959,6 +982,7 @@ Public Class RadFAntecedentDetailEdit
         TxtDrcId.Text = ""
         TxtAntecedentDescription.Text = ""
         DteDateDebut.Value = "01/01/1900"
+        DteChaineEpisodeDateFin.Value = "01/01/1900"
         ChkCache.Checked = False
         ChkOcculte.Checked = False
         ChkPublie.Checked = False
@@ -1023,6 +1047,7 @@ Public Class RadFAntecedentDetailEdit
         TxtDrcId.Enabled = False
         TxtAntecedentDescription.Enabled = False
         DteDateDebut.Enabled = False
+        DteChaineEpisodeDateFin.Enabled = False
         ChkCache.Enabled = False
         ChkOcculte.Enabled = False
         ChkPublie.Enabled = False

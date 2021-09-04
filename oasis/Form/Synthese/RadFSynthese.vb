@@ -295,11 +295,11 @@ Public Class RadFSynthese
 
         'Parcours du DataTable pour alimenter le DataGridView
         For i = 0 To rowCount Step 1
-
-            If RadChkMajeurSeul.Checked = True Then
-                If antecedentDataTable.Rows(i)("oa_antecedent_niveau") <> 1 Then
-                    Continue For
-                End If
+            If ChkChaineEpisodeActive.Checked AndAlso (IsDBNull(antecedentDataTable.Rows(i)("oa_chaine_episode_date_fin")) OrElse antecedentDataTable.Rows(i)("oa_chaine_episode_date_fin") < Date.Now()) Then
+                Continue For
+            End If
+            If RadChkMajeurSeul.Checked AndAlso antecedentDataTable.Rows(i)("oa_antecedent_niveau") <> 1 Then
+                Continue For
             End If
 
             If RadChkParPriorite.Checked = True Then
@@ -319,7 +319,6 @@ Public Class RadFSynthese
             End If
 
             'Recherche si le contexte a été modifié
-            AfficheDateModification = ""
             If antecedentDataTable.Rows(i)("oa_antecedent_date_modification") IsNot DBNull.Value Then
                 dateDateModification = antecedentDataTable.Rows(i)("oa_antecedent_date_modification")
                 AfficheDateModification = " (" + FormatageDateAffichage(dateDateModification) + ")"
@@ -926,6 +925,12 @@ Public Class RadFSynthese
                 RadChkMajeurSeul.Checked = True
             End If
         End If
+    End Sub
+
+    Private Sub ChkChaineEpisodeActive_ToggleStateChanged(sender As Object, args As StateChangedEventArgs) Handles ChkChaineEpisodeActive.ToggleStateChanged
+        'ChkChaineEpisodeActive.Checked = Not ChkChaineEpisodeActive.Checked
+        Application.DoEvents()
+        ChargementAntecedent()
     End Sub
 
     Private Sub RadChkMajeurTous_ToggleStateChanged(sender As Object, args As StateChangedEventArgs) Handles RadChkMajeurTous.ToggleStateChanged
