@@ -429,7 +429,6 @@ Public Class EpisodeDao
             Using ParcoursDataAdapter
                 ParcoursDataAdapter.SelectCommand = New SqlCommand(SQLString, con)
                 Try
-                    Debug.WriteLine(GetSqlCommandTextForLogs(ParcoursDataAdapter.SelectCommand))
                     ParcoursDataAdapter.Fill(ParcoursDataTable)
                     Dim command As SqlCommand = con.CreateCommand()
                 Catch ex As Exception

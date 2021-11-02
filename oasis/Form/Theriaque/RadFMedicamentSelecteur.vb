@@ -180,7 +180,7 @@ Public Class RadFMedicamentSelecteur
                         While EnumeratorATC.MoveNext()
                             Dim CodeATC As String = EnumeratorATC.Current.ToString
                             ' Recherche des spécialités virtuelles correspondant aux ATC des spécialités classiques obtenues précédemment
-                            dt = theriaqueDao.getSpecialiteByArgument(CodeATC, TheriaqueDao.EnumGetSpecialite.CLASSE_ATC, TheriaqueDao.EnumMonoVir.VIRTUEL)
+                            dt = theriaqueDao.GetSpecialiteByArgument(CodeATC, TheriaqueDao.EnumGetSpecialite.CLASSE_ATC, TheriaqueDao.EnumMonoVir.VIRTUEL)
                             If dt.Rows.Count > 0 Then
                                 ResultatOk = True
                                 RowsCount += dt.Rows.Count

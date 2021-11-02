@@ -17,6 +17,36 @@ Public Class FrmMain
         End Try
     End Sub
 
+    Private Sub VaccinImport_Click(sender As Object, e As EventArgs) Handles VaccinImport.Click
+        Me.Cursor = Cursors.WaitCursor
+        Me.Enabled = False
+        Try
+            Using frm As New RadFVaccin
+                frm.ShowDialog()
+            End Using
+        Catch err As Exception
+            MsgBox(err.Message())
+        Finally
+            Me.Enabled = True
+            Me.Cursor = Cursors.Default
+        End Try
+    End Sub
+
+    Private Sub CGV_Click(sender As Object, e As EventArgs) Handles CGV.Click
+        Me.Cursor = Cursors.WaitCursor
+        Me.Enabled = False
+        Try
+            Using frm As New RadFCGV
+                frm.ShowDialog()
+            End Using
+        Catch err As Exception
+            MsgBox(err.Message())
+        Finally
+            Me.Enabled = True
+            Me.Cursor = Cursors.Default
+        End Try
+    End Sub
+
     Private Sub RadTileElementAPropos_Click(sender As Object, e As EventArgs) Handles RadTileElementAPropos.Click
         Me.Cursor = Cursors.WaitCursor
         Me.Enabled = False

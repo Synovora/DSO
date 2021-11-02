@@ -70,29 +70,70 @@ Public Class ContexteDao
         Return IsExist
     End Function
 
+    Public Function GetByDrcId(patientId As Long, drcId As Long) As Antecedent
+        Dim con As SqlConnection = GetConnection()
+        Dim contexte As Antecedent = Nothing
+
+        Try
+            Dim command As SqlCommand = con.CreateCommand()
+            command.CommandText =
+                "SELECT * FROM oasis.oa_antecedent" &
+                " WHERE oa_antecedent_type = 'C'" &
+                " AND (oa_antecedent_inactif = '0' OR oa_antecedent_inactif is Null)" &
+                " AND oa_antecedent_patient_id = @patientId" &
+                " AND oa_antecedent_drc_id = @drcId" &
+                " AND (oa_antecedent_arret = '0' OR oa_antecedent_arret is Null)" &
+                " AND oa_antecedent_date_fin >= GETDATE()"
+
+            With command.Parameters
+                .AddWithValue("@patientId", patientId)
+                .AddWithValue("@drcId", drcId)
+            End With
+
+            Using reader As SqlDataReader = command.ExecuteReader()
+                If reader.Read() Then
+                    contexte = New Antecedent(reader)
+                End If
+            End Using
+        Catch ex As Exception
+            Throw ex
+        Finally
+            con.Close()
+        End Try
+
+        Return contexte
+    End Function
+
     Public Function TransformationEnAntecedent(contexteId As Integer, ContexteHistoACreer As AntecedentHisto, Description As String, Publication As String, user As Utilisateur) As Boolean
         Dim da As SqlDataAdapter = New SqlDataAdapter()
         Dim con As SqlConnection = GetConnection()
         Dim codeRetour As Boolean
 
         Try
-            Dim cmd As New SqlCommand("UPDATE oasis.oa_antecedent SET" &
-                " oa_antecedent_type = 'A'," &
-                " oa_antecedent_description = @description," &
-                " oa_antecedent_date_modification = @dateModification," &
-                " oa_antecedent_utilisateur_modification = @utilisateurModification," &
-                " oa_antecedent_date_fin = @dateFin," &
-                " oa_antecedent_nature = @nature," &
-                " oa_antecedent_priorite = @priorite," &
-                " oa_antecedent_statut_affichage = @publication," &
-                " oa_antecedent_niveau = @niveau," &
-                " oa_antecedent_id_niveau1 = @idNiveau1," &
-                " oa_antecedent_id_niveau2 = @idNiveau2," &
-                " oa_antecedent_ordre_affichage1 = @ordreAffichage1," &
-                " oa_antecedent_ordre_affichage2 = @ordreAffichage2," &
-                " oa_antecedent_ordre_affichage3 = @ordreAffichage3," &
-                " oa_chaine_episode_date_fin = @chaineEpisodeDateFin" &
-                " WHERE oa_antecedent_id = @antecedentId", con)
+            Dim SQLstring As String = "
+            BEGIN TRANSACTION
+                UPDATE oasis.oa_antecedent SET
+                    oa_antecedent_type = 'A',
+                    oa_antecedent_description = @description,
+                    oa_antecedent_date_modification = @dateModification,
+                    oa_antecedent_utilisateur_modification = @utilisateurModification,
+                    oa_antecedent_date_fin = @dateFin,
+                    oa_antecedent_nature = @nature,
+                    oa_antecedent_priorite = @priorite,
+                    oa_antecedent_statut_affichage = @publication,
+                    oa_antecedent_niveau = @niveau,
+                    oa_antecedent_id_niveau1 = @idNiveau1,
+                    oa_antecedent_id_niveau2 = @idNiveau2,
+                    oa_antecedent_ordre_affichage1 = @ordreAffichage1,
+                    oa_antecedent_ordre_affichage2 = @ordreAffichage2,
+                    oa_antecedent_ordre_affichage3 = @ordreAffichage3,
+                    oa_chaine_episode_date_fin = @chaineEpisodeDateFin
+                WHERE oa_antecedent_id = @antecedentId
+                DELETE FROM oasis.oa_chaine_episode
+                WHERE antecedent_id = @antecedentId
+            COMMIT"
+
+            Dim cmd As New SqlCommand(SQLstring, con)
 
             With cmd.Parameters
                 .AddWithValue("@utilisateurModification", 1)

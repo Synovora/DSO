@@ -91,7 +91,6 @@ Public Class ChaineEpisodeDao
             If other <> Nothing Then
                 command.CommandText += other
             End If
-            Debug.WriteLine(GetSqlCommandTextForLogs(command))
 
             Using reader As SqlDataReader = command.ExecuteReader()
                 While (reader.Read())
@@ -146,8 +145,8 @@ Public Class ChaineEpisodeDao
                     "(antecedent_id, chaine_id)" &
             " VALUES (@antecedent_id, @chaine_id); SELECT SCOPE_IDENTITY()", con, transaction)
             With cmd.Parameters
-                .AddWithValue("@antecedent_id", N2N(chaineEpisode.AntecedentId))
-                .AddWithValue("@chaine_id", N2N(chaineEpisode.ChaineId))
+                .AddWithValue("@antecedent_id", N2N(Of Long)(chaineEpisode.AntecedentId))
+                .AddWithValue("@chaine_id", N2N(Of Long)(chaineEpisode.ChaineId))
             End With
 
             da.InsertCommand = cmd

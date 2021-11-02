@@ -220,7 +220,6 @@ Public Class EpisodeParametreDao
             .AddWithValue("@inactif", episodeParametre.Inactif)
         End With
 
-        Debug.WriteLine(GetSqlCommandTextForLogs(cmd))
         Try
             da.InsertCommand = cmd
             nbcreate = da.InsertCommand.ExecuteNonQuery()

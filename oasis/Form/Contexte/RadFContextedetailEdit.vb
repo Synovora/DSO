@@ -4,7 +4,7 @@ Public Class RadFContextedetailEdit
     Private privateSelectedPatient As Patient
     Private privateUtilisateurConnecte As Utilisateur
     Private privateSelectedContexteId As Integer
-    Private privateSelectedDrcId As Integer
+    Private privateSelectedDrcId As Long
     Private privateCodeRetour As Boolean
     Private _CodeResultat As Integer
     Private privateContexteTransformeEnAntecedent As Boolean
@@ -106,6 +106,8 @@ Public Class RadFContextedetailEdit
             _episode = value
         End Set
     End Property
+
+    Property NewContext As Antecedent
 
     Enum EnumTraitement
         Creation = 5
@@ -631,9 +633,9 @@ Public Class RadFContextedetailEdit
         Select Case Traitement
             Case EnumTraitement.Creation
                 If ValidationContexte() = True Then
-                    Dim contextId = contexteDao.CreationContexte(contexteUpdate, ContexteHistoACreer, userLog, ConclusionEpisode, Episode)
+                    contexteUpdate.Id = contexteDao.CreationContexte(contexteUpdate, ContexteHistoACreer, userLog, ConclusionEpisode, Episode)
 
-                    If contextId <> 0 Then
+                    If contexteUpdate.Id <> 0 Then
                         If ConclusionEpisode = True Then
                             Dim episodeDao As New EpisodeDao
                             episodeDao.MajEpisodeConclusionMedicale(Episode.Id)
@@ -645,7 +647,7 @@ Public Class RadFContextedetailEdit
                                 chaineEpisodeDao.Create(New ChaineEpisode With {
                                 .Id = 0,
                                 .ChaineId = row.Cells("id").Value,
-                                .AntecedentId = contextId
+                                .AntecedentId = contexteUpdate.Id
                             })
                             End If
                         Next
@@ -656,6 +658,7 @@ Public Class RadFContextedetailEdit
                             form.Message = "Contexte patient créé"
                             form.Show()
                             Me.CodeRetour = True
+                            Me.NewContext = contexteUpdate
                             Close()
                         Catch ex As Exception
                             MessageBox.Show(ex.Message)

@@ -2871,17 +2871,11 @@ Public Class RadFSynthese
         Me.Enabled = False
         Cursor.Current = Cursors.WaitCursor
 
-        Try
-            Using vFPatientNoteListe As New RadFPatientNoteListe
-                vFPatientNoteListe.TypeNote = EnumTypeNote.Vaccin
-                vFPatientNoteListe.SelectedPatientId = Me.SelectedPatient.PatientId
-                vFPatientNoteListe.SelectedPatient = Me.SelectedPatient
-                vFPatientNoteListe.UtilisateurConnecte = Me.UtilisateurConnecte
-                vFPatientNoteListe.ShowDialog() 'Modal
-            End Using
-        Catch ex As Exception
-            MsgBox(ex.Message())
-        End Try
+        Using radFCPV As New RadFCPV
+            radFCPV.Patient = SelectedPatient
+            radFCPV.ShowDialog()
+            'ChargementValence()
+        End Using
 
         Me.Enabled = True
     End Sub

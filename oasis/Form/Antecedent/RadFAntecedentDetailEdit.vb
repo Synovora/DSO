@@ -416,11 +416,11 @@ Public Class RadFAntecedentDetailEdit
         If MsgBox("Attention, la suppression d'un antécédent est irréversible, confirmez-vous l'annulation", MsgBoxStyle.YesNo, "") = MsgBoxResult.Yes Then
             'Annulation antécédent
             If AnnulationAntecedent() = True Then
-                Dim form As New RadFNotification()
-                form.Message = "antécédent patient annulé"
-                form.Show()
-                Me.CodeRetour = True
-                Close()
+                'Dim form As New RadFNotification()
+                'form.Message = "antécédent patient annulé"
+                'form.Show()
+                'Me.CodeRetour = True
+                'Close()
             Else
                 Me.CodeRetour = False
             End If

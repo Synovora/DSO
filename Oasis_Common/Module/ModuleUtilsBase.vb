@@ -40,12 +40,13 @@ Public Module ModuleUtilsBase
         Return text
     End Function
 
-    Public Function N2N(ByVal ParamArray Parameters As Object()) As Object
-        For Each Parameter As Object In Parameters
-            If Not Parameter Is Nothing AndAlso Parameter <> Nothing Then
-                Return Parameter
-            End If
-        Next
+    Public Function N2N(Of T)(ByVal Parameter As Object, Optional DefaultValue As Object = Nothing)
+        If Parameter IsNot Nothing Then
+            Return CType(Parameter, T)
+        End If
+        If DefaultValue IsNot Nothing Then
+            Return DefaultValue
+        End If
         Return DBNull.Value
     End Function
 

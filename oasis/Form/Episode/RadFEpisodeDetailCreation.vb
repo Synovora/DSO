@@ -1,5 +1,6 @@
 ﻿Imports System.Configuration
 Imports Oasis_Common
+Imports Telerik.WinControls
 
 Public Class RadFEpisodeDetailCreation
     Private _SelectedPatient As Patient
@@ -39,6 +40,10 @@ Public Class RadFEpisodeDetailCreation
     Dim episodeActiviteDT As New DataTable
     ReadOnly episodeDao As New EpisodeDao
     ReadOnly contexteDao As New ContexteDao
+    ReadOnly antecedentDao As New AntecedentDao
+    ReadOnly chaineEpisodeDao As New ChaineEpisodeDao
+    ReadOnly userDao As New UserDao
+    ReadOnly drcDao As New DrcDao
 
     Private Sub RadFEpisodeDetailCreation_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         Dim TypeActiviteEpisode As String
@@ -163,6 +168,68 @@ Public Class RadFEpisodeDetailCreation
                         End If
                     End Try
 
+                    ' Condition d'atrribution des CE
+                    If episode.TypeActivite = Episode.EnumTypeActiviteEpisodeCode.PREVENTION_SUIVI_GROSSESSE Then
+                        Dim contexte As Antecedent = contexteDao.GetByDrcId(SelectedPatient.PatientId, ConfigurationManager.AppSettings("DrcIdGrossesse"))
+                        chaineEpisodeDao.AddRelation(New RelationChaineEpisode() With {
+                        .Id = 0,
+                        .EpisodeId = EpisodeId,
+                        .ChaineId = contexte.Id
+                    })
+                    ElseIf episode.TypeActivite = Episode.EnumTypeActiviteEpisodeCode.SUIVI_CHRONIQUE Then
+                        Dim antecedents As List(Of Antecedent) = antecedentDao.GetListByPatient(SelectedPatient.PatientId)
+                        For Each antecedent In antecedents
+                            If antecedent.StatutAffichage <> Antecedent.EnumStatutAffichage.OCCULTE Then
+                                chaineEpisodeDao.AddRelation(New RelationChaineEpisode() With {
+                                .Id = 0,
+                                .EpisodeId = EpisodeId,
+                                .ChaineId = antecedent.Id
+                            })
+                            End If
+                        Next
+                    ElseIf episode.TypeActivite = Episode.EnumTypeActiviteEpisodeCode.PREVENTION_ENFANT_PRE_SCOLAIRE Then
+                        Dim contexte As Antecedent = contexteDao.GetByDrcId(SelectedPatient.PatientId, ConfigurationManager.AppSettings("DrcIdSuiviPrescolaire"))
+
+                        If contexte Is Nothing Then
+                            Dim drc As Drc = drcDao.GetDrcById(ConfigurationManager.AppSettings("DrcIdSuiviPrescolaire"))
+                            contexte = CreateAntecedentOrContexte(episode, drc, "C")
+                        End If
+                        If contexte IsNot Nothing Then
+                            chaineEpisodeDao.AddRelation(New RelationChaineEpisode() With {
+                                .Id = 0,
+                                .EpisodeId = EpisodeId,
+                                .ChaineId = contexte.Id
+                        })
+                        End If
+                    ElseIf episode.TypeActivite = Episode.EnumTypeActiviteEpisodeCode.PREVENTION_ENFANT_SCOLAIRE Then
+                        Dim contexte As Antecedent = contexteDao.GetByDrcId(SelectedPatient.PatientId, ConfigurationManager.AppSettings("DrcIdSuiviScolaire"))
+
+                        If contexte Is Nothing Then
+                            Dim drc As Drc = drcDao.GetDrcById(ConfigurationManager.AppSettings("DrcIdSuiviScolaire"))
+                            contexte = CreateAntecedentOrContexte(episode, drc, "C")
+                        End If
+                        If contexte IsNot Nothing Then
+                            chaineEpisodeDao.AddRelation(New RelationChaineEpisode() With {
+                        .Id = 0,
+                        .EpisodeId = EpisodeId,
+                        .ChaineId = contexte.Id
+                    })
+                        End If
+                    ElseIf episode.TypeActivite = Episode.EnumTypeActiviteEpisodeCode.PREVENTION_SUIVI_GYNECOLOGIQUE Then
+                        Dim antecedent As Antecedent = antecedentDao.GetByDrcId(SelectedPatient.PatientId, ConfigurationManager.AppSettings("DrcIdGyneco"))
+                        If antecedent Is Nothing Then
+                            Dim drc As Drc = drcDao.GetDrcById(ConfigurationManager.AppSettings("DrcIdGyneco"))
+                            antecedent = CreateAntecedentOrContexte(episode, drc, "A")
+                        End If
+                        If antecedent IsNot Nothing Then
+                            chaineEpisodeDao.AddRelation(New RelationChaineEpisode() With {
+                        .Id = 0,
+                        .EpisodeId = EpisodeId,
+                        .ChaineId = antecedent.Id
+                        })
+                        End If
+                    End If
+
                     Cursor.Current = Cursors.Default
                     CodeRetour = True
                     Close()
@@ -177,6 +244,55 @@ Public Class RadFEpisodeDetailCreation
         End If
 
     End Sub
+
+    Private Function CreateAntecedentOrContexte(SelectedEpisode As Episode, SelectedDrcId As Drc, Type As String) As Antecedent
+        Dim contexteUpdate As New Antecedent
+        Dim ContexteHistoACreer As New AntecedentHisto
+        Dim user As Utilisateur = userDao.getUserById(1)
+
+        contexteUpdate.PatientId = SelectedPatient.PatientId
+        contexteUpdate.Type = Type
+        contexteUpdate.Niveau = 1
+        contexteUpdate.Nature = "Patient"
+        contexteUpdate.Inactif = False
+        contexteUpdate.CategorieContexte = ContexteCourrier.EnumParcoursBaseCode.Medical
+        contexteUpdate.DrcId = SelectedDrcId.DrcId
+        contexteUpdate.Description = SelectedDrcId.DrcLibelle
+        contexteUpdate.DateCreation = Date.Now
+        contexteUpdate.UserCreation = user.UtilisateurId
+        contexteUpdate.DateModification = Date.Now
+        contexteUpdate.UserModification = user.UtilisateurId
+        contexteUpdate.DateDebut = Date.Now
+        contexteUpdate.DateFin = New Date(2999, 12, 31, 0, 0, 0)
+        contexteUpdate.ChaineEpisodeDateFin = Date.Now().AddMonths(Coalesce(ConfigurationManager.AppSettings("ChaineEpisodePeriode"), 0))
+        contexteUpdate.StatutAffichage = "P"
+        contexteUpdate.StatutAffichageTransformation = "P"
+        contexteUpdate.Diagnostic = 1
+        'contexteUpdate.AldId =
+        '    contexteUpdate.AldCim10Id =
+
+
+        AntecedentHistoCreationDao.InitAntecedentHistorisation(contexteUpdate, user, ContexteHistoACreer)
+
+        If Type = "C" Then
+            contexteUpdate.Id = contexteDao.CreationContexte(contexteUpdate, ContexteHistoACreer, user, False, SelectedEpisode)
+        ElseIf Type = "A" Then
+            contexteUpdate.Id = antecedentDao.CreationAntecedent(contexteUpdate, user)
+        End If
+        If contexteUpdate.Id <> 0 Then
+            Try
+                Dim form As New RadFNotification()
+                form.Titre = If(Type = "C", "Notification contexte patient", "Notification antecedent patient")
+                form.Message = If(Type = "C", "Contexte patient créé", "Antecdent patient créé")
+                form.Show()
+                Close()
+                Return contexteUpdate
+            Catch ex As Exception
+                MessageBox.Show(ex.Message)
+            End Try
+        End If
+        Return Nothing
+    End Function
 
     Private Sub RadBtnAbandon_Click(sender As Object, e As EventArgs) Handles RadBtnAbandon.Click
         CodeRetour = False

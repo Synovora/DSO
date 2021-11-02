@@ -27,6 +27,37 @@ Public Class AntecedentDao
         Return antecedent
     End Function
 
+    Public Function GetByDrcId(patientId As Long, drcId As Long) As Antecedent
+        Dim con As SqlConnection = GetConnection()
+        Dim contexte As Antecedent = Nothing
+
+        Try
+            Dim command As SqlCommand = con.CreateCommand()
+            command.CommandText =
+                "SELECT * FROM oasis.oa_antecedent" &
+                " WHERE oa_antecedent_type = 'A'" &
+                " AND oa_antecedent_patient_id = @patientId" &
+                " AND oa_antecedent_drc_id = @drcId"
+
+            With command.Parameters
+                .AddWithValue("@patientId", patientId)
+                .AddWithValue("@drcId", drcId)
+            End With
+
+            Using reader As SqlDataReader = command.ExecuteReader()
+                If reader.Read() Then
+                    contexte = New Antecedent(reader)
+                End If
+            End Using
+        Catch ex As Exception
+            Throw ex
+        Finally
+            con.Close()
+        End Try
+
+        Return contexte
+    End Function
+
     Public Function Clone(Source As Antecedent) As Antecedent
         Dim Cible As New Antecedent With {
             .Id = Source.Id,
@@ -518,7 +549,7 @@ Public Class AntecedentDao
         Return codeRetour
     End Function
 
-    Public Function CreationAntecedent(antecedentUpdate As Antecedent, userLog As Utilisateur) As Boolean
+    Public Function CreationAntecedent(antecedentUpdate As Antecedent, userLog As Utilisateur) As Long
         Dim da As SqlDataAdapter = New SqlDataAdapter()
         Dim codeRetour As Boolean = True
         Dim antecedentId As Long
@@ -539,8 +570,6 @@ Public Class AntecedentDao
                 @utilisateurModification, @dateDebut, @niveau, @nature, @publication, @inactif, @ordreAffichage1, @ordreAffichage2, @ordreAffichage3, @diagnostic,
                 @aldId, @aldCim10Id, @aldValide, @aldDateDebut, @aldDateFin, @aldDemandeEnCours, @aldDateDemande, @chaineEpisodeDateFin);
             SELECT @AntecedentId = SCOPE_IDENTITY();
-            INSERT INTO oasis.oa_chaine_episode (antecedent_id, actif) VALUES (@AntecedentId, 1);
-            SELECT @AntecedentId
         COMMIT"
 
         Dim con As SqlConnection = GetConnection()
@@ -634,7 +663,7 @@ Public Class AntecedentDao
             patientDao.ModificationDateMajSynthesePatient(antecedentUpdate.PatientId, userLog)
         End If
 
-        Return codeRetour
+        Return antecedentId
 
     End Function
 
