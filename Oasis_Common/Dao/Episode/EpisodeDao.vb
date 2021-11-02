@@ -197,14 +197,17 @@ Public Class EpisodeDao
         Return episodes
     End Function
 
-    Public Function GetAllEpisodeByPatient(patientId As Long, dateDebut As Date, dateFin As Date, ligneDeVie As LigneDeVie) As DataTable
-        Dim SQLString, ClauseWhereString, TypeEpisodeString, ActiviteEpisodeString, ProfilEpisodeString, OrderByString As String
+    Public Function GetAllEpisodeByPatient(patientId As Long, dateDebut As Date, dateFin As Date, ligneDeVie As LigneDeVie, chaineEpisode As List(Of Long)) As DataTable
+        Dim SQLString, CEString, ClauseWhereString, TypeEpisodeString, ActiviteEpisodeString, ProfilEpisodeString, OrderByString As String
         Dim Parametre1String, Parametre2String, Parametre3String, Parametre4String, Parametre5String As String, sousEpisodeQuery As String
         Dim RechercherTypeEpisode, RechercherActiviteEpisode, RechercherprofilEpisode As Boolean
         Dim dateDebutRecherche As Date = dateDebut.AddDays(1)
 
+        For i As Integer = 0 To chaineEpisode.Count - 1 Step 1
+            CEString += String.Format("{0}{1}", chaineEpisode(i), If(i = chaineEpisode.Count - 1, "", ","))
+        Next
 
-        SQLString = "SELECT E.episode_id, patient_id, type, type_activite, description_activite, type_profil," & vbCrLf &
+        SQLString = "SELECT DISTINCT E.episode_id, patient_id, type, type_activite, description_activite, type_profil," & vbCrLf &
                     " commentaire, date_creation, observation_paramedical, observation_medical, etat, ORDO.oa_ordonnance_id, ORDO.oa_ordonnance_date_validation" & vbCrLf
 
         sousEpisodeQuery = ",(SELECT COUNT(*) FROM oasis.oa_sous_episode SE WHERE SE.episode_id = E.episode_id AND COALESCE(SE.is_inactif,'false')='false' ) AS nb_sous_episode" & vbCrLf
@@ -242,13 +245,21 @@ Public Class EpisodeDao
 
         'Début Claude WHERE
         ClauseWhereString = " FROM oasis.oa_episode E" & vbCrLf &
+                    "LEFT JOIN [oasis].[oasis].[oa_relation_chaine_episode] RCE ON RCE.episode_id=E.episode_id" & vbCrLf &
                     " OUTER APPLY (Select TOP (1) * FROM oasis.oasis.oa_patient_ordonnance" &
                         " WHERE oa_ordonnance_episode_id = E.episode_id" &
-                        " AND (oa_ordonnance_inactif = 'False' OR oa_ordonnance_inactif is NULL)) AS ORDO" &
-                    " WHERE patient_id = " & patientId.ToString & vbCrLf &
+                        " AND (oa_ordonnance_inactif = 'False' OR oa_ordonnance_inactif is NULL)) AS ORDO"
+        ClauseWhereString += " WHERE patient_id = " & patientId.ToString & vbCrLf &
                     " AND (inactif = 'False' OR inactif is Null)" & vbCrLf &
                     " AND date_creation <= '" & dateDebutRecherche.ToString("yyyy-MM-dd") & "'" & vbCrLf &
                     " AND date_creation >= '" & dateFin.Date.ToString("yyyy-MM-dd") & "'" & vbCrLf
+        If chaineEpisode.Count <> 0 Then
+            ClauseWhereString += String.Format(" AND (RCE.chaine_id IN ({0}) ", CEString)
+            If ligneDeVie.TypeParametre = True Then
+                ClauseWhereString += "OR [type] IN ('" & Episode.EnumTypeEpisode.PARAMETRE.ToString & "')"
+            End If
+            ClauseWhereString += ")"
+        End If
 
         'Type
         TypeEpisodeString = " AND [type] IN ('"

@@ -210,7 +210,7 @@ Public Class EpisodeParametreDao
             .AddWithValue("@parametreId", episodeParametre.ParametreId)
             .AddWithValue("@patientId", episodeParametre.PatientId)
             .AddWithValue("@episodeId", episodeParametre.EpisodeId)
-            .AddWithValue("@valeur", episodeParametre.Valeur)
+            .AddWithValue("@valeur", If(episodeParametre.Valeur.HasValue, episodeParametre.Valeur.Value, DBNull.Value))
             .AddWithValue("@description", episodeParametre.Description)
             .AddWithValue("@entier", episodeParametre.Entier)
             .AddWithValue("@decimal", episodeParametre.Decimal)
@@ -255,7 +255,7 @@ Public Class EpisodeParametreDao
             .AddWithValue("@patientId", episodeParametre.PatientId)
             .AddWithValue("@patientId", episodeParametre.PatientId)
             .AddWithValue("@episodeId", episodeParametre.EpisodeId)
-            .AddWithValue("@valeur", episodeParametre.Valeur)
+            .AddWithValue("@valeur", If(episodeParametre.Valeur.HasValue, episodeParametre.Valeur.Value, DBNull.Value))
             .AddWithValue("@description", episodeParametre.Description)
             .AddWithValue("@entier", episodeParametre.Entier)
             .AddWithValue("@decimal", episodeParametre.Decimal)
@@ -277,7 +277,7 @@ Public Class EpisodeParametreDao
         Return codeRetour
     End Function
 
-    Public Function ModificationValeurEpisodeParametre(episodeParametreId As Long, Valeur As Decimal) As Boolean
+    Public Function ModificationValeurEpisodeParametre(episodeParametreId As Long, Valeur As Decimal?) As Boolean
         Dim da As SqlDataAdapter = New SqlDataAdapter()
         Dim codeRetour As Boolean = True
         Dim con As SqlConnection = GetConnection()
@@ -290,7 +290,7 @@ Public Class EpisodeParametreDao
 
         With cmd.Parameters
             .AddWithValue("@Id", episodeParametreId)
-            .AddWithValue("@valeur", Valeur)
+            .AddWithValue("@valeur", If(Valeur.HasValue, Valeur.Value, DBNull.Value))
         End With
 
         Try

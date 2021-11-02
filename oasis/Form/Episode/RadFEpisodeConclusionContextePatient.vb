@@ -4,6 +4,7 @@ Imports Telerik.WinControls.UI
 Public Class RadFEpisodeConclusionContextePatient
     Private _selectedEpisode As Episode
     Private _codeRetour As Boolean
+    Dim InitPublie As Boolean
 
     Public Property SelectedEpisode As Episode
         Get
@@ -26,16 +27,20 @@ Public Class RadFEpisodeConclusionContextePatient
     Dim InitContextePublie As Boolean = False
 
     Dim SelectedPatient As Patient
+    Dim chaineEpisodeDao As New ChaineEpisodeDao
 
     Private Sub RadFEpisodeSelecteurContextePatient_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        RadChkPublie.Checked = True
         ChargementEtatCivil()
         RadChkContextePublie.Checked = True
         ChargementConclusion()
         ChargementContexte()
+        RefreshChaineEpisode()
     End Sub
 
     ReadOnly episodeContexteDao As New EpisodeContexteDao
     ReadOnly episodeDao As New EpisodeDao
+    ReadOnly antecedentDao As New AntecedentDao
 
     ReadOnly ListConclusion As List(Of Long) = New List(Of Long)
 
@@ -246,6 +251,7 @@ Public Class RadFEpisodeConclusionContextePatient
                         vFContexteDetailEdit.UtilisateurConnecte = userLog
                         vFContexteDetailEdit.SelectedDrcId = 0
                         vFContexteDetailEdit.PositionGaucheDroite = EnumPosition.Droite
+                        vFContexteDetailEdit.Episode = SelectedEpisode
                         vFContexteDetailEdit.ShowDialog() 'Modal
                         If vFContexteDetailEdit.CodeRetour = True Then
                             CodeRetour = True
@@ -305,6 +311,7 @@ Public Class RadFEpisodeConclusionContextePatient
                             vFContexteDetailEdit.SelectedDrcId = SelectedDrcId
                             vFContexteDetailEdit.SelectedContexteId = 0
                             vFContexteDetailEdit.PositionGaucheDroite = EnumPosition.Droite
+                            vFContexteDetailEdit.Episode = SelectedEpisode
                             vFContexteDetailEdit.ShowDialog()
                             'Si le traitement a été créé, on recharge la grid
                             If vFContexteDetailEdit.CodeRetour = True Then
@@ -360,7 +367,7 @@ Public Class RadFEpisodeConclusionContextePatient
             If aRow >= 0 Then
                 Cursor.Current = Cursors.WaitCursor
                 episodeContexteId = RadConclusionGridView.Rows(aRow).Cells("episode_contexte_id").Value
-                EpisodeContexteDao.SuppressionEpisodeContexteById(episodeContexteId)
+                episodeContexteDao.SuppressionEpisodeContexteById(episodeContexteId)
                 ChargementConclusion()
                 ChargementContexte()
                 CodeRetour = True
@@ -376,4 +383,94 @@ Public Class RadFEpisodeConclusionContextePatient
         episodeDao.MajEpisodeConclusionMedicale(SelectedEpisode.Id)
     End Sub
 
+    Private Sub RadGridViewChaineEpisode_Click(sender As Object, e As EventArgs) Handles RadGridViewChaineEpisodeAntecedent.Click
+        Dim chainEpisodeId = RadGridViewChaineEpisodeAntecedent.Rows(Me.RadGridViewChaineEpisodeAntecedent.Rows.IndexOf(Me.RadGridViewChaineEpisodeAntecedent.CurrentRow)).Cells("id").Value
+        Dim isChecked = RadGridViewChaineEpisodeAntecedent.Rows(Me.RadGridViewChaineEpisodeAntecedent.Rows.IndexOf(Me.RadGridViewChaineEpisodeAntecedent.CurrentRow)).Cells("selected").Value
+        Dim relation As New RelationChaineEpisode With {
+            .Id = 0,
+            .ChaineId = chainEpisodeId,
+            .EpisodeId = SelectedEpisode.Id
+        }
+        If (isChecked) Then
+            chaineEpisodeDao.DeleteRelation(relation)
+        Else
+            chaineEpisodeDao.AddRelation(relation)
+        End If
+        RefreshChaineEpisode()
+    End Sub
+
+    Private Sub RadGridViewChaineEpisodeContexte_Click(sender As Object, e As EventArgs) Handles RadGridViewChaineEpisodeContexte.Click
+        Dim chainEpisodeId = RadGridViewChaineEpisodeContexte.Rows(Me.RadGridViewChaineEpisodeContexte.Rows.IndexOf(Me.RadGridViewChaineEpisodeContexte.CurrentRow)).Cells("id").Value
+        Dim isChecked = RadGridViewChaineEpisodeContexte.Rows(Me.RadGridViewChaineEpisodeContexte.Rows.IndexOf(Me.RadGridViewChaineEpisodeContexte.CurrentRow)).Cells("selected").Value
+        Dim relation As New RelationChaineEpisode With {
+            .Id = 0,
+            .ChaineId = chainEpisodeId,
+            .EpisodeId = SelectedEpisode.Id
+        }
+        If (isChecked) Then
+            chaineEpisodeDao.DeleteRelation(relation)
+        Else
+            chaineEpisodeDao.AddRelation(relation)
+        End If
+        RefreshChaineEpisode()
+    End Sub
+
+    Private Sub RefreshChaineEpisode()
+        Dim relationChaineEpisodes = chaineEpisodeDao.GetRelationListByEpisode(SelectedEpisode)
+        Dim filter
+        If RadChkPublie.Checked = False Then
+            filter = " AND (oasis.oa_antecedent.oa_antecedent_statut_affichage = 'P' OR oasis.oa_antecedent.oa_antecedent_statut_affichage = 'C')"
+        Else
+            filter = " AND oasis.oa_antecedent.oa_antecedent_statut_affichage = 'P' "
+        End If
+        filter += " AND (oasis.oa_antecedent.oa_antecedent_inactif = '0' OR oasis.oa_antecedent.oa_antecedent_inactif is Null) ORDER BY oasis.oa_antecedent.oa_antecedent_ordre_affichage1, oasis.oa_antecedent.oa_antecedent_ordre_affichage2, oasis.oa_antecedent.oa_antecedent_ordre_affichage3;"
+
+        Dim antecedents = antecedentDao.GetListByPatient(SelectedPatient.PatientId, " AND oasis.oa_antecedent.oa_antecedent_type = 'A'" & filter)
+
+        RadGridViewChaineEpisodeAntecedent.Rows.Clear()
+        For Each antecedent In antecedents
+            RadGridViewChaineEpisodeAntecedent.Rows.Add(antecedents.IndexOf(antecedent))
+            RadGridViewChaineEpisodeAntecedent.Rows(antecedents.IndexOf(antecedent)).Cells("id").Value = antecedent.Id
+            RadGridViewChaineEpisodeAntecedent.Rows(antecedents.IndexOf(antecedent)).Cells("name").Value = antecedent.Description
+            RadGridViewChaineEpisodeAntecedent.Rows(antecedents.IndexOf(antecedent)).Cells("selected").Value = relationChaineEpisodes.Any(Function(myObject) myObject.ChaineId = antecedent.Id)
+        Next
+
+        antecedents = antecedentDao.GetListByPatient(SelectedPatient.PatientId, " AND oasis.oa_antecedent.oa_antecedent_type = 'C' AND (oasis.oa_antecedent.oa_antecedent_arret = '0' OR oasis.oa_antecedent.oa_antecedent_arret is Null) " & filter)
+
+        RadGridViewChaineEpisodeContexte.Rows.Clear()
+        For Each antecedent In antecedents
+            RadGridViewChaineEpisodeContexte.Rows.Add(antecedents.IndexOf(antecedent))
+            RadGridViewChaineEpisodeContexte.Rows(antecedents.IndexOf(antecedent)).Cells("id").Value = antecedent.Id
+            RadGridViewChaineEpisodeContexte.Rows(antecedents.IndexOf(antecedent)).Cells("name").Value = antecedent.Description
+            RadGridViewChaineEpisodeContexte.Rows(antecedents.IndexOf(antecedent)).Cells("selected").Value = relationChaineEpisodes.Any(Function(myObject) myObject.ChaineId = antecedent.Id)
+        Next
+    End Sub
+
+    Private Sub RadChkPublie_ToggleStateChanged(sender As Object, args As Telerik.WinControls.UI.StateChangedEventArgs) Handles RadChkPublie.ToggleStateChanged
+        If RadChkPublie.Checked = True Then
+            RadChkTous.Checked = False
+            If InitPublie = True Then
+                Application.DoEvents()
+                RefreshChaineEpisode()
+            Else
+                InitPublie = True
+            End If
+        Else
+            If RadChkTous.Checked = False Then
+                RadChkPublie.Checked = True
+            End If
+        End If
+    End Sub
+
+    Private Sub RadChkTous_ToggleStateChanged(sender As Object, args As Telerik.WinControls.UI.StateChangedEventArgs) Handles RadChkTous.ToggleStateChanged
+        If RadChkTous.Checked = True Then
+            RadChkPublie.Checked = False
+            Application.DoEvents()
+            RefreshChaineEpisode()
+        Else
+            If RadChkPublie.Checked = False Then
+                RadChkTous.Checked = True
+            End If
+        End If
+    End Sub
 End Class

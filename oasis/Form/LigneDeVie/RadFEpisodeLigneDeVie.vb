@@ -1,4 +1,5 @@
 ﻿Imports System.Configuration
+Imports System.Diagnostics
 Imports Oasis_Common
 Imports Telerik.WinControls
 Imports Telerik.WinControls.UI
@@ -8,6 +9,7 @@ Public Class RadFEpisodeLigneDeVie
     Private privateUtilisateurConnecte As Utilisateur
     Private _EpisodeIdDejaOuvert As Long
     Private _ecranPrecedent As EnumAccesEcranPrecedent
+    Dim InitPublie As Boolean
 
     Public Property SelectedPatient As Patient
         Get
@@ -50,6 +52,8 @@ Public Class RadFEpisodeLigneDeVie
     Dim parametreDao As New ParametreDao
     Dim episodeParametreDao As New EpisodeParametreDao
     Dim patientParametreLdvDao As New PatientParametreLdvDao
+    Dim chaineEpisodeDao As New ChaineEpisodeDao
+    Dim antecedentDao As New AntecedentDao
 
     Dim patientParametreLdv As PatientParametreLdv
     Dim ligneDeVie As New LigneDeVie
@@ -69,7 +73,8 @@ Public Class RadFEpisodeLigneDeVie
 
     Private Sub RadFEpisodeListe_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         'Contrôle d'accès aux écran Synthèse, épisode et ligne de vie
-        Environnement.ControleAccesForm.addFormToControl(EnumForm.LIGNE_DE_VIE.ToString)
+        RadChkCEPublie.Checked = True
+        Environnement.ControleAccesForm.AddFormToControl(EnumForm.LIGNE_DE_VIE.ToString)
         If Environnement.ControleAccesForm.IsAccessToFormOK(EnumForm.EPISODE.ToString) = False Then
             RadBtnEpisode.Hide()
         End If
@@ -79,6 +84,7 @@ Public Class RadFEpisodeLigneDeVie
         Else
             RadBtnCreationEpisodeParametre.Enabled = False
         End If
+        RefreshChaineEpisode()
         GetParametresEtFiltres()
         InitFiltre()
         ChargementEtatCivil()
@@ -88,13 +94,13 @@ Public Class RadFEpisodeLigneDeVie
     Private Sub GetParametresEtFiltres()
         ConfigurationParametreExiste = True
         Try
-            patientParametreLdv = patientParametreLdvDao.GetParametreByPatientId(SelectedPatient.patientId)
+            patientParametreLdv = patientParametreLdvDao.GetParametreByPatientId(SelectedPatient.PatientId)
         Catch ex As Exception
             Dim messageErreur As String = ex.Message
             If messageErreur.StartsWith("RNF") Then
                 ConfigurationParametreExiste = False
                 patientParametreLdv = New PatientParametreLdv()
-                patientParametreLdv.PatientId = SelectedPatient.patientId
+                patientParametreLdv.PatientId = SelectedPatient.PatientId
             End If
         End Try
     End Sub
@@ -351,16 +357,36 @@ Public Class RadFEpisodeLigneDeVie
         Cursor.Current = Cursors.WaitCursor
         RadGridViewEpisode.Rows.Clear()
 
-        Dim dt As DataTable
         Dim episodeDao As New EpisodeDao
-        dt = episodeDao.GetAllEpisodeByPatient(SelectedPatient.patientId, DteDepuis.Value, DteJusqua.Value, ligneDeVie)
+        Dim chaineEpisodes As New List(Of Long)
+
+        For Each row As GridViewRowInfo In RadGridViewChaineEpisodeAntecedent.Rows
+            If row.Cells("selected").Value = True Then
+                chaineEpisodes.Add(CLng(row.Cells("id").Value))
+            End If
+        Next
+
+        For Each row As GridViewRowInfo In RadGridViewChaineEpisodeContexte.Rows
+            If row.Cells("selected").Value = True Then
+                chaineEpisodes.Add(CLng(row.Cells("id").Value))
+            End If
+        Next
+
+        If chaineEpisodes.Count > 0 Then
+            Dim tmp As List(Of ChaineEpisode) = chaineEpisodeDao.GetList(Nothing, chaineEpisodes)
+            For Each row As ChaineEpisode In tmp
+                chaineEpisodes.Add(row.AntecedentId)
+            Next
+        End If
+
+        Dim dt As DataTable = episodeDao.GetAllEpisodeByPatient(SelectedPatient.PatientId, DteDepuis.Value, DteJusqua.Value, ligneDeVie, If(RadChkCETous.Checked AndAlso chaineEpisodes.Count = RadGridViewChaineEpisodeContexte.Rows.Count + RadGridViewChaineEpisodeAntecedent.Rows.Count, New List(Of Long), chaineEpisodes.Distinct().ToList))
 
         'Déclaration des variables pour réaliser le parcours du DataTable pour alimenter le DataGridView
         Dim i As Integer
         Dim iGrid As Integer = -1 'Indice pour alimenter la Grid qui peut comporter moins d'occurrences que le DataTable
         Dim dateCreation As Date
         Dim conclusionMedicale As String
-        Dim ValeurParametre As Decimal
+        Dim ValeurParametre As Decimal?
         Dim ValeurString As String
         Dim rowCount As Integer = dt.Rows.Count - 1
 
@@ -435,8 +461,8 @@ Public Class RadFEpisodeLigneDeVie
             If RadGridViewEpisode.Columns.Item("parametre1").IsVisible = True Then
                 RadGridViewEpisode.Rows(iGrid).Cells("parametre1").Value = ""
                 If Parametre1Id <> 0 Then
-                    ValeurParametre = Coalesce(dt.Rows(i)("ValeurParam1"), 0)
-                    If ValeurParametre <> 0 Then
+                    ValeurParametre = Coalesce(dt.Rows(i)("ValeurParam1"), Nothing)
+                    If ValeurParametre.HasValue Then
                         ValeurString = FormatParametre(Entier1, Decimale1, ValeurParametre)
                         RadGridViewEpisode.Rows(iGrid).Cells("parametre1").Value = ValeurString
                     End If
@@ -446,8 +472,8 @@ Public Class RadFEpisodeLigneDeVie
             If RadGridViewEpisode.Columns.Item("parametre2").IsVisible = True Then
                 RadGridViewEpisode.Rows(iGrid).Cells("parametre2").Value = ""
                 If Parametre2Id <> 0 Then
-                    ValeurParametre = Coalesce(dt.Rows(i)("ValeurParam2"), 0)
-                    If ValeurParametre <> 0 Then
+                    ValeurParametre = Coalesce(dt.Rows(i)("ValeurParam2"), Nothing)
+                    If ValeurParametre.HasValue Then
                         ValeurString = FormatParametre(Entier2, Decimale2, ValeurParametre)
                         RadGridViewEpisode.Rows(iGrid).Cells("parametre2").Value = ValeurString
                     End If
@@ -457,8 +483,8 @@ Public Class RadFEpisodeLigneDeVie
             If RadGridViewEpisode.Columns.Item("parametre3").IsVisible = True Then
                 RadGridViewEpisode.Rows(iGrid).Cells("parametre3").Value = ""
                 If Parametre3Id <> 0 Then
-                    ValeurParametre = Coalesce(dt.Rows(i)("ValeurParam3"), 0)
-                    If ValeurParametre <> 0 Then
+                    ValeurParametre = Coalesce(dt.Rows(i)("ValeurParam3"), Nothing)
+                    If ValeurParametre.HasValue Then
                         ValeurString = FormatParametre(Entier3, Decimale3, ValeurParametre)
                         RadGridViewEpisode.Rows(iGrid).Cells("parametre3").Value = ValeurString
                     End If
@@ -468,8 +494,8 @@ Public Class RadFEpisodeLigneDeVie
             If RadGridViewEpisode.Columns.Item("parametre4").IsVisible = True Then
                 RadGridViewEpisode.Rows(iGrid).Cells("parametre4").Value = ""
                 If Parametre4Id <> 0 Then
-                    ValeurParametre = Coalesce(dt.Rows(i)("ValeurParam4"), 0)
-                    If ValeurParametre <> 0 Then
+                    ValeurParametre = Coalesce(dt.Rows(i)("ValeurParam4"), Nothing)
+                    If ValeurParametre.HasValue Then
                         ValeurString = FormatParametre(Entier4, Decimale4, ValeurParametre)
                         RadGridViewEpisode.Rows(iGrid).Cells("parametre4").Value = ValeurString
                     End If
@@ -479,8 +505,8 @@ Public Class RadFEpisodeLigneDeVie
             If RadGridViewEpisode.Columns.Item("parametre5").IsVisible = True Then
                 RadGridViewEpisode.Rows(iGrid).Cells("parametre5").Value = ""
                 If Parametre5Id <> 0 Then
-                    ValeurParametre = Coalesce(dt.Rows(i)("ValeurParam5"), 0)
-                    If ValeurParametre <> 0 Then
+                    ValeurParametre = Coalesce(dt.Rows(i)("ValeurParam5"), Nothing)
+                    If ValeurParametre.HasValue Then
                         ValeurString = FormatParametre(Entier5, Decimale5, ValeurParametre)
                         RadGridViewEpisode.Rows(iGrid).Cells("parametre5").Value = ValeurString
                     End If
@@ -547,7 +573,7 @@ Public Class RadFEpisodeLigneDeVie
         LblALD.Hide()
         Dim StringTooltip As String
         Dim aldDao As New AldDao
-        StringTooltip = aldDao.DateFinALD(Me.SelectedPatient.patientId)
+        StringTooltip = aldDao.DateFinALD(Me.SelectedPatient.PatientId)
         If StringTooltip <> "" Then
             LblALD.Show()
             ToolTip1.SetToolTip(LblALD, StringTooltip)
@@ -736,7 +762,7 @@ Public Class RadFEpisodeLigneDeVie
     End Sub
 
     Private Sub RadFEpisodeLigneDeVie_FormClosed(sender As Object, e As FormClosedEventArgs) Handles MyBase.FormClosed
-        Environnement.ControleAccesForm.removeFormToControl(EnumForm.LIGNE_DE_VIE.ToString)
+        Environnement.ControleAccesForm.RemoveFormToControl(EnumForm.LIGNE_DE_VIE.ToString)
     End Sub
 
     Private Sub MasterTemplate_CellFormatting(sender As Object, e As CellFormattingEventArgs) Handles RadGridViewEpisode.CellFormatting
@@ -863,6 +889,24 @@ Public Class RadFEpisodeLigneDeVie
         End If
 
         ChargementEpisode(ligneDeVie)
+    End Sub
+
+    Private Sub RadButtonDeselectAll_Click(sender As Object, e As EventArgs) Handles RadButtonDeselectAll.Click
+        For Each row In RadGridViewChaineEpisodeAntecedent.Rows
+            RadGridViewChaineEpisodeAntecedent.Rows(RadGridViewChaineEpisodeAntecedent.Rows.IndexOf(row)).Cells("selected").Value = False
+        Next
+        For Each row In RadGridViewChaineEpisodeContexte.Rows
+            RadGridViewChaineEpisodeContexte.Rows(RadGridViewChaineEpisodeContexte.Rows.IndexOf(row)).Cells("selected").Value = False
+        Next
+    End Sub
+
+    Private Sub RadButtonSelectAll_Click(sender As Object, e As EventArgs) Handles RadButtonSelectAll.Click
+        For Each row In RadGridViewChaineEpisodeAntecedent.Rows
+            RadGridViewChaineEpisodeAntecedent.Rows(RadGridViewChaineEpisodeAntecedent.Rows.IndexOf(row)).Cells("selected").Value = True
+        Next
+        For Each row In RadGridViewChaineEpisodeContexte.Rows
+            RadGridViewChaineEpisodeContexte.Rows(RadGridViewChaineEpisodeContexte.Rows.IndexOf(row)).Cells("selected").Value = True
+        Next
     End Sub
 
     Private Sub MasterTemplate_ToolTipTextNeeded(sender As Object, e As Telerik.WinControls.ToolTipTextNeededEventArgs) Handles RadGridViewEpisode.ToolTipTextNeeded
@@ -1042,4 +1086,72 @@ Public Class RadFEpisodeLigneDeVie
 
         Return ValeurString
     End Function
+
+    Private Sub RefreshChaineEpisode()
+        Dim filter
+        If RadChkCEPublie.Checked = False Then
+            filter = " AND (oasis.oa_antecedent.oa_antecedent_statut_affichage = 'P' OR oasis.oa_antecedent.oa_antecedent_statut_affichage = 'C')"
+        Else
+            filter = " AND oasis.oa_antecedent.oa_antecedent_statut_affichage = 'P' "
+        End If
+        filter += " AND (oasis.oa_antecedent.oa_antecedent_inactif = '0' OR oasis.oa_antecedent.oa_antecedent_inactif is Null) ORDER BY oasis.oa_antecedent.oa_antecedent_ordre_affichage1, oasis.oa_antecedent.oa_antecedent_ordre_affichage2, oasis.oa_antecedent.oa_antecedent_ordre_affichage3;"
+
+        Dim antecedents = antecedentDao.GetListByPatient(SelectedPatient.PatientId, " AND oasis.oa_antecedent.oa_antecedent_type = 'A'" & filter)
+
+        RadGridViewChaineEpisodeAntecedent.Rows.Clear()
+        For Each antecedent In antecedents
+            RadGridViewChaineEpisodeAntecedent.Rows.Add(antecedents.IndexOf(antecedent))
+            RadGridViewChaineEpisodeAntecedent.Rows(antecedents.IndexOf(antecedent)).Cells("id").Value = antecedent.Id
+            RadGridViewChaineEpisodeAntecedent.Rows(antecedents.IndexOf(antecedent)).Cells("name").Value = antecedent.Description
+            RadGridViewChaineEpisodeAntecedent.Rows(antecedents.IndexOf(antecedent)).Cells("selected").Value = True
+        Next
+
+        antecedents = antecedentDao.GetListByPatient(SelectedPatient.PatientId, " AND oasis.oa_antecedent.oa_antecedent_type = 'C' AND (oasis.oa_antecedent.oa_antecedent_arret = '0' OR oasis.oa_antecedent.oa_antecedent_arret is Null) " & filter)
+
+        RadGridViewChaineEpisodeContexte.Rows.Clear()
+        For Each antecedent In antecedents
+            RadGridViewChaineEpisodeContexte.Rows.Add(antecedents.IndexOf(antecedent))
+            RadGridViewChaineEpisodeContexte.Rows(antecedents.IndexOf(antecedent)).Cells("id").Value = antecedent.Id
+            RadGridViewChaineEpisodeContexte.Rows(antecedents.IndexOf(antecedent)).Cells("name").Value = antecedent.Description
+            RadGridViewChaineEpisodeContexte.Rows(antecedents.IndexOf(antecedent)).Cells("selected").Value = True
+        Next
+    End Sub
+
+    Private Sub RadGridViewChaineEpisodeAntecedent_Click(sender As Object, e As EventArgs) Handles RadGridViewChaineEpisodeAntecedent.Click
+        Dim chainEpisodeId = RadGridViewChaineEpisodeAntecedent.Rows(Me.RadGridViewChaineEpisodeAntecedent.Rows.IndexOf(Me.RadGridViewChaineEpisodeAntecedent.CurrentRow)).Cells("id").Value
+        RadGridViewChaineEpisodeAntecedent.Rows(Me.RadGridViewChaineEpisodeAntecedent.Rows.IndexOf(Me.RadGridViewChaineEpisodeAntecedent.CurrentRow)).Cells("selected").Value = Not RadGridViewChaineEpisodeAntecedent.Rows(Me.RadGridViewChaineEpisodeAntecedent.Rows.IndexOf(Me.RadGridViewChaineEpisodeAntecedent.CurrentRow)).Cells("selected").Value
+    End Sub
+
+    Private Sub RadGridViewChaineEpisodeContexte_Click(sender As Object, e As EventArgs) Handles RadGridViewChaineEpisodeContexte.Click
+        Dim chainEpisodeId = RadGridViewChaineEpisodeAntecedent.Rows(Me.RadGridViewChaineEpisodeAntecedent.Rows.IndexOf(Me.RadGridViewChaineEpisodeAntecedent.CurrentRow)).Cells("id").Value
+        RadGridViewChaineEpisodeContexte.Rows(Me.RadGridViewChaineEpisodeContexte.Rows.IndexOf(Me.RadGridViewChaineEpisodeContexte.CurrentRow)).Cells("selected").Value = Not RadGridViewChaineEpisodeContexte.Rows(Me.RadGridViewChaineEpisodeContexte.Rows.IndexOf(Me.RadGridViewChaineEpisodeContexte.CurrentRow)).Cells("selected").Value
+    End Sub
+
+    Private Sub RadChkCEPublie_ToggleStateChanged(sender As Object, args As Telerik.WinControls.UI.StateChangedEventArgs) Handles RadChkCEPublie.ToggleStateChanged
+        If RadChkCEPublie.Checked = True Then
+            RadChkCETous.Checked = False
+            If InitPublie = True Then
+                Application.DoEvents()
+                RefreshChaineEpisode()
+            Else
+                InitPublie = True
+            End If
+        Else
+            If RadChkCETous.Checked = False Then
+                RadChkCEPublie.Checked = True
+            End If
+        End If
+    End Sub
+
+    Private Sub RadChkTous_ToggleStateChanged(sender As Object, args As Telerik.WinControls.UI.StateChangedEventArgs) Handles RadChkCETous.ToggleStateChanged
+        If RadChkCETous.Checked = True Then
+            RadChkCEPublie.Checked = False
+            Application.DoEvents()
+            RefreshChaineEpisode()
+        Else
+            If RadChkCEPublie.Checked = False Then
+                RadChkCETous.Checked = True
+            End If
+        End If
+    End Sub
 End Class

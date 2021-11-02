@@ -2,6 +2,7 @@
 Imports Telerik.WinControls.UI
 Imports Oasis_Common
 Imports System.Configuration
+Imports System.Diagnostics
 
 Public Class RadFEpisodeParametreDetailEdit
     Private _SelectedEpisodeId As Long
@@ -40,7 +41,7 @@ Public Class RadFEpisodeParametreDetailEdit
 
     ReadOnly listeParametreEpisode As New List(Of Long)
 
-    Dim FinChargementParametres As Boolean = False
+    Dim FinChargementParametres As Boolean
 
     Dim ParametreIdTaille As Long
     Dim AgeAdulteHomme As Integer
@@ -68,8 +69,10 @@ Public Class RadFEpisodeParametreDetailEdit
     End Sub
 
     Private Sub ChargementParametreApplication()
-        'Récupération du nom de l'organisation dans les paramètres de l'application
         Dim ParametreIdTailleString As String = ConfigurationManager.AppSettings("ParametreIdTaille")
+        Dim AgeAdulteHommeString As String = ConfigurationManager.AppSettings("AgeAdulteHomme")
+        Dim AgeAdulteFemmeString As String = ConfigurationManager.AppSettings("AgeAdulteFemme")
+
         If IsNumeric(ParametreIdTailleString) Then
             ParametreIdTaille = CInt(ParametreIdTailleString)
         Else
@@ -77,7 +80,6 @@ Public Class RadFEpisodeParametreDetailEdit
             CreateLog("Paramètre application 'ParametreIdTaille' non trouvé !", Me.Name, Log.EnumTypeLog.ERREUR.ToString, userLog)
         End If
 
-        Dim AgeAdulteHommeString As String = ConfigurationManager.AppSettings("AgeAdulteHomme")
         If IsNumeric(AgeAdulteHommeString) Then
             AgeAdulteHomme = CInt(AgeAdulteHommeString)
         Else
@@ -85,7 +87,6 @@ Public Class RadFEpisodeParametreDetailEdit
             CreateLog("Paramètre application 'AgeAdulteHomme' non trouvé !", Me.Name, Log.EnumTypeLog.ERREUR.ToString, userLog)
         End If
 
-        Dim AgeAdulteFemmeString As String = ConfigurationManager.AppSettings("AgeAdulteFemme")
         If IsNumeric(AgeAdulteFemmeString) Then
             AgeAdulteFemme = CInt(AgeAdulteFemmeString)
         Else
@@ -98,15 +99,13 @@ Public Class RadFEpisodeParametreDetailEdit
         FinChargementParametres = False
         RadGridViewParm.Rows.Clear()
 
-        Dim parmDataTable As DataTable
-        parmDataTable = episodeParametreDao.getAllParametreEpisodeByEpisodeId(SelectedEpisodeId)
-        'Déclaration des variables pour réaliser le parcours du DataTable pour alimenter le DataGridView
+        Dim parmDataTable As DataTable = episodeParametreDao.getAllParametreEpisodeByEpisodeId(SelectedEpisodeId)
         Dim i, entier, nombreDecimal As Integer
-        Dim Valeur As Decimal
-        Dim ValeurString, definition As String
+        Dim Valeur As Decimal?
+        Dim ValeurString As String
         Dim ParametreAjoute As Boolean
         Dim iGrid As Integer = -1 'Indice pour alimenter la Grid qui peut comporter moins d'occurrences que le DataTable
-        ParmRowCount = parmDataTable.Rows.Count - 1
+        Dim ParmRowCount As Integer = parmDataTable.Rows.Count - 1
         Dim RowCount As Integer = parmDataTable.Rows.Count - 1
         'Parcours du DataTable pour alimenter le DataGridView
         For i = 0 To RowCount Step 1
@@ -118,10 +117,10 @@ Public Class RadFEpisodeParametreDetailEdit
                 ParmRowCount -= 1
                 Continue For
             End If
-            'Ajout d'une ligne au DataGridView
+
             iGrid += 1
             RadGridViewParm.Rows.Add(iGrid)
-            'Alimentation du DataGridView
+
             RadGridViewParm.Rows(iGrid).Cells("episode_parametre_id").Value = parmDataTable.Rows(i)("episode_parametre_id")
             RadGridViewParm.Rows(iGrid).Cells("parametre_id").Value = parmDataTable.Rows(i)("parametre_id")
 
@@ -134,77 +133,64 @@ Public Class RadFEpisodeParametreDetailEdit
             If ParametreAjoute = True Then
                 RadGridViewParm.Rows(iGrid).Cells("ajoute").Value = "+"
             End If
-            Valeur = parmDataTable.Rows(i)("valeur")
+            Valeur = If(IsDBNull(parmDataTable.Rows(i)("valeur")), Nothing, parmDataTable.Rows(i)("valeur"))
 
-            'Si c'est le paramètre taille et que la valeur n'est pas renseignée, on va récupérer la taille stocké dans la table patient
             If parametreId = 2 Then 'Taille
-                If Valeur = 0 Then
+                If Valeur Is Nothing Then
                     If SelectedPatient.Taille <> 0 Then
                         Valeur = SelectedPatient.Taille
                     End If
                 End If
             End If
 
-            'Console.WriteLine("Id : " & parametreId.ToString & " ajout : " & parmDataTable.Rows(i)("parametre_ajoute"))
-
-            'RadGridViewParm.Rows(iGrid).Cells("valeurInput").Tag = ""
             RadGridViewParm.Rows(iGrid).Cells("description").Value = parmDataTable.Rows(i)("description")
             RadGridViewParm.Rows(iGrid).Cells("entier").Value = parmDataTable.Rows(i)("entier")
             entier = parmDataTable.Rows(i)("entier")
             RadGridViewParm.Rows(iGrid).Cells("decimal").Value = parmDataTable.Rows(i)("decimal")
             nombreDecimal = parmDataTable.Rows(i)("decimal")
             RadGridViewParm.Rows(iGrid).Cells("unite").Value = parmDataTable.Rows(i)("unite")
-            definition = ""
+
             ValeurString = ""
-            Select Case entier
-                Case 1
-                    Select Case nombreDecimal
-                        Case 0
-                            ValeurString = Valeur.ToString("0")
-                            definition = "0"
-                        Case 1
-                            ValeurString = Valeur.ToString("0.0")
-                            definition = "0,0"
-                        Case 2
-                            ValeurString = Valeur.ToString("0.00")
-                            definition = "0,00"
-                        Case 3
-                            ValeurString = Valeur.ToString("0.000")
-                            definition = "0,000"
-                    End Select
-                Case 2
-                    Select Case nombreDecimal
-                        Case 0
-                            ValeurString = Valeur.ToString("#0")
-                            definition = "00"
-                        Case 1
-                            ValeurString = Valeur.ToString("#0.0")
-                            definition = "00,0"
-                        Case 2
-                            ValeurString = Valeur.ToString("#0.00")
-                            definition = "00,00"
-                        Case 3
-                            ValeurString = Valeur.ToString("#0.000")
-                            definition = "00,000"
-                    End Select
-                Case 3
-                    Select Case nombreDecimal
-                        Case 0
-                            ValeurString = Valeur.ToString("##0")
-                            definition = "000"
-                        Case 1
-                            ValeurString = Valeur.ToString("##0.0")
-                            definition = "000,0"
-                        Case 2
-                            ValeurString = Valeur.ToString("##0.00")
-                            definition = "000,00"
-                        Case 3
-                            ValeurString = Valeur.ToString("##0.000")
-                            definition = "000,000"
-                    End Select
-            End Select
+            If Valeur IsNot Nothing Then
+                Select Case entier
+                    Case 1
+                        Select Case nombreDecimal
+                            Case 0
+                                ValeurString = Valeur.Value.ToString("0")
+                            Case 1
+                                ValeurString = Valeur.Value.ToString("0.0")
+                            Case 2
+                                ValeurString = Valeur.Value.ToString("0.00")
+                            Case 3
+                                ValeurString = Valeur.Value.ToString("0.000")
+                        End Select
+                    Case 2
+                        Select Case nombreDecimal
+                            Case 0
+                                ValeurString = Valeur.Value.ToString("#0")
+                            Case 1
+                                ValeurString = Valeur.Value.ToString("#0.0")
+                            Case 2
+                                ValeurString = Valeur.Value.ToString("#0.00")
+                            Case 3
+                                ValeurString = Valeur.Value.ToString("#0.000")
+                        End Select
+                    Case 3
+                        Select Case nombreDecimal
+                            Case 0
+                                ValeurString = Valeur.Value.ToString("##0")
+                            Case 1
+                                ValeurString = Valeur.Value.ToString("##0.0")
+                            Case 2
+                                ValeurString = Valeur.Value.ToString("##0.00")
+                            Case 3
+                                ValeurString = Valeur.Value.ToString("##0.000")
+                        End Select
+                End Select
+            End If
+
             RadGridViewParm.Rows(iGrid).Cells("valeurInput").Value = ValeurString
-            If Valeur = 0 Then
+            If IsNothing(Valeur) Then
                 RadGridViewParm.Rows(iGrid).Cells("valeurInput").Style.ForeColor = Color.Red
                 RadGridViewParm.Rows(iGrid).Cells("description").Style.ForeColor = Color.Red
                 RadGridViewParm.Rows(iGrid).Cells("unite").Style.ForeColor = Color.Red
@@ -303,28 +289,33 @@ Public Class RadFEpisodeParametreDetailEdit
         Close()
     End Sub
 
-    Private Sub Validation()
+    Private Sub Validation(Optional row As GridViewCellEventArgs = Nothing)
         Dim MiseAJour As Boolean = False
         Dim ParmRowIndex As Integer = 0
         Dim patientDao As New PatientDao
 
         For Each rowInfo As GridViewRowInfo In RadGridViewParm.Rows
-            Dim valeurInput As Decimal = 0
-            Dim valeur As Decimal = 0
+            Dim valeurInput As Decimal? = Nothing
+            Dim valeur As Decimal? = Nothing
             Dim id, parametreId As Long
+
+            If (row IsNot Nothing AndAlso row.RowIndex <> rowInfo.Index) Then
+                Continue For
+            End If
+
             For Each cellInfo As GridViewCellInfo In rowInfo.Cells
                 If (cellInfo.ColumnInfo.Name = "valeurInput") Then
-                    If cellInfo.Value <> Nothing Then
-                        valeurInput = cellInfo.Value
+                    If Not String.IsNullOrEmpty(cellInfo.Value) Then
+                        valeurInput = CDec(Val(cellInfo.Value))
                     Else
-                        valeurInput = 0
+                        valeurInput = Nothing
                     End If
                 End If
                 If (cellInfo.ColumnInfo.Name = "valeur") Then
-                    If cellInfo.Value <> Nothing Then
-                        valeur = cellInfo.Value
+                    If Not String.IsNullOrEmpty(cellInfo.Value) Then
+                        valeur = CDec(Val(cellInfo.Value))
                     Else
-                        valeur = 0
+                        valeur = Nothing
                     End If
                 End If
                 If (cellInfo.ColumnInfo.Name = "episode_parametre_id") Then
@@ -342,34 +333,31 @@ Public Class RadFEpisodeParametreDetailEdit
                     End If
                 End If
             Next
-            If valeurInput <> valeur AndAlso valeurInput <> 0 Then
-                'Mise à jour du paramètre
-                'Console.WriteLine("Id : " & id.ToString & " Valeur saisie : " & valeurInput.ToString & " valeur initiale : " & valeur.ToString)
-                episodeParametreDao.ModificationValeurEpisodeParametre(id, valeurInput)
-                If parametreId = ParametreIdTaille Then
-                    Select Case SelectedPatient.PatientGenreId
-                        'Calcul age par rapport à la date de l'épisode de saisie des  
-                        Case "M"
-                            If SelectedPatient.PatientAgeEnAnnee >= AgeAdulteHomme Then
-                                patientDao.ModificationPatientTaille(SelectedPatient.patientId, valeurInput)
-                            End If
-                        Case "F"
-                            If SelectedPatient.PatientAgeEnAnnee >= AgeAdulteFemme Then
-                                patientDao.ModificationPatientTaille(SelectedPatient.patientId, valeurInput)
-                            End If
-                        Case Else
-                            If SelectedPatient.PatientAgeEnAnnee >= AgeAdulteHomme Then
-                                patientDao.ModificationPatientTaille(SelectedPatient.patientId, valeurInput)
-                            End If
-                    End Select
-                End If
-                MiseAJour = True
-                If rowInfo.Index() >= ParmRowCount Then
-                    ParmRowIndex = 0
-                Else
-                    ParmRowIndex = rowInfo.Index() + 1
-                End If
+            'If valeurInput IsNot Nothing Then
+            episodeParametreDao.ModificationValeurEpisodeParametre(id, valeurInput)
+            If parametreId = ParametreIdTaille Then
+                Select Case SelectedPatient.PatientGenreId
+                    Case "M"
+                        If SelectedPatient.PatientAgeEnAnnee >= AgeAdulteHomme Then
+                            patientDao.ModificationPatientTaille(SelectedPatient.PatientId, valeurInput)
+                        End If
+                    Case "F"
+                        If SelectedPatient.PatientAgeEnAnnee >= AgeAdulteFemme Then
+                            patientDao.ModificationPatientTaille(SelectedPatient.PatientId, valeurInput)
+                        End If
+                    Case Else
+                        If SelectedPatient.PatientAgeEnAnnee >= AgeAdulteHomme Then
+                            patientDao.ModificationPatientTaille(SelectedPatient.PatientId, valeurInput)
+                        End If
+                End Select
             End If
+            MiseAJour = True
+            If rowInfo.Index() >= ParmRowCount Then
+                ParmRowIndex = 0
+            Else
+                ParmRowIndex = rowInfo.Index() + 1
+            End If
+            ' End If
         Next
 
         If MiseAJour = True Then
@@ -393,41 +381,41 @@ Public Class RadFEpisodeParametreDetailEdit
         Me.Width = 491
     End Sub
 
-    Private Sub AjouterParametre()
-        Me.Enabled = False
-        Using form As New RadFParametreSelecteur
-            form.ListeParametreExistant = listeParametreEpisode
-            form.ShowDialog()
-            If form.IsSelected = True Then
-                'Création paramètre
-                Try
-                    Dim episodeParametre As New EpisodeParametre With {
-                        .ParametreId = form.SelectedParametre.Id,
-                        .EpisodeId = SelectedEpisodeId,
-                        .PatientId = SelectedPatient.PatientId,
-                        .Valeur = 0,
-                        .Description = form.SelectedParametre.Description,
-                        .Entier = form.SelectedParametre.Entier,
-                        .Decimal = form.SelectedParametre.Decimal,
-                        .Unite = form.SelectedParametre.Unite,
-                        .Ordre = form.SelectedParametre.Ordre,
-                        .ParametreAjoute = True,
-                        .Inactif = False
-                    }
-                    episodeParametreDao.CreateEpisodeParametre(episodeParametre)
-                Catch ex As Exception
-                    CreateLog(ex.ToString, Me.Name, Log.EnumTypeLog.ERREUR.ToString, userLog)
-                    If ex.Message.StartsWith("Collisio") = True Then
-                        MessageBox.Show("paramètre déjà existant pour cet épisode !")
-                    End If
-                End Try
-                RadGridViewParm.Rows.Clear()
-                ChargementParametres()
-                CodeRetour = True
-            End If
-        End Using
-        Me.Enabled = True
-    End Sub
+    'Private Sub AjouterParametre()
+    '    Me.Enabled = False
+    '    Using form As New RadFParametreSelecteur
+    '        form.ListeParametreExistant = listeParametreEpisode
+    '        form.ShowDialog()
+    '        If form.IsSelected = True Then
+    '            'Création paramètre
+    '            Try
+    '                Dim episodeParametre As New EpisodeParametre With {
+    '                    .ParametreId = form.SelectedParametre.Id,
+    '                    .EpisodeId = SelectedEpisodeId,
+    '                    .PatientId = SelectedPatient.PatientId,
+    '                    .Valeur = 0,
+    '                    .Description = form.SelectedParametre.Description,
+    '                    .Entier = form.SelectedParametre.Entier,
+    '                    .Decimal = form.SelectedParametre.Decimal,
+    '                    .Unite = form.SelectedParametre.Unite,
+    '                    .Ordre = form.SelectedParametre.Ordre,
+    '                    .ParametreAjoute = True,
+    '                    .Inactif = False
+    '                }
+    '                episodeParametreDao.CreateEpisodeParametre(episodeParametre)
+    '            Catch ex As Exception
+    '                CreateLog(ex.ToString, Me.Name, Log.EnumTypeLog.ERREUR.ToString, userLog)
+    '                If ex.Message.StartsWith("Collisio") = True Then
+    '                    MessageBox.Show("paramètre déjà existant pour cet épisode !")
+    '                End If
+    '            End Try
+    '            RadGridViewParm.Rows.Clear()
+    '            ChargementParametres()
+    '            CodeRetour = True
+    '        End If
+    '    End Using
+    '    Me.Enabled = True
+    'End Sub
 
 
     'Ajouter un paramètre
@@ -448,7 +436,7 @@ Public Class RadFEpisodeParametreDetailEdit
                     .ParametreId = SelectedParametre.Id,
                     .EpisodeId = SelectedEpisodeId,
                     .PatientId = SelectedPatient.PatientId,
-                    .Valeur = 0,
+                    .Valeur = Nothing,
                     .Description = SelectedParametre.Description,
                     .Entier = SelectedParametre.Entier,
                     .Decimal = SelectedParametre.Decimal,
@@ -508,7 +496,7 @@ Public Class RadFEpisodeParametreDetailEdit
 
     Private Sub MasterTemplate_CellValueChanged(sender As Object, e As GridViewCellEventArgs) Handles RadGridViewParm.CellValueChanged
         If FinChargementParametres = True Then
-            Validation()
+            Validation(e)
         End If
     End Sub
 

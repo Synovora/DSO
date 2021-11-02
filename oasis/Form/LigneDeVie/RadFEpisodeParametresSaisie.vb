@@ -110,17 +110,16 @@ Public Class RadFEpisodeParametresSaisie
 
     'Chargement des paramètres
     Private Sub ChargementParametres()
-        Dim ValeurParametreNonSaisie As Boolean = False
+        Dim ValeurParametreNonSaisieGlobal As Boolean = False
         Dim parmDataTable As DataTable
-        parmDataTable = EpisodeParametreDao.getAllParametreEpisodeByEpisodeId(SelectedEpisodeId)
+        parmDataTable = episodeParametreDao.getAllParametreEpisodeByEpisodeId(SelectedEpisodeId)
         'Déclaration des variables pour réaliser le parcours du DataTable pour alimenter le DataGridView
         Dim i As Integer
         Dim rowCount As Integer = parmDataTable.Rows.Count - 1
         Dim entier, nombreDecimal, longueurString, idString As Integer
-        Dim Valeur, ValeurIMC, ValeurPAM As Decimal
         Dim description, unite, valeurString, parametreString As String
         Dim ParametreId, EpisodeParametreId, EpisodeParametreIdIMC, EpisodeParametreIdPAM As Long
-        Dim valeurPoids, valeurTaille, valeurPAS, valeurPAD As Decimal
+        Dim valeurPoids, valeurTaille, valeurPAS, valeurPAD, ValeurIMC, ValeurPAM, Valeur As Decimal?
         Dim uniteIMC, unitePAM As String
         Dim IMCaCalculer As Boolean = False
         Dim PAMaCalculer As Boolean = False
@@ -135,9 +134,11 @@ Public Class RadFEpisodeParametresSaisie
 
         'Parcours du DataTable pour alimenter le DataGridView
         For i = 0 To rowCount Step 1
-            Valeur = parmDataTable.Rows(i)("valeur")
-            If Valeur = 0 Then
+            Dim ValeurParametreNonSaisie As Boolean = False
+            Valeur = If(IsDBNull(parmDataTable.Rows(i)("valeur")), Nothing, parmDataTable.Rows(i)("valeur"))
+            If Valeur Is Nothing Then
                 ValeurParametreNonSaisie = True
+                ValeurParametreNonSaisieGlobal = True
             End If
             description = parmDataTable.Rows(i)("description")
             entier = parmDataTable.Rows(i)("entier")
@@ -148,46 +149,48 @@ Public Class RadFEpisodeParametresSaisie
             valeurString = ""
 
             If ParametreId = 2 Then
-                If Valeur = 0 Then
+                If Valeur Is Nothing Then
                     Valeur = SelectedPatient.Taille
                 End If
             End If
 
-            Select Case entier
-                Case 1
-                    Select Case nombreDecimal
-                        Case 0
-                            valeurString = Valeur.ToString("0")
-                        Case 1
-                            valeurString = Valeur.ToString("0.0")
-                        Case 2
-                            valeurString = Valeur.ToString("0.00")
-                        Case 3
-                            valeurString = Valeur.ToString("0.000")
-                    End Select
-                Case 2
-                    Select Case nombreDecimal
-                        Case 0
-                            valeurString = Valeur.ToString("#0")
-                        Case 1
-                            valeurString = Valeur.ToString("#0.0")
-                        Case 2
-                            valeurString = Valeur.ToString("#0.00")
-                        Case 3
-                            valeurString = Valeur.ToString("#0.000")
-                    End Select
-                Case 3
-                    Select Case nombreDecimal
-                        Case 0
-                            valeurString = Valeur.ToString("##0")
-                        Case 1
-                            valeurString = Valeur.ToString("##0.0")
-                        Case 2
-                            valeurString = Valeur.ToString("##0.00")
-                        Case 3
-                            valeurString = Valeur.ToString("##0.000")
-                    End Select
-            End Select
+            If Not ValeurParametreNonSaisie Then
+                Select Case entier
+                    Case 1
+                        Select Case nombreDecimal
+                            Case 0
+                                valeurString = Valeur.Value.ToString("0")
+                            Case 1
+                                valeurString = Valeur.Value.ToString("0.0")
+                            Case 2
+                                valeurString = Valeur.Value.ToString("0.00")
+                            Case 3
+                                valeurString = Valeur.Value.ToString("0.000")
+                        End Select
+                    Case 2
+                        Select Case nombreDecimal
+                            Case 0
+                                valeurString = Valeur.Value.ToString("#0")
+                            Case 1
+                                valeurString = Valeur.Value.ToString("#0.0")
+                            Case 2
+                                valeurString = Valeur.Value.ToString("#0.00")
+                            Case 3
+                                valeurString = Valeur.Value.ToString("#0.000")
+                        End Select
+                    Case 3
+                        Select Case nombreDecimal
+                            Case 0
+                                valeurString = Valeur.Value.ToString("##0")
+                            Case 1
+                                valeurString = Valeur.Value.ToString("##0.0")
+                            Case 2
+                                valeurString = Valeur.Value.ToString("##0.00")
+                            Case 3
+                                valeurString = Valeur.Value.ToString("##0.000")
+                        End Select
+                End Select
+            End If
 
             Select Case ParametreId
                 Case Parametre.EnumParametreId.POIDS
@@ -198,7 +201,7 @@ Public Class RadFEpisodeParametresSaisie
                     LblLabelTaille.Text = "Taille"
                     LblParmTaille.Text = valeurString & " " & unite
                     valeurTaille = Valeur
-                    If valeurTaille = 0 Then
+                    If ValeurParametreNonSaisie Then
                         valeurTaille = SelectedPatient.Taille
                     End If
                 Case Parametre.EnumParametreId.IMC
@@ -305,30 +308,29 @@ Public Class RadFEpisodeParametresSaisie
                 Dim ValeurCalcul As Decimal = valeurPoids / ((valeurTaille * valeurTaille) / 10000)
                 Dim ValeurCalculAComparer As Decimal = Decimal.Round(ValeurCalcul, 3)
                 'Mise à jour du paramètre déduit
-                If ValeurIMC <> ValeurCalculAComparer Then
+                If Not ValeurIMC.HasValue OrElse ValeurIMC <> ValeurCalculAComparer Then
                     ValeurIMC = ValeurCalculAComparer
                     episodeParametreDao.ModificationValeurEpisodeParametre(EpisodeParametreIdIMC, ValeurIMC)
                 End If
             Else
-                Valeur = 0
+                ValeurIMC = 0
             End If
-            valeurString = ValeurIMC.ToString("#0.0")
+            valeurString = ValeurIMC.Value.ToString("#0.0")
             LblParmIMC.Text = valeurString & " " & uniteIMC
         End If
 
         If PAMaCalculer = True Then
-            If valeurPAD <> 0 And valeurPAS <> 0 Then
+            If valeurPAD.HasValue And valeurPAS.HasValue Then
                 Dim ValeurCalcul As Decimal = (valeurPAS + (2 * valeurPAD)) / 3
                 Dim ValeurCalculAComparer As Decimal = Decimal.Round(ValeurCalcul, 3)
-                'Mise à jour du paramètre déduit
-                If ValeurPAM <> ValeurCalculAComparer Then
+                If Not ValeurPAM.HasValue OrElse ValeurPAM <> ValeurCalculAComparer Then
                     ValeurPAM = ValeurCalculAComparer
                     episodeParametreDao.ModificationValeurEpisodeParametre(EpisodeParametreIdPAM, ValeurPAM)
                 End If
             Else
-                Valeur = 0
+                ValeurPAM = 0
             End If
-            valeurString = ValeurPAM.ToString("##0")
+            valeurString = ValeurPAM.Value.ToString("##0")
             LblParmPAM.Text = valeurString & " " & unitePAM
         End If
 
@@ -343,7 +345,7 @@ Public Class RadFEpisodeParametresSaisie
             End If
         End If
         If SaisieParametreOK = True Then
-            If ValeurParametreNonSaisie = True Then
+            If ValeurParametreNonSaisieGlobal = True Then
                 RadBtnParametre.ForeColor = Color.Red
                 RadBtnParametre.Font = New Font(RadBtnParametre.Font, FontStyle.Bold)
                 ToolTip1.SetToolTip(RadBtnParametre, "Des paramètres requis ne sont pas saisis")
@@ -353,7 +355,6 @@ Public Class RadFEpisodeParametresSaisie
                 ToolTip1.SetToolTip(RadBtnParametre, "")
             End If
         End If
-
     End Sub
 
     'Appel saisie des paramètres

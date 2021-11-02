@@ -123,6 +123,8 @@
     <Compile Include="Bean\Antecedent\AntecedentCourrier.vb" />
     <Compile Include="Bean\Antecedent\AntecedentDeplacement.vb" />
     <Compile Include="Bean\Antecedent\AntecedentHisto.vb" />
+    <Compile Include="Bean\ChaineEpisode\RelationChaineEpisode.vb" />
+    <Compile Include="Bean\ChaineEpisode\ChaineEpisode.vb" />
     <Compile Include="Bean\Contexte\ContexteCourrier.vb" />
     <Compile Include="Bean\DRC\Drc.vb" />
     <Compile Include="Bean\DRC\DrcActeParamedicalAsso.vb" />
@@ -182,8 +184,12 @@
     <Compile Include="Bean\Theriaque\ContreIndicationSubstance.vb" />
     <Compile Include="Bean\Theriaque\SpecialiteAllergique.vb" />
     <Compile Include="Bean\Theriaque\SpecialiteContreIndique.vb" />
+    <Compile Include="Bean\Vaccin\Vaccin.vb" />
     <Compile Include="Bean\Theriaque\SpecialiteTheriaque.vb" />
-    <Compile Include="Bean\Theriaque\Substance.vb" />
+    <Compile Include="Bean\Vaccin\CGVDate.vb" />
+    <Compile Include="Bean\Vaccin\CGVValence.vb" />
+    <Compile Include="Bean\Vaccin\Valence.vb" />
+    <Compile Include="Bean\Vaccin\Substance.vb" />
     <Compile Include="Bean\Traitement\Traitement.vb" />
     <Compile Include="Bean\Traitement\TraitementCourrier.vb" />
     <Compile Include="Bean\Traitement\TraitementHistoClass.vb" />
@@ -211,6 +217,7 @@
     <Compile Include="Dao\Antecedent\AntecedentDeplacementDao.vb" />
     <Compile Include="Dao\Antecedent\AntecedentHistoCreationDao.vb" />
     <Compile Include="Dao\Antecedent\AntecedentHistoDao.vb" />
+    <Compile Include="Dao\ChaineEpisode\ChaineEpisodeDao.vb" />
     <Compile Include="Dao\Contexte\ContexteDao.vb" />
     <Compile Include="Dao\DRC\DrcActeParamedicalAssoDao.vb" />
     <Compile Include="Dao\DRC\DrcDao.vb" />
@@ -266,6 +273,10 @@
     <Compile Include="Dao\structurebase\UniteSanitaireDao.vb" />
     <Compile Include="Dao\Tache\TacheDao.vb" />
     <Compile Include="Dao\Theriaque\AllergieDao.vb" />
+    <Compile Include="Dao\Vaccin\VaccinDao.vb" />
+    <Compile Include="Dao\Vaccin\CGVDateDoa.vb" />
+    <Compile Include="Dao\Vaccin\CGVValenceDao.vb" />
+    <Compile Include="Dao\Vaccin\ValenceDao.vb" />
     <Compile Include="Dao\Theriaque\ContreIndicationATCDao.vb" />
     <Compile Include="Dao\Theriaque\ContreIndicationSubstanceDao.vb" />
     <Compile Include="Dao\Theriaque\TheriaqueDao.vb" />

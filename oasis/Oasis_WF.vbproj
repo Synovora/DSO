@@ -577,6 +577,12 @@
     <Compile Include="Form\Theriaque\RadFSubstancesListe.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="Form\Theriaque\RadFValenceCreation.Designer.vb">
+      <DependentUpon>RadFValenceCreation.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Form\Theriaque\RadFValenceCreation.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Form\Theriaque\RadF_AllergieSelecteur.Designer.vb">
       <DependentUpon>RadF_AllergieSelecteur.vb</DependentUpon>
     </Compile>
@@ -623,6 +629,42 @@
       <DependentUpon>FrmUtilisateur.vb</DependentUpon>
     </Compile>
     <Compile Include="Form\utilisateur\FrmUtilisateur.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form\Vaccin\RadFCGV.Designer.vb">
+      <DependentUpon>RadFCGV.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Form\Vaccin\RadFCGV.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form\Vaccin\RadFCPV.Designer.vb">
+      <DependentUpon>RadFCPV.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Form\Vaccin\RadFCPV.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form\Vaccin\RadFVaccin.Designer.vb">
+      <DependentUpon>RadFVaccin.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Form\Vaccin\RadFVaccin.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form\Vaccin\RadFVaccinInfo.Designer.vb">
+      <DependentUpon>RadFVaccinInfo.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Form\Vaccin\RadFVaccinInfo.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form\Vaccin\RadFVaccinInput.Designer.vb">
+      <DependentUpon>RadFVaccinInput.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Form\Vaccin\RadFVaccinInput.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form\Vaccin\RadFValenceSelecteur.Designer.vb">
+      <DependentUpon>RadFValenceSelecteur.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Form\Vaccin\RadFValenceSelecteur.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Form\Workflow\RadFWkfCommentaire.Designer.vb">
@@ -1195,6 +1237,9 @@
     <EmbeddedResource Include="Form\Theriaque\RadFSubstancesListe.resx">
       <DependentUpon>RadFSubstancesListe.vb</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Form\Theriaque\RadFValenceCreation.resx">
+      <DependentUpon>RadFValenceCreation.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Form\Theriaque\RadF_AllergieSelecteur.resx">
       <DependentUpon>RadF_AllergieSelecteur.vb</DependentUpon>
     </EmbeddedResource>
@@ -1218,6 +1263,24 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Form\utilisateur\FrmUtilisateur.resx">
       <DependentUpon>FrmUtilisateur.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form\Vaccin\RadFCGV.resx">
+      <DependentUpon>RadFCGV.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form\Vaccin\RadFCPV.resx">
+      <DependentUpon>RadFCPV.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form\Vaccin\RadFVaccin.resx">
+      <DependentUpon>RadFVaccin.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form\Vaccin\RadFVaccinInfo.resx">
+      <DependentUpon>RadFVaccinInfo.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form\Vaccin\RadFVaccinInput.resx">
+      <DependentUpon>RadFVaccinInput.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form\Vaccin\RadFValenceSelecteur.resx">
+      <DependentUpon>RadFValenceSelecteur.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Form\Workflow\RadFWkfCommentaire.resx">
       <DependentUpon>RadFWkfCommentaire.vb</DependentUpon>

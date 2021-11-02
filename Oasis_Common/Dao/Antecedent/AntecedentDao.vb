@@ -5,46 +5,6 @@ Public Class AntecedentDao
 
     ReadOnly patientDao As New PatientDao
 
-    Private Function BuildBean(reader As SqlDataReader) As Antecedent
-        Dim antecedent As New Antecedent With {
-            .Id = reader("oa_antecedent_id"),
-            .PatientId = Coalesce(reader("oa_antecedent_patient_id"), 0),
-            .Type = Coalesce(reader("oa_antecedent_type"), ""),
-            .DrcId = Coalesce(reader("oa_antecedent_drc_id"), 0),
-            .Description = Coalesce(reader("oa_antecedent_description"), ""),
-            .UserCreation = Coalesce(reader("oa_antecedent_utilisateur_creation"), 0),
-            .DateCreation = Coalesce(reader("oa_antecedent_date_creation"), Nothing),
-            .UserModification = Coalesce(reader("oa_antecedent_utilisateur_modification"), 0),
-            .DateModification = Coalesce(reader("oa_antecedent_date_modification"), Nothing),
-            .Diagnostic = Coalesce(reader("oa_antecedent_diagnostic"), 0),
-            .DateDebut = Coalesce(reader("oa_antecedent_date_debut"), Nothing),
-            .DateFin = Coalesce(reader("oa_antecedent_date_fin"), Nothing),
-            .AldId = Coalesce(reader("oa_antecedent_ald_id"), 0),
-            .AldCim10Id = Coalesce(reader("oa_antecedent_ald_cim_10_id"), 0),
-            .AldValide = Coalesce(reader("oa_antecedent_ald_valide"), False),
-            .AldDateDebut = Coalesce(reader("oa_antecedent_ald_date_debut"), Nothing),
-            .AldDateFin = Coalesce(reader("oa_antecedent_ald_date_fin"), Nothing),
-            .AldDemandeEnCours = Coalesce(reader("oa_antecedent_ald_demande_en_cours"), False),
-            .AldDateDemande = Coalesce(reader("oa_antecedent_ald_demande_date"), Nothing),
-            .Arret = Coalesce(reader("oa_antecedent_arret"), False),
-            .ArretCommentaire = Coalesce(reader("oa_antecedent_arret_commentaire"), ""),
-            .Nature = Coalesce(reader("oa_antecedent_nature"), ""),
-            .Priorite = Coalesce(reader("oa_antecedent_priorite"), 0),
-            .Niveau = Coalesce(reader("oa_antecedent_niveau"), 0),
-            .Niveau1Id = Coalesce(reader("oa_antecedent_id_niveau1"), 0),
-            .Niveau2Id = Coalesce(reader("oa_antecedent_id_niveau2"), 0),
-            .Ordre1 = Coalesce(reader("oa_antecedent_ordre_affichage1"), 0),
-            .Ordre2 = Coalesce(reader("oa_antecedent_ordre_affichage2"), 0),
-            .Ordre3 = Coalesce(reader("oa_antecedent_ordre_affichage3"), 0),
-            .StatutAffichage = Coalesce(reader("oa_antecedent_statut_affichage"), ""),
-            .StatutAffichageTransformation = Coalesce(reader("oa_antecedent_statut_affichage_transformation"), ""),
-            .CategorieContexte = Coalesce(reader("oa_antecedent_categorie_contexte"), ""),
-            .EpisodeId = Coalesce(reader("oa_episode_id"), 0),
-            .Inactif = Coalesce(reader("oa_antecedent_inactif"), False)
-        }
-        Return antecedent
-    End Function
-
     Public Function GetAntecedentById(antecedentId As Integer) As Antecedent
         Dim antecedent As Antecedent
         Dim con As SqlConnection = GetConnection()
@@ -65,6 +25,37 @@ Public Class AntecedentDao
             con.Close()
         End Try
         Return antecedent
+    End Function
+
+    Public Function GetByDrcId(patientId As Long, drcId As Long) As Antecedent
+        Dim con As SqlConnection = GetConnection()
+        Dim contexte As Antecedent = Nothing
+
+        Try
+            Dim command As SqlCommand = con.CreateCommand()
+            command.CommandText =
+                "SELECT * FROM oasis.oa_antecedent" &
+                " WHERE oa_antecedent_type = 'A'" &
+                " AND oa_antecedent_patient_id = @patientId" &
+                " AND oa_antecedent_drc_id = @drcId"
+
+            With command.Parameters
+                .AddWithValue("@patientId", patientId)
+                .AddWithValue("@drcId", drcId)
+            End With
+
+            Using reader As SqlDataReader = command.ExecuteReader()
+                If reader.Read() Then
+                    contexte = New Antecedent(reader)
+                End If
+            End Using
+        Catch ex As Exception
+            Throw ex
+        Finally
+            con.Close()
+        End Try
+
+        Return contexte
     End Function
 
     Public Function Clone(Source As Antecedent) As Antecedent
@@ -102,7 +93,8 @@ Public Class AntecedentDao
             .StatutAffichageTransformation = Source.StatutAffichageTransformation,
             .CategorieContexte = Source.CategorieContexte,
             .EpisodeId = Source.EpisodeId,
-            .Inactif = Source.Inactif
+            .Inactif = Source.Inactif,
+            .ChaineEpisodeDateFin = Source.ChaineEpisodeDateFin
         }
         Return Cible
     End Function
@@ -210,15 +202,65 @@ Public Class AntecedentDao
         If source1.Inactif <> source2.Inactif Then
             Return False
         End If
+        If source1.ChaineEpisodeDateFin <> source2.ChaineEpisodeDateFin Then
+            Return False
+        End If
 
         Return True
+    End Function
+
+    Public Function GetList() As List(Of Antecedent)
+        Dim con As SqlConnection = GetConnection()
+        Dim antecedents As List(Of Antecedent) = New List(Of Antecedent)
+
+        Try
+            Dim command As SqlCommand = con.CreateCommand()
+            command.CommandText = "SELECT * FROM oasis.oa_antecedent"
+            Using reader As SqlDataReader = command.ExecuteReader()
+                While (reader.Read())
+                    antecedents.Add(BuildBean(reader))
+                End While
+            End Using
+        Catch ex As Exception
+            Throw ex
+        Finally
+            con.Close()
+        End Try
+
+        Return antecedents
+    End Function
+
+    Public Function GetListByPatient(patientId As Integer, Optional other As String = Nothing) As List(Of Antecedent)
+        Dim con As SqlConnection = GetConnection()
+        Dim sousEpisodeReponseMails As List(Of Antecedent) = New List(Of Antecedent)
+
+        Try
+            Dim command As SqlCommand = con.CreateCommand()
+            command.CommandText = "SELECT * FROM oasis.oa_antecedent WHERE oa_antecedent_patient_id = " + patientId.ToString
+
+            If other <> Nothing Then
+                command.CommandText += other
+            End If
+
+            Using reader As SqlDataReader = command.ExecuteReader()
+                While (reader.Read())
+                    sousEpisodeReponseMails.Add(BuildBean(reader))
+                End While
+            End Using
+        Catch ex As Exception
+            Throw ex
+        Finally
+            con.Close()
+        End Try
+
+        Return sousEpisodeReponseMails
     End Function
 
     Public Function GetAllAntecedentbyPatient(patientId As Integer, publication As Boolean, parPriorite As Boolean) As DataTable
         Dim SQLString As String = "SELECT oa_antecedent_date_modification, oa_antecedent_date_creation, oa_antecedent_statut_affichage," &
                     " oa_antecedent_ald_valide, oa_antecedent_ald_date_fin, oa_antecedent_ald_demande_en_cours, oa_antecedent_diagnostic, oa_antecedent_drc_id," &
                     " oa_antecedent_description, oa_antecedent_date_debut, A.oa_ald_cim10_description, oa_antecedent_id, oa_antecedent_niveau," &
-                    " oa_antecedent_id_niveau1, oa_antecedent_id_niveau2, oa_antecedent_ordre_affichage1, oa_antecedent_ordre_affichage2, oa_antecedent_ordre_affichage3, D.oa_drc_libelle" &
+                    " oa_antecedent_id_niveau1, oa_antecedent_id_niveau2, oa_antecedent_ordre_affichage1, oa_antecedent_ordre_affichage2, oa_antecedent_ordre_affichage3, D.oa_drc_libelle, oa_chaine_episode_date_fin" &
                     " FROM oasis.oa_antecedent" &
                     " LEFT JOIN oasis.oa_drc D ON D.oa_drc_id = oa_antecedent_drc_id" &
                     " LEFT JOIN oasis.oa_ald_cim10 A ON A.oa_ald_cim10_id = oa_antecedent_ald_cim_10_id" &
@@ -369,12 +411,13 @@ Public Class AntecedentDao
 
         Dim dateModification As Date = Date.Now.Date
 
-        Dim SQLstring As String = "update oasis.oa_antecedent set oa_antecedent_date_modification = @dateModification," &
+        Dim SQLstring As String = "UPDATE oasis.oa_antecedent SET oa_antecedent_date_modification = @dateModification," &
         " oa_antecedent_utilisateur_modification = @utilisateurModification, oa_antecedent_drc_id = @drcId, oa_antecedent_description = @description," &
         " oa_antecedent_date_debut = @dateDebut, oa_antecedent_diagnostic = @diagnostic, oa_antecedent_statut_affichage = @publication," &
         " oa_antecedent_ald_id = @aldId, oa_antecedent_ald_cim_10_id = @aldCim10Id, oa_antecedent_ald_valide = @aldValide, oa_antecedent_ald_date_debut = @aldDateDebut," &
-        " oa_antecedent_ald_date_fin = @aldDateFin, oa_antecedent_ald_demande_en_cours = @aldDemandeEnCours, oa_antecedent_ald_demande_date = @aldDateDemande" &
-        " where oa_antecedent_id = @antecedentId"
+        " oa_antecedent_ald_date_fin = @aldDateFin, oa_antecedent_ald_demande_en_cours = @aldDemandeEnCours, oa_antecedent_ald_demande_date = @aldDateDemande," &
+        " oa_chaine_episode_date_fin = @chaineEpisodeDateFin" &
+        " WHERE oa_antecedent_id = @antecedentId"
 
         Dim con As SqlConnection = GetConnection()
         Dim cmd As New SqlCommand(SQLstring, con)
@@ -410,6 +453,7 @@ Public Class AntecedentDao
             .AddWithValue("@aldDateFin", antecedentUpdate.AldDateFin)
             .AddWithValue("@alddemandeEnCours", antecedentUpdate.AldDemandeEnCours)
             .AddWithValue("@aldDateDemande", antecedentUpdate.AldDateDemande)
+            .AddWithValue("@chaineEpisodeDateFin", antecedentUpdate.ChaineEpisodeDateFin)
         End With
 
         Try
@@ -443,6 +487,7 @@ Public Class AntecedentDao
             AntecedentHistoACreer.AldDateFin = antecedentUpdate.AldDateFin
             AntecedentHistoACreer.AldDemandeEnCours = antecedentUpdate.AldDemandeEnCours
             AntecedentHistoACreer.AldDateDemande = antecedentUpdate.AldDateDemande
+            AntecedentHistoACreer.ChaineEpisodeDateFin = antecedentUpdate.ChaineEpisodeDateFin
 
             'Création dans l'historique des modifications de l'antecedent
             AntecedentHistoCreationDao.CreationAntecedentHisto(AntecedentHistoACreer, userLog, AntecedentHistoCreationDao.EnumEtatAntecedentHisto.ModificationAntecedent)
@@ -504,22 +549,28 @@ Public Class AntecedentDao
         Return codeRetour
     End Function
 
-    Public Function CreationAntecedent(antecedentUpdate As Antecedent, userLog As Utilisateur) As Boolean
+    Public Function CreationAntecedent(antecedentUpdate As Antecedent, userLog As Utilisateur) As Long
         Dim da As SqlDataAdapter = New SqlDataAdapter()
         Dim codeRetour As Boolean = True
         Dim antecedentId As Long
 
         Dim dateCreation As Date = Date.Now.Date
 
-        Dim SQLstring As String = "insert into oasis.oa_antecedent (oa_antecedent_patient_id, oa_antecedent_type, oa_antecedent_drc_id, oa_antecedent_description," &
-        " oa_antecedent_date_creation, oa_antecedent_utilisateur_creation, oa_antecedent_utilisateur_modification, oa_antecedent_date_debut, oa_antecedent_niveau," &
-        " oa_antecedent_nature, oa_antecedent_statut_affichage, oa_antecedent_inactif, oa_antecedent_ordre_affichage1, oa_antecedent_ordre_affichage2," &
-        " oa_antecedent_ordre_affichage3, oa_antecedent_diagnostic," &
-        " oa_antecedent_ald_id, oa_antecedent_ald_cim_10_id, oa_antecedent_ald_valide, oa_antecedent_ald_date_debut," &
-        " oa_antecedent_ald_date_fin, oa_antecedent_ald_demande_en_cours, oa_antecedent_ald_demande_date)" &
-        " VALUES (@patientId, @type, @drcId, @description, @dateCreation, @utilisateurCreation," &
-        " @utilisateurModification, @dateDebut, @niveau, @nature, @publication, @inactif, @ordreAffichage1, @ordreAffichage2, @ordreAffichage3, @diagnostic," &
-        " @aldId, @aldCim10Id, @aldValide, @aldDateDebut, @aldDateFin, @aldDemandeEnCours, @aldDateDemande); SELECT SCOPE_IDENTITY()"
+        Dim SQLstring As String = "
+        BEGIN TRANSACTION
+            DECLARE @AntecedentId bigint;
+            INSERT into oasis.oa_antecedent (oa_antecedent_patient_id, oa_antecedent_type, oa_antecedent_drc_id, oa_antecedent_description,
+                oa_antecedent_date_creation, oa_antecedent_utilisateur_creation, oa_antecedent_utilisateur_modification, oa_antecedent_date_debut, oa_antecedent_niveau,
+                oa_antecedent_nature, oa_antecedent_statut_affichage, oa_antecedent_inactif, oa_antecedent_ordre_affichage1, oa_antecedent_ordre_affichage2,
+                oa_antecedent_ordre_affichage3, oa_antecedent_diagnostic,
+                oa_antecedent_ald_id, oa_antecedent_ald_cim_10_id, oa_antecedent_ald_valide, oa_antecedent_ald_date_debut,
+                oa_antecedent_ald_date_fin, oa_antecedent_ald_demande_en_cours, oa_antecedent_ald_demande_date,
+                oa_chaine_episode_date_fin)
+                VALUES (@patientId, @type, @drcId, @description, @dateCreation, @utilisateurCreation,
+                @utilisateurModification, @dateDebut, @niveau, @nature, @publication, @inactif, @ordreAffichage1, @ordreAffichage2, @ordreAffichage3, @diagnostic,
+                @aldId, @aldCim10Id, @aldValide, @aldDateDebut, @aldDateFin, @aldDemandeEnCours, @aldDateDemande, @chaineEpisodeDateFin);
+            SELECT @AntecedentId = SCOPE_IDENTITY();
+        COMMIT"
 
         Dim con As SqlConnection = GetConnection()
         Dim cmd As New SqlCommand(SQLstring, con)
@@ -563,6 +614,7 @@ Public Class AntecedentDao
             .AddWithValue("@aldDateFin", antecedentUpdate.AldDateFin)
             .AddWithValue("@aldDemandeEnCours", antecedentUpdate.AldDemandeEnCours)
             .AddWithValue("@aldDateDemande", antecedentUpdate.AldDateDemande)
+            .AddWithValue("@chaineEpisodeDateFin", antecedentUpdate.ChaineEpisodeDateFin)
         End With
 
         Try
@@ -611,7 +663,7 @@ Public Class AntecedentDao
             patientDao.ModificationDateMajSynthesePatient(antecedentUpdate.PatientId, userLog)
         End If
 
-        Return codeRetour
+        Return antecedentId
 
     End Function
 
@@ -817,5 +869,8 @@ Public Class AntecedentDao
         Return codeRetour
     End Function
 
+    Public Function BuildBean(reader As SqlDataReader) As Antecedent
+        Return New Antecedent(reader)
+    End Function
 
 End Class

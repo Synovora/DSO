@@ -1,5 +1,6 @@
 ﻿Imports System.Configuration
 Imports System.Data.Common
+Imports System.Data.SqlClient
 Imports System.IO
 Imports System.Security.Cryptography
 Imports System.Text
@@ -29,6 +30,24 @@ Public Module ModuleUtilsBase
 
         Return ConfigurationManager.ConnectionStrings("Oasis_WF.My.MySettings.oasisConnection").ConnectionString
 
+    End Function
+
+    Public Function GetSqlCommandTextForLogs(cmd As SqlCommand) As String
+        Dim text = cmd.CommandText
+        For Each parameter As SqlParameter In cmd.Parameters
+            text = text.Replace(parameter.ParameterName, parameter.Value.ToString())
+        Next
+        Return text
+    End Function
+
+    Public Function N2N(Of T)(ByVal Parameter As Object, Optional DefaultValue As Object = Nothing)
+        If Parameter IsNot Nothing Then
+            Return CType(Parameter, T)
+        End If
+        If DefaultValue IsNot Nothing Then
+            Return DefaultValue
+        End If
+        Return DBNull.Value
     End Function
 
     ''' <summary>

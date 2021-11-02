@@ -715,10 +715,10 @@ Public Class RadF_AllergieSelecteur
             Dim substance As Substance = theriaqueDao.GetSubstanceById(SubstanceId)
 
             'Dénomination
-            allergieSubstance.DenominationSubstance = substance.SubstanceDenomination
+            allergieSubstance.DenominationSubstance = substance.Denomination
 
             'Substance père
-            allergieSubstance.SubstancePereId = substance.SubstancePereId
+            allergieSubstance.SubstancePereId = substance.PereId
 
             'Dénomination substance père
             allergieSubstance.DenominationSubstancePere = ""

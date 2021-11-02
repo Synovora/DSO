@@ -52,6 +52,9 @@ Partial Class FrmMain
         Me.TileGroupOutils = New Telerik.WinControls.UI.TileGroupElement()
         Me.RadTileElementRepublication = New Telerik.WinControls.UI.RadTileElement()
         Me.RadTileElementAPropos = New Telerik.WinControls.UI.RadTileElement()
+        Me.TileGroupElement3 = New Telerik.WinControls.UI.TileGroupElement()
+        Me.VaccinImport = New Telerik.WinControls.UI.RadTileElement()
+        Me.CGV = New Telerik.WinControls.UI.RadTileElement()
         CType(Me.RadPanorama1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.RadPanorama1.SuspendLayout()
         CType(Me.RadBtnAbandon, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -107,19 +110,19 @@ Partial Class FrmMain
         Me.RadPanorama1.Dock = System.Windows.Forms.DockStyle.Fill
         Me.RadPanorama1.EnableGestures = False
         Me.RadPanorama1.EnableZooming = False
-        Me.RadPanorama1.Groups.AddRange(New Telerik.WinControls.RadItem() {Me.TileGroupElement1, Me.TileGroupElement2, Me.TileGroupOrganisation, Me.TileGroupGeneraux, Me.TileGroupOutils})
+        Me.RadPanorama1.Groups.AddRange(New Telerik.WinControls.RadItem() {Me.TileGroupElement1, Me.TileGroupElement2, Me.TileGroupOrganisation, Me.TileGroupGeneraux, Me.TileGroupOutils, Me.TileGroupElement3})
         Me.RadPanorama1.Location = New System.Drawing.Point(0, 0)
         Me.RadPanorama1.Name = "RadPanorama1"
-        Me.RadPanorama1.RowsCount = 5
+        Me.RadPanorama1.RowsCount = 6
         Me.RadPanorama1.ShowGroups = True
-        Me.RadPanorama1.Size = New System.Drawing.Size(1303, 569)
+        Me.RadPanorama1.Size = New System.Drawing.Size(1523, 643)
         Me.RadPanorama1.TabIndex = 1
         Me.RadPanorama1.ThemeName = "ControlDefault"
         '
         'RadBtnAbandon
         '
         Me.RadBtnAbandon.DialogResult = System.Windows.Forms.DialogResult.Cancel
-        Me.RadBtnAbandon.Location = New System.Drawing.Point(1193, 545)
+        Me.RadBtnAbandon.Location = New System.Drawing.Point(1401, 616)
         Me.RadBtnAbandon.Name = "RadBtnAbandon"
         Me.RadBtnAbandon.Size = New System.Drawing.Size(110, 24)
         Me.RadBtnAbandon.TabIndex = 0
@@ -180,7 +183,7 @@ Partial Class FrmMain
         '
         Me.TileGroupElement2.Items.AddRange(New Telerik.WinControls.RadItem() {Me.RadTileSpecialite, Me.RadTileROR, Me.RadTileDRCORC, Me.RadTilePatient, Me.RadTileRefMed, Me.RadTileDRCNouveau, Me.RadTileMedicament})
         Me.TileGroupElement2.Name = "TileGroupElement2"
-        Me.TileGroupElement2.RowsCount = 5
+        Me.TileGroupElement2.RowsCount = 6
         Me.TileGroupElement2.Text = "Métier"
         '
         'RadTileSpecialite
@@ -313,12 +316,33 @@ Partial Class FrmMain
         Me.RadTileElementAPropos.Row = 4
         Me.RadTileElementAPropos.Text = "A Propos"
         '
+        'TileGroupElement3
+        '
+        Me.TileGroupElement3.Items.AddRange(New Telerik.WinControls.RadItem() {Me.VaccinImport, Me.CGV})
+        Me.TileGroupElement3.Name = "TileGroupElement3"
+        Me.TileGroupElement3.RowsCount = 4
+        Me.TileGroupElement3.Text = "Volet Vaccinal"
+        '
+        'VaccinImport
+        '
+        Me.VaccinImport.ColSpan = 2
+        Me.VaccinImport.Name = "VaccinImport"
+        Me.VaccinImport.RowSpan = 1
+        Me.VaccinImport.Text = "Association Vaccin-Valence"
+        '
+        'CGV
+        '
+        Me.CGV.ColSpan = 2
+        Me.CGV.Name = "CGV"
+        Me.CGV.Row = 1
+        Me.CGV.Text = "Calendrier General Vaccinal"
+        '
         'FrmMain
         '
-        Me.AutoScaleDimensions = New System.Drawing.SizeF(12.0!, 25.0!)
+        Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.CancelButton = Me.RadBtnAbandon
-        Me.ClientSize = New System.Drawing.Size(1303, 569)
+        Me.ClientSize = New System.Drawing.Size(1523, 643)
         Me.Controls.Add(Me.RadPanorama1)
         Me.Cursor = System.Windows.Forms.Cursors.Default
         Me.Name = "FrmMain"
@@ -368,5 +392,8 @@ Partial Class FrmMain
     Friend WithEvents RadBtnAbandon As Telerik.WinControls.UI.RadButton
     Friend WithEvents RadTileElementTemplateSE As Telerik.WinControls.UI.RadTileElement
     Friend WithEvents RadTileElement4 As Telerik.WinControls.UI.RadTileElement
+    Friend WithEvents TileGroupElement3 As Telerik.WinControls.UI.TileGroupElement
+    Friend WithEvents VaccinImport As Telerik.WinControls.UI.RadTileElement
+    Friend WithEvents CGV As Telerik.WinControls.UI.RadTileElement
 End Class
 

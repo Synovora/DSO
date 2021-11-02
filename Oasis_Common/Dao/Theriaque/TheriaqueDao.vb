@@ -411,13 +411,15 @@ Public Class TheriaqueDao
 
                 Dim rowCount As Integer = dt.Rows.Count
                 If dt.Rows.Count > 0 Then
-                    substance.SubstanceId = dt.Rows(0)("SAC_CODE_SQ_PK")
-                    substance.SubstanceDenomination = Coalesce(dt.Rows(0)("SAC_NOM"), "")
-                    substance.SubstancePereId = Coalesce(dt.Rows(0)("SAC_GSAC_CODE_FK"), 0)
+                    substance.Id = dt.Rows(0)("SAC_CODE_SQ_PK")
+                    substance.Denomination = Coalesce(dt.Rows(0)("SAC_NOM"), "")
+                    substance.Libelle = Coalesce(dt.Rows(0)("SAC_LIBELLE_REF"), "")
+                    substance.PereId = Coalesce(dt.Rows(0)("SAC_GSAC_CODE_FK"), 0)
                 Else
-                    substance.SubstanceId = 0
-                    substance.SubstanceDenomination = ""
-                    substance.SubstancePereId = 0
+                    substance.Id = 0
+                    substance.Denomination = ""
+                    substance.Libelle = ""
+                    substance.PereId = 0
                 End If
             Catch ex As Exception
                 Throw ex

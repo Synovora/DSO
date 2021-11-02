@@ -791,10 +791,10 @@ Public Class RadF_CI_ATC_Selecteur
             Dim substance As Substance = theriaqueDao.GetSubstanceById(SubstanceId)
 
             'Dénomination
-            contreIndicationSubstance.DenominationSubstance = substance.SubstanceDenomination
+            contreIndicationSubstance.DenominationSubstance = substance.Denomination
 
             'Substance père
-            contreIndicationSubstance.SubstancePereId = substance.SubstancePereId
+            contreIndicationSubstance.SubstancePereId = substance.PereId
 
             'Dénomination substance père
             contreIndicationSubstance.DenominationSubstancePere = ""

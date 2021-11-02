@@ -397,9 +397,11 @@ Public Class FrmSousEpisodeReponseAttribution
     End Sub
 
     Private Sub RadButtonDelete_Click(sender As Object, e As EventArgs) Handles RadButtonDelete.Click
-        Dim reponseMailId As Integer = RadGridViewMail.Rows(Me.RadGridViewMail.Rows.IndexOf(Me.RadGridViewMail.CurrentRow)).Cells("id").Value
-        sousEpisodeReponseMailDao.DeleteSousEpisodeReponseMailById(reponseMailId)
-        ChargementMails()
+        If MsgBox("Etes-vous sur de vouloir supprimer ce mail ?", MsgBoxStyle.YesNo Or MsgBoxStyle.DefaultButton2 Or MsgBoxStyle.Critical, "Suppression") = MsgBoxResult.Yes Then
+            Dim reponseMailId As Integer = RadGridViewMail.Rows(Me.RadGridViewMail.Rows.IndexOf(Me.RadGridViewMail.CurrentRow)).Cells("id").Value
+            sousEpisodeReponseMailDao.DeleteSousEpisodeReponseMailById(reponseMailId)
+            ChargementMails()
+        End If
     End Sub
 
     Private Sub RadButtonOpen_Click(sender As Object, e As EventArgs) Handles RadButtonOpen.Click

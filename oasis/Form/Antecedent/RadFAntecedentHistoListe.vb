@@ -86,17 +86,17 @@ Public Class RadFAntecedentHistoListe
         Dim rowCount As Integer = antecedentHistoDataTable.Rows.Count - 1
         Dim natureHisto, ALDId, ALDCim10Id As Integer
         Dim ActionHistoString, Publication, typeAntecedent, TypeAntecedentString, categorieContexte, CategorieContexteString, DiagnosticString As String
-        Dim dateDebut, dateFin, AldDateDebut, AldDateFin, AldDemandeDate As Date
+        Dim dateDebut, dateFin, AldDateDebut, AldDateFin, AldDemandeDate, chaineEpisodeDateFin As Date
         Dim dateHisto As DateTime
         Dim Arret, Inactif As Boolean
 
         'Initialisation des variables de comparaison
         Dim MaxDate As New Date(9999, 12, 31, 0, 0, 0)
-        Dim DateDebutComp, DateFinComp, ALDDateDebutComp, ALDDateFinComp, ALDDemandeDateComp As Date
+        Dim DateDebutComp, DateFinComp, ALDDateDebutComp, ALDDateFinComp, ALDDemandeDateComp, chaineEpisodeDateFinComp As Date
         Dim ArretComp, InactifComp, AldValide, AldDemande As Boolean
         Dim DescriptionComp, PublicationComp, ArretCommentaireComp, TypeAntecedentComp, CategorieContexteComp, DiagnosticComp As String
-        Dim ALDDescription, ALDValideComp, ALDDemandeComp As String
-        Dim DrcComp, NiveauComp, AntecedentId1Comp, AntecedentId2Comp, Ordre1Comp, Ordre2Comp, Ordre3Comp, ALDCim10IdComp As Integer
+        Dim ALDDescription, ALDValideComp, ALDDemandeComp, AntecedentId1Comp, AntecedentId2Comp As String
+        Dim DrcComp, NiveauComp, Ordre1Comp, Ordre2Comp, Ordre3Comp, ALDCim10IdComp As Integer
 
 
         DrcComp = 0
@@ -109,8 +109,8 @@ Public Class RadFAntecedentHistoListe
         ArretCommentaireComp = ""
         ALDDescription = ""
         NiveauComp = 0
-        AntecedentId1Comp = 0
-        AntecedentId2Comp = 0
+        AntecedentId1Comp = "0"
+        AntecedentId2Comp = "0"
         ALDCim10IdComp = 0
         InactifComp = False
         ALDValideComp = False
@@ -118,6 +118,7 @@ Public Class RadFAntecedentHistoListe
         ALDDateDebutComp = Nothing
         ALDDateFinComp = Nothing
         ALDDemandeDateComp = Nothing
+        chaineEpisodeDateFinComp = Nothing
 
         Dim premierPassage As Boolean = True
 
@@ -409,6 +410,18 @@ Public Class RadFAntecedentHistoListe
                     RadAntecedentDataGridView.Rows(iGrid).Cells("oa_antecedent_ald_demande_date").Style.ForeColor = Color.Red
                 End If
                 ALDDemandeDateComp = AldDemandeDate
+
+                chaineEpisodeDateFin = Coalesce(antecedentHistoDataTable.Rows(i)("oa_chaine_episode_date_fin"), Nothing)
+                If chaineEpisodeDateFin.Date = MaxDate.Date Or chaineEpisodeDateFin.Date = Nothing Then
+                    RadAntecedentDataGridView.Rows(iGrid).Cells("chaineEpisodeDateFin").Value = "-"
+                Else
+                    RadAntecedentDataGridView.Rows(iGrid).Cells("chaineEpisodeDateFin").Value = chaineEpisodeDateFin.ToString("dd.MM.yyyy")
+                End If
+                If chaineEpisodeDateFin.Date <> chaineEpisodeDateFinComp.Date And premierPassage = False Then
+                    RadAntecedentDataGridView.Rows(iGrid).Cells("chaineEpisodeDateFin").Style.ForeColor = Color.Red
+                End If
+                chaineEpisodeDateFinComp = chaineEpisodeDateFin
+
             Else
                 RadAntecedentDataGridView.Rows(iGrid).Cells("oa_antecedent_ald_id").Value = ""
                 RadAntecedentDataGridView.Rows(iGrid).Cells("oa_ald_description").Value = ""
@@ -418,12 +431,14 @@ Public Class RadFAntecedentHistoListe
                 RadAntecedentDataGridView.Rows(iGrid).Cells("oa_antecedent_ald_date_fin").Value = ""
                 RadAntecedentDataGridView.Rows(iGrid).Cells("oa_antecedent_ald_demande_en_cours").Value = ""
                 RadAntecedentDataGridView.Rows(iGrid).Cells("oa_antecedent_ald_demande_date").Value = ""
+                RadAntecedentDataGridView.Rows(iGrid).Cells("chaineEpisodeDateFin").Value = ""
                 ALDCim10IdComp = 0
                 ALDValideComp = ""
                 ALDDateDebutComp = Nothing
                 ALDDateFinComp = Nothing
                 ALDDemandeComp = ""
                 ALDDemandeDateComp = Nothing
+                chaineEpisodeDateFinComp = Nothing
             End If
 
             'Arrêt
