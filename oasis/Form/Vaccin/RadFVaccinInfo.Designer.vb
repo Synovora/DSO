@@ -22,15 +22,16 @@ Partial Class RadFVaccinInfo
     'Do not modify it using the code editor.
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
-        Dim GridViewCheckBoxColumn1 As Telerik.WinControls.UI.GridViewCheckBoxColumn = New Telerik.WinControls.UI.GridViewCheckBoxColumn()
-        Dim GridViewTextBoxColumn1 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
-        Dim SortDescriptor1 As Telerik.WinControls.Data.SortDescriptor = New Telerik.WinControls.Data.SortDescriptor()
-        Dim TableViewDefinition1 As Telerik.WinControls.UI.TableViewDefinition = New Telerik.WinControls.UI.TableViewDefinition()
-        Dim GridViewCheckBoxColumn2 As Telerik.WinControls.UI.GridViewCheckBoxColumn = New Telerik.WinControls.UI.GridViewCheckBoxColumn()
-        Dim GridViewTextBoxColumn2 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
-        Dim GridViewTextBoxColumn3 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
-        Dim SortDescriptor2 As Telerik.WinControls.Data.SortDescriptor = New Telerik.WinControls.Data.SortDescriptor()
-        Dim TableViewDefinition2 As Telerik.WinControls.UI.TableViewDefinition = New Telerik.WinControls.UI.TableViewDefinition()
+        Me.components = New System.ComponentModel.Container()
+        Dim GridViewCheckBoxColumn5 As Telerik.WinControls.UI.GridViewCheckBoxColumn = New Telerik.WinControls.UI.GridViewCheckBoxColumn()
+        Dim GridViewTextBoxColumn7 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
+        Dim SortDescriptor5 As Telerik.WinControls.Data.SortDescriptor = New Telerik.WinControls.Data.SortDescriptor()
+        Dim TableViewDefinition5 As Telerik.WinControls.UI.TableViewDefinition = New Telerik.WinControls.UI.TableViewDefinition()
+        Dim GridViewCheckBoxColumn6 As Telerik.WinControls.UI.GridViewCheckBoxColumn = New Telerik.WinControls.UI.GridViewCheckBoxColumn()
+        Dim GridViewTextBoxColumn8 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
+        Dim GridViewTextBoxColumn9 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
+        Dim SortDescriptor6 As Telerik.WinControls.Data.SortDescriptor = New Telerik.WinControls.Data.SortDescriptor()
+        Dim TableViewDefinition6 As Telerik.WinControls.UI.TableViewDefinition = New Telerik.WinControls.UI.TableViewDefinition()
         Me.RadGridView1 = New Telerik.WinControls.UI.RadGridView()
         Me.RadGridView2 = New Telerik.WinControls.UI.RadGridView()
         Me.BtnValidationProgram = New Telerik.WinControls.UI.RadButton()
@@ -60,6 +61,19 @@ Partial Class RadFVaccinInfo
         Me.Label2 = New System.Windows.Forms.Label()
         Me.RadLabel1 = New Telerik.WinControls.UI.RadLabel()
         Me.LblAgeVaccination = New Telerik.WinControls.UI.RadLabel()
+        Me.ToolTip = New System.Windows.Forms.ToolTip(Me.components)
+        Me.TraitementContextMenuStrip = New System.Windows.Forms.ContextMenuStrip(Me.components)
+        Me.CréerUnTraitementToolStripMenuItem1 = New System.Windows.Forms.ToolStripMenuItem()
+        Me.GérerUneFenêtreThérapeutiqueToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.HistoriqueToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.ToolStripSeparator1 = New System.Windows.Forms.ToolStripSeparator()
+        Me.TraitementsObsoletesToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.ToolStripSeparator2 = New System.Windows.Forms.ToolStripSeparator()
+        Me.DéclarationAllergieToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.ListeDesMédicamentsDéclarésAllergiquesToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.ToolStripSeparator4 = New System.Windows.Forms.ToolStripSeparator()
+        Me.DéclarationAllergieOuContreindicationToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.ListeDesMédicamentsDéclarésContreindiquésToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         CType(Me.RadGridView1, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.RadGridView1.MasterTemplate, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.RadGridView2, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -73,6 +87,7 @@ Partial Class RadFVaccinInfo
         Me.RadGroupBoxEtatCivil.SuspendLayout()
         CType(Me.RadLabel1, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.LblAgeVaccination, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.TraitementContextMenuStrip.SuspendLayout()
         CType(Me, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
@@ -87,21 +102,21 @@ Partial Class RadFVaccinInfo
         '
         '
         '
-        GridViewCheckBoxColumn1.EnableExpressionEditor = False
-        GridViewCheckBoxColumn1.MinWidth = 20
-        GridViewCheckBoxColumn1.Name = "checked"
-        GridViewCheckBoxColumn1.ReadOnly = True
-        GridViewTextBoxColumn1.EnableExpressionEditor = False
-        GridViewTextBoxColumn1.HeaderText = "Valences"
-        GridViewTextBoxColumn1.Name = "valence"
-        GridViewTextBoxColumn1.ReadOnly = True
-        GridViewTextBoxColumn1.SortOrder = Telerik.WinControls.UI.RadSortOrder.Ascending
-        GridViewTextBoxColumn1.Width = 180
-        Me.RadGridView1.MasterTemplate.Columns.AddRange(New Telerik.WinControls.UI.GridViewDataColumn() {GridViewCheckBoxColumn1, GridViewTextBoxColumn1})
+        GridViewCheckBoxColumn5.EnableExpressionEditor = False
+        GridViewCheckBoxColumn5.MinWidth = 20
+        GridViewCheckBoxColumn5.Name = "checked"
+        GridViewCheckBoxColumn5.ReadOnly = True
+        GridViewTextBoxColumn7.EnableExpressionEditor = False
+        GridViewTextBoxColumn7.HeaderText = "Valences"
+        GridViewTextBoxColumn7.Name = "valence"
+        GridViewTextBoxColumn7.ReadOnly = True
+        GridViewTextBoxColumn7.SortOrder = Telerik.WinControls.UI.RadSortOrder.Ascending
+        GridViewTextBoxColumn7.Width = 180
+        Me.RadGridView1.MasterTemplate.Columns.AddRange(New Telerik.WinControls.UI.GridViewDataColumn() {GridViewCheckBoxColumn5, GridViewTextBoxColumn7})
         Me.RadGridView1.MasterTemplate.ShowRowHeaderColumn = False
-        SortDescriptor1.PropertyName = "valence"
-        Me.RadGridView1.MasterTemplate.SortDescriptors.AddRange(New Telerik.WinControls.Data.SortDescriptor() {SortDescriptor1})
-        Me.RadGridView1.MasterTemplate.ViewDefinition = TableViewDefinition1
+        SortDescriptor5.PropertyName = "valence"
+        Me.RadGridView1.MasterTemplate.SortDescriptors.AddRange(New Telerik.WinControls.Data.SortDescriptor() {SortDescriptor5})
+        Me.RadGridView1.MasterTemplate.ViewDefinition = TableViewDefinition5
         Me.RadGridView1.Name = "RadGridView1"
         Me.RadGridView1.RightToLeft = System.Windows.Forms.RightToLeft.No
         Me.RadGridView1.ShowGroupPanel = False
@@ -119,23 +134,23 @@ Partial Class RadFVaccinInfo
         '
         '
         '
-        GridViewCheckBoxColumn2.EnableExpressionEditor = False
-        GridViewCheckBoxColumn2.MinWidth = 20
-        GridViewCheckBoxColumn2.Name = "checked"
-        GridViewTextBoxColumn2.EnableExpressionEditor = False
-        GridViewTextBoxColumn2.HeaderText = "Categorie"
-        GridViewTextBoxColumn2.Name = "cat"
-        GridViewTextBoxColumn2.Width = 80
-        GridViewTextBoxColumn3.EnableExpressionEditor = False
-        GridViewTextBoxColumn3.HeaderText = "Vaccins"
-        GridViewTextBoxColumn3.Name = "vaccin"
-        GridViewTextBoxColumn3.SortOrder = Telerik.WinControls.UI.RadSortOrder.Ascending
-        GridViewTextBoxColumn3.Width = 500
-        Me.RadGridView2.MasterTemplate.Columns.AddRange(New Telerik.WinControls.UI.GridViewDataColumn() {GridViewCheckBoxColumn2, GridViewTextBoxColumn2, GridViewTextBoxColumn3})
+        GridViewCheckBoxColumn6.EnableExpressionEditor = False
+        GridViewCheckBoxColumn6.MinWidth = 20
+        GridViewCheckBoxColumn6.Name = "checked"
+        GridViewTextBoxColumn8.EnableExpressionEditor = False
+        GridViewTextBoxColumn8.HeaderText = "Categorie"
+        GridViewTextBoxColumn8.Name = "cat"
+        GridViewTextBoxColumn8.Width = 80
+        GridViewTextBoxColumn9.EnableExpressionEditor = False
+        GridViewTextBoxColumn9.HeaderText = "Vaccins"
+        GridViewTextBoxColumn9.Name = "vaccin"
+        GridViewTextBoxColumn9.SortOrder = Telerik.WinControls.UI.RadSortOrder.Ascending
+        GridViewTextBoxColumn9.Width = 500
+        Me.RadGridView2.MasterTemplate.Columns.AddRange(New Telerik.WinControls.UI.GridViewDataColumn() {GridViewCheckBoxColumn6, GridViewTextBoxColumn8, GridViewTextBoxColumn9})
         Me.RadGridView2.MasterTemplate.ShowRowHeaderColumn = False
-        SortDescriptor2.PropertyName = "vaccin"
-        Me.RadGridView2.MasterTemplate.SortDescriptors.AddRange(New Telerik.WinControls.Data.SortDescriptor() {SortDescriptor2})
-        Me.RadGridView2.MasterTemplate.ViewDefinition = TableViewDefinition2
+        SortDescriptor6.PropertyName = "vaccin"
+        Me.RadGridView2.MasterTemplate.SortDescriptors.AddRange(New Telerik.WinControls.Data.SortDescriptor() {SortDescriptor6})
+        Me.RadGridView2.MasterTemplate.ViewDefinition = TableViewDefinition6
         Me.RadGridView2.Name = "RadGridView2"
         Me.RadGridView2.RightToLeft = System.Windows.Forms.RightToLeft.No
         Me.RadGridView2.ShowGroupPanel = False
@@ -425,6 +440,75 @@ Partial Class RadFVaccinInfo
         Me.LblAgeVaccination.TabIndex = 37
         Me.LblAgeVaccination.Text = "--"
         '
+        'TraitementContextMenuStrip
+        '
+        Me.TraitementContextMenuStrip.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.CréerUnTraitementToolStripMenuItem1, Me.GérerUneFenêtreThérapeutiqueToolStripMenuItem, Me.HistoriqueToolStripMenuItem, Me.ToolStripSeparator1, Me.TraitementsObsoletesToolStripMenuItem, Me.ToolStripSeparator2, Me.DéclarationAllergieToolStripMenuItem, Me.ListeDesMédicamentsDéclarésAllergiquesToolStripMenuItem, Me.ToolStripSeparator4, Me.DéclarationAllergieOuContreindicationToolStripMenuItem, Me.ListeDesMédicamentsDéclarésContreindiquésToolStripMenuItem})
+        Me.TraitementContextMenuStrip.Name = "TraitementContextMenuStrip"
+        Me.TraitementContextMenuStrip.Size = New System.Drawing.Size(346, 220)
+        '
+        'CréerUnTraitementToolStripMenuItem1
+        '
+        Me.CréerUnTraitementToolStripMenuItem1.Name = "CréerUnTraitementToolStripMenuItem1"
+        Me.CréerUnTraitementToolStripMenuItem1.Size = New System.Drawing.Size(345, 22)
+        Me.CréerUnTraitementToolStripMenuItem1.Text = "Créer un traitement"
+        '
+        'GérerUneFenêtreThérapeutiqueToolStripMenuItem
+        '
+        Me.GérerUneFenêtreThérapeutiqueToolStripMenuItem.Name = "GérerUneFenêtreThérapeutiqueToolStripMenuItem"
+        Me.GérerUneFenêtreThérapeutiqueToolStripMenuItem.Size = New System.Drawing.Size(345, 22)
+        Me.GérerUneFenêtreThérapeutiqueToolStripMenuItem.Text = "Gérer une fenêtre thérapeutique pour un traitement"
+        '
+        'HistoriqueToolStripMenuItem
+        '
+        Me.HistoriqueToolStripMenuItem.Name = "HistoriqueToolStripMenuItem"
+        Me.HistoriqueToolStripMenuItem.Size = New System.Drawing.Size(345, 22)
+        Me.HistoriqueToolStripMenuItem.Text = "Historique des modifications d'un traitement"
+        '
+        'ToolStripSeparator1
+        '
+        Me.ToolStripSeparator1.Name = "ToolStripSeparator1"
+        Me.ToolStripSeparator1.Size = New System.Drawing.Size(342, 6)
+        '
+        'TraitementsObsoletesToolStripMenuItem
+        '
+        Me.TraitementsObsoletesToolStripMenuItem.Name = "TraitementsObsoletesToolStripMenuItem"
+        Me.TraitementsObsoletesToolStripMenuItem.Size = New System.Drawing.Size(345, 22)
+        Me.TraitementsObsoletesToolStripMenuItem.Text = "Afficher les traitements obsolètes"
+        '
+        'ToolStripSeparator2
+        '
+        Me.ToolStripSeparator2.Name = "ToolStripSeparator2"
+        Me.ToolStripSeparator2.Size = New System.Drawing.Size(342, 6)
+        '
+        'DéclarationAllergieToolStripMenuItem
+        '
+        Me.DéclarationAllergieToolStripMenuItem.Name = "DéclarationAllergieToolStripMenuItem"
+        Me.DéclarationAllergieToolStripMenuItem.Size = New System.Drawing.Size(345, 22)
+        Me.DéclarationAllergieToolStripMenuItem.Text = "Déclaration allergie"
+        '
+        'ListeDesMédicamentsDéclarésAllergiquesToolStripMenuItem
+        '
+        Me.ListeDesMédicamentsDéclarésAllergiquesToolStripMenuItem.Name = "ListeDesMédicamentsDéclarésAllergiquesToolStripMenuItem"
+        Me.ListeDesMédicamentsDéclarésAllergiquesToolStripMenuItem.Size = New System.Drawing.Size(345, 22)
+        Me.ListeDesMédicamentsDéclarésAllergiquesToolStripMenuItem.Text = "Liste des substances allergiques"
+        '
+        'ToolStripSeparator4
+        '
+        Me.ToolStripSeparator4.Name = "ToolStripSeparator4"
+        Me.ToolStripSeparator4.Size = New System.Drawing.Size(342, 6)
+        '
+        'DéclarationAllergieOuContreindicationToolStripMenuItem
+        '
+        Me.DéclarationAllergieOuContreindicationToolStripMenuItem.Name = "DéclarationAllergieOuContreindicationToolStripMenuItem"
+        Me.DéclarationAllergieOuContreindicationToolStripMenuItem.Size = New System.Drawing.Size(345, 22)
+        Me.DéclarationAllergieOuContreindicationToolStripMenuItem.Text = "Déclaration contre-indication"
+        '
+        'ListeDesMédicamentsDéclarésContreindiquésToolStripMenuItem
+        '
+        Me.ListeDesMédicamentsDéclarésContreindiquésToolStripMenuItem.Name = "ListeDesMédicamentsDéclarésContreindiquésToolStripMenuItem"
+        Me.ListeDesMédicamentsDéclarésContreindiquésToolStripMenuItem.Size = New System.Drawing.Size(345, 22)
+        Me.ListeDesMédicamentsDéclarésContreindiquésToolStripMenuItem.Text = "Liste des contre-indications"
+        '
         'RadFVaccinInfo
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -463,6 +547,7 @@ Partial Class RadFVaccinInfo
         Me.RadGroupBoxEtatCivil.PerformLayout()
         CType(Me.RadLabel1, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.LblAgeVaccination, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.TraitementContextMenuStrip.ResumeLayout(False)
         CType(Me, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
         Me.PerformLayout()
@@ -498,5 +583,18 @@ Partial Class RadFVaccinInfo
     Friend WithEvents Label2 As Label
     Friend WithEvents RadLabel1 As Telerik.WinControls.UI.RadLabel
     Friend WithEvents LblAgeVaccination As Telerik.WinControls.UI.RadLabel
+    Friend WithEvents ToolTip As ToolTip
+    Friend WithEvents TraitementContextMenuStrip As ContextMenuStrip
+    Friend WithEvents CréerUnTraitementToolStripMenuItem1 As ToolStripMenuItem
+    Friend WithEvents GérerUneFenêtreThérapeutiqueToolStripMenuItem As ToolStripMenuItem
+    Friend WithEvents HistoriqueToolStripMenuItem As ToolStripMenuItem
+    Friend WithEvents ToolStripSeparator1 As ToolStripSeparator
+    Friend WithEvents TraitementsObsoletesToolStripMenuItem As ToolStripMenuItem
+    Friend WithEvents ToolStripSeparator2 As ToolStripSeparator
+    Friend WithEvents DéclarationAllergieToolStripMenuItem As ToolStripMenuItem
+    Friend WithEvents ListeDesMédicamentsDéclarésAllergiquesToolStripMenuItem As ToolStripMenuItem
+    Friend WithEvents ToolStripSeparator4 As ToolStripSeparator
+    Friend WithEvents DéclarationAllergieOuContreindicationToolStripMenuItem As ToolStripMenuItem
+    Friend WithEvents ListeDesMédicamentsDéclarésContreindiquésToolStripMenuItem As ToolStripMenuItem
 End Class
 

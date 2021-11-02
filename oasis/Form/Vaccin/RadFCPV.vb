@@ -302,4 +302,17 @@ Public Class RadFCPV
         ChargementValence()
         ChargementDate()
     End Sub
+
+    Private Sub RadButton1_Click(sender As Object, e As EventArgs) Handles RadButton1.Click
+        Me.Enabled = False
+        Cursor.Current = Cursors.WaitCursor
+
+        Using radFCPV As New RadFVaccinInfo
+            radFCPV.SelectedPatient = Patient
+            radFCPV.ShowDialog()
+            'ChargementValence()
+        End Using
+
+        Me.Enabled = True
+    End Sub
 End Class
