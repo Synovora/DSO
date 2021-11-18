@@ -20,25 +20,6 @@ Public Class RadFCPV
         ChargementDate()
     End Sub
 
-    Shared Function DaysToDate(days As Long) As String
-        Dim dayPerMonth = 30.44
-        Dim monthPerYear = 12
-        Dim showMaxMonths = 40
-        If days < dayPerMonth Then
-            Return String.Format("{0} Jours", Math.Round(days))
-        ElseIf days / dayPerMonth < showMaxMonths Then
-            Return String.Format("{0} Mois", Math.Round(days / dayPerMonth))
-        Else
-            Return String.Format("{0} Ans", Math.Round(days / dayPerMonth / monthPerYear))
-        End If
-    End Function
-
-    Shared Function DateToDays(days As Long, months As Long, years As Long) As Long
-        Dim dayPerMonth = 30.44
-        Dim monthPerYear = 12
-        Return Math.Round(days + months * dayPerMonth + years * monthPerYear * dayPerMonth)
-    End Function
-
     Private Sub ChargementValence()
         Grid.Columns.Clear()
         Me.Enabled = False
@@ -93,7 +74,7 @@ Public Class RadFCPV
 
             Grid.Rows(iGrid).Cells(2).Value = String.Format("{0} {1}", cgvDate.PerformDate, cgvDate.PerformBy)
 
-            Grid.Rows(iGrid).Cells(2).Value = DaysToDate(cgvDate.Days)
+            Grid.Rows(iGrid).Cells(2).Value = CGVDate.DaysToDate(cgvDate.Days)
             For Each actualRelation As RelationValenceDate In actualRelations
                 Dim valence = valences.Find(Function(myObject) myObject.Id = actualRelation.Valence)
                 Grid.Rows(iGrid).Cells(Grid.Columns.IndexOf(valence.Code)).Value = "✓"
@@ -173,7 +154,7 @@ Public Class RadFCPV
         Integer.TryParse(TextMonth.Text, m)
         Integer.TryParse(TextYear.Text, y)
 
-        Dim days = DateToDays(d, m, y)
+        Dim days = Oasis_Common.CGVDate.DateToDays(d, m, y)
         If days = 0 Then
             MessageBox.Show("Veuillez rentrer une date", "Calendrier", MessageBoxButtons.OK, MessageBoxIcon.Exclamation)
             Return
@@ -223,7 +204,7 @@ Public Class RadFCPV
     End Sub
 
     Private Sub Grid_Click(sender As Object, ByVal e As GridViewCellEventArgs) Handles Grid.CellClick
-        If e.RowIndex >= 0 AndAlso e.ColumnIndex > 0 Then
+        If e.RowIndex >= 0 AndAlso e.ColumnIndex >= 0 Then
             Dim dateRow As Integer = e.RowIndex
             Dim valenceCol As Integer = e.ColumnIndex
 
@@ -237,7 +218,27 @@ Public Class RadFCPV
                 End If
                 ChargementValence()
             ElseIf dateRow >= 0 AndAlso valenceCol <= 1 Then
-                MessageBox.Show("Edit screen", "Edit")
+                Me.Enabled = False
+                Cursor.Current = Cursors.WaitCursor
+
+                Dim aRow As Integer = Grid.Rows.IndexOf(Grid.CurrentRow)
+                If aRow >= 0 Then
+                    Dim enlabledValence = New List(Of CGVValence)
+                    For Each valence As CGVValence In valences
+                        If relations.Any(Function(myObject) myObject.Valence = valence.Id AndAlso myObject.Date = cgvDates(aRow).Id) Then
+                            enlabledValence.Add(valence)
+                        End If
+                    Next
+
+                    Using radFCPV As New RadFVaccinInfo
+                        radFCPV.SelectedPatient = Patient
+                        radFCPV.SelectedCGVDate = cgvDates(aRow)
+                        radFCPV.SelectedValences = enlabledValence
+                        radFCPV.ShowDialog()
+                    End Using
+                End If
+
+                Me.Enabled = True
             End If
         End If
     End Sub
@@ -301,18 +302,5 @@ Public Class RadFCPV
         Cursor.Current = Cursors.Default
         ChargementValence()
         ChargementDate()
-    End Sub
-
-    Private Sub RadButton1_Click(sender As Object, e As EventArgs) Handles RadButton1.Click
-        Me.Enabled = False
-        Cursor.Current = Cursors.WaitCursor
-
-        Using radFCPV As New RadFVaccinInfo
-            radFCPV.SelectedPatient = Patient
-            radFCPV.ShowDialog()
-            'ChargementValence()
-        End Using
-
-        Me.Enabled = True
     End Sub
 End Class

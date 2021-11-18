@@ -248,4 +248,28 @@ Public Class VaccinDao
         Return relations
     End Function
 
+    Public Function getFromValences(valenceIds As List(Of Long)) As List(Of VaccinValence)
+        Dim con As SqlConnection = GetConnection()
+        Dim vaccins As List(Of VaccinValence) = New List(Of VaccinValence)
+
+        Try
+            Dim command As SqlCommand = con.CreateCommand()
+            command.CommandText = String.Format("SELECT * FROM [oasis].[oasis].[oa_vaccin] Vaccin " & vbCrLf &
+            "LEFT JOIN [oasis].[oasis].[oa_relation_vaccin_valence] RVV " & vbCrLf &
+            "ON RVV.vaccin=Vaccin.code WHERE valence IN ({0})", String.Join(",", valenceIds.ToArray()))
+
+            Using reader As SqlDataReader = command.ExecuteReader()
+                While (reader.Read())
+                    vaccins.Add(New VaccinValence(reader))
+                End While
+            End Using
+        Catch ex As Exception
+            Throw ex
+        Finally
+            con.Close()
+        End Try
+
+        Return vaccins
+    End Function
+
 End Class

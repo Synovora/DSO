@@ -22,6 +22,9 @@ Public Class RadFVaccin
     End Sub
 
     Private Sub ChargementValence()
+        Me.Enabled = False
+        Cursor.Current = Cursors.WaitCursor
+
         GridValence.Rows.Clear()
         Dim iGrid As Integer = 0
         Dim vaccinRow As Integer = Me.RadGridViewSpe.Rows.IndexOf(Me.RadGridViewSpe.CurrentRow)
@@ -40,20 +43,25 @@ Public Class RadFVaccin
             iGrid += 1
         Next
         GridValence.Enabled = True
+        Cursor.Current = Cursors.Default
+        Me.Enabled = True
     End Sub
 
     'Liste des médicaments par classe ATC
     Private Sub ChargementMedicamentByAtc()
+        Me.Enabled = False
+        Cursor.Current = Cursors.WaitCursor
+
         Dim MonoVir As Integer = TheriaqueDao.EnumMonoVir.CLASSIQUE
 
         Dim dt As DataTable
 
-        Cursor.Current = Cursors.WaitCursor
         dt = theriaqueDao.GetSpecialiteByArgument(SelectedClasseAtc, TheriaqueDao.EnumGetSpecialite.CLASSE_ATC, MonoVir)
         If dt.Rows.Count > 0 Then
             ChargementSpecialite(dt, True)
         End If
         Cursor.Current = Cursors.Default
+        Me.Enabled = True
     End Sub
 
 
@@ -123,6 +131,9 @@ Public Class RadFVaccin
     End Sub
 
     Private Sub ChargementATC3(CodeATC As String)
+        Me.Enabled = False
+        Cursor.Current = Cursors.WaitCursor
+
         RadGridViewATC3.Rows.Clear()
         Dim dt As DataTable = theriaqueDao.GetATCListeByATCPere(CodeATC)
 
@@ -135,9 +146,14 @@ Public Class RadFVaccin
             RadGridViewATC3.Rows(iGrid).Cells("catc_nomf").Value = dt.Rows(i)("catc_nomf")
             iGrid += 1
         Next
+        Cursor.Current = Cursors.Default
+        Me.Enabled = True
     End Sub
 
     Private Sub ChargementATC4(CodeATC As String)
+        Me.Enabled = False
+        Cursor.Current = Cursors.WaitCursor
+
         RadGridViewATC4.Rows.Clear()
         Dim dt As DataTable
         dt = theriaqueDao.GetATCListeByATCPere(CodeATC)
@@ -151,9 +167,14 @@ Public Class RadFVaccin
             RadGridViewATC4.Rows(iGrid).Cells("catc_nomf").Value = dt.Rows(i)("catc_nomf")
             iGrid += 1
         Next
+        Cursor.Current = Cursors.Default
+        Me.Enabled = True
     End Sub
 
     Private Sub RadGridViewATC3_Click(sender As Object, e As EventArgs) Handles RadGridViewATC3.Click
+        Me.Enabled = False
+        Cursor.Current = Cursors.WaitCursor
+
         If RadGridViewATC3.CurrentRow IsNot Nothing Then
             Dim aRow As Integer = Me.RadGridViewATC3.Rows.IndexOf(Me.RadGridViewATC3.CurrentRow)
             Dim ATCCode As String = RadGridViewATC3.Rows(aRow).Cells("catc_code_pk").Value
@@ -161,9 +182,14 @@ Public Class RadFVaccin
                 ChargementATC4(ATCCode)
             End If
         End If
+        Cursor.Current = Cursors.Default
+        Me.Enabled = True
     End Sub
 
     Private Sub RadBtnSpec2_Click(sender As Object, e As EventArgs) Handles RadBtnSpec3.Click
+        Me.Enabled = False
+        Cursor.Current = Cursors.WaitCursor
+
         If RadGridViewATC3.CurrentRow IsNot Nothing Then
             Dim aRow As Integer = Me.RadGridViewATC3.Rows.IndexOf(Me.RadGridViewATC3.CurrentRow)
             If aRow >= 0 Then
@@ -172,9 +198,14 @@ Public Class RadFVaccin
                 RadTxtSpecialite.Text = ""
             End If
         End If
+        Cursor.Current = Cursors.Default
+        Me.Enabled = True
     End Sub
 
     Private Sub RadBtnSpec4_Click(sender As Object, e As EventArgs) Handles RadBtnSpec4.Click
+        Me.Enabled = False
+        Cursor.Current = Cursors.WaitCursor
+
         If RadGridViewATC4.CurrentRow IsNot Nothing Then
             Dim aRow As Integer = Me.RadGridViewATC4.Rows.IndexOf(Me.RadGridViewATC4.CurrentRow)
             If aRow >= 0 Then
@@ -183,10 +214,13 @@ Public Class RadFVaccin
                 RadTxtSpecialite.Text = ""
             End If
         End If
+        Cursor.Current = Cursors.Default
+        Me.Enabled = True
     End Sub
 
     'Appel API Thériaque : recherche spécialité par classe thérapeutique
     Private Sub GetSpecialiteByATC(CodeAtc As String)
+        Me.Enabled = False
         Cursor.Current = Cursors.WaitCursor
 
         Dim Monovir As Integer = TheriaqueDao.EnumMonoVir.CLASSIQUE
@@ -197,6 +231,7 @@ Public Class RadFVaccin
         ChargementSpecialite(dt, True)
 
         Cursor.Current = Cursors.Default
+        Me.Enabled = True
     End Sub
 
     'Appel API Thériaque : recherche spécialité par nom de spécialité
@@ -319,21 +354,25 @@ Public Class RadFVaccin
     End Sub
 
     Private Sub RadBtnSubstance_Click(sender As Object, e As EventArgs)
+        Me.Enabled = False
+        Cursor.Current = Cursors.WaitCursor
         If RadGridViewSpe.CurrentRow IsNot Nothing Then
             Dim aRow As Integer = Me.RadGridViewSpe.Rows.IndexOf(Me.RadGridViewSpe.CurrentRow)
             If aRow >= 0 Then
                 Dim SpecialiteId As Long = RadGridViewSpe.Rows(aRow).Cells("SP_CODE_SQ_PK").Value
-                Me.Enabled = False
                 Using form As New RadFSubstancesListe
                     form.SelectedSpecialite = SpecialiteId
                     form.ShowDialog()
                 End Using
-                Me.Enabled = True
             End If
         End If
+        Me.Enabled = True
+        Cursor.Current = Cursors.Default
     End Sub
 
-    Private Sub RadGridViewSpe_DoubleClick_1(sender As Object, e As EventArgs) Handles RadGridViewSpe.Click
+    Private Sub RadGridViewSpe_Click(sender As Object, e As EventArgs) Handles RadGridViewSpe.Click
+        Me.Enabled = False
+        Cursor.Current = Cursors.WaitCursor
         RadGridViewSubstance.Rows.Clear()
         GridValence.Rows.Clear()
         RadGridViewSubstance.Enabled = False
@@ -341,9 +380,13 @@ Public Class RadFVaccin
         ImportVaccin()
         LoadSubstance()
         ChargementValence()
+        Me.Enabled = True
+        Cursor.Current = Cursors.Default
     End Sub
 
     Private Sub ImportVaccin()
+        Me.Enabled = False
+        Cursor.Current = Cursors.WaitCursor
         Dim aRow As Integer = Me.RadGridViewSpe.Rows.IndexOf(Me.RadGridViewSpe.CurrentRow)
         If aRow >= 0 Then
             Dim vaccin = vaccinDao.GetByCode(RadGridViewSpe.Rows(aRow).Cells("SP_CODE_SQ_PK").Value)
@@ -364,6 +407,8 @@ Public Class RadFVaccin
                 'RadGridViewSpe.Rows(iGrid).Cells("SP_CIPUCD").Value = dt.Rows(i)("SP_CIPUCD")
             End If
         End If
+        Me.Enabled = True
+        Cursor.Current = Cursors.Default
     End Sub
 
     Private Sub LoadSubstance()
