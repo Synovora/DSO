@@ -318,6 +318,29 @@ Public Class PatientDao
         Return patients
     End Function
 
+    Public Function GetByDRC(DRC As Long) As List(Of Patient)
+        Dim con As SqlConnection = GetConnection()
+        Dim patients As List(Of Patient) = New List(Of Patient)
+        Dim SQLString As String = String.Format("SELECT DISTINCT Patient.* FROM  oasis.oa_patient Patient " & vbCrLf &
+            "LEFT JOIN oasis.oa_antecedent A " & vbCrLf &
+            "ON A.oa_antecedent_patient_id = Patient.oa_patient_id WHERE A.oa_antecedent_drc_id = {0}", DRC)
+        Try
+            Dim command As SqlCommand = con.CreateCommand()
+            command.CommandText = SQLString
+            Using reader As SqlDataReader = command.ExecuteReader()
+                While (reader.Read())
+                    patients.Add(BuildBean(reader))
+                End While
+            End Using
+        Catch ex As Exception
+            Throw ex
+        Finally
+            con.Close()
+        End Try
+
+        Return patients
+    End Function
+
     Public Function GetAllPatient(Tous As Boolean, PatientOasis As Boolean) As DataTable
         Dim conxn As New SqlConnection(GetConnectionString())
         Dim da As SqlDataAdapter = New SqlDataAdapter()

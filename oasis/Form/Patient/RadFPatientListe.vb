@@ -520,7 +520,6 @@ Public Class RadFPatientListe
             Try
                 Using form As New RadFPatientRendezVousListe
                     Me.SelectedPatient = patientDao.GetPatient(patientId)
-                    Me.SelectedPatient = patientDao.GetPatient(patientId)
                     form.SelectedPatient = Me.SelectedPatient
                     form.ShowDialog() 'Modal
                 End Using
@@ -679,4 +678,32 @@ Public Class RadFPatientListe
         Me.Cursor = Cursors.Default
     End Sub
 
+    Private Sub BtnVaccin_Click(sender As Object, e As EventArgs) Handles BtnVaccin.Click
+        Me.Enabled = False
+        Cursor.Current = Cursors.WaitCursor
+
+        If TxtIdSelected.Text <> "" Then
+            Dim patientId As Integer = CInt(TxtIdSelected.Text)
+            Me.SelectedPatient = patientDao.GetPatient(patientId)
+
+            Using radFCPV As New RadFCPV
+                radFCPV.Patient = SelectedPatient
+                radFCPV.ShowDialog()
+            End Using
+        End If
+
+        Cursor.Current = Cursors.Default
+        Me.Enabled = True
+    End Sub
+
+    Private Sub BtnRequest_Click(sender As Object, e As EventArgs) Handles BtnRequest.Click
+        Try
+            Using form As New RadFPatientRequest
+
+                form.ShowDialog() 'Modal
+            End Using
+        Catch ex As Exception
+            MessageBox.Show(ex.Message)
+        End Try
+    End Sub
 End Class

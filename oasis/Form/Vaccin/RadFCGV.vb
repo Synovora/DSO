@@ -18,25 +18,6 @@ Public Class RadFCGV
         ChargementDate()
     End Sub
 
-    Shared Function DaysToDate(days As Long) As String
-        Dim dayPerMonth = 30.44
-        Dim monthPerYear = 12
-        Dim showMaxMonths = 40
-        If days < dayPerMonth Then
-            Return String.Format("{0} Jours", Math.Round(days))
-        ElseIf days / dayPerMonth < showMaxMonths Then
-            Return String.Format("{0} Mois", Math.Round(days / dayPerMonth))
-        Else
-            Return String.Format("{0} Ans", Math.Round(days / dayPerMonth / monthPerYear))
-        End If
-    End Function
-
-    Shared Function DateToDays(days As Long, months As Long, years As Long) As Long
-        Dim dayPerMonth = 30.44
-        Dim monthPerYear = 12
-        Return Math.Round(days + months * dayPerMonth + years * monthPerYear * dayPerMonth)
-    End Function
-
     Private Sub ChargementValence()
         Grid.Columns.Clear()
         Me.Enabled = False
@@ -76,7 +57,7 @@ Public Class RadFCGV
                 Continue For
             End If
             Grid.Rows.Add(iGrid)
-            Grid.Rows(iGrid).Cells(0).Value = DaysToDate(cgvDate.Days)
+            Grid.Rows(iGrid).Cells(0).Value = CGVDate.DaysToDate(cgvDate.Days)
             For Each actualRelation As RelationValenceDate In actualRelations
                 Dim valence = valences.Find(Function(myObject) myObject.Id = actualRelation.Valence)
                 'If (valence.Visible = False) Then Continue For
@@ -157,7 +138,7 @@ Public Class RadFCGV
         Integer.TryParse(TextMonth.Text, m)
         Integer.TryParse(TextYear.Text, y)
 
-        Dim days = DateToDays(d, m, y)
+        Dim days = Oasis_Common.CGVDate.DateToDays(d, m, y)
         If days = 0 Then
             MessageBox.Show("Veuillez rentrer une date", "Calendrier", MessageBoxButtons.OK, MessageBoxIcon.Exclamation)
             Return

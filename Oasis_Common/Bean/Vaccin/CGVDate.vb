@@ -24,6 +24,25 @@ Public Class CGVDate
         Me.OperatedDate = Coalesce(reader("operated_date"), Nothing)
     End Sub
 
+    Shared Function DaysToDate(days As Long) As String
+        Dim dayPerMonth = 30.44
+        Dim monthPerYear = 12
+        Dim showMaxMonths = 40
+        If days < dayPerMonth Then
+            Return String.Format("{0} Jours", Math.Round(days))
+        ElseIf days / dayPerMonth < showMaxMonths Then
+            Return String.Format("{0} Mois", Math.Round(days / dayPerMonth))
+        Else
+            Return String.Format("{0} Ans", Math.Round(days / dayPerMonth / monthPerYear))
+        End If
+    End Function
+
+    Shared Function DateToDays(days As Long, months As Long, years As Long) As Long
+        Dim dayPerMonth = 30.44
+        Dim monthPerYear = 12
+        Return Math.Round(days + months * dayPerMonth + years * monthPerYear * dayPerMonth)
+    End Function
+
 End Class
 
 Public Class RelationValenceDate

@@ -43,7 +43,6 @@ Partial Class RadFCPV
         Me.TextMonth = New Telerik.WinControls.UI.RadTextBox()
         Me.TextDay = New Telerik.WinControls.UI.RadTextBox()
         Me.BtnImport = New Telerik.WinControls.UI.RadButton()
-        Me.RadButton1 = New Telerik.WinControls.UI.RadButton()
         CType(Me.RadBtnAbandon, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.Grid, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.Grid.MasterTemplate, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -64,7 +63,6 @@ Partial Class RadFCPV
         CType(Me.TextMonth, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.TextDay, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.BtnImport, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.RadButton1, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
@@ -247,21 +245,12 @@ Partial Class RadFCPV
         Me.BtnImport.Text = "Importer depuis le calendrier general"
         Me.BtnImport.Visible = False
         '
-        'RadButton1
-        '
-        Me.RadButton1.Location = New System.Drawing.Point(1486, 345)
-        Me.RadButton1.Name = "RadButton1"
-        Me.RadButton1.Size = New System.Drawing.Size(110, 24)
-        Me.RadButton1.TabIndex = 59
-        Me.RadButton1.Text = "RadButton1"
-        '
         'RadFCPV
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.CancelButton = Me.RadBtnAbandon
         Me.ClientSize = New System.Drawing.Size(1643, 686)
-        Me.Controls.Add(Me.RadButton1)
         Me.Controls.Add(Me.BtnImport)
         Me.Controls.Add(Me.RadGroupBox2)
         Me.Controls.Add(Me.RadGroupBox1)
@@ -297,7 +286,6 @@ Partial Class RadFCPV
         CType(Me.TextMonth, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.TextDay, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.BtnImport, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.RadButton1, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
 
@@ -320,6 +308,5 @@ Partial Class RadFCPV
     Friend WithEvents RBDateActif As Telerik.WinControls.UI.RadRadioButton
     Friend WithEvents RBDateAll As Telerik.WinControls.UI.RadRadioButton
     Friend WithEvents BtnImport As Telerik.WinControls.UI.RadButton
-    Friend WithEvents RadButton1 As Telerik.WinControls.UI.RadButton
 End Class
 

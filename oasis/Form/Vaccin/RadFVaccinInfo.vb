@@ -1,15 +1,70 @@
 ﻿Imports Oasis_Common
+Imports Telerik.WinControls.UI
 
 Public Class RadFVaccinInfo
     Property SelectedPatient As Patient
-    Dim PatientAllergie, PatientContreIndication As Boolean
+    Property SelectedCGVDate As CGVDate
+    Property SelectedValences As List(Of CGVValence)
+    Property Vaccins As List(Of VaccinValence)
+
+    ReadOnly vaccinDao As New VaccinDao
 
     Private Sub RadFATCListe_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-        'AfficheTitleForm(Me, "Vaccin - Calendrier Personnalise", userLog)
-        'RBDateAll.CheckState = True
-        'ChargementValence()
-        'ChargementDate()
+        AfficheTitleForm(Me, "Vaccin - Information", userLog)
+        Dim valenceIds As List(Of Long) = New List(Of Long)
+        For Each valences As CGVValence In SelectedValences
+            valenceIds.Add(valences.Valence)
+        Next
+        Vaccins = vaccinDao.getFromValences(valenceIds)
         ChargementEtatCivil()
+        ChargementInformation()
+        ChargementValences()
+        ChargementVaccins()
+    End Sub
+
+    Private Sub ChargementInformation()
+        LblAgeVaccination.Text = CGVDate.DaysToDate(SelectedCGVDate.Days)
+        LblDate.Text = Date.Now
+        LblOperator.Text = GetProfilUserString(userLog)
+    End Sub
+
+    Private Sub ChargementVaccins()
+        Me.Enabled = False
+        Cursor.Current = Cursors.WaitCursor
+
+        GVVaccin.Rows.Clear()
+        Dim iGrid As Integer = 0
+
+        For Each vaccin As VaccinValence In Vaccins.GroupBy(Function(x) x.Code).Select(Function(x) x.First).ToList
+            GVVaccin.Rows.Add(iGrid)
+            GVVaccin.Rows(iGrid).Cells("id").Value = vaccin.Id
+            'GVVaccin.Rows(iGrid).Cells("checked").Value = False
+            GVVaccin.Rows(iGrid).Cells("dci").Value = vaccin.Dci
+            GVVaccin.Rows(iGrid).Cells("valence").Value = vaccin.Valence
+            iGrid += 1
+        Next
+
+        Cursor.Current = Cursors.Default
+        Me.Enabled = True
+    End Sub
+
+    Private Sub ChargementValences()
+        Me.Enabled = False
+        Cursor.Current = Cursors.WaitCursor
+
+        GVValence.Rows.Clear()
+        Dim iGrid As Integer = 0
+
+        For Each valence As CGVValence In SelectedValences
+            GVValence.Rows.Add(iGrid)
+            GVValence.Rows(iGrid).Cells("id").Value = valence.Id
+            GVValence.Rows(iGrid).Cells("checked").Value = GVVaccin.Rows.Any(Function(x) x.Cells("valence").Value = valence.Valence.ToString())
+            GVValence.Rows(iGrid).Cells("nom").Value = valence.Description
+            iGrid += 1
+        Next
+
+        Cursor.Current = Cursors.Default
+        Me.Enabled = True
     End Sub
 
     Private Sub ChargementEtatCivil()
@@ -58,11 +113,9 @@ Public Class RadFVaccinInfo
         Dim patientDao As New PatientDao
         Dim StringAllergieToolTip As String = patientDao.GetStringAllergieByPatient(SelectedPatient.PatientId)
         If StringAllergieToolTip = "" Then
-            PatientAllergie = False
             LblAllergie.Hide()
             ListeDesMédicamentsDéclarésAllergiquesToolStripMenuItem.Enabled = False
         Else
-            PatientAllergie = True
             LblAllergie.Show()
             ToolTip.SetToolTip(LblAllergie, StringAllergieToolTip)
             ListeDesMédicamentsDéclarésAllergiquesToolStripMenuItem.Enabled = True
@@ -74,13 +127,28 @@ Public Class RadFVaccinInfo
         Dim StringContreIndicationToolTip As String = patientDao.GetStringContreIndicationByPatient(SelectedPatient.PatientId)
         If StringContreIndicationToolTip = "" Then
             LblContreIndication.Hide()
-            PatientContreIndication = False
             ListeDesMédicamentsDéclarésContreindiquésToolStripMenuItem.Enabled = False
         Else
             LblContreIndication.Show()
             ToolTip.SetToolTip(LblContreIndication, StringContreIndicationToolTip)
-            PatientContreIndication = True
             ListeDesMédicamentsDéclarésContreindiquésToolStripMenuItem.Enabled = True
         End If
+    End Sub
+
+    Private Sub GVVaccin_Click(sender As Object, ByVal e As GridViewCellEventArgs) Handles GVVaccin.CellClick
+        Me.Enabled = False
+        Cursor.Current = Cursors.WaitCursor
+        If e.RowIndex >= 0 AndAlso e.ColumnIndex >= 0 Then
+            Dim row As Integer = e.RowIndex
+            Dim valenceCol As Integer = e.ColumnIndex
+
+            If row >= 0 AndAlso valenceCol = 0 Then
+
+                GVVaccin.Rows(row).Cells("checked").Value = Not GVVaccin.Rows(row).Cells("checked").Value
+                ChargementValences()
+            End If
+        End If
+        Cursor.Current = Cursors.Default
+        Me.Enabled = True
     End Sub
 End Class
