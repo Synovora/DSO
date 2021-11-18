@@ -151,4 +151,10 @@ Public Class RadFVaccinInfo
         Cursor.Current = Cursors.Default
         Me.Enabled = True
     End Sub
+
+    Private Sub BtnAdminVaccin_Click(sender As Object, e As EventArgs) Handles BtnAdminVaccin.Click
+        Using radFVaccinInput As New RadFVaccinInput
+            radFVaccinInput.ShowDialog()
+        End Using
+    End Sub
 End Class
