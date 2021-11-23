@@ -698,8 +698,7 @@ Public Class RadFPatientListe
 
     Private Sub BtnRequest_Click(sender As Object, e As EventArgs) Handles BtnRequest.Click
         Try
-            Using form As New RadFPatientRequest
-
+            Using form As New RadFPatientRequestSelector
                 form.ShowDialog() 'Modal
             End Using
         Catch ex As Exception

@@ -330,6 +330,12 @@
     <Compile Include="Form\Patient\RadFPatientRequest.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="Form\Patient\RadFPatientRequestSelector.Designer.vb">
+      <DependentUpon>RadFPatientRequestSelector.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Form\Patient\RadFPatientRequestSelector.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Form\RendezVous\RadFListeIntervenantSansRDV.Designer.vb">
       <DependentUpon>RadFListeIntervenantSansRDV.vb</DependentUpon>
     </Compile>
@@ -1132,6 +1138,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Form\Patient\RadFPatientRequest.resx">
       <DependentUpon>RadFPatientRequest.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form\Patient\RadFPatientRequestSelector.resx">
+      <DependentUpon>RadFPatientRequestSelector.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Form\RendezVous\RadFListeIntervenantSansRDV.resx">
       <DependentUpon>RadFListeIntervenantSansRDV.vb</DependentUpon>
