@@ -558,7 +558,6 @@ Public Class AntecedentDao
 
         Dim SQLstring As String = "
         BEGIN TRANSACTION
-            DECLARE @AntecedentId bigint;
             INSERT into oasis.oa_antecedent (oa_antecedent_patient_id, oa_antecedent_type, oa_antecedent_drc_id, oa_antecedent_description,
                 oa_antecedent_date_creation, oa_antecedent_utilisateur_creation, oa_antecedent_utilisateur_modification, oa_antecedent_date_debut, oa_antecedent_niveau,
                 oa_antecedent_nature, oa_antecedent_statut_affichage, oa_antecedent_inactif, oa_antecedent_ordre_affichage1, oa_antecedent_ordre_affichage2,
@@ -569,7 +568,7 @@ Public Class AntecedentDao
                 VALUES (@patientId, @type, @drcId, @description, @dateCreation, @utilisateurCreation,
                 @utilisateurModification, @dateDebut, @niveau, @nature, @publication, @inactif, @ordreAffichage1, @ordreAffichage2, @ordreAffichage3, @diagnostic,
                 @aldId, @aldCim10Id, @aldValide, @aldDateDebut, @aldDateFin, @aldDemandeEnCours, @aldDateDemande, @chaineEpisodeDateFin);
-            SELECT @AntecedentId = SCOPE_IDENTITY();
+            SELECT SCOPE_IDENTITY();
         COMMIT"
 
         Dim con As SqlConnection = GetConnection()

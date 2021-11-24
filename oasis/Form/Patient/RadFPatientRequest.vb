@@ -118,12 +118,13 @@ Public Class RadFPatientRequest
         End If
     End Sub
 
-    Private Sub RadPatientGridView_DoubleClick(sender As Object, e As GridViewCellEventArgs) Handles RadPatientGridView.DoubleClick
-        If userLog.TypeProfil = ProfilDao.EnumProfilType.MEDICAL.ToString OrElse userLog.TypeProfil = ProfilDao.EnumProfilType.PARAMEDICAL.ToString Then
-            If e.RowIndex >= 0 Then
-                Dim row As Integer = e.RowIndex
+    Private Sub RadPatientGridView_DoubleClick(sender As Object, e As GridViewCellEventArgs) Handles RadPatientGridView.CellDoubleClick
+        Dim SelectedCell As GridDataCellElement = TryCast(sender, GridDataCellElement)
 
-                Dim patientId As Long = CLng(RadPatientGridView.Rows(row).Cells("oa_patient_id").Value)
+        If userLog.TypeProfil = ProfilDao.EnumProfilType.MEDICAL.ToString OrElse userLog.TypeProfil = ProfilDao.EnumProfilType.PARAMEDICAL.ToString Then
+            If SelectedCell IsNot Nothing Then
+
+                Dim patientId As Long = CLng(RadPatientGridView.Rows(SelectedCell.RowIndex).Cells("oa_patient_id").Value)
                 Cursor.Current = Cursors.WaitCursor
                 Me.Enabled = False
 
@@ -198,6 +199,7 @@ Public Class RadFPatientRequest
     End Sub
 
     Private Sub BtnDRC_Click(sender As Object, e As EventArgs) Handles BtnDRC.Click
+        Me.Enabled = False
         Cursor.Current = Cursors.WaitCursor
         Try
             Using vFDrcSelecteur As New RadFDRCSelecteur
@@ -210,6 +212,7 @@ Public Class RadFPatientRequest
         Catch ex As Exception
             MessageBox.Show(ex.Message)
         End Try
+        Me.Enabled = True
         Cursor.Current = Cursors.Default
     End Sub
 End Class

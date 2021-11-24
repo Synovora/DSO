@@ -38,10 +38,31 @@ Public Class RadFVaccinInfo
         For Each vaccin As VaccinValence In Vaccins.GroupBy(Function(x) x.Code).Select(Function(x) x.First).ToList
             GVVaccin.Rows.Add(iGrid)
             GVVaccin.Rows(iGrid).Cells("id").Value = vaccin.Id
-            'GVVaccin.Rows(iGrid).Cells("checked").Value = False
+            GVVaccin.Rows(iGrid).Cells("checked").Value = False
             GVVaccin.Rows(iGrid).Cells("dci").Value = vaccin.Dci
             GVVaccin.Rows(iGrid).Cells("valence").Value = vaccin.Valence
             iGrid += 1
+        Next
+
+        Cursor.Current = Cursors.Default
+        Me.Enabled = True
+    End Sub
+
+    Private Sub ColorVaccins()
+        Me.Enabled = False
+        Cursor.Current = Cursors.WaitCursor
+
+
+        For Each row As GridViewRowInfo In GVVaccin.Rows
+            If row.Cells("checked").Value = False Then
+                If GVValence.Rows.Any(Function(x) x.Cells("checked").Value = True AndAlso x.Cells("valence").Value = row.Cells("valence").Value) Then
+                    row.Cells("dci").Style.ForeColor = Color.Red
+                Else
+                    row.Cells("dci").Style.ForeColor = Color.Black
+                End If
+            Else
+                row.Cells("dci").Style.ForeColor = Color.Black
+            End If
         Next
 
         Cursor.Current = Cursors.Default
@@ -58,11 +79,12 @@ Public Class RadFVaccinInfo
         For Each valence As CGVValence In SelectedValences
             GVValence.Rows.Add(iGrid)
             GVValence.Rows(iGrid).Cells("id").Value = valence.Id
-            GVValence.Rows(iGrid).Cells("checked").Value = GVVaccin.Rows.Any(Function(x) x.Cells("valence").Value = valence.Valence.ToString())
+            GVValence.Rows(iGrid).Cells("valence").Value = valence.Valence
+            GVValence.Rows(iGrid).Cells("checked").Value = GVVaccin.Rows.Any(Function(x) x.Cells("checked").Value = True AndAlso x.Cells("valence").Value = valence.Valence.ToString())
             GVValence.Rows(iGrid).Cells("nom").Value = valence.Description
             iGrid += 1
         Next
-
+        ColorVaccins()
         Cursor.Current = Cursors.Default
         Me.Enabled = True
     End Sub
@@ -143,12 +165,24 @@ Public Class RadFVaccinInfo
             Dim valenceCol As Integer = e.ColumnIndex
 
             If row >= 0 AndAlso valenceCol = 0 Then
+                'If GVValence.Rows.Any(Function(x) x.Cells("checked").Value = True AndAlso x.Cells("valence").Value = GVVaccin.Rows(row).Cells("valence").Value) Then
+                'GVVaccin.Rows(row).Cells("dci").Style.ForeColor = Color.Red
 
                 GVVaccin.Rows(row).Cells("checked").Value = Not GVVaccin.Rows(row).Cells("checked").Value
-                ChargementValences()
-            End If
+                    GVVaccin.Refresh()
+                    GVVaccin.Update()
+                    ChargementValences()
+                    'End If
+                End If
         End If
         Cursor.Current = Cursors.Default
         Me.Enabled = True
+    End Sub
+
+    Private Sub BtnAdminVaccin_Click(sender As Object, e As EventArgs) Handles BtnAdminVaccin.Click
+        Using radFVaccinInput As New RadFVaccinInput
+            radFVaccinInput.Vaccins = Vaccins
+            radFVaccinInput.ShowDialog()
+        End Using
     End Sub
 End Class

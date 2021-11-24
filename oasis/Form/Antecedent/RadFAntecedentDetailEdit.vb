@@ -960,7 +960,7 @@ Public Class RadFAntecedentDetailEdit
     Private Function CreationAntecedent() As Boolean
         Dim codeRetour As Boolean = True
 
-        If AntecedentDao.CreationAntecedent(antecedentUpdate, userLog) = True Then
+        If AntecedentDao.CreationAntecedent(antecedentUpdate, userLog) <> 0 Then
             Dim form As New RadFNotification()
             form.Message = "Antécédent patient créé"
             form.Show()
