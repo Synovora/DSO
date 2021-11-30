@@ -272,4 +272,28 @@ Public Class VaccinDao
         Return vaccins
     End Function
 
+    Public Function getAll() As List(Of VaccinValence)
+        Dim con As SqlConnection = GetConnection()
+        Dim vaccins As List(Of VaccinValence) = New List(Of VaccinValence)
+
+        Try
+            Dim command As SqlCommand = con.CreateCommand()
+            command.CommandText = "SELECT * FROM [oasis].[oasis].[oa_vaccin] Vaccin " & vbCrLf &
+            "LEFT JOIN [oasis].[oasis].[oa_relation_vaccin_valence] RVV " & vbCrLf &
+            "ON RVV.vaccin=Vaccin.code WHERE RVV.id IS NOT NULL"
+
+            Using reader As SqlDataReader = command.ExecuteReader()
+                While (reader.Read())
+                    vaccins.Add(New VaccinValence(reader))
+                End While
+            End Using
+        Catch ex As Exception
+            Throw ex
+        Finally
+            con.Close()
+        End Try
+
+        Return vaccins
+    End Function
+
 End Class

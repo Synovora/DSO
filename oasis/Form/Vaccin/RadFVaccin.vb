@@ -535,8 +535,12 @@ Public Class RadFVaccin
         Dim aRow As Integer = Me.GridValence.Rows.IndexOf(Me.GridValence.CurrentRow)
         If aRow >= 0 Then
             Dim valenceId As String = GridValence.Rows(aRow).Cells("id").Value
-            valenceDao.Delete(New Valence() With {.Id = valenceId})
-            ChargementValence()
+            If valenceDao.GetRelationListByValence(valenceId).Count = 0 Then
+                valenceDao.Delete(New Valence() With {.Id = valenceId})
+                ChargementValence()
+            Else
+                MessageBox.Show("Cette valence a des relations avec un ou des vaccin(s)")
+            End If
         End If
     End Sub
 

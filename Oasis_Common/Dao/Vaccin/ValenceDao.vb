@@ -356,6 +356,31 @@ Public Class ValenceDao
         Return relations
     End Function
 
+    Public Function GetRelationListByValence(valenceId As Long) As List(Of RelationVaccinValence)
+        Dim con As SqlConnection = GetConnection()
+        Dim relations As List(Of RelationVaccinValence) = New List(Of RelationVaccinValence)
+
+        Try
+            Dim command As SqlCommand = con.CreateCommand()
+            command.CommandText = "SELECT * FROM oasis.oa_relation_vaccin_valence WHERE valence=@valenceId"
+
+            With command.Parameters
+                .AddWithValue("@valenceId", valenceId)
+            End With
+            Using reader As SqlDataReader = command.ExecuteReader()
+                While (reader.Read())
+                    relations.Add(New RelationVaccinValence(reader))
+                End While
+            End Using
+        Catch ex As Exception
+            Throw ex
+        Finally
+            con.Close()
+        End Try
+
+        Return relations
+    End Function
+
     Public Function GetRelationList() As List(Of RelationVaccinValence)
         Dim con As SqlConnection = GetConnection()
         Dim valences As List(Of RelationVaccinValence) = New List(Of RelationVaccinValence)

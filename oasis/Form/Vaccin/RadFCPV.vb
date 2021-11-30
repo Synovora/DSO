@@ -255,17 +255,17 @@ Public Class RadFCPV
     Private Sub BtnImport_Click(sender As Object, e As EventArgs) Handles BtnImport.Click
         Me.Enabled = False
         Cursor.Current = Cursors.WaitCursor
-        If (valences.Count = 0) Then
-            valences = cgvValenceDao.GetListFromPatient(0)
+        'If (valences.Count = 0) Then
+        valences = cgvValenceDao.GetListFromPatient(0)
             For Each valence As CGVValence In valences
                 Dim newValence = valence
                 newValence.Patient = Patient.PatientId
                 cgvValenceDao.Create(newValence)
             Next
             valences = cgvValenceDao.GetListFromPatient(Patient.PatientId)
-        End If
-        If (cgvDates.Count = 0) Then
-            cgvDates = cgvDateDao.GetListFromPatient(0)
+        'End If
+        'If (cgvDates.Count = 0) Then
+        cgvDates = cgvDateDao.GetListFromPatient(0)
             relations = cgvDateDao.GetRelationListFromPatient(0)
             For Each cgvDate As CGVDate In cgvDates
                 If relations.Any(Function(x) x.Date = cgvDate.Id) Then
@@ -275,7 +275,7 @@ Public Class RadFCPV
                 End If
             Next
             cgvDates = cgvDateDao.GetListFromPatient(Patient.PatientId)
-        End If
+        'End If
         relations = cgvDateDao.GetRelationListFromPatient(0)
         For Each relation As RelationValenceDate In relations
             Dim oldDate = cgvDateDao.GetById(relation.Date)

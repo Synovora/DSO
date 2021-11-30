@@ -15,11 +15,12 @@ Public Class RadFVaccinInfo
         For Each valences As CGVValence In SelectedValences
             valenceIds.Add(valences.Valence)
         Next
-        Vaccins = vaccinDao.getFromValences(valenceIds)
+        Vaccins = vaccinDao.getAll()
         ChargementEtatCivil()
         ChargementInformation()
         ChargementValences()
         ChargementVaccins()
+        ColorVaccins()
     End Sub
 
     Private Sub ChargementInformation()
@@ -36,12 +37,34 @@ Public Class RadFVaccinInfo
         Dim iGrid As Integer = 0
 
         For Each vaccin As VaccinValence In Vaccins.GroupBy(Function(x) x.Code).Select(Function(x) x.First).ToList
-            GVVaccin.Rows.Add(iGrid)
-            GVVaccin.Rows(iGrid).Cells("id").Value = vaccin.Id
-            GVVaccin.Rows(iGrid).Cells("checked").Value = False
-            GVVaccin.Rows(iGrid).Cells("dci").Value = vaccin.Dci
-            GVVaccin.Rows(iGrid).Cells("valence").Value = vaccin.Valence
-            iGrid += 1
+            If SelectedValences.Any(Function(x) x.Valence = vaccin.Valence) Then
+                GVVaccin.Rows.Add(iGrid)
+                GVVaccin.Rows(iGrid).Cells("id").Value = vaccin.Id
+                GVVaccin.Rows(iGrid).Cells("checked").Value = False
+                GVVaccin.Rows(iGrid).Cells("dci").Value = vaccin.Dci
+                GVVaccin.Rows(iGrid).Cells("valence").Value = vaccin.Valence
+                iGrid += 1
+            End If
+        Next
+
+        Cursor.Current = Cursors.Default
+        Me.Enabled = True
+    End Sub
+
+    Private Sub RefreshSelectedVaccin()
+        Me.Enabled = False
+        Cursor.Current = Cursors.WaitCursor
+
+        GVSelectedVaccin.Rows.Clear()
+        Dim iGrid As Integer = 0
+        For Each row As GridViewRowInfo In GVVaccin.Rows
+            If row.Cells("checked").Value = True Then
+                GVSelectedVaccin.Rows.Add(iGrid)
+                GVSelectedVaccin.Rows(iGrid).Cells("id").Value = row.Cells("id").Value
+                GVSelectedVaccin.Rows(iGrid).Cells("dci").Value = row.Cells("dci").Value
+                GVSelectedVaccin.Rows(iGrid).Cells("valence").Value = row.Cells("valence").Value
+                iGrid += 1
+            End If
         Next
 
         Cursor.Current = Cursors.Default
@@ -63,6 +86,12 @@ Public Class RadFVaccinInfo
             Else
                 row.Cells("dci").Style.ForeColor = Color.Black
             End If
+            If Vaccins.Any(Function(x) x.Id.ToString() = row.Cells("id").Value AndAlso Not SelectedValences.Any(Function(y) y.Valence = x.Valence)) Then
+                row.Cells("dci").Style.ForeColor = Color.Orange
+            End If
+            If Vaccins.Any(Function(x) x.Id.ToString() = row.Cells("id").Value AndAlso SelectedValences.All(Function(y) y.Valence = x.Valence)) Then
+                row.Cells("dci").Style.ForeColor = Color.Green
+            End If
         Next
 
         Cursor.Current = Cursors.Default
@@ -80,7 +109,7 @@ Public Class RadFVaccinInfo
             GVValence.Rows.Add(iGrid)
             GVValence.Rows(iGrid).Cells("id").Value = valence.Id
             GVValence.Rows(iGrid).Cells("valence").Value = valence.Valence
-            GVValence.Rows(iGrid).Cells("checked").Value = GVVaccin.Rows.Any(Function(x) x.Cells("checked").Value = True AndAlso x.Cells("valence").Value = valence.Valence.ToString())
+            GVValence.Rows(iGrid).Cells("checked").Value = GVVaccin.Rows.Any(Function(x) x.Cells("checked").Value = True AndAlso Vaccins.Any(Function(y) y.Id = x.Cells("id").Value AndAlso y.Valence.ToString() = valence.Valence.ToString()))
             GVValence.Rows(iGrid).Cells("nom").Value = valence.Description
             iGrid += 1
         Next
@@ -169,12 +198,15 @@ Public Class RadFVaccinInfo
                 'GVVaccin.Rows(row).Cells("dci").Style.ForeColor = Color.Red
 
                 GVVaccin.Rows(row).Cells("checked").Value = Not GVVaccin.Rows(row).Cells("checked").Value
-                    GVVaccin.Refresh()
-                    GVVaccin.Update()
-                    ChargementValences()
-                    'End If
-                End If
+                GVVaccin.Refresh()
+                GVVaccin.Update()
+                ChargementValences()
+                'End If
+            End If
         End If
+
+        RefreshSelectedVaccin()
+
         Cursor.Current = Cursors.Default
         Me.Enabled = True
     End Sub
