@@ -165,6 +165,8 @@ Public Class ValenceDao
         Dim dateCreation As Date = Date.Now.Date
 
         Dim SQLstring As String = "
+            DELETE FROM oasis.oa_vaccin_cgv_relation_valence_date WHERE valence=@id;
+            DELETE FROM oasis.oa_vaccin_cgv_valence WHERE valence=@id;
             DELETE FROM oasis.oa_relation_vaccin_valence WHERE valence=@id;
             DELETE FROM oasis.oa_valence WHERE id=@id;
         "

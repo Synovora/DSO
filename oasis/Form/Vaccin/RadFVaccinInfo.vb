@@ -1,4 +1,5 @@
 ﻿Imports Oasis_Common
+Imports Telerik.WinControls
 Imports Telerik.WinControls.UI
 
 Public Class RadFVaccinInfo
@@ -6,32 +7,38 @@ Public Class RadFVaccinInfo
     Property SelectedCGVDate As CGVDate
     Property SelectedValences As List(Of CGVValence)
     Property Vaccins As List(Of VaccinValence)
+    Property VaccinPrograms As List(Of VaccinProgramRelation)
 
     ReadOnly vaccinDao As New VaccinDao
+    ReadOnly cgvDateDao As New CGVDateDao
 
     Private Sub RadFATCListe_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         AfficheTitleForm(Me, "Vaccin - Information", userLog)
-        Dim valenceIds As List(Of Long) = New List(Of Long)
-        For Each valences As CGVValence In SelectedValences
-            valenceIds.Add(valences.Valence)
-        Next
-        Vaccins = vaccinDao.getAll()
         ChargementEtatCivil()
         ChargementInformation()
-        ChargementValences()
         ChargementVaccins()
+        ChargementValences()
+        RefreshSelectedVaccin()
         ColorVaccins()
     End Sub
 
     Private Sub ChargementInformation()
         LblAgeVaccination.Text = CGVDate.DaysToDate(SelectedCGVDate.Days)
-        LblDate.Text = Date.Now
         LblOperator.Text = GetProfilUserString(userLog)
+        Dim valenceIds As List(Of Long) = New List(Of Long)
+        For Each valences As CGVValence In SelectedValences
+            valenceIds.Add(valences.Valence)
+        Next
+        Vaccins = vaccinDao.getAll()
+        DTPDate.Value = If(SelectedCGVDate.OperatedDate = Nothing, Date.Now(), SelectedCGVDate.OperatedDate)
+        LblOperator.Text = Coalesce(SelectedCGVDate.OperatedBy, userLog.UtilisateurId)
     End Sub
 
     Private Sub ChargementVaccins()
         Me.Enabled = False
         Cursor.Current = Cursors.WaitCursor
+
+        VaccinPrograms = vaccinDao.GetVaccinProgramRelationListDatePatient(SelectedCGVDate.Id, SelectedPatient.PatientId)
 
         GVVaccin.Rows.Clear()
         Dim iGrid As Integer = 0
@@ -40,8 +47,9 @@ Public Class RadFVaccinInfo
             If SelectedValences.Any(Function(x) x.Valence = vaccin.Valence) Then
                 GVVaccin.Rows.Add(iGrid)
                 GVVaccin.Rows(iGrid).Cells("id").Value = vaccin.Id
-                GVVaccin.Rows(iGrid).Cells("checked").Value = False
+                GVVaccin.Rows(iGrid).Cells("checked").Value = VaccinPrograms.Any(Function(x) x.Vaccin = vaccin.Id)
                 GVVaccin.Rows(iGrid).Cells("dci").Value = vaccin.Dci
+                GVVaccin.Rows(iGrid).Cells("dci").Tag = Vaccins.FindAll(Function(x) x.Code = vaccin.Code AndAlso SelectedValences.Any(Function(y) y.Valence = x.Valence)).Count()
                 GVVaccin.Rows(iGrid).Cells("valence").Value = vaccin.Valence
                 iGrid += 1
             End If
@@ -66,7 +74,6 @@ Public Class RadFVaccinInfo
                 iGrid += 1
             End If
         Next
-
         Cursor.Current = Cursors.Default
         Me.Enabled = True
     End Sub
@@ -77,20 +84,26 @@ Public Class RadFVaccinInfo
 
 
         For Each row As GridViewRowInfo In GVVaccin.Rows
+            'If row.Cells("checked").Value = False Then
+            '    If GVValence.Rows.Any(Function(x) x.Cells("checked").Value = True AndAlso x.Cells("valence").Value = row.Cells("valence").Value) Then
+            '        row.Cells("dci").Style.ForeColor = Color.Red
+            '    Else
+            '        row.Cells("dci").Style.ForeColor = Color.Black
+            '    End If
+            'Else
+            row.Cells("dci").Style.ForeColor = Color.Black
+            row.Cells("dci").Style.BackColor = Color.White
             If row.Cells("checked").Value = False Then
+                If Vaccins.Any(Function(x) x.Id.ToString() = row.Cells("id").Value AndAlso Not SelectedValences.Any(Function(y) y.Valence = x.Valence)) Then
+                    row.Cells("dci").Style.ForeColor = Color.Orange
+                End If
+                If Vaccins.FindAll(Function(x) x.Id.ToString() = row.Cells("id").Value AndAlso SelectedValences.Any(Function(y) y.Valence = x.Valence)).Count = SelectedValences.Count Then
+                    row.Cells("dci").Style.ForeColor = Color.Green
+                End If
                 If GVValence.Rows.Any(Function(x) x.Cells("checked").Value = True AndAlso x.Cells("valence").Value = row.Cells("valence").Value) Then
                     row.Cells("dci").Style.ForeColor = Color.Red
-                Else
-                    row.Cells("dci").Style.ForeColor = Color.Black
+                    row.Cells("dci").Style.BackColor = Color.Gray
                 End If
-            Else
-                row.Cells("dci").Style.ForeColor = Color.Black
-            End If
-            If Vaccins.Any(Function(x) x.Id.ToString() = row.Cells("id").Value AndAlso Not SelectedValences.Any(Function(y) y.Valence = x.Valence)) Then
-                row.Cells("dci").Style.ForeColor = Color.Orange
-            End If
-            If Vaccins.Any(Function(x) x.Id.ToString() = row.Cells("id").Value AndAlso SelectedValences.All(Function(y) y.Valence = x.Valence)) Then
-                row.Cells("dci").Style.ForeColor = Color.Green
             End If
         Next
 
@@ -187,22 +200,24 @@ Public Class RadFVaccinInfo
     End Sub
 
     Private Sub GVVaccin_Click(sender As Object, ByVal e As GridViewCellEventArgs) Handles GVVaccin.CellClick
-        Me.Enabled = False
-        Cursor.Current = Cursors.WaitCursor
-        If e.RowIndex >= 0 AndAlso e.ColumnIndex >= 0 Then
-            Dim row As Integer = e.RowIndex
-            Dim valenceCol As Integer = e.ColumnIndex
+        Dim row As Integer = e.RowIndex
+        Dim valenceCol As Integer = e.ColumnIndex
 
-            If row >= 0 AndAlso valenceCol = 0 Then
-                'If GVValence.Rows.Any(Function(x) x.Cells("checked").Value = True AndAlso x.Cells("valence").Value = GVVaccin.Rows(row).Cells("valence").Value) Then
-                'GVVaccin.Rows(row).Cells("dci").Style.ForeColor = Color.Red
-
-                GVVaccin.Rows(row).Cells("checked").Value = Not GVVaccin.Rows(row).Cells("checked").Value
-                GVVaccin.Refresh()
-                GVVaccin.Update()
-                ChargementValences()
-                'End If
+        If row >= 0 AndAlso valenceCol = 0 Then
+            If GVVaccin.Rows(row).Cells("checked").Value Then
+                Me.Enabled = False
+                Cursor.Current = Cursors.WaitCursor
+                vaccinDao.DeleteVaccinProgramRelation(New VaccinProgramRelation() With {.Date = SelectedCGVDate.Id, .Vaccin = GVVaccin.Rows(row).Cells("id").Value, .Patient = SelectedPatient.PatientId})
+            ElseIf Not GVValence.Rows.Any(Function(x) x.Cells("checked").Value = True AndAlso x.Cells("valence").Value = GVVaccin.Rows(row).Cells("valence").Value) Then
+                Me.Enabled = False
+                Cursor.Current = Cursors.WaitCursor
+                vaccinDao.CreateVaccinProgramRelation(New VaccinProgramRelation() With {.Date = SelectedCGVDate.Id, .Vaccin = GVVaccin.Rows(row).Cells("id").Value, .Patient = SelectedPatient.PatientId})
+            Else Return
             End If
+            GVVaccin.Refresh()
+            GVVaccin.Update()
+            ChargementVaccins()
+            ChargementValences()
         End If
 
         RefreshSelectedVaccin()
@@ -216,5 +231,22 @@ Public Class RadFVaccinInfo
             radFVaccinInput.Vaccins = Vaccins
             radFVaccinInput.ShowDialog()
         End Using
+    End Sub
+
+    Private Sub GVVaccin_ToolTipTextNeeded(sender As Object, e As ToolTipTextNeededEventArgs) Handles GVVaccin.ToolTipTextNeeded
+        Dim hoveredCell As GridDataCellElement = TryCast(sender, GridDataCellElement)
+        If hoveredCell IsNot Nothing AndAlso hoveredCell.ColumnInfo.Name = "dci" Then
+            e.ToolTipText = hoveredCell.RowInfo.Cells("dci").Tag
+        End If
+    End Sub
+
+    Private Sub BtnValidationProgram_Click(sender As Object, e As EventArgs) Handles BtnValidationProgram.Click
+        SelectedCGVDate.OperatedBy = userLog.UtilisateurId
+        cgvDateDao.Update(SelectedCGVDate)
+        Close()
+    End Sub
+
+    Private Sub DTPDate_ValueChanged(sender As Object, e As EventArgs) Handles DTPDate.ValueChanged
+        SelectedCGVDate.OperatedDate = DTPDate.Value
     End Sub
 End Class
