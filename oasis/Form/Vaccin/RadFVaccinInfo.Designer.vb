@@ -23,30 +23,37 @@ Partial Class RadFVaccinInfo
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
         Me.components = New System.ComponentModel.Container()
-        Dim GridViewCheckBoxColumn5 As Telerik.WinControls.UI.GridViewCheckBoxColumn = New Telerik.WinControls.UI.GridViewCheckBoxColumn()
-        Dim GridViewTextBoxColumn21 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
-        Dim GridViewTextBoxColumn22 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
-        Dim GridViewTextBoxColumn23 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
-        Dim SortDescriptor7 As Telerik.WinControls.Data.SortDescriptor = New Telerik.WinControls.Data.SortDescriptor()
-        Dim TableViewDefinition7 As Telerik.WinControls.UI.TableViewDefinition = New Telerik.WinControls.UI.TableViewDefinition()
-        Dim GridViewCheckBoxColumn6 As Telerik.WinControls.UI.GridViewCheckBoxColumn = New Telerik.WinControls.UI.GridViewCheckBoxColumn()
-        Dim GridViewTextBoxColumn24 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
-        Dim GridViewTextBoxColumn25 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
-        Dim GridViewTextBoxColumn26 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
-        Dim GridViewTextBoxColumn27 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
-        Dim SortDescriptor8 As Telerik.WinControls.Data.SortDescriptor = New Telerik.WinControls.Data.SortDescriptor()
-        Dim TableViewDefinition8 As Telerik.WinControls.UI.TableViewDefinition = New Telerik.WinControls.UI.TableViewDefinition()
-        Dim GridViewTextBoxColumn28 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
-        Dim GridViewTextBoxColumn29 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
-        Dim GridViewTextBoxColumn30 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
-        Dim SortDescriptor9 As Telerik.WinControls.Data.SortDescriptor = New Telerik.WinControls.Data.SortDescriptor()
-        Dim TableViewDefinition9 As Telerik.WinControls.UI.TableViewDefinition = New Telerik.WinControls.UI.TableViewDefinition()
+        Dim GridViewCheckBoxColumn1 As Telerik.WinControls.UI.GridViewCheckBoxColumn = New Telerik.WinControls.UI.GridViewCheckBoxColumn()
+        Dim GridViewTextBoxColumn1 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
+        Dim GridViewTextBoxColumn2 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
+        Dim GridViewTextBoxColumn3 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
+        Dim SortDescriptor1 As Telerik.WinControls.Data.SortDescriptor = New Telerik.WinControls.Data.SortDescriptor()
+        Dim TableViewDefinition1 As Telerik.WinControls.UI.TableViewDefinition = New Telerik.WinControls.UI.TableViewDefinition()
+        Dim GridViewCheckBoxColumn2 As Telerik.WinControls.UI.GridViewCheckBoxColumn = New Telerik.WinControls.UI.GridViewCheckBoxColumn()
+        Dim GridViewTextBoxColumn4 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
+        Dim GridViewTextBoxColumn5 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
+        Dim GridViewTextBoxColumn6 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
+        Dim GridViewTextBoxColumn7 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
+        Dim SortDescriptor2 As Telerik.WinControls.Data.SortDescriptor = New Telerik.WinControls.Data.SortDescriptor()
+        Dim TableViewDefinition2 As Telerik.WinControls.UI.TableViewDefinition = New Telerik.WinControls.UI.TableViewDefinition()
+        Dim GridViewTextBoxColumn8 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
+        Dim GridViewTextBoxColumn9 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
+        Dim GridViewTextBoxColumn10 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
+        Dim SortDescriptor3 As Telerik.WinControls.Data.SortDescriptor = New Telerik.WinControls.Data.SortDescriptor()
+        Dim TableViewDefinition3 As Telerik.WinControls.UI.TableViewDefinition = New Telerik.WinControls.UI.TableViewDefinition()
+        Dim GridViewCheckBoxColumn3 As Telerik.WinControls.UI.GridViewCheckBoxColumn = New Telerik.WinControls.UI.GridViewCheckBoxColumn()
+        Dim GridViewTextBoxColumn11 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
+        Dim GridViewTextBoxColumn12 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
+        Dim GridViewTextBoxColumn13 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
+        Dim SortDescriptor4 As Telerik.WinControls.Data.SortDescriptor = New Telerik.WinControls.Data.SortDescriptor()
+        Dim TableViewDefinition4 As Telerik.WinControls.UI.TableViewDefinition = New Telerik.WinControls.UI.TableViewDefinition()
         Me.GVValence = New Telerik.WinControls.UI.RadGridView()
         Me.GVVaccin = New Telerik.WinControls.UI.RadGridView()
         Me.BtnValidationProgram = New Telerik.WinControls.UI.RadButton()
         Me.BtnPrintOrdo = New Telerik.WinControls.UI.RadButton()
         Me.BtnAdminVaccin = New Telerik.WinControls.UI.RadButton()
         Me.RadGroupBox1 = New Telerik.WinControls.UI.RadGroupBox()
+        Me.DTPDate = New System.Windows.Forms.DateTimePicker()
         Me.LblOperator = New System.Windows.Forms.Label()
         Me.LabelStaticOperator = New System.Windows.Forms.Label()
         Me.LabelStaticDate = New System.Windows.Forms.Label()
@@ -85,7 +92,9 @@ Partial Class RadFVaccinInfo
         Me.ListeDesMédicamentsDéclarésContreindiquésToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.GVSelectedVaccin = New Telerik.WinControls.UI.RadGridView()
         Me.Label3 = New System.Windows.Forms.Label()
-        Me.DTPDate = New System.Windows.Forms.DateTimePicker()
+        Me.Label4 = New System.Windows.Forms.Label()
+        Me.Label6 = New System.Windows.Forms.Label()
+        Me.GVValenceNonRequis = New Telerik.WinControls.UI.RadGridView()
         CType(Me.GVValence, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.GVValence.MasterTemplate, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.GVVaccin, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -102,6 +111,8 @@ Partial Class RadFVaccinInfo
         Me.TraitementContextMenuStrip.SuspendLayout()
         CType(Me.GVSelectedVaccin, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.GVSelectedVaccin.MasterTemplate, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.GVValenceNonRequis, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.GVValenceNonRequis.MasterTemplate, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
@@ -112,39 +123,39 @@ Partial Class RadFVaccinInfo
         Me.GVValence.Font = New System.Drawing.Font("Segoe UI", 8.25!)
         Me.GVValence.ForeColor = System.Drawing.Color.Black
         Me.GVValence.ImeMode = System.Windows.Forms.ImeMode.NoControl
-        Me.GVValence.Location = New System.Drawing.Point(742, 56)
+        Me.GVValence.Location = New System.Drawing.Point(742, 79)
         '
         '
         '
-        GridViewCheckBoxColumn5.EnableExpressionEditor = False
-        GridViewCheckBoxColumn5.MinWidth = 20
-        GridViewCheckBoxColumn5.Name = "checked"
-        GridViewCheckBoxColumn5.ReadOnly = True
-        GridViewTextBoxColumn21.EnableExpressionEditor = False
-        GridViewTextBoxColumn21.HeaderText = "Nom"
-        GridViewTextBoxColumn21.Name = "nom"
-        GridViewTextBoxColumn21.ReadOnly = True
-        GridViewTextBoxColumn21.Width = 180
-        GridViewTextBoxColumn22.EnableExpressionEditor = False
-        GridViewTextBoxColumn22.HeaderText = "id"
-        GridViewTextBoxColumn22.IsVisible = False
-        GridViewTextBoxColumn22.Name = "id"
-        GridViewTextBoxColumn23.EnableExpressionEditor = False
-        GridViewTextBoxColumn23.HeaderText = "valence"
-        GridViewTextBoxColumn23.IsVisible = False
-        GridViewTextBoxColumn23.Name = "valence"
-        GridViewTextBoxColumn23.ReadOnly = True
-        GridViewTextBoxColumn23.SortOrder = Telerik.WinControls.UI.RadSortOrder.Ascending
-        Me.GVValence.MasterTemplate.Columns.AddRange(New Telerik.WinControls.UI.GridViewDataColumn() {GridViewCheckBoxColumn5, GridViewTextBoxColumn21, GridViewTextBoxColumn22, GridViewTextBoxColumn23})
+        GridViewCheckBoxColumn1.EnableExpressionEditor = False
+        GridViewCheckBoxColumn1.MinWidth = 20
+        GridViewCheckBoxColumn1.Name = "checked"
+        GridViewCheckBoxColumn1.ReadOnly = True
+        GridViewTextBoxColumn1.EnableExpressionEditor = False
+        GridViewTextBoxColumn1.HeaderText = "Nom"
+        GridViewTextBoxColumn1.Name = "nom"
+        GridViewTextBoxColumn1.ReadOnly = True
+        GridViewTextBoxColumn1.Width = 180
+        GridViewTextBoxColumn2.EnableExpressionEditor = False
+        GridViewTextBoxColumn2.HeaderText = "id"
+        GridViewTextBoxColumn2.IsVisible = False
+        GridViewTextBoxColumn2.Name = "id"
+        GridViewTextBoxColumn3.EnableExpressionEditor = False
+        GridViewTextBoxColumn3.HeaderText = "valence"
+        GridViewTextBoxColumn3.IsVisible = False
+        GridViewTextBoxColumn3.Name = "valence"
+        GridViewTextBoxColumn3.ReadOnly = True
+        GridViewTextBoxColumn3.SortOrder = Telerik.WinControls.UI.RadSortOrder.Ascending
+        Me.GVValence.MasterTemplate.Columns.AddRange(New Telerik.WinControls.UI.GridViewDataColumn() {GridViewCheckBoxColumn1, GridViewTextBoxColumn1, GridViewTextBoxColumn2, GridViewTextBoxColumn3})
         Me.GVValence.MasterTemplate.ReadOnly = True
         Me.GVValence.MasterTemplate.ShowRowHeaderColumn = False
-        SortDescriptor7.PropertyName = "valence"
-        Me.GVValence.MasterTemplate.SortDescriptors.AddRange(New Telerik.WinControls.Data.SortDescriptor() {SortDescriptor7})
-        Me.GVValence.MasterTemplate.ViewDefinition = TableViewDefinition7
+        SortDescriptor1.PropertyName = "valence"
+        Me.GVValence.MasterTemplate.SortDescriptors.AddRange(New Telerik.WinControls.Data.SortDescriptor() {SortDescriptor1})
+        Me.GVValence.MasterTemplate.ViewDefinition = TableViewDefinition1
         Me.GVValence.Name = "GVValence"
         Me.GVValence.RightToLeft = System.Windows.Forms.RightToLeft.No
         Me.GVValence.ShowGroupPanel = False
-        Me.GVValence.Size = New System.Drawing.Size(270, 596)
+        Me.GVValence.Size = New System.Drawing.Size(270, 376)
         Me.GVValence.TabIndex = 0
         '
         'GVVaccin
@@ -160,32 +171,32 @@ Partial Class RadFVaccinInfo
         '
         Me.GVVaccin.MasterTemplate.AllowAddNewRow = False
         Me.GVVaccin.MasterTemplate.AllowDeleteRow = False
-        GridViewCheckBoxColumn6.EnableExpressionEditor = False
-        GridViewCheckBoxColumn6.MinWidth = 20
-        GridViewCheckBoxColumn6.Name = "checked"
-        GridViewTextBoxColumn24.EnableExpressionEditor = False
-        GridViewTextBoxColumn24.HeaderText = "Categorie"
-        GridViewTextBoxColumn24.Name = "category"
-        GridViewTextBoxColumn24.Width = 80
-        GridViewTextBoxColumn25.EnableExpressionEditor = False
-        GridViewTextBoxColumn25.HeaderText = "Vaccins"
-        GridViewTextBoxColumn25.Name = "dci"
-        GridViewTextBoxColumn25.Width = 500
-        GridViewTextBoxColumn26.EnableExpressionEditor = False
-        GridViewTextBoxColumn26.HeaderText = "id"
-        GridViewTextBoxColumn26.IsVisible = False
-        GridViewTextBoxColumn26.Name = "id"
-        GridViewTextBoxColumn27.EnableExpressionEditor = False
-        GridViewTextBoxColumn27.HeaderText = "valence"
-        GridViewTextBoxColumn27.IsVisible = False
-        GridViewTextBoxColumn27.Name = "valence"
-        Me.GVVaccin.MasterTemplate.Columns.AddRange(New Telerik.WinControls.UI.GridViewDataColumn() {GridViewCheckBoxColumn6, GridViewTextBoxColumn24, GridViewTextBoxColumn25, GridViewTextBoxColumn26, GridViewTextBoxColumn27})
+        GridViewCheckBoxColumn2.EnableExpressionEditor = False
+        GridViewCheckBoxColumn2.MinWidth = 20
+        GridViewCheckBoxColumn2.Name = "checked"
+        GridViewTextBoxColumn4.EnableExpressionEditor = False
+        GridViewTextBoxColumn4.HeaderText = "Categorie"
+        GridViewTextBoxColumn4.Name = "category"
+        GridViewTextBoxColumn4.Width = 80
+        GridViewTextBoxColumn5.EnableExpressionEditor = False
+        GridViewTextBoxColumn5.HeaderText = "Vaccins"
+        GridViewTextBoxColumn5.Name = "dci"
+        GridViewTextBoxColumn5.Width = 500
+        GridViewTextBoxColumn6.EnableExpressionEditor = False
+        GridViewTextBoxColumn6.HeaderText = "id"
+        GridViewTextBoxColumn6.IsVisible = False
+        GridViewTextBoxColumn6.Name = "id"
+        GridViewTextBoxColumn7.EnableExpressionEditor = False
+        GridViewTextBoxColumn7.HeaderText = "valence"
+        GridViewTextBoxColumn7.IsVisible = False
+        GridViewTextBoxColumn7.Name = "valence"
+        Me.GVVaccin.MasterTemplate.Columns.AddRange(New Telerik.WinControls.UI.GridViewDataColumn() {GridViewCheckBoxColumn2, GridViewTextBoxColumn4, GridViewTextBoxColumn5, GridViewTextBoxColumn6, GridViewTextBoxColumn7})
         Me.GVVaccin.MasterTemplate.EnableGrouping = False
         Me.GVVaccin.MasterTemplate.EnableSorting = False
         Me.GVVaccin.MasterTemplate.ShowRowHeaderColumn = False
-        SortDescriptor8.PropertyName = "vaccin"
-        Me.GVVaccin.MasterTemplate.SortDescriptors.AddRange(New Telerik.WinControls.Data.SortDescriptor() {SortDescriptor8})
-        Me.GVVaccin.MasterTemplate.ViewDefinition = TableViewDefinition8
+        SortDescriptor2.PropertyName = "vaccin"
+        Me.GVVaccin.MasterTemplate.SortDescriptors.AddRange(New Telerik.WinControls.Data.SortDescriptor() {SortDescriptor2})
+        Me.GVVaccin.MasterTemplate.ViewDefinition = TableViewDefinition2
         Me.GVVaccin.Name = "GVVaccin"
         Me.GVVaccin.ReadOnly = True
         Me.GVVaccin.RightToLeft = System.Windows.Forms.RightToLeft.No
@@ -229,6 +240,13 @@ Partial Class RadFVaccinInfo
         Me.RadGroupBox1.Name = "RadGroupBox1"
         Me.RadGroupBox1.Size = New System.Drawing.Size(701, 75)
         Me.RadGroupBox1.TabIndex = 5
+        '
+        'DTPDate
+        '
+        Me.DTPDate.Location = New System.Drawing.Point(79, 15)
+        Me.DTPDate.Name = "DTPDate"
+        Me.DTPDate.Size = New System.Drawing.Size(200, 20)
+        Me.DTPDate.TabIndex = 4
         '
         'LblOperator
         '
@@ -561,25 +579,25 @@ Partial Class RadFVaccinInfo
         '
         Me.GVSelectedVaccin.MasterTemplate.AllowAddNewRow = False
         Me.GVSelectedVaccin.MasterTemplate.AllowDeleteRow = False
-        GridViewTextBoxColumn28.EnableExpressionEditor = False
-        GridViewTextBoxColumn28.HeaderText = "Vaccins"
-        GridViewTextBoxColumn28.Name = "dci"
-        GridViewTextBoxColumn28.Width = 500
-        GridViewTextBoxColumn29.EnableExpressionEditor = False
-        GridViewTextBoxColumn29.HeaderText = "id"
-        GridViewTextBoxColumn29.IsVisible = False
-        GridViewTextBoxColumn29.Name = "id"
-        GridViewTextBoxColumn30.EnableExpressionEditor = False
-        GridViewTextBoxColumn30.HeaderText = "valence"
-        GridViewTextBoxColumn30.IsVisible = False
-        GridViewTextBoxColumn30.Name = "valence"
-        Me.GVSelectedVaccin.MasterTemplate.Columns.AddRange(New Telerik.WinControls.UI.GridViewDataColumn() {GridViewTextBoxColumn28, GridViewTextBoxColumn29, GridViewTextBoxColumn30})
+        GridViewTextBoxColumn8.EnableExpressionEditor = False
+        GridViewTextBoxColumn8.HeaderText = "Vaccins"
+        GridViewTextBoxColumn8.Name = "dci"
+        GridViewTextBoxColumn8.Width = 500
+        GridViewTextBoxColumn9.EnableExpressionEditor = False
+        GridViewTextBoxColumn9.HeaderText = "id"
+        GridViewTextBoxColumn9.IsVisible = False
+        GridViewTextBoxColumn9.Name = "id"
+        GridViewTextBoxColumn10.EnableExpressionEditor = False
+        GridViewTextBoxColumn10.HeaderText = "valence"
+        GridViewTextBoxColumn10.IsVisible = False
+        GridViewTextBoxColumn10.Name = "valence"
+        Me.GVSelectedVaccin.MasterTemplate.Columns.AddRange(New Telerik.WinControls.UI.GridViewDataColumn() {GridViewTextBoxColumn8, GridViewTextBoxColumn9, GridViewTextBoxColumn10})
         Me.GVSelectedVaccin.MasterTemplate.EnableGrouping = False
         Me.GVSelectedVaccin.MasterTemplate.EnableSorting = False
         Me.GVSelectedVaccin.MasterTemplate.ShowRowHeaderColumn = False
-        SortDescriptor9.PropertyName = "vaccin"
-        Me.GVSelectedVaccin.MasterTemplate.SortDescriptors.AddRange(New Telerik.WinControls.Data.SortDescriptor() {SortDescriptor9})
-        Me.GVSelectedVaccin.MasterTemplate.ViewDefinition = TableViewDefinition9
+        SortDescriptor3.PropertyName = "vaccin"
+        Me.GVSelectedVaccin.MasterTemplate.SortDescriptors.AddRange(New Telerik.WinControls.Data.SortDescriptor() {SortDescriptor3})
+        Me.GVSelectedVaccin.MasterTemplate.ViewDefinition = TableViewDefinition3
         Me.GVSelectedVaccin.Name = "GVSelectedVaccin"
         Me.GVSelectedVaccin.ReadOnly = True
         Me.GVSelectedVaccin.RightToLeft = System.Windows.Forms.RightToLeft.No
@@ -596,18 +614,75 @@ Partial Class RadFVaccinInfo
         Me.Label3.TabIndex = 38
         Me.Label3.Text = "Vaccins selectionnes:"
         '
-        'DTPDate
+        'Label4
         '
-        Me.DTPDate.Location = New System.Drawing.Point(79, 15)
-        Me.DTPDate.Name = "DTPDate"
-        Me.DTPDate.Size = New System.Drawing.Size(200, 22)
-        Me.DTPDate.TabIndex = 4
+        Me.Label4.AutoSize = True
+        Me.Label4.Location = New System.Drawing.Point(742, 462)
+        Me.Label4.Name = "Label4"
+        Me.Label4.Size = New System.Drawing.Size(197, 13)
+        Me.Label4.TabIndex = 41
+        Me.Label4.Text = "Valences non requises selectionnees:"
+        '
+        'Label6
+        '
+        Me.Label6.AutoSize = True
+        Me.Label6.Location = New System.Drawing.Point(742, 58)
+        Me.Label6.Name = "Label6"
+        Me.Label6.Size = New System.Drawing.Size(54, 13)
+        Me.Label6.TabIndex = 42
+        Me.Label6.Text = "Valences:"
+        '
+        'GVValenceNonRequis
+        '
+        Me.GVValenceNonRequis.BackColor = System.Drawing.Color.FromArgb(CType(CType(191, Byte), Integer), CType(CType(219, Byte), Integer), CType(CType(255, Byte), Integer))
+        Me.GVValenceNonRequis.Cursor = System.Windows.Forms.Cursors.Default
+        Me.GVValenceNonRequis.Font = New System.Drawing.Font("Segoe UI", 8.25!)
+        Me.GVValenceNonRequis.ForeColor = System.Drawing.Color.Black
+        Me.GVValenceNonRequis.ImeMode = System.Windows.Forms.ImeMode.NoControl
+        Me.GVValenceNonRequis.Location = New System.Drawing.Point(742, 484)
+        '
+        '
+        '
+        GridViewCheckBoxColumn3.EnableExpressionEditor = False
+        GridViewCheckBoxColumn3.IsVisible = False
+        GridViewCheckBoxColumn3.MinWidth = 20
+        GridViewCheckBoxColumn3.Name = "checked"
+        GridViewCheckBoxColumn3.ReadOnly = True
+        GridViewTextBoxColumn11.EnableExpressionEditor = False
+        GridViewTextBoxColumn11.HeaderText = "Nom"
+        GridViewTextBoxColumn11.Name = "name"
+        GridViewTextBoxColumn11.ReadOnly = True
+        GridViewTextBoxColumn11.Width = 180
+        GridViewTextBoxColumn12.EnableExpressionEditor = False
+        GridViewTextBoxColumn12.HeaderText = "id"
+        GridViewTextBoxColumn12.IsVisible = False
+        GridViewTextBoxColumn12.Name = "id"
+        GridViewTextBoxColumn13.EnableExpressionEditor = False
+        GridViewTextBoxColumn13.HeaderText = "valence"
+        GridViewTextBoxColumn13.IsVisible = False
+        GridViewTextBoxColumn13.Name = "valence"
+        GridViewTextBoxColumn13.ReadOnly = True
+        GridViewTextBoxColumn13.SortOrder = Telerik.WinControls.UI.RadSortOrder.Ascending
+        Me.GVValenceNonRequis.MasterTemplate.Columns.AddRange(New Telerik.WinControls.UI.GridViewDataColumn() {GridViewCheckBoxColumn3, GridViewTextBoxColumn11, GridViewTextBoxColumn12, GridViewTextBoxColumn13})
+        Me.GVValenceNonRequis.MasterTemplate.ReadOnly = True
+        Me.GVValenceNonRequis.MasterTemplate.ShowRowHeaderColumn = False
+        SortDescriptor4.PropertyName = "valence"
+        Me.GVValenceNonRequis.MasterTemplate.SortDescriptors.AddRange(New Telerik.WinControls.Data.SortDescriptor() {SortDescriptor4})
+        Me.GVValenceNonRequis.MasterTemplate.ViewDefinition = TableViewDefinition4
+        Me.GVValenceNonRequis.Name = "GVValenceNonRequis"
+        Me.GVValenceNonRequis.RightToLeft = System.Windows.Forms.RightToLeft.No
+        Me.GVValenceNonRequis.ShowGroupPanel = False
+        Me.GVValenceNonRequis.Size = New System.Drawing.Size(270, 168)
+        Me.GVValenceNonRequis.TabIndex = 1
         '
         'RadFVaccinInfo
         '
-        Me.AutoScaleDimensions = New System.Drawing.SizeF(8.0!, 16.0!)
+        Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(1025, 694)
+        Me.Controls.Add(Me.GVValenceNonRequis)
+        Me.Controls.Add(Me.Label6)
+        Me.Controls.Add(Me.Label4)
         Me.Controls.Add(Me.legend)
         Me.Controls.Add(Me.Label3)
         Me.Controls.Add(Me.GVSelectedVaccin)
@@ -647,6 +722,8 @@ Partial Class RadFVaccinInfo
         Me.TraitementContextMenuStrip.ResumeLayout(False)
         CType(Me.GVSelectedVaccin.MasterTemplate, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.GVSelectedVaccin, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.GVValenceNonRequis.MasterTemplate, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.GVValenceNonRequis, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
         Me.PerformLayout()
@@ -698,5 +775,8 @@ Partial Class RadFVaccinInfo
     Friend WithEvents Label3 As Label
     Friend WithEvents legend As Label
     Friend WithEvents DTPDate As DateTimePicker
+    Friend WithEvents Label4 As Label
+    Friend WithEvents Label6 As Label
+    Friend WithEvents GVValenceNonRequis As Telerik.WinControls.UI.RadGridView
 End Class
 

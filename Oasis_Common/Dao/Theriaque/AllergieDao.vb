@@ -1,5 +1,5 @@
 ﻿Imports System.Data.SqlClient
-Imports Oasis_Common
+
 Public Class AllergieDao
     Inherits StandardDao
 
@@ -32,19 +32,19 @@ Public Class AllergieDao
     End Function
 
     Private Function BuildBean(reader As SqlDataReader) As Allergie
-        Dim allergie As New Allergie
-
-        allergie.AllergieId = reader("allergie_id")
-        allergie.PatientId = Coalesce(reader("patient_id"), 0)
-        allergie.SubstanceId = Coalesce(reader("substance_id"), 0)
-        allergie.SubstancePereId = Coalesce(reader("substance_pere_id"), 0)
-        allergie.DenominationSubstance = Coalesce(reader("denomination_substance"), "")
-        allergie.DenominationSubstancePere = Coalesce(reader("denomination_substance_pere"), "")
-        allergie.UserCreation = Coalesce(reader("creation_user_id"), 0)
-        allergie.DateCreation = Coalesce(reader("creation_date"), Nothing)
-        allergie.UserAnnulation = Coalesce(reader("annulation_user_id"), 0)
-        allergie.DateAnnulation = Coalesce(reader("annulation_date"), Nothing)
-        allergie.Inactif = Coalesce(reader("inactif"), False)
+        Dim allergie As New Allergie With {
+            .AllergieId = reader("allergie_id"),
+            .PatientId = Coalesce(reader("patient_id"), 0),
+            .SubstanceId = Coalesce(reader("substance_id"), 0),
+            .SubstancePereId = Coalesce(reader("substance_pere_id"), 0),
+            .DenominationSubstance = Coalesce(reader("denomination_substance"), ""),
+            .DenominationSubstancePere = Coalesce(reader("denomination_substance_pere"), ""),
+            .UserCreation = Coalesce(reader("creation_user_id"), 0),
+            .DateCreation = Coalesce(reader("creation_date"), Nothing),
+            .UserAnnulation = Coalesce(reader("annulation_user_id"), 0),
+            .DateAnnulation = Coalesce(reader("annulation_date"), Nothing),
+            .Inactif = Coalesce(reader("inactif"), False)
+        }
 
         Return allergie
     End Function

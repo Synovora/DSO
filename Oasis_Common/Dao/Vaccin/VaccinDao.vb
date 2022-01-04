@@ -330,7 +330,7 @@ Public Class VaccinDao
         Return vaccins
     End Function
 
-    Public Function getAll() As List(Of VaccinValence)
+    Public Function GetAll() As List(Of VaccinValence)
         Dim con As SqlConnection = GetConnection()
         Dim vaccins As List(Of VaccinValence) = New List(Of VaccinValence)
 
@@ -392,7 +392,7 @@ Public Class VaccinDao
         Dim da As SqlDataAdapter = New SqlDataAdapter()
         Dim vaccinProgramId As Long
 
-        Dim SQLstring As String = "DELETE FROM oasis.oa_vaccin_program_relation WHERE patient=@patientId AND date=@dateId;"
+        Dim SQLstring As String = "DELETE FROM oasis.oa_vaccin_program_relation WHERE patient=@patientId AND date=@dateId AND vaccin=@vaccinId;"
 
         Dim con As SqlConnection = GetConnection()
         Dim cmd As New SqlCommand(SQLstring, con)
@@ -400,6 +400,7 @@ Public Class VaccinDao
         With cmd.Parameters
             .AddWithValue("@patientId", vaccinProgram.Patient)
             .AddWithValue("@dateId", vaccinProgram.Date)
+            .AddWithValue("@vaccinId", vaccinProgram.Vaccin)
         End With
         Try
             da.InsertCommand = cmd

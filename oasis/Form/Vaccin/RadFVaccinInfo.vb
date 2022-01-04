@@ -6,11 +6,14 @@ Public Class RadFVaccinInfo
     Property SelectedPatient As Patient
     Property SelectedCGVDate As CGVDate
     Property SelectedValences As List(Of CGVValence)
+    Property Valences As List(Of Valence)
     Property Vaccins As List(Of VaccinValence)
     Property VaccinPrograms As List(Of VaccinProgramRelation)
 
+    ReadOnly valenceDao As New ValenceDao
     ReadOnly vaccinDao As New VaccinDao
     ReadOnly cgvDateDao As New CGVDateDao
+    ReadOnly userDao As New UserDao
 
     Private Sub RadFATCListe_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         AfficheTitleForm(Me, "Vaccin - Information", userLog)
@@ -19,19 +22,21 @@ Public Class RadFVaccinInfo
         ChargementVaccins()
         ChargementValences()
         RefreshSelectedVaccin()
+        'RefreshNoneRequireValence()
         ColorVaccins()
     End Sub
 
     Private Sub ChargementInformation()
         LblAgeVaccination.Text = CGVDate.DaysToDate(SelectedCGVDate.Days)
-        LblOperator.Text = GetProfilUserString(userLog)
+        'LblOperator.Text = GetProfilUserString(userLog)
         Dim valenceIds As List(Of Long) = New List(Of Long)
         For Each valences As CGVValence In SelectedValences
             valenceIds.Add(valences.Valence)
         Next
-        Vaccins = vaccinDao.getAll()
+        Vaccins = vaccinDao.GetAll()
+        Valences = valenceDao.GetList()
         DTPDate.Value = If(SelectedCGVDate.OperatedDate = Nothing, Date.Now(), SelectedCGVDate.OperatedDate)
-        LblOperator.Text = Coalesce(SelectedCGVDate.OperatedBy, userLog.UtilisateurId)
+        LblOperator.Text = GetProfilUserString(userDao.getUserById(Coalesce(SelectedCGVDate.OperatedBy, userLog.UtilisateurId)))
     End Sub
 
     Private Sub ChargementVaccins()
@@ -49,7 +54,10 @@ Public Class RadFVaccinInfo
                 GVVaccin.Rows(iGrid).Cells("id").Value = vaccin.Id
                 GVVaccin.Rows(iGrid).Cells("checked").Value = VaccinPrograms.Any(Function(x) x.Vaccin = vaccin.Id)
                 GVVaccin.Rows(iGrid).Cells("dci").Value = vaccin.Dci
-                GVVaccin.Rows(iGrid).Cells("dci").Tag = Vaccins.FindAll(Function(x) x.Code = vaccin.Code AndAlso SelectedValences.Any(Function(y) y.Valence = x.Valence)).Count()
+                Dim valenceList = (From _vaccins In Vaccins.FindAll(Function(y) y.Code = vaccin.Code) Select _vaccins.Valence).ToArray()
+                Dim test = (From _valence In Valences.FindAll(Function(x) valenceList.Contains(x.Id)) Select _valence.Description).ToArray()
+
+                GVVaccin.Rows(iGrid).Cells("dci").Tag = String.Join(vbCrLf, (From _valence In Valences.FindAll(Function(x) valenceList.Contains(x.Id)) Select _valence.Description).ToArray())
                 GVVaccin.Rows(iGrid).Cells("valence").Value = vaccin.Valence
                 iGrid += 1
             End If
@@ -76,6 +84,25 @@ Public Class RadFVaccinInfo
         Next
         Cursor.Current = Cursors.Default
         Me.Enabled = True
+        RefreshNoneRequireValence()
+    End Sub
+
+    Private Sub RefreshNoneRequireValence()
+        Me.Enabled = False
+        Cursor.Current = Cursors.WaitCursor
+
+        GVValenceNonRequis.Rows.Clear()
+        Dim iGrid As Integer = 0
+        For Each row As GridViewRowInfo In GVSelectedVaccin.Rows
+            For Each valenceNone In Vaccins.FindAll(Function(x) x.Id.ToString() = row.Cells("id").Value AndAlso Not SelectedValences.Any(Function(y) y.Valence = x.Valence))
+                GVValenceNonRequis.Rows.Add(iGrid)
+                GVValenceNonRequis.Rows(iGrid).Cells("id").Value = row.Cells("id").Value
+                GVValenceNonRequis.Rows(iGrid).Cells("name").Value = Valences.Find(Function(x) x.Id = valenceNone.Valence).Description
+                iGrid += 1
+            Next
+        Next
+        Cursor.Current = Cursors.Default
+        Me.Enabled = True
     End Sub
 
     Private Sub ColorVaccins()
@@ -84,25 +111,14 @@ Public Class RadFVaccinInfo
 
 
         For Each row As GridViewRowInfo In GVVaccin.Rows
-            'If row.Cells("checked").Value = False Then
-            '    If GVValence.Rows.Any(Function(x) x.Cells("checked").Value = True AndAlso x.Cells("valence").Value = row.Cells("valence").Value) Then
-            '        row.Cells("dci").Style.ForeColor = Color.Red
-            '    Else
-            '        row.Cells("dci").Style.ForeColor = Color.Black
-            '    End If
-            'Else
             row.Cells("dci").Style.ForeColor = Color.Black
-            row.Cells("dci").Style.BackColor = Color.White
             If row.Cells("checked").Value = False Then
-                If Vaccins.Any(Function(x) x.Id.ToString() = row.Cells("id").Value AndAlso Not SelectedValences.Any(Function(y) y.Valence = x.Valence)) Then
-                    row.Cells("dci").Style.ForeColor = Color.Orange
-                End If
-                If Vaccins.FindAll(Function(x) x.Id.ToString() = row.Cells("id").Value AndAlso SelectedValences.Any(Function(y) y.Valence = x.Valence)).Count = SelectedValences.Count Then
-                    row.Cells("dci").Style.ForeColor = Color.Green
-                End If
-                If GVValence.Rows.Any(Function(x) x.Cells("checked").Value = True AndAlso x.Cells("valence").Value = row.Cells("valence").Value) Then
+                If GVValence.Rows.Any(Function(x) x.Cells("checked").Value = True AndAlso Vaccins.Any(Function(y) y.Id = row.Cells("id").Value AndAlso y.Valence = x.Cells("valence").Value)) Then
                     row.Cells("dci").Style.ForeColor = Color.Red
-                    row.Cells("dci").Style.BackColor = Color.Gray
+                ElseIf Vaccins.Any(Function(x) x.Id.ToString() = row.Cells("id").Value AndAlso Not SelectedValences.Any(Function(y) y.Valence = x.Valence)) Then
+                    row.Cells("dci").Style.ForeColor = Color.Orange
+                ElseIf Vaccins.FindAll(Function(x) x.Id.ToString() = row.Cells("id").Value AndAlso GVValence.Rows.Any(Function(y) y.Cells("valence").Value = x.Valence AndAlso y.Cells("checked").Value = False)).Count = SelectedValences.Count Then
+                    row.Cells("dci").Style.ForeColor = Color.Green
                 End If
             End If
         Next
@@ -227,8 +243,9 @@ Public Class RadFVaccinInfo
     End Sub
 
     Private Sub BtnAdminVaccin_Click(sender As Object, e As EventArgs) Handles BtnAdminVaccin.Click
+        Dim vaccinList = (From _vaccin In GVVaccin.Rows Where _vaccin.Cells("checked").Value = True Select Convert.ToInt64(_vaccin.Cells("id").Value)).ToArray()
         Using radFVaccinInput As New RadFVaccinInput
-            radFVaccinInput.Vaccins = Vaccins
+            radFVaccinInput.Vaccins = Vaccins.FindAll(Function(x) vaccinList.Contains(x.Id))
             radFVaccinInput.ShowDialog()
         End Using
     End Sub
