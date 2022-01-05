@@ -6,10 +6,10 @@ Public Class CGVDate
     Property Days As Long
     Property Patient As Long
 
-    Property PerformBy As Long?
-    Property PerformDate As Date?
-    Property OperatedBy As Long?
-    Property OperatedDate As Date?
+    Property PerformBy As Long
+    Property PerformDate As Date
+    Property OperatedBy As Long
+    Property OperatedDate As Date
 
     Public Sub New()
     End Sub

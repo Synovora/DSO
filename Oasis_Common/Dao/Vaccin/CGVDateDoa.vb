@@ -148,37 +148,40 @@ Public Class CGVDateDao
         Return cgvDateId
     End Function
 
-    'Public Function Update(valence As Valence) As Long
-    '    Dim da As SqlDataAdapter = New SqlDataAdapter()
+    Public Function Update(cgvDate As CGVDate) As Long
+        Dim da As SqlDataAdapter = New SqlDataAdapter()
+        Dim cgvDateId As Long
 
-    '    Dim SQLstring As String = "UPDATE oasis.oa_valence SET code = @code," &
-    '    " description = @description, precaution = @precaution," &
-    '    " date_modification = @date_modification, utilisateur_modification = @utilisateur_modification WHERE id = @id;"
+        Dim SQLstring As String = "UPDATE oasis.oa_vaccin_cgv_date SET days=@days," &
+        " patient=@patient, operated_by=@operated_by," &
+        " operated_date=@operated_date, perform_date=@perform_date, perform_by=@perform_by WHERE id=@id;"
+        '" SELECT SCOPE_IDENTITY();"
 
-    '    Dim con As SqlConnection = GetConnection()
-    '    Dim cmd As New SqlCommand(SQLstring, con)
+        Dim con As SqlConnection = GetConnection()
+        Dim cmd As New SqlCommand(SQLstring, con)
+        With cmd.Parameters
+            .AddWithValue("@id", cgvDate.Id)
+            .AddWithValue("@days", cgvDate.Days)
+            .AddWithValue("@patient", cgvDate.Patient)
+            .AddWithValue("@operated_by", If(cgvDate.OperatedBy = Nothing, DBNull.Value, cgvDate.OperatedBy))
+            .AddWithValue("@operated_date", If(cgvDate.OperatedDate = Nothing, DBNull.Value, cgvDate.OperatedDate))
+            .AddWithValue("@perform_date", If(cgvDate.PerformDate = Nothing, DBNull.Value, cgvDate.PerformDate))
+            .AddWithValue("@perform_by", If(cgvDate.PerformBy = Nothing, DBNull.Value, cgvDate.PerformBy))
+        End With
 
-    '    With cmd.Parameters
-    '        .AddWithValue("@id", valence.Id)
-    '        .AddWithValue("@code", valence.Code)
-    '        .AddWithValue("@description", valence.Description)
-    '        .AddWithValue("@precaution", valence.Precaution)
-    '        .AddWithValue("@date_modification", DateTime.Now)
-    '        .AddWithValue("@utilisateur_modification", valence.UtilisateurModification)
-    '    End With
+        Try
+            da.InsertCommand = cmd
+            'cgvDateId = 
+            da.InsertCommand.ExecuteScalar()
+        Catch ex As Exception
+            Throw New Exception(ex.Message)
+            'cgvDateId = 0
+        Finally
+            con.Close()
+        End Try
 
-    '    Try
-    '        da.UpdateCommand = cmd
-    '        da.UpdateCommand.ExecuteNonQuery()
-    '    Catch ex As Exception
-    '        Debug.WriteLine(GetSqlCommandTextForLogs(cmd))
-    '        Throw New Exception(ex.Message)
-    '    Finally
-    '        con.Close()
-    '    End Try
-
-    '    Return valence.Id
-    'End Function
+        Return cgvDateId
+    End Function
 
     Public Function CreateRelation(relationValenceDate As RelationValenceDate) As Long
         Dim da As SqlDataAdapter = New SqlDataAdapter()
@@ -248,6 +251,30 @@ Public Class CGVDateDao
             command.CommandText = "SELECT * FROM oasis.oa_vaccin_cgv_relation_valence_date WHERE patient=@patientId"
             With command.Parameters
                 .AddWithValue("@patientId", patientId)
+            End With
+            Using reader As SqlDataReader = command.ExecuteReader()
+                While (reader.Read())
+                    cgvDates.Add(New RelationValenceDate(reader))
+                End While
+            End Using
+        Catch ex As Exception
+            Throw ex
+        Finally
+            con.Close()
+        End Try
+
+        Return cgvDates
+    End Function
+
+    Public Function GetRelationListByValence(valenceId As Long) As List(Of RelationValenceDate)
+        Dim con As SqlConnection = GetConnection()
+        Dim cgvDates As List(Of RelationValenceDate) = New List(Of RelationValenceDate)
+
+        Try
+            Dim command As SqlCommand = con.CreateCommand()
+            command.CommandText = "SELECT * FROM oasis.oa_vaccin_cgv_relation_valence_date WHERE valence=@valenceId"
+            With command.Parameters
+                .AddWithValue("@valenceId", valenceId)
             End With
             Using reader As SqlDataReader = command.ExecuteReader()
                 While (reader.Read())

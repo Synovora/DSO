@@ -9,6 +9,8 @@ Public Class RadFCPV
 
     ReadOnly cgvValenceDao As New CGVValenceDao
     ReadOnly cgvDateDao As New CGVDateDao
+    ReadOnly userDao As New UserDao
+
     Dim valences As List(Of CGVValence)
     Dim relations As List(Of RelationValenceDate) = New List(Of RelationValenceDate)
     Dim cgvDates As List(Of CGVDate)
@@ -16,9 +18,15 @@ Public Class RadFCPV
     Private Sub RadFATCListe_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         AfficheTitleForm(Me, "Vaccin - Calendrier Personnalise", userLog)
         RBDateAll.CheckState = True
+
         ChargementValence()
         ChargementDate()
+        'ChargementVaccinProgram()
     End Sub
+
+    'Private Sub ChargementVaccinProgram()
+    '    vaccinPrograms = vaccinDao.GetVaccinProgramListByPatient(Patient.PatientId)
+    'End Sub
 
     Private Sub ChargementValence()
         Grid.Columns.Clear()
@@ -70,13 +78,13 @@ Public Class RadFCPV
                 Continue For
             End If
             Grid.Rows.Add(iGrid)
-            Grid.Rows(iGrid).Cells(0).Value = If(cgvDate.OperatedDate <> Nothing, String.Format("{0} - {1}", cgvDate.OperatedDate, cgvDate.OperatedBy), "+")
+            Grid.Rows(iGrid).Cells(0).Value = If(cgvDate.OperatedDate <> Nothing, String.Format("{0} - {1}", cgvDate.OperatedDate.ToShortDateString(), GetProfilUserString(userDao.getUserById(cgvDate.OperatedBy))), "+")
 
             Grid.Rows(iGrid).Cells(2).Value = String.Format("{0} {1}", cgvDate.PerformDate, cgvDate.PerformBy)
 
             Grid.Rows(iGrid).Cells(2).Value = CGVDate.DaysToDate(cgvDate.Days)
             For Each actualRelation As RelationValenceDate In actualRelations
-                Dim valence = valences.Find(Function(myObject) myObject.Id = actualRelation.Valence)
+                Dim valence = valences.Find(Function(myObject) myObject.Valence = actualRelation.Valence)
                 Grid.Rows(iGrid).Cells(Grid.Columns.IndexOf(valence.Code)).Value = "✓"
             Next
             iGrid += 1
@@ -211,10 +219,10 @@ Public Class RadFCPV
             If dateRow >= 0 AndAlso valenceCol >= 3 Then
                 Dim mydate = cgvDates(dateRow)
                 Dim valence = valences(valenceCol - 3)
-                If (cgvDateDao.RelationExist(New RelationValenceDate() With {.Date = mydate.Id, .Valence = valence.Id, .Patient = Patient.PatientId})) Then
-                    cgvDateDao.DeleteRelation(New RelationValenceDate() With {.Date = mydate.Id, .Valence = valence.Id, .Patient = Patient.PatientId})
+                If (cgvDateDao.RelationExist(New RelationValenceDate() With {.Date = mydate.Id, .Valence = valence.Valence, .Patient = Patient.PatientId})) Then
+                    cgvDateDao.DeleteRelation(New RelationValenceDate() With {.Date = mydate.Id, .Valence = valence.Valence, .Patient = Patient.PatientId})
                 Else
-                    cgvDateDao.CreateRelation(New RelationValenceDate() With {.Date = mydate.Id, .Valence = valence.Id, .Patient = Patient.PatientId})
+                    cgvDateDao.CreateRelation(New RelationValenceDate() With {.Date = mydate.Id, .Valence = valence.Valence, .Patient = Patient.PatientId})
                 End If
                 ChargementValence()
             ElseIf dateRow >= 0 AndAlso valenceCol <= 1 Then
@@ -225,7 +233,7 @@ Public Class RadFCPV
                 If aRow >= 0 Then
                     Dim enlabledValence = New List(Of CGVValence)
                     For Each valence As CGVValence In valences
-                        If relations.Any(Function(myObject) myObject.Valence = valence.Id AndAlso myObject.Date = cgvDates(aRow).Id) Then
+                        If relations.Any(Function(myObject) myObject.Valence = valence.Valence AndAlso myObject.Date = cgvDates(aRow).Id) Then
                             enlabledValence.Add(valence)
                         End If
                     Next
@@ -235,6 +243,7 @@ Public Class RadFCPV
                         radFCPV.SelectedCGVDate = cgvDates(aRow)
                         radFCPV.SelectedValences = enlabledValence
                         radFCPV.ShowDialog()
+                        ChargementDate()
                     End Using
                 End If
 
@@ -255,17 +264,17 @@ Public Class RadFCPV
     Private Sub BtnImport_Click(sender As Object, e As EventArgs) Handles BtnImport.Click
         Me.Enabled = False
         Cursor.Current = Cursors.WaitCursor
-        If (valences.Count = 0) Then
-            valences = cgvValenceDao.GetListFromPatient(0)
+        'If (valences.Count = 0) Then
+        valences = cgvValenceDao.GetListFromPatient(0)
             For Each valence As CGVValence In valences
                 Dim newValence = valence
                 newValence.Patient = Patient.PatientId
                 cgvValenceDao.Create(newValence)
             Next
             valences = cgvValenceDao.GetListFromPatient(Patient.PatientId)
-        End If
-        If (cgvDates.Count = 0) Then
-            cgvDates = cgvDateDao.GetListFromPatient(0)
+        'End If
+        'If (cgvDates.Count = 0) Then
+        cgvDates = cgvDateDao.GetListFromPatient(0)
             relations = cgvDateDao.GetRelationListFromPatient(0)
             For Each cgvDate As CGVDate In cgvDates
                 If relations.Any(Function(x) x.Date = cgvDate.Id) Then
@@ -275,7 +284,7 @@ Public Class RadFCPV
                 End If
             Next
             cgvDates = cgvDateDao.GetListFromPatient(Patient.PatientId)
-        End If
+        'End If
         relations = cgvDateDao.GetRelationListFromPatient(0)
         For Each relation As RelationValenceDate In relations
             Dim oldDate = cgvDateDao.GetById(relation.Date)
@@ -292,7 +301,7 @@ Public Class RadFCPV
 
             cgvDateDao.CreateRelation(New RelationValenceDate With {
                     .Date = newDate.Id,
-                    .Valence = newValence.Id,
+                    .Valence = newValence.Valence,
                     .Patient = Patient.PatientId
                  })
         Next

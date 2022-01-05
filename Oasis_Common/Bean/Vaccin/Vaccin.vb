@@ -42,3 +42,44 @@ Public Class VaccinValence
     End Sub
 
 End Class
+
+Public Class VaccinProgramRelation
+    Property Id As Long
+    Property Patient As Long
+    Property [Date] As Long
+    Property Vaccin As Long
+
+    Public Sub New()
+    End Sub
+
+    Public Sub New(reader As SqlDataReader)
+        Me.Id = reader("id")
+        Me.Patient = reader("patient")
+        Me.Date = reader("date")
+        Me.Vaccin = reader("vaccin")
+    End Sub
+
+End Class
+
+'Public Class VaccinProgram
+'    Property Id As Long
+'    Property Patient As Long
+'    Property [Date] As Long
+'    Property ProgramDate As Date
+'    Property ProgramUser As Long
+'    Property DoneDate As Date?
+'    Property DoneUser As Long?
+
+'    Public Sub New()
+'    End Sub
+
+'    Public Sub New(reader As SqlDataReader)
+'        Me.Id = reader("id")
+'        Me.Patient = reader("patient")
+'        Me.Date = reader("date")
+'        Me.ProgramDate = reader("program_date")
+'        Me.ProgramUser = reader("program_user")
+'        Me.DoneDate = Coalesce(reader("done_date"), Nothing)
+'        Me.DoneUser = Coalesce(reader("done_user"), Nothing)
+'    End Sub
+'End Class

@@ -10,6 +10,7 @@ Public Class RadFVaccin
     ReadOnly theriaqueDao As New TheriaqueDao
     ReadOnly valenceDao As New ValenceDao
     ReadOnly vaccinDao As New VaccinDao
+    ReadOnly cgvDateDao As New CGVDateDao
     Dim valences As List(Of Valence)
     Dim relations As List(Of RelationVaccinValence) = New List(Of RelationVaccinValence)
 
@@ -535,8 +536,14 @@ Public Class RadFVaccin
         Dim aRow As Integer = Me.GridValence.Rows.IndexOf(Me.GridValence.CurrentRow)
         If aRow >= 0 Then
             Dim valenceId As String = GridValence.Rows(aRow).Cells("id").Value
-            valenceDao.Delete(New Valence() With {.Id = valenceId})
-            ChargementValence()
+            If valenceDao.GetRelationListByValence(valenceId).Count <> 0 Then
+                MessageBox.Show("Cette valence a des relations avec un ou des vaccin(s)", "Suppression d'une valence", MessageBoxButtons.OK, MessageBoxIcon.Warning)
+            ElseIf cgvDateDao.GetRelationListByValence(valenceId).Count <> 0 Then
+                MessageBox.Show("Cette valence est utilise dans un ou des calendrier(s) vaccinal", "Suppression d'une valence", MessageBoxButtons.OK, MessageBoxIcon.Warning)
+            Else
+                valenceDao.Delete(New Valence() With {.Id = valenceId})
+                ChargementValence()
+            End If
         End If
     End Sub
 

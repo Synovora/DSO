@@ -59,7 +59,7 @@ Public Class RadFCGV
             Grid.Rows.Add(iGrid)
             Grid.Rows(iGrid).Cells(0).Value = CGVDate.DaysToDate(cgvDate.Days)
             For Each actualRelation As RelationValenceDate In actualRelations
-                Dim valence = valences.Find(Function(myObject) myObject.Id = actualRelation.Valence)
+                Dim valence = valences.Find(Function(myObject) myObject.Valence = actualRelation.Valence)
                 'If (valence.Visible = False) Then Continue For
                 Grid.Rows(iGrid).Cells(Grid.Columns.IndexOf(valence.Code)).Value = "✓"
             Next
@@ -197,10 +197,10 @@ Public Class RadFCGV
             Dim mydate = cgvDates(dateRow)
             Dim valence = valences(valenceCol)
             If dateRow >= 0 AndAlso valenceCol >= 0 Then
-                If (cgvDateDao.RelationExist(New RelationValenceDate() With {.Date = mydate.Id, .Valence = valence.Id, .Patient = 0})) Then
-                    cgvDateDao.DeleteRelation(New RelationValenceDate() With {.Date = mydate.Id, .Valence = valence.Id, .Patient = 0})
+                If (cgvDateDao.RelationExist(New RelationValenceDate() With {.Date = mydate.Id, .Valence = valence.Valence, .Patient = 0})) Then
+                    cgvDateDao.DeleteRelation(New RelationValenceDate() With {.Date = mydate.Id, .Valence = valence.Valence, .Patient = 0})
                 Else
-                    cgvDateDao.CreateRelation(New RelationValenceDate() With {.Date = mydate.Id, .Valence = valence.Id, .Patient = 0})
+                    cgvDateDao.CreateRelation(New RelationValenceDate() With {.Date = mydate.Id, .Valence = valence.Valence, .Patient = 0})
                 End If
                 ChargementValence()
             End If

@@ -413,7 +413,8 @@ Public Class TheriaqueDao
                 If dt.Rows.Count > 0 Then
                     substance.Id = dt.Rows(0)("SAC_CODE_SQ_PK")
                     substance.Denomination = Coalesce(dt.Rows(0)("SAC_NOM"), "")
-                    substance.Libelle = Coalesce(dt.Rows(0)("SAC_LIBELLE_REF"), "")
+                    'substance.Libelle = Coalesce(dt.Rows(0)("SAC_LIBELLE_REF"), "") DATE: 04/01/2022
+                    substance.Libelle = Coalesce(dt.Rows(0)("NOM_REF"), "")
                     substance.PereId = Coalesce(dt.Rows(0)("SAC_GSAC_CODE_FK"), 0)
                 Else
                     substance.Id = 0

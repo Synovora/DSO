@@ -9,7 +9,7 @@ Public Class CGVValenceDao
         Dim con As SqlConnection = GetConnection()
         Try
             Dim command As SqlCommand = con.CreateCommand()
-            command.CommandText = "SELECT * FROM oasis.oa_vaccin_cgv_valence WHERE patient=@patient AND valence=@valence"
+            command.CommandText = "SELECT cgv_valence.*, valence.code, valence.description, valence.precaution FROM oasis.oa_vaccin_cgv_valence cgv_valence LEFT JOIN oasis.oa_valence valence ON valence.id = cgv_valence.valence WHERE cgv_valence.patient=@patient AND cgv_valence.valence=@valence"
             command.Parameters.AddWithValue("@patient", cgvValence.Patient)
             command.Parameters.AddWithValue("@valence", cgvValence.Valence)
             Using reader As SqlDataReader = command.ExecuteReader()
@@ -32,7 +32,7 @@ Public Class CGVValenceDao
         Dim con As SqlConnection = GetConnection()
         Try
             Dim command As SqlCommand = con.CreateCommand()
-            command.CommandText = "SELECT * FROM oasis.oa_vaccin_cgv_valence WHERE id = @id"
+            command.CommandText = "SELECT cgv_valence.*, valence.code, valence.description, valence.precaution FROM oasis.oa_vaccin_cgv_valence cgv_valence LEFT JOIN oasis.oa_valence valence ON valence.id = cgv_valence.valence WHERE cgv_valence.id = @id"
             command.Parameters.AddWithValue("@id", valenceId)
             Using reader As SqlDataReader = command.ExecuteReader()
                 If reader.Read() Then
@@ -55,7 +55,7 @@ Public Class CGVValenceDao
 
         Try
             Dim command As SqlCommand = con.CreateCommand()
-            command.CommandText = "SELECT * FROM oasis.oa_vaccin_cgv_valence WHERE patient=@patientId ORDER BY ordre ASC"
+            command.CommandText = "SELECT cgv_valence.*, valence.code, valence.description, valence.precaution FROM oasis.oa_vaccin_cgv_valence cgv_valence LEFT JOIN oasis.oa_valence valence ON valence.id = cgv_valence.valence WHERE patient=@patientId ORDER BY cgv_valence.ordre ASC"
             With command.Parameters
                 .AddWithValue("@patientId", patientId)
             End With
@@ -79,7 +79,7 @@ Public Class CGVValenceDao
 
         Try
             Dim command As SqlCommand = con.CreateCommand()
-            command.CommandText = "SELECT * FROM oasis.oa_vaccin_cgv_valence ORDER BY ordre ASC"
+            command.CommandText = "SELECT cgv_valence.*, valence.code, valence.description, valence.precaution FROM oasis.oa_vaccin_cgv_valence cgv_valence LEFT JOIN oasis.oa_valence valence ON valence.id = cgv_valence.valence ORDER BY ordre ASC"
             Using reader As SqlDataReader = command.ExecuteReader()
                 While (reader.Read())
                     valences.Add(New CGVValence(reader))
@@ -100,7 +100,7 @@ Public Class CGVValenceDao
 
         Try
             Dim command As SqlCommand = con.CreateCommand()
-            command.CommandText = "SELECT TOP 1 * FROM oasis.oa_vaccin_cgv_valence ORDER BY ordre DESC"
+            command.CommandText = "SELECT TOP 1 cgv_valence.*, valence.code, valence.description, valence.precaution FROM oasis.oa_vaccin_cgv_valence cgv_valence LEFT JOIN oasis.oa_valence valence ON valence.id = cgv_valence.valence ORDER BY ordre DESC"
             Using reader As SqlDataReader = command.ExecuteReader()
                 If reader.Read() Then
                     valence = New CGVValence(reader)
@@ -121,7 +121,7 @@ Public Class CGVValenceDao
 
         Try
             Dim command As SqlCommand = con.CreateCommand()
-            command.CommandText = "SELECT TOP 1 * FROM oasis.oa_vaccin_cgv_valence WHERE ordre = @ordre"
+            command.CommandText = "SELECT TOP 1 cgv_valence.*, valence.code, valence.description, valence.precaution FROM oasis.oa_vaccin_cgv_valence cgv_valence LEFT JOIN oasis.oa_valence valence ON valence.id = cgv_valence.valence WHERE cgv_valence.ordre = @ordre"
             With command.Parameters
                 .AddWithValue("@ordre", order)
             End With
@@ -145,7 +145,7 @@ Public Class CGVValenceDao
 
         Try
             Dim command As SqlCommand = con.CreateCommand()
-            command.CommandText = "SELECT * FROM oasis.oa_vaccin_cgv_valence WHERE ordre >= @ordre"
+            command.CommandText = "SELECT cgv_valence.*, valence.code, valence.description, valence.precaution FROM oasis.oa_vaccin_cgv_valence cgv_valence LEFT JOIN oasis.oa_valence valence ON valence.id = cgv_valence.valence WHERE cgv_valence.ordre >= @ordre"
             With command.Parameters
                 .AddWithValue("@ordre", order)
             End With
@@ -171,8 +171,8 @@ Public Class CGVValenceDao
         Dim dateCreation As Date = Date.Now.Date
 
         Dim SQLstring As String = "
-            INSERT into oasis.oa_vaccin_cgv_valence (code, description, precaution, valence, patient, ordre)
-                VALUES (@code, @description, @precaution, @valence, @patient, @ordre);
+            INSERT into oasis.oa_vaccin_cgv_valence (valence, patient, ordre)
+                VALUES (@valence, @patient, @ordre);
             SELECT SCOPE_IDENTITY();
         "
 
@@ -181,9 +181,6 @@ Public Class CGVValenceDao
         Dim lastValence = GetLastOrder()
 
         With cmd.Parameters
-            .AddWithValue("@code", valence.Code)
-            .AddWithValue("@description", valence.Description)
-            .AddWithValue("@precaution", valence.Precaution)
             .AddWithValue("@valence", valence.Valence)
             .AddWithValue("@patient", valence.Patient)
             .AddWithValue("@ordre", If(lastValence IsNot Nothing, lastValence.Ordre + 1, 0))
@@ -210,7 +207,6 @@ Public Class CGVValenceDao
         Dim SQLstring As String = "
             DELETE FROM oasis.oa_vaccin_cgv_valence WHERE id=@id;
         "
-        'DELETE FROM oasis.oa_relation_vaccin_valence WHERE valence=@id;
 
         Dim con As SqlConnection = GetConnection()
         Dim cmd As New SqlCommand(SQLstring, con)
@@ -232,11 +228,41 @@ Public Class CGVValenceDao
         Return valenceId
     End Function
 
+    'Public Function DeleteByValence(valenceId As Long) As Long
+    '    Dim da As SqlDataAdapter = New SqlDataAdapter()
+    '    Dim valenceId As Long
+
+    '    Dim dateCreation As Date = Date.Now.Date
+
+    '    Dim SQLstring As String = "
+    '        DELETE FROM oasis.oa_relation_vaccin_valence WHERE valence=@id;
+    '        DELETE FROM oasis.oa_valence WHERE id=@id;
+    '    "
+
+    '    Dim con As SqlConnection = GetConnection()
+    '    Dim cmd As New SqlCommand(SQLstring, con)
+
+    '    With cmd.Parameters
+    '        .AddWithValue("@id", Valence.Id)
+    '    End With
+    '    Try
+    '        da.InsertCommand = cmd
+    '        da.InsertCommand.ExecuteScalar()
+    '        valenceId = Valence.Id
+    '    Catch ex As Exception
+    '        Throw New Exception(ex.Message)
+    '        valenceId = 0
+    '    Finally
+    '        con.Close()
+    '    End Try
+
+    '    Return valenceId
+    'End Function
+
     Public Function Update(valence As CGVValence) As Long
         Dim da As SqlDataAdapter = New SqlDataAdapter()
 
-        Dim SQLstring As String = "UPDATE oasis.oa_vaccin_cgv_valence SET code = @code," &
-        " description = @description, precaution = @precaution," &
+        Dim SQLstring As String = "UPDATE oasis.oa_vaccin_cgv_valence SET" &
         " patient = @patient, ordre = @ordre WHERE id = @id;"
 
         Dim con As SqlConnection = GetConnection()
@@ -244,9 +270,6 @@ Public Class CGVValenceDao
 
         With cmd.Parameters
             .AddWithValue("@id", valence.Id)
-            .AddWithValue("@code", valence.Code)
-            .AddWithValue("@description", valence.Description)
-            .AddWithValue("@precaution", valence.Precaution)
             .AddWithValue("@valence", valence.Valence)
             .AddWithValue("@patient", valence.Patient)
             .AddWithValue("@ordre", valence.Ordre)

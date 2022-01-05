@@ -36,21 +36,25 @@ Partial Class RadFVaccinInfo
         Dim GridViewTextBoxColumn7 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
         Dim SortDescriptor2 As Telerik.WinControls.Data.SortDescriptor = New Telerik.WinControls.Data.SortDescriptor()
         Dim TableViewDefinition2 As Telerik.WinControls.UI.TableViewDefinition = New Telerik.WinControls.UI.TableViewDefinition()
-        Dim GridViewCheckBoxColumn3 As Telerik.WinControls.UI.GridViewCheckBoxColumn = New Telerik.WinControls.UI.GridViewCheckBoxColumn()
         Dim GridViewTextBoxColumn8 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
         Dim GridViewTextBoxColumn9 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
         Dim GridViewTextBoxColumn10 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
-        Dim GridViewTextBoxColumn11 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
         Dim SortDescriptor3 As Telerik.WinControls.Data.SortDescriptor = New Telerik.WinControls.Data.SortDescriptor()
         Dim TableViewDefinition3 As Telerik.WinControls.UI.TableViewDefinition = New Telerik.WinControls.UI.TableViewDefinition()
+        Dim GridViewCheckBoxColumn3 As Telerik.WinControls.UI.GridViewCheckBoxColumn = New Telerik.WinControls.UI.GridViewCheckBoxColumn()
+        Dim GridViewTextBoxColumn11 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
+        Dim GridViewTextBoxColumn12 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
+        Dim GridViewTextBoxColumn13 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
+        Dim SortDescriptor4 As Telerik.WinControls.Data.SortDescriptor = New Telerik.WinControls.Data.SortDescriptor()
+        Dim TableViewDefinition4 As Telerik.WinControls.UI.TableViewDefinition = New Telerik.WinControls.UI.TableViewDefinition()
         Me.GVValence = New Telerik.WinControls.UI.RadGridView()
         Me.GVVaccin = New Telerik.WinControls.UI.RadGridView()
         Me.BtnValidationProgram = New Telerik.WinControls.UI.RadButton()
         Me.BtnPrintOrdo = New Telerik.WinControls.UI.RadButton()
         Me.BtnAdminVaccin = New Telerik.WinControls.UI.RadButton()
         Me.RadGroupBox1 = New Telerik.WinControls.UI.RadGroupBox()
+        Me.DTPDate = New System.Windows.Forms.DateTimePicker()
         Me.LblOperator = New System.Windows.Forms.Label()
-        Me.LblDate = New System.Windows.Forms.Label()
         Me.LabelStaticOperator = New System.Windows.Forms.Label()
         Me.LabelStaticDate = New System.Windows.Forms.Label()
         Me.RadGroupBoxEtatCivil = New Telerik.WinControls.UI.RadGroupBox()
@@ -73,6 +77,7 @@ Partial Class RadFVaccinInfo
         Me.RadLabel1 = New Telerik.WinControls.UI.RadLabel()
         Me.LblAgeVaccination = New Telerik.WinControls.UI.RadLabel()
         Me.ToolTip = New System.Windows.Forms.ToolTip(Me.components)
+        Me.legend = New System.Windows.Forms.Label()
         Me.TraitementContextMenuStrip = New System.Windows.Forms.ContextMenuStrip(Me.components)
         Me.CréerUnTraitementToolStripMenuItem1 = New System.Windows.Forms.ToolStripMenuItem()
         Me.GérerUneFenêtreThérapeutiqueToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
@@ -85,8 +90,11 @@ Partial Class RadFVaccinInfo
         Me.ToolStripSeparator4 = New System.Windows.Forms.ToolStripSeparator()
         Me.DéclarationAllergieOuContreindicationToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.ListeDesMédicamentsDéclarésContreindiquésToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-        Me.RadGridView1 = New Telerik.WinControls.UI.RadGridView()
+        Me.GVSelectedVaccin = New Telerik.WinControls.UI.RadGridView()
         Me.Label3 = New System.Windows.Forms.Label()
+        Me.Label4 = New System.Windows.Forms.Label()
+        Me.Label6 = New System.Windows.Forms.Label()
+        Me.GVValenceNonRequis = New Telerik.WinControls.UI.RadGridView()
         CType(Me.GVValence, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.GVValence.MasterTemplate, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.GVVaccin, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -101,8 +109,10 @@ Partial Class RadFVaccinInfo
         CType(Me.RadLabel1, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.LblAgeVaccination, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.TraitementContextMenuStrip.SuspendLayout()
-        CType(Me.RadGridView1, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.RadGridView1.MasterTemplate, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.GVSelectedVaccin, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.GVSelectedVaccin.MasterTemplate, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.GVValenceNonRequis, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.GVValenceNonRequis.MasterTemplate, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
@@ -113,7 +123,7 @@ Partial Class RadFVaccinInfo
         Me.GVValence.Font = New System.Drawing.Font("Segoe UI", 8.25!)
         Me.GVValence.ForeColor = System.Drawing.Color.Black
         Me.GVValence.ImeMode = System.Windows.Forms.ImeMode.NoControl
-        Me.GVValence.Location = New System.Drawing.Point(742, 56)
+        Me.GVValence.Location = New System.Drawing.Point(742, 79)
         '
         '
         '
@@ -145,7 +155,7 @@ Partial Class RadFVaccinInfo
         Me.GVValence.Name = "GVValence"
         Me.GVValence.RightToLeft = System.Windows.Forms.RightToLeft.No
         Me.GVValence.ShowGroupPanel = False
-        Me.GVValence.Size = New System.Drawing.Size(270, 596)
+        Me.GVValence.Size = New System.Drawing.Size(270, 376)
         Me.GVValence.TabIndex = 0
         '
         'GVVaccin
@@ -221,8 +231,8 @@ Partial Class RadFVaccinInfo
         'RadGroupBox1
         '
         Me.RadGroupBox1.AccessibleRole = System.Windows.Forms.AccessibleRole.Grouping
+        Me.RadGroupBox1.Controls.Add(Me.DTPDate)
         Me.RadGroupBox1.Controls.Add(Me.LblOperator)
-        Me.RadGroupBox1.Controls.Add(Me.LblDate)
         Me.RadGroupBox1.Controls.Add(Me.LabelStaticOperator)
         Me.RadGroupBox1.Controls.Add(Me.LabelStaticDate)
         Me.RadGroupBox1.HeaderText = ""
@@ -230,6 +240,13 @@ Partial Class RadFVaccinInfo
         Me.RadGroupBox1.Name = "RadGroupBox1"
         Me.RadGroupBox1.Size = New System.Drawing.Size(701, 75)
         Me.RadGroupBox1.TabIndex = 5
+        '
+        'DTPDate
+        '
+        Me.DTPDate.Location = New System.Drawing.Point(79, 15)
+        Me.DTPDate.Name = "DTPDate"
+        Me.DTPDate.Size = New System.Drawing.Size(200, 20)
+        Me.DTPDate.TabIndex = 4
         '
         'LblOperator
         '
@@ -239,15 +256,6 @@ Partial Class RadFVaccinInfo
         Me.LblOperator.Size = New System.Drawing.Size(15, 13)
         Me.LblOperator.TabIndex = 3
         Me.LblOperator.Text = "--"
-        '
-        'LblDate
-        '
-        Me.LblDate.AutoSize = True
-        Me.LblDate.Location = New System.Drawing.Point(76, 22)
-        Me.LblDate.Name = "LblDate"
-        Me.LblDate.Size = New System.Drawing.Size(15, 13)
-        Me.LblDate.TabIndex = 2
-        Me.LblDate.Text = "--"
         '
         'LabelStaticOperator
         '
@@ -477,6 +485,18 @@ Partial Class RadFVaccinInfo
         Me.LblAgeVaccination.TabIndex = 37
         Me.LblAgeVaccination.Text = "--"
         '
+        'legend
+        '
+        Me.legend.AutoSize = True
+        Me.legend.Location = New System.Drawing.Point(704, 462)
+        Me.legend.Name = "legend"
+        Me.legend.Size = New System.Drawing.Size(12, 13)
+        Me.legend.TabIndex = 39
+        Me.legend.Text = "?"
+        Me.ToolTip.SetToolTip(Me.legend, "Vert: Le vaccin contient toutes les valences requises" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "Orange: Le vaccin contient" &
+        " des valences non requises" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "Rouge: Le vaccin contient des valences deja selectio" &
+        "nees")
+        '
         'TraitementContextMenuStrip
         '
         Me.TraitementContextMenuStrip.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.CréerUnTraitementToolStripMenuItem1, Me.GérerUneFenêtreThérapeutiqueToolStripMenuItem, Me.HistoriqueToolStripMenuItem, Me.ToolStripSeparator1, Me.TraitementsObsoletesToolStripMenuItem, Me.ToolStripSeparator2, Me.DéclarationAllergieToolStripMenuItem, Me.ListeDesMédicamentsDéclarésAllergiquesToolStripMenuItem, Me.ToolStripSeparator4, Me.DéclarationAllergieOuContreindicationToolStripMenuItem, Me.ListeDesMédicamentsDéclarésContreindiquésToolStripMenuItem})
@@ -546,51 +566,44 @@ Partial Class RadFVaccinInfo
         Me.ListeDesMédicamentsDéclarésContreindiquésToolStripMenuItem.Size = New System.Drawing.Size(345, 22)
         Me.ListeDesMédicamentsDéclarésContreindiquésToolStripMenuItem.Text = "Liste des contre-indications"
         '
-        'RadGridView1
+        'GVSelectedVaccin
         '
-        Me.RadGridView1.BackColor = System.Drawing.Color.FromArgb(CType(CType(191, Byte), Integer), CType(CType(219, Byte), Integer), CType(CType(255, Byte), Integer))
-        Me.RadGridView1.Cursor = System.Windows.Forms.Cursors.Default
-        Me.RadGridView1.Font = New System.Drawing.Font("Segoe UI", 8.25!)
-        Me.RadGridView1.ForeColor = System.Drawing.Color.Black
-        Me.RadGridView1.ImeMode = System.Windows.Forms.ImeMode.NoControl
-        Me.RadGridView1.Location = New System.Drawing.Point(15, 484)
+        Me.GVSelectedVaccin.BackColor = System.Drawing.Color.FromArgb(CType(CType(191, Byte), Integer), CType(CType(219, Byte), Integer), CType(CType(255, Byte), Integer))
+        Me.GVSelectedVaccin.Cursor = System.Windows.Forms.Cursors.Default
+        Me.GVSelectedVaccin.Font = New System.Drawing.Font("Segoe UI", 8.25!)
+        Me.GVSelectedVaccin.ForeColor = System.Drawing.Color.Black
+        Me.GVSelectedVaccin.ImeMode = System.Windows.Forms.ImeMode.NoControl
+        Me.GVSelectedVaccin.Location = New System.Drawing.Point(15, 484)
         '
         '
         '
-        Me.RadGridView1.MasterTemplate.AllowAddNewRow = False
-        Me.RadGridView1.MasterTemplate.AllowDeleteRow = False
-        GridViewCheckBoxColumn3.EnableExpressionEditor = False
-        GridViewCheckBoxColumn3.MinWidth = 20
-        GridViewCheckBoxColumn3.Name = "checked"
+        Me.GVSelectedVaccin.MasterTemplate.AllowAddNewRow = False
+        Me.GVSelectedVaccin.MasterTemplate.AllowDeleteRow = False
         GridViewTextBoxColumn8.EnableExpressionEditor = False
-        GridViewTextBoxColumn8.HeaderText = "Categorie"
-        GridViewTextBoxColumn8.Name = "category"
-        GridViewTextBoxColumn8.Width = 80
+        GridViewTextBoxColumn8.HeaderText = "Vaccins"
+        GridViewTextBoxColumn8.Name = "dci"
+        GridViewTextBoxColumn8.Width = 500
         GridViewTextBoxColumn9.EnableExpressionEditor = False
-        GridViewTextBoxColumn9.HeaderText = "Vaccins"
-        GridViewTextBoxColumn9.Name = "dci"
-        GridViewTextBoxColumn9.Width = 500
+        GridViewTextBoxColumn9.HeaderText = "id"
+        GridViewTextBoxColumn9.IsVisible = False
+        GridViewTextBoxColumn9.Name = "id"
         GridViewTextBoxColumn10.EnableExpressionEditor = False
-        GridViewTextBoxColumn10.HeaderText = "id"
+        GridViewTextBoxColumn10.HeaderText = "valence"
         GridViewTextBoxColumn10.IsVisible = False
-        GridViewTextBoxColumn10.Name = "id"
-        GridViewTextBoxColumn11.EnableExpressionEditor = False
-        GridViewTextBoxColumn11.HeaderText = "valence"
-        GridViewTextBoxColumn11.IsVisible = False
-        GridViewTextBoxColumn11.Name = "valence"
-        Me.RadGridView1.MasterTemplate.Columns.AddRange(New Telerik.WinControls.UI.GridViewDataColumn() {GridViewCheckBoxColumn3, GridViewTextBoxColumn8, GridViewTextBoxColumn9, GridViewTextBoxColumn10, GridViewTextBoxColumn11})
-        Me.RadGridView1.MasterTemplate.EnableGrouping = False
-        Me.RadGridView1.MasterTemplate.EnableSorting = False
-        Me.RadGridView1.MasterTemplate.ShowRowHeaderColumn = False
+        GridViewTextBoxColumn10.Name = "valence"
+        Me.GVSelectedVaccin.MasterTemplate.Columns.AddRange(New Telerik.WinControls.UI.GridViewDataColumn() {GridViewTextBoxColumn8, GridViewTextBoxColumn9, GridViewTextBoxColumn10})
+        Me.GVSelectedVaccin.MasterTemplate.EnableGrouping = False
+        Me.GVSelectedVaccin.MasterTemplate.EnableSorting = False
+        Me.GVSelectedVaccin.MasterTemplate.ShowRowHeaderColumn = False
         SortDescriptor3.PropertyName = "vaccin"
-        Me.RadGridView1.MasterTemplate.SortDescriptors.AddRange(New Telerik.WinControls.Data.SortDescriptor() {SortDescriptor3})
-        Me.RadGridView1.MasterTemplate.ViewDefinition = TableViewDefinition3
-        Me.RadGridView1.Name = "RadGridView1"
-        Me.RadGridView1.ReadOnly = True
-        Me.RadGridView1.RightToLeft = System.Windows.Forms.RightToLeft.No
-        Me.RadGridView1.ShowGroupPanel = False
-        Me.RadGridView1.Size = New System.Drawing.Size(701, 168)
-        Me.RadGridView1.TabIndex = 2
+        Me.GVSelectedVaccin.MasterTemplate.SortDescriptors.AddRange(New Telerik.WinControls.Data.SortDescriptor() {SortDescriptor3})
+        Me.GVSelectedVaccin.MasterTemplate.ViewDefinition = TableViewDefinition3
+        Me.GVSelectedVaccin.Name = "GVSelectedVaccin"
+        Me.GVSelectedVaccin.ReadOnly = True
+        Me.GVSelectedVaccin.RightToLeft = System.Windows.Forms.RightToLeft.No
+        Me.GVSelectedVaccin.ShowGroupPanel = False
+        Me.GVSelectedVaccin.Size = New System.Drawing.Size(701, 168)
+        Me.GVSelectedVaccin.TabIndex = 2
         '
         'Label3
         '
@@ -601,13 +614,78 @@ Partial Class RadFVaccinInfo
         Me.Label3.TabIndex = 38
         Me.Label3.Text = "Vaccins selectionnes:"
         '
+        'Label4
+        '
+        Me.Label4.AutoSize = True
+        Me.Label4.Location = New System.Drawing.Point(742, 462)
+        Me.Label4.Name = "Label4"
+        Me.Label4.Size = New System.Drawing.Size(197, 13)
+        Me.Label4.TabIndex = 41
+        Me.Label4.Text = "Valences non requises selectionnees:"
+        '
+        'Label6
+        '
+        Me.Label6.AutoSize = True
+        Me.Label6.Location = New System.Drawing.Point(742, 58)
+        Me.Label6.Name = "Label6"
+        Me.Label6.Size = New System.Drawing.Size(54, 13)
+        Me.Label6.TabIndex = 42
+        Me.Label6.Text = "Valences:"
+        '
+        'GVValenceNonRequis
+        '
+        Me.GVValenceNonRequis.BackColor = System.Drawing.Color.FromArgb(CType(CType(191, Byte), Integer), CType(CType(219, Byte), Integer), CType(CType(255, Byte), Integer))
+        Me.GVValenceNonRequis.Cursor = System.Windows.Forms.Cursors.Default
+        Me.GVValenceNonRequis.Font = New System.Drawing.Font("Segoe UI", 8.25!)
+        Me.GVValenceNonRequis.ForeColor = System.Drawing.Color.Black
+        Me.GVValenceNonRequis.ImeMode = System.Windows.Forms.ImeMode.NoControl
+        Me.GVValenceNonRequis.Location = New System.Drawing.Point(742, 484)
+        '
+        '
+        '
+        GridViewCheckBoxColumn3.EnableExpressionEditor = False
+        GridViewCheckBoxColumn3.IsVisible = False
+        GridViewCheckBoxColumn3.MinWidth = 20
+        GridViewCheckBoxColumn3.Name = "checked"
+        GridViewCheckBoxColumn3.ReadOnly = True
+        GridViewTextBoxColumn11.EnableExpressionEditor = False
+        GridViewTextBoxColumn11.HeaderText = "Nom"
+        GridViewTextBoxColumn11.Name = "name"
+        GridViewTextBoxColumn11.ReadOnly = True
+        GridViewTextBoxColumn11.Width = 180
+        GridViewTextBoxColumn12.EnableExpressionEditor = False
+        GridViewTextBoxColumn12.HeaderText = "id"
+        GridViewTextBoxColumn12.IsVisible = False
+        GridViewTextBoxColumn12.Name = "id"
+        GridViewTextBoxColumn13.EnableExpressionEditor = False
+        GridViewTextBoxColumn13.HeaderText = "valence"
+        GridViewTextBoxColumn13.IsVisible = False
+        GridViewTextBoxColumn13.Name = "valence"
+        GridViewTextBoxColumn13.ReadOnly = True
+        GridViewTextBoxColumn13.SortOrder = Telerik.WinControls.UI.RadSortOrder.Ascending
+        Me.GVValenceNonRequis.MasterTemplate.Columns.AddRange(New Telerik.WinControls.UI.GridViewDataColumn() {GridViewCheckBoxColumn3, GridViewTextBoxColumn11, GridViewTextBoxColumn12, GridViewTextBoxColumn13})
+        Me.GVValenceNonRequis.MasterTemplate.ReadOnly = True
+        Me.GVValenceNonRequis.MasterTemplate.ShowRowHeaderColumn = False
+        SortDescriptor4.PropertyName = "valence"
+        Me.GVValenceNonRequis.MasterTemplate.SortDescriptors.AddRange(New Telerik.WinControls.Data.SortDescriptor() {SortDescriptor4})
+        Me.GVValenceNonRequis.MasterTemplate.ViewDefinition = TableViewDefinition4
+        Me.GVValenceNonRequis.Name = "GVValenceNonRequis"
+        Me.GVValenceNonRequis.RightToLeft = System.Windows.Forms.RightToLeft.No
+        Me.GVValenceNonRequis.ShowGroupPanel = False
+        Me.GVValenceNonRequis.Size = New System.Drawing.Size(270, 168)
+        Me.GVValenceNonRequis.TabIndex = 1
+        '
         'RadFVaccinInfo
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(1025, 694)
+        Me.Controls.Add(Me.GVValenceNonRequis)
+        Me.Controls.Add(Me.Label6)
+        Me.Controls.Add(Me.Label4)
+        Me.Controls.Add(Me.legend)
         Me.Controls.Add(Me.Label3)
-        Me.Controls.Add(Me.RadGridView1)
+        Me.Controls.Add(Me.GVSelectedVaccin)
         Me.Controls.Add(Me.LblAgeVaccination)
         Me.Controls.Add(Me.RadLabel1)
         Me.Controls.Add(Me.Label2)
@@ -642,8 +720,10 @@ Partial Class RadFVaccinInfo
         CType(Me.RadLabel1, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.LblAgeVaccination, System.ComponentModel.ISupportInitialize).EndInit()
         Me.TraitementContextMenuStrip.ResumeLayout(False)
-        CType(Me.RadGridView1.MasterTemplate, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.RadGridView1, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.GVSelectedVaccin.MasterTemplate, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.GVSelectedVaccin, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.GVValenceNonRequis.MasterTemplate, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.GVValenceNonRequis, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
         Me.PerformLayout()
@@ -657,7 +737,6 @@ Partial Class RadFVaccinInfo
     Friend WithEvents BtnAdminVaccin As Telerik.WinControls.UI.RadButton
     Friend WithEvents RadGroupBox1 As Telerik.WinControls.UI.RadGroupBox
     Friend WithEvents LblOperator As Label
-    Friend WithEvents LblDate As Label
     Friend WithEvents LabelStaticOperator As Label
     Friend WithEvents LabelStaticDate As Label
     Friend WithEvents RadGroupBoxEtatCivil As Telerik.WinControls.UI.RadGroupBox
@@ -692,7 +771,12 @@ Partial Class RadFVaccinInfo
     Friend WithEvents ToolStripSeparator4 As ToolStripSeparator
     Friend WithEvents DéclarationAllergieOuContreindicationToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents ListeDesMédicamentsDéclarésContreindiquésToolStripMenuItem As ToolStripMenuItem
-    Friend WithEvents RadGridView1 As Telerik.WinControls.UI.RadGridView
+    Friend WithEvents GVSelectedVaccin As Telerik.WinControls.UI.RadGridView
     Friend WithEvents Label3 As Label
+    Friend WithEvents legend As Label
+    Friend WithEvents DTPDate As DateTimePicker
+    Friend WithEvents Label4 As Label
+    Friend WithEvents Label6 As Label
+    Friend WithEvents GVValenceNonRequis As Telerik.WinControls.UI.RadGridView
 End Class
 
