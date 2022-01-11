@@ -22,13 +22,14 @@ Partial Class RadFVaccinInput
     'Do not modify it using the code editor.
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
-        Dim GridViewTextBoxColumn1 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
-        Dim GridViewTextBoxColumn2 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
-        Dim GridViewTextBoxColumn3 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
-        Dim GridViewDateTimeColumn1 As Telerik.WinControls.UI.GridViewDateTimeColumn = New Telerik.WinControls.UI.GridViewDateTimeColumn()
-        Dim GridViewTextBoxColumn4 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
-        Dim GridViewTextBoxColumn5 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
-        Dim TableViewDefinition1 As Telerik.WinControls.UI.TableViewDefinition = New Telerik.WinControls.UI.TableViewDefinition()
+        Dim GridViewTextBoxColumn6 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
+        Dim GridViewTextBoxColumn7 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
+        Dim GridViewTextBoxColumn8 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
+        Dim GridViewDateTimeColumn2 As Telerik.WinControls.UI.GridViewDateTimeColumn = New Telerik.WinControls.UI.GridViewDateTimeColumn()
+        Dim GridViewTextBoxColumn9 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
+        Dim GridViewTextBoxColumn10 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
+        Dim SortDescriptor2 As Telerik.WinControls.Data.SortDescriptor = New Telerik.WinControls.Data.SortDescriptor()
+        Dim TableViewDefinition2 As Telerik.WinControls.UI.TableViewDefinition = New Telerik.WinControls.UI.TableViewDefinition()
         Me.GVVaccin = New Telerik.WinControls.UI.RadGridView()
         Me.BtnValidation = New Telerik.WinControls.UI.RadButton()
         Me.BtnCancel = New Telerik.WinControls.UI.RadButton()
@@ -52,43 +53,56 @@ Partial Class RadFVaccinInput
         '
         Me.GVVaccin.MasterTemplate.AllowAddNewRow = False
         Me.GVVaccin.MasterTemplate.AllowDragToGroup = False
-        GridViewTextBoxColumn1.EnableExpressionEditor = False
-        GridViewTextBoxColumn1.HeaderText = "id"
-        GridViewTextBoxColumn1.IsVisible = False
-        GridViewTextBoxColumn1.Name = "id"
-        GridViewTextBoxColumn2.EnableExpressionEditor = False
-        GridViewTextBoxColumn2.HeaderText = "dci"
-        GridViewTextBoxColumn2.MinWidth = 200
-        GridViewTextBoxColumn2.Name = "dci"
-        GridViewTextBoxColumn2.Width = 300
-        GridViewTextBoxColumn3.EnableExpressionEditor = False
-        GridViewTextBoxColumn3.HeaderText = "Lot"
-        GridViewTextBoxColumn3.Name = "Lot"
-        GridViewTextBoxColumn3.Width = 80
-        GridViewDateTimeColumn1.EnableExpressionEditor = False
-        GridViewDateTimeColumn1.HeaderText = "Exp"
-        GridViewDateTimeColumn1.Name = "exp"
-        GridViewDateTimeColumn1.Width = 100
-        GridViewTextBoxColumn4.EnableExpressionEditor = False
-        GridViewTextBoxColumn4.HeaderText = "Réal"
-        GridViewTextBoxColumn4.Name = "Réal"
-        GridViewTextBoxColumn5.EnableExpressionEditor = False
-        GridViewTextBoxColumn5.HeaderText = "Commentaire"
-        GridViewTextBoxColumn5.Name = "commentaire"
-        Me.GVVaccin.MasterTemplate.Columns.AddRange(New Telerik.WinControls.UI.GridViewDataColumn() {GridViewTextBoxColumn1, GridViewTextBoxColumn2, GridViewTextBoxColumn3, GridViewDateTimeColumn1, GridViewTextBoxColumn4, GridViewTextBoxColumn5})
+        GridViewTextBoxColumn6.EnableExpressionEditor = False
+        GridViewTextBoxColumn6.HeaderText = "id"
+        GridViewTextBoxColumn6.IsVisible = False
+        GridViewTextBoxColumn6.Name = "id"
+        GridViewTextBoxColumn7.EnableExpressionEditor = False
+        GridViewTextBoxColumn7.HeaderText = "Nom"
+        GridViewTextBoxColumn7.MinWidth = 200
+        GridViewTextBoxColumn7.Name = "dci"
+        GridViewTextBoxColumn7.Width = 300
+        GridViewTextBoxColumn8.EnableExpressionEditor = False
+        GridViewTextBoxColumn8.HeaderText = "Lot"
+        GridViewTextBoxColumn8.Name = "Lot"
+        GridViewTextBoxColumn8.Width = 80
+        GridViewDateTimeColumn2.CustomFormat = "MM/yyyy"
+        GridViewDateTimeColumn2.DateTimeKind = System.DateTimeKind.Local
+        GridViewDateTimeColumn2.EnableExpressionEditor = False
+        GridViewDateTimeColumn2.FilteringTimePrecision = Telerik.WinControls.UI.GridViewTimePrecisionMode.None
+        GridViewDateTimeColumn2.HeaderText = "Exp"
+        GridViewDateTimeColumn2.Name = "exp"
+        GridViewDateTimeColumn2.Width = 100
+        GridViewTextBoxColumn9.EnableExpressionEditor = False
+        GridViewTextBoxColumn9.HeaderText = "Réalisation"
+        GridViewTextBoxColumn9.Name = "realisation"
+        GridViewTextBoxColumn9.Width = 160
+        GridViewTextBoxColumn10.AllowGroup = False
+        GridViewTextBoxColumn10.AllowResize = False
+        GridViewTextBoxColumn10.AllowSort = False
+        GridViewTextBoxColumn10.EnableExpressionEditor = False
+        GridViewTextBoxColumn10.HeaderText = "Commentaire"
+        GridViewTextBoxColumn10.Name = "commentaire"
+        GridViewTextBoxColumn10.ReadOnly = True
+        GridViewTextBoxColumn10.SortOrder = Telerik.WinControls.UI.RadSortOrder.Ascending
+        GridViewTextBoxColumn10.VisibleInColumnChooser = False
+        GridViewTextBoxColumn10.Width = 300
+        Me.GVVaccin.MasterTemplate.Columns.AddRange(New Telerik.WinControls.UI.GridViewDataColumn() {GridViewTextBoxColumn6, GridViewTextBoxColumn7, GridViewTextBoxColumn8, GridViewDateTimeColumn2, GridViewTextBoxColumn9, GridViewTextBoxColumn10})
         Me.GVVaccin.MasterTemplate.ShowRowHeaderColumn = False
-        Me.GVVaccin.MasterTemplate.ViewDefinition = TableViewDefinition1
+        SortDescriptor2.PropertyName = "commentaire"
+        Me.GVVaccin.MasterTemplate.SortDescriptors.AddRange(New Telerik.WinControls.Data.SortDescriptor() {SortDescriptor2})
+        Me.GVVaccin.MasterTemplate.ViewDefinition = TableViewDefinition2
         Me.GVVaccin.Name = "GVVaccin"
         Me.GVVaccin.RightToLeft = System.Windows.Forms.RightToLeft.No
         Me.GVVaccin.ShowCellErrors = False
         Me.GVVaccin.ShowGroupPanel = False
         Me.GVVaccin.ShowRowErrors = False
-        Me.GVVaccin.Size = New System.Drawing.Size(755, 349)
+        Me.GVVaccin.Size = New System.Drawing.Size(948, 349)
         Me.GVVaccin.TabIndex = 0
         '
         'BtnValidation
         '
-        Me.BtnValidation.Location = New System.Drawing.Point(657, 367)
+        Me.BtnValidation.Location = New System.Drawing.Point(851, 367)
         Me.BtnValidation.Name = "BtnValidation"
         Me.BtnValidation.Size = New System.Drawing.Size(110, 24)
         Me.BtnValidation.TabIndex = 1
@@ -96,7 +110,7 @@ Partial Class RadFVaccinInput
         '
         'BtnCancel
         '
-        Me.BtnCancel.Location = New System.Drawing.Point(541, 367)
+        Me.BtnCancel.Location = New System.Drawing.Point(735, 367)
         Me.BtnCancel.Name = "BtnCancel"
         Me.BtnCancel.Size = New System.Drawing.Size(110, 24)
         Me.BtnCancel.TabIndex = 2
@@ -106,7 +120,7 @@ Partial Class RadFVaccinInput
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(779, 401)
+        Me.ClientSize = New System.Drawing.Size(972, 400)
         Me.Controls.Add(Me.BtnCancel)
         Me.Controls.Add(Me.BtnValidation)
         Me.Controls.Add(Me.GVVaccin)

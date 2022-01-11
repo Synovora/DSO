@@ -19,14 +19,30 @@ Public Class RadFCPV
         AfficheTitleForm(Me, "Vaccin - Calendrier Personnalise", userLog)
         RBDateAll.CheckState = True
 
+        ChargementEtatCivil()
         ChargementValence()
         ChargementDate()
-        'ChargementVaccinProgram()
     End Sub
 
-    'Private Sub ChargementVaccinProgram()
-    '    vaccinPrograms = vaccinDao.GetVaccinProgramListByPatient(Patient.PatientId)
-    'End Sub
+    Private Sub ChargementEtatCivil()
+        LblPatientNIR.Text = Patient.PatientNir.ToString
+        LblPatientPrenom.Text = Patient.PatientPrenom
+        LblPatientNom.Text = Patient.PatientNom
+        LblPatientAge.Text = Patient.PatientAge
+        LblDateNaissance.Text = Patient.PatientDateNaissance.ToString("dd.MM.yyyy")
+        LblPatientGenre.Text = Patient.PatientGenre
+        LblPatientSite.Text = Environnement.Table_site.GetSiteDescription(Patient.PatientSiteId)
+        LblPatientDateMaj.Text = Patient.PatientSyntheseDateMaj.ToString("dd.MM.yyyy")
+
+        LblALD.Hide()
+        Dim StringTooltip As String
+        Dim aldDao As New AldDao
+        StringTooltip = aldDao.DateFinALD(Patient.PatientId)
+        If StringTooltip <> "" Then
+            LblALD.Show()
+            ToolTip.SetToolTip(LblALD, StringTooltip)
+        End If
+    End Sub
 
     Private Sub ChargementValence()
         Grid.Columns.Clear()

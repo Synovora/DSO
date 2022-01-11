@@ -28,7 +28,6 @@ Public Class RadFVaccinInfo
 
     Private Sub ChargementInformation()
         LblAgeVaccination.Text = CGVDate.DaysToDate(SelectedCGVDate.Days)
-        'LblOperator.Text = GetProfilUserString(userLog)
         Dim valenceIds As List(Of Long) = New List(Of Long)
         For Each valences As CGVValence In SelectedValences
             valenceIds.Add(valences.Valence)
@@ -98,6 +97,7 @@ Public Class RadFVaccinInfo
                 GVValenceNonRequis.Rows.Add(iGrid)
                 GVValenceNonRequis.Rows(iGrid).Cells("id").Value = row.Cells("id").Value
                 GVValenceNonRequis.Rows(iGrid).Cells("name").Value = Valences.Find(Function(x) x.Id = valenceNone.Valence).Description
+                GVValenceNonRequis.Rows(iGrid).Cells("name").Tag = Valences.Find(Function(x) x.Id = valenceNone.Valence).Description
                 iGrid += 1
             Next
         Next
@@ -108,19 +108,22 @@ Public Class RadFVaccinInfo
     Private Sub ColorVaccins()
         Me.Enabled = False
         Cursor.Current = Cursors.WaitCursor
-
-
         For Each row As GridViewRowInfo In GVVaccin.Rows
+            Dim tmp = 2
             row.Cells("dci").Style.ForeColor = Color.Black
             If row.Cells("checked").Value = False Then
                 If GVValence.Rows.Any(Function(x) x.Cells("checked").Value = True AndAlso Vaccins.Any(Function(y) y.Id = row.Cells("id").Value AndAlso y.Valence = x.Cells("valence").Value)) Then
                     row.Cells("dci").Style.ForeColor = Color.Red
+                    tmp = 4
                 ElseIf Vaccins.Any(Function(x) x.Id.ToString() = row.Cells("id").Value AndAlso Not SelectedValences.Any(Function(y) y.Valence = x.Valence)) Then
                     row.Cells("dci").Style.ForeColor = Color.Orange
+                    tmp = 3
                 ElseIf Vaccins.FindAll(Function(x) x.Id.ToString() = row.Cells("id").Value AndAlso GVValence.Rows.Any(Function(y) y.Cells("valence").Value = x.Valence AndAlso y.Cells("checked").Value = False)).Count = SelectedValences.Count Then
                     row.Cells("dci").Style.ForeColor = Color.Green
+                    tmp = 1
                 End If
             End If
+            row.Cells("category").Value = tmp
         Next
 
         Cursor.Current = Cursors.Default
@@ -139,7 +142,8 @@ Public Class RadFVaccinInfo
             GVValence.Rows(iGrid).Cells("id").Value = valence.Id
             GVValence.Rows(iGrid).Cells("valence").Value = valence.Valence
             GVValence.Rows(iGrid).Cells("checked").Value = GVVaccin.Rows.Any(Function(x) x.Cells("checked").Value = True AndAlso Vaccins.Any(Function(y) y.Id = x.Cells("id").Value AndAlso y.Valence.ToString() = valence.Valence.ToString()))
-            GVValence.Rows(iGrid).Cells("nom").Value = valence.Description
+            GVValence.Rows(iGrid).Cells("name").Value = valence.Description
+            GVValence.Rows(iGrid).Cells("name").Tag = valence.Description
             iGrid += 1
         Next
         ColorVaccins()
@@ -230,8 +234,8 @@ Public Class RadFVaccinInfo
                 vaccinDao.CreateVaccinProgramRelation(New VaccinProgramRelation() With {.Date = SelectedCGVDate.Id, .Vaccin = GVVaccin.Rows(row).Cells("id").Value, .Patient = SelectedPatient.PatientId})
             Else Return
             End If
-            GVVaccin.Refresh()
-            GVVaccin.Update()
+            'GVVaccin.Refresh()
+            'GVVaccin.Update()
             ChargementVaccins()
             ChargementValences()
         End If
@@ -254,6 +258,20 @@ Public Class RadFVaccinInfo
         Dim hoveredCell As GridDataCellElement = TryCast(sender, GridDataCellElement)
         If hoveredCell IsNot Nothing AndAlso hoveredCell.ColumnInfo.Name = "dci" Then
             e.ToolTipText = hoveredCell.RowInfo.Cells("dci").Tag
+        End If
+    End Sub
+
+    Private Sub GVValence_ToolTipTextNeeded(sender As Object, e As ToolTipTextNeededEventArgs) Handles GVValence.ToolTipTextNeeded
+        Dim hoveredCell As GridDataCellElement = TryCast(sender, GridDataCellElement)
+        If hoveredCell IsNot Nothing AndAlso hoveredCell.ColumnInfo.Name = "name" Then
+            e.ToolTipText = hoveredCell.RowInfo.Cells("name").Tag
+        End If
+    End Sub
+
+    Private Sub GVValenceNonRequis_ToolTipTextNeeded(sender As Object, e As ToolTipTextNeededEventArgs) Handles GVValenceNonRequis.ToolTipTextNeeded
+        Dim hoveredCell As GridDataCellElement = TryCast(sender, GridDataCellElement)
+        If hoveredCell IsNot Nothing AndAlso hoveredCell.ColumnInfo.Name = "name" Then
+            e.ToolTipText = hoveredCell.RowInfo.Cells("name").Tag
         End If
     End Sub
 

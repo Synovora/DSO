@@ -674,6 +674,18 @@
     <Compile Include="Form\Vaccin\RadFVaccinInput.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="Form\Vaccin\RadFVaccinInputComment.Designer.vb">
+      <DependentUpon>RadFVaccinInputComment.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Form\Vaccin\RadFVaccinInputComment.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form\Vaccin\RadFVaccinInputRealisation.Designer.vb">
+      <DependentUpon>RadFVaccinInputRealisation.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Form\Vaccin\RadFVaccinInputRealisation.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Form\Vaccin\RadFValenceSelecteur.Designer.vb">
       <DependentUpon>RadFValenceSelecteur.vb</DependentUpon>
     </Compile>
@@ -1297,6 +1309,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Form\Vaccin\RadFVaccinInput.resx">
       <DependentUpon>RadFVaccinInput.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form\Vaccin\RadFVaccinInputComment.resx">
+      <DependentUpon>RadFVaccinInputComment.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form\Vaccin\RadFVaccinInputRealisation.resx">
+      <DependentUpon>RadFVaccinInputRealisation.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Form\Vaccin\RadFValenceSelecteur.resx">
       <DependentUpon>RadFValenceSelecteur.vb</DependentUpon>
