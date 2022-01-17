@@ -31,9 +31,9 @@ Public Class RadFVaccinInput
                 radFVaccinInputComment.ShowDialog()
             End Using
         ElseIf row >= 0 AndAlso valenceCol = 4 Then
-            Using radFVaccinInputComment As New RadFVaccinInputRealisation
-                radFVaccinInputComment.ShowDialog()
-            End Using
+            'Using radFVaccinInputComment As New RadFVaccinInputRealisation
+            '    radFVaccinInputComment.ShowDialog()
+            'End Using
         End If
 
         Cursor.Current = Cursors.Default

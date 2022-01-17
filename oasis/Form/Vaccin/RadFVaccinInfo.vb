@@ -14,6 +14,7 @@ Public Class RadFVaccinInfo
     ReadOnly vaccinDao As New VaccinDao
     ReadOnly cgvDateDao As New CGVDateDao
     ReadOnly userDao As New UserDao
+    ReadOnly antecedentDao As New AntecedentDao
 
     Private Sub RadFATCListe_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         AfficheTitleForm(Me, "Vaccin - Information", userLog)
@@ -179,6 +180,7 @@ Public Class RadFVaccinInfo
 
         'Allergie
         GetAllergie()
+        GetAllergieNonMedicamenteuse()
 
     End Sub
 
@@ -203,6 +205,19 @@ Public Class RadFVaccinInfo
             LblAllergie.Show()
             ToolTip.SetToolTip(LblAllergie, StringAllergieToolTip)
             ListeDesMédicamentsDéclarésAllergiquesToolStripMenuItem.Enabled = True
+        End If
+    End Sub
+
+    Private Sub GetAllergieNonMedicamenteuse()
+        Dim patientDao As New PatientDao
+        Dim antecedentAllergie As Antecedent = antecedentDao.GetByDrcId(SelectedPatient.PatientId, 121009)
+        If antecedentAllergie Is Nothing Then
+            LblAllergie.Hide()
+            'ListeDesMédicamentsDéclarésAllergiquesToolStripMenuItem.Enabled = False
+        Else
+            LblAllergie.Show()
+            ToolTip.SetToolTip(LblAllergieNonMedicamenteuse, antecedentAllergie.Description)
+            'ListeDesMédicamentsDéclarésAllergiquesToolStripMenuItem.Enabled = True
         End If
     End Sub
 

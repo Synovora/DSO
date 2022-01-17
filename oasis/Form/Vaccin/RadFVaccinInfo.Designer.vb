@@ -75,7 +75,7 @@ Partial Class RadFVaccinInfo
         Me.LblPatientNIR = New System.Windows.Forms.Label()
         Me.LblContreIndication = New System.Windows.Forms.Label()
         Me.LblAllergie = New System.Windows.Forms.Label()
-        Me.Label2 = New System.Windows.Forms.Label()
+        Me.LblAllergieNonMedicamenteuse = New System.Windows.Forms.Label()
         Me.RadLabel1 = New Telerik.WinControls.UI.RadLabel()
         Me.LblAgeVaccination = New Telerik.WinControls.UI.RadLabel()
         Me.ToolTip = New System.Windows.Forms.ToolTip(Me.components)
@@ -198,8 +198,8 @@ Partial Class RadFVaccinInfo
         Me.GVVaccin.MasterTemplate.Columns.AddRange(New Telerik.WinControls.UI.GridViewDataColumn() {GridViewCheckBoxColumn2, GridViewTextBoxColumn4, GridViewTextBoxColumn5, GridViewTextBoxColumn6, GridViewTextBoxColumn7})
         Me.GVVaccin.MasterTemplate.EnableGrouping = False
         Me.GVVaccin.MasterTemplate.ShowRowHeaderColumn = False
-        SortDescriptor2.PropertyName = "vaccin"
-        SortDescriptor3.PropertyName = "category"
+        SortDescriptor2.PropertyName = "category"
+        SortDescriptor3.PropertyName = "vaccin"
         Me.GVVaccin.MasterTemplate.SortDescriptors.AddRange(New Telerik.WinControls.Data.SortDescriptor() {SortDescriptor2, SortDescriptor3})
         Me.GVVaccin.MasterTemplate.ViewDefinition = TableViewDefinition2
         Me.GVVaccin.Name = "GVVaccin"
@@ -463,16 +463,16 @@ Partial Class RadFVaccinInfo
         Me.LblAllergie.TabIndex = 33
         Me.LblAllergie.Text = "Allergie(s) "
         '
-        'Label2
+        'LblAllergieNonMedicamenteuse
         '
-        Me.Label2.AutoSize = True
-        Me.Label2.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label2.ForeColor = System.Drawing.Color.OrangeRed
-        Me.Label2.Location = New System.Drawing.Point(526, 58)
-        Me.Label2.Name = "Label2"
-        Me.Label2.Size = New System.Drawing.Size(190, 13)
-        Me.Label2.TabIndex = 35
-        Me.Label2.Text = "Allergie(s)  non medicamenteuse"
+        Me.LblAllergieNonMedicamenteuse.AutoSize = True
+        Me.LblAllergieNonMedicamenteuse.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.LblAllergieNonMedicamenteuse.ForeColor = System.Drawing.Color.OrangeRed
+        Me.LblAllergieNonMedicamenteuse.Location = New System.Drawing.Point(526, 58)
+        Me.LblAllergieNonMedicamenteuse.Name = "LblAllergieNonMedicamenteuse"
+        Me.LblAllergieNonMedicamenteuse.Size = New System.Drawing.Size(190, 13)
+        Me.LblAllergieNonMedicamenteuse.TabIndex = 35
+        Me.LblAllergieNonMedicamenteuse.Text = "Allergie(s)  non medicamenteuse"
         '
         'RadLabel1
         '
@@ -693,7 +693,7 @@ Partial Class RadFVaccinInfo
         Me.Controls.Add(Me.GVSelectedVaccin)
         Me.Controls.Add(Me.LblAgeVaccination)
         Me.Controls.Add(Me.RadLabel1)
-        Me.Controls.Add(Me.Label2)
+        Me.Controls.Add(Me.LblAllergieNonMedicamenteuse)
         Me.Controls.Add(Me.LblContreIndication)
         Me.Controls.Add(Me.LblAllergie)
         Me.Controls.Add(Me.RadGroupBoxEtatCivil)
@@ -760,7 +760,7 @@ Partial Class RadFVaccinInfo
     Friend WithEvents LblPatientNIR As Label
     Friend WithEvents LblContreIndication As Label
     Friend WithEvents LblAllergie As Label
-    Friend WithEvents Label2 As Label
+    Friend WithEvents LblAllergieNonMedicamenteuse As Label
     Friend WithEvents RadLabel1 As Telerik.WinControls.UI.RadLabel
     Friend WithEvents LblAgeVaccination As Telerik.WinControls.UI.RadLabel
     Friend WithEvents ToolTip As ToolTip
