@@ -141,7 +141,7 @@ Public Class RadFPatientNoteDetailEdit
 
         If patientNote.UserCreation <> 0 Then
             Dim userDao As New UserDao
-            utilisateurHisto = userDao.getUserById(patientNote.UserCreation)
+            utilisateurHisto = userDao.GetUserById(patientNote.UserCreation)
             'SetUtilisateur(utilisateurHisto, patientNote.UserCreation)
             LblUtilisateurCreation.Text = Me.utilisateurHisto.UtilisateurPrenom & " " & Me.utilisateurHisto.UtilisateurNom
         Else
@@ -159,7 +159,7 @@ Public Class RadFPatientNoteDetailEdit
 
         If patientNote.UserModification <> 0 Then
             Dim userDao As New UserDao
-            utilisateurHisto = userDao.getUserById(patientNote.UserModification)
+            utilisateurHisto = userDao.GetUserById(patientNote.UserModification)
             'SetUtilisateur(utilisateurHisto, patientNote.UserModification)
             LblUtilisateurModification.Text = Me.utilisateurHisto.UtilisateurPrenom & " " & Me.utilisateurHisto.UtilisateurNom
         Else

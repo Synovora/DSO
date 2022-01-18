@@ -879,7 +879,7 @@ Public Class RadFPatientDetailEdit
             If dt.Rows(i)("oa_patient_note_utilisateur_creation") IsNot DBNull.Value Then
                 If dt.Rows(i)("oa_patient_note_utilisateur_creation") <> 0 Then
                     Dim userDao As New UserDao
-                    utilisateurHisto = userDao.getUserById(dt.Rows(i)("oa_patient_note_utilisateur_creation"))
+                    utilisateurHisto = userDao.GetUserById(dt.Rows(i)("oa_patient_note_utilisateur_creation"))
                     Auteur = Me.utilisateurHisto.UtilisateurPrenom & " " & Me.utilisateurHisto.UtilisateurNom
                 End If
             End If

@@ -357,6 +357,41 @@ Public Class VaccinDao
     '
     ' PROGRAMMATION RELATION
     '
+    Public Function UpdateVaccinProgramRelation(vaccinProgramRelation As VaccinProgramRelation) As Long
+        Dim da As New SqlDataAdapter()
+        Dim vaccinId As Long
+
+        Dim SQLstring As String = "
+            UPDATE oasis.oa_vaccin_program_relation SET vaccin=@vaccin, date=@date, patient=@patient, realisation_date=@realisation_date, realisation_operator=@realisation_operator WHERE id=@id;
+        "
+        'SELECT SCOPE_IDENTITY();
+
+        Dim con As SqlConnection = GetConnection()
+        Dim cmd As New SqlCommand(SQLstring, con)
+
+        With cmd.Parameters
+            .AddWithValue("@id", vaccinProgramRelation.Id)
+            .AddWithValue("@vaccin", vaccinProgramRelation.Vaccin)
+            .AddWithValue("@date", vaccinProgramRelation.Date)
+            .AddWithValue("@patient", vaccinProgramRelation.Patient)
+            .AddWithValue("@realisation_date", vaccinProgramRelation.RealisationDate)
+            .AddWithValue("@realisation_operator", vaccinProgramRelation.RealisationOperator)
+        End With
+        Try
+            da.InsertCommand = cmd
+            Debug.WriteLine(GetSqlCommandTextForLogs(cmd))
+            'vaccinId = 
+            da.InsertCommand.ExecuteScalar()
+        Catch ex As Exception
+            Throw New Exception(ex.Message)
+            vaccinId = 0
+        Finally
+            con.Close()
+        End Try
+
+        Return vaccinId
+    End Function
+
     Public Function CreateVaccinProgramRelation(vaccinProgram As VaccinProgramRelation) As Long
         Dim da As SqlDataAdapter = New SqlDataAdapter()
         Dim vaccinProgramId As Long
@@ -440,6 +475,98 @@ Public Class VaccinDao
         End Try
 
         Return vaccinPrograms
+    End Function
+
+    '
+    ' VACCIN PROGRAM ADMINISTRATION
+    '
+
+    Public Function CreateVaccinProgramAdministration(vaccinProgramAdmin As VaccinProgramAdmin) As Long
+        Dim da As New SqlDataAdapter()
+        Dim vaccinId As Long
+
+        Dim SQLstring As String = "
+            INSERT into oasis.oa_vaccin_program_admin (vaccin_program_relation, lot, expiration, comment)
+                VALUES (@vaccin_program_relation, @lot, @expiration, @comment);
+            SELECT SCOPE_IDENTITY();
+        "
+
+        Dim con As SqlConnection = GetConnection()
+        Dim cmd As New SqlCommand(SQLstring, con)
+
+        With cmd.Parameters
+            .AddWithValue("@vaccin_program_relation", vaccinProgramAdmin.VaccinProgramRelation)
+            .AddWithValue("@lot", vaccinProgramAdmin.Lot)
+            .AddWithValue("@expiration", vaccinProgramAdmin.Expiration)
+            .AddWithValue("@comment", vaccinProgramAdmin.Comment)
+        End With
+        Try
+            da.InsertCommand = cmd
+            vaccinId = da.InsertCommand.ExecuteScalar()
+        Catch ex As Exception
+            Throw New Exception(ex.Message)
+            vaccinId = 0
+        Finally
+            con.Close()
+        End Try
+
+        Return vaccinId
+    End Function
+
+    Public Function UpdateVaccinProgramAdministration(vaccinProgramAdmin As VaccinProgramAdmin) As Long
+        Dim da As New SqlDataAdapter()
+        Dim vaccinId As Long
+
+        Dim SQLstring As String = "
+            UPDATE oasis.oa_vaccin_program_admin SET vaccin_program_relation=@vaccin_program_relation, lot=@lot, expiration=@expiration, comment=@comment WHERE id=@id;
+        "
+        'SELECT SCOPE_IDENTITY();
+
+        Dim con As SqlConnection = GetConnection()
+        Dim cmd As New SqlCommand(SQLstring, con)
+
+        With cmd.Parameters
+            .AddWithValue("@id", vaccinProgramAdmin.Id)
+            .AddWithValue("@vaccin_program_relation", vaccinProgramAdmin.VaccinProgramRelation)
+            .AddWithValue("@lot", vaccinProgramAdmin.Lot)
+            .AddWithValue("@expiration", vaccinProgramAdmin.Expiration)
+            .AddWithValue("@comment", vaccinProgramAdmin.Comment)
+        End With
+        Try
+            da.InsertCommand = cmd
+            Debug.WriteLine(GetSqlCommandTextForLogs(cmd))
+            'vaccinId = 
+            da.InsertCommand.ExecuteScalar()
+        Catch ex As Exception
+            Throw New Exception(ex.Message)
+            vaccinId = 0
+        Finally
+            con.Close()
+        End Try
+
+        Return vaccinId
+    End Function
+
+    Public Function GetVaccinProgramAdministrationByRelation(vaccinProgramRelationId As Integer) As VaccinProgramAdmin
+        Dim vaccinProgramAdmin As VaccinProgramAdmin
+        Dim con As SqlConnection = GetConnection()
+
+        Try
+            Dim command As SqlCommand = con.CreateCommand()
+            command.CommandText = "SELECT * FROM oasis.[oa_vaccin_program_admin] WHERE vaccin_program_relation=@vaccinProgramRelationId"
+            command.Parameters.AddWithValue("@vaccinProgramRelationId", vaccinProgramRelationId)
+            Using reader As SqlDataReader = command.ExecuteReader()
+                If reader.Read() Then
+                    vaccinProgramAdmin = New VaccinProgramAdmin(reader)
+                End If
+            End Using
+        Catch ex As Exception
+            Throw ex
+        Finally
+            con.Close()
+        End Try
+
+        Return vaccinProgramAdmin
     End Function
 
     ''

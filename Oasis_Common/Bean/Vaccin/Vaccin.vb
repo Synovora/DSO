@@ -48,6 +48,8 @@ Public Class VaccinProgramRelation
     Property Patient As Long
     Property [Date] As Long
     Property Vaccin As Long
+    Property RealisationDate As Date
+    Property RealisationOperator As Long
 
     Public Sub New()
     End Sub
@@ -57,6 +59,8 @@ Public Class VaccinProgramRelation
         Me.Patient = reader("patient")
         Me.Date = reader("date")
         Me.Vaccin = reader("vaccin")
+        Me.RealisationDate = Coalesce(reader("realisation_date"), Nothing)
+        Me.RealisationOperator = Coalesce(reader("realisation_operator"), Nothing)
     End Sub
 
 End Class

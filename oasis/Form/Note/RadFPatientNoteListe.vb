@@ -125,7 +125,7 @@ Public Class RadFPatientNoteListe
                 If NotePatientDataTable.Rows(i)("oa_patient_note_utilisateur_creation") <> 0 Then
                     Dim UtilisateurCreation As Utilisateur
                     Dim userDao As New UserDao
-                    UtilisateurCreation = userDao.getUserById(NotePatientDataTable.Rows(i)("oa_patient_note_utilisateur_creation"))
+                    UtilisateurCreation = userDao.GetUserById(NotePatientDataTable.Rows(i)("oa_patient_note_utilisateur_creation"))
                     'SetUtilisateur(utilisateurHisto, NotePatientDataTable.Rows(i)("oa_patient_note_utilisateur_creation"))
                     Auteur = UtilisateurCreation.UtilisateurPrenom & " " & UtilisateurCreation.UtilisateurNom
                 End If

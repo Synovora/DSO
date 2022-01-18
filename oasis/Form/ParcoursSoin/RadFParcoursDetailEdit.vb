@@ -349,7 +349,7 @@ Public Class RadFParcoursDetailEdit
 
         If ParcoursUpdate.UserCreation <> 0 Then
             Dim userDao As New UserDao
-            UtilisateurHisto = userDao.getUserById(ParcoursUpdate.UserCreation)
+            UtilisateurHisto = userDao.GetUserById(ParcoursUpdate.UserCreation)
             LblUtilisateurCreation.Text = Me.UtilisateurHisto.UtilisateurPrenom & " " & Me.UtilisateurHisto.UtilisateurNom
         End If
 
@@ -365,7 +365,7 @@ Public Class RadFParcoursDetailEdit
         LblUtilisateurModification.Text = ""
         If ParcoursUpdate.UserModification <> 0 Then
             Dim userDao As New UserDao
-            UtilisateurHisto = userDao.getUserById(ParcoursUpdate.UserModification)
+            UtilisateurHisto = userDao.GetUserById(ParcoursUpdate.UserModification)
             LblUtilisateurModification.Text = Me.UtilisateurHisto.UtilisateurPrenom & " " & Me.UtilisateurHisto.UtilisateurNom
         End If
     End Sub
@@ -1105,7 +1105,7 @@ Public Class RadFParcoursDetailEdit
 
                     Me.Enabled = True
                 Else
-                    Dim user As Utilisateur = userDao.getUserById(tache.TraiteUserId)
+                    Dim user As Utilisateur = userDao.GetUserById(tache.TraiteUserId)
                     MessageBox.Show("Le rendez-vous n'est pas modifiable, il est en cours de traitement par : " & user.UtilisateurPrenom & " " & user.UtilisateurNom, "Alerte", MessageBoxButtons.OK, MessageBoxIcon.Warning)
                 End If
             End If
@@ -1154,7 +1154,7 @@ Public Class RadFParcoursDetailEdit
 
                     Me.Enabled = True
                 Else
-                    Dim user As Utilisateur = userDao.getUserById(tache.TraiteUserId)
+                    Dim user As Utilisateur = userDao.GetUserById(tache.TraiteUserId)
                     MessageBox.Show("Le rendez-vous n'est pas modifiable, il est en cours de traitement par : " & userLog.UtilisateurPrenom & " " & userLog.UtilisateurNom, "Alerte", MessageBoxButtons.OK, MessageBoxIcon.Warning)
                 End If
             End If

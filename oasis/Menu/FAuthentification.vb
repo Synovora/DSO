@@ -167,7 +167,7 @@ Public Class FAuthentificattion
         Me.Cursor = Cursors.WaitCursor
         Dim UtilisateurConnecte As New Utilisateur()
         Try
-            UtilisateurConnecte = userdao.getUserById(UtilisateurId)
+            UtilisateurConnecte = userdao.GetUserById(UtilisateurId)
             UtilisateurConnecte.UtilisateurAdmin = Admin
             userLog = UtilisateurConnecte
             '  --- init internationnalisation du richTextBoxEditor

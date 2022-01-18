@@ -242,7 +242,7 @@ Public Class RadFPPSDetailEdit
         LblUtilisateurCreation.Text = ""
         If PPSUpdate.UserCreation <> 0 Then
             Dim userDao As New UserDao
-            UtilisateurHisto = userDao.getUserById(PPSUpdate.UserCreation)
+            UtilisateurHisto = userDao.GetUserById(PPSUpdate.UserCreation)
             LblUtilisateurCreation.Text = Me.UtilisateurHisto.UtilisateurPrenom & " " & Me.UtilisateurHisto.UtilisateurNom
         End If
 
@@ -258,7 +258,7 @@ Public Class RadFPPSDetailEdit
         LblUtilisateurModification.Text = ""
         If PPSUpdate.UserModification <> 0 Then
             Dim userDao As New UserDao
-            UtilisateurHisto = userDao.getUserById(PPSUpdate.UserModification)
+            UtilisateurHisto = userDao.GetUserById(PPSUpdate.UserModification)
             LblUtilisateurModification.Text = Me.UtilisateurHisto.UtilisateurPrenom & " " & Me.UtilisateurHisto.UtilisateurNom
         End If
 

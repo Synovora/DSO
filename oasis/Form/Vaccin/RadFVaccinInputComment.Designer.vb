@@ -22,37 +22,38 @@ Partial Class RadFVaccinInputComment
     'Do not modify it using the code editor.
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
-        Me.RadRichTextEditor1 = New Telerik.WinControls.UI.RadRichTextEditor()
+        Me.RTEComment = New Telerik.WinControls.UI.RadRichTextEditor()
         Me.RadBtnAddTraitement = New Telerik.WinControls.UI.RadButton()
         Me.RadBtnDone = New Telerik.WinControls.UI.RadButton()
         Me.RadBtnCancel = New Telerik.WinControls.UI.RadButton()
         Me.RadLabel1 = New Telerik.WinControls.UI.RadLabel()
         Me.RadLabel2 = New Telerik.WinControls.UI.RadLabel()
         Me.DTPExp = New System.Windows.Forms.DateTimePicker()
-        Me.RadTextBox1 = New Telerik.WinControls.UI.RadTextBox()
+        Me.TextLot = New Telerik.WinControls.UI.RadTextBox()
         Me.RadLabel3 = New Telerik.WinControls.UI.RadLabel()
-        CType(Me.RadRichTextEditor1, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.RTEComment, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.RadBtnAddTraitement, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.RadBtnDone, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.RadBtnCancel, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.RadLabel1, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.RadLabel2, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.RadTextBox1, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.TextLot, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.RadLabel3, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
-        'RadRichTextEditor1
+        'RTEComment
         '
-        Me.RadRichTextEditor1.BorderColor = System.Drawing.Color.FromArgb(CType(CType(156, Byte), Integer), CType(CType(189, Byte), Integer), CType(CType(232, Byte), Integer))
-        Me.RadRichTextEditor1.Location = New System.Drawing.Point(13, 56)
-        Me.RadRichTextEditor1.Name = "RadRichTextEditor1"
-        Me.RadRichTextEditor1.SelectionFill = System.Drawing.Color.FromArgb(CType(CType(128, Byte), Integer), CType(CType(78, Byte), Integer), CType(CType(158, Byte), Integer), CType(CType(255, Byte), Integer))
-        Me.RadRichTextEditor1.Size = New System.Drawing.Size(467, 173)
-        Me.RadRichTextEditor1.TabIndex = 0
+        Me.RTEComment.BorderColor = System.Drawing.Color.FromArgb(CType(CType(156, Byte), Integer), CType(CType(189, Byte), Integer), CType(CType(232, Byte), Integer))
+        Me.RTEComment.Location = New System.Drawing.Point(13, 56)
+        Me.RTEComment.Name = "RTEComment"
+        Me.RTEComment.SelectionFill = System.Drawing.Color.FromArgb(CType(CType(128, Byte), Integer), CType(CType(78, Byte), Integer), CType(CType(158, Byte), Integer), CType(CType(255, Byte), Integer))
+        Me.RTEComment.Size = New System.Drawing.Size(467, 173)
+        Me.RTEComment.TabIndex = 0
         '
         'RadBtnAddTraitement
         '
+        Me.RadBtnAddTraitement.Enabled = False
         Me.RadBtnAddTraitement.Location = New System.Drawing.Point(13, 235)
         Me.RadBtnAddTraitement.Name = "RadBtnAddTraitement"
         Me.RadBtnAddTraitement.Size = New System.Drawing.Size(153, 24)
@@ -61,6 +62,7 @@ Partial Class RadFVaccinInputComment
         '
         'RadBtnDone
         '
+        Me.RadBtnDone.Enabled = False
         Me.RadBtnDone.Location = New System.Drawing.Point(369, 234)
         Me.RadBtnDone.Name = "RadBtnDone"
         Me.RadBtnDone.Size = New System.Drawing.Size(110, 24)
@@ -98,12 +100,12 @@ Partial Class RadFVaccinInputComment
         Me.DTPExp.Size = New System.Drawing.Size(212, 20)
         Me.DTPExp.TabIndex = 6
         '
-        'RadTextBox1
+        'TextLot
         '
-        Me.RadTextBox1.Location = New System.Drawing.Point(44, 10)
-        Me.RadTextBox1.Name = "RadTextBox1"
-        Me.RadTextBox1.Size = New System.Drawing.Size(149, 20)
-        Me.RadTextBox1.TabIndex = 7
+        Me.TextLot.Location = New System.Drawing.Point(44, 10)
+        Me.TextLot.Name = "TextLot"
+        Me.TextLot.Size = New System.Drawing.Size(149, 20)
+        Me.TextLot.TabIndex = 7
         '
         'RadLabel3
         '
@@ -119,27 +121,27 @@ Partial Class RadFVaccinInputComment
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(492, 270)
         Me.Controls.Add(Me.RadLabel3)
-        Me.Controls.Add(Me.RadTextBox1)
+        Me.Controls.Add(Me.TextLot)
         Me.Controls.Add(Me.DTPExp)
         Me.Controls.Add(Me.RadLabel2)
         Me.Controls.Add(Me.RadLabel1)
         Me.Controls.Add(Me.RadBtnCancel)
         Me.Controls.Add(Me.RadBtnDone)
         Me.Controls.Add(Me.RadBtnAddTraitement)
-        Me.Controls.Add(Me.RadRichTextEditor1)
+        Me.Controls.Add(Me.RTEComment)
         Me.Name = "RadFVaccinInputComment"
         '
         '
         '
         Me.RootElement.ApplyShapeToControl = True
         Me.Text = "Vaccin - Commentaire"
-        CType(Me.RadRichTextEditor1, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.RTEComment, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.RadBtnAddTraitement, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.RadBtnDone, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.RadBtnCancel, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.RadLabel1, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.RadLabel2, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.RadTextBox1, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.TextLot, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.RadLabel3, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
@@ -147,14 +149,14 @@ Partial Class RadFVaccinInputComment
 
     End Sub
 
-    Friend WithEvents RadRichTextEditor1 As Telerik.WinControls.UI.RadRichTextEditor
+    Friend WithEvents RTEComment As Telerik.WinControls.UI.RadRichTextEditor
     Friend WithEvents RadBtnAddTraitement As Telerik.WinControls.UI.RadButton
     Friend WithEvents RadBtnDone As Telerik.WinControls.UI.RadButton
     Friend WithEvents RadBtnCancel As Telerik.WinControls.UI.RadButton
     Friend WithEvents RadLabel1 As Telerik.WinControls.UI.RadLabel
     Friend WithEvents RadLabel2 As Telerik.WinControls.UI.RadLabel
     Friend WithEvents DTPExp As DateTimePicker
-    Friend WithEvents RadTextBox1 As Telerik.WinControls.UI.RadTextBox
+    Friend WithEvents TextLot As Telerik.WinControls.UI.RadTextBox
     Friend WithEvents RadLabel3 As Telerik.WinControls.UI.RadLabel
 End Class
 

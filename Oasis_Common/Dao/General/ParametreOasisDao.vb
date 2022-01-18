@@ -175,7 +175,7 @@ Public Class ParametreOasisDao
                     IdUserAuto = 1
                 End If
                 Dim userdao As New UserDao
-                Dim user As Utilisateur = userdao.getUserById(IdUserAuto)
+                Dim user As Utilisateur = userdao.GetUserById(IdUserAuto)
 
                 ContexteDao.TransformationEnAntecedent(contexteId, AntecedentHistoaCreer, Description, Coalesce(ContexteObsoleteDataTable.Rows(i)("oa_antecedent_statut_affichage_transformation"), ""), user)
             Next

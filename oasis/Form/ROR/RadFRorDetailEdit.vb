@@ -110,7 +110,7 @@ Public Class RadFRorDetailEdit
 
         If ror.UserCreation <> 0 Then
             Dim userDao As New UserDao
-            UtilisateurHisto = userDao.getUserById(ror.UserCreation)
+            UtilisateurHisto = userDao.GetUserById(ror.UserCreation)
             'SetUtilisateur(UtilisateurHisto, ror.UserCreation)
             LblUtilisateurCreation.Text = Me.UtilisateurHisto.UtilisateurPrenom & " " & Me.UtilisateurHisto.UtilisateurNom
         End If
@@ -127,7 +127,7 @@ Public Class RadFRorDetailEdit
         LblUtilisateurModification.Text = ""
         If ror.UserModification <> 0 Then
             Dim userDao As New UserDao
-            UtilisateurHisto = userDao.getUserById(ror.UserModification)
+            UtilisateurHisto = userDao.GetUserById(ror.UserModification)
             'SetUtilisateur(UtilisateurHisto, ror.UserModification)
             LblUtilisateurModification.Text = Me.UtilisateurHisto.UtilisateurPrenom & " " & Me.UtilisateurHisto.UtilisateurNom
         End If

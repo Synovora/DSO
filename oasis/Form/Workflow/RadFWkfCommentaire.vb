@@ -30,7 +30,7 @@ Public Class RadFWkfCommentaire
                     iGrid += 1
                     RadGridViewWkfCommentaire.Rows.Add(iGrid)
                     RadGridViewWkfCommentaire.Rows(iGrid).Cells("emetteurCommentaire").Value = workflow.EmetteurCommentaire
-                    Dim emetteur As Utilisateur = userDao.getUserById(workflow.EmetteurUserId)
+                    Dim emetteur As Utilisateur = userDao.GetUserById(workflow.EmetteurUserId)
                     Dim emetteurNom As String = emetteur.UtilisateurPrenom & " " & emetteur.UtilisateurNom
                     RadGridViewWkfCommentaire.Rows(iGrid).Cells("emetteurNom").Value = emetteurNom
                 End If

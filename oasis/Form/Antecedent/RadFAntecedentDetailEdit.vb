@@ -323,7 +323,7 @@ Public Class RadFAntecedentDetailEdit
         LblUtilisateurCreation.Text = ""
         If antecedentRead.UserCreation <> 0 Then
             Dim userDao As New UserDao
-            utilisateurHisto = userDao.getUserById(antecedentRead.UserCreation)
+            utilisateurHisto = userDao.GetUserById(antecedentRead.UserCreation)
             'SetUtilisateur(utilisateurHisto, antecedentRead.UserCreation)
             LblUtilisateurCreation.Text = Me.utilisateurHisto.UtilisateurPrenom & " " & Me.utilisateurHisto.UtilisateurNom
         Else
@@ -344,7 +344,7 @@ Public Class RadFAntecedentDetailEdit
         LblUtilisateurModification.Text = ""
         If antecedentRead.UserModification <> 0 Then
             Dim userDao As New UserDao
-            utilisateurHisto = userDao.getUserById(antecedentRead.UserModification)
+            utilisateurHisto = userDao.GetUserById(antecedentRead.UserModification)
             'SetUtilisateur(utilisateurHisto, antecedentRead.UserModification)
             LblUtilisateurModification.Text = Me.utilisateurHisto.UtilisateurPrenom & " " & Me.utilisateurHisto.UtilisateurNom
         Else

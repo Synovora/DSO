@@ -1,4 +1,5 @@
-﻿Imports Oasis_Common
+﻿Imports System.Diagnostics
+Imports Oasis_Common
 
 Public Class RadFValenceSelecteur
     Property Patient As Patient

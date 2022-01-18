@@ -363,7 +363,7 @@ Public Class PrtOrdonnance
             Dim my_qrCode = New QRCode(Data)
             With EditTools
                 .CreateParagraphIntoSection(section,, RadTextAlignment.Right)
-                Dim Medecin As Utilisateur = userDao.getUserById(ordonnance.UserValidation)
+                Dim Medecin As Utilisateur = userDao.GetUserById(ordonnance.UserValidation)
                 Dim profil As Profil = profilDao.getProfilById(Medecin.UtilisateurProfilId)
                 .AddTexteLine(Medecin.UtilisateurPrenom & " " & Medecin.UtilisateurNom & ", " & profil.Designation)
                 .AddTexteLine("RPPS : " & Medecin.UtilisateurRPPS)

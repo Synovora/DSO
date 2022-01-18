@@ -98,7 +98,7 @@ Public Class RadFEpisodeObservationDetailEdit
         End If
 
         If episodeObservationRead.UserCreation <> 0 Then
-            user = userDao.getUserById(episodeObservationRead.UserCreation)
+            user = userDao.GetUserById(episodeObservationRead.UserCreation)
             LblCreationObs2.Show()
             LblUtilisateurCreation.Text = user.UtilisateurPrenom & " " & user.UtilisateurNom
         Else

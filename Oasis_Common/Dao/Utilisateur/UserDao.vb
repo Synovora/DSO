@@ -169,7 +169,7 @@ Public Class UserDao
     ''' </summary>
     ''' <param name="userId"></param>
     ''' <returns></returns>
-    Public Function getUserById(userId As Integer) As Utilisateur
+    Public Function GetUserById(userId As Integer) As Utilisateur
         Dim user As Utilisateur
         Dim con As SqlConnection
 

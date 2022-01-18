@@ -94,7 +94,7 @@ Public Class RadFCPV
                 Continue For
             End If
             Grid.Rows.Add(iGrid)
-            Grid.Rows(iGrid).Cells(0).Value = If(cgvDate.OperatedDate <> Nothing, String.Format("{0} - {1}", cgvDate.OperatedDate.ToShortDateString(), GetProfilUserString(userDao.getUserById(cgvDate.OperatedBy))), "+")
+            Grid.Rows(iGrid).Cells(0).Value = If(cgvDate.OperatedDate <> Nothing, String.Format("{0} - {1}", cgvDate.OperatedDate.ToShortDateString(), GetProfilUserString(userDao.GetUserById(cgvDate.OperatedBy))), "+")
 
             Grid.Rows(iGrid).Cells(2).Value = String.Format("{0} {1}", cgvDate.PerformDate, cgvDate.PerformBy)
 
