@@ -8,7 +8,7 @@ Public Class RorDao
         Const StructureRor = "Structure"
     End Structure
 
-    Public Function getRorById(RorId As Integer) As Ror
+    Public Function GetRorById(RorId As Integer) As Ror
         Dim ror As Ror
         Dim con As SqlConnection = GetConnection()
 
@@ -20,7 +20,7 @@ Public Class RorDao
             command.Parameters.AddWithValue("@id", RorId)
             Using reader As SqlDataReader = command.ExecuteReader()
                 If reader.Read() Then
-                    ror = buildBean(reader)
+                    ror = New Ror(reader)
                 Else
                     Throw New ArgumentException("ROR inexistant !")
                 End If
@@ -35,44 +35,7 @@ Public Class RorDao
         Return ror
     End Function
 
-    Private Function buildBean(reader As SqlDataReader) As Ror
-        Dim ror As New Ror With {
-            .Id = reader("oa_ror_id"),
-            .SpecialiteId = Coalesce(reader("oa_ror_specialite_id"), 0),
-            .Nom = Coalesce(reader("oa_ror_nom"), ""),
-            .Oasis = Coalesce(reader("oa_ror_oasis"), False),
-            .Type = Coalesce(reader("oa_ror_type"), ""),
-            .StructureId = Coalesce(reader("oa_ror_structure_id"), 0),
-            .StructureNom = Coalesce(reader("oa_ror_structure_nom"), ""),
-            .Adresse1 = Coalesce(reader("oa_ror_adresse1"), ""),
-            .Adresse2 = Coalesce(reader("oa_ror_adresse2"), ""),
-            .CodePostal = Coalesce(reader("oa_ror_code_postal"), ""),
-            .Ville = Coalesce(reader("oa_ror_ville"), ""),
-            .Code = Coalesce(reader("oa_ror_code"), ""),
-            .Telephone = Coalesce(reader("oa_ror_telephone"), ""),
-            .Email = Coalesce(reader("oa_ror_email"), ""),
-            .Commentaire = Coalesce(reader("oa_ror_commentaire"), ""),
-            .Rpps = Coalesce(reader("oa_ror_rpps"), 0),
-            .Finess = Coalesce(reader("oa_ror_finess"), 0),
-            .Adeli = Coalesce(reader("oa_ror_adeli"), 0),
-            .Inactif = Coalesce(reader("oa_ror_inactif"), False),
-            .UserCreation = Coalesce(reader("oa_ror_user_creation"), 0),
-            .DateCreation = Coalesce(reader("oa_ror_date_creation"), Nothing),
-            .UserModification = Coalesce(reader("oa_ror_user_modification"), 0),
-            .DateModification = Coalesce(reader("oa_ror_date_modification"), Nothing),
-            .ExtractionAnnuaire = Coalesce(reader("oa_ror_extraction_annuaire"), False),
-            .IdentifiantNational = Coalesce(reader("oa_ror_identifiant_national_pp"), ""),
-            .IdentifiantStructure = Coalesce(reader("oa_ror_identifiant_technique_structure"), ""),
-            .CodeModeExercice_r23 = Coalesce(reader("oa_ror_code_nos_r23_mode_exercice"), ""),
-            .CodeProfessionSante_g15 = Coalesce(reader("oa_ror_code_nos_g15_profession_sante"), 0),
-            .CodeTypeSavoirFaire_r04 = Coalesce(reader("oa_ror_code_nos_r04_type_savoir_faire"), ""),
-            .CodeSavoirFaire = Coalesce(reader("oa_ror_code_savoir_faire"), ""),
-            .CleReferenceAnnuaire = Coalesce(reader("oa_ror_cle_reference"), 0)
-        }
-        Return ror
-    End Function
-
-    Public Function getAllRor() As DataTable
+    Public Function GetAllRor() As DataTable
         Dim SQLString As String = "SELECT * FROM oasis.oa_ror where oa_ror_inactif = 'False' or oa_ror_inactif is Null"
 
         Using con As SqlConnection = GetConnection()
@@ -133,12 +96,47 @@ Public Class RorDao
         End Using
     End Function
 
-    Public Function CreationRor(ror As Ror, userLog As Utilisateur) As Boolean
-        Dim da As SqlDataAdapter = New SqlDataAdapter()
-        Dim codeRetour As Boolean = True
+    Public Function GetListRorByNomAndCommune(nomExercice As String, villeExercice As String, departementExercice As String) As List(Of Ror)
+        Dim con As SqlConnection = GetConnection()
+        Dim rors As New List(Of Ror)
+
+        Try
+            Dim command As SqlCommand = con.CreateCommand()
+            command.CommandText = "SELECT * FROM oasis.oa_ror WHERE 1=1"
+
+            If nomExercice.Trim() <> "" Then
+                command.CommandText += " AND oa_ror_nom LIKE '%" & nomExercice & "%'"
+            End If
+
+            If villeExercice.Trim() <> "" Then
+                command.CommandText += " AND oa_ror_ville LIKE '%" & villeExercice & "%'"
+            End If
+
+            If departementExercice.Trim() <> "" Then
+                command.CommandText += " AND oa_ror_code_postal LIKE '" & departementExercice & "%'"
+            End If
+
+            Using reader As SqlDataReader = command.ExecuteReader()
+                While (reader.Read())
+                    rors.Add(New Ror(reader))
+                End While
+            End Using
+        Catch ex As Exception
+            Throw ex
+        Finally
+            con.Close()
+        End Try
+
+        Return rors
+    End Function
+
+    Public Function CreationRor(ror As Ror, userLog As Utilisateur) As Long
+        Dim da As New SqlDataAdapter()
+        Dim id As Long
+
         Dim con As SqlConnection = GetConnection()
         Dim dateCreation As Date = Date.Now.Date
-        Dim SQLstring As String = "insert into oasis.oa_ror" &
+        Dim SQLstring As String = "INSERT INTO oasis.oa_ror" &
         " (oa_ror_specialite_id, oa_ror_nom, oa_ror_type, oa_ror_structure_id, oa_ror_structure_nom," &
         " oa_ror_adresse1, oa_ror_adresse2, oa_ror_code_postal, oa_ror_ville," &
         " oa_ror_code, oa_ror_telephone, oa_ror_email, oa_ror_commentaire, oa_ror_rpps, oa_ror_finess, oa_ror_adeli, oa_ror_inactif, oa_ror_user_creation, oa_ror_date_creation," &
@@ -149,7 +147,8 @@ Public Class RorDao
         " @adresse1, @adresse2, @codePostal, @ville," &
         " @code, @telephone, @email, @commentaire, @rpps, @finess, @adeli, @inactif, @userCreation, @dateCreation," &
         " @extractionAnnuaire, @identifiantNational, @identifiantStructure, @codeModeExercice," &
-        " @codeProfessionSante, @codeTypeSavoirFaire, @codeSavoirFaire, @cleReference)"
+        " @codeProfessionSante, @codeTypeSavoirFaire, @codeSavoirFaire, @cleReference);" &
+        " SELECT SCOPE_IDENTITY();"
 
         Dim cmd As New SqlCommand(SQLstring, con)
         With cmd.Parameters
@@ -184,15 +183,14 @@ Public Class RorDao
 
         Try
             da.InsertCommand = cmd
-            da.InsertCommand.ExecuteNonQuery()
+            id = da.InsertCommand.ExecuteScalar()
         Catch ex As Exception
             Throw New Exception(ex.Message)
-            codeRetour = False
         Finally
             con.Close()
         End Try
 
-        Return codeRetour
+        Return id
     End Function
 
     Public Function ModificationRor(ror As Ror, userLog As Utilisateur) As Boolean

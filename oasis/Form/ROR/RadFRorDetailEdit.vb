@@ -76,7 +76,7 @@ Public Class RadFRorDetailEdit
 
     Private Sub ChargementRor()
         Dim dateCreation, dateModification As Date
-        ror = rorDao.getRorById(Me.SelectedRorId)
+        ror = rorDao.GetRorById(Me.SelectedRorId)
         TxtSpecialite.Text = Table_specialite.GetSpecialiteDescription(ror.SpecialiteId)
         TxtSpecialite.Enabled = False
         TxtNomIntervenant.Text = ror.Nom
@@ -190,7 +190,7 @@ Public Class RadFRorDetailEdit
         Select Case EditMode
             Case EnumEditMode.Creation
                 If ValidationDonneeSaisie() = True Then
-                    If rorDao.CreationRor(ror, userLog) = True Then
+                    If rorDao.CreationRor(ror, userLog) <> 0 Then
                         MessageBox.Show("Elément créé dans le référentiel des professionnels de santé de type : " & CbxType.Text)
                         CodeRetour = True
                         Close()

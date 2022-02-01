@@ -91,7 +91,12 @@ Public Class AnnuaireProfessionnelDao
         " indice_repetition_voie_coord_structure, libelle_type_voie_coord_structure, libelle_voie_coord_structure, bureau_cedex_coord_structure" &
         " FROM oasis.ans_annuaire_professionnel_sante"
 
-        Dim ClauseWhere As String = " WHERE code_profression = " & CodeProfessionId & " AND code_savoir_faire = '" & CodeSavoirFaireId & "'"
+        Dim ClauseWhere As String = " WHERE "
+        If CodeProfessionId AndAlso CodeSavoirFaireId Then
+            ClauseWhere += "code_profression = " & CodeProfessionId & " AND code_savoir_faire = '" & CodeSavoirFaireId & "'"
+        Else
+            ClauseWhere += "1=1"
+        End If
 
         If nomExercice.Trim() <> "" Then
             ClauseWhere += " AND nom_exercice LIKE '%" & nomExercice & "%'"

@@ -105,7 +105,7 @@ Public Class FrmSousEpisodeReponseAttribution
             Next
 
             If sousEpisode.SousTypeLibelle = "Courrier" Then
-                Dim intervenant = rorDao.getRorById(sousEpisode.IdIntervenant)
+                Dim intervenant = rorDao.GetRorById(sousEpisode.IdIntervenant)
                 Dim specialite = Table_specialite.GetSpecialiteDescription(intervenant.SpecialiteId)
                 Text = "Intervenant: " & intervenant.Nom & " - " & specialite
             End If

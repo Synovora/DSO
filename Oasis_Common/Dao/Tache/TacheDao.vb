@@ -1510,7 +1510,7 @@ Public Class TacheDao
                 tacheBeanAssocie.Specialite = Table_specialite.GetSpecialiteById(tacheBeanAssocie.Parcours.SpecialiteId)
                 If tacheBeanAssocie.Specialite.Oasis = False Then
                     ' -- on recherche le nom de l'intervenant
-                    Dim ror As Ror = rorDao.getRorById(tacheBeanAssocie.Parcours.RorId)
+                    Dim ror As Ror = rorDao.GetRorById(tacheBeanAssocie.Parcours.RorId)
                     tacheBeanAssocie.Intervenant = ror.Nom
                 End If
             End If

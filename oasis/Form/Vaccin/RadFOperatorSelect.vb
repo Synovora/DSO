@@ -1,12 +1,13 @@
 ﻿Imports Oasis_Common
 Imports Telerik.WinControls.UI
 
-Public Class RadFAnnuaireProfessionnelSelect
+Public Class RadFOperatorSelect
     Property InputSpecialiteId As Integer
-    Property InputCodeProfessionId As Integer
     Property InputCodeSavoirFaireId As String
     Property InputTypeSavoirFaireId As String
     Property SelectedProfessionnelCle As Integer
+    Property SelectedRorId As Long
+    Property CodeRetour As Boolean
 
     Private professionSanteDao As New NosProfessionSanteDao
     Private specialiteOrdinaleDao As New NosSpecialiteOrdinaleDao
@@ -23,27 +24,39 @@ Public Class RadFAnnuaireProfessionnelSelect
 
     Private Sub RadFAnnuaireProfessionnelSelect_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         AfficheTitleForm(Me, "Répertoire national - Sélection professionnel de santé", userLog)
-
-        If InputCodeProfessionId <> 0 Then
-            Dim professionSante As G15_ProfessionSante
-            professionSante = professionSanteDao.GetProfessionSanteById(InputCodeProfessionId)
-            LblInputProfessionSavoirFaire.Text = professionSante.Libelle
-        End If
-
-        If InputCodeSavoirFaireId <> "" Then
-            Select Case InputTypeSavoirFaireId.Trim()
-                Case Specialite.EnumTypeSavoirFaire.COMPETENCE_EXCLUSIVE
-                    Dim savoirFaire As R40_CompetenceExclusive
-                    savoirFaire = competenceExclusiveDao.GetCompetenceExclusiveById(InputCodeSavoirFaireId)
-                    LblInputProfessionSavoirFaire.Text += " - " & savoirFaire.Libelle
-                Case Specialite.EnumTypeSavoirFaire.SPECIALITE_ORDINALE
-                    Dim savoirFaire As R38_SpecialiteOrdinale
-                    savoirFaire = specialiteOrdinaleDao.GetSpecialiteOrdinaleById(InputCodeSavoirFaireId)
-                    LblInputProfessionSavoirFaire.Text += " - " & savoirFaire.Libelle
-            End Select
-        End If
-
         InitSelection()
+    End Sub
+
+    Private Sub ChargementRor()
+        Cursor.Current = Cursors.WaitCursor
+
+        RadGridViewAnnuaire.Rows.Clear()
+        InitSelection()
+
+        Dim rors As List(Of Ror) = rorDao.GetListRorByNomAndCommune(FiltreNomExercice.Text, FiltreVilleExercice.Text, FiltreDépartementExercice.Text)
+
+        Dim iGrid As Integer = -1 'Indice pour alimenter la Grid qui peut comporter moins d'occurrences que le DataTable
+
+        For Each ror In rors
+            iGrid += 1
+            RadGridViewAnnuaire.Rows.Add(iGrid)
+            RadGridViewAnnuaire.Rows(iGrid).Cells("cle").Value = ror.CleReferenceAnnuaire
+            RadGridViewAnnuaire.Rows(iGrid).Cells("civilite_exercice").Value = "" 'Coalesce(ror.co, "")
+            RadGridViewAnnuaire.Rows(iGrid).Cells("prenom_exercice").Value = "" '"Coalesce(ror.pr, "")
+            RadGridViewAnnuaire.Rows(iGrid).Cells("nom_exercice").Value = Coalesce(ror.Nom, "")
+            RadGridViewAnnuaire.Rows(iGrid).Cells("libelle_commune").Value = Coalesce(ror.Ville, "")
+            RadGridViewAnnuaire.Rows(iGrid).Cells("raison_sociale_site").Value = "" '"Coalesce(DataTableAnnuaire.Rows(i)("raison_sociale_site"), "")
+            RadGridViewAnnuaire.Rows(iGrid).Cells("adresse").Value = ror.Adresse1
+        Next
+
+        If RadGridViewAnnuaire.Rows.Count > 0 Then
+            RadGridViewAnnuaire.CurrentRow = RadGridViewAnnuaire.ChildRows(0)
+        End If
+
+        LblOccurrencesLues.Text = rors.Count & " occurrence(s) correspondant aux critères de recherche"
+
+
+        Cursor.Current = Cursors.Default
     End Sub
 
     Private Sub ChargementAnnuaire()
@@ -55,7 +68,7 @@ Public Class RadFAnnuaireProfessionnelSelect
 
         Dim adresse1 As String
 
-        DataTableAnnuaire = annuaireProfessionnelDao.GetProfessionnelSanteByNomAndCommune(InputCodeProfessionId, InputCodeSavoirFaireId, FiltreNomExercice.Text, FiltreVilleExercice.Text, FiltreDépartementExercice.Text)
+        DataTableAnnuaire = annuaireProfessionnelDao.GetProfessionnelSanteByNomAndCommune(Nothing, Nothing, FiltreNomExercice.Text, FiltreVilleExercice.Text, FiltreDépartementExercice.Text)
 
         Dim i As Integer
         Dim iGrid As Integer = -1 'Indice pour alimenter la Grid qui peut comporter moins d'occurrences que le DataTable
@@ -142,7 +155,11 @@ Public Class RadFAnnuaireProfessionnelSelect
         End If
 
         If lancementChargement = True Then
-            ChargementAnnuaire()
+            If RBOasis.IsChecked Then
+                ChargementRor()
+            ElseIf RBNat.IsChecked Then
+                ChargementAnnuaire()
+            End If
         End If
     End Sub
 
@@ -222,7 +239,7 @@ Public Class RadFAnnuaireProfessionnelSelect
             'Creation de l'instance dans le référentiel interne
             Dim ror As New Ror
 
-            ror.SpecialiteId = InputSpecialiteId
+            ror.SpecialiteId = SelectedAnnuaireProfessionnel.CodeProfession
             ror.Oasis = False
             If SelectedAnnuaireProfessionnel.LibelleCivilite <> "" Then
                 ror.Nom = SelectedAnnuaireProfessionnel.LibelleCiviliteExercice & " "
@@ -230,7 +247,7 @@ Public Class RadFAnnuaireProfessionnelSelect
                 ror.Nom = ""
             End If
             ror.Nom += SelectedAnnuaireProfessionnel.PrenomExercice & " " & SelectedAnnuaireProfessionnel.NomExercice
-            ror.Type = Ror.EnumIntervenant.Intervenants
+            ror.Type = ror.EnumIntervenant.Intervenants
             ror.StructureId = 0
             ror.StructureNom = SelectedAnnuaireProfessionnel.RaisonSocialeSite
             ror.Adresse1 = SelectedAnnuaireProfessionnel.ComplementPointGeographiqueCoordonneeStructure.Trim()
@@ -261,10 +278,12 @@ Public Class RadFAnnuaireProfessionnelSelect
             ror.CleReferenceAnnuaire = CleRefenceAnnuaire
 
             'Création dans le référentiel interne
-            rorDao.CreationRor(ror, userLog)
+
+            SelectedRorId = rorDao.CreationRor(ror, userLog)
 
             'Retour écran précédent
             SelectedProfessionnelCle = CleRefenceAnnuaire
+            CodeRetour = True
             Close()
         End If
     End Sub
@@ -273,7 +292,7 @@ Public Class RadFAnnuaireProfessionnelSelect
         Try
             Using form As New RadFAnnuaireProfessionneldetail
                 form.CleReferenceAnnuaire = SelectedAnnuaireProfessionnel.Cle_entree
-                form.Reference = AnnuaireReferenceDao.EnumSourceAnnuaire.ANNUAIRE_NATIONAL
+                form.Reference = annuaireReferenceDao.EnumSourceAnnuaire.ANNUAIRE_NATIONAL
                 form.ShowDialog()
             End Using
         Catch ex As Exception

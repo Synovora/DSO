@@ -30,6 +30,11 @@ Public Module outils
                 " / " & userLog.TypeProfil.ToLower.Trim & ")")
     End Function
 
+    Public Function GetProfilUserString(userLog As Ror) As String
+        Return If(userLog Is Nothing, "", userLog.Nom.Trim &
+                " - " & userLog.Type.Trim)
+    End Function
+
     Public Function AccesFonctionMedicaleSynthese(patient As Patient, userLog As Utilisateur) As Boolean
         Dim CodeRetour As Boolean = False
 

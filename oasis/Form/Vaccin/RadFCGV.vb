@@ -105,31 +105,31 @@ Public Class RadFCGV
     End Function
 
     Private Sub TextDay_TextChanged() Handles TextDay.TextChanged
-        If IsNumeric(TextDay.Text) Then
-            'TextDay.Text = IsValid(TextDay.Text, 0, 30).ToString()
-            TextMonth.Text = ""
-            TextYear.Text = ""
-        Else
-            TextDay.Text = ""
-        End If
+        'If IsNumeric(TextDay.Text) Then
+        '    'TextDay.Text = IsValid(TextDay.Text, 0, 30).ToString()
+        '    TextMonth.Text = ""
+        '    TextYear.Text = ""
+        'Else
+        '    TextDay.Text = ""
+        'End If
     End Sub
     Private Sub TextMonth_TextChanged() Handles TextMonth.TextChanged
-        If IsNumeric(TextMonth.Text) Then
-            'TextMonth.Text = IsValid(TextMonth.Text, 0, 40).ToString()
-            TextDay.Text = ""
-            TextYear.Text = ""
-        Else
-            TextMonth.Text = ""
-        End If
+        'If IsNumeric(TextMonth.Text) Then
+        '    'TextMonth.Text = IsValid(TextMonth.Text, 0, 40).ToString()
+        '    TextDay.Text = ""
+        '    TextYear.Text = ""
+        'Else
+        '    TextMonth.Text = ""
+        'End If
     End Sub
     Private Sub TextYear_TextChanged() Handles TextYear.TextChanged
-        If IsNumeric(TextYear.Text) Then
-            'TextYear.Text = IsValid(TextYear.Text, 0, 120).ToString()
-            TextDay.Text = ""
-            TextMonth.Text = ""
-        Else
-            TextYear.Text = ""
-        End If
+        'If IsNumeric(TextYear.Text) Then
+        '    'TextYear.Text = IsValid(TextYear.Text, 0, 120).ToString()
+        '    TextDay.Text = ""
+        '    TextMonth.Text = ""
+        'Else
+        '    TextYear.Text = ""
+        'End If
     End Sub
 
     Private Sub BtnDateAdd_Click(sender As Object, e As EventArgs) Handles BtnDateAdd.Click

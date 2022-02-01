@@ -12,6 +12,9 @@ Public Class RadFVaccinInfo
     Property Vaccins As List(Of VaccinValence)
     Property VaccinPrograms As List(Of VaccinProgramRelation)
 
+    Property CodeRetour As Boolean
+
+    ReadOnly rorDao As RorDao = New RorDao
     ReadOnly valenceDao As New ValenceDao
     ReadOnly vaccinDao As New VaccinDao
     ReadOnly cgvDateDao As New CGVDateDao
@@ -26,12 +29,14 @@ Public Class RadFVaccinInfo
             Me.BtnAdminVaccin.Enabled = False
             Me.BtnValidationProgram.Enabled = False
         End If
+        Vaccins = vaccinDao.GetAll()
+        Valences = valenceDao.GetList()
         ChargementEtatCivil()
-        ChargementInformation()
         ChargementVaccins()
         ChargementValences()
         RefreshSelectedVaccin()
         ColorVaccins()
+        ChargementInformation()
     End Sub
 
     Private Sub ChargementInformation()
@@ -40,10 +45,18 @@ Public Class RadFVaccinInfo
         For Each valences As CGVValence In SelectedValences
             valenceIds.Add(valences.Valence)
         Next
-        Vaccins = vaccinDao.GetAll()
-        Valences = valenceDao.GetList()
         DTPDate.Value = If(SelectedCGVDate.OperatedDate = Nothing, Date.Now(), SelectedCGVDate.OperatedDate)
-        LblOperator.Text = GetProfilUserString(userDao.GetUserById(If(SelectedCGVDate.OperatedBy <> Nothing, SelectedCGVDate.OperatedBy, userLog.UtilisateurId)))
+        BtnAdminVaccin.Enabled = If(SelectedCGVDate.OperatedDate <> Nothing, True, False)
+
+        If (VaccinPrograms.Count > 0 AndAlso VaccinPrograms(0).RealisationOperator <> Nothing) Then
+            LblOperator.Text = GetProfilUserString(userDao.GetUserById(VaccinPrograms(0).RealisationOperator))
+        ElseIf (VaccinPrograms.Count > 0 AndAlso VaccinPrograms(0).RealisationOperatorRor <> Nothing) Then
+            LblOperator.Text = GetProfilUserString(rorDao.GetRorById(VaccinPrograms(0).RealisationOperatorRor))
+        ElseIf (VaccinPrograms.Count > 0 AndAlso VaccinPrograms(0).RealisationOperatorText <> Nothing) Then
+            LblOperator.Text = VaccinPrograms(0).RealisationOperatorText
+        Else
+            LblOperator.Text = GetProfilUserString(userLog)
+        End If
     End Sub
 
     Private Sub ChargementVaccins()
@@ -217,13 +230,13 @@ Public Class RadFVaccinInfo
 
     Private Sub GetAllergieNonMedicamenteuse()
         Dim patientDao As New PatientDao
-        Dim antecedentAllergie As Antecedent = antecedentDao.GetByDrcId(SelectedPatient.PatientId, 121009)
-        If antecedentAllergie Is Nothing Then
+        Dim antecedentAllergies As List(Of Antecedent) = antecedentDao.GetListByDrc(SelectedPatient.PatientId, 121009)
+        If antecedentAllergies.Count = 0 Then
             LblAllergie.Hide()
             'ListeDesMédicamentsDéclarésAllergiquesToolStripMenuItem.Enabled = False
         Else
             LblAllergie.Show()
-            ToolTip.SetToolTip(LblAllergieNonMedicamenteuse, antecedentAllergie.Description)
+            ToolTip.SetToolTip(LblAllergieNonMedicamenteuse, String.Join(vbCrLf, (From antecedentAllergie In antecedentAllergies Select antecedentAllergie.Description).ToArray()))
             'ListeDesMédicamentsDéclarésAllergiquesToolStripMenuItem.Enabled = True
         End If
     End Sub
@@ -276,6 +289,7 @@ Public Class RadFVaccinInfo
             radFVaccinInput.VaccinPrograms = vaccinDao.GetVaccinProgramRelationListDatePatient(SelectedCGVDate.Id, SelectedPatient.PatientId)
             radFVaccinInput.Vaccins = Vaccins.FindAll(Function(x) vaccinList.Contains(x.Id))
             radFVaccinInput.ShowDialog()
+            ChargementInformation()
         End Using
     End Sub
 
@@ -303,6 +317,7 @@ Public Class RadFVaccinInfo
     Private Sub BtnValidationProgram_Click(sender As Object, e As EventArgs) Handles BtnValidationProgram.Click
         SelectedCGVDate.OperatedBy = userLog.UtilisateurId
         cgvDateDao.Update(SelectedCGVDate)
+        CodeRetour = True
         Close()
     End Sub
 

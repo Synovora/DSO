@@ -349,7 +349,7 @@ Public Class RadFOrdonnanceListeDetail
         If SelectedPatient.PharmacienId <> 0 Then
             Dim rordao As New RorDao
             Dim ror As Ror
-            ror = rordao.getRorById(SelectedPatient.PharmacienId)
+            ror = rordao.GetRorById(SelectedPatient.PharmacienId)
             LblPharmacienNom.Text = ror.Nom & " " & ror.Ville
         Else
             LblPharmacienNom.Text = "Pas de pharmacie référencée pour ce patient"

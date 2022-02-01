@@ -432,7 +432,7 @@ Public Class RadFPatientRendezVousListe
             If aRow >= 0 Then
                 Dim rorId As Long = RadGridViewRDV.Rows(aRow).Cells("ror_id").Value
                 Dim ror As Ror
-                ror = rorDao.getRorById(rorId)
+                ror = rorDao.GetRorById(rorId)
                 If ror.ExtractionAnnuaire = True Then
                     Try
                         Using form As New RadFAnnuaireProfessionneldetail

@@ -223,7 +223,7 @@ Public Class VaccinDao
         Return relationId
     End Function
 
-    Public Function GetListByVaccin(vaccinId As Long) As List(Of RelationVaccinValence)
+    Public Function GetListRelationByVaccin(vaccinId As Long) As List(Of RelationVaccinValence)
         Dim con As SqlConnection = GetConnection()
         Dim relations As List(Of RelationVaccinValence) = New List(Of RelationVaccinValence)
 
@@ -362,9 +362,8 @@ Public Class VaccinDao
         Dim vaccinId As Long
 
         Dim SQLstring As String = "
-            UPDATE oasis.oa_vaccin_program_relation SET vaccin=@vaccin, date=@date, patient=@patient, realisation_date=@realisation_date, realisation_operator=@realisation_operator WHERE id=@id;
+            UPDATE oasis.oa_vaccin_program_relation SET vaccin=@vaccin, date=@date, patient=@patient, realisation_date=@realisation_date, realisation_operator=@realisation_operator, realisation_operator_text=@realisation_operator_text, realisation_operator_ror=@realisation_operator_ror WHERE id=@id;
         "
-        'SELECT SCOPE_IDENTITY();
 
         Dim con As SqlConnection = GetConnection()
         Dim cmd As New SqlCommand(SQLstring, con)
@@ -376,12 +375,13 @@ Public Class VaccinDao
             .AddWithValue("@patient", vaccinProgramRelation.Patient)
             .AddWithValue("@realisation_date", vaccinProgramRelation.RealisationDate)
             .AddWithValue("@realisation_operator", vaccinProgramRelation.RealisationOperator)
+            .AddWithValue("@realisation_operator_ror", vaccinProgramRelation.RealisationOperatorRor)
+            .AddWithValue("@realisation_operator_text", vaccinProgramRelation.RealisationOperatorText)
         End With
         Try
             da.InsertCommand = cmd
-            Debug.WriteLine(GetSqlCommandTextForLogs(cmd))
-            'vaccinId = 
             da.InsertCommand.ExecuteScalar()
+            vaccinId = vaccinProgramRelation.Id
         Catch ex As Exception
             Throw New Exception(ex.Message)
             vaccinId = 0

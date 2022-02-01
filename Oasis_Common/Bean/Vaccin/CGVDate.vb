@@ -51,6 +51,7 @@ Public Class RelationValenceDate
     Property Valence As Long
     Property [Date] As Long
     Property Patient As Long
+    Property Status As Boolean
 
 
     Public Sub New()
@@ -61,6 +62,7 @@ Public Class RelationValenceDate
         Me.Valence = reader("valence")
         Me.Date = reader("date")
         Me.Patient = reader("patient")
+        Me.Status = reader("status")
     End Sub
 
 End Class

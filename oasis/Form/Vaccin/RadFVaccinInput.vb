@@ -4,17 +4,37 @@ Imports Telerik.WinControls.UI
 
 Public Class RadFVaccinInput
 
+    ReadOnly rorDao As RorDao = New RorDao
+    ReadOnly userDao As UserDao = New UserDao
     ReadOnly vaccinDao As VaccinDao = New VaccinDao
+    ReadOnly cgvDateDao As CGVDateDao = New CGVDateDao
+
     Property Vaccins As List(Of VaccinValence)
     Property VaccinPrograms As List(Of VaccinProgramRelation)
+    Property RealisationOperator As Long
+    Property RealisationOperatorRor As Long
+    Property RealisationOperatorText As String = ""
 
     Private Sub RadFVaccinInput_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         AfficheTitleForm(Me, "Vaccin - Administrer", userLog)
         DTPRealisation.Format = DateTimePickerFormat.Custom
         DTPRealisation.CustomFormat = "dd/MM/yyyy"
-        If (VaccinPrograms.Count > 0 AndAlso VaccinPrograms(0).RealisationDate <> Nothing) Then
-            DTPRealisation.Value = VaccinPrograms(0).RealisationDate
-            DTPRealisation_ValueChanged(Nothing, Nothing)
+        TextOperator.Text = GetProfilUserString(userLog)
+        If (VaccinPrograms.Count > 0) Then
+            If (VaccinPrograms(0).RealisationDate <> Nothing) Then
+                DTPRealisation.Value = VaccinPrograms(0).RealisationDate
+                DTPRealisation_ValueChanged(Nothing, Nothing)
+            End If
+            If (VaccinPrograms(0).RealisationOperator <> Nothing) Then
+                TextOperator.Text = GetProfilUserString(userDao.GetUserById(VaccinPrograms(0).RealisationOperator))
+                RealisationOperator = VaccinPrograms(0).RealisationOperator
+            ElseIf (VaccinPrograms(0).RealisationOperatorRor <> Nothing) Then
+                TextOperator.Text = GetProfilUserString(rorDao.GetRorById(VaccinPrograms(0).RealisationOperatorRor))
+                RealisationOperatorRor = VaccinPrograms(0).RealisationOperatorRor
+            ElseIf (VaccinPrograms(0).RealisationOperatorText <> Nothing) Then
+                TextOperator.Text = VaccinPrograms(0).RealisationOperatorText
+                RealisationOperatorText = VaccinPrograms(0).RealisationOperatorText
+            End If
         End If
         Refresh()
     End Sub
@@ -100,9 +120,21 @@ Public Class RadFVaccinInput
                                                   .[Date] = vaccinProgram.Date,
                                                   .Patient = vaccinProgram.Patient,
                                                   .Vaccin = vaccinProgram.Vaccin,
+                                                  .RealisationOperator = RealisationOperator,
+                                                  .RealisationOperatorText = RealisationOperatorText,
+                                                  .RealisationOperatorRor = RealisationOperatorRor,
                                                   .RealisationDate = DTPRealisation.Value})
+            Dim valences = vaccinDao.GetListRelationByVaccin(vaccinProgram.Vaccin)
+            For Each valence In valences
+                cgvDateDao.UpdateRelationStatus(New RelationValenceDate With {
+                                            .[Date] = vaccinProgram.Date,
+                                            .Patient = vaccinProgram.Patient,
+                                            .Valence = valence.Valence,
+                                            .Status = 1
+            })
+            Next
         Next
-        Cursor.Current = Cursors.Default
+            Cursor.Current = Cursors.Default
         Me.Enabled = True
         Me.Close()
     End Sub
@@ -117,5 +149,29 @@ Public Class RadFVaccinInput
 
         Cursor.Current = Cursors.Default
         Me.Enabled = True
+    End Sub
+
+    Private Sub BtnSelectOperator_Click(sender As Object, e As EventArgs) Handles BtnSelectOperator.Click
+        Try
+            Using radFVaccinOperator As New RadFVaccinOperator
+                radFVaccinOperator.ShowDialog()
+                If radFVaccinOperator.CodeRetour = True Then
+                    If radFVaccinOperator.SelectedRorId <> Nothing Then
+                        TextOperator.Text = GetProfilUserString(rorDao.GetRorById(radFVaccinOperator.SelectedRorId))
+                        RealisationOperatorRor = radFVaccinOperator.SelectedRorId
+                        RealisationOperator = 0
+                        RealisationOperatorText = ""
+                    Else
+                        TextOperator.Text = radFVaccinOperator.TextOperator.Text
+                        RealisationOperatorRor = 0
+                        RealisationOperator = 0
+                        RealisationOperatorText = radFVaccinOperator.TextOperator.Text
+                    End If
+
+                End If
+            End Using
+        Catch ex As Exception
+            MessageBox.Show(ex.Message)
+        End Try
     End Sub
 End Class

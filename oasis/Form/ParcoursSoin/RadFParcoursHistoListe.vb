@@ -124,7 +124,7 @@ Public Class RadFParcoursHistoListe
             If intervenantId <> 0 Then
                 Dim rordao As New RorDao
                 Dim ror As Ror
-                ror = rordao.getRorById(intervenantId)
+                ror = rordao.GetRorById(intervenantId)
                 intervenantString = ror.Nom
             End If
 

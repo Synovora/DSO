@@ -95,13 +95,21 @@ Public Class RadFCPV
             End If
             Grid.Rows.Add(iGrid)
             Grid.Rows(iGrid).Cells(0).Value = If(cgvDate.OperatedDate <> Nothing, String.Format("{0} - {1}", cgvDate.OperatedDate.ToShortDateString(), GetProfilUserString(userDao.GetUserById(cgvDate.OperatedBy))), "+")
-
-            Grid.Rows(iGrid).Cells(2).Value = String.Format("{0} {1}", cgvDate.PerformDate, cgvDate.PerformBy)
+            Grid.Rows(iGrid).Cells(1).Value = If(cgvDate.PerformDate <> Nothing, String.Format("{0} - {1}", cgvDate.PerformDate.ToShortDateString(), GetProfilUserString(userDao.GetUserById(cgvDate.PerformBy))), "")
+            'Grid.Rows(iGrid).Cells(2).Value = String.Format("{0} {1}", cgvDate.PerformDate, cgvDate.PerformBy)
 
             Grid.Rows(iGrid).Cells(2).Value = CGVDate.DaysToDate(cgvDate.Days)
             For Each actualRelation As RelationValenceDate In actualRelations
                 Dim valence = valences.Find(Function(myObject) myObject.Valence = actualRelation.Valence)
-                Grid.Rows(iGrid).Cells(Grid.Columns.IndexOf(valence.Code)).Value = "✓"
+                If actualRelation.Status = 0 Then
+                    Grid.Rows(iGrid).Cells(Grid.Columns.IndexOf(valence.Code)).Value = "✓"
+                ElseIf actualRelation.Status = 1 Then
+                    Grid.Rows(iGrid).Cells(Grid.Columns.IndexOf(valence.Code)).Value = "✓"
+                    Grid.Rows(iGrid).Cells(Grid.Columns.IndexOf(valence.Code)).Style.ForeColor = Color.Green
+                ElseIf actualRelation.Status = 2 Then
+                    Grid.Rows(iGrid).Cells(Grid.Columns.IndexOf(valence.Code)).Value = "✗"
+                    Grid.Rows(iGrid).Cells(Grid.Columns.IndexOf(valence.Code)).Style.ForeColor = Color.Red
+                End If
             Next
             iGrid += 1
         Next
@@ -145,31 +153,31 @@ Public Class RadFCPV
     End Function
 
     Private Sub TextDay_TextChanged() Handles TextDay.TextChanged
-        If IsNumeric(TextDay.Text) Then
-            'TextDay.Text = IsValid(TextDay.Text, 0, 30).ToString()
-            TextMonth.Text = ""
-            TextYear.Text = ""
-        Else
-            TextDay.Text = ""
-        End If
+        'If IsNumeric(TextDay.Text) Then
+        '    'TextDay.Text = IsValid(TextDay.Text, 0, 30).ToString()
+        '    TextMonth.Text = ""
+        '    TextYear.Text = ""
+        'Else
+        '    TextDay.Text = ""
+        'End If
     End Sub
     Private Sub TextMonth_TextChanged() Handles TextMonth.TextChanged
-        If IsNumeric(TextMonth.Text) Then
-            'TextMonth.Text = IsValid(TextMonth.Text, 0, 40).ToString()
-            TextDay.Text = ""
-            TextYear.Text = ""
-        Else
-            TextMonth.Text = ""
-        End If
+        'If IsNumeric(TextMonth.Text) Then
+        '    'TextMonth.Text = IsValid(TextMonth.Text, 0, 40).ToString()
+        '    TextDay.Text = ""
+        '    TextYear.Text = ""
+        'Else
+        '    TextMonth.Text = ""
+        'End If
     End Sub
     Private Sub TextYear_TextChanged() Handles TextYear.TextChanged
-        If IsNumeric(TextYear.Text) Then
-            'TextYear.Text = IsValid(TextYear.Text, 0, 120).ToString()
-            TextDay.Text = ""
-            TextMonth.Text = ""
-        Else
-            TextYear.Text = ""
-        End If
+        'If IsNumeric(TextYear.Text) Then
+        '    'TextYear.Text = IsValid(TextYear.Text, 0, 120).ToString()
+        '    TextDay.Text = ""
+        '    TextMonth.Text = ""
+        'Else
+        '    TextYear.Text = ""
+        'End If
     End Sub
 
     Private Sub BtnDateAdd_Click(sender As Object, e As EventArgs) Handles BtnDateAdd.Click
@@ -259,7 +267,9 @@ Public Class RadFCPV
                         radFCPV.SelectedCGVDate = cgvDates(aRow)
                         radFCPV.SelectedValences = enlabledValence
                         radFCPV.ShowDialog()
-                        ChargementDate()
+                        If radFCPV.CodeRetour Then
+                            ChargementDate()
+                        End If
                     End Using
                 End If
 
