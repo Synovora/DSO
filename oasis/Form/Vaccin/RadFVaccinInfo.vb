@@ -23,18 +23,20 @@ Public Class RadFVaccinInfo
 
     Private Sub RadFATCListe_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         AfficheTitleForm(Me, "Vaccin - Information", userLog)
-        If SelectedCGVDate.PerformBy <> Nothing Then
-            Lock = True
-        End If
+
+        Lock = If(SelectedCGVDate.PerformBy <> Nothing, True, False)
         If (Lock) Then
             Me.DTPDate.Enabled = False
             Me.GVVaccin.Enabled = False
             Me.BtnValidationProgram.Enabled = False
             Me.BtnAdminVaccin.Text = "Information vaccins"
         End If
-        Me.BtnAdminVaccin.Enabled = False
+
+        DTPDate.MinDate = DateAndTime.Now()
+        BtnAdminVaccin.Enabled = False
         Vaccins = vaccinDao.GetListVaccinValence()
         Valences = valenceDao.GetList()
+
         ChargementEtatCivil()
         ChargementVaccins()
         ChargementValences()

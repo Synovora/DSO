@@ -163,7 +163,7 @@ Public Class RadFCGV
             Dim actualRelations = relations.FindAll(Function(myObject) myObject.Date = cgvDateId)
             Dim index = 1
             For Each Col In Grid.Columns
-                If Grid.CurrentRow.Cells(index).Value IsNot Nothing Then
+                If Grid.CurrentRow.Cells(index) IsNot Nothing AndAlso Grid.CurrentRow.Cells(index).Value IsNot Nothing Then
                     Dim result As DialogResult = MessageBox.Show("Pour cette date des valences ont été programmées, etes-vous sure de vouloir supprimer cette date", "Calendrier", MessageBoxButtons.YesNo, MessageBoxIcon.Question)
                     If result = DialogResult.Yes Then
                         Exit For

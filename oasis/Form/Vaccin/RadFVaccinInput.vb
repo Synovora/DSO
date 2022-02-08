@@ -28,6 +28,8 @@ Public Class RadFVaccinInput
 
         DTPRealisation.Format = DateTimePickerFormat.Custom
         DTPRealisation.CustomFormat = "dd/MM/yyyy"
+        DTPRealisation.MaxDate = DateTime.Today
+
         TextOperator.Text = GetProfilUserString(userLog)
         If (VaccinPrograms.Count > 0) Then
             If (VaccinPrograms(0).RealisationDate <> Nothing) Then

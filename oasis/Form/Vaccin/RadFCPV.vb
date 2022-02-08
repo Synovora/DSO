@@ -324,15 +324,9 @@ Public Class RadFCPV
                    .Patient = Patient.PatientId
                    })
 
-            Dim oldValence = cgvValenceDao.GetById(relation.Valence)
-            Dim newValence = cgvValenceDao.GetByValencePatient(New CGVValence With {
-                   .Valence = oldValence.Valence,
-                   .Patient = Patient.PatientId
-                   })
-
             cgvDateDao.CreateRelation(New RelationValenceDate With {
                     .Date = newDate.Id,
-                    .Valence = newValence.Valence,
+                    .Valence = relation.Valence,
                     .Patient = Patient.PatientId
                  })
         Next
