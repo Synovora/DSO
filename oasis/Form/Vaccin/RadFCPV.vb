@@ -4,7 +4,6 @@ Imports Oasis_Common
 Imports System.Text.RegularExpressions
 
 Public Class RadFCPV
-
     Property Patient As Patient
 
     ReadOnly cgvValenceDao As New CGVValenceDao
@@ -12,7 +11,7 @@ Public Class RadFCPV
     ReadOnly userDao As New UserDao
 
     Dim valences As List(Of CGVValence)
-    Dim relations As List(Of RelationValenceDate) = New List(Of RelationValenceDate)
+    Dim relations As New List(Of RelationValenceDate)
     Dim cgvDates As List(Of CGVDate)
 
     Private Sub RadFATCListe_Load(sender As Object, e As EventArgs) Handles MyBase.Load
@@ -101,7 +100,7 @@ Public Class RadFCPV
             For Each actualRelation As RelationValenceDate In actualRelations
                 Dim valence = valences.Find(Function(myObject) myObject.Valence = actualRelation.Valence)
                 If actualRelation.Status = 0 Then
-                    Grid.Rows(iGrid).Cells(Grid.Columns.IndexOf(valence.Code)).Value = "✓"
+                    Grid.Rows(iGrid).Cells(Grid.Columns.IndexOf(valence.Code)).Value = "○"
                 ElseIf actualRelation.Status = 1 Then
                     Grid.Rows(iGrid).Cells(Grid.Columns.IndexOf(valence.Code)).Value = "✓"
                     Grid.Rows(iGrid).Cells(Grid.Columns.IndexOf(valence.Code)).Style.ForeColor = Color.Green
@@ -119,7 +118,7 @@ Public Class RadFCPV
         Dim dataCell As GridDataCellElement = TryCast(sender, GridDataCellElement)
 
         If dataCell IsNot Nothing Then
-            Dim textPart As TextPart = New TextPart(dataCell)
+            Dim textPart As New TextPart(dataCell)
             Dim size As SizeF = textPart.Measure(New SizeF(Single.PositiveInfinity, Single.PositiveInfinity))
             Dim sizeInCell As SizeF = textPart.Measure(New SizeF(dataCell.ColumnInfo.Width, Single.PositiveInfinity))
             Dim toolTipText As String = Nothing
@@ -139,7 +138,7 @@ Public Class RadFCPV
         End If
     End Sub
 
-    Public Function IsNumeric(input As String) As Boolean
+    Public Shared Function IsNumeric(input As String) As Boolean
         Return Regex.IsMatch(input.Trim, "^\d+$")
     End Function
 
@@ -150,34 +149,6 @@ Public Class RadFCPV
         End If
         Return 0
     End Function
-
-    Private Sub TextDay_TextChanged() Handles TextDay.TextChanged
-        'If IsNumeric(TextDay.Text) Then
-        '    'TextDay.Text = IsValid(TextDay.Text, 0, 30).ToString()
-        '    TextMonth.Text = ""
-        '    TextYear.Text = ""
-        'Else
-        '    TextDay.Text = ""
-        'End If
-    End Sub
-    Private Sub TextMonth_TextChanged() Handles TextMonth.TextChanged
-        'If IsNumeric(TextMonth.Text) Then
-        '    'TextMonth.Text = IsValid(TextMonth.Text, 0, 40).ToString()
-        '    TextDay.Text = ""
-        '    TextYear.Text = ""
-        'Else
-        '    TextMonth.Text = ""
-        'End If
-    End Sub
-    Private Sub TextYear_TextChanged() Handles TextYear.TextChanged
-        'If IsNumeric(TextYear.Text) Then
-        '    'TextYear.Text = IsValid(TextYear.Text, 0, 120).ToString()
-        '    TextDay.Text = ""
-        '    TextMonth.Text = ""
-        'Else
-        '    TextYear.Text = ""
-        'End If
-    End Sub
 
     Private Sub BtnDateAdd_Click(sender As Object, e As EventArgs) Handles BtnDateAdd.Click
         Dim d, m, y

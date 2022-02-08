@@ -25,11 +25,10 @@ Public Class RadFCGV
         Dim iGrid As Integer = 0
 
         Grid.Columns.Add("Age")
-        Grid.Columns(0).Width = 50
+        Grid.Columns(0).Width = 80
 
         valences = cgvValenceDao.GetListFromPatient(0)
         For Each valence As CGVValence In valences
-            'If (valence.Visible = False) Then Continue For
             iGrid += 1
             Grid.Columns.Add(valence.Code)
             Grid.Columns(iGrid).Width = 80
@@ -60,8 +59,7 @@ Public Class RadFCGV
             Grid.Rows(iGrid).Cells(0).Value = CGVDate.DaysToDate(cgvDate.Days)
             For Each actualRelation As RelationValenceDate In actualRelations
                 Dim valence = valences.Find(Function(myObject) myObject.Valence = actualRelation.Valence)
-                'If (valence.Visible = False) Then Continue For
-                Grid.Rows(iGrid).Cells(Grid.Columns.IndexOf(valence.Code)).Value = "✓"
+                Grid.Rows(iGrid).Cells(Grid.Columns.IndexOf(valence.Code)).Value = "○"
             Next
             iGrid += 1
         Next
@@ -103,34 +101,6 @@ Public Class RadFCGV
         End If
         Return 0
     End Function
-
-    Private Sub TextDay_TextChanged() Handles TextDay.TextChanged
-        'If IsNumeric(TextDay.Text) Then
-        '    'TextDay.Text = IsValid(TextDay.Text, 0, 30).ToString()
-        '    TextMonth.Text = ""
-        '    TextYear.Text = ""
-        'Else
-        '    TextDay.Text = ""
-        'End If
-    End Sub
-    Private Sub TextMonth_TextChanged() Handles TextMonth.TextChanged
-        'If IsNumeric(TextMonth.Text) Then
-        '    'TextMonth.Text = IsValid(TextMonth.Text, 0, 40).ToString()
-        '    TextDay.Text = ""
-        '    TextYear.Text = ""
-        'Else
-        '    TextMonth.Text = ""
-        'End If
-    End Sub
-    Private Sub TextYear_TextChanged() Handles TextYear.TextChanged
-        'If IsNumeric(TextYear.Text) Then
-        '    'TextYear.Text = IsValid(TextYear.Text, 0, 120).ToString()
-        '    TextDay.Text = ""
-        '    TextMonth.Text = ""
-        'Else
-        '    TextYear.Text = ""
-        'End If
-    End Sub
 
     Private Sub BtnDateAdd_Click(sender As Object, e As EventArgs) Handles BtnDateAdd.Click
         Dim d, m, y
