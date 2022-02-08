@@ -154,6 +154,12 @@ Public Class RadFOperatorSelect
             End If
         End If
 
+
+        If FiltreNomExercice.Text.Trim.Length < 3 Then
+            MessageBox.Show("Le filtre de recherche du nom est obligatoire et doit comporter au moins 3 caractères")
+            lancementChargement = False
+        End If
+
         If lancementChargement = True Then
             If RBOasis.IsChecked Then
                 ChargementRor()

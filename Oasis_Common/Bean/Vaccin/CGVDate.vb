@@ -25,20 +25,20 @@ Public Class CGVDate
     End Sub
 
     Shared Function DaysToDate(days As Long) As String
-        Dim dayPerMonth = 30.44
+        Dim dayPerMonth = 30
         Dim monthPerYear = 12
         Dim showMaxMonths = 40
         If days < dayPerMonth Then
             Return String.Format("{0} Jours", Math.Round(days))
         ElseIf days / dayPerMonth < showMaxMonths Then
-            Return String.Format("{0} Mois", Math.Round(days / dayPerMonth))
+            Return If(Math.Round(days Mod dayPerMonth) > 0, String.Format("{0} Mois {1} Jours", Math.Round(days / dayPerMonth), Math.Round(days Mod dayPerMonth)), String.Format("{0} Mois", Math.Round(days / dayPerMonth)))
         Else
-            Return String.Format("{0} Ans", Math.Round(days / dayPerMonth / monthPerYear))
+            Return If(Math.Round(days / dayPerMonth Mod monthPerYear) > 0, String.Format("{0} Ans {1} Mois", Math.Round(days / dayPerMonth / monthPerYear), Math.Round(days / dayPerMonth Mod monthPerYear)), String.Format("{0} Ans", Math.Round(days / dayPerMonth / monthPerYear)))
         End If
     End Function
 
     Shared Function DateToDays(days As Long, months As Long, years As Long) As Long
-        Dim dayPerMonth = 30.44
+        Dim dayPerMonth = 30
         Dim monthPerYear = 12
         Return Math.Round(days + months * dayPerMonth + years * monthPerYear * dayPerMonth)
     End Function
@@ -51,7 +51,7 @@ Public Class RelationValenceDate
     Property Valence As Long
     Property [Date] As Long
     Property Patient As Long
-    Property Status As Boolean
+    Property Status As Short
 
 
     Public Sub New()

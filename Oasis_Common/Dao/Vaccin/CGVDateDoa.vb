@@ -45,7 +45,7 @@ Public Class CGVDateDao
         Return newCgvDate
     End Function
 
-    Public Function RelationExist(relationValenceDate As RelationValenceDate) As Boolean
+    Public Function GetRelationIfExist(relationValenceDate As RelationValenceDate) As RelationValenceDate
         Dim con As SqlConnection = GetConnection()
         Try
             Dim command As SqlCommand = con.CreateCommand()
@@ -54,9 +54,9 @@ Public Class CGVDateDao
             command.Parameters.AddWithValue("@valence", relationValenceDate.Valence)
             Using reader As SqlDataReader = command.ExecuteReader()
                 If reader.Read() Then
-                    Return True
+                    Return New RelationValenceDate(reader)
                 Else
-                    Return False
+                    Return Nothing
                 End If
             End Using
         Catch ex As Exception
@@ -64,7 +64,7 @@ Public Class CGVDateDao
         Finally
             con.Close()
         End Try
-        Return False
+        Return Nothing
     End Function
 
     Public Function GetListFromPatient(patientId As Long) As List(Of CGVDate)

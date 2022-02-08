@@ -9,6 +9,8 @@ Public Class RadFVaccinInput
     ReadOnly vaccinDao As VaccinDao = New VaccinDao
     ReadOnly cgvDateDao As CGVDateDao = New CGVDateDao
 
+    Property Lock As Boolean
+    Property Valences As List(Of CGVValence)
     Property Vaccins As List(Of VaccinValence)
     Property VaccinPrograms As List(Of VaccinProgramRelation)
     Property RealisationOperator As Long
@@ -17,6 +19,13 @@ Public Class RadFVaccinInput
 
     Private Sub RadFVaccinInput_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         AfficheTitleForm(Me, "Vaccin - Administrer", userLog)
+
+        If (Lock) Then
+            Me.DTPRealisation.Enabled = False
+            Me.BtnSelectOperator.Enabled = False
+            Me.BtnValidation.Enabled = False
+        End If
+
         DTPRealisation.Format = DateTimePickerFormat.Custom
         DTPRealisation.CustomFormat = "dd/MM/yyyy"
         TextOperator.Text = GetProfilUserString(userLog)
@@ -45,28 +54,36 @@ Public Class RadFVaccinInput
 
         GVVaccin.Rows.Clear()
         Dim iGrid As Integer = 0
+        Dim checker = 0
 
         For Each vaccin As VaccinValence In Vaccins.GroupBy(Function(x) x.Code).Select(Function(x) x.First).ToList
             GVVaccin.Rows.Add(iGrid)
             GVVaccin.Rows(iGrid).Cells("id").Value = vaccin.Id
             GVVaccin.Rows(iGrid).Cells("dci").Value = vaccin.Dci
             GVVaccin.Rows(iGrid).Cells("relation_id").Value = VaccinPrograms.Find(Function(x) x.Vaccin = vaccin.Id).Id
+            GVVaccin.Rows(iGrid).Cells("realisation").Value = DTPRealisation.Value.ToString("dd/MM/yyyy", CultureInfo.InvariantCulture) & " - " & TextOperator.Text
             Dim vaccinProgramAdmin = vaccinDao.GetVaccinProgramAdministrationByRelation(VaccinPrograms.Find(Function(x) x.Vaccin = vaccin.Id).Id)
             If (vaccinProgramAdmin IsNot Nothing) Then
                 GVVaccin.Rows(iGrid).Cells("program_id").Value = vaccinProgramAdmin.Id
                 GVVaccin.Rows(iGrid).Cells("lot").Value = vaccinProgramAdmin.Lot
                 GVVaccin.Rows(iGrid).Cells("expiration").Value = vaccinProgramAdmin.Expiration
                 GVVaccin.Rows(iGrid).Cells("comment").Value = vaccinProgramAdmin.Comment
+                checker += 1
             End If
             iGrid += 1
         Next
+
+        BtnValidation.Enabled = checker = iGrid
 
         Cursor.Current = Cursors.Default
         Me.Enabled = True
     End Sub
 
     Private Sub GVVaccin_Click(sender As Object, ByVal e As GridViewCellEventArgs) Handles GVVaccin.CellClick
-        Cursor.Current = Cursors.WaitCursor
+        If Not Lock Then
+
+
+            Cursor.Current = Cursors.WaitCursor
         Me.Enabled = False
 
         Dim row As Integer = e.RowIndex
@@ -104,7 +121,9 @@ Public Class RadFVaccinInput
         End If
 
         Cursor.Current = Cursors.Default
-        Me.Enabled = True
+            Me.Enabled = True
+
+        End If
     End Sub
 
     Private Sub BtnCancel_Click(sender As Object, e As EventArgs) Handles BtnCancel.Click
@@ -112,39 +131,52 @@ Public Class RadFVaccinInput
     End Sub
 
     Private Sub BtnValidation_Click(sender As Object, e As EventArgs) Handles BtnValidation.Click
-        Me.Enabled = False
-        Cursor.Current = Cursors.WaitCursor
-        For Each vaccinProgram In VaccinPrograms
-            vaccinDao.UpdateVaccinProgramRelation(New VaccinProgramRelation With {
-                                                  .Id = vaccinProgram.Id,
-                                                  .[Date] = vaccinProgram.Date,
-                                                  .Patient = vaccinProgram.Patient,
-                                                  .Vaccin = vaccinProgram.Vaccin,
-                                                  .RealisationOperator = RealisationOperator,
-                                                  .RealisationOperatorText = RealisationOperatorText,
-                                                  .RealisationOperatorRor = RealisationOperatorRor,
-                                                  .RealisationDate = DTPRealisation.Value})
-            Dim valences = vaccinDao.GetListRelationByVaccin(vaccinProgram.Vaccin)
-            For Each valence In valences
-                cgvDateDao.UpdateRelationStatus(New RelationValenceDate With {
-                                            .[Date] = vaccinProgram.Date,
-                                            .Patient = vaccinProgram.Patient,
-                                            .Valence = valence.Valence,
-                                            .Status = 1
-            })
+        If Not Lock Then
+            Enabled = False
+            Cursor.Current = Cursors.WaitCursor
+            For Each vaccinProgram As VaccinProgramRelation In VaccinPrograms
+                vaccinDao.UpdateVaccinProgramRelation(New VaccinProgramRelation With {
+                                                      .Id = vaccinProgram.Id,
+                                                      .[Date] = vaccinProgram.Date,
+                                                      .Patient = vaccinProgram.Patient,
+                                                      .Vaccin = vaccinProgram.Vaccin,
+                                                      .RelationVaccinValence = vaccinProgram.RelationVaccinValence,
+                                                      .RealisationOperator = RealisationOperator,
+                                                      .RealisationOperatorText = RealisationOperatorText,
+                                                      .RealisationOperatorRor = RealisationOperatorRor,
+                                                      .RealisationDate = DTPRealisation.Value})
+                Dim vaccinValences = vaccinDao.GetListRelationByVaccin(vaccinProgram.RelationVaccinValence)
+
+                Valences.RemoveAll(Function(x) vaccinValences.Any(Function(y) y.Valence = x.Valence))
+                For Each vaccinValence In vaccinValences
+                    cgvDateDao.UpdateRelationStatus(New RelationValenceDate With {
+                                                .[Date] = vaccinProgram.Date,
+                                                .Patient = vaccinProgram.Patient,
+                                                .Valence = vaccinValence.Valence,
+                                                .Status = 1
+                })
+                Next
             Next
-        Next
+            For Each valence In Valences
+                cgvDateDao.UpdateRelationStatus(New RelationValenceDate With {
+                                                .[Date] = VaccinPrograms(0).Date,
+                                                .Patient = VaccinPrograms(0).Patient,
+                                                .Valence = valence.Valence,
+                                                .Status = 2
+                })
+            Next
             Cursor.Current = Cursors.Default
-        Me.Enabled = True
+            Me.Enabled = True
+        End If
         Me.Close()
     End Sub
 
-    Private Sub DTPRealisation_ValueChanged(sender As Object, e As EventArgs) Handles DTPRealisation.ValueChanged
+    Private Sub DTPRealisation_ValueChanged(sender As Object, e As EventArgs) Handles DTPRealisation.ValueChanged, TextOperator.TextChanged
         Me.Enabled = False
         Cursor.Current = Cursors.WaitCursor
 
         For Each row In GVVaccin.Rows
-            row.Cells("realisation").Value = DTPRealisation.Value.ToString("dd/MM/yyyy", CultureInfo.InvariantCulture) & " - "
+            row.Cells("realisation").Value = DTPRealisation.Value.ToString("dd/MM/yyyy", CultureInfo.InvariantCulture) & " - " & TextOperator.Text
         Next
 
         Cursor.Current = Cursors.Default

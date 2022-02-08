@@ -197,7 +197,7 @@ Public Class RadFCGV
             Dim mydate = cgvDates(dateRow)
             Dim valence = valences(valenceCol)
             If dateRow >= 0 AndAlso valenceCol >= 0 Then
-                If (cgvDateDao.RelationExist(New RelationValenceDate() With {.Date = mydate.Id, .Valence = valence.Valence, .Patient = 0})) Then
+                If (cgvDateDao.GetRelationIfExist(New RelationValenceDate() With {.Date = mydate.Id, .Valence = valence.Valence, .Patient = 0}) IsNot Nothing) Then
                     cgvDateDao.DeleteRelation(New RelationValenceDate() With {.Date = mydate.Id, .Valence = valence.Valence, .Patient = 0})
                 Else
                     cgvDateDao.CreateRelation(New RelationValenceDate() With {.Date = mydate.Id, .Valence = valence.Valence, .Patient = 0})

@@ -57,7 +57,7 @@ Public Class RadFCPV
         Grid.Columns(1).Width = 80
         Grid.Columns(1).TextAlignment = DataGridViewContentAlignment.MiddleCenter
         Grid.Columns.Add("Age")
-        Grid.Columns(2).Width = 50
+        Grid.Columns(2).Width = 100
         Grid.Columns(2).TextAlignment = DataGridViewContentAlignment.MiddleCenter
 
         valences = cgvValenceDao.GetListFromPatient(Patient.PatientId)
@@ -94,9 +94,8 @@ Public Class RadFCPV
                 Continue For
             End If
             Grid.Rows.Add(iGrid)
-            Grid.Rows(iGrid).Cells(0).Value = If(cgvDate.OperatedDate <> Nothing, String.Format("{0} - {1}", cgvDate.OperatedDate.ToShortDateString(), GetProfilUserString(userDao.GetUserById(cgvDate.OperatedBy))), "+")
-            Grid.Rows(iGrid).Cells(1).Value = If(cgvDate.PerformDate <> Nothing, String.Format("{0} - {1}", cgvDate.PerformDate.ToShortDateString(), GetProfilUserString(userDao.GetUserById(cgvDate.PerformBy))), "")
-            'Grid.Rows(iGrid).Cells(2).Value = String.Format("{0} {1}", cgvDate.PerformDate, cgvDate.PerformBy)
+            Grid.Rows(iGrid).Cells(0).Value = If(cgvDate.OperatedDate <> Nothing AndAlso cgvDate.OperatedBy <> Nothing, String.Format("{0} - {1}", cgvDate.OperatedDate.ToShortDateString(), GetProfilUserString(userDao.GetUserById(cgvDate.OperatedBy))), "+")
+            Grid.Rows(iGrid).Cells(1).Value = If(cgvDate.PerformDate <> Nothing AndAlso cgvDate.PerformBy <> Nothing, String.Format("{0} - {1}", cgvDate.PerformDate.ToShortDateString(), GetProfilUserString(userDao.GetUserById(cgvDate.PerformBy))), "")
 
             Grid.Rows(iGrid).Cells(2).Value = CGVDate.DaysToDate(cgvDate.Days)
             For Each actualRelation As RelationValenceDate In actualRelations
@@ -243,12 +242,17 @@ Public Class RadFCPV
             If dateRow >= 0 AndAlso valenceCol >= 3 Then
                 Dim mydate = cgvDates(dateRow)
                 Dim valence = valences(valenceCol - 3)
-                If (cgvDateDao.RelationExist(New RelationValenceDate() With {.Date = mydate.Id, .Valence = valence.Valence, .Patient = Patient.PatientId})) Then
-                    cgvDateDao.DeleteRelation(New RelationValenceDate() With {.Date = mydate.Id, .Valence = valence.Valence, .Patient = Patient.PatientId})
+
+                If mydate.PerformDate = Nothing Then
+                    If (cgvDateDao.GetRelationIfExist(New RelationValenceDate() With {.Date = mydate.Id, .Valence = valence.Valence, .Patient = Patient.PatientId}) IsNot Nothing) Then
+                        cgvDateDao.DeleteRelation(New RelationValenceDate() With {.Date = mydate.Id, .Valence = valence.Valence, .Patient = Patient.PatientId})
+                    Else
+                        cgvDateDao.CreateRelation(New RelationValenceDate() With {.Date = mydate.Id, .Valence = valence.Valence, .Patient = Patient.PatientId})
+                    End If
+                    ChargementValence()
                 Else
-                    cgvDateDao.CreateRelation(New RelationValenceDate() With {.Date = mydate.Id, .Valence = valence.Valence, .Patient = Patient.PatientId})
+                    MessageBox.Show("Vaccin(s) administré(s), modification impossible.", "Modification Impossible", MessageBoxButtons.OK, MessageBoxIcon.Warning)
                 End If
-                ChargementValence()
             ElseIf dateRow >= 0 AndAlso valenceCol <= 1 Then
                 Me.Enabled = False
                 Cursor.Current = Cursors.WaitCursor
@@ -274,6 +278,7 @@ Public Class RadFCPV
                 End If
 
                 Me.Enabled = True
+                Cursor.Current = Cursors.Default
             End If
         End If
     End Sub
@@ -292,24 +297,24 @@ Public Class RadFCPV
         Cursor.Current = Cursors.WaitCursor
         'If (valences.Count = 0) Then
         valences = cgvValenceDao.GetListFromPatient(0)
-            For Each valence As CGVValence In valences
-                Dim newValence = valence
-                newValence.Patient = Patient.PatientId
-                cgvValenceDao.Create(newValence)
-            Next
-            valences = cgvValenceDao.GetListFromPatient(Patient.PatientId)
+        For Each valence As CGVValence In valences
+            Dim newValence = valence
+            newValence.Patient = Patient.PatientId
+            cgvValenceDao.Create(newValence)
+        Next
+        valences = cgvValenceDao.GetListFromPatient(Patient.PatientId)
         'End If
         'If (cgvDates.Count = 0) Then
         cgvDates = cgvDateDao.GetListFromPatient(0)
-            relations = cgvDateDao.GetRelationListFromPatient(0)
-            For Each cgvDate As CGVDate In cgvDates
-                If relations.Any(Function(x) x.Date = cgvDate.Id) Then
-                    Dim newDate = cgvDate
-                    newDate.Patient = Patient.PatientId
-                    cgvDateDao.Create(newDate)
-                End If
-            Next
-            cgvDates = cgvDateDao.GetListFromPatient(Patient.PatientId)
+        relations = cgvDateDao.GetRelationListFromPatient(0)
+        For Each cgvDate As CGVDate In cgvDates
+            If relations.Any(Function(x) x.Date = cgvDate.Id) Then
+                Dim newDate = cgvDate
+                newDate.Patient = Patient.PatientId
+                cgvDateDao.Create(newDate)
+            End If
+        Next
+        cgvDates = cgvDateDao.GetListFromPatient(Patient.PatientId)
         'End If
         relations = cgvDateDao.GetRelationListFromPatient(0)
         For Each relation As RelationValenceDate In relations

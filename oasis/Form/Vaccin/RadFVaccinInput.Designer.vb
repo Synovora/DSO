@@ -145,6 +145,7 @@ Partial Class RadFVaccinInput
         '
         'BtnValidation
         '
+        Me.BtnValidation.Enabled = False
         Me.BtnValidation.Location = New System.Drawing.Point(851, 369)
         Me.BtnValidation.Name = "BtnValidation"
         Me.BtnValidation.Size = New System.Drawing.Size(110, 24)
@@ -179,7 +180,7 @@ Partial Class RadFVaccinInput
         '
         Me.DTPRealisation.Location = New System.Drawing.Point(132, 12)
         Me.DTPRealisation.Name = "DTPRealisation"
-        Me.DTPRealisation.Size = New System.Drawing.Size(227, 20)
+        Me.DTPRealisation.Size = New System.Drawing.Size(227, 26)
         Me.DTPRealisation.TabIndex = 6
         '
         'BtnSelectOperator
@@ -194,12 +195,13 @@ Partial Class RadFVaccinInput
         '
         Me.TextOperator.Location = New System.Drawing.Point(447, 12)
         Me.TextOperator.Name = "TextOperator"
-        Me.TextOperator.Size = New System.Drawing.Size(348, 20)
+        Me.TextOperator.ReadOnly = True
+        Me.TextOperator.Size = New System.Drawing.Size(348, 27)
         Me.TextOperator.TabIndex = 11
         '
         'RadFVaccinInput
         '
-        Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
+        Me.AutoScaleDimensions = New System.Drawing.SizeF(9.0!, 20.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(972, 401)
         Me.Controls.Add(Me.TextOperator)
