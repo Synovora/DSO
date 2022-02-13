@@ -1498,7 +1498,7 @@ Public Class TacheDao
         Dim patientDao As New PatientDao
 
         Dim tacheBeanAssocie = New TacheBeanAssocie With {
-            .UserEmetteur = userDao.getUserById(tache.EmetteurUserId)
+            .UserEmetteur = userDao.GetUserById(tache.EmetteurUserId)
         }
         If tache.EmetteurFonctionId <> 0 Then tacheBeanAssocie.FonctionEmetteur = fonctionDao.GetFonctionById(tache.EmetteurFonctionId)
         tacheBeanAssocie.UniteSanitaire = uniteSanitaireDao.getUniteSanitaireById(tache.UniteSanitaireId, True)
@@ -1510,14 +1510,14 @@ Public Class TacheDao
                 tacheBeanAssocie.Specialite = Table_specialite.GetSpecialiteById(tacheBeanAssocie.Parcours.SpecialiteId)
                 If tacheBeanAssocie.Specialite.Oasis = False Then
                     ' -- on recherche le nom de l'intervenant
-                    Dim ror As Ror = rorDao.getRorById(tacheBeanAssocie.Parcours.RorId)
+                    Dim ror As Ror = rorDao.GetRorById(tacheBeanAssocie.Parcours.RorId)
                     tacheBeanAssocie.Intervenant = ror.Nom
                 End If
             End If
         End If
         If tache.TraiteFonctionId Then tacheBeanAssocie.FonctionTraiteur = fonctionDao.GetFonctionById(tache.TraiteFonctionId)
         If tache.TraiteUserId <> 0 Then
-            tacheBeanAssocie.UserTraiteur = userDao.getUserById(tache.TraiteUserId)
+            tacheBeanAssocie.UserTraiteur = userDao.GetUserById(tache.TraiteUserId)
         End If
         Return tacheBeanAssocie
 

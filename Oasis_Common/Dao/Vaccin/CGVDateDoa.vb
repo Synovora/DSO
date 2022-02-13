@@ -45,7 +45,7 @@ Public Class CGVDateDao
         Return newCgvDate
     End Function
 
-    Public Function RelationExist(relationValenceDate As RelationValenceDate) As Boolean
+    Public Function GetRelationIfExist(relationValenceDate As RelationValenceDate) As RelationValenceDate
         Dim con As SqlConnection = GetConnection()
         Try
             Dim command As SqlCommand = con.CreateCommand()
@@ -54,9 +54,9 @@ Public Class CGVDateDao
             command.Parameters.AddWithValue("@valence", relationValenceDate.Valence)
             Using reader As SqlDataReader = command.ExecuteReader()
                 If reader.Read() Then
-                    Return True
+                    Return New RelationValenceDate(reader)
                 Else
-                    Return False
+                    Return Nothing
                 End If
             End Using
         Catch ex As Exception
@@ -64,7 +64,7 @@ Public Class CGVDateDao
         Finally
             con.Close()
         End Try
-        Return False
+        Return Nothing
     End Function
 
     Public Function GetListFromPatient(patientId As Long) As List(Of CGVDate)
@@ -183,13 +183,70 @@ Public Class CGVDateDao
         Return cgvDateId
     End Function
 
+
+    Public Function UpdateRelation(relationValenceDate As RelationValenceDate) As Long
+        Dim da As New SqlDataAdapter()
+
+        Dim SQLstring As String = "UPDATE oasis.oa_vaccin_cgv_relation_valence_date SET valence=@valence," &
+        " date=@date, patient=@patient," &
+        " status=@status WHERE id=@id;"
+
+        Dim con As SqlConnection = GetConnection()
+        Dim cmd As New SqlCommand(SQLstring, con)
+        With cmd.Parameters
+            .AddWithValue("@id", relationValenceDate.Id)
+            .AddWithValue("@valence", relationValenceDate.Valence)
+            .AddWithValue("@date", relationValenceDate.Date)
+            .AddWithValue("@patient", relationValenceDate.Patient)
+            .AddWithValue("@status", relationValenceDate.Status)
+        End With
+
+        Try
+            da.InsertCommand = cmd
+            da.InsertCommand.ExecuteScalar()
+        Catch ex As Exception
+            Throw New Exception(ex.Message)
+        Finally
+            con.Close()
+        End Try
+
+        Return relationValenceDate.Id
+    End Function
+
+    Public Function UpdateRelationStatus(relationValenceDate As RelationValenceDate) As Long
+        Dim da As New SqlDataAdapter()
+
+        Dim SQLstring As String = "UPDATE oasis.oa_vaccin_cgv_relation_valence_date SET status=@status WHERE date=@date AND valence=@valence AND patient=@patient;"
+
+        Dim con As SqlConnection = GetConnection()
+        Dim cmd As New SqlCommand(SQLstring, con)
+        With cmd.Parameters
+            .AddWithValue("@id", relationValenceDate.Id)
+            .AddWithValue("@valence", relationValenceDate.Valence)
+            .AddWithValue("@date", relationValenceDate.Date)
+            .AddWithValue("@patient", relationValenceDate.Patient)
+            .AddWithValue("@status", relationValenceDate.Status)
+        End With
+
+        Try
+            da.InsertCommand = cmd
+            da.InsertCommand.ExecuteScalar()
+        Catch ex As Exception
+            Throw New Exception(ex.Message)
+        Finally
+            con.Close()
+        End Try
+
+        Return relationValenceDate.Id
+    End Function
+
     Public Function CreateRelation(relationValenceDate As RelationValenceDate) As Long
-        Dim da As SqlDataAdapter = New SqlDataAdapter()
+        Dim da As New SqlDataAdapter()
         Dim relationId As Long
 
         Dim SQLstring As String = "
-            INSERT INTO oasis.oa_vaccin_cgv_relation_valence_date (valence, date, patient)
-                VALUES (@valence, @date, @patient);
+            INSERT INTO oasis.oa_vaccin_cgv_relation_valence_date (valence, date, patient, status)
+                VALUES (@valence, @date, @patient, @status);
             SELECT SCOPE_IDENTITY();
         "
 
@@ -200,6 +257,7 @@ Public Class CGVDateDao
             .AddWithValue("@valence", relationValenceDate.Valence)
             .AddWithValue("@date", relationValenceDate.Date)
             .AddWithValue("@patient", relationValenceDate.Patient)
+            .AddWithValue("@status", relationValenceDate.Status)
         End With
         Try
             da.InsertCommand = cmd

@@ -3,6 +3,8 @@ Imports Telerik.WinControls
 Imports Telerik.WinControls.UI
 
 Public Class RadFVaccinInfo
+
+    Property Lock As Boolean
     Property SelectedPatient As Patient
     Property SelectedCGVDate As CGVDate
     Property SelectedValences As List(Of CGVValence)
@@ -10,33 +12,56 @@ Public Class RadFVaccinInfo
     Property Vaccins As List(Of VaccinValence)
     Property VaccinPrograms As List(Of VaccinProgramRelation)
 
+    Property CodeRetour As Boolean
+
+    ReadOnly rorDao As RorDao = New RorDao
     ReadOnly valenceDao As New ValenceDao
     ReadOnly vaccinDao As New VaccinDao
     ReadOnly cgvDateDao As New CGVDateDao
     ReadOnly userDao As New UserDao
+    ReadOnly antecedentDao As New AntecedentDao
 
     Private Sub RadFATCListe_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         AfficheTitleForm(Me, "Vaccin - Information", userLog)
+
+        Lock = If(SelectedCGVDate.PerformBy <> Nothing, True, False)
+        If (Lock) Then
+            Me.DTPDate.Enabled = False
+            Me.GVVaccin.Enabled = False
+            Me.BtnValidationProgram.Enabled = False
+            Me.BtnAdminVaccin.Text = "Information vaccins"
+        End If
+
+        DTPDate.MinDate = DateAndTime.Now()
+        BtnAdminVaccin.Enabled = False
+        Vaccins = vaccinDao.GetListVaccinValence()
+        Valences = valenceDao.GetList()
+
         ChargementEtatCivil()
-        ChargementInformation()
         ChargementVaccins()
         ChargementValences()
         RefreshSelectedVaccin()
-        'RefreshNoneRequireValence()
         ColorVaccins()
+        ChargementInformation()
     End Sub
 
     Private Sub ChargementInformation()
         LblAgeVaccination.Text = CGVDate.DaysToDate(SelectedCGVDate.Days)
-        'LblOperator.Text = GetProfilUserString(userLog)
-        Dim valenceIds As List(Of Long) = New List(Of Long)
+        Dim valenceIds As New List(Of Long)
         For Each valences As CGVValence In SelectedValences
             valenceIds.Add(valences.Valence)
         Next
-        Vaccins = vaccinDao.GetAll()
-        Valences = valenceDao.GetList()
         DTPDate.Value = If(SelectedCGVDate.OperatedDate = Nothing, Date.Now(), SelectedCGVDate.OperatedDate)
-        LblOperator.Text = GetProfilUserString(userDao.getUserById(Coalesce(SelectedCGVDate.OperatedBy, userLog.UtilisateurId)))
+
+        If (VaccinPrograms.Count > 0 AndAlso VaccinPrograms(0).RealisationOperator <> Nothing) Then
+            LblOperator.Text = GetProfilUserString(userDao.GetUserById(VaccinPrograms(0).RealisationOperator))
+        ElseIf (VaccinPrograms.Count > 0 AndAlso VaccinPrograms(0).RealisationOperatorRor <> Nothing) Then
+            LblOperator.Text = GetProfilUserString(rorDao.GetRorById(VaccinPrograms(0).RealisationOperatorRor))
+        ElseIf (VaccinPrograms.Count > 0 AndAlso VaccinPrograms(0).RealisationOperatorText <> Nothing) Then
+            LblOperator.Text = VaccinPrograms(0).RealisationOperatorText
+        Else
+            LblOperator.Text = GetProfilUserString(userLog)
+        End If
     End Sub
 
     Private Sub ChargementVaccins()
@@ -47,22 +72,27 @@ Public Class RadFVaccinInfo
 
         GVVaccin.Rows.Clear()
         Dim iGrid As Integer = 0
+        Dim checker = False
 
         For Each vaccin As VaccinValence In Vaccins.GroupBy(Function(x) x.Code).Select(Function(x) x.First).ToList
             If SelectedValences.Any(Function(x) x.Valence = vaccin.Valence) Then
                 GVVaccin.Rows.Add(iGrid)
                 GVVaccin.Rows(iGrid).Cells("id").Value = vaccin.Id
                 GVVaccin.Rows(iGrid).Cells("checked").Value = VaccinPrograms.Any(Function(x) x.Vaccin = vaccin.Id)
+                GVVaccin.Rows(iGrid).Cells("code").Value = vaccin.Code
                 GVVaccin.Rows(iGrid).Cells("dci").Value = vaccin.Dci
                 Dim valenceList = (From _vaccins In Vaccins.FindAll(Function(y) y.Code = vaccin.Code) Select _vaccins.Valence).ToArray()
                 Dim test = (From _valence In Valences.FindAll(Function(x) valenceList.Contains(x.Id)) Select _valence.Description).ToArray()
 
                 GVVaccin.Rows(iGrid).Cells("dci").Tag = String.Join(vbCrLf, (From _valence In Valences.FindAll(Function(x) valenceList.Contains(x.Id)) Select _valence.Description).ToArray())
                 GVVaccin.Rows(iGrid).Cells("valence").Value = vaccin.Valence
+                If VaccinPrograms.Any(Function(x) x.Vaccin = vaccin.Id) Then
+                    checker = True
+                End If
                 iGrid += 1
             End If
         Next
-
+        Me.BtnAdminVaccin.Enabled = checker
         Cursor.Current = Cursors.Default
         Me.Enabled = True
     End Sub
@@ -98,6 +128,7 @@ Public Class RadFVaccinInfo
                 GVValenceNonRequis.Rows.Add(iGrid)
                 GVValenceNonRequis.Rows(iGrid).Cells("id").Value = row.Cells("id").Value
                 GVValenceNonRequis.Rows(iGrid).Cells("name").Value = Valences.Find(Function(x) x.Id = valenceNone.Valence).Description
+                GVValenceNonRequis.Rows(iGrid).Cells("name").Tag = Valences.Find(Function(x) x.Id = valenceNone.Valence).Description
                 iGrid += 1
             Next
         Next
@@ -108,19 +139,22 @@ Public Class RadFVaccinInfo
     Private Sub ColorVaccins()
         Me.Enabled = False
         Cursor.Current = Cursors.WaitCursor
-
-
         For Each row As GridViewRowInfo In GVVaccin.Rows
+            Dim tmp = 2
             row.Cells("dci").Style.ForeColor = Color.Black
             If row.Cells("checked").Value = False Then
                 If GVValence.Rows.Any(Function(x) x.Cells("checked").Value = True AndAlso Vaccins.Any(Function(y) y.Id = row.Cells("id").Value AndAlso y.Valence = x.Cells("valence").Value)) Then
                     row.Cells("dci").Style.ForeColor = Color.Red
+                    tmp = 4
                 ElseIf Vaccins.Any(Function(x) x.Id.ToString() = row.Cells("id").Value AndAlso Not SelectedValences.Any(Function(y) y.Valence = x.Valence)) Then
                     row.Cells("dci").Style.ForeColor = Color.Orange
+                    tmp = 3
                 ElseIf Vaccins.FindAll(Function(x) x.Id.ToString() = row.Cells("id").Value AndAlso GVValence.Rows.Any(Function(y) y.Cells("valence").Value = x.Valence AndAlso y.Cells("checked").Value = False)).Count = SelectedValences.Count Then
                     row.Cells("dci").Style.ForeColor = Color.Green
+                    tmp = 1
                 End If
             End If
+            row.Cells("category").Value = tmp
         Next
 
         Cursor.Current = Cursors.Default
@@ -139,7 +173,8 @@ Public Class RadFVaccinInfo
             GVValence.Rows(iGrid).Cells("id").Value = valence.Id
             GVValence.Rows(iGrid).Cells("valence").Value = valence.Valence
             GVValence.Rows(iGrid).Cells("checked").Value = GVVaccin.Rows.Any(Function(x) x.Cells("checked").Value = True AndAlso Vaccins.Any(Function(y) y.Id = x.Cells("id").Value AndAlso y.Valence.ToString() = valence.Valence.ToString()))
-            GVValence.Rows(iGrid).Cells("nom").Value = valence.Description
+            GVValence.Rows(iGrid).Cells("name").Value = valence.Description
+            GVValence.Rows(iGrid).Cells("name").Tag = valence.Description
             iGrid += 1
         Next
         ColorVaccins()
@@ -175,6 +210,7 @@ Public Class RadFVaccinInfo
 
         'Allergie
         GetAllergie()
+        GetAllergieNonMedicamenteuse()
 
     End Sub
 
@@ -202,6 +238,17 @@ Public Class RadFVaccinInfo
         End If
     End Sub
 
+    Private Sub GetAllergieNonMedicamenteuse()
+        Dim patientDao As New PatientDao
+        Dim antecedentAllergies As List(Of Antecedent) = antecedentDao.GetListByDrc(SelectedPatient.PatientId, 121009)
+        If antecedentAllergies.Count = 0 Then
+            LblAllergie.Hide()
+        Else
+            LblAllergie.Show()
+            ToolTip.SetToolTip(LblAllergieNonMedicamenteuse, String.Join(vbCrLf, (From antecedentAllergie In antecedentAllergies Select antecedentAllergie.Description).ToArray()))
+        End If
+    End Sub
+
     Private Sub GetContreIndication()
         Dim patientDao As New PatientDao
         Dim StringContreIndicationToolTip As String = patientDao.GetStringContreIndicationByPatient(SelectedPatient.PatientId)
@@ -223,15 +270,17 @@ Public Class RadFVaccinInfo
             If GVVaccin.Rows(row).Cells("checked").Value Then
                 Me.Enabled = False
                 Cursor.Current = Cursors.WaitCursor
-                vaccinDao.DeleteVaccinProgramRelation(New VaccinProgramRelation() With {.Date = SelectedCGVDate.Id, .Vaccin = GVVaccin.Rows(row).Cells("id").Value, .Patient = SelectedPatient.PatientId})
+                If (vaccinDao.GetVaccinProgramAdministrationByRelation(VaccinPrograms.Find(Function(x) x.Vaccin = GVVaccin.Rows(row).Cells("id").Value).Id) IsNot Nothing) Then
+                    MessageBox.Show("Ce vaccin a deja ete administre, il ne peut pas etre revoque")
+                Else
+                    vaccinDao.DeleteVaccinProgramRelation(New VaccinProgramRelation() With {.Date = SelectedCGVDate.Id, .Vaccin = GVVaccin.Rows(row).Cells("id").Value, .RelationVaccinValence = GVVaccin.Rows(row).Cells("code").Value, .Patient = SelectedPatient.PatientId})
+                End If
             ElseIf Not GVValence.Rows.Any(Function(x) x.Cells("checked").Value = True AndAlso x.Cells("valence").Value = GVVaccin.Rows(row).Cells("valence").Value) Then
                 Me.Enabled = False
                 Cursor.Current = Cursors.WaitCursor
-                vaccinDao.CreateVaccinProgramRelation(New VaccinProgramRelation() With {.Date = SelectedCGVDate.Id, .Vaccin = GVVaccin.Rows(row).Cells("id").Value, .Patient = SelectedPatient.PatientId})
+                vaccinDao.CreateVaccinProgramRelation(New VaccinProgramRelation() With {.Date = SelectedCGVDate.Id, .RelationVaccinValence = GVVaccin.Rows(row).Cells("code").Value, .Vaccin = GVVaccin.Rows(row).Cells("id").Value, .Patient = SelectedPatient.PatientId})
             Else Return
             End If
-            GVVaccin.Refresh()
-            GVVaccin.Update()
             ChargementVaccins()
             ChargementValences()
         End If
@@ -243,11 +292,37 @@ Public Class RadFVaccinInfo
     End Sub
 
     Private Sub BtnAdminVaccin_Click(sender As Object, e As EventArgs) Handles BtnAdminVaccin.Click
-        Dim vaccinList = (From _vaccin In GVVaccin.Rows Where _vaccin.Cells("checked").Value = True Select Convert.ToInt64(_vaccin.Cells("id").Value)).ToArray()
-        Using radFVaccinInput As New RadFVaccinInput
-            radFVaccinInput.Vaccins = Vaccins.FindAll(Function(x) vaccinList.Contains(x.Id))
-            radFVaccinInput.ShowDialog()
-        End Using
+        If Lock Then
+            Dim vaccinList = (From _vaccin In GVVaccin.Rows Where _vaccin.Cells("checked").Value = True Select Convert.ToInt64(_vaccin.Cells("id").Value)).ToArray()
+            Using radFVaccinInput As New RadFVaccinInput
+                radFVaccinInput.Lock = True
+                radFVaccinInput.VaccinPrograms = vaccinDao.GetVaccinProgramRelationListDatePatient(SelectedCGVDate.Id, SelectedPatient.PatientId)
+                radFVaccinInput.Vaccins = Vaccins.FindAll(Function(x) vaccinList.Contains(x.Id))
+                radFVaccinInput.Valences = SelectedValences
+                radFVaccinInput.ShowDialog()
+                ChargementInformation()
+            End Using
+        Else
+
+            SelectedCGVDate.OperatedBy = userLog.UtilisateurId
+            SelectedCGVDate.OperatedDate = DTPDate.Value
+            cgvDateDao.Update(SelectedCGVDate)
+            Dim vaccinList = (From _vaccin In GVVaccin.Rows Where _vaccin.Cells("checked").Value = True Select Convert.ToInt64(_vaccin.Cells("id").Value)).ToArray()
+            Using radFVaccinInput As New RadFVaccinInput
+                radFVaccinInput.VaccinPrograms = vaccinDao.GetVaccinProgramRelationListDatePatient(SelectedCGVDate.Id, SelectedPatient.PatientId)
+                radFVaccinInput.Vaccins = Vaccins.FindAll(Function(x) vaccinList.Contains(x.Id))
+                radFVaccinInput.Valences = SelectedValences
+                radFVaccinInput.ShowDialog()
+                ChargementInformation()
+                CodeRetour = True
+
+                SelectedCGVDate.PerformDate = radFVaccinInput.DTPRealisation.Value()
+                SelectedCGVDate.PerformBy = userLog.UtilisateurId
+
+                cgvDateDao.Update(SelectedCGVDate)
+                Close()
+            End Using
+        End If
     End Sub
 
     Private Sub GVVaccin_ToolTipTextNeeded(sender As Object, e As ToolTipTextNeededEventArgs) Handles GVVaccin.ToolTipTextNeeded
@@ -257,9 +332,25 @@ Public Class RadFVaccinInfo
         End If
     End Sub
 
+    Private Sub GVValence_ToolTipTextNeeded(sender As Object, e As ToolTipTextNeededEventArgs) Handles GVValence.ToolTipTextNeeded
+        Dim hoveredCell As GridDataCellElement = TryCast(sender, GridDataCellElement)
+        If hoveredCell IsNot Nothing AndAlso hoveredCell.ColumnInfo.Name = "name" Then
+            e.ToolTipText = hoveredCell.RowInfo.Cells("name").Tag
+        End If
+    End Sub
+
+    Private Sub GVValenceNonRequis_ToolTipTextNeeded(sender As Object, e As ToolTipTextNeededEventArgs) Handles GVValenceNonRequis.ToolTipTextNeeded
+        Dim hoveredCell As GridDataCellElement = TryCast(sender, GridDataCellElement)
+        If hoveredCell IsNot Nothing AndAlso hoveredCell.ColumnInfo.Name = "name" Then
+            e.ToolTipText = hoveredCell.RowInfo.Cells("name").Tag
+        End If
+    End Sub
+
     Private Sub BtnValidationProgram_Click(sender As Object, e As EventArgs) Handles BtnValidationProgram.Click
         SelectedCGVDate.OperatedBy = userLog.UtilisateurId
+        SelectedCGVDate.OperatedDate = DTPDate.Value
         cgvDateDao.Update(SelectedCGVDate)
+        CodeRetour = True
         Close()
     End Sub
 

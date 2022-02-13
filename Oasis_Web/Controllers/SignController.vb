@@ -39,7 +39,7 @@ Namespace Controllers
                 End If
                 ViewBag.Patient = patient
                 'patient.PatientDateNaissance.ToString
-                Dim user = utilisateurDao.getUserById(ordonnance.UserValidation)
+                Dim user = utilisateurDao.GetUserById(ordonnance.UserValidation)
                 If user Is Nothing Then
                     Return View()
                 End If

@@ -69,7 +69,7 @@ Public Class FrmMailOrdonnance
         If (patient.PharmacienId <> 0) Then
             Try
                 Dim rorDao As New RorDao()
-                Dim ror = rorDao.getRorById(patient.PharmacienId)
+                Dim ror = rorDao.GetRorById(patient.PharmacienId)
                 emailPharmacien = ror.Email
             Catch err As Exception
             End Try

@@ -214,7 +214,7 @@ Public Class RadFAnnuaireProfessionnelSelect
         End If
     End Sub
 
-    Private Sub CreationDansReferentienDSO()
+    Private Sub CreationDansReferentienDSO() 'TODO: Pro Sante -> ROR
         If CreationRor = True Then
             'Creation de l'instance dans le réferntiel de référence et récupération de la clé
             Dim CleRefenceAnnuaire As Long

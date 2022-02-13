@@ -145,7 +145,7 @@ Public Class RadFParcoursDetailEdit
             End If
 
             'Données ROR
-            ror = rordao.getRorById(Me.SelectedRorId)
+            ror = rordao.GetRorById(Me.SelectedRorId)
             ParcoursUpdate.RorId = Me.SelectedRorId
             TxtNomIntervenant.Text = ror.Nom
             TxtTypeIntervenant.Text = ror.Type
@@ -300,7 +300,7 @@ Public Class RadFParcoursDetailEdit
         End If
 
         'Données ROR
-        ror = rordao.getRorById(ParcoursUpdate.RorId)
+        ror = rordao.GetRorById(ParcoursUpdate.RorId)
         TxtNomIntervenant.Text = ror.Nom
         TxtTypeIntervenant.Text = ror.Type
         TxtNomStructure.Text = ror.StructureNom
@@ -349,7 +349,7 @@ Public Class RadFParcoursDetailEdit
 
         If ParcoursUpdate.UserCreation <> 0 Then
             Dim userDao As New UserDao
-            UtilisateurHisto = userDao.getUserById(ParcoursUpdate.UserCreation)
+            UtilisateurHisto = userDao.GetUserById(ParcoursUpdate.UserCreation)
             LblUtilisateurCreation.Text = Me.UtilisateurHisto.UtilisateurPrenom & " " & Me.UtilisateurHisto.UtilisateurNom
         End If
 
@@ -365,7 +365,7 @@ Public Class RadFParcoursDetailEdit
         LblUtilisateurModification.Text = ""
         If ParcoursUpdate.UserModification <> 0 Then
             Dim userDao As New UserDao
-            UtilisateurHisto = userDao.getUserById(ParcoursUpdate.UserModification)
+            UtilisateurHisto = userDao.GetUserById(ParcoursUpdate.UserModification)
             LblUtilisateurModification.Text = Me.UtilisateurHisto.UtilisateurPrenom & " " & Me.UtilisateurHisto.UtilisateurNom
         End If
     End Sub
@@ -523,7 +523,7 @@ Public Class RadFParcoursDetailEdit
             If vRadFRorListe.CodeRetour = True Then
                 If vRadFRorListe.SelectedRorId <> 0 Then
                     Me.SelectedRorId = vRadFRorListe.SelectedRorId
-                    ror = rordao.getRorById(vRadFRorListe.SelectedRorId)
+                    ror = rordao.GetRorById(vRadFRorListe.SelectedRorId)
                     ParcoursUpdate.RorId = Me.SelectedRorId
                     GestionAffichageBoutonValidation()
                     TxtNomIntervenant.Text = ror.Nom
@@ -531,7 +531,7 @@ Public Class RadFParcoursDetailEdit
                     'Structure
                     If ror.StructureId <> 0 Then
                         Dim structureIntervenant As Ror
-                        structureIntervenant = rordao.getRorById(ror.StructureId)
+                        structureIntervenant = rordao.GetRorById(ror.StructureId)
                         TxtNomStructure.Text = structureIntervenant.Nom
                     Else
                         TxtNomStructure.Text = ror.StructureNom
@@ -1105,7 +1105,7 @@ Public Class RadFParcoursDetailEdit
 
                     Me.Enabled = True
                 Else
-                    Dim user As Utilisateur = userDao.getUserById(tache.TraiteUserId)
+                    Dim user As Utilisateur = userDao.GetUserById(tache.TraiteUserId)
                     MessageBox.Show("Le rendez-vous n'est pas modifiable, il est en cours de traitement par : " & user.UtilisateurPrenom & " " & user.UtilisateurNom, "Alerte", MessageBoxButtons.OK, MessageBoxIcon.Warning)
                 End If
             End If
@@ -1154,7 +1154,7 @@ Public Class RadFParcoursDetailEdit
 
                     Me.Enabled = True
                 Else
-                    Dim user As Utilisateur = userDao.getUserById(tache.TraiteUserId)
+                    Dim user As Utilisateur = userDao.GetUserById(tache.TraiteUserId)
                     MessageBox.Show("Le rendez-vous n'est pas modifiable, il est en cours de traitement par : " & userLog.UtilisateurPrenom & " " & userLog.UtilisateurNom, "Alerte", MessageBoxButtons.OK, MessageBoxIcon.Warning)
                 End If
             End If
@@ -1373,7 +1373,7 @@ Public Class RadFParcoursDetailEdit
     'Visualisation détail intervenant (ROR)
     Private Sub RadBtnRorDetail_Click(sender As Object, e As EventArgs) Handles RadBtnRorDetail.Click
         Dim ror As Ror
-        ror = rordao.getRorById(ParcoursUpdate.RorId)
+        ror = rordao.GetRorById(ParcoursUpdate.RorId)
         If ror.ExtractionAnnuaire = True Then
             Try
                 Using form As New RadFAnnuaireProfessionneldetail
@@ -1389,7 +1389,7 @@ Public Class RadFParcoursDetailEdit
                 vFRorDetailEdit.SelectedRorId = ParcoursUpdate.RorId
                 vFRorDetailEdit.ShowDialog() 'Modal
                 If vFRorDetailEdit.CodeRetour = True Then
-                    ror = rordao.getRorById(ParcoursUpdate.RorId)
+                    ror = rordao.GetRorById(ParcoursUpdate.RorId)
                     TxtNomIntervenant.Text = ror.Nom
                     TxtTypeIntervenant.Text = ror.Type
                     TxtNomStructure.Text = ror.StructureNom

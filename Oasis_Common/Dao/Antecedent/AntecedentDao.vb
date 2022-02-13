@@ -230,6 +230,37 @@ Public Class AntecedentDao
         Return antecedents
     End Function
 
+    Public Function GetListByDrc(patientId As Long, drcId As Long) As List(Of Antecedent)
+        Dim con As SqlConnection = GetConnection()
+        Dim antecedents As List(Of Antecedent) = New List(Of Antecedent)
+
+        Try
+            Dim command As SqlCommand = con.CreateCommand()
+            command.CommandText =
+                "SELECT * FROM oasis.oa_antecedent" &
+                " WHERE oa_antecedent_type = 'A'" &
+                " AND oa_antecedent_patient_id = @patientId" &
+                " AND oa_antecedent_drc_id = @drcId"
+
+            With command.Parameters
+                .AddWithValue("@patientId", patientId)
+                .AddWithValue("@drcId", drcId)
+            End With
+
+            Using reader As SqlDataReader = command.ExecuteReader()
+                While (reader.Read())
+                    antecedents.Add(BuildBean(reader))
+                End While
+            End Using
+        Catch ex As Exception
+            Throw ex
+        Finally
+            con.Close()
+        End Try
+
+        Return antecedents
+    End Function
+
     Public Function GetListByPatient(patientId As Integer, Optional other As String = Nothing) As List(Of Antecedent)
         Dim con As SqlConnection = GetConnection()
         Dim sousEpisodeReponseMails As List(Of Antecedent) = New List(Of Antecedent)

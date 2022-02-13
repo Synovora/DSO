@@ -206,7 +206,7 @@ Public Class RadFPatientRendezVousListe
 
                 Me.Enabled = True
             Else
-                Dim user As Utilisateur = UserDao.getUserById(tache.TraiteUserId)
+                Dim user As Utilisateur = UserDao.GetUserById(tache.TraiteUserId)
                 MessageBox.Show("La demande de rendez-vous n'est pas modifiable, elle est attribuée à : " & user.UtilisateurPrenom & " " & user.UtilisateurNom)
             End If
         End If
@@ -248,7 +248,7 @@ Public Class RadFPatientRendezVousListe
                 ChargementListeRendezvous()
                 Me.Enabled = True
             Else
-                Dim user As Utilisateur = userDao.getUserById(tache.TraiteUserId)
+                Dim user As Utilisateur = userDao.GetUserById(tache.TraiteUserId)
                 MessageBox.Show("Le rendez-vous n'est pas modifiable, il est attribué à : " & user.UtilisateurPrenom & " " & user.UtilisateurNom)
             End If
         End If
@@ -311,7 +311,7 @@ Public Class RadFPatientRendezVousListe
                     End If
 
                 Else
-                    Dim user As Utilisateur = userDao.getUserById(tache.TraiteUserId)
+                    Dim user As Utilisateur = userDao.GetUserById(tache.TraiteUserId)
                     MessageBox.Show("Le rendez-vous n'est pas modifiable, il est attribué à : " & user.UtilisateurPrenom & " " & user.UtilisateurNom, "Alerte", MessageBoxButtons.OK, MessageBoxIcon.Exclamation)
                 End If
 
@@ -375,7 +375,7 @@ Public Class RadFPatientRendezVousListe
 
         Else
             Dim user As Utilisateur
-            user = UserDao.getUserById(tache.TraiteUserId)
+            user = UserDao.GetUserById(tache.TraiteUserId)
             MessageBox.Show("Le rendez-vous n'est pas disponible, il est attribué à : " & user.UtilisateurPrenom & " " & user.UtilisateurNom, "Information", MessageBoxButtons.OK, MessageBoxIcon.Information)
         End If
     End Sub
@@ -409,7 +409,7 @@ Public Class RadFPatientRendezVousListe
 
         Else
             Dim user As Utilisateur
-            user = UserDao.getUserById(tache.TraiteUserId)
+            user = UserDao.GetUserById(tache.TraiteUserId)
             MessageBox.Show("La demande de rendez-vous n'est pas disponible, elle est attribuée à : " & user.UtilisateurPrenom & " " & user.UtilisateurNom)
         End If
     End Sub
@@ -432,7 +432,7 @@ Public Class RadFPatientRendezVousListe
             If aRow >= 0 Then
                 Dim rorId As Long = RadGridViewRDV.Rows(aRow).Cells("ror_id").Value
                 Dim ror As Ror
-                ror = rorDao.getRorById(rorId)
+                ror = rorDao.GetRorById(rorId)
                 If ror.ExtractionAnnuaire = True Then
                     Try
                         Using form As New RadFAnnuaireProfessionneldetail

@@ -29,7 +29,7 @@ Public Class RadFOrdonnanceListe
                 If ordonnance.UtilisateurCreation <> 0 Then
                     Dim auteur As Utilisateur
                     Dim userDao As New UserDao
-                    auteur = userDao.getUserById(ordonnance.UtilisateurCreation)
+                    auteur = userDao.GetUserById(ordonnance.UtilisateurCreation)
                     'UtilisateurDao.SetUtilisateur(auteur, AuteurId)
                     AuteurNom = auteur.UtilisateurPrenom & " " & auteur.UtilisateurNom
                 End If

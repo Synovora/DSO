@@ -48,6 +48,11 @@ Public Class VaccinProgramRelation
     Property Patient As Long
     Property [Date] As Long
     Property Vaccin As Long
+    Property RelationVaccinValence As Long
+    Property RealisationDate As Date
+    Property RealisationOperator As Long
+    Property RealisationOperatorRor As Long
+    Property RealisationOperatorText As String
 
     Public Sub New()
     End Sub
@@ -57,29 +62,11 @@ Public Class VaccinProgramRelation
         Me.Patient = reader("patient")
         Me.Date = reader("date")
         Me.Vaccin = reader("vaccin")
+        Me.RelationVaccinValence = reader("relation_vaccin_valence")
+        Me.RealisationDate = Coalesce(reader("realisation_date"), Nothing)
+        Me.RealisationOperator = Coalesce(reader("realisation_operator"), Nothing)
+        Me.RealisationOperatorRor = Coalesce(reader("realisation_operator_ror"), Nothing)
+        Me.RealisationOperatorText = Coalesce(reader("realisation_operator_text"), Nothing)
     End Sub
 
 End Class
-
-'Public Class VaccinProgram
-'    Property Id As Long
-'    Property Patient As Long
-'    Property [Date] As Long
-'    Property ProgramDate As Date
-'    Property ProgramUser As Long
-'    Property DoneDate As Date?
-'    Property DoneUser As Long?
-
-'    Public Sub New()
-'    End Sub
-
-'    Public Sub New(reader As SqlDataReader)
-'        Me.Id = reader("id")
-'        Me.Patient = reader("patient")
-'        Me.Date = reader("date")
-'        Me.ProgramDate = reader("program_date")
-'        Me.ProgramUser = reader("program_user")
-'        Me.DoneDate = Coalesce(reader("done_date"), Nothing)
-'        Me.DoneUser = Coalesce(reader("done_user"), Nothing)
-'    End Sub
-'End Class

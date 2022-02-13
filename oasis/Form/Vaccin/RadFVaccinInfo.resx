@@ -120,6 +120,12 @@
   <metadata name="ToolTip.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>17, 17</value>
   </metadata>
+  <data name="legend.ToolTip" xml:space="preserve">
+    <value>Vert: Le vaccin contient toutes les valences requises
+Orange: Le vaccin contient des valences non requises
+Rouge: Le vaccin contient des valences deja selectionees
+Noir: Le vaccin contient des valences requises sans valences non requises</value>
+  </data>
   <metadata name="TraitementContextMenuStrip.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>318, 30</value>
   </metadata>

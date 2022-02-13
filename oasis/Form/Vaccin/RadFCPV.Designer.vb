@@ -43,6 +43,19 @@ Partial Class RadFCPV
         Me.TextMonth = New Telerik.WinControls.UI.RadTextBox()
         Me.TextDay = New Telerik.WinControls.UI.RadTextBox()
         Me.BtnImport = New Telerik.WinControls.UI.RadButton()
+        Me.RadGroupBoxEtatCivil = New Telerik.WinControls.UI.RadGroupBox()
+        Me.LblDateNaissance = New System.Windows.Forms.Label()
+        Me.LblALD = New System.Windows.Forms.Label()
+        Me.Label13 = New System.Windows.Forms.Label()
+        Me.LblPatientDateMaj = New System.Windows.Forms.Label()
+        Me.Label5 = New System.Windows.Forms.Label()
+        Me.LblPatientSite = New System.Windows.Forms.Label()
+        Me.Label4 = New System.Windows.Forms.Label()
+        Me.LblPatientPrenom = New System.Windows.Forms.Label()
+        Me.LblPatientNom = New System.Windows.Forms.Label()
+        Me.LblPatientAge = New System.Windows.Forms.Label()
+        Me.LblPatientGenre = New System.Windows.Forms.Label()
+        Me.LblPatientNIR = New System.Windows.Forms.Label()
         CType(Me.RadBtnAbandon, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.Grid, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.Grid.MasterTemplate, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -63,6 +76,8 @@ Partial Class RadFCPV
         CType(Me.TextMonth, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.TextDay, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.BtnImport, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.RadGroupBoxEtatCivil, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.RadGroupBoxEtatCivil.SuspendLayout()
         CType(Me, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
@@ -71,7 +86,7 @@ Partial Class RadFCPV
         Me.RadBtnAbandon.DialogResult = System.Windows.Forms.DialogResult.Cancel
         Me.RadBtnAbandon.Image = Global.Oasis_WF.My.Resources.Resources._exit
         Me.RadBtnAbandon.ImageAlignment = System.Drawing.ContentAlignment.MiddleCenter
-        Me.RadBtnAbandon.Location = New System.Drawing.Point(1607, 650)
+        Me.RadBtnAbandon.Location = New System.Drawing.Point(1607, 694)
         Me.RadBtnAbandon.Name = "RadBtnAbandon"
         Me.RadBtnAbandon.Size = New System.Drawing.Size(24, 24)
         Me.RadBtnAbandon.TabIndex = 2
@@ -83,7 +98,7 @@ Partial Class RadFCPV
         Me.Grid.Font = New System.Drawing.Font("Segoe UI", 8.25!)
         Me.Grid.ForeColor = System.Drawing.Color.Black
         Me.Grid.ImeMode = System.Windows.Forms.ImeMode.NoControl
-        Me.Grid.Location = New System.Drawing.Point(12, 12)
+        Me.Grid.Location = New System.Drawing.Point(12, 56)
         '
         '
         '
@@ -217,7 +232,7 @@ Partial Class RadFCPV
         Me.TextYear.Location = New System.Drawing.Point(71, 97)
         Me.TextYear.Name = "TextYear"
         Me.TextYear.NullText = "0"
-        Me.TextYear.Size = New System.Drawing.Size(77, 20)
+        Me.TextYear.Size = New System.Drawing.Size(77, 27)
         Me.TextYear.TabIndex = 17
         '
         'TextMonth
@@ -225,7 +240,7 @@ Partial Class RadFCPV
         Me.TextMonth.Location = New System.Drawing.Point(71, 71)
         Me.TextMonth.Name = "TextMonth"
         Me.TextMonth.NullText = "0"
-        Me.TextMonth.Size = New System.Drawing.Size(77, 20)
+        Me.TextMonth.Size = New System.Drawing.Size(77, 27)
         Me.TextMonth.TabIndex = 16
         '
         'TextDay
@@ -233,7 +248,7 @@ Partial Class RadFCPV
         Me.TextDay.Location = New System.Drawing.Point(71, 45)
         Me.TextDay.Name = "TextDay"
         Me.TextDay.NullText = "0"
-        Me.TextDay.Size = New System.Drawing.Size(77, 20)
+        Me.TextDay.Size = New System.Drawing.Size(77, 27)
         Me.TextDay.TabIndex = 15
         '
         'BtnImport
@@ -245,12 +260,152 @@ Partial Class RadFCPV
         Me.BtnImport.Text = "Importer depuis le calendrier general"
         Me.BtnImport.Visible = False
         '
+        'RadGroupBoxEtatCivil
+        '
+        Me.RadGroupBoxEtatCivil.AccessibleRole = System.Windows.Forms.AccessibleRole.Grouping
+        Me.RadGroupBoxEtatCivil.BackColor = System.Drawing.SystemColors.GradientInactiveCaption
+        Me.RadGroupBoxEtatCivil.Controls.Add(Me.LblDateNaissance)
+        Me.RadGroupBoxEtatCivil.Controls.Add(Me.LblALD)
+        Me.RadGroupBoxEtatCivil.Controls.Add(Me.Label13)
+        Me.RadGroupBoxEtatCivil.Controls.Add(Me.LblPatientDateMaj)
+        Me.RadGroupBoxEtatCivil.Controls.Add(Me.Label5)
+        Me.RadGroupBoxEtatCivil.Controls.Add(Me.LblPatientSite)
+        Me.RadGroupBoxEtatCivil.Controls.Add(Me.Label4)
+        Me.RadGroupBoxEtatCivil.Controls.Add(Me.LblPatientPrenom)
+        Me.RadGroupBoxEtatCivil.Controls.Add(Me.LblPatientNom)
+        Me.RadGroupBoxEtatCivil.Controls.Add(Me.LblPatientAge)
+        Me.RadGroupBoxEtatCivil.Controls.Add(Me.LblPatientGenre)
+        Me.RadGroupBoxEtatCivil.Controls.Add(Me.LblPatientNIR)
+        Me.RadGroupBoxEtatCivil.GroupBoxStyle = Telerik.WinControls.UI.RadGroupBoxStyle.Office
+        Me.RadGroupBoxEtatCivil.HeaderText = ""
+        Me.RadGroupBoxEtatCivil.Location = New System.Drawing.Point(12, 12)
+        Me.RadGroupBoxEtatCivil.Name = "RadGroupBoxEtatCivil"
+        Me.RadGroupBoxEtatCivil.Size = New System.Drawing.Size(1452, 38)
+        Me.RadGroupBoxEtatCivil.TabIndex = 59
+        CType(Me.RadGroupBoxEtatCivil.GetChildAt(0).GetChildAt(0), Telerik.WinControls.UI.GroupBoxContent).Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Bold)
+        CType(Me.RadGroupBoxEtatCivil.GetChildAt(0).GetChildAt(1), Telerik.WinControls.UI.GroupBoxHeader).GroupBoxStyle = Telerik.WinControls.UI.RadGroupBoxStyle.Office
+        CType(Me.RadGroupBoxEtatCivil.GetChildAt(0).GetChildAt(1), Telerik.WinControls.UI.GroupBoxHeader).Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Bold)
+        '
+        'LblDateNaissance
+        '
+        Me.LblDateNaissance.AutoSize = True
+        Me.LblDateNaissance.Location = New System.Drawing.Point(447, 4)
+        Me.LblDateNaissance.Name = "LblDateNaissance"
+        Me.LblDateNaissance.Size = New System.Drawing.Size(96, 23)
+        Me.LblDateNaissance.TabIndex = 46
+        Me.LblDateNaissance.Text = "25-04-2018"
+        '
+        'LblALD
+        '
+        Me.LblALD.AutoSize = True
+        Me.LblALD.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.LblALD.ForeColor = System.Drawing.Color.OrangeRed
+        Me.LblALD.Location = New System.Drawing.Point(1119, 4)
+        Me.LblALD.Name = "LblALD"
+        Me.LblALD.Size = New System.Drawing.Size(46, 20)
+        Me.LblALD.TabIndex = 43
+        Me.LblALD.Text = "ALD"
+        '
+        'Label13
+        '
+        Me.Label13.AutoSize = True
+        Me.Label13.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label13.Location = New System.Drawing.Point(682, 4)
+        Me.Label13.Name = "Label13"
+        Me.Label13.Size = New System.Drawing.Size(52, 20)
+        Me.Label13.TabIndex = 42
+        Me.Label13.Text = "NIR :"
+        '
+        'LblPatientDateMaj
+        '
+        Me.LblPatientDateMaj.AutoSize = True
+        Me.LblPatientDateMaj.Location = New System.Drawing.Point(973, 4)
+        Me.LblPatientDateMaj.Name = "LblPatientDateMaj"
+        Me.LblPatientDateMaj.Size = New System.Drawing.Size(96, 23)
+        Me.LblPatientDateMaj.TabIndex = 41
+        Me.LblPatientDateMaj.Text = "23-05-2019"
+        '
+        'Label5
+        '
+        Me.Label5.AutoSize = True
+        Me.Label5.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label5.Location = New System.Drawing.Point(839, 4)
+        Me.Label5.Name = "Label5"
+        Me.Label5.Size = New System.Drawing.Size(194, 20)
+        Me.Label5.TabIndex = 40
+        Me.Label5.Text = "Dernière mise à jour :"
+        '
+        'LblPatientSite
+        '
+        Me.LblPatientSite.AutoSize = True
+        Me.LblPatientSite.Location = New System.Drawing.Point(882, 21)
+        Me.LblPatientSite.Name = "LblPatientSite"
+        Me.LblPatientSite.Size = New System.Drawing.Size(53, 23)
+        Me.LblPatientSite.TabIndex = 37
+        Me.LblPatientSite.Text = "Cluny"
+        '
+        'Label4
+        '
+        Me.Label4.AutoSize = True
+        Me.Label4.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label4.Location = New System.Drawing.Point(839, 21)
+        Me.Label4.Name = "Label4"
+        Me.Label4.Size = New System.Drawing.Size(54, 20)
+        Me.Label4.TabIndex = 36
+        Me.Label4.Text = "Site :"
+        '
+        'LblPatientPrenom
+        '
+        Me.LblPatientPrenom.AutoSize = True
+        Me.LblPatientPrenom.Location = New System.Drawing.Point(11, 4)
+        Me.LblPatientPrenom.Name = "LblPatientPrenom"
+        Me.LblPatientPrenom.Size = New System.Drawing.Size(95, 23)
+        Me.LblPatientPrenom.TabIndex = 23
+        Me.LblPatientPrenom.Text = "Jean-Pierre"
+        '
+        'LblPatientNom
+        '
+        Me.LblPatientNom.AutoSize = True
+        Me.LblPatientNom.Location = New System.Drawing.Point(133, 4)
+        Me.LblPatientNom.Name = "LblPatientNom"
+        Me.LblPatientNom.Size = New System.Drawing.Size(67, 23)
+        Me.LblPatientNom.TabIndex = 24
+        Me.LblPatientNom.Text = "Durand"
+        '
+        'LblPatientAge
+        '
+        Me.LblPatientAge.AutoSize = True
+        Me.LblPatientAge.Location = New System.Drawing.Point(516, 4)
+        Me.LblPatientAge.Name = "LblPatientAge"
+        Me.LblPatientAge.Size = New System.Drawing.Size(59, 23)
+        Me.LblPatientAge.TabIndex = 25
+        Me.LblPatientAge.Text = "35 ans"
+        '
+        'LblPatientGenre
+        '
+        Me.LblPatientGenre.AutoSize = True
+        Me.LblPatientGenre.Location = New System.Drawing.Point(599, 4)
+        Me.LblPatientGenre.Name = "LblPatientGenre"
+        Me.LblPatientGenre.Size = New System.Drawing.Size(77, 23)
+        Me.LblPatientGenre.TabIndex = 26
+        Me.LblPatientGenre.Text = "Masculin"
+        '
+        'LblPatientNIR
+        '
+        Me.LblPatientNIR.AutoSize = True
+        Me.LblPatientNIR.Location = New System.Drawing.Point(733, 4)
+        Me.LblPatientNIR.Name = "LblPatientNIR"
+        Me.LblPatientNIR.Size = New System.Drawing.Size(127, 23)
+        Me.LblPatientNIR.TabIndex = 27
+        Me.LblPatientNIR.Text = "1840675370367"
+        '
         'RadFCPV
         '
-        Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
+        Me.AutoScaleDimensions = New System.Drawing.SizeF(9.0!, 20.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.CancelButton = Me.RadBtnAbandon
-        Me.ClientSize = New System.Drawing.Size(1643, 686)
+        Me.ClientSize = New System.Drawing.Size(1643, 728)
+        Me.Controls.Add(Me.RadGroupBoxEtatCivil)
         Me.Controls.Add(Me.BtnImport)
         Me.Controls.Add(Me.RadGroupBox2)
         Me.Controls.Add(Me.RadGroupBox1)
@@ -286,6 +441,9 @@ Partial Class RadFCPV
         CType(Me.TextMonth, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.TextDay, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.BtnImport, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.RadGroupBoxEtatCivil, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.RadGroupBoxEtatCivil.ResumeLayout(False)
+        Me.RadGroupBoxEtatCivil.PerformLayout()
         CType(Me, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
 
@@ -308,5 +466,18 @@ Partial Class RadFCPV
     Friend WithEvents RBDateActif As Telerik.WinControls.UI.RadRadioButton
     Friend WithEvents RBDateAll As Telerik.WinControls.UI.RadRadioButton
     Friend WithEvents BtnImport As Telerik.WinControls.UI.RadButton
+    Friend WithEvents RadGroupBoxEtatCivil As Telerik.WinControls.UI.RadGroupBox
+    Friend WithEvents LblDateNaissance As Label
+    Friend WithEvents LblALD As Label
+    Friend WithEvents Label13 As Label
+    Friend WithEvents LblPatientDateMaj As Label
+    Friend WithEvents Label5 As Label
+    Friend WithEvents LblPatientSite As Label
+    Friend WithEvents Label4 As Label
+    Friend WithEvents LblPatientPrenom As Label
+    Friend WithEvents LblPatientNom As Label
+    Friend WithEvents LblPatientAge As Label
+    Friend WithEvents LblPatientGenre As Label
+    Friend WithEvents LblPatientNIR As Label
 End Class
 

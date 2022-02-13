@@ -29,7 +29,7 @@ Public Class RadFListeActions
         Else
             UserActionId = UserId
         End If
-        User = userdao.getUserById(UserActionId)
+        User = userdao.GetUserById(UserActionId)
         LblNomUtilisateur.Text = User.UtilisateurPrenom & "  " & User.UtilisateurNom & "  - " & User.UtilisateurProfilId & " / " & User.TypeProfil
 
         ChargementActions()

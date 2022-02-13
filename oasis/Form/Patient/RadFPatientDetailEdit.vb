@@ -224,7 +224,7 @@ Public Class RadFPatientDetailEdit
         TxtProfession.Text = patientUpdate.Profession
         PharmacienRorId = patientUpdate.PharmacienId
         If patientUpdate.PharmacienId <> 0 Then
-            ror = rorDao.getRorById(patientUpdate.PharmacienId)
+            ror = rorDao.GetRorById(patientUpdate.PharmacienId)
             TxtPharmacien.Text = ror.Nom
         End If
 
@@ -879,7 +879,7 @@ Public Class RadFPatientDetailEdit
             If dt.Rows(i)("oa_patient_note_utilisateur_creation") IsNot DBNull.Value Then
                 If dt.Rows(i)("oa_patient_note_utilisateur_creation") <> 0 Then
                     Dim userDao As New UserDao
-                    utilisateurHisto = userDao.getUserById(dt.Rows(i)("oa_patient_note_utilisateur_creation"))
+                    utilisateurHisto = userDao.GetUserById(dt.Rows(i)("oa_patient_note_utilisateur_creation"))
                     Auteur = Me.utilisateurHisto.UtilisateurPrenom & " " & Me.utilisateurHisto.UtilisateurNom
                 End If
             End If
@@ -1115,7 +1115,7 @@ Public Class RadFPatientDetailEdit
             vRadFRorListe.ShowDialog()
             If vRadFRorListe.SelectedRorId <> 0 Then
                 PharmacienRorId = vRadFRorListe.SelectedRorId
-                ror = rorDao.getRorById(PharmacienRorId)
+                ror = rorDao.GetRorById(PharmacienRorId)
                 TxtPharmacien.Text = ror.Nom
             End If
         End Using

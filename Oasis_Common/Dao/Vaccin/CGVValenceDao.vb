@@ -51,7 +51,7 @@ Public Class CGVValenceDao
 
     Public Function GetListFromPatient(patientId As Long) As List(Of CGVValence)
         Dim con As SqlConnection = GetConnection()
-        Dim valences As List(Of CGVValence) = New List(Of CGVValence)
+        Dim valences As New List(Of CGVValence)
 
         Try
             Dim command As SqlCommand = con.CreateCommand()

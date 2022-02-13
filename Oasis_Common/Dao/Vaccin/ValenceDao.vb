@@ -277,7 +277,7 @@ Public Class ValenceDao
     End Function
 
     Public Function CreateRelation(relationVaccinValence As RelationVaccinValence) As Long
-        Dim da As SqlDataAdapter = New SqlDataAdapter()
+        Dim da As New SqlDataAdapter()
         Dim relationId As Long
 
         Dim SQLstring As String = "
@@ -307,7 +307,7 @@ Public Class ValenceDao
     End Function
 
     Public Function DeleteRelation(relationVaccinValence As RelationVaccinValence) As Long
-        Dim da As SqlDataAdapter = New SqlDataAdapter()
+        Dim da As New SqlDataAdapter()
         Dim relationId As Long
 
         Dim SQLstring As String = "DELETE FROM oasis.oa_relation_vaccin_valence WHERE valence=@valenceId AND vaccin=@vaccinId;"

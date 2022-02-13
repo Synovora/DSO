@@ -553,7 +553,7 @@ Public Class RadFContextedetailEdit
         LblUtilisateurCreation.Text = ""
         If contexteRead.UserCreation <> 0 Then
             Dim userDao As New UserDao
-            utilisateurHisto = userDao.getUserById(contexteRead.UserCreation)
+            utilisateurHisto = userDao.GetUserById(contexteRead.UserCreation)
             'SetUtilisateur(utilisateurHisto, contexteRead.UserCreation)
             LblUtilisateurCreation.Text = Me.utilisateurHisto.UtilisateurPrenom & " " & Me.utilisateurHisto.UtilisateurNom
         Else
@@ -573,7 +573,7 @@ Public Class RadFContextedetailEdit
         LblUtilisateurModification.Text = ""
         If contexteRead.UserModification <> 0 Then
             Dim userDao As New UserDao
-            utilisateurHisto = userDao.getUserById(contexteRead.UserModification)
+            utilisateurHisto = userDao.GetUserById(contexteRead.UserModification)
             'SetUtilisateur(utilisateurHisto, contexteRead.UserModification)
             LblUtilisateurModification.Text = Me.utilisateurHisto.UtilisateurPrenom & " " & Me.utilisateurHisto.UtilisateurNom
         Else

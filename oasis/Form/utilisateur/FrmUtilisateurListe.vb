@@ -106,7 +106,7 @@ Public Class FrmUtilisateurListe
         Dim user As Utilisateur
         Try
             Me.Cursor = Cursors.WaitCursor
-            user = userDao.getUserById(Me.RadGridView1.CurrentRow.Cells("Id").Value)
+            user = userDao.GetUserById(Me.RadGridView1.CurrentRow.Cells("Id").Value)
         Catch err As Exception
             MsgBox(err.Message())
             Return

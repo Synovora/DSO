@@ -248,7 +248,7 @@ Public Class RadFEpisodeDetailCreation
     Private Function CreateAntecedentOrContexte(SelectedEpisode As Episode, SelectedDrcId As Drc, Type As String) As Antecedent
         Dim contexteUpdate As New Antecedent
         Dim ContexteHistoACreer As New AntecedentHisto
-        Dim user As Utilisateur = userDao.getUserById(1)
+        Dim user As Utilisateur = userDao.GetUserById(1)
 
         contexteUpdate.PatientId = SelectedPatient.PatientId
         contexteUpdate.Type = Type

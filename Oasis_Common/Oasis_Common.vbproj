@@ -184,6 +184,7 @@
     <Compile Include="Bean\Theriaque\ContreIndicationSubstance.vb" />
     <Compile Include="Bean\Theriaque\SpecialiteAllergique.vb" />
     <Compile Include="Bean\Theriaque\SpecialiteContreIndique.vb" />
+    <Compile Include="Bean\Vaccin\VaccinProgram.vb" />
     <Compile Include="Bean\Vaccin\Vaccin.vb" />
     <Compile Include="Bean\Theriaque\SpecialiteTheriaque.vb" />
     <Compile Include="Bean\Vaccin\CGVDate.vb" />

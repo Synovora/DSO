@@ -470,14 +470,14 @@ Public Class RadFEpisodeDetail
         CommentaireEpisode = episode.Commentaire
 
         Dim userDao As New UserDao
-        user = userDao.getUserById(episode.UserCreation)
+        user = userDao.GetUserById(episode.UserCreation)
         'UtilisateurDao.SetUtilisateur(user, episode.UserCreation)
         UserCreation = user.UtilisateurPrenom.Trim & " " & user.UtilisateurNom.Trim
         DateCreation = episode.DateCreation.ToString("dd/MM/yyyy HH:mm")
         DateModification = episode.DateModification.ToString("dd/MM/yyyy HH:mm")
 
         If episode.UserModification <> 0 Then
-            user = userDao.getUserById(episode.UserModification)
+            user = userDao.GetUserById(episode.UserModification)
             'UtilisateurDao.SetUtilisateur(user, episode.UserModification)
             UserModification = user.UtilisateurPrenom.Trim & " " & user.UtilisateurNom.Trim
         End If
@@ -950,7 +950,7 @@ Public Class RadFEpisodeDetail
                 Next
             Next
             If sousEpisode.SousTypeLibelle = "Courrier" Then
-                Dim intervenant = rorDao.getRorById(sousEpisode.IdIntervenant)
+                Dim intervenant = rorDao.GetRorById(sousEpisode.IdIntervenant)
                 Dim specialite = Table_specialite.GetSpecialiteDescription(intervenant.SpecialiteId)
                 Text = "Intervenant: " & intervenant.Nom & " - " & specialite
             End If
@@ -1539,7 +1539,7 @@ Public Class RadFEpisodeDetail
             If Coalesce(ObservationSpe.Rows(i)("user_id"), 0) <> 0 Then
                 Dim UtilisateurCreation As Utilisateur
                 Dim userDao As New UserDao
-                UtilisateurCreation = userDao.getUserById(ObservationSpe.Rows(i)("user_id"))
+                UtilisateurCreation = userDao.GetUserById(ObservationSpe.Rows(i)("user_id"))
                 'SetUtilisateur(UtilisateurCreation, ObservationSpe.Rows(i)("user_id"))
                 Auteur = UtilisateurCreation.UtilisateurPrenom & " " & UtilisateurCreation.UtilisateurNom
             End If
@@ -1858,7 +1858,7 @@ Public Class RadFEpisodeDetail
             If tache.TraiteUserId <> 0 Then
                 If tache.TraiteUserId <> userLog.UtilisateurId Then
                     Dim userTraitement As Utilisateur
-                    userTraitement = UserDao.getUserById(tache.TraiteUserId)
+                    userTraitement = UserDao.GetUserById(tache.TraiteUserId)
                     MessageBox.Show("Accès impossible, le traitement de cette demande d'avis est déjà attribué à " & userTraitement.UtilisateurPrenom & " " & userTraitement.UtilisateurNom & " (" & userTraitement.UtilisateurProfilId & ")")
                     Exit Sub
                 End If

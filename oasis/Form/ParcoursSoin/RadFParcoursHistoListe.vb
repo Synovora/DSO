@@ -124,7 +124,7 @@ Public Class RadFParcoursHistoListe
             If intervenantId <> 0 Then
                 Dim rordao As New RorDao
                 Dim ror As Ror
-                ror = rordao.getRorById(intervenantId)
+                ror = rordao.GetRorById(intervenantId)
                 intervenantString = ror.Nom
             End If
 
@@ -143,7 +143,7 @@ Public Class RadFParcoursHistoListe
             'Utilisateur
             Dim UtilisateurId As Integer = parcoursHistoDataTable.Rows(i)("oa_parcours_histo_user_historisation")
             Dim userDao As New UserDao
-            UtilisateurHisto = userDao.getUserById(UtilisateurId)
+            UtilisateurHisto = userDao.GetUserById(UtilisateurId)
             'SetUtilisateur(UtilisateurHisto, UtilisateurId)
             RadParcoursDataGridView.Rows(iGrid).Cells("histoUtilisateur").Value = Me.UtilisateurHisto.UtilisateurPrenom & " " & Me.UtilisateurHisto.UtilisateurNom
 

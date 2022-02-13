@@ -192,7 +192,7 @@ Public Class ParcoursDao
                     intervenantParcours.IntervenantId = row("oa_parcours_ror_id")
                     intervenantParcours.PatientId = row("oa_parcours_patient_id")
                     Dim Intervenant As Ror
-                    Intervenant = rorDao.getRorById(intervenantParcours.IntervenantId)
+                    Intervenant = rorDao.GetRorById(intervenantParcours.IntervenantId)
                     intervenantParcours.Nom = Intervenant.Nom
                     intervenantParcours.Structure = Intervenant.StructureNom
 

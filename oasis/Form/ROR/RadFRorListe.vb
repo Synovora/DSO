@@ -352,7 +352,7 @@ Public Class RadFRorListe
     Private Sub RadBtnDetail_Click(sender As Object, e As EventArgs) Handles RadBtnDetail.Click
         If RorIdDisplayed <> 0 Then
             Dim ror As Ror
-            ror = rorDao.getRorById(RorIdDisplayed)
+            ror = rorDao.GetRorById(RorIdDisplayed)
             If ror.CleReferenceAnnuaire <> 0 Then
                 Try
                     Using form As New RadFAnnuaireProfessionneldetail
