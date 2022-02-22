@@ -298,6 +298,32 @@ Public Class VaccinDao
         Return vaccinPrograms
     End Function
 
+    Public Function GetFirstVaccinProgramRelationListDatePatient(dateId As Long, patientId As Long) As VaccinProgramRelation
+        Dim con As SqlConnection = GetConnection()
+        Dim vaccinProgram As VaccinProgramRelation = Nothing
+
+        Try
+            Dim command As SqlCommand = con.CreateCommand()
+            command.CommandText = "SELECT TOP 1  * FROM oasis.oa_vaccin_program_relation WHERE date=@dateId AND patient=@patientId;"
+
+            With command.Parameters
+                .AddWithValue("@dateId", dateId)
+                .AddWithValue("@patientId", patientId)
+            End With
+            Using reader As SqlDataReader = command.ExecuteReader()
+                If reader.Read() Then
+                    vaccinProgram = New VaccinProgramRelation(reader)
+                End If
+            End Using
+        Catch ex As Exception
+            Throw ex
+        Finally
+            con.Close()
+        End Try
+
+        Return vaccinProgram
+    End Function
+
     '
     ' VACCIN PROGRAM ADMINISTRATION
     '

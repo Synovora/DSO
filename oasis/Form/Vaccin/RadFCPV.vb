@@ -9,6 +9,8 @@ Public Class RadFCPV
     ReadOnly cgvValenceDao As New CGVValenceDao
     ReadOnly cgvDateDao As New CGVDateDao
     ReadOnly userDao As New UserDao
+    ReadOnly vaccinDao As New VaccinDao
+    ReadOnly rorDao As RorDao = New RorDao
 
     Dim valences As List(Of CGVValence)
     Dim relations As New List(Of RelationValenceDate)
@@ -53,7 +55,7 @@ Public Class RadFCPV
         Grid.Columns(0).Width = 80
         Grid.Columns(0).TextAlignment = DataGridViewContentAlignment.MiddleCenter
         Grid.Columns.Add("Realise le/par")
-        Grid.Columns(1).Width = 80
+        Grid.Columns(1).Width = 160
         Grid.Columns(1).TextAlignment = DataGridViewContentAlignment.MiddleCenter
         Grid.Columns.Add("Age")
         Grid.Columns(2).Width = 100
@@ -68,7 +70,7 @@ Public Class RadFCPV
         For Each valence As CGVValence In valences
             iGrid += 1
             Grid.Columns.Add(valence.Code)
-            Grid.Columns(iGrid).Width = 80
+            Grid.Columns(iGrid).Width = 50
             Grid.Columns(iGrid).TextAlignment = ContentAlignment.MiddleCenter
         Next
         Grid.Enabled = True
@@ -94,7 +96,19 @@ Public Class RadFCPV
             End If
             Grid.Rows.Add(iGrid)
             Grid.Rows(iGrid).Cells(0).Value = If(cgvDate.OperatedDate <> Nothing AndAlso cgvDate.OperatedBy <> Nothing, String.Format("{0} - {1}", cgvDate.OperatedDate.ToShortDateString(), GetProfilUserString(userDao.GetUserById(cgvDate.OperatedBy))), "+")
-            Grid.Rows(iGrid).Cells(1).Value = If(cgvDate.PerformDate <> Nothing AndAlso cgvDate.PerformBy <> Nothing, String.Format("{0} - {1}", cgvDate.PerformDate.ToShortDateString(), GetProfilUserString(userDao.GetUserById(cgvDate.PerformBy))), "")
+
+            Dim VaccinProgram = vaccinDao.GetFirstVaccinProgramRelationListDatePatient(cgvDate.Id, Patient.PatientId)
+            Dim Text = ""
+            If (VaccinProgram IsNot Nothing AndAlso VaccinProgram.RealisationDate <> Nothing) Then
+                If (VaccinProgram.RealisationOperator <> Nothing) Then
+                    Text = GetProfilUserString(userDao.GetUserById(VaccinProgram.RealisationOperator))
+                ElseIf (VaccinProgram.RealisationOperatorRor <> Nothing) Then
+                    Text = GetProfilUserString(rorDao.GetRorById(VaccinProgram.RealisationOperatorRor))
+                ElseIf (VaccinProgram.RealisationOperatorText <> Nothing) Then
+                    Text = VaccinProgram.RealisationOperatorText
+                End If
+                Grid.Rows(iGrid).Cells(1).Value = String.Format("{0} - {1}", VaccinProgram.RealisationDate.ToShortDateString(), Text)
+            End If
 
             Grid.Rows(iGrid).Cells(2).Value = CGVDate.DaysToDate(cgvDate.Days)
             For Each actualRelation As RelationValenceDate In actualRelations
@@ -214,7 +228,7 @@ Public Class RadFCPV
                 Dim mydate = cgvDates(dateRow)
                 Dim valence = valences(valenceCol - 3)
 
-                If mydate.PerformDate = Nothing Then
+                If e.Row.Cells(1).Value = "" Then
                     If (cgvDateDao.GetRelationIfExist(New RelationValenceDate() With {.Date = mydate.Id, .Valence = valence.Valence, .Patient = Patient.PatientId}) IsNot Nothing) Then
                         cgvDateDao.DeleteRelation(New RelationValenceDate() With {.Date = mydate.Id, .Valence = valence.Valence, .Patient = Patient.PatientId})
                     Else
@@ -238,6 +252,7 @@ Public Class RadFCPV
                     Next
 
                     Using radFCPV As New RadFVaccinInfo
+                        radFCPV.Lock = If(e.Row.Cells(1).Value = "", False, True)
                         radFCPV.SelectedPatient = Patient
                         radFCPV.SelectedCGVDate = cgvDates(aRow)
                         radFCPV.SelectedValences = enlabledValence
@@ -307,5 +322,17 @@ Public Class RadFCPV
         Cursor.Current = Cursors.Default
         ChargementValence()
         ChargementDate()
+    End Sub
+
+    Private Sub BtnCarnet_Click(sender As Object, e As EventArgs) Handles BtnCarnet.Click
+        Cursor.Current = Cursors.WaitCursor
+        Try
+            Dim printPdf As New PrtCarnetVaccinal
+            printPdf.SelectedPatient = Patient
+            printPdf.PrintDocument()
+        Catch ex As Exception
+            MessageBox.Show(ex.Message())
+        End Try
+        Cursor.Current = Cursors.Default
     End Sub
 End Class

@@ -24,7 +24,6 @@ Public Class RadFVaccinInfo
     Private Sub RadFATCListe_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         AfficheTitleForm(Me, "Vaccin - Information", userLog)
 
-        Lock = If(SelectedCGVDate.PerformBy <> Nothing, True, False)
         If (Lock) Then
             Me.DTPDate.Enabled = False
             Me.GVVaccin.Enabled = False
@@ -92,6 +91,7 @@ Public Class RadFVaccinInfo
                 iGrid += 1
             End If
         Next
+        GVVaccin.TableElement.RowScroller.ScrollToItem(GVVaccin.Rows(0))
         Me.BtnAdminVaccin.Enabled = checker
         Cursor.Current = Cursors.Default
         Me.Enabled = True
@@ -316,11 +316,12 @@ Public Class RadFVaccinInfo
                 ChargementInformation()
                 CodeRetour = True
 
-                SelectedCGVDate.PerformDate = radFVaccinInput.DTPRealisation.Value()
-                SelectedCGVDate.PerformBy = userLog.UtilisateurId
-
-                cgvDateDao.Update(SelectedCGVDate)
-                Close()
+                If radFVaccinInput.CodeRetour = True Then
+                    'SelectedCGVDate.PerformDate = radFVaccinInput.DTPRealisation.Value()
+                    'SelectedCGVDate.PerformBy = userLog.UtilisateurId
+                    'cgvDateDao.Update(SelectedCGVDate)
+                    Close()
+                End If
             End Using
         End If
     End Sub

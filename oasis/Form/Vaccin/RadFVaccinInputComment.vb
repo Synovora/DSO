@@ -2,6 +2,7 @@
 
     Property codeRetour As Boolean
     Property ProgramId As Long
+    Property Lock As Boolean
 
     Private Sub RadFVaccinInput_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         AfficheTitleForm(Me, "Vaccin - Information", userLog)
@@ -9,6 +10,10 @@
     End Sub
 
     Private Sub Init()
+        If Lock Then
+            DTPExp.Enabled = False
+            TextLot.Enabled = False
+        End If
         DTPExp.Value = If(DTPExp.Value = Nothing, Date.Now(), DTPExp.Value)
         DTPExp.Format = DateTimePickerFormat.Custom
         DTPExp.CustomFormat = "MM/yyyy"

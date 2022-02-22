@@ -988,6 +988,7 @@
     <Compile Include="Form\Traitement\RadFTraitementObsoletes.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="Pdf\PrtCarnetVaccinal.vb" />
     <Compile Include="Pdf\PrtOrdonnance.vb" />
     <Compile Include="Pdf\PrtSynthese.vb" />
     <Compile Include="Resources\FrenchRichTextBoxStrings.Designer.vb">

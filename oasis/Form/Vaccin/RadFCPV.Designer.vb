@@ -56,6 +56,7 @@ Partial Class RadFCPV
         Me.LblPatientAge = New System.Windows.Forms.Label()
         Me.LblPatientGenre = New System.Windows.Forms.Label()
         Me.LblPatientNIR = New System.Windows.Forms.Label()
+        Me.BtnCarnet = New Telerik.WinControls.UI.RadButton()
         CType(Me.RadBtnAbandon, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.Grid, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.Grid.MasterTemplate, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -78,6 +79,7 @@ Partial Class RadFCPV
         CType(Me.BtnImport, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.RadGroupBoxEtatCivil, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.RadGroupBoxEtatCivil.SuspendLayout()
+        CType(Me.BtnCarnet, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
@@ -399,12 +401,21 @@ Partial Class RadFCPV
         Me.LblPatientNIR.TabIndex = 27
         Me.LblPatientNIR.Text = "1840675370367"
         '
+        'BtnCarnet
+        '
+        Me.BtnCarnet.Location = New System.Drawing.Point(1470, 641)
+        Me.BtnCarnet.Name = "BtnCarnet"
+        Me.BtnCarnet.Size = New System.Drawing.Size(161, 47)
+        Me.BtnCarnet.TabIndex = 16
+        Me.BtnCarnet.Text = "Carnet Vaccinal"
+        '
         'RadFCPV
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(9.0!, 20.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.CancelButton = Me.RadBtnAbandon
         Me.ClientSize = New System.Drawing.Size(1643, 728)
+        Me.Controls.Add(Me.BtnCarnet)
         Me.Controls.Add(Me.RadGroupBoxEtatCivil)
         Me.Controls.Add(Me.BtnImport)
         Me.Controls.Add(Me.RadGroupBox2)
@@ -444,6 +455,7 @@ Partial Class RadFCPV
         CType(Me.RadGroupBoxEtatCivil, System.ComponentModel.ISupportInitialize).EndInit()
         Me.RadGroupBoxEtatCivil.ResumeLayout(False)
         Me.RadGroupBoxEtatCivil.PerformLayout()
+        CType(Me.BtnCarnet, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
 
@@ -479,5 +491,6 @@ Partial Class RadFCPV
     Friend WithEvents LblPatientAge As Label
     Friend WithEvents LblPatientGenre As Label
     Friend WithEvents LblPatientNIR As Label
+    Friend WithEvents BtnCarnet As Telerik.WinControls.UI.RadButton
 End Class
 
