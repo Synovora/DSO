@@ -9,11 +9,14 @@ Imports System.Globalization
 
 Public Class PrtCarnetVaccinal
     Public Property SelectedPatient As Patient
+    Public Property startDate As Date
+    Public Property endDate As Date
 
     ReadOnly EditTools As New OasisTextTools
 
     ReadOnly episodeParametreDao As New EpisodeParametreDao
     ReadOnly userDao As New UserDao
+    ReadOnly rorDao As New RorDao
     ReadOnly siteDao As New SiteDao
     ReadOnly cgvValenceDao As New CGVValenceDao
     ReadOnly cgvDateDao As New CGVDateDao
@@ -47,6 +50,10 @@ Public Class PrtCarnetVaccinal
     Public Function ExportDocumenttoPdfBytes() As Byte()
 
         Try
+            Vaccins = vaccinDao.GetListVaccinValence()
+            valences = cgvValenceDao.GetListFromPatient(SelectedPatient.PatientId)
+            cgvDates = cgvDateDao.GetListFromPatient(SelectedPatient.PatientId)
+            relations = cgvDateDao.GetRelationListFromPatient(SelectedPatient.PatientId)
             GenereDocument()
             Return EditTools.exportToPdf()
         Finally
@@ -61,7 +68,7 @@ Public Class PrtCarnetVaccinal
         PrintEntete(section)
         PrintEtatCivil(section)
         EditTools.InsertFragmentToEditor(document)
-        EditTools.InsertFragmentToEditor(PrintOrdonnanceDetail())
+        EditTools.InsertFragmentToEditor(PrintCarnetDetail())
 
         Dim sectionFin = EditTools.CreateSection()
         Dim documentFin = EditTools.AddSectionIntoDocument(Nothing, sectionFin)
@@ -98,12 +105,16 @@ Public Class PrtCarnetVaccinal
             .AddTexteLine("Date de naissance : " & DateNaissancePatient.ToString("dd.MM.yyyy"))
             .AddTexteLine("Immatriculation CPAM : " & SelectedPatient.PatientNir)
             .AddNewLigne()
+            .AddTexteLine("Document imprime le: " & Date.Now.ToString("dd/MM/yyyy"))
+            .AddNewLigne()
+            .AddTexteLine("Vaccins realises du " & startDate.ToString("dd/MM/yyyy") & " au " & endDate.ToString("dd/MM/yyyy"))
+            .AddNewLigne()
             .CreateParagraphIntoSection(section,, RadTextAlignment.Right)
             Dim SiteDescription As String = Environnement.Table_site.GetSiteDescription(SelectedPatient.PatientSiteId)
         End With
     End Sub
 
-    Private Function PrintOrdonnanceDetail() As RadDocument
+    Private Function PrintCarnetDetail() As RadDocument
         Try
             cgvDates.Sort(Function(x, y) x.Days - y.Days)
             Const LargeurCol As Integer = 60
@@ -191,23 +202,23 @@ Public Class PrtCarnetVaccinal
 
             For Each cgvDate As CGVDate In cgvDates
                 Dim VaccinProgram = vaccinDao.GetFirstVaccinProgramRelationListDatePatient(cgvDate.Id, SelectedPatient.PatientId)
-                If VaccinProgram IsNot Nothing AndAlso VaccinProgram.RealisationDate <> Nothing Then
+                If VaccinProgram Is Nothing OrElse VaccinProgram.RealisationDate = Nothing OrElse VaccinProgram.RealisationDate < startDate OrElse VaccinProgram.RealisationDate > endDate Then
                     Continue For
                 End If
                 Dim VaccinPrograms = vaccinDao.GetVaccinProgramRelationListDatePatient(cgvDate.Id, SelectedPatient.PatientId)
                 Dim isFirstLine = True
-                For Each vaccinProgram In VaccinPrograms
+                For Each VaccinProgram In VaccinPrograms
                     Dim row As New TableRow()
                     Dim vaccinProgramAdmin = vaccinDao.GetVaccinProgramAdministrationByRelation(VaccinPrograms.Find(Function(x) x.Vaccin = VaccinProgram.Vaccin).Id)
-                    If (vaccinProgramAdmin Is Nothing) Then
+                    If (vaccinProgramAdmin Is Nothing) Then 'TODO: Error
                         Continue For
                     End If
-                    Dim isLastRow = If(VaccinPrograms.IndexOf(vaccinProgram) = VaccinPrograms.Count - 1, True, False)
+                    Dim isLastRow = If(VaccinPrograms.IndexOf(VaccinProgram) = VaccinPrograms.Count - 1, True, False)
                     If isFirstLine = True Then
                         Dim cellDetail2 As New TableCell With {
                         .PreferredWidth = New TableWidthUnit(TableWidthUnitType.Fixed, LargeurCol * 3),
                               .Borders = New TableCellBorders(
-                           New Border(2, BorderStyle.Single, Colors.Black), New Border(2, BorderStyle.Single, Colors.Black), New Border(2, BorderStyle.Single, Colors.Black), If(isLastRow, New Border(1, BorderStyle.Single, Colors.Black), New Border(0, BorderStyle.None, Colors.Black))
+                           New Border(1, BorderStyle.Single, Colors.Black), New Border(1, BorderStyle.Single, Colors.Black), New Border(1, BorderStyle.Single, Colors.Black), If(isLastRow, New Border(1, BorderStyle.Single, Colors.Black), New Border(0, BorderStyle.None, Colors.Black))
                         )
                     }
                         Dim spanDetail2 As New Span With {
@@ -215,7 +226,17 @@ Public Class PrtCarnetVaccinal
                         .FontWeight = Telerik.WinControls.RichTextEditor.UI.FontWeights.Bold
                     }
                         Dim paragrapheDetail2 As New Paragraph()
-                        spanDetail2.Text = "TODO" 'If(VaccinProgram <> Nothing AndAlso VaccinProgram.RealisationDate <> Nothing, String.Format("{0} - {1}",  VaccinProgram.RealisationDate.ToShortDateString(), GetProfilUserString2(userDao.GetUserById( VaccinProgram.RealisationOperator))), "")
+                        Dim Text = ""
+                        If (VaccinProgram IsNot Nothing AndAlso VaccinProgram.RealisationDate <> Nothing) Then
+                            If (VaccinProgram.RealisationOperator <> Nothing) Then
+                                Text = GetProfilUserString(userDao.GetUserById(VaccinProgram.RealisationOperator))
+                            ElseIf (VaccinProgram.RealisationOperatorRor <> Nothing) Then
+                                Text = GetProfilUserString(rorDao.GetRorById(VaccinProgram.RealisationOperatorRor))
+                            ElseIf (VaccinProgram.RealisationOperatorText <> Nothing) Then
+                                Text = VaccinProgram.RealisationOperatorText
+                            End If
+                        End If
+                        spanDetail2.Text = String.Format("{0} - {1}", VaccinProgram.RealisationDate.ToShortDateString(), Text) 'If(VaccinProgram <> Nothing AndAlso VaccinProgram.RealisationDate <> Nothing, String.Format("{0} - {1}",  VaccinProgram.RealisationDate.ToShortDateString(), GetProfilUserString2(userDao.GetUserById( VaccinProgram.RealisationOperator))), "")
                         paragrapheDetail2.Inlines.Add(spanDetail2)
                         cellDetail2.Blocks.Add(paragrapheDetail2)
                         row.Cells.Add(cellDetail2)
@@ -223,7 +244,7 @@ Public Class PrtCarnetVaccinal
                         Dim cellDetail2 As New TableCell With {
                     .PreferredWidth = New TableWidthUnit(TableWidthUnitType.Fixed, LargeurCol * 3),
                        .Borders = New TableCellBorders(
-                           New Border(2, BorderStyle.Single, Colors.Black), New Border(0, BorderStyle.None, Colors.Black), New Border(2, BorderStyle.Single, Colors.Black), New Border(0, BorderStyle.None, Colors.Black)
+                           New Border(1, BorderStyle.Single, Colors.Black), New Border(0, BorderStyle.None, Colors.Black), New Border(1, BorderStyle.Single, Colors.Black), New Border(0, BorderStyle.None, Colors.Black)
                         )
                     }
                         row.Cells.Add(cellDetail2)
@@ -236,7 +257,7 @@ Public Class PrtCarnetVaccinal
                     .FontSize = 10,
                     .FontWeight = Telerik.WinControls.RichTextEditor.UI.FontWeights.Bold
                 }
-                    spanDetail3.Text = Vaccins.Find(Function(x) x.Id = vaccinProgram.Vaccin).Dci
+                    spanDetail3.Text = Vaccins.Find(Function(x) x.Id = VaccinProgram.Vaccin).Dci
                     Dim paragrapheDetail3 As New Paragraph()
                     paragrapheDetail3.Inlines.Add(spanDetail3)
                     cellDetail3.Blocks.Add(paragrapheDetail3)
@@ -275,7 +296,7 @@ Public Class PrtCarnetVaccinal
                     .FontSize = 10,
                     .FontWeight = Telerik.WinControls.RichTextEditor.UI.FontWeights.Bold
                 }
-                    Dim valenceList = (From _vaccins In Vaccins.FindAll(Function(y) y.Code = vaccinProgram.RelationVaccinValence) Select _vaccins.Valence).ToArray()
+                    Dim valenceList = (From _vaccins In Vaccins.FindAll(Function(y) y.Code = VaccinProgram.RelationVaccinValence) Select _vaccins.Valence).ToArray()
                     spanDetail6.Text = String.Join(", ", (From _valence In valences.FindAll(Function(x) valenceList.Contains(x.Valence)) Select _valence.Code).ToArray())
                     Dim paragrapheDetail6 As New Paragraph()
                     paragrapheDetail6.Inlines.Add(spanDetail6)

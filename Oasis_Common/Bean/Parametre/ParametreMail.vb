@@ -7,6 +7,7 @@ Public Class ParametreMail
         ORDONNANCE
         SYNTHESE
         SOUS_EPISODE
+        CARNET_VACCINAL
     End Enum
 
     Property Id As Long

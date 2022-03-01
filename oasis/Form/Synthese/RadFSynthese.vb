@@ -2832,6 +2832,7 @@ Public Class RadFSynthese
         mailOasis.Contenu = tblByte
         mailOasis.Filename = "SynthesePatient.pdf"
         mailOasis.IsSousEpisode = False
+        mailOasis.Type = ParametreMail.TypeMailParams.SYNTHESE
 
         ' -- 2) lancement du formulaire de choix du destinataire
         Try

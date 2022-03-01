@@ -35,6 +35,14 @@ Public Class RadFCPV
         LblPatientSite.Text = Environnement.Table_site.GetSiteDescription(Patient.PatientSiteId)
         LblPatientDateMaj.Text = Patient.PatientSyntheseDateMaj.ToString("dd.MM.yyyy")
 
+        DTPStart.Format = DateTimePickerFormat.Custom
+        DTPStart.CustomFormat = "dd/MM/yyyy"
+        DTPStart.Value = Patient.PatientDateNaissance
+
+        DTPEnd.Format = DateTimePickerFormat.Custom
+        DTPEnd.CustomFormat = "dd/MM/yyyy"
+        DTPEnd.Value = DateAndTime.Now()
+
         LblALD.Hide()
         Dim StringTooltip As String
         Dim aldDao As New AldDao
@@ -52,10 +60,10 @@ Public Class RadFCPV
         Dim iGrid As Integer = 2
 
         Grid.Columns.Add("Date operateur")
-        Grid.Columns(0).Width = 80
+        Grid.Columns(0).Width = 180
         Grid.Columns(0).TextAlignment = DataGridViewContentAlignment.MiddleCenter
         Grid.Columns.Add("Realise le/par")
-        Grid.Columns(1).Width = 160
+        Grid.Columns(1).Width = 180
         Grid.Columns(1).TextAlignment = DataGridViewContentAlignment.MiddleCenter
         Grid.Columns.Add("Age")
         Grid.Columns(2).Width = 100
@@ -328,11 +336,52 @@ Public Class RadFCPV
         Cursor.Current = Cursors.WaitCursor
         Try
             Dim printPdf As New PrtCarnetVaccinal
+            printPdf.startDate = DTPStart.Value
+            printPdf.endDate = DTPEnd.Value
             printPdf.SelectedPatient = Patient
             printPdf.PrintDocument()
         Catch ex As Exception
             MessageBox.Show(ex.Message())
         End Try
         Cursor.Current = Cursors.Default
+    End Sub
+
+    Private Sub BtnSendMail_Click(sender As Object, e As EventArgs) Handles BtnSendMail.Click
+        ' -- 1) creation du tableau de byte représentant l'ordonnance en pdf
+        Cursor.Current = Cursors.WaitCursor
+        Me.Enabled = False
+        Dim tblByte As Byte()
+        Try
+            Dim printPdf As New PrtCarnetVaccinal
+            printPdf.startDate = DTPStart.Value
+            printPdf.endDate = DTPEnd.Value
+            printPdf.SelectedPatient = Patient
+            tblByte = printPdf.ExportDocumenttoPdfBytes()
+        Catch ex As Exception
+            MessageBox.Show(ex.Message())
+            Me.Enabled = True
+            Return
+        Finally
+            Cursor.Current = Cursors.Default
+        End Try
+
+        Dim mailOasis As New MailOasis
+        mailOasis.Contenu = tblByte
+        mailOasis.Filename = "CarnetVaccinalPatient.pdf"
+        mailOasis.IsSousEpisode = False
+        mailOasis.Type = ParametreMail.TypeMailParams.CARNET_VACCINAL
+
+        ' -- 2) lancement du formulaire de choix du destinataire
+        Try
+            Cursor.Current = Cursors.WaitCursor
+            Using frm = New FrmMailSousEpisodeOuSynthese(Patient, Nothing, mailOasis)
+                frm.ShowDialog()
+            End Using
+        Catch ex As Exception
+            MessageBox.Show(ex.Message)
+        Finally
+            Cursor.Current = Cursors.Default
+            Me.Enabled = True
+        End Try
     End Sub
 End Class
