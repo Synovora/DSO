@@ -38,10 +38,10 @@
     <ProductName>Oasis</ProductName>
     <PublisherName>Synovora</PublisherName>
     <SuiteName>Oasis</SuiteName>
-    <MinimumRequiredVersion>1.0.0.165</MinimumRequiredVersion>
+    <MinimumRequiredVersion>1.0.0.240</MinimumRequiredVersion>
     <CreateWebPageOnPublish>true</CreateWebPageOnPublish>
     <WebPage>publish.htm</WebPage>
-    <ApplicationRevision>218</ApplicationRevision>
+    <ApplicationRevision>252</ApplicationRevision>
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <CreateDesktopShortcut>true</CreateDesktopShortcut>
