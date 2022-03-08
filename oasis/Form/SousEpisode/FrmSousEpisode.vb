@@ -768,6 +768,7 @@ Public Class FrmSousEpisode
         mailOasis.Contenu = tblByte
         mailOasis.Filename = "SousEpidode.docx"
         mailOasis.IsSousEpisode = True
+        mailOasis.Type = ParametreMail.TypeMailParams.SOUS_EPISODE
 
         ' -- 2) lancement du formulaire de choix du destinataire
         Me.Enabled = False

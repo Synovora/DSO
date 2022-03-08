@@ -24,10 +24,16 @@ Public Module outils
     End Sub
 
     Public Function GetProfilUserString(userLog As Utilisateur) As String
-        Return If(userLog Is Nothing, "", " (" & userLog.UtilisateurPrenom.Trim &
+        Return If(userLog Is Nothing, "", "(" & userLog.UtilisateurPrenom.Trim &
                 " " & userLog.UtilisateurNom.Trim &
                 " -  " & userLog.UtilisateurProfilId.ToLower.Trim.Replace("_", " ") &
                 " / " & userLog.TypeProfil.ToLower.Trim & ")")
+    End Function
+
+    Public Function GetProfilUserString2(userLog As Utilisateur) As String
+        Return If(userLog Is Nothing, "", "(" & userLog.UtilisateurPrenom.Trim &
+                " " & userLog.UtilisateurNom.Trim &
+                " -  " & userLog.UtilisateurProfilId.ToLower.Trim.Replace("_", " ") & ")")
     End Function
 
     Public Function GetProfilUserString(userLog As Ror) As String

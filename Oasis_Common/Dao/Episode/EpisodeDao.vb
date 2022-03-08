@@ -589,6 +589,13 @@ Public Class EpisodeDao
             " user_creation, date_creation, date_modification, etat)" &
             " VALUES (@patientId, @type, @typeActivite, @typeProfil, @descriptionActivite, @commentaire," &
             " @userCreation, '" & episode.DateCreation.ToString("yyyy-MM-dd HH:mm:ss") & "',  @dateModification, '" & Episode.EnumEtatEpisode.CLOTURE.ToString & "'); SELECT SCOPE_IDENTITY()"
+        ElseIf episode.Type = Episode.EnumTypeEpisode.VACCINATION.ToString Then
+            SQLstring =
+    " INSERT INTO oasis.oa_episode" &
+    " (patient_id, type, type_activite, type_profil, description_activite, commentaire," &
+    " user_creation, date_creation, etat)" &
+    " VALUES (@patientId, @type, @typeActivite, @typeProfil, @descriptionActivite, @commentaire," &
+    " @userCreation, @dateCreation, @etat); SELECT SCOPE_IDENTITY()"
         Else
             SQLstring = "IF Not EXISTS (SELECT 1 FROM oasis.oa_episode WHERE patient_id = @patientId And etat = @etat)" &
             " INSERT INTO oasis.oa_episode" &

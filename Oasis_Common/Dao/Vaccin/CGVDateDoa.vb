@@ -153,9 +153,8 @@ Public Class CGVDateDao
         Dim cgvDateId As Long
 
         Dim SQLstring As String = "UPDATE oasis.oa_vaccin_cgv_date SET days=@days," &
-        " patient=@patient, operated_by=@operated_by," &
-        " operated_date=@operated_date, perform_date=@perform_date, perform_by=@perform_by WHERE id=@id;"
-        '" SELECT SCOPE_IDENTITY();"
+        " patient=@patient, operated_by=@operated_by, ordonnance_id=@ordonnance_id," &
+        " operated_date=@operated_date WHERE id=@id;"
 
         Dim con As SqlConnection = GetConnection()
         Dim cmd As New SqlCommand(SQLstring, con)
@@ -165,17 +164,14 @@ Public Class CGVDateDao
             .AddWithValue("@patient", cgvDate.Patient)
             .AddWithValue("@operated_by", If(cgvDate.OperatedBy = Nothing, DBNull.Value, cgvDate.OperatedBy))
             .AddWithValue("@operated_date", If(cgvDate.OperatedDate = Nothing, DBNull.Value, cgvDate.OperatedDate))
-            .AddWithValue("@perform_date", If(cgvDate.PerformDate = Nothing, DBNull.Value, cgvDate.PerformDate))
-            .AddWithValue("@perform_by", If(cgvDate.PerformBy = Nothing, DBNull.Value, cgvDate.PerformBy))
+            .AddWithValue("@ordonnance_id", If(cgvDate.OrdonnanceId = Nothing, DBNull.Value, cgvDate.OrdonnanceId))
         End With
 
         Try
             da.InsertCommand = cmd
-            'cgvDateId = 
             da.InsertCommand.ExecuteScalar()
         Catch ex As Exception
             Throw New Exception(ex.Message)
-            'cgvDateId = 0
         Finally
             con.Close()
         End Try

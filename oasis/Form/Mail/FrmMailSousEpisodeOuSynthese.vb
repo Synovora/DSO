@@ -12,7 +12,6 @@ Public Class FrmMailSousEpisodeOuSynthese
     Dim patient As Patient
     Dim sousEpisode As SousEpisode
 
-    Dim isSynthese As Boolean
     Dim adrSiege As String = ""
 
     ''' <summary>
@@ -25,9 +24,15 @@ Public Class FrmMailSousEpisodeOuSynthese
         ' Cet appel est requis par le concepteur.
         InitializeComponent()
 
-        Me.sousEpisode = TryCast(objet, SousEpisode)
-        Me.isSynthese = IsNothing(Me.sousEpisode)
-        Me.Text = If(isSynthese, "Envoi d'une synthèse en email", "Envoi d'un sous-épisode en email")
+        Select Case mailOasis.Type
+            Case ParametreMail.TypeMailParams.CARNET_VACCINAL
+                Me.Text = "Envoi d'un carnet vaccinal par email"
+            Case ParametreMail.TypeMailParams.SYNTHESE
+                Me.Text = "Envoi d'une synthèse en email"
+            Case ParametreMail.TypeMailParams.SOUS_EPISODE
+                Me.Text = "Envoi d'un sous-épisode en email"
+                Me.sousEpisode = TryCast(objet, SousEpisode)
+        End Select
 
         ' -- Ajoutez une initialisation quelconque après l'appel InitializeComponent().
         AfficheTitleForm(Me, Me.Text, userLog)
@@ -46,7 +51,7 @@ Public Class FrmMailSousEpisodeOuSynthese
 
         ' ------------------------------------ params mail
         Dim parametreMailDao As New ParametreMailDao
-        Dim parametreMail = parametreMailDao.GetParametreMailBySiegeIdTypeMailParam(patient.PatientSiegeId, If(isSynthese, TypeMailParams.SYNTHESE, TypeMailParams.SOUS_EPISODE))
+        Dim parametreMail = parametreMailDao.GetParametreMailBySiegeIdTypeMailParam(patient.PatientSiegeId, mailOasis.Type)
 
         ' ------------------------------------ params siege
         Try
@@ -81,10 +86,17 @@ Public Class FrmMailSousEpisodeOuSynthese
     End Sub
 
     Private Function replaceZonesVariables(source As String)
-        If isSynthese = False Then source = source.Replace("@Reference", sousEpisode.Reference)
+        Select Case mailOasis.Type
+            Case ParametreMail.TypeMailParams.CARNET_VACCINAL
+                source = source.Replace("@DateCreation", Now.ToString("dd/MM/yyyy"))
+            Case ParametreMail.TypeMailParams.SYNTHESE
+                source = source.Replace("@Reference", If(sousEpisode IsNot Nothing, sousEpisode.Reference, ""))
+                source = source.Replace("@DateCreation", Now.ToString("dd/MM/yyyy"))
+            Case Else
+                source = source.Replace("@DateCreation", If(sousEpisode IsNot Nothing, sousEpisode.HorodateCreation.ToString("dd/MM/yyyy"), ""))
+        End Select
         Return source.Replace("@PatientNom", patient.PatientNom) _
                      .Replace("@PatientPrenom", patient.PatientPrenom) _
-                     .Replace("@DateCreation", If(isSynthese, Now.ToString("dd/MM/yyyy"), sousEpisode.HorodateCreation.ToString("dd/MM/yyyy"))) _
                      .Replace("@SiegeCoord", adrSiege)
     End Function
 
@@ -118,7 +130,7 @@ Public Class FrmMailSousEpisodeOuSynthese
         Try
             Me.Cursor = Cursors.WaitCursor
             Me.Enabled = False
-            If isSynthese = False Then convertToPdf()
+            If mailOasis.Type = ParametreMail.TypeMailParams.SYNTHESE OrElse mailOasis.Type = ParametreMail.TypeMailParams.CARNET_VACCINAL Then convertToPdf()
             With mailOasis
                 .AliasFrom = ""
                 .Body = TxtBody.Text
@@ -156,18 +168,6 @@ Public Class FrmMailSousEpisodeOuSynthese
         End Using
 
     End Sub
-
-    'Private Sub convertToPdfAspose()
-    '    Using stream As MemoryStream = New MemoryStream(mailOasis.Contenu)
-    '        Dim document = New Aspose.Words.Document(stream)
-    '        Using outstream As New MemoryStream
-    '            document.Save(outstream, Aspose.Words.SaveFormat.Pdf)
-    '            mailOasis.Contenu = outstream.ToArray
-    '            mailOasis.Filename = "SousEpisode.pdf"
-    '        End Using
-    '    End Using
-
-    'End Sub
 
     Private Sub convertToPdfTelerik()
         Dim providerDocx = New DocxFormatProvider()

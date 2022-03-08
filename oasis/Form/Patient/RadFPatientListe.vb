@@ -705,4 +705,5 @@ Public Class RadFPatientListe
             MessageBox.Show(ex.Message)
         End Try
     End Sub
+
 End Class

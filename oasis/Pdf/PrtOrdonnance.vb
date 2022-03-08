@@ -7,8 +7,15 @@ Imports Nethereum.Hex.HexConvertors.Extensions
 Imports QRCoder
 
 Public Class PrtOrdonnance
+
+    Public Enum TypeOrdonnance
+        BASE
+        VACCIN
+    End Enum
+
     Public Property SelectedPatient As Patient
     Public Property SelectedOrdonnanceId As Long
+    Public Property Type As TypeOrdonnance = TypeOrdonnance.BASE
 
     ReadOnly EditTools As New OasisTextTools
 
@@ -92,7 +99,7 @@ Public Class PrtOrdonnance
         Dim documentFin = EditTools.AddSectionIntoDocument(Nothing, sectionFin)
         PrintBasPage(sectionFin)
         EditTools.InsertFragmentToEditor(documentFin)
-
+        EditTools.AddPageNumber()
     End Sub
 
 
@@ -108,7 +115,7 @@ Public Class PrtOrdonnance
             .AddTexte("Ordonnance", 16, FontWeights.Bold)
             .AddNewLigne()
             .AddTexteLine("Service Oasis Santé", 14)
-            .AddTexteLine("Tel : " & siege.SiegeTelephone & " Fax : " & siege.SiegeFax)
+            .AddTexteLine("Tel : " & siege.SiegeTelephone & "| Fax : " & siege.SiegeFax)
             .AddTexteLine("Mail : " & siege.SiegeMail)
             .AddTexte("Numéro structure : " & uniteSanitaire.NumeroStructure)
         End With

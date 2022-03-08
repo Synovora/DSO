@@ -20,6 +20,33 @@ Public Class OasisTextTools
         Editor = New RadRichTextEditor()
     End Sub
 
+    Public Function AddPageNumber() As RadDocument
+        Dim document = New RadDocument()
+        Dim Section = New Section()
+        Dim Paragraph = New Paragraph() With {.TextAlignment = RadTextAlignment.Center}
+        Dim PageField = New PageField() With {.DisplayMode = FieldDisplayMode.Result}
+        Dim pageFieldStart = New FieldRangeStart()
+        pageFieldStart.Field = PageField
+        Dim pageFieldEnd = New FieldRangeEnd()
+        pageFieldEnd.Start = pageFieldStart
+
+        Paragraph.Inlines.Add(pageFieldStart)
+        Paragraph.Inlines.Add(pageFieldEnd)
+
+        Dim numPagesFieldStart = New FieldRangeStart()
+        numPagesFieldStart.Field = New NumPagesField() With {.DisplayMode = FieldDisplayMode.Result}
+        Dim numPagesFieldEnd = New FieldRangeEnd()
+        numPagesFieldEnd.Start = numPagesFieldStart
+
+        Paragraph.Inlines.Add(New Span(" / "))
+        Paragraph.Inlines.Add(numPagesFieldStart)
+        Paragraph.Inlines.Add(numPagesFieldEnd)
+
+        Section.Blocks.Add(Paragraph)
+        document.Sections.Add(Section)
+        Editor.Document.Sections.First.Footers.Default.Body = document
+    End Function
+
     ''' <summary>
     ''' ajoute une section au document, si le document est nothing, un document est instancié, dans tous les cas la fonction retourne un RadDocument
     ''' </summary>
@@ -46,7 +73,6 @@ Public Class OasisTextTools
         'editor.ChangeFontFamily(New FontFamily("Times New Roman"))
         section.PageOrientation = orientation
         section.PageSize = PaperTypeConverter.ToSize(PaperTypes.A4)
-
         Return section
     End Function
 

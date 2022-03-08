@@ -55,7 +55,7 @@ Partial Class FAuthentificattion
         'RbtAdminNon
         '
         Me.RbtAdminNon.AutoSize = True
-        Me.RbtAdminNon.Location = New System.Drawing.Point(134, 23)
+        Me.RbtAdminNon.Location = New System.Drawing.Point(77, 23)
         Me.RbtAdminNon.Name = "RbtAdminNon"
         Me.RbtAdminNon.Size = New System.Drawing.Size(45, 17)
         Me.RbtAdminNon.TabIndex = 1
@@ -68,17 +68,17 @@ Partial Class FAuthentificattion
         Me.Label3.AutoSize = True
         Me.Label3.Location = New System.Drawing.Point(17, 76)
         Me.Label3.Name = "Label3"
-        Me.Label3.Size = New System.Drawing.Size(53, 13)
+        Me.Label3.Size = New System.Drawing.Size(56, 13)
         Me.Label3.TabIndex = 7
-        Me.Label3.Text = "Utilisateur"
+        Me.Label3.Text = "Utilisateur:"
         '
         'CbxUtilisateur
         '
         Me.CbxUtilisateur.FormattingEnabled = True
         Me.CbxUtilisateur.Items.AddRange(New Object() {"7 - Informaticien", "2 - Médecin", "5 - IDE", "8 - Secrétaire médicale", "6 - Secrétaire administrative"})
-        Me.CbxUtilisateur.Location = New System.Drawing.Point(135, 73)
+        Me.CbxUtilisateur.Location = New System.Drawing.Point(76, 73)
         Me.CbxUtilisateur.Name = "CbxUtilisateur"
-        Me.CbxUtilisateur.Size = New System.Drawing.Size(210, 21)
+        Me.CbxUtilisateur.Size = New System.Drawing.Size(218, 21)
         Me.CbxUtilisateur.TabIndex = 8
         '
         'BtnValidation
@@ -96,7 +96,7 @@ Partial Class FAuthentificattion
         Me.GroupBox1.Controls.Add(Me.RbtAdminOui)
         Me.GroupBox1.Location = New System.Drawing.Point(15, 12)
         Me.GroupBox1.Name = "GroupBox1"
-        Me.GroupBox1.Size = New System.Drawing.Size(223, 49)
+        Me.GroupBox1.Size = New System.Drawing.Size(279, 49)
         Me.GroupBox1.TabIndex = 10
         Me.GroupBox1.TabStop = False
         Me.GroupBox1.Text = "Admin"
@@ -104,9 +104,9 @@ Partial Class FAuthentificattion
         'BtnAbandon
         '
         Me.BtnAbandon.DialogResult = System.Windows.Forms.DialogResult.Cancel
-        Me.BtnAbandon.Location = New System.Drawing.Point(261, 267)
+        Me.BtnAbandon.Location = New System.Drawing.Point(160, 276)
         Me.BtnAbandon.Name = "BtnAbandon"
-        Me.BtnAbandon.Size = New System.Drawing.Size(75, 23)
+        Me.BtnAbandon.Size = New System.Drawing.Size(134, 23)
         Me.BtnAbandon.TabIndex = 13
         Me.BtnAbandon.Text = "Abandon"
         Me.BtnAbandon.UseVisualStyleBackColor = True
@@ -162,9 +162,9 @@ Partial Class FAuthentificattion
         '
         'BtnDebloque
         '
-        Me.BtnDebloque.Location = New System.Drawing.Point(219, 174)
+        Me.BtnDebloque.Location = New System.Drawing.Point(160, 145)
         Me.BtnDebloque.Name = "BtnDebloque"
-        Me.BtnDebloque.Size = New System.Drawing.Size(117, 23)
+        Me.BtnDebloque.Size = New System.Drawing.Size(134, 23)
         Me.BtnDebloque.TabIndex = 19
         Me.BtnDebloque.Text = "Débloque Poste"
         Me.BtnDebloque.UseVisualStyleBackColor = True
@@ -172,18 +172,18 @@ Partial Class FAuthentificattion
         'LblNbTry
         '
         Me.LblNbTry.AutoSize = True
-        Me.LblNbTry.Location = New System.Drawing.Point(222, 153)
+        Me.LblNbTry.Location = New System.Drawing.Point(157, 116)
         Me.LblNbTry.Name = "LblNbTry"
-        Me.LblNbTry.Size = New System.Drawing.Size(39, 13)
+        Me.LblNbTry.Size = New System.Drawing.Size(40, 13)
         Me.LblNbTry.TabIndex = 20
-        Me.LblNbTry.Text = "Label1"
+        Me.LblNbTry.Text = "Action:"
         '
         'FAuthentificattion
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.CancelButton = Me.BtnAbandon
-        Me.ClientSize = New System.Drawing.Size(372, 310)
+        Me.ClientSize = New System.Drawing.Size(304, 311)
         Me.Controls.Add(Me.LblNbTry)
         Me.Controls.Add(Me.BtnDebloque)
         Me.Controls.Add(Me.BtnLogin)

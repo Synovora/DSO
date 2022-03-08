@@ -267,7 +267,7 @@ Partial Class RadFVaccinInfo
         '
         Me.DTPDate.Location = New System.Drawing.Point(79, 15)
         Me.DTPDate.Name = "DTPDate"
-        Me.DTPDate.Size = New System.Drawing.Size(200, 26)
+        Me.DTPDate.Size = New System.Drawing.Size(200, 20)
         Me.DTPDate.TabIndex = 4
         '
         'LblOperator
@@ -275,7 +275,7 @@ Partial Class RadFVaccinInfo
         Me.LblOperator.AutoSize = True
         Me.LblOperator.Location = New System.Drawing.Point(76, 47)
         Me.LblOperator.Name = "LblOperator"
-        Me.LblOperator.Size = New System.Drawing.Size(24, 23)
+        Me.LblOperator.Size = New System.Drawing.Size(15, 13)
         Me.LblOperator.TabIndex = 3
         Me.LblOperator.Text = "--"
         '
@@ -284,7 +284,7 @@ Partial Class RadFVaccinInfo
         Me.LabelStaticOperator.AutoSize = True
         Me.LabelStaticOperator.Location = New System.Drawing.Point(6, 47)
         Me.LabelStaticOperator.Name = "LabelStaticOperator"
-        Me.LabelStaticOperator.Size = New System.Drawing.Size(88, 23)
+        Me.LabelStaticOperator.Size = New System.Drawing.Size(60, 13)
         Me.LabelStaticOperator.TabIndex = 1
         Me.LabelStaticOperator.Text = "Operateur"
         '
@@ -293,7 +293,7 @@ Partial Class RadFVaccinInfo
         Me.LabelStaticDate.AutoSize = True
         Me.LabelStaticDate.Location = New System.Drawing.Point(6, 22)
         Me.LabelStaticDate.Name = "LabelStaticDate"
-        Me.LabelStaticDate.Size = New System.Drawing.Size(46, 23)
+        Me.LabelStaticDate.Size = New System.Drawing.Size(31, 13)
         Me.LabelStaticDate.TabIndex = 0
         Me.LabelStaticDate.Text = "Date"
         '
@@ -331,7 +331,7 @@ Partial Class RadFVaccinInfo
         Me.LblDateNaissance.ForeColor = System.Drawing.Color.Red
         Me.LblDateNaissance.Location = New System.Drawing.Point(339, 2)
         Me.LblDateNaissance.Name = "LblDateNaissance"
-        Me.LblDateNaissance.Size = New System.Drawing.Size(106, 25)
+        Me.LblDateNaissance.Size = New System.Drawing.Size(65, 15)
         Me.LblDateNaissance.TabIndex = 45
         Me.LblDateNaissance.Text = "25-04-2018"
         '
@@ -342,7 +342,7 @@ Partial Class RadFVaccinInfo
         Me.LblNonOasis.ForeColor = System.Drawing.Color.Red
         Me.LblNonOasis.Location = New System.Drawing.Point(231, 17)
         Me.LblNonOasis.Name = "LblNonOasis"
-        Me.LblNonOasis.Size = New System.Drawing.Size(612, 28)
+        Me.LblNonOasis.Size = New System.Drawing.Size(432, 19)
         Me.LblNonOasis.TabIndex = 44
         Me.LblNonOasis.Text = "++++++++++ !!! Patient hors système Oasis !!! ++++++++++"
         '
@@ -353,7 +353,7 @@ Partial Class RadFVaccinInfo
         Me.LblALD.ForeColor = System.Drawing.Color.OrangeRed
         Me.LblALD.Location = New System.Drawing.Point(947, 2)
         Me.LblALD.Name = "LblALD"
-        Me.LblALD.Size = New System.Drawing.Size(46, 20)
+        Me.LblALD.Size = New System.Drawing.Size(31, 13)
         Me.LblALD.TabIndex = 43
         Me.LblALD.Text = "ALD"
         '
@@ -363,7 +363,7 @@ Partial Class RadFVaccinInfo
         Me.Label13.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label13.Location = New System.Drawing.Point(588, 2)
         Me.Label13.Name = "Label13"
-        Me.Label13.Size = New System.Drawing.Size(52, 20)
+        Me.Label13.Size = New System.Drawing.Size(37, 13)
         Me.Label13.TabIndex = 42
         Me.Label13.Text = "NIR :"
         '
@@ -372,7 +372,7 @@ Partial Class RadFVaccinInfo
         Me.LblPatientDateMaj.AutoSize = True
         Me.LblPatientDateMaj.Location = New System.Drawing.Point(879, 2)
         Me.LblPatientDateMaj.Name = "LblPatientDateMaj"
-        Me.LblPatientDateMaj.Size = New System.Drawing.Size(96, 23)
+        Me.LblPatientDateMaj.Size = New System.Drawing.Size(63, 13)
         Me.LblPatientDateMaj.TabIndex = 41
         Me.LblPatientDateMaj.Text = "23-05-2019"
         '
@@ -382,7 +382,7 @@ Partial Class RadFVaccinInfo
         Me.Label5.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label5.Location = New System.Drawing.Point(745, 2)
         Me.Label5.Name = "Label5"
-        Me.Label5.Size = New System.Drawing.Size(194, 20)
+        Me.Label5.Size = New System.Drawing.Size(128, 13)
         Me.Label5.TabIndex = 40
         Me.Label5.Text = "Dernière mise à jour :"
         '
@@ -391,7 +391,7 @@ Partial Class RadFVaccinInfo
         Me.LblPatientSite.AutoSize = True
         Me.LblPatientSite.Location = New System.Drawing.Point(710, 21)
         Me.LblPatientSite.Name = "LblPatientSite"
-        Me.LblPatientSite.Size = New System.Drawing.Size(53, 23)
+        Me.LblPatientSite.Size = New System.Drawing.Size(36, 13)
         Me.LblPatientSite.TabIndex = 37
         Me.LblPatientSite.Text = "Cluny"
         '
@@ -401,7 +401,7 @@ Partial Class RadFVaccinInfo
         Me.Label1.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label1.Location = New System.Drawing.Point(667, 21)
         Me.Label1.Name = "Label1"
-        Me.Label1.Size = New System.Drawing.Size(54, 20)
+        Me.Label1.Size = New System.Drawing.Size(37, 13)
         Me.Label1.TabIndex = 36
         Me.Label1.Text = "Site :"
         '
@@ -412,7 +412,7 @@ Partial Class RadFVaccinInfo
         Me.LblPatientPrenom.ForeColor = System.Drawing.Color.Red
         Me.LblPatientPrenom.Location = New System.Drawing.Point(10, 2)
         Me.LblPatientPrenom.Name = "LblPatientPrenom"
-        Me.LblPatientPrenom.Size = New System.Drawing.Size(108, 25)
+        Me.LblPatientPrenom.Size = New System.Drawing.Size(73, 17)
         Me.LblPatientPrenom.TabIndex = 23
         Me.LblPatientPrenom.Text = "Jean-Pierre"
         '
@@ -423,7 +423,7 @@ Partial Class RadFVaccinInfo
         Me.LblPatientNom.ForeColor = System.Drawing.Color.Red
         Me.LblPatientNom.Location = New System.Drawing.Point(136, 2)
         Me.LblPatientNom.Name = "LblPatientNom"
-        Me.LblPatientNom.Size = New System.Drawing.Size(75, 25)
+        Me.LblPatientNom.Size = New System.Drawing.Size(51, 17)
         Me.LblPatientNom.TabIndex = 24
         Me.LblPatientNom.Text = "Durand"
         '
@@ -434,7 +434,7 @@ Partial Class RadFVaccinInfo
         Me.LblPatientAge.ForeColor = System.Drawing.Color.DarkRed
         Me.LblPatientAge.Location = New System.Drawing.Point(412, 2)
         Me.LblPatientAge.Name = "LblPatientAge"
-        Me.LblPatientAge.Size = New System.Drawing.Size(64, 25)
+        Me.LblPatientAge.Size = New System.Drawing.Size(40, 15)
         Me.LblPatientAge.TabIndex = 25
         Me.LblPatientAge.Text = "35 ans"
         '
@@ -445,7 +445,7 @@ Partial Class RadFVaccinInfo
         Me.LblPatientGenre.ForeColor = System.Drawing.Color.DarkRed
         Me.LblPatientGenre.Location = New System.Drawing.Point(505, 2)
         Me.LblPatientGenre.Name = "LblPatientGenre"
-        Me.LblPatientGenre.Size = New System.Drawing.Size(81, 25)
+        Me.LblPatientGenre.Size = New System.Drawing.Size(55, 15)
         Me.LblPatientGenre.TabIndex = 26
         Me.LblPatientGenre.Text = "Masculin"
         '
@@ -454,7 +454,7 @@ Partial Class RadFVaccinInfo
         Me.LblPatientNIR.AutoSize = True
         Me.LblPatientNIR.Location = New System.Drawing.Point(639, 2)
         Me.LblPatientNIR.Name = "LblPatientNIR"
-        Me.LblPatientNIR.Size = New System.Drawing.Size(127, 23)
+        Me.LblPatientNIR.Size = New System.Drawing.Size(85, 13)
         Me.LblPatientNIR.TabIndex = 27
         Me.LblPatientNIR.Text = "1840675370367"
         '
@@ -465,7 +465,7 @@ Partial Class RadFVaccinInfo
         Me.LblContreIndication.ForeColor = System.Drawing.Color.OrangeRed
         Me.LblContreIndication.Location = New System.Drawing.Point(320, 58)
         Me.LblContreIndication.Name = "LblContreIndication"
-        Me.LblContreIndication.Size = New System.Drawing.Size(177, 20)
+        Me.LblContreIndication.Size = New System.Drawing.Size(117, 13)
         Me.LblContreIndication.TabIndex = 34
         Me.LblContreIndication.Text = "Contre-indication(s)"
         '
@@ -476,7 +476,7 @@ Partial Class RadFVaccinInfo
         Me.LblAllergie.ForeColor = System.Drawing.Color.OrangeRed
         Me.LblAllergie.Location = New System.Drawing.Point(453, 58)
         Me.LblAllergie.Name = "LblAllergie"
-        Me.LblAllergie.Size = New System.Drawing.Size(103, 20)
+        Me.LblAllergie.Size = New System.Drawing.Size(67, 13)
         Me.LblAllergie.TabIndex = 33
         Me.LblAllergie.Text = "Allergie(s) "
         '
@@ -487,7 +487,7 @@ Partial Class RadFVaccinInfo
         Me.LblAllergieNonMedicamenteuse.ForeColor = System.Drawing.Color.OrangeRed
         Me.LblAllergieNonMedicamenteuse.Location = New System.Drawing.Point(526, 58)
         Me.LblAllergieNonMedicamenteuse.Name = "LblAllergieNonMedicamenteuse"
-        Me.LblAllergieNonMedicamenteuse.Size = New System.Drawing.Size(286, 20)
+        Me.LblAllergieNonMedicamenteuse.Size = New System.Drawing.Size(190, 13)
         Me.LblAllergieNonMedicamenteuse.TabIndex = 35
         Me.LblAllergieNonMedicamenteuse.Text = "Allergie(s)  non medicamenteuse"
         '
@@ -512,7 +512,7 @@ Partial Class RadFVaccinInfo
         Me.legend.AutoSize = True
         Me.legend.Location = New System.Drawing.Point(704, 462)
         Me.legend.Name = "legend"
-        Me.legend.Size = New System.Drawing.Size(18, 23)
+        Me.legend.Size = New System.Drawing.Size(12, 13)
         Me.legend.TabIndex = 39
         Me.legend.Text = "?"
         Me.ToolTip.SetToolTip(Me.legend, resources.GetString("legend.ToolTip"))
@@ -522,69 +522,69 @@ Partial Class RadFVaccinInfo
         Me.TraitementContextMenuStrip.ImageScalingSize = New System.Drawing.Size(24, 24)
         Me.TraitementContextMenuStrip.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.CréerUnTraitementToolStripMenuItem1, Me.GérerUneFenêtreThérapeutiqueToolStripMenuItem, Me.HistoriqueToolStripMenuItem, Me.ToolStripSeparator1, Me.TraitementsObsoletesToolStripMenuItem, Me.ToolStripSeparator2, Me.DéclarationAllergieToolStripMenuItem, Me.ListeDesMédicamentsDéclarésAllergiquesToolStripMenuItem, Me.ToolStripSeparator4, Me.DéclarationAllergieOuContreindicationToolStripMenuItem, Me.ListeDesMédicamentsDéclarésContreindiquésToolStripMenuItem})
         Me.TraitementContextMenuStrip.Name = "TraitementContextMenuStrip"
-        Me.TraitementContextMenuStrip.Size = New System.Drawing.Size(490, 278)
+        Me.TraitementContextMenuStrip.Size = New System.Drawing.Size(346, 198)
         '
         'CréerUnTraitementToolStripMenuItem1
         '
         Me.CréerUnTraitementToolStripMenuItem1.Name = "CréerUnTraitementToolStripMenuItem1"
-        Me.CréerUnTraitementToolStripMenuItem1.Size = New System.Drawing.Size(489, 32)
+        Me.CréerUnTraitementToolStripMenuItem1.Size = New System.Drawing.Size(345, 22)
         Me.CréerUnTraitementToolStripMenuItem1.Text = "Créer un traitement"
         '
         'GérerUneFenêtreThérapeutiqueToolStripMenuItem
         '
         Me.GérerUneFenêtreThérapeutiqueToolStripMenuItem.Name = "GérerUneFenêtreThérapeutiqueToolStripMenuItem"
-        Me.GérerUneFenêtreThérapeutiqueToolStripMenuItem.Size = New System.Drawing.Size(489, 32)
+        Me.GérerUneFenêtreThérapeutiqueToolStripMenuItem.Size = New System.Drawing.Size(345, 22)
         Me.GérerUneFenêtreThérapeutiqueToolStripMenuItem.Text = "Gérer une fenêtre thérapeutique pour un traitement"
         '
         'HistoriqueToolStripMenuItem
         '
         Me.HistoriqueToolStripMenuItem.Name = "HistoriqueToolStripMenuItem"
-        Me.HistoriqueToolStripMenuItem.Size = New System.Drawing.Size(489, 32)
+        Me.HistoriqueToolStripMenuItem.Size = New System.Drawing.Size(345, 22)
         Me.HistoriqueToolStripMenuItem.Text = "Historique des modifications d'un traitement"
         '
         'ToolStripSeparator1
         '
         Me.ToolStripSeparator1.Name = "ToolStripSeparator1"
-        Me.ToolStripSeparator1.Size = New System.Drawing.Size(486, 6)
+        Me.ToolStripSeparator1.Size = New System.Drawing.Size(342, 6)
         '
         'TraitementsObsoletesToolStripMenuItem
         '
         Me.TraitementsObsoletesToolStripMenuItem.Name = "TraitementsObsoletesToolStripMenuItem"
-        Me.TraitementsObsoletesToolStripMenuItem.Size = New System.Drawing.Size(489, 32)
+        Me.TraitementsObsoletesToolStripMenuItem.Size = New System.Drawing.Size(345, 22)
         Me.TraitementsObsoletesToolStripMenuItem.Text = "Afficher les traitements obsolètes"
         '
         'ToolStripSeparator2
         '
         Me.ToolStripSeparator2.Name = "ToolStripSeparator2"
-        Me.ToolStripSeparator2.Size = New System.Drawing.Size(486, 6)
+        Me.ToolStripSeparator2.Size = New System.Drawing.Size(342, 6)
         '
         'DéclarationAllergieToolStripMenuItem
         '
         Me.DéclarationAllergieToolStripMenuItem.Name = "DéclarationAllergieToolStripMenuItem"
-        Me.DéclarationAllergieToolStripMenuItem.Size = New System.Drawing.Size(489, 32)
+        Me.DéclarationAllergieToolStripMenuItem.Size = New System.Drawing.Size(345, 22)
         Me.DéclarationAllergieToolStripMenuItem.Text = "Déclaration allergie"
         '
         'ListeDesMédicamentsDéclarésAllergiquesToolStripMenuItem
         '
         Me.ListeDesMédicamentsDéclarésAllergiquesToolStripMenuItem.Name = "ListeDesMédicamentsDéclarésAllergiquesToolStripMenuItem"
-        Me.ListeDesMédicamentsDéclarésAllergiquesToolStripMenuItem.Size = New System.Drawing.Size(489, 32)
+        Me.ListeDesMédicamentsDéclarésAllergiquesToolStripMenuItem.Size = New System.Drawing.Size(345, 22)
         Me.ListeDesMédicamentsDéclarésAllergiquesToolStripMenuItem.Text = "Liste des substances allergiques"
         '
         'ToolStripSeparator4
         '
         Me.ToolStripSeparator4.Name = "ToolStripSeparator4"
-        Me.ToolStripSeparator4.Size = New System.Drawing.Size(486, 6)
+        Me.ToolStripSeparator4.Size = New System.Drawing.Size(342, 6)
         '
         'DéclarationAllergieOuContreindicationToolStripMenuItem
         '
         Me.DéclarationAllergieOuContreindicationToolStripMenuItem.Name = "DéclarationAllergieOuContreindicationToolStripMenuItem"
-        Me.DéclarationAllergieOuContreindicationToolStripMenuItem.Size = New System.Drawing.Size(489, 32)
+        Me.DéclarationAllergieOuContreindicationToolStripMenuItem.Size = New System.Drawing.Size(345, 22)
         Me.DéclarationAllergieOuContreindicationToolStripMenuItem.Text = "Déclaration contre-indication"
         '
         'ListeDesMédicamentsDéclarésContreindiquésToolStripMenuItem
         '
         Me.ListeDesMédicamentsDéclarésContreindiquésToolStripMenuItem.Name = "ListeDesMédicamentsDéclarésContreindiquésToolStripMenuItem"
-        Me.ListeDesMédicamentsDéclarésContreindiquésToolStripMenuItem.Size = New System.Drawing.Size(489, 32)
+        Me.ListeDesMédicamentsDéclarésContreindiquésToolStripMenuItem.Size = New System.Drawing.Size(345, 22)
         Me.ListeDesMédicamentsDéclarésContreindiquésToolStripMenuItem.Text = "Liste des contre-indications"
         '
         'GVSelectedVaccin
@@ -632,7 +632,7 @@ Partial Class RadFVaccinInfo
         Me.Label3.AutoSize = True
         Me.Label3.Location = New System.Drawing.Point(15, 462)
         Me.Label3.Name = "Label3"
-        Me.Label3.Size = New System.Drawing.Size(168, 23)
+        Me.Label3.Size = New System.Drawing.Size(114, 13)
         Me.Label3.TabIndex = 38
         Me.Label3.Text = "Vaccins selectionnes:"
         '
@@ -641,7 +641,7 @@ Partial Class RadFVaccinInfo
         Me.Label4.AutoSize = True
         Me.Label4.Location = New System.Drawing.Point(742, 462)
         Me.Label4.Name = "Label4"
-        Me.Label4.Size = New System.Drawing.Size(289, 23)
+        Me.Label4.Size = New System.Drawing.Size(197, 13)
         Me.Label4.TabIndex = 41
         Me.Label4.Text = "Valences non requises selectionnees:"
         '
@@ -650,7 +650,7 @@ Partial Class RadFVaccinInfo
         Me.Label6.AutoSize = True
         Me.Label6.Location = New System.Drawing.Point(742, 58)
         Me.Label6.Name = "Label6"
-        Me.Label6.Size = New System.Drawing.Size(80, 23)
+        Me.Label6.Size = New System.Drawing.Size(54, 13)
         Me.Label6.TabIndex = 42
         Me.Label6.Text = "Valences:"
         '
@@ -700,7 +700,7 @@ Partial Class RadFVaccinInfo
         '
         'RadFVaccinInfo
         '
-        Me.AutoScaleDimensions = New System.Drawing.SizeF(9.0!, 20.0!)
+        Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(1025, 694)
         Me.Controls.Add(Me.GVValenceNonRequis)
