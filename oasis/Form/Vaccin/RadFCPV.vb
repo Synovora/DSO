@@ -60,10 +60,10 @@ Public Class RadFCPV
         Dim iGrid As Integer = 2
 
         Grid.Columns.Add("Date operateur")
-        Grid.Columns(0).Width = 180
+        Grid.Columns(0).Width = 220
         Grid.Columns(0).TextAlignment = DataGridViewContentAlignment.MiddleCenter
         Grid.Columns.Add("Realise le/par")
-        Grid.Columns(1).Width = 180
+        Grid.Columns(1).Width = 220
         Grid.Columns(1).TextAlignment = DataGridViewContentAlignment.MiddleCenter
         Grid.Columns.Add("Age")
         Grid.Columns(2).Width = 100

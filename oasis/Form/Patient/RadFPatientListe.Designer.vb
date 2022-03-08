@@ -59,10 +59,6 @@ Partial Class RadFPatientListe
         Me.ContextMenuStrip1 = New System.Windows.Forms.ContextMenuStrip(Me.components)
         Me.CréerLesIntervenantsOasisParDéfautToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.RadPanel1 = New Telerik.WinControls.UI.RadPanel()
-        Me.DateTimePicker1 = New System.Windows.Forms.DateTimePicker()
-        Me.Button1 = New System.Windows.Forms.Button()
-        Me.TextBox2 = New System.Windows.Forms.TextBox()
-        Me.TextBox1 = New System.Windows.Forms.TextBox()
         Me.LblOccurrenceLue = New System.Windows.Forms.Label()
         Me.RadChkPatientTous = New Telerik.WinControls.UI.RadRadioButton()
         Me.RadChkPatientNonOasis = New Telerik.WinControls.UI.RadRadioButton()
@@ -83,6 +79,13 @@ Partial Class RadFPatientListe
         Me.RadPanel4 = New Telerik.WinControls.UI.RadPanel()
         Me.ToolTip = New System.Windows.Forms.ToolTip(Me.components)
         Me.RadDesktopAlert1 = New Telerik.WinControls.UI.RadDesktopAlert(Me.components)
+        Me.RadGroupBox2 = New Telerik.WinControls.UI.RadGroupBox()
+        Me.RadPanel5 = New Telerik.WinControls.UI.RadPanel()
+        Me.DateTimePicker2 = New System.Windows.Forms.DateTimePicker()
+        Me.Button2 = New System.Windows.Forms.Button()
+        Me.TextBox3 = New System.Windows.Forms.TextBox()
+        Me.TextBox4 = New System.Windows.Forms.TextBox()
+        Me.RadPanel6 = New Telerik.WinControls.UI.RadPanel()
         CType(Me.RadPnlSelectedPatient, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.RadPnlSelectedPatient.SuspendLayout()
         CType(Me.BtnVaccin, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -119,6 +122,12 @@ Partial Class RadFPatientListe
         Me.RadGroupBox1.SuspendLayout()
         CType(Me.RadPanel4, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.RadPanel4.SuspendLayout()
+        CType(Me.RadGroupBox2, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.RadGroupBox2.SuspendLayout()
+        CType(Me.RadPanel5, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.RadPanel5.SuspendLayout()
+        CType(Me.RadPanel6, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.RadPanel6.SuspendLayout()
         CType(Me, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
@@ -126,15 +135,10 @@ Partial Class RadFPatientListe
         '
         Me.RadPnlSelectedPatient.AccessibleRole = System.Windows.Forms.AccessibleRole.Grouping
         Me.RadPnlSelectedPatient.BackColor = System.Drawing.SystemColors.GradientInactiveCaption
-        Me.RadPnlSelectedPatient.Controls.Add(Me.BtnVaccin)
-        Me.RadPnlSelectedPatient.Controls.Add(Me.RadBtnLigneDeVie)
+        Me.RadPnlSelectedPatient.Controls.Add(Me.RadGroupBox2)
         Me.RadPnlSelectedPatient.Controls.Add(Me.LblPatientALD)
         Me.RadPnlSelectedPatient.Controls.Add(Me.TxtSite)
-        Me.RadPnlSelectedPatient.Controls.Add(Me.RadBtnRendezVous)
-        Me.RadPnlSelectedPatient.Controls.Add(Me.RadBtnEpisode)
-        Me.RadPnlSelectedPatient.Controls.Add(Me.RadBtnDetailPatient)
         Me.RadPnlSelectedPatient.Controls.Add(Me.TxtIdSelected)
-        Me.RadPnlSelectedPatient.Controls.Add(Me.RadBtnSynthese)
         Me.RadPnlSelectedPatient.Controls.Add(Me.TxtPrenomSelected)
         Me.RadPnlSelectedPatient.Controls.Add(Me.LblAgeSelected)
         Me.RadPnlSelectedPatient.Controls.Add(Me.TxtNirSelected)
@@ -148,23 +152,23 @@ Partial Class RadFPatientListe
         Me.RadPnlSelectedPatient.HeaderText = "Patient sélectionné"
         Me.RadPnlSelectedPatient.Location = New System.Drawing.Point(0, 0)
         Me.RadPnlSelectedPatient.Name = "RadPnlSelectedPatient"
-        Me.RadPnlSelectedPatient.Size = New System.Drawing.Size(329, 471)
+        Me.RadPnlSelectedPatient.Size = New System.Drawing.Size(329, 512)
         Me.RadPnlSelectedPatient.TabIndex = 1
         Me.RadPnlSelectedPatient.Text = "Patient sélectionné"
         '
         'BtnVaccin
         '
-        Me.BtnVaccin.Location = New System.Drawing.Point(14, 408)
+        Me.BtnVaccin.Location = New System.Drawing.Point(13, 131)
         Me.BtnVaccin.Name = "BtnVaccin"
-        Me.BtnVaccin.Size = New System.Drawing.Size(110, 24)
+        Me.BtnVaccin.Size = New System.Drawing.Size(110, 22)
         Me.BtnVaccin.TabIndex = 68
         Me.BtnVaccin.Text = "Vaccin"
         '
         'RadBtnLigneDeVie
         '
-        Me.RadBtnLigneDeVie.Location = New System.Drawing.Point(14, 348)
+        Me.RadBtnLigneDeVie.Location = New System.Drawing.Point(13, 71)
         Me.RadBtnLigneDeVie.Name = "RadBtnLigneDeVie"
-        Me.RadBtnLigneDeVie.Size = New System.Drawing.Size(110, 24)
+        Me.RadBtnLigneDeVie.Size = New System.Drawing.Size(110, 22)
         Me.RadBtnLigneDeVie.TabIndex = 68
         Me.RadBtnLigneDeVie.Text = "Ligne de vie"
         '
@@ -173,7 +177,7 @@ Partial Class RadFPatientListe
         Me.LblPatientALD.AutoSize = True
         Me.LblPatientALD.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Bold)
         Me.LblPatientALD.ForeColor = System.Drawing.Color.Red
-        Me.LblPatientALD.Location = New System.Drawing.Point(11, 193)
+        Me.LblPatientALD.Location = New System.Drawing.Point(11, 192)
         Me.LblPatientALD.Name = "LblPatientALD"
         Me.LblPatientALD.Size = New System.Drawing.Size(29, 13)
         Me.LblPatientALD.TabIndex = 69
@@ -193,25 +197,25 @@ Partial Class RadFPatientListe
         '
         'RadBtnRendezVous
         '
-        Me.RadBtnRendezVous.Location = New System.Drawing.Point(14, 318)
+        Me.RadBtnRendezVous.Location = New System.Drawing.Point(13, 41)
         Me.RadBtnRendezVous.Name = "RadBtnRendezVous"
-        Me.RadBtnRendezVous.Size = New System.Drawing.Size(110, 24)
+        Me.RadBtnRendezVous.Size = New System.Drawing.Size(110, 22)
         Me.RadBtnRendezVous.TabIndex = 67
         Me.RadBtnRendezVous.Text = "Liste rendez-vous"
         '
         'RadBtnEpisode
         '
-        Me.RadBtnEpisode.Location = New System.Drawing.Point(14, 438)
+        Me.RadBtnEpisode.Location = New System.Drawing.Point(13, 161)
         Me.RadBtnEpisode.Name = "RadBtnEpisode"
-        Me.RadBtnEpisode.Size = New System.Drawing.Size(110, 24)
+        Me.RadBtnEpisode.Size = New System.Drawing.Size(110, 22)
         Me.RadBtnEpisode.TabIndex = 67
         Me.RadBtnEpisode.Text = "Episode"
         '
         'RadBtnDetailPatient
         '
-        Me.RadBtnDetailPatient.Location = New System.Drawing.Point(14, 288)
+        Me.RadBtnDetailPatient.Location = New System.Drawing.Point(13, 11)
         Me.RadBtnDetailPatient.Name = "RadBtnDetailPatient"
-        Me.RadBtnDetailPatient.Size = New System.Drawing.Size(110, 24)
+        Me.RadBtnDetailPatient.Size = New System.Drawing.Size(110, 22)
         Me.RadBtnDetailPatient.TabIndex = 66
         Me.RadBtnDetailPatient.Text = "Détail patient"
         '
@@ -229,9 +233,9 @@ Partial Class RadFPatientListe
         '
         'RadBtnSynthese
         '
-        Me.RadBtnSynthese.Location = New System.Drawing.Point(14, 378)
+        Me.RadBtnSynthese.Location = New System.Drawing.Point(13, 101)
         Me.RadBtnSynthese.Name = "RadBtnSynthese"
-        Me.RadBtnSynthese.Size = New System.Drawing.Size(110, 24)
+        Me.RadBtnSynthese.Size = New System.Drawing.Size(110, 22)
         Me.RadBtnSynthese.TabIndex = 65
         Me.RadBtnSynthese.Text = "Outil de synthèse"
         '
@@ -293,7 +297,7 @@ Partial Class RadFPatientListe
         'LblDateSortie
         '
         Me.LblDateSortie.AutoSize = True
-        Me.LblDateSortie.Location = New System.Drawing.Point(76, 226)
+        Me.LblDateSortie.Location = New System.Drawing.Point(76, 214)
         Me.LblDateSortie.Name = "LblDateSortie"
         Me.LblDateSortie.Size = New System.Drawing.Size(63, 13)
         Me.LblDateSortie.TabIndex = 62
@@ -304,7 +308,7 @@ Partial Class RadFPatientListe
         Me.LblPatientSorti.AutoSize = True
         Me.LblPatientSorti.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.LblPatientSorti.ForeColor = System.Drawing.Color.Red
-        Me.LblPatientSorti.Location = New System.Drawing.Point(8, 250)
+        Me.LblPatientSorti.Location = New System.Drawing.Point(8, 238)
         Me.LblPatientSorti.Name = "LblPatientSorti"
         Me.LblPatientSorti.Size = New System.Drawing.Size(279, 13)
         Me.LblPatientSorti.TabIndex = 60
@@ -314,7 +318,7 @@ Partial Class RadFPatientListe
         '
         Me.LblLabelDateSortie.AutoSize = True
         Me.LblLabelDateSortie.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.LblLabelDateSortie.Location = New System.Drawing.Point(8, 226)
+        Me.LblLabelDateSortie.Location = New System.Drawing.Point(8, 214)
         Me.LblLabelDateSortie.Name = "LblLabelDateSortie"
         Me.LblLabelDateSortie.Size = New System.Drawing.Size(77, 13)
         Me.LblLabelDateSortie.TabIndex = 61
@@ -322,7 +326,7 @@ Partial Class RadFPatientListe
         '
         'RadBtnAdmin
         '
-        Me.RadBtnAdmin.Location = New System.Drawing.Point(10, 438)
+        Me.RadBtnAdmin.Location = New System.Drawing.Point(10, 482)
         Me.RadBtnAdmin.Name = "RadBtnAdmin"
         Me.RadBtnAdmin.Size = New System.Drawing.Size(128, 24)
         Me.RadBtnAdmin.TabIndex = 42
@@ -330,7 +334,7 @@ Partial Class RadFPatientListe
         '
         'RadBtnCreatePatient
         '
-        Me.RadBtnCreatePatient.Location = New System.Drawing.Point(12, 46)
+        Me.RadBtnCreatePatient.Location = New System.Drawing.Point(12, 9)
         Me.RadBtnCreatePatient.Name = "RadBtnCreatePatient"
         Me.RadBtnCreatePatient.Size = New System.Drawing.Size(24, 24)
         Me.RadBtnCreatePatient.TabIndex = 41
@@ -408,7 +412,7 @@ Partial Class RadFPatientListe
         Me.RadPatientGridView.Name = "RadPatientGridView"
         Me.RadPatientGridView.ReadOnly = True
         Me.RadPatientGridView.RightToLeft = System.Windows.Forms.RightToLeft.No
-        Me.RadPatientGridView.Size = New System.Drawing.Size(1060, 471)
+        Me.RadPatientGridView.Size = New System.Drawing.Size(1057, 512)
         Me.RadPatientGridView.TabIndex = 0
         '
         'ContextMenuStrip1
@@ -425,57 +429,23 @@ Partial Class RadFPatientListe
         '
         'RadPanel1
         '
-        Me.RadPanel1.Controls.Add(Me.DateTimePicker1)
-        Me.RadPanel1.Controls.Add(Me.Button1)
-        Me.RadPanel1.Controls.Add(Me.TextBox2)
-        Me.RadPanel1.Controls.Add(Me.TextBox1)
         Me.RadPanel1.Controls.Add(Me.LblOccurrenceLue)
         Me.RadPanel1.Controls.Add(Me.RadChkPatientTous)
         Me.RadPanel1.Controls.Add(Me.RadChkPatientNonOasis)
         Me.RadPanel1.Controls.Add(Me.RadBtnCreatePatient)
         Me.RadPanel1.Controls.Add(Me.RadChkPatientOasis)
-        Me.RadPanel1.Dock = System.Windows.Forms.DockStyle.Top
+        Me.RadPanel1.Dock = System.Windows.Forms.DockStyle.Left
         Me.RadPanel1.Location = New System.Drawing.Point(0, 0)
         Me.RadPanel1.Name = "RadPanel1"
-        Me.RadPanel1.Size = New System.Drawing.Size(1545, 76)
+        Me.RadPanel1.Size = New System.Drawing.Size(500, 40)
         Me.RadPanel1.TabIndex = 43
-        '
-        'DateTimePicker1
-        '
-        Me.DateTimePicker1.Location = New System.Drawing.Point(664, 13)
-        Me.DateTimePicker1.Name = "DateTimePicker1"
-        Me.DateTimePicker1.Size = New System.Drawing.Size(200, 22)
-        Me.DateTimePicker1.TabIndex = 45
-        '
-        'Button1
-        '
-        Me.Button1.Location = New System.Drawing.Point(499, 13)
-        Me.Button1.Name = "Button1"
-        Me.Button1.Size = New System.Drawing.Size(75, 23)
-        Me.Button1.TabIndex = 44
-        Me.Button1.Text = "Button1"
-        Me.Button1.UseVisualStyleBackColor = True
-        '
-        'TextBox2
-        '
-        Me.TextBox2.Location = New System.Drawing.Point(258, 13)
-        Me.TextBox2.Name = "TextBox2"
-        Me.TextBox2.Size = New System.Drawing.Size(148, 22)
-        Me.TextBox2.TabIndex = 43
-        '
-        'TextBox1
-        '
-        Me.TextBox1.Location = New System.Drawing.Point(13, 13)
-        Me.TextBox1.Name = "TextBox1"
-        Me.TextBox1.Size = New System.Drawing.Size(148, 22)
-        Me.TextBox1.TabIndex = 42
         '
         'LblOccurrenceLue
         '
         Me.LblOccurrenceLue.AutoSize = True
         Me.LblOccurrenceLue.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Bold)
         Me.LblOccurrenceLue.ForeColor = System.Drawing.Color.DarkRed
-        Me.LblOccurrenceLue.Location = New System.Drawing.Point(496, 50)
+        Me.LblOccurrenceLue.Location = New System.Drawing.Point(497, 10)
         Me.LblOccurrenceLue.Name = "LblOccurrenceLue"
         Me.LblOccurrenceLue.Size = New System.Drawing.Size(102, 13)
         Me.LblOccurrenceLue.TabIndex = 3
@@ -483,7 +453,7 @@ Partial Class RadFPatientListe
         '
         'RadChkPatientTous
         '
-        Me.RadChkPatientTous.Location = New System.Drawing.Point(362, 49)
+        Me.RadChkPatientTous.Location = New System.Drawing.Point(287, 12)
         Me.RadChkPatientTous.Name = "RadChkPatientTous"
         Me.RadChkPatientTous.Size = New System.Drawing.Size(44, 18)
         Me.RadChkPatientTous.TabIndex = 2
@@ -491,7 +461,7 @@ Partial Class RadFPatientListe
         '
         'RadChkPatientNonOasis
         '
-        Me.RadChkPatientNonOasis.Location = New System.Drawing.Point(244, 49)
+        Me.RadChkPatientNonOasis.Location = New System.Drawing.Point(169, 12)
         Me.RadChkPatientNonOasis.Name = "RadChkPatientNonOasis"
         Me.RadChkPatientNonOasis.Size = New System.Drawing.Size(112, 18)
         Me.RadChkPatientNonOasis.TabIndex = 1
@@ -499,7 +469,7 @@ Partial Class RadFPatientListe
         '
         'RadChkPatientOasis
         '
-        Me.RadChkPatientOasis.Location = New System.Drawing.Point(148, 49)
+        Me.RadChkPatientOasis.Location = New System.Drawing.Point(73, 12)
         Me.RadChkPatientOasis.Name = "RadChkPatientOasis"
         Me.RadChkPatientOasis.Size = New System.Drawing.Size(90, 18)
         Me.RadChkPatientOasis.TabIndex = 0
@@ -522,14 +492,14 @@ Partial Class RadFPatientListe
         Me.RadPanel2.Controls.Add(Me.RadBtnEpisodeEnCours)
         Me.RadPanel2.Controls.Add(Me.RadButtonAbandon)
         Me.RadPanel2.Dock = System.Windows.Forms.DockStyle.Bottom
-        Me.RadPanel2.Location = New System.Drawing.Point(0, 547)
+        Me.RadPanel2.Location = New System.Drawing.Point(0, 552)
         Me.RadPanel2.Name = "RadPanel2"
-        Me.RadPanel2.Size = New System.Drawing.Size(1545, 44)
+        Me.RadPanel2.Size = New System.Drawing.Size(1542, 38)
         Me.RadPanel2.TabIndex = 44
         '
         'RadBtnIntervenantSansRdv
         '
-        Me.RadBtnIntervenantSansRdv.Location = New System.Drawing.Point(519, 8)
+        Me.RadBtnIntervenantSansRdv.Location = New System.Drawing.Point(528, 6)
         Me.RadBtnIntervenantSansRdv.Name = "RadBtnIntervenantSansRdv"
         Me.RadBtnIntervenantSansRdv.Size = New System.Drawing.Size(175, 24)
         Me.RadBtnIntervenantSansRdv.TabIndex = 47
@@ -537,7 +507,7 @@ Partial Class RadFPatientListe
         '
         'RadBtnRdvEnCours
         '
-        Me.RadBtnRdvEnCours.Location = New System.Drawing.Point(700, 8)
+        Me.RadBtnRdvEnCours.Location = New System.Drawing.Point(709, 6)
         Me.RadBtnRdvEnCours.Name = "RadBtnRdvEnCours"
         Me.RadBtnRdvEnCours.Size = New System.Drawing.Size(175, 24)
         Me.RadBtnRdvEnCours.TabIndex = 46
@@ -545,7 +515,7 @@ Partial Class RadFPatientListe
         '
         'RadBtnTache
         '
-        Me.RadBtnTache.Location = New System.Drawing.Point(403, 8)
+        Me.RadBtnTache.Location = New System.Drawing.Point(412, 6)
         Me.RadBtnTache.Name = "RadBtnTache"
         Me.RadBtnTache.Size = New System.Drawing.Size(110, 24)
         Me.RadBtnTache.TabIndex = 45
@@ -553,7 +523,7 @@ Partial Class RadFPatientListe
         '
         'RadButton1
         '
-        Me.RadButton1.Location = New System.Drawing.Point(158, 8)
+        Me.RadButton1.Location = New System.Drawing.Point(167, 6)
         Me.RadButton1.Name = "RadButton1"
         Me.RadButton1.Size = New System.Drawing.Size(239, 24)
         Me.RadButton1.TabIndex = 44
@@ -561,7 +531,7 @@ Partial Class RadFPatientListe
         '
         'RadBtnEpisodeEnCours
         '
-        Me.RadBtnEpisodeEnCours.Location = New System.Drawing.Point(3, 8)
+        Me.RadBtnEpisodeEnCours.Location = New System.Drawing.Point(12, 6)
         Me.RadBtnEpisodeEnCours.Name = "RadBtnEpisodeEnCours"
         Me.RadBtnEpisodeEnCours.Size = New System.Drawing.Size(149, 24)
         Me.RadBtnEpisodeEnCours.TabIndex = 43
@@ -573,7 +543,7 @@ Partial Class RadFPatientListe
         Me.RadButtonAbandon.ForeColor = System.Drawing.Color.Black
         Me.RadButtonAbandon.Image = CType(resources.GetObject("RadButtonAbandon.Image"), System.Drawing.Image)
         Me.RadButtonAbandon.ImageAlignment = System.Drawing.ContentAlignment.MiddleCenter
-        Me.RadButtonAbandon.Location = New System.Drawing.Point(1502, 8)
+        Me.RadButtonAbandon.Location = New System.Drawing.Point(1499, 6)
         Me.RadButtonAbandon.Name = "RadButtonAbandon"
         Me.RadButtonAbandon.Size = New System.Drawing.Size(31, 24)
         Me.RadButtonAbandon.TabIndex = 43
@@ -607,9 +577,9 @@ Partial Class RadFPatientListe
         Me.RadPanel3.Controls.Add(Me.RadGroupBox1)
         Me.RadPanel3.Controls.Add(Me.RadPnlSelectedPatient)
         Me.RadPanel3.Dock = System.Windows.Forms.DockStyle.Right
-        Me.RadPanel3.Location = New System.Drawing.Point(1060, 76)
+        Me.RadPanel3.Location = New System.Drawing.Point(1057, 40)
         Me.RadPanel3.Name = "RadPanel3"
-        Me.RadPanel3.Size = New System.Drawing.Size(485, 471)
+        Me.RadPanel3.Size = New System.Drawing.Size(485, 512)
         Me.RadPanel3.TabIndex = 45
         '
         'RadGroupBox1
@@ -626,7 +596,7 @@ Partial Class RadFPatientListe
         Me.RadGroupBox1.HeaderText = "Fonctions générales"
         Me.RadGroupBox1.Location = New System.Drawing.Point(335, 0)
         Me.RadGroupBox1.Name = "RadGroupBox1"
-        Me.RadGroupBox1.Size = New System.Drawing.Size(150, 471)
+        Me.RadGroupBox1.Size = New System.Drawing.Size(150, 512)
         Me.RadGroupBox1.TabIndex = 70
         Me.RadGroupBox1.Text = "Fonctions générales"
         '
@@ -634,9 +604,9 @@ Partial Class RadFPatientListe
         '
         Me.RadPanel4.Controls.Add(Me.RadPatientGridView)
         Me.RadPanel4.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.RadPanel4.Location = New System.Drawing.Point(0, 76)
+        Me.RadPanel4.Location = New System.Drawing.Point(0, 40)
         Me.RadPanel4.Name = "RadPanel4"
-        Me.RadPanel4.Size = New System.Drawing.Size(1060, 471)
+        Me.RadPanel4.Size = New System.Drawing.Size(1057, 512)
         Me.RadPanel4.TabIndex = 46
         '
         'RadDesktopAlert1
@@ -647,16 +617,83 @@ Partial Class RadFPatientListe
         Me.RadDesktopAlert1.ScreenPosition = Telerik.WinControls.UI.AlertScreenPosition.TopCenter
         Me.RadDesktopAlert1.ThemeName = ""
         '
+        'RadGroupBox2
+        '
+        Me.RadGroupBox2.AccessibleRole = System.Windows.Forms.AccessibleRole.Grouping
+        Me.RadGroupBox2.Controls.Add(Me.RadBtnDetailPatient)
+        Me.RadGroupBox2.Controls.Add(Me.BtnVaccin)
+        Me.RadGroupBox2.Controls.Add(Me.RadBtnSynthese)
+        Me.RadGroupBox2.Controls.Add(Me.RadBtnLigneDeVie)
+        Me.RadGroupBox2.Controls.Add(Me.RadBtnEpisode)
+        Me.RadGroupBox2.Controls.Add(Me.RadBtnRendezVous)
+        Me.RadGroupBox2.HeaderText = ""
+        Me.RadGroupBox2.Location = New System.Drawing.Point(6, 313)
+        Me.RadGroupBox2.Name = "RadGroupBox2"
+        Me.RadGroupBox2.Size = New System.Drawing.Size(134, 193)
+        Me.RadGroupBox2.TabIndex = 47
+        '
+        'RadPanel5
+        '
+        Me.RadPanel5.Controls.Add(Me.DateTimePicker2)
+        Me.RadPanel5.Controls.Add(Me.Button2)
+        Me.RadPanel5.Controls.Add(Me.TextBox3)
+        Me.RadPanel5.Controls.Add(Me.TextBox4)
+        Me.RadPanel5.Dock = System.Windows.Forms.DockStyle.Right
+        Me.RadPanel5.Location = New System.Drawing.Point(905, 0)
+        Me.RadPanel5.Name = "RadPanel5"
+        Me.RadPanel5.Size = New System.Drawing.Size(637, 40)
+        Me.RadPanel5.TabIndex = 47
+        '
+        'DateTimePicker2
+        '
+        Me.DateTimePicker2.Location = New System.Drawing.Point(420, 9)
+        Me.DateTimePicker2.Name = "DateTimePicker2"
+        Me.DateTimePicker2.Size = New System.Drawing.Size(200, 20)
+        Me.DateTimePicker2.TabIndex = 45
+        '
+        'Button2
+        '
+        Me.Button2.Location = New System.Drawing.Point(334, 7)
+        Me.Button2.Name = "Button2"
+        Me.Button2.Size = New System.Drawing.Size(75, 23)
+        Me.Button2.TabIndex = 44
+        Me.Button2.Text = "Button2"
+        Me.Button2.UseVisualStyleBackColor = True
+        '
+        'TextBox3
+        '
+        Me.TextBox3.Location = New System.Drawing.Point(168, 9)
+        Me.TextBox3.Name = "TextBox3"
+        Me.TextBox3.Size = New System.Drawing.Size(148, 20)
+        Me.TextBox3.TabIndex = 43
+        '
+        'TextBox4
+        '
+        Me.TextBox4.Location = New System.Drawing.Point(3, 10)
+        Me.TextBox4.Name = "TextBox4"
+        Me.TextBox4.Size = New System.Drawing.Size(148, 20)
+        Me.TextBox4.TabIndex = 42
+        '
+        'RadPanel6
+        '
+        Me.RadPanel6.Controls.Add(Me.RadPanel1)
+        Me.RadPanel6.Controls.Add(Me.RadPanel5)
+        Me.RadPanel6.Dock = System.Windows.Forms.DockStyle.Top
+        Me.RadPanel6.Location = New System.Drawing.Point(0, 0)
+        Me.RadPanel6.Name = "RadPanel6"
+        Me.RadPanel6.Size = New System.Drawing.Size(1542, 40)
+        Me.RadPanel6.TabIndex = 48
+        '
         'RadFPatientListe
         '
-        Me.AutoScaleDimensions = New System.Drawing.SizeF(8.0!, 16.0!)
+        Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.CancelButton = Me.RadButtonAbandon
-        Me.ClientSize = New System.Drawing.Size(1545, 591)
+        Me.ClientSize = New System.Drawing.Size(1542, 590)
         Me.Controls.Add(Me.RadPanel4)
         Me.Controls.Add(Me.RadPanel3)
         Me.Controls.Add(Me.RadPanel2)
-        Me.Controls.Add(Me.RadPanel1)
+        Me.Controls.Add(Me.RadPanel6)
         Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
         Me.MinimizeBox = False
         Me.Name = "RadFPatientListe"
@@ -704,6 +741,13 @@ Partial Class RadFPatientListe
         Me.RadGroupBox1.ResumeLayout(False)
         CType(Me.RadPanel4, System.ComponentModel.ISupportInitialize).EndInit()
         Me.RadPanel4.ResumeLayout(False)
+        CType(Me.RadGroupBox2, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.RadGroupBox2.ResumeLayout(False)
+        CType(Me.RadPanel5, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.RadPanel5.ResumeLayout(False)
+        Me.RadPanel5.PerformLayout()
+        CType(Me.RadPanel6, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.RadPanel6.ResumeLayout(False)
         CType(Me, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
 
@@ -752,9 +796,12 @@ Partial Class RadFPatientListe
     Friend WithEvents BtnVaccin As Telerik.WinControls.UI.RadButton
     Friend WithEvents BtnRequest As Telerik.WinControls.UI.RadButton
     Friend WithEvents RadGroupBox1 As Telerik.WinControls.UI.RadGroupBox
-    Friend WithEvents DateTimePicker1 As DateTimePicker
-    Friend WithEvents Button1 As Button
-    Friend WithEvents TextBox2 As TextBox
-    Friend WithEvents TextBox1 As TextBox
+    Friend WithEvents RadGroupBox2 As Telerik.WinControls.UI.RadGroupBox
+    Friend WithEvents RadPanel5 As Telerik.WinControls.UI.RadPanel
+    Friend WithEvents DateTimePicker2 As DateTimePicker
+    Friend WithEvents Button2 As Button
+    Friend WithEvents TextBox3 As TextBox
+    Friend WithEvents TextBox4 As TextBox
+    Friend WithEvents RadPanel6 As Telerik.WinControls.UI.RadPanel
 End Class
 

@@ -74,7 +74,7 @@ Public Class PrtCarnetVaccinal
         Dim documentFin = EditTools.AddSectionIntoDocument(Nothing, sectionFin)
         PrintBasPage(sectionFin)
         EditTools.InsertFragmentToEditor(documentFin)
-
+        EditTools.AddPageNumber()
     End Sub
 
 

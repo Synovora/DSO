@@ -8,6 +8,7 @@ Public Class CGVDate
 
     Property OperatedBy As Long
     Property OperatedDate As Date
+    Property OrdonnanceId As Long
 
     Public Sub New()
     End Sub
@@ -18,6 +19,7 @@ Public Class CGVDate
         Me.Patient = reader("patient")
         Me.OperatedBy = Coalesce(reader("operated_by"), Nothing)
         Me.OperatedDate = Coalesce(reader("operated_date"), Nothing)
+        Me.OrdonnanceId = Coalesce(reader("ordonnance_id"), Nothing)
     End Sub
 
     Shared Function DaysToDate(days As Long) As String

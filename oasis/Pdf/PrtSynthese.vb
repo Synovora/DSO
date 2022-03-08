@@ -53,6 +53,7 @@ Public Class PrtSynthese
 
         'EditTools.insertFragmentToEditor(PrintTitre("--- PPS ---")) 
         PrintPPS()
+        EditTools.AddPageNumber()
     End Sub
 
     Private Sub PrintEntete(section As Section)

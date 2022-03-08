@@ -26,6 +26,7 @@
         Const PREVENTION_SUIVI_GYNECOLOGIQUE = "PREVENTION_SUIVI_GYNECOLOGIQUE"
         Const SOCIAL = "SOCIAL"
         Const SUIVI_CHRONIQUE = "SUIVI_CHRONIQUE"
+        Const VACCINATION = "VACCINATION"
     End Structure
 
     Public Enum EnumEtatEpisode
@@ -38,6 +39,7 @@
         CONSULTATION = 0
         VIRTUEL = 1
         PARAMETRE = 2
+        VACCINATION = 3
     End Enum
 
     Property Id As Long
