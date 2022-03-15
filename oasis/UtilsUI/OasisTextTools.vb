@@ -5,6 +5,7 @@ Imports Telerik.WinForms.Documents.FormatProviders.Pdf
 Imports Telerik.WinForms.Documents.Layout
 Imports Telerik.WinForms.Documents.Model
 Imports Telerik.WinControls.RichTextEditor.UI
+Imports Oasis_Common
 
 Public Class OasisTextTools
     Implements IDisposable
@@ -47,6 +48,41 @@ Public Class OasisTextTools
         Editor.Document.Sections.First.Footers.Default.Body = document
     End Function
 
+    Public Function AddHeader(SelectedPatient As Patient, Title As String) As RadDocument
+        Dim userDao As New UserDao
+        Dim siteDao As New SiteDao
+        Dim uniteSanitaireDao As New UniteSanitaireDao
+        Dim siegeDao As New SiegeDao
+
+        Dim document = New RadDocument()
+        Dim Section = New Section()
+        Dim site As Site
+        site = siteDao.getSiteById(SelectedPatient.PatientSiteId)
+        Dim uniteSanitaire As UniteSanitaire
+        uniteSanitaire = uniteSanitaireDao.getUniteSanitaireById(site.Oa_site_unite_sanitaire_id)
+        Dim siege As Siege
+        siege = siegeDao.getSiegeById(uniteSanitaire.Oa_unite_sanitaire_siege_id)
+        With Me
+            .CreateParagraphIntoSection(Section, 12, RadTextAlignment.Center)
+            .AddTexte(Title & " - ", 14, FontWeights.Bold)
+            .AddTexte(text:=("Document généré le " & Date.Now.ToString("dd-MM-yyyy") & " à " & Date.Now.ToString("HH:mm")), 11, FontWeights.Medium)
+            .AddNewLigne()
+            .AddTexteLine("Service Oasis Santé", 14)
+            .AddTexteLine("Tel : " & siege.SiegeTelephone & " -  Fax : " & siege.SiegeFax)
+            .AddTexteLine("Mail : " & siege.SiegeMail)
+            .AddTexte("Numéro structure : " & uniteSanitaire.NumeroStructure)
+        End With
+        With Me
+            .CreateParagraphIntoSection(Section,, RadTextAlignment.Left)
+            .AddTexteLine(SelectedPatient.PatientNom & " " & SelectedPatient.PatientPrenom & " (" & SelectedPatient.PatientGenre & ")")
+            .AddTexteLine("Date de naissance : " & SelectedPatient.PatientDateNaissance.ToString("dd.MM.yyyy") & " (" & CalculAgeEnAnneeEtMoisString(SelectedPatient.PatientDateNaissance) & ")")
+            .AddTexteLine("Immatriculation CPAM : " & SelectedPatient.PatientNir)
+        End With
+
+        document.Sections.Add(Section)
+        Editor.Document.Sections.First.Headers.Default.Body = document
+    End Function
+
     ''' <summary>
     ''' ajoute une section au document, si le document est nothing, un document est instancié, dans tous les cas la fonction retourne un RadDocument
     ''' </summary>
@@ -66,11 +102,11 @@ Public Class OasisTextTools
     Public Function CreateSection(Optional orientation As PageOrientation = PageOrientation.Portrait) As Section
         ' caracteristique section
         Dim section As New Section()
-        'section.PageMargin = New Padding(40, 40, 30, 30)
+        section.PageMargin = New Padding(10)
         'ex When the section has already been added to the document
 
         'editeur.ChangeSectionPageMargin(New Telerik.WinForms.Documents.Layout.Padding(40, 40, 30, 30))
-        'editor.ChangeFontFamily(New FontFamily("Times New Roman"))
+        Editor.ChangeFontFamily(New FontFamily("Times New Roman"))
         section.PageOrientation = orientation
         section.PageSize = PaperTypeConverter.ToSize(PaperTypes.A4)
         Return section

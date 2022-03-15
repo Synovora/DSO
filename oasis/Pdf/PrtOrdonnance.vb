@@ -68,7 +68,6 @@ Public Class PrtOrdonnance
         Dim section = EditTools.CreateSection()
         Dim document = EditTools.AddSectionIntoDocument(Nothing, section)
 
-        PrintEntete(section)
         PrintEtatCivil(section)
         PrintEnteteALD(section)
         EditTools.InsertFragmentToEditor(document)
@@ -99,26 +98,8 @@ Public Class PrtOrdonnance
         Dim documentFin = EditTools.AddSectionIntoDocument(Nothing, sectionFin)
         PrintBasPage(sectionFin)
         EditTools.InsertFragmentToEditor(documentFin)
+        EditTools.AddHeader(SelectedPatient, "Ordonnance")
         EditTools.AddPageNumber()
-    End Sub
-
-
-    Private Sub PrintEntete(section As Section)
-        Dim site As Site
-        site = siteDao.getSiteById(SelectedPatient.PatientSiteId)
-        Dim uniteSanitaire As UniteSanitaire
-        uniteSanitaire = uniteSanitaireDao.getUniteSanitaireById(site.Oa_site_unite_sanitaire_id)
-        Dim siege As Siege
-        siege = siegeDao.getSiegeById(uniteSanitaire.Oa_unite_sanitaire_siege_id)
-        With EditTools
-            .CreateParagraphIntoSection(section, 15, RadTextAlignment.Center)
-            .AddTexte("Ordonnance", 16, FontWeights.Bold)
-            .AddNewLigne()
-            .AddTexteLine("Service Oasis Santé", 14)
-            .AddTexteLine("Tel : " & siege.SiegeTelephone & "| Fax : " & siege.SiegeFax)
-            .AddTexteLine("Mail : " & siege.SiegeMail)
-            .AddTexte("Numéro structure : " & uniteSanitaire.NumeroStructure)
-        End With
     End Sub
 
     Private Sub PrintEtatCivil(section As Section)

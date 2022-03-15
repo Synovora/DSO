@@ -61,7 +61,6 @@ Public Class PrtOrdonnanceVaccin
         Dim section = EditTools.CreateSection()
         Dim document = EditTools.AddSectionIntoDocument(Nothing, section)
 
-        PrintEntete(section)
         PrintEtatCivil(section)
         EditTools.InsertFragmentToEditor(document)
         EditTools.InsertFragmentToEditor(PrintOrdonnanceDetail())
@@ -70,37 +69,14 @@ Public Class PrtOrdonnanceVaccin
         Dim documentFin = EditTools.AddSectionIntoDocument(Nothing, sectionFin)
         PrintBasPage(sectionFin)
         EditTools.InsertFragmentToEditor(documentFin)
+        EditTools.AddHeader(SelectedPatient, "Ordonnance Vaccin")
         EditTools.AddPageNumber()
     End Sub
 
 
-    Private Sub PrintEntete(section As Section)
-        Dim site As Site
-        site = siteDao.getSiteById(SelectedPatient.PatientSiteId)
-        Dim uniteSanitaire As UniteSanitaire
-        uniteSanitaire = uniteSanitaireDao.getUniteSanitaireById(site.Oa_site_unite_sanitaire_id)
-        Dim siege As Siege
-        siege = siegeDao.getSiegeById(uniteSanitaire.Oa_unite_sanitaire_siege_id)
-        With EditTools
-            .CreateParagraphIntoSection(section, 15, RadTextAlignment.Center)
-            .AddTexte("Ordonnance", 16, FontWeights.Bold)
-            .AddNewLigne()
-            .AddTexteLine("Service Oasis Santé", 14)
-            .AddTexteLine("Tel : " & siege.SiegeTelephone & "| Fax : " & siege.SiegeFax)
-            .AddTexteLine("Mail : " & siege.SiegeMail)
-            .AddTexte("Numéro structure : " & uniteSanitaire.NumeroStructure)
-        End With
-    End Sub
-
     Private Sub PrintEtatCivil(section As Section)
         With EditTools
             .CreateParagraphIntoSection(section,, RadTextAlignment.Left)
-            .AddTexteLine(SelectedPatient.PatientNom & " " & SelectedPatient.PatientPrenom)
-
-            Dim DateNaissancePatient As Date = SelectedPatient.PatientDateNaissance
-            .AddTexteLine("Date de naissance : " & DateNaissancePatient.ToString("dd.MM.yyyy"))
-            .AddTexteLine("Immatriculation CPAM : " & SelectedPatient.PatientNir)
-            .AddNewLigne()
             Dim Poids As Double = episodeParametreDao.GetPoidsByEpisodeIdOrLastKnow(0, SelectedPatient.PatientId)
             If Poids > 0 Then
                 .AddTexteLine("Poids : " & Poids & " Kg")
@@ -117,7 +93,7 @@ Public Class PrtOrdonnanceVaccin
         Try
             Dim document As New RadDocument()
 
-            Const LargeurCol1 As Integer = 475
+            Const LargeurCol1 As Integer = 680
             Const LargeurCol2 As Integer = 70
             Const LargeurCol3 As Integer = 85
 
@@ -131,14 +107,9 @@ Public Class PrtOrdonnanceVaccin
                 Dim row As New TableRow()
 
                 Dim spanDetail11 As New Span With {
-                    .FontSize = 10,
+                    .FontSize = 11,
                     .FontWeight = Telerik.WinControls.RichTextEditor.UI.FontWeights.Bold,
                     .Text = vaccin.Dci
-                }
-                Dim spanDetail12 As New Span With {
-                    .FontSize = 10,
-                    .FontWeight = Telerik.WinControls.RichTextEditor.UI.FontWeights.Normal,
-                    .Text = vbCrLf & "Posologie: 1"
                 }
 
                 Dim cellDetail1 As New TableCell With {
@@ -146,7 +117,6 @@ Public Class PrtOrdonnanceVaccin
                 }
                 Dim paragrapheDetail1 As New Paragraph()
                 paragrapheDetail1.Inlines.Add(spanDetail11)
-                paragrapheDetail1.Inlines.Add(spanDetail12)
                 cellDetail1.Blocks.Add(paragrapheDetail1)
                 row.Cells.Add(cellDetail1)
 

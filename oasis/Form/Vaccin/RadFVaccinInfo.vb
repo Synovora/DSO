@@ -21,9 +21,6 @@ Public Class RadFVaccinInfo
     ReadOnly cgvDateDao As New CGVDateDao
     ReadOnly userDao As New UserDao
     ReadOnly antecedentDao As New AntecedentDao
-    ReadOnly episodeDao As New EpisodeDao
-    ReadOnly ordonnanceDao As New OrdonnanceDao
-    ReadOnly ordonnanceDetailDao As New OrdonnanceDetailDao
 
     Private Sub RadFATCListe_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         AfficheTitleForm(Me, "Vaccin - Information", userLog)
@@ -35,6 +32,7 @@ Public Class RadFVaccinInfo
         RefreshSelectedVaccin()
         ColorVaccins()
         ChargementInformation()
+        ChargementButtons()
     End Sub
 
     Private Sub Chargement()
@@ -45,14 +43,28 @@ Public Class RadFVaccinInfo
             Me.BtnAdminVaccin.Text = "Information vaccins"
         End If
 
-        If (SelectedCGVDate.OrdonnanceId <> Nothing) Then
-            BtnPrintOrdo.Enabled = True
-        End If
-
         DTPDate.MinDate = DateAndTime.Now()
         BtnAdminVaccin.Enabled = False
         Vaccins = vaccinDao.GetListVaccinValence()
         Valences = valenceDao.GetList()
+    End Sub
+
+    Private Sub ChargementButtons()
+        If SelectedCGVDate.OperatedBy <> Nothing AndAlso SelectedCGVDate.OperatedDate <> Nothing Then
+            BtnValidationProgram.Text = "Annuler la programmation"
+            If (SelectedCGVDate.SignedBy <> Nothing AndAlso SelectedCGVDate.SignedDate <> Nothing) Then
+                BtnOrdo.Text = "Imprimer l'ordonnance"
+                BtnOrdo.Enabled = True
+            Else
+                BtnOrdo.Text = "Signer l'ordonnance"
+                BtnOrdo.Enabled = userLog.TypeProfil = ProfilDao.EnumProfilType.MEDICAL.ToString
+                ToolTip1.Show("Vous ne disposez pas d'un profil de type 'Médical', pour valider une ordonnance." &
+                                " Votre prodil est de type : " & userLog.TypeProfil, BtnOrdo)
+            End If
+        Else
+            BtnOrdo.Text = "Signer l'ordonnance"
+            BtnOrdo.Enabled = False
+        End If
     End Sub
 
     Private Sub ChargementInformation()
@@ -312,6 +324,7 @@ Public Class RadFVaccinInfo
                 radFVaccinInput.VaccinPrograms = vaccinDao.GetVaccinProgramRelationListDatePatient(SelectedCGVDate.Id, SelectedPatient.PatientId)
                 radFVaccinInput.Vaccins = Vaccins.FindAll(Function(x) vaccinList.Contains(x.Id))
                 radFVaccinInput.Valences = SelectedValences
+                radFVaccinInput.Patient = SelectedPatient
                 radFVaccinInput.ShowDialog()
                 ChargementInformation()
             End Using
@@ -325,6 +338,7 @@ Public Class RadFVaccinInfo
                 radFVaccinInput.VaccinPrograms = vaccinDao.GetVaccinProgramRelationListDatePatient(SelectedCGVDate.Id, SelectedPatient.PatientId)
                 radFVaccinInput.Vaccins = Vaccins.FindAll(Function(x) vaccinList.Contains(x.Id))
                 radFVaccinInput.Valences = SelectedValences
+                radFVaccinInput.Patient = SelectedPatient
                 radFVaccinInput.ShowDialog()
                 ChargementInformation()
                 CodeRetour = True
@@ -361,69 +375,13 @@ Public Class RadFVaccinInfo
     End Sub
 
     Private Sub BtnValidationProgram_Click(sender As Object, e As EventArgs) Handles BtnValidationProgram.Click
-        'If (SelectedCGVDate.OrdonnanceId <> Nothing) Then
-        '    Dim episode As New Episode With {
-        '    .Commentaire = "",
-        '    .DescriptionActivite = "Ordonnance vaccinale"
-        '}
-        '    episode.Type = Episode.EnumTypeEpisode.VACCINATION.ToString
-        '    episode.TypeActivite = Episode.EnumTypeActiviteEpisodeCode.VACCINATION
-        '    episode.PatientId = SelectedPatient.PatientId
-        '    episode.TypeProfil = userLog.TypeProfil
-
-        '    Dim EpisodeId = episodeDao.CreateEpisode(episode, userLog.UtilisateurId)
-        '    SelectedCGVDate.OrdonnanceId = ordonnanceDao.CreateOrdonnance(SelectedPatient.PatientId, EpisodeId, userLog)
-
-        '    Dim ordonnanceDetail As New OrdonnanceDetail With {
-        '        .OrdonnanceId = SelectedCGVDate.OrdonnanceId,
-        '        .Traitement = True,
-        '        .TraitementId = TraitementDataTable.Rows(i)("oa_traitement_id"),
-        '        .OrdreAffichage = TraitementDataTable.Rows(i)("oa_traitement_ordre_affichage"),
-        '        .MedicamentCis = TraitementDataTable.Rows(i)("oa_traitement_medicament_cis"),
-        '        .MedicamentDci = Coalesce(TraitementDataTable.Rows(i)("oa_traitement_medicament_dci"), ""),
-        '        .DateDebut = Nothing,
-        '        .DateFin = Nothing,
-        '        .Duree = Nothing,
-        '        .Posologie = Nothing,
-        '        .PosologieBase = Nothing,
-        '        .PosologieRythme = Nothing,
-        '        .PosologieMatin = Nothing,
-        '        .PosologieMidi = Nothing,
-        '        .PosologieApresMidi = Nothing,
-        '        .PosologieSoir = Nothing,
-        '        .FractionMatin = Nothing,
-        '        .FractionMidi = Nothing,
-        '        .FractionApresMidi = Nothing,
-        '        .FractionSoir = Nothing,
-        '        .PosologieCommentaire = Nothing,
-        '        .Commentaire = Nothing,
-        '        .Fenetre = False,
-        '        .FenetreDateDebut = Nothing,
-        '        .FenetreDateFin = Nothing
-        '    }
-
-
-        '    'Récupération de la période de non délivrance dans les paramètres de l'application
-        '    Dim PeriodeNonDelivranceStringAllergieString As String = ConfigurationManager.AppSettings("PeriodeNonDelivrance")
-        '    Dim PeriodeNonDelivrance As Long
-        '    If IsNumeric(PeriodeNonDelivranceStringAllergieString) Then
-        '        PeriodeNonDelivrance = CInt(PeriodeNonDelivranceStringAllergieString)
-        '    Else
-        '        'TODO: CreateLog("Paramètre application 'PeriodeNonDelivrance' non trouvé !", "OrdonnanceDao", LogDao.EnumTypeLog.ERREUR.ToString)
-        '        PeriodeNonDelivrance = 15
-        '    End If
-        '    PeriodeNonDelivrance *= -1
-
-        '    ordonnanceDetail.ADelivrer = False
-        '    ordonnanceDetail.Ald = False
-
-        '    OrdonnanceDetailDao.CreationOrdonnanceDetail(ordonnanceDetail)
-        '    'Next
-
-        'End If
-        SelectedCGVDate.OrdonnanceId = 1
-        SelectedCGVDate.OperatedBy = userLog.UtilisateurId
-        SelectedCGVDate.OperatedDate = DTPDate.Value
+        If SelectedCGVDate.OperatedBy <> Nothing AndAlso SelectedCGVDate.OperatedDate <> Nothing Then
+            SelectedCGVDate.OperatedBy = Nothing
+            SelectedCGVDate.OperatedDate = Nothing
+        Else
+            SelectedCGVDate.OperatedBy = userLog.UtilisateurId
+            SelectedCGVDate.OperatedDate = DTPDate.Value
+        End If
         cgvDateDao.Update(SelectedCGVDate)
         CodeRetour = True
         Close()
@@ -433,20 +391,27 @@ Public Class RadFVaccinInfo
         SelectedCGVDate.OperatedDate = DTPDate.Value
     End Sub
 
-    Private Sub BtnPrintOrdo_Click(sender As Object, e As EventArgs) Handles BtnPrintOrdo.Click
-        '    If (SelectedCGVDate.OrdonnanceId <> Nothing) Then
-        Dim vaccinList = (From _vaccin In GVVaccin.Rows Where _vaccin.Cells("checked").Value = True Select Convert.ToInt64(_vaccin.Cells("id").Value)).ToArray()
-        Try
-            Dim printPdf As New PrtOrdonnanceVaccin
-            printPdf.SelectedPatient = SelectedPatient
-            printPdf.Vaccins = Vaccins.FindAll(Function(x) vaccinList.Contains(x.Id)).GroupBy(Function(x) x.Code).Select(Function(x) x.First).ToList
-            printPdf.SelectedUserValidation = userDao.GetUserById(SelectedCGVDate.OperatedBy)
-            printPdf.PrintDocument()
-        Catch ex As Exception
-            MessageBox.Show(ex.Message())
-        End Try
-        'Else
-        '    MsgBox("La vaccination n'est pas programmee, impossible de fournir une ordonnance.")
-        'End If
+    Private Sub BtnPrintOrdo_Click(sender As Object, e As EventArgs) Handles BtnOrdo.Click
+        If (SelectedCGVDate.SignedBy <> Nothing AndAlso SelectedCGVDate.SignedDate <> Nothing) Then
+            Dim vaccinList = (From _vaccin In GVVaccin.Rows Where _vaccin.Cells("checked").Value = True Select Convert.ToInt64(_vaccin.Cells("id").Value)).ToArray()
+            Try
+                Dim printPdf As New PrtOrdonnanceVaccin
+                printPdf.SelectedPatient = SelectedPatient
+                printPdf.Vaccins = Vaccins.FindAll(Function(x) vaccinList.Contains(x.Id)).GroupBy(Function(x) x.Code).Select(Function(x) x.First).ToList
+                printPdf.SelectedUserValidation = userDao.GetUserById(SelectedCGVDate.OperatedBy)
+                printPdf.PrintDocument()
+            Catch ex As Exception
+                MessageBox.Show(ex.Message())
+            End Try
+        Else
+            SelectedCGVDate.SignedBy = userLog.UtilisateurId
+            SelectedCGVDate.SignedDate = Date.Now()
+            cgvDateDao.Update(SelectedCGVDate)
+            Dim form As New RadFNotification With {
+                 .Message = "L'ordonnance a été signée numériquement par : " & userLog.UtilisateurPrenom & " " & userLog.UtilisateurNom & vbCrLf & ". L'ordonnance est à présent disponible pour être imprimée"
+             }
+            form.Show()
+            ChargementButtons()
+        End If
     End Sub
 End Class

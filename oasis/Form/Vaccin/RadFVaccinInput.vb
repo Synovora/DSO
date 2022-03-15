@@ -18,6 +18,7 @@ Public Class RadFVaccinInput
     Property RealisationOperator As Long
     Property RealisationOperatorRor As Long
     Property RealisationOperatorText As String = ""
+    Property Patient As Patient
 
     Private Sub RadFVaccinInput_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         AfficheTitleForm(Me, "Vaccin - Administrer", userLog)
@@ -31,6 +32,7 @@ Public Class RadFVaccinInput
         DTPRealisation.Format = DateTimePickerFormat.Custom
         DTPRealisation.CustomFormat = "dd/MM/yyyy"
         DTPRealisation.MaxDate = DateTime.Today
+        DTPRealisation.MinDate = Patient.PatientDateNaissance
 
         TextOperator.Text = GetProfilUserString(userLog)
         RealisationOperator = userLog.UtilisateurId
@@ -202,7 +204,7 @@ Public Class RadFVaccinInput
         Me.Close()
     End Sub
 
-    Private Sub DTPRealisation_ValueChanged(sender As Object, e As EventArgs) Handles DTPRealisation.ValueChanged, TextOperator.TextChanged
+    Private Sub DTPRealisation_ValueChanged(sender As Object, e As EventArgs) Handles DTPRealisation.Validated, TextOperator.Validated
         Me.Enabled = False
         Cursor.Current = Cursors.WaitCursor
 

@@ -53,7 +53,7 @@ Partial Class RadFVaccinInfo
         Me.GVValence = New Telerik.WinControls.UI.RadGridView()
         Me.GVVaccin = New Telerik.WinControls.UI.RadGridView()
         Me.BtnValidationProgram = New Telerik.WinControls.UI.RadButton()
-        Me.BtnPrintOrdo = New Telerik.WinControls.UI.RadButton()
+        Me.BtnOrdo = New Telerik.WinControls.UI.RadButton()
         Me.BtnAdminVaccin = New Telerik.WinControls.UI.RadButton()
         Me.RadGroupBox1 = New Telerik.WinControls.UI.RadGroupBox()
         Me.DTPDate = New System.Windows.Forms.DateTimePicker()
@@ -98,12 +98,13 @@ Partial Class RadFVaccinInfo
         Me.Label4 = New System.Windows.Forms.Label()
         Me.Label6 = New System.Windows.Forms.Label()
         Me.GVValenceNonRequis = New Telerik.WinControls.UI.RadGridView()
+        Me.ToolTip1 = New System.Windows.Forms.ToolTip(Me.components)
         CType(Me.GVValence, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.GVValence.MasterTemplate, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.GVVaccin, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.GVVaccin.MasterTemplate, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.BtnValidationProgram, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.BtnPrintOrdo, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.BtnOrdo, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.BtnAdminVaccin, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.RadGroupBox1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.RadGroupBox1.SuspendLayout()
@@ -228,18 +229,18 @@ Partial Class RadFVaccinInfo
         '
         Me.BtnValidationProgram.Location = New System.Drawing.Point(15, 658)
         Me.BtnValidationProgram.Name = "BtnValidationProgram"
-        Me.BtnValidationProgram.Size = New System.Drawing.Size(240, 24)
+        Me.BtnValidationProgram.Size = New System.Drawing.Size(442, 24)
         Me.BtnValidationProgram.TabIndex = 2
         Me.BtnValidationProgram.Text = "Valider la programmation"
         '
-        'BtnPrintOrdo
+        'BtnOrdo
         '
-        Me.BtnPrintOrdo.Enabled = False
-        Me.BtnPrintOrdo.Location = New System.Drawing.Point(261, 658)
-        Me.BtnPrintOrdo.Name = "BtnPrintOrdo"
-        Me.BtnPrintOrdo.Size = New System.Drawing.Size(240, 24)
-        Me.BtnPrintOrdo.TabIndex = 3
-        Me.BtnPrintOrdo.Text = "Imprimer l'ordonnance"
+        Me.BtnOrdo.Enabled = False
+        Me.BtnOrdo.Location = New System.Drawing.Point(476, 658)
+        Me.BtnOrdo.Name = "BtnOrdo"
+        Me.BtnOrdo.Size = New System.Drawing.Size(240, 24)
+        Me.BtnOrdo.TabIndex = 3
+        Me.BtnOrdo.Text = "Signer l'ordonnance"
         '
         'BtnAdminVaccin
         '
@@ -265,7 +266,7 @@ Partial Class RadFVaccinInfo
         '
         'DTPDate
         '
-        Me.DTPDate.Location = New System.Drawing.Point(79, 15)
+        Me.DTPDate.Location = New System.Drawing.Point(58, 22)
         Me.DTPDate.Name = "DTPDate"
         Me.DTPDate.Size = New System.Drawing.Size(200, 20)
         Me.DTPDate.TabIndex = 4
@@ -273,7 +274,7 @@ Partial Class RadFVaccinInfo
         'LblOperator
         '
         Me.LblOperator.AutoSize = True
-        Me.LblOperator.Location = New System.Drawing.Point(76, 47)
+        Me.LblOperator.Location = New System.Drawing.Point(100, 47)
         Me.LblOperator.Name = "LblOperator"
         Me.LblOperator.Size = New System.Drawing.Size(15, 13)
         Me.LblOperator.TabIndex = 3
@@ -717,7 +718,7 @@ Partial Class RadFVaccinInfo
         Me.Controls.Add(Me.RadGroupBoxEtatCivil)
         Me.Controls.Add(Me.RadGroupBox1)
         Me.Controls.Add(Me.BtnAdminVaccin)
-        Me.Controls.Add(Me.BtnPrintOrdo)
+        Me.Controls.Add(Me.BtnOrdo)
         Me.Controls.Add(Me.BtnValidationProgram)
         Me.Controls.Add(Me.GVVaccin)
         Me.Controls.Add(Me.GVValence)
@@ -732,7 +733,7 @@ Partial Class RadFVaccinInfo
         CType(Me.GVVaccin.MasterTemplate, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.GVVaccin, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.BtnValidationProgram, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.BtnPrintOrdo, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.BtnOrdo, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.BtnAdminVaccin, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.RadGroupBox1, System.ComponentModel.ISupportInitialize).EndInit()
         Me.RadGroupBox1.ResumeLayout(False)
@@ -756,7 +757,7 @@ Partial Class RadFVaccinInfo
     Friend WithEvents GVValence As Telerik.WinControls.UI.RadGridView
     Friend WithEvents GVVaccin As Telerik.WinControls.UI.RadGridView
     Friend WithEvents BtnValidationProgram As Telerik.WinControls.UI.RadButton
-    Friend WithEvents BtnPrintOrdo As Telerik.WinControls.UI.RadButton
+    Friend WithEvents BtnOrdo As Telerik.WinControls.UI.RadButton
     Friend WithEvents BtnAdminVaccin As Telerik.WinControls.UI.RadButton
     Friend WithEvents RadGroupBox1 As Telerik.WinControls.UI.RadGroupBox
     Friend WithEvents LblOperator As Label
@@ -801,5 +802,6 @@ Partial Class RadFVaccinInfo
     Friend WithEvents Label4 As Label
     Friend WithEvents Label6 As Label
     Friend WithEvents GVValenceNonRequis As Telerik.WinControls.UI.RadGridView
+    Friend WithEvents ToolTip1 As ToolTip
 End Class
 

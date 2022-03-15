@@ -38,10 +38,14 @@ Public Class RadFCPV
         DTPStart.Format = DateTimePickerFormat.Custom
         DTPStart.CustomFormat = "dd/MM/yyyy"
         DTPStart.Value = Patient.PatientDateNaissance
+        DTPStart.MinDate = Patient.PatientDateNaissance
+        DTPStart.MaxDate = DateAndTime.Now()
 
         DTPEnd.Format = DateTimePickerFormat.Custom
         DTPEnd.CustomFormat = "dd/MM/yyyy"
         DTPEnd.Value = DateAndTime.Now()
+        DTPEnd.MaxDate = DateAndTime.Now()
+        DTPEnd.MinDate = Patient.PatientDateNaissance
 
         LblALD.Hide()
         Dim StringTooltip As String
@@ -78,7 +82,7 @@ Public Class RadFCPV
         For Each valence As CGVValence In valences
             iGrid += 1
             Grid.Columns.Add(valence.Code)
-            Grid.Columns(iGrid).Width = 50
+            Grid.Columns(iGrid).Width = 100
             Grid.Columns(iGrid).TextAlignment = ContentAlignment.MiddleCenter
         Next
         Grid.Enabled = True
@@ -138,7 +142,6 @@ Public Class RadFCPV
 
     Private Sub Grid_ToolTipTextNeeded(ByVal sender As Object, ByVal e As Telerik.WinControls.ToolTipTextNeededEventArgs) Handles Grid.ToolTipTextNeeded
         Dim dataCell As GridDataCellElement = TryCast(sender, GridDataCellElement)
-
         If dataCell IsNot Nothing Then
             Dim textPart As New TextPart(dataCell)
             Dim size As SizeF = textPart.Measure(New SizeF(Single.PositiveInfinity, Single.PositiveInfinity))

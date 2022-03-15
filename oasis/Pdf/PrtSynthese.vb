@@ -34,7 +34,6 @@ Public Class PrtSynthese
         Dim section = EditTools.CreateSection()
         Dim document = EditTools.AddSectionIntoDocument(Nothing, section)
 
-        PrintEntete(section)
         PrintEtatCivil(section)
         EditTools.InsertFragmentToEditor(document)
 
@@ -53,40 +52,18 @@ Public Class PrtSynthese
 
         'EditTools.insertFragmentToEditor(PrintTitre("--- PPS ---")) 
         PrintPPS()
+        EditTools.AddHeader(SelectedPatient, "Synthese Patient")
         EditTools.AddPageNumber()
     End Sub
 
-    Private Sub PrintEntete(section As Section)
-        With EditTools
-            .CreateParagraphIntoSection(section, 12, RadTextAlignment.Center)
-            .AddTexte("Synthèse patient - ", 14, FontWeights.Bold)
-            Dim Titre As String = "Document généré le " & Date.Now.ToString("dd-MM-yyyy") & " à " & Date.Now.ToString("HH:mm")
-            .AddTexte(Titre, 10, FontWeights.Normal)
-        End With
-    End Sub
-
     Private Sub PrintEtatCivil(section As Section)
-        Dim Ligne1 As String = "Prénom / Nom : " &
-            SelectedPatient.PatientPrenom & " " &
-            SelectedPatient.PatientNom.ToUpper() &
-            "    NIR : " & SelectedPatient.PatientNir.ToString &
-            "    " & SelectedPatient.PatientGenre
-
-        Dim ligne2 As String =
-            "   Date de naissance : " & SelectedPatient.PatientDateNaissance.ToString("dd.MM.yyyy") & "   -   âge : " & CalculAgeEnAnneeEtMoisString(SelectedPatient.PatientDateNaissance)
-
-        Dim ligne3 As String =
-            "   Rattachement au site Oasis de " & Environnement.Table_site.GetSiteDescription(SelectedPatient.PatientSiteId) &
-            "   -  Dernière mise à jour de la synthèse : " & FormatageDateAffichage(SelectedPatient.PatientSyntheseDateMaj, True)
-
-        Dim ALD As String = aldDao.DateFinALD(Me.SelectedPatient.patientId)
+        Dim ALD As String = aldDao.DateFinALD(Me.SelectedPatient.PatientId)
         ALD = ALD.Replace(vbCrLf, " ")
 
         With EditTools
             .CreateParagraphIntoSection(section, 12, RadTextAlignment.Center)
-            .AddTexteLine(Ligne1)
-            .AddTexteLine(ligne2)
-            .AddTexteLine(ligne3)
+            .AddTexteLine("   Rattachement au site Oasis de " & Environnement.Table_site.GetSiteDescription(SelectedPatient.PatientSiteId) &
+            "   -  Dernière mise à jour de la synthèse : " & FormatageDateAffichage(SelectedPatient.PatientSyntheseDateMaj, True))
             If ALD <> "" Then
                 .AddTexteLine(ALD)
             End If

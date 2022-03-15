@@ -65,7 +65,6 @@ Public Class PrtCarnetVaccinal
         Dim section = EditTools.CreateSection()
         Dim document = EditTools.AddSectionIntoDocument(Nothing, section)
 
-        PrintEntete(section)
         PrintEtatCivil(section)
         EditTools.InsertFragmentToEditor(document)
         EditTools.InsertFragmentToEditor(PrintCarnetDetail())
@@ -74,43 +73,14 @@ Public Class PrtCarnetVaccinal
         Dim documentFin = EditTools.AddSectionIntoDocument(Nothing, sectionFin)
         PrintBasPage(sectionFin)
         EditTools.InsertFragmentToEditor(documentFin)
+        EditTools.AddHeader(SelectedPatient, "Carnet Vaccinal")
         EditTools.AddPageNumber()
-    End Sub
-
-
-    Private Sub PrintEntete(section As Section)
-        Dim site As Site
-        site = siteDao.getSiteById(SelectedPatient.PatientSiteId)
-        Dim uniteSanitaire As UniteSanitaire
-        uniteSanitaire = uniteSanitaireDao.getUniteSanitaireById(site.Oa_site_unite_sanitaire_id)
-        Dim siege As Siege
-        siege = siegeDao.getSiegeById(uniteSanitaire.Oa_unite_sanitaire_siege_id)
-        With EditTools
-            .CreateParagraphIntoSection(section, 15, RadTextAlignment.Center)
-            .AddTexte("Carnet Vaccinal", 16, FontWeights.Bold)
-            .AddNewLigne()
-            .AddTexteLine("Service Oasis Santé", 14)
-            .AddTexteLine("Tel : " & siege.SiegeTelephone & "| Fax : " & siege.SiegeFax)
-            .AddTexteLine("Mail : " & siege.SiegeMail)
-            .AddTexte("Numéro structure : " & uniteSanitaire.NumeroStructure)
-        End With
     End Sub
 
     Private Sub PrintEtatCivil(section As Section)
         With EditTools
-            .CreateParagraphIntoSection(section,, RadTextAlignment.Left)
-            .AddTexteLine(SelectedPatient.PatientNom & " " & SelectedPatient.PatientPrenom)
-
-            Dim DateNaissancePatient As Date = SelectedPatient.PatientDateNaissance
-            .AddTexteLine("Date de naissance : " & DateNaissancePatient.ToString("dd.MM.yyyy"))
-            .AddTexteLine("Immatriculation CPAM : " & SelectedPatient.PatientNir)
-            .AddNewLigne()
-            .AddTexteLine("Document imprime le: " & Date.Now.ToString("dd/MM/yyyy"))
-            .AddNewLigne()
+            .CreateParagraphIntoSection(section, 12, RadTextAlignment.Left)
             .AddTexteLine("Vaccins realises du " & startDate.ToString("dd/MM/yyyy") & " au " & endDate.ToString("dd/MM/yyyy"))
-            .AddNewLigne()
-            .CreateParagraphIntoSection(section,, RadTextAlignment.Right)
-            Dim SiteDescription As String = Environnement.Table_site.GetSiteDescription(SelectedPatient.PatientSiteId)
         End With
     End Sub
 
