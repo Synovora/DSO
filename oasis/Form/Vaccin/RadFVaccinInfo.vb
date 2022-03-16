@@ -378,6 +378,8 @@ Public Class RadFVaccinInfo
         If SelectedCGVDate.OperatedBy <> Nothing AndAlso SelectedCGVDate.OperatedDate <> Nothing Then
             SelectedCGVDate.OperatedBy = Nothing
             SelectedCGVDate.OperatedDate = Nothing
+            SelectedCGVDate.OperatedBy = Nothing
+            SelectedCGVDate.OperatedDate = Nothing
         Else
             SelectedCGVDate.OperatedBy = userLog.UtilisateurId
             SelectedCGVDate.OperatedDate = DTPDate.Value

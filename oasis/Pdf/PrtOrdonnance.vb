@@ -105,12 +105,6 @@ Public Class PrtOrdonnance
     Private Sub PrintEtatCivil(section As Section)
         With EditTools
             .CreateParagraphIntoSection(section,, RadTextAlignment.Left)
-            .AddTexteLine(SelectedPatient.PatientNom & " " & SelectedPatient.PatientPrenom)
-
-            Dim DateNaissancePatient As Date = SelectedPatient.PatientDateNaissance
-            .AddTexteLine("Date de naissance : " & DateNaissancePatient.ToString("dd.MM.yyyy"))
-            .AddTexteLine("Immatriculation CPAM : " & SelectedPatient.PatientNir)
-            .AddNewLigne()
             Dim Poids As Double = episodeParametreDao.GetPoidsByEpisodeIdOrLastKnow(0, SelectedPatient.PatientId)
             If Poids > 0 Then
                 .AddTexteLine("Poids : " & Poids & " Kg")

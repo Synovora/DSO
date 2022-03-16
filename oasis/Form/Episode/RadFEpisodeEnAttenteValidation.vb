@@ -54,8 +54,6 @@ Public Class RadFEpisodeEnAttenteValidation
             End If
             RadGridViewEpisode.Rows(iGrid).Cells("nombreSousEpisode").Value = Coalesce(episodeDataTable.Rows(i)("TotalSSP"), 0)
             RadGridViewEpisode.Rows(iGrid).Cells("nombreSousEpisodeReponse").Value = Coalesce(episodeDataTable.Rows(i)("TotalSER"), 0)
-
-
         Next
 
         'Positionnement du grid sur la première occurrence
