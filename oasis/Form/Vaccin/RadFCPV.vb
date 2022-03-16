@@ -82,7 +82,7 @@ Public Class RadFCPV
         For Each valence As CGVValence In valences
             iGrid += 1
             Grid.Columns.Add(valence.Code)
-            Grid.Columns(iGrid).Width = 100
+            Grid.Columns(iGrid).Width = 60
             Grid.Columns(iGrid).TextAlignment = ContentAlignment.MiddleCenter
         Next
         Grid.Enabled = True
@@ -142,7 +142,9 @@ Public Class RadFCPV
 
     Private Sub Grid_ToolTipTextNeeded(ByVal sender As Object, ByVal e As Telerik.WinControls.ToolTipTextNeededEventArgs) Handles Grid.ToolTipTextNeeded
         Dim dataCell As GridDataCellElement = TryCast(sender, GridDataCellElement)
-        If dataCell IsNot Nothing Then
+        If TryCast(sender, GridHeaderCellElement) IsNot Nothing AndAlso sender.ColumnIndex - 3 >= 0 Then
+            e.ToolTipText = valences(sender.ColumnIndex - 3).Description
+        ElseIf dataCell IsNot Nothing Then
             Dim textPart As New TextPart(dataCell)
             Dim size As SizeF = textPart.Measure(New SizeF(Single.PositiveInfinity, Single.PositiveInfinity))
             Dim sizeInCell As SizeF = textPart.Measure(New SizeF(dataCell.ColumnInfo.Width, Single.PositiveInfinity))
