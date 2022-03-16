@@ -1,5 +1,6 @@
 ﻿Imports System.Diagnostics
 Imports Oasis_Common
+Imports Telerik.WinControls.UI
 
 Public Class RadFValenceSelecteur
     Property Patient As Patient
@@ -42,6 +43,29 @@ Public Class RadFValenceSelecteur
             RGVValenceNotVisible.Rows(iGrid).Cells(2).Value = valence.Description
             iGrid += 1
         Next
+    End Sub
+
+    Private Sub Grid_ToolTipTextNeeded(ByVal sender As Object, ByVal e As Telerik.WinControls.ToolTipTextNeededEventArgs) Handles RGVValenceVisible.ToolTipTextNeeded, RGVValenceNotVisible.ToolTipTextNeeded
+        Dim dataCell As GridDataCellElement = TryCast(sender, GridDataCellElement)
+        If dataCell IsNot Nothing Then
+            Dim textPart As New TextPart(dataCell)
+            Dim size As SizeF = textPart.Measure(New SizeF(Single.PositiveInfinity, Single.PositiveInfinity))
+            Dim sizeInCell As SizeF = textPart.Measure(New SizeF(dataCell.ColumnInfo.Width, Single.PositiveInfinity))
+            Dim toolTipText As String = Nothing
+            Dim cellWidth As Single = dataCell.ColumnInfo.Width
+
+            If TypeOf dataCell.MasterTemplate.ViewDefinition Is HtmlViewDefinition Then
+                cellWidth = (CType(dataCell.TableElement.ViewElement.RowLayout, HtmlViewRowLayout)).GetArrangeInfo(dataCell.ColumnInfo).Bounds.Width - dataCell.BorderWidth * 2
+            End If
+
+            Dim cellHeight As Single = dataCell.Size.Height - dataCell.BorderWidth * 2
+
+            If size.Width > cellWidth OrElse cellHeight < sizeInCell.Height Then
+                toolTipText = dataCell.Text
+            End If
+
+            e.ToolTipText = toolTipText
+        End If
     End Sub
 
     Private Sub BtnAdd_Click(sender As Object, e As EventArgs) Handles BtnAdd.Click
