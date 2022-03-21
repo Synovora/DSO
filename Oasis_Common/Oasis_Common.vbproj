@@ -275,7 +275,7 @@
     <Compile Include="Dao\Tache\TacheDao.vb" />
     <Compile Include="Dao\Theriaque\AllergieDao.vb" />
     <Compile Include="Dao\Vaccin\VaccinDao.vb" />
-    <Compile Include="Dao\Vaccin\CGVDateDoa.vb" />
+    <Compile Include="Dao\Vaccin\CGVDateDao.vb" />
     <Compile Include="Dao\Vaccin\CGVValenceDao.vb" />
     <Compile Include="Dao\Vaccin\ValenceDao.vb" />
     <Compile Include="Dao\Theriaque\ContreIndicationATCDao.vb" />

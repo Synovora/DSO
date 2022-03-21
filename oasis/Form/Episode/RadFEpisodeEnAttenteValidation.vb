@@ -3,6 +3,7 @@ Imports Telerik.WinControls
 Imports Telerik.WinControls.UI
 Public Class RadFEpisodeEnAttenteValidation
     Dim episodeDao As New EpisodeDao
+    Dim cgvDateDao As New CGVDateDao
 
     Private Sub RadFEpisodeEnAttenteValidation_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         AfficheTitleForm(Me, "Episodes avec document(s) en attente de validation médicale", userLog)
@@ -56,6 +57,21 @@ Public Class RadFEpisodeEnAttenteValidation
             RadGridViewEpisode.Rows(iGrid).Cells("nombreSousEpisodeReponse").Value = Coalesce(episodeDataTable.Rows(i)("TotalSER"), 0)
         Next
 
+        Dim cgvDates = cgvDateDao.GetListToSign()
+        Dim rowCount2 As Integer = cgvDates.Rows.Count - 1
+        For i = 0 To rowCount2 Step 1
+            iGrid += 1
+            RadGridViewEpisode.Rows.Add(iGrid)
+            RadGridViewEpisode.Rows(iGrid).Cells("episode_id").Value = "0"
+            RadGridViewEpisode.Rows(iGrid).Cells("patient_id").Value = cgvDates.Rows(i)("patient")
+            RadGridViewEpisode.Rows(iGrid).Cells("type_activite").Value = "ORDONNANCE_VACCINAL"
+            RadGridViewEpisode.Rows(iGrid).Cells("patient").Value = cgvDates.Rows(i)("oa_patient_prenom") & " " & cgvDates.Rows(i)("oa_patient_nom")
+            Dim patientDateNaissance As Date = Coalesce(cgvDates.Rows(i)("oa_patient_date_naissance"), Nothing)
+            RadGridViewEpisode.Rows(iGrid).Cells("dateNaissance").Value = Coalesce(patientDateNaissance.ToString("dd.MM.yyyy"), Nothing)
+            RadGridViewEpisode.Rows(iGrid).Cells("ordonnance").Value = True
+            RadGridViewEpisode.Rows(iGrid).Cells("nombreSousEpisode").Value = "0"
+            RadGridViewEpisode.Rows(iGrid).Cells("nombreSousEpisodeReponse").Value = "0"
+        Next
         'Positionnement du grid sur la première occurrence
         If RadGridViewEpisode.Rows.Count > 0 Then
             Me.RadGridViewEpisode.CurrentRow = RadGridViewEpisode.Rows(0)

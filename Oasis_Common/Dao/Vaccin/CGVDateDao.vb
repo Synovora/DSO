@@ -89,6 +89,32 @@ Public Class CGVDateDao
         Return cgvDates
     End Function
 
+    Public Function GetListToSign() As DataTable
+        Dim SQLString As String
+        SQLString = "SELECT D.*, P.oa_patient_prenom,P.oa_patient_nom,P.oa_patient_date_naissance FROM oasis.oa_vaccin_cgv_date D " &
+                " LEFT JOIN oasis.oa_patient P ON P.oa_patient_id = D.patient" &
+                " WHERE operated_by IS NOT NULL AND signed_by IS NULL;"
+
+        Dim ParcoursDataTable As DataTable = New DataTable()
+
+        Using con As SqlConnection = GetConnection()
+            Dim ParcoursDataAdapter As SqlDataAdapter = New SqlDataAdapter()
+            Using ParcoursDataAdapter
+                ParcoursDataAdapter.SelectCommand = New SqlCommand(SQLString, con)
+                Try
+                    ParcoursDataAdapter.Fill(ParcoursDataTable)
+                    Dim command As SqlCommand = con.CreateCommand()
+                Catch ex As Exception
+                    Throw ex
+                Finally
+                    con.Close()
+                End Try
+            End Using
+        End Using
+
+        Return ParcoursDataTable
+    End Function
+
     Public Function Create(cgvDate As CGVDate) As Long
         Dim da As SqlDataAdapter = New SqlDataAdapter()
         Dim cgvDateId As Long
