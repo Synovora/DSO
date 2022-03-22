@@ -1,9 +1,9 @@
-﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
+﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()>
 Partial Class RadFParcoursDetailEdit
     Inherits Telerik.WinControls.UI.RadForm
 
     'Form overrides dispose to clean up the component list.
-    <System.Diagnostics.DebuggerNonUserCode()> _
+    <System.Diagnostics.DebuggerNonUserCode()>
     Protected Overrides Sub Dispose(ByVal disposing As Boolean)
         Try
             If disposing AndAlso components IsNot Nothing Then
@@ -20,7 +20,7 @@ Partial Class RadFParcoursDetailEdit
     'NOTE: The following procedure is required by the Windows Form Designer
     'It can be modified using the Windows Form Designer.  
     'Do not modify it using the code editor.
-    <System.Diagnostics.DebuggerStepThrough()> _
+    <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
         Me.components = New System.ComponentModel.Container()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(RadFParcoursDetailEdit))
@@ -129,7 +129,6 @@ Partial Class RadFParcoursDetailEdit
         Me.RadBtnTestParametre = New Telerik.WinControls.UI.RadButton()
         Me.RadBtnAutoSuivi = New Telerik.WinControls.UI.RadButton()
         Me.RadBtnTestActePara = New Telerik.WinControls.UI.RadButton()
-        Me.Office2007SilverTheme1 = New Telerik.WinControls.Themes.Office2007SilverTheme()
         CType(Me.RadGroupBoxEtatCivil, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.RadGroupBoxEtatCivil.SuspendLayout()
         CType(Me.RadBtnAnnuler, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -1355,6 +1354,5 @@ Partial Class RadFParcoursDetailEdit
     Friend WithEvents RadBtnHistoRDV As Telerik.WinControls.UI.RadButton
     Friend WithEvents RadBtnAutoSuivi As Telerik.WinControls.UI.RadButton
     Friend WithEvents RadBtnTestActePara As Telerik.WinControls.UI.RadButton
-    Friend WithEvents Office2007SilverTheme1 As Telerik.WinControls.Themes.Office2007SilverTheme
 End Class
 

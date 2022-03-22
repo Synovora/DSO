@@ -62,16 +62,17 @@ Public Class RadFCPV
         Me.Enabled = False
         Cursor.Current = Cursors.WaitCursor
         Dim iGrid As Integer = 2
-
+        Grid.Columns.Add("id")
+        Grid.Columns(0).IsVisible = False
         Grid.Columns.Add("Date operateur")
-        Grid.Columns(0).Width = 220
-        Grid.Columns(0).TextAlignment = DataGridViewContentAlignment.MiddleCenter
-        Grid.Columns.Add("Realise le/par")
         Grid.Columns(1).Width = 220
         Grid.Columns(1).TextAlignment = DataGridViewContentAlignment.MiddleCenter
-        Grid.Columns.Add("Age")
-        Grid.Columns(2).Width = 100
+        Grid.Columns.Add("Realise le/par")
+        Grid.Columns(2).Width = 220
         Grid.Columns(2).TextAlignment = DataGridViewContentAlignment.MiddleCenter
+        Grid.Columns.Add("Age")
+        Grid.Columns(3).Width = 100
+        Grid.Columns(3).TextAlignment = DataGridViewContentAlignment.MiddleCenter
 
         valences = cgvValenceDao.GetListFromPatient(Patient.PatientId)
         If (valences.Count = 0) Then
@@ -107,7 +108,8 @@ Public Class RadFCPV
                 Continue For
             End If
             Grid.Rows.Add(iGrid)
-            Grid.Rows(iGrid).Cells(0).Value = If(cgvDate.OperatedDate <> Nothing AndAlso cgvDate.OperatedBy <> Nothing, String.Format("{0} - {1}", cgvDate.OperatedDate.ToShortDateString(), GetProfilUserString(userDao.GetUserById(cgvDate.OperatedBy))), "+")
+            Grid.Rows(iGrid).Cells(0).Value = cgvDate.Id
+            Grid.Rows(iGrid).Cells(1).Value = If(cgvDate.OperatedDate <> Nothing AndAlso cgvDate.OperatedBy <> Nothing, String.Format("{0} - {1}", cgvDate.OperatedDate.ToShortDateString(), GetProfilUserString(userDao.GetUserById(cgvDate.OperatedBy))), "+")
 
             Dim VaccinProgram = vaccinDao.GetFirstVaccinProgramRelationListDatePatient(cgvDate.Id, Patient.PatientId)
             Dim Text = ""
@@ -119,10 +121,10 @@ Public Class RadFCPV
                 ElseIf (VaccinProgram.RealisationOperatorText <> Nothing) Then
                     Text = VaccinProgram.RealisationOperatorText
                 End If
-                Grid.Rows(iGrid).Cells(1).Value = String.Format("{0} - {1}", VaccinProgram.RealisationDate.ToShortDateString(), Text)
+                Grid.Rows(iGrid).Cells(2).Value = String.Format("{0} - {1}", VaccinProgram.RealisationDate.ToShortDateString(), Text)
             End If
 
-            Grid.Rows(iGrid).Cells(2).Value = CGVDate.DaysToDate(cgvDate.Days)
+            Grid.Rows(iGrid).Cells(3).Value = CGVDate.DaysToDate(cgvDate.Days)
             For Each actualRelation As RelationValenceDate In actualRelations
                 Dim valence = valences.Find(Function(myObject) myObject.Valence = actualRelation.Valence)
                 If actualRelation.Status = 0 Then
@@ -142,8 +144,8 @@ Public Class RadFCPV
 
     Private Sub Grid_ToolTipTextNeeded(ByVal sender As Object, ByVal e As Telerik.WinControls.ToolTipTextNeededEventArgs) Handles Grid.ToolTipTextNeeded
         Dim dataCell As GridDataCellElement = TryCast(sender, GridDataCellElement)
-        If TryCast(sender, GridHeaderCellElement) IsNot Nothing AndAlso sender.ColumnIndex - 3 >= 0 Then
-            e.ToolTipText = valences(sender.ColumnIndex - 3).Description
+        If TryCast(sender, GridHeaderCellElement) IsNot Nothing AndAlso sender.ColumnIndex - 4 >= 0 Then
+            e.ToolTipText = valences(sender.ColumnIndex - 4).Description
         ElseIf dataCell IsNot Nothing Then
             Dim textPart As New TextPart(dataCell)
             Dim size As SizeF = textPart.Measure(New SizeF(Single.PositiveInfinity, Single.PositiveInfinity))
@@ -204,7 +206,7 @@ Public Class RadFCPV
     Private Sub BtnDateDelete_Click(sender As Object, e As EventArgs) Handles BtnDateDelete.Click
         Dim aRow As Integer = Grid.Rows.IndexOf(Grid.CurrentRow)
         If aRow >= 0 Then
-            Dim cgvDateId As String = cgvDates(aRow).Id
+            Dim cgvDateId As String = cgvDates(Convert.ToInt64(Grid.Rows(aRow).Cells(0).Value)).Id
             Dim actualRelations = relations.FindAll(Function(myObject) myObject.Date = cgvDateId)
             Dim index = 1
             For Each Col In Grid.Columns
@@ -237,11 +239,11 @@ Public Class RadFCPV
             Dim dateRow As Integer = e.RowIndex
             Dim valenceCol As Integer = e.ColumnIndex
 
-            If dateRow >= 0 AndAlso valenceCol >= 3 Then
+            If dateRow >= 0 AndAlso valenceCol >= 4 Then
                 Dim mydate = cgvDates(dateRow)
-                Dim valence = valences(valenceCol - 3)
+                Dim valence = valences(valenceCol - 4)
 
-                If e.Row.Cells(1).Value = "" Then
+                If e.Row.Cells(2).Value = "" Then
                     If (cgvDateDao.GetRelationIfExist(New RelationValenceDate() With {.Date = mydate.Id, .Valence = valence.Valence, .Patient = Patient.PatientId}) IsNot Nothing) Then
                         cgvDateDao.DeleteRelation(New RelationValenceDate() With {.Date = mydate.Id, .Valence = valence.Valence, .Patient = Patient.PatientId})
                     Else
@@ -257,18 +259,17 @@ Public Class RadFCPV
 
                 Dim aRow As Integer = Grid.Rows.IndexOf(Grid.CurrentRow)
                 If aRow >= 0 Then
-                    Dim enlabledValence = New List(Of CGVValence)
+                    Dim enableValence = New List(Of CGVValence)
                     For Each valence As CGVValence In valences
-                        If relations.Any(Function(myObject) myObject.Valence = valence.Valence AndAlso myObject.Date = cgvDates(aRow).Id) Then
-                            enlabledValence.Add(valence)
+                        If relations.Any(Function(myObject) myObject.Valence = valence.Valence AndAlso myObject.Date = cgvDates(Convert.ToInt64(Grid.Rows(aRow).Cells(0).Value)).Id) Then
+                            enableValence.Add(valence)
                         End If
                     Next
 
                     Using radFCPV As New RadFVaccinInfo
-                        radFCPV.Lock = If(e.Row.Cells(1).Value = "", False, True)
                         radFCPV.SelectedPatient = Patient
-                        radFCPV.SelectedCGVDate = cgvDates(aRow)
-                        radFCPV.SelectedValences = enlabledValence
+                        radFCPV.SelectedCGVDate = cgvDates(Convert.ToInt64(Grid.Rows(aRow).Cells(0).Value))
+                        radFCPV.SelectedValences = enableValence
                         radFCPV.ShowDialog()
                         If radFCPV.CodeRetour Then
                             ChargementDate()

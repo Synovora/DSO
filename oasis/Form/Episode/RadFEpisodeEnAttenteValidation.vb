@@ -4,6 +4,7 @@ Imports Telerik.WinControls.UI
 Public Class RadFEpisodeEnAttenteValidation
     Dim episodeDao As New EpisodeDao
     Dim cgvDateDao As New CGVDateDao
+    Dim cgvValenceDao As New CGVValenceDao
 
     Private Sub RadFEpisodeEnAttenteValidation_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         AfficheTitleForm(Me, "Episodes avec document(s) en attente de validation médicale", userLog)
@@ -62,7 +63,7 @@ Public Class RadFEpisodeEnAttenteValidation
         For i = 0 To rowCount2 Step 1
             iGrid += 1
             RadGridViewEpisode.Rows.Add(iGrid)
-            RadGridViewEpisode.Rows(iGrid).Cells("episode_id").Value = "0"
+            RadGridViewEpisode.Rows(iGrid).Cells("episode_id").Value = cgvDates.Rows(i)("id")
             RadGridViewEpisode.Rows(iGrid).Cells("patient_id").Value = cgvDates.Rows(i)("patient")
             RadGridViewEpisode.Rows(iGrid).Cells("type_activite").Value = "ORDONNANCE_VACCINAL"
             RadGridViewEpisode.Rows(iGrid).Cells("patient").Value = cgvDates.Rows(i)("oa_patient_prenom") & " " & cgvDates.Rows(i)("oa_patient_nom")
@@ -88,20 +89,36 @@ Public Class RadFEpisodeEnAttenteValidation
         If RadGridViewEpisode.CurrentRow IsNot Nothing Then
             Dim aRow As Integer = Me.RadGridViewEpisode.Rows.IndexOf(Me.RadGridViewEpisode.CurrentRow)
             If aRow >= 0 Then
+                Me.Enabled = False
+                Cursor.Current = Cursors.WaitCursor
                 Dim episodeId As Integer = RadGridViewEpisode.Rows(aRow).Cells("episode_id").Value
                 Dim patientId As Integer = RadGridViewEpisode.Rows(aRow).Cells("patient_id").Value
                 Dim patient As Patient
-                'patientDao.SetPatient(patient, patientId)
                 patient = patientDao.GetPatient(patientId)
-                Me.Enabled = False
-                Cursor.Current = Cursors.WaitCursor
-                Using vRadFEpisodeDetail As New RadFEpisodeDetail
-                    vRadFEpisodeDetail.SelectedEpisodeId = episodeId
-                    vRadFEpisodeDetail.SelectedPatient = patient
-                    vRadFEpisodeDetail.RendezVousId = 0
-                    vRadFEpisodeDetail.UtilisateurConnecte = userLog
-                    vRadFEpisodeDetail.ShowDialog()
-                End Using
+                If RadGridViewEpisode.Rows(aRow).Cells("type_activite").Value = "ORDONNANCE_VACCINAL" Then
+                    Dim valences = cgvValenceDao.GetListFromPatient(patientId)
+                    Dim relations = cgvDateDao.GetRelationListFromPatient(patientId)
+                    Dim enableValence = New List(Of CGVValence)
+                    For Each valence As CGVValence In valences
+                        If relations.Any(Function(myObject) myObject.Valence = valence.Valence AndAlso myObject.Date = episodeId) Then
+                            enableValence.Add(valence)
+                        End If
+                    Next
+                    Using radFCPV As New RadFVaccinInfo
+                        radFCPV.SelectedPatient = patient
+                        radFCPV.SelectedCGVDate = cgvDateDao.GetById(episodeId)
+                        radFCPV.SelectedValences = enableValence
+                        radFCPV.ShowDialog()
+                    End Using
+                Else
+                    Using vRadFEpisodeDetail As New RadFEpisodeDetail
+                        vRadFEpisodeDetail.SelectedEpisodeId = episodeId
+                        vRadFEpisodeDetail.SelectedPatient = Patient
+                        vRadFEpisodeDetail.RendezVousId = 0
+                        vRadFEpisodeDetail.UtilisateurConnecte = userLog
+                        vRadFEpisodeDetail.ShowDialog()
+                    End Using
+                End If
                 Me.Enabled = True
                 ChargementEpisode()
             End If

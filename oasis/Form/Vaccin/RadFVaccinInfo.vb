@@ -15,7 +15,7 @@ Public Class RadFVaccinInfo
 
     Property CodeRetour As Boolean
 
-    ReadOnly rorDao As RorDao = New RorDao
+    ReadOnly rorDao As New RorDao
     ReadOnly valenceDao As New ValenceDao
     ReadOnly vaccinDao As New VaccinDao
     ReadOnly cgvDateDao As New CGVDateDao
@@ -24,7 +24,8 @@ Public Class RadFVaccinInfo
 
     Private Sub RadFATCListe_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         AfficheTitleForm(Me, "Vaccin - Information", userLog)
-
+        Dim VaccinProgram = vaccinDao.GetFirstVaccinProgramRelationListDatePatient(SelectedCGVDate.Id, SelectedPatient.PatientId)
+        Lock = If(VaccinProgram.RealisationDate <> Nothing, False, True)
         Chargement()
         ChargementEtatCivil()
         ChargementVaccins()
@@ -97,7 +98,7 @@ Public Class RadFVaccinInfo
         Dim checker = False
 
         For Each vaccin As VaccinValence In Vaccins.GroupBy(Function(x) x.Code).Select(Function(x) x.First).ToList
-            If SelectedValences.Any(Function(x) x.Valence = vaccin.Valence) Then
+            If SelectedValences IsNot Nothing AndAlso SelectedValences.Any(Function(x) x.Valence = vaccin.Valence) Then
                 GVVaccin.Rows.Add(iGrid)
                 GVVaccin.Rows(iGrid).Cells("id").Value = vaccin.Id
                 GVVaccin.Rows(iGrid).Cells("checked").Value = VaccinPrograms.Any(Function(x) x.Vaccin = vaccin.Id)
@@ -189,7 +190,9 @@ Public Class RadFVaccinInfo
     Private Sub ChargementValences()
         Me.Enabled = False
         Cursor.Current = Cursors.WaitCursor
-
+        If SelectedValences Is Nothing Then
+            Return
+        End If
         GVValence.Rows.Clear()
         Dim iGrid As Integer = 0
 
