@@ -23,17 +23,17 @@ Partial Class RadFPatientListe
     <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
         Me.components = New System.ComponentModel.Container()
-        Dim GridViewTextBoxColumn11 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
-        Dim GridViewTextBoxColumn12 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
-        Dim GridViewTextBoxColumn13 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
-        Dim GridViewTextBoxColumn14 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
-        Dim GridViewTextBoxColumn15 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
-        Dim GridViewTextBoxColumn16 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
-        Dim GridViewTextBoxColumn17 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
-        Dim GridViewTextBoxColumn18 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
-        Dim GridViewTextBoxColumn19 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
-        Dim GridViewTextBoxColumn20 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
-        Dim TableViewDefinition2 As Telerik.WinControls.UI.TableViewDefinition = New Telerik.WinControls.UI.TableViewDefinition()
+        Dim GridViewTextBoxColumn1 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
+        Dim GridViewTextBoxColumn2 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
+        Dim GridViewTextBoxColumn3 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
+        Dim GridViewTextBoxColumn4 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
+        Dim GridViewTextBoxColumn5 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
+        Dim GridViewTextBoxColumn6 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
+        Dim GridViewTextBoxColumn7 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
+        Dim GridViewTextBoxColumn8 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
+        Dim GridViewTextBoxColumn9 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
+        Dim GridViewTextBoxColumn10 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
+        Dim TableViewDefinition1 As Telerik.WinControls.UI.TableViewDefinition = New Telerik.WinControls.UI.TableViewDefinition()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(RadFPatientListe))
         Me.RadPnlSelectedPatient = New Telerik.WinControls.UI.RadGroupBox()
         Me.RadGroupBox2 = New Telerik.WinControls.UI.RadGroupBox()
@@ -60,10 +60,10 @@ Partial Class RadFPatientListe
         Me.ContextMenuStrip1 = New System.Windows.Forms.ContextMenuStrip(Me.components)
         Me.CréerLesIntervenantsOasisParDéfautToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.RadPanel1 = New Telerik.WinControls.UI.RadPanel()
-        Me.LblOccurrenceLue = New System.Windows.Forms.Label()
         Me.RadChkPatientTous = New Telerik.WinControls.UI.RadRadioButton()
         Me.RadChkPatientNonOasis = New Telerik.WinControls.UI.RadRadioButton()
         Me.RadChkPatientOasis = New Telerik.WinControls.UI.RadRadioButton()
+        Me.LblOccurrenceLue = New System.Windows.Forms.Label()
         Me.BtnRequest = New Telerik.WinControls.UI.RadButton()
         Me.RadPanel2 = New Telerik.WinControls.UI.RadPanel()
         Me.RadBtnIntervenantSansRdv = New Telerik.WinControls.UI.RadButton()
@@ -81,14 +81,15 @@ Partial Class RadFPatientListe
         Me.ToolTip = New System.Windows.Forms.ToolTip(Me.components)
         Me.RadDesktopAlert1 = New Telerik.WinControls.UI.RadDesktopAlert(Me.components)
         Me.RadPanel5 = New Telerik.WinControls.UI.RadPanel()
+        Me.RadButton3 = New Telerik.WinControls.UI.RadButton()
+        Me.RadButton2 = New Telerik.WinControls.UI.RadButton()
+        Me.RadLabel3 = New Telerik.WinControls.UI.RadLabel()
+        Me.RadLabel2 = New Telerik.WinControls.UI.RadLabel()
+        Me.RadLabel1 = New Telerik.WinControls.UI.RadLabel()
         Me.DateTimePicker2 = New System.Windows.Forms.DateTimePicker()
         Me.TextBox3 = New System.Windows.Forms.TextBox()
         Me.TextBox4 = New System.Windows.Forms.TextBox()
         Me.RadPanel6 = New Telerik.WinControls.UI.RadPanel()
-        Me.RadLabel1 = New Telerik.WinControls.UI.RadLabel()
-        Me.RadLabel2 = New Telerik.WinControls.UI.RadLabel()
-        Me.RadLabel3 = New Telerik.WinControls.UI.RadLabel()
-        Me.RadButton2 = New Telerik.WinControls.UI.RadButton()
         CType(Me.RadPnlSelectedPatient, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.RadPnlSelectedPatient.SuspendLayout()
         CType(Me.RadGroupBox2, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -129,12 +130,13 @@ Partial Class RadFPatientListe
         Me.RadPanel4.SuspendLayout()
         CType(Me.RadPanel5, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.RadPanel5.SuspendLayout()
+        CType(Me.RadButton3, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.RadButton2, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.RadLabel3, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.RadLabel2, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.RadLabel1, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.RadPanel6, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.RadPanel6.SuspendLayout()
-        CType(Me.RadLabel1, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.RadLabel2, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.RadLabel3, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.RadButton2, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
@@ -159,7 +161,7 @@ Partial Class RadFPatientListe
         Me.RadPnlSelectedPatient.HeaderText = "Patient sélectionné"
         Me.RadPnlSelectedPatient.Location = New System.Drawing.Point(0, 0)
         Me.RadPnlSelectedPatient.Name = "RadPnlSelectedPatient"
-        Me.RadPnlSelectedPatient.Size = New System.Drawing.Size(329, 512)
+        Me.RadPnlSelectedPatient.Size = New System.Drawing.Size(329, 509)
         Me.RadPnlSelectedPatient.TabIndex = 1
         Me.RadPnlSelectedPatient.Text = "Patient sélectionné"
         '
@@ -379,62 +381,62 @@ Partial Class RadFPatientListe
         '
         Me.RadPatientGridView.MasterTemplate.AllowAddNewRow = False
         Me.RadPatientGridView.MasterTemplate.AllowCellContextMenu = False
-        GridViewTextBoxColumn11.EnableExpressionEditor = False
-        GridViewTextBoxColumn11.HeaderText = "Id"
-        GridViewTextBoxColumn11.Name = "oa_patient_id"
-        GridViewTextBoxColumn11.TextAlignment = System.Drawing.ContentAlignment.MiddleCenter
-        GridViewTextBoxColumn12.EnableExpressionEditor = False
-        GridViewTextBoxColumn12.HeaderText = "Prénom"
-        GridViewTextBoxColumn12.HeaderTextAlignment = System.Drawing.ContentAlignment.MiddleLeft
-        GridViewTextBoxColumn12.Name = "oa_patient_prenom"
-        GridViewTextBoxColumn12.Width = 120
-        GridViewTextBoxColumn13.EnableExpressionEditor = False
-        GridViewTextBoxColumn13.HeaderText = "Nom"
-        GridViewTextBoxColumn13.HeaderTextAlignment = System.Drawing.ContentAlignment.MiddleLeft
-        GridViewTextBoxColumn13.Name = "oa_patient_nom"
-        GridViewTextBoxColumn13.Width = 180
-        GridViewTextBoxColumn14.EnableExpressionEditor = False
-        GridViewTextBoxColumn14.HeaderText = "NIR"
-        GridViewTextBoxColumn14.Name = "oa_patient_nir"
-        GridViewTextBoxColumn14.TextAlignment = System.Drawing.ContentAlignment.TopCenter
-        GridViewTextBoxColumn14.Width = 110
-        GridViewTextBoxColumn15.EnableExpressionEditor = False
-        GridViewTextBoxColumn15.HeaderText = "Site"
-        GridViewTextBoxColumn15.HeaderTextAlignment = System.Drawing.ContentAlignment.MiddleLeft
-        GridViewTextBoxColumn15.Name = "site"
-        GridViewTextBoxColumn15.Width = 100
-        GridViewTextBoxColumn16.EnableExpressionEditor = False
-        GridViewTextBoxColumn16.HeaderText = "Naissance"
-        GridViewTextBoxColumn16.Name = "oa_patient_date_naissance"
-        GridViewTextBoxColumn16.TextAlignment = System.Drawing.ContentAlignment.MiddleCenter
-        GridViewTextBoxColumn16.Width = 80
-        GridViewTextBoxColumn17.EnableExpressionEditor = False
-        GridViewTextBoxColumn17.HeaderText = "Age"
-        GridViewTextBoxColumn17.Name = "age"
-        GridViewTextBoxColumn17.TextAlignment = System.Drawing.ContentAlignment.MiddleCenter
-        GridViewTextBoxColumn17.Width = 85
-        GridViewTextBoxColumn18.EnableExpressionEditor = False
-        GridViewTextBoxColumn18.HeaderText = "Lieu naissance"
-        GridViewTextBoxColumn18.HeaderTextAlignment = System.Drawing.ContentAlignment.MiddleLeft
-        GridViewTextBoxColumn18.Name = "oa_patient_lieu_naissance"
-        GridViewTextBoxColumn18.Width = 150
-        GridViewTextBoxColumn19.EnableExpressionEditor = False
-        GridViewTextBoxColumn19.HeaderText = "Date entrée"
-        GridViewTextBoxColumn19.Name = "oa_patient_date_entree_oasis"
-        GridViewTextBoxColumn19.TextAlignment = System.Drawing.ContentAlignment.MiddleCenter
-        GridViewTextBoxColumn19.Width = 80
-        GridViewTextBoxColumn20.EnableExpressionEditor = False
-        GridViewTextBoxColumn20.HeaderText = "Sortie"
-        GridViewTextBoxColumn20.Name = "oa_patient_date_sortie_oasis"
-        GridViewTextBoxColumn20.TextAlignment = System.Drawing.ContentAlignment.MiddleCenter
-        GridViewTextBoxColumn20.Width = 80
-        Me.RadPatientGridView.MasterTemplate.Columns.AddRange(New Telerik.WinControls.UI.GridViewDataColumn() {GridViewTextBoxColumn11, GridViewTextBoxColumn12, GridViewTextBoxColumn13, GridViewTextBoxColumn14, GridViewTextBoxColumn15, GridViewTextBoxColumn16, GridViewTextBoxColumn17, GridViewTextBoxColumn18, GridViewTextBoxColumn19, GridViewTextBoxColumn20})
+        GridViewTextBoxColumn1.EnableExpressionEditor = False
+        GridViewTextBoxColumn1.HeaderText = "Id"
+        GridViewTextBoxColumn1.Name = "oa_patient_id"
+        GridViewTextBoxColumn1.TextAlignment = System.Drawing.ContentAlignment.MiddleCenter
+        GridViewTextBoxColumn2.EnableExpressionEditor = False
+        GridViewTextBoxColumn2.HeaderText = "Prénom"
+        GridViewTextBoxColumn2.HeaderTextAlignment = System.Drawing.ContentAlignment.MiddleLeft
+        GridViewTextBoxColumn2.Name = "oa_patient_prenom"
+        GridViewTextBoxColumn2.Width = 120
+        GridViewTextBoxColumn3.EnableExpressionEditor = False
+        GridViewTextBoxColumn3.HeaderText = "Nom"
+        GridViewTextBoxColumn3.HeaderTextAlignment = System.Drawing.ContentAlignment.MiddleLeft
+        GridViewTextBoxColumn3.Name = "oa_patient_nom"
+        GridViewTextBoxColumn3.Width = 180
+        GridViewTextBoxColumn4.EnableExpressionEditor = False
+        GridViewTextBoxColumn4.HeaderText = "NIR"
+        GridViewTextBoxColumn4.Name = "oa_patient_nir"
+        GridViewTextBoxColumn4.TextAlignment = System.Drawing.ContentAlignment.TopCenter
+        GridViewTextBoxColumn4.Width = 110
+        GridViewTextBoxColumn5.EnableExpressionEditor = False
+        GridViewTextBoxColumn5.HeaderText = "Site"
+        GridViewTextBoxColumn5.HeaderTextAlignment = System.Drawing.ContentAlignment.MiddleLeft
+        GridViewTextBoxColumn5.Name = "site"
+        GridViewTextBoxColumn5.Width = 100
+        GridViewTextBoxColumn6.EnableExpressionEditor = False
+        GridViewTextBoxColumn6.HeaderText = "Naissance"
+        GridViewTextBoxColumn6.Name = "oa_patient_date_naissance"
+        GridViewTextBoxColumn6.TextAlignment = System.Drawing.ContentAlignment.MiddleCenter
+        GridViewTextBoxColumn6.Width = 80
+        GridViewTextBoxColumn7.EnableExpressionEditor = False
+        GridViewTextBoxColumn7.HeaderText = "Age"
+        GridViewTextBoxColumn7.Name = "age"
+        GridViewTextBoxColumn7.TextAlignment = System.Drawing.ContentAlignment.MiddleCenter
+        GridViewTextBoxColumn7.Width = 85
+        GridViewTextBoxColumn8.EnableExpressionEditor = False
+        GridViewTextBoxColumn8.HeaderText = "Lieu naissance"
+        GridViewTextBoxColumn8.HeaderTextAlignment = System.Drawing.ContentAlignment.MiddleLeft
+        GridViewTextBoxColumn8.Name = "oa_patient_lieu_naissance"
+        GridViewTextBoxColumn8.Width = 150
+        GridViewTextBoxColumn9.EnableExpressionEditor = False
+        GridViewTextBoxColumn9.HeaderText = "Date entrée"
+        GridViewTextBoxColumn9.Name = "oa_patient_date_entree_oasis"
+        GridViewTextBoxColumn9.TextAlignment = System.Drawing.ContentAlignment.MiddleCenter
+        GridViewTextBoxColumn9.Width = 80
+        GridViewTextBoxColumn10.EnableExpressionEditor = False
+        GridViewTextBoxColumn10.HeaderText = "Sortie"
+        GridViewTextBoxColumn10.Name = "oa_patient_date_sortie_oasis"
+        GridViewTextBoxColumn10.TextAlignment = System.Drawing.ContentAlignment.MiddleCenter
+        GridViewTextBoxColumn10.Width = 80
+        Me.RadPatientGridView.MasterTemplate.Columns.AddRange(New Telerik.WinControls.UI.GridViewDataColumn() {GridViewTextBoxColumn1, GridViewTextBoxColumn2, GridViewTextBoxColumn3, GridViewTextBoxColumn4, GridViewTextBoxColumn5, GridViewTextBoxColumn6, GridViewTextBoxColumn7, GridViewTextBoxColumn8, GridViewTextBoxColumn9, GridViewTextBoxColumn10})
         Me.RadPatientGridView.MasterTemplate.EnableFiltering = True
-        Me.RadPatientGridView.MasterTemplate.ViewDefinition = TableViewDefinition2
+        Me.RadPatientGridView.MasterTemplate.ViewDefinition = TableViewDefinition1
         Me.RadPatientGridView.Name = "RadPatientGridView"
         Me.RadPatientGridView.ReadOnly = True
         Me.RadPatientGridView.RightToLeft = System.Windows.Forms.RightToLeft.No
-        Me.RadPatientGridView.Size = New System.Drawing.Size(1057, 512)
+        Me.RadPatientGridView.Size = New System.Drawing.Size(1057, 509)
         Me.RadPatientGridView.TabIndex = 0
         '
         'ContextMenuStrip1
@@ -452,7 +454,6 @@ Partial Class RadFPatientListe
         '
         'RadPanel1
         '
-        Me.RadPanel1.Controls.Add(Me.LblOccurrenceLue)
         Me.RadPanel1.Controls.Add(Me.RadChkPatientTous)
         Me.RadPanel1.Controls.Add(Me.RadChkPatientNonOasis)
         Me.RadPanel1.Controls.Add(Me.RadBtnCreatePatient)
@@ -460,23 +461,12 @@ Partial Class RadFPatientListe
         Me.RadPanel1.Dock = System.Windows.Forms.DockStyle.Left
         Me.RadPanel1.Location = New System.Drawing.Point(0, 0)
         Me.RadPanel1.Name = "RadPanel1"
-        Me.RadPanel1.Size = New System.Drawing.Size(356, 40)
+        Me.RadPanel1.Size = New System.Drawing.Size(319, 43)
         Me.RadPanel1.TabIndex = 43
-        '
-        'LblOccurrenceLue
-        '
-        Me.LblOccurrenceLue.AutoSize = True
-        Me.LblOccurrenceLue.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Bold)
-        Me.LblOccurrenceLue.ForeColor = System.Drawing.Color.DarkRed
-        Me.LblOccurrenceLue.Location = New System.Drawing.Point(497, 10)
-        Me.LblOccurrenceLue.Name = "LblOccurrenceLue"
-        Me.LblOccurrenceLue.Size = New System.Drawing.Size(154, 23)
-        Me.LblOccurrenceLue.TabIndex = 3
-        Me.LblOccurrenceLue.Text = "n occurrences lues"
         '
         'RadChkPatientTous
         '
-        Me.RadChkPatientTous.Location = New System.Drawing.Point(287, 12)
+        Me.RadChkPatientTous.Location = New System.Drawing.Point(262, 12)
         Me.RadChkPatientTous.Name = "RadChkPatientTous"
         Me.RadChkPatientTous.Size = New System.Drawing.Size(44, 18)
         Me.RadChkPatientTous.TabIndex = 2
@@ -484,7 +474,7 @@ Partial Class RadFPatientListe
         '
         'RadChkPatientNonOasis
         '
-        Me.RadChkPatientNonOasis.Location = New System.Drawing.Point(169, 12)
+        Me.RadChkPatientNonOasis.Location = New System.Drawing.Point(144, 12)
         Me.RadChkPatientNonOasis.Name = "RadChkPatientNonOasis"
         Me.RadChkPatientNonOasis.Size = New System.Drawing.Size(112, 18)
         Me.RadChkPatientNonOasis.TabIndex = 1
@@ -492,11 +482,22 @@ Partial Class RadFPatientListe
         '
         'RadChkPatientOasis
         '
-        Me.RadChkPatientOasis.Location = New System.Drawing.Point(73, 12)
+        Me.RadChkPatientOasis.Location = New System.Drawing.Point(48, 12)
         Me.RadChkPatientOasis.Name = "RadChkPatientOasis"
         Me.RadChkPatientOasis.Size = New System.Drawing.Size(90, 18)
         Me.RadChkPatientOasis.TabIndex = 0
         Me.RadChkPatientOasis.Text = "Patients Oasis"
+        '
+        'LblOccurrenceLue
+        '
+        Me.LblOccurrenceLue.AutoSize = True
+        Me.LblOccurrenceLue.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Bold)
+        Me.LblOccurrenceLue.ForeColor = System.Drawing.Color.DarkRed
+        Me.LblOccurrenceLue.Location = New System.Drawing.Point(338, 9)
+        Me.LblOccurrenceLue.Name = "LblOccurrenceLue"
+        Me.LblOccurrenceLue.Size = New System.Drawing.Size(154, 23)
+        Me.LblOccurrenceLue.TabIndex = 3
+        Me.LblOccurrenceLue.Text = "n occurrences lues"
         '
         'BtnRequest
         '
@@ -600,9 +601,9 @@ Partial Class RadFPatientListe
         Me.RadPanel3.Controls.Add(Me.RadGroupBox1)
         Me.RadPanel3.Controls.Add(Me.RadPnlSelectedPatient)
         Me.RadPanel3.Dock = System.Windows.Forms.DockStyle.Right
-        Me.RadPanel3.Location = New System.Drawing.Point(1057, 40)
+        Me.RadPanel3.Location = New System.Drawing.Point(1057, 43)
         Me.RadPanel3.Name = "RadPanel3"
-        Me.RadPanel3.Size = New System.Drawing.Size(485, 512)
+        Me.RadPanel3.Size = New System.Drawing.Size(485, 509)
         Me.RadPanel3.TabIndex = 45
         '
         'RadGroupBox1
@@ -619,7 +620,7 @@ Partial Class RadFPatientListe
         Me.RadGroupBox1.HeaderText = "Fonctions générales"
         Me.RadGroupBox1.Location = New System.Drawing.Point(335, 0)
         Me.RadGroupBox1.Name = "RadGroupBox1"
-        Me.RadGroupBox1.Size = New System.Drawing.Size(150, 512)
+        Me.RadGroupBox1.Size = New System.Drawing.Size(150, 509)
         Me.RadGroupBox1.TabIndex = 70
         Me.RadGroupBox1.Text = "Fonctions générales"
         '
@@ -627,9 +628,9 @@ Partial Class RadFPatientListe
         '
         Me.RadPanel4.Controls.Add(Me.RadPatientGridView)
         Me.RadPanel4.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.RadPanel4.Location = New System.Drawing.Point(0, 40)
+        Me.RadPanel4.Location = New System.Drawing.Point(0, 43)
         Me.RadPanel4.Name = "RadPanel4"
-        Me.RadPanel4.Size = New System.Drawing.Size(1057, 512)
+        Me.RadPanel4.Size = New System.Drawing.Size(1057, 509)
         Me.RadPanel4.TabIndex = 46
         '
         'RadDesktopAlert1
@@ -642,6 +643,7 @@ Partial Class RadFPatientListe
         '
         'RadPanel5
         '
+        Me.RadPanel5.Controls.Add(Me.RadButton3)
         Me.RadPanel5.Controls.Add(Me.RadButton2)
         Me.RadPanel5.Controls.Add(Me.RadLabel3)
         Me.RadPanel5.Controls.Add(Me.RadLabel2)
@@ -650,16 +652,56 @@ Partial Class RadFPatientListe
         Me.RadPanel5.Controls.Add(Me.TextBox3)
         Me.RadPanel5.Controls.Add(Me.TextBox4)
         Me.RadPanel5.Dock = System.Windows.Forms.DockStyle.Right
-        Me.RadPanel5.Location = New System.Drawing.Point(735, 0)
+        Me.RadPanel5.Location = New System.Drawing.Point(600, 0)
         Me.RadPanel5.Name = "RadPanel5"
-        Me.RadPanel5.Size = New System.Drawing.Size(807, 40)
+        Me.RadPanel5.Size = New System.Drawing.Size(942, 43)
         Me.RadPanel5.TabIndex = 47
+        '
+        'RadButton3
+        '
+        Me.RadButton3.Location = New System.Drawing.Point(666, 8)
+        Me.RadButton3.Name = "RadButton3"
+        Me.RadButton3.Size = New System.Drawing.Size(122, 26)
+        Me.RadButton3.TabIndex = 50
+        Me.RadButton3.Text = "Filtre des sites ▼"
+        '
+        'RadButton2
+        '
+        Me.RadButton2.Location = New System.Drawing.Point(829, 9)
+        Me.RadButton2.Name = "RadButton2"
+        Me.RadButton2.Size = New System.Drawing.Size(98, 25)
+        Me.RadButton2.TabIndex = 49
+        Me.RadButton2.Text = "Rechercher"
+        '
+        'RadLabel3
+        '
+        Me.RadLabel3.Location = New System.Drawing.Point(411, 12)
+        Me.RadLabel3.Name = "RadLabel3"
+        Me.RadLabel3.Size = New System.Drawing.Size(36, 18)
+        Me.RadLabel3.TabIndex = 50
+        Me.RadLabel3.Text = "DDN :"
+        '
+        'RadLabel2
+        '
+        Me.RadLabel2.Location = New System.Drawing.Point(214, 12)
+        Me.RadLabel2.Name = "RadLabel2"
+        Me.RadLabel2.Size = New System.Drawing.Size(37, 18)
+        Me.RadLabel2.TabIndex = 49
+        Me.RadLabel2.Text = "Nom :"
+        '
+        'RadLabel1
+        '
+        Me.RadLabel1.Location = New System.Drawing.Point(3, 12)
+        Me.RadLabel1.Name = "RadLabel1"
+        Me.RadLabel1.Size = New System.Drawing.Size(51, 18)
+        Me.RadLabel1.TabIndex = 46
+        Me.RadLabel1.Text = "Prenom :"
         '
         'DateTimePicker2
         '
         Me.DateTimePicker2.Location = New System.Drawing.Point(453, 8)
         Me.DateTimePicker2.Name = "DateTimePicker2"
-        Me.DateTimePicker2.Size = New System.Drawing.Size(200, 26)
+        Me.DateTimePicker2.Size = New System.Drawing.Size(187, 26)
         Me.DateTimePicker2.TabIndex = 45
         '
         'TextBox3
@@ -678,45 +720,14 @@ Partial Class RadFPatientListe
         '
         'RadPanel6
         '
+        Me.RadPanel6.Controls.Add(Me.LblOccurrenceLue)
         Me.RadPanel6.Controls.Add(Me.RadPanel1)
         Me.RadPanel6.Controls.Add(Me.RadPanel5)
         Me.RadPanel6.Dock = System.Windows.Forms.DockStyle.Top
         Me.RadPanel6.Location = New System.Drawing.Point(0, 0)
         Me.RadPanel6.Name = "RadPanel6"
-        Me.RadPanel6.Size = New System.Drawing.Size(1542, 40)
+        Me.RadPanel6.Size = New System.Drawing.Size(1542, 43)
         Me.RadPanel6.TabIndex = 48
-        '
-        'RadLabel1
-        '
-        Me.RadLabel1.Location = New System.Drawing.Point(3, 12)
-        Me.RadLabel1.Name = "RadLabel1"
-        Me.RadLabel1.Size = New System.Drawing.Size(51, 18)
-        Me.RadLabel1.TabIndex = 46
-        Me.RadLabel1.Text = "Prenom :"
-        '
-        'RadLabel2
-        '
-        Me.RadLabel2.Location = New System.Drawing.Point(214, 12)
-        Me.RadLabel2.Name = "RadLabel2"
-        Me.RadLabel2.Size = New System.Drawing.Size(37, 18)
-        Me.RadLabel2.TabIndex = 49
-        Me.RadLabel2.Text = "Nom :"
-        '
-        'RadLabel3
-        '
-        Me.RadLabel3.Location = New System.Drawing.Point(411, 12)
-        Me.RadLabel3.Name = "RadLabel3"
-        Me.RadLabel3.Size = New System.Drawing.Size(36, 18)
-        Me.RadLabel3.TabIndex = 50
-        Me.RadLabel3.Text = "DDN :"
-        '
-        'RadButton2
-        '
-        Me.RadButton2.Location = New System.Drawing.Point(659, 9)
-        Me.RadButton2.Name = "RadButton2"
-        Me.RadButton2.Size = New System.Drawing.Size(136, 24)
-        Me.RadButton2.TabIndex = 49
-        Me.RadButton2.Text = "Rechercher"
         '
         'RadFPatientListe
         '
@@ -780,12 +791,14 @@ Partial Class RadFPatientListe
         CType(Me.RadPanel5, System.ComponentModel.ISupportInitialize).EndInit()
         Me.RadPanel5.ResumeLayout(False)
         Me.RadPanel5.PerformLayout()
+        CType(Me.RadButton3, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.RadButton2, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.RadLabel3, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.RadLabel2, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.RadLabel1, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.RadPanel6, System.ComponentModel.ISupportInitialize).EndInit()
         Me.RadPanel6.ResumeLayout(False)
-        CType(Me.RadLabel1, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.RadLabel2, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.RadLabel3, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.RadButton2, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.RadPanel6.PerformLayout()
         CType(Me, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
 
@@ -844,5 +857,6 @@ Partial Class RadFPatientListe
     Friend WithEvents RadLabel2 As Telerik.WinControls.UI.RadLabel
     Friend WithEvents RadLabel1 As Telerik.WinControls.UI.RadLabel
     Friend WithEvents RadButton2 As Telerik.WinControls.UI.RadButton
+    Friend WithEvents RadButton3 As Telerik.WinControls.UI.RadButton
 End Class
 

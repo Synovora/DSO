@@ -206,7 +206,7 @@ Public Class RadFCPV
     Private Sub BtnDateDelete_Click(sender As Object, e As EventArgs) Handles BtnDateDelete.Click
         Dim aRow As Integer = Grid.Rows.IndexOf(Grid.CurrentRow)
         If aRow >= 0 Then
-            Dim cgvDateId As String = cgvDates(Convert.ToInt64(Grid.Rows(aRow).Cells(0).Value)).Id
+            Dim cgvDateId As String = Grid.Rows(aRow).Cells(0).Value
             Dim actualRelations = relations.FindAll(Function(myObject) myObject.Date = cgvDateId)
             Dim index = 1
             For Each Col In Grid.Columns
@@ -261,14 +261,14 @@ Public Class RadFCPV
                 If aRow >= 0 Then
                     Dim enableValence = New List(Of CGVValence)
                     For Each valence As CGVValence In valences
-                        If relations.Any(Function(myObject) myObject.Valence = valence.Valence AndAlso myObject.Date = cgvDates(Convert.ToInt64(Grid.Rows(aRow).Cells(0).Value)).Id) Then
+                        If relations.Any(Function(myObject) myObject.Valence = valence.Valence AndAlso myObject.Date = Convert.ToInt64(Grid.Rows(aRow).Cells(0).Value)) Then
                             enableValence.Add(valence)
                         End If
                     Next
 
                     Using radFCPV As New RadFVaccinInfo
                         radFCPV.SelectedPatient = Patient
-                        radFCPV.SelectedCGVDate = cgvDates(Convert.ToInt64(Grid.Rows(aRow).Cells(0).Value))
+                        radFCPV.SelectedCGVDate = cgvDates.Find(Function(x) x.Id = Convert.ToInt64(Grid.Rows(aRow).Cells(0).Value))
                         radFCPV.SelectedValences = enableValence
                         radFCPV.ShowDialog()
                         If radFCPV.CodeRetour Then
