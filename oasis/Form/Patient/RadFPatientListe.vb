@@ -5,7 +5,7 @@ Imports System.Configuration
 
 Public Class RadFPatientListe
     Private privateUtilisateurConnecte As Utilisateur
-
+    Private filterTache As FiltreTache = New FiltreTache()
     Public Property UtilisateurConnecte As Utilisateur
         Get
             Return privateUtilisateurConnecte
@@ -20,7 +20,6 @@ Public Class RadFPatientListe
 
     'Instanciation du patient pour le fournir aux Forms qui seront appelées depuis cette Form
     Dim SelectedPatient As New Patient
-    Dim IndexGrid As Integer
 
     Private Sub RadFPatientListe_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         AfficheTitleForm(Me, "Liste des patients", userLog)
@@ -33,6 +32,10 @@ Public Class RadFPatientListe
         Me.RadDesktopAlert1.Popup.AlertElement.BackColor = Color.MistyRose
         Me.RadDesktopAlert1.Popup.AlertElement.GradientStyle = GradientStyles.Solid
         Me.RadDesktopAlert1.Popup.AlertElement.BorderColor = Color.DarkBlue
+
+        DTPDDN.Format = DateTimePickerFormat.Custom
+        DTPDDN.CustomFormat = " "
+        DTPDDN.Value = DTPDDN.MinDate
 
         'Traitement des contextes obsolètes
         Dim parametreOasisDao As ParametreOasisDao = New ParametreOasisDao
@@ -50,6 +53,25 @@ Public Class RadFPatientListe
         Cursor.Current = Cursors.Default
     End Sub
 
+    Private Sub ShowFilter()
+        Try
+            Me.Enabled = False
+            Using frmFiltreTacheATraiter = New FrmFiltreTacheATraiter(filterTache)
+                frmFiltreTacheATraiter.Tag = filterTache
+                frmFiltreTacheATraiter.ShowDialog()
+                If Not frmFiltreTacheATraiter.filtreTacheNouveau Is Nothing Then
+                    filterTache = frmFiltreTacheATraiter.filtreTacheNouveau
+                    'refreshPanelFilter()
+                    'refreshGridTacheATraiter()
+                End If
+            End Using
+        Catch err As Exception
+            MsgBox(err.Message())
+        Finally
+            Me.Enabled = True
+
+        End Try
+    End Sub
 
     Private Sub ChargementPatient()
         Dim patientDataTable As DataTable
@@ -70,8 +92,11 @@ Public Class RadFPatientListe
                 Tous = True
             End If
         End If
-
-        patientDataTable = patientDao.GetAllPatient(Tous, PatientOasis)
+        Dim filter = ""
+        filter = String.Format("{0} AND (LOWER(oa_patient_prenom) LIKE '%{1}%' OR {2})", filter, InputPrenom.Text, If(InputPrenom.Text.Length >= 3, "1!=1", "1=1"))
+        filter = String.Format("{0} AND (LOWER(oa_patient_nom) LIKE '%{1}%' OR {2})", filter, InputNom.Text, If(InputNom.Text.Length >= 3, "1!=1", "1=1"))
+        filter = String.Format("{0} AND (oa_patient_date_naissance = '{1}' OR {2})", filter, DTPDDN.Value.ToString("yyyy-MM-dd"), If(DTPDDN.Value <> DTPDDN.MinDate, "1!=1", "1=1"))
+        patientDataTable = patientDao.GetAllPatientWithFilter(Tous, PatientOasis, filter)
 
         Dim iGrid As Integer = -1
         Dim rowCount As Integer = patientDataTable.Rows.Count - 1
@@ -127,6 +152,13 @@ Public Class RadFPatientListe
         'Positionnement du grid sur la première occurrence
         If RadPatientGridView.Rows.Count > 0 Then
             Me.RadPatientGridView.CurrentRow = RadPatientGridView.Rows(0)
+        End If
+    End Sub
+
+    Private Sub DTPDDN_DropDown(sender As Object, e As EventArgs) Handles DTPDDN.DropDown
+        If DTPDDN.Value = DTPDDN.MinDate Then
+            DTPDDN.Value = Date.Now()
+            DTPDDN.Format = DateTimePickerFormat.Long
         End If
     End Sub
 
@@ -252,8 +284,6 @@ Public Class RadFPatientListe
                     RadBtnRendezVous.Hide()
                 End If
             End If
-
-            IndexGrid = aRow
         Else
             InitZonesSelectionPatient()
         End If
@@ -454,7 +484,7 @@ Public Class RadFPatientListe
         If RadChkPatientOasis.CheckState = CheckState.Checked Then
             Application.DoEvents()
             Cursor.Current = Cursors.WaitCursor
-            ChargementPatient()
+            'ChargementPatient()
             InitZonesSelectionPatient()
             Cursor.Current = Cursors.Default
         End If
@@ -464,7 +494,7 @@ Public Class RadFPatientListe
         If RadChkPatientNonOasis.CheckState = CheckState.Checked Then
             Application.DoEvents()
             Cursor.Current = Cursors.WaitCursor
-            ChargementPatient()
+            'ChargementPatient()
             InitZonesSelectionPatient()
             Cursor.Current = Cursors.Default
         End If
@@ -474,7 +504,7 @@ Public Class RadFPatientListe
         If RadChkPatientTous.CheckState = CheckState.Checked Then
             Application.DoEvents()
             Cursor.Current = Cursors.WaitCursor
-            ChargementPatient()
+            'ChargementPatient()
             InitZonesSelectionPatient()
             Cursor.Current = Cursors.Default
         End If
@@ -706,4 +736,23 @@ Public Class RadFPatientListe
         End Try
     End Sub
 
+    Private Sub BtnSearch_Click(sender As Object, e As EventArgs) Handles BtnSearch.Click
+        ChargementPatient()
+    End Sub
+
+    Private Sub RadButton2_Click(sender As Object, e As EventArgs) Handles RadButton2.Click
+        InputPrenom.Text = ""
+    End Sub
+
+    Private Sub RadButton4_Click(sender As Object, e As EventArgs) Handles RadButton4.Click
+        InputNom.Text = ""
+    End Sub
+
+    Private Sub RadButton5_Click(sender As Object, e As EventArgs) Handles RadButton5.Click
+        DTPDDN.Value = DTPDDN.MinDate
+    End Sub
+
+    Private Sub RadButton3_Click(sender As Object, e As EventArgs) Handles RadButton3.Click
+        ShowFilter()
+    End Sub
 End Class

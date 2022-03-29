@@ -124,7 +124,7 @@ Partial Class FrmFiltreTacheATraiter
         'FrmFiltreTacheATraiter
         '
         Me.AcceptButton = Me.BtnValidate
-        Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
+        Me.AutoScaleDimensions = New System.Drawing.SizeF(9.0!, 20.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.CancelButton = Me.BtnCancel
         Me.ClientSize = New System.Drawing.Size(437, 494)
@@ -140,7 +140,7 @@ Partial Class FrmFiltreTacheATraiter
         Me.ShowIcon = False
         Me.ShowInTaskbar = False
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent
-        Me.Text = "Filtre Taches  à Traiter"
+        Me.Text = "Selection de site"
         CType(Me.RadPanel1, System.ComponentModel.ISupportInitialize).EndInit()
         Me.RadPanel1.ResumeLayout(False)
         CType(Me.RadTreeView1, System.ComponentModel.ISupportInitialize).EndInit()

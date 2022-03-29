@@ -341,6 +341,50 @@ Public Class PatientDao
         Return patients
     End Function
 
+    Public Function GetAllPatientWithFilter(Tous As Boolean, PatientOasis As Boolean, filter As String) As DataTable
+        Dim conxn As New SqlConnection(GetConnectionString())
+        Dim da As SqlDataAdapter = New SqlDataAdapter()
+        Dim dt As DataTable = New DataTable()
+        Dim SQLString As String
+
+        SQLString = "SELECT oa_patient_id, oa_patient_nir, oa_patient_prenom, oa_patient_nom, oa_patient_date_naissance," &
+                    " oa_patient_lieu_naissance, oa_patient_date_entree_oasis, oa_patient_date_sortie_oasis, oa_patient_site_id" &
+                    " FROM oasis.oa_patient WHERE 1=1" & filter
+
+        Dim FiltrePatientOasis As String =
+                    " AND oa_patient_date_entree_oasis Is Not NULL" &
+                    " AND oa_patient_date_entree_oasis <> '9998-12-31'" &
+                    " AND (oa_patient_date_sortie_oasis Is NULL OR oa_patient_date_sortie_oasis > '" & Date.Now.ToString("yyyy-MM-dd") & "')"
+
+        Dim FiltrePatientNonOasis As String =
+                    " AND (oa_patient_date_entree_oasis is NULL OR oa_patient_date_entree_oasis = '9998-12-31')" &
+                    " OR oa_patient_date_sortie_oasis <= '" & Date.Now.ToString("yyyy-MM-dd") & "'"
+
+        If Tous = False Then
+            If PatientOasis = True Then
+                SQLString += FiltrePatientOasis
+            Else
+                SQLString += FiltrePatientNonOasis
+            End If
+        End If
+
+        Try
+            'Lecture des données en base
+            da.SelectCommand = New SqlCommand(SQLString, conxn)
+            Debug.WriteLine(GetSqlCommandTextForLogs(da.SelectCommand))
+            da.Fill(dt)
+            conxn.Open()
+        Catch ex As Exception
+            Throw New Exception("1" & ex.Message)
+            Throw ex
+        Finally
+            conxn.Close()
+            da.Dispose()
+        End Try
+
+        Return dt
+    End Function
+
     Public Function GetAllPatient(Tous As Boolean, PatientOasis As Boolean) As DataTable
         Dim conxn As New SqlConnection(GetConnectionString())
         Dim da As SqlDataAdapter = New SqlDataAdapter()

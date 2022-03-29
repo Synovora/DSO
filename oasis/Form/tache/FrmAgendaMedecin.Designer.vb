@@ -53,7 +53,7 @@ Partial Class FrmAgendaMedecin
         CType(Me.RadSchedulerNavigator1.GetChildAt(0).GetChildAt(2).GetChildAt(0).GetChildAt(2).GetChildAt(4), Telerik.WinControls.UI.RadToggleButtonElement).Text = "Agenda"
         CType(Me.RadSchedulerNavigator1.GetChildAt(0).GetChildAt(2).GetChildAt(0).GetChildAt(2).GetChildAt(5), Telerik.WinControls.UI.LightVisualElement).Visibility = Telerik.WinControls.ElementVisibility.Visible
         CType(Me.RadSchedulerNavigator1.GetChildAt(0).GetChildAt(2).GetChildAt(0).GetChildAt(2).GetChildAt(5).GetChildAt(0), Telerik.WinControls.UI.RadCheckBoxElement).Text = "Voir Weekend"
-        CType(Me.RadSchedulerNavigator1.GetChildAt(0).GetChildAt(2).GetChildAt(0).GetChildAt(2).GetChildAt(6).GetChildAt(0), Telerik.WinControls.UI.RadLabelElement).Text = "(UTC+01:00) Bruxelles, Copenhague, Madrid, Paris"
+        CType(Me.RadSchedulerNavigator1.GetChildAt(0).GetChildAt(2).GetChildAt(0).GetChildAt(2).GetChildAt(6).GetChildAt(0), Telerik.WinControls.UI.RadLabelElement).Text = "(UTC-10:00) Hawaii"
         CType(Me.RadSchedulerNavigator1.GetChildAt(0).GetChildAt(2).GetChildAt(0).GetChildAt(2).GetChildAt(6).GetChildAt(0), Telerik.WinControls.UI.RadLabelElement).Visibility = Telerik.WinControls.ElementVisibility.Hidden
         CType(Me.RadSchedulerNavigator1.GetChildAt(0).GetChildAt(2).GetChildAt(0).GetChildAt(2).GetChildAt(6).GetChildAt(1), Telerik.WinControls.UI.RadDropDownListElement).Visibility = Telerik.WinControls.ElementVisibility.Hidden
         CType(Me.RadSchedulerNavigator1.GetChildAt(0).GetChildAt(2).GetChildAt(0).GetChildAt(2).GetChildAt(6).GetChildAt(1).GetChildAt(2), Telerik.WinControls.UI.StackLayoutElement).Visibility = Telerik.WinControls.ElementVisibility.Hidden
@@ -65,7 +65,6 @@ Partial Class FrmAgendaMedecin
         CType(Me.RadSchedulerNavigator1.GetChildAt(0).GetChildAt(2).GetChildAt(0).GetChildAt(2).GetChildAt(6).GetChildAt(2).GetChildAt(2).GetChildAt(0), Telerik.WinControls.UI.LightVisualButtonElement).Visibility = Telerik.WinControls.ElementVisibility.Collapsed
         CType(Me.RadSchedulerNavigator1.GetChildAt(0).GetChildAt(2).GetChildAt(0).GetChildAt(2).GetChildAt(6).GetChildAt(2).GetChildAt(3), Telerik.WinControls.Layouts.DockLayoutPanel).LastChildFill = True
         CType(Me.RadSchedulerNavigator1.GetChildAt(0).GetChildAt(2).GetChildAt(0).GetChildAt(2).GetChildAt(6).GetChildAt(2).GetChildAt(3), Telerik.WinControls.Layouts.DockLayoutPanel).Visibility = Telerik.WinControls.ElementVisibility.Visible
-        CType(Me.RadSchedulerNavigator1.GetChildAt(0).GetChildAt(2).GetChildAt(1).GetChildAt(2).GetChildAt(3).GetChildAt(0), Telerik.WinControls.UI.RadButtonElement).Text = "Aujourd'hui"
         '
         'RadScheduler1
         '
@@ -92,7 +91,7 @@ Partial Class FrmAgendaMedecin
         '
         'FrmAgendaMedecin
         '
-        Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
+        Me.AutoScaleDimensions = New System.Drawing.SizeF(9.0!, 20.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(963, 532)
         Me.Controls.Add(Me.RadScheduler1)

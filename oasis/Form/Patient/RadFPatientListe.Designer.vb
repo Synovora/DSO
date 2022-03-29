@@ -81,14 +81,18 @@ Partial Class RadFPatientListe
         Me.ToolTip = New System.Windows.Forms.ToolTip(Me.components)
         Me.RadDesktopAlert1 = New Telerik.WinControls.UI.RadDesktopAlert(Me.components)
         Me.RadPanel5 = New Telerik.WinControls.UI.RadPanel()
-        Me.RadButton3 = New Telerik.WinControls.UI.RadButton()
+        Me.RadButton6 = New Telerik.WinControls.UI.RadButton()
+        Me.RadButton5 = New Telerik.WinControls.UI.RadButton()
+        Me.RadButton4 = New Telerik.WinControls.UI.RadButton()
         Me.RadButton2 = New Telerik.WinControls.UI.RadButton()
+        Me.RadButton3 = New Telerik.WinControls.UI.RadButton()
+        Me.BtnSearch = New Telerik.WinControls.UI.RadButton()
         Me.RadLabel3 = New Telerik.WinControls.UI.RadLabel()
         Me.RadLabel2 = New Telerik.WinControls.UI.RadLabel()
         Me.RadLabel1 = New Telerik.WinControls.UI.RadLabel()
-        Me.DateTimePicker2 = New System.Windows.Forms.DateTimePicker()
-        Me.TextBox3 = New System.Windows.Forms.TextBox()
-        Me.TextBox4 = New System.Windows.Forms.TextBox()
+        Me.DTPDDN = New System.Windows.Forms.DateTimePicker()
+        Me.InputPrenom = New System.Windows.Forms.TextBox()
+        Me.InputNom = New System.Windows.Forms.TextBox()
         Me.RadPanel6 = New Telerik.WinControls.UI.RadPanel()
         CType(Me.RadPnlSelectedPatient, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.RadPnlSelectedPatient.SuspendLayout()
@@ -130,8 +134,12 @@ Partial Class RadFPatientListe
         Me.RadPanel4.SuspendLayout()
         CType(Me.RadPanel5, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.RadPanel5.SuspendLayout()
-        CType(Me.RadButton3, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.RadButton6, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.RadButton5, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.RadButton4, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.RadButton2, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.RadButton3, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.BtnSearch, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.RadLabel3, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.RadLabel2, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.RadLabel1, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -643,39 +651,75 @@ Partial Class RadFPatientListe
         '
         'RadPanel5
         '
-        Me.RadPanel5.Controls.Add(Me.RadButton3)
+        Me.RadPanel5.Controls.Add(Me.RadButton6)
+        Me.RadPanel5.Controls.Add(Me.RadButton5)
+        Me.RadPanel5.Controls.Add(Me.RadButton4)
         Me.RadPanel5.Controls.Add(Me.RadButton2)
+        Me.RadPanel5.Controls.Add(Me.RadButton3)
+        Me.RadPanel5.Controls.Add(Me.BtnSearch)
         Me.RadPanel5.Controls.Add(Me.RadLabel3)
         Me.RadPanel5.Controls.Add(Me.RadLabel2)
         Me.RadPanel5.Controls.Add(Me.RadLabel1)
-        Me.RadPanel5.Controls.Add(Me.DateTimePicker2)
-        Me.RadPanel5.Controls.Add(Me.TextBox3)
-        Me.RadPanel5.Controls.Add(Me.TextBox4)
+        Me.RadPanel5.Controls.Add(Me.DTPDDN)
+        Me.RadPanel5.Controls.Add(Me.InputPrenom)
+        Me.RadPanel5.Controls.Add(Me.InputNom)
         Me.RadPanel5.Dock = System.Windows.Forms.DockStyle.Right
-        Me.RadPanel5.Location = New System.Drawing.Point(600, 0)
+        Me.RadPanel5.Location = New System.Drawing.Point(528, 0)
         Me.RadPanel5.Name = "RadPanel5"
-        Me.RadPanel5.Size = New System.Drawing.Size(942, 43)
+        Me.RadPanel5.Size = New System.Drawing.Size(1014, 43)
         Me.RadPanel5.TabIndex = 47
         '
-        'RadButton3
+        'RadButton6
         '
-        Me.RadButton3.Location = New System.Drawing.Point(666, 8)
-        Me.RadButton3.Name = "RadButton3"
-        Me.RadButton3.Size = New System.Drawing.Size(122, 26)
-        Me.RadButton3.TabIndex = 50
-        Me.RadButton3.Text = "Filtre des sites ▼"
+        Me.RadButton6.Location = New System.Drawing.Point(818, 10)
+        Me.RadButton6.Name = "RadButton6"
+        Me.RadButton6.Size = New System.Drawing.Size(20, 20)
+        Me.RadButton6.TabIndex = 53
+        Me.RadButton6.Text = "⟳"
+        '
+        'RadButton5
+        '
+        Me.RadButton5.Location = New System.Drawing.Point(645, 10)
+        Me.RadButton5.Name = "RadButton5"
+        Me.RadButton5.Size = New System.Drawing.Size(20, 20)
+        Me.RadButton5.TabIndex = 52
+        Me.RadButton5.Text = "⟳"
+        '
+        'RadButton4
+        '
+        Me.RadButton4.Location = New System.Drawing.Point(412, 10)
+        Me.RadButton4.Name = "RadButton4"
+        Me.RadButton4.Size = New System.Drawing.Size(20, 20)
+        Me.RadButton4.TabIndex = 51
+        Me.RadButton4.Text = "⟳"
         '
         'RadButton2
         '
-        Me.RadButton2.Location = New System.Drawing.Point(829, 9)
+        Me.RadButton2.Location = New System.Drawing.Point(196, 10)
         Me.RadButton2.Name = "RadButton2"
-        Me.RadButton2.Size = New System.Drawing.Size(98, 25)
-        Me.RadButton2.TabIndex = 49
-        Me.RadButton2.Text = "Rechercher"
+        Me.RadButton2.Size = New System.Drawing.Size(20, 20)
+        Me.RadButton2.TabIndex = 50
+        Me.RadButton2.Text = "⟳"
+        '
+        'RadButton3
+        '
+        Me.RadButton3.Location = New System.Drawing.Point(690, 9)
+        Me.RadButton3.Name = "RadButton3"
+        Me.RadButton3.Size = New System.Drawing.Size(122, 21)
+        Me.RadButton3.TabIndex = 50
+        Me.RadButton3.Text = "Filtre des sites ▼"
+        '
+        'BtnSearch
+        '
+        Me.BtnSearch.Location = New System.Drawing.Point(874, 7)
+        Me.BtnSearch.Name = "BtnSearch"
+        Me.BtnSearch.Size = New System.Drawing.Size(98, 25)
+        Me.BtnSearch.TabIndex = 49
+        Me.BtnSearch.Text = "Rechercher"
         '
         'RadLabel3
         '
-        Me.RadLabel3.Location = New System.Drawing.Point(411, 12)
+        Me.RadLabel3.Location = New System.Drawing.Point(447, 12)
         Me.RadLabel3.Name = "RadLabel3"
         Me.RadLabel3.Size = New System.Drawing.Size(36, 18)
         Me.RadLabel3.TabIndex = 50
@@ -683,7 +727,7 @@ Partial Class RadFPatientListe
         '
         'RadLabel2
         '
-        Me.RadLabel2.Location = New System.Drawing.Point(214, 12)
+        Me.RadLabel2.Location = New System.Drawing.Point(233, 12)
         Me.RadLabel2.Name = "RadLabel2"
         Me.RadLabel2.Size = New System.Drawing.Size(37, 18)
         Me.RadLabel2.TabIndex = 49
@@ -697,26 +741,26 @@ Partial Class RadFPatientListe
         Me.RadLabel1.TabIndex = 46
         Me.RadLabel1.Text = "Prenom :"
         '
-        'DateTimePicker2
+        'DTPDDN
         '
-        Me.DateTimePicker2.Location = New System.Drawing.Point(453, 8)
-        Me.DateTimePicker2.Name = "DateTimePicker2"
-        Me.DateTimePicker2.Size = New System.Drawing.Size(187, 26)
-        Me.DateTimePicker2.TabIndex = 45
+        Me.DTPDDN.Location = New System.Drawing.Point(489, 10)
+        Me.DTPDDN.Name = "DTPDDN"
+        Me.DTPDDN.Size = New System.Drawing.Size(150, 26)
+        Me.DTPDDN.TabIndex = 45
         '
-        'TextBox3
+        'InputPrenom
         '
-        Me.TextBox3.Location = New System.Drawing.Point(60, 8)
-        Me.TextBox3.Name = "TextBox3"
-        Me.TextBox3.Size = New System.Drawing.Size(148, 26)
-        Me.TextBox3.TabIndex = 43
+        Me.InputPrenom.Location = New System.Drawing.Point(60, 10)
+        Me.InputPrenom.Name = "InputPrenom"
+        Me.InputPrenom.Size = New System.Drawing.Size(130, 26)
+        Me.InputPrenom.TabIndex = 43
         '
-        'TextBox4
+        'InputNom
         '
-        Me.TextBox4.Location = New System.Drawing.Point(257, 8)
-        Me.TextBox4.Name = "TextBox4"
-        Me.TextBox4.Size = New System.Drawing.Size(148, 26)
-        Me.TextBox4.TabIndex = 42
+        Me.InputNom.Location = New System.Drawing.Point(276, 10)
+        Me.InputNom.Name = "InputNom"
+        Me.InputNom.Size = New System.Drawing.Size(130, 26)
+        Me.InputNom.TabIndex = 42
         '
         'RadPanel6
         '
@@ -791,8 +835,12 @@ Partial Class RadFPatientListe
         CType(Me.RadPanel5, System.ComponentModel.ISupportInitialize).EndInit()
         Me.RadPanel5.ResumeLayout(False)
         Me.RadPanel5.PerformLayout()
-        CType(Me.RadButton3, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.RadButton6, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.RadButton5, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.RadButton4, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.RadButton2, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.RadButton3, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.BtnSearch, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.RadLabel3, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.RadLabel2, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.RadLabel1, System.ComponentModel.ISupportInitialize).EndInit()
@@ -849,14 +897,18 @@ Partial Class RadFPatientListe
     Friend WithEvents RadGroupBox1 As Telerik.WinControls.UI.RadGroupBox
     Friend WithEvents RadGroupBox2 As Telerik.WinControls.UI.RadGroupBox
     Friend WithEvents RadPanel5 As Telerik.WinControls.UI.RadPanel
-    Friend WithEvents DateTimePicker2 As DateTimePicker
-    Friend WithEvents TextBox3 As TextBox
-    Friend WithEvents TextBox4 As TextBox
+    Friend WithEvents DTPDDN As DateTimePicker
+    Friend WithEvents InputPrenom As TextBox
+    Friend WithEvents InputNom As TextBox
     Friend WithEvents RadPanel6 As Telerik.WinControls.UI.RadPanel
     Friend WithEvents RadLabel3 As Telerik.WinControls.UI.RadLabel
     Friend WithEvents RadLabel2 As Telerik.WinControls.UI.RadLabel
     Friend WithEvents RadLabel1 As Telerik.WinControls.UI.RadLabel
-    Friend WithEvents RadButton2 As Telerik.WinControls.UI.RadButton
+    Friend WithEvents BtnSearch As Telerik.WinControls.UI.RadButton
     Friend WithEvents RadButton3 As Telerik.WinControls.UI.RadButton
+    Friend WithEvents RadButton6 As Telerik.WinControls.UI.RadButton
+    Friend WithEvents RadButton5 As Telerik.WinControls.UI.RadButton
+    Friend WithEvents RadButton4 As Telerik.WinControls.UI.RadButton
+    Friend WithEvents RadButton2 As Telerik.WinControls.UI.RadButton
 End Class
 

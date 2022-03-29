@@ -22,7 +22,7 @@ Public Class FrmTacheMain
         ' Cet appel est requis par le concepteur.
         InitializeComponent()
 
-        AfficheTitleForm(Me, Me.Text, userLog)
+        AfficheTitleForm(Me, "", userLog)
 
         ' Ajoutez une initialisation quelconque après l'appel InitializeComponent().
         Me.SplitContainerMain.Dock = DockStyle.Fill
@@ -301,6 +301,7 @@ Public Class FrmTacheMain
 
         End Try
     End Sub
+
     Private Sub refreshGridTacheATraiter(Optional chk As Integer = -1)
         Dim exId As Long, index As Integer = -1, exPosit = 0
         Dim dateRdv As Date, strToolTip As String
