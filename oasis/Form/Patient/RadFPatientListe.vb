@@ -5,7 +5,8 @@ Imports System.Configuration
 
 Public Class RadFPatientListe
     Private privateUtilisateurConnecte As Utilisateur
-    Private filterTache As FiltreTache = New FiltreTache()
+    Private filterTache As New FiltreTache()
+
     Public Property UtilisateurConnecte As Utilisateur
         Get
             Return privateUtilisateurConnecte
@@ -37,6 +38,8 @@ Public Class RadFPatientListe
         DTPDDN.CustomFormat = " "
         DTPDDN.Value = DTPDDN.MinDate
 
+        TTValidation.ForeColor = Color.Red
+
         'Traitement des contextes obsolètes
         Dim parametreOasisDao As ParametreOasisDao = New ParametreOasisDao
         parametreOasisDao.TraitementContexte()
@@ -61,8 +64,6 @@ Public Class RadFPatientListe
                 frmFiltreTacheATraiter.ShowDialog()
                 If Not frmFiltreTacheATraiter.filtreTacheNouveau Is Nothing Then
                     filterTache = frmFiltreTacheATraiter.filtreTacheNouveau
-                    'refreshPanelFilter()
-                    'refreshGridTacheATraiter()
                 End If
             End Using
         Catch err As Exception
@@ -74,6 +75,10 @@ Public Class RadFPatientListe
     End Sub
 
     Private Sub ChargementPatient()
+        If InputPrenom.Text.Length < 3 AndAlso InputNom.Text.Length < 3 AndAlso DTPDDN.Value = DTPDDN.MinDate Then
+            Return
+        End If
+
         Dim patientDataTable As DataTable
 
         Dim Tous As Boolean
@@ -93,19 +98,20 @@ Public Class RadFPatientListe
             End If
         End If
         Dim filter = ""
-        filter = String.Format("{0} AND (LOWER(oa_patient_prenom) LIKE '%{1}%' OR {2})", filter, InputPrenom.Text, If(InputPrenom.Text.Length >= 3, "1!=1", "1=1"))
-        filter = String.Format("{0} AND (LOWER(oa_patient_nom) LIKE '%{1}%' OR {2})", filter, InputNom.Text, If(InputNom.Text.Length >= 3, "1!=1", "1=1"))
+        filter = String.Format("{0} AND (LOWER(convert(varchar, oa_patient_prenom) COLLATE SQL_Latin1_General_Cp1251_CS_AS) LIKE '%{1}%' OR {2})", filter, InputPrenom.Text.Replace(" ", "").ToLower(), If(InputPrenom.Text.Length >= 3, "1!=1", "1=1"))
+        filter = String.Format("{0} AND (LOWER(convert(varchar, oa_patient_nom) COLLATE SQL_Latin1_General_Cp1251_CS_AS) LIKE '%{1}%' OR {2})", filter, InputNom.Text.Replace(" ", "").ToLower(), If(InputNom.Text.Length >= 3, "1!=1", "1=1"))
         filter = String.Format("{0} AND (oa_patient_date_naissance = '{1}' OR {2})", filter, DTPDDN.Value.ToString("yyyy-MM-dd"), If(DTPDDN.Value <> DTPDDN.MinDate, "1!=1", "1=1"))
+        filter = String.Format("{0} AND (oa_patient_site_id {1} OR {2})", filter, If(filterTache.GetListAllSite().Count > 0, "IN (" & String.Join(",", filterTache.GetListAllSite().Select(Function(x) x.Oa_site_id).ToArray()) & ")", "= ''"), If(filterTache.GetListAllSite().Count > 0, "1!=1", "1=1"))
+
         patientDataTable = patientDao.GetAllPatientWithFilter(Tous, PatientOasis, filter)
 
         Dim iGrid As Integer = -1
         Dim rowCount As Integer = patientDataTable.Rows.Count - 1
         LblOccurrenceLue.Text = patientDataTable.Rows.Count & " occurrence(s) lue(s)"
+        LblOccurrenceLue.Visible = rowCount > 0
         For i = 0 To rowCount Step 1
             iGrid += 1
-            'Ajout d'une ligne au DataGridView
             RadPatientGridView.Rows.Add(iGrid)
-            'Alimentation du DataGridView
             RadPatientGridView.Rows(iGrid).Cells("oa_patient_id").Value = patientDataTable.Rows(i)("oa_patient_id")
             Dim NIR As Long = Coalesce(patientDataTable.Rows(i)("oa_patient_nir"), 0)
             If NIR <> 0 Then
@@ -740,19 +746,27 @@ Public Class RadFPatientListe
         ChargementPatient()
     End Sub
 
-    Private Sub RadButton2_Click(sender As Object, e As EventArgs) Handles RadButton2.Click
-        InputPrenom.Text = ""
-    End Sub
-
-    Private Sub RadButton4_Click(sender As Object, e As EventArgs) Handles RadButton4.Click
-        InputNom.Text = ""
-    End Sub
-
     Private Sub RadButton5_Click(sender As Object, e As EventArgs) Handles RadButton5.Click
         DTPDDN.Value = DTPDDN.MinDate
     End Sub
 
     Private Sub RadButton3_Click(sender As Object, e As EventArgs) Handles RadButton3.Click
         ShowFilter()
+    End Sub
+
+    Private Sub RadButton3_Hover(sender As Object, e As EventArgs) Handles RadButton3.MouseHover
+        TTSites.Show(filterTache.ResumeFiltre(), sender, 5000)
+    End Sub
+
+    Private Sub InputPrenom_TextChanged(sender As Object, e As EventArgs) Handles InputPrenom.Validated
+        If InputPrenom.Text.Length > 0 AndAlso InputPrenom.Text.Length < 3 Then
+            TTValidation.Show("Le champ de recherche prenom doit contenir au moins 3 characteres. (Utiliser un espace comme charactere échappatoire)", sender, 5000)
+        End If
+    End Sub
+
+    Private Sub InputNom_TextChanged(sender As Object, e As EventArgs) Handles InputNom.Validated
+        If InputNom.Text.Length > 0 AndAlso InputNom.Text.Length < 3 Then
+            TTValidation.Show("Le champ de recherche nom doit contenir au moins 3 characteres. (Utiliser un espace comme charactere échappatoire)", sender, 5000)
+        End If
     End Sub
 End Class
