@@ -43,4 +43,8 @@
         Return lstAllSite
     End Function
 
+    Public Sub Clear()
+        LstUniteSanitaire.Clear()
+    End Sub
+
 End Class

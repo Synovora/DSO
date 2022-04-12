@@ -1,4 +1,5 @@
 ﻿Imports System.ComponentModel
+Imports Telerik.WinControls.Enumerations
 
 Public Class ItemUniteSite
 
@@ -13,25 +14,16 @@ Public Class ItemUniteSite
     Property Id As Integer
     Property ParentId As Integer
     Property Name As String
-    Property IsActive As Boolean
+    Property IsActive As ToggleState
     Property UniteSanitaireOuSite As Object
 
-    Public Sub New(unitesanitaireOusite As Object, ByVal description As String, ByVal isActive As Boolean, ByVal parent_Id As Integer, ByVal id As Integer)
+    Public Sub New(unitesanitaireOusite As Object, ByVal description As String, ByVal isActive As ToggleState, ByVal parent_Id As Integer, ByVal id As Integer)
         Me.UniteSanitaireOuSite = unitesanitaireOusite
         Me.Name = description
         Me.IsActive = isActive
         Me.ParentId = parent_Id
         Me.Id = id
     End Sub
-
-    Public Property UniteSanitaireOuSite1 As Object
-        Get
-            Return UniteSanitaireOuSite
-        End Get
-        Set(value As Object)
-            UniteSanitaireOuSite = value
-        End Set
-    End Property
 
 End Class
 

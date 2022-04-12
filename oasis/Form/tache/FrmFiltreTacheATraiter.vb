@@ -1,6 +1,5 @@
 ﻿
 
-Imports System.ComponentModel
 Imports Oasis_Common
 Imports Telerik.WinControls.Enumerations
 Imports Telerik.WinControls.UI
@@ -47,7 +46,7 @@ Public Class FrmFiltreTacheATraiter
 
         ' --- active le  mode trois etats
         Me.RadTreeView1.TriStateMode = True
-        Me.RadTreeView1.AutoCheckChildNodes = True
+        'Me.RadTreeView1.AutoCheckChildNodes = True
 
         lstUS = uniteSanitaireDao.getList(False)
         For Each uniteSanitaire In lstUS
@@ -76,7 +75,7 @@ Public Class FrmFiltreTacheATraiter
 
     Private Function isUniteSanitaireChecked(uniteS As UniteSanitaire) As ToggleState
         For Each us In filtreTacheOrigine.LstUniteSanitaire
-            'If us.LstSite.Count > 0 Then Return ToggleState.Indeterminate
+            If us.LstSite.Count > 0 Then Return ToggleState.Indeterminate
             If us.Oa_unite_sanitaire_id = uniteS.Oa_unite_sanitaire_id Then Return ToggleState.On
         Next
         Return ToggleState.Off
@@ -92,20 +91,16 @@ Public Class FrmFiltreTacheATraiter
         Return ToggleState.Off
     End Function
 
-    ''' <summary>
-    ''' 
-    ''' </summary>
     Private Sub construitFiltreNouveau()
         Dim filtreTache As New FiltreTache
-        Dim usParent As UniteSanitaire = Nothing
         Dim itemUS As ItemUniteSite
 
         ' -- on depile les unite sanitaires
         For Each node In RadTreeView1.Nodes
             itemUS = DirectCast(node.DataBoundItem, ItemUniteSite)
-            usParent = DirectCast(itemUS.UniteSanitaireOuSite1, UniteSanitaire)
+            Dim usParent As UniteSanitaire = DirectCast(itemUS.UniteSanitaireOuSite, UniteSanitaire)
 
-            If itemUS.IsActive <> ToggleState.Off Then ' indeterminate ossible que sur les unites sanitaire
+            If itemUS.IsActive <> ToggleState.Off Then
                 filtreTache.AddUniteSanitaire(usParent)
                 usParent.LstSite.Clear()
 
@@ -113,7 +108,7 @@ Public Class FrmFiltreTacheATraiter
                 For Each nodeS In node.Nodes
                     itemUS = DirectCast(nodeS.DataBoundItem, ItemUniteSite)
                     If itemUS.IsActive <> ToggleState.Off Then
-                        filtreTache.AddSiteToUniteSanitaire(usParent, DirectCast(itemUS.UniteSanitaireOuSite1, Site))
+                        filtreTache.AddSiteToUniteSanitaire(usParent, DirectCast(itemUS.UniteSanitaireOuSite, Site))
                     End If
                 Next
             End If

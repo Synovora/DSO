@@ -70,12 +70,16 @@ Public Class RadFPatientListe
             MsgBox(err.Message())
         Finally
             Me.Enabled = True
-
         End Try
+        If filterTache.LstUniteSanitaire.Count > 0 Then
+            BtnFilter.ForeColor = Color.Green
+        Else
+            BtnFilter.ForeColor = Nothing
+        End If
     End Sub
 
     Private Sub ChargementPatient()
-        If InputPrenom.Text.Length < 3 AndAlso InputNom.Text.Length < 3 AndAlso DTPDDN.Value = DTPDDN.MinDate Then
+        If InputPrenom.Text.Length < 3 AndAlso InputNom.Text.Length < 3 AndAlso DTPDDN.Value = DTPDDN.MinDate AndAlso filterTache.LstUniteSanitaire.Count < 1 Then
             Return
         End If
 
@@ -108,7 +112,6 @@ Public Class RadFPatientListe
         Dim iGrid As Integer = -1
         Dim rowCount As Integer = patientDataTable.Rows.Count - 1
         LblOccurrenceLue.Text = patientDataTable.Rows.Count & " occurrence(s) lue(s)"
-        LblOccurrenceLue.Visible = rowCount > 0
         For i = 0 To rowCount Step 1
             iGrid += 1
             RadPatientGridView.Rows.Add(iGrid)
@@ -750,11 +753,11 @@ Public Class RadFPatientListe
         DTPDDN.Value = DTPDDN.MinDate
     End Sub
 
-    Private Sub RadButton3_Click(sender As Object, e As EventArgs) Handles RadButton3.Click
+    Private Sub RadButton3_Click(sender As Object, e As EventArgs) Handles BtnFilter.Click
         ShowFilter()
     End Sub
 
-    Private Sub RadButton3_Hover(sender As Object, e As EventArgs) Handles RadButton3.MouseHover
+    Private Sub RadButton3_Hover(sender As Object, e As EventArgs) Handles BtnFilter.MouseHover
         TTSites.Show(filterTache.ResumeFiltre(), sender, 5000)
     End Sub
 
@@ -768,5 +771,10 @@ Public Class RadFPatientListe
         If InputNom.Text.Length > 0 AndAlso InputNom.Text.Length < 3 Then
             TTValidation.Show("Le champ de recherche nom doit contenir au moins 3 characteres. (Utiliser un espace comme charactere échappatoire)", sender, 5000)
         End If
+    End Sub
+
+    Private Sub RadButton6_Click(sender As Object, e As EventArgs) Handles RadButton6.Click
+        filterTache.Clear()
+        BtnFilter.ForeColor = Nothing
     End Sub
 End Class
