@@ -3,6 +3,7 @@ Imports Telerik.WinControls.UI.Localization
 Imports Oasis_Common
 Imports Telerik.WinControls.UI
 Imports System.Diagnostics
+Imports Nethereum.Signer
 
 Public Class RadFPatientDetailEdit
     Private privateSelectedPatientId As Integer
@@ -68,10 +69,12 @@ Public Class RadFPatientDetailEdit
 
     ReadOnly rorDao As New RorDao
     ReadOnly patientDao As New PatientDao
+    ReadOnly internauteDao As New InternauteDao
+    ReadOnly internautePermissionDao As New InternautePermissionDao
 
-    Dim utilisateurHisto As Utilisateur = New Utilisateur()
+    Dim utilisateurHisto As New Utilisateur()
     Dim ror As Ror
-    Dim PharmacienRorId As Integer = 0
+    Dim PharmacienRorId As Integer
 
     ReadOnly uniteSanitaireListe As Dictionary(Of Integer, String) = Table_unite_sanitaire.GetUniteSanitaireListe()
     ReadOnly genreListe As Dictionary(Of String, String) = Table_genre.GetGenreListe()
@@ -104,6 +107,13 @@ Public Class RadFPatientDetailEdit
             RadNotePatientDataGridView.Hide()
             NoteContextMenuStrip.Enabled = False
             Me.Width = 590
+        End If
+        BtnCreateInternaute.Enabled = False
+        BtnInitInternaute.Enabled = False
+        If SelectedPatient.PatientEmail IsNot Nothing And internauteDao.GetInternauteByEmail(SelectedPatient.PatientEmail) Is Nothing Then
+            BtnCreateInternaute.Enabled = True
+        Else
+            BtnInitInternaute.Enabled = True
         End If
     End Sub
 
@@ -1137,4 +1147,81 @@ Public Class RadFPatientDetailEdit
         Close()
     End Sub
 
+    Private Sub BtnCreateInternaute_Click(sender As Object, e As EventArgs) Handles BtnCreateInternaute.Click
+        Cursor.Current = Cursors.WaitCursor
+        Me.Enabled = False
+        Dim ecKey As String = BitConverter.ToString(EthECKey.GenerateKey().GetPrivateKeyAsBytes()).Replace("-", "")
+        Dim internauteId = internauteDao.Create(New Internaute With {
+        .Email = SelectedPatient.PatientEmail,
+        .Recovery = ecKey,
+        .Code = "0000",
+        .Username = SelectedPatient.PatientNom
+        })
+        Dim internautePermissionId = internautePermissionDao.Create(New InternautePermission With {
+            .Internaute = internauteId,
+            .Patient = SelectedPatient.PatientId,
+            .Permission = 1
+        })
+        If internautePermissionId > 0 Then
+            Dim mailOasis As New MailOasis
+            mailOasis.IsSousEpisode = False
+            mailOasis.Type = ParametreMail.TypeMailParams.PWD_GENERATE
+            Try
+                Cursor.Current = Cursors.WaitCursor
+                Using frm = New FrmMailSousEpisodeOuSynthese(SelectedPatient, Nothing, mailOasis)
+                    frm.TxtTo.Text = SelectedPatient.PatientEmail
+                    frm.TxtBody.Text = frm.TxtBody.Text.Replace("@RECOVER_LINK", "https://ns3119889.ip-51-38-181.eu/Auth/Recover?key=" & ecKey)
+                    frm.Send()
+                End Using
+
+
+                Dim form As New RadFNotification()
+                form.Message = "Compte internaute cree"
+                form.Show()
+                BtnCreateInternaute.Enabled = False
+            Catch ex As Exception
+                MessageBox.Show(ex.Message)
+            Finally
+                Cursor.Current = Cursors.Default
+                Me.Enabled = True
+            End Try
+        End If
+    End Sub
+
+    Private Sub RadButton1_Click(sender As Object, e As EventArgs) Handles BtnInitInternaute.Click
+        Cursor.Current = Cursors.WaitCursor
+        Me.Enabled = False
+        Dim ecKey As String = BitConverter.ToString(EthECKey.GenerateKey().GetPrivateKeyAsBytes()).Replace("-", "")
+        Dim internautePermissions = internautePermissionDao.GetPermissionsByPatient(Me.SelectedPatientId)
+        Dim internauteId = internauteDao.Update(New Internaute With {
+            .Id = internautePermissions(0).Internaute,
+            .Password = "",
+            .Recovery = ecKey,
+            .Code = "0000"
+        })
+        If internauteId > 0 Then
+            Dim mailOasis As New MailOasis
+            mailOasis.IsSousEpisode = False
+            mailOasis.Type = ParametreMail.TypeMailParams.PWD_GENERATE
+            Try
+                Cursor.Current = Cursors.WaitCursor
+                Using frm = New FrmMailSousEpisodeOuSynthese(SelectedPatient, Nothing, mailOasis)
+                    frm.TxtTo.Text = SelectedPatient.PatientEmail
+                    frm.TxtBody.Text = frm.TxtBody.Text.Replace("@RECOVER_LINK", "https://ns3119889.ip-51-38-181.eu/Auth/Recover?key=" & ecKey)
+                    frm.Send()
+                End Using
+
+
+                Dim form As New RadFNotification()
+                form.Message = "Compte internaute nouveau mot de passe"
+                form.Show()
+                BtnCreateInternaute.Enabled = False
+            Catch ex As Exception
+                MessageBox.Show(ex.Message)
+            Finally
+                Cursor.Current = Cursors.Default
+                Me.Enabled = True
+            End Try
+        End If
+    End Sub
 End Class

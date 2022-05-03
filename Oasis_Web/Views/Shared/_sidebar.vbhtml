@@ -11,22 +11,29 @@
 
                 <li>
                     <a href="@Url.Action("Index","Dashboard")" class="waves-effect">
-                        <i class="bx bx-home-circle"></i>@*<span class="badge badge-pill badge-info float-right">3</span>*@
+                        <i class="bx bx-home-circle"></i>
                         <span>Accueil</span>
                     </a>
                 </li>
 
                 <li>
                     <a href="@Url.Action("Index", "Synthese")" class="waves-effect">
-                        <i class="bx bx-task"></i>@*<span class="badge badge-pill badge-info float-right">3</span>*@
-                    <span>Synthese</span>
+                        <i class="bx bx-task"></i>
+                        <span>Synthese</span>
                     </a>
                 </li>
 
                 <li>
                     <a href="@Url.Action("Index", "AutoSuivi")" class="waves-effect">
-                        <i class="bx bx-task"></i>@*<span class="badge badge-pill badge-info float-right">3</span>*@
+                        <i class="bx bx-task"></i>
                         <span>Auto-Suivi</span>
+                    </a>
+                </li>
+
+                <li>
+                    <a href="@Url.Action("Index", "CarnetVaccinal")" class="waves-effect">
+                        <i class="bx bx-sun"></i>
+                    <span>Mes Vaccins</span>
                     </a>
                 </li>
 

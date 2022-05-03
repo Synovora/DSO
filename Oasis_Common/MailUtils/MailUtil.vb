@@ -31,7 +31,12 @@ Public Class MailUtil
             .Subject = mailOasis.Subject
 
             Dim builder = New BodyBuilder()
-            builder.TextBody = mailOasis.Body
+            If mailOasis.Type = TypeMailParams.PWD_GENERATE Then
+                builder.HtmlBody = mailOasis.Body
+            Else
+                builder.TextBody = mailOasis.Body
+            End If
+
             If mailOasis.IsWithContenu Then
                 builder.Attachments.Add(mailOasis.Filename, mailOasis.Contenu)
             End If

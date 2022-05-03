@@ -243,7 +243,7 @@ Partial Class RadFPatientListe
         Me.LblPatientALD.ForeColor = System.Drawing.Color.Red
         Me.LblPatientALD.Location = New System.Drawing.Point(11, 192)
         Me.LblPatientALD.Name = "LblPatientALD"
-        Me.LblPatientALD.Size = New System.Drawing.Size(29, 13)
+        Me.LblPatientALD.Size = New System.Drawing.Size(44, 23)
         Me.LblPatientALD.TabIndex = 69
         Me.LblPatientALD.Text = "ALD"
         '
@@ -255,7 +255,7 @@ Partial Class RadFPatientListe
         Me.TxtSite.Location = New System.Drawing.Point(11, 166)
         Me.TxtSite.Name = "TxtSite"
         Me.TxtSite.ReadOnly = True
-        Me.TxtSite.Size = New System.Drawing.Size(228, 13)
+        Me.TxtSite.Size = New System.Drawing.Size(228, 19)
         Me.TxtSite.TabIndex = 68
         Me.TxtSite.Text = "Site"
         '
@@ -267,7 +267,7 @@ Partial Class RadFPatientListe
         Me.TxtIdSelected.Location = New System.Drawing.Point(11, 31)
         Me.TxtIdSelected.Name = "TxtIdSelected"
         Me.TxtIdSelected.ReadOnly = True
-        Me.TxtIdSelected.Size = New System.Drawing.Size(53, 13)
+        Me.TxtIdSelected.Size = New System.Drawing.Size(53, 19)
         Me.TxtIdSelected.TabIndex = 56
         Me.TxtIdSelected.Text = "Id"
         '
@@ -279,7 +279,7 @@ Partial Class RadFPatientListe
         Me.TxtPrenomSelected.Location = New System.Drawing.Point(11, 85)
         Me.TxtPrenomSelected.Name = "TxtPrenomSelected"
         Me.TxtPrenomSelected.ReadOnly = True
-        Me.TxtPrenomSelected.Size = New System.Drawing.Size(134, 13)
+        Me.TxtPrenomSelected.Size = New System.Drawing.Size(134, 19)
         Me.TxtPrenomSelected.TabIndex = 58
         Me.TxtPrenomSelected.Text = "Prénom"
         '
@@ -288,7 +288,7 @@ Partial Class RadFPatientListe
         Me.LblAgeSelected.AutoSize = True
         Me.LblAgeSelected.Location = New System.Drawing.Point(102, 139)
         Me.LblAgeSelected.Name = "LblAgeSelected"
-        Me.LblAgeSelected.Size = New System.Drawing.Size(40, 13)
+        Me.LblAgeSelected.Size = New System.Drawing.Size(59, 23)
         Me.LblAgeSelected.TabIndex = 64
         Me.LblAgeSelected.Text = "20 ans"
         '
@@ -300,7 +300,7 @@ Partial Class RadFPatientListe
         Me.TxtNirSelected.Location = New System.Drawing.Point(11, 58)
         Me.TxtNirSelected.Name = "TxtNirSelected"
         Me.TxtNirSelected.ReadOnly = True
-        Me.TxtNirSelected.Size = New System.Drawing.Size(100, 13)
+        Me.TxtNirSelected.Size = New System.Drawing.Size(100, 19)
         Me.TxtNirSelected.TabIndex = 57
         Me.TxtNirSelected.Text = "Nir"
         '
@@ -310,7 +310,7 @@ Partial Class RadFPatientListe
         Me.LblDateNaissanceSelected.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.LblDateNaissanceSelected.Location = New System.Drawing.Point(11, 139)
         Me.LblDateNaissanceSelected.Name = "LblDateNaissanceSelected"
-        Me.LblDateNaissanceSelected.Size = New System.Drawing.Size(75, 13)
+        Me.LblDateNaissanceSelected.Size = New System.Drawing.Size(101, 20)
         Me.LblDateNaissanceSelected.TabIndex = 63
         Me.LblDateNaissanceSelected.Text = "01/01/2000"
         '
@@ -322,7 +322,7 @@ Partial Class RadFPatientListe
         Me.TxtNomSelected.Location = New System.Drawing.Point(11, 112)
         Me.TxtNomSelected.Name = "TxtNomSelected"
         Me.TxtNomSelected.ReadOnly = True
-        Me.TxtNomSelected.Size = New System.Drawing.Size(228, 13)
+        Me.TxtNomSelected.Size = New System.Drawing.Size(228, 19)
         Me.TxtNomSelected.TabIndex = 59
         Me.TxtNomSelected.Text = "Nom"
         '
@@ -331,7 +331,7 @@ Partial Class RadFPatientListe
         Me.LblDateSortie.AutoSize = True
         Me.LblDateSortie.Location = New System.Drawing.Point(76, 214)
         Me.LblDateSortie.Name = "LblDateSortie"
-        Me.LblDateSortie.Size = New System.Drawing.Size(63, 13)
+        Me.LblDateSortie.Size = New System.Drawing.Size(96, 23)
         Me.LblDateSortie.TabIndex = 62
         Me.LblDateSortie.Text = "01/01/2000"
         '
@@ -342,7 +342,7 @@ Partial Class RadFPatientListe
         Me.LblPatientSorti.ForeColor = System.Drawing.Color.Red
         Me.LblPatientSorti.Location = New System.Drawing.Point(8, 238)
         Me.LblPatientSorti.Name = "LblPatientSorti"
-        Me.LblPatientSorti.Size = New System.Drawing.Size(279, 13)
+        Me.LblPatientSorti.Size = New System.Drawing.Size(418, 20)
         Me.LblPatientSorti.TabIndex = 60
         Me.LblPatientSorti.Text = "Attention, ce patient est sorti du dispositif Oasis"
         '
@@ -352,7 +352,7 @@ Partial Class RadFPatientListe
         Me.LblLabelDateSortie.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.LblLabelDateSortie.Location = New System.Drawing.Point(8, 214)
         Me.LblLabelDateSortie.Name = "LblLabelDateSortie"
-        Me.LblLabelDateSortie.Size = New System.Drawing.Size(77, 13)
+        Me.LblLabelDateSortie.Size = New System.Drawing.Size(115, 20)
         Me.LblLabelDateSortie.TabIndex = 61
         Me.LblLabelDateSortie.Text = "Date sortie :"
         '
@@ -452,12 +452,12 @@ Partial Class RadFPatientListe
         Me.ContextMenuStrip1.ImageScalingSize = New System.Drawing.Size(24, 24)
         Me.ContextMenuStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.CréerLesIntervenantsOasisParDéfautToolStripMenuItem})
         Me.ContextMenuStrip1.Name = "ContextMenuStrip1"
-        Me.ContextMenuStrip1.Size = New System.Drawing.Size(276, 26)
+        Me.ContextMenuStrip1.Size = New System.Drawing.Size(388, 36)
         '
         'CréerLesIntervenantsOasisParDéfautToolStripMenuItem
         '
         Me.CréerLesIntervenantsOasisParDéfautToolStripMenuItem.Name = "CréerLesIntervenantsOasisParDéfautToolStripMenuItem"
-        Me.CréerLesIntervenantsOasisParDéfautToolStripMenuItem.Size = New System.Drawing.Size(275, 22)
+        Me.CréerLesIntervenantsOasisParDéfautToolStripMenuItem.Size = New System.Drawing.Size(387, 32)
         Me.CréerLesIntervenantsOasisParDéfautToolStripMenuItem.Text = "Créer les intervenants Oasis par défaut"
         '
         'RadPanel1
@@ -503,7 +503,7 @@ Partial Class RadFPatientListe
         Me.LblOccurrenceLue.ForeColor = System.Drawing.Color.DarkRed
         Me.LblOccurrenceLue.Location = New System.Drawing.Point(338, 9)
         Me.LblOccurrenceLue.Name = "LblOccurrenceLue"
-        Me.LblOccurrenceLue.Size = New System.Drawing.Size(0, 13)
+        Me.LblOccurrenceLue.Size = New System.Drawing.Size(0, 23)
         Me.LblOccurrenceLue.TabIndex = 3
         '
         'BtnRequest
@@ -683,7 +683,7 @@ Partial Class RadFPatientListe
         Me.InputNom.Location = New System.Drawing.Point(276, 10)
         Me.InputNom.Name = "InputNom"
         Me.InputNom.ShowClearButton = True
-        Me.InputNom.Size = New System.Drawing.Size(167, 20)
+        Me.InputNom.Size = New System.Drawing.Size(167, 27)
         Me.InputNom.TabIndex = 55
         '
         'InputPrenom
@@ -692,7 +692,7 @@ Partial Class RadFPatientListe
         Me.InputPrenom.Location = New System.Drawing.Point(60, 10)
         Me.InputPrenom.Name = "InputPrenom"
         Me.InputPrenom.ShowClearButton = True
-        Me.InputPrenom.Size = New System.Drawing.Size(167, 20)
+        Me.InputPrenom.Size = New System.Drawing.Size(167, 27)
         Me.InputPrenom.TabIndex = 54
         '
         'RadButton6
@@ -702,6 +702,7 @@ Partial Class RadFPatientListe
         Me.RadButton6.Size = New System.Drawing.Size(28, 28)
         Me.RadButton6.TabIndex = 53
         Me.RadButton6.Text = "⟳"
+        Me.ToolTip.SetToolTip(Me.RadButton6, "Réinitialisation des filtres")
         '
         'RadButton5
         '
@@ -710,6 +711,7 @@ Partial Class RadFPatientListe
         Me.RadButton5.Size = New System.Drawing.Size(28, 28)
         Me.RadButton5.TabIndex = 52
         Me.RadButton5.Text = "⟳"
+        Me.ToolTip.SetToolTip(Me.RadButton5, "Réinitialisation de la date de naissance")
         '
         'BtnFilter
         '
@@ -755,7 +757,7 @@ Partial Class RadFPatientListe
         '
         Me.DTPDDN.Location = New System.Drawing.Point(489, 10)
         Me.DTPDDN.Name = "DTPDDN"
-        Me.DTPDDN.Size = New System.Drawing.Size(150, 20)
+        Me.DTPDDN.Size = New System.Drawing.Size(150, 26)
         Me.DTPDDN.TabIndex = 45
         '
         'TTValidation
@@ -765,7 +767,7 @@ Partial Class RadFPatientListe
         '
         'RadFPatientListe
         '
-        Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
+        Me.AutoScaleDimensions = New System.Drawing.SizeF(9.0!, 20.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.CancelButton = Me.RadButtonAbandon
         Me.ClientSize = New System.Drawing.Size(1542, 610)

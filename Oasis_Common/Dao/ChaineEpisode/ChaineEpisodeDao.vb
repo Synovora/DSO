@@ -150,7 +150,7 @@ Public Class ChaineEpisodeDao
             End With
 
             da.InsertCommand = cmd
-            id = da.InsertCommand.ExecuteNonQuery()
+            id = da.InsertCommand.ExecuteScalar()
             transaction.Commit()
 
         Catch ex As Exception

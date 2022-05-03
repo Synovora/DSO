@@ -100,7 +100,7 @@ Public Class FrmMailSousEpisodeOuSynthese
                      .Replace("@SiegeCoord", adrSiege)
     End Function
 
-    Private Sub BtnValider_Click(sender As Object, e As EventArgs) Handles BtnValider.Click
+    Public Sub BtnValider_Click(sender As Object, e As EventArgs) Handles BtnValider.Click
         Dim isDejaOk As Boolean = False
         Dim tbl As String() = TxtTo.Text.Split(",")
         If tbl.Length > 1 Then
@@ -127,6 +127,12 @@ Public Class FrmMailSousEpisodeOuSynthese
             End If
         End If
 
+        Me.Send()
+        Me.Close()
+
+    End Sub
+
+    Public Sub Send()
         Try
             Me.Cursor = Cursors.WaitCursor
             Me.Enabled = False
@@ -150,8 +156,6 @@ Public Class FrmMailSousEpisodeOuSynthese
             Me.Enabled = True
             Me.Cursor = Cursors.Default
         End Try
-        Me.Close()
-
     End Sub
 
     Private Sub convertToPdf()

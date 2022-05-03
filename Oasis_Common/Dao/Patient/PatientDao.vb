@@ -371,7 +371,6 @@ Public Class PatientDao
         Try
             'Lecture des données en base
             da.SelectCommand = New SqlCommand(SQLString, conxn)
-            Debug.WriteLine(GetSqlCommandTextForLogs(da.SelectCommand))
             da.Fill(dt)
             conxn.Open()
         Catch ex As Exception
@@ -579,18 +578,12 @@ Public Class PatientDao
         Dim rowCount As Integer = dt.Rows.Count - 1
         For i = 0 To rowCount Step 1
             If PremierPassage = True Then
-                StringContreIndication += "Substance :" & vbCrLf
+                StringContreIndication += "Substance : " & vbCrLf
                 PremierPassage = False
             End If
-            Dim substanceId As Integer = dt.Rows(i)("substance_id")
-            If substanceId <> 0 Then
-                StringContreIndication += dt.Rows(i)("substance_id") & " : " & dt.Rows(i)("denomination_substance") & vbCrLf
-            Else
-                Dim substancePereId As Integer = dt.Rows(i)("substance_pere_id")
-                If substancePereId <> 0 Then
-                    StringContreIndication += dt.Rows(i)("substance_pere_id") & " : " & dt.Rows(i)("denomination_substance_pere") & vbCrLf
-                End If
-            End If
+
+            StringContreIndication += dt.Rows(i)("denomination_substance_pere") & vbCrLf
+
 
         Next
 

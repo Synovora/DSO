@@ -63,8 +63,7 @@ Public Class SendMailController
                                        parametreMail.GetSMTPPort(),
                                        parametreMail.GetSMTPUser(mailOasis.IsSousEpisode),
                                        parametreMail.GetSMTPPassword(mailOasis.IsSousEpisode),
-                                       parametreMail.GetSMTPFrom(mailOasis.IsSousEpisode)
-                                       )
+                                       parametreMail.GetSMTPFrom(mailOasis.IsSousEpisode))
             mailUtil.SendMail(user, mailOasis)
 
             Return Request.CreateResponse(HttpStatusCode.Accepted, "true")

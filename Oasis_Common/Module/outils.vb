@@ -1,6 +1,7 @@
 ﻿Imports System.Runtime.InteropServices
 Imports System.IO
 Imports System.Runtime.CompilerServices
+Imports System.Text
 
 <Assembly: InternalsVisibleTo("UnitTest")>
 Public Module outils
@@ -201,10 +202,15 @@ Public Module outils
         Return GuidString.Substring(0, 6)
     End Function
 
-
-    '========================================================================================
-    '=== Envoi mail
-    '========================================================================================
-
+    Function GenPassword(ByVal i As Integer)
+        Dim characters As String = "123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz"
+        Dim producer As New Random
+        Dim collector As New StringBuilder
+        For counter As Integer = 1 To i
+            Dim supplier As Integer = producer.Next(0, characters.Length)
+            collector.Append(characters.Substring(supplier, 1))
+        Next
+        Return collector.ToString()
+    End Function
 
 End Module

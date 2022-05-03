@@ -1,12 +1,4 @@
-﻿Imports System
-Imports System.Collections.Generic
-Imports System.Linq
-Imports System.Net
-Imports System.Net.Http.Formatting
-Imports System.Web
-Imports System.Web.Http
-Imports System.Web.Mvc
-Imports Oasis_Common
+﻿Imports Oasis_Common
 
 Namespace Oasis_Web.Controllers
     Public Class DashboardController
@@ -23,11 +15,12 @@ Namespace Oasis_Web.Controllers
         ReadOnly episodeDao As New EpisodeDao
         Dim episodeParametreDao As New EpisodeParametreDao
 
-        <System.Web.Mvc.Authorize>
+        <Authorize>
         Public Function Index() As ActionResult
-
+            Dim internauteConnectionDao As New InternauteConnectionDao
             Dim strName As String = Constants.LAYOUT_VERTICAL
             Dim strWelcomeText As String = "Dashboard"
+
             If TempData("ModeName") IsNot Nothing Then strName = TempData("ModeName").ToString()
             If TempData("WelcomeText") IsNot Nothing Then strWelcomeText = TempData("WelcomeText").ToString()
             ViewBag.ModeName = strName
@@ -39,6 +32,9 @@ Namespace Oasis_Web.Controllers
 
             Dim patient = patientDao.GetPatient(Request.Cookies("patientId").Value)
             ViewBag.Patient = patient
+
+            Dim internauteConnections = internauteConnectionDao.GetConnectionByInternaute(Request.Cookies("internauteId").Value)
+            ViewBag.Connections = internauteConnections
 
             Return View()
         End Function

@@ -14,7 +14,7 @@ Module Environnement
     Public Sub AfficheTitleForm(form As RadForm, titre As String, userLog As Utilisateur)
         ' --- centrage et chgt de style du titre du formulaire
         With form
-            .Text = titre & " -" & GetProfilUserString(userLog) & " - " & String.Format("Version {0}", AssemblyVersion) & "   Date : " & Date.Now.ToString("dd.MM.yyyy")
+            .Text = titre & " - " & GetProfilUserString(userLog) & " - " & String.Format("Version {0}", AssemblyVersion) & "   Date : " & Date.Now.ToString("dd.MM.yyyy")
             If form.FormElement IsNot Nothing Then
                 Try
                     .FormElement.TitleBar.TitlePrimitive.StretchHorizontally = True

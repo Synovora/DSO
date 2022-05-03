@@ -43,6 +43,9 @@ Partial Class RadFPatientDetailEdit
         Me.TxtCommentaireSortie = New System.Windows.Forms.TextBox()
         Me.DteDateSortie = New System.Windows.Forms.DateTimePicker()
         Me.RadPanel4 = New Telerik.WinControls.UI.RadPanel()
+        Me.RadGB3 = New Telerik.WinControls.UI.RadGroupBox()
+        Me.BtnInitInternaute = New Telerik.WinControls.UI.RadButton()
+        Me.BtnCreateInternaute = New Telerik.WinControls.UI.RadButton()
         Me.LblHorsOasis = New System.Windows.Forms.Label()
         Me.RadBtnAnnulerAction = New Telerik.WinControls.UI.RadButton()
         Me.RadGroupBox2 = New Telerik.WinControls.UI.RadGroupBox()
@@ -111,6 +114,10 @@ Partial Class RadFPatientDetailEdit
         CType(Me.RadBtnValidationSortie, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.RadPanel4, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.RadPanel4.SuspendLayout()
+        CType(Me.RadGB3, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.RadGB3.SuspendLayout()
+        CType(Me.BtnInitInternaute, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.BtnCreateInternaute, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.RadBtnAnnulerAction, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.RadGroupBox2, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.RadGroupBox2.SuspendLayout()
@@ -168,6 +175,7 @@ Partial Class RadFPatientDetailEdit
         '
         'NoteContextMenuStrip
         '
+        Me.NoteContextMenuStrip.ImageScalingSize = New System.Drawing.Size(24, 24)
         Me.NoteContextMenuStrip.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.CréerUneNoteToolStripMenuItem})
         Me.NoteContextMenuStrip.Name = "NoteContextMenuStrip"
         Me.NoteContextMenuStrip.Size = New System.Drawing.Size(153, 26)
@@ -191,7 +199,7 @@ Partial Class RadFPatientDetailEdit
         Me.RadBtnAbandonner.DialogResult = System.Windows.Forms.DialogResult.Cancel
         Me.RadBtnAbandonner.Image = Global.Oasis_WF.My.Resources.Resources._exit
         Me.RadBtnAbandonner.ImageAlignment = System.Drawing.ContentAlignment.MiddleCenter
-        Me.RadBtnAbandonner.Location = New System.Drawing.Point(1306, 796)
+        Me.RadBtnAbandonner.Location = New System.Drawing.Point(1306, 857)
         Me.RadBtnAbandonner.Name = "RadBtnAbandonner"
         Me.RadBtnAbandonner.Size = New System.Drawing.Size(24, 24)
         Me.RadBtnAbandonner.TabIndex = 364
@@ -199,7 +207,7 @@ Partial Class RadFPatientDetailEdit
         'RadBtnValider
         '
         Me.RadBtnValider.Image = Global.Oasis_WF.My.Resources.Resources.validation2
-        Me.RadBtnValider.Location = New System.Drawing.Point(19, 796)
+        Me.RadBtnValider.Location = New System.Drawing.Point(19, 857)
         Me.RadBtnValider.Name = "RadBtnValider"
         Me.RadBtnValider.Size = New System.Drawing.Size(110, 24)
         Me.RadBtnValider.TabIndex = 363
@@ -207,7 +215,7 @@ Partial Class RadFPatientDetailEdit
         '
         'RadBtnSortieOasis
         '
-        Me.RadBtnSortieOasis.Location = New System.Drawing.Point(251, 796)
+        Me.RadBtnSortieOasis.Location = New System.Drawing.Point(251, 857)
         Me.RadBtnSortieOasis.Name = "RadBtnSortieOasis"
         Me.RadBtnSortieOasis.Size = New System.Drawing.Size(121, 24)
         Me.RadBtnSortieOasis.TabIndex = 362
@@ -216,7 +224,7 @@ Partial Class RadFPatientDetailEdit
         'RadBtnModifier
         '
         Me.RadBtnModifier.Image = Global.Oasis_WF.My.Resources.Resources.modifier
-        Me.RadBtnModifier.Location = New System.Drawing.Point(135, 796)
+        Me.RadBtnModifier.Location = New System.Drawing.Point(135, 857)
         Me.RadBtnModifier.Name = "RadBtnModifier"
         Me.RadBtnModifier.Size = New System.Drawing.Size(110, 24)
         Me.RadBtnModifier.TabIndex = 361
@@ -288,6 +296,7 @@ Partial Class RadFPatientDetailEdit
         '
         'RadPanel4
         '
+        Me.RadPanel4.Controls.Add(Me.RadGB3)
         Me.RadPanel4.Controls.Add(Me.LblHorsOasis)
         Me.RadPanel4.Controls.Add(Me.RadBtnAnnulerAction)
         Me.RadPanel4.Controls.Add(Me.RadGroupBox2)
@@ -305,8 +314,41 @@ Partial Class RadFPatientDetailEdit
         Me.RadPanel4.Dock = System.Windows.Forms.DockStyle.Fill
         Me.RadPanel4.Location = New System.Drawing.Point(0, 0)
         Me.RadPanel4.Name = "RadPanel4"
-        Me.RadPanel4.Size = New System.Drawing.Size(1342, 827)
+        Me.RadPanel4.Size = New System.Drawing.Size(1342, 893)
         Me.RadPanel4.TabIndex = 3
+        '
+        'RadGB3
+        '
+        Me.RadGB3.AccessibleRole = System.Windows.Forms.AccessibleRole.Grouping
+        Me.RadGB3.BackColor = System.Drawing.SystemColors.GradientInactiveCaption
+        Me.RadGB3.Controls.Add(Me.BtnInitInternaute)
+        Me.RadGB3.Controls.Add(Me.BtnCreateInternaute)
+        Me.RadGB3.GroupBoxStyle = Telerik.WinControls.UI.RadGroupBoxStyle.Office
+        Me.RadGB3.HeaderText = "Déclaration de sortie du patient"
+        Me.RadGB3.Location = New System.Drawing.Point(19, 796)
+        Me.RadGB3.Name = "RadGB3"
+        Me.RadGB3.Size = New System.Drawing.Size(558, 55)
+        Me.RadGB3.TabIndex = 362
+        Me.RadGB3.Text = "Déclaration de sortie du patient"
+        CType(Me.RadGB3.GetChildAt(0).GetChildAt(1), Telerik.WinControls.UI.GroupBoxHeader).GroupBoxStyle = Telerik.WinControls.UI.RadGroupBoxStyle.Office
+        CType(Me.RadGB3.GetChildAt(0).GetChildAt(1).GetChildAt(0), Telerik.WinControls.Primitives.FillPrimitive).BackColor = System.Drawing.SystemColors.ActiveCaption
+        CType(Me.RadGB3.GetChildAt(0).GetChildAt(1).GetChildAt(0), Telerik.WinControls.Primitives.FillPrimitive).SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.None
+        '
+        'BtnInitInternaute
+        '
+        Me.BtnInitInternaute.Location = New System.Drawing.Point(191, 21)
+        Me.BtnInitInternaute.Name = "BtnInitInternaute"
+        Me.BtnInitInternaute.Size = New System.Drawing.Size(170, 24)
+        Me.BtnInitInternaute.TabIndex = 366
+        Me.BtnInitInternaute.Text = "Reinitialisation du compte internaute"
+        '
+        'BtnCreateInternaute
+        '
+        Me.BtnCreateInternaute.Location = New System.Drawing.Point(15, 21)
+        Me.BtnCreateInternaute.Name = "BtnCreateInternaute"
+        Me.BtnCreateInternaute.Size = New System.Drawing.Size(170, 24)
+        Me.BtnCreateInternaute.TabIndex = 365
+        Me.BtnCreateInternaute.Text = "Creation de compte internaute"
         '
         'LblHorsOasis
         '
@@ -321,7 +363,7 @@ Partial Class RadFPatientDetailEdit
         '
         'RadBtnAnnulerAction
         '
-        Me.RadBtnAnnulerAction.Location = New System.Drawing.Point(378, 796)
+        Me.RadBtnAnnulerAction.Location = New System.Drawing.Point(378, 857)
         Me.RadBtnAnnulerAction.Name = "RadBtnAnnulerAction"
         Me.RadBtnAnnulerAction.Size = New System.Drawing.Size(110, 24)
         Me.RadBtnAnnulerAction.TabIndex = 414
@@ -825,7 +867,7 @@ Partial Class RadFPatientDetailEdit
         '
         'RadBtnRDV
         '
-        Me.RadBtnRDV.Location = New System.Drawing.Point(552, 796)
+        Me.RadBtnRDV.Location = New System.Drawing.Point(552, 857)
         Me.RadBtnRDV.Name = "RadBtnRDV"
         Me.RadBtnRDV.Size = New System.Drawing.Size(110, 24)
         Me.RadBtnRDV.TabIndex = 364
@@ -856,7 +898,7 @@ Partial Class RadFPatientDetailEdit
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.CancelButton = Me.RadBtnAbandonner
-        Me.ClientSize = New System.Drawing.Size(1342, 827)
+        Me.ClientSize = New System.Drawing.Size(1342, 893)
         Me.Controls.Add(Me.RadPanel4)
         Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
         Me.Name = "RadFPatientDetailEdit"
@@ -882,6 +924,10 @@ Partial Class RadFPatientDetailEdit
         CType(Me.RadPanel4, System.ComponentModel.ISupportInitialize).EndInit()
         Me.RadPanel4.ResumeLayout(False)
         Me.RadPanel4.PerformLayout()
+        CType(Me.RadGB3, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.RadGB3.ResumeLayout(False)
+        CType(Me.BtnInitInternaute, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.BtnCreateInternaute, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.RadBtnAnnulerAction, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.RadGroupBox2, System.ComponentModel.ISupportInitialize).EndInit()
         Me.RadGroupBox2.ResumeLayout(False)
@@ -967,5 +1013,8 @@ Partial Class RadFPatientDetailEdit
     Friend WithEvents TxtINS As TextBox
     Friend WithEvents RadBtnAnnulerAction As Telerik.WinControls.UI.RadButton
     Friend WithEvents LblHorsOasis As Label
+    Friend WithEvents BtnCreateInternaute As Telerik.WinControls.UI.RadButton
+    Friend WithEvents RadGB3 As Telerik.WinControls.UI.RadGroupBox
+    Friend WithEvents BtnInitInternaute As Telerik.WinControls.UI.RadButton
 End Class
 

@@ -38,9 +38,9 @@ End Section
         <div class="card text-center">
             <div class="card-body">
                 <div class="text-center">
-                    <button type="button" class="btn btn-primary btn-sm btn-rounded waves-effect waves-light" data-toggle="modal" data-target=".exampleModal">
-                        Mes Vaccins
-                    </button>
+                    <a href="@Url.Action("Index", "CarnetVaccinal")" class="btn btn-primary btn-sm btn-rounded waves-effect waves-light">
+                            Mes Vaccins
+                    </a>
                 </div>
             </div>
         </div>

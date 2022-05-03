@@ -1,15 +1,20 @@
-﻿Imports System.Security.Cryptography
+﻿Imports System.Data.SqlClient
 
-Public Class InternautePermission
+Public Class InternauteConnection
 
-    Public Property InternauteId As Integer
-    Public Property PatientId As Integer
-    Public Property PermissionId As Integer
-    Public Property PermissionLevel As Integer
+    Public Property Id As Long
+    Public Property Internaute As Long
+    Public Property Datetime As Date
+    Public Property Ip As String
 
-    Public Function Clone() As InternautePermission
-        Dim newInstance As InternautePermission = DirectCast(Me.MemberwiseClone(), InternautePermission)
-        Return newInstance
-    End Function
+    Public Sub New()
+    End Sub
+
+    Public Sub New(reader As SqlDataReader)
+        Me.Id = reader("id")
+        Me.Internaute = reader("internaute")
+        Me.Datetime = reader("datetime")
+        Me.Ip = reader("ip")
+    End Sub
 
 End Class

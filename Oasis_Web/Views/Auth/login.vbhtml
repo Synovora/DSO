@@ -21,13 +21,13 @@ End Code
                                             <p> Connectez-vous pour continuer vers Synovora.</p>
                                         </div>
                                     </div>
-                                    <div Class="col-5 align-self-end">
+                                    @*<div Class="col-5 align-self-end">
                                         <img src="assets/images/profile-img.png" alt="" Class="img-fluid">
-                                    </div>
+                                    </div>*@
                                 </div>
                             </div>
                             <div Class="card-body pt-0">
-                                <div>
+                                @*<div>
                                     <a href="@Url.Action("Index", "Dashboard")">
                                         <div Class="avatar-md profile-user-wid mb-4">
                                             <span Class="avatar-title rounded-circle bg-light">
@@ -35,13 +35,13 @@ End Code
                                             </span>
                                         </div>
                                     </a>
-                                </div>
+                                </div>*@
                                 <div Class="p-2">
                                     <form Class="form-horizontal" action="@Url.Action("Login", "Auth")" method="post">
 
                                         <div Class="form-group">
-                                            <label for="username">Nom d'utilisateur</label>
-                                            @Html.TextBoxFor(Function(u) u.Username, New With {Key .Class = "form-control", .placeholder = "Entrez votre nom d'utilisateur"})
+                                            <label for="username">Adresse mail</label>
+                                            @Html.TextBoxFor(Function(u) u.Email, New With {Key .Class = "form-control", .placeholder = "Entrez votre adresse mail"})
                                         </div>
 
                                         <div Class="form-group">
@@ -58,7 +58,7 @@ End Code
                                         </div>
 
                                         <div Class="mt-4 text-center">
-                                            <a href="@Url.Action("auth-recoverpw", "Auth")" Class="text-muted"><i Class="mdi mdi-lock mr-1"></i> Mot de passe oublie?</a>
+                                            <a href="@Url.Action("Recover", "Auth")" Class="text-muted"><i Class="mdi mdi-lock mr-1"></i> Mot de passe oublie?</a>
                                         </div>
                                     </form>
                                 </div>

@@ -13,7 +13,7 @@ Public Class LoginController
 
     <AllowAnonymous>
     Public Function PostValue(<FromBody()> ByVal loginRequest As LoginRequest) As HttpResponseMessage
-        Dim userDao As UserDao = New UserDao
+        Dim userDao As New UserDao
 
         Try
             verifPassword(loginRequest.login, loginRequest.password)
