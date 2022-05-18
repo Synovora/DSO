@@ -25,7 +25,8 @@ Public Class RadFVaccinInfo
     Private Sub RadFATCListe_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         AfficheTitleForm(Me, "Vaccin - Information", userLog)
         Dim VaccinProgram = vaccinDao.GetFirstVaccinProgramRelationListDatePatient(SelectedCGVDate.Id, SelectedPatient.PatientId)
-        Lock = If(VaccinProgram.RealisationDate <> Nothing, False, True)
+
+        Lock = If(VaccinProgram IsNot Nothing AndAlso VaccinProgram.RealisationDate <> Nothing, False, True)
         Chargement()
         ChargementEtatCivil()
         ChargementVaccins()

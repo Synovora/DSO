@@ -58,7 +58,7 @@ End Code
                                         </div>
 
                                         <div Class="mt-4 text-center">
-                                            <a href="@Url.Action("Recover", "Auth")" Class="text-muted"><i Class="mdi mdi-lock mr-1"></i> Mot de passe oublie?</a>
+                                            <a href="@Url.Action("Forgot", "Auth")" Class="text-muted"><i Class="mdi mdi-lock mr-1"></i> Mot de passe oublie?</a>
                                         </div>
                                     </form>
                                 </div>

@@ -50,6 +50,9 @@
     <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="BouncyCastle.Crypto, Version=1.8.2.0, Culture=neutral, PublicKeyToken=0e99375e54769942">
+      <HintPath>..\packages\BouncyCastle.1.8.2\lib\BouncyCastle.Crypto.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.CodeDom.Providers.DotNetCompilerPlatform, Version=3.6.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.3.6.0\lib\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll</HintPath>
     </Reference>
@@ -60,12 +63,28 @@
     <Reference Include="Microsoft.IdentityModel.Tokens, Version=6.7.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.IdentityModel.Tokens.6.7.1\lib\net461\Microsoft.IdentityModel.Tokens.dll</HintPath>
     </Reference>
+    <Reference Include="Nethereum.Hex, Version=3.8.0.0, Culture=neutral, PublicKeyToken=8768a594786aba4e, processorArchitecture=MSIL">
+      <HintPath>..\packages\Nethereum.Hex.3.8.0\lib\net451\Nethereum.Hex.dll</HintPath>
+    </Reference>
+    <Reference Include="Nethereum.Model, Version=3.8.0.0, Culture=neutral, PublicKeyToken=8768a594786aba4e, processorArchitecture=MSIL">
+      <HintPath>..\packages\Nethereum.Model.3.8.0\lib\net451\Nethereum.Model.dll</HintPath>
+    </Reference>
+    <Reference Include="Nethereum.RLP, Version=3.8.0.0, Culture=neutral, PublicKeyToken=8768a594786aba4e, processorArchitecture=MSIL">
+      <HintPath>..\packages\Nethereum.RLP.3.8.0\lib\net451\Nethereum.RLP.dll</HintPath>
+    </Reference>
+    <Reference Include="Nethereum.Signer, Version=3.8.0.0, Culture=neutral, PublicKeyToken=8768a594786aba4e, processorArchitecture=MSIL">
+      <HintPath>..\packages\Nethereum.Signer.3.8.0\lib\net451\Nethereum.Signer.dll</HintPath>
+    </Reference>
+    <Reference Include="Nethereum.Util, Version=3.8.0.0, Culture=neutral, PublicKeyToken=8768a594786aba4e, processorArchitecture=MSIL">
+      <HintPath>..\packages\Nethereum.Util.3.8.0\lib\net451\Nethereum.Util.dll</HintPath>
+    </Reference>
     <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.12.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Numerics" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
@@ -194,6 +213,7 @@
     <Compile Include="Constants.vb" />
     <Compile Include="Controllers\AutoSuiviController.vb" />
     <Compile Include="Controllers\CarnetVaccinalController.vb" />
+    <Compile Include="Controllers\RDVController.vb" />
     <Compile Include="Controllers\RenameController.vb" />
     <Compile Include="Controllers\DocFileUploadController.vb" />
     <Compile Include="Controllers\DocFileDownloadController.vb" />
@@ -205,6 +225,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\ParametreAutoSuivi.vb" />
+    <Compile Include="Models\UserForgot.vb" />
     <Compile Include="Models\UserRecover.vb" />
     <Compile Include="Models\UserLogin.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
@@ -1566,6 +1587,7 @@
     <Content Include="Scripts\popper-utils.min.js.map" />
     <Content Include="Scripts\popper-utils.js.map" />
     <Content Include="Views\Auth\login.vbhtml" />
+    <Content Include="Views\Auth\forgot.vbhtml" />
     <None Include="Views\Auth\recover.vbhtml" />
     <None Include="Views\Auth\register.vbhtml" />
     <Content Include="Views\Dashboard\Index.vbhtml" />
@@ -1599,6 +1621,7 @@
     <Content Include="Views\AutoSuivi\Index.vbhtml" />
     <Content Include="Views\Synthese\Index.vbhtml" />
     <Content Include="Views\CarnetVaccinal\Index.vbhtml" />
+    <Content Include="Views\RDV\Index.vbhtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="favicon.ico" />

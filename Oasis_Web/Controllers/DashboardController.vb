@@ -36,7 +36,47 @@ Namespace Oasis_Web.Controllers
             Dim internauteConnections = internauteConnectionDao.GetConnectionByInternaute(Request.Cookies("internauteId").Value)
             ViewBag.Connections = internauteConnections
 
+            ViewBag.ParcoursDeSoin = ChargementParcoursDeSoin(patient.PatientId)
             Return View()
+        End Function
+
+        Private Function ChargementParcoursDeSoin(patientId As Long)
+            Dim ParcoursDataTable As DataTable
+            Dim parcoursDao As New ParcoursDao
+            Dim tacheDao As New TacheDao
+            Dim IntervenantOasis As Boolean
+            Dim Result As New List(Of List(Of String))
+
+            ParcoursDataTable = parcoursDao.GetAllParcoursbyPatient(patientId)
+
+            Dim rowCount As Integer = ParcoursDataTable.Rows.Count - 1
+            Dim SpecialiteDescription As String
+            Dim ParcoursCacher As Boolean
+
+            For i = 0 To rowCount Step 1
+                Dim tmp As New List(Of String)
+                Dim rorId As Integer = Coalesce(ParcoursDataTable.Rows(i)("oa_parcours_ror_id"), 0)
+
+                ParcoursCacher = Coalesce(ParcoursDataTable.Rows(i)("oa_parcours_cacher"), False)
+                tmp.Add(ParcoursDataTable.Rows(i)("oa_parcours_id"))
+
+                Dim SpecialiteId = ParcoursDataTable.Rows(i)("oa_parcours_specialite")
+                SpecialiteDescription = Table_specialite.GetSpecialiteDescription(SpecialiteId)
+                tmp.Add(SpecialiteDescription)
+
+                If IntervenantOasis = True Then
+                    tmp.Add("Oasis")
+                    tmp.Add("Oasis")
+                Else
+                    tmp.Add(Coalesce(ParcoursDataTable.Rows(i)("oa_ror_nom"), ""))
+                    tmp.Add(Coalesce(ParcoursDataTable.Rows(i)("oa_ror_structure_nom"), ""))
+                End If
+
+                tmp.Add(Coalesce(ParcoursDataTable.Rows(i)("NextRendezVous"), Nothing))
+                tmp.Add(Coalesce(ParcoursDataTable.Rows(i)("DateDemandeRdv"), Nothing))
+                Result.Add(tmp)
+            Next
+            Return Result
         End Function
 
     End Class

@@ -1,0 +1,250 @@
+﻿Imports Oasis_Common
+
+Public Class RadFAnnuaireProfessionneldetail
+    Property CleReferenceAnnuaire As Long
+    Property Reference As AnnuaireReferenceDao.EnumSourceAnnuaire
+
+    Dim annuaireReferenceDao As New AnnuaireReferenceDao
+    Dim annuaireProfessionnelDao As New AnnuaireProfessionnelDao
+    Dim annuaireProfessionnelBalDao As New AnnuaireProfessionnelBalDao
+
+    Private DataTableMail As DataTable = New DataTable()
+    Private DataTableStructure As DataTable = New DataTable()
+
+    Private Sub RadFAnnuaireProfessionneldetail_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        Chargement()
+    End Sub
+
+    Private Sub Chargement()
+
+        AfficheTitleForm(Me, "Détail professionnel de santé", userLog)
+
+        If CleReferenceAnnuaire <> 0 Then
+            Dim annuaireProfessionnel As AnnuaireProfessionnel
+            Try
+                Select Case Reference
+                    Case AnnuaireReferenceDao.EnumSourceAnnuaire.ANNUAIRE_REFERENCE
+                        annuaireProfessionnel = annuaireReferenceDao.GetAnnuaireReferenceById(CleReferenceAnnuaire)
+                    Case AnnuaireReferenceDao.EnumSourceAnnuaire.ANNUAIRE_NATIONAL
+                        annuaireProfessionnel = annuaireProfessionnelDao.GetAnnuaireProfessionnelById(CleReferenceAnnuaire)
+                    Case Else
+                        MessageBox.Show("Type de l'annuaire inconnu : " & Reference)
+                        Close()
+                End Select
+
+                ChargementData(annuaireProfessionnel)
+                ChargementMail(annuaireProfessionnel)
+                ChargementStructure(annuaireProfessionnel)
+            Catch ex As Exception
+                MessageBox.Show(ex.Message)
+                Close()
+            End Try
+        Else
+            Close()
+        End If
+    End Sub
+
+    Private Sub ChargementData(annuaireProfessionnel As AnnuaireProfessionnel)
+        Dim annuaireEtatCivil As AnnuaireEtatCivil
+        annuaireEtatCivil = annuaireReferenceDao.ChargementEtatCivil(annuaireProfessionnel)
+
+        LblPrenomNom.Text = annuaireEtatCivil.Nom
+        LblProfessionSavoirFaire.Text = annuaireEtatCivil.Profession
+        LblRaisonSociale.Text = annuaireEtatCivil.RaisonSociale
+        'TODO: Si la raison sociale n'est pas renseignée, recherche si raison sociale existe en complément
+        If annuaireEtatCivil.RaisonSociale = "" Then
+
+        End If
+
+        LblAdresse1.Text = annuaireEtatCivil.Adresse1
+        LblAdresse2.Text = annuaireEtatCivil.Adresse2
+        'TODO: Si adresse 1 et 2 ne sont pas renseignées, recherche si adresse 1 et 2 existent en complément
+        If annuaireEtatCivil.Adresse1 = "" AndAlso annuaireEtatCivil.Adresse2 = "" Then
+
+        End If
+
+        LblTelephoneLabel.Text = ""
+        LblTelephone.Text = ""
+        If annuaireProfessionnel.TelephoneCoordonneeStructure.Trim <> "" Then
+            LblTelephoneLabel.Text = "Téléphone :"
+            LblTelephone.Text = annuaireProfessionnel.TelephoneCoordonneeStructure.Trim
+            If annuaireProfessionnel.Telephone2CoordonneeStructure.Trim <> "" Then
+                LblTelephone.Text += " - " & annuaireProfessionnel.Telephone2CoordonneeStructure.Trim
+            End If
+        Else
+            If annuaireProfessionnel.Telephone2CoordonneeStructure.Trim <> "" Then
+                LblTelephoneLabel.Text = "Téléphone :"
+                LblTelephone.Text = annuaireProfessionnel.Telephone2CoordonneeStructure.Trim
+            End If
+        End If
+        'TODO: Si telephone non renseigné, recherche si existe en complément
+        If LblTelephone.Text = "" Then
+
+        End If
+
+        LblTelecopieLabel.Text = ""
+        LblTelecopie.Text = ""
+        If annuaireProfessionnel.TelepcopieCoordonneeStructure.Trim <> "" Then
+            LblTelecopieLabel.Text = "Télécopie :"
+            LblTelecopie.Text = annuaireProfessionnel.TelepcopieCoordonneeStructure.Trim
+        End If
+        'TODO: Si télécopie non renseignée, recherche si existe en complément
+        If LblTelecopie.Text = "" Then
+
+        End If
+
+        LblIdentifiant.Text = annuaireProfessionnel.Identifiant
+        Select Case annuaireProfessionnel.Typeidentifiant
+            Case 0
+                LblRPPS_ADELI.Text = "ADELI :"
+            Case 8
+                LblRPPS_ADELI.Text = "RPPS :"
+            Case Else
+                LblRPPS_ADELI.Text = ""
+                LblIdentifiant.Text = ""
+        End Select
+
+        If annuaireProfessionnel.LibelleModeExercice <> "" Then
+            LblModeExercice.Text = annuaireProfessionnel.LibelleModeExercice
+        Else
+            LblModeExerciceLabel.Text = ""
+        End If
+
+        If annuaireProfessionnel.LibelleSecteurActivite <> "" Then
+            LblSecteurActivite.Text = annuaireProfessionnel.LibelleSecteurActivite
+        Else
+            LblSecteurActiviteLabel.Text = ""
+            LblSecteurActivite.Text = ""
+        End If
+
+        If annuaireProfessionnel.emailCoordonneeStructure <> "" Then
+            TextEmailStructure.Show()
+            LblMailStructureLabel.Show()
+            RadBtnMail.Show()
+            TextEmailStructure.Text = annuaireProfessionnel.emailCoordonneeStructure
+        Else
+            'Si email structure non renseigné, recherche si existe en complément
+
+            TextEmailStructure.Hide()
+            LblMailStructureLabel.Hide()
+            RadBtnMail.Hide()
+        End If
+    End Sub
+
+    Private Sub ChargementMail(annuaireProfessionnel As AnnuaireProfessionnel)
+        Cursor.Current = Cursors.WaitCursor
+
+        DataTableMail.Rows.Clear()
+        RadGridViewMail.Rows.Clear()
+
+        DataTableMail = annuaireProfessionnelBalDao.GetBalByTypeBalAndIdentifiant(AnnuaireProfessionnelBalDao.EnumTypeBal.PERSONNELLE, annuaireProfessionnel.IdentifiantNational)
+
+        Dim i As Integer
+        Dim iGrid As Integer = -1
+        Dim rowCount As Integer = DataTableMail.Rows.Count - 1
+
+        For i = 0 To rowCount Step 1
+            iGrid += 1
+            'Ajout d'une ligne au DataGridView
+            RadGridViewMail.Rows.Add(iGrid)
+
+            'Alimentation du Grid
+            RadGridViewMail.Rows(iGrid).Cells("adresse_bal").Value = DataTableMail.Rows(i)("adresse_bal")
+            RadGridViewMail.Rows(iGrid).Cells("raison_sociale_structure").Value = Coalesce(DataTableMail.Rows(i)("raison_sociale_structure"), "")
+        Next
+
+        'Positionnement du grid sur la première occurrence
+        If RadGridViewMail.Rows.Count > 0 Then
+            RadGridViewMail.CurrentRow = RadGridViewMail.ChildRows(0)
+        End If
+
+        Cursor.Current = Cursors.Default
+    End Sub
+
+    Private Sub ChargementStructure(annuaireProfessionnel As AnnuaireProfessionnel)
+        Cursor.Current = Cursors.WaitCursor
+
+        DataTableStructure.Rows.Clear()
+        RadGridViewStructure.Rows.Clear()
+
+        DataTableStructure = annuaireProfessionnelDao.GetStruturesByProfessionnel(annuaireProfessionnel.IdentifiantNational)
+
+        Dim i As Integer
+        Dim iGrid As Integer = -1
+        Dim rowCount As Integer = DataTableStructure.Rows.Count - 1
+
+        For i = 0 To rowCount Step 1
+            iGrid += 1
+            'Ajout d'une ligne au DataGridView
+            RadGridViewStructure.Rows.Add(iGrid)
+
+            'Alimentation du Grid
+            RadGridViewStructure.Rows(iGrid).Cells("Cle_entree").Value = Coalesce(DataTableStructure.Rows(i)("Cle_entree"), 0)
+            RadGridViewStructure.Rows(iGrid).Cells("identifiant_technique_structure").Value = Coalesce(DataTableStructure.Rows(i)("identifiant_technique_structure"), "")
+            RadGridViewStructure.Rows(iGrid).Cells("raison_sociale_site").Value = Coalesce(DataTableStructure.Rows(i)("raison_sociale_site"), "")
+            RadGridViewStructure.Rows(iGrid).Cells("adresse").Value = Coalesce(DataTableStructure.Rows(i)("indice_repetition_voie_coord_structure"), "") &
+                Coalesce(DataTableStructure.Rows(i)("libelle_type_voie_coord_structure"), "") & " " &
+                Coalesce(DataTableStructure.Rows(i)("libelle_voie_coord_structure"), "") & " " &
+                Coalesce(DataTableStructure.Rows(i)("bureau_cedex_coord_structure"), "")
+            RadGridViewStructure.Rows(iGrid).Cells("cnt").Value = DataTableStructure.Rows(i)("cnt")
+            If RadGridViewStructure.Rows(iGrid).Cells("cnt").Value <> "0" Then
+                RadGridViewStructure.Rows(iGrid).Cells("identifiant_technique_structure").Style.ForeColor = Color.Red
+                RadGridViewStructure.Rows(iGrid).Cells("raison_sociale_site").Style.ForeColor = Color.Red
+                RadGridViewStructure.Rows(iGrid).Cells("adresse").Style.ForeColor = Color.Red
+                RadGridViewStructure.Rows(iGrid).Cells("dso").Value = "DSO"
+            Else
+                RadGridViewStructure.Rows(iGrid).Cells("dso").Value = ""
+            End If
+        Next
+
+        'Positionnement du grid sur la première occurrence
+        If RadGridViewStructure.Rows.Count > 0 Then
+            RadGridViewStructure.CurrentRow = RadGridViewStructure.ChildRows(0)
+        End If
+
+        Cursor.Current = Cursors.Default
+    End Sub
+
+    Private Sub RadBtnAbandon_Click(sender As Object, e As EventArgs) Handles RadBtnAbandon.Click
+        Close()
+    End Sub
+
+    Private Sub DétailIntervenantPourCetteStructureToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles DétailIntervenantPourCetteStructureToolStripMenuItem.Click
+        If RadGridViewStructure.CurrentRow IsNot Nothing Then
+            Dim aRow As Integer = Me.RadGridViewStructure.Rows.IndexOf(Me.RadGridViewStructure.CurrentRow)
+            If aRow >= 0 Then
+                Reference = AnnuaireReferenceDao.EnumSourceAnnuaire.ANNUAIRE_NATIONAL
+                CleReferenceAnnuaire = RadGridViewStructure.Rows(aRow).Cells("Cle_entree").Value
+                Chargement()
+            End If
+        End If
+    End Sub
+
+    Private Sub EnvoyerUnMailToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles EnvoyerUnMailToolStripMenuItem.Click
+        If RadGridViewMail.CurrentRow IsNot Nothing Then
+            Dim aRow As Integer = Me.RadGridViewMail.Rows.IndexOf(Me.RadGridViewMail.CurrentRow)
+            If aRow >= 0 Then
+                Dim mailAdresse = RadGridViewMail.Rows(aRow).Cells("adresse_bal").Value
+                EnvoyerMail(mailAdresse)
+            End If
+        End If
+    End Sub
+
+    Private Sub RadBtnMail_Click(sender As Object, e As EventArgs) Handles RadBtnMail.Click
+        If TextEmailStructure.Text <> "" Then
+            EnvoyerMail(TextEmailStructure.Text)
+        End If
+    End Sub
+
+    Private Sub EnvoyerMail(mailAdresse As String)
+        Try
+            Dim form As New RadFMailEdit
+            form.sendMailTo = mailAdresse
+            form.sendMailFrom = userLog.UtilisateurMail
+            form.sendMailsender = userLog.UtilisateurPrenom & " " & userLog.UtilisateurNom
+            form.Show()
+        Catch ex As Exception
+            MessageBox.Show(ex.Message)
+        End Try
+    End Sub
+End Class

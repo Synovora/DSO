@@ -7,6 +7,7 @@ Imports System.Web
 Imports System.Web.Mvc
 Imports Oasis_Common
 Imports Oasis_Web.Models
+Imports Nethereum.Signer
 
 Namespace Oasis_Web.Controllers
 
@@ -21,6 +22,12 @@ Namespace Oasis_Web.Controllers
         <AllowAnonymous>
         <ActionName("login")>
         Public Function Login() As ActionResult
+            Return View()
+        End Function
+
+        <AllowAnonymous>
+        <ActionName("forgot")>
+        Public Function Forgot() As ActionResult
             Return View()
         End Function
 
@@ -76,6 +83,52 @@ Namespace Oasis_Web.Controllers
                 internaute.Code = ""
                 internaute.CryptePwd()
                 internauteDao.Update(internaute)
+                Return RedirectToAction("Login", "Auth")
+
+            Catch ex As Exception
+                message = ex.Message
+            End Try
+
+            ViewBag.Message = message
+
+            Return View()
+        End Function
+
+        <HttpPost>
+        <ValidateAntiForgeryToken>
+        <AllowAnonymous>
+        Public Function Forgot(user As UserForgot) As ActionResult
+            Dim message As String
+            Dim internauteDao As New InternauteDao
+            Dim internautePermissionDao As New InternautePermissionDao
+
+            Try
+                Dim internaute = internauteDao.GetInternauteByEmail(user.Email)
+                If (internaute Is Nothing) Then
+                    Return RedirectToAction("Login", "Auth")
+                End If
+                Dim internautePermission = internautePermissionDao.GetPermissionsByInternaute(internaute.Id)
+                Dim ecKey As String = BitConverter.ToString(EthECKey.GenerateKey().GetPrivateKeyAsBytes()).Replace("-", "")
+                Dim internautePermissions = internautePermissionDao.GetPermissionsByPatient(internautePermission(0).Patient)
+                Dim internauteId = internauteDao.Update(New Internaute With {
+                    .Id = internautePermissions(0).Internaute,
+                    .Password = "",
+                .Recovery = ecKey,
+                    .Code = "0000"
+                })
+                If internauteId > 0 Then
+                    Dim mailOasis As New MailOasis
+                    mailOasis.IsSousEpisode = False
+                    mailOasis.Type = ParametreMail.TypeMailParams.PWD_GENERATE
+                    Try
+                        'Using frm = New FrmMailSousEpisodeOuSynthese(SelectedPatient, Nothing, mailOasis)
+                        '    frm.TxtTo.Text = SelectedPatient.PatientEmail
+                        '    frm.TxtBody.Text = frm.TxtBody.Text.Replace("@RECOVER_LINK", "https://ns3119889.ip-51-38-181.eu/Auth/Recover?key=" & ecKey)
+                        '    frm.Send()
+                        'End Using
+                    Catch ex As Exception
+                    End Try
+                End If
                 Return RedirectToAction("Login", "Auth")
 
             Catch ex As Exception

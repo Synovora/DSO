@@ -21,52 +21,33 @@ End Code
             </div>
             <div class="card-body pt-0">
                 <div class="row">
-                    <div class="col-sm-4">
-                        <div class="avatar-md profile-user-wid mb-4">
+                    <div class="col-sm-8 mt-4">
+                        @*<div class="avatar-md profile-user-wid mb-4">
                             <div class="img-thumbnail rounded-circle w-100 h-100"></div>
-                        </div>
-                        <h5 class="font-size-15 text-truncate">DDN: @ViewBag.Patient.PatientDateNaissance</h5>
-                        <h5 class="font-size-15 text-truncate">NIR: @ViewBag.Patient.PatientNir</h5>
-                    </div>
-                    <div class="col-sm-8">
-                        <div class="pt-4">
-                            <div class="row">
-                                @*<div class="col-6">
-                                        <h5 class="font-size-15">125</h5>
-                                        <p class="text-muted mb-0">Episodes</p>
-                                    </div>
-                                    <div class="col-6">
-                                        <h5 class="font-size-15">2</h5>
-                                        <p class="text-muted mb-0">Traitements</p>
-                                    </div>*@
-                            </div>
-                            @*<div class="mt-4">
-                                    <a href="" class="btn btn-primary waves-effect waves-light btn-sm">Voir Profil <i class="mdi mdi-arrow-right ml-1"></i></a>
-                                </div>*@
-                        </div>
+                        </div>*@
+                        <p class="font-size-14 text-muted">Date de naissance: <span class="text-info">@String.Format("{0:dd/MM/yyyy}", ViewBag.Patient.PatientDateNaissance)</span></p>
+                        <p class="font-size-14 text-muted">NIR:  <span class="text-info">@ViewBag.Patient.PatientNir</span></p>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-    <div class="col-xl-4">
+    <div class="col-xl-3">
         <div class="card">
             <div class="card-body">
-                <h4 class="card-title mb-2">Mes dernieres connections</h4>
+                <h4 class="card-title mb-2">Mes dernières connections</h4>
                 <div class="table-responsive">
                     <table class="table mb-0">
                         <thead>
                         <thead>
                             <tr>
                                 <th>Date</th>
-                                <th>Ip</th>
                             </tr>
                         </thead>
                         <tbody>
                             @For i As Integer = 0 To ViewBag.Connections.Count - 1
                                 @<tr>
-                                    <td>@ViewBag.Connections(i).Datetime</td>
-                                    <td>@ViewBag.Connections(i).Ip</td>
+                                    <td>@String.Format("le {0:dddd d MMM yyyy à HH\hmm}", ViewBag.Connections(i).Datetime)</td>
                                 </tr>
                             Next
                         </tbody>
@@ -80,12 +61,13 @@ End Code
     <div class="col-xl-6">
         <div class="card">
             <div class="card-body">
-                <h4 class="card-title mb-4">Ma Synthese</h4>
-                <div class="row">
-                    <p class="text-muted">
-                        C'est un résumé des principaux éléments de votre dossier de santé. Il facilitera grandement votre prise en charge par tout personnel de santé qui ne vous connaîtrait pas.
-                    </p>
-                </div>
+                <h4 class="card-title mb-4">
+                    Ma Synthèse
+                </h4>
+                <p class="text-muted">
+                    C'est un résumé des principaux éléments de votre dossier de santé. Il facilitera grandement votre prise en charge par tout personnel de santé qui ne vous connaîtrait pas.
+                </p>
+                <button type="button" class="btn btn-primary btn-sm" onClick="document.location.href='/Synthese'">Accéder à ma synthese</button>
             </div>
         </div>
 
@@ -94,24 +76,21 @@ End Code
         <div class="card">
             <div class="card-body">
                 <h4 class="card-title mb-4">Mon Auto-Suivi</h4>
-                <div class="row">
-                    <p class="text-muted">
-                        C’est un outil qui vous permet de partager avec vos soignants les éléments chiffrés de la surveillance que vous réalisez vous même.
-                    </p>
-                </div>
+                <p class="text-muted">
+                    C’est un outil qui vous permet de partager avec vos soignants les éléments chiffrés de la surveillance que vous réalisez vous même.
+                </p>
+                <button type="button" class="btn btn-primary btn-sm" onClick="document.location.href='/AutoSuivi'">Accéder à mon auto-suivi</button>
             </div>
         </div>
-
     </div>
     <div class="col-xl-6">
         <div class="card">
             <div class="card-body">
                 <h4 class="card-title mb-4">Mes Vaccins</h4>
-                <div class="row">
-                    <p class="text-muted">
-                        C’est votre « carnet vaccinal » où sont résumés tous les vaccins dont vous avez bénéficié.
-                    </p>
-                </div>
+                <p class="text-muted">
+                    C’est votre « carnet vaccinal » où sont résumés tous les vaccins dont vous avez bénéficié.
+                </p>
+                <button type="button" class="btn btn-primary btn-sm" onClick="document.location.href='/CarnetVaccinal'">Accéder à mes vaccins</button>
             </div>
         </div>
     </div>
@@ -119,11 +98,10 @@ End Code
         <div class="card">
             <div class="card-body">
                 <h4 class="card-title mb-4">Mes Rendez-Vous</h4>
-                <div class="row">
-                    <p class="text-muted">
-                        C’est un accès à l’ensemble de vos résultats d’analyses biologiques, d’examens radiologiques, d’avis spécialisés réalisés et communiqués à votre référent de santé.
-                    </p>
-                </div>
+                <p class="text-muted">
+                    C’est un résumé de vos rendez-vous avec des professionnels de santé.
+                </p>
+                <button type="button" class="btn btn-primary btn-sm" onClick="document.location.href='/RDV'">Accéder à mes rendez-vous</button>
             </div>
         </div>
     </div>
@@ -131,11 +109,10 @@ End Code
         <div class="card">
             <div class="card-body">
                 <h4 class="card-title mb-4">Mes Résultats</h4>
-                <div class="row">
-                    <p class="text-muted">
-                        C’est un résumé de vos rendez-vous avec des professionnels de santé.
-                    </p>
-                </div>
+                <p class="text-muted">
+                    C’est un accès à l’ensemble de vos résultats d’analyses biologiques, d’examens radiologiques, d’avis spécialisés réalisés et communiqués à votre référent de santé.
+                </p>
+                @*<button type="button" class="btn btn-primary btn-sm" onClick="document.location.href='/Synthese'">Acceder a mes résultats</button>*@
             </div>
         </div>
     </div>

@@ -746,6 +746,9 @@ Public Class RadFPatientListe
     End Sub
 
     Private Sub BtnSearch_Click(sender As Object, e As EventArgs) Handles BtnSearch.Click
+        SelectedPatient = Nothing
+        Me.RadPatientGridView.CurrentRow = Nothing
+        SelectionPatient()
         ChargementPatient()
     End Sub
 

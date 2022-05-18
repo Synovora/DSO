@@ -1,0 +1,268 @@
+﻿
+Imports System.IO
+Imports Telerik.WinControls.UI
+Imports Telerik.WinForms.Documents.FormatProviders.Pdf
+Imports Telerik.WinForms.Documents.Layout
+Imports Telerik.WinForms.Documents.Model
+Imports Telerik.WinControls.RichTextEditor.UI
+Imports Oasis_Common
+
+Public Class OasisTextTools
+    Implements IDisposable
+    Public Property Editor As RadRichTextEditor
+
+    Dim paragrapheEnCours As Paragraph  ' paragraphe en cours
+
+    Public Sub New()
+        Init()
+    End Sub
+
+    Private Sub Init()
+        Editor = New RadRichTextEditor()
+    End Sub
+
+    Public Function AddPageNumber() As RadDocument
+        Dim document = New RadDocument()
+        Dim Section = New Section()
+        Dim Paragraph = New Paragraph() With {.TextAlignment = RadTextAlignment.Center}
+        Dim PageField = New PageField() With {.DisplayMode = FieldDisplayMode.Result}
+        Dim pageFieldStart = New FieldRangeStart()
+        pageFieldStart.Field = PageField
+        Dim pageFieldEnd = New FieldRangeEnd()
+        pageFieldEnd.Start = pageFieldStart
+
+        Paragraph.Inlines.Add(pageFieldStart)
+        Paragraph.Inlines.Add(pageFieldEnd)
+
+        Dim numPagesFieldStart = New FieldRangeStart()
+        numPagesFieldStart.Field = New NumPagesField() With {.DisplayMode = FieldDisplayMode.Result}
+        Dim numPagesFieldEnd = New FieldRangeEnd()
+        numPagesFieldEnd.Start = numPagesFieldStart
+
+        Paragraph.Inlines.Add(New Span(" / "))
+        Paragraph.Inlines.Add(numPagesFieldStart)
+        Paragraph.Inlines.Add(numPagesFieldEnd)
+
+        Section.Blocks.Add(Paragraph)
+        document.Sections.Add(Section)
+        Editor.Document.Sections.First.Footers.Default.Body = document
+    End Function
+
+    Public Function AddHeader(SelectedPatient As Patient, Title As String) As RadDocument
+        Dim userDao As New UserDao
+        Dim siteDao As New SiteDao
+        Dim uniteSanitaireDao As New UniteSanitaireDao
+        Dim siegeDao As New SiegeDao
+
+        Dim document = New RadDocument()
+        Dim Section = New Section()
+        Dim site As Site
+        site = siteDao.getSiteById(SelectedPatient.PatientSiteId)
+        Dim uniteSanitaire As UniteSanitaire
+        uniteSanitaire = uniteSanitaireDao.getUniteSanitaireById(site.Oa_site_unite_sanitaire_id)
+        Dim siege As Siege
+        siege = siegeDao.getSiegeById(uniteSanitaire.Oa_unite_sanitaire_siege_id)
+        With Me
+            .CreateParagraphIntoSection(Section, 12, RadTextAlignment.Center)
+            .AddTexte(Title & " - ", 14, FontWeights.Bold)
+            .AddTexte(text:=("Document généré le " & Date.Now.ToString("dd-MM-yyyy") & " à " & Date.Now.ToString("HH:mm")), 11, FontWeights.Medium)
+            .AddNewLigne()
+            .AddTexteLine("Service Oasis Santé", 14)
+            .AddTexteLine("Tel : " & siege.SiegeTelephone & " -  Fax : " & siege.SiegeFax)
+            .AddTexteLine("Mail : " & siege.SiegeMail)
+            .AddTexte("Numéro structure : " & uniteSanitaire.NumeroStructure)
+        End With
+        With Me
+            .CreateParagraphIntoSection(Section,, RadTextAlignment.Left)
+            .AddTexteLine(SelectedPatient.PatientNom & " " & SelectedPatient.PatientPrenom & " (" & SelectedPatient.PatientGenre & ")")
+            .AddTexteLine("Date de naissance : " & SelectedPatient.PatientDateNaissance.ToString("dd.MM.yyyy") & " (" & CalculAgeEnAnneeEtMoisString(SelectedPatient.PatientDateNaissance) & ")")
+            .AddTexteLine("Immatriculation CPAM : " & SelectedPatient.PatientNir)
+        End With
+
+        document.Sections.Add(Section)
+        Editor.Document.Sections.First.Headers.Default.Body = document
+    End Function
+
+    ''' <summary>
+    ''' ajoute une section au document, si le document est nothing, un document est instancié, dans tous les cas la fonction retourne un RadDocument
+    ''' </summary>
+    ''' <param name="document"></param>
+    ''' <param name="section"></param>
+    ''' <returns></returns>
+    Public Function AddSectionIntoDocument(document As RadDocument, section As Section) As RadDocument
+        If document Is Nothing Then document = New RadDocument
+        document.Sections.Add(section)
+        Return document
+    End Function
+
+    ''' <summary>
+    ''' 
+    ''' </summary>
+    ''' <returns></returns>
+    Public Function CreateSection(Optional orientation As PageOrientation = PageOrientation.Portrait) As Section
+        ' caracteristique section
+        Dim section As New Section()
+        section.PageMargin = New Padding(10)
+        'ex When the section has already been added to the document
+
+        'editeur.ChangeSectionPageMargin(New Telerik.WinForms.Documents.Layout.Padding(40, 40, 30, 30))
+        Editor.ChangeFontFamily(New FontFamily("Times New Roman"))
+        section.PageOrientation = orientation
+        section.PageSize = PaperTypeConverter.ToSize(PaperTypes.A4)
+        Return section
+    End Function
+
+    ''' <summary>
+    ''' 
+    ''' </summary>
+    ''' <param name="section"></param>
+    ''' <param name="fontSize"></param>
+    ''' <param name="textAlignment"></param>
+    ''' <returns></returns>
+    Public Function CreateParagraphIntoSection(section As Section,
+                                      Optional fontSize As Double = 12,
+                                      Optional textAlignment As RadTextAlignment = RadTextAlignment.Left) As Paragraph
+        Dim paragraphe As New Paragraph()
+        If IsNothing(fontSize) = False Then paragraphe.FontSize = fontSize
+        paragraphe.TextAlignment = textAlignment
+        section.Blocks.Add(paragraphe)    '--- ajout paragraphe à la section
+
+        Me.paragrapheEnCours = paragraphe
+        Return paragraphe
+
+    End Function
+
+    Public Sub AddImage(image As WriteableBitmap, size As Size)
+        If paragrapheEnCours Is Nothing Then Throw New Exception("Pas de paragraphe en cours")
+        Dim _img As ImageInline = New ImageInline(image)
+        _img.Size = size
+        paragrapheEnCours.Inlines.Add(_img)
+        Return
+
+    End Sub
+
+    Public Sub AddTexte(text As String,
+                             Optional fontSize As Double = 12,
+                             Optional fontWeight As Telerik.WinControls.RichTextEditor.UI.FontWeight = Nothing,
+                             Optional fontForeColor As Color = Nothing
+                             )
+        If paragrapheEnCours Is Nothing Then Throw New Exception("Pas de paragraphe en cours")
+        Dim span = New Span()
+        span.FontSize = If(IsNothing(fontSize), paragrapheEnCours.FontSize, fontSize)
+        If IsNothing(fontWeight) = False Then span.FontWeight = fontWeight   ' ex : Telerik.WinControls.RichTextEditor.UI.FontWeights.Bold
+
+        If fontForeColor.ToString <> "#00000000" Then
+            span.ForeColor = fontForeColor
+        End If
+        'span.ForeColor = If(IsNothing(fontForeColor), Colors.Black, fontForeColor)
+        span.Text = text
+
+        Me.paragrapheEnCours.Inlines.Add(span)
+        Return
+
+    End Sub
+
+    Public Sub AddTexteLine(texte As String,
+                                                     Optional fontSize As Double = 12,
+                                                     Optional fontWeight As Telerik.WinControls.RichTextEditor.UI.FontWeight = Nothing,
+                                                     Optional fontForeColor As Color = Nothing
+                                                     )
+        If paragrapheEnCours Is Nothing Then Throw New Exception("Pas de paragraphe en cours")
+        AddTexte(texte, fontSize, fontWeight, fontForeColor)
+        AddNewLigne()
+        Return
+
+    End Sub
+
+    Public Sub AddTexteAfterANewLine(texte As String,
+                                        Optional fontSize As Double = 12,
+                                        Optional fontWeight As Telerik.WinControls.RichTextEditor.UI.FontWeight = Nothing,
+                                        Optional fontForeColor As Color = Nothing
+                                        )
+        If paragrapheEnCours Is Nothing Then Throw New Exception("Pas de paragraphe en cours")
+        AddNewLigne()
+        AddTexte(texte, fontSize, fontWeight, fontForeColor)
+    End Sub
+
+    Public Sub AddNewLigne()
+        If paragrapheEnCours Is Nothing Then Throw New Exception("Pas de paragraphe en cours")
+        Me.paragrapheEnCours.Inlines.Add(New Break(BreakType.LineBreak))
+    End Sub
+
+    Public Sub AddNewPage()
+        If paragrapheEnCours Is Nothing Then Throw New Exception("Pas de paragraphe en cours")
+        Me.paragrapheEnCours.Inlines.Add(New Break(BreakType.PageBreak))
+    End Sub
+
+    Public Sub SaveAsPdfToFile(ByVal pathFile As String)
+        SaveAsPdfToFile(Editor.Document, pathFile)
+    End Sub
+
+    Public Function SaveAsPdfToBytes() As Byte()
+        Return SaveAsPdfToBytes(Editor.Document)
+    End Function
+
+    Private Sub SaveAsPdfToFile(ByVal document As RadDocument, ByVal pathFile As String)
+        Dim provider = New PdfFormatProvider()
+
+        Using output As Stream = New FileStream(pathFile, FileMode.OpenOrCreate)
+            provider.Export(document, output)
+        End Using
+    End Sub
+
+    Private Function SaveAsPdfToBytes(ByVal document As RadDocument) As Byte()
+        Dim provider = New PdfFormatProvider()
+        Return provider.Export(document)
+    End Function
+
+    Public Sub InsertFragmentToEditor(document As RadDocument)
+        Editor.InsertFragment(New DocumentFragment(document))
+    End Sub
+
+    Public Sub PrintPreview()
+        Editor.LoadElementTree()
+        Editor.PrintPreview()
+    End Sub
+
+    Public Function exportToPdf() As Byte()
+        Dim pdfExportSettings As PdfExportSettings = New PdfExportSettings()
+        pdfExportSettings.ContentsDeflaterCompressionLevel = 9
+        pdfExportSettings.DrawPageBodyBackground = False
+        Dim pdfFormatProvider As PdfFormatProvider = New PdfFormatProvider()
+        pdfFormatProvider.ExportSettings = pdfExportSettings
+        Editor.LoadElementTree()
+        Return pdfFormatProvider.Export(Editor.Document)
+    End Function
+
+    Public Sub Print()
+        Editor.LoadElementTree()
+        Editor.Print()
+    End Sub
+
+    Public Sub Dispose() Implements IDisposable.Dispose
+        Editor.Dispose()
+    End Sub
+
+    Public Sub SetCell(Cell As TableCell, Texte As String, Optional FontSize As Double = 12, Optional color As Color = Nothing, Optional FontWeight As FontWeight = Nothing)
+        Dim span As New Span()
+        Dim paragraphe As New Paragraph()
+        'paragraphe.TextAlignment = TextAlignment.Justify
+        span.Text = Texte
+        If span.Text <> "" Then
+            paragraphe.Inlines.Add(span)
+            span.FontSize = FontSize
+            If color = Nothing Then
+                span.ForeColor = Colors.Black
+            Else
+                span.ForeColor = color
+            End If
+            If FontWeight = Nothing Then
+                span.FontWeight = Telerik.WinControls.RichTextEditor.UI.FontWeights.Normal
+            Else
+                span.FontWeight = FontWeight
+            End If
+        End If
+        Cell.Blocks.Add(paragraphe)
+    End Sub
+
+End Class

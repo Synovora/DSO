@@ -178,12 +178,12 @@ Partial Class RadFPatientDetailEdit
         Me.NoteContextMenuStrip.ImageScalingSize = New System.Drawing.Size(24, 24)
         Me.NoteContextMenuStrip.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.CréerUneNoteToolStripMenuItem})
         Me.NoteContextMenuStrip.Name = "NoteContextMenuStrip"
-        Me.NoteContextMenuStrip.Size = New System.Drawing.Size(153, 26)
+        Me.NoteContextMenuStrip.Size = New System.Drawing.Size(201, 36)
         '
         'CréerUneNoteToolStripMenuItem
         '
         Me.CréerUneNoteToolStripMenuItem.Name = "CréerUneNoteToolStripMenuItem"
-        Me.CréerUneNoteToolStripMenuItem.Size = New System.Drawing.Size(152, 22)
+        Me.CréerUneNoteToolStripMenuItem.Size = New System.Drawing.Size(200, 32)
         Me.CréerUneNoteToolStripMenuItem.Text = "Créer une note"
         '
         'BtnCreerNote
@@ -241,7 +241,7 @@ Partial Class RadFPatientDetailEdit
         Me.GbxSortieOasis.Controls.Add(Me.DteDateSortie)
         Me.GbxSortieOasis.GroupBoxStyle = Telerik.WinControls.UI.RadGroupBoxStyle.Office
         Me.GbxSortieOasis.HeaderText = "Déclaration de sortie du patient"
-        Me.GbxSortieOasis.Location = New System.Drawing.Point(19, 643)
+        Me.GbxSortieOasis.Location = New System.Drawing.Point(19, 704)
         Me.GbxSortieOasis.Name = "GbxSortieOasis"
         Me.GbxSortieOasis.Size = New System.Drawing.Size(558, 147)
         Me.GbxSortieOasis.TabIndex = 356
@@ -265,7 +265,7 @@ Partial Class RadFPatientDetailEdit
         Me.Label17.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label17.Location = New System.Drawing.Point(8, 52)
         Me.Label17.Name = "Label17"
-        Me.Label17.Size = New System.Drawing.Size(79, 13)
+        Me.Label17.Size = New System.Drawing.Size(120, 20)
         Me.Label17.TabIndex = 49
         Me.Label17.Text = "Commentaire"
         '
@@ -275,7 +275,7 @@ Partial Class RadFPatientDetailEdit
         Me.Label12.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label12.Location = New System.Drawing.Point(8, 29)
         Me.Label12.Name = "Label12"
-        Me.Label12.Size = New System.Drawing.Size(69, 13)
+        Me.Label12.Size = New System.Drawing.Size(103, 20)
         Me.Label12.TabIndex = 36
         Me.Label12.Text = "Date sortie"
         '
@@ -291,7 +291,7 @@ Partial Class RadFPatientDetailEdit
         '
         Me.DteDateSortie.Location = New System.Drawing.Point(118, 23)
         Me.DteDateSortie.Name = "DteDateSortie"
-        Me.DteDateSortie.Size = New System.Drawing.Size(200, 20)
+        Me.DteDateSortie.Size = New System.Drawing.Size(200, 26)
         Me.DteDateSortie.TabIndex = 90
         '
         'RadPanel4
@@ -325,7 +325,7 @@ Partial Class RadFPatientDetailEdit
         Me.RadGB3.Controls.Add(Me.BtnCreateInternaute)
         Me.RadGB3.GroupBoxStyle = Telerik.WinControls.UI.RadGroupBoxStyle.Office
         Me.RadGB3.HeaderText = "Déclaration de sortie du patient"
-        Me.RadGB3.Location = New System.Drawing.Point(19, 796)
+        Me.RadGB3.Location = New System.Drawing.Point(19, 643)
         Me.RadGB3.Name = "RadGB3"
         Me.RadGB3.Size = New System.Drawing.Size(558, 55)
         Me.RadGB3.TabIndex = 362
@@ -357,7 +357,7 @@ Partial Class RadFPatientDetailEdit
         Me.LblHorsOasis.ForeColor = System.Drawing.Color.Red
         Me.LblHorsOasis.Location = New System.Drawing.Point(206, 17)
         Me.LblHorsOasis.Name = "LblHorsOasis"
-        Me.LblHorsOasis.Size = New System.Drawing.Size(58, 13)
+        Me.LblHorsOasis.Size = New System.Drawing.Size(88, 23)
         Me.LblHorsOasis.TabIndex = 415
         Me.LblHorsOasis.Text = "HorsOasis"
         '
@@ -428,7 +428,7 @@ Partial Class RadFPatientDetailEdit
         Me.Label19.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label19.Location = New System.Drawing.Point(6, 185)
         Me.Label19.Name = "Label19"
-        Me.Label19.Size = New System.Drawing.Size(28, 13)
+        Me.Label19.Size = New System.Drawing.Size(39, 20)
         Me.Label19.TabIndex = 410
         Me.Label19.Text = "INS"
         '
@@ -437,7 +437,7 @@ Partial Class RadFPatientDetailEdit
         Me.TxtINS.Location = New System.Drawing.Point(123, 182)
         Me.TxtINS.MaxLength = 14
         Me.TxtINS.Name = "TxtINS"
-        Me.TxtINS.Size = New System.Drawing.Size(100, 20)
+        Me.TxtINS.Size = New System.Drawing.Size(100, 26)
         Me.TxtINS.TabIndex = 409
         '
         'LblDateNaissance
@@ -446,7 +446,7 @@ Partial Class RadFPatientDetailEdit
         Me.LblDateNaissance.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.LblDateNaissance.Location = New System.Drawing.Point(5, 27)
         Me.LblDateNaissance.Name = "LblDateNaissance"
-        Me.LblDateNaissance.Size = New System.Drawing.Size(113, 13)
+        Me.LblDateNaissance.Size = New System.Drawing.Size(166, 20)
         Me.LblDateNaissance.TabIndex = 373
         Me.LblDateNaissance.Text = "Date de naissance"
         '
@@ -455,7 +455,7 @@ Partial Class RadFPatientDetailEdit
         Me.TxtPrenom.Location = New System.Drawing.Point(123, 51)
         Me.TxtPrenom.MaxLength = 100
         Me.TxtPrenom.Name = "TxtPrenom"
-        Me.TxtPrenom.Size = New System.Drawing.Size(136, 20)
+        Me.TxtPrenom.Size = New System.Drawing.Size(136, 26)
         Me.TxtPrenom.TabIndex = 365
         '
         'TxtNom
@@ -464,7 +464,7 @@ Partial Class RadFPatientDetailEdit
         Me.TxtNom.Location = New System.Drawing.Point(123, 77)
         Me.TxtNom.MaxLength = 100
         Me.TxtNom.Name = "TxtNom"
-        Me.TxtNom.Size = New System.Drawing.Size(200, 20)
+        Me.TxtNom.Size = New System.Drawing.Size(200, 26)
         Me.TxtNom.TabIndex = 366
         '
         'Label1
@@ -473,7 +473,7 @@ Partial Class RadFPatientDetailEdit
         Me.Label1.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold)
         Me.Label1.Location = New System.Drawing.Point(5, 391)
         Me.Label1.Name = "Label1"
-        Me.Label1.Size = New System.Drawing.Size(66, 13)
+        Me.Label1.Size = New System.Drawing.Size(99, 20)
         Me.Label1.TabIndex = 408
         Me.Label1.Text = "Profession"
         '
@@ -482,7 +482,7 @@ Partial Class RadFPatientDetailEdit
         Me.TxtAdresse1.Location = New System.Drawing.Point(123, 208)
         Me.TxtAdresse1.MaxLength = 150
         Me.TxtAdresse1.Name = "TxtAdresse1"
-        Me.TxtAdresse1.Size = New System.Drawing.Size(200, 20)
+        Me.TxtAdresse1.Size = New System.Drawing.Size(200, 26)
         Me.TxtAdresse1.TabIndex = 382
         '
         'TxtProfession
@@ -490,7 +490,7 @@ Partial Class RadFPatientDetailEdit
         Me.TxtProfession.Location = New System.Drawing.Point(123, 384)
         Me.TxtProfession.MaxLength = 150
         Me.TxtProfession.Name = "TxtProfession"
-        Me.TxtProfession.Size = New System.Drawing.Size(416, 20)
+        Me.TxtProfession.Size = New System.Drawing.Size(416, 26)
         Me.TxtProfession.TabIndex = 407
         '
         'TxtAdresse2
@@ -498,7 +498,7 @@ Partial Class RadFPatientDetailEdit
         Me.TxtAdresse2.Location = New System.Drawing.Point(123, 234)
         Me.TxtAdresse2.MaxLength = 150
         Me.TxtAdresse2.Name = "TxtAdresse2"
-        Me.TxtAdresse2.Size = New System.Drawing.Size(200, 20)
+        Me.TxtAdresse2.Size = New System.Drawing.Size(200, 26)
         Me.TxtAdresse2.TabIndex = 383
         '
         'TxtCodePostal
@@ -506,14 +506,14 @@ Partial Class RadFPatientDetailEdit
         Me.TxtCodePostal.Location = New System.Drawing.Point(123, 260)
         Me.TxtCodePostal.MaxLength = 5
         Me.TxtCodePostal.Name = "TxtCodePostal"
-        Me.TxtCodePostal.Size = New System.Drawing.Size(61, 20)
+        Me.TxtCodePostal.Size = New System.Drawing.Size(61, 26)
         Me.TxtCodePostal.TabIndex = 384
         '
         'DteDateNaissance
         '
         Me.DteDateNaissance.Location = New System.Drawing.Point(123, 25)
         Me.DteDateNaissance.Name = "DteDateNaissance"
-        Me.DteDateNaissance.Size = New System.Drawing.Size(200, 20)
+        Me.DteDateNaissance.Size = New System.Drawing.Size(200, 26)
         Me.DteDateNaissance.TabIndex = 364
         '
         'LblPrenom
@@ -522,7 +522,7 @@ Partial Class RadFPatientDetailEdit
         Me.LblPrenom.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.LblPrenom.Location = New System.Drawing.Point(5, 53)
         Me.LblPrenom.Name = "LblPrenom"
-        Me.LblPrenom.Size = New System.Drawing.Size(49, 13)
+        Me.LblPrenom.Size = New System.Drawing.Size(73, 20)
         Me.LblPrenom.TabIndex = 367
         Me.LblPrenom.Text = "Prénom"
         '
@@ -540,7 +540,7 @@ Partial Class RadFPatientDetailEdit
         Me.LblNom.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.LblNom.Location = New System.Drawing.Point(5, 79)
         Me.LblNom.Name = "LblNom"
-        Me.LblNom.Size = New System.Drawing.Size(32, 13)
+        Me.LblNom.Size = New System.Drawing.Size(47, 20)
         Me.LblNom.TabIndex = 368
         Me.LblNom.Text = "Nom"
         '
@@ -550,7 +550,7 @@ Partial Class RadFPatientDetailEdit
         Me.Label3.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label3.Location = New System.Drawing.Point(5, 105)
         Me.Label3.Name = "Label3"
-        Me.Label3.Size = New System.Drawing.Size(41, 13)
+        Me.Label3.Size = New System.Drawing.Size(60, 20)
         Me.Label3.TabIndex = 369
         Me.Label3.Text = "Genre"
         '
@@ -560,7 +560,7 @@ Partial Class RadFPatientDetailEdit
         Me.Label4.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label4.Location = New System.Drawing.Point(5, 235)
         Me.Label4.Name = "Label4"
-        Me.Label4.Size = New System.Drawing.Size(63, 13)
+        Me.Label4.Size = New System.Drawing.Size(94, 20)
         Me.Label4.TabIndex = 370
         Me.Label4.Text = "Adresse 2"
         '
@@ -578,7 +578,7 @@ Partial Class RadFPatientDetailEdit
         Me.Label5.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label5.Location = New System.Drawing.Point(5, 261)
         Me.Label5.Name = "Label5"
-        Me.Label5.Size = New System.Drawing.Size(105, 13)
+        Me.Label5.Size = New System.Drawing.Size(154, 20)
         Me.Label5.TabIndex = 372
         Me.Label5.Text = "Code Postal/Ville"
         '
@@ -587,7 +587,7 @@ Partial Class RadFPatientDetailEdit
         Me.CbxGenre.FormattingEnabled = True
         Me.CbxGenre.Location = New System.Drawing.Point(123, 103)
         Me.CbxGenre.Name = "CbxGenre"
-        Me.CbxGenre.Size = New System.Drawing.Size(121, 21)
+        Me.CbxGenre.Size = New System.Drawing.Size(121, 28)
         Me.CbxGenre.TabIndex = 371
         '
         'Label15
@@ -596,7 +596,7 @@ Partial Class RadFPatientDetailEdit
         Me.Label15.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label15.Location = New System.Drawing.Point(229, 158)
         Me.Label15.Name = "Label15"
-        Me.Label15.Size = New System.Drawing.Size(59, 13)
+        Me.Label15.Size = New System.Drawing.Size(86, 20)
         Me.Label15.TabIndex = 404
         Me.Label15.Text = "Clé NIR :"
         '
@@ -606,7 +606,7 @@ Partial Class RadFPatientDetailEdit
         Me.Label7.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label7.Location = New System.Drawing.Point(5, 209)
         Me.Label7.Name = "Label7"
-        Me.Label7.Size = New System.Drawing.Size(63, 13)
+        Me.Label7.Size = New System.Drawing.Size(94, 20)
         Me.Label7.TabIndex = 374
         Me.Label7.Text = "Adresse 1"
         '
@@ -615,7 +615,7 @@ Partial Class RadFPatientDetailEdit
         Me.LblModulo.AutoSize = True
         Me.LblModulo.Location = New System.Drawing.Point(294, 159)
         Me.LblModulo.Name = "LblModulo"
-        Me.LblModulo.Size = New System.Drawing.Size(19, 13)
+        Me.LblModulo.Size = New System.Drawing.Size(28, 23)
         Me.LblModulo.TabIndex = 403
         Me.LblModulo.Text = "99"
         '
@@ -624,7 +624,7 @@ Partial Class RadFPatientDetailEdit
         Me.TxtVille.Location = New System.Drawing.Point(190, 260)
         Me.TxtVille.MaxLength = 100
         Me.TxtVille.Name = "TxtVille"
-        Me.TxtVille.Size = New System.Drawing.Size(200, 20)
+        Me.TxtVille.Size = New System.Drawing.Size(200, 26)
         Me.TxtVille.TabIndex = 386
         '
         'TxtTelFixe
@@ -632,7 +632,7 @@ Partial Class RadFPatientDetailEdit
         Me.TxtTelFixe.Location = New System.Drawing.Point(123, 286)
         Me.TxtTelFixe.MaxLength = 20
         Me.TxtTelFixe.Name = "TxtTelFixe"
-        Me.TxtTelFixe.Size = New System.Drawing.Size(100, 20)
+        Me.TxtTelFixe.Size = New System.Drawing.Size(100, 26)
         Me.TxtTelFixe.TabIndex = 389
         '
         'LblNomMarital
@@ -641,7 +641,7 @@ Partial Class RadFPatientDetailEdit
         Me.LblNomMarital.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.LblNomMarital.Location = New System.Drawing.Point(5, 131)
         Me.LblNomMarital.Name = "LblNomMarital"
-        Me.LblNomMarital.Size = New System.Drawing.Size(73, 13)
+        Me.LblNomMarital.Size = New System.Drawing.Size(111, 20)
         Me.LblNomMarital.TabIndex = 397
         Me.LblNomMarital.Text = "Nom marital"
         '
@@ -650,7 +650,7 @@ Partial Class RadFPatientDetailEdit
         Me.TxtTelMobile.Location = New System.Drawing.Point(123, 312)
         Me.TxtTelMobile.MaxLength = 20
         Me.TxtTelMobile.Name = "TxtTelMobile"
-        Me.TxtTelMobile.Size = New System.Drawing.Size(100, 20)
+        Me.TxtTelMobile.Size = New System.Drawing.Size(100, 26)
         Me.TxtTelMobile.TabIndex = 394
         '
         'TxtNomMarital
@@ -658,7 +658,7 @@ Partial Class RadFPatientDetailEdit
         Me.TxtNomMarital.Location = New System.Drawing.Point(123, 130)
         Me.TxtNomMarital.MaxLength = 100
         Me.TxtNomMarital.Name = "TxtNomMarital"
-        Me.TxtNomMarital.Size = New System.Drawing.Size(200, 20)
+        Me.TxtNomMarital.Size = New System.Drawing.Size(200, 26)
         Me.TxtNomMarital.TabIndex = 375
         '
         'Label2
@@ -667,7 +667,7 @@ Partial Class RadFPatientDetailEdit
         Me.Label2.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label2.Location = New System.Drawing.Point(5, 287)
         Me.Label2.Name = "Label2"
-        Me.Label2.Size = New System.Drawing.Size(53, 13)
+        Me.Label2.Size = New System.Drawing.Size(76, 20)
         Me.Label2.TabIndex = 377
         Me.Label2.Text = "Tel. fixe"
         '
@@ -676,7 +676,7 @@ Partial Class RadFPatientDetailEdit
         Me.ChkCouvertureInternet.AutoSize = True
         Me.ChkCouvertureInternet.Location = New System.Drawing.Point(123, 364)
         Me.ChkCouvertureInternet.Name = "ChkCouvertureInternet"
-        Me.ChkCouvertureInternet.Size = New System.Drawing.Size(15, 14)
+        Me.ChkCouvertureInternet.Size = New System.Drawing.Size(22, 21)
         Me.ChkCouvertureInternet.TabIndex = 401
         Me.ChkCouvertureInternet.UseVisualStyleBackColor = True
         '
@@ -686,7 +686,7 @@ Partial Class RadFPatientDetailEdit
         Me.Label6.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label6.Location = New System.Drawing.Point(5, 313)
         Me.Label6.Name = "Label6"
-        Me.Label6.Size = New System.Drawing.Size(69, 13)
+        Me.Label6.Size = New System.Drawing.Size(101, 20)
         Me.Label6.TabIndex = 378
         Me.Label6.Text = "Tel. mobile"
         '
@@ -696,7 +696,7 @@ Partial Class RadFPatientDetailEdit
         Me.Label16.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label16.Location = New System.Drawing.Point(5, 366)
         Me.Label16.Name = "Label16"
-        Me.Label16.Size = New System.Drawing.Size(117, 13)
+        Me.Label16.Size = New System.Drawing.Size(171, 20)
         Me.Label16.TabIndex = 395
         Me.Label16.Text = "Couverture Internet"
         '
@@ -706,7 +706,7 @@ Partial Class RadFPatientDetailEdit
         Me.Label9.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label9.Location = New System.Drawing.Point(5, 157)
         Me.Label9.Name = "Label9"
-        Me.Label9.Size = New System.Drawing.Size(29, 13)
+        Me.Label9.Size = New System.Drawing.Size(40, 20)
         Me.Label9.TabIndex = 381
         Me.Label9.Text = "NIR"
         '
@@ -715,7 +715,7 @@ Partial Class RadFPatientDetailEdit
         Me.LblAge.AutoSize = True
         Me.LblAge.Location = New System.Drawing.Point(330, 31)
         Me.LblAge.Name = "LblAge"
-        Me.LblAge.Size = New System.Drawing.Size(40, 13)
+        Me.LblAge.Size = New System.Drawing.Size(59, 23)
         Me.LblAge.TabIndex = 393
         Me.LblAge.Text = "99 ans"
         '
@@ -724,7 +724,7 @@ Partial Class RadFPatientDetailEdit
         Me.TxtNIR.Location = New System.Drawing.Point(123, 156)
         Me.TxtNIR.MaxLength = 14
         Me.TxtNIR.Name = "TxtNIR"
-        Me.TxtNIR.Size = New System.Drawing.Size(100, 20)
+        Me.TxtNIR.Size = New System.Drawing.Size(100, 26)
         Me.TxtNIR.TabIndex = 379
         '
         'TxtEmail
@@ -732,7 +732,7 @@ Partial Class RadFPatientDetailEdit
         Me.TxtEmail.Location = New System.Drawing.Point(123, 338)
         Me.TxtEmail.MaxLength = 200
         Me.TxtEmail.Name = "TxtEmail"
-        Me.TxtEmail.Size = New System.Drawing.Size(200, 20)
+        Me.TxtEmail.Size = New System.Drawing.Size(200, 26)
         Me.TxtEmail.TabIndex = 396
         '
         'Label10
@@ -741,7 +741,7 @@ Partial Class RadFPatientDetailEdit
         Me.Label10.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label10.Location = New System.Drawing.Point(5, 341)
         Me.Label10.Name = "Label10"
-        Me.Label10.Size = New System.Drawing.Size(37, 13)
+        Me.Label10.Size = New System.Drawing.Size(54, 20)
         Me.Label10.TabIndex = 385
         Me.Label10.Text = "eMail"
         '
@@ -751,7 +751,7 @@ Partial Class RadFPatientDetailEdit
         Me.Label13.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label13.Location = New System.Drawing.Point(5, 415)
         Me.Label13.Name = "Label13"
-        Me.Label13.Size = New System.Drawing.Size(72, 13)
+        Me.Label13.Size = New System.Drawing.Size(105, 20)
         Me.Label13.TabIndex = 388
         Me.Label13.Text = "Date décès"
         '
@@ -759,7 +759,7 @@ Partial Class RadFPatientDetailEdit
         '
         Me.DteDateDeces.Location = New System.Drawing.Point(123, 410)
         Me.DteDateDeces.Name = "DteDateDeces"
-        Me.DteDateDeces.Size = New System.Drawing.Size(200, 20)
+        Me.DteDateDeces.Size = New System.Drawing.Size(200, 26)
         Me.DteDateDeces.TabIndex = 402
         '
         'RadGroupBox1
@@ -792,7 +792,7 @@ Partial Class RadFPatientDetailEdit
         Me.Label11.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label11.Location = New System.Drawing.Point(5, 30)
         Me.Label11.Name = "Label11"
-        Me.Label11.Size = New System.Drawing.Size(74, 13)
+        Me.Label11.Size = New System.Drawing.Size(108, 20)
         Me.Label11.TabIndex = 387
         Me.Label11.Text = "Date entrée"
         '
@@ -802,7 +802,7 @@ Partial Class RadFPatientDetailEdit
         Me.Label8.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label8.Location = New System.Drawing.Point(5, 82)
         Me.Label8.Name = "Label8"
-        Me.Label8.Size = New System.Drawing.Size(29, 13)
+        Me.Label8.Size = New System.Drawing.Size(42, 20)
         Me.Label8.TabIndex = 380
         Me.Label8.Text = "Site"
         '
@@ -818,7 +818,7 @@ Partial Class RadFPatientDetailEdit
         '
         Me.DteDateEntree.Location = New System.Drawing.Point(123, 23)
         Me.DteDateEntree.Name = "DteDateEntree"
-        Me.DteDateEntree.Size = New System.Drawing.Size(200, 20)
+        Me.DteDateEntree.Size = New System.Drawing.Size(200, 26)
         Me.DteDateEntree.TabIndex = 398
         '
         'TxtPharmacien
@@ -826,7 +826,7 @@ Partial Class RadFPatientDetailEdit
         Me.TxtPharmacien.Location = New System.Drawing.Point(123, 103)
         Me.TxtPharmacien.Name = "TxtPharmacien"
         Me.TxtPharmacien.ReadOnly = True
-        Me.TxtPharmacien.Size = New System.Drawing.Size(306, 20)
+        Me.TxtPharmacien.Size = New System.Drawing.Size(306, 26)
         Me.TxtPharmacien.TabIndex = 410
         '
         'CbxSite
@@ -834,7 +834,7 @@ Partial Class RadFPatientDetailEdit
         Me.CbxSite.FormattingEnabled = True
         Me.CbxSite.Location = New System.Drawing.Point(123, 76)
         Me.CbxSite.Name = "CbxSite"
-        Me.CbxSite.Size = New System.Drawing.Size(121, 21)
+        Me.CbxSite.Size = New System.Drawing.Size(121, 28)
         Me.CbxSite.TabIndex = 399
         '
         'Label18
@@ -843,7 +843,7 @@ Partial Class RadFPatientDetailEdit
         Me.Label18.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label18.Location = New System.Drawing.Point(5, 107)
         Me.Label18.Name = "Label18"
-        Me.Label18.Size = New System.Drawing.Size(73, 13)
+        Me.Label18.Size = New System.Drawing.Size(108, 20)
         Me.Label18.TabIndex = 409
         Me.Label18.Text = "Pharmacien"
         '
@@ -853,7 +853,7 @@ Partial Class RadFPatientDetailEdit
         Me.Label14.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label14.Location = New System.Drawing.Point(5, 56)
         Me.Label14.Name = "Label14"
-        Me.Label14.Size = New System.Drawing.Size(89, 13)
+        Me.Label14.Size = New System.Drawing.Size(132, 20)
         Me.Label14.TabIndex = 390
         Me.Label14.Text = "Unité sanitaire"
         '
@@ -862,7 +862,7 @@ Partial Class RadFPatientDetailEdit
         Me.CbxUniteSanitaire.FormattingEnabled = True
         Me.CbxUniteSanitaire.Location = New System.Drawing.Point(123, 49)
         Me.CbxUniteSanitaire.Name = "CbxUniteSanitaire"
-        Me.CbxUniteSanitaire.Size = New System.Drawing.Size(121, 21)
+        Me.CbxUniteSanitaire.Size = New System.Drawing.Size(121, 28)
         Me.CbxUniteSanitaire.TabIndex = 400
         '
         'RadBtnRDV
@@ -878,7 +878,7 @@ Partial Class RadFPatientDetailEdit
         Me.LblIdentifiantOasis.AutoSize = True
         Me.LblIdentifiantOasis.Location = New System.Drawing.Point(143, 17)
         Me.LblIdentifiantOasis.Name = "LblIdentifiantOasis"
-        Me.LblIdentifiantOasis.Size = New System.Drawing.Size(43, 13)
+        Me.LblIdentifiantOasis.Size = New System.Drawing.Size(64, 23)
         Me.LblIdentifiantOasis.TabIndex = 392
         Me.LblIdentifiantOasis.Text = "123456"
         '
@@ -888,14 +888,14 @@ Partial Class RadFPatientDetailEdit
         Me.LblLabelIdOasis.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.LblLabelIdOasis.Location = New System.Drawing.Point(25, 17)
         Me.LblLabelIdOasis.Name = "LblLabelIdOasis"
-        Me.LblLabelIdOasis.Size = New System.Drawing.Size(99, 13)
+        Me.LblLabelIdOasis.Size = New System.Drawing.Size(147, 20)
         Me.LblLabelIdOasis.TabIndex = 391
         Me.LblLabelIdOasis.Text = "Identifiant Oasis"
         '
         'RadFPatientDetailEdit
         '
         Me.AcceptButton = Me.RadBtnValider
-        Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
+        Me.AutoScaleDimensions = New System.Drawing.SizeF(9.0!, 20.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.CancelButton = Me.RadBtnAbandonner
         Me.ClientSize = New System.Drawing.Size(1342, 893)

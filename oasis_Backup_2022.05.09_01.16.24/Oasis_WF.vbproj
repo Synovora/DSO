@@ -1,0 +1,1745 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="..\packages\Microsoft.CodeAnalysis.FxCopAnalyzers.3.3.0\build\Microsoft.CodeAnalysis.FxCopAnalyzers.props" Condition="Exists('..\packages\Microsoft.CodeAnalysis.FxCopAnalyzers.3.3.0\build\Microsoft.CodeAnalysis.FxCopAnalyzers.props')" />
+  <Import Project="..\packages\Microsoft.NetFramework.Analyzers.3.3.0\build\Microsoft.NetFramework.Analyzers.props" Condition="Exists('..\packages\Microsoft.NetFramework.Analyzers.3.3.0\build\Microsoft.NetFramework.Analyzers.props')" />
+  <Import Project="..\packages\Microsoft.NetCore.Analyzers.3.3.0\build\Microsoft.NetCore.Analyzers.props" Condition="Exists('..\packages\Microsoft.NetCore.Analyzers.3.3.0\build\Microsoft.NetCore.Analyzers.props')" />
+  <Import Project="..\packages\Microsoft.CodeQuality.Analyzers.3.3.0\build\Microsoft.CodeQuality.Analyzers.props" Condition="Exists('..\packages\Microsoft.CodeQuality.Analyzers.3.3.0\build\Microsoft.CodeQuality.Analyzers.props')" />
+  <Import Project="..\packages\Microsoft.CodeAnalysis.VersionCheckAnalyzer.3.3.0\build\Microsoft.CodeAnalysis.VersionCheckAnalyzer.props" Condition="Exists('..\packages\Microsoft.CodeAnalysis.VersionCheckAnalyzer.3.3.0\build\Microsoft.CodeAnalysis.VersionCheckAnalyzer.props')" />
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{1903009E-032F-4098-954C-30293136A56A}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <StartupObject>Oasis_WF.My.MyApplication</StartupObject>
+    <RootNamespace>Oasis_WF</RootNamespace>
+    <AssemblyName>Oasis_WF</AssemblyName>
+    <FileAlignment>512</FileAlignment>
+    <MyType>WindowsForms</MyType>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <Deterministic>true</Deterministic>
+    <IsWebBootstrapper>true</IsWebBootstrapper>
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
+    <TargetFrameworkProfile />
+    <PublishUrl>ftp://ns3119889.ip-51-38-181.eu/</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Web</InstallFrom>
+    <UpdateEnabled>true</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>true</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <InstallUrl>http://ns3119889.ip-51-38-181.eu/clickonce/</InstallUrl>
+    <UpdateUrl>http://ns3119889.ip-51-38-181.eu/clickonce/</UpdateUrl>
+    <ProductName>Oasis</ProductName>
+    <PublisherName>Synovora</PublisherName>
+    <SuiteName>Oasis</SuiteName>
+    <MinimumRequiredVersion>1.0.0.240</MinimumRequiredVersion>
+    <CreateWebPageOnPublish>true</CreateWebPageOnPublish>
+    <WebPage>publish.htm</WebPage>
+    <ApplicationRevision>255</ApplicationRevision>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <CreateDesktopShortcut>true</CreateDesktopShortcut>
+    <PublishWizardCompleted>true</PublishWizardCompleted>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <DefineDebug>true</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DocumentationFile>Oasis_WF.xml</DocumentationFile>
+    <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <DefineDebug>false</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DocumentationFile>Oasis_WF.xml</DocumentationFile>
+    <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
+  </PropertyGroup>
+  <PropertyGroup>
+    <OptionExplicit>On</OptionExplicit>
+  </PropertyGroup>
+  <PropertyGroup>
+    <OptionCompare>Binary</OptionCompare>
+  </PropertyGroup>
+  <PropertyGroup>
+    <OptionStrict>Off</OptionStrict>
+  </PropertyGroup>
+  <PropertyGroup>
+    <OptionInfer>On</OptionInfer>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ManifestCertificateThumbprint>88D3DD4F26291B5A06254C2D3EEE79EFDF381459</ManifestCertificateThumbprint>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ManifestKeyFile>Oasis_WF_1_TemporaryKey.pfx</ManifestKeyFile>
+  </PropertyGroup>
+  <PropertyGroup>
+    <GenerateManifests>true</GenerateManifests>
+  </PropertyGroup>
+  <PropertyGroup>
+    <SignManifests>false</SignManifests>
+  </PropertyGroup>
+  <PropertyGroup>
+    <TargetZone>LocalIntranet</TargetZone>
+  </PropertyGroup>
+  <PropertyGroup />
+  <PropertyGroup>
+    <ApplicationIcon>dso16%281%29.ico</ApplicationIcon>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationManifest>app.manifest</ApplicationManifest>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="BouncyCastle.Crypto, Version=1.8.9.0, Culture=neutral, PublicKeyToken=0e99375e54769942">
+      <HintPath>..\packages\BouncyCastle.1.8.9\lib\BouncyCastle.Crypto.dll</HintPath>
+    </Reference>
+    <Reference Include="Common.Logging, Version=3.4.1.0, Culture=neutral, PublicKeyToken=af08829b84f0328e, processorArchitecture=MSIL">
+      <HintPath>..\packages\Common.Logging.3.4.1\lib\net40\Common.Logging.dll</HintPath>
+    </Reference>
+    <Reference Include="Common.Logging.Core, Version=3.4.1.0, Culture=neutral, PublicKeyToken=af08829b84f0328e, processorArchitecture=MSIL">
+      <HintPath>..\packages\Common.Logging.Core.3.4.1\lib\net40\Common.Logging.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="GemBox.Document, Version=33.0.0.1249, Culture=neutral, PublicKeyToken=b1b72c69714d4847, processorArchitecture=MSIL">
+      <HintPath>..\packages\GemBox.Document.33.0.1249\lib\net35\GemBox.Document.dll</HintPath>
+    </Reference>
+    <Reference Include="itext.barcodes, Version=7.1.12.0, Culture=neutral, PublicKeyToken=8354ae6d2174ddca, processorArchitecture=MSIL">
+      <HintPath>..\packages\itext7.7.1.12\lib\net40\itext.barcodes.dll</HintPath>
+    </Reference>
+    <Reference Include="itext.forms, Version=7.1.12.0, Culture=neutral, PublicKeyToken=8354ae6d2174ddca, processorArchitecture=MSIL">
+      <HintPath>..\packages\itext7.7.1.12\lib\net40\itext.forms.dll</HintPath>
+    </Reference>
+    <Reference Include="itext.io, Version=7.1.12.0, Culture=neutral, PublicKeyToken=8354ae6d2174ddca, processorArchitecture=MSIL">
+      <HintPath>..\packages\itext7.7.1.12\lib\net40\itext.io.dll</HintPath>
+    </Reference>
+    <Reference Include="itext.kernel, Version=7.1.12.0, Culture=neutral, PublicKeyToken=8354ae6d2174ddca, processorArchitecture=MSIL">
+      <HintPath>..\packages\itext7.7.1.12\lib\net40\itext.kernel.dll</HintPath>
+    </Reference>
+    <Reference Include="itext.layout, Version=7.1.12.0, Culture=neutral, PublicKeyToken=8354ae6d2174ddca, processorArchitecture=MSIL">
+      <HintPath>..\packages\itext7.7.1.12\lib\net40\itext.layout.dll</HintPath>
+    </Reference>
+    <Reference Include="itext.pdfa, Version=7.1.12.0, Culture=neutral, PublicKeyToken=8354ae6d2174ddca, processorArchitecture=MSIL">
+      <HintPath>..\packages\itext7.7.1.12\lib\net40\itext.pdfa.dll</HintPath>
+    </Reference>
+    <Reference Include="itext.sign, Version=7.1.12.0, Culture=neutral, PublicKeyToken=8354ae6d2174ddca, processorArchitecture=MSIL">
+      <HintPath>..\packages\itext7.7.1.12\lib\net40\itext.sign.dll</HintPath>
+    </Reference>
+    <Reference Include="itext.styledxmlparser, Version=7.1.12.0, Culture=neutral, PublicKeyToken=8354ae6d2174ddca, processorArchitecture=MSIL">
+      <HintPath>..\packages\itext7.7.1.12\lib\net40\itext.styledxmlparser.dll</HintPath>
+    </Reference>
+    <Reference Include="itext.svg, Version=7.1.12.0, Culture=neutral, PublicKeyToken=8354ae6d2174ddca, processorArchitecture=MSIL">
+      <HintPath>..\packages\itext7.7.1.12\lib\net40\itext.svg.dll</HintPath>
+    </Reference>
+    <Reference Include="MailKit, Version=2.12.0.0, Culture=neutral, PublicKeyToken=4e064fe7c44a8f1b, processorArchitecture=MSIL">
+      <HintPath>..\packages\MailKit.2.12.0\lib\net47\MailKit.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Microsoft.IdentityModel.Logging, Version=6.7.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.IdentityModel.Logging.6.7.1\lib\net461\Microsoft.IdentityModel.Logging.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.IdentityModel.Tokens, Version=6.7.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.IdentityModel.Tokens.6.7.1\lib\net461\Microsoft.IdentityModel.Tokens.dll</HintPath>
+    </Reference>
+    <Reference Include="MimeKit, Version=2.12.0.0, Culture=neutral, PublicKeyToken=bede1c8a46c66814, processorArchitecture=MSIL">
+      <HintPath>..\packages\MimeKit.2.12.0\lib\net47\MimeKit.dll</HintPath>
+    </Reference>
+    <Reference Include="Nethereum.Hex, Version=3.8.0.0, Culture=neutral, PublicKeyToken=8768a594786aba4e, processorArchitecture=MSIL">
+      <HintPath>..\packages\Nethereum.Hex.3.8.0\lib\net451\Nethereum.Hex.dll</HintPath>
+    </Reference>
+    <Reference Include="Nethereum.Model, Version=3.8.0.0, Culture=neutral, PublicKeyToken=8768a594786aba4e, processorArchitecture=MSIL">
+      <HintPath>..\packages\Nethereum.Model.3.8.0\lib\net451\Nethereum.Model.dll</HintPath>
+    </Reference>
+    <Reference Include="Nethereum.RLP, Version=3.8.0.0, Culture=neutral, PublicKeyToken=8768a594786aba4e, processorArchitecture=MSIL">
+      <HintPath>..\packages\Nethereum.RLP.3.8.0\lib\net451\Nethereum.RLP.dll</HintPath>
+    </Reference>
+    <Reference Include="Nethereum.Signer, Version=3.8.0.0, Culture=neutral, PublicKeyToken=8768a594786aba4e, processorArchitecture=MSIL">
+      <HintPath>..\packages\Nethereum.Signer.3.8.0\lib\net451\Nethereum.Signer.dll</HintPath>
+    </Reference>
+    <Reference Include="Nethereum.Util, Version=3.8.0.0, Culture=neutral, PublicKeyToken=8768a594786aba4e, processorArchitecture=MSIL">
+      <HintPath>..\packages\Nethereum.Util.3.8.0\lib\net451\Nethereum.Util.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.12.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
+    <Reference Include="QRCoder, Version=1.3.9.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\QRCoder.1.3.9\lib\net40\QRCoder.dll</HintPath>
+    </Reference>
+    <Reference Include="ReachFramework" />
+    <Reference Include="System" />
+    <Reference Include="System.Buffers, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Buffers.4.5.1\lib\net461\System.Buffers.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Collections.NonGeneric, Version=4.0.2.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Collections.NonGeneric.4.3.0\lib\net46\System.Collections.NonGeneric.dll</HintPath>
+      <Private>True</Private>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.ComponentModel.Composition" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.ComponentModel.Primitives" />
+    <Reference Include="System.ComponentModel.TypeConverter" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Configuration.Install" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Data.Linq" />
+    <Reference Include="System.Deployment" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Drawing.Common, Version=4.0.0.1, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Drawing.Common.4.7.0\lib\net461\System.Drawing.Common.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Numerics" />
+    <Reference Include="System.Printing" />
+    <Reference Include="System.Security" />
+    <Reference Include="System.ServiceProcess" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xaml" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="Telerik.WinControls, Version=2022.1.222.40, Culture=neutral, PublicKeyToken=5bb2a467cbec794e, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\lib\RCWF\2022.1.222.40.Trial\Telerik.WinControls.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Telerik.WinControls.ChartView, Version=2022.1.222.40, Culture=neutral, PublicKeyToken=5bb2a467cbec794e, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\lib\RCWF\2022.1.222.40.Trial\Telerik.WinControls.ChartView.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Telerik.WinControls.GridView, Version=2022.1.222.40, Culture=neutral, PublicKeyToken=5bb2a467cbec794e, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\lib\RCWF\2022.1.222.40.Trial\Telerik.WinControls.GridView.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Telerik.WinControls.RichTextEditor, Version=2022.1.222.40, Culture=neutral, PublicKeyToken=5bb2a467cbec794e, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\lib\RCWF\2022.1.222.40.Trial\Telerik.WinControls.RichTextEditor.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Telerik.WinControls.Scheduler, Version=2022.1.222.40, Culture=neutral, PublicKeyToken=5bb2a467cbec794e, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\lib\RCWF\2022.1.222.40.Trial\Telerik.WinControls.Scheduler.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Telerik.WinControls.Themes.Office2007Silver, Version=2022.1.222.40, Culture=neutral, PublicKeyToken=5bb2a467cbec794e, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\lib\RCWF\2022.1.222.40.Trial\Telerik.WinControls.Themes.Office2007Silver.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Telerik.WinControls.UI, Version=2022.1.222.40, Culture=neutral, PublicKeyToken=5bb2a467cbec794e, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\lib\RCWF\2022.1.222.40.Trial\Telerik.WinControls.UI.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Telerik.Windows.Documents.Core, Version=2022.1.217.40, Culture=neutral, PublicKeyToken=5803cfa389c90ce7, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\lib\RCWF\2022.1.222.40.Trial\Telerik.Windows.Documents.Core.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Telerik.Windows.Zip, Version=2022.1.217.40, Culture=neutral, PublicKeyToken=5803cfa389c90ce7, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\lib\RCWF\2022.1.222.40.Trial\Telerik.Windows.Zip.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="TelerikCommon, Version=2022.1.222.40, Culture=neutral, PublicKeyToken=5bb2a467cbec794e, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\lib\RCWF\2022.1.222.40.Trial\TelerikCommon.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="WindowsBase" />
+  </ItemGroup>
+  <ItemGroup>
+    <Import Include="Microsoft.VisualBasic" />
+    <Import Include="System" />
+    <Import Include="System.Collections" />
+    <Import Include="System.Collections.Generic" />
+    <Import Include="System.ComponentModel" />
+    <Import Include="System.ComponentModel.Composition.Primitives" />
+    <Import Include="System.Data" />
+    <Import Include="System.Drawing" />
+    <Import Include="System.Windows.Forms" />
+    <Import Include="System.Linq" />
+    <Import Include="System.Xml.Linq" />
+    <Import Include="System.Threading.Tasks" />
+    <Import Include="Telerik.WinControls.Design" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Form\AnnuaireProfessionnel\RadFAnnuaireProfessionneldetail.Designer.vb">
+      <DependentUpon>RadFAnnuaireProfessionneldetail.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Form\AnnuaireProfessionnel\RadFAnnuaireProfessionneldetail.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form\AnnuaireProfessionnel\RadFAnnuaireProfessionnelSelect.Designer.vb">
+      <DependentUpon>RadFAnnuaireProfessionnelSelect.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Form\AnnuaireProfessionnel\RadFAnnuaireProfessionnelSelect.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form\DRC\RadFAutoSuivi.Designer.vb">
+      <DependentUpon>RadFAutoSuivi.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Form\DRC\RadFAutoSuivi.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form\Episode\EpisodeUtils.vb" />
+    <Compile Include="Form\EtatJournalier\FrmEtatJournalier.Designer.vb">
+      <DependentUpon>FrmEtatJournalier.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Form\EtatJournalier\FrmEtatJournalier.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form\Mail\FrmMailOrdonnance.Designer.vb">
+      <DependentUpon>FrmMailOrdonnance.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Form\Mail\FrmMailOrdonnance.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form\Mail\FrmMailSousEpisodeOuSynthese.Designer.vb">
+      <DependentUpon>FrmMailSousEpisodeOuSynthese.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Form\Mail\FrmMailSousEpisodeOuSynthese.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form\Mail\RadFMailEdit.Designer.vb">
+      <DependentUpon>RadFMailEdit.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Form\Mail\RadFMailEdit.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form\Patient\RadFPatientRequest.Designer.vb">
+      <DependentUpon>RadFPatientRequest.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Form\Patient\RadFPatientRequest.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form\Patient\RadFPatientRequestSelector.Designer.vb">
+      <DependentUpon>RadFPatientRequestSelector.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Form\Patient\RadFPatientRequestSelector.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form\RendezVous\RadFListeIntervenantSansRDV.Designer.vb">
+      <DependentUpon>RadFListeIntervenantSansRDV.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Form\RendezVous\RadFListeIntervenantSansRDV.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form\ALD\RadFSelecteurALD.Designer.vb">
+      <DependentUpon>RadFSelecteurALD.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Form\ALD\RadFSelecteurALD.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form\DRC\RadFActeParamedicalTest.Designer.vb">
+      <DependentUpon>RadFActeParamedicalTest.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Form\DRC\RadFActeParamedicalTest.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form\DRC\RadFParametreTest.Designer.vb">
+      <DependentUpon>RadFParametreTest.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Form\DRC\RadFParametreTest.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form\Episode\RadFEpisodeConsigneIdeDetail.Designer.vb">
+      <DependentUpon>RadFEpisodeConsigneIdeDetail.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Form\Episode\RadFEpisodeConsigneIdeDetail.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form\Episode\RadFEpisodeEnAttenteValidation.Designer.vb">
+      <DependentUpon>RadFEpisodeEnAttenteValidation.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Form\Episode\RadFEpisodeEnAttenteValidation.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form\Episode\RadFEpisodeEnCoursListe.Designer.vb">
+      <DependentUpon>RadFEpisodeEnCoursListe.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Form\Episode\RadFEpisodeEnCoursListe.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ApplicationEvents.vb" />
+    <Compile Include="Form\DRC\RadFDrcActePMAssocieEdit.Designer.vb">
+      <DependentUpon>RadFDrcActePMAssocieEdit.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Form\DRC\RadFDrcActePMAssocieEdit.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form\DRC\RadFDrcParametresEdit.Designer.vb">
+      <DependentUpon>RadFDrcParametresEdit.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Form\DRC\RadFDrcParametresEdit.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form\DRC\RadFDrcStandardTypeActiviteListe.Designer.vb">
+      <DependentUpon>RadFDrcStandardTypeActiviteListe.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Form\DRC\RadFDrcStandardTypeActiviteListe.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form\DRC\RadFDrcStandardTypeActiviteDetail.Designer.vb">
+      <DependentUpon>RadFDrcStandardTypeActiviteDetail.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Form\DRC\RadFDrcStandardTypeActiviteDetail.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form\Episode\RadFEpisodeActeParamedicalDetailEdit.Designer.vb">
+      <DependentUpon>RadFEpisodeActeParamedicalDetailEdit.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Form\Episode\RadFEpisodeActeParamedicalDetailEdit.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form\Episode\RadFEpisodeDetailCreation.Designer.vb">
+      <DependentUpon>RadFEpisodeDetailCreation.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Form\Episode\RadFEpisodeDetailCreation.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="DataSetDRC.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>DataSetDRC.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="DataSetDrcSelecteur.Designer.vb">
+      <DependentUpon>DataSetDrcSelecteur.xsd</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
+    <Compile Include="DataSetPatient.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>DataSetPatient.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="dataSetUtilisateur1.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>dataSetUtilisateur.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="DatSetDRC.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>DatSetDRC.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="Form\Episode\RadFEpisodeObservationDetailEdit.Designer.vb">
+      <DependentUpon>RadFEpisodeObservationDetailEdit.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Form\Episode\RadFEpisodeObservationDetailEdit.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form\Episode\RadFEpisodeParametreDetailEdit.Designer.vb">
+      <DependentUpon>RadFEpisodeParametreDetailEdit.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Form\Episode\RadFEpisodeParametreDetailEdit.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form\Episode\RadFEpisodeProtocoleAiguDetail.Designer.vb">
+      <DependentUpon>RadFEpisodeProtocoleAiguDetail.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Form\Episode\RadFEpisodeProtocoleAiguDetail.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form\Episode\RadFEpisodeConclusionContextePatient.Designer.vb">
+      <DependentUpon>RadFEpisodeConclusionContextePatient.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Form\Episode\RadFEpisodeConclusionContextePatient.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form\General\RadFAffichaeInfo.Designer.vb">
+      <DependentUpon>RadFAffichaeInfo.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Form\General\RadFAffichaeInfo.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form\LigneDeVie\RadFEpisodeParametresCreation.Designer.vb">
+      <DependentUpon>RadFEpisodeParametresCreation.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Form\LigneDeVie\RadFEpisodeParametresCreation.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form\LigneDeVie\RadFEpisodeParametresSaisie.Designer.vb">
+      <DependentUpon>RadFEpisodeParametresSaisie.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Form\LigneDeVie\RadFEpisodeParametresSaisie.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form\LigneDeVie\RadFLigneDeVieGraphe.Designer.vb">
+      <DependentUpon>RadFLigneDeVieGraphe.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Form\LigneDeVie\RadFLigneDeVieGraphe.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form\LigneDeVie\RadFLigneDeVieParametreSelecteur.Designer.vb">
+      <DependentUpon>RadFLigneDeVieParametreSelecteur.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Form\LigneDeVie\RadFLigneDeVieParametreSelecteur.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form\RendezVous\RadFHistoriqueRDVPatient.Designer.vb">
+      <DependentUpon>RadFHistoriqueRDVPatient.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Form\RendezVous\RadFHistoriqueRDVPatient.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form\RendezVous\RadFListeRendezVousEnCours.Designer.vb">
+      <DependentUpon>RadFListeRendezVousEnCours.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Form\RendezVous\RadFListeRendezVousEnCours.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form\RendezVous\RadFPatientRendezVousListe.Designer.vb">
+      <DependentUpon>RadFPatientRendezVousListe.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Form\RendezVous\RadFPatientRendezVousListe.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form\PPS\RadFPPSListeParcours.Designer.vb">
+      <DependentUpon>RadFPPSListeParcours.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Form\PPS\RadFPPSListeParcours.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form\SousEpisode\FrmActionDoc.Designer.vb">
+      <DependentUpon>FrmActionDoc.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Form\SousEpisode\FrmActionDoc.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form\SousEpisode\FrmAdminTemplateDocx.Designer.vb">
+      <DependentUpon>FrmAdminTemplateDocx.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Form\SousEpisode\FrmAdminTemplateDocx.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form\RendezVous\RadFTacheModificationDemandeRendezVous.Designer.vb">
+      <DependentUpon>RadFTacheModificationDemandeRendezVous.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Form\RendezVous\RadFTacheModificationDemandeRendezVous.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form\RendezVous\RadFTacheModificationRendezVous.Designer.vb">
+      <DependentUpon>RadFTacheModificationRendezVous.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Form\RendezVous\RadFTacheModificationRendezVous.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form\SousEpisode\FrmSousEpisodeReponseAttribution.Designer.vb">
+      <DependentUpon>FrmSousEpisodeReponseAttribution.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Form\SousEpisode\FrmSousEpisodeReponseAttribution.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form\SousEpisode\FrmTestDynamiqueDocument.Designer.vb">
+      <DependentUpon>FrmTestDynamiqueDocument.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Form\SousEpisode\FrmTestDynamiqueDocument.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form\Test\RadFTestMethodes.Designer.vb">
+      <DependentUpon>RadFTestMethodes.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Form\Test\RadFTestMethodes.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form\Theriaque\RadFEffetSecondaire.Designer.vb">
+      <DependentUpon>RadFEffetSecondaire.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Form\Theriaque\RadFEffetSecondaire.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form\Theriaque\RadFMedicamentSelecteur.Designer.vb">
+      <DependentUpon>RadFMedicamentSelecteur.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Form\Theriaque\RadFMedicamentSelecteur.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form\SousEpisode\FrmSousEpisode.Designer.vb">
+      <DependentUpon>FrmSousEpisode.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Form\SousEpisode\FrmSousEpisode.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form\SousEpisode\FrmSousEpisodeListe.Designer.vb">
+      <DependentUpon>FrmSousEpisodeListe.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Form\SousEpisode\FrmSousEpisodeListe.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form\Theriaque\RadFSubstancesListe.Designer.vb">
+      <DependentUpon>RadFSubstancesListe.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Form\Theriaque\RadFSubstancesListe.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form\Theriaque\RadFValenceCreation.Designer.vb">
+      <DependentUpon>RadFValenceCreation.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Form\Theriaque\RadFValenceCreation.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form\Theriaque\RadF_AllergieSelecteur.Designer.vb">
+      <DependentUpon>RadF_AllergieSelecteur.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Form\Theriaque\RadF_AllergieSelecteur.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form\Theriaque\RadF_CI_ATC_Selecteur.Designer.vb">
+      <DependentUpon>RadF_CI_ATC_Selecteur.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Form\Theriaque\RadF_CI_ATC_Selecteur.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form\Traitement\RadFAllergieEtCISuppressionDetail.Designer.vb">
+      <DependentUpon>RadFAllergieEtCISuppressionDetail.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Form\Traitement\RadFAllergieEtCISuppressionDetail.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form\Traitement\RadFDeclarationAllergieEtCIDetail.Designer.vb">
+      <DependentUpon>RadFDeclarationAllergieEtCIDetail.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Form\Traitement\RadFDeclarationAllergieEtCIDetail.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form\Tutoriel\RadFTutoriel.Designer.vb">
+      <DependentUpon>RadFTutoriel.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Form\Tutoriel\RadFTutoriel.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form\Tutoriel\RadFWebBrowser.Designer.vb">
+      <DependentUpon>RadFWebBrowser.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Form\Tutoriel\RadFWebBrowser.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form\utilisateur\FrmChangePassword.Designer.vb">
+      <DependentUpon>FrmChangePassword.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Form\utilisateur\FrmChangePassword.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form\utilisateur\FrmUtilisateur.Designer.vb">
+      <DependentUpon>FrmUtilisateur.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Form\utilisateur\FrmUtilisateur.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form\Vaccin\RadFCGV.Designer.vb">
+      <DependentUpon>RadFCGV.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Form\Vaccin\RadFCGV.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form\Vaccin\RadFCPV.Designer.vb">
+      <DependentUpon>RadFCPV.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Form\Vaccin\RadFCPV.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form\Vaccin\RadFOperatorSelect.Designer.vb">
+      <DependentUpon>RadFOperatorSelect.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Form\Vaccin\RadFOperatorSelect.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form\Vaccin\RadFVaccin.Designer.vb">
+      <DependentUpon>RadFVaccin.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Form\Vaccin\RadFVaccin.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form\Vaccin\RadFVaccinInfo.Designer.vb">
+      <DependentUpon>RadFVaccinInfo.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Form\Vaccin\RadFVaccinInfo.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form\Vaccin\RadFVaccinInput.Designer.vb">
+      <DependentUpon>RadFVaccinInput.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Form\Vaccin\RadFVaccinInput.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form\Vaccin\RadFVaccinInputComment.Designer.vb">
+      <DependentUpon>RadFVaccinInputComment.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Form\Vaccin\RadFVaccinInputComment.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form\Vaccin\RadFVaccinOperator.Designer.vb">
+      <DependentUpon>RadFVaccinOperator.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Form\Vaccin\RadFVaccinOperator.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form\Vaccin\RadFValenceSelecteur.Designer.vb">
+      <DependentUpon>RadFValenceSelecteur.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Form\Vaccin\RadFValenceSelecteur.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form\Workflow\RadFWkfCommentaire.Designer.vb">
+      <DependentUpon>RadFWkfCommentaire.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Form\Workflow\RadFWkfCommentaire.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form\Workflow\RadFWkfDemandeAvisHisto.Designer.vb">
+      <DependentUpon>RadFWkfDemandeAvisHisto.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Form\Workflow\RadFWkfDemandeAvisHisto.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form\General\RadFNotification.Designer.vb">
+      <DependentUpon>RadFNotification.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Form\General\RadFNotification.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form\Ordonnance\RadFOrdonnanceDetail.Designer.vb">
+      <DependentUpon>RadFOrdonnanceDetail.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Form\Ordonnance\RadFOrdonnanceDetail.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form\Parametre\RadFParametreSelecteur.Designer.vb">
+      <DependentUpon>RadFParametreSelecteur.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Form\Parametre\RadFParametreSelecteur.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form\tache\FrmAgendaMedecin.Designer.vb">
+      <DependentUpon>FrmAgendaMedecin.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Form\tache\FrmAgendaMedecin.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form\tache\FrmChoixDateHeureDuree.Designer.vb">
+      <DependentUpon>FrmChoixDateHeureDuree.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Form\tache\FrmChoixDateHeureDuree.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form\tache\FrmTacheDetail.vb.Designer.vb">
+      <DependentUpon>FrmTacheDetail.vb.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Form\tache\FrmTacheDetail.vb.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form\tache\FrmTacheMain.Designer.vb">
+      <DependentUpon>FrmTacheMain.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Form\tache\FrmTacheMain.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form\tache\FrmFiltreTacheATraiter.Designer.vb">
+      <DependentUpon>FrmFiltreTacheATraiter.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Form\tache\FrmFiltreTacheATraiter.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form\Workflow\RadFWkfDemandeAvis.Designer.vb">
+      <DependentUpon>RadFWkfDemandeAvis.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Form\Workflow\RadFWkfDemandeAvis.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form\utilisateur\FrmLogin.Designer.vb">
+      <DependentUpon>FrmLogin.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Form\utilisateur\FrmLogin.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form\utilisateur\FrmUtilisateurListe.Designer.vb">
+      <DependentUpon>FrmUtilisateurListe.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Form\utilisateur\FrmUtilisateurListe.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form\utilisateur\RadFListeActions.Designer.vb">
+      <DependentUpon>RadFListeActions.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Form\utilisateur\RadFListeActions.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="localization\FrenchRadGridViewLocalizationProvider.vb" />
+    <Compile Include="localization\FrenchSchedulerLocalizationProvider.vb" />
+    <Compile Include="localization\FrenchSchedulerNavigatorLocalizationProvider.vb" />
+    <Compile Include="Menu\FrmAbout.designer.vb">
+      <DependentUpon>FrmAbout.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Menu\FrmAbout.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form\SousEpisode\FrmAdminTemplateSousEpisode.Designer.vb">
+      <DependentUpon>FrmAdminTemplateSousEpisode.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Form\SousEpisode\FrmAdminTemplateSousEpisode.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Menu\FrmMain.Designer.vb">
+      <DependentUpon>FrmMain.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Menu\FrmMain.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form\SousEpisode\FrmEditDocxSousEpisode.Designer.vb">
+      <DependentUpon>FrmEditDocxSousEpisode.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Form\SousEpisode\FrmEditDocxSousEpisode.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Menu\SplashForm.Designer.vb">
+      <DependentUpon>SplashForm.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Menu\SplashForm.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Module\CacheGlobal.vb" />
+    <Compile Include="DS_Ordonnance.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>DS_Ordonnance.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="DS_Specialite.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>DS_Specialite.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="Form\ALD\RadFAldCim10Selecteur.Designer.vb">
+      <DependentUpon>RadFAldCim10Selecteur.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Form\ALD\RadFAldCim10Selecteur.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form\Obsolete\RadFAntecedentAffectationSelecteur.Designer.vb">
+      <DependentUpon>RadFAntecedentAffectationSelecteur.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Form\Obsolete\RadFAntecedentAffectationSelecteur.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form\Antecedent\RadFAntecedentHistoListe.Designer.vb">
+      <DependentUpon>RadFAntecedentHistoListe.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Form\Antecedent\RadFAntecedentHistoListe.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form\Antecedent\RadFAntecedentOrdreSelecteur.Designer.vb">
+      <DependentUpon>RadFAntecedentOrdreSelecteur.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Form\Antecedent\RadFAntecedentOrdreSelecteur.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form\Contexte\RadFContextedetailEdit.Designer.vb">
+      <DependentUpon>RadFContextedetailEdit.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Form\Contexte\RadFContextedetailEdit.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form\DRC\RadFDrcDetailEdit.Designer.vb">
+      <DependentUpon>RadFDrcDetailEdit.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Form\DRC\RadFDrcDetailEdit.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form\DRC\RadFDrcListe.Designer.vb">
+      <DependentUpon>RadFDrcListe.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Form\DRC\RadFDrcListe.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form\DRC\RadFDrcSynonymeDetailEdit.Designer.vb">
+      <DependentUpon>RadFDrcSynonymeDetailEdit.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Form\DRC\RadFDrcSynonymeDetailEdit.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form\Episode\RadFEpisodeDetail.Designer.vb">
+      <DependentUpon>RadFEpisodeDetail.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Form\Episode\RadFEpisodeDetail.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form\LigneDeVie\RadFEpisodeLigneDeVie.Designer.vb">
+      <DependentUpon>RadFEpisodeLigneDeVie.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Form\LigneDeVie\RadFEpisodeLigneDeVie.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form\Obsolete\RadFMedocDetail.Designer.vb">
+      <DependentUpon>RadFMedocDetail.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Form\Obsolete\RadFMedocDetail.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form\Note\RadFPatientNoteListe.Designer.vb">
+      <DependentUpon>RadFPatientNoteListe.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Form\Note\RadFPatientNoteListe.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form\ParcoursSoin\RadFParcoursConsigneDetailEdit.Designer.vb">
+      <DependentUpon>RadFParcoursConsigneDetailEdit.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Form\ParcoursSoin\RadFParcoursConsigneDetailEdit.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form\ParcoursSoin\RadFParcoursHistoListe.Designer.vb">
+      <DependentUpon>RadFParcoursHistoListe.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Form\ParcoursSoin\RadFParcoursHistoListe.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form\Patient\RadFPatientAllergieListe.Designer.vb">
+      <DependentUpon>RadFPatientAllergieListe.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Form\Patient\RadFPatientAllergieListe.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form\Patient\RadFPatientContreIndicationListe.Designer.vb">
+      <DependentUpon>RadFPatientContreIndicationListe.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Form\Patient\RadFPatientContreIndicationListe.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form\PPS\RadFPPSDetailEdit.Designer.vb">
+      <DependentUpon>RadFPPSDetailEdit.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Form\PPS\RadFPPSDetailEdit.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form\ParcoursSoin\RadFParcoursDetailEdit.Designer.vb">
+      <DependentUpon>RadFParcoursDetailEdit.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Form\ParcoursSoin\RadFParcoursDetailEdit.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form\PPS\RadFPPSHistoListe.Designer.vb">
+      <DependentUpon>RadFPPSHistoListe.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Form\PPS\RadFPPSHistoListe.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form\ROR\RadFRorDetailEdit.Designer.vb">
+      <DependentUpon>RadFRorDetailEdit.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Form\ROR\RadFRorDetailEdit.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form\ROR\RadFRorListe.Designer.vb">
+      <DependentUpon>RadFRorListe.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Form\ROR\RadFRorListe.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form\Specialite\RadFSpecialiteSelecteur.Designer.vb">
+      <DependentUpon>RadFSpecialiteSelecteur.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Form\Specialite\RadFSpecialiteSelecteur.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form\Ordonnance\RadFOrdonnanceListeDetail.Designer.vb">
+      <DependentUpon>RadFOrdonnanceListeDetail.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Form\Ordonnance\RadFOrdonnanceListeDetail.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form\Ordonnance\RadFOrdonnanceListe.Designer.vb">
+      <DependentUpon>RadFOrdonnanceListe.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Form\Ordonnance\RadFOrdonnanceListe.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form\Traitement\RadFTraitementAllergieEtCI.Designer.vb">
+      <DependentUpon>RadFTraitementAllergieEtCI.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Form\Traitement\RadFTraitementAllergieEtCI.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form\Traitement\RadFTraitementDetailEdit.Designer.vb">
+      <DependentUpon>RadFTraitementDetailEdit.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Form\Traitement\RadFTraitementDetailEdit.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form\Traitement\RadFTraitementFenetreTh.Designer.vb">
+      <DependentUpon>RadFTraitementFenetreTh.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Form\Traitement\RadFTraitementFenetreTh.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form\Traitement\RadFTraitementHistoListe.Designer.vb">
+      <DependentUpon>RadFTraitementHistoListe.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Form\Traitement\RadFTraitementHistoListe.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form\Traitement\RadFTraitementObsoletes.Designer.vb">
+      <DependentUpon>RadFTraitementObsoletes.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Form\Traitement\RadFTraitementObsoletes.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Pdf\PrtCarnetVaccinal.vb" />
+    <Compile Include="Pdf\PrtOrdonnanceVaccin.vb" />
+    <Compile Include="Pdf\PrtOrdonnance.vb" />
+    <Compile Include="Pdf\PrtSynthese.vb" />
+    <Compile Include="Resources\FrenchRichTextBoxStrings.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>FrenchRichTextBoxStrings.resx</DependentUpon>
+    </Compile>
+    <Compile Include="RORDS.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>RORDS.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="Form\Antecedent\RadFAntecedentDetailEdit.Designer.vb">
+      <DependentUpon>RadFAntecedentDetailEdit.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Form\Antecedent\RadFAntecedentDetailEdit.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form\Obsolete\RadFMedocSelecteur.Designer.vb">
+      <DependentUpon>RadFMedocSelecteur.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Form\Obsolete\RadFMedocSelecteur.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="oasisDataSet.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>oasisDataSet.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="oasisDataSet1.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>oasisDataSet1.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="oasisDataSet2.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>oasisDataSet2.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="ProjectInstaller.Designer.vb">
+      <DependentUpon>ProjectInstaller.vb</DependentUpon>
+    </Compile>
+    <Compile Include="ProjectInstaller.vb">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Form\DRC\RadFDRCSelecteur.Designer.vb">
+      <DependentUpon>RadFDRCSelecteur.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Form\DRC\RadFDRCSelecteur.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form\Synthese\RadFSynthese.Designer.vb">
+      <DependentUpon>RadFSynthese.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Form\Synthese\RadFSynthese.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form\Patient\RadFPatientDetailEdit.Designer.vb">
+      <DependentUpon>RadFPatientDetailEdit.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Form\Patient\RadFPatientDetailEdit.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form\Patient\RadFPatientListe.Designer.vb">
+      <DependentUpon>RadFPatientListe.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Form\Patient\RadFPatientListe.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form\Note\RadFPatientNoteDetailEdit.Designer.vb">
+      <DependentUpon>RadFPatientNoteDetailEdit.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Form\Note\RadFPatientNoteDetailEdit.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form\Patient\FPatientListeDoublons.Designer.vb">
+      <DependentUpon>FPatientListeDoublons.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Form\Patient\FPatientListeDoublons.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form\Antecedent\FAntecedentOccultesListe.Designer.vb">
+      <DependentUpon>FAntecedentOccultesListe.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Form\Antecedent\FAntecedentOccultesListe.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form\Obsolete\FMedocListe.Designer.vb">
+      <DependentUpon>FMedocListe.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Form\Obsolete\FMedocListe.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form\General\FmUniteSanitaire.Designer.vb">
+      <DependentUpon>FmUniteSanitaire.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Form\General\FmUniteSanitaire.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UtilsUI\Notification.vb" />
+    <Compile Include="UtilsUI\OasisTextTools.vb" />
+    <Compile Include="UtilsUI\RadInputBox.vb" />
+    <Compile Include="UniteSanitaireDataSet.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>UniteSanitaireDataSet.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="Menu\FAuthentification.Designer.vb">
+      <DependentUpon>FAuthentification.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Menu\FAuthentification.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Module\Environnement.vb" />
+    <Compile Include="My Project\AssemblyInfo.vb" />
+    <Compile Include="My Project\Application.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Application.myapp</DependentUpon>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="My Project\Resources.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="My Project\Settings.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="Settings.vb" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Form\AnnuaireProfessionnel\RadFAnnuaireProfessionneldetail.resx">
+      <DependentUpon>RadFAnnuaireProfessionneldetail.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form\AnnuaireProfessionnel\RadFAnnuaireProfessionnelSelect.resx">
+      <DependentUpon>RadFAnnuaireProfessionnelSelect.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form\DRC\RadFAutoSuivi.resx">
+      <DependentUpon>RadFAutoSuivi.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form\EtatJournalier\FrmEtatJournalier.resx">
+      <DependentUpon>FrmEtatJournalier.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form\Mail\FrmMailOrdonnance.resx">
+      <DependentUpon>FrmMailOrdonnance.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form\Mail\FrmMailSousEpisodeOuSynthese.resx">
+      <DependentUpon>FrmMailSousEpisodeOuSynthese.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form\Mail\RadFMailEdit.resx">
+      <DependentUpon>RadFMailEdit.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form\Patient\RadFPatientRequest.resx">
+      <DependentUpon>RadFPatientRequest.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form\Patient\RadFPatientRequestSelector.resx">
+      <DependentUpon>RadFPatientRequestSelector.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form\RendezVous\RadFListeIntervenantSansRDV.resx">
+      <DependentUpon>RadFListeIntervenantSansRDV.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form\ALD\RadFSelecteurALD.resx">
+      <DependentUpon>RadFSelecteurALD.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form\DRC\RadFActeParamedicalTest.resx">
+      <DependentUpon>RadFActeParamedicalTest.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form\DRC\RadFParametreTest.resx">
+      <DependentUpon>RadFParametreTest.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form\Episode\RadFEpisodeConsigneIdeDetail.resx">
+      <DependentUpon>RadFEpisodeConsigneIdeDetail.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form\Episode\RadFEpisodeEnAttenteValidation.resx">
+      <DependentUpon>RadFEpisodeEnAttenteValidation.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form\Episode\RadFEpisodeEnCoursListe.resx">
+      <DependentUpon>RadFEpisodeEnCoursListe.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form\DRC\RadFDrcActePMAssocieEdit.resx">
+      <DependentUpon>RadFDrcActePMAssocieEdit.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form\DRC\RadFDrcParametresEdit.resx">
+      <DependentUpon>RadFDrcParametresEdit.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form\DRC\RadFDrcStandardTypeActiviteListe.resx">
+      <DependentUpon>RadFDrcStandardTypeActiviteListe.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form\DRC\RadFDrcStandardTypeActiviteDetail.resx">
+      <DependentUpon>RadFDrcStandardTypeActiviteDetail.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form\Episode\RadFEpisodeActeParamedicalDetailEdit.resx">
+      <DependentUpon>RadFEpisodeActeParamedicalDetailEdit.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form\Episode\RadFEpisodeDetailCreation.resx">
+      <DependentUpon>RadFEpisodeDetailCreation.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form\Episode\RadFEpisodeObservationDetailEdit.resx">
+      <DependentUpon>RadFEpisodeObservationDetailEdit.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form\Episode\RadFEpisodeParametreDetailEdit.resx">
+      <DependentUpon>RadFEpisodeParametreDetailEdit.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form\Episode\RadFEpisodeProtocoleAiguDetail.resx">
+      <DependentUpon>RadFEpisodeProtocoleAiguDetail.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form\Episode\RadFEpisodeConclusionContextePatient.resx">
+      <DependentUpon>RadFEpisodeConclusionContextePatient.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form\General\RadFAffichaeInfo.resx">
+      <DependentUpon>RadFAffichaeInfo.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form\LigneDeVie\RadFEpisodeParametresCreation.resx">
+      <DependentUpon>RadFEpisodeParametresCreation.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form\LigneDeVie\RadFEpisodeParametresSaisie.resx">
+      <DependentUpon>RadFEpisodeParametresSaisie.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form\LigneDeVie\RadFLigneDeVieGraphe.resx">
+      <DependentUpon>RadFLigneDeVieGraphe.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form\LigneDeVie\RadFLigneDeVieParametreSelecteur.resx">
+      <DependentUpon>RadFLigneDeVieParametreSelecteur.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form\RendezVous\RadFHistoriqueRDVPatient.resx">
+      <DependentUpon>RadFHistoriqueRDVPatient.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form\RendezVous\RadFListeRendezVousEnCours.resx">
+      <DependentUpon>RadFListeRendezVousEnCours.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form\RendezVous\RadFPatientRendezVousListe.resx">
+      <DependentUpon>RadFPatientRendezVousListe.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form\PPS\RadFPPSListeParcours.resx">
+      <DependentUpon>RadFPPSListeParcours.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form\SousEpisode\FrmActionDoc.resx">
+      <DependentUpon>FrmActionDoc.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form\SousEpisode\FrmAdminTemplateDocx.resx">
+      <DependentUpon>FrmAdminTemplateDocx.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form\RendezVous\RadFTacheModificationDemandeRendezVous.resx">
+      <DependentUpon>RadFTacheModificationDemandeRendezVous.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form\RendezVous\RadFTacheModificationRendezVous.resx">
+      <DependentUpon>RadFTacheModificationRendezVous.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form\SousEpisode\FrmSousEpisodeReponseAttribution.resx">
+      <DependentUpon>FrmSousEpisodeReponseAttribution.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form\SousEpisode\FrmTestDynamiqueDocument.resx">
+      <DependentUpon>FrmTestDynamiqueDocument.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form\Test\RadFTestMethodes.resx">
+      <DependentUpon>RadFTestMethodes.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form\Theriaque\RadFEffetSecondaire.resx">
+      <DependentUpon>RadFEffetSecondaire.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form\Theriaque\RadFMedicamentSelecteur.resx">
+      <DependentUpon>RadFMedicamentSelecteur.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form\SousEpisode\FrmSousEpisode.resx">
+      <DependentUpon>FrmSousEpisode.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form\SousEpisode\FrmSousEpisodeListe.resx">
+      <DependentUpon>FrmSousEpisodeListe.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form\Theriaque\RadFSubstancesListe.resx">
+      <DependentUpon>RadFSubstancesListe.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form\Theriaque\RadFValenceCreation.resx">
+      <DependentUpon>RadFValenceCreation.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form\Theriaque\RadF_AllergieSelecteur.resx">
+      <DependentUpon>RadF_AllergieSelecteur.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form\Theriaque\RadF_CI_ATC_Selecteur.resx">
+      <DependentUpon>RadF_CI_ATC_Selecteur.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form\Traitement\RadFAllergieEtCISuppressionDetail.resx">
+      <DependentUpon>RadFAllergieEtCISuppressionDetail.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form\Traitement\RadFDeclarationAllergieEtCIDetail.resx">
+      <DependentUpon>RadFDeclarationAllergieEtCIDetail.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form\Tutoriel\RadFTutoriel.resx">
+      <DependentUpon>RadFTutoriel.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form\Tutoriel\RadFWebBrowser.resx">
+      <DependentUpon>RadFWebBrowser.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form\utilisateur\FrmChangePassword.resx">
+      <DependentUpon>FrmChangePassword.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form\utilisateur\FrmUtilisateur.resx">
+      <DependentUpon>FrmUtilisateur.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form\Vaccin\RadFCGV.resx">
+      <DependentUpon>RadFCGV.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form\Vaccin\RadFCPV.resx">
+      <DependentUpon>RadFCPV.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form\Vaccin\RadFOperatorSelect.resx">
+      <DependentUpon>RadFOperatorSelect.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form\Vaccin\RadFVaccin.resx">
+      <DependentUpon>RadFVaccin.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form\Vaccin\RadFVaccinInfo.resx">
+      <DependentUpon>RadFVaccinInfo.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form\Vaccin\RadFVaccinInput.resx">
+      <DependentUpon>RadFVaccinInput.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form\Vaccin\RadFVaccinInputComment.resx">
+      <DependentUpon>RadFVaccinInputComment.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form\Vaccin\RadFVaccinOperator.resx">
+      <DependentUpon>RadFVaccinOperator.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form\Vaccin\RadFValenceSelecteur.resx">
+      <DependentUpon>RadFValenceSelecteur.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form\Workflow\RadFWkfCommentaire.resx">
+      <DependentUpon>RadFWkfCommentaire.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form\Workflow\RadFWkfDemandeAvisHisto.resx">
+      <DependentUpon>RadFWkfDemandeAvisHisto.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form\General\RadFNotification.resx">
+      <DependentUpon>RadFNotification.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form\Ordonnance\RadFOrdonnanceDetail.resx">
+      <DependentUpon>RadFOrdonnanceDetail.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form\Parametre\RadFParametreSelecteur.resx">
+      <DependentUpon>RadFParametreSelecteur.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form\tache\FrmAgendaMedecin.resx">
+      <DependentUpon>FrmAgendaMedecin.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form\tache\FrmChoixDateHeureDuree.resx">
+      <DependentUpon>FrmChoixDateHeureDuree.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form\tache\FrmTacheDetail.vb.resx">
+      <DependentUpon>FrmTacheDetail.vb.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form\tache\FrmTacheMain.resx">
+      <DependentUpon>FrmTacheMain.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form\tache\FrmFiltreTacheATraiter.resx">
+      <DependentUpon>FrmFiltreTacheATraiter.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form\Workflow\RadFWkfDemandeAvis.resx">
+      <DependentUpon>RadFWkfDemandeAvis.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form\utilisateur\FrmLogin.resx">
+      <DependentUpon>FrmLogin.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form\utilisateur\FrmUtilisateurListe.resx">
+      <DependentUpon>FrmUtilisateurListe.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form\utilisateur\RadFListeActions.resx">
+      <DependentUpon>RadFListeActions.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Menu\FrmAbout.resx">
+      <DependentUpon>FrmAbout.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form\SousEpisode\FrmAdminTemplateSousEpisode.resx">
+      <DependentUpon>FrmAdminTemplateSousEpisode.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Menu\FrmMain.resx">
+      <DependentUpon>FrmMain.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form\ALD\RadFAldCim10Selecteur.resx">
+      <DependentUpon>RadFAldCim10Selecteur.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form\Obsolete\RadFAntecedentAffectationSelecteur.resx">
+      <DependentUpon>RadFAntecedentAffectationSelecteur.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form\Antecedent\RadFAntecedentHistoListe.resx">
+      <DependentUpon>RadFAntecedentHistoListe.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form\Antecedent\RadFAntecedentOrdreSelecteur.resx">
+      <DependentUpon>RadFAntecedentOrdreSelecteur.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form\Contexte\RadFContextedetailEdit.resx">
+      <DependentUpon>RadFContextedetailEdit.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form\DRC\RadFDrcDetailEdit.resx">
+      <DependentUpon>RadFDrcDetailEdit.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form\DRC\RadFDrcListe.resx">
+      <DependentUpon>RadFDrcListe.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form\DRC\RadFDrcSynonymeDetailEdit.resx">
+      <DependentUpon>RadFDrcSynonymeDetailEdit.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form\Episode\RadFEpisodeDetail.resx">
+      <DependentUpon>RadFEpisodeDetail.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form\LigneDeVie\RadFEpisodeLigneDeVie.resx">
+      <DependentUpon>RadFEpisodeLigneDeVie.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form\Obsolete\RadFMedocDetail.resx">
+      <DependentUpon>RadFMedocDetail.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form\Note\RadFPatientNoteListe.resx">
+      <DependentUpon>RadFPatientNoteListe.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form\ParcoursSoin\RadFParcoursConsigneDetailEdit.resx">
+      <DependentUpon>RadFParcoursConsigneDetailEdit.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form\ParcoursSoin\RadFParcoursHistoListe.resx">
+      <DependentUpon>RadFParcoursHistoListe.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form\Patient\RadFPatientAllergieListe.resx">
+      <DependentUpon>RadFPatientAllergieListe.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form\Patient\RadFPatientContreIndicationListe.resx">
+      <DependentUpon>RadFPatientContreIndicationListe.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form\PPS\RadFPPSDetailEdit.resx">
+      <DependentUpon>RadFPPSDetailEdit.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form\ParcoursSoin\RadFParcoursDetailEdit.resx">
+      <DependentUpon>RadFParcoursDetailEdit.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form\PPS\RadFPPSHistoListe.resx">
+      <DependentUpon>RadFPPSHistoListe.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form\ROR\RadFRorDetailEdit.resx">
+      <DependentUpon>RadFRorDetailEdit.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form\ROR\RadFRorListe.resx">
+      <DependentUpon>RadFRorListe.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form\Specialite\RadFSpecialiteSelecteur.resx">
+      <DependentUpon>RadFSpecialiteSelecteur.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form\Ordonnance\RadFOrdonnanceListeDetail.resx">
+      <DependentUpon>RadFOrdonnanceListeDetail.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form\Ordonnance\RadFOrdonnanceListe.resx">
+      <DependentUpon>RadFOrdonnanceListe.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form\Traitement\RadFTraitementAllergieEtCI.resx">
+      <DependentUpon>RadFTraitementAllergieEtCI.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form\Traitement\RadFTraitementFenetreTh.resx">
+      <DependentUpon>RadFTraitementFenetreTh.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form\Traitement\RadFTraitementHistoListe.resx">
+      <DependentUpon>RadFTraitementHistoListe.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form\Traitement\RadFTraitementDetailEdit.resx">
+      <DependentUpon>RadFTraitementDetailEdit.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form\Traitement\RadFTraitementObsoletes.resx">
+      <DependentUpon>RadFTraitementObsoletes.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form\SousEpisode\FrmEditDocxSousEpisode.resx">
+      <DependentUpon>FrmEditDocxSousEpisode.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Menu\SplashForm.resx">
+      <DependentUpon>SplashForm.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form\Antecedent\RadFAntecedentDetailEdit.resx">
+      <DependentUpon>RadFAntecedentDetailEdit.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form\Obsolete\RadFMedocSelecteur.resx">
+      <DependentUpon>RadFMedocSelecteur.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Menu\FAuthentification.resx">
+      <DependentUpon>FAuthentification.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="My Project\licenses.licx" />
+    <EmbeddedResource Include="My Project\Resources.resx">
+      <Generator>VbMyResourcesResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.vb</LastGenOutput>
+      <CustomToolNamespace>My.Resources</CustomToolNamespace>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ProjectInstaller.resx">
+      <DependentUpon>ProjectInstaller.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form\DRC\RadFDRCSelecteur.resx">
+      <DependentUpon>RadFDRCSelecteur.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form\Synthese\RadFSynthese.resx">
+      <DependentUpon>RadFSynthese.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form\Patient\RadFPatientDetailEdit.resx">
+      <DependentUpon>RadFPatientDetailEdit.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form\Patient\RadFPatientListe.resx">
+      <DependentUpon>RadFPatientListe.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form\Note\RadFPatientNoteDetailEdit.resx">
+      <DependentUpon>RadFPatientNoteDetailEdit.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form\Patient\FPatientListeDoublons.resx">
+      <DependentUpon>FPatientListeDoublons.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form\Antecedent\FAntecedentOccultesListe.resx">
+      <DependentUpon>FAntecedentOccultesListe.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form\Obsolete\FMedocListe.resx">
+      <DependentUpon>FMedocListe.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form\General\FmUniteSanitaire.resx">
+      <DependentUpon>FmUniteSanitaire.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\FrenchRichTextBoxStrings.resx">
+      <CustomToolNamespace>My.Resources</CustomToolNamespace>
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>FrenchRichTextBoxStrings.Designer.vb</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include=".editorconfig" />
+    <None Include="App.config" />
+    <None Include="app.manifest" />
+    <None Include="DataSetDRC.xsc">
+      <DependentUpon>DataSetDRC.xsd</DependentUpon>
+    </None>
+    <None Include="DataSetDRC.xsd">
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>DataSetDRC.Designer.vb</LastGenOutput>
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="DataSetDRC.xss">
+      <DependentUpon>DataSetDRC.xsd</DependentUpon>
+    </None>
+    <None Include="DataSetDrcSelecteur.xsc">
+      <DependentUpon>DataSetDrcSelecteur.xsd</DependentUpon>
+    </None>
+    <None Include="DataSetDrcSelecteur.xsd">
+      <SubType>Designer</SubType>
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>DataSetDrcSelecteur.Designer.vb</LastGenOutput>
+    </None>
+    <None Include="DataSetDrcSelecteur.xss">
+      <DependentUpon>DataSetDrcSelecteur.xsd</DependentUpon>
+    </None>
+    <None Include="DataSetPatient.xsc">
+      <DependentUpon>DataSetPatient.xsd</DependentUpon>
+    </None>
+    <None Include="DataSetPatient.xsd">
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>DataSetPatient.Designer.vb</LastGenOutput>
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="DataSetPatient.xss">
+      <DependentUpon>DataSetPatient.xsd</DependentUpon>
+    </None>
+    <None Include="dataSetUtilisateur.xsc">
+      <DependentUpon>dataSetUtilisateur.xsd</DependentUpon>
+    </None>
+    <None Include="dataSetUtilisateur.xsd">
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>dataSetUtilisateur1.Designer.vb</LastGenOutput>
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="dataSetUtilisateur.xss">
+      <DependentUpon>dataSetUtilisateur.xsd</DependentUpon>
+    </None>
+    <None Include="DatSetDRC.xsc">
+      <DependentUpon>DatSetDRC.xsd</DependentUpon>
+    </None>
+    <None Include="DatSetDRC.xsd">
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>DatSetDRC.Designer.vb</LastGenOutput>
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="DatSetDRC.xss">
+      <DependentUpon>DatSetDRC.xsd</DependentUpon>
+    </None>
+    <None Include="DS_Ordonnance.xsc">
+      <DependentUpon>DS_Ordonnance.xsd</DependentUpon>
+    </None>
+    <None Include="DS_Ordonnance.xsd">
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>DS_Ordonnance.Designer.vb</LastGenOutput>
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="DS_Ordonnance.xss">
+      <DependentUpon>DS_Ordonnance.xsd</DependentUpon>
+    </None>
+    <None Include="DS_Specialite.xsc">
+      <DependentUpon>DS_Specialite.xsd</DependentUpon>
+    </None>
+    <None Include="DS_Specialite.xsd">
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>DS_Specialite.Designer.vb</LastGenOutput>
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="DS_Specialite.xss">
+      <DependentUpon>DS_Specialite.xsd</DependentUpon>
+    </None>
+    <None Include="My Project\app.manifest" />
+    <None Include="My Project\Application.myapp">
+      <Generator>MyApplicationCodeGenerator</Generator>
+      <LastGenOutput>Application.Designer.vb</LastGenOutput>
+    </None>
+    <None Include="My Project\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <CustomToolNamespace>My</CustomToolNamespace>
+      <LastGenOutput>Settings1.Designer.vb</LastGenOutput>
+    </None>
+    <None Include="oasisDataSet.xsc">
+      <DependentUpon>oasisDataSet.xsd</DependentUpon>
+    </None>
+    <None Include="oasisDataSet.xsd">
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>oasisDataSet.Designer.vb</LastGenOutput>
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="oasisDataSet.xss">
+      <DependentUpon>oasisDataSet.xsd</DependentUpon>
+    </None>
+    <None Include="oasisDataSet1.xsc">
+      <DependentUpon>oasisDataSet1.xsd</DependentUpon>
+    </None>
+    <None Include="oasisDataSet1.xsd">
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>oasisDataSet1.Designer.vb</LastGenOutput>
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="oasisDataSet1.xss">
+      <DependentUpon>oasisDataSet1.xsd</DependentUpon>
+    </None>
+    <None Include="oasisDataSet2.xsc">
+      <DependentUpon>oasisDataSet2.xsd</DependentUpon>
+    </None>
+    <None Include="oasisDataSet2.xsd">
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>oasisDataSet2.Designer.vb</LastGenOutput>
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="oasisDataSet2.xss">
+      <DependentUpon>oasisDataSet2.xsd</DependentUpon>
+    </None>
+    <None Include="Oasis_WF_1_TemporaryKey.pfx" />
+    <None Include="Oasis_WF_TemporaryKey.pfx" />
+    <None Include="packages.config" />
+    <None Include="RORDS.xsc">
+      <DependentUpon>RORDS.xsd</DependentUpon>
+    </None>
+    <None Include="RORDS.xsd">
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>RORDS.Designer.vb</LastGenOutput>
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="RORDS.xss">
+      <DependentUpon>RORDS.xsd</DependentUpon>
+    </None>
+    <None Include="UniteSanitaireDataSet.xsc">
+      <DependentUpon>UniteSanitaireDataSet.xsd</DependentUpon>
+    </None>
+    <None Include="UniteSanitaireDataSet.xsd">
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>UniteSanitaireDataSet.Designer.vb</LastGenOutput>
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="UniteSanitaireDataSet.xss">
+      <DependentUpon>UniteSanitaireDataSet.xsd</DependentUpon>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include=".NETFramework,Version=v4.7.2">
+      <Visible>False</Visible>
+      <ProductName>Microsoft .NET Framework 4.7.2 %28x86 and x64%29</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="dso16%281%29.ico" />
+    <Content Include="Resources\Aha-Soft-People-User-group.ico" />
+    <None Include="Resources\historique.png" />
+    <None Include="Resources\select.png" />
+    <None Include="Resources\modifier2.png" />
+    <None Include="Resources\modifier1.png" />
+    <None Include="Resources\modifier.png" />
+    <None Include="Resources\supprimer1.png" />
+    <None Include="Resources\validation2.png" />
+    <None Include="Resources\rechercher.png" />
+    <None Include="Resources\supprimer.png" />
+    <None Include="Resources\validation.png" />
+    <None Include="Resources\mail.png" />
+    <None Include="Resources\print.png" />
+    <None Include="Resources\reload.png" />
+    <None Include="Resources\exit.png" />
+    <Resource Include="Resources\RichTextBoxStrings.xml" />
+    <None Include="Resources\Keys-icon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Oasis_Common\Oasis_Common.vbproj">
+      <Project>{2dac58a3-f441-4561-93ea-b093cf6f982a}</Project>
+      <Name>Oasis_Common</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Analyzer Include="..\packages\Microsoft.CodeAnalysis.VersionCheckAnalyzer.3.3.0\analyzers\dotnet\Microsoft.CodeAnalysis.VersionCheckAnalyzer.dll" />
+    <Analyzer Include="..\packages\Microsoft.CodeQuality.Analyzers.3.3.0\analyzers\dotnet\vb\Humanizer.dll" />
+    <Analyzer Include="..\packages\Microsoft.CodeQuality.Analyzers.3.3.0\analyzers\dotnet\vb\Microsoft.CodeQuality.Analyzers.dll" />
+    <Analyzer Include="..\packages\Microsoft.CodeQuality.Analyzers.3.3.0\analyzers\dotnet\vb\Microsoft.CodeQuality.VisualBasic.Analyzers.dll" />
+    <Analyzer Include="..\packages\Microsoft.NetCore.Analyzers.3.3.0\analyzers\dotnet\vb\Microsoft.NetCore.Analyzers.dll" />
+    <Analyzer Include="..\packages\Microsoft.NetCore.Analyzers.3.3.0\analyzers\dotnet\vb\Microsoft.NetCore.VisualBasic.Analyzers.dll" />
+    <Analyzer Include="..\packages\Microsoft.NetFramework.Analyzers.3.3.0\analyzers\dotnet\vb\Microsoft.NetFramework.Analyzers.dll" />
+    <Analyzer Include="..\packages\Microsoft.NetFramework.Analyzers.3.3.0\analyzers\dotnet\vb\Microsoft.NetFramework.VisualBasic.Analyzers.dll" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>Ce projet fait référence à des packages NuGet qui sont manquants sur cet ordinateur. Utilisez l'option de restauration des packages NuGet pour les télécharger. Pour plus d'informations, consultez http://go.microsoft.com/fwlink/?LinkID=322105. Le fichier manquant est : {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\packages\Microsoft.CodeAnalysis.VersionCheckAnalyzer.3.3.0\build\Microsoft.CodeAnalysis.VersionCheckAnalyzer.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.CodeAnalysis.VersionCheckAnalyzer.3.3.0\build\Microsoft.CodeAnalysis.VersionCheckAnalyzer.props'))" />
+    <Error Condition="!Exists('..\packages\Microsoft.CodeQuality.Analyzers.3.3.0\build\Microsoft.CodeQuality.Analyzers.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.CodeQuality.Analyzers.3.3.0\build\Microsoft.CodeQuality.Analyzers.props'))" />
+    <Error Condition="!Exists('..\packages\Microsoft.NetCore.Analyzers.3.3.0\build\Microsoft.NetCore.Analyzers.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.NetCore.Analyzers.3.3.0\build\Microsoft.NetCore.Analyzers.props'))" />
+    <Error Condition="!Exists('..\packages\Microsoft.NetFramework.Analyzers.3.3.0\build\Microsoft.NetFramework.Analyzers.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.NetFramework.Analyzers.3.3.0\build\Microsoft.NetFramework.Analyzers.props'))" />
+    <Error Condition="!Exists('..\packages\Microsoft.CodeAnalysis.FxCopAnalyzers.3.3.0\build\Microsoft.CodeAnalysis.FxCopAnalyzers.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.CodeAnalysis.FxCopAnalyzers.3.3.0\build\Microsoft.CodeAnalysis.FxCopAnalyzers.props'))" />
+  </Target>
+  <ProjectExtensions>
+    <VisualStudio>
+      <UserProperties ShouldAddDPIScalingManifest="True" />
+    </VisualStudio>
+  </ProjectExtensions>
+</Project>
