@@ -1205,11 +1205,10 @@ Public Class RadFPatientDetailEdit
             mailOasis.Type = ParametreMail.TypeMailParams.PWD_GENERATE
             Try
                 Cursor.Current = Cursors.WaitCursor
-                Using frm = New FrmMailSousEpisodeOuSynthese(SelectedPatient, Nothing, mailOasis)
-                    frm.TxtTo.Text = SelectedPatient.PatientEmail
-                    frm.TxtBody.Text = frm.TxtBody.Text.Replace("@RECOVER_LINK", "https://ns3119889.ip-51-38-181.eu/Auth/Recover?key=" & ecKey)
-                    frm.Send()
-                End Using
+                mailOasis.ReplaceZonesVariables(SelectedPatient)
+                mailOasis.Body = mailOasis.Body.Replace("@RECOVER_LINK", "https://ns3119889.ip-51-38-181.eu/Auth/Recover?key=" & ecKey)
+                mailOasis.AdressTo = SelectedPatient.PatientEmail
+                mailOasis.Send(loginRequestLog)
 
 
                 Dim form As New RadFNotification()

@@ -38,47 +38,51 @@ End Code
                             </div>
 
                             <div class="p-2">
-                                <div class="alert alert-success text-center mb-4" role="alert">
-                                    Vous venez de vous connecter pour la premiere fois avec un lien temporaire, veuillez entrer votre nouveau mot de passe.
-                                </div>
-
-                                <form Class="form-horizontal" action="@Url.Action("Recover", "Auth")" method="post">
-                                    @If ViewBag.Internaute IsNot Nothing Then
-                                        @<div class="form-group">
-                                            <label for="useremail">Email</label>
-                                            <input type="email" class="form-control" id="email" placeholder=@ViewBag.Internaute.Email disabled>
+                                 @If ViewBag.Internaute IsNot Nothing AndAlso ViewBag.Recovery IsNot Nothing Then
+                                        @<div class="alert alert-success text-center mb-4" role="alert">
+                                            Vous venez de vous connecter pour la premiere fois avec un lien temporaire, veuillez entrer votre nouveau mot de passe.
                                         </div>
-                                    End If
-                                    @If ViewBag.Recovery IsNot Nothing Then
-                                        @<div Class="form-group">
-                                            <label for="userpassword">Recovery</label>
-                                            <input type="text" name="Recovery" value="@ViewBag.Recovery" />
-                                        </div>
-                                    End If
-                                    <div Class="form-group">
-                                        <label for="usercode">Code</label>
-                                        @Html.PasswordFor(Function(u) u.Code, New With {Key .Class = "form-control", .placeholder = "Entrez le code SMS"})
-                                        @Html.ValidationMessageFor(Function(u) u.Code)
-                                    </div>
-                                    <div Class="form-group">
-                                        <label for="userpassword">Mot de passe</label>
-                                        @Html.PasswordFor(Function(u) u.Password, New With {Key .Class = "form-control", .placeholder = "Entrez votre mot de passe"})
-                                        @Html.ValidationMessageFor(Function(u) u.Password)
-                                    </div>
 
-                                    <div Class="form-group">
-                                        <label for="userpassword">Confirmation mot de passe</label>
-                                        @Html.PasswordFor(Function(u) u.PasswordBis, New With {Key .Class = "form-control", .placeholder = "Confirmez votre mot de passe"})
-                                        @Html.ValidationMessageFor(Function(u) u.PasswordBis)
-                                    </div>
+                                        @<form Class="form-horizontal" action="@Url.Action("Recover", "Auth")" method="post">
+                                            <div class="form-group">
+                                                <label for="useremail">Email:</label>
+                                                <input type="email" class="form-control" id="email" placeholder=@ViewBag.Internaute.Email disabled>
+                                            </div>
+                                            <div Class="form-group">
+                                                <label for="userpassword">Recovery Key:</label>
+                                                <input type="text" name="Recovery" value="@ViewBag.Recovery" />
+                                            </div>
 
-                                    <div class="form-group row mb-0">
-                                        <div class="col-12 text-right">
-                                            <button class="btn btn-primary w-md waves-effect waves-light" type="submit">Valider</button>
-                                        </div>
-                                    </div>
+                                            <div Class="form-group">
+                                                <Label for="usercode">Code SMS:</Label>
+                                                @Html.PasswordFor(Function(u) u.Code, New With {Key .Class = "form-control", .placeholder = "Entrez le code SMS"})
+                                                @Html.ValidationMessageFor(Function(u) u.Code)
+                                            </div>
+                                            <div Class="form-group">
+                                                <label for="userpassword">Mot de passe:</label>
+                                                @Html.PasswordFor(Function(u) u.Password, New With {Key .Class = "form-control", .placeholder = "Entrez votre mot de passe"})
+                                                @Html.ValidationMessageFor(Function(u) u.Password)
+                                            </div>
+                                            <div Class="form-group">
+                                                <Label for="userpassword">Confirmation mot de passe:</Label>
+                                                @Html.PasswordFor(Function(u) u.PasswordBis, New With {Key .Class = "form-control", .placeholder = "Confirmez votre mot de passe"})
+                                                @Html.ValidationMessageFor(Function(u) u.PasswordBis)
+                                            </div>
+                                            <div Class="form-group">
+                                                <Label>@ViewBag.Message</Label>
+                                            </div>
+                                            <div Class="form-group row mb-0">
+                                                <div Class="col-12 text-right">
+                                                    <Button Class="btn btn-primary w-md waves-effect waves-light" type="submit">Valider</Button>
+                                                </div>
+                                            </div>
+                                        </form>
 
-                                </form>
+                                 Else
+                                    @<div class="alert alert-danger text-center" role="alert">
+                                         <Label>@ViewBag.Message</Label>
+                                     </div>
+                                 End If
                             </div>
 
                         </div>
@@ -90,6 +94,5 @@ End Code
                 </div>
             </div>
         </div>
-    </div>
-    End Using
+    </div>                  End Using
 </div>

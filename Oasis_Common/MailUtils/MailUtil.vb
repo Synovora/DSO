@@ -31,7 +31,7 @@ Public Class MailUtil
             .Subject = mailOasis.Subject
 
             Dim builder = New BodyBuilder()
-            If mailOasis.Type = TypeMailParams.PWD_GENERATE Then
+            If mailOasis.IsHTML = True Then
                 builder.HtmlBody = mailOasis.Body
             Else
                 builder.TextBody = mailOasis.Body

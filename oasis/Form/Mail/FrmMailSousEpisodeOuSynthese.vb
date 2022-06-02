@@ -136,19 +136,15 @@ Public Class FrmMailSousEpisodeOuSynthese
         Try
             Me.Cursor = Cursors.WaitCursor
             Me.Enabled = False
-            If mailOasis.Type = ParametreMail.TypeMailParams.SYNTHESE OrElse mailOasis.Type = ParametreMail.TypeMailParams.CARNET_VACCINAL Then convertToPdf()
+            If mailOasis.Type = ParametreMail.TypeMailParams.SYNTHESE OrElse mailOasis.Type = ParametreMail.TypeMailParams.CARNET_VACCINAL Then mailOasis.ConvertToPdf()
             With mailOasis
                 .AliasFrom = ""
                 .Body = TxtBody.Text
                 .Subject = TxtObjet.Text
                 .AdressTo = TxtTo.Text
             End With
-            Using apiOasis As New ApiOasis()
-                Dim ret = apiOasis.sendMailRest(loginRequestLog.login,
-                              loginRequestLog.password,
-                              mailOasis)
-                Notification.show("Emission Email", "Email envoyé !")
-            End Using
+            mailOasis.Send(loginRequestLog)
+            Notification.show("Emission Email", "Email envoyé !")
         Catch ex As Exception
             MessageBox.Show(ex.Message, "Erreur Envoi Email")
             Return
@@ -156,41 +152,6 @@ Public Class FrmMailSousEpisodeOuSynthese
             Me.Enabled = True
             Me.Cursor = Cursors.Default
         End Try
-    End Sub
-
-    Private Sub convertToPdf()
-        GemBox.Document.ComponentInfo.SetLicense("FREE-LIMITED-KEY")
-        ' Continue to use the component in a Trial mode when free limit is reached.
-        AddHandler GemBox.Document.ComponentInfo.FreeLimitReached, Sub(sender, e) e.FreeLimitReachedAction = GemBox.Document.FreeLimitReachedAction.ContinueAsTrial
-        Using stream As MemoryStream = New MemoryStream(mailOasis.Contenu)
-            Dim document = GemBox.Document.DocumentModel.Load(stream)
-            Using outstream As New MemoryStream
-                document.Save(outstream, GemBox.Document.SaveOptions.PdfDefault)
-                mailOasis.Contenu = outstream.ToArray
-                mailOasis.Filename = "SousEpisode.pdf"
-            End Using
-        End Using
-
-    End Sub
-
-    Private Sub convertToPdfTelerik()
-        Dim providerDocx = New DocxFormatProvider()
-
-        Dim document = providerDocx.Import(mailOasis.Contenu)
-        Dim providerPdf = New PdfFormatProvider()
-        Dim pdfExportSettings As PdfExportSettings = New PdfExportSettings()
-        pdfExportSettings.ContentsDeflaterCompressionLevel = 9
-        pdfExportSettings.DrawPageBodyBackground = False
-        pdfExportSettings.ImagesDeflaterCompressionLevel = 9
-        pdfExportSettings.ContentsCompressionMode = PdfContentsCompressionMode.Deflate
-        providerPdf.ExportSettings = pdfExportSettings
-
-        Using outStream As MemoryStream = New MemoryStream()
-            providerPdf.Export(document, outStream)
-            mailOasis.Contenu = outStream.ToArray
-            mailOasis.Filename = "SousEpisode.pdf"
-        End Using
-
     End Sub
 
     Private Sub refreshGrid()

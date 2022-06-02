@@ -34,26 +34,27 @@ Namespace Oasis_Web.Controllers
         <AllowAnonymous>
         <ActionName("recover")>
         Public Function Recover(key As String) As ActionResult
-            Dim message As String
+            Dim message As String = Nothing
             Dim internauteDao As New InternauteDao
             Dim patientDao As New PatientDao
             Dim internautePermissionDao As New InternautePermissionDao
+
             Try
-                If Not Regex.IsMatch(key, "^[A-F0-9]{64}") Then
+                If key Is Nothing OrElse Not Regex.IsMatch(key, "^[A-F0-9]{64}") Then
                     Throw New ArgumentException("La recovery key n'est pas valide.")
-                    Return RedirectToAction("Login", "Auth")
                 End If
 
                 Dim internaute As Internaute = internauteDao.GetInternauteByRecoveryKey(key)
-                ViewBag.Internaute = internaute
-                ViewBag.Recovery = key
                 If internaute Is Nothing Then
                     Throw New ArgumentException("Internaute introuvable.")
                 End If
 
+                ViewBag.Internaute = internaute
+                ViewBag.Recovery = key
             Catch ex As Exception
                 message = ex.Message
             End Try
+
             ViewBag.Message = message
             Return View()
         End Function
@@ -120,14 +121,9 @@ Namespace Oasis_Web.Controllers
                     Dim mailOasis As New MailOasis
                     mailOasis.IsSousEpisode = False
                     mailOasis.Type = ParametreMail.TypeMailParams.PWD_GENERATE
-                    Try
-                        'Using frm = New FrmMailSousEpisodeOuSynthese(SelectedPatient, Nothing, mailOasis)
-                        '    frm.TxtTo.Text = SelectedPatient.PatientEmail
-                        '    frm.TxtBody.Text = frm.TxtBody.Text.Replace("@RECOVER_LINK", "https://ns3119889.ip-51-38-181.eu/Auth/Recover?key=" & ecKey)
-                        '    frm.Send()
-                        'End Using
-                    Catch ex As Exception
-                    End Try
+                    mailOasis.Send(New LoginRequest With {
+                                   .login = "Bertrand.Gambet",
+                                   .password = "a"})
                 End If
                 Return RedirectToAction("Login", "Auth")
 

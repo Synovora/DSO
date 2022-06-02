@@ -45,6 +45,7 @@ Public Class SendMailController
                 mailOasis.Subject = .Item("subject")
                 mailOasis.Body = .Item("body")
                 mailOasis.IsSousEpisode = .Item("isSousEpisode")
+                mailOasis.IsHTML = .Item("isHTML")
             End With
 
             For Each fileData As MultipartFileData In provider.FileData
