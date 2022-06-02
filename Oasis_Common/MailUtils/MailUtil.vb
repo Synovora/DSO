@@ -15,7 +15,6 @@ Public Class MailUtil
 
     Public Sub SendMail(user As Utilisateur, mailOasis As MailOasis)
 
-        ' -- recuperation des parametres
         Dim paramMailDao As New ParametreMailDao
         Dim paramSMTP = paramMailDao.GetParametreMailBySiegeIdTypeMailParam(user.UtilisateurSiegeId, TypeMailParams.SMTP_PARAMETERS)
 

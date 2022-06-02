@@ -27,7 +27,6 @@ Public Class SendMailController
 
             Await content.ReadAsMultipartAsync(provider)
 
-            ' -- on verifie que le login / password est ok 
             Dim login As String = provider.FormData.Item("login")
             Dim password As String = provider.FormData.Item("password")
 

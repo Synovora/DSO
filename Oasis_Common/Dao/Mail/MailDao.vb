@@ -2,8 +2,8 @@
 Public Class MailDao
     Inherits StandardDao
 
-    Private Function BuildBean(reader As SqlDataReader) As Mail
-        Dim mail As New Mail With {
+    Private Function BuildBean(reader As SqlDataReader) As MailDB
+        Dim mail As New MailDB With {
             .sendMailKey = reader("sendMailKey"),
             .sendMailTo = reader("sendMailTo"),
             .sendMailCc = reader("sendMailCc"),
@@ -20,8 +20,8 @@ Public Class MailDao
         Return mail
     End Function
 
-    Public Function GetProfessionSanteById(sendMailKey As Integer) As Mail
-        Dim mail As Mail
+    Public Function GetProfessionSanteById(sendMailKey As Integer) As MailDB
+        Dim mail As MailDB
         Dim con As SqlConnection = GetConnection()
         Try
             Dim command As SqlCommand = con.CreateCommand()
@@ -42,7 +42,7 @@ Public Class MailDao
         Return mail
     End Function
 
-    Public Function CreateMail(mail As Mail, userLog As Utilisateur) As Boolean
+    Public Function CreateMail(mail As MailDB, userLog As Utilisateur) As Boolean
         Dim da As SqlDataAdapter = New SqlDataAdapter()
         Dim codeRetour As Boolean = True
         Dim con As SqlConnection
