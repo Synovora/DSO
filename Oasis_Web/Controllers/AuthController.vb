@@ -102,6 +102,7 @@ Namespace Oasis_Web.Controllers
             Dim message As String
             Dim internauteDao As New InternauteDao
             Dim internautePermissionDao As New InternautePermissionDao
+            Dim patientDao As New PatientDao
 
             Try
                 Dim internaute = internauteDao.GetInternauteByEmail(user.Email)
@@ -118,15 +119,17 @@ Namespace Oasis_Web.Controllers
                     .Code = "0000"
                 })
                 If internauteId > 0 Then
+                    Dim patient = patientDao.GetPatient(internautePermissions(0).Patient)
                     Dim mailOasis As New MailOasis
-                    mailOasis.IsSousEpisode = False
-                    mailOasis.Type = ParametreMail.TypeMailParams.PWD_GENERATE
+                    mailOasis.Type = ParametreMail.TypeMailParams.INTERNAUTE_RESET
+                    mailOasis.AddressTo = user.Email
+                    mailOasis.Internaute = internaute
                     mailOasis.Send(New LoginRequest With {
                                    .login = "Bertrand.Gambet",
                                    .password = "a"})
                 End If
-                Return RedirectToAction("Login", "Auth")
 
+                Return RedirectToAction("Login", "Auth")
             Catch ex As Exception
                 message = ex.Message
             End Try

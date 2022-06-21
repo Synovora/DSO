@@ -3646,7 +3646,10 @@ Public Class RadFEpisodeDetail
 
     'Création d'un traitement
     Private Sub RadBtnCreationTraitement_Click(sender As Object, e As EventArgs) Handles RadBtnCreationTraitement.Click
-        CreationTraitement()
+        Dim dt = ordonnaceDao.GetOrdonnanceValideByPatient(SelectedPatient.PatientId, SelectedEpisodeId)
+        If dt.Count > 0 AndAlso MsgBox("Vous avez apporté des modifications aux traitements prescrits à ce patient alors qu'une ordonnance a été produite et en attente de validation. Sans l'annulation de l'ordonnance en cours et sa re-génération, l'ordonnance ne sera pas alignée avec vos modifications.", MsgBoxStyle.YesNo, "Modification des traitements") = MsgBoxResult.Yes Then
+            CreationTraitement()
+        End If
     End Sub
 
     Private Sub CréerUnTraitementToolStripMenuItem1_Click(sender As Object, e As EventArgs) Handles CréerUnTraitementToolStripMenuItem1.Click
@@ -3696,33 +3699,36 @@ Public Class RadFEpisodeDetail
     'Affichage du détail d'un traitement dans un popup
     Private Sub RadTraitementDataGridView_CellDoubleClick(sender As Object, e As Telerik.WinControls.UI.GridViewCellEventArgs) Handles RadTraitementDataGridView.CellDoubleClick
         If RadTraitementDataGridView.CurrentRow IsNot Nothing Then
-            Dim aRow As Integer = Me.RadTraitementDataGridView.Rows.IndexOf(Me.RadTraitementDataGridView.CurrentRow)
-            If aRow >= 0 Then
-                Dim TraitementId, SelectedMedicamentCis As Integer
-                TraitementId = RadTraitementDataGridView.Rows(aRow).Cells("TraitementId").Value
-                SelectedMedicamentCis = RadTraitementDataGridView.Rows(aRow).Cells("MedicamentCis").Value
-                Cursor.Current = Cursors.WaitCursor
-                Me.Enabled = False
+            Dim dt = ordonnaceDao.GetOrdonnanceValideByPatient(SelectedPatient.PatientId, SelectedEpisodeId)
+            If dt.Count > 0 AndAlso MsgBox("Vous allez vous attribuer le traitement du rendez-vous qui sera honoré à la sortie de l'épisode. Confirmez-vous son attribution", MsgBoxStyle.YesNo, "Modification des traitements") = MsgBoxResult.Yes Then
+                Dim aRow As Integer = Me.RadTraitementDataGridView.Rows.IndexOf(Me.RadTraitementDataGridView.CurrentRow)
+                If aRow >= 0 Then
+                    Dim TraitementId, SelectedMedicamentCis As Integer
+                    TraitementId = RadTraitementDataGridView.Rows(aRow).Cells("TraitementId").Value
+                    SelectedMedicamentCis = RadTraitementDataGridView.Rows(aRow).Cells("MedicamentCis").Value
+                    Cursor.Current = Cursors.WaitCursor
+                    Me.Enabled = False
 
-                Try
-                    Using vFTraitementDetailEdit As New RadFTraitementDetailEdit
-                        vFTraitementDetailEdit.SelectedTraitementId = TraitementId
-                        vFTraitementDetailEdit.SelectedPatient = Me.SelectedPatient
-                        'vFTraitementDetailEdit.UtilisateurConnecte = Me.UtilisateurConnecte
-                        vFTraitementDetailEdit.SelectedMedicamentId = SelectedMedicamentCis
-                        vFTraitementDetailEdit.Allergie = Me.PatientAllergie
-                        vFTraitementDetailEdit.ContreIndication = Me.PatientContreIndication
-                        vFTraitementDetailEdit.PositionGaucheDroite = EnumPosition.Gauche
-                        vFTraitementDetailEdit.ShowDialog() 'Modal
-                        If vFTraitementDetailEdit.CodeRetour = True Then
-                            ChargementTraitement()
-                        End If
-                    End Using
-                Catch ex As Exception
-                    MessageBox.Show(ex.Message)
-                End Try
+                    Try
+                        Using vFTraitementDetailEdit As New RadFTraitementDetailEdit
+                            vFTraitementDetailEdit.SelectedTraitementId = TraitementId
+                            vFTraitementDetailEdit.SelectedPatient = Me.SelectedPatient
+                            'vFTraitementDetailEdit.UtilisateurConnecte = Me.UtilisateurConnecte
+                            vFTraitementDetailEdit.SelectedMedicamentId = SelectedMedicamentCis
+                            vFTraitementDetailEdit.Allergie = Me.PatientAllergie
+                            vFTraitementDetailEdit.ContreIndication = Me.PatientContreIndication
+                            vFTraitementDetailEdit.PositionGaucheDroite = EnumPosition.Gauche
+                            vFTraitementDetailEdit.ShowDialog() 'Modal
+                            If vFTraitementDetailEdit.CodeRetour = True Then
+                                ChargementTraitement()
+                            End If
+                        End Using
+                    Catch ex As Exception
+                        MessageBox.Show(ex.Message)
+                    End Try
 
-                Me.Enabled = True
+                    Me.Enabled = True
+                End If
             End If
         End If
     End Sub
@@ -5212,6 +5218,10 @@ Public Class RadFEpisodeDetail
     Private Sub RadBtnAddSousEpisode_Click(sender As Object, e As EventArgs) Handles RadBtnAddSousEpisode.Click
         FicheSousEpisode(New SousEpisode, userLog.UtilisateurPrenom + " " + userLog.UtilisateurNom, Nothing, Nothing)
         RefreshButtonSousEpisodeProperties()
+    End Sub
+
+    Private Sub RadTraitementDataGridView_Click(sender As Object, e As EventArgs) Handles RadTraitementDataGridView.Click
+
     End Sub
 
     '===========================================================

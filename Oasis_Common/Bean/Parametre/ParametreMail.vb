@@ -8,7 +8,8 @@ Public Class ParametreMail
         SYNTHESE
         SOUS_EPISODE
         CARNET_VACCINAL
-        PWD_GENERATE
+        INTERNAUTE_CREATE
+        INTERNAUTE_RESET
     End Enum
 
     Property Id As Long

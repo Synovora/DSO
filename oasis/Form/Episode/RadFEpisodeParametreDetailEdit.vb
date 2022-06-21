@@ -105,7 +105,7 @@ Public Class RadFEpisodeParametreDetailEdit
         Dim ValeurString As String
         Dim ParametreAjoute As Boolean
         Dim iGrid As Integer = -1 'Indice pour alimenter la Grid qui peut comporter moins d'occurrences que le DataTable
-        Dim ParmRowCount As Integer = parmDataTable.Rows.Count - 1
+        ParmRowCount = parmDataTable.Rows.Count - 1
         Dim RowCount As Integer = parmDataTable.Rows.Count - 1
         'Parcours du DataTable pour alimenter le DataGridView
         For i = 0 To RowCount Step 1
@@ -200,10 +200,10 @@ Public Class RadFEpisodeParametreDetailEdit
         'Positionnement du grid sur la première occurrence
         If Index <> -1 Then
             If Index < RadGridViewParm.Rows.Count Then
-                Me.RadGridViewParm.CurrentRow = RadGridViewParm.ChildRows(Index)
-                Me.RadGridViewParm.Rows(Index).IsCurrent = True
-                Me.RadGridViewParm.Columns(5).IsCurrent = True
-                Me.RadGridViewParm.BeginEdit()
+                RadGridViewParm.CurrentRow = RadGridViewParm.ChildRows(Index)
+                RadGridViewParm.Rows(Index).IsCurrent = True
+                'RadGridViewParm.Columns(1).IsCurrent = True
+                RadGridViewParm.CurrentRow.Cells(1).BeginEdit()
             End If
         Else
             If RadGridViewParm.Rows.Count > 0 Then
@@ -535,4 +535,19 @@ Public Class RadFEpisodeParametreDetailEdit
             End If
         End If
     End Sub
+
+    Private Sub RadGridViewParm_KeyDown(
+        ByVal sender As Object,
+        ByVal e As System.Windows.Forms.KeyEventArgs) _
+    Handles RadGridViewParm.KeyDown
+
+        If e.KeyCode = Keys.Enter Then
+            Dim row = RadGridViewParm.CurrentRow
+            If row IsNot Nothing AndAlso row.Cells.Count > 2 Then
+                row.Cells(1).BeginEdit()
+            End If
+        End If
+    End Sub
 End Class
+
+

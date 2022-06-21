@@ -19,7 +19,7 @@ End Class
 Public Class Mail
 
     Property AliasFrom As String = ""
-    Property AdressTo As String = ""
+    Property AddressTo As String = ""
     Property Subject As String = ""
     Property Body As String = ""
     Property Filename As String = ""

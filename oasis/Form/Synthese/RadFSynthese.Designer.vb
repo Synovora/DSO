@@ -118,6 +118,12 @@ Partial Class RadFSynthese
         Me.HistoriqueDesModificationsToolStripMenuItem2 = New System.Windows.Forms.ToolStripMenuItem()
         Me.RadBtnCreationParcours = New Telerik.WinControls.UI.RadButton()
         Me.RadParcoursDataGridView = New Telerik.WinControls.UI.RadGridView()
+        Me.PPSContextMenuStrip = New System.Windows.Forms.ContextMenuStrip(Me.components)
+        Me.CréerUnObjectifDeSantéToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.CréerUneMesurePréventiveToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.CréerUneStratégieContextuelleToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.CréerUnSuiviToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.HistoriqueDesModificationsToolStripMenuItem3 = New System.Windows.Forms.ToolStripMenuItem()
         Me.RadGroupBoxContexte = New Telerik.WinControls.UI.RadGroupBox()
         Me.ContexteMedicalContextMenuStrip = New System.Windows.Forms.ContextMenuStrip(Me.components)
         Me.ToolStripMenuItem1 = New System.Windows.Forms.ToolStripMenuItem()
@@ -125,12 +131,6 @@ Partial Class RadFSynthese
         Me.RadBtnCreationContexte = New Telerik.WinControls.UI.RadButton()
         Me.RadContexteDataGridView = New Telerik.WinControls.UI.RadGridView()
         Me.RadGroupBoxPPS = New Telerik.WinControls.UI.RadGroupBox()
-        Me.PPSContextMenuStrip = New System.Windows.Forms.ContextMenuStrip(Me.components)
-        Me.CréerUnObjectifDeSantéToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-        Me.CréerUneMesurePréventiveToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-        Me.CréerUneStratégieContextuelleToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-        Me.CréerUnSuiviToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-        Me.HistoriqueDesModificationsToolStripMenuItem3 = New System.Windows.Forms.ToolStripMenuItem()
         Me.RadBtnCreationPPSSuivi = New Telerik.WinControls.UI.RadButton()
         Me.RadBtnCreationPPSStrategie = New Telerik.WinControls.UI.RadButton()
         Me.RadBtnCreationPPSObjectif = New Telerik.WinControls.UI.RadButton()
@@ -188,6 +188,7 @@ Partial Class RadFSynthese
         CType(Me.RadBtnCreationParcours, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.RadParcoursDataGridView, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.RadParcoursDataGridView.MasterTemplate, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.PPSContextMenuStrip.SuspendLayout()
         CType(Me.RadGroupBoxContexte, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.RadGroupBoxContexte.SuspendLayout()
         Me.ContexteMedicalContextMenuStrip.SuspendLayout()
@@ -196,7 +197,6 @@ Partial Class RadFSynthese
         CType(Me.RadContexteDataGridView.MasterTemplate, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.RadGroupBoxPPS, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.RadGroupBoxPPS.SuspendLayout()
-        Me.PPSContextMenuStrip.SuspendLayout()
         CType(Me.RadBtnCreationPPSSuivi, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.RadBtnCreationPPSStrategie, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.RadBtnCreationPPSObjectif, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -261,20 +261,21 @@ Partial Class RadFSynthese
         '
         'EtatCivilContextMenuStrip
         '
+        Me.EtatCivilContextMenuStrip.ImageScalingSize = New System.Drawing.Size(24, 24)
         Me.EtatCivilContextMenuStrip.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ToolStripMenuItemMaps, Me.DétailPatientToolStripMenuItem})
         Me.EtatCivilContextMenuStrip.Name = "EtatCivilContextMenuStrip"
-        Me.EtatCivilContextMenuStrip.Size = New System.Drawing.Size(266, 48)
+        Me.EtatCivilContextMenuStrip.Size = New System.Drawing.Size(374, 68)
         '
         'ToolStripMenuItemMaps
         '
         Me.ToolStripMenuItemMaps.Name = "ToolStripMenuItemMaps"
-        Me.ToolStripMenuItemMaps.Size = New System.Drawing.Size(265, 22)
+        Me.ToolStripMenuItemMaps.Size = New System.Drawing.Size(373, 32)
         Me.ToolStripMenuItemMaps.Text = "Afficher l'adresse dans Google Maps"
         '
         'DétailPatientToolStripMenuItem
         '
         Me.DétailPatientToolStripMenuItem.Name = "DétailPatientToolStripMenuItem"
-        Me.DétailPatientToolStripMenuItem.Size = New System.Drawing.Size(265, 22)
+        Me.DétailPatientToolStripMenuItem.Size = New System.Drawing.Size(373, 32)
         Me.DétailPatientToolStripMenuItem.Text = "Détail patient"
         '
         'LblDateNaissance
@@ -284,7 +285,7 @@ Partial Class RadFSynthese
         Me.LblDateNaissance.ForeColor = System.Drawing.Color.Red
         Me.LblDateNaissance.Location = New System.Drawing.Point(339, 2)
         Me.LblDateNaissance.Name = "LblDateNaissance"
-        Me.LblDateNaissance.Size = New System.Drawing.Size(65, 15)
+        Me.LblDateNaissance.Size = New System.Drawing.Size(106, 25)
         Me.LblDateNaissance.TabIndex = 45
         Me.LblDateNaissance.Text = "25-04-2018"
         '
@@ -295,7 +296,7 @@ Partial Class RadFSynthese
         Me.LblNonOasis.ForeColor = System.Drawing.Color.Red
         Me.LblNonOasis.Location = New System.Drawing.Point(231, 17)
         Me.LblNonOasis.Name = "LblNonOasis"
-        Me.LblNonOasis.Size = New System.Drawing.Size(432, 19)
+        Me.LblNonOasis.Size = New System.Drawing.Size(612, 28)
         Me.LblNonOasis.TabIndex = 44
         Me.LblNonOasis.Text = "++++++++++ !!! Patient hors système Oasis !!! ++++++++++"
         '
@@ -306,7 +307,7 @@ Partial Class RadFSynthese
         Me.LblALD.ForeColor = System.Drawing.Color.OrangeRed
         Me.LblALD.Location = New System.Drawing.Point(947, 2)
         Me.LblALD.Name = "LblALD"
-        Me.LblALD.Size = New System.Drawing.Size(31, 13)
+        Me.LblALD.Size = New System.Drawing.Size(46, 20)
         Me.LblALD.TabIndex = 43
         Me.LblALD.Text = "ALD"
         '
@@ -316,7 +317,7 @@ Partial Class RadFSynthese
         Me.Label13.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label13.Location = New System.Drawing.Point(588, 2)
         Me.Label13.Name = "Label13"
-        Me.Label13.Size = New System.Drawing.Size(37, 13)
+        Me.Label13.Size = New System.Drawing.Size(52, 20)
         Me.Label13.TabIndex = 42
         Me.Label13.Text = "NIR :"
         '
@@ -325,7 +326,7 @@ Partial Class RadFSynthese
         Me.LblPatientDateMaj.AutoSize = True
         Me.LblPatientDateMaj.Location = New System.Drawing.Point(879, 2)
         Me.LblPatientDateMaj.Name = "LblPatientDateMaj"
-        Me.LblPatientDateMaj.Size = New System.Drawing.Size(63, 13)
+        Me.LblPatientDateMaj.Size = New System.Drawing.Size(96, 23)
         Me.LblPatientDateMaj.TabIndex = 41
         Me.LblPatientDateMaj.Text = "23-05-2019"
         '
@@ -335,7 +336,7 @@ Partial Class RadFSynthese
         Me.Label5.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label5.Location = New System.Drawing.Point(745, 2)
         Me.Label5.Name = "Label5"
-        Me.Label5.Size = New System.Drawing.Size(128, 13)
+        Me.Label5.Size = New System.Drawing.Size(194, 20)
         Me.Label5.TabIndex = 40
         Me.Label5.Text = "Dernière mise à jour :"
         '
@@ -344,7 +345,7 @@ Partial Class RadFSynthese
         Me.LblPatientSite.AutoSize = True
         Me.LblPatientSite.Location = New System.Drawing.Point(710, 21)
         Me.LblPatientSite.Name = "LblPatientSite"
-        Me.LblPatientSite.Size = New System.Drawing.Size(36, 13)
+        Me.LblPatientSite.Size = New System.Drawing.Size(53, 23)
         Me.LblPatientSite.TabIndex = 37
         Me.LblPatientSite.Text = "Cluny"
         '
@@ -354,7 +355,7 @@ Partial Class RadFSynthese
         Me.Label4.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label4.Location = New System.Drawing.Point(667, 21)
         Me.Label4.Name = "Label4"
-        Me.Label4.Size = New System.Drawing.Size(37, 13)
+        Me.Label4.Size = New System.Drawing.Size(54, 20)
         Me.Label4.TabIndex = 36
         Me.Label4.Text = "Site :"
         '
@@ -365,7 +366,7 @@ Partial Class RadFSynthese
         Me.LblPatientPrenom.ForeColor = System.Drawing.Color.Red
         Me.LblPatientPrenom.Location = New System.Drawing.Point(10, 2)
         Me.LblPatientPrenom.Name = "LblPatientPrenom"
-        Me.LblPatientPrenom.Size = New System.Drawing.Size(73, 17)
+        Me.LblPatientPrenom.Size = New System.Drawing.Size(108, 25)
         Me.LblPatientPrenom.TabIndex = 23
         Me.LblPatientPrenom.Text = "Jean-Pierre"
         '
@@ -376,7 +377,7 @@ Partial Class RadFSynthese
         Me.LblPatientNom.ForeColor = System.Drawing.Color.Red
         Me.LblPatientNom.Location = New System.Drawing.Point(136, 2)
         Me.LblPatientNom.Name = "LblPatientNom"
-        Me.LblPatientNom.Size = New System.Drawing.Size(51, 17)
+        Me.LblPatientNom.Size = New System.Drawing.Size(75, 25)
         Me.LblPatientNom.TabIndex = 24
         Me.LblPatientNom.Text = "Durand"
         '
@@ -387,7 +388,7 @@ Partial Class RadFSynthese
         Me.LblPatientAge.ForeColor = System.Drawing.Color.DarkRed
         Me.LblPatientAge.Location = New System.Drawing.Point(412, 2)
         Me.LblPatientAge.Name = "LblPatientAge"
-        Me.LblPatientAge.Size = New System.Drawing.Size(40, 15)
+        Me.LblPatientAge.Size = New System.Drawing.Size(64, 25)
         Me.LblPatientAge.TabIndex = 25
         Me.LblPatientAge.Text = "35 ans"
         '
@@ -398,7 +399,7 @@ Partial Class RadFSynthese
         Me.LblPatientGenre.ForeColor = System.Drawing.Color.DarkRed
         Me.LblPatientGenre.Location = New System.Drawing.Point(505, 2)
         Me.LblPatientGenre.Name = "LblPatientGenre"
-        Me.LblPatientGenre.Size = New System.Drawing.Size(55, 15)
+        Me.LblPatientGenre.Size = New System.Drawing.Size(81, 25)
         Me.LblPatientGenre.TabIndex = 26
         Me.LblPatientGenre.Text = "Masculin"
         '
@@ -407,7 +408,7 @@ Partial Class RadFSynthese
         Me.LblPatientNIR.AutoSize = True
         Me.LblPatientNIR.Location = New System.Drawing.Point(639, 2)
         Me.LblPatientNIR.Name = "LblPatientNIR"
-        Me.LblPatientNIR.Size = New System.Drawing.Size(85, 13)
+        Me.LblPatientNIR.Size = New System.Drawing.Size(127, 23)
         Me.LblPatientNIR.TabIndex = 27
         Me.LblPatientNIR.Text = "1840675370367"
         '
@@ -524,37 +525,38 @@ Partial Class RadFSynthese
         '
         'AntecedentContextMenuStrip
         '
+        Me.AntecedentContextMenuStrip.ImageScalingSize = New System.Drawing.Size(24, 24)
         Me.AntecedentContextMenuStrip.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.CréerAntecedentToolStripMenuItem, Me.ModifierUnAntécédentToolStripMenuItem, Me.HistoriqueDesModificationsToolStripMenuItem, Me.ToolStripSeparator3, Me.ModifierLordreDunAntécédentToolStripMenuItem})
         Me.AntecedentContextMenuStrip.Name = "AntecedentContextMenuStrip"
-        Me.AntecedentContextMenuStrip.Size = New System.Drawing.Size(316, 98)
+        Me.AntecedentContextMenuStrip.Size = New System.Drawing.Size(445, 138)
         '
         'CréerAntecedentToolStripMenuItem
         '
         Me.CréerAntecedentToolStripMenuItem.Name = "CréerAntecedentToolStripMenuItem"
-        Me.CréerAntecedentToolStripMenuItem.Size = New System.Drawing.Size(315, 22)
+        Me.CréerAntecedentToolStripMenuItem.Size = New System.Drawing.Size(444, 32)
         Me.CréerAntecedentToolStripMenuItem.Text = "Créer un antécédent"
         '
         'ModifierUnAntécédentToolStripMenuItem
         '
         Me.ModifierUnAntécédentToolStripMenuItem.Name = "ModifierUnAntécédentToolStripMenuItem"
-        Me.ModifierUnAntécédentToolStripMenuItem.Size = New System.Drawing.Size(315, 22)
+        Me.ModifierUnAntécédentToolStripMenuItem.Size = New System.Drawing.Size(444, 32)
         Me.ModifierUnAntécédentToolStripMenuItem.Text = "Modifier un antécédent"
         '
         'HistoriqueDesModificationsToolStripMenuItem
         '
         Me.HistoriqueDesModificationsToolStripMenuItem.Name = "HistoriqueDesModificationsToolStripMenuItem"
-        Me.HistoriqueDesModificationsToolStripMenuItem.Size = New System.Drawing.Size(315, 22)
+        Me.HistoriqueDesModificationsToolStripMenuItem.Size = New System.Drawing.Size(444, 32)
         Me.HistoriqueDesModificationsToolStripMenuItem.Text = "Historique des modifications d'un antécédent"
         '
         'ToolStripSeparator3
         '
         Me.ToolStripSeparator3.Name = "ToolStripSeparator3"
-        Me.ToolStripSeparator3.Size = New System.Drawing.Size(312, 6)
+        Me.ToolStripSeparator3.Size = New System.Drawing.Size(441, 6)
         '
         'ModifierLordreDunAntécédentToolStripMenuItem
         '
         Me.ModifierLordreDunAntécédentToolStripMenuItem.Name = "ModifierLordreDunAntécédentToolStripMenuItem"
-        Me.ModifierLordreDunAntécédentToolStripMenuItem.Size = New System.Drawing.Size(315, 22)
+        Me.ModifierLordreDunAntécédentToolStripMenuItem.Size = New System.Drawing.Size(444, 32)
         Me.ModifierLordreDunAntécédentToolStripMenuItem.Text = "Modifier l'ordre d'un antécédent"
         '
         'RadGroupBoxAntecedent
@@ -618,71 +620,72 @@ Partial Class RadFSynthese
         '
         'TraitementContextMenuStrip
         '
+        Me.TraitementContextMenuStrip.ImageScalingSize = New System.Drawing.Size(24, 24)
         Me.TraitementContextMenuStrip.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.CréerUnTraitementToolStripMenuItem1, Me.GérerUneFenêtreThérapeutiqueToolStripMenuItem, Me.HistoriqueToolStripMenuItem, Me.ToolStripSeparator1, Me.TraitementsObsoletesToolStripMenuItem, Me.ToolStripSeparator2, Me.DéclarationAllergieToolStripMenuItem, Me.ListeDesMédicamentsDéclarésAllergiquesToolStripMenuItem, Me.ToolStripSeparator4, Me.DéclarationAllergieOuContreindicationToolStripMenuItem, Me.ListeDesMédicamentsDéclarésContreindiquésToolStripMenuItem})
         Me.TraitementContextMenuStrip.Name = "TraitementContextMenuStrip"
-        Me.TraitementContextMenuStrip.Size = New System.Drawing.Size(346, 198)
+        Me.TraitementContextMenuStrip.Size = New System.Drawing.Size(490, 278)
         '
         'CréerUnTraitementToolStripMenuItem1
         '
         Me.CréerUnTraitementToolStripMenuItem1.Name = "CréerUnTraitementToolStripMenuItem1"
-        Me.CréerUnTraitementToolStripMenuItem1.Size = New System.Drawing.Size(345, 22)
+        Me.CréerUnTraitementToolStripMenuItem1.Size = New System.Drawing.Size(489, 32)
         Me.CréerUnTraitementToolStripMenuItem1.Text = "Créer un traitement"
         '
         'GérerUneFenêtreThérapeutiqueToolStripMenuItem
         '
         Me.GérerUneFenêtreThérapeutiqueToolStripMenuItem.Name = "GérerUneFenêtreThérapeutiqueToolStripMenuItem"
-        Me.GérerUneFenêtreThérapeutiqueToolStripMenuItem.Size = New System.Drawing.Size(345, 22)
+        Me.GérerUneFenêtreThérapeutiqueToolStripMenuItem.Size = New System.Drawing.Size(489, 32)
         Me.GérerUneFenêtreThérapeutiqueToolStripMenuItem.Text = "Gérer une fenêtre thérapeutique pour un traitement"
         '
         'HistoriqueToolStripMenuItem
         '
         Me.HistoriqueToolStripMenuItem.Name = "HistoriqueToolStripMenuItem"
-        Me.HistoriqueToolStripMenuItem.Size = New System.Drawing.Size(345, 22)
+        Me.HistoriqueToolStripMenuItem.Size = New System.Drawing.Size(489, 32)
         Me.HistoriqueToolStripMenuItem.Text = "Historique des modifications d'un traitement"
         '
         'ToolStripSeparator1
         '
         Me.ToolStripSeparator1.Name = "ToolStripSeparator1"
-        Me.ToolStripSeparator1.Size = New System.Drawing.Size(342, 6)
+        Me.ToolStripSeparator1.Size = New System.Drawing.Size(486, 6)
         '
         'TraitementsObsoletesToolStripMenuItem
         '
         Me.TraitementsObsoletesToolStripMenuItem.Name = "TraitementsObsoletesToolStripMenuItem"
-        Me.TraitementsObsoletesToolStripMenuItem.Size = New System.Drawing.Size(345, 22)
+        Me.TraitementsObsoletesToolStripMenuItem.Size = New System.Drawing.Size(489, 32)
         Me.TraitementsObsoletesToolStripMenuItem.Text = "Afficher les traitements obsolètes"
         '
         'ToolStripSeparator2
         '
         Me.ToolStripSeparator2.Name = "ToolStripSeparator2"
-        Me.ToolStripSeparator2.Size = New System.Drawing.Size(342, 6)
+        Me.ToolStripSeparator2.Size = New System.Drawing.Size(486, 6)
         '
         'DéclarationAllergieToolStripMenuItem
         '
         Me.DéclarationAllergieToolStripMenuItem.Name = "DéclarationAllergieToolStripMenuItem"
-        Me.DéclarationAllergieToolStripMenuItem.Size = New System.Drawing.Size(345, 22)
+        Me.DéclarationAllergieToolStripMenuItem.Size = New System.Drawing.Size(489, 32)
         Me.DéclarationAllergieToolStripMenuItem.Text = "Déclaration allergie"
         '
         'ListeDesMédicamentsDéclarésAllergiquesToolStripMenuItem
         '
         Me.ListeDesMédicamentsDéclarésAllergiquesToolStripMenuItem.Name = "ListeDesMédicamentsDéclarésAllergiquesToolStripMenuItem"
-        Me.ListeDesMédicamentsDéclarésAllergiquesToolStripMenuItem.Size = New System.Drawing.Size(345, 22)
+        Me.ListeDesMédicamentsDéclarésAllergiquesToolStripMenuItem.Size = New System.Drawing.Size(489, 32)
         Me.ListeDesMédicamentsDéclarésAllergiquesToolStripMenuItem.Text = "Liste des substances allergiques"
         '
         'ToolStripSeparator4
         '
         Me.ToolStripSeparator4.Name = "ToolStripSeparator4"
-        Me.ToolStripSeparator4.Size = New System.Drawing.Size(342, 6)
+        Me.ToolStripSeparator4.Size = New System.Drawing.Size(486, 6)
         '
         'DéclarationAllergieOuContreindicationToolStripMenuItem
         '
         Me.DéclarationAllergieOuContreindicationToolStripMenuItem.Name = "DéclarationAllergieOuContreindicationToolStripMenuItem"
-        Me.DéclarationAllergieOuContreindicationToolStripMenuItem.Size = New System.Drawing.Size(345, 22)
+        Me.DéclarationAllergieOuContreindicationToolStripMenuItem.Size = New System.Drawing.Size(489, 32)
         Me.DéclarationAllergieOuContreindicationToolStripMenuItem.Text = "Déclaration contre-indication"
         '
         'ListeDesMédicamentsDéclarésContreindiquésToolStripMenuItem
         '
         Me.ListeDesMédicamentsDéclarésContreindiquésToolStripMenuItem.Name = "ListeDesMédicamentsDéclarésContreindiquésToolStripMenuItem"
-        Me.ListeDesMédicamentsDéclarésContreindiquésToolStripMenuItem.Size = New System.Drawing.Size(345, 22)
+        Me.ListeDesMédicamentsDéclarésContreindiquésToolStripMenuItem.Size = New System.Drawing.Size(489, 32)
         Me.ListeDesMédicamentsDéclarésContreindiquésToolStripMenuItem.Text = "Liste des contre-indications"
         '
         'LblTraitementArret
@@ -692,7 +695,7 @@ Partial Class RadFSynthese
         Me.LblTraitementArret.ForeColor = System.Drawing.Color.OrangeRed
         Me.LblTraitementArret.Location = New System.Drawing.Point(93, 1)
         Me.LblTraitementArret.Name = "LblTraitementArret"
-        Me.LblTraitementArret.Size = New System.Drawing.Size(132, 13)
+        Me.LblTraitementArret.Size = New System.Drawing.Size(203, 20)
         Me.LblTraitementArret.TabIndex = 2
         Me.LblTraitementArret.Text = "Traitement(s) arrêté(s)"
         '
@@ -702,7 +705,7 @@ Partial Class RadFSynthese
         Me.LblSubstance.ForeColor = System.Drawing.Color.OrangeRed
         Me.LblSubstance.Location = New System.Drawing.Point(449, 1)
         Me.LblSubstance.Name = "LblSubstance"
-        Me.LblSubstance.Size = New System.Drawing.Size(60, 13)
+        Me.LblSubstance.Size = New System.Drawing.Size(88, 23)
         Me.LblSubstance.TabIndex = 1
         Me.LblSubstance.Text = "Substance"
         '
@@ -833,20 +836,21 @@ Partial Class RadFSynthese
         '
         'ParcoursContextMenuStrip
         '
+        Me.ParcoursContextMenuStrip.ImageScalingSize = New System.Drawing.Size(24, 24)
         Me.ParcoursContextMenuStrip.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.CréerUnIntervenantToolStripMenuItem, Me.HistoriqueDesModificationsToolStripMenuItem2})
         Me.ParcoursContextMenuStrip.Name = "ParcoursContextMenuStrip"
-        Me.ParcoursContextMenuStrip.Size = New System.Drawing.Size(227, 48)
+        Me.ParcoursContextMenuStrip.Size = New System.Drawing.Size(313, 68)
         '
         'CréerUnIntervenantToolStripMenuItem
         '
         Me.CréerUnIntervenantToolStripMenuItem.Name = "CréerUnIntervenantToolStripMenuItem"
-        Me.CréerUnIntervenantToolStripMenuItem.Size = New System.Drawing.Size(226, 22)
+        Me.CréerUnIntervenantToolStripMenuItem.Size = New System.Drawing.Size(312, 32)
         Me.CréerUnIntervenantToolStripMenuItem.Text = "Créer un intervenant"
         '
         'HistoriqueDesModificationsToolStripMenuItem2
         '
         Me.HistoriqueDesModificationsToolStripMenuItem2.Name = "HistoriqueDesModificationsToolStripMenuItem2"
-        Me.HistoriqueDesModificationsToolStripMenuItem2.Size = New System.Drawing.Size(226, 22)
+        Me.HistoriqueDesModificationsToolStripMenuItem2.Size = New System.Drawing.Size(312, 32)
         Me.HistoriqueDesModificationsToolStripMenuItem2.Text = "Historique des modifications"
         '
         'RadBtnCreationParcours
@@ -936,6 +940,43 @@ Partial Class RadFSynthese
         Me.RadParcoursDataGridView.Size = New System.Drawing.Size(996, 133)
         Me.RadParcoursDataGridView.TabIndex = 0
         '
+        'PPSContextMenuStrip
+        '
+        Me.PPSContextMenuStrip.ImageScalingSize = New System.Drawing.Size(24, 24)
+        Me.PPSContextMenuStrip.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.CréerUnObjectifDeSantéToolStripMenuItem, Me.CréerUneMesurePréventiveToolStripMenuItem, Me.CréerUneStratégieContextuelleToolStripMenuItem, Me.CréerUnSuiviToolStripMenuItem, Me.HistoriqueDesModificationsToolStripMenuItem3})
+        Me.PPSContextMenuStrip.Name = "PPSContextMenuStrip1"
+        Me.PPSContextMenuStrip.Size = New System.Drawing.Size(332, 164)
+        '
+        'CréerUnObjectifDeSantéToolStripMenuItem
+        '
+        Me.CréerUnObjectifDeSantéToolStripMenuItem.Name = "CréerUnObjectifDeSantéToolStripMenuItem"
+        Me.CréerUnObjectifDeSantéToolStripMenuItem.Size = New System.Drawing.Size(331, 32)
+        Me.CréerUnObjectifDeSantéToolStripMenuItem.Text = "Créer un objectif de santé"
+        '
+        'CréerUneMesurePréventiveToolStripMenuItem
+        '
+        Me.CréerUneMesurePréventiveToolStripMenuItem.Name = "CréerUneMesurePréventiveToolStripMenuItem"
+        Me.CréerUneMesurePréventiveToolStripMenuItem.Size = New System.Drawing.Size(331, 32)
+        Me.CréerUneMesurePréventiveToolStripMenuItem.Text = "Créer une mesure préventive"
+        '
+        'CréerUneStratégieContextuelleToolStripMenuItem
+        '
+        Me.CréerUneStratégieContextuelleToolStripMenuItem.Name = "CréerUneStratégieContextuelleToolStripMenuItem"
+        Me.CréerUneStratégieContextuelleToolStripMenuItem.Size = New System.Drawing.Size(331, 32)
+        Me.CréerUneStratégieContextuelleToolStripMenuItem.Text = "Créer une stratégie contextuelle"
+        '
+        'CréerUnSuiviToolStripMenuItem
+        '
+        Me.CréerUnSuiviToolStripMenuItem.Name = "CréerUnSuiviToolStripMenuItem"
+        Me.CréerUnSuiviToolStripMenuItem.Size = New System.Drawing.Size(331, 32)
+        Me.CréerUnSuiviToolStripMenuItem.Text = "Créer un suivi"
+        '
+        'HistoriqueDesModificationsToolStripMenuItem3
+        '
+        Me.HistoriqueDesModificationsToolStripMenuItem3.Name = "HistoriqueDesModificationsToolStripMenuItem3"
+        Me.HistoriqueDesModificationsToolStripMenuItem3.Size = New System.Drawing.Size(331, 32)
+        Me.HistoriqueDesModificationsToolStripMenuItem3.Text = "Historique des modifications"
+        '
         'RadGroupBoxContexte
         '
         Me.RadGroupBoxContexte.AccessibleRole = System.Windows.Forms.AccessibleRole.Grouping
@@ -954,20 +995,21 @@ Partial Class RadFSynthese
         '
         'ContexteMedicalContextMenuStrip
         '
+        Me.ContexteMedicalContextMenuStrip.ImageScalingSize = New System.Drawing.Size(24, 24)
         Me.ContexteMedicalContextMenuStrip.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ToolStripMenuItem1, Me.HistoriqueDesModificationsToolStripMenuItem1})
         Me.ContexteMedicalContextMenuStrip.Name = "ContexteContextMenuStrip"
-        Me.ContexteMedicalContextMenuStrip.Size = New System.Drawing.Size(303, 48)
+        Me.ContexteMedicalContextMenuStrip.Size = New System.Drawing.Size(425, 68)
         '
         'ToolStripMenuItem1
         '
         Me.ToolStripMenuItem1.Name = "ToolStripMenuItem1"
-        Me.ToolStripMenuItem1.Size = New System.Drawing.Size(302, 22)
+        Me.ToolStripMenuItem1.Size = New System.Drawing.Size(424, 32)
         Me.ToolStripMenuItem1.Text = "Créer un contexte"
         '
         'HistoriqueDesModificationsToolStripMenuItem1
         '
         Me.HistoriqueDesModificationsToolStripMenuItem1.Name = "HistoriqueDesModificationsToolStripMenuItem1"
-        Me.HistoriqueDesModificationsToolStripMenuItem1.Size = New System.Drawing.Size(302, 22)
+        Me.HistoriqueDesModificationsToolStripMenuItem1.Size = New System.Drawing.Size(424, 32)
         Me.HistoriqueDesModificationsToolStripMenuItem1.Text = "Historique des modifications d'un contexte"
         '
         'RadBtnCreationContexte
@@ -1046,42 +1088,6 @@ Partial Class RadFSynthese
         Me.RadGroupBoxPPS.Text = "Plan Personnalisé de Soin"
         CType(Me.RadGroupBoxPPS.GetChildAt(0).GetChildAt(1), Telerik.WinControls.UI.GroupBoxHeader).GroupBoxStyle = Telerik.WinControls.UI.RadGroupBoxStyle.Office
         CType(Me.RadGroupBoxPPS.GetChildAt(0).GetChildAt(1), Telerik.WinControls.UI.GroupBoxHeader).Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Bold)
-        '
-        'PPSContextMenuStrip
-        '
-        Me.PPSContextMenuStrip.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.CréerUnObjectifDeSantéToolStripMenuItem, Me.CréerUneMesurePréventiveToolStripMenuItem, Me.CréerUneStratégieContextuelleToolStripMenuItem, Me.CréerUnSuiviToolStripMenuItem, Me.HistoriqueDesModificationsToolStripMenuItem3})
-        Me.PPSContextMenuStrip.Name = "PPSContextMenuStrip1"
-        Me.PPSContextMenuStrip.Size = New System.Drawing.Size(242, 114)
-        '
-        'CréerUnObjectifDeSantéToolStripMenuItem
-        '
-        Me.CréerUnObjectifDeSantéToolStripMenuItem.Name = "CréerUnObjectifDeSantéToolStripMenuItem"
-        Me.CréerUnObjectifDeSantéToolStripMenuItem.Size = New System.Drawing.Size(241, 22)
-        Me.CréerUnObjectifDeSantéToolStripMenuItem.Text = "Créer un objectif de santé"
-        '
-        'CréerUneMesurePréventiveToolStripMenuItem
-        '
-        Me.CréerUneMesurePréventiveToolStripMenuItem.Name = "CréerUneMesurePréventiveToolStripMenuItem"
-        Me.CréerUneMesurePréventiveToolStripMenuItem.Size = New System.Drawing.Size(241, 22)
-        Me.CréerUneMesurePréventiveToolStripMenuItem.Text = "Créer une mesure préventive"
-        '
-        'CréerUneStratégieContextuelleToolStripMenuItem
-        '
-        Me.CréerUneStratégieContextuelleToolStripMenuItem.Name = "CréerUneStratégieContextuelleToolStripMenuItem"
-        Me.CréerUneStratégieContextuelleToolStripMenuItem.Size = New System.Drawing.Size(241, 22)
-        Me.CréerUneStratégieContextuelleToolStripMenuItem.Text = "Créer une stratégie contextuelle"
-        '
-        'CréerUnSuiviToolStripMenuItem
-        '
-        Me.CréerUnSuiviToolStripMenuItem.Name = "CréerUnSuiviToolStripMenuItem"
-        Me.CréerUnSuiviToolStripMenuItem.Size = New System.Drawing.Size(241, 22)
-        Me.CréerUnSuiviToolStripMenuItem.Text = "Créer un suivi"
-        '
-        'HistoriqueDesModificationsToolStripMenuItem3
-        '
-        Me.HistoriqueDesModificationsToolStripMenuItem3.Name = "HistoriqueDesModificationsToolStripMenuItem3"
-        Me.HistoriqueDesModificationsToolStripMenuItem3.Size = New System.Drawing.Size(241, 22)
-        Me.HistoriqueDesModificationsToolStripMenuItem3.Text = "Historique des modifications"
         '
         'RadBtnCreationPPSSuivi
         '
@@ -1191,7 +1197,7 @@ Partial Class RadFSynthese
         Me.LblContreIndication.ForeColor = System.Drawing.Color.OrangeRed
         Me.LblContreIndication.Location = New System.Drawing.Point(248, 228)
         Me.LblContreIndication.Name = "LblContreIndication"
-        Me.LblContreIndication.Size = New System.Drawing.Size(117, 13)
+        Me.LblContreIndication.Size = New System.Drawing.Size(177, 20)
         Me.LblContreIndication.TabIndex = 32
         Me.LblContreIndication.Text = "Contre-indication(s)"
         Me.ToolTip.SetToolTip(Me.LblContreIndication, resources.GetString("LblContreIndication.ToolTip"))
@@ -1203,7 +1209,7 @@ Partial Class RadFSynthese
         Me.LblAllergie.ForeColor = System.Drawing.Color.OrangeRed
         Me.LblAllergie.Location = New System.Drawing.Point(381, 228)
         Me.LblAllergie.Name = "LblAllergie"
-        Me.LblAllergie.Size = New System.Drawing.Size(67, 13)
+        Me.LblAllergie.Size = New System.Drawing.Size(103, 20)
         Me.LblAllergie.TabIndex = 31
         Me.LblAllergie.Text = "Allergie(s) "
         Me.ToolTip.SetToolTip(Me.LblAllergie, resources.GetString("LblAllergie.ToolTip"))
@@ -1211,7 +1217,7 @@ Partial Class RadFSynthese
         'RadBtnCreationTraitement
         '
         Me.RadBtnCreationTraitement.Font = New System.Drawing.Font("Segoe UI", 11.0!)
-        Me.RadBtnCreationTraitement.Location = New System.Drawing.Point(77, 226)
+        Me.RadBtnCreationTraitement.Location = New System.Drawing.Point(80, 227)
         Me.RadBtnCreationTraitement.Name = "RadBtnCreationTraitement"
         Me.RadBtnCreationTraitement.Size = New System.Drawing.Size(15, 15)
         Me.RadBtnCreationTraitement.TabIndex = 41
@@ -1452,7 +1458,7 @@ Partial Class RadFSynthese
         '
         'RadFSynthese
         '
-        Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
+        Me.AutoScaleDimensions = New System.Drawing.SizeF(9.0!, 20.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.CancelButton = Me.RadButtonAbandon
         Me.ClientSize = New System.Drawing.Size(1024, 947)
@@ -1527,6 +1533,7 @@ Partial Class RadFSynthese
         CType(Me.RadBtnCreationParcours, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.RadParcoursDataGridView.MasterTemplate, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.RadParcoursDataGridView, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.PPSContextMenuStrip.ResumeLayout(False)
         CType(Me.RadGroupBoxContexte, System.ComponentModel.ISupportInitialize).EndInit()
         Me.RadGroupBoxContexte.ResumeLayout(False)
         Me.ContexteMedicalContextMenuStrip.ResumeLayout(False)
@@ -1535,7 +1542,6 @@ Partial Class RadFSynthese
         CType(Me.RadContexteDataGridView, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.RadGroupBoxPPS, System.ComponentModel.ISupportInitialize).EndInit()
         Me.RadGroupBoxPPS.ResumeLayout(False)
-        Me.PPSContextMenuStrip.ResumeLayout(False)
         CType(Me.RadBtnCreationPPSSuivi, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.RadBtnCreationPPSStrategie, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.RadBtnCreationPPSObjectif, System.ComponentModel.ISupportInitialize).EndInit()

@@ -142,7 +142,7 @@ Public Class ApiOasis
             {New StringContent(login), "login"},
             {New StringContent(password), "password"},
             {New StringContent(mailOasis.AliasFrom), "aliasFrom"},
-            {New StringContent(mailOasis.AdressTo), "adressTo"},
+            {New StringContent(mailOasis.AddressTo), "adressTo"},
             {New StringContent(mailOasis.Subject), "subject"},
             {New StringContent(mailOasis.Body), "body"},
             {New StringContent(mailOasis.IsSousEpisode), "isSousEpisode"},

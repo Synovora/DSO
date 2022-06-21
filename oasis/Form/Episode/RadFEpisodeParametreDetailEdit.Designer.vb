@@ -104,69 +104,94 @@ Partial Class RadFEpisodeParametreDetailEdit
         Me.RadGridViewParm.ForeColor = System.Drawing.Color.Black
         Me.RadGridViewParm.ImeMode = System.Windows.Forms.ImeMode.NoControl
         Me.RadGridViewParm.Location = New System.Drawing.Point(12, 34)
+        Me.RadGridViewParm.Margin = New System.Windows.Forms.Padding(4)
         '
         '
         '
         Me.RadGridViewParm.MasterTemplate.AllowAddNewRow = False
         Me.RadGridViewParm.MasterTemplate.AllowCellContextMenu = False
+        Me.RadGridViewParm.MasterTemplate.AllowColumnChooser = False
+        Me.RadGridViewParm.MasterTemplate.AllowColumnReorder = False
+        Me.RadGridViewParm.MasterTemplate.AllowColumnResize = False
         Me.RadGridViewParm.MasterTemplate.AllowDeleteRow = False
+        Me.RadGridViewParm.MasterTemplate.AllowDragToGroup = False
+        Me.RadGridViewParm.MasterTemplate.AllowRowResize = False
         GridViewTextBoxColumn1.EnableExpressionEditor = False
         GridViewTextBoxColumn1.FieldName = "episode_parametre_id"
         GridViewTextBoxColumn1.HeaderText = "episode_parametre_id"
         GridViewTextBoxColumn1.IsVisible = False
+        GridViewTextBoxColumn1.MinWidth = 8
         GridViewTextBoxColumn1.Name = "episode_parametre_id"
+        GridViewTextBoxColumn1.Width = 75
         GridViewTextBoxColumn2.EnableExpressionEditor = False
         GridViewTextBoxColumn2.FieldName = "parametre_id"
         GridViewTextBoxColumn2.HeaderText = "parametre_id"
         GridViewTextBoxColumn2.IsVisible = False
+        GridViewTextBoxColumn2.MinWidth = 8
         GridViewTextBoxColumn2.Name = "parametre_id"
+        GridViewTextBoxColumn2.Width = 75
         GridViewTextBoxColumn3.EnableExpressionEditor = False
         GridViewTextBoxColumn3.FieldName = "description"
         GridViewTextBoxColumn3.HeaderText = "Description"
         GridViewTextBoxColumn3.HeaderTextAlignment = System.Drawing.ContentAlignment.MiddleLeft
+        GridViewTextBoxColumn3.MinWidth = 8
         GridViewTextBoxColumn3.Name = "description"
         GridViewTextBoxColumn3.ReadOnly = True
-        GridViewTextBoxColumn3.Width = 250
+        GridViewTextBoxColumn3.Width = 375
         GridViewTextBoxColumn4.EnableExpressionEditor = False
         GridViewTextBoxColumn4.FieldName = "entier"
         GridViewTextBoxColumn4.HeaderText = "entier"
         GridViewTextBoxColumn4.IsVisible = False
+        GridViewTextBoxColumn4.MinWidth = 8
         GridViewTextBoxColumn4.Name = "entier"
         GridViewTextBoxColumn4.TextAlignment = System.Drawing.ContentAlignment.MiddleCenter
+        GridViewTextBoxColumn4.Width = 75
         GridViewTextBoxColumn5.EnableExpressionEditor = False
         GridViewTextBoxColumn5.FieldName = "decimal"
         GridViewTextBoxColumn5.HeaderText = "decimal"
         GridViewTextBoxColumn5.IsVisible = False
+        GridViewTextBoxColumn5.MinWidth = 8
         GridViewTextBoxColumn5.Name = "decimal"
         GridViewTextBoxColumn5.TextAlignment = System.Drawing.ContentAlignment.MiddleCenter
+        GridViewTextBoxColumn5.Width = 75
         GridViewTextBoxColumn6.EnableExpressionEditor = False
         GridViewTextBoxColumn6.HeaderText = "Valeur"
+        GridViewTextBoxColumn6.MinWidth = 8
         GridViewTextBoxColumn6.Name = "valeurInput"
+        GridViewTextBoxColumn6.Width = 75
         GridViewTextBoxColumn7.EnableExpressionEditor = False
         GridViewTextBoxColumn7.FieldName = "unite"
         GridViewTextBoxColumn7.HeaderText = "Unité"
         GridViewTextBoxColumn7.HeaderTextAlignment = System.Drawing.ContentAlignment.MiddleLeft
+        GridViewTextBoxColumn7.MinWidth = 8
         GridViewTextBoxColumn7.Name = "unite"
         GridViewTextBoxColumn7.ReadOnly = True
-        GridViewTextBoxColumn7.Width = 80
+        GridViewTextBoxColumn7.Width = 120
         GridViewTextBoxColumn8.EnableExpressionEditor = False
         GridViewTextBoxColumn8.FieldName = "valeur"
         GridViewTextBoxColumn8.HeaderText = "valeur"
         GridViewTextBoxColumn8.IsVisible = False
+        GridViewTextBoxColumn8.MinWidth = 8
         GridViewTextBoxColumn8.Name = "valeur"
+        GridViewTextBoxColumn8.Width = 75
         GridViewTextBoxColumn9.EnableExpressionEditor = False
         GridViewTextBoxColumn9.FieldName = "parametre_ajoute"
         GridViewTextBoxColumn9.IsVisible = False
+        GridViewTextBoxColumn9.MinWidth = 8
         GridViewTextBoxColumn9.Name = "parametre_ajoute"
         GridViewTextBoxColumn9.TextAlignment = System.Drawing.ContentAlignment.MiddleCenter
-        GridViewTextBoxColumn9.Width = 20
+        GridViewTextBoxColumn9.Width = 30
         GridViewTextBoxColumn10.EnableExpressionEditor = False
         GridViewTextBoxColumn10.FieldName = "ajoute"
         GridViewTextBoxColumn10.HeaderText = "+"
+        GridViewTextBoxColumn10.MinWidth = 8
         GridViewTextBoxColumn10.Name = "ajoute"
+        GridViewTextBoxColumn10.ReadOnly = True
         GridViewTextBoxColumn10.TextAlignment = System.Drawing.ContentAlignment.MiddleCenter
-        GridViewTextBoxColumn10.Width = 15
+        GridViewTextBoxColumn10.Width = 22
         Me.RadGridViewParm.MasterTemplate.Columns.AddRange(New Telerik.WinControls.UI.GridViewDataColumn() {GridViewTextBoxColumn1, GridViewTextBoxColumn2, GridViewTextBoxColumn3, GridViewTextBoxColumn4, GridViewTextBoxColumn5, GridViewTextBoxColumn6, GridViewTextBoxColumn7, GridViewTextBoxColumn8, GridViewTextBoxColumn9, GridViewTextBoxColumn10})
+        Me.RadGridViewParm.MasterTemplate.EnableGrouping = False
+        Me.RadGridViewParm.MasterTemplate.EnableSorting = False
         Me.RadGridViewParm.MasterTemplate.ShowFilteringRow = False
         Me.RadGridViewParm.MasterTemplate.ViewDefinition = TableViewDefinition1
         Me.RadGridViewParm.Name = "RadGridViewParm"
@@ -177,14 +202,15 @@ Partial Class RadFEpisodeParametreDetailEdit
         '
         'ContextMenuStrip1
         '
+        Me.ContextMenuStrip1.ImageScalingSize = New System.Drawing.Size(24, 24)
         Me.ContextMenuStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.TutorielToolStripMenuItem})
         Me.ContextMenuStrip1.Name = "ContextMenuStrip1"
-        Me.ContextMenuStrip1.Size = New System.Drawing.Size(115, 26)
+        Me.ContextMenuStrip1.Size = New System.Drawing.Size(144, 36)
         '
         'TutorielToolStripMenuItem
         '
         Me.TutorielToolStripMenuItem.Name = "TutorielToolStripMenuItem"
-        Me.TutorielToolStripMenuItem.Size = New System.Drawing.Size(114, 22)
+        Me.TutorielToolStripMenuItem.Size = New System.Drawing.Size(143, 32)
         Me.TutorielToolStripMenuItem.Text = "Tutoriel"
         '
         'RadDesktopAlert1
@@ -262,7 +288,7 @@ Partial Class RadFEpisodeParametreDetailEdit
         '
         'RadFEpisodeParametreDetailEdit
         '
-        Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
+        Me.AutoScaleDimensions = New System.Drawing.SizeF(9.0!, 20.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.CancelButton = Me.RadBtnAbandon
         Me.ClientSize = New System.Drawing.Size(915, 567)

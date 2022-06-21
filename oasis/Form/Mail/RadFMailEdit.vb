@@ -69,7 +69,7 @@ Public Class RadFMailEdit
     Private Sub SendMessage()
 
         'Ecriture dans la table "send_mail_trigger"
-        Dim mail As New Mail
+        Dim mail As New MailDB
         mail.sendMailTo = TxtSendMailTo.Text
         mail.sendMailCc = TxtSendMailCc.Text
         mail.sendMailBcc = TxtSendMailBc.Text

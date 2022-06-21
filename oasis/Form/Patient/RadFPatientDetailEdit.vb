@@ -1151,28 +1151,28 @@ Public Class RadFPatientDetailEdit
         Cursor.Current = Cursors.WaitCursor
         Me.Enabled = False
         Dim ecKey As String = BitConverter.ToString(EthECKey.GenerateKey().GetPrivateKeyAsBytes()).Replace("-", "")
-        Dim internauteId = internauteDao.Create(New Internaute With {
+        Dim internaute = New Internaute With {
         .Email = SelectedPatient.PatientEmail,
         .Recovery = ecKey,
         .Code = "0000",
         .Username = SelectedPatient.PatientNom
-        })
+        }
+        Dim internauteId = internauteDao.Create(internaute)
         Dim internautePermissionId = internautePermissionDao.Create(New InternautePermission With {
             .Internaute = internauteId,
             .Patient = SelectedPatient.PatientId,
             .Permission = 1
         })
-        If internautePermissionId > 0 Then
+        If internautePermissionId > 0 AndAlso internauteId > 0 Then
             Dim mailOasis As New MailOasis
             mailOasis.IsSousEpisode = False
-            mailOasis.Type = ParametreMail.TypeMailParams.PWD_GENERATE
+            mailOasis.Type = ParametreMail.TypeMailParams.INTERNAUTE_CREATE
             Try
                 Cursor.Current = Cursors.WaitCursor
-                Using frm = New FrmMailSousEpisodeOuSynthese(SelectedPatient, Nothing, mailOasis)
-                    frm.TxtTo.Text = SelectedPatient.PatientEmail
-                    frm.TxtBody.Text = frm.TxtBody.Text.Replace("@RECOVER_LINK", "https://ns3119889.ip-51-38-181.eu/Auth/Recover?key=" & ecKey)
-                    frm.Send()
-                End Using
+                mailOasis.Patient = SelectedPatient
+                mailOasis.Internaute = internaute
+                mailOasis.AddressTo = SelectedPatient.PatientEmail
+                mailOasis.Send(loginRequestLog)
 
 
                 Dim form As New RadFNotification()
@@ -1188,26 +1188,26 @@ Public Class RadFPatientDetailEdit
         End If
     End Sub
 
-    Private Sub RadButton1_Click(sender As Object, e As EventArgs) Handles BtnInitInternaute.Click
+    Private Sub BtnInitInternaute_Click(sender As Object, e As EventArgs) Handles BtnInitInternaute.Click
         Cursor.Current = Cursors.WaitCursor
         Me.Enabled = False
         Dim ecKey As String = BitConverter.ToString(EthECKey.GenerateKey().GetPrivateKeyAsBytes()).Replace("-", "")
         Dim internautePermissions = internautePermissionDao.GetPermissionsByPatient(Me.SelectedPatientId)
-        Dim internauteId = internauteDao.Update(New Internaute With {
+        Dim internaute = New Internaute With {
             .Id = internautePermissions(0).Internaute,
             .Password = "",
             .Recovery = ecKey,
             .Code = "0000"
-        })
-        If internauteId > 0 Then
+        }
+        If internauteDao.Update(internaute) > 0 Then
             Dim mailOasis As New MailOasis
             mailOasis.IsSousEpisode = False
-            mailOasis.Type = ParametreMail.TypeMailParams.PWD_GENERATE
+            mailOasis.Type = ParametreMail.TypeMailParams.INTERNAUTE_RESET
             Try
                 Cursor.Current = Cursors.WaitCursor
-                mailOasis.ReplaceZonesVariables(SelectedPatient)
-                mailOasis.Body = mailOasis.Body.Replace("@RECOVER_LINK", "https://ns3119889.ip-51-38-181.eu/Auth/Recover?key=" & ecKey)
-                mailOasis.AdressTo = SelectedPatient.PatientEmail
+                mailOasis.Internaute = internaute
+                mailOasis.Patient = SelectedPatient
+                mailOasis.AddressTo = SelectedPatient.PatientEmail
                 mailOasis.Send(loginRequestLog)
 
 

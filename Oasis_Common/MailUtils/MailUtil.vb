@@ -23,7 +23,7 @@ Public Class MailUtil
 
         With mimMessage
             .From.Add(New MailboxAddress(mailOasis.AliasFrom, Me.SMTPFrom))
-            Dim tbl = mailOasis.AdressTo.Split(",")
+            Dim tbl = mailOasis.AddressTo.Split(",")
             For Each adr As String In tbl
                 .To.Add(MailboxAddress.Parse(adr))
             Next

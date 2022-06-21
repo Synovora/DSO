@@ -150,7 +150,7 @@ Un clic de souris sur cette mention permet d'accéder à l'écran listant les su
   <data name="RadBtnRefresh.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAAA8AAAAPCAYAAAA71pVKAAAABGdBTUEAALGPC/xhBQAAACBjSFJNAAB6
-        JgAAgIQAAPoAAACA6AAAdTAAAOpgAAA6mAAAF3CculE8AAAACXBIWXMAAA7DAAAOwwHHb6hkAAAAB3RJ
+        JgAAgIQAAPoAAACA6AAAdTAAAOpgAAA6mAAAF3CculE8AAAACXBIWXMAAA7CAAAOwgEVKEqAAAAAB3RJ
         TUUH5AQCChIdCO0EowAAABl0RVh0U29mdHdhcmUAd3d3Lmlua3NjYXBlLm9yZ5vuPBoAAADvSURBVDhP
         nZCxrkRQEIZVeAIKUegkFKJQC8/hNSRqL6DVKj2Ad9BqdDotodL9mxlnd6+9dte9XzPzz8yXIyS80LYt
         giCApmkwTZMrZZq/cpBd14XneZjnWUx2KNOc9j95yJZloSgKkc6hPd3dYbmua8RxzINvRFHE9wTLsixz
@@ -162,7 +162,7 @@ Un clic de souris sur cette mention permet d'accéder à l'écran listant les su
   <data name="RadBtnImprimer.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAAA8AAAAPCAYAAAA71pVKAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAO
-        wwAADsMBx2+oZAAAAWBJREFUOE+VkrGKwkAURacQLdLYiQoaUZKAiqaxCFiInSBYSX4gP2KdfFOCNvoH
+        wgAADsIBFShKgAAAAWBJREFUOE+VkrGKwkAURacQLdLYiQoaUZKAiqaxCFiInSBYSX4gP2KdfFOCNvoH
         FmIpEhXsrPQud3Ymrqyw64HHvPfuu8lMMgKK+/0OIQTa7TZs25bBnL00TdXUK5n5dDphPB6r6kmpVIJh
         GNjv96rzJDOfz2d4nqeqJ61WS66FQgGHw0Hmmj/N3PZkMsFgMJD5T16q0WiksvcMh0OVfSNM00S5XJZn
         y+VyqFQqMtfBulqtolarIZ/Pw7IsNJtN1Ot1CH7VTwiCAHEcw3VdCMdxVPt/rFYr3G43dDqdz80a+gSf

@@ -40,7 +40,7 @@ Public Class SendMailController
             Dim mailOasis = New MailOasis
             With provider.FormData
                 mailOasis.AliasFrom = .Item("aliasFrom")
-                mailOasis.AdressTo = .Item("adressTo")
+                mailOasis.AddressTo = .Item("adressTo")
                 mailOasis.Subject = .Item("subject")
                 mailOasis.Body = .Item("body")
                 mailOasis.IsSousEpisode = .Item("isSousEpisode")
@@ -55,7 +55,7 @@ Public Class SendMailController
             ' ------------------------------------ params mail
             Dim smtpServer As String = Nothing
             Dim parametreMailDao As New ParametreMailDao
-            Dim parametreMail = parametreMailDao.GetParametreMailBySiegeIdTypeMailParam(mailOasis.IdSiege, TypeMailParams.SMTP_PARAMETERS)
+            Dim parametreMail = parametreMailDao.GetParametreMailBySiegeIdTypeMailParam(mailOasis.Patient.PatientSiegeId, TypeMailParams.SMTP_PARAMETERS)
             smtpServer = parametreMail.GetSMTPServerUrl()
 
 

@@ -24,7 +24,7 @@ Public Class FrmMailOrdonnance
         Me.mailOasis = mailOasis
         Me.patient = patient
         Me.ordonnance = ordonnance
-        Me.mailOasis.IdSiege = patient.PatientSiegeId
+        'Me.mailOasis.IdSiege = patient.PatientSiegeId
         Me.mailOasis.IsSousEpisode = False
 
         ' Ajoutez une initialisation quelconque après l'appel InitializeComponent().
@@ -128,7 +128,7 @@ Public Class FrmMailOrdonnance
                 .AliasFrom = ""
                 .Body = TxtBody.Text
                 .Subject = TxtObjet.Text
-                .AdressTo = TxtTo.Text
+                .AddressTo = TxtTo.Text
             End With
             Using apiOasis As New ApiOasis()
                 Dim ret = apiOasis.sendMailRest(loginRequestLog.login,

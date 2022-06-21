@@ -39,7 +39,6 @@ Public Class FrmMailSousEpisodeOuSynthese
 
         Me.mailOasis = mailOasis
         Me.patient = patient
-        Me.mailOasis.IdSiege = patient.PatientSiegeId
 
         ' Ajoutez une initialisation quelconque après l'appel InitializeComponent().
         initFormulaire()
@@ -141,7 +140,7 @@ Public Class FrmMailSousEpisodeOuSynthese
                 .AliasFrom = ""
                 .Body = TxtBody.Text
                 .Subject = TxtObjet.Text
-                .AdressTo = TxtTo.Text
+                .AddressTo = TxtTo.Text
             End With
             mailOasis.Send(loginRequestLog)
             Notification.show("Emission Email", "Email envoyé !")

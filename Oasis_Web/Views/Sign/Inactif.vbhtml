@@ -9,7 +9,7 @@ End Code
             <div class="col-lg-12">
                 <div class="text-center mb-5">
                     <h1 class="display-2 font-weight-medium"><i class="bx bx-buoy bx-spin text-primary display-3"></i></h1>
-                    <h4 class="text-uppercase">L'ordonnance est introuvable</h4>
+                    <h4 class="text-uppercase">L'ordonnance est introuvable ou a peut-être été annulée par le prescripteur</h4>
                     @*<div class="mt-5 text-center">
                         <a class="btn btn-primary waves-effect waves-light" href="@Url.Action("Index","Dashboard")">Back to Dashboard</a>
                     </div>*@

@@ -325,13 +325,15 @@ Public Class RadFRorListe
 
     Private Sub RadBtnAnnuaireProf_Click(sender As Object, e As EventArgs) Handles RadBtnAnnuaireProf.Click
         Dim specialite As Specialite
-        specialite = specialiteDao.GetSpecialiteById(SpecialiteId)
+        If SpecialiteId <> 0 Then
+            specialite = specialiteDao.GetSpecialiteById(SpecialiteId)
+        End If
         Try
             Using form As New RadFAnnuaireProfessionnelSelect
-                form.InputSpecialiteId = specialite.SpecialiteId
-                form.InputCodeProfessionId = specialite.NosG15CodeProfession
-                form.InputTypeSavoirFaireId = specialite.NosR40TypeSavoirFaire
-                form.InputCodeSavoirFaireId = specialite.NosCodeSavoirFaire
+                form.InputSpecialiteId = SpecialiteId
+                form.InputCodeProfessionId = If(specialite IsNot Nothing, specialite.NosG15CodeProfession, 0)
+                form.InputTypeSavoirFaireId = If(specialite IsNot Nothing, specialite.NosR40TypeSavoirFaire, "")
+                form.InputCodeSavoirFaireId = If(specialite IsNot Nothing, specialite.NosCodeSavoirFaire, "")
                 form.ShowDialog()
                 If form.SelectedProfessionnelCle <> 0 Then
                     ChargementRor()
