@@ -10,6 +10,7 @@ Public Class RadFValenceSelecteur
     ReadOnly valenceDao As New ValenceDao
     ReadOnly cgvValenceDao As New CGVValenceDao
     ReadOnly cgvDateDao As New CGVDateDao
+    Property IsUpdated As Boolean = False
 
     Private Sub RadFValenceSelecteur_Load(sender As Object, e As EventArgs) Handles MyBase.Load
 
@@ -68,7 +69,7 @@ Public Class RadFValenceSelecteur
         End If
     End Sub
 
-    Private Sub BtnAdd_Click(sender As Object, e As EventArgs) Handles BtnAdd.Click
+    Private Sub BtnAdd_Click(sender As Object, e As EventArgs) Handles BtnValenceAdd.Click
         Dim aRow As Integer = RGVValenceNotVisible.CurrentRow.Index
         If aRow >= 0 Then
             Dim valenceId = RGVValenceNotVisible.Rows(aRow).Cells(0).Value
@@ -81,10 +82,11 @@ Public Class RadFValenceSelecteur
                           .Patient = Patient.PatientId
             })
             ChargementValence()
+            IsUpdated = True
         End If
     End Sub
 
-    Private Sub BtnRemove_Click(sender As Object, e As EventArgs) Handles BtnRemove.Click
+    Private Sub BtnRemove_Click(sender As Object, e As EventArgs) Handles BtnValenceRemove.Click
         Dim aRow As Integer = RGVValenceVisible.CurrentRow.Index
         If aRow >= 0 Then
             Dim valenceId = RGVValenceVisible.Rows(aRow).Cells(0).Value
@@ -111,10 +113,11 @@ Public Class RadFValenceSelecteur
             Next
 
             ChargementValence()
+            IsUpdated = True
         End If
     End Sub
 
-    Private Sub BtnUp_Click(sender As Object, e As EventArgs) Handles BtnUp.Click
+    Private Sub BtnValenceUp_Click(sender As Object, e As EventArgs) Handles BtnValenceUp.Click
         Dim aRow As Integer = RGVValenceVisible.CurrentRow.Index
         If aRow >= 0 Then
             Dim valenceId = RGVValenceVisible.Rows(aRow).Cells(0).Value
@@ -125,10 +128,11 @@ Public Class RadFValenceSelecteur
                 valenceDao.SetOrder(swapValence.Id, swapValence.Ordre + 1)
             End If
             ChargementValence()
+            IsUpdated = True
         End If
     End Sub
 
-    Private Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click
+    Private Sub BtnValenceDown_Click(sender As Object, e As EventArgs) Handles BtnValenceDown.Click
         Dim aRow As Integer = RGVValenceVisible.CurrentRow.Index
         If aRow >= 0 Then
             Dim valenceId = RGVValenceVisible.Rows(aRow).Cells(0).Value
@@ -140,6 +144,7 @@ Public Class RadFValenceSelecteur
                 valenceDao.SetOrder(swapValence.Id, swapValence.Ordre - 1)
             End If
             ChargementValence()
+            IsUpdated = True
         End If
     End Sub
 
@@ -147,10 +152,7 @@ Public Class RadFValenceSelecteur
         Using formSelecteur As New RadFValenceCreation
             formSelecteur.ShowDialog()
             ChargementValence()
+            IsUpdated = True
         End Using
-    End Sub
-
-    Private Sub BtnAddValence_Click_1(sender As Object, e As EventArgs) Handles BtnAddValence.Click
-
     End Sub
 End Class

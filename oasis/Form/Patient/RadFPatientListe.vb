@@ -22,6 +22,15 @@ Public Class RadFPatientListe
     'Instanciation du patient pour le fournir aux Forms qui seront appelées depuis cette Form
     Dim SelectedPatient As New Patient
 
+    Private Sub Input_KeyDown(
+        ByVal sender As Object,
+        ByVal e As System.Windows.Forms.KeyEventArgs) _
+    Handles InputPrenom.KeyDown, InputNom.KeyDown
+        If e.KeyCode = Keys.Enter Then
+            BtnSearch_Click(Nothing, Nothing)
+        End If
+    End Sub
+
     Private Sub RadFPatientListe_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         AfficheTitleForm(Me, "Liste des patients", userLog)
 

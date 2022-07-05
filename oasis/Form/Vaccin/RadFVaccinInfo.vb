@@ -320,6 +320,16 @@ Public Class RadFVaccinInfo
         Me.Enabled = True
     End Sub
 
+    Private Function CreateRelationForAllNoneRequireValences()
+        For Each row As GridViewRowInfo In GVSelectedVaccin.Rows
+            For Each vaccinValenceNone In Vaccins.FindAll(Function(x) x.Id.ToString() = row.Cells("id").Value AndAlso Not SelectedValences.Any(Function(y) y.Valence = x.Valence))
+                If (Not cgvDateDao.GetRelationIfExist(New RelationValenceDate() With {.Date = SelectedCGVDate.Id, .Valence = vaccinValenceNone.Valence, .Patient = SelectedPatient.PatientId}) IsNot Nothing) Then
+                    cgvDateDao.CreateRelation(New RelationValenceDate() With {.Date = SelectedCGVDate.Id, .Valence = vaccinValenceNone.Valence, .Patient = SelectedPatient.PatientId})
+                End If
+            Next
+        Next
+    End Function
+
     Private Sub BtnAdminVaccin_Click(sender As Object, e As EventArgs) Handles BtnAdminVaccin.Click
         If Lock Then
             Dim vaccinList = (From _vaccin In GVVaccin.Rows Where _vaccin.Cells("checked").Value = True Select Convert.ToInt64(_vaccin.Cells("id").Value)).ToArray()
@@ -327,7 +337,7 @@ Public Class RadFVaccinInfo
                 radFVaccinInput.Lock = True
                 radFVaccinInput.VaccinPrograms = vaccinDao.GetVaccinProgramRelationListDatePatient(SelectedCGVDate.Id, SelectedPatient.PatientId)
                 radFVaccinInput.Vaccins = Vaccins.FindAll(Function(x) vaccinList.Contains(x.Id))
-                radFVaccinInput.Valences = SelectedValences
+                radFVaccinInput.SelectedValences = SelectedValences
                 radFVaccinInput.Patient = SelectedPatient
                 radFVaccinInput.ShowDialog()
                 ChargementInformation()
@@ -338,19 +348,17 @@ Public Class RadFVaccinInfo
             SelectedCGVDate.OperatedDate = DTPDate.Value
             cgvDateDao.Update(SelectedCGVDate)
             Dim vaccinList = (From _vaccin In GVVaccin.Rows Where _vaccin.Cells("checked").Value = True Select Convert.ToInt64(_vaccin.Cells("id").Value)).ToArray()
+            CreateRelationForAllNoneRequireValences()
             Using radFVaccinInput As New RadFVaccinInput
                 radFVaccinInput.VaccinPrograms = vaccinDao.GetVaccinProgramRelationListDatePatient(SelectedCGVDate.Id, SelectedPatient.PatientId)
                 radFVaccinInput.Vaccins = Vaccins.FindAll(Function(x) vaccinList.Contains(x.Id))
-                radFVaccinInput.Valences = SelectedValences
+                radFVaccinInput.SelectedValences = SelectedValences
                 radFVaccinInput.Patient = SelectedPatient
                 radFVaccinInput.ShowDialog()
                 ChargementInformation()
                 CodeRetour = True
 
                 If radFVaccinInput.CodeRetour = True Then
-                    'SelectedCGVDate.PerformDate = radFVaccinInput.DTPRealisation.Value()
-                    'SelectedCGVDate.PerformBy = userLog.UtilisateurId
-                    'cgvDateDao.Update(SelectedCGVDate)
                     Close()
                 End If
             End Using

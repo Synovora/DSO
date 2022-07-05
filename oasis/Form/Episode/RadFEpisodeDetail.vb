@@ -3647,9 +3647,10 @@ Public Class RadFEpisodeDetail
     'Création d'un traitement
     Private Sub RadBtnCreationTraitement_Click(sender As Object, e As EventArgs) Handles RadBtnCreationTraitement.Click
         Dim dt = ordonnaceDao.GetOrdonnanceValideByPatient(SelectedPatient.PatientId, SelectedEpisodeId)
-        If dt.Count > 0 AndAlso MsgBox("Vous avez apporté des modifications aux traitements prescrits à ce patient alors qu'une ordonnance a été produite et en attente de validation. Sans l'annulation de l'ordonnance en cours et sa re-génération, l'ordonnance ne sera pas alignée avec vos modifications.", MsgBoxStyle.YesNo, "Modification des traitements") = MsgBoxResult.Yes Then
-            CreationTraitement()
+        If dt.Count > 0 AndAlso MsgBox("Vous allez apporter des modifications aux traitements prescrits à ce patient alors qu'une ordonnance a été produite et en attente de validation. Sans l'annulation de l'ordonnance en cours et sa re-génération, l'ordonnance ne sera pas alignée avec vos modifications.", MsgBoxStyle.YesNo Or MsgBoxStyle.Exclamation, "Creation d'un traitements") = MsgBoxResult.No Then
+            Return
         End If
+        CreationTraitement()
     End Sub
 
     Private Sub CréerUnTraitementToolStripMenuItem1_Click(sender As Object, e As EventArgs) Handles CréerUnTraitementToolStripMenuItem1.Click
@@ -3700,7 +3701,7 @@ Public Class RadFEpisodeDetail
     Private Sub RadTraitementDataGridView_CellDoubleClick(sender As Object, e As Telerik.WinControls.UI.GridViewCellEventArgs) Handles RadTraitementDataGridView.CellDoubleClick
         If RadTraitementDataGridView.CurrentRow IsNot Nothing Then
             Dim dt = ordonnaceDao.GetOrdonnanceValideByPatient(SelectedPatient.PatientId, SelectedEpisodeId)
-            If dt.Count > 0 AndAlso MsgBox("Vous allez vous attribuer le traitement du rendez-vous qui sera honoré à la sortie de l'épisode. Confirmez-vous son attribution", MsgBoxStyle.YesNo, "Modification des traitements") = MsgBoxResult.Yes Then
+            If dt.Count > 0 AndAlso MsgBox("Vous allez apporter des modifications aux traitements prescrits à ce patient alors qu'une ordonnance a été produite et en attente de validation. Sans l'annulation de l'ordonnance en cours et sa re-génération, l'ordonnance ne sera pas alignée avec vos modifications.", MsgBoxStyle.YesNo Or MsgBoxStyle.Exclamation, "Modification des traitements") = MsgBoxResult.Yes Then
                 Dim aRow As Integer = Me.RadTraitementDataGridView.Rows.IndexOf(Me.RadTraitementDataGridView.CurrentRow)
                 If aRow >= 0 Then
                     Dim TraitementId, SelectedMedicamentCis As Integer
@@ -5454,14 +5455,10 @@ Public Class RadFEpisodeDetail
     Private Sub RadBtnVaccins_Click(sender As Object, e As EventArgs) Handles RadBtnVaccins.Click
         Me.Enabled = False
         Cursor.Current = Cursors.WaitCursor
-
         Try
-            Using vFPatientNoteListe As New RadFPatientNoteListe
-                vFPatientNoteListe.TypeNote = EnumTypeNote.Vaccin
-                vFPatientNoteListe.SelectedPatientId = Me.SelectedPatient.patientId
-                vFPatientNoteListe.SelectedPatient = Me.SelectedPatient
-                vFPatientNoteListe.UtilisateurConnecte = Me.UtilisateurConnecte
-                vFPatientNoteListe.ShowDialog() 'Modal
+            Using radFCPV As New RadFCPV
+                radFCPV.Patient = SelectedPatient
+                radFCPV.ShowDialog()
             End Using
         Catch ex As Exception
             MessageBox.Show(ex.Message)

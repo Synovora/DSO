@@ -93,6 +93,8 @@ Public Class RadFCPV
     End Sub
 
     Private Sub ChargementDate()
+        Me.Enabled = False
+        Cursor.Current = Cursors.WaitCursor
         Grid.Rows.Clear()
         TextDay.Text = ""
         TextMonth.Text = ""
@@ -140,6 +142,8 @@ Public Class RadFCPV
             iGrid += 1
         Next
         Grid.Enabled = True
+        Cursor.Current = Cursors.Default
+        Me.Enabled = True
     End Sub
 
     Private Sub Grid_ToolTipTextNeeded(ByVal sender As Object, ByVal e As Telerik.WinControls.ToolTipTextNeededEventArgs) Handles Grid.ToolTipTextNeeded
@@ -230,7 +234,9 @@ Public Class RadFCPV
         Using form As New RadFValenceSelecteur
             form.Patient = Patient
             form.ShowDialog()
-            ChargementValence()
+            If form.IsUpdated Then
+                ChargementValence()
+            End If
         End Using
     End Sub
 
@@ -390,4 +396,5 @@ Public Class RadFCPV
             Me.Enabled = True
         End Try
     End Sub
+
 End Class

@@ -1282,7 +1282,7 @@ Public Class RadFSynthese
         Dim episodeEnCours = episodeDao.GetEpisodeEnCoursByPatientId(SelectedPatient.PatientId)
         If episodeEnCours IsNot Nothing Then
             Dim dt = ordonnaceDao.GetOrdonnanceValideByPatient(SelectedPatient.PatientId, episodeEnCours.Id)
-            If dt.Count > 0 AndAlso MsgBox("Vous avez apporté des modifications aux traitements prescrits à ce patient alors qu'une ordonnance a été produite et en attente de validation. Sans l'annulation de l'ordonnance en cours et sa re-génération, l'ordonnance ne sera pas alignée avec vos modifications.", MsgBoxStyle.YesNo, RadMessageIcon.Info) = MsgBoxResult.No Then
+            If dt.Count > 0 AndAlso MsgBox("Vous allez apporter des modifications aux traitements prescrits à ce patient alors qu'une ordonnance a été produite et en attente de validation sur l'episode [" + episodeEnCours.Type + " - " + episodeEnCours.TypeActivite + "]. Sans l'annulation de l'ordonnance en cours et sa re-génération, l'ordonnance ne sera pas alignée avec vos modifications.", MsgBoxStyle.YesNo Or MsgBoxStyle.Exclamation, "Création d'un traitement") = MsgBoxResult.No Then
                 Return
             End If
         End If
@@ -1343,7 +1343,7 @@ Public Class RadFSynthese
             Dim episodeEnCours = episodeDao.GetEpisodeEnCoursByPatientId(SelectedPatient.PatientId)
             If episodeEnCours IsNot Nothing Then
                 Dim dt = ordonnaceDao.GetOrdonnanceValideByPatient(SelectedPatient.PatientId, episodeEnCours.Id)
-                If dt.Count > 0 AndAlso MsgBox("Vous avez apporté des modifications aux traitements prescrits à ce patient alors qu'une ordonnance a été produite et en attente de validation. Sans l'annulation de l'ordonnance en cours et sa re-génération, l'ordonnance ne sera pas alignée avec vos modifications.", MsgBoxStyle.YesNo, RadMessageIcon.Info) = MsgBoxResult.No Then
+                If dt.Count > 0 AndAlso MsgBox("Vous allez apporter des modifications aux traitements prescrits à ce patient alors qu'une ordonnance a été produite et en attente de validation sur l'episode [" + episodeEnCours.Type + " - " + episodeEnCours.TypeActivite + "]. Sans l'annulation de l'ordonnance en cours et sa re-génération, l'ordonnance ne sera pas alignée avec vos modifications.", MsgBoxStyle.YesNo Or MsgBoxStyle.Exclamation, "Modification d'un traitement") = MsgBoxResult.No Then
                     Return
                 End If
             End If

@@ -245,7 +245,7 @@ Partial Class RadFCPV
         Me.TextYear.Location = New System.Drawing.Point(71, 97)
         Me.TextYear.Name = "TextYear"
         Me.TextYear.NullText = "0"
-        Me.TextYear.Size = New System.Drawing.Size(77, 20)
+        Me.TextYear.Size = New System.Drawing.Size(77, 27)
         Me.TextYear.TabIndex = 17
         '
         'TextMonth
@@ -253,7 +253,7 @@ Partial Class RadFCPV
         Me.TextMonth.Location = New System.Drawing.Point(71, 71)
         Me.TextMonth.Name = "TextMonth"
         Me.TextMonth.NullText = "0"
-        Me.TextMonth.Size = New System.Drawing.Size(77, 20)
+        Me.TextMonth.Size = New System.Drawing.Size(77, 27)
         Me.TextMonth.TabIndex = 16
         '
         'TextDay
@@ -261,7 +261,7 @@ Partial Class RadFCPV
         Me.TextDay.Location = New System.Drawing.Point(71, 45)
         Me.TextDay.Name = "TextDay"
         Me.TextDay.NullText = "0"
-        Me.TextDay.Size = New System.Drawing.Size(77, 20)
+        Me.TextDay.Size = New System.Drawing.Size(77, 27)
         Me.TextDay.TabIndex = 15
         '
         'BtnImport
@@ -305,7 +305,7 @@ Partial Class RadFCPV
         Me.LblDateNaissance.AutoSize = True
         Me.LblDateNaissance.Location = New System.Drawing.Point(447, 4)
         Me.LblDateNaissance.Name = "LblDateNaissance"
-        Me.LblDateNaissance.Size = New System.Drawing.Size(63, 13)
+        Me.LblDateNaissance.Size = New System.Drawing.Size(96, 23)
         Me.LblDateNaissance.TabIndex = 46
         Me.LblDateNaissance.Text = "25-04-2018"
         '
@@ -316,7 +316,7 @@ Partial Class RadFCPV
         Me.LblALD.ForeColor = System.Drawing.Color.OrangeRed
         Me.LblALD.Location = New System.Drawing.Point(1119, 4)
         Me.LblALD.Name = "LblALD"
-        Me.LblALD.Size = New System.Drawing.Size(31, 13)
+        Me.LblALD.Size = New System.Drawing.Size(46, 20)
         Me.LblALD.TabIndex = 43
         Me.LblALD.Text = "ALD"
         '
@@ -326,7 +326,7 @@ Partial Class RadFCPV
         Me.Label13.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label13.Location = New System.Drawing.Point(682, 4)
         Me.Label13.Name = "Label13"
-        Me.Label13.Size = New System.Drawing.Size(37, 13)
+        Me.Label13.Size = New System.Drawing.Size(52, 20)
         Me.Label13.TabIndex = 42
         Me.Label13.Text = "NIR :"
         '
@@ -335,7 +335,7 @@ Partial Class RadFCPV
         Me.LblPatientDateMaj.AutoSize = True
         Me.LblPatientDateMaj.Location = New System.Drawing.Point(973, 4)
         Me.LblPatientDateMaj.Name = "LblPatientDateMaj"
-        Me.LblPatientDateMaj.Size = New System.Drawing.Size(63, 13)
+        Me.LblPatientDateMaj.Size = New System.Drawing.Size(96, 23)
         Me.LblPatientDateMaj.TabIndex = 41
         Me.LblPatientDateMaj.Text = "23-05-2019"
         '
@@ -345,7 +345,7 @@ Partial Class RadFCPV
         Me.Label5.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label5.Location = New System.Drawing.Point(839, 4)
         Me.Label5.Name = "Label5"
-        Me.Label5.Size = New System.Drawing.Size(128, 13)
+        Me.Label5.Size = New System.Drawing.Size(194, 20)
         Me.Label5.TabIndex = 40
         Me.Label5.Text = "Dernière mise à jour :"
         '
@@ -354,7 +354,7 @@ Partial Class RadFCPV
         Me.LblPatientSite.AutoSize = True
         Me.LblPatientSite.Location = New System.Drawing.Point(882, 21)
         Me.LblPatientSite.Name = "LblPatientSite"
-        Me.LblPatientSite.Size = New System.Drawing.Size(36, 13)
+        Me.LblPatientSite.Size = New System.Drawing.Size(53, 23)
         Me.LblPatientSite.TabIndex = 37
         Me.LblPatientSite.Text = "Cluny"
         '
@@ -364,7 +364,7 @@ Partial Class RadFCPV
         Me.Label4.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label4.Location = New System.Drawing.Point(839, 21)
         Me.Label4.Name = "Label4"
-        Me.Label4.Size = New System.Drawing.Size(37, 13)
+        Me.Label4.Size = New System.Drawing.Size(54, 20)
         Me.Label4.TabIndex = 36
         Me.Label4.Text = "Site :"
         '
@@ -373,7 +373,7 @@ Partial Class RadFCPV
         Me.LblPatientPrenom.AutoSize = True
         Me.LblPatientPrenom.Location = New System.Drawing.Point(11, 4)
         Me.LblPatientPrenom.Name = "LblPatientPrenom"
-        Me.LblPatientPrenom.Size = New System.Drawing.Size(63, 13)
+        Me.LblPatientPrenom.Size = New System.Drawing.Size(95, 23)
         Me.LblPatientPrenom.TabIndex = 23
         Me.LblPatientPrenom.Text = "Jean-Pierre"
         '
@@ -382,7 +382,7 @@ Partial Class RadFCPV
         Me.LblPatientNom.AutoSize = True
         Me.LblPatientNom.Location = New System.Drawing.Point(133, 4)
         Me.LblPatientNom.Name = "LblPatientNom"
-        Me.LblPatientNom.Size = New System.Drawing.Size(46, 13)
+        Me.LblPatientNom.Size = New System.Drawing.Size(67, 23)
         Me.LblPatientNom.TabIndex = 24
         Me.LblPatientNom.Text = "Durand"
         '
@@ -391,7 +391,7 @@ Partial Class RadFCPV
         Me.LblPatientAge.AutoSize = True
         Me.LblPatientAge.Location = New System.Drawing.Point(516, 4)
         Me.LblPatientAge.Name = "LblPatientAge"
-        Me.LblPatientAge.Size = New System.Drawing.Size(40, 13)
+        Me.LblPatientAge.Size = New System.Drawing.Size(59, 23)
         Me.LblPatientAge.TabIndex = 25
         Me.LblPatientAge.Text = "35 ans"
         '
@@ -400,7 +400,7 @@ Partial Class RadFCPV
         Me.LblPatientGenre.AutoSize = True
         Me.LblPatientGenre.Location = New System.Drawing.Point(599, 4)
         Me.LblPatientGenre.Name = "LblPatientGenre"
-        Me.LblPatientGenre.Size = New System.Drawing.Size(53, 13)
+        Me.LblPatientGenre.Size = New System.Drawing.Size(77, 23)
         Me.LblPatientGenre.TabIndex = 26
         Me.LblPatientGenre.Text = "Masculin"
         '
@@ -409,7 +409,7 @@ Partial Class RadFCPV
         Me.LblPatientNIR.AutoSize = True
         Me.LblPatientNIR.Location = New System.Drawing.Point(733, 4)
         Me.LblPatientNIR.Name = "LblPatientNIR"
-        Me.LblPatientNIR.Size = New System.Drawing.Size(85, 13)
+        Me.LblPatientNIR.Size = New System.Drawing.Size(127, 23)
         Me.LblPatientNIR.TabIndex = 27
         Me.LblPatientNIR.Text = "1840675370367"
         '
@@ -441,14 +441,14 @@ Partial Class RadFCPV
         '
         Me.DTPEnd.Location = New System.Drawing.Point(53, 59)
         Me.DTPEnd.Name = "DTPEnd"
-        Me.DTPEnd.Size = New System.Drawing.Size(95, 20)
+        Me.DTPEnd.Size = New System.Drawing.Size(95, 26)
         Me.DTPEnd.TabIndex = 21
         '
         'DTPStart
         '
         Me.DTPStart.Location = New System.Drawing.Point(53, 27)
         Me.DTPStart.Name = "DTPStart"
-        Me.DTPStart.Size = New System.Drawing.Size(95, 20)
+        Me.DTPStart.Size = New System.Drawing.Size(95, 26)
         Me.DTPStart.TabIndex = 20
         '
         'RadLabel5
@@ -477,7 +477,7 @@ Partial Class RadFCPV
         '
         'RadFCPV
         '
-        Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
+        Me.AutoScaleDimensions = New System.Drawing.SizeF(9.0!, 20.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.CancelButton = Me.RadBtnAbandon
         Me.ClientSize = New System.Drawing.Size(1643, 728)

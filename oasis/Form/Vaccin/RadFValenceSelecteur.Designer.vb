@@ -1,9 +1,9 @@
-﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
+﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()>
 Partial Class RadFValenceSelecteur
     Inherits Telerik.WinControls.UI.RadForm
 
     'Form overrides dispose to clean up the component list.
-    <System.Diagnostics.DebuggerNonUserCode()> _
+    <System.Diagnostics.DebuggerNonUserCode()>
     Protected Overrides Sub Dispose(ByVal disposing As Boolean)
         Try
             If disposing AndAlso components IsNot Nothing Then
@@ -20,36 +20,34 @@ Partial Class RadFValenceSelecteur
     'NOTE: The following procedure is required by the Windows Form Designer
     'It can be modified using the Windows Form Designer.  
     'Do not modify it using the code editor.
-    <System.Diagnostics.DebuggerStepThrough()> _
+    <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
         Me.components = New System.ComponentModel.Container()
-        Dim GridViewTextBoxColumn1 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
-        Dim GridViewTextBoxColumn2 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
-        Dim GridViewTextBoxColumn3 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
-        Dim GridViewTextBoxColumn4 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
-        Dim SortDescriptor1 As Telerik.WinControls.Data.SortDescriptor = New Telerik.WinControls.Data.SortDescriptor()
-        Dim TableViewDefinition1 As Telerik.WinControls.UI.TableViewDefinition = New Telerik.WinControls.UI.TableViewDefinition()
-        Dim GridViewTextBoxColumn5 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
-        Dim GridViewTextBoxColumn6 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
-        Dim GridViewTextBoxColumn7 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
-        Dim TableViewDefinition2 As Telerik.WinControls.UI.TableViewDefinition = New Telerik.WinControls.UI.TableViewDefinition()
+        Dim GridViewTextBoxColumn8 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
+        Dim GridViewTextBoxColumn9 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
+        Dim GridViewTextBoxColumn10 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
+        Dim GridViewTextBoxColumn11 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
+        Dim SortDescriptor2 As Telerik.WinControls.Data.SortDescriptor = New Telerik.WinControls.Data.SortDescriptor()
+        Dim TableViewDefinition3 As Telerik.WinControls.UI.TableViewDefinition = New Telerik.WinControls.UI.TableViewDefinition()
+        Dim GridViewTextBoxColumn12 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
+        Dim GridViewTextBoxColumn13 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
+        Dim GridViewTextBoxColumn14 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
+        Dim TableViewDefinition4 As Telerik.WinControls.UI.TableViewDefinition = New Telerik.WinControls.UI.TableViewDefinition()
         Me.RGVValenceVisible = New Telerik.WinControls.UI.RadGridView()
         Me.RadBtnAbandon = New Telerik.WinControls.UI.RadButton()
         Me.ToolTip = New System.Windows.Forms.ToolTip(Me.components)
         Me.RGVValenceNotVisible = New Telerik.WinControls.UI.RadGridView()
-        Me.BtnAdd = New System.Windows.Forms.Button()
-        Me.BtnRemove = New System.Windows.Forms.Button()
-        Me.Button1 = New System.Windows.Forms.Button()
-        Me.BtnUp = New System.Windows.Forms.Button()
+        Me.BtnValenceAdd = New System.Windows.Forms.Button()
+        Me.BtnValenceRemove = New System.Windows.Forms.Button()
+        Me.BtnValenceDown = New System.Windows.Forms.Button()
+        Me.BtnValenceUp = New System.Windows.Forms.Button()
         Me.Label1 = New System.Windows.Forms.Label()
         Me.Label2 = New System.Windows.Forms.Label()
-        Me.BtnAddValence = New Telerik.WinControls.UI.RadButton()
         CType(Me.RGVValenceVisible, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.RGVValenceVisible.MasterTemplate, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.RadBtnAbandon, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.RGVValenceNotVisible, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.RGVValenceNotVisible.MasterTemplate, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.BtnAddValence, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
@@ -67,31 +65,31 @@ Partial Class RadFValenceSelecteur
         Me.RGVValenceVisible.MasterTemplate.AllowAddNewRow = False
         Me.RGVValenceVisible.MasterTemplate.AllowDeleteRow = False
         Me.RGVValenceVisible.MasterTemplate.AllowEditRow = False
-        GridViewTextBoxColumn1.EnableExpressionEditor = False
-        GridViewTextBoxColumn1.FieldName = "id"
-        GridViewTextBoxColumn1.HeaderText = "id"
-        GridViewTextBoxColumn1.IsVisible = False
-        GridViewTextBoxColumn1.Name = "id"
-        GridViewTextBoxColumn2.EnableExpressionEditor = False
-        GridViewTextBoxColumn2.FieldName = "unite"
-        GridViewTextBoxColumn2.HeaderText = "Code"
-        GridViewTextBoxColumn2.Name = "code"
-        GridViewTextBoxColumn2.TextAlignment = System.Drawing.ContentAlignment.MiddleCenter
-        GridViewTextBoxColumn2.Width = 65
-        GridViewTextBoxColumn3.EnableExpressionEditor = False
-        GridViewTextBoxColumn3.FieldName = "description"
-        GridViewTextBoxColumn3.HeaderText = "Description"
-        GridViewTextBoxColumn3.HeaderTextAlignment = System.Drawing.ContentAlignment.MiddleLeft
-        GridViewTextBoxColumn3.Name = "description"
-        GridViewTextBoxColumn3.Width = 200
-        GridViewTextBoxColumn4.EnableExpressionEditor = False
-        GridViewTextBoxColumn4.HeaderText = "column1"
-        GridViewTextBoxColumn4.IsVisible = False
-        GridViewTextBoxColumn4.Name = "order"
-        Me.RGVValenceVisible.MasterTemplate.Columns.AddRange(New Telerik.WinControls.UI.GridViewDataColumn() {GridViewTextBoxColumn1, GridViewTextBoxColumn2, GridViewTextBoxColumn3, GridViewTextBoxColumn4})
-        SortDescriptor1.PropertyName = "unite"
-        Me.RGVValenceVisible.MasterTemplate.SortDescriptors.AddRange(New Telerik.WinControls.Data.SortDescriptor() {SortDescriptor1})
-        Me.RGVValenceVisible.MasterTemplate.ViewDefinition = TableViewDefinition1
+        GridViewTextBoxColumn8.EnableExpressionEditor = False
+        GridViewTextBoxColumn8.FieldName = "id"
+        GridViewTextBoxColumn8.HeaderText = "id"
+        GridViewTextBoxColumn8.IsVisible = False
+        GridViewTextBoxColumn8.Name = "id"
+        GridViewTextBoxColumn9.EnableExpressionEditor = False
+        GridViewTextBoxColumn9.FieldName = "unite"
+        GridViewTextBoxColumn9.HeaderText = "Code"
+        GridViewTextBoxColumn9.Name = "code"
+        GridViewTextBoxColumn9.TextAlignment = System.Drawing.ContentAlignment.MiddleCenter
+        GridViewTextBoxColumn9.Width = 65
+        GridViewTextBoxColumn10.EnableExpressionEditor = False
+        GridViewTextBoxColumn10.FieldName = "description"
+        GridViewTextBoxColumn10.HeaderText = "Description"
+        GridViewTextBoxColumn10.HeaderTextAlignment = System.Drawing.ContentAlignment.MiddleLeft
+        GridViewTextBoxColumn10.Name = "description"
+        GridViewTextBoxColumn10.Width = 200
+        GridViewTextBoxColumn11.EnableExpressionEditor = False
+        GridViewTextBoxColumn11.HeaderText = "column1"
+        GridViewTextBoxColumn11.IsVisible = False
+        GridViewTextBoxColumn11.Name = "order"
+        Me.RGVValenceVisible.MasterTemplate.Columns.AddRange(New Telerik.WinControls.UI.GridViewDataColumn() {GridViewTextBoxColumn8, GridViewTextBoxColumn9, GridViewTextBoxColumn10, GridViewTextBoxColumn11})
+        SortDescriptor2.PropertyName = "unite"
+        Me.RGVValenceVisible.MasterTemplate.SortDescriptors.AddRange(New Telerik.WinControls.Data.SortDescriptor() {SortDescriptor2})
+        Me.RGVValenceVisible.MasterTemplate.ViewDefinition = TableViewDefinition3
         Me.RGVValenceVisible.Name = "RGVValenceVisible"
         Me.RGVValenceVisible.RightToLeft = System.Windows.Forms.RightToLeft.No
         Me.RGVValenceVisible.ShowGroupPanel = False
@@ -122,77 +120,77 @@ Partial Class RadFValenceSelecteur
         Me.RGVValenceNotVisible.MasterTemplate.AllowAddNewRow = False
         Me.RGVValenceNotVisible.MasterTemplate.AllowDeleteRow = False
         Me.RGVValenceNotVisible.MasterTemplate.AllowEditRow = False
-        GridViewTextBoxColumn5.EnableExpressionEditor = False
-        GridViewTextBoxColumn5.FieldName = "id"
-        GridViewTextBoxColumn5.HeaderText = "id"
-        GridViewTextBoxColumn5.IsVisible = False
-        GridViewTextBoxColumn5.Name = "id"
-        GridViewTextBoxColumn6.EnableExpressionEditor = False
-        GridViewTextBoxColumn6.FieldName = "unite"
-        GridViewTextBoxColumn6.HeaderText = "Code"
-        GridViewTextBoxColumn6.Name = "code"
-        GridViewTextBoxColumn6.TextAlignment = System.Drawing.ContentAlignment.MiddleCenter
-        GridViewTextBoxColumn6.Width = 65
-        GridViewTextBoxColumn7.EnableExpressionEditor = False
-        GridViewTextBoxColumn7.FieldName = "description"
-        GridViewTextBoxColumn7.HeaderText = "Description"
-        GridViewTextBoxColumn7.HeaderTextAlignment = System.Drawing.ContentAlignment.MiddleLeft
-        GridViewTextBoxColumn7.Name = "description"
-        GridViewTextBoxColumn7.Width = 200
-        Me.RGVValenceNotVisible.MasterTemplate.Columns.AddRange(New Telerik.WinControls.UI.GridViewDataColumn() {GridViewTextBoxColumn5, GridViewTextBoxColumn6, GridViewTextBoxColumn7})
-        Me.RGVValenceNotVisible.MasterTemplate.ViewDefinition = TableViewDefinition2
+        GridViewTextBoxColumn12.EnableExpressionEditor = False
+        GridViewTextBoxColumn12.FieldName = "id"
+        GridViewTextBoxColumn12.HeaderText = "id"
+        GridViewTextBoxColumn12.IsVisible = False
+        GridViewTextBoxColumn12.Name = "id"
+        GridViewTextBoxColumn13.EnableExpressionEditor = False
+        GridViewTextBoxColumn13.FieldName = "unite"
+        GridViewTextBoxColumn13.HeaderText = "Code"
+        GridViewTextBoxColumn13.Name = "code"
+        GridViewTextBoxColumn13.TextAlignment = System.Drawing.ContentAlignment.MiddleCenter
+        GridViewTextBoxColumn13.Width = 65
+        GridViewTextBoxColumn14.EnableExpressionEditor = False
+        GridViewTextBoxColumn14.FieldName = "description"
+        GridViewTextBoxColumn14.HeaderText = "Description"
+        GridViewTextBoxColumn14.HeaderTextAlignment = System.Drawing.ContentAlignment.MiddleLeft
+        GridViewTextBoxColumn14.Name = "description"
+        GridViewTextBoxColumn14.Width = 200
+        Me.RGVValenceNotVisible.MasterTemplate.Columns.AddRange(New Telerik.WinControls.UI.GridViewDataColumn() {GridViewTextBoxColumn12, GridViewTextBoxColumn13, GridViewTextBoxColumn14})
+        Me.RGVValenceNotVisible.MasterTemplate.ViewDefinition = TableViewDefinition4
         Me.RGVValenceNotVisible.Name = "RGVValenceNotVisible"
         Me.RGVValenceNotVisible.RightToLeft = System.Windows.Forms.RightToLeft.No
         Me.RGVValenceNotVisible.ShowGroupPanel = False
         Me.RGVValenceNotVisible.Size = New System.Drawing.Size(309, 492)
         Me.RGVValenceNotVisible.TabIndex = 1
         '
-        'BtnAdd
+        'BtnValenceAdd
         '
-        Me.BtnAdd.Font = New System.Drawing.Font("Calibri", 14.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.BtnAdd.Location = New System.Drawing.Point(327, 180)
-        Me.BtnAdd.Name = "BtnAdd"
-        Me.BtnAdd.Size = New System.Drawing.Size(45, 45)
-        Me.BtnAdd.TabIndex = 2
-        Me.BtnAdd.Text = "←"
-        Me.BtnAdd.UseVisualStyleBackColor = True
+        Me.BtnValenceAdd.Font = New System.Drawing.Font("Calibri", 14.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.BtnValenceAdd.Location = New System.Drawing.Point(327, 180)
+        Me.BtnValenceAdd.Name = "BtnValenceAdd"
+        Me.BtnValenceAdd.Size = New System.Drawing.Size(45, 45)
+        Me.BtnValenceAdd.TabIndex = 2
+        Me.BtnValenceAdd.Text = "←"
+        Me.BtnValenceAdd.UseVisualStyleBackColor = True
         '
-        'BtnRemove
+        'BtnValenceRemove
         '
-        Me.BtnRemove.Font = New System.Drawing.Font("Calibri", 14.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.BtnRemove.Location = New System.Drawing.Point(326, 231)
-        Me.BtnRemove.Name = "BtnRemove"
-        Me.BtnRemove.Size = New System.Drawing.Size(45, 45)
-        Me.BtnRemove.TabIndex = 3
-        Me.BtnRemove.Text = "→"
-        Me.BtnRemove.UseVisualStyleBackColor = True
+        Me.BtnValenceRemove.Font = New System.Drawing.Font("Calibri", 14.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.BtnValenceRemove.Location = New System.Drawing.Point(326, 231)
+        Me.BtnValenceRemove.Name = "BtnValenceRemove"
+        Me.BtnValenceRemove.Size = New System.Drawing.Size(45, 45)
+        Me.BtnValenceRemove.TabIndex = 3
+        Me.BtnValenceRemove.Text = "→"
+        Me.BtnValenceRemove.UseVisualStyleBackColor = True
         '
-        'Button1
+        'BtnValenceDown
         '
-        Me.Button1.Font = New System.Drawing.Font("Calibri", 14.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Button1.Location = New System.Drawing.Point(327, 100)
-        Me.Button1.Name = "Button1"
-        Me.Button1.Size = New System.Drawing.Size(45, 45)
-        Me.Button1.TabIndex = 5
-        Me.Button1.Text = "↓"
-        Me.Button1.UseVisualStyleBackColor = True
+        Me.BtnValenceDown.Font = New System.Drawing.Font("Calibri", 14.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.BtnValenceDown.Location = New System.Drawing.Point(327, 100)
+        Me.BtnValenceDown.Name = "BtnValenceDown"
+        Me.BtnValenceDown.Size = New System.Drawing.Size(45, 45)
+        Me.BtnValenceDown.TabIndex = 5
+        Me.BtnValenceDown.Text = "↓"
+        Me.BtnValenceDown.UseVisualStyleBackColor = True
         '
-        'BtnUp
+        'BtnValenceUp
         '
-        Me.BtnUp.Font = New System.Drawing.Font("Calibri", 14.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.BtnUp.Location = New System.Drawing.Point(327, 49)
-        Me.BtnUp.Name = "BtnUp"
-        Me.BtnUp.Size = New System.Drawing.Size(45, 45)
-        Me.BtnUp.TabIndex = 4
-        Me.BtnUp.Text = "↑"
-        Me.BtnUp.UseVisualStyleBackColor = True
+        Me.BtnValenceUp.Font = New System.Drawing.Font("Calibri", 14.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.BtnValenceUp.Location = New System.Drawing.Point(327, 49)
+        Me.BtnValenceUp.Name = "BtnValenceUp"
+        Me.BtnValenceUp.Size = New System.Drawing.Size(45, 45)
+        Me.BtnValenceUp.TabIndex = 4
+        Me.BtnValenceUp.Text = "↑"
+        Me.BtnValenceUp.UseVisualStyleBackColor = True
         '
         'Label1
         '
         Me.Label1.AutoSize = True
         Me.Label1.Location = New System.Drawing.Point(13, 7)
         Me.Label1.Name = "Label1"
-        Me.Label1.Size = New System.Drawing.Size(165, 13)
+        Me.Label1.Size = New System.Drawing.Size(245, 23)
         Me.Label1.TabIndex = 6
         Me.Label1.Text = "Valence du calendrier general :"
         '
@@ -201,31 +199,22 @@ Partial Class RadFValenceSelecteur
         Me.Label2.AutoSize = True
         Me.Label2.Location = New System.Drawing.Point(376, 7)
         Me.Label2.Name = "Label2"
-        Me.Label2.Size = New System.Drawing.Size(234, 13)
+        Me.Label2.Size = New System.Drawing.Size(347, 23)
         Me.Label2.TabIndex = 7
         Me.Label2.Text = "Valence non associee au calendrier general :"
         '
-        'BtnAddValence
-        '
-        Me.BtnAddValence.Location = New System.Drawing.Point(548, 524)
-        Me.BtnAddValence.Name = "BtnAddValence"
-        Me.BtnAddValence.Size = New System.Drawing.Size(110, 24)
-        Me.BtnAddValence.TabIndex = 8
-        Me.BtnAddValence.Text = "Ajouter une valence"
-        '
         'RadFValenceSelecteur
         '
-        Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
+        Me.AutoScaleDimensions = New System.Drawing.SizeF(9.0!, 20.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.CancelButton = Me.RadBtnAbandon
         Me.ClientSize = New System.Drawing.Size(700, 557)
-        Me.Controls.Add(Me.BtnAddValence)
         Me.Controls.Add(Me.Label2)
         Me.Controls.Add(Me.Label1)
-        Me.Controls.Add(Me.Button1)
-        Me.Controls.Add(Me.BtnUp)
-        Me.Controls.Add(Me.BtnRemove)
-        Me.Controls.Add(Me.BtnAdd)
+        Me.Controls.Add(Me.BtnValenceDown)
+        Me.Controls.Add(Me.BtnValenceUp)
+        Me.Controls.Add(Me.BtnValenceRemove)
+        Me.Controls.Add(Me.BtnValenceAdd)
         Me.Controls.Add(Me.RGVValenceNotVisible)
         Me.Controls.Add(Me.RadBtnAbandon)
         Me.Controls.Add(Me.RGVValenceVisible)
@@ -245,7 +234,6 @@ Partial Class RadFValenceSelecteur
         CType(Me.RadBtnAbandon, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.RGVValenceNotVisible.MasterTemplate, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.RGVValenceNotVisible, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.BtnAddValence, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
         Me.PerformLayout()
@@ -256,12 +244,11 @@ Partial Class RadFValenceSelecteur
     Friend WithEvents RadBtnAbandon As Telerik.WinControls.UI.RadButton
     Friend WithEvents ToolTip As ToolTip
     Friend WithEvents RGVValenceNotVisible As Telerik.WinControls.UI.RadGridView
-    Friend WithEvents BtnAdd As Button
-    Friend WithEvents BtnRemove As Button
-    Friend WithEvents Button1 As Button
-    Friend WithEvents BtnUp As Button
+    Friend WithEvents BtnValenceAdd As Button
+    Friend WithEvents BtnValenceRemove As Button
+    Friend WithEvents BtnValenceDown As Button
+    Friend WithEvents BtnValenceUp As Button
     Friend WithEvents Label1 As Label
     Friend WithEvents Label2 As Label
-    Friend WithEvents BtnAddValence As Telerik.WinControls.UI.RadButton
 End Class
 

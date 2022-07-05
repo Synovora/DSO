@@ -608,6 +608,7 @@ Partial Class RadFSynthese
         Me.RadGroupBoxTraitement.Controls.Add(Me.LblTraitementArret)
         Me.RadGroupBoxTraitement.Controls.Add(Me.LblSubstance)
         Me.RadGroupBoxTraitement.Controls.Add(Me.RadTraitementDataGridView)
+        Me.RadGroupBoxTraitement.Controls.Add(Me.RadBtnCreationTraitement)
         Me.RadGroupBoxTraitement.GroupBoxStyle = Telerik.WinControls.UI.RadGroupBoxStyle.Office
         Me.RadGroupBoxTraitement.HeaderText = "Traitement"
         Me.RadGroupBoxTraitement.Location = New System.Drawing.Point(12, 227)
@@ -1217,7 +1218,7 @@ Partial Class RadFSynthese
         'RadBtnCreationTraitement
         '
         Me.RadBtnCreationTraitement.Font = New System.Drawing.Font("Segoe UI", 11.0!)
-        Me.RadBtnCreationTraitement.Location = New System.Drawing.Point(80, 227)
+        Me.RadBtnCreationTraitement.Location = New System.Drawing.Point(68, 0)
         Me.RadBtnCreationTraitement.Name = "RadBtnCreationTraitement"
         Me.RadBtnCreationTraitement.Size = New System.Drawing.Size(15, 15)
         Me.RadBtnCreationTraitement.TabIndex = 41
@@ -1472,7 +1473,6 @@ Partial Class RadFSynthese
         Me.Controls.Add(Me.RadBtnUp)
         Me.Controls.Add(Me.RadBtnCreationPPSMesure)
         Me.Controls.Add(Me.RadBtnCreationAntecedent)
-        Me.Controls.Add(Me.RadBtnCreationTraitement)
         Me.Controls.Add(Me.RadBtnRefresh)
         Me.Controls.Add(Me.RadChkMesureMax)
         Me.Controls.Add(Me.RadChkParcoursTous)

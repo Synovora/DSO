@@ -12,7 +12,8 @@ Public Class RadFVaccinInput
 
     Property Lock As Boolean
     Property CodeRetour As Boolean
-    Property Valences As List(Of CGVValence)
+
+    Property SelectedValences As List(Of CGVValence)
     Property Vaccins As List(Of VaccinValence)
     Property VaccinPrograms As List(Of VaccinProgramRelation)
     Property RealisationOperator As Long
@@ -158,7 +159,6 @@ Public Class RadFVaccinInput
             MessageBoxIcon.Question,
             MessageBoxDefaultButton.Button2)
 
-            ' Test DialogResult.
             If result3 = DialogResult.Yes Then
                 For Each vaccinProgram As VaccinProgramRelation In VaccinPrograms
                     vaccinDao.UpdateVaccinProgramRelation(New VaccinProgramRelation With {
@@ -172,8 +172,7 @@ Public Class RadFVaccinInput
                                                           .RealisationOperatorRor = RealisationOperatorRor,
                                                           .RealisationDate = DTPRealisation.Value})
                     Dim vaccinValences = vaccinDao.GetListRelationByVaccin(vaccinProgram.RelationVaccinValence)
-
-                    Valences.RemoveAll(Function(x) vaccinValences.Any(Function(y) y.Valence = x.Valence))
+                    SelectedValences.RemoveAll(Function(x) vaccinValences.Any(Function(y) y.Valence = x.Valence))
                     For Each vaccinValence In vaccinValences
                         cgvDateDao.UpdateRelationStatus(New RelationValenceDate With {
                                                     .[Date] = vaccinProgram.Date,
@@ -183,13 +182,13 @@ Public Class RadFVaccinInput
                     })
                     Next
                 Next
-                For Each valence In Valences
+                For Each valence In SelectedValences
                     cgvDateDao.UpdateRelationStatus(New RelationValenceDate With {
-                                                .[Date] = VaccinPrograms(0).Date,
-                                                .Patient = VaccinPrograms(0).Patient,
-                                                .Valence = valence.Valence,
-                                                .Status = 2
-                })
+                                                    .[Date] = VaccinPrograms(0).Date,
+                                                    .Patient = VaccinPrograms(0).Patient,
+                                                    .Valence = valence.Valence,
+                                                    .Status = 2
+                    })
                 Next
             Else
                 Cursor.Current = Cursors.Default
