@@ -112,6 +112,7 @@ Partial Class RadFSynthese
         Me.LblTraitementArret = New System.Windows.Forms.Label()
         Me.LblSubstance = New System.Windows.Forms.Label()
         Me.RadTraitementDataGridView = New Telerik.WinControls.UI.RadGridView()
+        Me.RadBtnCreationTraitement = New Telerik.WinControls.UI.RadButton()
         Me.RadGroupBoxParcours = New Telerik.WinControls.UI.RadGroupBox()
         Me.ParcoursContextMenuStrip = New System.Windows.Forms.ContextMenuStrip(Me.components)
         Me.CréerUnIntervenantToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
@@ -138,7 +139,6 @@ Partial Class RadFSynthese
         Me.ToolTip = New System.Windows.Forms.ToolTip(Me.components)
         Me.LblContreIndication = New System.Windows.Forms.Label()
         Me.LblAllergie = New System.Windows.Forms.Label()
-        Me.RadBtnCreationTraitement = New Telerik.WinControls.UI.RadButton()
         Me.RadBtnCreationAntecedent = New Telerik.WinControls.UI.RadButton()
         Me.RadBtnCreationPPSMesure = New Telerik.WinControls.UI.RadButton()
         Me.RadBtnRefresh = New Telerik.WinControls.UI.RadButton()
@@ -166,6 +166,7 @@ Partial Class RadFSynthese
         Me.RadButtonAbandon = New Telerik.WinControls.UI.RadButton()
         Me.BtnMail = New Telerik.WinControls.UI.RadButton()
         Me.ChkChaineEpisodeActive = New Telerik.WinControls.UI.RadCheckBox()
+        Me.AfficherLesPPSObsolètesToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         CType(Me.RadGroupBoxEtatCivil, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.RadGroupBoxEtatCivil.SuspendLayout()
         Me.EtatCivilContextMenuStrip.SuspendLayout()
@@ -182,6 +183,7 @@ Partial Class RadFSynthese
         Me.TraitementContextMenuStrip.SuspendLayout()
         CType(Me.RadTraitementDataGridView, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.RadTraitementDataGridView.MasterTemplate, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.RadBtnCreationTraitement, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.RadGroupBoxParcours, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.RadGroupBoxParcours.SuspendLayout()
         Me.ParcoursContextMenuStrip.SuspendLayout()
@@ -202,7 +204,6 @@ Partial Class RadFSynthese
         CType(Me.RadBtnCreationPPSObjectif, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.RadPPSDataGridView, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.RadPPSDataGridView.MasterTemplate, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.RadBtnCreationTraitement, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.RadBtnCreationAntecedent, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.RadBtnCreationPPSMesure, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.RadBtnRefresh, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -819,6 +820,16 @@ Partial Class RadFSynthese
         Me.RadTraitementDataGridView.Size = New System.Drawing.Size(996, 170)
         Me.RadTraitementDataGridView.TabIndex = 0
         '
+        'RadBtnCreationTraitement
+        '
+        Me.RadBtnCreationTraitement.Font = New System.Drawing.Font("Segoe UI", 11.0!)
+        Me.RadBtnCreationTraitement.Location = New System.Drawing.Point(68, 0)
+        Me.RadBtnCreationTraitement.Name = "RadBtnCreationTraitement"
+        Me.RadBtnCreationTraitement.Size = New System.Drawing.Size(15, 15)
+        Me.RadBtnCreationTraitement.TabIndex = 41
+        Me.RadBtnCreationTraitement.Text = "+"
+        Me.ToolTip.SetToolTip(Me.RadBtnCreationTraitement, "Ajout traitement")
+        '
         'RadGroupBoxParcours
         '
         Me.RadGroupBoxParcours.AccessibleRole = System.Windows.Forms.AccessibleRole.Grouping
@@ -944,9 +955,9 @@ Partial Class RadFSynthese
         'PPSContextMenuStrip
         '
         Me.PPSContextMenuStrip.ImageScalingSize = New System.Drawing.Size(24, 24)
-        Me.PPSContextMenuStrip.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.CréerUnObjectifDeSantéToolStripMenuItem, Me.CréerUneMesurePréventiveToolStripMenuItem, Me.CréerUneStratégieContextuelleToolStripMenuItem, Me.CréerUnSuiviToolStripMenuItem, Me.HistoriqueDesModificationsToolStripMenuItem3})
+        Me.PPSContextMenuStrip.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.CréerUnObjectifDeSantéToolStripMenuItem, Me.CréerUneMesurePréventiveToolStripMenuItem, Me.CréerUneStratégieContextuelleToolStripMenuItem, Me.CréerUnSuiviToolStripMenuItem, Me.HistoriqueDesModificationsToolStripMenuItem3, Me.AfficherLesPPSObsolètesToolStripMenuItem})
         Me.PPSContextMenuStrip.Name = "PPSContextMenuStrip1"
-        Me.PPSContextMenuStrip.Size = New System.Drawing.Size(332, 164)
+        Me.PPSContextMenuStrip.Size = New System.Drawing.Size(332, 229)
         '
         'CréerUnObjectifDeSantéToolStripMenuItem
         '
@@ -1215,16 +1226,6 @@ Partial Class RadFSynthese
         Me.LblAllergie.Text = "Allergie(s) "
         Me.ToolTip.SetToolTip(Me.LblAllergie, resources.GetString("LblAllergie.ToolTip"))
         '
-        'RadBtnCreationTraitement
-        '
-        Me.RadBtnCreationTraitement.Font = New System.Drawing.Font("Segoe UI", 11.0!)
-        Me.RadBtnCreationTraitement.Location = New System.Drawing.Point(68, 0)
-        Me.RadBtnCreationTraitement.Name = "RadBtnCreationTraitement"
-        Me.RadBtnCreationTraitement.Size = New System.Drawing.Size(15, 15)
-        Me.RadBtnCreationTraitement.TabIndex = 41
-        Me.RadBtnCreationTraitement.Text = "+"
-        Me.ToolTip.SetToolTip(Me.RadBtnCreationTraitement, "Ajout traitement")
-        '
         'RadBtnCreationAntecedent
         '
         Me.RadBtnCreationAntecedent.Font = New System.Drawing.Font("Segoe UI", 11.0!)
@@ -1457,6 +1458,12 @@ Partial Class RadFSynthese
         Me.ChkChaineEpisodeActive.TabIndex = 6
         Me.ChkChaineEpisodeActive.Text = "Pathologie en cours"
         '
+        'AfficherLesPPSObsolètesToolStripMenuItem
+        '
+        Me.AfficherLesPPSObsolètesToolStripMenuItem.Name = "AfficherLesPPSObsolètesToolStripMenuItem"
+        Me.AfficherLesPPSObsolètesToolStripMenuItem.Size = New System.Drawing.Size(331, 32)
+        Me.AfficherLesPPSObsolètesToolStripMenuItem.Text = "Afficher les PPS obsolètes"
+        '
         'RadFSynthese
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(9.0!, 20.0!)
@@ -1527,6 +1534,7 @@ Partial Class RadFSynthese
         Me.TraitementContextMenuStrip.ResumeLayout(False)
         CType(Me.RadTraitementDataGridView.MasterTemplate, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.RadTraitementDataGridView, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.RadBtnCreationTraitement, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.RadGroupBoxParcours, System.ComponentModel.ISupportInitialize).EndInit()
         Me.RadGroupBoxParcours.ResumeLayout(False)
         Me.ParcoursContextMenuStrip.ResumeLayout(False)
@@ -1547,7 +1555,6 @@ Partial Class RadFSynthese
         CType(Me.RadBtnCreationPPSObjectif, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.RadPPSDataGridView.MasterTemplate, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.RadPPSDataGridView, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.RadBtnCreationTraitement, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.RadBtnCreationAntecedent, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.RadBtnCreationPPSMesure, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.RadBtnRefresh, System.ComponentModel.ISupportInitialize).EndInit()
@@ -1678,5 +1685,6 @@ Partial Class RadFSynthese
     Friend WithEvents Panel2 As Panel
     Friend WithEvents BtnMail As Telerik.WinControls.UI.RadButton
     Friend WithEvents ChkChaineEpisodeActive As Telerik.WinControls.UI.RadCheckBox
+    Friend WithEvents AfficherLesPPSObsolètesToolStripMenuItem As ToolStripMenuItem
 End Class
 

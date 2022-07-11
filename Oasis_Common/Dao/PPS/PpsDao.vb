@@ -5,19 +5,20 @@ Public Class PpsDao
 
     Dim patientDao As New PatientDao
 
-    Public Function getAllPPSbyPatient(patientId As Integer) As DataTable
+    Public Function getAllPPSbyPatient(patientId As Integer, Optional filter As String = "") As DataTable
         Dim SQLString As String
 
         SQLString = "Select oa_r_pps_categorie_id, oa_r_pps_sous_categorie_id, oa_r_pps_sous_categorie_type," &
         " oa_pps_id, oa_pps_drc_id, oa_pps_commentaire, oa_pps_drc_id, oa_pps_date_debut, oa_pps_date_creation, oa_pps_date_modification," &
-        " oa_pps_arret," &
+        " oa_pps_arret, oa_pps_date_fin, " &
         " oa_parcours_id, oa_parcours_specialite, oa_parcours_ror_id, oa_parcours_base, oa_parcours_rythme, oa_parcours_commentaire, oa_parcours_date_creation," &
         " oa_parcours_date_modification, oa_parcours_cacher" &
         " From oasis.oasis.oa_r_pps_sous_categorie" &
         " Left outer join oasis.oasis.oa_patient_pps On oa_r_pps_categorie_id = oa_pps_categorie And oa_r_pps_sous_categorie_id = oa_pps_sous_categorie" &
         " Left outer join oasis.oasis.oa_patient_parcours on oa_r_pps_categorie_id = oa_parcours_categorie_id And oa_r_pps_sous_categorie_id = oa_parcours_sous_categorie_id" &
-        " Where((oa_pps_inactif = 0 Or oa_pps_inactif Is NULL) And oa_pps_patient_id = " & patientId.ToString & ") Or" &
-        " ((oa_parcours_inactif = 0 Or oa_parcours_inactif Is NULL) And oa_parcours_patient_id = " & patientId.ToString & ")" &
+        " Where (((oa_pps_inactif = 0 Or oa_pps_inactif Is NULL) And oa_pps_patient_id = " & patientId.ToString & ") Or" &
+        " ((oa_parcours_inactif = 0 Or oa_parcours_inactif Is NULL) And oa_parcours_patient_id = " & patientId.ToString & "))" &
+        filter &
         " order by oa_r_pps_sous_categorie_ordre_affichage, oa_pps_priorite"
 
         Using con As SqlConnection = GetConnection()
@@ -204,8 +205,8 @@ Public Class PpsDao
 
         Dim SQLstring As String = "insert into oasis.oa_patient_pps" &
         " (oa_pps_patient_id, oa_pps_categorie, oa_pps_sous_categorie, oa_pps_priorite, oa_pps_drc_id, oa_pps_commentaire," &
-        " oa_pps_utilisateur_creation, oa_pps_date_creation, oa_pps_affichage_synthese)" &
-        " VALUES (@patientId, @categorie, @sousCategorie, @priorite, @drcId, @commentaire, @utilisateurCreation, @dateCreation, @affichageSynthese); SELECT SCOPE_IDENTITY()"
+        " oa_pps_utilisateur_creation, oa_pps_date_creation, oa_pps_affichage_synthese, oa_pps_date_fin)" &
+        " VALUES (@patientId, @categorie, @sousCategorie, @priorite, @drcId, @commentaire, @utilisateurCreation, @dateCreation, @affichageSynthese, @dateFin); SELECT SCOPE_IDENTITY()"
 
         Dim con As SqlConnection = GetConnection()
         Dim cmd As New SqlCommand(SQLstring, con)
@@ -219,6 +220,7 @@ Public Class PpsDao
             .AddWithValue("@commentaire", pps.Commentaire)
             .AddWithValue("@utilisateurCreation", userLog.UtilisateurId.ToString)
             .AddWithValue("@dateCreation", Date.Now.ToString("yyyy-MM-dd HH:mm:ss"))
+            .AddWithValue("@dateFin", pps.DateFin)
             .AddWithValue("@affichageSynthese", 1)
         End With
 
@@ -280,7 +282,7 @@ Public Class PpsDao
         Dim dateModification As Date = Date.Now.Date
         Dim SQLstring As String = "update oasis.oa_patient_pps set oa_pps_sous_categorie = @sousCategorie, oa_pps_date_modification = @dateModification," &
         " oa_pps_utilisateur_modification = @utilisateurModification, oa_pps_priorite = @priorite, oa_pps_drc_id = @drcId," &
-        " oa_pps_commentaire = @commentaire where oa_pps_id = @ppsId"
+        " oa_pps_commentaire = @commentaire, oa_pps_date_fin = @dateFin where oa_pps_id = @ppsId"
 
         Dim con As SqlConnection = GetConnection()
         Dim cmd As New SqlCommand(SQLstring, con)
@@ -292,6 +294,7 @@ Public Class PpsDao
             .AddWithValue("@priorite", pps.Priorite)
             .AddWithValue("@commentaire", pps.Commentaire)
             .AddWithValue("@drcId", pps.DrcId)
+            .AddWithValue("@dateFin", If(pps.DateFin Is Nothing, DBNull.Value, pps.DateFin))
             .AddWithValue("@ppsId", pps.Id)
         End With
 

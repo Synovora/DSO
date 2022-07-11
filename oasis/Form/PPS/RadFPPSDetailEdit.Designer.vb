@@ -46,6 +46,8 @@ Partial Class RadFPPSDetailEdit
         Me.Label2 = New System.Windows.Forms.Label()
         Me.LblPatientAdresse1 = New System.Windows.Forms.Label()
         Me.RadGroupBox1 = New Telerik.WinControls.UI.RadGroupBox()
+        Me.Label1 = New System.Windows.Forms.Label()
+        Me.DTPFin = New System.Windows.Forms.DateTimePicker()
         Me.RadBtnRecupereDrc = New Telerik.WinControls.UI.RadButton()
         Me.CbxTypeStrategie = New System.Windows.Forms.ComboBox()
         Me.LblTypeStrategie = New System.Windows.Forms.Label()
@@ -76,6 +78,7 @@ Partial Class RadFPPSDetailEdit
         Me.RadBtnConfirmationAnnulation = New Telerik.WinControls.UI.RadButton()
         Me.RadBtnAbandonner = New Telerik.WinControls.UI.RadButton()
         Me.RadBtnTutoriel = New Telerik.WinControls.UI.RadButton()
+        Me.BtnDateFinReset = New Telerik.WinControls.UI.RadButton()
         CType(Me.RadGroupBoxEtatCivil, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.RadGroupBoxEtatCivil.SuspendLayout()
         CType(Me.RadGroupBox1, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -91,6 +94,7 @@ Partial Class RadFPPSDetailEdit
         CType(Me.RadBtnConfirmationAnnulation, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.RadBtnAbandonner, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.RadBtnTutoriel, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.BtnDateFinReset, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
@@ -137,7 +141,7 @@ Partial Class RadFPPSDetailEdit
         Me.LblALD.ForeColor = System.Drawing.Color.OrangeRed
         Me.LblALD.Location = New System.Drawing.Point(973, 20)
         Me.LblALD.Name = "LblALD"
-        Me.LblALD.Size = New System.Drawing.Size(31, 13)
+        Me.LblALD.Size = New System.Drawing.Size(46, 20)
         Me.LblALD.TabIndex = 43
         Me.LblALD.Text = "ALD"
         '
@@ -147,7 +151,7 @@ Partial Class RadFPPSDetailEdit
         Me.Label13.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label13.Location = New System.Drawing.Point(510, 20)
         Me.Label13.Name = "Label13"
-        Me.Label13.Size = New System.Drawing.Size(37, 13)
+        Me.Label13.Size = New System.Drawing.Size(52, 20)
         Me.Label13.TabIndex = 42
         Me.Label13.Text = "NIR :"
         '
@@ -156,7 +160,7 @@ Partial Class RadFPPSDetailEdit
         Me.LblPatientDateMaj.AutoSize = True
         Me.LblPatientDateMaj.Location = New System.Drawing.Point(801, 20)
         Me.LblPatientDateMaj.Name = "LblPatientDateMaj"
-        Me.LblPatientDateMaj.Size = New System.Drawing.Size(63, 13)
+        Me.LblPatientDateMaj.Size = New System.Drawing.Size(96, 23)
         Me.LblPatientDateMaj.TabIndex = 41
         Me.LblPatientDateMaj.Text = "23-05-2019"
         '
@@ -166,7 +170,7 @@ Partial Class RadFPPSDetailEdit
         Me.Label5.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label5.Location = New System.Drawing.Point(667, 20)
         Me.Label5.Name = "Label5"
-        Me.Label5.Size = New System.Drawing.Size(128, 13)
+        Me.Label5.Size = New System.Drawing.Size(194, 20)
         Me.Label5.TabIndex = 40
         Me.Label5.Text = "Dernière mise à jour :"
         '
@@ -175,7 +179,7 @@ Partial Class RadFPPSDetailEdit
         Me.LblPatientUniteSanitaire.AutoSize = True
         Me.LblPatientUniteSanitaire.Location = New System.Drawing.Point(848, 53)
         Me.LblPatientUniteSanitaire.Name = "LblPatientUniteSanitaire"
-        Me.LblPatientUniteSanitaire.Size = New System.Drawing.Size(46, 13)
+        Me.LblPatientUniteSanitaire.Size = New System.Drawing.Size(69, 23)
         Me.LblPatientUniteSanitaire.TabIndex = 39
         Me.LblPatientUniteSanitaire.Text = "Auxerre"
         '
@@ -185,7 +189,7 @@ Partial Class RadFPPSDetailEdit
         Me.Label6.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label6.Location = New System.Drawing.Point(667, 53)
         Me.Label6.Name = "Label6"
-        Me.Label6.Size = New System.Drawing.Size(175, 13)
+        Me.Label6.Size = New System.Drawing.Size(260, 20)
         Me.Label6.TabIndex = 38
         Me.Label6.Text = "Centre médical de référence :"
         '
@@ -194,7 +198,7 @@ Partial Class RadFPPSDetailEdit
         Me.LblPatientSite.AutoSize = True
         Me.LblPatientSite.Location = New System.Drawing.Point(710, 37)
         Me.LblPatientSite.Name = "LblPatientSite"
-        Me.LblPatientSite.Size = New System.Drawing.Size(36, 13)
+        Me.LblPatientSite.Size = New System.Drawing.Size(53, 23)
         Me.LblPatientSite.TabIndex = 37
         Me.LblPatientSite.Text = "Cluny"
         '
@@ -204,7 +208,7 @@ Partial Class RadFPPSDetailEdit
         Me.Label4.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label4.Location = New System.Drawing.Point(667, 37)
         Me.Label4.Name = "Label4"
-        Me.Label4.Size = New System.Drawing.Size(37, 13)
+        Me.Label4.Size = New System.Drawing.Size(54, 20)
         Me.Label4.TabIndex = 36
         Me.Label4.Text = "Site :"
         '
@@ -213,7 +217,7 @@ Partial Class RadFPPSDetailEdit
         Me.LblPatientTel2.AutoSize = True
         Me.LblPatientTel2.Location = New System.Drawing.Point(403, 53)
         Me.LblPatientTel2.Name = "LblPatientTel2"
-        Me.LblPatientTel2.Size = New System.Drawing.Size(67, 13)
+        Me.LblPatientTel2.Size = New System.Drawing.Size(100, 23)
         Me.LblPatientTel2.TabIndex = 35
         Me.LblPatientTel2.Text = "0968542357"
         '
@@ -222,7 +226,7 @@ Partial Class RadFPPSDetailEdit
         Me.LblPatientPrenom.AutoSize = True
         Me.LblPatientPrenom.Location = New System.Drawing.Point(11, 20)
         Me.LblPatientPrenom.Name = "LblPatientPrenom"
-        Me.LblPatientPrenom.Size = New System.Drawing.Size(63, 13)
+        Me.LblPatientPrenom.Size = New System.Drawing.Size(95, 23)
         Me.LblPatientPrenom.TabIndex = 23
         Me.LblPatientPrenom.Text = "Jean-Pierre"
         '
@@ -231,7 +235,7 @@ Partial Class RadFPPSDetailEdit
         Me.LblPatientTel1.AutoSize = True
         Me.LblPatientTel1.Location = New System.Drawing.Point(403, 37)
         Me.LblPatientTel1.Name = "LblPatientTel1"
-        Me.LblPatientTel1.Size = New System.Drawing.Size(67, 13)
+        Me.LblPatientTel1.Size = New System.Drawing.Size(100, 23)
         Me.LblPatientTel1.TabIndex = 34
         Me.LblPatientTel1.Text = "0288425678"
         '
@@ -240,7 +244,7 @@ Partial Class RadFPPSDetailEdit
         Me.LblPatientNom.AutoSize = True
         Me.LblPatientNom.Location = New System.Drawing.Point(133, 20)
         Me.LblPatientNom.Name = "LblPatientNom"
-        Me.LblPatientNom.Size = New System.Drawing.Size(46, 13)
+        Me.LblPatientNom.Size = New System.Drawing.Size(67, 23)
         Me.LblPatientNom.TabIndex = 24
         Me.LblPatientNom.Text = "Durand"
         '
@@ -250,7 +254,7 @@ Partial Class RadFPPSDetailEdit
         Me.Label3.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label3.Location = New System.Drawing.Point(360, 37)
         Me.Label3.Name = "Label3"
-        Me.Label3.Size = New System.Drawing.Size(37, 13)
+        Me.Label3.Size = New System.Drawing.Size(52, 20)
         Me.Label3.TabIndex = 33
         Me.Label3.Text = "Tel. :"
         '
@@ -259,7 +263,7 @@ Partial Class RadFPPSDetailEdit
         Me.LblPatientAge.AutoSize = True
         Me.LblPatientAge.Location = New System.Drawing.Point(314, 20)
         Me.LblPatientAge.Name = "LblPatientAge"
-        Me.LblPatientAge.Size = New System.Drawing.Size(40, 13)
+        Me.LblPatientAge.Size = New System.Drawing.Size(59, 23)
         Me.LblPatientAge.TabIndex = 25
         Me.LblPatientAge.Text = "35 ans"
         '
@@ -268,7 +272,7 @@ Partial Class RadFPPSDetailEdit
         Me.LblPatientVille.AutoSize = True
         Me.LblPatientVille.Location = New System.Drawing.Point(125, 53)
         Me.LblPatientVille.Name = "LblPatientVille"
-        Me.LblPatientVille.Size = New System.Drawing.Size(57, 13)
+        Me.LblPatientVille.Size = New System.Drawing.Size(83, 23)
         Me.LblPatientVille.TabIndex = 32
         Me.LblPatientVille.Text = "Lournand"
         '
@@ -277,7 +281,7 @@ Partial Class RadFPPSDetailEdit
         Me.LblPatientGenre.AutoSize = True
         Me.LblPatientGenre.Location = New System.Drawing.Point(424, 20)
         Me.LblPatientGenre.Name = "LblPatientGenre"
-        Me.LblPatientGenre.Size = New System.Drawing.Size(53, 13)
+        Me.LblPatientGenre.Size = New System.Drawing.Size(77, 23)
         Me.LblPatientGenre.TabIndex = 26
         Me.LblPatientGenre.Text = "Masculin"
         '
@@ -286,7 +290,7 @@ Partial Class RadFPPSDetailEdit
         Me.LblPatientCodePostal.AutoSize = True
         Me.LblPatientCodePostal.Location = New System.Drawing.Point(82, 53)
         Me.LblPatientCodePostal.Name = "LblPatientCodePostal"
-        Me.LblPatientCodePostal.Size = New System.Drawing.Size(37, 13)
+        Me.LblPatientCodePostal.Size = New System.Drawing.Size(55, 23)
         Me.LblPatientCodePostal.TabIndex = 31
         Me.LblPatientCodePostal.Text = "71250"
         '
@@ -295,7 +299,7 @@ Partial Class RadFPPSDetailEdit
         Me.LblPatientNIR.AutoSize = True
         Me.LblPatientNIR.Location = New System.Drawing.Point(561, 20)
         Me.LblPatientNIR.Name = "LblPatientNIR"
-        Me.LblPatientNIR.Size = New System.Drawing.Size(85, 13)
+        Me.LblPatientNIR.Size = New System.Drawing.Size(127, 23)
         Me.LblPatientNIR.TabIndex = 27
         Me.LblPatientNIR.Text = "1840675370367"
         '
@@ -304,7 +308,7 @@ Partial Class RadFPPSDetailEdit
         Me.LblPatientAdresse2.AutoSize = True
         Me.LblPatientAdresse2.Location = New System.Drawing.Point(236, 36)
         Me.LblPatientAdresse2.Name = "LblPatientAdresse2"
-        Me.LblPatientAdresse2.Size = New System.Drawing.Size(55, 13)
+        Me.LblPatientAdresse2.Size = New System.Drawing.Size(81, 23)
         Me.LblPatientAdresse2.TabIndex = 30
         Me.LblPatientAdresse2.Text = "adresse 2"
         '
@@ -314,7 +318,7 @@ Partial Class RadFPPSDetailEdit
         Me.Label2.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label2.Location = New System.Drawing.Point(11, 36)
         Me.Label2.Name = "Label2"
-        Me.Label2.Size = New System.Drawing.Size(60, 13)
+        Me.Label2.Size = New System.Drawing.Size(90, 20)
         Me.Label2.TabIndex = 28
         Me.Label2.Text = "Adresse :"
         '
@@ -323,13 +327,16 @@ Partial Class RadFPPSDetailEdit
         Me.LblPatientAdresse1.AutoSize = True
         Me.LblPatientAdresse1.Location = New System.Drawing.Point(82, 36)
         Me.LblPatientAdresse1.Name = "LblPatientAdresse1"
-        Me.LblPatientAdresse1.Size = New System.Drawing.Size(121, 13)
+        Me.LblPatientAdresse1.Size = New System.Drawing.Size(178, 23)
         Me.LblPatientAdresse1.TabIndex = 29
         Me.LblPatientAdresse1.Text = "3 rue de la république"
         '
         'RadGroupBox1
         '
         Me.RadGroupBox1.AccessibleRole = System.Windows.Forms.AccessibleRole.Grouping
+        Me.RadGroupBox1.Controls.Add(Me.BtnDateFinReset)
+        Me.RadGroupBox1.Controls.Add(Me.Label1)
+        Me.RadGroupBox1.Controls.Add(Me.DTPFin)
         Me.RadGroupBox1.Controls.Add(Me.RadBtnRecupereDrc)
         Me.RadGroupBox1.Controls.Add(Me.CbxTypeStrategie)
         Me.RadGroupBox1.Controls.Add(Me.LblTypeStrategie)
@@ -345,12 +352,28 @@ Partial Class RadFPPSDetailEdit
         Me.RadGroupBox1.HeaderText = "Détail"
         Me.RadGroupBox1.Location = New System.Drawing.Point(12, 105)
         Me.RadGroupBox1.Name = "RadGroupBox1"
-        Me.RadGroupBox1.Size = New System.Drawing.Size(1015, 179)
+        Me.RadGroupBox1.Size = New System.Drawing.Size(1015, 217)
         Me.RadGroupBox1.TabIndex = 3
         Me.RadGroupBox1.Text = "Détail"
         CType(Me.RadGroupBox1.GetChildAt(0).GetChildAt(1), Telerik.WinControls.UI.GroupBoxHeader).GroupBoxStyle = Telerik.WinControls.UI.RadGroupBoxStyle.Office
         CType(Me.RadGroupBox1.GetChildAt(0).GetChildAt(1).GetChildAt(0), Telerik.WinControls.Primitives.FillPrimitive).BackColor = System.Drawing.SystemColors.ActiveCaption
         CType(Me.RadGroupBox1.GetChildAt(0).GetChildAt(1).GetChildAt(0), Telerik.WinControls.Primitives.FillPrimitive).SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.None
+        '
+        'Label1
+        '
+        Me.Label1.AutoSize = True
+        Me.Label1.Location = New System.Drawing.Point(13, 183)
+        Me.Label1.Name = "Label1"
+        Me.Label1.Size = New System.Drawing.Size(32, 23)
+        Me.Label1.TabIndex = 99
+        Me.Label1.Text = "Fin"
+        '
+        'DTPFin
+        '
+        Me.DTPFin.Location = New System.Drawing.Point(94, 179)
+        Me.DTPFin.Name = "DTPFin"
+        Me.DTPFin.Size = New System.Drawing.Size(200, 26)
+        Me.DTPFin.TabIndex = 98
         '
         'RadBtnRecupereDrc
         '
@@ -366,7 +389,7 @@ Partial Class RadFPPSDetailEdit
         Me.CbxTypeStrategie.Items.AddRange(New Object() {"Prophylactique", "Sociale", "Symptomatique", "Curative", "Diagnostique", "Palliative"})
         Me.CbxTypeStrategie.Location = New System.Drawing.Point(94, 27)
         Me.CbxTypeStrategie.Name = "CbxTypeStrategie"
-        Me.CbxTypeStrategie.Size = New System.Drawing.Size(121, 21)
+        Me.CbxTypeStrategie.Size = New System.Drawing.Size(121, 28)
         Me.CbxTypeStrategie.TabIndex = 82
         '
         'LblTypeStrategie
@@ -374,7 +397,7 @@ Partial Class RadFPPSDetailEdit
         Me.LblTypeStrategie.AutoSize = True
         Me.LblTypeStrategie.Location = New System.Drawing.Point(11, 30)
         Me.LblTypeStrategie.Name = "LblTypeStrategie"
-        Me.LblTypeStrategie.Size = New System.Drawing.Size(78, 13)
+        Me.LblTypeStrategie.Size = New System.Drawing.Size(116, 23)
         Me.LblTypeStrategie.TabIndex = 81
         Me.LblTypeStrategie.Text = "Type stratégie"
         '
@@ -391,7 +414,7 @@ Partial Class RadFPPSDetailEdit
         Me.Label8.AutoSize = True
         Me.Label8.Location = New System.Drawing.Point(11, 83)
         Me.Label8.Name = "Label8"
-        Me.Label8.Size = New System.Drawing.Size(75, 13)
+        Me.Label8.Size = New System.Drawing.Size(114, 23)
         Me.Label8.TabIndex = 42
         Me.Label8.Text = "Commentaire"
         '
@@ -409,7 +432,7 @@ Partial Class RadFPPSDetailEdit
         Me.TxtDrcDescription.Location = New System.Drawing.Point(236, 54)
         Me.TxtDrcDescription.Name = "TxtDrcDescription"
         Me.TxtDrcDescription.ReadOnly = True
-        Me.TxtDrcDescription.Size = New System.Drawing.Size(768, 20)
+        Me.TxtDrcDescription.Size = New System.Drawing.Size(768, 26)
         Me.TxtDrcDescription.TabIndex = 40
         '
         'Label7
@@ -417,7 +440,7 @@ Partial Class RadFPPSDetailEdit
         Me.Label7.AutoSize = True
         Me.Label7.Location = New System.Drawing.Point(11, 57)
         Me.Label7.Name = "Label7"
-        Me.Label7.Size = New System.Drawing.Size(56, 13)
+        Me.Label7.Size = New System.Drawing.Size(84, 23)
         Me.Label7.TabIndex = 39
         Me.Label7.Text = "DRC/ORC"
         '
@@ -426,7 +449,7 @@ Partial Class RadFPPSDetailEdit
         Me.LblPriorite.AutoSize = True
         Me.LblPriorite.Location = New System.Drawing.Point(13, 149)
         Me.LblPriorite.Name = "LblPriorite"
-        Me.LblPriorite.Size = New System.Drawing.Size(44, 13)
+        Me.LblPriorite.Size = New System.Drawing.Size(65, 23)
         Me.LblPriorite.TabIndex = 38
         Me.LblPriorite.Text = "Priorité"
         '
@@ -436,7 +459,7 @@ Partial Class RadFPPSDetailEdit
         Me.TxtDrcId.Location = New System.Drawing.Point(166, 54)
         Me.TxtDrcId.Name = "TxtDrcId"
         Me.TxtDrcId.ReadOnly = True
-        Me.TxtDrcId.Size = New System.Drawing.Size(64, 20)
+        Me.TxtDrcId.Size = New System.Drawing.Size(64, 26)
         Me.TxtDrcId.TabIndex = 37
         '
         'NumPriorite
@@ -445,7 +468,7 @@ Partial Class RadFPPSDetailEdit
         Me.NumPriorite.Location = New System.Drawing.Point(94, 147)
         Me.NumPriorite.Maximum = New Decimal(New Integer() {1000, 0, 0, 0})
         Me.NumPriorite.Name = "NumPriorite"
-        Me.NumPriorite.Size = New System.Drawing.Size(64, 20)
+        Me.NumPriorite.Size = New System.Drawing.Size(64, 26)
         Me.NumPriorite.TabIndex = 36
         '
         'LblLabelCommentaireArret
@@ -453,7 +476,7 @@ Partial Class RadFPPSDetailEdit
         Me.LblLabelCommentaireArret.AutoSize = True
         Me.LblLabelCommentaireArret.Location = New System.Drawing.Point(11, 29)
         Me.LblLabelCommentaireArret.Name = "LblLabelCommentaireArret"
-        Me.LblLabelCommentaireArret.Size = New System.Drawing.Size(75, 13)
+        Me.LblLabelCommentaireArret.Size = New System.Drawing.Size(114, 23)
         Me.LblLabelCommentaireArret.TabIndex = 46
         Me.LblLabelCommentaireArret.Text = "Commentaire"
         '
@@ -469,9 +492,9 @@ Partial Class RadFPPSDetailEdit
         'LblId
         '
         Me.LblId.AutoSize = True
-        Me.LblId.Location = New System.Drawing.Point(1007, 389)
+        Me.LblId.Location = New System.Drawing.Point(1007, 427)
         Me.LblId.Name = "LblId"
-        Me.LblId.Size = New System.Drawing.Size(12, 13)
+        Me.LblId.Size = New System.Drawing.Size(18, 23)
         Me.LblId.TabIndex = 91
         Me.LblId.Text = "?"
         '
@@ -479,9 +502,9 @@ Partial Class RadFPPSDetailEdit
         '
         Me.LblLabelStrategieParModification.AutoSize = True
         Me.LblLabelStrategieParModification.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.LblLabelStrategieParModification.Location = New System.Drawing.Point(651, 389)
+        Me.LblLabelStrategieParModification.Location = New System.Drawing.Point(651, 427)
         Me.LblLabelStrategieParModification.Name = "LblLabelStrategieParModification"
-        Me.LblLabelStrategieParModification.Size = New System.Drawing.Size(25, 13)
+        Me.LblLabelStrategieParModification.Size = New System.Drawing.Size(36, 20)
         Me.LblLabelStrategieParModification.TabIndex = 90
         Me.LblLabelStrategieParModification.Text = "par"
         '
@@ -489,27 +512,27 @@ Partial Class RadFPPSDetailEdit
         '
         Me.LblLabelStrategieParCreation.AutoSize = True
         Me.LblLabelStrategieParCreation.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.LblLabelStrategieParCreation.Location = New System.Drawing.Point(151, 389)
+        Me.LblLabelStrategieParCreation.Location = New System.Drawing.Point(151, 427)
         Me.LblLabelStrategieParCreation.Name = "LblLabelStrategieParCreation"
-        Me.LblLabelStrategieParCreation.Size = New System.Drawing.Size(25, 13)
+        Me.LblLabelStrategieParCreation.Size = New System.Drawing.Size(36, 20)
         Me.LblLabelStrategieParCreation.TabIndex = 89
         Me.LblLabelStrategieParCreation.Text = "par"
         '
         'LblUtilisateurModification
         '
         Me.LblUtilisateurModification.AutoSize = True
-        Me.LblUtilisateurModification.Location = New System.Drawing.Point(682, 389)
+        Me.LblUtilisateurModification.Location = New System.Drawing.Point(682, 427)
         Me.LblUtilisateurModification.Name = "LblUtilisateurModification"
-        Me.LblUtilisateurModification.Size = New System.Drawing.Size(144, 13)
+        Me.LblUtilisateurModification.Size = New System.Drawing.Size(211, 23)
         Me.LblUtilisateurModification.TabIndex = 88
         Me.LblUtilisateurModification.Text = "Utilisateur en modification"
         '
         'LblUtilisateurCreation
         '
         Me.LblUtilisateurCreation.AutoSize = True
-        Me.LblUtilisateurCreation.Location = New System.Drawing.Point(182, 389)
+        Me.LblUtilisateurCreation.Location = New System.Drawing.Point(182, 427)
         Me.LblUtilisateurCreation.Name = "LblUtilisateurCreation"
-        Me.LblUtilisateurCreation.Size = New System.Drawing.Size(121, 13)
+        Me.LblUtilisateurCreation.Size = New System.Drawing.Size(178, 23)
         Me.LblUtilisateurCreation.TabIndex = 87
         Me.LblUtilisateurCreation.Text = "Utilisateur en création"
         '
@@ -517,18 +540,18 @@ Partial Class RadFPPSDetailEdit
         '
         Me.LblLabelStrategieDateCreation.AutoSize = True
         Me.LblLabelStrategieDateCreation.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.LblLabelStrategieDateCreation.Location = New System.Drawing.Point(23, 389)
+        Me.LblLabelStrategieDateCreation.Location = New System.Drawing.Point(23, 427)
         Me.LblLabelStrategieDateCreation.Name = "LblLabelStrategieDateCreation"
-        Me.LblLabelStrategieDateCreation.Size = New System.Drawing.Size(55, 13)
+        Me.LblLabelStrategieDateCreation.Size = New System.Drawing.Size(82, 20)
         Me.LblLabelStrategieDateCreation.TabIndex = 83
         Me.LblLabelStrategieDateCreation.Text = "Créé le :"
         '
         'LblStrategieDateCreation
         '
         Me.LblStrategieDateCreation.AutoSize = True
-        Me.LblStrategieDateCreation.Location = New System.Drawing.Point(84, 389)
+        Me.LblStrategieDateCreation.Location = New System.Drawing.Point(84, 427)
         Me.LblStrategieDateCreation.Name = "LblStrategieDateCreation"
-        Me.LblStrategieDateCreation.Size = New System.Drawing.Size(61, 13)
+        Me.LblStrategieDateCreation.Size = New System.Drawing.Size(90, 23)
         Me.LblStrategieDateCreation.TabIndex = 84
         Me.LblStrategieDateCreation.Text = "01.10.2019"
         '
@@ -536,25 +559,25 @@ Partial Class RadFPPSDetailEdit
         '
         Me.LblLabelStrategieDateModification.AutoSize = True
         Me.LblLabelStrategieDateModification.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.LblLabelStrategieDateModification.Location = New System.Drawing.Point(508, 389)
+        Me.LblLabelStrategieDateModification.Location = New System.Drawing.Point(508, 427)
         Me.LblLabelStrategieDateModification.Name = "LblLabelStrategieDateModification"
-        Me.LblLabelStrategieDateModification.Size = New System.Drawing.Size(70, 13)
+        Me.LblLabelStrategieDateModification.Size = New System.Drawing.Size(103, 20)
         Me.LblLabelStrategieDateModification.TabIndex = 85
         Me.LblLabelStrategieDateModification.Text = "Modifié le :"
         '
         'LblStrategieDateModification
         '
         Me.LblStrategieDateModification.AutoSize = True
-        Me.LblStrategieDateModification.Location = New System.Drawing.Point(584, 389)
+        Me.LblStrategieDateModification.Location = New System.Drawing.Point(584, 427)
         Me.LblStrategieDateModification.Name = "LblStrategieDateModification"
-        Me.LblStrategieDateModification.Size = New System.Drawing.Size(61, 13)
+        Me.LblStrategieDateModification.Size = New System.Drawing.Size(90, 23)
         Me.LblStrategieDateModification.TabIndex = 86
         Me.LblStrategieDateModification.Text = "02.10.2019"
         '
         'RadBtnValidation
         '
         Me.RadBtnValidation.Image = Global.Oasis_WF.My.Resources.Resources.validation2
-        Me.RadBtnValidation.Location = New System.Drawing.Point(12, 422)
+        Me.RadBtnValidation.Location = New System.Drawing.Point(12, 460)
         Me.RadBtnValidation.Name = "RadBtnValidation"
         Me.RadBtnValidation.Size = New System.Drawing.Size(110, 24)
         Me.RadBtnValidation.TabIndex = 95
@@ -564,7 +587,7 @@ Partial Class RadFPPSDetailEdit
         'RadBtnAnnulation
         '
         Me.RadBtnAnnulation.Image = Global.Oasis_WF.My.Resources.Resources.supprimer
-        Me.RadBtnAnnulation.Location = New System.Drawing.Point(244, 422)
+        Me.RadBtnAnnulation.Location = New System.Drawing.Point(244, 460)
         Me.RadBtnAnnulation.Name = "RadBtnAnnulation"
         Me.RadBtnAnnulation.Size = New System.Drawing.Size(110, 24)
         Me.RadBtnAnnulation.TabIndex = 93
@@ -574,7 +597,7 @@ Partial Class RadFPPSDetailEdit
         'RadBtnHistorique
         '
         Me.RadBtnHistorique.Image = Global.Oasis_WF.My.Resources.Resources.historique
-        Me.RadBtnHistorique.Location = New System.Drawing.Point(128, 422)
+        Me.RadBtnHistorique.Location = New System.Drawing.Point(128, 460)
         Me.RadBtnHistorique.Name = "RadBtnHistorique"
         Me.RadBtnHistorique.Size = New System.Drawing.Size(110, 24)
         Me.RadBtnHistorique.TabIndex = 102
@@ -588,7 +611,7 @@ Partial Class RadFPPSDetailEdit
         Me.RadGbxAnnulation.Controls.Add(Me.LblLabelCommentaireArret)
         Me.RadGbxAnnulation.GroupBoxStyle = Telerik.WinControls.UI.RadGroupBoxStyle.Office
         Me.RadGbxAnnulation.HeaderText = "Annulation mesure préventive"
-        Me.RadGbxAnnulation.Location = New System.Drawing.Point(12, 290)
+        Me.RadGbxAnnulation.Location = New System.Drawing.Point(12, 328)
         Me.RadGbxAnnulation.Name = "RadGbxAnnulation"
         Me.RadGbxAnnulation.Size = New System.Drawing.Size(1015, 88)
         Me.RadGbxAnnulation.TabIndex = 92
@@ -599,7 +622,7 @@ Partial Class RadFPPSDetailEdit
         '
         'RadBtnConfirmationAnnulation
         '
-        Me.RadBtnConfirmationAnnulation.Location = New System.Drawing.Point(360, 422)
+        Me.RadBtnConfirmationAnnulation.Location = New System.Drawing.Point(360, 460)
         Me.RadBtnConfirmationAnnulation.Name = "RadBtnConfirmationAnnulation"
         Me.RadBtnConfirmationAnnulation.Size = New System.Drawing.Size(171, 24)
         Me.RadBtnConfirmationAnnulation.TabIndex = 94
@@ -610,26 +633,34 @@ Partial Class RadFPPSDetailEdit
         Me.RadBtnAbandonner.DialogResult = System.Windows.Forms.DialogResult.Cancel
         Me.RadBtnAbandonner.Image = Global.Oasis_WF.My.Resources.Resources._exit
         Me.RadBtnAbandonner.ImageAlignment = System.Drawing.ContentAlignment.MiddleCenter
-        Me.RadBtnAbandonner.Location = New System.Drawing.Point(1003, 422)
+        Me.RadBtnAbandonner.Location = New System.Drawing.Point(1003, 460)
         Me.RadBtnAbandonner.Name = "RadBtnAbandonner"
         Me.RadBtnAbandonner.Size = New System.Drawing.Size(24, 24)
         Me.RadBtnAbandonner.TabIndex = 96
         '
         'RadBtnTutoriel
         '
-        Me.RadBtnTutoriel.Location = New System.Drawing.Point(537, 422)
+        Me.RadBtnTutoriel.Location = New System.Drawing.Point(537, 460)
         Me.RadBtnTutoriel.Name = "RadBtnTutoriel"
         Me.RadBtnTutoriel.Size = New System.Drawing.Size(110, 24)
         Me.RadBtnTutoriel.TabIndex = 103
         Me.RadBtnTutoriel.Text = "Tutoriel"
         '
+        'BtnDateFinReset
+        '
+        Me.BtnDateFinReset.Location = New System.Drawing.Point(300, 182)
+        Me.BtnDateFinReset.Name = "BtnDateFinReset"
+        Me.BtnDateFinReset.Size = New System.Drawing.Size(112, 23)
+        Me.BtnDateFinReset.TabIndex = 98
+        Me.BtnDateFinReset.Text = "Reinitialiser"
+        '
         'RadFPPSDetailEdit
         '
         Me.AcceptButton = Me.RadBtnValidation
-        Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
+        Me.AutoScaleDimensions = New System.Drawing.SizeF(9.0!, 20.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.CancelButton = Me.RadBtnAbandonner
-        Me.ClientSize = New System.Drawing.Size(1031, 455)
+        Me.ClientSize = New System.Drawing.Size(1031, 488)
         Me.Controls.Add(Me.RadBtnTutoriel)
         Me.Controls.Add(Me.RadBtnHistorique)
         Me.Controls.Add(Me.RadBtnAbandonner)
@@ -675,6 +706,7 @@ Partial Class RadFPPSDetailEdit
         CType(Me.RadBtnConfirmationAnnulation, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.RadBtnAbandonner, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.RadBtnTutoriel, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.BtnDateFinReset, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
         Me.PerformLayout()
@@ -734,5 +766,8 @@ Partial Class RadFPPSDetailEdit
     Friend WithEvents RadBtnRecupereDrc As Telerik.WinControls.UI.RadButton
     Friend WithEvents RadBtnHistorique As Telerik.WinControls.UI.RadButton
     Friend WithEvents RadBtnTutoriel As Telerik.WinControls.UI.RadButton
+    Friend WithEvents Label1 As Label
+    Friend WithEvents DTPFin As DateTimePicker
+    Friend WithEvents BtnDateFinReset As Telerik.WinControls.UI.RadButton
 End Class
 

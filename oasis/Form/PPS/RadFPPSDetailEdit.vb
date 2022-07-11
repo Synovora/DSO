@@ -82,6 +82,9 @@ Public Class RadFPPSDetailEdit
     Dim drcdao As New DrcDao
 
     Private Sub RadFPPSMesurePreventive_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        DTPFin.Value = DTPFin.MaxDate
+        DTPFin.Format = DateTimePickerFormat.Custom
+        DTPFin.CustomFormat = " "
         If PositionGaucheDroite = EnumPosition.Droite Then
             Me.Location = New Point(Screen.PrimaryScreen.WorkingArea.Width - Me.Width - 10, Screen.PrimaryScreen.WorkingArea.Height - Me.Height - 10)
         Else
@@ -141,6 +144,7 @@ Public Class RadFPPSDetailEdit
             'Cacher les boutons d'action
             RadBtnHistorique.Hide()
         End If
+
         CodeRetour = False
 
         Cursor.Current = Cursors.Default
@@ -262,6 +266,10 @@ Public Class RadFPPSDetailEdit
             LblUtilisateurModification.Text = Me.UtilisateurHisto.UtilisateurPrenom & " " & Me.UtilisateurHisto.UtilisateurNom
         End If
 
+        DTPFin.Value = Coalesce(PPSUpdate.DateFin, DTPFin.MaxDate)
+        If DTPFin.Value <> DTPFin.MaxDate Then
+            DTPFin.Format = DateTimePickerFormat.Long
+        End If
         RadBtnValidation.Enabled = False
     End Sub
 
@@ -378,6 +386,7 @@ Public Class RadFPPSDetailEdit
         PPSUpdate.UserCreation = userLog.UtilisateurId
         PPSUpdate.AffichageSynthese = True
         PPSUpdate.Inactif = False
+        PPSUpdate.DateFin = If(DTPFin.Value = DTPFin.MaxDate, Nothing, DTPFin.Value)
 
         If ppsDao.CreationPPS(PPSUpdate, userLog) = True Then
             Dim form As New RadFNotification()
@@ -465,6 +474,20 @@ Public Class RadFPPSDetailEdit
         'RadBtnValidation.Enabled = True
         PPSUpdate.SousCategorieId = DeterminationTypeStrategie()
         GestionAffichageBoutonValidation()
+    End Sub
+
+    Private Sub DTPFin_ValueChanged(sender As Object, e As EventArgs) Handles DTPFin.ValueChanged
+        PPSUpdate.DateFin = DTPFin.Value
+        'GestionAffichageBoutonValidation()
+    End Sub
+
+    Private Sub DTPFin_DropDown(sender As Object, e As EventArgs) Handles DTPFin.DropDown
+        If DTPFin.Value = DTPFin.MaxDate Then
+            DTPFin.Value = Date.Now
+            DTPFin.Format = DateTimePickerFormat.Long
+        End If
+        PPSUpdate.DateFin = DTPFin.Value
+        RadBtnValidation.Enabled = True
     End Sub
 
     Private Sub LblId_MouseHover(sender As Object, e As EventArgs) Handles LblId.MouseHover
@@ -558,5 +581,13 @@ Public Class RadFPPSDetailEdit
                 End Try
             End If
         End If
+    End Sub
+
+    Private Sub BtnDateFinReset_Click(sender As Object, e As EventArgs) Handles BtnDateFinReset.Click
+        DTPFin.Value = DTPFin.MaxDate
+        DTPFin.Format = DateTimePickerFormat.Custom
+        DTPFin.CustomFormat = " "
+        PPSUpdate.DateFin = Nothing
+        RadBtnValidation.Enabled = True
     End Sub
 End Class

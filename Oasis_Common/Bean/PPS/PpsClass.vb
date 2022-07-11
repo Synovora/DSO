@@ -25,7 +25,7 @@
     Property AffichageSynthese As Boolean
     Property Commentaire As String
     Property DateDebut As Date
-    Property DateFin As Date
+    Property DateFin As Date?
     Property Arret As Boolean
     Property ArretCommentaire As String
     Property DateCreation As Date

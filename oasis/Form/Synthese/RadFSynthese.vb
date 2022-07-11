@@ -1387,11 +1387,12 @@ Public Class RadFSynthese
         Cursor.Current = Cursors.WaitCursor
 
         Try
+
             Using vFTraitementObsoletes As New RadFTraitementObsoletes
-                vFTraitementObsoletes.SelectedPatient = Me.SelectedPatient
-                vFTraitementObsoletes.UtilisateurConnecte = Me.UtilisateurConnecte
-                vFTraitementObsoletes.ShowDialog() 'Modal
-            End Using
+                    vFTraitementObsoletes.SelectedPatient = Me.SelectedPatient
+                    vFTraitementObsoletes.UtilisateurConnecte = Me.UtilisateurConnecte
+                    vFTraitementObsoletes.ShowDialog() 'Modal
+                End Using
         Catch ex As Exception
             MsgBox(ex.Message())
         End Try
@@ -2205,7 +2206,7 @@ Public Class RadFSynthese
 
         Dim PPSDataTable As DataTable
         Dim PPSDao As PpsDao = New PpsDao
-        PPSDataTable = PPSDao.getAllPPSbyPatient(SelectedPatient.PatientId)
+        PPSDataTable = PPSDao.getAllPPSbyPatient(SelectedPatient.PatientId, " And (oa_pps_date_fin Is NULL Or oa_pps_date_fin >= '" & Date.Now().ToShortDateString() & "')")
 
         'Déclaration des variables pour réaliser le parcours du DataTable pour alimenter le DataGridView
         Dim i, mesureCount As Integer
@@ -2863,6 +2864,23 @@ Public Class RadFSynthese
             Me.Enabled = True
         End Try
 
+    End Sub
+
+    Private Sub AfficherLesPPSObsolètesToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles AfficherLesPPSObsolètesToolStripMenuItem.Click
+        Me.Enabled = False
+        Cursor.Current = Cursors.WaitCursor
+
+        Try
+            Using vFPPSObsoletes As New RadFPPSObsoletes
+                vFPPSObsoletes.SelectedPatient = Me.SelectedPatient
+                vFPPSObsoletes.UtilisateurConnecte = userLog
+                vFPPSObsoletes.ShowDialog() 'Modal
+            End Using
+        Catch ex As Exception
+            MsgBox(ex.Message())
+        End Try
+
+        Me.Enabled = True
     End Sub
 
     Private Sub RadBtnSocial_Click(sender As Object, e As EventArgs) Handles RadBtnSocial.Click
