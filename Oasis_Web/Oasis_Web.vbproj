@@ -213,6 +213,7 @@
     <Compile Include="Constants.vb" />
     <Compile Include="Controllers\AutoSuiviController.vb" />
     <Compile Include="Controllers\CarnetVaccinalController.vb" />
+    <Compile Include="Controllers\ResultatsController.vb" />
     <Compile Include="Controllers\RDVController.vb" />
     <Compile Include="Controllers\RenameController.vb" />
     <Compile Include="Controllers\DocFileUploadController.vb" />
@@ -224,6 +225,7 @@
     <Compile Include="Global.asax.vb">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\Resultats.vb" />
     <Compile Include="Models\ParametreAutoSuivi.vb" />
     <Compile Include="Models\UserForgot.vb" />
     <Compile Include="Models\UserRecover.vb" />
@@ -1622,6 +1624,7 @@
     <Content Include="Views\Synthese\Index.vbhtml" />
     <Content Include="Views\CarnetVaccinal\Index.vbhtml" />
     <Content Include="Views\RDV\Index.vbhtml" />
+    <Content Include="Views\Resultats\Index.vbhtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="favicon.ico" />

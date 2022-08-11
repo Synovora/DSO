@@ -48,7 +48,7 @@ Public Class PatientDao
             Try
                 Dim command As SqlCommand = con.CreateCommand()
                 command.CommandText =
-                    "SELECT * FROM oasis.oa_patient where oa_patient_id = @patientId"
+                    "SELECT * FROM oasis.oa_patient WHERE oa_patient_id = @patientId"
                 command.Parameters.AddWithValue("@patientId", patientId.ToString)
                 Using reader As SqlDataReader = command.ExecuteReader()
                     If reader.Read() Then

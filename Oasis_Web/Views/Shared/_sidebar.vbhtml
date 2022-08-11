@@ -39,8 +39,15 @@
 
                 <li>
                     <a href="@Url.Action("Index", "CarnetVaccinal")" class="waves-effect">
-                        <i class="bx bx-sun"></i>
+                        <i class="bx bx-task"></i>
                         <span>Mes Vaccins</span>
+                    </a>
+                </li>
+
+                                <li>
+                    <a href="@Url.Action("Index", "Resultats")" class="waves-effect">
+                        <i class="bx bx-task"></i>
+                        <span>Mes Resultats</span>
                     </a>
                 </li>
 
