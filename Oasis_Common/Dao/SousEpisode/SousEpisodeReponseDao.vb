@@ -4,6 +4,26 @@ Imports System.IO
 Public Class SousEpisodeReponseDao
     Inherits StandardDao
 
+    Public Function GetReponseByUser(userId As Integer) As List(Of SousEpisodeReponse)
+        Dim con As SqlConnection = GetConnection()
+        Dim episodes As List(Of SousEpisodeReponse) = New List(Of SousEpisodeReponse)
+        Try
+            Dim command As SqlCommand = con.CreateCommand()
+            command.CommandText = "SELECT SER.* FROM [oasis].[oasis].[oa_sous_episode_reponse] SER JOIN [oasis].[oasis].[oa_utilisateur] UC ON UC.oa_utilisateur_id = SER.create_user_id WHERE UC.oa_utilisateur_id = @userId ORDER BY SER.horodate_creation DESC"
+            command.Parameters.AddWithValue("@userId", userId)
+            Using reader As SqlDataReader = command.ExecuteReader()
+                While (reader.Read())
+                    episodes.Add(buildBean(reader))
+                End While
+            End Using
+        Catch ex As Exception
+            Throw ex
+        Finally
+            con.Close()
+        End Try
+        Return episodes
+    End Function
+
     ''' <summary>
     ''' 
     ''' </summary>
@@ -355,4 +375,19 @@ Public Class SousEpisodeReponseDao
         Return seType
     End Function
 
+    Private Function BuildBean(reader As SqlDataReader) As SousEpisodeReponse
+        Dim episode As New SousEpisodeReponse With {
+            .Id = reader("id"),
+            .EpisodeId = Coalesce(reader("episode_id"), 0),
+            .IdSousEpisode = Coalesce(reader("id_sous_episode"), 0),
+            .CreateUserId = Coalesce(reader("create_user_id"), 0),
+            .HorodateCreation = Coalesce(reader("horodate_creation"), Nothing),
+            .NomFichier = Coalesce(reader("nom_fichier"), ""),
+            .Commentaire = Coalesce(reader("commentaire"), ""),
+            .ValidateState = Coalesce(reader("validate_state"), ""),
+            .ValidateUserId = Coalesce(reader("validate_user_id"), 0),
+            .ValidateDate = Coalesce(reader("validate_date"), Nothing)
+        }
+        Return episode
+    End Function
 End Class
