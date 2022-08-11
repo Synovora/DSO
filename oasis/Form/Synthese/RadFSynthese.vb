@@ -1,11 +1,8 @@
-﻿Imports System.Collections.Specialized
-Imports System.Configuration
+﻿Imports System.Configuration
 Imports Telerik.WinControls
 Imports Telerik.WinControls.UI
 Imports Telerik.WinControls.UI.Localization
 Imports Oasis_Common
-Imports System.IO
-Imports Telerik.WinForms.Documents.FormatProviders.Pdf
 Imports System.Diagnostics
 
 Public Class RadFSynthese
@@ -2206,7 +2203,7 @@ Public Class RadFSynthese
 
         Dim PPSDataTable As DataTable
         Dim PPSDao As PpsDao = New PpsDao
-        PPSDataTable = PPSDao.getAllPPSbyPatient(SelectedPatient.PatientId, " And (oa_pps_date_fin Is NULL Or oa_pps_date_fin >= '" & Date.Now().ToShortDateString() & "')")
+        PPSDataTable = PPSDao.getAllPPSbyPatient(SelectedPatient.PatientId, " And (oa_pps_date_fin Is NULL Or oa_pps_date_fin >= '" & Date.Now().ToString("yyyy-MM-dd") & "')")
 
         'Déclaration des variables pour réaliser le parcours du DataTable pour alimenter le DataGridView
         Dim i, mesureCount As Integer
@@ -2215,7 +2212,6 @@ Public Class RadFSynthese
         Dim rowCount As Integer = PPSDataTable.Rows.Count - 1
         Dim categoriePPS, sousCategoriePPS, Rythme, SpecialiteId As Integer
         Dim ppsArret As Boolean
-        Dim mesureMax As Boolean = False
         Dim NaturePPS, CommentairePPS, commentaireParcours, AffichePPS, AfficheDateModificationPPS, AfficheDateModificationParcours, Base, BaseItem, SpecialiteDescription As String
 
         PPSSuiviIdeExiste = False
@@ -2295,7 +2291,6 @@ Public Class RadFSynthese
             End If
 
             'Recherche si le parcours a été modifié
-            AfficheDateModificationParcours = ""
             If PPSDataTable.Rows(i)("oa_parcours_date_modification") IsNot DBNull.Value Then
                 dateModification = PPSDataTable.Rows(i)("oa_parcours_date_modification")
                 AfficheDateModificationParcours = FormatageDateAffichage(dateModification) + " : "
@@ -2314,7 +2309,6 @@ Public Class RadFSynthese
                 End If
             End If
 
-            NaturePPS = ""
             AffichePPS = ""
             'Présentation PPS : Cible/Objectif de santé (commentaire)
             If categoriePPS = EnumCategoriePPS.Objectif Then
@@ -2326,7 +2320,6 @@ Public Class RadFSynthese
                 mesureCount += 1
                 If mesureCount > 2 Then
                     RadChkMesureMax.Show()
-                    mesureMax = True
                     If RadChkMesureMax.CheckState = False Then
                         Continue For
                     End If
@@ -2845,11 +2838,9 @@ Public Class RadFSynthese
             Cursor.Current = Cursors.Default
         End Try
 
-        Dim mailOasis As New MailOasis
+        Dim mailOasis As New MailOasis(ParametreMail.TypeMailParams.SYNTHESE, SelectedPatient)
         mailOasis.Contenu = tblByte
         mailOasis.Filename = "SynthesePatient.pdf"
-        mailOasis.IsSousEpisode = False
-        mailOasis.Type = ParametreMail.TypeMailParams.SYNTHESE
 
         ' -- 2) lancement du formulaire de choix du destinataire
         Try

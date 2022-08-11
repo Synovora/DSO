@@ -59,6 +59,8 @@ Partial Class RadFPPSObsoletes
         Me.DteHorizonAffichage = New System.Windows.Forms.DateTimePicker()
         Me.ToolTip = New System.Windows.Forms.ToolTip(Me.components)
         Me.RadPPSDataGridView = New Telerik.WinControls.UI.RadGridView()
+        Me.Label7 = New System.Windows.Forms.Label()
+        Me.DTPDateFin = New System.Windows.Forms.DateTimePicker()
         CType(Me.RadBtnAbandon, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.ContextMenuStrip1.SuspendLayout()
         CType(Me.RadGroupBoxEtatCivil, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -330,9 +332,9 @@ Partial Class RadFPPSObsoletes
         Me.Label1.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label1.Location = New System.Drawing.Point(20, 111)
         Me.Label1.Name = "Label1"
-        Me.Label1.Size = New System.Drawing.Size(173, 20)
+        Me.Label1.Size = New System.Drawing.Size(127, 20)
         Me.Label1.TabIndex = 21
-        Me.Label1.Text = "Horizon d'affichage"
+        Me.Label1.Text = "Date de debut"
         '
         'DteHorizonAffichage
         '
@@ -411,12 +413,32 @@ Partial Class RadFPPSObsoletes
         Me.RadPPSDataGridView.Size = New System.Drawing.Size(1365, 302)
         Me.RadPPSDataGridView.TabIndex = 22
         '
+        'Label7
+        '
+        Me.Label7.AutoSize = True
+        Me.Label7.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label7.Location = New System.Drawing.Point(388, 111)
+        Me.Label7.Name = "Label7"
+        Me.Label7.Size = New System.Drawing.Size(102, 20)
+        Me.Label7.TabIndex = 24
+        Me.Label7.Text = "Date de fin"
+        '
+        'DTPDateFin
+        '
+        Me.DTPDateFin.Format = System.Windows.Forms.DateTimePickerFormat.Custom
+        Me.DTPDateFin.Location = New System.Drawing.Point(516, 109)
+        Me.DTPDateFin.Name = "DTPDateFin"
+        Me.DTPDateFin.Size = New System.Drawing.Size(155, 26)
+        Me.DTPDateFin.TabIndex = 23
+        '
         'RadFPPSObsoletes
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(9.0!, 20.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.CancelButton = Me.RadBtnAbandon
         Me.ClientSize = New System.Drawing.Size(1383, 485)
+        Me.Controls.Add(Me.Label7)
+        Me.Controls.Add(Me.DTPDateFin)
         Me.Controls.Add(Me.Label1)
         Me.Controls.Add(Me.DteHorizonAffichage)
         Me.Controls.Add(Me.RadGroupBoxEtatCivil)
@@ -473,5 +495,7 @@ Partial Class RadFPPSObsoletes
     Friend WithEvents ContextMenuStrip1 As ContextMenuStrip
     Friend WithEvents HistoriqueDesModificationsToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents RadPPSDataGridView As Telerik.WinControls.UI.RadGridView
+    Friend WithEvents Label7 As Label
+    Friend WithEvents DTPDateFin As DateTimePicker
 End Class
 

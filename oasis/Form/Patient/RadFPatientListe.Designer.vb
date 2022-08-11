@@ -79,13 +79,13 @@ Partial Class RadFPatientListe
         Me.RadGroupBox1 = New Telerik.WinControls.UI.RadGroupBox()
         Me.RadPanel4 = New Telerik.WinControls.UI.RadPanel()
         Me.ToolTip = New System.Windows.Forms.ToolTip(Me.components)
+        Me.RadButton6 = New Telerik.WinControls.UI.RadButton()
+        Me.RadButton5 = New Telerik.WinControls.UI.RadButton()
         Me.RadDesktopAlert1 = New Telerik.WinControls.UI.RadDesktopAlert(Me.components)
         Me.RadPanel6 = New Telerik.WinControls.UI.RadPanel()
         Me.RadPanel5 = New Telerik.WinControls.UI.RadPanel()
         Me.InputNom = New Telerik.WinControls.UI.RadTextBox()
         Me.InputPrenom = New Telerik.WinControls.UI.RadTextBox()
-        Me.RadButton6 = New Telerik.WinControls.UI.RadButton()
-        Me.RadButton5 = New Telerik.WinControls.UI.RadButton()
         Me.BtnFilter = New Telerik.WinControls.UI.RadButton()
         Me.BtnSearch = New Telerik.WinControls.UI.RadButton()
         Me.RadLabel3 = New Telerik.WinControls.UI.RadLabel()
@@ -132,14 +132,14 @@ Partial Class RadFPatientListe
         Me.RadGroupBox1.SuspendLayout()
         CType(Me.RadPanel4, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.RadPanel4.SuspendLayout()
+        CType(Me.RadButton6, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.RadButton5, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.RadPanel6, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.RadPanel6.SuspendLayout()
         CType(Me.RadPanel5, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.RadPanel5.SuspendLayout()
         CType(Me.InputNom, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.InputPrenom, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.RadButton6, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.RadButton5, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.BtnFilter, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.BtnSearch, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.RadLabel3, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -585,7 +585,7 @@ Partial Class RadFPatientListe
         Me.RadMailButton.Name = "RadMailButton"
         Me.RadMailButton.Size = New System.Drawing.Size(128, 24)
         Me.RadMailButton.TabIndex = 49
-        Me.RadMailButton.Text = "Résultats non attribue"
+        Me.RadMailButton.Text = "Résultats non attribués"
         '
         'RadBtnWiki
         '
@@ -639,6 +639,24 @@ Partial Class RadFPatientListe
         Me.RadPanel4.Name = "RadPanel4"
         Me.RadPanel4.Size = New System.Drawing.Size(1057, 522)
         Me.RadPanel4.TabIndex = 46
+        '
+        'RadButton6
+        '
+        Me.RadButton6.Location = New System.Drawing.Point(818, 10)
+        Me.RadButton6.Name = "RadButton6"
+        Me.RadButton6.Size = New System.Drawing.Size(28, 28)
+        Me.RadButton6.TabIndex = 53
+        Me.RadButton6.Text = "⟳"
+        Me.ToolTip.SetToolTip(Me.RadButton6, "Réinitialisation des filtres")
+        '
+        'RadButton5
+        '
+        Me.RadButton5.Location = New System.Drawing.Point(645, 10)
+        Me.RadButton5.Name = "RadButton5"
+        Me.RadButton5.Size = New System.Drawing.Size(28, 28)
+        Me.RadButton5.TabIndex = 52
+        Me.RadButton5.Text = "⟳"
+        Me.ToolTip.SetToolTip(Me.RadButton5, "Réinitialisation de la date de naissance")
         '
         'RadDesktopAlert1
         '
@@ -694,24 +712,6 @@ Partial Class RadFPatientListe
         Me.InputPrenom.ShowClearButton = True
         Me.InputPrenom.Size = New System.Drawing.Size(167, 27)
         Me.InputPrenom.TabIndex = 54
-        '
-        'RadButton6
-        '
-        Me.RadButton6.Location = New System.Drawing.Point(818, 10)
-        Me.RadButton6.Name = "RadButton6"
-        Me.RadButton6.Size = New System.Drawing.Size(28, 28)
-        Me.RadButton6.TabIndex = 53
-        Me.RadButton6.Text = "⟳"
-        Me.ToolTip.SetToolTip(Me.RadButton6, "Réinitialisation des filtres")
-        '
-        'RadButton5
-        '
-        Me.RadButton5.Location = New System.Drawing.Point(645, 10)
-        Me.RadButton5.Name = "RadButton5"
-        Me.RadButton5.Size = New System.Drawing.Size(28, 28)
-        Me.RadButton5.TabIndex = 52
-        Me.RadButton5.Text = "⟳"
-        Me.ToolTip.SetToolTip(Me.RadButton5, "Réinitialisation de la date de naissance")
         '
         'BtnFilter
         '
@@ -824,6 +824,8 @@ Partial Class RadFPatientListe
         Me.RadGroupBox1.ResumeLayout(False)
         CType(Me.RadPanel4, System.ComponentModel.ISupportInitialize).EndInit()
         Me.RadPanel4.ResumeLayout(False)
+        CType(Me.RadButton6, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.RadButton5, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.RadPanel6, System.ComponentModel.ISupportInitialize).EndInit()
         Me.RadPanel6.ResumeLayout(False)
         Me.RadPanel6.PerformLayout()
@@ -832,8 +834,6 @@ Partial Class RadFPatientListe
         Me.RadPanel5.PerformLayout()
         CType(Me.InputNom, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.InputPrenom, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.RadButton6, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.RadButton5, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.BtnFilter, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.BtnSearch, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.RadLabel3, System.ComponentModel.ISupportInitialize).EndInit()

@@ -16,6 +16,8 @@ Public Class FrmEtatJournalier
         Dim parametreOasisDao As ParametreOasisDao = New ParametreOasisDao
         parametreOasisDao.TraitementContexte()
 
+        RadDateTimePicker.Value = Date.Now()
+
         ChargementPatient()
         Cursor.Current = Cursors.Default
     End Sub

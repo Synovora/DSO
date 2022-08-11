@@ -332,10 +332,11 @@ Public Class FrmSousEpisode
 
         End With
 
+        LblReference.Text = sousEpisode.Reference
+
         '-- handler sur boutons grid reponse
         AddHandler RadReponseGrid.CommandCellClick, AddressOf gridReponse_CommandCellClick
         AddHandler RadReponseGrid.CellFormatting, AddressOf RadReponseGrid_CellFormatting
-
     End Sub
 
     Private Sub RadReponseGrid_CellFormatting(ByVal sender As Object, ByVal e As CellFormattingEventArgs)
@@ -764,11 +765,9 @@ Public Class FrmSousEpisode
             Cursor.Current = Cursors.Default
         End Try
 
-        Dim mailOasis As New MailOasis
+        Dim mailOasis As New MailOasis(ParametreMail.TypeMailParams.SOUS_EPISODE, patient, Nothing, sousEpisode, True)
         mailOasis.Contenu = tblByte
-        mailOasis.Filename = "SousEpidode.docx"
-        mailOasis.IsSousEpisode = True
-        mailOasis.Type = ParametreMail.TypeMailParams.SOUS_EPISODE
+        mailOasis.Filename = "SousEpisode.docx"
 
         ' -- 2) lancement du formulaire de choix du destinataire
         Me.Enabled = False

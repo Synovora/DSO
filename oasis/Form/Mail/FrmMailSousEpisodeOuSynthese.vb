@@ -47,31 +47,10 @@ Public Class FrmMailSousEpisodeOuSynthese
     End Sub
 
     Private Sub initFormulaire()
-
-        ' ------------------------------------ params mail
-        Dim parametreMailDao As New ParametreMailDao
-        Dim parametreMail = parametreMailDao.GetParametreMailBySiegeIdTypeMailParam(patient.PatientSiegeId, mailOasis.Type)
-
-        ' ------------------------------------ params siege
-        Try
-            Dim siegeDao = New SiegeDao
-            Dim siege = siegeDao.getSiegeById(patient.PatientSiegeId)
-            With siege
-                If .SiegeDescription.Trim() <> String.Empty Then adrSiege = .SiegeDescription & If(parametreMail.IsBodyHtml, "<br />", vbCrLf)
-                If .SiegeAdresse1.Trim() <> String.Empty Then adrSiege += .SiegeAdresse1 & If(parametreMail.IsBodyHtml, "<br />", vbCrLf)
-                If .SiegeAdresse2.Trim() <> String.Empty Then adrSiege += .SiegeAdresse2 & If(parametreMail.IsBodyHtml, "<br />", vbCrLf)
-                If (.SiegeCodePostal + .SiegeVille) <> String.Empty Then adrSiege += .SiegeCodePostal & " " & .SiegeVille & If(parametreMail.IsBodyHtml, "<br />", vbCrLf)
-                If .SiegeTelephone.Trim() <> String.Empty Then adrSiege += "Tél : " & .SiegeTelephone & If(parametreMail.IsBodyHtml, "<br />", vbCrLf)
-                If .SiegeFax.Trim() <> String.Empty Then adrSiege += "Fax : " & .SiegeFax & If(parametreMail.IsBodyHtml, "<br />", vbCrLf)
-                If .SiegeMail.Trim() <> String.Empty Then adrSiege += "Email : " & .SiegeMail & If(parametreMail.IsBodyHtml, "<br />", vbCrLf)
-            End With
-        Catch ex As Exception
-        End Try
-
         refreshGrid()
 
-        Me.TxtObjet.Text = replaceZonesVariables(parametreMail.Objet)
-        Me.TxtBody.Text = replaceZonesVariables(parametreMail.Body)
+        Me.TxtObjet.Text = Me.mailOasis.Subject
+        Me.TxtBody.Text = Me.mailOasis.Body
 
         ' --------------------------------------------- patient
         If IsValidEmail(patient.PatientEmail) Then
@@ -83,21 +62,6 @@ Public Class FrmMailSousEpisodeOuSynthese
         End If
 
     End Sub
-
-    Private Function replaceZonesVariables(source As String)
-        Select Case mailOasis.Type
-            Case ParametreMail.TypeMailParams.CARNET_VACCINAL
-                source = source.Replace("@DateCreation", Now.ToString("dd/MM/yyyy"))
-            Case ParametreMail.TypeMailParams.SYNTHESE
-                source = source.Replace("@Reference", If(sousEpisode IsNot Nothing, sousEpisode.Reference, ""))
-                source = source.Replace("@DateCreation", Now.ToString("dd/MM/yyyy"))
-            Case Else
-                source = source.Replace("@DateCreation", If(sousEpisode IsNot Nothing, sousEpisode.HorodateCreation.ToString("dd/MM/yyyy"), ""))
-        End Select
-        Return source.Replace("@PatientNom", patient.PatientNom) _
-                     .Replace("@PatientPrenom", patient.PatientPrenom) _
-                     .Replace("@SiegeCoord", adrSiege)
-    End Function
 
     Public Sub BtnValider_Click(sender As Object, e As EventArgs) Handles BtnValider.Click
         Dim isDejaOk As Boolean = False

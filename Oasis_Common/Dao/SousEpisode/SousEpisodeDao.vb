@@ -297,9 +297,9 @@ Public Class SousEpisodeDao
 
     End Sub
 
-    Public Function GenerateRandomString(ByRef len As Integer) As String
+    Public Function GenerateBase33(Optional len As Integer = 6) As String
         Dim rand As New Random()
-        Dim allowableChars() As Char = "ABCDEFGHIJKLOMNOPQRSTUVWXYZ0123456789".ToCharArray()
+        Dim allowableChars() As Char = "123456789ABCDEFGHJKLMNPQRSTUVWXYZ".ToCharArray()
         Dim final As String = String.Empty
         For i As Integer = 0 To len - 1
             final += allowableChars(rand.Next(allowableChars.Length - 1))
@@ -319,12 +319,11 @@ Public Class SousEpisodeDao
         con = GetConnection()
         Dim transaction As SqlClient.SqlTransaction = con.BeginTransaction
 
-        Dim reference As String = GenerateRandomString(6)
         Dim episodeDao As New EpisodeDao
         Dim patientDao As New PatientDao
         Dim episode As Episode = episodeDao.GetEpisodeById(sousEpisode.EpisodeId)
         Dim patient As Patient = patientDao.GetPatient(episode.PatientId)
-        reference = FormatPrenom(patient.PatientPrenom) & "-" & reference
+        Dim reference As String = FormatPrenom(patient.PatientPrenom) & "-" & GenerateBase33(6)
         Try
             Dim SQLstring As String = "INSERT INTO oasis.oa_sous_episode " &
                     "(episode_id , id_intervenant, id_sous_episode_type , id_sous_episode_sous_type , create_user_id , horodate_creation , " &

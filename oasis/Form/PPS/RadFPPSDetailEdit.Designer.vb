@@ -46,6 +46,7 @@ Partial Class RadFPPSDetailEdit
         Me.Label2 = New System.Windows.Forms.Label()
         Me.LblPatientAdresse1 = New System.Windows.Forms.Label()
         Me.RadGroupBox1 = New Telerik.WinControls.UI.RadGroupBox()
+        Me.BtnDateFinReset = New Telerik.WinControls.UI.RadButton()
         Me.Label1 = New System.Windows.Forms.Label()
         Me.DTPFin = New System.Windows.Forms.DateTimePicker()
         Me.RadBtnRecupereDrc = New Telerik.WinControls.UI.RadButton()
@@ -78,11 +79,11 @@ Partial Class RadFPPSDetailEdit
         Me.RadBtnConfirmationAnnulation = New Telerik.WinControls.UI.RadButton()
         Me.RadBtnAbandonner = New Telerik.WinControls.UI.RadButton()
         Me.RadBtnTutoriel = New Telerik.WinControls.UI.RadButton()
-        Me.BtnDateFinReset = New Telerik.WinControls.UI.RadButton()
         CType(Me.RadGroupBoxEtatCivil, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.RadGroupBoxEtatCivil.SuspendLayout()
         CType(Me.RadGroupBox1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.RadGroupBox1.SuspendLayout()
+        CType(Me.BtnDateFinReset, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.RadBtnRecupereDrc, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.RadBtnDrcSelecteur, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.NumPriorite, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -94,7 +95,6 @@ Partial Class RadFPPSDetailEdit
         CType(Me.RadBtnConfirmationAnnulation, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.RadBtnAbandonner, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.RadBtnTutoriel, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.BtnDateFinReset, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
@@ -359,14 +359,22 @@ Partial Class RadFPPSDetailEdit
         CType(Me.RadGroupBox1.GetChildAt(0).GetChildAt(1).GetChildAt(0), Telerik.WinControls.Primitives.FillPrimitive).BackColor = System.Drawing.SystemColors.ActiveCaption
         CType(Me.RadGroupBox1.GetChildAt(0).GetChildAt(1).GetChildAt(0), Telerik.WinControls.Primitives.FillPrimitive).SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.None
         '
+        'BtnDateFinReset
+        '
+        Me.BtnDateFinReset.Location = New System.Drawing.Point(300, 182)
+        Me.BtnDateFinReset.Name = "BtnDateFinReset"
+        Me.BtnDateFinReset.Size = New System.Drawing.Size(112, 23)
+        Me.BtnDateFinReset.TabIndex = 98
+        Me.BtnDateFinReset.Text = "Reinitialiser"
+        '
         'Label1
         '
         Me.Label1.AutoSize = True
         Me.Label1.Location = New System.Drawing.Point(13, 183)
         Me.Label1.Name = "Label1"
-        Me.Label1.Size = New System.Drawing.Size(32, 23)
+        Me.Label1.Size = New System.Drawing.Size(94, 23)
         Me.Label1.TabIndex = 99
-        Me.Label1.Text = "Fin"
+        Me.Label1.Text = "Date de fin"
         '
         'DTPFin
         '
@@ -646,14 +654,6 @@ Partial Class RadFPPSDetailEdit
         Me.RadBtnTutoriel.TabIndex = 103
         Me.RadBtnTutoriel.Text = "Tutoriel"
         '
-        'BtnDateFinReset
-        '
-        Me.BtnDateFinReset.Location = New System.Drawing.Point(300, 182)
-        Me.BtnDateFinReset.Name = "BtnDateFinReset"
-        Me.BtnDateFinReset.Size = New System.Drawing.Size(112, 23)
-        Me.BtnDateFinReset.TabIndex = 98
-        Me.BtnDateFinReset.Text = "Reinitialiser"
-        '
         'RadFPPSDetailEdit
         '
         Me.AcceptButton = Me.RadBtnValidation
@@ -694,6 +694,7 @@ Partial Class RadFPPSDetailEdit
         CType(Me.RadGroupBox1, System.ComponentModel.ISupportInitialize).EndInit()
         Me.RadGroupBox1.ResumeLayout(False)
         Me.RadGroupBox1.PerformLayout()
+        CType(Me.BtnDateFinReset, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.RadBtnRecupereDrc, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.RadBtnDrcSelecteur, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.NumPriorite, System.ComponentModel.ISupportInitialize).EndInit()
@@ -706,7 +707,6 @@ Partial Class RadFPPSDetailEdit
         CType(Me.RadBtnConfirmationAnnulation, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.RadBtnAbandonner, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.RadBtnTutoriel, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.BtnDateFinReset, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
         Me.PerformLayout()

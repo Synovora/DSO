@@ -377,13 +377,10 @@ Public Class RadFCPV
             Cursor.Current = Cursors.Default
         End Try
 
-        Dim mailOasis As New MailOasis
+        Dim mailOasis As New MailOasis(ParametreMail.TypeMailParams.CARNET_VACCINAL, Patient)
         mailOasis.Contenu = tblByte
         mailOasis.Filename = "CarnetVaccinalPatient.pdf"
-        mailOasis.IsSousEpisode = False
-        mailOasis.Type = ParametreMail.TypeMailParams.CARNET_VACCINAL
 
-        ' -- 2) lancement du formulaire de choix du destinataire
         Try
             Cursor.Current = Cursors.WaitCursor
             Using frm = New FrmMailSousEpisodeOuSynthese(Patient, Nothing, mailOasis)

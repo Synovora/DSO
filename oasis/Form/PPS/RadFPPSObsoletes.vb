@@ -18,6 +18,9 @@ Public Class RadFPPSObsoletes
         DteHorizonAffichage.CustomFormat = "MMMM-yyyy"
         DteHorizonAffichage.Value = Date.Now.AddYears(-1 * Horizon)
         DteHorizonAffichage.MaxDate = Date.Now
+        DTPDateFin.CustomFormat = "MMMM-yyyy"
+        DTPDateFin.Value = Date.Now
+        DTPDateFin.MaxDate = Date.Now
         InitZones()
         ChargementEtatCivil()
         ChargementPPS()
@@ -74,12 +77,15 @@ Public Class RadFPPSObsoletes
     'Chargement de la Grid
     Private Sub ChargementPPS()
         RadPPSDataGridView.Rows.Clear()
+        Dim filtreDateDebut As Date
+        filtreDateDebut = DteHorizonAffichage.Value
+
         Dim filtreDateFin As Date
-        filtreDateFin = DteHorizonAffichage.Value
+        filtreDateFin = DTPDateFin.Value
 
         Dim PPSDataTable As DataTable
         Dim PPSDao As PpsDao = New PpsDao
-        PPSDataTable = PPSDao.getAllPPSbyPatient(SelectedPatient.PatientId, " And ((oa_pps_date_fin IS NOT NULL) AND (oa_pps_date_fin >= '" & filtreDateFin & "' AND oa_pps_date_fin <= '" & Date.Now & "'))")
+        PPSDataTable = PPSDao.getAllPPSbyPatient(SelectedPatient.PatientId, " And ((oa_pps_date_fin IS NOT NULL) AND (oa_pps_date_fin >= '" & filtreDateDebut.ToString("yyyy-MM-dd") & "' AND oa_pps_date_fin <= '" & filtreDateFin.ToString("yyyy-MM-dd") & "'))")
 
         'Déclaration des variables pour réaliser le parcours du DataTable pour alimenter le DataGridView
         Dim i, mesureCount As Integer
@@ -403,7 +409,7 @@ Public Class RadFPPSObsoletes
         Close()
     End Sub
 
-    Private Sub DteHorizonAffichage_ValueChanged(sender As Object, e As EventArgs) Handles DteHorizonAffichage.ValueChanged
+    Private Sub DteHorizonAffichage_ValueChanged(sender As Object, e As EventArgs) Handles DteHorizonAffichage.ValueChanged, DTPDateFin.ValueChanged
         ChargementPPS()
     End Sub
 End Class
