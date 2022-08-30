@@ -26,7 +26,7 @@ Namespace Oasis_Web.Controllers
             Response.ContentType = "application/pdf"
             Response.Buffer = True
             Response.AddHeader("Content-Disposition", String.Format("attachment;filename={0}", fileName))
-            Response.TransmitFile(ConfigurationManager.AppSettings("FileUploadLocation") & fileName)
+            Response.TransmitFile(filePath)
             Response.End()
 
             Return Nothing
