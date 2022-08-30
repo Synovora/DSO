@@ -4,16 +4,26 @@ Imports System.IO
 Public Class SousEpisodeReponseDao
     Inherits StandardDao
 
-    Public Function GetReponseByUser(userId As Integer) As List(Of SousEpisodeReponse)
+    Public Function GetReponseCompleteByUser(userId As Integer) As List(Of SousEpisodeReponse)
         Dim con As SqlConnection = GetConnection()
         Dim episodes As List(Of SousEpisodeReponse) = New List(Of SousEpisodeReponse)
         Try
             Dim command As SqlCommand = con.CreateCommand()
-            command.CommandText = "SELECT SER.* FROM [oasis].[oasis].[oa_sous_episode_reponse] SER JOIN [oasis].[oasis].[oa_utilisateur] UC ON UC.oa_utilisateur_id = SER.create_user_id WHERE UC.oa_utilisateur_id = @userId ORDER BY SER.horodate_creation DESC"
+            command.CommandText = "SELECT A.oa_antecedent_description AS conclusion, SER.*, AE.oa_activite_description AS type_activite, RSET.libelle AS sous_episode_libelle, RSEST.libelle AS sous_episode_sous_libelle , SE.* FROM [oasis].[oasis].[oa_sous_episode_reponse] SER
+                                    JOIN [oasis].[oasis].[oa_utilisateur] UC ON UC.oa_utilisateur_id = SER.create_user_id
+                                    JOIN [oasis].[oasis].[oa_sous_episode] SE ON SE.id = SER.id_sous_episode
+                                    JOIN [oasis].[oasis].oa_episode E ON E.episode_id = SER.episode_id
+                                    JOIN [oasis].[oasis].oa_r_activite_episode AE ON AE.oa_activite_type = E.type_activite
+
+                                    JOIN [oasis].[oasis].[oa_r_sous_episode_type] RSET ON RSET.id = SE.id_sous_episode_type
+                                    JOIN [oasis].[oasis].[oa_r_sous_episode_sous_type] RSEST ON RSEST.id = SE.id_sous_episode_sous_type
+
+									OUTER APPLY(SELECT TOP(1) A.* FROM oasis.oa_episode_contexte EC LEFT JOIN oasis.oa_antecedent A ON A.oa_antecedent_id = EC.episode_contexte_id WHERE EC.episode_id = E.episode_id) as A
+                                    WHERE UC.oa_utilisateur_id = @userId ORDER BY SER.horodate_creation DESC"
             command.Parameters.AddWithValue("@userId", userId)
             Using reader As SqlDataReader = command.ExecuteReader()
                 While (reader.Read())
-                    episodes.Add(buildBean(reader))
+                    episodes.Add(BuildBean(reader))
                 End While
             End Using
         Catch ex As Exception
@@ -386,7 +396,11 @@ Public Class SousEpisodeReponseDao
             .Commentaire = Coalesce(reader("commentaire"), ""),
             .ValidateState = Coalesce(reader("validate_state"), ""),
             .ValidateUserId = Coalesce(reader("validate_user_id"), 0),
-            .ValidateDate = Coalesce(reader("validate_date"), Nothing)
+            .ValidateDate = Coalesce(reader("validate_date"), Nothing),
+               .SousEpisodeLibelle = Coalesce(reader("sous_episode_libelle"), Nothing),
+        .SousEpisodeSousLibelle = Coalesce(reader("sous_episode_sous_libelle"), Nothing),
+        .Conclusion = Coalesce(reader("conclusion"), Nothing),
+        .TypeActivite = Coalesce(reader("type_activite"), Nothing)
         }
         Return episode
     End Function

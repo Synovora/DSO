@@ -13,6 +13,13 @@ Public Class SousEpisodeReponse
     Property ValidateDate As DateTime
     Property EpisodeId As Long
 
+    '--
+    Property SousEpisodeLibelle As String
+    Property SousEpisodeSousLibelle As String
+    Property TypeActivite As String
+    Property Conclusion As String
+
+
 
     Public Sub New()
     End Sub
@@ -28,6 +35,9 @@ Public Class SousEpisodeReponse
         Me.ValidateUserId = Coalesce(row("validate_user_id"), Nothing)
         Me.ValidateDate = Coalesce(row("validate_date"), Nothing)
         Me.EpisodeId = Coalesce(row("episode_id"), Nothing)
+        Me.SousEpisodeLibelle = Coalesce(row("sous_episode_libelle"), Nothing)
+        Me.SousEpisodeSousLibelle = Coalesce(row("sous_episode_sous_libelle"), Nothing)
+        Me.TypeActivite = Coalesce(row("type_activite"), Nothing)
 
     End Sub
 

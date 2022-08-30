@@ -112,7 +112,7 @@ End Code
                 <p class="text-muted">
                     C’est un accès à l’ensemble de vos résultats d’analyses biologiques, d’examens radiologiques, d’avis spécialisés réalisés et communiqués à votre référent de santé.
                 </p>
-                @*<button type="button" class="btn btn-primary btn-sm" onClick="document.location.href='/Synthese'">Acceder a mes résultats</button>*@
+                <button type="button" class="btn btn-primary btn-sm" onClick="document.location.href='/Resultats'">Acceder a mes résultats</button>
             </div>
         </div>
     </div>

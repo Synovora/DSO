@@ -107,6 +107,7 @@ Namespace Oasis_Web.Controllers
                 End If
                 Result.Add(tmp)
             Next
+
             Return Result.OrderBy(Function(x) Date.Parse(x(5))).ToList()
         End Function
 

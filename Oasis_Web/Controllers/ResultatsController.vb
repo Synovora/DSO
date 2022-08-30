@@ -15,13 +15,22 @@ Namespace Oasis_Web.Controllers
         ReadOnly episodeDao As New EpisodeDao
         Dim episodeParametreDao As New EpisodeParametreDao
 
-        'Function Index(model As ResultatsModel) As ActionResult
-        '    ' Here you can use the model.SelectedItem which will
-        '    ' return you the id of the selected item from the DropDown and 
-        '    ' model.SelectedItems which will return you the list of ids of
-        '    ' the selected items in the ListBox.
+        <ActionName("download")>
+        Public Function Download(fileName As String) As ActionResult
 
-        'End Function
+            Dim filePath = ConfigurationManager.AppSettings("FileUploadLocation") & "\" & fileName
+
+            Response.Clear()
+            Response.ClearContent()
+            Response.ClearHeaders()
+            Response.ContentType = "application/pdf"
+            Response.Buffer = True
+            Response.AddHeader("Content-Disposition", "attachment;filename=toto.pdf")
+            Response.TransmitFile("Z:\aneopsy\Download\Facture_2557668.pdf")
+            Response.End()
+
+            Return Nothing
+        End Function
 
         <Authorize>
         Public Function Index() As ActionResult
@@ -41,25 +50,29 @@ Namespace Oasis_Web.Controllers
             Dim patient = patientDao.GetPatient(Request.Cookies("patientId").Value)
             ViewBag.Patient = patient
 
-            ViewBag.Resultats = ChargementResultats(patient.PatientId)
-            Dim model = New ResultatsModel With {
-            .Items = {
-                New SelectListItem() With {.Value = "1", .Text = "item 1"},
-                New SelectListItem() With {.Value = "2", .Text = "item 2"},
-                New SelectListItem() With {.Value = "3", .Text = "item 3"}
-                }
-            }
-            ViewBag.Items = model.Items
-            Return View(model)
+            Dim Resultats = ChargementResultats(patient.PatientId)
+
+            Dim sousEpisodeLibelles = Resultats.Select(Function(item) item.SousEpisodeLibelle).Distinct().ToList.Select(Function(obj) New SelectListItem() With {.Value = obj, .Text = obj}).Reverse.Append(New SelectListItem() With {.Value = "Tous", .Text = "Tous"}).Reverse.ToList
+            ViewData("sousEpisodeLibelles") = sousEpisodeLibelles
+
+            Dim SousEpisodeSousLibelle = Resultats.Select(Function(item) item.SousEpisodeSousLibelle).Distinct().ToList.Select(Function(obj) New SelectListItem() With {.Value = obj, .Text = obj}).Reverse.Append(New SelectListItem() With {.Value = "Tous", .Text = "Tous"}).Reverse.ToList
+            ViewData("SousEpisodeSousLibelle") = SousEpisodeSousLibelle
+
+            For x = 0 To Resultats.Count - 1
+                Resultats(x).NomFichier = Resultats(x).GetFilenameServer(Resultats(x).EpisodeId)
+            Next
+
+            ViewBag.Resultats = Resultats.GroupBy(Function(x) x.IdSousEpisode, Function(key, element) New With {Key .Value = key, Key .Element = element}).Take(10)
+
+
+            Return View()
         End Function
 
         Private Function ChargementResultats(patientId As Long) As List(Of SousEpisodeReponse)
-
             Dim sousEpisodeReponseDao As New SousEpisodeReponseDao
             Dim tacheDao As New TacheDao
 
-            Return sousEpisodeReponseDao.GetReponseByUser(patientId)
-
+            Return sousEpisodeReponseDao.GetReponseCompleteByUser(patientId)
         End Function
 
     End Class
