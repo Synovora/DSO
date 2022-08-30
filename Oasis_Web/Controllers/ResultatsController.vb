@@ -25,8 +25,8 @@ Namespace Oasis_Web.Controllers
             Response.ClearHeaders()
             Response.ContentType = "application/pdf"
             Response.Buffer = True
-            Response.AddHeader("Content-Disposition", "attachment;filename=toto.pdf")
-            Response.TransmitFile("Z:\aneopsy\Download\Facture_2557668.pdf")
+            Response.AddHeader("Content-Disposition", String.Format("attachment;filename={0}", fileName))
+            Response.TransmitFile(fileName)
             Response.End()
 
             Return Nothing
