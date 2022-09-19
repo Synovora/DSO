@@ -17,7 +17,6 @@ Namespace Oasis_Web.Controllers
 
         <ActionName("download")>
         Public Function Download(fileName As String) As ActionResult
-
             Dim filePath = ConfigurationManager.AppSettings("FileUploadLocation") & "\" & fileName
 
             Response.Clear()
@@ -33,13 +32,14 @@ Namespace Oasis_Web.Controllers
         End Function
 
         <Authorize>
-        Public Function Index() As ActionResult
+        Public Function Index(ByVal MySousEpisodeLibelles As String, ByVal MySousEpisodeSousLibelle As String) As ActionResult
             Dim internauteConnectionDao As New InternauteConnectionDao
             Dim strName As String = Constants.LAYOUT_VERTICAL
             Dim strWelcomeText As String = "Resultats"
 
             If TempData("ModeName") IsNot Nothing Then strName = TempData("ModeName").ToString()
             If TempData("WelcomeText") IsNot Nothing Then strWelcomeText = TempData("WelcomeText").ToString()
+
             ViewBag.ModeName = strName
             ViewBag.WelcomeText = strWelcomeText
 
@@ -55,15 +55,26 @@ Namespace Oasis_Web.Controllers
             Dim sousEpisodeLibelles = Resultats.Select(Function(item) item.SousEpisodeLibelle).Distinct().ToList.Select(Function(obj) New SelectListItem() With {.Value = obj, .Text = obj}).Reverse.Append(New SelectListItem() With {.Value = "Tous", .Text = "Tous"}).Reverse.ToList
             ViewData("sousEpisodeLibelles") = sousEpisodeLibelles
 
-            Dim SousEpisodeSousLibelle = Resultats.Select(Function(item) item.SousEpisodeSousLibelle).Distinct().ToList.Select(Function(obj) New SelectListItem() With {.Value = obj, .Text = obj}).Reverse.Append(New SelectListItem() With {.Value = "Tous", .Text = "Tous"}).Reverse.ToList
-            ViewData("SousEpisodeSousLibelle") = SousEpisodeSousLibelle
+            If MySousEpisodeLibelles Is Nothing OrElse MySousEpisodeLibelles = "Tous" Then
+                ViewData("SousEpisodeSousLibelle") = New List(Of SelectListItem)
+            Else
+                Dim SousEpisodeSousLibelle = Resultats.Where(Function(x) x.SousEpisodeLibelle = MySousEpisodeLibelles).ToList().Select(Function(item) item.SousEpisodeSousLibelle).Distinct().ToList.Select(Function(obj) New SelectListItem() With {.Value = obj, .Text = obj}).Reverse.Append(New SelectListItem() With {.Value = "Tous", .Text = "Tous"}).Reverse.ToList
+                ViewData("SousEpisodeSousLibelle") = SousEpisodeSousLibelle
+            End If
 
             For x = 0 To Resultats.Count - 1
                 Resultats(x).NomFichier = Resultats(x).GetFilenameServer(Resultats(x).EpisodeId)
             Next
 
-            ViewBag.Resultats = Resultats.GroupBy(Function(x) x.IdSousEpisode, Function(key, element) New With {Key .Value = key, Key .Element = element}).Take(10)
-
+            If MySousEpisodeLibelles Is Nothing OrElse MySousEpisodeLibelles = "Tous" Then
+                ViewBag.Resultats = Resultats.GroupBy(Function(x) x.IdSousEpisode, Function(key, element) New With {Key .Value = key, Key .Element = element}).Take(10)
+            Else
+                If MySousEpisodeSousLibelle Is Nothing OrElse MySousEpisodeSousLibelle = "Tous" Then
+                    ViewBag.Resultats = Resultats.Where(Function(x) x.SousEpisodeLibelle = MySousEpisodeLibelles).ToList().GroupBy(Function(x) x.IdSousEpisode, Function(key, element) New With {Key .Value = key, Key .Element = element})
+                Else
+                    ViewBag.Resultats = Resultats.Where(Function(x) x.SousEpisodeLibelle = MySousEpisodeLibelles AndAlso x.SousEpisodeSousLibelle = MySousEpisodeSousLibelle).ToList().GroupBy(Function(x) x.IdSousEpisode, Function(key, element) New With {Key .Value = key, Key .Element = element})
+                End If
+            End If
 
             Return View()
         End Function

@@ -20,7 +20,7 @@ End Section
                 <div class="row mb-3">
                     <div class="col-md-6">
                         <div>
-                            <p class="text-muted">Date de naissance: @ViewBag.patient.PatientDateNaissance.ToShortDateString()</p>
+                            <p class="text-muted">Date de naissance: @String.Format(ViewBag.Patient.PatientDateNaissance, "dd/MM/yyyy")</p>
                             <p class="text-muted">Genre: @ViewBag.patient.PatientGenre</p>
                         </div>
                     </div>

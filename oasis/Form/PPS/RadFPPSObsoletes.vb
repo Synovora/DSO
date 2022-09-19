@@ -305,105 +305,105 @@ Public Class RadFPPSObsoletes
         RadPPSDataGridView.Rows.Clear()
     End Sub
 
-    Private Sub RadPPSDataGridView_CellDoubleClick(sender As Object, e As Telerik.WinControls.UI.GridViewCellEventArgs) Handles RadPPSDataGridView.CellDoubleClick
-        'Appeler selon la nature du PPS le DetailEdit correspondant
-        If RadPPSDataGridView.CurrentRow IsNot Nothing Then
-            Dim PPSId, ParcoursId, categoriePPS, sousCategoriePPS, SpecialiteId As Integer
-            Dim aRow As Integer = Me.RadPPSDataGridView.Rows.IndexOf(Me.RadPPSDataGridView.CurrentRow)
-            If aRow >= 0 Then
-                PPSId = RadPPSDataGridView.Rows(aRow).Cells("ppsId").Value
-                ParcoursId = RadPPSDataGridView.Rows(aRow).Cells("parcoursId").Value
-                categoriePPS = RadPPSDataGridView.Rows(aRow).Cells("categorieId").Value
-                sousCategoriePPS = RadPPSDataGridView.Rows(aRow).Cells("sousCategorieId").Value
-                SpecialiteId = RadPPSDataGridView.Rows(aRow).Cells("specialiteId").Value
-                Select Case categoriePPS
-                    Case Pps.EnumCategoriePPS.OBJECTIF_SANTE
-                        Cursor.Current = Cursors.WaitCursor
-                        Me.Enabled = False
+    'Private Sub RadPPSDataGridView_CellDoubleClick(sender As Object, e As Telerik.WinControls.UI.GridViewCellEventArgs) Handles RadPPSDataGridView.CellDoubleClick
+    '    'Appeler selon la nature du PPS le DetailEdit correspondant
+    '    If RadPPSDataGridView.CurrentRow IsNot Nothing Then
+    '        Dim PPSId, ParcoursId, categoriePPS, sousCategoriePPS, SpecialiteId As Integer
+    '        Dim aRow As Integer = Me.RadPPSDataGridView.Rows.IndexOf(Me.RadPPSDataGridView.CurrentRow)
+    '        If aRow >= 0 Then
+    '            PPSId = RadPPSDataGridView.Rows(aRow).Cells("ppsId").Value
+    '            ParcoursId = RadPPSDataGridView.Rows(aRow).Cells("parcoursId").Value
+    '            categoriePPS = RadPPSDataGridView.Rows(aRow).Cells("categorieId").Value
+    '            sousCategoriePPS = RadPPSDataGridView.Rows(aRow).Cells("sousCategorieId").Value
+    '            SpecialiteId = RadPPSDataGridView.Rows(aRow).Cells("specialiteId").Value
+    '            Select Case categoriePPS
+    '                Case Pps.EnumCategoriePPS.OBJECTIF_SANTE
+    '                    Cursor.Current = Cursors.WaitCursor
+    '                    Me.Enabled = False
 
-                        Try
-                            Using vRadFPPSObjectifSanteDetail As New RadFPPSDetailEdit
-                                vRadFPPSObjectifSanteDetail.PPSId = PPSId
-                                vRadFPPSObjectifSanteDetail.CategoriePPS = EnumCategoriePPS.Objectif
-                                vRadFPPSObjectifSanteDetail.SelectedPatient = Me.SelectedPatient
-                                vRadFPPSObjectifSanteDetail.UtilisateurConnecte = Me.UtilisateurConnecte
-                                vRadFPPSObjectifSanteDetail.PositionGaucheDroite = EnumPosition.Droite
-                                vRadFPPSObjectifSanteDetail.ShowDialog() 'Modal
-                                If vRadFPPSObjectifSanteDetail.CodeRetour = True Then
-                                    ChargementPPS()
-                                End If
-                            End Using
-                        Catch ex As Exception
-                            MsgBox(ex.Message())
-                        End Try
+    '                    Try
+    '                        Using vRadFPPSObjectifSanteDetail As New RadFPPSDetailEdit
+    '                            vRadFPPSObjectifSanteDetail.PPSId = PPSId
+    '                            vRadFPPSObjectifSanteDetail.CategoriePPS = EnumCategoriePPS.Objectif
+    '                            vRadFPPSObjectifSanteDetail.SelectedPatient = Me.SelectedPatient
+    '                            vRadFPPSObjectifSanteDetail.UtilisateurConnecte = Me.UtilisateurConnecte
+    '                            vRadFPPSObjectifSanteDetail.PositionGaucheDroite = EnumPosition.Droite
+    '                            vRadFPPSObjectifSanteDetail.ShowDialog() 'Modal
+    '                            If vRadFPPSObjectifSanteDetail.CodeRetour = True Then
+    '                                ChargementPPS()
+    '                            End If
+    '                        End Using
+    '                    Catch ex As Exception
+    '                        MsgBox(ex.Message())
+    '                    End Try
 
-                        Me.Enabled = True
-                    Case Pps.EnumCategoriePPS.MESURE_PREVENTIVE
-                        Cursor.Current = Cursors.WaitCursor
-                        Me.Enabled = False
+    '                    Me.Enabled = True
+    '                Case Pps.EnumCategoriePPS.MESURE_PREVENTIVE
+    '                    Cursor.Current = Cursors.WaitCursor
+    '                    Me.Enabled = False
 
-                        Try
-                            Using vFFPPSMesurePreventive As New RadFPPSDetailEdit
-                                vFFPPSMesurePreventive.PPSId = PPSId
-                                vFFPPSMesurePreventive.CategoriePPS = EnumCategoriePPS.MesurePreventive
-                                vFFPPSMesurePreventive.SelectedPatient = Me.SelectedPatient
-                                vFFPPSMesurePreventive.UtilisateurConnecte = Me.UtilisateurConnecte
-                                vFFPPSMesurePreventive.PositionGaucheDroite = EnumPosition.Droite
-                                vFFPPSMesurePreventive.ShowDialog() 'Modal
-                                If vFFPPSMesurePreventive.CodeRetour = True Then
-                                    ChargementPPS()
-                                End If
-                            End Using
-                        Catch ex As Exception
-                            MsgBox(ex.Message())
-                        End Try
+    '                    Try
+    '                        Using vFFPPSMesurePreventive As New RadFPPSDetailEdit
+    '                            vFFPPSMesurePreventive.PPSId = PPSId
+    '                            vFFPPSMesurePreventive.CategoriePPS = EnumCategoriePPS.MesurePreventive
+    '                            vFFPPSMesurePreventive.SelectedPatient = Me.SelectedPatient
+    '                            vFFPPSMesurePreventive.UtilisateurConnecte = Me.UtilisateurConnecte
+    '                            vFFPPSMesurePreventive.PositionGaucheDroite = EnumPosition.Droite
+    '                            vFFPPSMesurePreventive.ShowDialog() 'Modal
+    '                            If vFFPPSMesurePreventive.CodeRetour = True Then
+    '                                ChargementPPS()
+    '                            End If
+    '                        End Using
+    '                    Catch ex As Exception
+    '                        MsgBox(ex.Message())
+    '                    End Try
 
-                        Me.Enabled = True
-                    Case Pps.EnumCategoriePPS.SUIVI_INTERVENANT
-                        Cursor.Current = Cursors.WaitCursor
-                        Me.Enabled = False
+    '                    Me.Enabled = True
+    '                Case Pps.EnumCategoriePPS.SUIVI_INTERVENANT
+    '                    Cursor.Current = Cursors.WaitCursor
+    '                    Me.Enabled = False
 
-                        Try
-                            Using vFParcoursDetailEdit As New RadFParcoursDetailEdit
-                                vFParcoursDetailEdit.SelectedParcoursId = ParcoursId
-                                vFParcoursDetailEdit.SelectedPatient = Me.SelectedPatient
-                                'vFParcoursDetailEdit.UtilisateurConnecte = Me.UtilisateurConnecte
-                                vFParcoursDetailEdit.PositionGaucheDroite = EnumPosition.Droite
-                                vFParcoursDetailEdit.ShowDialog() 'Modal
-                                If vFParcoursDetailEdit.CodeRetour = True Then
-                                    ChargementPPS()
-                                End If
-                            End Using
-                        Catch ex As Exception
-                            MsgBox(ex.Message())
-                        End Try
+    '                    Try
+    '                        Using vFParcoursDetailEdit As New RadFParcoursDetailEdit
+    '                            vFParcoursDetailEdit.SelectedParcoursId = ParcoursId
+    '                            vFParcoursDetailEdit.SelectedPatient = Me.SelectedPatient
+    '                            'vFParcoursDetailEdit.UtilisateurConnecte = Me.UtilisateurConnecte
+    '                            vFParcoursDetailEdit.PositionGaucheDroite = EnumPosition.Droite
+    '                            vFParcoursDetailEdit.ShowDialog() 'Modal
+    '                            If vFParcoursDetailEdit.CodeRetour = True Then
+    '                                ChargementPPS()
+    '                            End If
+    '                        End Using
+    '                    Catch ex As Exception
+    '                        MsgBox(ex.Message())
+    '                    End Try
 
-                        Me.Enabled = True
-                    Case Pps.EnumCategoriePPS.STRATEGIE
-                        Cursor.Current = Cursors.WaitCursor
-                        Me.Enabled = False
+    '                    Me.Enabled = True
+    '                Case Pps.EnumCategoriePPS.STRATEGIE
+    '                    Cursor.Current = Cursors.WaitCursor
+    '                    Me.Enabled = False
 
-                        Try
-                            Using vFPPSStrategie As New RadFPPSDetailEdit
-                                vFPPSStrategie.PPSId = PPSId
-                                vFPPSStrategie.CategoriePPS = EnumCategoriePPS.Strategie
-                                vFPPSStrategie.SelectedPatient = Me.SelectedPatient
-                                vFPPSStrategie.UtilisateurConnecte = Me.UtilisateurConnecte
-                                vFPPSStrategie.PositionGaucheDroite = EnumPosition.Droite
-                                vFPPSStrategie.ShowDialog() 'Modal
-                                If vFPPSStrategie.CodeRetour = True Then
-                                    ChargementPPS()
-                                End If
-                            End Using
-                        Catch ex As Exception
-                            MsgBox(ex.Message())
-                        End Try
+    '                    Try
+    '                        Using vFPPSStrategie As New RadFPPSDetailEdit
+    '                            vFPPSStrategie.PPSId = PPSId
+    '                            vFPPSStrategie.CategoriePPS = EnumCategoriePPS.Strategie
+    '                            vFPPSStrategie.SelectedPatient = Me.SelectedPatient
+    '                            vFPPSStrategie.UtilisateurConnecte = Me.UtilisateurConnecte
+    '                            vFPPSStrategie.PositionGaucheDroite = EnumPosition.Droite
+    '                            vFPPSStrategie.ShowDialog() 'Modal
+    '                            If vFPPSStrategie.CodeRetour = True Then
+    '                                ChargementPPS()
+    '                            End If
+    '                        End Using
+    '                    Catch ex As Exception
+    '                        MsgBox(ex.Message())
+    '                    End Try
 
-                        Me.Enabled = True
-                End Select
-            End If
-        End If
-    End Sub
+    '                    Me.Enabled = True
+    '            End Select
+    '        End If
+    '    End If
+    'End Sub
 
     Private Sub RadBtnAbandon_Click(sender As Object, e As EventArgs) Handles RadBtnAbandon.Click
         Close()
@@ -412,4 +412,5 @@ Public Class RadFPPSObsoletes
     Private Sub DteHorizonAffichage_ValueChanged(sender As Object, e As EventArgs) Handles DteHorizonAffichage.ValueChanged, DTPDateFin.ValueChanged
         ChargementPPS()
     End Sub
+
 End Class

@@ -1,7 +1,7 @@
 ﻿@Imports Oasis_Common
 @Code
     ViewBag.Title = "Resultats"
-    ViewBag.pTitle = "Resultats de " & ViewBag.Patient.PatientPrenom & " " & ViewBag.Patient.PatientNom & " (" & ViewBag.Patient.PatientDateNaissance & ")"
+    ViewBag.pTitle = "Resultats de " & ViewBag.Patient.PatientPrenom & " " & ViewBag.Patient.PatientNom & " (" & Format(ViewBag.Patient.PatientDateNaissance, "dd/MM/yyyy") & ")"
     ViewBag.pageTitle = "Synovora"
     Layout = "~/Views/Shared/_Layout.vbhtml"
 
@@ -24,24 +24,26 @@ End section
 </style>
 
 <div class="">
-    <div class="row">
-        <div class="col-xl-3">
-            <div class="card">
-                <div class="card-body">
-                    <h4 class="card-title mb-2">Type</h4>
-                    @Html.DropDownList("sousEpisodeLibelles", sousEpisodeLibelles, New With {.Class = "form-control"})
+    @Using Html.BeginForm("index", "Resultats")
+        @<div class="row">
+            <div Class="col-xl-3">
+                <div Class="card">
+                    <div Class="card-body">
+                        <h4 Class="card-title mb-2">Type</h4>
+                        @Html.DropDownList("MySousEpisodeLibelles", sousEpisodeLibelles, New With {.Class = "form-control", .onchange = "submit();", .autopostback = "true"})
+                    </div>
+                </div>
+            </div>
+            <div Class="col-xl-3">
+                <div Class="card">
+                    <div Class="card-body">
+                        <h4 Class="card-title mb-2">Sous Type</h4>
+                        @Html.DropDownList("MySousEpisodeSousLibelle", SousEpisodeSousLibelle, New With {.Class = "form-control", .onchange = "submit();", .autopostback = "true"})
+                    </div>
                 </div>
             </div>
         </div>
-        <div class="col-xl-3">
-            <div class="card">
-                <div class="card-body">
-                    <h4 class="card-title mb-2">Sous Type</h4>
-                    @Html.DropDownList("SousEpisodeSousLibelle", SousEpisodeSousLibelle, New With {.Class = "form-control"})
-                </div>
-            </div>
-        </div>
-    </div>
+    End Using
     <div class="row">
         <div class="col-xl-12">
             <div class="card">
@@ -52,11 +54,11 @@ End section
                             <thead>
                             <thead>
                                 <tr>
-                                    <th>Type</th>
-                                    <th>Sous Type</th>
+                                    <th> Type</th>
+                                    <th> Sous Type</th>
                                     <th>Date</th>
-                                    <th>Pathologie</th>
-                                    <th>Conclusion</th>
+                                    <th> Pathologie</th>
+                                    <th> Conclusion</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -65,7 +67,7 @@ End section
                                     <tr data-toggle="collapse" data-target=@("#accordion" + item.Value.ToString) class="clickable cursor-pointer">
                                         <td>@item.Element(0).SousEpisodeLibelle</td>
                                         <td>@item.Element(0).SousEpisodeSousLibelle</td>
-                                        <td>@item.Element(0).HorodateCreation.ToShortDateString()</td>
+                                        <td>@Format(item.Element(0).HorodateCreation, "dd/MM/yyyy")</td>
                                         <td>@item.Element(0).TypeActivite</td>
                                         <td>@item.Element(0).Conclusion</td>
                                     </tr>
@@ -83,10 +85,10 @@ End section
                                                 <tbody>
                                                     @For Each resultat In item.Element
                                                         @<tr>
-    <td>@resultat.NomFichier</td>
-    <td>@resultat.HorodateCreation.ToString()</td>
-    <td><a onclick="location.href='@Url.Action("download", "Resultats", New With {Key .fileName = resultat.NomFichier})'" class="btn btn-primary btn-sm w-xs">Voir</a></td>
-</tr>
+                                                            <td>@resultat.NomFichier</td>
+                                                            <td>@Format(resultat.HorodateCreation, "le dd/MM/yyyy a HH\hMM")</td>
+                                                            <td><a onclick="location.href='@Url.Action("download", "Resultats", New With {Key .fileName = resultat.NomFichier})'" class="btn btn-primary btn-sm w-xs">Voir</a></td>
+                                                        </tr>
                                                     Next
                                                 </tbody>
                                             </table>
@@ -94,7 +96,7 @@ End section
                                     </tr>
                         </div>
 
-                                Next
+                    Next
                                 </tbody>
                                 </table>
                             </div>

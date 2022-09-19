@@ -64,10 +64,10 @@ Namespace Oasis_Web.Controllers
                             Text1 = VaccinProgram.RealisationOperatorText
                         End If
                     End If
-                    Realisation.Add(String.Format("{0} - {1}", VaccinProgram.RealisationDate.ToShortDateString(), Text1))
+                    Realisation.Add(String.Format("{0} - {1}", VaccinProgram.RealisationDate.ToString("dd/MM/yyyy"), Text1))
                     Dci.Add(Vaccins.Find(Function(x) x.Id = VaccinProgram.Vaccin).Dci)
                     Lot.Add(vaccinProgramAdmin.Lot)
-                    Exp.Add(vaccinProgramAdmin.Expiration.ToString("MM/yyyy", CultureInfo.InvariantCulture))
+                    Exp.Add(vaccinProgramAdmin.Expiration.ToString("MM/yyyy", CultureInfo.GetCultureInfoByIetfLanguageTag("fr-FR")))
                 Next
             Next
             ViewBag.Realisation = Realisation
