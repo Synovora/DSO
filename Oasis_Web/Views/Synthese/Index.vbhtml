@@ -11,29 +11,31 @@ End Code
     <link href="~/assets/libs/sweetalert2/sweetalert2.min.css" rel="stylesheet" type="text/css" />
 End Section
 
-<div class="row mt-4 mb-4">
-    <div class="col-xl-6">
-        <div class="card">
-            <div class="card-header bg-soft-primary">
-                <div class="text-primary">
-                    <h5 class="text-primary">@ViewBag.Patient.PatientPrenom @ViewBag.Patient.PatientNom</h5>
+<div class="grid mb-4">
+    <div class="card overflow-hidden g-col-8">
+        <div class="card-body">
+            <div class="d-flex gap-2 justify-content-between align-items-center">
+                <div class="">
+                    <div class="avatar-md profile-user-wid m-auto">
+                        <img src="https://th.bing.com/th/id/R.dc8b1732c919ca17845aab44dc3afb27?rik=qOkrlNPk9Y4cBg&pid=ImgRaw&r=0" alt="" class="img-thumbnail rounded-circle">
+                    </div>
                 </div>
-            </div>
-            <div class="card-body">
-                <div class="row mb-3">
-                    <div class="col-md-6">
-                        <p class="text-muted">Date de naissance: @String.Format(ViewBag.Patient.PatientDateNaissance, "dd/MM/yyyy")</p>
-                        <p class="text-muted">Genre: @ViewBag.patient.PatientGenre</p>
-                    </div>
-                    <div class="col-md-6">
-                        <p class="text-muted">Age: @ViewBag.patient.PatientAge</p>
-                        <p class="text-muted">NIR: @ViewBag.patient.PatientNir</p>
-                    </div>
+                <div class="">
+                    <h5 class="font-size-15 text-truncate">@ViewBag.Patient.PatientPrenom @ViewBag.Patient.PatientNom</h5>
+                    <p class="text-muted mb-0 text-truncate">Profil Patient Nº @Request.Cookies("patientId").Value</p>
+                </div>
+                <div class="mx-auto d-flex flex-column">
+                    <p>Date de naissance: <span class="text-muted">@String.Format(ViewBag.Patient.PatientDateNaissance, "dd/MM/yyyy")</span></p>
+                    <p>Genre: <span class="text-muted">@ViewBag.patient.PatientGenre</span></p>
+                </div>
+                <div class="mx-auto d-flex flex-column">
+                    <p>Age: <span class="text-muted">@ViewBag.patient.PatientAge</span></p>
+                    <p>NIR: <span class="text-muted">@ViewBag.patient.PatientNir</span></p>
                 </div>
             </div>
         </div>
     </div>
-    <div class="col-xl-6">
+    <div class="g-col-4">
         <div class="card text-center">
             <div class="card-body">
                 <div class="text-center">
@@ -48,10 +50,10 @@ End Section
 <div class="row mb-4">
     <div class="col-xl-12">
         <div class="card">
-            <div class="card-header bg-soft-primary">
-                <h5>Mes Antecedents</h5>
-            </div>
             <div class="card-body">
+                <div class="card-title bg-soft-primary">
+                    <h5>Mes Antecedents</h5>
+                </div>
                 <div class="table-responsive">
                     <table class="table mb-0">
                         <tbody>
@@ -70,10 +72,10 @@ End Section
 <div class="row mb-4">
     <div class="col-xl-9">
         <div class="card">
-            <div class="card-header bg-soft-primary">
+            <div class="card-body">
+            <div class="card-title bg-soft-primary">
                 <h5>Mes Traitements</h5>
             </div>
-            <div class="card-body">
                 <div class="table-responsive">
                     <table class="table mb-0">
                         <thead>
@@ -128,10 +130,10 @@ End Section
 <div class="row mb-4">
     <div class="col-xl-12">
         <div class="card">
-            <div class="card-header bg-soft-primary">
+            <div class="card-body">
+            <div class="card-title bg-soft-primary">
                 <h5>Mon Parcours de Soin</h5>
             </div>
-            <div class="card-body">
                 <div class="table-responsive">
                     <table class="table mb-0">
                         <thead>
@@ -161,14 +163,14 @@ End Section
             </div>
         </div>
     </div>
-    </div>
+</div>
 <div class="row mb-4">
     <div class="col-xl-6">
         <div Class="card" id="autoSuiviCard">
-            <div class="card-header bg-soft-primary">
+            <div Class="card-body">
+            <div class="card-title bg-soft-primary">
                 <h5>Mes Contextes</h5>
             </div>
-            <div Class="card-body">
                 <div Class="clearfix"></div>
                 <div class="table-responsive">
                     <table class="table mb-0">
@@ -191,10 +193,10 @@ End Section
     </div>
     <div class="col-xl-6">
         <div class="card">
-            <div class="card-header bg-soft-primary">
+            <div class="card-body">
+            <div class="card-title bg-soft-primary">
                 <h5>Mon Plan Personnalisé de Soin</h5>
             </div>
-            <div class="card-body">
                 <div class="table-responsive">
                     <table class="table mb-0">
                         <tbody>

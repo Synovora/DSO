@@ -12,7 +12,7 @@ End Code
     <link href="~/assets/libs/sweetalert2/sweetalert2.min.css" rel="stylesheet" type="text/css" />
 End Section
 
-<div class="row my-4">
+<div class="row mb-4">
     <div class="col-xl-6">
         <div class="card">
             <div class="card-header bg-soft-primary">

@@ -2,10 +2,10 @@
 <html lang="en">
 
 <head>
+
     @Html.Partial("~/Views/Shared/_title_meta.cshtml")
     @RenderSection("styles", False)
     @Html.Partial("~/Views/Shared/_head_css.cshtml")
-
 </head>
 
 <body data-sidebar="dark">
@@ -27,8 +27,9 @@
                     @RenderBody()
                 </div> <!-- container-fluid -->
             </div>
-            @Html.Partial("~/Views/Shared/_footer.vbhtml")
             <!-- End Page-content -->
+
+            @Html.Partial("~/Views/Shared/_footer.vbhtml")
         </div>
         <!-- end main content-->
 
@@ -42,7 +43,6 @@
     @Html.Partial("~/Views/Shared/_vendor_scripts.vbhtml")
 
     @RenderSection("scripts", False)
-
 
 </body>
 
