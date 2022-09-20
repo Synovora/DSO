@@ -12,23 +12,23 @@ End Code
     <link href="~/assets/libs/sweetalert2/sweetalert2.min.css" rel="stylesheet" type="text/css" />
 End Section
 
-<div class="row">
+<div class="row my-4">
     <div class="col-xl-6">
-        <div class="card text-center">
+        <div class="card">
+            <div class="card-header bg-soft-primary">
+                <div class="text-primary">
+                    <h5 class="text-primary">@ViewBag.Patient.PatientPrenom @ViewBag.Patient.PatientNom</h5>
+                </div>
+            </div>
             <div class="card-body">
-                <h5 class="font-size-15"><a href="#" class="text-dark">@ViewBag.patient.PatientPrenom @ViewBag.patient.PatientNom</a></h5>
                 <div class="row mb-3">
                     <div class="col-md-6">
-                        <div>
-                            <p class="text-muted">Date de naissance: @String.Format(ViewBag.Patient.PatientDateNaissance, "dd/MM/yyyy"))</p>
-                            <p class="text-muted">Genre: @ViewBag.patient.PatientGenre</p>
-                        </div>
+                        <p class="text-muted">Date de naissance: @String.Format(ViewBag.Patient.PatientDateNaissance, "dd/MM/yyyy")</p>
+                        <p class="text-muted">Genre: @ViewBag.patient.PatientGenre</p>
                     </div>
                     <div class="col-md-6">
-                        <div>
-                            <p class="text-muted">Age: @ViewBag.patient.PatientAge</p>
-                            <p class="text-muted">NIR: @ViewBag.patient.PatientNir</p>
-                        </div>
+                        <p class="text-muted">Age: @ViewBag.patient.PatientAge</p>
+                        <p class="text-muted">NIR: @ViewBag.patient.PatientNir</p>
                     </div>
                 </div>
             </div>
@@ -38,8 +38,10 @@ End Section
 <div class="row">
     <div class="col-xl-12">
         <div class="card">
+            <div class="card-header bg-soft-primary">
+                <h5>Mes Rendez-Vous</h5>
+            </div>
             <div class="card-body">
-                <h4 class="card-title">Mes Rendez-Vous</h4>
                 <div class="table-responsive">
                     <table class="table mb-0">
                         <thead>
@@ -54,12 +56,12 @@ End Section
                         <tbody>
                             @For i As Integer = 0 To ViewBag.ParcoursDeSoin.Count - 1
                                 @<tr>
-    <td>@ViewBag.ParcoursDeSoin(i)(1)</td>
-    <td>@ViewBag.ParcoursDeSoin(i)(2)</td>
-    <td>@ViewBag.ParcoursDeSoin(i)(3)</td>
-    <td>@ViewBag.ParcoursDeSoin(i)(4)</td>
+                                    <td>@ViewBag.ParcoursDeSoin(i)(1)</td>
+                                    <td>@ViewBag.ParcoursDeSoin(i)(2)</td>
+                                    <td>@ViewBag.ParcoursDeSoin(i)(3)</td>
+                                    <td>@ViewBag.ParcoursDeSoin(i)(4)</td>
 
-</tr>
+                                </tr>
                             Next
                         </tbody>
                     </table>

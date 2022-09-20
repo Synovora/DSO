@@ -6,11 +6,13 @@
     Layout = "~/Views/Shared/_Layout.vbhtml"
 End Code
 
-<div class="row">
+<div class="row my-4">
     <div class="col-xl-12">
         <div class="card">
+            <div class="card-header bg-soft-primary">
+                <h5>Liste des vaccins au @Date.Now().ToString("dd/MM/yyyy")</h5>
+            </div>
             <div class="card-body">
-                <h4 class="card-title mb-2">Liste des vaccins au @Date.Now().ToString("dd/MM/yyyy")</h4>
                 <div class="table-responsive">
                     <table class="table mb-0">
                         <thead>

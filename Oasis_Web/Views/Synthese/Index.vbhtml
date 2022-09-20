@@ -8,27 +8,26 @@ End Code
 
 
 @Section Styles
-    <!-- Sweet Alert-->
     <link href="~/assets/libs/sweetalert2/sweetalert2.min.css" rel="stylesheet" type="text/css" />
 End Section
 
-<div class="row">
+<div class="row mt-4 mb-4">
     <div class="col-xl-6">
-        <div class="card text-center">
+        <div class="card">
+            <div class="card-header bg-soft-primary">
+                <div class="text-primary">
+                    <h5 class="text-primary">@ViewBag.Patient.PatientPrenom @ViewBag.Patient.PatientNom</h5>
+                </div>
+            </div>
             <div class="card-body">
-                <h5 class="font-size-15"><a href="#" class="text-dark">@ViewBag.patient.PatientPrenom @ViewBag.patient.PatientNom</a></h5>
                 <div class="row mb-3">
                     <div class="col-md-6">
-                        <div>
-                            <p class="text-muted">Date de naissance: @String.Format(ViewBag.Patient.PatientDateNaissance, "dd/MM/yyyy")</p>
-                            <p class="text-muted">Genre: @ViewBag.patient.PatientGenre</p>
-                        </div>
+                        <p class="text-muted">Date de naissance: @String.Format(ViewBag.Patient.PatientDateNaissance, "dd/MM/yyyy")</p>
+                        <p class="text-muted">Genre: @ViewBag.patient.PatientGenre</p>
                     </div>
                     <div class="col-md-6">
-                        <div>
-                            <p class="text-muted">Age: @ViewBag.patient.PatientAge</p>
-                            <p class="text-muted">NIR: @ViewBag.patient.PatientNir</p>
-                        </div>
+                        <p class="text-muted">Age: @ViewBag.patient.PatientAge</p>
+                        <p class="text-muted">NIR: @ViewBag.patient.PatientNir</p>
                     </div>
                 </div>
             </div>
@@ -39,18 +38,20 @@ End Section
             <div class="card-body">
                 <div class="text-center">
                     <a href="@Url.Action("Index", "CarnetVaccinal")" class="btn btn-primary btn-sm btn-rounded waves-effect waves-light">
-                            Mes Vaccins
+                        Mes Vaccins
                     </a>
                 </div>
             </div>
         </div>
     </div>
 </div>
-<div class="row">
+<div class="row mb-4">
     <div class="col-xl-12">
         <div class="card">
+            <div class="card-header bg-soft-primary">
+                <h5>Mes Antecedents</h5>
+            </div>
             <div class="card-body">
-                <h4 class="card-title">Antecedents</h4>
                 <div class="table-responsive">
                     <table class="table mb-0">
                         <tbody>
@@ -66,11 +67,13 @@ End Section
         </div>
     </div>
 </div>
-<div class="row">
+<div class="row mb-4">
     <div class="col-xl-9">
         <div class="card">
+            <div class="card-header bg-soft-primary">
+                <h5>Mes Traitements</h5>
+            </div>
             <div class="card-body">
-                <h4 class="card-title">Traitements</h4>
                 <div class="table-responsive">
                     <table class="table mb-0">
                         <thead>
@@ -122,11 +125,13 @@ End Section
         </div>
     </div>
 </div>
-<div class="row">
+<div class="row mb-4">
     <div class="col-xl-12">
         <div class="card">
+            <div class="card-header bg-soft-primary">
+                <h5>Mon Parcours de Soin</h5>
+            </div>
             <div class="card-body">
-                <h4 class="card-title">Parcours de Soin</h4>
                 <div class="table-responsive">
                     <table class="table mb-0">
                         <thead>
@@ -156,10 +161,14 @@ End Section
             </div>
         </div>
     </div>
+    </div>
+<div class="row mb-4">
     <div class="col-xl-6">
         <div Class="card" id="autoSuiviCard">
+            <div class="card-header bg-soft-primary">
+                <h5>Mes Contextes</h5>
+            </div>
             <div Class="card-body">
-                <h4 Class="card-title mb-4 float-sm-left">Contexte</h4>
                 <div Class="clearfix"></div>
                 <div class="table-responsive">
                     <table class="table mb-0">
@@ -182,8 +191,10 @@ End Section
     </div>
     <div class="col-xl-6">
         <div class="card">
+            <div class="card-header bg-soft-primary">
+                <h5>Mon Plan Personnalisé de Soin</h5>
+            </div>
             <div class="card-body">
-                <h4 class="card-title">Plan Personnalisé de Soin</h4>
                 <div class="table-responsive">
                     <table class="table mb-0">
                         <tbody>

@@ -23,22 +23,25 @@ End section
     }
 </style>
 
-<div class="">
+<div class="my-4">
     @Using Html.BeginForm("index", "Resultats")
-        @<div class="row">
-            <div Class="col-xl-3">
+        @<div class="row mb-4">
+            <div Class="w-100">
                 <div Class="card">
-                    <div Class="card-body">
-                        <h4 Class="card-title mb-2">Type</h4>
-                        @Html.DropDownList("MySousEpisodeLibelles", sousEpisodeLibelles, New With {.Class = "form-control", .onchange = "submit();", .autopostback = "true"})
+                    <div class="card-header bg-soft-primary">
+                        <h5>Filtre</h5>
                     </div>
-                </div>
-            </div>
-            <div Class="col-xl-3">
-                <div Class="card">
-                    <div Class="card-body">
-                        <h4 Class="card-title mb-2">Sous Type</h4>
-                        @Html.DropDownList("MySousEpisodeSousLibelle", SousEpisodeSousLibelle, New With {.Class = "form-control", .onchange = "submit();", .autopostback = "true"})
+                    <div Class="card-body d-flex flex-row gap-2">
+                        <div>
+                            <p Class="mb-2">Type:</p>
+                            @Html.DropDownList("MySousEpisodeLibelles", sousEpisodeLibelles, New With {.Class = "form-control", .onchange = "submit();", .autopostback = "true"})
+                        </div>
+                        @if SousEpisodeSousLibelle.Count > 0 Then
+                            @<div>
+                                <p Class="mb-2">Sous Type:</p>
+                                @Html.DropDownList("MySousEpisodeSousLibelle", SousEpisodeSousLibelle, New With {.Class = "form-control", .onchange = "submit();", .autopostback = "true"})
+                            </div>
+                        End If
                     </div>
                 </div>
             </div>
@@ -47,8 +50,10 @@ End section
     <div class="row">
         <div class="col-xl-12">
             <div class="card">
+                <div class="card-header bg-soft-primary">
+                    <h5>Liste des resultats</h5>
+                </div>
                 <div class="card-body">
-                    <h4 class="card-title mb-2">Liste des resultats</h4>
                     <div class="table-responsive">
                         <table class="table mb-0 table-hover">
                             <thead>

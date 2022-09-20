@@ -7,8 +7,8 @@
     Layout = "~/Views/Shared/_Layout.vbhtml"
 End Code
 
-<div class="container d-flex mt-4 mb-4">
-    <div class="card d-md-flex overflow-hidden">
+<div class="grid mt-4 mb-4">
+    <div class="card d-md-flex overflow-hidden g-col-8">
         <div class="card-header bg-soft-primary">
             <div class="text-primary">
                 <h5 class="text-primary">Bienvenue @ViewBag.Patient.PatientPrenom @ViewBag.Patient.PatientNom !</h5>
@@ -25,7 +25,7 @@ End Code
         </div>
     </div>
 
-    <div class="card d-md-flex ms-auto w-auto">
+    <div class="card d-md-flex g-col-4">
         <h4 class="card-header">Mes dernières connections</h4>
         <div class="card-body">
             <div class="table-responsive">
@@ -48,8 +48,8 @@ End Code
         </div>
     </div>
 </div>
-<div class="container grid" style="--bs-columns: 12; --bs-rows: 3; --bs-gap: .5rem;">
-        <div class="card">
+<div class="grid">
+        <div class="card g-col-6">
             <h4 class="card-header mb-4">
                 Ma Synthèse
             </h4>

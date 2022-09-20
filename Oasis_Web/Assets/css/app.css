@@ -7,6 +7,11 @@ Contact: themesbrand@gmail.com
 File: Main Css File
 */
 @import url("https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700&display=swap");
+
+body {
+    position: relative;
+}
+
 #page-topbar {
   position: fixed;
   top: 0;
@@ -3900,15 +3905,20 @@ div.dataTables_wrapper div.dataTables_filter {
 
 .blog-play-icon {
   position: absolute;
-  top: 50%;
+  top: 50%;vertical-menu
   left: 0;
   right: 0;
   -webkit-transform: translateY(-50%);
           transform: translateY(-50%);
   margin: 0px auto; }
-ranslateY(-50%);
-  margin: 0px auto; }
 
 .cursor-pointer {
     cursor: pointer;
+}
+
+.footer-bs {
+    position: fixed;
+    height: 100px;
+    bottom: 0;
+    width: 90%;
 }

@@ -27,9 +27,8 @@
                     @RenderBody()
                 </div> <!-- container-fluid -->
             </div>
-            <!-- End Page-content -->
-
             @Html.Partial("~/Views/Shared/_footer.vbhtml")
+            <!-- End Page-content -->
         </div>
         <!-- end main content-->
 

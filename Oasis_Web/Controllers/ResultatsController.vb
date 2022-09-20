@@ -55,12 +55,11 @@ Namespace Oasis_Web.Controllers
             Dim sousEpisodeLibelles = Resultats.Select(Function(item) item.SousEpisodeLibelle).Distinct().ToList.Select(Function(obj) New SelectListItem() With {.Value = obj, .Text = obj}).Reverse.Append(New SelectListItem() With {.Value = "Tous", .Text = "Tous"}).Reverse.ToList
             ViewData("sousEpisodeLibelles") = sousEpisodeLibelles
 
-            If MySousEpisodeLibelles Is Nothing OrElse MySousEpisodeLibelles = "Tous" Then
-                ViewData("SousEpisodeSousLibelle") = New List(Of SelectListItem)
-            Else
-                Dim SousEpisodeSousLibelle = Resultats.Where(Function(x) x.SousEpisodeLibelle = MySousEpisodeLibelles).ToList().Select(Function(item) item.SousEpisodeSousLibelle).Distinct().ToList.Select(Function(obj) New SelectListItem() With {.Value = obj, .Text = obj}).Reverse.Append(New SelectListItem() With {.Value = "Tous", .Text = "Tous"}).Reverse.ToList
-                ViewData("SousEpisodeSousLibelle") = SousEpisodeSousLibelle
+            Dim SousEpisodeSousLibelle = New List(Of SelectListItem)
+            If Not (MySousEpisodeLibelles Is Nothing OrElse MySousEpisodeLibelles = "Tous") Then
+                SousEpisodeSousLibelle = Resultats.Where(Function(x) x.SousEpisodeLibelle = MySousEpisodeLibelles).ToList().Select(Function(item) item.SousEpisodeSousLibelle).Distinct().ToList.Select(Function(obj) New SelectListItem() With {.Value = obj, .Text = obj}).Reverse.Append(New SelectListItem() With {.Value = "Tous", .Text = "Tous"}).Reverse.ToList
             End If
+            ViewData("SousEpisodeSousLibelle") = SousEpisodeSousLibelle
 
             For x = 0 To Resultats.Count - 1
                 Resultats(x).NomFichier = Resultats(x).GetFilenameServer(Resultats(x).EpisodeId)
@@ -69,7 +68,7 @@ Namespace Oasis_Web.Controllers
             If MySousEpisodeLibelles Is Nothing OrElse MySousEpisodeLibelles = "Tous" Then
                 ViewBag.Resultats = Resultats.GroupBy(Function(x) x.IdSousEpisode, Function(key, element) New With {Key .Value = key, Key .Element = element}).Take(10)
             Else
-                If MySousEpisodeSousLibelle Is Nothing OrElse MySousEpisodeSousLibelle = "Tous" Then
+                If MySousEpisodeSousLibelle Is Nothing OrElse SousEpisodeSousLibelle.Find(Function(x) x.Value = MySousEpisodeSousLibelle) Is Nothing OrElse MySousEpisodeSousLibelle = "Tous" Then
                     ViewBag.Resultats = Resultats.Where(Function(x) x.SousEpisodeLibelle = MySousEpisodeLibelles).ToList().GroupBy(Function(x) x.IdSousEpisode, Function(key, element) New With {Key .Value = key, Key .Element = element})
                 Else
                     ViewBag.Resultats = Resultats.Where(Function(x) x.SousEpisodeLibelle = MySousEpisodeLibelles AndAlso x.SousEpisodeSousLibelle = MySousEpisodeSousLibelle).ToList().GroupBy(Function(x) x.IdSousEpisode, Function(key, element) New With {Key .Value = key, Key .Element = element})
