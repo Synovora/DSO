@@ -33,7 +33,7 @@
                 <img src="~/assets/images/layouts/layout-3.jpg" class="img-fluid img-thumbnail" alt="">
             </div>
             <div class="custom-control custom-switch mb-5">
-                <input type="checkbox" class="custom-control-input theme-choice" id="rtl-mode-switch" data-appStyle="~/assets/css/app-rtl.min.css" />
+                @*<input type="checkbox" class="custom-control-input theme-choice" id="rtl-mode-switch" data-appStyle="~/assets/css/app-rtl.min.css" />*@
                 <label class="custom-control-label" for="rtl-mode-switch">RTL Mode</label>
             </div>
 

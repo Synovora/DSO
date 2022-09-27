@@ -4,8 +4,8 @@
 <head>
 
     @Html.Partial("~/Views/Shared/_title_meta.cshtml")
-    @RenderSection("styles", False)
     @Html.Partial("~/Views/Shared/_head_css.cshtml")
+    @RenderSection("styles", False)
 </head>
 
 <body data-sidebar="dark">
@@ -38,9 +38,9 @@
     @RenderSection("externalhtml", False)
 
     <!-- END layout-wrapper -->
-    @Html.Partial("~/Views/Shared/_right_sidebar.vbhtml")
+    @*@Html.Partial("~/Views/Shared/_right_sidebar.vbhtml")
 
-    @Html.Partial("~/Views/Shared/_vendor_scripts.vbhtml")
+    @Html.Partial("~/Views/Shared/_vendor_scripts.vbhtml")*@
 
     @RenderSection("scripts", False)
 

@@ -279,7 +279,6 @@
     <Content Include="Areas\HelpPage\Views\Help\Api.vbhtml" />
     <Content Include="Assets\css\app-dark.css" />
     <Content Include="Assets\css\app-dark.min.css" />
-    <Content Include="Assets\css\app-rtl.css" />
     <Content Include="Assets\css\app-rtl.min.css" />
     <Content Include="Assets\css\app.css" />
     <Content Include="Assets\css\app.min.css" />
