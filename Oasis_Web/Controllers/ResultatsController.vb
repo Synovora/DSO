@@ -66,11 +66,11 @@ Namespace Oasis_Web.Controllers
 
             For x = 0 To Resultats.Count - 1
                 Resultats(x).NomFichier = Resultats(x).GetFilenameServer(Resultats(x).EpisodeId)
-                Resultats(x).Commentaire = Coalesce(Extensions.Find(Function(y) y.Extension = Path.GetExtension(Resultats(x).NomFichier)).Description, "fichier inconnu")
+                Resultats(x).Commentaire = Coalesce(Extensions.Find(Function(y) y.Extension = Path.GetExtension(Resultats(x).NomFichier).Replace(".", ""))?.Description, "fichier inconnu")
             Next
 
             If MySousEpisodeLibelles Is Nothing OrElse MySousEpisodeLibelles = "Tous" Then
-                ViewBag.Resultats = Resultats.GroupBy(Function(x) x.IdSousEpisode, Function(key, element) New With {Key .Value = key, Key .Element = element}).Take(10)
+                ViewBag.Resultats = Resultats.GroupBy(Function(x) x.IdSousEpisode, Function(key, element) New With {Key .Value = key, Key .Element = element}).Take(12)
             Else
                 If MySousEpisodeSousLibelle Is Nothing OrElse SousEpisodeSousLibelle.Find(Function(x) x.Value = MySousEpisodeSousLibelle) Is Nothing OrElse MySousEpisodeSousLibelle = "Tous" Then
                     ViewBag.Resultats = Resultats.Where(Function(x) x.SousEpisodeLibelle = MySousEpisodeLibelles).ToList().GroupBy(Function(x) x.IdSousEpisode, Function(key, element) New With {Key .Value = key, Key .Element = element})

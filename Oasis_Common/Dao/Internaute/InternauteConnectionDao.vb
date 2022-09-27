@@ -45,7 +45,7 @@ Public Class InternauteConnectionDao
         Using con As SqlConnection = GetConnection()
             Dim command As SqlCommand = con.CreateCommand()
             Try
-                command.CommandText = "SELECT TOP 5 * FROM oasis.oa_internaute_connection WHERE internaute = @internaute ORDER BY id DESC;"
+                command.CommandText = "SELECT TOP 6 * FROM oasis.oa_internaute_connection WHERE internaute = @internaute ORDER BY id DESC;"
                 command.Parameters.AddWithValue("@internaute", internaute)
                 Using reader As SqlDataReader = command.ExecuteReader()
                     While (reader.Read())

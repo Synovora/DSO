@@ -54,9 +54,9 @@ End Code
             <h4 class="card-title mb-4">Mes dernières connections</h4>
             <ul class="verti-timeline list-unstyled">
                 @For i As Integer = 0 To ViewBag.Connections.Count - 1
-                    @<li class="event-list">
+                    @<li class="event-list" style="padding: 0 0 20px 20px">
                         <div class="event-timeline-dot">
-                            <i class="bx bx-right-arrow-circle font-size-18"></i>
+                            <i class="mdi mdi-connection font-size-18"></i>
                         </div>
                         <div class="d-flex">
                             <div class="flex-shrink-0 me-3">
@@ -116,7 +116,7 @@ End Code
             <p class="text-muted">
                 C’est un accès à l’ensemble de vos résultats d’analyses biologiques, d’examens radiologiques, d’avis spécialisés réalisés et communiqués à votre référent de santé.
             </p>
-            <button type="button" class="btn btn-primary btn-sm" onClick="document.location.href='/Resultats'">Acceder a mes résultats</button>
+            <button type="button" class="btn btn-primary btn-sm" onClick="document.location.href='/Resultats'">Accéder à mes résultats</button>
         </div>
     </div>
 </div>

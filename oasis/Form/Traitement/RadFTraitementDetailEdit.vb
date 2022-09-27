@@ -344,6 +344,7 @@ Public Class RadFTraitementDetailEdit
                 LblstatutTraitement.Show()
                 RadPnlStatutTraitement.Show()
                 InhiberZonesDeSaisie()
+                RadBtnModifierMedicament.Hide()
             End If
         End If
 
@@ -374,6 +375,7 @@ Public Class RadFTraitementDetailEdit
                     LblFenetreActive.Text = "--- Fenêtre thérapeutique à venir ---"
                 Else
                     LblFenetreActive.Text = "(Fenêtre thérapeutique obsolète)"
+                    RadBtnModifierMedicament.Hide()
                 End If
             End If
             LblFenetreTherapeutique.Show()

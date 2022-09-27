@@ -32,7 +32,7 @@ End Section
                     <form id="myDiv" Class="form-horizontal" data-url="@Url.Action("AutoSuiviValidate", "AutoSuivi" )" autocomplete="off">
                         <div class="d-flex flex-column flex-wrap justify-flex-start">
                             @For i As Integer = 0 To ViewBag.ParametresAutoSuivi.Count - 1
-                                @<div class="boxAutoSuiviItem d-flex flex-row justify-content-between lh-condensed">
+                                @<div class="boxAutoSuiviItem d-flex flex-row justify-content-between lh-condensed mb-2">
                                     <h6 class="my-0">@(If(ViewBag.ParametresAutoSuivi(i).DescriptionPatient = "", ViewBag.ParametresAutoSuivi(i).Description, ViewBag.ParametresAutoSuivi(i).DescriptionPatient))</h6>
                                     <div Class="d-flex flex-row">
                                         <div Class="">
@@ -40,7 +40,7 @@ End Section
                                                 <input type="text" class="form-control" maxlength="11" id=@("ParametreAutoSuivi-" & ViewBag.ParametresAutoSuivi(i).Id) name=@ViewBag.ParametresAutoSuivi(i).Id placeholder="">
                                                 @If (ViewBag.ParametresAutoSuivi(i).Description <> "PAS") Then
                                                     @<div class="input-group-append">
-                                                        <span class="input-group-text" id="validationTooltipUsernamePrepend">@ViewBag.ParametresAutoSuivi(i).Unite</span>
+                                                        <span class="input-group-text" style="width: 80px" id="validationTooltipUsernamePrepend">@ViewBag.ParametresAutoSuivi(i).Unite</span>
                                                     </div>
                                                 End If
                                             </div>
@@ -54,7 +54,7 @@ End Section
                                                     <div class="input-group">
                                                         <input type="text" class="form-control" maxlength="11" id=@("ParametreAutoSuivi-7") name="7" placeholder="">
                                                         <div class="input-group-append">
-                                                            <span class="input-group-text" id="validationTooltipUsernamePrepend">@ViewBag.ParametresAutoSuivi(i).Unite</span>
+                                                            <span class="input-group-text" style="width: 80px" id="validationTooltipUsernamePrepend">@ViewBag.ParametresAutoSuivi(i).Unite</span>
                                                         </div>
                                                     </div>
                                                 </div>

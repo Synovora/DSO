@@ -4,12 +4,12 @@ Public Class FileExtensionDao
     Inherits StandardDao
 
     Private Function BuildBean(reader As SqlDataReader) As FileExtension
-        Dim log As New FileExtension With {
+        Dim extension As New FileExtension With {
             .Id = reader("id"),
             .Extension = Coalesce(reader("ext"), ""),
-            .Description = Coalesce(reader("description"), ""),
+            .Description = Coalesce(reader("description"), "")
         }
-        Return log
+        Return extension
     End Function
 
     Public Function GetAllFileExtension() As List(Of FileExtension)
@@ -50,7 +50,7 @@ Public Class FileExtensionDao
         Finally
             con.Close()
         End Try
-        Return log
+        Return extension
     End Function
 
 End Class

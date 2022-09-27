@@ -23,15 +23,15 @@ End section
     }
 </style>
 
-<div class="my-4">
-    @Using Html.BeginForm("index", "Resultats")
-        @<div class="row mb-4">
-            <div Class="w-100">
-                <div Class="card">
-                    <div class="card-header bg-soft-primary">
-                        <h5>Filtre</h5>
-                    </div>
-                    <div Class="card-body d-flex flex-row gap-2">
+<div class="grid">
+    <div class="row g-col-2">
+        @Using Html.BeginForm("index", "Resultats")
+            @<div Class="w-100">
+                <div Class="card mb-0">
+                    <div Class="card-body d-flex flex-column gap-2">
+                        <div class="card-title bg-soft-primary">
+                            <h5>Filtre</h5>
+                        </div>
                         <div>
                             <p Class="mb-2">Type:</p>
                             @Html.DropDownList("MySousEpisodeLibelles", sousEpisodeLibelles, New With {.Class = "form-control", .onchange = "submit();", .autopostback = "true"})
@@ -45,25 +45,25 @@ End section
                     </div>
                 </div>
             </div>
-        </div>
-    End Using
-    <div class="row">
+        End Using
+    </div>
+    <div class="row g-col-10">
         <div class="col-xl-12">
             <div class="card">
-                <div class="card-header bg-soft-primary">
-                    <h5>Liste des resultats</h5>
-                </div>
                 <div class="card-body">
+                    <div class="card-title bg-soft-primary">
+                        <h5>Liste des x derniers résultats</h5>
+                    </div>
                     <div class="table-responsive">
                         <table class="table mb-0 table-hover">
                             <thead>
                             <thead>
                                 <tr>
-                                    <th> Type</th>
-                                    <th> Sous Type</th>
+                                    <th>Type</th>
+                                    <th>Sous Type</th>
                                     <th>Date</th>
-                                    <th> Pathologie</th>
-                                    <th> Conclusion</th>
+                                    <th>Pathologie</th>
+                                    <th>Conclusion</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -82,7 +82,7 @@ End section
                                                 <thead>
                                                 <thead>
                                                     <tr>
-                                                        <th>Nom du fichier</th>
+                                                        <th>Type de fichier</th>
                                                         <th>Date</th>
                                                         <th>Actions</th>
                                                     </tr>
@@ -90,7 +90,7 @@ End section
                                                 <tbody>
                                                     @For Each resultat In item.Element
                                                         @<tr>
-                                                            <td>@resultat.NomFichier</td>
+                                                            <td>@resultat.Commentaire</td>
                                                             <td>@Format(resultat.HorodateCreation, "le dd/MM/yyyy a HH\hMM")</td>
                                                             <td><a onclick="location.href='@Url.Action("download", "Resultats", New With {Key .fileName = resultat.NomFichier})'" class="btn btn-primary btn-sm w-xs">Voir</a></td>
                                                         </tr>
@@ -101,7 +101,7 @@ End section
                                     </tr>
                         </div>
 
-                    Next
+                                Next
                                 </tbody>
                                 </table>
                             </div>

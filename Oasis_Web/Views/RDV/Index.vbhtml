@@ -12,60 +12,58 @@ End Code
     <link href="~/assets/libs/sweetalert2/sweetalert2.min.css" rel="stylesheet" type="text/css" />
 End Section
 
-<div class="row mb-4">
-    <div class="col-xl-6">
-        <div class="card">
-            <div class="card-header bg-soft-primary">
-                <div class="text-primary">
-                    <h5 class="text-primary">@ViewBag.Patient.PatientPrenom @ViewBag.Patient.PatientNom</h5>
+<div class="grid">
+    <div class="card overflow-hidden g-col-6 mb-0">
+        <div class="card-body">
+            <div class="d-flex gap-2 justify-content-between align-items-center">
+                <div class="">
+                    <div class="avatar-md profile-user-wid m-auto">
+                        <img src="https://th.bing.com/th/id/R.dc8b1732c919ca17845aab44dc3afb27?rik=qOkrlNPk9Y4cBg&pid=ImgRaw&r=0" alt="" class="img-thumbnail rounded-circle">
+                    </div>
                 </div>
-            </div>
-            <div class="card-body">
-                <div class="row mb-3">
-                    <div class="col-md-6">
-                        <p class="text-muted">Date de naissance: @String.Format(ViewBag.Patient.PatientDateNaissance, "dd/MM/yyyy")</p>
-                        <p class="text-muted">Genre: @ViewBag.patient.PatientGenre</p>
-                    </div>
-                    <div class="col-md-6">
-                        <p class="text-muted">Age: @ViewBag.patient.PatientAge</p>
-                        <p class="text-muted">NIR: @ViewBag.patient.PatientNir</p>
-                    </div>
+                <div class="">
+                    <h5 class="font-size-15 text-truncate">@ViewBag.Patient.PatientPrenom @ViewBag.Patient.PatientNom</h5>
+                    <p class="text-muted mb-0 text-truncate">Profil Patient Nº @Request.Cookies("patientId").Value</p>
+                </div>
+                <div class="mx-auto d-flex flex-column">
+                    <p>Date de naissance: <span class="text-muted">@String.Format(ViewBag.Patient.PatientDateNaissance, "dd/MM/yyyy")</span></p>
+                    <p>Genre: <span class="text-muted">@ViewBag.patient.PatientGenre</span></p>
+                </div>
+                <div class="mx-auto d-flex flex-column">
+                    <p>Age: <span class="text-muted">@ViewBag.patient.PatientAge</span></p>
+                    <p>NIR: <span class="text-muted">@ViewBag.patient.PatientNir</span></p>
                 </div>
             </div>
         </div>
     </div>
-</div>
-<div class="row">
-    <div class="col-xl-12">
-        <div class="card">
-            <div class="card-header bg-soft-primary">
+    <div class="card g-col-12">
+        <div class="card-body">
+            <div class="card-title bg-soft-primary">
                 <h5>Mes Rendez-Vous</h5>
             </div>
-            <div class="card-body">
-                <div class="table-responsive">
-                    <table class="table mb-0">
-                        <thead>
-                        <thead>
-                            <tr>
-                                <th>Spécialité</th>
-                                <th>Nom</th>
-                                <th>Structure</th>
-                                <th>Prochain RDV</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @For i As Integer = 0 To ViewBag.ParcoursDeSoin.Count - 1
-                                @<tr>
-                                    <td>@ViewBag.ParcoursDeSoin(i)(1)</td>
-                                    <td>@ViewBag.ParcoursDeSoin(i)(2)</td>
-                                    <td>@ViewBag.ParcoursDeSoin(i)(3)</td>
-                                    <td>@ViewBag.ParcoursDeSoin(i)(4)</td>
+            <div class="table-responsive">
+                <table class="table mb-0">
+                    <thead>
+                    <thead>
+                        <tr>
+                            <th>Spécialité</th>
+                            <th>Nom</th>
+                            <th>Structure</th>
+                            <th>Prochain RDV</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @For i As Integer = 0 To ViewBag.ParcoursDeSoin.Count - 1
+                            @<tr>
+                                <td>@ViewBag.ParcoursDeSoin(i)(1)</td>
+                                <td>@ViewBag.ParcoursDeSoin(i)(2)</td>
+                                <td>@ViewBag.ParcoursDeSoin(i)(3)</td>
+                                <td>@ViewBag.ParcoursDeSoin(i)(4)</td>
 
-                                </tr>
-                            Next
-                        </tbody>
-                    </table>
-                </div>
+                            </tr>
+                        Next
+                    </tbody>
+                </table>
             </div>
         </div>
     </div>

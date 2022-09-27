@@ -12,7 +12,7 @@ End Code
 End Section
 
 <div class="grid mb-4">
-    <div class="card overflow-hidden g-col-8">
+    <div class="card overflow-hidden g-col-8 mb-0">
         <div class="card-body">
             <div class="d-flex gap-2 justify-content-between align-items-center">
                 <div class="">
@@ -36,8 +36,11 @@ End Section
         </div>
     </div>
     <div class="g-col-4">
-        <div class="card text-center">
+        <div class="card h-100">
             <div class="card-body">
+                <div class="card-title bg-soft-primary">
+                    <h5>Mes Actions</h5>
+                </div>
                 <div class="text-center">
                     <a href="@Url.Action("Index", "CarnetVaccinal")" class="btn btn-primary btn-sm btn-rounded waves-effect waves-light">
                         Mes Vaccins
@@ -47,7 +50,7 @@ End Section
         </div>
     </div>
 </div>
-<div class="row mb-4">
+<div class="row">
     <div class="col-xl-12">
         <div class="card">
             <div class="card-body">
@@ -69,7 +72,7 @@ End Section
         </div>
     </div>
 </div>
-<div class="row mb-4">
+<div class="row">
     <div class="col-xl-9">
         <div class="card">
             <div class="card-body">
@@ -127,7 +130,7 @@ End Section
         </div>
     </div>
 </div>
-<div class="row mb-4">
+<div class="row">
     <div class="col-xl-12">
         <div class="card">
             <div class="card-body">
@@ -164,7 +167,7 @@ End Section
         </div>
     </div>
 </div>
-<div class="row mb-4">
+<div class="row">
     <div class="col-xl-6">
         <div Class="card" id="autoSuiviCard">
             <div Class="card-body">
