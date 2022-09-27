@@ -157,6 +157,7 @@
     <Compile Include="Bean\Internaute\Internaute.vb" />
     <Compile Include="Bean\LigneDeVie\LigneDeVie.vb" />
     <Compile Include="Bean\LigneDeVie\PatientParametreLdv.vb" />
+    <Compile Include="Bean\Log\FileExtension.vb" />
     <Compile Include="Bean\Log\Log.vb" />
     <Compile Include="Bean\Mail\Mail.vb" />
     <Compile Include="Bean\Medicament\Medicament.vb" />
@@ -254,6 +255,7 @@
     <Compile Include="Dao\Internaute\InternautePermissionDao.vb" />
     <Compile Include="Dao\Internaute\InternauteDao.vb" />
     <Compile Include="Dao\LigneDeVie\PatientParametreLdvDao.vb" />
+    <Compile Include="Dao\Log\FileExtensionDao.vb" />
     <Compile Include="Dao\Log\LogDao.vb" />
     <Compile Include="Dao\Mail\MailDao.vb" />
     <Compile Include="Dao\Medicament\MedicamentDao.vb" />

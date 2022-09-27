@@ -1,9 +1,11 @@
-﻿Imports Oasis_Common
+﻿Imports System.IO
+Imports Oasis_Common
 
 Namespace Oasis_Web.Controllers
     Public Class ResultatsController
         Inherits Controller
 
+        ReadOnly fileExtensionDao As New FileExtensionDao
         ReadOnly parametreDao As New ParametreDao
         ReadOnly ordonnanceDao As New OrdonnanceDao
         ReadOnly patientDao As New PatientDao
@@ -50,6 +52,7 @@ Namespace Oasis_Web.Controllers
             Dim patient = patientDao.GetPatient(Request.Cookies("patientId").Value)
             ViewBag.Patient = patient
 
+            Dim Extensions = fileExtensionDao.GetAllFileExtension()
             Dim Resultats = ChargementResultats(patient.PatientId)
 
             Dim sousEpisodeLibelles = Resultats.Select(Function(item) item.SousEpisodeLibelle).Distinct().ToList.Select(Function(obj) New SelectListItem() With {.Value = obj, .Text = obj}).Reverse.Append(New SelectListItem() With {.Value = "Tous", .Text = "Tous"}).Reverse.ToList
@@ -63,6 +66,7 @@ Namespace Oasis_Web.Controllers
 
             For x = 0 To Resultats.Count - 1
                 Resultats(x).NomFichier = Resultats(x).GetFilenameServer(Resultats(x).EpisodeId)
+                Resultats(x).Commentaire = Coalesce(Extensions.Find(Function(y) y.Extension = Path.GetExtension(Resultats(x).NomFichier)).Description, "fichier inconnu")
             Next
 
             If MySousEpisodeLibelles Is Nothing OrElse MySousEpisodeLibelles = "Tous" Then
