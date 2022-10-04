@@ -72,7 +72,7 @@ Public Class SendMailController
             Catch e As Exception
                 Dim resp = New HttpResponseMessage(HttpStatusCode.InternalServerError) With {
                 .Content = New StringContent(e.Message),
-                .ReasonPhrase = "Erreur interne au server lors de l'envoie du mail: (" + smtpServer + ")" + +e.Message
+                .ReasonPhrase = "Erreur interne au server lors de l'envoie du mail: (" + smtpServer + ")" + e.Message
             }
                 Return resp
             End Try
