@@ -53,30 +53,39 @@ Public Class SendMailController
             Next
 
             ' ------------------------------------ params mail
-            Dim smtpServer As String = Nothing
-            Dim parametreMailDao As New ParametreMailDao
-            Dim parametreMail = parametreMailDao.GetParametreMailBySiegeIdTypeMailParam(mailOasis.Patient.PatientSiegeId, TypeMailParams.SMTP_PARAMETERS)
-            smtpServer = parametreMail.GetSMTPServerUrl()
+            Try
+
+                Dim smtpServer As String = Nothing
+                Dim parametreMailDao As New ParametreMailDao
+                Dim parametreMail = parametreMailDao.GetParametreMailBySiegeIdTypeMailParam(mailOasis.Patient.PatientSiegeId, TypeMailParams.SMTP_PARAMETERS)
+                smtpServer = parametreMail.GetSMTPServerUrl()
 
 
-            Dim mailUtil = New MailUtil(parametreMail.GetSMTPServerUrl(),
-                                       parametreMail.GetSMTPPort(),
-                                       parametreMail.GetSMTPUser(mailOasis.IsSousEpisode),
-                                       parametreMail.GetSMTPPassword(mailOasis.IsSousEpisode),
-                                       parametreMail.GetSMTPFrom(mailOasis.IsSousEpisode))
-            mailUtil.SendMail(user, mailOasis)
+                Dim mailUtil = New MailUtil(parametreMail.GetSMTPServerUrl(),
+                                           parametreMail.GetSMTPPort(),
+                                           parametreMail.GetSMTPUser(mailOasis.IsSousEpisode),
+                                           parametreMail.GetSMTPPassword(mailOasis.IsSousEpisode),
+                                           parametreMail.GetSMTPFrom(mailOasis.IsSousEpisode))
+                mailUtil.SendMail(user, mailOasis)
 
-            Return Request.CreateResponse(HttpStatusCode.Accepted, "true")
+                Return Request.CreateResponse(HttpStatusCode.Accepted, "true")
+            Catch e As Exception
+                Dim resp = New HttpResponseMessage(HttpStatusCode.InternalServerError) With {
+                .Content = New StringContent(e.Message),
+                .ReasonPhrase = "Erreur interne au server lors de l'envoie du mail: " + e.Message
+            }
+                Return resp
+            End Try
 
         Catch e As UnauthorizedAccessException
-            Dim resp = New HttpResponseMessage(HttpStatusCode.Unauthorized) With {
-                .Content = New StringContent(e.Message),
-                .ReasonPhrase = "Utilisateur introuvable"
-            }
-            Return resp
+                Dim resp = New HttpResponseMessage(HttpStatusCode.Unauthorized) With {
+                    .Content = New StringContent(e.Message),
+                    .ReasonPhrase = "Utilisateur introuvable"
+                }
+                Return resp
 
-        Catch e As Exception
-            Dim resp = New HttpResponseMessage(HttpStatusCode.InternalServerError) With {
+            Catch e As Exception
+                Dim resp = New HttpResponseMessage(HttpStatusCode.InternalServerError) With {
                 .Content = New StringContent(e.Message),
                 .ReasonPhrase = "Erreur interne au server : " + e.Message
             }
