@@ -57,7 +57,7 @@ Public Class SendMailController
             Try
 
                 Dim parametreMailDao As New ParametreMailDao
-                Dim parametreMail = parametreMailDao.GetParametreMailBySiegeIdTypeMailParam(mailOasis.Patient.PatientSiegeId, TypeMailParams.SMTP_PARAMETERS)
+                Dim parametreMail = parametreMailDao.GetParametreMailBySiegeIdTypeMailParam(Nothing, TypeMailParams.SMTP_PARAMETERS)
                 smtpServer = parametreMail.GetSMTPServerUrl()
 
 
