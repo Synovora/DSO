@@ -53,9 +53,9 @@ Public Class SendMailController
             Next
 
             ' ------------------------------------ params mail
+            Dim smtpServer As String = Nothing
             Try
 
-                Dim smtpServer As String = Nothing
                 Dim parametreMailDao As New ParametreMailDao
                 Dim parametreMail = parametreMailDao.GetParametreMailBySiegeIdTypeMailParam(mailOasis.Patient.PatientSiegeId, TypeMailParams.SMTP_PARAMETERS)
                 smtpServer = parametreMail.GetSMTPServerUrl()
@@ -72,7 +72,7 @@ Public Class SendMailController
             Catch e As Exception
                 Dim resp = New HttpResponseMessage(HttpStatusCode.InternalServerError) With {
                 .Content = New StringContent(e.Message),
-                .ReasonPhrase = "Erreur interne au server lors de l'envoie du mail: " + e.Message
+                .ReasonPhrase = "Erreur interne au server lors de l'envoie du mail: (" + smtpServer + ")" + +e.Message
             }
                 Return resp
             End Try
