@@ -23,10 +23,10 @@ End section
     }
 </style>
 
-<div class="grid">
-    <div class="row g-col-2">
-        @Using Html.BeginForm("index", "Resultats")
-            @<div Class="w-100">
+@Using Html.BeginForm("index", "Resultats")
+    @<div class="grid">
+        <div Class="row g-col-2">
+            <div Class="w-100">
                 <div Class="card mb-0">
                     <div Class="card-body d-flex flex-column gap-2">
                         <div class="card-title bg-soft-primary">
@@ -45,68 +45,82 @@ End section
                     </div>
                 </div>
             </div>
-        End Using
-    </div>
-    <div class="row g-col-10">
-        <div class="col-xl-12">
-            <div class="card">
-                <div class="card-body">
-                    <div class="card-title bg-soft-primary">
-                        <h5>Liste des x derniers résultats</h5>
-                    </div>
-                    <div class="table-responsive">
-                        <table class="table mb-0 table-hover">
-                            <thead>
-                            <thead>
-                                <tr>
-                                    <th>Type</th>
-                                    <th>Sous Type</th>
-                                    <th>Date</th>
-                                    <th>Pathologie</th>
-                                    <th>Conclusion</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @For Each item In ViewBag.Resultats
-                                    @<div>
-                                    <tr data-toggle="collapse" data-target=@("#accordion" + item.Value.ToString) class="clickable cursor-pointer">
-                                        <td>@item.Element(0).SousEpisodeLibelle</td>
-                                        <td>@item.Element(0).SousEpisodeSousLibelle</td>
-                                        <td>@Format(item.Element(0).HorodateCreation, "dd/MM/yyyy")</td>
-                                        <td>@item.Element(0).TypeActivite</td>
-                                        <td>@item.Element(0).Conclusion</td>
-                                    </tr>
-                                    <tr id=@("accordion" + item.Value.ToString()) class="collapse border border-primary">
-                                        <td colspan="6" class="bg-light">
-                                            <table class="table mb-0">
-                                                <thead>
-                                                <thead>
-                                                    <tr>
-                                                        <th>Type de fichier</th>
-                                                        <th>Date</th>
-                                                        <th>Actions</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-                                                    @For Each resultat In item.Element
-                                                        @<tr>
-                                                            <td>@resultat.Commentaire</td>
-                                                            <td>@Format(resultat.HorodateCreation, "le dd/MM/yyyy a HH\hMM")</td>
-                                                            <td><a onclick="location.href='@Url.Action("download", "Resultats", New With {Key .fileName = resultat.NomFichier})'" class="btn btn-primary btn-sm w-xs">Voir</a></td>
-                                                        </tr>
-                                                    Next
-                                                </tbody>
-                                            </table>
-                                        </td>
-                                    </tr>
+        </div>
+        <div Class="row g-col-10">
+            <div Class="col-xl-12">
+                <div Class="card">
+                    <div Class="card-body">
+                        <div Class="card-title bg-soft-primary d-flex justify-content-between">
+                            <h5>
+                                Liste des resultats @(((ViewBag.Page) * ViewBag.PageCount) + 1) -> @Math.Min((ViewBag.Page + 1) * ViewBag.PageCount, ViewBag.PageTotal) sur @ViewBag.PageTotal resultats
+                            </h5>
+                            <div class="d-flex p-2 align-self-center align-items-center">
+                                @If ViewBag.Page > 0 Then
+                                    @<button name="Page" value=@(ViewBag.Page - 1) id="Button2" type="submit"><i Class="mdi mdi-arrow-left"></i></button>
+                                End If
+
+                                <p Class="px-2 my-auto">Page @(ViewBag.Page + 1)</p>
+
+                                @If (ViewBag.Page + 1) * ViewBag.PageCount < ViewBag.PageTotal Then
+                                    @<Button name="Page" value=@(ViewBag.Page + 1) id="Button1" type="submit"><i Class="mdi mdi-arrow-right"></i></Button>
+                                End If
+                            </div>
                         </div>
 
-                                Next
-                                </tbody>
-                                </table>
+                        <div Class="table-responsive">
+                            <Table Class="table mb-0 table-hover">
+                                <thead>
+                                <thead>
+                                    <tr>
+                                        <th> Type</th>
+                                        <th> Sous Type</th>
+                                        <th>Date</th>
+                                        <th> Pathologie</th>
+                                        <th> Conclusion</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @For Each item In ViewBag.Resultats
+                                        @<div id="accordionExample">
+                                        <tr data-toggle="collapse" data-target=@("#accordion" + item.Value.ToString) class="clickable cursor-pointer">
+                                            <td>@item.Element(0).SousEpisodeLibelle</td>
+                                            <td>@item.Element(0).SousEpisodeSousLibelle</td>
+                                            <td>@Format(item.Element(0).HorodateCreation, "dd/MM/yyyy")</td>
+                                            <td>@item.Element(0).TypeActivite</td>
+                                            <td>@item.Element(0).Conclusion</td>
+                                        </tr>
+                                        <tr id=@("accordion" + item.Value.ToString()) class="collapse" data-parent="#accordionExample">
+                                            <td colspan="6" class="bg-light">
+                                                <table class="table mb-0">
+                                                    <thead>
+                                                    <thead>
+                                                        <tr>
+                                                            <th>Type de fichier</th>
+                                                            <th>Date</th>
+                                                            <th>Actions</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        @For Each resultat In item.Element
+                                                            @<tr>
+                                                                <td>@resultat.Commentaire</td>
+                                                                <td>@Format(resultat.HorodateCreation, "le dd/MM/yyyy a HH\hMM")</td>
+                                                                <td><a onclick="location.href='@Url.Action("download", "Resultats", New With {Key .fileName = resultat.NomFichier})'" class="btn btn-primary btn-sm w-xs">Voir</a></td>
+                                                            </tr>
+                                                        Next
+                                                    </tbody>
+                                                </table>
+                                            </td>
+                                        </tr>
+                            </div>
+
+                        Next
+                                    </tbody>
+                                    </table>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
-            </div>
+                </div>
+            End Using

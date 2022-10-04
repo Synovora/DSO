@@ -1,4 +1,5 @@
 ﻿@Imports Oasis_Common
+@Imports System.Globalization
 @Code
     ViewBag.Title = "RDV"
     ViewBag.pTitle = "Rendez-Vous"
@@ -26,7 +27,7 @@ End Section
                     <p class="text-muted mb-0 text-truncate">Profil Patient Nº @Request.Cookies("patientId").Value</p>
                 </div>
                 <div class="mx-auto d-flex flex-column">
-                    <p>Date de naissance: <span class="text-muted">@String.Format(ViewBag.Patient.PatientDateNaissance, "dd/MM/yyyy")</span></p>
+                    <p>Date de naissance: <span class="text-muted">@String.Format(ViewBag.Patient.PatientDateNaissance, "dd/MM/yyyy", CultureInfo.GetCultureInfoByIetfLanguageTag("fr-FR"))</span></p>
                     <p>Genre: <span class="text-muted">@ViewBag.patient.PatientGenre</span></p>
                 </div>
                 <div class="mx-auto d-flex flex-column">

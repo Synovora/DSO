@@ -693,7 +693,7 @@ Public Class RadFPatientListe
         Dim UriProcedureTutorielle As String = ConfigurationManager.AppSettings("UriProcedureTutorielle")
         If UriProcedureTutorielle = "" Then
             CreateLog("Paramètre application 'UriProcedureTutorielle' non trouvé !", "Procédure tutorielle", Log.EnumTypeLog.ERREUR.ToString, userLog)
-            UriProcedureTutorielle = "http://173.199.71.187/doku.php?id="
+            UriProcedureTutorielle = "http://wiki.synovora.com/doku.php?id="
         End If
 
         Dim MonURL As String

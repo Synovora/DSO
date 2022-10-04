@@ -40,7 +40,9 @@
     <!-- END layout-wrapper -->
     @*@Html.Partial("~/Views/Shared/_right_sidebar.vbhtml")
 
-    @Html.Partial("~/Views/Shared/_vendor_scripts.vbhtml")*@
+        @Html.Partial("~/Views/Shared/_vendor_scripts.vbhtml")*@
+
+    @Html.Partial("~/Views/Shared/_vendor_scripts.vbhtml")
 
     @RenderSection("scripts", False)
 

@@ -1,4 +1,5 @@
 ﻿@Imports Oasis_Common
+@Imports System.Globalization
 @Code
     ViewBag.Title = "Carnet Vaccinal"
     ViewBag.pTitle = "Carnet Vaccinal de " & ViewBag.Patient.PatientPrenom & " " & ViewBag.Patient.PatientNom & " (" & ViewBag.Patient.PatientDateNaissance & ")"
@@ -10,9 +11,9 @@ End Code
     <div class="col-xl-12">
         <div class="card">
             <div class="card-body">
-            <div class="card-title bg-soft-primary">
-                <h5>Liste des vaccins au @Date.Now().ToString("dd/MM/yyyy")</h5>
-            </div>
+                <div class="card-title bg-soft-primary">
+                    <h5>Liste des vaccins au @Date.Now().ToString("dd/MM/yyyy", CultureInfo.GetCultureInfoByIetfLanguageTag("fr-FR"))</h5>
+                </div>
                 <div class="table-responsive">
                     <table class="table mb-0">
                         <thead>

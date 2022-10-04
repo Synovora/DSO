@@ -34,6 +34,54 @@ Public Class SousEpisodeReponseDao
         Return episodes
     End Function
 
+    Public Function GetCountReponseCompleteByUser(userId As Integer) As Integer
+        Dim con As SqlConnection = GetConnection()
+        Dim rtn = 0
+        Try
+            Dim command As SqlCommand = con.CreateCommand()
+            command.CommandText = "SELECT COUNT(DISTINCT SE.id) FROM [oasis].[oasis].[oa_sous_episode_reponse] SER
+	                                JOIN [oasis].[oasis].[oa_utilisateur] UC ON UC.oa_utilisateur_id = SER.create_user_id
+	                                JOIN [oasis].[oasis].[oa_sous_episode] SE ON SE.id = SER.id_sous_episode
+                                    WHERE UC.oa_utilisateur_id = @userId"
+            command.Parameters.AddWithValue("@userId", userId)
+            rtn = Convert.ToInt32(command.ExecuteScalar())
+        Catch ex As Exception
+            Throw ex
+        Finally
+            con.Close()
+        End Try
+        Return rtn
+    End Function
+
+    Public Function GetAllFilterByUser(userId As Integer) As List(Of List(Of String))
+        Dim con As SqlConnection = GetConnection()
+        Dim episodes As New List(Of List(Of String))
+        Try
+            Dim command As SqlCommand = con.CreateCommand()
+            command.CommandText = "SELECT DISTINCT RSET.libelle AS sous_episode_libelle, RSEST.libelle AS sous_episode_sous_libelle FROM [oasis].[oasis].[oa_sous_episode_reponse] SER
+	                                JOIN [oasis].[oasis].[oa_utilisateur] UC ON UC.oa_utilisateur_id = SER.create_user_id
+                                    JOIN [oasis].[oasis].[oa_sous_episode] SE ON SE.id = SER.id_sous_episode
+                                    JOIN [oasis].[oasis].oa_episode E ON E.episode_id = SER.episode_id
+
+                                    JOIN [oasis].[oasis].[oa_r_sous_episode_type] RSET ON RSET.id = SE.id_sous_episode_type
+                                    JOIN [oasis].[oasis].[oa_r_sous_episode_sous_type] RSEST ON RSEST.id = SE.id_sous_episode_sous_type
+
+	                                OUTER APPLY(SELECT TOP(1) A.* FROM oasis.oa_episode_contexte EC LEFT JOIN oasis.oa_antecedent A ON A.oa_antecedent_id = EC.episode_contexte_id WHERE EC.episode_id = E.episode_id) AS A
+                                    WHERE UC.oa_utilisateur_id = @userId"
+            command.Parameters.AddWithValue("@userId", userId)
+            Using reader As SqlDataReader = command.ExecuteReader()
+                While (reader.Read())
+                    episodes.Add(New List(Of String)({Coalesce(reader("sous_episode_libelle"), Nothing), Coalesce(reader("sous_episode_sous_libelle"), Nothing)}))
+                End While
+            End Using
+        Catch ex As Exception
+            Throw ex
+        Finally
+            con.Close()
+        End Try
+        Return episodes
+    End Function
+
     ''' <summary>
     ''' 
     ''' </summary>

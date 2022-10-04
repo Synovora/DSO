@@ -35,7 +35,7 @@ End Code
                     <div class="pt-4">
                         <div class="row">
                             <div class="col-md-6">
-                                <p class="text-muted">Date de naissance: @String.Format(ViewBag.Patient.PatientDateNaissance, "dd/MM/yyyy")</p>
+                                <p class="text-muted">Date de naissance: @String.Format(ViewBag.Patient.PatientDateNaissance, "dd/MM/yyyy", CultureInfo.GetCultureInfoByIetfLanguageTag("fr-FR"))</p>
                                 <p class="text-muted">Genre: @ViewBag.patient.PatientGenre</p>
                             </div>
                             <div class="col-md-6">

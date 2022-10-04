@@ -1,4 +1,5 @@
 ﻿@Imports Oasis_Common
+@Imports System.Globalization
 @Code
     ViewBag.Title = "Synthese"
     ViewBag.pTitle = "Synthese"
@@ -25,7 +26,7 @@ End Section
                     <p class="text-muted mb-0 text-truncate">Profil Patient Nº @Request.Cookies("patientId").Value</p>
                 </div>
                 <div class="mx-auto d-flex flex-column">
-                    <p>Date de naissance: <span class="text-muted">@String.Format(ViewBag.Patient.PatientDateNaissance, "dd/MM/yyyy")</span></p>
+                    <p>Date de naissance: <span class="text-muted">@String.Format(ViewBag.Patient.PatientDateNaissance, "dd/MM/yyyy", CultureInfo.GetCultureInfoByIetfLanguageTag("fr-FR"))</span></p>
                     <p>Genre: <span class="text-muted">@ViewBag.patient.PatientGenre</span></p>
                 </div>
                 <div class="mx-auto d-flex flex-column">
@@ -76,9 +77,9 @@ End Section
     <div class="col-xl-9">
         <div class="card">
             <div class="card-body">
-            <div class="card-title bg-soft-primary">
-                <h5>Mes Traitements</h5>
-            </div>
+                <div class="card-title bg-soft-primary">
+                    <h5>Mes Traitements</h5>
+                </div>
                 <div class="table-responsive">
                     <table class="table mb-0">
                         <thead>
@@ -134,9 +135,9 @@ End Section
     <div class="col-xl-12">
         <div class="card">
             <div class="card-body">
-            <div class="card-title bg-soft-primary">
-                <h5>Mon Parcours de Soin</h5>
-            </div>
+                <div class="card-title bg-soft-primary">
+                    <h5>Mon Parcours de Soin</h5>
+                </div>
                 <div class="table-responsive">
                     <table class="table mb-0">
                         <thead>
@@ -171,9 +172,9 @@ End Section
     <div class="col-xl-6">
         <div Class="card" id="autoSuiviCard">
             <div Class="card-body">
-            <div class="card-title bg-soft-primary">
-                <h5>Mes Contextes</h5>
-            </div>
+                <div class="card-title bg-soft-primary">
+                    <h5>Mes Contextes</h5>
+                </div>
                 <div Class="clearfix"></div>
                 <div class="table-responsive">
                     <table class="table mb-0">
@@ -197,9 +198,9 @@ End Section
     <div class="col-xl-6">
         <div class="card">
             <div class="card-body">
-            <div class="card-title bg-soft-primary">
-                <h5>Mon Plan Personnalisé de Soin</h5>
-            </div>
+                <div class="card-title bg-soft-primary">
+                    <h5>Mon Plan Personnalisé de Soin</h5>
+                </div>
                 <div class="table-responsive">
                     <table class="table mb-0">
                         <tbody>

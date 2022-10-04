@@ -12,9 +12,9 @@ Public Class OrdonnanceFull
                 writer.Write(Ordonnance.Serialize().Length) 'Int
                 writer.Write(Ordonnance.Serialize()) 'Dyn
                 writer.Write(Details.Count) 'Int
-                For Each x In Details
-                    writer.Write(x.Serialize().Length) 'Int
-                    writer.Write(x.Serialize()) 'Dyn
+                For Each detail In Details
+                    writer.Write(detail.Serialize().Length) 'Int
+                    writer.Write(detail.Serialize()) 'Dyn
                 Next
             End Using
             Return m.ToArray()
