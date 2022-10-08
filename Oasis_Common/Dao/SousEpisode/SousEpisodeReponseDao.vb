@@ -428,12 +428,12 @@ Public Class SousEpisodeReponseDao
     ''' </summary>
     ''' <param name="row"></param>
     ''' <returns></returns>
-    Private Function buildBean(row As DataRow) As SousEpisodeReponse
+    Shared Function buildBean(row As DataRow) As SousEpisodeReponse
         Dim seType As New SousEpisodeReponse(row)
         Return seType
     End Function
 
-    Private Function BuildBean(reader As SqlDataReader) As SousEpisodeReponse
+    Shared Function BuildBean(reader As SqlDataReader) As SousEpisodeReponse
         Dim episode As New SousEpisodeReponse With {
             .Id = reader("id"),
             .EpisodeId = Coalesce(reader("episode_id"), 0),

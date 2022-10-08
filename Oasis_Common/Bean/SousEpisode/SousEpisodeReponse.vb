@@ -35,9 +35,9 @@ Public Class SousEpisodeReponse
         Me.ValidateUserId = Coalesce(row("validate_user_id"), Nothing)
         Me.ValidateDate = Coalesce(row("validate_date"), Nothing)
         Me.EpisodeId = Coalesce(row("episode_id"), Nothing)
-        Me.SousEpisodeLibelle = Coalesce(row("sous_episode_libelle"), Nothing)
-        Me.SousEpisodeSousLibelle = Coalesce(row("sous_episode_sous_libelle"), Nothing)
-        Me.TypeActivite = Coalesce(row("type_activite"), Nothing)
+        Me.SousEpisodeLibelle = If(row.Table.Columns.Contains("sous_episode_libelle"), row("sous_episode_libelle"), Nothing)
+        Me.SousEpisodeSousLibelle = If(row.Table.Columns.Contains("sous_episode_sous_libelle"), row("sous_episode_sous_libelle"), Nothing)
+        Me.TypeActivite = If(row.Table.Columns.Contains("type_activite"), row("type_activite"), Nothing)
 
     End Sub
 
