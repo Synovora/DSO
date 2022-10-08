@@ -59,7 +59,7 @@ Namespace Oasis_Web.Controllers
                 .TypeProfil = ProfilDao.EnumProfilType.PATIENT.ToString,
                 .Etat = Episode.EnumEtatEpisode.CLOTURE.ToString
             }
-            Debug.WriteLine(data)
+            Debug.WriteLine(data, parametres)
             Dim episodeId As Long = episodeDao.CreateEpisode(episode, 0)
             If episodeId <> 0 Then
                 For i = 0 To parametres.Count - 1
@@ -84,6 +84,7 @@ Namespace Oasis_Web.Controllers
                         .Valeur = Decimal.Parse(value),
                         .Inactif = False
                     }
+                    Debug.WriteLine(value, parametre.Entier)
                     episodeParametreDao.CreateEpisodeParametre(episodeParametre)
                 Next
                 Session("autosuivi") = True
