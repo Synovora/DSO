@@ -10,16 +10,16 @@ Public Class SousEpisodeReponseDao
         Try
             Dim command As SqlCommand = con.CreateCommand()
             command.CommandText = "SELECT A.oa_antecedent_description AS conclusion, SER.*, AE.oa_activite_description AS type_activite, RSET.libelle AS sous_episode_libelle, RSEST.libelle AS sous_episode_sous_libelle , SE.* FROM [oasis].[oasis].[oa_sous_episode_reponse] SER
-                                    JOIN [oasis].[oasis].[oa_utilisateur] UC ON UC.oa_utilisateur_id = SER.create_user_id
                                     JOIN [oasis].[oasis].[oa_sous_episode] SE ON SE.id = SER.id_sous_episode
                                     JOIN [oasis].[oasis].oa_episode E ON E.episode_id = SER.episode_id
+                                    JOIN [oasis].[oasis].[oa_patient] P ON P.oa_patient_id = E.patient_id
                                     JOIN [oasis].[oasis].oa_r_activite_episode AE ON AE.oa_activite_type = E.type_activite
 
                                     JOIN [oasis].[oasis].[oa_r_sous_episode_type] RSET ON RSET.id = SE.id_sous_episode_type
                                     JOIN [oasis].[oasis].[oa_r_sous_episode_sous_type] RSEST ON RSEST.id = SE.id_sous_episode_sous_type
 
 									OUTER APPLY(SELECT TOP(1) A.* FROM oasis.oa_episode_contexte EC LEFT JOIN oasis.oa_antecedent A ON A.oa_antecedent_id = EC.episode_contexte_id WHERE EC.episode_id = E.episode_id) as A
-                                    WHERE UC.oa_utilisateur_id = @userId ORDER BY SER.horodate_creation DESC"
+                                    WHERE P.oa_patient_id = @userId ORDER BY SER.horodate_creation DESC"
             command.Parameters.AddWithValue("@userId", userId)
             Using reader As SqlDataReader = command.ExecuteReader()
                 While (reader.Read())
@@ -40,9 +40,10 @@ Public Class SousEpisodeReponseDao
         Try
             Dim command As SqlCommand = con.CreateCommand()
             command.CommandText = "SELECT COUNT(DISTINCT SE.id) FROM [oasis].[oasis].[oa_sous_episode_reponse] SER
-	                                JOIN [oasis].[oasis].[oa_utilisateur] UC ON UC.oa_utilisateur_id = SER.create_user_id
 	                                JOIN [oasis].[oasis].[oa_sous_episode] SE ON SE.id = SER.id_sous_episode
-                                    WHERE UC.oa_utilisateur_id = @userId"
+                                    JOIN [oasis].[oasis].oa_episode E ON E.episode_id = SER.episode_id
+	                                JOIN [oasis].[oasis].[oa_patient] P ON P.patient_id =  E.patient_id
+                                    WHERE P.oa_patient_id = @userId"
             command.Parameters.AddWithValue("@userId", userId)
             rtn = Convert.ToInt32(command.ExecuteScalar())
         Catch ex As Exception
@@ -59,15 +60,15 @@ Public Class SousEpisodeReponseDao
         Try
             Dim command As SqlCommand = con.CreateCommand()
             command.CommandText = "SELECT DISTINCT RSET.libelle AS sous_episode_libelle, RSEST.libelle AS sous_episode_sous_libelle FROM [oasis].[oasis].[oa_sous_episode_reponse] SER
-	                                JOIN [oasis].[oasis].[oa_utilisateur] UC ON UC.oa_utilisateur_id = SER.create_user_id
                                     JOIN [oasis].[oasis].[oa_sous_episode] SE ON SE.id = SER.id_sous_episode
                                     JOIN [oasis].[oasis].oa_episode E ON E.episode_id = SER.episode_id
+	                                JOIN [oasis].[oasis].[oa_patient] P ON P.oa_patient_id = E.patient_id
 
                                     JOIN [oasis].[oasis].[oa_r_sous_episode_type] RSET ON RSET.id = SE.id_sous_episode_type
                                     JOIN [oasis].[oasis].[oa_r_sous_episode_sous_type] RSEST ON RSEST.id = SE.id_sous_episode_sous_type
 
 	                                OUTER APPLY(SELECT TOP(1) A.* FROM oasis.oa_episode_contexte EC LEFT JOIN oasis.oa_antecedent A ON A.oa_antecedent_id = EC.episode_contexte_id WHERE EC.episode_id = E.episode_id) AS A
-                                    WHERE UC.oa_utilisateur_id = @userId"
+                                    WHERE P.oa_patient_id = @userId"
             command.Parameters.AddWithValue("@userId", userId)
             Using reader As SqlDataReader = command.ExecuteReader()
                 While (reader.Read())
