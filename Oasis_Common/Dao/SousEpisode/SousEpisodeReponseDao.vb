@@ -18,7 +18,7 @@ Public Class SousEpisodeReponseDao
                                     JOIN [oasis].[oasis].[oa_r_sous_episode_type] RSET ON RSET.id = SE.id_sous_episode_type
                                     JOIN [oasis].[oasis].[oa_r_sous_episode_sous_type] RSEST ON RSEST.id = SE.id_sous_episode_sous_type
 
-									OUTER APPLY(SELECT TOP(1) A.* FROM oasis.oa_episode_contexte EC LEFT JOIN oasis.oa_antecedent A ON A.oa_antecedent_id = EC.episode_contexte_id WHERE EC.episode_id = E.episode_id) as A
+									OUTER APPLY(SELECT TOP(1) A.* FROM oasis.oa_episode_contexte EC LEFT JOIN oasis.oa_antecedent A ON A.oa_antecedent_id = EC.contexte_id WHERE EC.episode_id = E.episode_id) as A
                                     WHERE P.oa_patient_id = @userId ORDER BY SER.horodate_creation DESC"
             command.Parameters.AddWithValue("@userId", userId)
             Using reader As SqlDataReader = command.ExecuteReader()
@@ -67,7 +67,7 @@ Public Class SousEpisodeReponseDao
                                     JOIN [oasis].[oasis].[oa_r_sous_episode_type] RSET ON RSET.id = SE.id_sous_episode_type
                                     JOIN [oasis].[oasis].[oa_r_sous_episode_sous_type] RSEST ON RSEST.id = SE.id_sous_episode_sous_type
 
-	                                OUTER APPLY(SELECT TOP(1) A.* FROM oasis.oa_episode_contexte EC LEFT JOIN oasis.oa_antecedent A ON A.oa_antecedent_id = EC.episode_contexte_id WHERE EC.episode_id = E.episode_id) AS A
+	                                OUTER APPLY(SELECT TOP(1) A.* FROM oasis.oa_episode_contexte EC LEFT JOIN oasis.oa_antecedent A ON A.oa_antecedent_id = EC.contexte_id WHERE EC.episode_id = E.episode_id) AS A
                                     WHERE P.oa_patient_id = @userId"
             command.Parameters.AddWithValue("@userId", userId)
             Using reader As SqlDataReader = command.ExecuteReader()
