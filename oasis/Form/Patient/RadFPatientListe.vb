@@ -709,13 +709,12 @@ Public Class RadFPatientListe
         End Try
     End Sub
 
-    Private Sub RadMailButton_Click(sender As Object, e As EventArgs) Handles RadMailButton.Click
+    Private Sub BtnResultats_Click(sender As Object, e As EventArgs) Handles BtnResultats.Click
         Me.Cursor = Cursors.WaitCursor
         Me.Enabled = False
 
         Try
             Using frm As New FrmSousEpisodeReponseAttribution
-                'Me.SelectedPatient = patientDao.GetPatient(0)
                 frm.ShowDialog()
             End Using
         Catch ex As Exception

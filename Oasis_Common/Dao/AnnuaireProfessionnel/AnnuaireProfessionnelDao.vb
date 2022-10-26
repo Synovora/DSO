@@ -92,7 +92,7 @@ Public Class AnnuaireProfessionnelDao
         " FROM oasis.ans_annuaire_professionnel_sante"
 
         Dim ClauseWhere As String = " WHERE "
-        If CodeProfessionId AndAlso CodeSavoirFaireId Then
+        If CodeProfessionId AndAlso CodeSavoirFaireId IsNot Nothing Then
             ClauseWhere += "code_profression = " & CodeProfessionId & " AND code_savoir_faire = '" & CodeSavoirFaireId & "'"
         Else
             ClauseWhere += "1=1"

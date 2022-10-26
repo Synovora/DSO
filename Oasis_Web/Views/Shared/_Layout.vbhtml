@@ -2,7 +2,6 @@
 <html lang="en">
 
 <head>
-
     @Html.Partial("~/Views/Shared/_title_meta.cshtml")
     @Html.Partial("~/Views/Shared/_head_css.cshtml")
     @RenderSection("styles", False)

@@ -3701,7 +3701,7 @@ Public Class RadFEpisodeDetail
     Private Sub RadTraitementDataGridView_CellDoubleClick(sender As Object, e As Telerik.WinControls.UI.GridViewCellEventArgs) Handles RadTraitementDataGridView.CellDoubleClick
         If RadTraitementDataGridView.CurrentRow IsNot Nothing Then
             Dim dt = ordonnaceDao.GetOrdonnanceValideByPatient(SelectedPatient.PatientId, SelectedEpisodeId)
-            If dt.Count > 0 AndAlso MsgBox("Vous allez apporter des modifications aux traitements prescrits à ce patient alors qu'une ordonnance a été produite et en attente de validation. Sans l'annulation de l'ordonnance en cours et sa re-génération, l'ordonnance ne sera pas alignée avec vos modifications.", MsgBoxStyle.YesNo Or MsgBoxStyle.Exclamation, "Modification des traitements") = MsgBoxResult.Yes Then
+            If dt.Count = 0 OrElse (dt.Count > 0 AndAlso MsgBox("Vous allez apporter des modifications aux traitements prescrits à ce patient alors qu'une ordonnance a été produite et en attente de validation. Sans l'annulation de l'ordonnance en cours et sa re-génération, l'ordonnance ne sera pas alignée avec vos modifications.", MsgBoxStyle.YesNo Or MsgBoxStyle.Exclamation, "Modification des traitements") = MsgBoxResult.Yes) Then
                 Dim aRow As Integer = Me.RadTraitementDataGridView.Rows.IndexOf(Me.RadTraitementDataGridView.CurrentRow)
                 If aRow >= 0 Then
                     Dim TraitementId, SelectedMedicamentCis As Integer
@@ -5219,10 +5219,6 @@ Public Class RadFEpisodeDetail
     Private Sub RadBtnAddSousEpisode_Click(sender As Object, e As EventArgs) Handles RadBtnAddSousEpisode.Click
         FicheSousEpisode(New SousEpisode, userLog.UtilisateurPrenom + " " + userLog.UtilisateurNom, Nothing, Nothing)
         RefreshButtonSousEpisodeProperties()
-    End Sub
-
-    Private Sub RadTraitementDataGridView_Click(sender As Object, e As EventArgs) Handles RadTraitementDataGridView.Click
-
     End Sub
 
     '===========================================================
