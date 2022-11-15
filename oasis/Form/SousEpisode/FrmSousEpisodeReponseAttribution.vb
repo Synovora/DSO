@@ -20,6 +20,8 @@ Public Class FrmSousEpisodeReponseAttribution
     ReadOnly sousEpisodeReponseDao As New SousEpisodeReponseDao
     ReadOnly rorDao As New RorDao
 
+    Dim page = 1
+
     Dim lstSousEpisodeSousType As List(Of SousEpisodeSousType)
     Dim lstSousEpisodeSousSousType As List(Of SousEpisodeSousSousType)
     Dim lstMail As List(Of SousEpisodeReponseMail)
@@ -47,7 +49,7 @@ Public Class FrmSousEpisodeReponseAttribution
         Me.Cursor = Cursors.WaitCursor
         Dim sousEpisodeReponseMailDao As SousEpisodeReponseMailDao = New SousEpisodeReponseMailDao
         Try
-            lstMail = sousEpisodeReponseMailDao.GetLstSousEpisodeReponseMail()
+            lstMail = sousEpisodeReponseMailDao.GetLstSousEpisodeReponseMail(page)
             Dim numRowGrid As Integer = 0
             ' -- recup eventuelle precedente selectionnée
             'If RadSousEpisodeGrid.Rows.Count > 0 AndAlso Not IsNothing(Me.RadSousEpisodeGrid.CurrentRow) Then
@@ -494,5 +496,21 @@ Public Class FrmSousEpisodeReponseAttribution
 
     Private Sub BtnRefreshMail_Click(sender As Object, e As EventArgs)
         ChargementMails()
+    End Sub
+
+    Private Sub BtnPrevPage_Click(sender As Object, e As EventArgs) Handles BtnPrevPage.Click
+        If page > 1 Then
+            page -= 1
+            LblPage.Text = page.ToString()
+            ChargementMails()
+        End If
+    End Sub
+
+    Private Sub BtnNextPage_Click(sender As Object, e As EventArgs) Handles BtnNextPage.Click
+        If True Then
+            page += 1
+            LblPage.Text = page.ToString()
+            ChargementMails()
+        End If
     End Sub
 End Class

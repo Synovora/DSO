@@ -5221,6 +5221,23 @@ Public Class RadFEpisodeDetail
         RefreshButtonSousEpisodeProperties()
     End Sub
 
+    Private Sub AfficherLesPPSObsolètesToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles AfficherLesPPSObsolètesToolStripMenuItem.Click
+        Me.Enabled = False
+        Cursor.Current = Cursors.WaitCursor
+
+        Try
+            Using vFPPSObsoletes As New RadFPPSObsoletes
+                vFPPSObsoletes.SelectedPatient = Me.SelectedPatient
+                vFPPSObsoletes.UtilisateurConnecte = userLog
+                vFPPSObsoletes.ShowDialog() 'Modal
+            End Using
+        Catch ex As Exception
+            MsgBox(ex.Message())
+        End Try
+
+        Me.Enabled = True
+    End Sub
+
     '===========================================================
     '======================= Droits d'accès ====================
     '===========================================================

@@ -54,6 +54,7 @@ Public Class RadFEpisodeLigneDeVie
     Dim patientParametreLdvDao As New PatientParametreLdvDao
     Dim chaineEpisodeDao As New ChaineEpisodeDao
     Dim antecedentDao As New AntecedentDao
+    Dim sousEpisodeDao As New SousEpisodeDao
 
     Dim patientParametreLdv As PatientParametreLdv
     Dim ligneDeVie As New LigneDeVie
@@ -912,10 +913,16 @@ Public Class RadFEpisodeLigneDeVie
     Private Sub MasterTemplate_ToolTipTextNeeded(sender As Object, e As Telerik.WinControls.ToolTipTextNeededEventArgs) Handles RadGridViewEpisode.ToolTipTextNeeded
         Dim hoveredCell As GridDataCellElement = TryCast(sender, GridDataCellElement)
         If hoveredCell IsNot Nothing Then
-            If hoveredCell.ColumnInfo.Name = "type_activite" Then
-                e.ToolTipText = hoveredCell.RowInfo.Cells("type_activite").Value & " " & hoveredCell.RowInfo.Cells("description_activite").Value
+            If hoveredCell.ColumnIndex = 7 Then
+                Dim episodeId = RadGridViewEpisode.Rows(hoveredCell.RowIndex).Cells("episode_id").Value
+                Dim sousEpisodes = sousEpisodeDao.GetLstSousEpisodeByEpisodeId(Convert.ToInt64(episodeId))
+                e.ToolTipText = String.Join(vbCrLf, sousEpisodes.Select(Function(m) m.SousTypeLibelle).ToArray())
             Else
-                e.ToolTipText = hoveredCell.Value.ToString()
+                If hoveredCell.ColumnInfo.Name = "type_activite" Then
+                    e.ToolTipText = hoveredCell.RowInfo.Cells("type_activite").Value & " " & hoveredCell.RowInfo.Cells("description_activite").Value
+                Else
+                    e.ToolTipText = hoveredCell.Value.ToString()
+                End If
             End If
         End If
     End Sub

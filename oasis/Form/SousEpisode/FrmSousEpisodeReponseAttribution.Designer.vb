@@ -23,31 +23,31 @@ Partial Class FrmSousEpisodeReponseAttribution
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
         Me.components = New System.ComponentModel.Container()
-        Dim GridViewTextBoxColumn1 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
-        Dim GridViewTextBoxColumn2 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
-        Dim GridViewTextBoxColumn3 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
-        Dim GridViewTextBoxColumn4 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
-        Dim TableViewDefinition1 As Telerik.WinControls.UI.TableViewDefinition = New Telerik.WinControls.UI.TableViewDefinition()
-        Dim GridViewTextBoxColumn5 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
-        Dim GridViewTextBoxColumn6 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
-        Dim GridViewTextBoxColumn7 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
-        Dim GridViewTextBoxColumn8 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
-        Dim TableViewDefinition2 As Telerik.WinControls.UI.TableViewDefinition = New Telerik.WinControls.UI.TableViewDefinition()
-        Dim GridViewTextBoxColumn9 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
-        Dim GridViewTextBoxColumn10 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
-        Dim SortDescriptor1 As Telerik.WinControls.Data.SortDescriptor = New Telerik.WinControls.Data.SortDescriptor()
-        Dim TableViewDefinition3 As Telerik.WinControls.UI.TableViewDefinition = New Telerik.WinControls.UI.TableViewDefinition()
-        Dim GridViewTextBoxColumn11 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
-        Dim GridViewTextBoxColumn12 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
-        Dim GridViewTextBoxColumn13 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
-        Dim GridViewTextBoxColumn14 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
-        Dim GridViewTextBoxColumn15 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
-        Dim SortDescriptor2 As Telerik.WinControls.Data.SortDescriptor = New Telerik.WinControls.Data.SortDescriptor()
-        Dim TableViewDefinition4 As Telerik.WinControls.UI.TableViewDefinition = New Telerik.WinControls.UI.TableViewDefinition()
-        Dim GridViewTextBoxColumn16 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
-        Dim GridViewTextBoxColumn17 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
-        Dim GridViewTextBoxColumn18 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
-        Dim TableViewDefinition5 As Telerik.WinControls.UI.TableViewDefinition = New Telerik.WinControls.UI.TableViewDefinition()
+        Dim GridViewTextBoxColumn55 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
+        Dim GridViewTextBoxColumn56 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
+        Dim GridViewTextBoxColumn57 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
+        Dim GridViewTextBoxColumn58 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
+        Dim TableViewDefinition16 As Telerik.WinControls.UI.TableViewDefinition = New Telerik.WinControls.UI.TableViewDefinition()
+        Dim GridViewTextBoxColumn59 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
+        Dim GridViewTextBoxColumn60 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
+        Dim GridViewTextBoxColumn61 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
+        Dim GridViewTextBoxColumn62 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
+        Dim TableViewDefinition17 As Telerik.WinControls.UI.TableViewDefinition = New Telerik.WinControls.UI.TableViewDefinition()
+        Dim GridViewTextBoxColumn63 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
+        Dim GridViewTextBoxColumn64 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
+        Dim SortDescriptor7 As Telerik.WinControls.Data.SortDescriptor = New Telerik.WinControls.Data.SortDescriptor()
+        Dim TableViewDefinition18 As Telerik.WinControls.UI.TableViewDefinition = New Telerik.WinControls.UI.TableViewDefinition()
+        Dim GridViewTextBoxColumn65 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
+        Dim GridViewTextBoxColumn66 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
+        Dim GridViewTextBoxColumn67 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
+        Dim GridViewTextBoxColumn68 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
+        Dim GridViewTextBoxColumn69 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
+        Dim SortDescriptor8 As Telerik.WinControls.Data.SortDescriptor = New Telerik.WinControls.Data.SortDescriptor()
+        Dim TableViewDefinition19 As Telerik.WinControls.UI.TableViewDefinition = New Telerik.WinControls.UI.TableViewDefinition()
+        Dim GridViewTextBoxColumn70 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
+        Dim GridViewTextBoxColumn71 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
+        Dim GridViewTextBoxColumn72 As Telerik.WinControls.UI.GridViewTextBoxColumn = New Telerik.WinControls.UI.GridViewTextBoxColumn()
+        Dim TableViewDefinition20 As Telerik.WinControls.UI.TableViewDefinition = New Telerik.WinControls.UI.TableViewDefinition()
         Me.RadButtonAttribution = New Telerik.WinControls.UI.RadButton()
         Me.RadButtonOpen = New Telerik.WinControls.UI.RadButton()
         Me.RadGridViewMail = New Telerik.WinControls.UI.RadGridView()
@@ -83,6 +83,10 @@ Partial Class FrmSousEpisodeReponseAttribution
         Me.RadSeparator1 = New Telerik.WinControls.UI.RadSeparator()
         Me.ToolTip1 = New System.Windows.Forms.ToolTip(Me.components)
         Me.ToolTip2 = New System.Windows.Forms.ToolTip(Me.components)
+        Me.BtnNextPage = New Telerik.WinControls.UI.RadButton()
+        Me.BtnPrevPage = New Telerik.WinControls.UI.RadButton()
+        Me.Label1 = New System.Windows.Forms.Label()
+        Me.LblPage = New System.Windows.Forms.Label()
         CType(Me.RadButtonAttribution, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.RadButtonOpen, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.RadGridViewMail, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -122,24 +126,28 @@ Partial Class FrmSousEpisodeReponseAttribution
         CType(Me.RadLabel1, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.RadObjetTextBox, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.RadSeparator1, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.BtnNextPage, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.BtnPrevPage, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'RadButtonAttribution
         '
         Me.RadButtonAttribution.Enabled = False
-        Me.RadButtonAttribution.Location = New System.Drawing.Point(942, 669)
+        Me.RadButtonAttribution.Location = New System.Drawing.Point(1413, 1004)
+        Me.RadButtonAttribution.Margin = New System.Windows.Forms.Padding(4, 4, 4, 4)
         Me.RadButtonAttribution.Name = "RadButtonAttribution"
-        Me.RadButtonAttribution.Size = New System.Drawing.Size(575, 27)
+        Me.RadButtonAttribution.Size = New System.Drawing.Size(862, 40)
         Me.RadButtonAttribution.TabIndex = 1
         Me.RadButtonAttribution.Text = "Attribuer"
         '
         'RadButtonOpen
         '
         Me.RadButtonOpen.Enabled = False
-        Me.RadButtonOpen.Location = New System.Drawing.Point(6, 652)
+        Me.RadButtonOpen.Location = New System.Drawing.Point(9, 978)
+        Me.RadButtonOpen.Margin = New System.Windows.Forms.Padding(4, 4, 4, 4)
         Me.RadButtonOpen.Name = "RadButtonOpen"
-        Me.RadButtonOpen.Size = New System.Drawing.Size(114, 24)
+        Me.RadButtonOpen.Size = New System.Drawing.Size(171, 36)
         Me.RadButtonOpen.TabIndex = 0
         Me.RadButtonOpen.Text = "Ouvrir"
         '
@@ -150,7 +158,8 @@ Partial Class FrmSousEpisodeReponseAttribution
         Me.RadGridViewMail.Font = New System.Drawing.Font("Segoe UI", 8.25!)
         Me.RadGridViewMail.ForeColor = System.Drawing.Color.Black
         Me.RadGridViewMail.ImeMode = System.Windows.Forms.ImeMode.NoControl
-        Me.RadGridViewMail.Location = New System.Drawing.Point(6, 22)
+        Me.RadGridViewMail.Location = New System.Drawing.Point(9, 70)
+        Me.RadGridViewMail.Margin = New System.Windows.Forms.Padding(4, 4, 4, 4)
         '
         '
         '
@@ -165,39 +174,39 @@ Partial Class FrmSousEpisodeReponseAttribution
         Me.RadGridViewMail.MasterTemplate.AllowEditRow = False
         Me.RadGridViewMail.MasterTemplate.AllowRowHeaderContextMenu = False
         Me.RadGridViewMail.MasterTemplate.AutoGenerateColumns = False
-        GridViewTextBoxColumn1.EnableExpressionEditor = False
-        GridViewTextBoxColumn1.HeaderText = "Objet"
-        GridViewTextBoxColumn1.MinWidth = 100
-        GridViewTextBoxColumn1.Name = "objet"
-        GridViewTextBoxColumn1.ReadOnly = True
-        GridViewTextBoxColumn1.Width = 320
-        GridViewTextBoxColumn2.EnableExpressionEditor = False
-        GridViewTextBoxColumn2.HeaderText = "Auteur"
-        GridViewTextBoxColumn2.MinWidth = 80
-        GridViewTextBoxColumn2.Name = "auteur"
-        GridViewTextBoxColumn2.ReadOnly = True
-        GridViewTextBoxColumn2.Width = 150
-        GridViewTextBoxColumn3.EnableExpressionEditor = False
-        GridViewTextBoxColumn3.HeaderText = "Date"
-        GridViewTextBoxColumn3.MinWidth = 50
-        GridViewTextBoxColumn3.Name = "date"
-        GridViewTextBoxColumn3.ReadOnly = True
-        GridViewTextBoxColumn3.TextAlignment = System.Drawing.ContentAlignment.MiddleCenter
-        GridViewTextBoxColumn3.Width = 80
-        GridViewTextBoxColumn4.AllowGroup = False
-        GridViewTextBoxColumn4.AllowSort = False
-        GridViewTextBoxColumn4.EnableExpressionEditor = False
-        GridViewTextBoxColumn4.HeaderText = "Id"
-        GridViewTextBoxColumn4.IsVisible = False
-        GridViewTextBoxColumn4.Name = "id"
-        GridViewTextBoxColumn4.ReadOnly = True
-        Me.RadGridViewMail.MasterTemplate.Columns.AddRange(New Telerik.WinControls.UI.GridViewDataColumn() {GridViewTextBoxColumn1, GridViewTextBoxColumn2, GridViewTextBoxColumn3, GridViewTextBoxColumn4})
+        GridViewTextBoxColumn55.EnableExpressionEditor = False
+        GridViewTextBoxColumn55.HeaderText = "Objet"
+        GridViewTextBoxColumn55.MinWidth = 150
+        GridViewTextBoxColumn55.Name = "objet"
+        GridViewTextBoxColumn55.ReadOnly = True
+        GridViewTextBoxColumn55.Width = 480
+        GridViewTextBoxColumn56.EnableExpressionEditor = False
+        GridViewTextBoxColumn56.HeaderText = "Auteur"
+        GridViewTextBoxColumn56.MinWidth = 120
+        GridViewTextBoxColumn56.Name = "auteur"
+        GridViewTextBoxColumn56.ReadOnly = True
+        GridViewTextBoxColumn56.Width = 225
+        GridViewTextBoxColumn57.EnableExpressionEditor = False
+        GridViewTextBoxColumn57.HeaderText = "Date"
+        GridViewTextBoxColumn57.MinWidth = 75
+        GridViewTextBoxColumn57.Name = "date"
+        GridViewTextBoxColumn57.ReadOnly = True
+        GridViewTextBoxColumn57.TextAlignment = System.Drawing.ContentAlignment.MiddleCenter
+        GridViewTextBoxColumn57.Width = 120
+        GridViewTextBoxColumn58.AllowGroup = False
+        GridViewTextBoxColumn58.AllowSort = False
+        GridViewTextBoxColumn58.EnableExpressionEditor = False
+        GridViewTextBoxColumn58.HeaderText = "Id"
+        GridViewTextBoxColumn58.IsVisible = False
+        GridViewTextBoxColumn58.Name = "id"
+        GridViewTextBoxColumn58.ReadOnly = True
+        Me.RadGridViewMail.MasterTemplate.Columns.AddRange(New Telerik.WinControls.UI.GridViewDataColumn() {GridViewTextBoxColumn55, GridViewTextBoxColumn56, GridViewTextBoxColumn57, GridViewTextBoxColumn58})
         Me.RadGridViewMail.MasterTemplate.ShowRowHeaderColumn = False
-        Me.RadGridViewMail.MasterTemplate.ViewDefinition = TableViewDefinition1
+        Me.RadGridViewMail.MasterTemplate.ViewDefinition = TableViewDefinition16
         Me.RadGridViewMail.Name = "RadGridViewMail"
         Me.RadGridViewMail.RightToLeft = System.Windows.Forms.RightToLeft.No
         Me.RadGridViewMail.ShowGroupPanel = False
-        Me.RadGridViewMail.Size = New System.Drawing.Size(556, 297)
+        Me.RadGridViewMail.Size = New System.Drawing.Size(834, 409)
         Me.RadGridViewMail.TabIndex = 2
         '
         'RadGridViewEpisode
@@ -209,7 +218,8 @@ Partial Class FrmSousEpisodeReponseAttribution
         Me.RadGridViewEpisode.Font = New System.Drawing.Font("Segoe UI", 8.25!)
         Me.RadGridViewEpisode.ForeColor = System.Drawing.Color.Black
         Me.RadGridViewEpisode.ImeMode = System.Windows.Forms.ImeMode.NoControl
-        Me.RadGridViewEpisode.Location = New System.Drawing.Point(5, 21)
+        Me.RadGridViewEpisode.Location = New System.Drawing.Point(8, 32)
+        Me.RadGridViewEpisode.Margin = New System.Windows.Forms.Padding(4, 4, 4, 4)
         '
         '
         '
@@ -219,50 +229,52 @@ Partial Class FrmSousEpisodeReponseAttribution
         Me.RadGridViewEpisode.MasterTemplate.AllowDeleteRow = False
         Me.RadGridViewEpisode.MasterTemplate.AllowDragToGroup = False
         Me.RadGridViewEpisode.MasterTemplate.AllowEditRow = False
-        GridViewTextBoxColumn5.EnableExpressionEditor = False
-        GridViewTextBoxColumn5.HeaderText = "Date"
-        GridViewTextBoxColumn5.Name = "date"
-        GridViewTextBoxColumn5.Width = 80
-        GridViewTextBoxColumn6.EnableExpressionEditor = False
-        GridViewTextBoxColumn6.HeaderText = "Type"
-        GridViewTextBoxColumn6.Name = "type"
-        GridViewTextBoxColumn6.Width = 100
-        GridViewTextBoxColumn7.EnableExpressionEditor = False
-        GridViewTextBoxColumn7.HeaderText = "Conclusion"
-        GridViewTextBoxColumn7.Name = "conclusion"
-        GridViewTextBoxColumn7.Width = 200
-        GridViewTextBoxColumn8.EnableExpressionEditor = False
-        GridViewTextBoxColumn8.HeaderText = "id"
-        GridViewTextBoxColumn8.IsVisible = False
-        GridViewTextBoxColumn8.Name = "id"
-        Me.RadGridViewEpisode.MasterTemplate.Columns.AddRange(New Telerik.WinControls.UI.GridViewDataColumn() {GridViewTextBoxColumn5, GridViewTextBoxColumn6, GridViewTextBoxColumn7, GridViewTextBoxColumn8})
+        GridViewTextBoxColumn59.EnableExpressionEditor = False
+        GridViewTextBoxColumn59.HeaderText = "Date"
+        GridViewTextBoxColumn59.Name = "date"
+        GridViewTextBoxColumn59.Width = 120
+        GridViewTextBoxColumn60.EnableExpressionEditor = False
+        GridViewTextBoxColumn60.HeaderText = "Type"
+        GridViewTextBoxColumn60.Name = "type"
+        GridViewTextBoxColumn60.Width = 150
+        GridViewTextBoxColumn61.EnableExpressionEditor = False
+        GridViewTextBoxColumn61.HeaderText = "Conclusion"
+        GridViewTextBoxColumn61.Name = "conclusion"
+        GridViewTextBoxColumn61.Width = 300
+        GridViewTextBoxColumn62.EnableExpressionEditor = False
+        GridViewTextBoxColumn62.HeaderText = "id"
+        GridViewTextBoxColumn62.IsVisible = False
+        GridViewTextBoxColumn62.Name = "id"
+        Me.RadGridViewEpisode.MasterTemplate.Columns.AddRange(New Telerik.WinControls.UI.GridViewDataColumn() {GridViewTextBoxColumn59, GridViewTextBoxColumn60, GridViewTextBoxColumn61, GridViewTextBoxColumn62})
         Me.RadGridViewEpisode.MasterTemplate.ShowRowHeaderColumn = False
-        Me.RadGridViewEpisode.MasterTemplate.ViewDefinition = TableViewDefinition2
+        Me.RadGridViewEpisode.MasterTemplate.ViewDefinition = TableViewDefinition17
         Me.RadGridViewEpisode.Name = "RadGridViewEpisode"
         Me.RadGridViewEpisode.ReadOnly = True
         Me.RadGridViewEpisode.RightToLeft = System.Windows.Forms.RightToLeft.No
         Me.RadGridViewEpisode.ShowGroupPanel = False
-        Me.RadGridViewEpisode.Size = New System.Drawing.Size(361, 571)
+        Me.RadGridViewEpisode.Size = New System.Drawing.Size(542, 856)
         Me.RadGridViewEpisode.TabIndex = 5
         '
         'ContextMenuStrip1
         '
+        Me.ContextMenuStrip1.ImageScalingSize = New System.Drawing.Size(24, 24)
         Me.ContextMenuStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.VoirLepisodeToolStripMenuItem})
         Me.ContextMenuStrip1.Name = "ContextMenuStrip1"
-        Me.ContextMenuStrip1.Size = New System.Drawing.Size(145, 26)
+        Me.ContextMenuStrip1.Size = New System.Drawing.Size(192, 36)
         '
         'VoirLepisodeToolStripMenuItem
         '
         Me.VoirLepisodeToolStripMenuItem.Name = "VoirLepisodeToolStripMenuItem"
-        Me.VoirLepisodeToolStripMenuItem.Size = New System.Drawing.Size(144, 22)
+        Me.VoirLepisodeToolStripMenuItem.Size = New System.Drawing.Size(191, 32)
         Me.VoirLepisodeToolStripMenuItem.Text = "Voir l'episode"
         '
         'RadButtonCEV
         '
         Me.RadButtonCEV.Enabled = False
-        Me.RadButtonCEV.Location = New System.Drawing.Point(7, 612)
+        Me.RadButtonCEV.Location = New System.Drawing.Point(10, 918)
+        Me.RadButtonCEV.Margin = New System.Windows.Forms.Padding(4, 4, 4, 4)
         Me.RadButtonCEV.Name = "RadButtonCEV"
-        Me.RadButtonCEV.Size = New System.Drawing.Size(359, 30)
+        Me.RadButtonCEV.Size = New System.Drawing.Size(538, 45)
         Me.RadButtonCEV.TabIndex = 6
         Me.RadButtonCEV.Text = "Creation Episode Virtuel"
         '
@@ -274,7 +286,8 @@ Partial Class FrmSousEpisodeReponseAttribution
         Me.RadGridViewSousEpisode.Font = New System.Drawing.Font("Segoe UI", 8.25!)
         Me.RadGridViewSousEpisode.ForeColor = System.Drawing.Color.Black
         Me.RadGridViewSousEpisode.ImeMode = System.Windows.Forms.ImeMode.NoControl
-        Me.RadGridViewSousEpisode.Location = New System.Drawing.Point(9, 22)
+        Me.RadGridViewSousEpisode.Location = New System.Drawing.Point(14, 33)
+        Me.RadGridViewSousEpisode.Margin = New System.Windows.Forms.Padding(4, 4, 4, 4)
         '
         '
         '
@@ -282,33 +295,34 @@ Partial Class FrmSousEpisodeReponseAttribution
         Me.RadGridViewSousEpisode.MasterTemplate.AllowDeleteRow = False
         Me.RadGridViewSousEpisode.MasterTemplate.AllowDragToGroup = False
         Me.RadGridViewSousEpisode.MasterTemplate.AllowEditRow = False
-        GridViewTextBoxColumn9.EnableExpressionEditor = False
-        GridViewTextBoxColumn9.HeaderText = "Sous Type"
-        GridViewTextBoxColumn9.MinWidth = 180
-        GridViewTextBoxColumn9.Name = "sousType"
-        GridViewTextBoxColumn9.Width = 180
-        GridViewTextBoxColumn10.EnableExpressionEditor = False
-        GridViewTextBoxColumn10.HeaderText = "column1"
-        GridViewTextBoxColumn10.IsVisible = False
-        GridViewTextBoxColumn10.Name = "id"
-        GridViewTextBoxColumn10.ReadOnly = True
-        Me.RadGridViewSousEpisode.MasterTemplate.Columns.AddRange(New Telerik.WinControls.UI.GridViewDataColumn() {GridViewTextBoxColumn9, GridViewTextBoxColumn10})
+        GridViewTextBoxColumn63.EnableExpressionEditor = False
+        GridViewTextBoxColumn63.HeaderText = "Sous Type"
+        GridViewTextBoxColumn63.MinWidth = 270
+        GridViewTextBoxColumn63.Name = "sousType"
+        GridViewTextBoxColumn63.Width = 270
+        GridViewTextBoxColumn64.EnableExpressionEditor = False
+        GridViewTextBoxColumn64.HeaderText = "column1"
+        GridViewTextBoxColumn64.IsVisible = False
+        GridViewTextBoxColumn64.Name = "id"
+        GridViewTextBoxColumn64.ReadOnly = True
+        Me.RadGridViewSousEpisode.MasterTemplate.Columns.AddRange(New Telerik.WinControls.UI.GridViewDataColumn() {GridViewTextBoxColumn63, GridViewTextBoxColumn64})
         Me.RadGridViewSousEpisode.MasterTemplate.ShowRowHeaderColumn = False
-        SortDescriptor1.PropertyName = "column1"
-        Me.RadGridViewSousEpisode.MasterTemplate.SortDescriptors.AddRange(New Telerik.WinControls.Data.SortDescriptor() {SortDescriptor1})
-        Me.RadGridViewSousEpisode.MasterTemplate.ViewDefinition = TableViewDefinition3
+        SortDescriptor7.PropertyName = "column1"
+        Me.RadGridViewSousEpisode.MasterTemplate.SortDescriptors.AddRange(New Telerik.WinControls.Data.SortDescriptor() {SortDescriptor7})
+        Me.RadGridViewSousEpisode.MasterTemplate.ViewDefinition = TableViewDefinition18
         Me.RadGridViewSousEpisode.Name = "RadGridViewSousEpisode"
         Me.RadGridViewSousEpisode.RightToLeft = System.Windows.Forms.RightToLeft.No
         Me.RadGridViewSousEpisode.ShowGroupPanel = False
-        Me.RadGridViewSousEpisode.Size = New System.Drawing.Size(182, 571)
+        Me.RadGridViewSousEpisode.Size = New System.Drawing.Size(273, 856)
         Me.RadGridViewSousEpisode.TabIndex = 6
         '
         'RadButtonCSE
         '
         Me.RadButtonCSE.Enabled = False
-        Me.RadButtonCSE.Location = New System.Drawing.Point(9, 612)
+        Me.RadButtonCSE.Location = New System.Drawing.Point(14, 918)
+        Me.RadButtonCSE.Margin = New System.Windows.Forms.Padding(4, 4, 4, 4)
         Me.RadButtonCSE.Name = "RadButtonCSE"
-        Me.RadButtonCSE.Size = New System.Drawing.Size(182, 30)
+        Me.RadButtonCSE.Size = New System.Drawing.Size(273, 45)
         Me.RadButtonCSE.TabIndex = 7
         Me.RadButtonCSE.Text = "Creation Sous Episode"
         '
@@ -319,7 +333,8 @@ Partial Class FrmSousEpisodeReponseAttribution
         Me.RadGridViewPatient.Font = New System.Drawing.Font("Segoe UI", 8.25!)
         Me.RadGridViewPatient.ForeColor = System.Drawing.Color.Black
         Me.RadGridViewPatient.ImeMode = System.Windows.Forms.ImeMode.NoControl
-        Me.RadGridViewPatient.Location = New System.Drawing.Point(585, 150)
+        Me.RadGridViewPatient.Location = New System.Drawing.Point(878, 225)
+        Me.RadGridViewPatient.Margin = New System.Windows.Forms.Padding(4, 4, 4, 4)
         '
         '
         '
@@ -335,35 +350,36 @@ Partial Class FrmSousEpisodeReponseAttribution
         Me.RadGridViewPatient.MasterTemplate.AllowRowHeaderContextMenu = False
         Me.RadGridViewPatient.MasterTemplate.AllowRowResize = False
         Me.RadGridViewPatient.MasterTemplate.AutoGenerateColumns = False
-        GridViewTextBoxColumn11.EnableExpressionEditor = False
-        GridViewTextBoxColumn11.HeaderText = "Prenom"
-        GridViewTextBoxColumn11.Name = "prenom"
-        GridViewTextBoxColumn11.SortOrder = Telerik.WinControls.UI.RadSortOrder.Ascending
-        GridViewTextBoxColumn11.Width = 120
-        GridViewTextBoxColumn12.EnableExpressionEditor = False
-        GridViewTextBoxColumn12.HeaderText = "Nom"
-        GridViewTextBoxColumn12.Name = "nom"
-        GridViewTextBoxColumn12.Width = 100
-        GridViewTextBoxColumn13.EnableExpressionEditor = False
-        GridViewTextBoxColumn13.HeaderText = "DDN"
-        GridViewTextBoxColumn13.Name = "ddn"
-        GridViewTextBoxColumn14.EnableExpressionEditor = False
-        GridViewTextBoxColumn14.HeaderText = "Site"
-        GridViewTextBoxColumn14.Name = "site"
-        GridViewTextBoxColumn14.Width = 80
-        GridViewTextBoxColumn15.EnableExpressionEditor = False
-        GridViewTextBoxColumn15.HeaderText = "id"
-        GridViewTextBoxColumn15.IsVisible = False
-        GridViewTextBoxColumn15.Name = "id"
-        Me.RadGridViewPatient.MasterTemplate.Columns.AddRange(New Telerik.WinControls.UI.GridViewDataColumn() {GridViewTextBoxColumn11, GridViewTextBoxColumn12, GridViewTextBoxColumn13, GridViewTextBoxColumn14, GridViewTextBoxColumn15})
+        GridViewTextBoxColumn65.EnableExpressionEditor = False
+        GridViewTextBoxColumn65.HeaderText = "Prenom"
+        GridViewTextBoxColumn65.Name = "prenom"
+        GridViewTextBoxColumn65.SortOrder = Telerik.WinControls.UI.RadSortOrder.Ascending
+        GridViewTextBoxColumn65.Width = 180
+        GridViewTextBoxColumn66.EnableExpressionEditor = False
+        GridViewTextBoxColumn66.HeaderText = "Nom"
+        GridViewTextBoxColumn66.Name = "nom"
+        GridViewTextBoxColumn66.Width = 150
+        GridViewTextBoxColumn67.EnableExpressionEditor = False
+        GridViewTextBoxColumn67.HeaderText = "DDN"
+        GridViewTextBoxColumn67.Name = "ddn"
+        GridViewTextBoxColumn67.Width = 75
+        GridViewTextBoxColumn68.EnableExpressionEditor = False
+        GridViewTextBoxColumn68.HeaderText = "Site"
+        GridViewTextBoxColumn68.Name = "site"
+        GridViewTextBoxColumn68.Width = 120
+        GridViewTextBoxColumn69.EnableExpressionEditor = False
+        GridViewTextBoxColumn69.HeaderText = "id"
+        GridViewTextBoxColumn69.IsVisible = False
+        GridViewTextBoxColumn69.Name = "id"
+        Me.RadGridViewPatient.MasterTemplate.Columns.AddRange(New Telerik.WinControls.UI.GridViewDataColumn() {GridViewTextBoxColumn65, GridViewTextBoxColumn66, GridViewTextBoxColumn67, GridViewTextBoxColumn68, GridViewTextBoxColumn69})
         Me.RadGridViewPatient.MasterTemplate.ShowRowHeaderColumn = False
-        SortDescriptor2.PropertyName = "prenom"
-        Me.RadGridViewPatient.MasterTemplate.SortDescriptors.AddRange(New Telerik.WinControls.Data.SortDescriptor() {SortDescriptor2})
-        Me.RadGridViewPatient.MasterTemplate.ViewDefinition = TableViewDefinition4
+        SortDescriptor8.PropertyName = "prenom"
+        Me.RadGridViewPatient.MasterTemplate.SortDescriptors.AddRange(New Telerik.WinControls.Data.SortDescriptor() {SortDescriptor8})
+        Me.RadGridViewPatient.MasterTemplate.ViewDefinition = TableViewDefinition19
         Me.RadGridViewPatient.Name = "RadGridViewPatient"
         Me.RadGridViewPatient.RightToLeft = System.Windows.Forms.RightToLeft.No
         Me.RadGridViewPatient.ShowGroupPanel = False
-        Me.RadGridViewPatient.Size = New System.Drawing.Size(350, 546)
+        Me.RadGridViewPatient.Size = New System.Drawing.Size(525, 819)
         Me.RadGridViewPatient.TabIndex = 4
         '
         'RadGroupBox1
@@ -380,88 +396,100 @@ Partial Class FrmSousEpisodeReponseAttribution
         Me.RadGroupBox1.Controls.Add(Me.RadTextBoxNom)
         Me.RadGroupBox1.Controls.Add(Me.RadTextBoxPrenom)
         Me.RadGroupBox1.HeaderText = "Filtre"
-        Me.RadGroupBox1.Location = New System.Drawing.Point(585, 12)
+        Me.RadGroupBox1.Location = New System.Drawing.Point(878, 18)
+        Me.RadGroupBox1.Margin = New System.Windows.Forms.Padding(4, 4, 4, 4)
         Me.RadGroupBox1.Name = "RadGroupBox1"
-        Me.RadGroupBox1.Size = New System.Drawing.Size(350, 132)
+        Me.RadGroupBox1.Padding = New System.Windows.Forms.Padding(3, 27, 3, 3)
+        Me.RadGroupBox1.Size = New System.Drawing.Size(525, 198)
         Me.RadGroupBox1.TabIndex = 8
         Me.RadGroupBox1.Text = "Filtre"
         '
         'RadDateTimeDDN
         '
-        Me.RadDateTimeDDN.Location = New System.Drawing.Point(62, 73)
+        Me.RadDateTimeDDN.Location = New System.Drawing.Point(93, 110)
+        Me.RadDateTimeDDN.Margin = New System.Windows.Forms.Padding(4, 4, 4, 4)
         Me.RadDateTimeDDN.Name = "RadDateTimeDDN"
-        Me.RadDateTimeDDN.Size = New System.Drawing.Size(252, 20)
+        Me.RadDateTimeDDN.Size = New System.Drawing.Size(376, 26)
         Me.RadDateTimeDDN.TabIndex = 14
         '
         'RadButtonResetDate
         '
-        Me.RadButtonResetDate.Location = New System.Drawing.Point(320, 72)
+        Me.RadButtonResetDate.Location = New System.Drawing.Point(480, 108)
+        Me.RadButtonResetDate.Margin = New System.Windows.Forms.Padding(4, 4, 4, 4)
         Me.RadButtonResetDate.Name = "RadButtonResetDate"
-        Me.RadButtonResetDate.Size = New System.Drawing.Size(25, 22)
+        Me.RadButtonResetDate.Size = New System.Drawing.Size(38, 33)
         Me.RadButtonResetDate.TabIndex = 13
         Me.RadButtonResetDate.Text = "↺"
         Me.ToolTip1.SetToolTip(Me.RadButtonResetDate, "Reinitialiser la date de naissance")
         '
         'RadLabelDDN
         '
-        Me.RadLabelDDN.Location = New System.Drawing.Point(5, 75)
+        Me.RadLabelDDN.Location = New System.Drawing.Point(8, 112)
+        Me.RadLabelDDN.Margin = New System.Windows.Forms.Padding(4, 4, 4, 4)
         Me.RadLabelDDN.Name = "RadLabelDDN"
-        Me.RadLabelDDN.Size = New System.Drawing.Size(36, 18)
+        Me.RadLabelDDN.Size = New System.Drawing.Size(55, 28)
         Me.RadLabelDDN.TabIndex = 12
         Me.RadLabelDDN.Text = "DDN :"
         '
         'RadLabelNom
         '
-        Me.RadLabelNom.Location = New System.Drawing.Point(5, 49)
+        Me.RadLabelNom.Location = New System.Drawing.Point(8, 74)
+        Me.RadLabelNom.Margin = New System.Windows.Forms.Padding(4, 4, 4, 4)
         Me.RadLabelNom.Name = "RadLabelNom"
-        Me.RadLabelNom.Size = New System.Drawing.Size(37, 18)
+        Me.RadLabelNom.Size = New System.Drawing.Size(56, 28)
         Me.RadLabelNom.TabIndex = 11
         Me.RadLabelNom.Text = "Nom :"
         '
         'RadLabelPrenom
         '
-        Me.RadLabelPrenom.Location = New System.Drawing.Point(5, 23)
+        Me.RadLabelPrenom.Location = New System.Drawing.Point(8, 34)
+        Me.RadLabelPrenom.Margin = New System.Windows.Forms.Padding(4, 4, 4, 4)
         Me.RadLabelPrenom.Name = "RadLabelPrenom"
-        Me.RadLabelPrenom.Size = New System.Drawing.Size(51, 18)
+        Me.RadLabelPrenom.Size = New System.Drawing.Size(77, 28)
         Me.RadLabelPrenom.TabIndex = 6
         Me.RadLabelPrenom.Text = "Prenom :"
         '
         'RadButtonResearch
         '
-        Me.RadButtonResearch.Location = New System.Drawing.Point(178, 100)
+        Me.RadButtonResearch.Location = New System.Drawing.Point(267, 150)
+        Me.RadButtonResearch.Margin = New System.Windows.Forms.Padding(4, 4, 4, 4)
         Me.RadButtonResearch.Name = "RadButtonResearch"
-        Me.RadButtonResearch.Size = New System.Drawing.Size(167, 24)
+        Me.RadButtonResearch.Size = New System.Drawing.Size(250, 36)
         Me.RadButtonResearch.TabIndex = 5
         Me.RadButtonResearch.Text = "Rechercher"
         '
         'RadButtonReset
         '
-        Me.RadButtonReset.Location = New System.Drawing.Point(5, 100)
+        Me.RadButtonReset.Location = New System.Drawing.Point(8, 150)
+        Me.RadButtonReset.Margin = New System.Windows.Forms.Padding(4, 4, 4, 4)
         Me.RadButtonReset.Name = "RadButtonReset"
-        Me.RadButtonReset.Size = New System.Drawing.Size(167, 24)
+        Me.RadButtonReset.Size = New System.Drawing.Size(250, 36)
         Me.RadButtonReset.TabIndex = 4
         Me.RadButtonReset.Text = "Reinitialiser"
         '
         'RadButtonTextBox1
         '
-        Me.RadButtonTextBox1.Location = New System.Drawing.Point(212, 85)
+        Me.RadButtonTextBox1.Location = New System.Drawing.Point(318, 128)
+        Me.RadButtonTextBox1.Margin = New System.Windows.Forms.Padding(4, 4, 4, 4)
         Me.RadButtonTextBox1.Name = "RadButtonTextBox1"
-        Me.RadButtonTextBox1.Size = New System.Drawing.Size(0, 20)
+        Me.RadButtonTextBox1.Size = New System.Drawing.Size(0, 9)
         Me.RadButtonTextBox1.TabIndex = 3
         Me.RadButtonTextBox1.Text = "RadButtonTextBox1"
         '
         'RadTextBoxNom
         '
-        Me.RadTextBoxNom.Location = New System.Drawing.Point(62, 47)
+        Me.RadTextBoxNom.Location = New System.Drawing.Point(93, 70)
+        Me.RadTextBoxNom.Margin = New System.Windows.Forms.Padding(4, 4, 4, 4)
         Me.RadTextBoxNom.Name = "RadTextBoxNom"
-        Me.RadTextBoxNom.Size = New System.Drawing.Size(283, 20)
+        Me.RadTextBoxNom.Size = New System.Drawing.Size(424, 31)
         Me.RadTextBoxNom.TabIndex = 1
         '
         'RadTextBoxPrenom
         '
-        Me.RadTextBoxPrenom.Location = New System.Drawing.Point(62, 21)
+        Me.RadTextBoxPrenom.Location = New System.Drawing.Point(93, 32)
+        Me.RadTextBoxPrenom.Margin = New System.Windows.Forms.Padding(4, 4, 4, 4)
         Me.RadTextBoxPrenom.Name = "RadTextBoxPrenom"
-        Me.RadTextBoxPrenom.Size = New System.Drawing.Size(283, 20)
+        Me.RadTextBoxPrenom.Size = New System.Drawing.Size(424, 31)
         Me.RadTextBoxPrenom.TabIndex = 0
         '
         'RadGroupBox2
@@ -471,17 +499,20 @@ Partial Class FrmSousEpisodeReponseAttribution
         Me.RadGroupBox2.Controls.Add(Me.RadGridViewEpisode)
         Me.RadGroupBox2.Controls.Add(Me.RadButtonCEV)
         Me.RadGroupBox2.HeaderText = "Episodes"
-        Me.RadGroupBox2.Location = New System.Drawing.Point(942, 13)
+        Me.RadGroupBox2.Location = New System.Drawing.Point(1413, 20)
+        Me.RadGroupBox2.Margin = New System.Windows.Forms.Padding(4, 4, 4, 4)
         Me.RadGroupBox2.Name = "RadGroupBox2"
-        Me.RadGroupBox2.Size = New System.Drawing.Size(371, 650)
+        Me.RadGroupBox2.Padding = New System.Windows.Forms.Padding(3, 27, 3, 3)
+        Me.RadGroupBox2.Size = New System.Drawing.Size(556, 975)
         Me.RadGroupBox2.TabIndex = 9
         Me.RadGroupBox2.Text = "Episodes"
         '
         'RadSeparator3
         '
-        Me.RadSeparator3.Location = New System.Drawing.Point(5, 598)
+        Me.RadSeparator3.Location = New System.Drawing.Point(8, 897)
+        Me.RadSeparator3.Margin = New System.Windows.Forms.Padding(4, 4, 4, 4)
         Me.RadSeparator3.Name = "RadSeparator3"
-        Me.RadSeparator3.Size = New System.Drawing.Size(348, 11)
+        Me.RadSeparator3.Size = New System.Drawing.Size(522, 16)
         Me.RadSeparator3.TabIndex = 9
         '
         'RadGroupBox3
@@ -491,22 +522,29 @@ Partial Class FrmSousEpisodeReponseAttribution
         Me.RadGroupBox3.Controls.Add(Me.RadGridViewSousEpisode)
         Me.RadGroupBox3.Controls.Add(Me.RadButtonCSE)
         Me.RadGroupBox3.HeaderText = "Sous Episodes"
-        Me.RadGroupBox3.Location = New System.Drawing.Point(1319, 13)
+        Me.RadGroupBox3.Location = New System.Drawing.Point(1978, 20)
+        Me.RadGroupBox3.Margin = New System.Windows.Forms.Padding(4, 4, 4, 4)
         Me.RadGroupBox3.Name = "RadGroupBox3"
-        Me.RadGroupBox3.Size = New System.Drawing.Size(198, 650)
+        Me.RadGroupBox3.Padding = New System.Windows.Forms.Padding(3, 27, 3, 3)
+        Me.RadGroupBox3.Size = New System.Drawing.Size(297, 975)
         Me.RadGroupBox3.TabIndex = 10
         Me.RadGroupBox3.Text = "Sous Episodes"
         '
         'RadSeparator2
         '
-        Me.RadSeparator2.Location = New System.Drawing.Point(7, 598)
+        Me.RadSeparator2.Location = New System.Drawing.Point(10, 897)
+        Me.RadSeparator2.Margin = New System.Windows.Forms.Padding(4, 4, 4, 4)
         Me.RadSeparator2.Name = "RadSeparator2"
-        Me.RadSeparator2.Size = New System.Drawing.Size(200, 11)
+        Me.RadSeparator2.Size = New System.Drawing.Size(300, 16)
         Me.RadSeparator2.TabIndex = 8
         '
         'RadGroupBox4
         '
         Me.RadGroupBox4.AccessibleRole = System.Windows.Forms.AccessibleRole.Grouping
+        Me.RadGroupBox4.Controls.Add(Me.LblPage)
+        Me.RadGroupBox4.Controls.Add(Me.Label1)
+        Me.RadGroupBox4.Controls.Add(Me.BtnPrevPage)
+        Me.RadGroupBox4.Controls.Add(Me.BtnNextPage)
         Me.RadGroupBox4.Controls.Add(Me.RadButtonDelete)
         Me.RadGroupBox4.Controls.Add(Me.BtnRefreshMail)
         Me.RadGroupBox4.Controls.Add(Me.WebBrowser)
@@ -517,36 +555,41 @@ Partial Class FrmSousEpisodeReponseAttribution
         Me.RadGroupBox4.Controls.Add(Me.RadGridViewMail)
         Me.RadGroupBox4.Controls.Add(Me.RadButtonOpen)
         Me.RadGroupBox4.HeaderText = "Mail"
-        Me.RadGroupBox4.Location = New System.Drawing.Point(12, 12)
+        Me.RadGroupBox4.Location = New System.Drawing.Point(18, 18)
+        Me.RadGroupBox4.Margin = New System.Windows.Forms.Padding(4, 4, 4, 4)
         Me.RadGroupBox4.Name = "RadGroupBox4"
-        Me.RadGroupBox4.Size = New System.Drawing.Size(567, 684)
+        Me.RadGroupBox4.Padding = New System.Windows.Forms.Padding(3, 27, 3, 3)
+        Me.RadGroupBox4.Size = New System.Drawing.Size(850, 1026)
         Me.RadGroupBox4.TabIndex = 1
         Me.RadGroupBox4.Text = "Mail"
         '
         'RadButtonDelete
         '
         Me.RadButtonDelete.Enabled = False
-        Me.RadButtonDelete.Location = New System.Drawing.Point(126, 653)
+        Me.RadButtonDelete.Location = New System.Drawing.Point(189, 980)
+        Me.RadButtonDelete.Margin = New System.Windows.Forms.Padding(4, 4, 4, 4)
         Me.RadButtonDelete.Name = "RadButtonDelete"
-        Me.RadButtonDelete.Size = New System.Drawing.Size(114, 24)
+        Me.RadButtonDelete.Size = New System.Drawing.Size(171, 36)
         Me.RadButtonDelete.TabIndex = 1
         Me.RadButtonDelete.Text = "Supprimer"
         '
         'BtnRefreshMail
         '
-        Me.BtnRefreshMail.Location = New System.Drawing.Point(537, 654)
+        Me.BtnRefreshMail.Location = New System.Drawing.Point(806, 981)
+        Me.BtnRefreshMail.Margin = New System.Windows.Forms.Padding(4, 4, 4, 4)
         Me.BtnRefreshMail.Name = "BtnRefreshMail"
-        Me.BtnRefreshMail.Size = New System.Drawing.Size(25, 22)
+        Me.BtnRefreshMail.Size = New System.Drawing.Size(38, 33)
         Me.BtnRefreshMail.TabIndex = 14
         Me.BtnRefreshMail.Text = "↺"
         Me.ToolTip2.SetToolTip(Me.BtnRefreshMail, "Rafraichir la liste des mails")
         '
         'WebBrowser
         '
-        Me.WebBrowser.Location = New System.Drawing.Point(6, 368)
-        Me.WebBrowser.MinimumSize = New System.Drawing.Size(20, 20)
+        Me.WebBrowser.Location = New System.Drawing.Point(9, 552)
+        Me.WebBrowser.Margin = New System.Windows.Forms.Padding(4, 4, 4, 4)
+        Me.WebBrowser.MinimumSize = New System.Drawing.Size(30, 30)
         Me.WebBrowser.Name = "WebBrowser"
-        Me.WebBrowser.Size = New System.Drawing.Size(394, 275)
+        Me.WebBrowser.Size = New System.Drawing.Size(591, 412)
         Me.WebBrowser.TabIndex = 8
         '
         'RadAttachmentGridView
@@ -556,63 +599,104 @@ Partial Class FrmSousEpisodeReponseAttribution
         Me.RadAttachmentGridView.Font = New System.Drawing.Font("Segoe UI", 8.25!)
         Me.RadAttachmentGridView.ForeColor = System.Drawing.Color.Black
         Me.RadAttachmentGridView.ImeMode = System.Windows.Forms.ImeMode.NoControl
-        Me.RadAttachmentGridView.Location = New System.Drawing.Point(406, 368)
+        Me.RadAttachmentGridView.Location = New System.Drawing.Point(609, 552)
+        Me.RadAttachmentGridView.Margin = New System.Windows.Forms.Padding(4, 4, 4, 4)
         '
         '
         '
         Me.RadAttachmentGridView.MasterTemplate.AllowAddNewRow = False
         Me.RadAttachmentGridView.MasterTemplate.AllowDragToGroup = False
-        GridViewTextBoxColumn16.EnableExpressionEditor = False
-        GridViewTextBoxColumn16.HeaderText = "Id"
-        GridViewTextBoxColumn16.IsVisible = False
-        GridViewTextBoxColumn16.Name = "id"
-        GridViewTextBoxColumn17.AllowGroup = False
-        GridViewTextBoxColumn17.AllowSort = False
-        GridViewTextBoxColumn17.EnableExpressionEditor = False
-        GridViewTextBoxColumn17.HeaderText = "Filename"
-        GridViewTextBoxColumn17.MinWidth = 50
-        GridViewTextBoxColumn17.Name = "filename"
-        GridViewTextBoxColumn17.ReadOnly = True
-        GridViewTextBoxColumn17.Width = 120
-        GridViewTextBoxColumn18.EnableExpressionEditor = False
-        GridViewTextBoxColumn18.HeaderText = "localName"
-        GridViewTextBoxColumn18.Name = "localName"
-        Me.RadAttachmentGridView.MasterTemplate.Columns.AddRange(New Telerik.WinControls.UI.GridViewDataColumn() {GridViewTextBoxColumn16, GridViewTextBoxColumn17, GridViewTextBoxColumn18})
+        GridViewTextBoxColumn70.EnableExpressionEditor = False
+        GridViewTextBoxColumn70.HeaderText = "Id"
+        GridViewTextBoxColumn70.IsVisible = False
+        GridViewTextBoxColumn70.Name = "id"
+        GridViewTextBoxColumn71.AllowGroup = False
+        GridViewTextBoxColumn71.AllowSort = False
+        GridViewTextBoxColumn71.EnableExpressionEditor = False
+        GridViewTextBoxColumn71.HeaderText = "Filename"
+        GridViewTextBoxColumn71.MinWidth = 75
+        GridViewTextBoxColumn71.Name = "filename"
+        GridViewTextBoxColumn71.ReadOnly = True
+        GridViewTextBoxColumn71.Width = 180
+        GridViewTextBoxColumn72.EnableExpressionEditor = False
+        GridViewTextBoxColumn72.HeaderText = "localName"
+        GridViewTextBoxColumn72.Name = "localName"
+        GridViewTextBoxColumn72.Width = 75
+        Me.RadAttachmentGridView.MasterTemplate.Columns.AddRange(New Telerik.WinControls.UI.GridViewDataColumn() {GridViewTextBoxColumn70, GridViewTextBoxColumn71, GridViewTextBoxColumn72})
         Me.RadAttachmentGridView.MasterTemplate.EnableSorting = False
         Me.RadAttachmentGridView.MasterTemplate.ShowColumnHeaders = False
         Me.RadAttachmentGridView.MasterTemplate.ShowFilteringRow = False
-        Me.RadAttachmentGridView.MasterTemplate.ViewDefinition = TableViewDefinition5
+        Me.RadAttachmentGridView.MasterTemplate.ViewDefinition = TableViewDefinition20
         Me.RadAttachmentGridView.Name = "RadAttachmentGridView"
         Me.RadAttachmentGridView.RightToLeft = System.Windows.Forms.RightToLeft.No
         Me.RadAttachmentGridView.ShowGroupPanel = False
-        Me.RadAttachmentGridView.Size = New System.Drawing.Size(156, 275)
+        Me.RadAttachmentGridView.Size = New System.Drawing.Size(234, 412)
         Me.RadAttachmentGridView.TabIndex = 7
         '
         'RadLabel1
         '
-        Me.RadLabel1.Location = New System.Drawing.Point(6, 342)
+        Me.RadLabel1.Location = New System.Drawing.Point(9, 513)
+        Me.RadLabel1.Margin = New System.Windows.Forms.Padding(4, 4, 4, 4)
         Me.RadLabel1.Name = "RadLabel1"
-        Me.RadLabel1.Size = New System.Drawing.Size(36, 18)
+        Me.RadLabel1.Size = New System.Drawing.Size(55, 28)
         Me.RadLabel1.TabIndex = 6
         Me.RadLabel1.Text = "Objet:"
         '
         'RadObjetTextBox
         '
-        Me.RadObjetTextBox.Location = New System.Drawing.Point(48, 342)
+        Me.RadObjetTextBox.Location = New System.Drawing.Point(72, 513)
+        Me.RadObjetTextBox.Margin = New System.Windows.Forms.Padding(4, 4, 4, 4)
         Me.RadObjetTextBox.Name = "RadObjetTextBox"
-        Me.RadObjetTextBox.Size = New System.Drawing.Size(514, 20)
+        Me.RadObjetTextBox.Size = New System.Drawing.Size(771, 31)
         Me.RadObjetTextBox.TabIndex = 4
         '
         'RadSeparator1
         '
-        Me.RadSeparator1.Location = New System.Drawing.Point(6, 325)
+        Me.RadSeparator1.Location = New System.Drawing.Point(9, 488)
+        Me.RadSeparator1.Margin = New System.Windows.Forms.Padding(4, 4, 4, 4)
         Me.RadSeparator1.Name = "RadSeparator1"
-        Me.RadSeparator1.Size = New System.Drawing.Size(556, 10)
+        Me.RadSeparator1.Size = New System.Drawing.Size(834, 15)
         Me.RadSeparator1.TabIndex = 3
+        '
+        'BtnNextPage
+        '
+        Me.BtnNextPage.Location = New System.Drawing.Point(798, 21)
+        Me.BtnNextPage.Margin = New System.Windows.Forms.Padding(6, 6, 6, 6)
+        Me.BtnNextPage.Name = "BtnNextPage"
+        Me.BtnNextPage.Size = New System.Drawing.Size(42, 42)
+        Me.BtnNextPage.TabIndex = 5
+        Me.BtnNextPage.Text = "→"
+        '
+        'BtnPrevPage
+        '
+        Me.BtnPrevPage.Location = New System.Drawing.Point(634, 21)
+        Me.BtnPrevPage.Margin = New System.Windows.Forms.Padding(9, 9, 9, 9)
+        Me.BtnPrevPage.Name = "BtnPrevPage"
+        Me.BtnPrevPage.Size = New System.Drawing.Size(42, 42)
+        Me.BtnPrevPage.TabIndex = 6
+        Me.BtnPrevPage.Text = "←"
+        '
+        'Label1
+        '
+        Me.Label1.AutoSize = True
+        Me.Label1.Location = New System.Drawing.Point(689, 31)
+        Me.Label1.Name = "Label1"
+        Me.Label1.Size = New System.Drawing.Size(51, 23)
+        Me.Label1.TabIndex = 15
+        Me.Label1.Text = "Page:"
+        '
+        'LblPage
+        '
+        Me.LblPage.AutoSize = True
+        Me.LblPage.Location = New System.Drawing.Point(743, 31)
+        Me.LblPage.Name = "LblPage"
+        Me.LblPage.Size = New System.Drawing.Size(19, 23)
+        Me.LblPage.TabIndex = 16
+        Me.LblPage.Text = "1"
         '
         'FrmSousEpisodeReponseAttribution
         '
-        Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
+        Me.AutoScaleDimensions = New System.Drawing.SizeF(9.0!, 20.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(1523, 705)
         Me.Controls.Add(Me.RadGroupBox4)
@@ -668,6 +752,8 @@ Partial Class FrmSousEpisodeReponseAttribution
         CType(Me.RadLabel1, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.RadObjetTextBox, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.RadSeparator1, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.BtnNextPage, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.BtnPrevPage, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
 
@@ -707,5 +793,9 @@ Partial Class FrmSousEpisodeReponseAttribution
     Friend WithEvents ToolTip1 As ToolTip
     Friend WithEvents ToolTip2 As ToolTip
     Friend WithEvents RadButtonDelete As Telerik.WinControls.UI.RadButton
+    Friend WithEvents LblPage As Label
+    Friend WithEvents Label1 As Label
+    Friend WithEvents BtnPrevPage As Telerik.WinControls.UI.RadButton
+    Friend WithEvents BtnNextPage As Telerik.WinControls.UI.RadButton
 End Class
 

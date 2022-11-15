@@ -3,13 +3,20 @@
 Public Class SousEpisodeReponseMailDao
     Inherits StandardDao
 
-    Public Function GetLstSousEpisodeReponseMail() As List(Of SousEpisodeReponseMail)
+    Public Function GetLstSousEpisodeReponseMail(Optional page = Nothing) As List(Of SousEpisodeReponseMail)
         Dim con As SqlConnection = GetConnection()
-        Dim sousEpisodeReponseMails As List(Of SousEpisodeReponseMail) = New List(Of SousEpisodeReponseMail)
+        Dim sousEpisodeReponseMails As New List(Of SousEpisodeReponseMail)
+        Dim SQLstring As String = "SELECT id, auteur, objet, status, horodate_creation, patient_id FROM oasis.oa_sous_episode_reponse_mail WHERE status='unprocessed'"
+        If page IsNot Nothing Then
+            SQLstring += " ORDER BY id ASC OFFSET @offset ROWS FETCH NEXT 50 ROWS ONLY"
+        End If
 
         Try
             Dim command As SqlCommand = con.CreateCommand()
-            command.CommandText = "SELECT id, auteur, objet, status, horodate_creation, patient_id FROM oasis.oa_sous_episode_reponse_mail WHERE status='unprocessed'"
+            command.CommandText = SQLstring
+            If page IsNot Nothing Then
+                command.Parameters.AddWithValue("@offset", (page - 1) * 50)
+            End If
             Using reader As SqlDataReader = command.ExecuteReader()
                 While (reader.Read())
                     sousEpisodeReponseMails.Add(BuildBean(reader))
@@ -20,6 +27,7 @@ Public Class SousEpisodeReponseMailDao
         Finally
             con.Close()
         End Try
+
         Return sousEpisodeReponseMails
     End Function
 

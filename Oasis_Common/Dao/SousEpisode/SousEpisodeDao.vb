@@ -4,6 +4,57 @@ Imports System.Data.SqlClient
 Public Class SousEpisodeDao
     Inherits StandardDao
 
+    Public Function GetLstSousEpisodeByEpisodeId(idEpisode As Long) As List(Of SousEpisode)
+        Dim con As SqlConnection = GetConnection()
+        Dim sousEpisodes As List(Of SousEpisode) = New List(Of SousEpisode)
+        Dim SQLString =
+            "SELECT " & vbCrLf &
+            "	  SE.id, " & vbCrLf &
+            "     SE.episode_id, " & vbCrLf &
+            "     SE.id_intervenant, " & vbCrLf &
+            "     SE.id_sous_episode_type, " & vbCrLf &
+            "     SE.id_sous_episode_sous_type, " & vbCrLf &
+            "     SE.create_user_id, " & vbCrLf &
+            "     SE.horodate_creation, " & vbCrLf &
+            "     SE.last_update_user_id, " & vbCrLf &
+            "     SE.horodate_last_update, " & vbCrLf &
+            "     SE.validate_user_id, " & vbCrLf &
+            "     SE.horodate_validate, " & vbCrLf &
+            "	  SE.commentaire, " & vbCrLf &
+            "	  SE.signature, " & vbCrLf &
+            "	  SE.reference, " & vbCrLf &
+            "	  SE.is_ald, " & vbCrLf &
+            "	  SE.is_reponse, " & vbCrLf &
+            "	  SE.delai_since_validation, " & vbCrLf &
+            "	  SE.is_reponse_recue, " & vbCrLf &
+            "	  SE.horodate_last_recu, " & vbCrLf &
+            "     T.libelle as type_libelle, " & vbCrLf &
+            "     S.libelle as sous_type_libelle, " & vbCrLf &
+            "	  SE.is_inactif " & vbCrLf
+
+        SQLString += "FROM [oasis].[oa_sous_episode] SE " & vbCrLf &
+                     "JOIN oasis.oa_r_sous_episode_type T ON T.id =SE.id_sous_episode_type " & vbCrLf &
+                     "JOIN oasis.oa_r_sous_episode_sous_type S ON S.id =SE.id_sous_episode_sous_type " & vbCrLf
+
+        SQLString += "WHERE SE.episode_id= @idEpisode ORDER by SE.id DESC"
+
+        Try
+            Dim command As SqlCommand = con.CreateCommand()
+            command.CommandText = SQLString
+            command.Parameters.AddWithValue("@idEpisode", idEpisode)
+            Using reader As SqlDataReader = command.ExecuteReader()
+                While (reader.Read())
+                    sousEpisodes.Add(BuildBean(reader))
+                End While
+            End Using
+        Catch ex As Exception
+            Throw ex
+        Finally
+            con.Close()
+        End Try
+        Return sousEpisodes
+    End Function
+
     Public Function GetLstSousEpisode(idEpisode As Long, Optional idSousEpisode As Long = 0, Optional isComplete As Boolean = True, Optional isWithInactif As Boolean = False) As List(Of SousEpisode)
         Dim con As SqlConnection = GetConnection()
         Dim sousEpisodes As List(Of SousEpisode) = New List(Of SousEpisode)
@@ -580,10 +631,11 @@ Public Class SousEpisodeDao
             .Signature = Coalesce(reader("signature"), "NaN"),
             .Reference = Coalesce(reader("reference"), "NaN"),
             .SousTypeLibelle = Coalesce(reader("sous_type_libelle"), ""),
-            .UserCreate = Coalesce(reader("user_create"), ""),
-            .NbReponse = Coalesce(reader("nb_reponse"), 0),
-            .NbReponseWaiting = Coalesce(reader("nb_reponse_waiting"), 0),
-            .NbMedReponseWaiting = Coalesce(reader("nb_med_reponse_waiting"), 0)
+            .TypeLibelle = Coalesce(reader("type_libelle"), ""),
+            .UserCreate = If(HasColumn(reader, "user_create"), reader("user_create"), ""),
+            .NbReponse = If(HasColumn(reader, "nb_reponse"), reader("nb_reponse"), 0),
+            .NbReponseWaiting = If(HasColumn(reader, "nb_reponse_waiting"), reader("nb_reponse_waiting"), 0),
+            .NbMedReponseWaiting = If(HasColumn(reader, "nb_med_reponse_waiting"), reader("nb_med_reponse_waiting"), 0)
             }
         Return sousEpisode
     End Function

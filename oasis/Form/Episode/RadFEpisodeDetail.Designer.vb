@@ -369,6 +369,7 @@ Partial Class RadFEpisodeDetail
         Me.SplitPanelTop = New Telerik.WinControls.UI.SplitPanel()
         Me.SplitPanelBody = New Telerik.WinControls.UI.SplitPanel()
         Me.SplitPanelBottom = New Telerik.WinControls.UI.SplitPanel()
+        Me.AfficherLesPPSObsolètesToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         CType(Me.RadPanelEtatCivil, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.RadPanelEtatCivil.SuspendLayout()
         CType(Me.RadGbxParametre, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -2724,7 +2725,7 @@ Partial Class RadFEpisodeDetail
         Me.RadPageView1.Dock = System.Windows.Forms.DockStyle.Fill
         Me.RadPageView1.Location = New System.Drawing.Point(0, 0)
         Me.RadPageView1.Name = "RadPageView1"
-        Me.RadPageView1.SelectedPage = Me.PgvAntecedent
+        Me.RadPageView1.SelectedPage = Me.PgvParcours
         Me.RadPageView1.Size = New System.Drawing.Size(465, 472)
         Me.RadPageView1.TabIndex = 0
         Me.RadPageView1.TabStop = False
@@ -3293,9 +3294,9 @@ Partial Class RadFEpisodeDetail
         Me.PgvParcours.Controls.Add(Me.RadParcoursDataGridView)
         Me.PgvParcours.Controls.Add(Me.RadGroupBox2)
         Me.PgvParcours.ItemSize = New System.Drawing.SizeF(99.0!, 28.0!)
-        Me.PgvParcours.Location = New System.Drawing.Point(10, 33)
+        Me.PgvParcours.Location = New System.Drawing.Point(10, 37)
         Me.PgvParcours.Name = "PgvParcours"
-        Me.PgvParcours.Size = New System.Drawing.Size(444, 428)
+        Me.PgvParcours.Size = New System.Drawing.Size(444, 424)
         Me.PgvParcours.Text = "Parcours de soin"
         '
         'RadParcoursDataGridView
@@ -3366,7 +3367,7 @@ Partial Class RadFEpisodeDetail
         Me.RadParcoursDataGridView.Name = "RadParcoursDataGridView"
         Me.RadParcoursDataGridView.RightToLeft = System.Windows.Forms.RightToLeft.No
         Me.RadParcoursDataGridView.ShowGroupPanel = False
-        Me.RadParcoursDataGridView.Size = New System.Drawing.Size(444, 401)
+        Me.RadParcoursDataGridView.Size = New System.Drawing.Size(444, 397)
         Me.RadParcoursDataGridView.TabIndex = 1
         '
         'ParcoursContextMenuStrip
@@ -3663,9 +3664,9 @@ Partial Class RadFEpisodeDetail
         'PPSContextMenuStrip
         '
         Me.PPSContextMenuStrip.ImageScalingSize = New System.Drawing.Size(24, 24)
-        Me.PPSContextMenuStrip.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.CréerUnObjectifDeSantéToolStripMenuItem, Me.CréerUneMesurePréventiveToolStripMenuItem, Me.CréerUneStratégieContextuelleToolStripMenuItem, Me.CréerUnSuiviToolStripMenuItem, Me.HistoriqueDesModificationsToolStripMenuItem3, Me.ToolStripSeparator10, Me.RafraichirLaffichageToolStripMenuItem2})
+        Me.PPSContextMenuStrip.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.CréerUnObjectifDeSantéToolStripMenuItem, Me.CréerUneMesurePréventiveToolStripMenuItem, Me.CréerUneStratégieContextuelleToolStripMenuItem, Me.CréerUnSuiviToolStripMenuItem, Me.HistoriqueDesModificationsToolStripMenuItem3, Me.AfficherLesPPSObsolètesToolStripMenuItem, Me.ToolStripSeparator10, Me.RafraichirLaffichageToolStripMenuItem2})
         Me.PPSContextMenuStrip.Name = "PPSContextMenuStrip1"
-        Me.PPSContextMenuStrip.Size = New System.Drawing.Size(242, 142)
+        Me.PPSContextMenuStrip.Size = New System.Drawing.Size(242, 186)
         '
         'CréerUnObjectifDeSantéToolStripMenuItem
         '
@@ -3887,6 +3888,12 @@ Partial Class RadFEpisodeDetail
         Me.SplitPanelBottom.TabIndex = 2
         Me.SplitPanelBottom.TabStop = False
         Me.SplitPanelBottom.Text = "SplitPanel4"
+        '
+        'AfficherLesPPSObsolètesToolStripMenuItem
+        '
+        Me.AfficherLesPPSObsolètesToolStripMenuItem.Name = "AfficherLesPPSObsolètesToolStripMenuItem"
+        Me.AfficherLesPPSObsolètesToolStripMenuItem.Size = New System.Drawing.Size(241, 22)
+        Me.AfficherLesPPSObsolètesToolStripMenuItem.Text = "Afficher les PPS obsolètes"
         '
         'RadFEpisodeDetail
         '
@@ -4404,4 +4411,5 @@ Partial Class RadFEpisodeDetail
     Friend WithEvents SplitPanel15 As Telerik.WinControls.UI.SplitPanel
     Friend WithEvents AideEnLigneToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents RadBtnAddSousEpisode As Telerik.WinControls.UI.RadButton
+    Friend WithEvents AfficherLesPPSObsolètesToolStripMenuItem As ToolStripMenuItem
 End Class

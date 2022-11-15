@@ -24,6 +24,7 @@ Public Class SousEpisode
     Property Signature As String
     Property Reference As String
     'Other Info
+    Property TypeLibelle As String
     Property SousTypeLibelle As String
     Property UserCreate As String
     Property NbReponse As Long
@@ -62,6 +63,7 @@ Public Class SousEpisode
 
         Me.Signature = Coalesce(row("signature"), "NaN")
         Me.Reference = Coalesce(row("reference"), "NaN")
+        Me.TypeLibelle = Coalesce(row("type_libelle"), "")
         Me.SousTypeLibelle = Coalesce(row("sous_type_libelle"), "")
         Me.UserCreate = Coalesce(row("user_create"), "")
         Me.NbReponse = Coalesce(row("nb_reponse"), 0)
