@@ -490,6 +490,7 @@
     <Compile Include="MailUtils\MailUtil.vb" />
     <Compile Include="Module\EnvironnementBase.vb" />
     <Compile Include="Module\MotDePasse.vb" />
+    <Compile Include="Module\VerificationSignature.vb" />
     <Compile Include="Module\ModuleUtilsBase.vb" />
     <Compile Include="Module\outils.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />

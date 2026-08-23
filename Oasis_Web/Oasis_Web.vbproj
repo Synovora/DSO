@@ -1816,6 +1816,7 @@
     <Content Include="Views\Home\Index.vbhtml" />
     <Content Include="Views\Sign\Check.vbhtml" />
     <Content Include="Views\Sign\Inactif.vbhtml" />
+    <Content Include="Views\Sign\Invalide.vbhtml" />
     <Content Include="Views\Web.config" />
     <Content Include="Views\_ViewStart.vbhtml" />
     <Content Include="Web.config" />

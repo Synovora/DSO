@@ -19,6 +19,12 @@ Public Class OrdonnanceDao
             .Inactif = Coalesce(reader("oa_ordonnance_inactif"), False),
             .Signature = Coalesce(reader("oa_ordonnance_signature"), "")
         }
+        If HasColumn(reader, "oa_ordonnance_signature_payload") Then
+            ordonnance.SignaturePayload = TryCast(Coalesce(reader("oa_ordonnance_signature_payload"), Nothing), Byte())
+        End If
+        If HasColumn(reader, "oa_ordonnance_signature_adresse") Then
+            ordonnance.SignatureAdresse = Coalesce(reader("oa_ordonnance_signature_adresse"), "")
+        End If
         Return ordonnance
     End Function
 
@@ -146,9 +152,11 @@ Public Class OrdonnanceDao
     Public Sub ModificationOrdonnanceCommentaire(OrdonnanceId As Long, Commentaire As String)
         Dim da As SqlDataAdapter = New SqlDataAdapter()
         Dim con As SqlConnection = GetConnection()
+        ' Une ordonnance signée n'est plus modifiable : le commentaire fait partie
+        ' de la charge signée, le modifier invaliderait la signature en silence.
         Dim SQLstring As String = "UPDATE oasis.oa_patient_ordonnance SET" &
         " oa_ordonnance_commentaire = @commentaire" &
-        " WHERE oa_ordonnance_id = @ordonnanceId"
+        " WHERE oa_ordonnance_id = @ordonnanceId AND oa_ordonnance_date_validation IS NULL"
         Dim cmd As New SqlCommand(SQLstring, con)
         With cmd.Parameters
             .AddWithValue("@ordonnanceId", OrdonnanceId)
@@ -156,7 +164,9 @@ Public Class OrdonnanceDao
         End With
         Try
             da.UpdateCommand = cmd
-            da.UpdateCommand.ExecuteNonQuery()
+            If da.UpdateCommand.ExecuteNonQuery() <> 1 Then
+                Throw New InvalidOperationException("Une ordonnance signée médicalement n'est plus modifiable.")
+            End If
         Catch ex As Exception
             Throw ex
         Finally
@@ -167,9 +177,10 @@ Public Class OrdonnanceDao
     Public Sub ModificationOrdonnanceRenouvellement(OrdonnanceId As Long, Renouvellement As Long)
         Dim da As SqlDataAdapter = New SqlDataAdapter()
         Dim con As SqlConnection = GetConnection()
+        ' Le renouvellement fait aussi partie de la charge signée.
         Dim SQLstring As String = "UPDATE oasis.oa_patient_ordonnance SET" &
         " oa_ordonnance_renouvellement = @renouvellement" &
-        " WHERE oa_ordonnance_id = @ordonnanceId"
+        " WHERE oa_ordonnance_id = @ordonnanceId AND oa_ordonnance_date_validation IS NULL"
         Dim cmd As New SqlCommand(SQLstring, con)
         With cmd.Parameters
             .AddWithValue("@ordonnanceId", OrdonnanceId)
@@ -177,7 +188,9 @@ Public Class OrdonnanceDao
         End With
         Try
             da.UpdateCommand = cmd
-            da.UpdateCommand.ExecuteNonQuery()
+            If da.UpdateCommand.ExecuteNonQuery() <> 1 Then
+                Throw New InvalidOperationException("Une ordonnance signée médicalement n'est plus modifiable.")
+            End If
         Catch ex As Exception
             Throw ex
         Finally
@@ -222,15 +235,26 @@ Public Class OrdonnanceDao
             Dim con As SqlConnection = GetConnection()
 
             'Update ordonnance before sign
-            ordonnanceFull.Ordonnance.DateValidation = Date.Now
+            ' La date de validation est tronquée au jour : la colonne SQL est de
+            ' type date, donc relire l'ordonnance donnait des ticks différents de
+            ' ceux signés et l'empreinte n'était plus reproductible.
+            ordonnanceFull.Ordonnance.DateValidation = Date.Now.Date
             ordonnanceFull.Ordonnance.DateEdition = ordonnanceFull.Ordonnance.DateValidation
             ordonnanceFull.Ordonnance.UserValidation = userLog.UtilisateurId
+
+            ' La charge signée et l'adresse du signataire sont conservées : sans
+            ' elles, aucune vérification cryptographique n'est possible après coup
+            ' (la clé de l'utilisateur peut changer, et le contenu vivant aussi).
+            Dim charge As Byte() = ordonnanceFull.Serialize()
+            Dim signature As String = userLog.Sign(charge)
 
             Dim SQLstring As String = "UPDATE oasis.oa_patient_ordonnance SET" &
             " oa_ordonnance_date_validation = @dateValidation," &
             " oa_ordonnance_user_validation = @userValidation," &
                     " oa_ordonnance_date_edition = @dateEdition," &
-            " oa_ordonnance_signature = @signature" &
+            " oa_ordonnance_signature = @signature," &
+            " oa_ordonnance_signature_payload = @signaturePayload," &
+            " oa_ordonnance_signature_adresse = @signatureAdresse" &
             " WHERE oa_ordonnance_id = @ordonnanceId"
             Dim cmd As New SqlCommand(SQLstring, con)
             With cmd.Parameters
@@ -238,7 +262,9 @@ Public Class OrdonnanceDao
                 .AddWithValue("@dateValidation", ordonnanceFull.Ordonnance.DateValidation)
                 .AddWithValue("@userValidation", ordonnanceFull.Ordonnance.UserValidation)
                 .AddWithValue("@dateEdition", ordonnanceFull.Ordonnance.DateEdition)
-                .AddWithValue("@signature", userLog.Sign(ordonnanceFull.Serialize()))
+                .AddWithValue("@signature", signature)
+                .AddWithValue("@signaturePayload", charge)
+                .AddWithValue("@signatureAdresse", If(userLog.UtilisateurAddress, ""))
             End With
             Try
                 da.UpdateCommand = cmd

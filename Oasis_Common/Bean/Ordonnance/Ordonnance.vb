@@ -14,6 +14,10 @@ Public Class Ordonnance
     Property Renouvellement As Integer
     Property Inactif As Boolean
     Property Signature As String
+    ''' <summary>Octets exacts qui ont été signés, conservés pour permettre la vérification.</summary>
+    Property SignaturePayload As Byte()
+    ''' <summary>Adresse publique du signataire au moment de la signature.</summary>
+    Property SignatureAdresse As String
 
     Public Function Clone() As Ordonnance
         Dim newInstance As Ordonnance = DirectCast(Me.MemberwiseClone(), Ordonnance)

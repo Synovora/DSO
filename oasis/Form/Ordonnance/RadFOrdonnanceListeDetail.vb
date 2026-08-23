@@ -772,6 +772,9 @@ Public Class RadFOrdonnanceListeDetail
                 ALDContextMenuStrip.Enabled = False
                 NonALDContextMenuStrip.Enabled = False
                 NumRenouvellement.Enabled = False
+                ' Le commentaire fait partie de la charge signée : il restait
+                ' modifiable alors que l'écran annonce l'inverse.
+                TxtCommentaire.Enabled = False
                 RadBtnAjoutLigne.Enabled = False
                 RadBtnValidation.Hide()
             Else

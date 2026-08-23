@@ -65,10 +65,10 @@ Public Class OrdonnanceDetail
                 writer.Write(PosologieMidi) 'Int
                 writer.Write(PosologieApresMidi) 'Int
                 writer.Write(PosologieSoir) 'Int
-                writer.Write(FractionMatin) 'String
-                writer.Write(FractionMidi) 'String
+                writer.Write(If(FractionMatin, "")) 'String
+                writer.Write(If(FractionMidi, "")) 'String
                 writer.Write(If(FractionApresMidi, "")) 'String
-                writer.Write(FractionSoir) 'String
+                writer.Write(If(FractionSoir, "")) 'String
                 writer.Write(If(PosologieCommentaire, "")) 'String
                 writer.Write(If(Commentaire, "")) 'String
                 writer.Write(Fenetre) 'Bool

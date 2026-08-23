@@ -5,8 +5,18 @@ End Code
 
 <div class="container">
     <div class="py-5 text-center">
-        <h2> Verification d'Ordonnance</h2>
-        <p class="lead">Verifier rapidement et simplement l'authenticite d'une ordonnance</p>
+        <h2> Vérification d'ordonnance</h2>
+        <p class="lead">Vérifier rapidement et simplement l'authenticité d'une ordonnance</p>
+        @If ViewBag.SignatureVerifiee Then
+            @<div Class="alert alert-success" role="alert">
+                Signature vérifiée : ce document correspond bien à ce qui a été signé par le prescripteur.
+            </div>
+        Else
+            @<div Class="alert alert-warning" role="alert">
+                Cette ordonnance a été signée avant la mise en place de la vérification cryptographique.
+                Son authenticité ne peut pas être confirmée automatiquement.
+            </div>
+        End If
     </div>
     <div class="row">
         <div class="col-md-6 order-md-2 mb-6">
@@ -66,17 +76,10 @@ End Code
                     </div>
                     <div Class="row">
                         <div Class="col-md-6 mb-3">
-                            <Label for="birthDate">Date de naissance</Label>
-                            <input type="text" Class="form-control" id="birthDate" placeholder="" value="@Format(ViewBag.Patient.PatientDateNaissance, "dd/MM/yyyy")" required disabled>
+                            <Label for="birthDate">Année de naissance</Label>
+                            <input type="text" Class="form-control" id="birthDate" placeholder="" value="@ViewBag.Patient.AnneeNaissance" required disabled>
                             <div Class="invalid-feedback">
                                 Valid birthDate Is required.
-                            </div>
-                        </div>
-                        <div Class="col-md-6 mb-3">
-                            <Label for="CPAM">Immatriculation CPAM</Label>
-                            <input type="text" Class="form-control" id="CPAM" placeholder="" value="@ViewBag.Patient.PatientNir" required disabled>
-                            <div Class="invalid-feedback">
-                                Valid CPAM Is required.
                             </div>
                         </div>
                     </div>
@@ -111,7 +114,7 @@ End Code
                         </div>
                         <div Class="col-md-6 mb-3">
                             <Label for="renouvelable">Renouvelable</Label>
-                            <input type="text" Class="form-control" id="renouvelable" placeholder="" value="@(If(ViewBag.Ordonnance.Renouvellement, ViewBag.Ordonnance.Renouvellement, "Non")") required disabled>
+                            <input type="text" Class="form-control" id="renouvelable" placeholder="" value="@(If(ViewBag.Ordonnance.Renouvellement, ViewBag.Ordonnance.Renouvellement, "Non"))" required disabled>
                         </div>
                     </div>
                 </div>

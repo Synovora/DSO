@@ -66,7 +66,7 @@ End section
 
                                                                 <Button name = "Page" value="@(ViewBag.Page + 1)" id="Button1" type="submit"><i Class="mdi mdi-chevron-right"></i></Button>
                             @If (ViewBag.Page + 1) * ViewBag.PageCount < ViewBag.PageTotal Then
-                            @<button name="Page" value="@(Math.Floor(ViewBag.PageTotal / 10)") id="Button2" type="submit"><i Class="mdi mdi-chevron-double-right"></i></button>
+                            @<button name="Page" value="@(Math.Floor(ViewBag.PageTotal / 10))" id="Button2" type="submit"><i Class="mdi mdi-chevron-double-right"></i></button>
                                                             End If
                                                         </div>
                                                     </div>
