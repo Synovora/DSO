@@ -33,7 +33,7 @@ Public Module CheminsDocuments
         End If
         Dim racine = Path.GetFullPath(racineConfig).TrimEnd(Path.DirectorySeparatorChar)
 
-        Dim nettoye = If(nomRelatif, "").Trim().Replace("/"c, "\"c).TrimStart("\"c)
+        Dim nettoye = NormaliserNomDocument(nomRelatif)
         If Not NomValide.IsMatch(nettoye) Then
             Throw New ArgumentException("Nom de fichier invalide.")
         End If
@@ -45,13 +45,17 @@ Public Module CheminsDocuments
         Return complet
     End Function
 
+    ''' <summary>Normalise un nom reçu d'un client (séparateurs, espaces).</summary>
+    Public Function NormaliserNomDocument(nomRelatif As String) As String
+        Return If(nomRelatif, "").Trim().Replace("/"c, "\"c).TrimStart("\"c)
+    End Function
+
     ''' <summary>
     ''' True si nomRelatif est un nom de document acceptable (sans résoudre le
     ''' chemin sur le disque). Utile pour valider avant écriture.
     ''' </summary>
     Public Function EstNomDocumentValide(nomRelatif As String) As Boolean
-        Dim nettoye = If(nomRelatif, "").Trim().Replace("/"c, "\"c).TrimStart("\"c)
-        Return NomValide.IsMatch(nettoye)
+        Return NomValide.IsMatch(NormaliserNomDocument(nomRelatif))
     End Function
 
 End Module

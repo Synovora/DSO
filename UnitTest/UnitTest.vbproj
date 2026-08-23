@@ -301,6 +301,7 @@
     <Compile Include="Module\ModuleUtils.test.vb" />
     <Compile Include="Module\Outils.test.vb" />
     <Compile Include="Ordonnance.test.vb" />
+    <Compile Include="Securite.test.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
       <AutoGen>True</AutoGen>

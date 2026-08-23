@@ -488,6 +488,7 @@
     <Compile Include="Dao\Utilisateur\UserDao.vb" />
     <Compile Include="MailUtils\MailUtil.vb" />
     <Compile Include="Module\EnvironnementBase.vb" />
+    <Compile Include="Module\CheminsDocuments.vb" />
     <Compile Include="Module\MotDePasse.vb" />
     <Compile Include="Module\VerificationSignature.vb" />
     <Compile Include="Module\ModuleUtilsBase.vb" />
