@@ -240,10 +240,12 @@ Public Class RadFMedocSelecteur
             Dim FiltreLongueur As Integer
             FiltreLongueur = TxtFiltreDenomination.Text.Length
             If FiltreLongueur >= 3 Then
-                Dim FiltreString As String = "oa_medicament_dci LIKE '" & TxtFiltreDenomination.Text & "%'"
+                ' Le filtre du BindingSource s'applique en mémoire (syntaxe DataTable),
+                ' le comptage passe par un paramètre côté base.
+                Dim FiltreString As String = "oa_medicament_dci LIKE '" & TxtFiltreDenomination.Text.Replace("'", "''") & "%'"
                 Dim Rowcount As Integer
                 VmedocBindingSource.Filter = FiltreString
-                Rowcount = GetCountMedicament(FiltreString)
+                Rowcount = GetCountMedicamentParDci(TxtFiltreDenomination.Text)
                 LblAffichage.Text = Rowcount.ToString & " occurrence(s) lue(s)"
                 Me.V_medocTableAdapter.Fill(Me.OasisDataSet2.v_medoc)
             End If

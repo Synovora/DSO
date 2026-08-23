@@ -24,11 +24,13 @@ Public Class FMedocListe
     Private Sub BindGrid()
         Dim conxn As New SqlConnection(getConnectionString())
 
-        Dim SQLString As String
-        SQLString = getSQLString()
-
-        'The select command is responsible for retrieving the data only. This one has no parameters because we want all rows from the database.
-        medicamentDataAdapter.SelectCommand = New SqlCommand(SQLString, conxn)
+        ' Les zones de saisie alimentent des paramètres, jamais le texte SQL.
+        medicamentDataAdapter.SelectCommand = New SqlCommand(getSQLString(), conxn)
+        With medicamentDataAdapter.SelectCommand.Parameters
+            If TxtDCI.Text <> "" Then .AddWithValue("@dci", "%" & EchapperLike(TxtDCI.Text) & "%")
+            If TxtCIS.Text <> "" Then .AddWithValue("@cis", "%" & EchapperLike(TxtCIS.Text) & "%")
+            If TxtLabo.Text <> "" Then .AddWithValue("@labo", "%" & EchapperLike(TxtLabo.Text) & "%")
+        End With
         medicamentDataAdapter.Fill(medicamentDataTable)
 
         'Pour terminer, alimentation de la Grid avec le DataTable (ou DataSet selon le cas)
@@ -49,19 +51,19 @@ Public Class FMedocListe
         If TxtDCI.Text = "" Then
             clauseDCI = "1 = 1"
         Else
-            clauseDCI = "oa_medicament_dci LIKE '%" & TxtDCI.Text & "%' "
+            clauseDCI = "oa_medicament_dci LIKE @dci "
         End If
 
         If TxtCIS.Text = "" Then
             clauseCIS = "1 = 1"
         Else
-            clauseCIS = "oa_medicament_cis LIKE '%" & TxtCIS.Text & "%' "
+            clauseCIS = "oa_medicament_cis LIKE @cis "
         End If
 
         If TxtLabo.Text = "" Then
             clauseLabo = "1 = 1"
         Else
-            clauseLabo = "oa_medicament_titulaire LIKE '%" & TxtLabo.Text & "%' "
+            clauseLabo = "oa_medicament_titulaire LIKE @labo "
         End If
 
         SQLString = "SELECT oa_medicament_cis, oa_medicament_dci, oa_medicament_forme, oa_medicament_voie_administration," &

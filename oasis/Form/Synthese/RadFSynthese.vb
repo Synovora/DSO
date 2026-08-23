@@ -2203,7 +2203,7 @@ Public Class RadFSynthese
 
         Dim PPSDataTable As DataTable
         Dim PPSDao As PpsDao = New PpsDao
-        PPSDataTable = PPSDao.getAllPPSbyPatient(SelectedPatient.PatientId, " And (oa_pps_date_fin Is NULL Or oa_pps_date_fin >= '" & Date.Now().ToString("yyyy-MM-dd") & "')")
+        PPSDataTable = PPSDao.getAllPPSbyPatient(SelectedPatient.PatientId, actifsAu:=Date.Now.Date)
 
         'Déclaration des variables pour réaliser le parcours du DataTable pour alimenter le DataGridView
         Dim i, mesureCount As Integer

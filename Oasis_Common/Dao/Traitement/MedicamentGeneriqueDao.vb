@@ -3,25 +3,31 @@ Imports System.Data.SqlClient
 
 Public Module MedicamentGeneriqueDao
 
-    Public Function GetCountMedicament(Filtre As String) As Integer
-        Dim SqlString As String = "SELECT COUNT(*) FROM oasis.v_medoc WHERE "
+    ''' <summary>
+    ''' Nombre de médicaments dont la DCI commence par le texte donné.
+    '''
+    ''' Cette fonction recevait auparavant un fragment SQL construit par l'écran
+    ''' appelant à partir d'une zone de saisie, et l'ajoutait tel quel à la clause
+    ''' WHERE. Elle prend désormais la valeur recherchée et la transmet en
+    ''' paramètre.
+    ''' </summary>
+    Public Function GetCountMedicamentParDci(debutDci As String) As Integer
+        Dim SqlString As String = "SELECT COUNT(*) FROM oasis.v_medoc WHERE 1 = 1"
         Dim RowCount As Integer = 0
 
-        If Filtre <> "" Then
-            SqlString += Filtre
+        If Not String.IsNullOrEmpty(debutDci) Then
+            SqlString += " AND oa_medicament_dci LIKE @debutDci"
         End If
 
-        Dim conxn As New SqlConnection(GetConnectionString())
-        Dim cmd As New SqlCommand(SqlString, conxn)
-        Try
-            conxn.Open()
-            RowCount = cmd.ExecuteScalar()
-        Catch ex As Exception
-            Throw New Exception(ex.Message)
-        Finally
-            conxn.Close()
-            cmd.Dispose()
-        End Try
+        Using conxn As New SqlConnection(GetConnectionString())
+            Using cmd As New SqlCommand(SqlString, conxn)
+                If Not String.IsNullOrEmpty(debutDci) Then
+                    cmd.Parameters.AddWithValue("@debutDci", EchapperLike(debutDci) & "%")
+                End If
+                conxn.Open()
+                RowCount = cmd.ExecuteScalar()
+            End Using
+        End Using
 
         Return RowCount
     End Function

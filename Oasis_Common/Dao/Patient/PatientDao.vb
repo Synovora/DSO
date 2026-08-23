@@ -291,19 +291,27 @@ Public Class PatientDao
         Dim patients As List(Of Patient) = New List(Of Patient)
         Dim SQLString As String = "SELECT * FROM oasis.oa_patient WHERE 1 = 1"
 
+        ' Valeurs saisies dans les zones de recherche : paramétrées.
         If Prenom <> Nothing Then
-            SQLString += "AND oa_patient_prenom LIKE '" & Prenom & "%'"
+            SQLString += " AND oa_patient_prenom LIKE @prenom"
         End If
         If Nom <> Nothing Then
-            SQLString += "AND oa_patient_nom LIKE '" & Nom & "%'"
+            SQLString += " AND oa_patient_nom LIKE @nom"
         End If
         If NDD <> Nothing Then
-            SQLString += "AND oa_patient_date_naissance LIKE '" & NDD & "'"
+            ' Comparaison de date, pas un LIKE sur une conversion dépendante de la
+            ' culture : l'ancienne version ne trouvait jamais rien.
+            SQLString += " AND oa_patient_date_naissance = @ddn"
         End If
 
         Try
             Dim command As SqlCommand = con.CreateCommand()
             command.CommandText = SQLString
+            With command.Parameters
+                If Prenom <> Nothing Then .AddWithValue("@prenom", EchapperLike(Prenom) & "%")
+                If Nom <> Nothing Then .AddWithValue("@nom", EchapperLike(Nom) & "%")
+                If NDD <> Nothing Then .AddWithValue("@ddn", NDD.Date)
+            End With
             Using reader As SqlDataReader = command.ExecuteReader()
                 While (reader.Read())
                     patients.Add(BuildBean(reader))
@@ -341,24 +349,54 @@ Public Class PatientDao
         Return patients
     End Function
 
-    Public Function GetAllPatientWithFilter(Tous As Boolean, PatientOasis As Boolean, filter As String) As DataTable
-        Dim conxn As New SqlConnection(GetConnectionString())
-        Dim da As SqlDataAdapter = New SqlDataAdapter()
+    ''' <summary>
+    ''' Liste des patients filtrée sur le prénom, le nom, la date de naissance et
+    ''' les sites autorisés.
+    '''
+    ''' Cette fonction acceptait auparavant un fragment SQL construit par l'appelant
+    ''' à partir des zones de saisie de l'écran, ce qui permettait d'exécuter du SQL
+    ''' arbitraire depuis la liste des patients. Les critères sont désormais typés
+    ''' et transmis en paramètres.
+    ''' </summary>
+    Public Function GetAllPatientWithFilter(Tous As Boolean, PatientOasis As Boolean,
+                                            prenom As String, nom As String,
+                                            dateNaissance As Date?,
+                                            siteIds As List(Of Long)) As DataTable
         Dim dt As DataTable = New DataTable()
         Dim SQLString As String
 
         SQLString = "SELECT oa_patient_id, oa_patient_nir, oa_patient_prenom, oa_patient_nom, oa_patient_date_naissance," &
                     " oa_patient_lieu_naissance, oa_patient_date_entree_oasis, oa_patient_date_sortie_oasis, oa_patient_site_id" &
-                    " FROM oasis.oa_patient WHERE 1=1" & filter
+                    " FROM oasis.oa_patient WHERE 1=1"
+
+        If Not String.IsNullOrWhiteSpace(prenom) Then
+            SQLString += " AND LOWER(convert(varchar, oa_patient_prenom) COLLATE SQL_Latin1_General_Cp1251_CS_AS) LIKE @prenom"
+        End If
+        If Not String.IsNullOrWhiteSpace(nom) Then
+            SQLString += " AND LOWER(convert(varchar, oa_patient_nom) COLLATE SQL_Latin1_General_Cp1251_CS_AS) LIKE @nom"
+        End If
+        If dateNaissance.HasValue Then
+            SQLString += " AND oa_patient_date_naissance = @ddn"
+        End If
+
+        ' La liste de sites est construite à partir d'entiers, avec un paramètre
+        ' par valeur : aucune donnée de saisie ne rejoint le texte SQL.
+        Dim nomsParamSite As New List(Of String)
+        If siteIds IsNot Nothing AndAlso siteIds.Count > 0 Then
+            For i = 0 To siteIds.Count - 1
+                nomsParamSite.Add("@site" & i)
+            Next
+            SQLString += " AND oa_patient_site_id IN (" & String.Join(", ", nomsParamSite) & ")"
+        End If
 
         Dim FiltrePatientOasis As String =
                     " AND oa_patient_date_entree_oasis Is Not NULL" &
                     " AND oa_patient_date_entree_oasis <> '9998-12-31'" &
-                    " AND (oa_patient_date_sortie_oasis Is NULL OR oa_patient_date_sortie_oasis > '" & Date.Now.ToString("yyyy-MM-dd") & "')"
+                    " AND (oa_patient_date_sortie_oasis Is NULL OR oa_patient_date_sortie_oasis > @aujourdhui)"
 
         Dim FiltrePatientNonOasis As String =
                     " AND (oa_patient_date_entree_oasis is NULL OR oa_patient_date_entree_oasis = '9998-12-31')" &
-                    " OR oa_patient_date_sortie_oasis <= '" & Date.Now.ToString("yyyy-MM-dd") & "'"
+                    " OR oa_patient_date_sortie_oasis <= @aujourdhui"
 
         If Tous = False Then
             If PatientOasis = True Then
@@ -368,18 +406,25 @@ Public Class PatientDao
             End If
         End If
 
-        Try
-            'Lecture des données en base
-            da.SelectCommand = New SqlCommand(SQLString, conxn)
-            da.Fill(dt)
-            conxn.Open()
-        Catch ex As Exception
-            Throw New Exception("1" & ex.Message)
-            Throw ex
-        Finally
-            conxn.Close()
-            da.Dispose()
-        End Try
+        Using conxn As SqlConnection = GetConnection()
+            Using da As SqlDataAdapter = New SqlDataAdapter()
+                da.SelectCommand = New SqlCommand(SQLString, conxn)
+                With da.SelectCommand.Parameters
+                    If Not String.IsNullOrWhiteSpace(prenom) Then
+                        .AddWithValue("@prenom", "%" & EchapperLike(prenom.Replace(" ", "").ToLower()) & "%")
+                    End If
+                    If Not String.IsNullOrWhiteSpace(nom) Then
+                        .AddWithValue("@nom", "%" & EchapperLike(nom.Replace(" ", "").ToLower()) & "%")
+                    End If
+                    If dateNaissance.HasValue Then .AddWithValue("@ddn", dateNaissance.Value.Date)
+                    For i = 0 To nomsParamSite.Count - 1
+                        .AddWithValue(nomsParamSite(i), siteIds(i))
+                    Next
+                    If Tous = False Then .AddWithValue("@aujourdhui", Date.Now.Date)
+                End With
+                da.Fill(dt)
+            End Using
+        End Using
 
         Return dt
     End Function

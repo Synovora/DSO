@@ -5,8 +5,27 @@ Public Class PpsDao
 
     Dim patientDao As New PatientDao
 
-    Public Function getAllPPSbyPatient(patientId As Integer, Optional filter As String = "") As DataTable
+    ''' <summary>
+    ''' PPS et parcours d'un patient.
+    '''
+    ''' Les critères de date étaient auparavant transmis sous forme de fragment SQL
+    ''' construit par l'appelant. Ils sont désormais typés :
+    '''  - actifsAu : ne renvoyer que les PPS encore en cours à cette date ;
+    '''  - finEntre / finEt : ne renvoyer que les PPS terminés dans cet intervalle.
+    ''' </summary>
+    Public Function getAllPPSbyPatient(patientId As Integer,
+                                       Optional actifsAu As Date? = Nothing,
+                                       Optional finEntre As Date? = Nothing,
+                                       Optional finEt As Date? = Nothing) As DataTable
         Dim SQLString As String
+        Dim filter As String = ""
+
+        If actifsAu.HasValue Then
+            filter += " And (oa_pps_date_fin Is NULL Or oa_pps_date_fin >= @actifsAu)"
+        End If
+        If finEntre.HasValue AndAlso finEt.HasValue Then
+            filter += " And ((oa_pps_date_fin IS NOT NULL) And (oa_pps_date_fin >= @finEntre And oa_pps_date_fin <= @finEt))"
+        End If
 
         SQLString = "Select oa_r_pps_categorie_id, oa_r_pps_sous_categorie_id, oa_r_pps_sous_categorie_type," &
         " oa_pps_id, oa_pps_drc_id, oa_pps_commentaire, oa_pps_drc_id, oa_pps_date_debut, oa_pps_date_creation, oa_pps_date_modification," &
@@ -16,8 +35,8 @@ Public Class PpsDao
         " From oasis.oasis.oa_r_pps_sous_categorie" &
         " Left outer join oasis.oasis.oa_patient_pps On oa_r_pps_categorie_id = oa_pps_categorie And oa_r_pps_sous_categorie_id = oa_pps_sous_categorie" &
         " Left outer join oasis.oasis.oa_patient_parcours on oa_r_pps_categorie_id = oa_parcours_categorie_id And oa_r_pps_sous_categorie_id = oa_parcours_sous_categorie_id" &
-        " Where (((oa_pps_inactif = 0 Or oa_pps_inactif Is NULL) And oa_pps_patient_id = " & patientId.ToString & ") Or" &
-        " ((oa_parcours_inactif = 0 Or oa_parcours_inactif Is NULL) And oa_parcours_patient_id = " & patientId.ToString & "))" &
+        " Where (((oa_pps_inactif = 0 Or oa_pps_inactif Is NULL) And oa_pps_patient_id = @patientId) Or" &
+        " ((oa_parcours_inactif = 0 Or oa_parcours_inactif Is NULL) And oa_parcours_patient_id = @patientId))" &
         filter &
         " order by oa_r_pps_sous_categorie_ordre_affichage, oa_pps_priorite"
 
@@ -25,11 +44,18 @@ Public Class PpsDao
             Dim PPSDataAdapter As SqlDataAdapter = New SqlDataAdapter()
             Using PPSDataAdapter
                 PPSDataAdapter.SelectCommand = New SqlCommand(SQLString, con)
+                With PPSDataAdapter.SelectCommand.Parameters
+                    .AddWithValue("@patientId", patientId)
+                    If actifsAu.HasValue Then .AddWithValue("@actifsAu", actifsAu.Value.Date)
+                    If finEntre.HasValue AndAlso finEt.HasValue Then
+                        .AddWithValue("@finEntre", finEntre.Value.Date)
+                        .AddWithValue("@finEt", finEt.Value.Date)
+                    End If
+                End With
                 Dim PPSDataTable As DataTable = New DataTable()
                 Using PPSDataTable
                     Try
                         PPSDataAdapter.Fill(PPSDataTable)
-                        Dim command As SqlCommand = con.CreateCommand()
                     Catch ex As Exception
                         Throw ex
                     End Try

@@ -247,13 +247,10 @@ Public Class RadFContextedetailEdit
     End Sub
 
     Private Sub RefreshChaineEpisode()
-        Dim filter = " AND oasis.oa_antecedent.oa_antecedent_type = 'A' AND (oasis.oa_antecedent.oa_antecedent_inactif = '0' OR oasis.oa_antecedent.oa_antecedent_inactif is Null)"
-
-        If RadChkPublie.Checked = False Then
-            antecedents = antecedentDao.GetListByPatient(SelectedPatient.PatientId, filter & " AND (oasis.oa_antecedent.oa_antecedent_statut_affichage = 'P' OR oasis.oa_antecedent.oa_antecedent_statut_affichage = 'C') ORDER BY oasis.oa_antecedent.oa_antecedent_ordre_affichage1, oasis.oa_antecedent.oa_antecedent_ordre_affichage2, oasis.oa_antecedent.oa_antecedent_ordre_affichage3;")
-        Else
-            antecedents = antecedentDao.GetListByPatient(SelectedPatient.PatientId, filter & " AND oasis.oa_antecedent.oa_antecedent_statut_affichage = 'P' ORDER BY oasis.oa_antecedent.oa_antecedent_ordre_affichage1, oasis.oa_antecedent.oa_antecedent_ordre_affichage2, oasis.oa_antecedent.oa_antecedent_ordre_affichage3;")
-        End If
+        ' Critères typés : le DAO construit lui-même la clause (plus de fragment SQL).
+        antecedents = antecedentDao.GetListByPatient(SelectedPatient.PatientId, "A",
+                                                     inclureCaches:=(RadChkPublie.Checked = False),
+                                                     exclureInactifs:=True, trierParOrdreAffichage:=True)
         relationChaineEpisodes = chaineEpisodeDao.GetList(SelectedContexteId)
 
         RadGridViewChaineEpisode.Rows.Clear()

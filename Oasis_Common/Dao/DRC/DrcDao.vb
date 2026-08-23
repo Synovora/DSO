@@ -212,21 +212,21 @@ Public Class DrcDao
         If selectDrc = "" Then
             clauseDrc = "1 = 1"
         Else
-            clauseDrc = "(oa_drc_libelle COLLATE Latin1_general_CI_AI LIKE '%" & selectDrc &
-                "%' COLLATE Latin1_general_CI_AI OR syn_libs COLLATE Latin1_general_CI_AI like '%" & selectDrc &
-                "%' COLLATE Latin1_general_CI_AI)"
+            ' Paramètre : la saisie de l'utilisateur ne doit jamais rejoindre le texte SQL.
+            clauseDrc = "(oa_drc_libelle COLLATE Latin1_general_CI_AI LIKE @selectDrc COLLATE Latin1_general_CI_AI" &
+                " OR syn_libs COLLATE Latin1_general_CI_AI LIKE @selectDrc COLLATE Latin1_general_CI_AI)"
         End If
 
         If categorieMajeureId = 0 Then
             clauseCategorieMajeure = "1 = 1"
         Else
-            clauseCategorieMajeure = "oa_drc_categorie_majeure_id = " & categorieMajeureId & " "
+            clauseCategorieMajeure = "oa_drc_categorie_majeure_id = @categorieMajeureId "
         End If
 
         If categorieOasis = 0 Then
             clauseCategorieOasis = "1 = 1 "
         Else
-            clauseCategorieOasis = "oa_drc_oasis_categorie = " & categorieOasis & " "
+            clauseCategorieOasis = "oa_drc_oasis_categorie = @categorieOasis "
         End If
 
         If selectAld = True Then
@@ -256,6 +256,11 @@ Public Class DrcDao
             Dim drcDataAdapter As SqlDataAdapter = New SqlDataAdapter()
             Using drcDataAdapter
                 drcDataAdapter.SelectCommand = New SqlCommand(SQLString, con)
+                With drcDataAdapter.SelectCommand.Parameters
+                    If selectDrc <> "" Then .AddWithValue("@selectDrc", "%" & EchapperLike(selectDrc) & "%")
+                    If categorieMajeureId <> 0 Then .AddWithValue("@categorieMajeureId", categorieMajeureId)
+                    If categorieOasis <> 0 Then .AddWithValue("@categorieOasis", categorieOasis)
+                End With
                 Dim drcDataTable As DataTable = New DataTable()
                 Using drcDataTable
                     Try
@@ -279,21 +284,21 @@ Public Class DrcDao
         If selectDrc = "" Then
             clauseDrc = "1 = 1"
         Else
-            clauseDrc = "(oa_drc_libelle COLLATE Latin1_general_CI_AI LIKE '%" & selectDrc &
-                "%' COLLATE Latin1_general_CI_AI or oa_drc_synonyme_libelle COLLATE Latin1_general_CI_AI like '%" & selectDrc &
-                "%' COLLATE Latin1_general_CI_AI)"
+            ' Paramètre : la saisie de l'utilisateur ne doit jamais rejoindre le texte SQL.
+            clauseDrc = "(oa_drc_libelle COLLATE Latin1_general_CI_AI LIKE @selectDrc COLLATE Latin1_general_CI_AI" &
+                " OR oa_drc_synonyme_libelle COLLATE Latin1_general_CI_AI LIKE @selectDrc COLLATE Latin1_general_CI_AI)"
         End If
 
         If categorieMajeureId = 0 Then
             clauseCategorieMajeure = "1 = 1"
         Else
-            clauseCategorieMajeure = "oa_drc_categorie_majeure_id = " & categorieMajeureId & " "
+            clauseCategorieMajeure = "oa_drc_categorie_majeure_id = @categorieMajeureId "
         End If
 
         If categorieOasis = 0 Then
             clauseCategorieOasis = "1 = 1 "
         Else
-            clauseCategorieOasis = "oa_drc_oasis_categorie = " & categorieOasis & " "
+            clauseCategorieOasis = "oa_drc_oasis_categorie = @categorieOasis "
         End If
 
         If selectAld = True Then
@@ -325,6 +330,11 @@ Public Class DrcDao
             Dim drcDataAdapter As SqlDataAdapter = New SqlDataAdapter()
             Using drcDataAdapter
                 drcDataAdapter.SelectCommand = New SqlCommand(SQLString, con)
+                With drcDataAdapter.SelectCommand.Parameters
+                    If selectDrc <> "" Then .AddWithValue("@selectDrc", "%" & EchapperLike(selectDrc) & "%")
+                    If categorieMajeureId <> 0 Then .AddWithValue("@categorieMajeureId", categorieMajeureId)
+                    If categorieOasis <> 0 Then .AddWithValue("@categorieOasis", categorieOasis)
+                End With
                 Dim drcDataTable As DataTable = New DataTable()
                 Using drcDataTable
                     Try

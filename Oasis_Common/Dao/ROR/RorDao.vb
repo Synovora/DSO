@@ -66,11 +66,11 @@ Public Class RorDao
         Dim ClauseWhere As String = " WHERE (oa_ror_annuaire_inactif = '0' OR oa_ror_annuaire_inactif is Null) "
 
         If specialiteId <> 0 Then
-            ClauseWhere += " AND oa_ror_specialite_id = " & specialiteId
+            ClauseWhere += " AND oa_ror_specialite_id = @specialiteId"
         End If
 
         If typeRor <> "" Then
-            ClauseWhere += " AND oa_ror_type = '" & typeRor.Trim & "'"
+            ClauseWhere += " AND oa_ror_type = @typeRor"
         End If
 
         Dim ClauseOrderBy As String = " ORDER BY oa_ror_nom ASC;"
@@ -82,11 +82,14 @@ Public Class RorDao
             Dim da As SqlDataAdapter = New SqlDataAdapter()
             Using da
                 da.SelectCommand = New SqlCommand(SQLString, con)
+                With da.SelectCommand.Parameters
+                    If specialiteId <> 0 Then .AddWithValue("@specialiteId", specialiteId)
+                    If typeRor <> "" Then .AddWithValue("@typeRor", typeRor.Trim())
+                End With
                 Dim dt As DataTable = New DataTable()
                 Using dt
                     Try
                         da.Fill(dt)
-                        Dim command As SqlCommand = con.CreateCommand()
                     Catch ex As Exception
                         Throw ex
                     End Try
@@ -104,16 +107,21 @@ Public Class RorDao
             Dim command As SqlCommand = con.CreateCommand()
             command.CommandText = "SELECT * FROM oasis.oa_ror WHERE 1=1"
 
+            ' Les trois valeurs viennent de zones de saisie : elles passent par des
+            ' paramètres, jamais par le texte de la commande.
             If nomExercice.Trim() <> "" Then
-                command.CommandText += " AND oa_ror_nom LIKE '%" & nomExercice & "%'"
+                command.CommandText += " AND oa_ror_nom LIKE @nom"
+                command.Parameters.AddWithValue("@nom", "%" & EchapperLike(nomExercice) & "%")
             End If
 
             If villeExercice.Trim() <> "" Then
-                command.CommandText += " AND oa_ror_ville LIKE '%" & villeExercice & "%'"
+                command.CommandText += " AND oa_ror_ville LIKE @ville"
+                command.Parameters.AddWithValue("@ville", "%" & EchapperLike(villeExercice) & "%")
             End If
 
             If departementExercice.Trim() <> "" Then
-                command.CommandText += " AND oa_ror_code_postal LIKE '" & departementExercice & "%'"
+                command.CommandText += " AND oa_ror_code_postal LIKE @departement"
+                command.Parameters.AddWithValue("@departement", EchapperLike(departementExercice) & "%")
             End If
 
             Using reader As SqlDataReader = command.ExecuteReader()
@@ -281,12 +289,12 @@ Public Class RorDao
             " FROM oasis.oa_ror" &
             " WHERE (oa_ror_inactif = 'False' OR oa_ror_inactif is Null)" &
             " AND oa_ror_extraction_annuaire = 'True'" &
-            " AND oa_ror_identifiant_national_pp = '" & IdNational.Trim() & "'" &
-            " AND oa_ror_identifiant_technique_structure = '" & IdStructure.Trim() & "'" &
-            " AND oa_ror_code_nos_r23_mode_exercice = '" & ModeExercice.Trim() & "'" &
-            " AND oa_ror_code_nos_g15_profession_sante = " & professionId.ToString &
-            " AND oa_ror_code_nos_r04_type_savoir_faire = '" & TypeSavoirFaire.Trim & "'" &
-            " AND oa_ror_code_savoir_faire = '" & CodeSavoirFaire.ToString & "'"
+            " AND oa_ror_identifiant_national_pp = @idNational" &
+            " AND oa_ror_identifiant_technique_structure = @idStructure" &
+            " AND oa_ror_code_nos_r23_mode_exercice = @modeExercice" &
+            " AND oa_ror_code_nos_g15_profession_sante = @professionId" &
+            " AND oa_ror_code_nos_r04_type_savoir_faire = @typeSavoirFaire" &
+            " AND oa_ror_code_savoir_faire = @codeSavoirFaire"
 
         Dim dt As DataTable = New DataTable()
 
@@ -294,6 +302,16 @@ Public Class RorDao
             Dim ParcoursDataAdapter As SqlDataAdapter = New SqlDataAdapter()
             Using ParcoursDataAdapter
                 ParcoursDataAdapter.SelectCommand = New SqlCommand(SQLString, con)
+                ' Valeurs issues de l'annuaire importé : paramétrées pour éviter
+                ' une injection de second ordre via les données reprises.
+                With ParcoursDataAdapter.SelectCommand.Parameters
+                    .AddWithValue("@idNational", If(IdNational, "").Trim())
+                    .AddWithValue("@idStructure", If(IdStructure, "").Trim())
+                    .AddWithValue("@modeExercice", If(ModeExercice, "").Trim())
+                    .AddWithValue("@professionId", professionId)
+                    .AddWithValue("@typeSavoirFaire", If(TypeSavoirFaire, "").Trim())
+                    .AddWithValue("@codeSavoirFaire", If(CodeSavoirFaire, "").Trim())
+                End With
                 'Using ParcoursDataTable
                 Try
                     ParcoursDataAdapter.Fill(dt)

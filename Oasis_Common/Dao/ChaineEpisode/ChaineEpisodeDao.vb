@@ -71,7 +71,11 @@ Public Class ChaineEpisodeDao
         Return chaineEpisodes
     End Function
 
-    Public Function GetListByPatient(patientId As Integer, Optional chaineId As Long = Nothing, Optional antecedentId As Long = Nothing, Optional other As String = Nothing) As List(Of ChaineEpisode)
+    ''' <summary>
+    ''' Le paramètre "other", ajouté tel quel au texte de la commande, a été retiré :
+    ''' aucun appelant ne l'utilisait et il ouvrait la porte à du SQL arbitraire.
+    ''' </summary>
+    Public Function GetListByPatient(patientId As Integer, Optional chaineId As Long = Nothing, Optional antecedentId As Long = Nothing) As List(Of ChaineEpisode)
         Dim con As SqlConnection = GetConnection()
         Dim chaineEpisodes As List(Of ChaineEpisode) = New List(Of ChaineEpisode)
         Dim command As SqlCommand = con.CreateCommand()
@@ -80,16 +84,23 @@ Public Class ChaineEpisodeDao
             command.CommandText = "
             SELECT * From oasis.oa_chaine_episode, oasis.oa_antecedent
             WHERE oasis.oa_chaine_episode.antecedent_id = oasis.oa_antecedent.oa_antecedent_id
-            AND oasis.oa_antecedent.oa_antecedent_patient_id = " + patientId.ToString
+            AND oasis.oa_antecedent.oa_antecedent_patient_id = @patientId"
+            command.Parameters.AddWithValue("@patientId", patientId)
             If chaineId <> Nothing Then
-                command.CommandText += "AND oasis.oa_chaine_episode.chaine_id = " + If(chaineId = 0, "NULL", CStr(chaineId))
+                If chaineId = 0 Then
+                    command.CommandText += " AND oasis.oa_chaine_episode.chaine_id IS NULL"
+                Else
+                    command.CommandText += " AND oasis.oa_chaine_episode.chaine_id = @chaineId"
+                    command.Parameters.AddWithValue("@chaineId", chaineId)
+                End If
             End If
             If antecedentId <> Nothing Then
-                command.CommandText += "AND oasis.oa_chaine_episode.antecedent_id = " + If(antecedentId = 0, "NULL", CStr(antecedentId))
-            End If
-
-            If other <> Nothing Then
-                command.CommandText += other
+                If antecedentId = 0 Then
+                    command.CommandText += " AND oasis.oa_chaine_episode.antecedent_id IS NULL"
+                Else
+                    command.CommandText += " AND oasis.oa_chaine_episode.antecedent_id = @antecedentId"
+                    command.Parameters.AddWithValue("@antecedentId", antecedentId)
+                End If
             End If
 
             Using reader As SqlDataReader = command.ExecuteReader()

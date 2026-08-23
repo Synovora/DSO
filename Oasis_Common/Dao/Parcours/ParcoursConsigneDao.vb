@@ -105,8 +105,8 @@ Public Class ParcoursConsigneDao
     Public Function GetDrcConsigneByActiviteEtPatientId(typeActivite As String, patientId As Long) As DataTable
         Dim SQLString As String = "SELECT oa_parcours_consigne_drc_id, oa_drc_oasis_categorie" &
             " LEFT JOIN oasis.oa_drc ON oa_parcours_consigne_drc_id = oa_drc_id" &
-            " WHERE oa_parcours_consigne_patient_id = " + patientId.ToString &
-            " AND activite_type_episode = '" & typeActivite & "'" &
+            " WHERE oa_parcours_consigne_patient_id = @patientId" &
+            " AND activite_type_episode = @typeActivite" &
             " AND (oa_parcours_consigne_inactif Is Null Or oa_parcours_consigne_inactif = 'False')" &
             " AND (oa_parcours_consigne_date_fin is Null OR oa_parcours_consigne_date_fin >= GETDATE())" &
             " ORDER BY oa_parcours_consigne_ordre"
@@ -114,6 +114,10 @@ Public Class ParcoursConsigneDao
             Dim ParcoursConsigneDataAdapter As SqlDataAdapter = New SqlDataAdapter()
             Using ParcoursConsigneDataAdapter
                 ParcoursConsigneDataAdapter.SelectCommand = New SqlCommand(SQLString, con)
+                With ParcoursConsigneDataAdapter.SelectCommand.Parameters
+                    .AddWithValue("@patientId", patientId)
+                    .AddWithValue("@typeActivite", If(typeActivite, ""))
+                End With
                 Dim ParcoursConsigneDataTable As DataTable = New DataTable()
                 Using ParcoursConsigneDataTable
                     Try

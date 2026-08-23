@@ -417,15 +417,10 @@ Public Class RadFEpisodeConclusionContextePatient
 
     Private Sub RefreshChaineEpisode()
         Dim relationChaineEpisodes = chaineEpisodeDao.GetRelationListByEpisode(SelectedEpisode)
-        Dim filter
-        If RadChkPublie.Checked = False Then
-            filter = " AND (oasis.oa_antecedent.oa_antecedent_statut_affichage = 'P' OR oasis.oa_antecedent.oa_antecedent_statut_affichage = 'C')"
-        Else
-            filter = " AND oasis.oa_antecedent.oa_antecedent_statut_affichage = 'P' "
-        End If
-        filter += " AND (oasis.oa_antecedent.oa_antecedent_inactif = '0' OR oasis.oa_antecedent.oa_antecedent_inactif is Null) ORDER BY oasis.oa_antecedent.oa_antecedent_ordre_affichage1, oasis.oa_antecedent.oa_antecedent_ordre_affichage2, oasis.oa_antecedent.oa_antecedent_ordre_affichage3;"
+        ' Critères typés : le DAO construit lui-même la clause (plus de fragment SQL).
+        Dim inclureCaches = (RadChkPublie.Checked = False)
 
-        Dim antecedents = antecedentDao.GetListByPatient(SelectedPatient.PatientId, " AND oasis.oa_antecedent.oa_antecedent_type = 'A'" & filter)
+        Dim antecedents = antecedentDao.GetListByPatient(SelectedPatient.PatientId, "A", inclureCaches, exclureInactifs:=True, trierParOrdreAffichage:=True)
 
         RadGridViewChaineEpisodeAntecedent.Rows.Clear()
         For Each antecedent In antecedents
@@ -435,7 +430,7 @@ Public Class RadFEpisodeConclusionContextePatient
             RadGridViewChaineEpisodeAntecedent.Rows(antecedents.IndexOf(antecedent)).Cells("selected").Value = relationChaineEpisodes.Any(Function(myObject) myObject.ChaineId = antecedent.Id)
         Next
 
-        antecedents = antecedentDao.GetListByPatient(SelectedPatient.PatientId, " AND oasis.oa_antecedent.oa_antecedent_type = 'C' AND (oasis.oa_antecedent.oa_antecedent_arret = '0' OR oasis.oa_antecedent.oa_antecedent_arret is Null) " & filter)
+        antecedents = antecedentDao.GetListByPatient(SelectedPatient.PatientId, "C", inclureCaches, exclureArretes:=True, exclureInactifs:=True, trierParOrdreAffichage:=True)
 
         RadGridViewChaineEpisodeContexte.Rows.Clear()
         For Each antecedent In antecedents

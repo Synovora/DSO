@@ -85,7 +85,7 @@ Public Class RadFPPSObsoletes
 
         Dim PPSDataTable As DataTable
         Dim PPSDao As PpsDao = New PpsDao
-        PPSDataTable = PPSDao.getAllPPSbyPatient(SelectedPatient.PatientId, " And ((oa_pps_date_fin IS NOT NULL) AND (oa_pps_date_fin >= '" & filtreDateDebut.ToString("yyyy-MM-dd") & "' AND oa_pps_date_fin <= '" & filtreDateFin.ToString("yyyy-MM-dd") & "'))")
+        PPSDataTable = PPSDao.getAllPPSbyPatient(SelectedPatient.PatientId, finEntre:=filtreDateDebut, finEt:=filtreDateFin)
 
         'Déclaration des variables pour réaliser le parcours du DataTable pour alimenter le DataGridView
         Dim i, mesureCount As Integer

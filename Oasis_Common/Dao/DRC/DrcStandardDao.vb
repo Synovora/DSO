@@ -50,7 +50,7 @@ Public Class DrcStandardDao
         Dim SQLString As String
         SQLString =
             "SELECT * FROM oasis.oa_drc_standard" &
-            " WHERE type_activite_episode = '" & TypeActivite & "'" &
+            " WHERE type_activite_episode = @typeActivite" &
             " AND (inactif = 'False' or inactif is Null)"
 
         Dim ParcoursDataTable As DataTable = New DataTable()
@@ -59,6 +59,7 @@ Public Class DrcStandardDao
             Dim DrcDataAdapter As SqlDataAdapter = New SqlDataAdapter()
             Using DrcDataAdapter
                 DrcDataAdapter.SelectCommand = New SqlCommand(SQLString, con)
+                DrcDataAdapter.SelectCommand.Parameters.AddWithValue("@typeActivite", If(TypeActivite, ""))
                 'Using ParcoursDataTable
                 Try
                     DrcDataAdapter.Fill(ParcoursDataTable)

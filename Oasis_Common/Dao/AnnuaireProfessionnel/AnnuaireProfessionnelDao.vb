@@ -92,22 +92,24 @@ Public Class AnnuaireProfessionnelDao
         " FROM oasis.ans_annuaire_professionnel_sante"
 
         Dim ClauseWhere As String = " WHERE "
+        ' Toutes les valeurs viennent de zones de saisie ou de données importées :
+        ' elles passent par des paramètres, jamais par le texte de la commande.
         If CodeProfessionId AndAlso CodeSavoirFaireId IsNot Nothing Then
-            ClauseWhere += "code_profression = " & CodeProfessionId & " AND code_savoir_faire = '" & CodeSavoirFaireId & "'"
+            ClauseWhere += "code_profression = @codeProfession AND code_savoir_faire = @codeSavoirFaire"
         Else
             ClauseWhere += "1=1"
         End If
 
         If nomExercice.Trim() <> "" Then
-            ClauseWhere += " AND nom_exercice LIKE '%" & nomExercice & "%'"
+            ClauseWhere += " AND nom_exercice LIKE @nom"
         End If
 
         If communeExercice.Trim() <> "" Then
-            ClauseWhere += " AND libelle_commune_coord_structure LIKE '%" & communeExercice & "%'"
+            ClauseWhere += " AND libelle_commune_coord_structure LIKE @commune"
         End If
 
         If departementExercice.Trim() <> "" Then
-            ClauseWhere += " AND code_postal_coord_structure LIKE '" & departementExercice & "%'"
+            ClauseWhere += " AND code_postal_coord_structure LIKE @departement"
         End If
 
         Dim ClauseOrderBy As String = " ORDER BY nom_exercice ASC;"
@@ -119,11 +121,19 @@ Public Class AnnuaireProfessionnelDao
             Dim TraitementDataAdapter As SqlDataAdapter = New SqlDataAdapter()
             Using TraitementDataAdapter
                 TraitementDataAdapter.SelectCommand = New SqlCommand(SQLString, con)
+                With TraitementDataAdapter.SelectCommand.Parameters
+                    If CodeProfessionId AndAlso CodeSavoirFaireId IsNot Nothing Then
+                        .AddWithValue("@codeProfession", CodeProfessionId)
+                        .AddWithValue("@codeSavoirFaire", CodeSavoirFaireId)
+                    End If
+                    If nomExercice.Trim() <> "" Then .AddWithValue("@nom", "%" & EchapperLike(nomExercice) & "%")
+                    If communeExercice.Trim() <> "" Then .AddWithValue("@commune", "%" & EchapperLike(communeExercice) & "%")
+                    If departementExercice.Trim() <> "" Then .AddWithValue("@departement", EchapperLike(departementExercice) & "%")
+                End With
                 Dim TraitementDataTable As DataTable = New DataTable()
                 Using TraitementDataTable
                     Try
                         TraitementDataAdapter.Fill(TraitementDataTable)
-                        Dim command As SqlCommand = con.CreateCommand()
                     Catch ex As Exception
                         Throw ex
                     End Try
@@ -152,7 +162,7 @@ Public Class AnnuaireProfessionnelDao
 	        WHERE REF.identifiant_national_pp = A.identifiant_national_pp
 	        AND REF.identifiant_technique_structure = A.identifiant_technique_structure) AS CNTE"
 
-        Dim ClauseWhere As String = " WHERE A.identifiant_national_pp = '" & IdentifiantNational.Trim & "'"
+        Dim ClauseWhere As String = " WHERE A.identifiant_national_pp = @identifiantNational"
 
         Dim ClauseOrderBy As String = " ORDER BY raison_sociale_site ASC;"
 
@@ -163,11 +173,12 @@ Public Class AnnuaireProfessionnelDao
             Dim TraitementDataAdapter As SqlDataAdapter = New SqlDataAdapter()
             Using TraitementDataAdapter
                 TraitementDataAdapter.SelectCommand = New SqlCommand(SQLString, con)
+                TraitementDataAdapter.SelectCommand.Parameters.AddWithValue(
+                    "@identifiantNational", If(IdentifiantNational, "").Trim())
                 Dim TraitementDataTable As DataTable = New DataTable()
                 Using TraitementDataTable
                     Try
                         TraitementDataAdapter.Fill(TraitementDataTable)
-                        Dim command As SqlCommand = con.CreateCommand()
                     Catch ex As Exception
                         Throw ex
                     End Try

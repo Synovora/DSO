@@ -138,6 +138,17 @@ Public Module ModuleUtilsBase
     End Function
 
     ''' <summary>
+    ''' Échappe les caractères jokers de SQL Server pour une valeur destinée à un
+    ''' LIKE paramétré : sans cela, une saisie contenant % ou _ élargit la
+    ''' recherche à l'insu de l'utilisateur.
+    ''' À utiliser avec un paramètre, jamais pour concaténer dans le texte SQL.
+    ''' </summary>
+    Public Function EchapperLike(valeur As String) As String
+        If valeur Is Nothing Then Return ""
+        Return valeur.Replace("[", "[[]").Replace("%", "[%]").Replace("_", "[_]")
+    End Function
+
+    ''' <summary>
     ''' Compare une saisie à une empreinte SHA-256 attendue (hexadécimal), à temps
     ''' constant. Sert aux mots de passe de maintenance stockés en configuration :
     ''' l'empreinte peut être lue par qui accède au poste, la saisie reste secrète.

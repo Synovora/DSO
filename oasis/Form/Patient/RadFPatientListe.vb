@@ -110,13 +110,15 @@ Public Class RadFPatientListe
                 Tous = True
             End If
         End If
-        Dim filter = ""
-        filter = String.Format("{0} AND (LOWER(convert(varchar, oa_patient_prenom) COLLATE SQL_Latin1_General_Cp1251_CS_AS) LIKE '%{1}%' OR {2})", filter, InputPrenom.Text.Replace(" ", "").ToLower(), If(InputPrenom.Text.Length >= 3, "1!=1", "1=1"))
-        filter = String.Format("{0} AND (LOWER(convert(varchar, oa_patient_nom) COLLATE SQL_Latin1_General_Cp1251_CS_AS) LIKE '%{1}%' OR {2})", filter, InputNom.Text.Replace(" ", "").ToLower(), If(InputNom.Text.Length >= 3, "1!=1", "1=1"))
-        filter = String.Format("{0} AND (oa_patient_date_naissance = '{1}' OR {2})", filter, DTPDDN.Value.ToString("yyyy-MM-dd"), If(DTPDDN.Value <> DTPDDN.MinDate, "1!=1", "1=1"))
-        filter = String.Format("{0} AND (oa_patient_site_id {1} OR {2})", filter, If(filterTache.GetListAllSite().Count > 0, "IN (" & String.Join(",", filterTache.GetListAllSite().Select(Function(x) x.Oa_site_id).ToArray()) & ")", "= ''"), If(filterTache.GetListAllSite().Count > 0, "1!=1", "1=1"))
+        ' Critères typés : le DAO les transmet en paramètres. Ils étaient auparavant
+        ' assemblés ici en fragments SQL, ce qui rendait cet écran injectable.
+        ' Le filtre ne s'applique qu'à partir de 3 caractères saisis, comme avant.
+        Dim prenomFiltre As String = If(InputPrenom.Text.Length >= 3, InputPrenom.Text, Nothing)
+        Dim nomFiltre As String = If(InputNom.Text.Length >= 3, InputNom.Text, Nothing)
+        Dim ddnFiltre As Date? = If(DTPDDN.Value <> DTPDDN.MinDate, DTPDDN.Value, CType(Nothing, Date?))
+        Dim sitesFiltre = filterTache.GetListAllSite().Select(Function(x) CLng(x.Oa_site_id)).ToList()
 
-        patientDataTable = patientDao.GetAllPatientWithFilter(Tous, PatientOasis, filter)
+        patientDataTable = patientDao.GetAllPatientWithFilter(Tous, PatientOasis, prenomFiltre, nomFiltre, ddnFiltre, sitesFiltre)
 
         Dim iGrid As Integer = -1
         Dim rowCount As Integer = patientDataTable.Rows.Count - 1

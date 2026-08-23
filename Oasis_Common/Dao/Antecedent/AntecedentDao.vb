@@ -261,16 +261,56 @@ Public Class AntecedentDao
         Return antecedents
     End Function
 
-    Public Function GetListByPatient(patientId As Integer, Optional other As String = Nothing) As List(Of Antecedent)
+    ''' <summary>
+    ''' Antécédents et contextes d'un patient.
+    '''
+    ''' Cette fonction acceptait auparavant un fragment SQL fourni par l'appelant,
+    ''' ajouté tel quel à la commande. Les critères sont désormais typés et le type
+    ''' d'antécédent est validé contre une liste fermée.
+    ''' </summary>
+    ''' <param name="typeAntecedent">"A" (antécédent) ou "C" (contexte). Nothing : les deux.</param>
+    ''' <param name="inclureCaches">True : fiches publiées et cachées ; False : publiées
+    ''' seulement ; Nothing (défaut) : aucun filtre sur le statut d'affichage.</param>
+    ''' <param name="exclureArretes">True pour exclure les contextes arrêtés.</param>
+    ''' <param name="exclureInactifs">True pour exclure les fiches inactives.</param>
+    ''' <param name="trierParOrdreAffichage">True pour trier par ordre d'affichage.</param>
+    Public Function GetListByPatient(patientId As Integer,
+                                     Optional typeAntecedent As String = Nothing,
+                                     Optional inclureCaches As Boolean? = Nothing,
+                                     Optional exclureArretes As Boolean = False,
+                                     Optional exclureInactifs As Boolean = False,
+                                     Optional trierParOrdreAffichage As Boolean = False) As List(Of Antecedent)
+        If typeAntecedent IsNot Nothing AndAlso typeAntecedent <> "A" AndAlso typeAntecedent <> "C" Then
+            Throw New ArgumentException("Type d'antécédent inconnu : " & typeAntecedent)
+        End If
+
         Dim con As SqlConnection = GetConnection()
         Dim sousEpisodeReponseMails As List(Of Antecedent) = New List(Of Antecedent)
 
         Try
             Dim command As SqlCommand = con.CreateCommand()
-            command.CommandText = "SELECT * FROM oasis.oa_antecedent WHERE oa_antecedent_patient_id = " + patientId.ToString
+            command.CommandText = "SELECT * FROM oasis.oa_antecedent WHERE oa_antecedent_patient_id = @patientId"
+            command.Parameters.AddWithValue("@patientId", patientId)
 
-            If other <> Nothing Then
-                command.CommandText += other
+            If typeAntecedent IsNot Nothing Then
+                command.CommandText += " AND oa_antecedent_type = @typeAntecedent"
+                command.Parameters.AddWithValue("@typeAntecedent", typeAntecedent)
+            End If
+            If exclureArretes Then
+                command.CommandText += " AND (oa_antecedent_arret = '0' OR oa_antecedent_arret is Null)"
+            End If
+            If exclureInactifs Then
+                command.CommandText += " AND (oa_antecedent_inactif = '0' OR oa_antecedent_inactif is Null)"
+            End If
+            If inclureCaches.HasValue Then
+                If inclureCaches.Value Then
+                    command.CommandText += " AND (oa_antecedent_statut_affichage = 'P' OR oa_antecedent_statut_affichage = 'C')"
+                Else
+                    command.CommandText += " AND oa_antecedent_statut_affichage = 'P'"
+                End If
+            End If
+            If trierParOrdreAffichage Then
+                command.CommandText += " ORDER BY oa_antecedent_ordre_affichage1, oa_antecedent_ordre_affichage2, oa_antecedent_ordre_affichage3"
             End If
 
             Using reader As SqlDataReader = command.ExecuteReader()
