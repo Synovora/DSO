@@ -1,6 +1,7 @@
 ﻿Imports System.Configuration
 Imports System.Diagnostics
 Imports System.IO
+Imports System.Text.RegularExpressions
 Imports MimeKit
 Imports Oasis_Common
 Imports Telerik.WinControls
@@ -287,21 +288,11 @@ Public Class FrmSousEpisodeReponseAttribution
 
             Dim tbl As Byte() = sousEpisodeReponseDao.getContenu(attachment.GetLocalName(), loginRequestLog)
 
-            Dim pathDownload = ConfigurationManager.AppSettings("CheminTelechargement")
-            If (Not System.IO.Directory.Exists(pathDownload)) Then
-                System.IO.Directory.CreateDirectory(pathDownload)
-            End If
-
-            File.WriteAllBytes(pathDownload & "\" & attachment.Filename, tbl)
-            Dim proc As New Process()
-            Try
-                proc.StartInfo.FileName = pathDownload & "\" & attachment.Filename
-                proc.Start()
-                proc.Close()
+            ' Nom et emplacement choisis par l'application : le nom d'origine vient
+            ' du correspondant et ne doit ni servir de chemin ni être exécuté.
+            If FichiersRecus.EcrireEtOuvrir(attachment.Filename, tbl) IsNot Nothing Then
                 Notification.show("Lancement du logiciel associé", "Veuillez patienter pendant le lancement du logiciel associé à la visualisation de votre fichier !")
-            Catch err As Exception
-                MsgBox(err.Message() & vbCrLf & "Votre fichier est téléchargé et disponible dans le répertoire suivant : " & vbCrLf & pathDownload)
-            End Try
+            End If
         Catch Err As Exception
             MsgBox(Err.Message())
             Return
@@ -326,18 +317,18 @@ Public Class FrmSousEpisodeReponseAttribution
 
             Dim tbl As Byte() = sousEpisodeReponseDao.getContenu(attachment.GetLocalName(), loginRequestLog)
 
-            Dim pathDownload = ConfigurationManager.AppSettings("CheminTelechargement")
-            If (Not System.IO.Directory.Exists(pathDownload)) Then
-                System.IO.Directory.CreateDirectory(pathDownload)
-            End If
-            Dim path = pathDownload & "\" & attachment.Filename
-
-            File.WriteAllBytes(path, tbl)
-            Dim proc As New Process()
+            ' Le nom d'origine vient du correspondant : on écrit sous un nom généré.
+            Dim path = FichiersRecus.EcrireDansCache(attachment.Filename, tbl)
             Try
                 Dim message = MimeMessage.Load(path)
                 RadObjetTextBox.Text = message.Subject
-                WebBrowser.DocumentText = If(message.HtmlBody, message.TextBody)
+                ' Corps de mail écrit par un correspondant extérieur : on neutralise
+                ' scripts et navigation avant de l'afficher dans le contrôle IE.
+                WebBrowser.AllowNavigation = False
+                WebBrowser.ScriptErrorsSuppressed = True
+                WebBrowser.IsWebBrowserContextMenuEnabled = False
+                WebBrowser.WebBrowserShortcutsEnabled = False
+                WebBrowser.DocumentText = NettoyerHtmlMail(If(message.HtmlBody, message.TextBody))
 
                 For Each attachment In lstAttachment.Skip(1)
                     Dim newRow As GridViewRowInfo = RadAttachmentGridView.Rows.NewRow()
@@ -413,21 +404,11 @@ Public Class FrmSousEpisodeReponseAttribution
 
             Dim tbl As Byte() = sousEpisodeReponseDao.getContenu(attachment.GetLocalName(), loginRequestLog)
 
-            Dim pathDownload = ConfigurationManager.AppSettings("CheminTelechargement")
-            If (Not System.IO.Directory.Exists(pathDownload)) Then
-                System.IO.Directory.CreateDirectory(pathDownload)
-            End If
-
-            File.WriteAllBytes(pathDownload & "\" & attachment.Filename, tbl)
-            Dim proc As New Process()
-            Try
-                proc.StartInfo.FileName = pathDownload & "\" & attachment.Filename
-                proc.Start()
-                proc.Close()
+            ' Nom et emplacement choisis par l'application : le nom d'origine vient
+            ' du correspondant et ne doit ni servir de chemin ni être exécuté.
+            If FichiersRecus.EcrireEtOuvrir(attachment.Filename, tbl) IsNot Nothing Then
                 Notification.show("Lancement du logiciel associé", "Veuillez patienter pendant le lancement du logiciel associé à la visualisation de votre fichier !")
-            Catch err As Exception
-                MsgBox(err.Message() & vbCrLf & "Votre fichier est téléchargé et disponible dans le répertoire suivant : " & vbCrLf & pathDownload)
-            End Try
+            End If
         Catch Err As Exception
             MsgBox(Err.Message())
             Return
@@ -513,4 +494,35 @@ Public Class FrmSousEpisodeReponseAttribution
             ChargementMails()
         End If
     End Sub
+
+    ''' <summary>
+    ''' Retire d'un corps de mail HTML les éléments actifs : scripts, cadres,
+    ''' objets, gestionnaires d'événements inline et URI javascript:. Le contrôle
+    ''' WebBrowser s'appuie sur Internet Explorer, qui les exécuterait avec les
+    ''' droits de l'utilisateur.
+    ''' </summary>
+    Private Shared Function NettoyerHtmlMail(html As String) As String
+        If String.IsNullOrEmpty(html) Then Return ""
+
+        Dim options = RegexOptions.IgnoreCase Or RegexOptions.Singleline
+        Dim propre = html
+
+        ' Blocs entiers (contenu compris).
+        For Each balise In {"script", "iframe", "frame", "frameset", "object", "embed", "applet", "link", "meta", "style"}
+            propre = Regex.Replace(propre, "<" & balise & "\b[^>]*>.*?</" & balise & "\s*>", "", options)
+            propre = Regex.Replace(propre, "<" & balise & "\b[^>]*/?>", "", options)
+        Next
+
+        ' Gestionnaires d'événements inline : onclick=..., onerror=..., etc.
+        propre = Regex.Replace(propre, "\son[a-z]+\s*=\s*""[^""]*""", "", options)
+        propre = Regex.Replace(propre, "\son[a-z]+\s*=\s*'[^']*'", "", options)
+        propre = Regex.Replace(propre, "\son[a-z]+\s*=\s*[^\s>]+", "", options)
+
+        ' URI actives.
+        propre = Regex.Replace(propre, "javascript\s*:", "", options)
+        propre = Regex.Replace(propre, "vbscript\s*:", "", options)
+        propre = Regex.Replace(propre, "data\s*:\s*text/html", "", options)
+
+        Return propre
+    End Function
 End Class

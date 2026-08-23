@@ -19,6 +19,16 @@
                                   MsgBoxStyle.RetryCancel Or MsgBoxStyle.Exclamation,
                                   "Oasis") = MsgBoxResult.Retry
                 End Function
+
+            ' Documents éventuellement laissés par une session précédente qui
+            ' s'est terminée anormalement.
+            FichiersRecus.PurgerCache()
+        End Sub
+
+        Private Sub MyApplication_Shutdown(sender As Object, e As EventArgs) Handles Me.Shutdown
+            ' Les documents médicaux ouverts pendant la session ne restent pas
+            ' sur le poste après la fermeture.
+            FichiersRecus.PurgerCache()
         End Sub
 
     End Class

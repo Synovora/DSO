@@ -219,23 +219,12 @@ Public Class FrmSousEpisodeListe
             '        File.WriteAllBytes(SaveFileDialog1.FileName, tbl)
             '        Notification.show("Réponse Sous-épisode", "Téléchargement de " & SaveFileDialog1.FileName & " Terminé !")
             'End Select
-            Dim pathDownload = ConfigurationManager.AppSettings("CheminTelechargement")
-            If (Not System.IO.Directory.Exists(pathDownload)) Then
-                System.IO.Directory.CreateDirectory(pathDownload)
-            End If
-
-            File.WriteAllBytes(pathDownload & "\" & sousEpisodeReponse.NomFichier, tbl)
-            Dim proc As New Process()
-            ' Nom du fichier dont l'extension est connue du shell à ouvrir 
-            Try
-                proc.StartInfo.FileName = pathDownload & "\" & sousEpisodeReponse.NomFichier
-                proc.Start()
-                ' On libère les ressources 
-                proc.Close()
+            ' Le nom du fichier vient de la réponse d'un correspondant : on écrit
+            ' sous un nom généré, dans le cache utilisateur, et on n'ouvre que les
+            ' types de documents autorisés.
+            If FichiersRecus.EcrireEtOuvrir(sousEpisodeReponse.NomFichier, tbl) IsNot Nothing Then
                 Notification.show("Lancement du logiciel associé", "Veuillez patienter pendant le lancement du logiciel associé à la visualisation de votre fichier !")
-            Catch err As Exception
-                MsgBox(err.Message() & vbCrLf & "Votre fichier est téléchargé et disponible dans le répertoire suivant : " & vbCrLf & pathDownload)
-            End Try
+            End If
 
         Catch err As Exception
             MsgBox(err.Message())
