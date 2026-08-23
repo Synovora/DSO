@@ -1,0 +1,40 @@
+Oasis
+Copyright (C) 2026 Synovora
+
+This product is licensed under the GNU Affero General Public License v3.0,
+with an additional permission under section 7 for linking against the
+proprietary components listed below. See the LICENSE file.
+
+This product bundles or depends on third-party components. Those components
+are NOT covered by the AGPL and remain subject to their own licence terms.
+
+Proprietary, licence required, not redistributed with this repository
+---------------------------------------------------------------------
+  Telerik UI for WinForms          Progress Software, commercial
+  Telerik Document Processing      Progress Software, commercial
+  GemBox.Document                  GemBox Ltd, commercial
+
+Open source dependencies
+------------------------
+  Nethereum (Signer, Hex, RLP, Util, Model)    MIT
+  MailKit                                      MIT
+  MimeKit                                      MIT
+  Newtonsoft.Json                              MIT
+  QRCoder                                      MIT
+  X.PagedList                                  MIT
+  BouncyCastle / Portable.BouncyCastle         MIT
+  Microsoft ASP.NET MVC, Web API, Razor        Apache-2.0
+  Microsoft.Extensions.*                       MIT
+
+Vendored front-end assets under Oasis_Web/
+------------------------------------------
+  Bootstrap                                    MIT
+  Popper.js                                    MIT
+  Leaflet                                      BSD-2-Clause
+  ECharts                                      Apache-2.0
+  Dropzone                                     MIT
+  ion.rangeSlider                              MIT
+  pdfmake                                      MIT
+
+Obtaining a Telerik licence is the responsibility of each developer and
+deployer. See the README section "Telerik setup".

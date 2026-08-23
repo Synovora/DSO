@@ -1,0 +1,15 @@
+<!--
+  Copy this file to Telerik.props.user (same directory) and set the path to
+  your Telerik UI for WinForms installation. Telerik.props.user is gitignored.
+
+  Use the full Bin40 folder from a Telerik Control Panel install, not a
+  hand-picked copy of individual DLLs. The Visual Studio WinForms designer
+  needs design-time assemblies that the compiler never references.
+
+  Expected version: 2022.2.622.40
+-->
+<Project>
+  <PropertyGroup>
+    <TelerikWinFormsDir>C:\Program Files (x86)\Progress\Telerik UI for WinForms R2 2022\Bin40</TelerikWinFormsDir>
+  </PropertyGroup>
+</Project>

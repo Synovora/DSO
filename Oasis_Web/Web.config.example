@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  Web.config.example: the settings you must supply locally.
+
+  Oasis_Web/Web.config is tracked in git with PLACEHOLDER values. Copy the
+  values below into your local Web.config and fill them in. Do not commit real
+  credentials: the file is tracked, so a real password would be published.
+
+  Only the two sections below need editing. Everything else in Web.config
+  (auth mode, handlers, binding redirects) must stay identical across machines.
+-->
+<configuration>
+
+  <appSettings>
+    <!-- Host of the Oasis REST API that the WinForms client and the portal
+         call. No scheme and no trailing slash, since ApiOasis prefixes "https://".
+         Production: api.synovora.com
+         Local IIS Express: localhost:44355 -->
+    <add key="ServeurOasis" value="api.synovora.com" />
+
+    <!-- Symmetric key used to encrypt the connection string handed to desktop
+         clients by /api/login, and by EncryptString/DecryptString generally.
+
+         This value was hardcoded in Oasis_Common/Module/ModuleUtilsBase.vb until
+         2026-08-23. That old value is public and must never be reused.
+
+         The server and EVERY deployed client must carry the SAME value, so
+         changing it requires a coordinated rollout. See the README section
+         "Cryptographic key". Generate at least 32 random characters, for example:
+           openssl rand -base64 32 -->
+    <add key="OasisCryptoKey" value="CHANGE_ME_32_RANDOM_CHARS_MINIMUM" />
+
+    <!-- Leave false. true disables TLS certificate validation for calls to the
+         Oasis API, and those calls carry database credentials. Only ever set it
+         true against a local test server with a self-signed certificate. -->
+    <add key="AllowInvalidServerCertificate" value="false" />
+
+    <!-- Absolute path on the web server where documents posted through
+         /api/docfileupload are written, and read back by /api/docfiledownload.
+         Must exist and be writable by the IIS app pool identity.
+         Sub-episode documents land in a "SousEpisode" subfolder. -->
+    <add key="FileUploadLocation" value="c:\db\oasis\upload" />
+  </appSettings>
+
+  <connectionStrings>
+    <!-- SQL Server holding the `oasis` schema.
+
+         This is the single most sensitive value in the repository. The web API
+         hands an AES-encrypted copy of this exact string to every desktop
+         client that authenticates via /api/login, so the desktop app never
+         needs its own credentials. See "How authentication works" in the README.
+
+         Use a least-privilege SQL login scoped to the `oasis` schema.
+         Do not use `sa`. -->
+    <add name="Oasis_WF.My.MySettings.oasisConnection"
+         connectionString="Data Source=SQLSERVER_HOST;Initial Catalog=oasis;persist security info=True;user id=DB_USER;password=DB_PASSWORD;encrypt=true;trustServerCertificate=true;MultipleActiveResultSets=True"
+         providerName="System.Data.SqlClient" />
+  </connectionStrings>
+
+</configuration>

@@ -1,0 +1,92 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema id="oasisDataSet" targetNamespace="http://tempuri.org/oasisDataSet.xsd" xmlns:mstns="http://tempuri.org/oasisDataSet.xsd" xmlns="http://tempuri.org/oasisDataSet.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:msprop="urn:schemas-microsoft-com:xml-msprop" attributeFormDefault="qualified" elementFormDefault="qualified">
+  <xs:annotation>
+    <xs:appinfo source="urn:schemas-microsoft-com:xml-msdatasource">
+      <DataSource DefaultConnectionIndex="0" FunctionsComponentName="QueriesTableAdapter" Modifier="AutoLayout, AnsiClass, Class, Public" SchemaSerializationMode="IncludeSchema" xmlns="urn:schemas-microsoft-com:xml-msdatasource">
+        <Connections>
+          <Connection AppSettingsObjectName="MySettings" AppSettingsPropertyName="oasisConnection" ConnectionStringObject="" IsAppSettingsProperty="true" Modifier="Assembly" Name="oasisConnection (MySettings)" ParameterPrefix="@" PropertyReference="ApplicationSettings.Oasis_WF.My.MySettings.GlobalReference.Default.oasisConnection" Provider="System.Data.SqlClient" />
+        </Connections>
+        <Tables>
+          <TableAdapter BaseClass="System.ComponentModel.Component" DataAccessorModifier="AutoLayout, AnsiClass, Class, Public" DataAccessorName="v_drcTableAdapter" GeneratorDataComponentClassName="v_drcTableAdapter" Name="v_drc" UserDataComponentName="v_drcTableAdapter">
+            <MainSource>
+              <DbSource ConnectionRef="oasisConnection (MySettings)" DbObjectName="oasis.oasis.v_drc" DbObjectType="View" FillMethodModifier="Public" FillMethodName="Fill" GenerateMethods="Both" GenerateShortCommands="false" GeneratorGetMethodName="GetData" GeneratorSourceName="Fill" GetMethodModifier="Public" GetMethodName="GetData" QueryType="Rowset" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="true" UserGetMethodName="GetData" UserSourceName="Fill">
+                <SelectCommand>
+                  <DbCommand CommandType="Text" ModifiedByUser="false">
+                    <CommandText>SELECT oa_drc_id, oa_drc_libelle, oa_drc_categorie_majeure_id, oa_drc_oasis, drc_oasis_lib, oa_drc_oasis_categorie, oa_drc_sexe, sexe_lib, oa_drc_age_min, oa_drc_age_max, oa_r_categorie_majeure_description FROM oasis.v_drc</CommandText>
+                    <Parameters />
+                  </DbCommand>
+                </SelectCommand>
+              </DbSource>
+            </MainSource>
+            <Mappings>
+              <Mapping SourceColumn="oa_drc_id" DataSetColumn="oa_drc_id" />
+              <Mapping SourceColumn="oa_drc_libelle" DataSetColumn="oa_drc_libelle" />
+              <Mapping SourceColumn="oa_drc_categorie_majeure_id" DataSetColumn="oa_drc_categorie_majeure_id" />
+              <Mapping SourceColumn="oa_drc_oasis" DataSetColumn="oa_drc_oasis" />
+              <Mapping SourceColumn="drc_oasis_lib" DataSetColumn="drc_oasis_lib" />
+              <Mapping SourceColumn="oa_drc_oasis_categorie" DataSetColumn="oa_drc_oasis_categorie" />
+              <Mapping SourceColumn="oa_drc_sexe" DataSetColumn="oa_drc_sexe" />
+              <Mapping SourceColumn="sexe_lib" DataSetColumn="sexe_lib" />
+              <Mapping SourceColumn="oa_drc_age_min" DataSetColumn="oa_drc_age_min" />
+              <Mapping SourceColumn="oa_drc_age_max" DataSetColumn="oa_drc_age_max" />
+              <Mapping SourceColumn="oa_r_categorie_majeure_description" DataSetColumn="oa_r_categorie_majeure_description" />
+            </Mappings>
+            <Sources />
+          </TableAdapter>
+        </Tables>
+        <Sources />
+      </DataSource>
+    </xs:appinfo>
+  </xs:annotation>
+  <xs:element name="oasisDataSet" msdata:IsDataSet="true" msdata:UseCurrentLocale="true" msprop:EnableTableAdapterManager="True" msprop:Generator_DataSetName="oasisDataSet" msprop:Generator_UserDSName="oasisDataSet">
+    <xs:complexType>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="v_drc" msprop:Generator_TableClassName="v_drcDataTable" msprop:Generator_TableVarName="tablev_drc" msprop:Generator_TablePropName="v_drc" msprop:Generator_RowDeletingName="v_drcRowDeleting" msprop:Generator_RowChangingName="v_drcRowChanging" msprop:Generator_RowEvHandlerName="v_drcRowChangeEventHandler" msprop:Generator_RowDeletedName="v_drcRowDeleted" msprop:Generator_UserTableName="v_drc" msprop:Generator_RowChangedName="v_drcRowChanged" msprop:Generator_RowEvArgName="v_drcRowChangeEvent" msprop:Generator_RowClassName="v_drcRow">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="oa_drc_id" msprop:Generator_ColumnVarNameInTable="columnoa_drc_id" msprop:Generator_ColumnPropNameInRow="oa_drc_id" msprop:Generator_ColumnPropNameInTable="oa_drc_idColumn" msprop:Generator_UserColumnName="oa_drc_id" type="xs:int" />
+              <xs:element name="oa_drc_libelle" msprop:Generator_ColumnVarNameInTable="columnoa_drc_libelle" msprop:Generator_ColumnPropNameInRow="oa_drc_libelle" msprop:Generator_ColumnPropNameInTable="oa_drc_libelleColumn" msprop:Generator_UserColumnName="oa_drc_libelle" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="150" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="oa_drc_categorie_majeure_id" msprop:Generator_ColumnVarNameInTable="columnoa_drc_categorie_majeure_id" msprop:Generator_ColumnPropNameInRow="oa_drc_categorie_majeure_id" msprop:Generator_ColumnPropNameInTable="oa_drc_categorie_majeure_idColumn" msprop:Generator_UserColumnName="oa_drc_categorie_majeure_id" type="xs:int" minOccurs="0" />
+              <xs:element name="oa_drc_oasis" msprop:Generator_ColumnVarNameInTable="columnoa_drc_oasis" msprop:Generator_ColumnPropNameInRow="oa_drc_oasis" msprop:Generator_ColumnPropNameInTable="oa_drc_oasisColumn" msprop:Generator_UserColumnName="oa_drc_oasis" type="xs:short" minOccurs="0" />
+              <xs:element name="drc_oasis_lib" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columndrc_oasis_lib" msprop:Generator_ColumnPropNameInRow="drc_oasis_lib" msprop:Generator_ColumnPropNameInTable="drc_oasis_libColumn" msprop:Generator_UserColumnName="drc_oasis_lib" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="10" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="oa_drc_oasis_categorie" msprop:Generator_ColumnVarNameInTable="columnoa_drc_oasis_categorie" msprop:Generator_ColumnPropNameInRow="oa_drc_oasis_categorie" msprop:Generator_ColumnPropNameInTable="oa_drc_oasis_categorieColumn" msprop:Generator_UserColumnName="oa_drc_oasis_categorie" type="xs:int" minOccurs="0" />
+              <xs:element name="oa_drc_sexe" msprop:Generator_ColumnVarNameInTable="columnoa_drc_sexe" msprop:Generator_ColumnPropNameInRow="oa_drc_sexe" msprop:Generator_ColumnPropNameInTable="oa_drc_sexeColumn" msprop:Generator_UserColumnName="oa_drc_sexe" type="xs:int" minOccurs="0" />
+              <xs:element name="sexe_lib" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnsexe_lib" msprop:Generator_ColumnPropNameInRow="sexe_lib" msprop:Generator_ColumnPropNameInTable="sexe_libColumn" msprop:Generator_UserColumnName="sexe_lib" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="14" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="oa_drc_age_min" msprop:Generator_ColumnVarNameInTable="columnoa_drc_age_min" msprop:Generator_ColumnPropNameInRow="oa_drc_age_min" msprop:Generator_ColumnPropNameInTable="oa_drc_age_minColumn" msprop:Generator_UserColumnName="oa_drc_age_min" type="xs:int" minOccurs="0" />
+              <xs:element name="oa_drc_age_max" msprop:Generator_ColumnVarNameInTable="columnoa_drc_age_max" msprop:Generator_ColumnPropNameInRow="oa_drc_age_max" msprop:Generator_ColumnPropNameInTable="oa_drc_age_maxColumn" msprop:Generator_UserColumnName="oa_drc_age_max" type="xs:int" minOccurs="0" />
+              <xs:element name="oa_r_categorie_majeure_description" msprop:Generator_ColumnVarNameInTable="columnoa_r_categorie_majeure_description" msprop:Generator_ColumnPropNameInRow="oa_r_categorie_majeure_description" msprop:Generator_ColumnPropNameInTable="oa_r_categorie_majeure_descriptionColumn" msprop:Generator_UserColumnName="oa_r_categorie_majeure_description" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="100" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:choice>
+    </xs:complexType>
+    <xs:unique name="Constraint1" msdata:PrimaryKey="true">
+      <xs:selector xpath=".//mstns:v_drc" />
+      <xs:field xpath="mstns:oa_drc_id" />
+    </xs:unique>
+  </xs:element>
+</xs:schema>

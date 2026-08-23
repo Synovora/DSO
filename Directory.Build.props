@@ -1,0 +1,67 @@
+<Project>
+
+  <!--
+    Telerik UI for WinForms resolution.
+
+    Telerik assemblies are commercial and are not committed to this repository.
+    Each developer supplies their own installation. This file locates it, trying
+    each source in order and taking the first that exists:
+
+      1. /p:TelerikWinFormsDir=...        explicit MSBuild override
+      2. TELERIK_WINFORMS_DIR             environment variable
+      3. Telerik.props.user               local file, gitignored
+      4. the Telerik Control Panel default install location
+      5. lib\RCWF\2022.2.622.40.Trial     legacy in-repo folder, if still present
+
+    Point it at a COMPLETE Bin40 folder, not a hand-picked set of assemblies.
+    The Visual Studio WinForms designer loads design-time assemblies that the
+    compiler never references. A minimal copy compiles but every RadForm fails
+    to open in the designer.
+
+    See the README section "Telerik setup".
+  -->
+
+  <PropertyGroup>
+    <!-- 2. environment variable -->
+    <TelerikWinFormsDir Condition="'$(TelerikWinFormsDir)' == '' AND '$(TELERIK_WINFORMS_DIR)' != ''">$(TELERIK_WINFORMS_DIR)</TelerikWinFormsDir>
+  </PropertyGroup>
+
+  <!-- 3. local override file, gitignored -->
+  <Import Project="$(MSBuildThisFileDirectory)Telerik.props.user"
+          Condition="'$(TelerikWinFormsDir)' == '' AND Exists('$(MSBuildThisFileDirectory)Telerik.props.user')" />
+
+  <PropertyGroup>
+    <!-- 4. Telerik Control Panel default for R2 2022 -->
+    <_TelerikDefaultDir>$(ProgramFiles(x86))\Progress\Telerik UI for WinForms R2 2022\Bin40</_TelerikDefaultDir>
+    <TelerikWinFormsDir Condition="'$(TelerikWinFormsDir)' == '' AND Exists('$(_TelerikDefaultDir)')">$(_TelerikDefaultDir)</TelerikWinFormsDir>
+
+    <!-- 5. legacy in-repo folder, untracked but often still on disk -->
+    <_TelerikLegacyDir>$(MSBuildThisFileDirectory)lib\RCWF\2022.2.622.40.Trial</_TelerikLegacyDir>
+    <TelerikWinFormsDir Condition="'$(TelerikWinFormsDir)' == '' AND Exists('$(_TelerikLegacyDir)')">$(_TelerikLegacyDir)</TelerikWinFormsDir>
+  </PropertyGroup>
+
+  <!--
+    Fail early and legibly. Without this, a missing Telerik produces several
+    hundred "type not found" errors originating in generated Designer files,
+    none of which name the real cause.
+  -->
+  <Target Name="ValidateTelerik"
+          BeforeTargets="CoreCompile"
+          Condition="'$(MSBuildProjectName)' == 'Oasis_WF' OR '$(MSBuildProjectName)' == 'Oasis_Common'">
+
+    <Error Condition="'$(TelerikWinFormsDir)' == ''"
+           Code="OASIS001"
+           Text="Telerik UI for WinForms was not found.%0A%0AProject '$(MSBuildProjectName)' needs it. Set one of the following:%0A  1. msbuild /p:TelerikWinFormsDir=&quot;C:\path\to\Bin40&quot;%0A  2. setx TELERIK_WINFORMS_DIR &quot;C:\path\to\Bin40&quot;%0A  3. copy Telerik.props.user.example to Telerik.props.user and edit it%0A  4. install via the Telerik Control Panel to the default location%0A%0AExpected version 2022.2.622.40. See the README section 'Telerik setup'." />
+
+    <Error Condition="'$(TelerikWinFormsDir)' != '' AND !Exists('$(TelerikWinFormsDir)\Telerik.WinControls.dll')"
+           Code="OASIS002"
+           Text="TelerikWinFormsDir resolved to '$(TelerikWinFormsDir)' but Telerik.WinControls.dll is not there.%0A%0AThe path must point at a Telerik Bin40 folder. See the README section 'Telerik setup'." />
+
+    <Warning Condition="'$(TelerikWinFormsDir)' != '' AND Exists('$(TelerikWinFormsDir)\Telerik.WinControls.dll') AND !Exists('$(TelerikWinFormsDir)\Telerik.WinControls.UI.Design.dll')"
+             Code="OASIS003"
+             Text="Telerik.WinControls.UI.Design.dll is missing from '$(TelerikWinFormsDir)'. The build will succeed but RadForm screens will not open in the Visual Studio designer. Point TelerikWinFormsDir at a complete Bin40 folder." />
+
+    <Message Importance="normal" Text="Telerik UI for WinForms: $(TelerikWinFormsDir)" />
+  </Target>
+
+</Project>
