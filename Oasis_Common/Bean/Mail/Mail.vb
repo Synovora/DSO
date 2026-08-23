@@ -1,4 +1,5 @@
-﻿Imports System.IO
+﻿Imports System.Configuration
+Imports System.IO
 
 Public Class MailDB
     Property sendMailKey As Long
@@ -31,8 +32,17 @@ Public Class Mail
     End Function
 
     Public Sub ConvertToPdf(Optional filename As String = "file")
-        GemBox.Document.ComponentInfo.SetLicense("FREE-LIMITED-KEY")
-        AddHandler GemBox.Document.ComponentInfo.FreeLimitReached, Sub(sender, e) e.FreeLimitReachedAction = GemBox.Document.FreeLimitReachedAction.ContinueAsTrial
+        ' Clé de licence GemBox lue en configuration. En mode d'évaluation, la
+        ' bibliothèque insère une mention dans le document produit : le PDF envoyé
+        ' au patient ne correspondait alors pas à ce que le praticien avait validé.
+        Dim cleGemBox = ConfigurationManager.AppSettings("GemBoxLicense")
+        If String.IsNullOrWhiteSpace(cleGemBox) Then cleGemBox = "FREE-LIMITED-KEY"
+        GemBox.Document.ComponentInfo.SetLicense(cleGemBox)
+        AddHandler GemBox.Document.ComponentInfo.FreeLimitReached,
+            Sub(sender, e)
+                ' Ne jamais produire silencieusement un document filigrané.
+                e.FreeLimitReachedAction = GemBox.Document.FreeLimitReachedAction.[Stop]
+            End Sub
         Using stream As New MemoryStream(Me.Contenu)
             Dim document = GemBox.Document.DocumentModel.Load(stream)
             Using outstream As New MemoryStream

@@ -982,7 +982,15 @@ Public Class TacheDao
         Return tache
     End Function
 
-    Public Function CreateTache(tache As Tache, userLog As Utilisateur, Optional ifExist As String = "") As Boolean
+    ''' <summary>
+    ''' Crée une tâche.
+    '''
+    ''' eviterDoublonRendezVous : n'insère rien s'il existe déjà un rendez-vous en
+    ''' cours ou en attente pour ce patient et ce parcours. Le garde-fou était
+    ''' auparavant passé sous forme de fragment SQL et purement et simplement
+    ''' ignoré : les rendez-vous en double n'ont jamais été empêchés.
+    ''' </summary>
+    Public Function CreateTache(tache As Tache, userLog As Utilisateur, Optional eviterDoublonRendezVous As Boolean = False) As Boolean
         Dim da As SqlDataAdapter = New SqlDataAdapter()
         Dim codeRetour As Boolean = True
         Dim con As SqlConnection
@@ -996,13 +1004,23 @@ Public Class TacheDao
                 ClosTache(con, tache.ParentId, Tache.EtatTache.TERMINEE, False, userLog, transaction)
             End If
 
+            Dim clauseDoublon As String = ""
+            If eviterDoublonRendezVous Then
+                clauseDoublon =
+                    " WHERE NOT EXISTS (SELECT 1 FROM oasis.oa_tache" &
+                    " WHERE patient_id = @patientId AND parcours_id = @parcoursId" &
+                    " AND type IN (@typeRdv, @typeRdvSpecialiste, @typeRdvDemande)" &
+                    " AND etat IN (@etatEnCours, @etatEnAttente))"
+            End If
+
             Dim SQLstring As String = "INSERT INTO oasis.oa_tache " &
                     "(parent_id, emetteur_user_id, emetteur_fonction_id, unite_sanitaire_id, site_id, patient_id, parcours_id, episode_id," &
                     " sous_episode_id, traite_user_id, traite_fonction_id, destinataire_fonction_id, priorite, ordre_affichage, categorie, type," &
                     " nature, duree_mn, emetteur_commentaire, horodate_creation, etat, cloture, type_demande_rendez_vous, date_rendez_vous, date_traitement_demande_rendez_vous)" &
-            " VALUES (@parentId, @emetteurId, @emetteurFonctionId, @uniteSanitaireId, @siteId, @patientId, @parcoursId, @episodeId," &
+            " SELECT @parentId, @emetteurId, @emetteurFonctionId, @uniteSanitaireId, @siteId, @patientId, @parcoursId, @episodeId," &
                     " @sousEpisodeId, @traiteUserId, @traiteFonctionId, @destinataireFonctionId, @priorite, @ordreAffichage, @categorie, @type," &
-                    " @nature, @duree, @commentaire, @dateCreation, @etat, @cloture, @typedemandeRendezVous, @dateRendezVous, @dateTraitementDemandeRendezVous)"
+                    " @nature, @duree, @commentaire, @dateCreation, @etat, @cloture, @typedemandeRendezVous, @dateRendezVous, @dateTraitementDemandeRendezVous" &
+                    clauseDoublon
 
             Dim cmd As New SqlCommand(SQLstring, con, transaction)
             With cmd.Parameters
@@ -1031,6 +1049,13 @@ Public Class TacheDao
                 .AddWithValue("@typeDemandeRendezVous", If(tache.TypedemandeRendezVous = "", DBNull.Value, tache.TypedemandeRendezVous))
                 .AddWithValue("@dateRendezVous", If(tache.DateRendezVous = Nothing, DBNull.Value, tache.DateRendezVous))
                 .AddWithValue("@dateTraitementDemandeRendezVous", If(tache.DateTraitementDemandeRendezVous = Nothing, DBNull.Value, tache.DateTraitementDemandeRendezVous))
+                If eviterDoublonRendezVous Then
+                    .AddWithValue("@typeRdv", Tache.TypeTache.RDV.ToString)
+                    .AddWithValue("@typeRdvSpecialiste", Tache.TypeTache.RDV_SPECIALISTE.ToString)
+                    .AddWithValue("@typeRdvDemande", Tache.TypeTache.RDV_DEMANDE.ToString)
+                    .AddWithValue("@etatEnCours", Tache.EtatTache.EN_COURS.ToString)
+                    .AddWithValue("@etatEnAttente", Tache.EtatTache.EN_ATTENTE.ToString)
+                End If
             End With
 
             da.InsertCommand = cmd
@@ -1051,29 +1076,10 @@ Public Class TacheDao
     End Function
 
     Public Function CreateRendezVous(tache As Tache, userLog As Utilisateur) As Boolean
-        Dim codeRetour As Boolean = True
-        Dim con As SqlConnection
-        con = GetConnection()
-
-        Dim SQLstring As String =
-        "IF Not EXISTS (SELECT 1 FROM oasis.oa_tache" & vbCrLf &
-        " WHERE patient_id = " & tache.PatientId & vbCrLf &
-        " And parcours_id = " & tache.ParcoursId & vbCrLf &
-        " And (type = '" & Tache.TypeTache.RDV.ToString &
-            "' OR (type = '" & Tache.TypeTache.RDV_SPECIALISTE.ToString &
-            "' OR (type = '" & Tache.TypeTache.RDV_DEMANDE.ToString & "')" & vbCrLf &
-        " AND (etat = '" & Tache.EtatTache.EN_COURS.ToString & "' OR etat = '" & Tache.EtatTache.EN_ATTENTE.ToString & "'))"
-
-        'Console.WriteLine(SQLstring)
-
-        Try
-            CreateTache(tache, userLog, SQLstring)
-        Catch ex As Exception
-            MsgBox(ex.Message)
-            codeRetour = False
-        End Try
-
-        Return codeRetour
+        ' Le garde-fou anti-doublon est appliqué par CreateTache, en SQL paramétré.
+        ' L'exception remonte à l'appelant : un MsgBox dans un DAO bloque le thread
+        ' côté serveur et masquait l'échec au client.
+        Return CreateTache(tache, userLog, eviterDoublonRendezVous:=True)
     End Function
 
     Public Function CreationAutomatiqueDeDemandeRendezVous(Patient As Patient, parcours As Parcours, dateDebut As Date, userLog As Utilisateur, Optional PremierRDV As Boolean = False) As Boolean
@@ -1318,14 +1324,11 @@ Public Class TacheDao
                 If reader.Read() Then
                     codeRetour = False
                 Else
-                    Try
-                        If CreateTache(tache, userLog) = True Then
-                            codeRetour = True
-                        End If
-                    Catch ex As Exception
-                        MsgBox(ex.Message)
-                        codeRetour = False
-                    End Try
+                    ' Un DAO ne doit pas afficher de boîte de dialogue : côté serveur
+                    ' elle bloque le thread, et l'échec était masqué à l'appelant.
+                    If CreateTache(tache, userLog) = True Then
+                        codeRetour = True
+                    End If
                 End If
             End Using
         Catch ex As Exception

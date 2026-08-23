@@ -227,7 +227,7 @@ Public Class RadFSynthese
     Private Sub ToolStripMenuItemMaps_Click(sender As Object, e As EventArgs) Handles ToolStripMenuItemMaps.Click
         'Etat civil : lancer l'URL pour afficher l'adresse dans Google Maps
         Dim MonURL As String
-        MonURL = "http://www.google.fr/maps/place/" + SelectedPatient.PatientAdresse1 + " " + SelectedPatient.PatientCodePostal + " " + SelectedPatient.PatientVille
+        MonURL = "https://www.google.fr/maps/place/" & Uri.EscapeDataString(SelectedPatient.PatientAdresse1 + " " + SelectedPatient.PatientCodePostal + " " + SelectedPatient.PatientVille)
         Process.Start(MonURL)
     End Sub
 

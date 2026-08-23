@@ -349,27 +349,18 @@ Public Class DrcDao
     End Function
 
     Public Function GetLastDrc(categorieOasisId As Long) As Long
-        Dim da As SqlDataAdapter = New SqlDataAdapter()
-        Dim LastDrcId As Integer = 0
-        Dim SQLstring As String
-        Dim con As SqlConnection
-        con = GetConnection()
-
-        'Récupération de l'identifiant de la dernière DRC créée
-        Dim EpisodeLastDataReader As SqlDataReader
-        SQLstring = "SELECT MAX(oa_drc_id) FROM oasis.oasis.oa_drc WHERE oa_drc_oasis_categorie = " & categorieOasisId
-        Dim EpisodeLastCommand As New SqlCommand(SQLstring, con)
-        EpisodeLastDataReader = EpisodeLastCommand.ExecuteReader()
-        If EpisodeLastDataReader.HasRows Then
-            EpisodeLastDataReader.Read()
-            'Récupération de la clé de l'enregistrement créé
-            LastDrcId = EpisodeLastDataReader(0)
-            'Libération des ressources d'accès aux données
-            con.Close()
-            EpisodeLastCommand.Dispose()
-        End If
-
-        Return LastDrcId
+        ' La connexion n'était fermée que sur le chemin nominal, et MAX() sur un
+        ' ensemble vide renvoie NULL, ce qui levait une conversion et laissait la
+        ' connexion ouverte.
+        Using con As SqlConnection = GetConnection()
+            Using cmd As New SqlCommand(
+                "SELECT MAX(oa_drc_id) FROM oasis.oasis.oa_drc WHERE oa_drc_oasis_categorie = @categorieOasisId", con)
+                cmd.Parameters.AddWithValue("@categorieOasisId", categorieOasisId)
+                Dim valeur = cmd.ExecuteScalar()
+                If valeur Is Nothing OrElse valeur Is DBNull.Value Then Return 0
+                Return CLng(valeur)
+            End Using
+        End Using
     End Function
 
 End Class

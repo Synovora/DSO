@@ -208,7 +208,7 @@ Public Module EnvironnementBase
             conxn.Close()
             specialiteDataAdapter.Dispose()
 
-            Dim DelaiString As String = "test" 'TODO: ConfigurationManager.AppSettings("SpecialiteDelaiPriseEnCharge")
+            Dim DelaiString As String = ConfigurationManager.AppSettings("SpecialiteDelaiPriseEnCharge")
             If IsNumeric(DelaiString) Then
                 Delai = CInt(DelaiString)
             Else

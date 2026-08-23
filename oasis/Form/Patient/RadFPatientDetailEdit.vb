@@ -1063,7 +1063,7 @@ Public Class RadFPatientDetailEdit
                     'lancer l'URL pour afficher l'adresse dans Google Maps
                     GoogleOK = True
                     Dim MonURL As String
-                    MonURL = "http://www.google.fr/maps/place/" + TxtAdresse1.Text + " " + TxtCodePostal.Text + " " + TxtVille.Text
+                    MonURL = "https://www.google.fr/maps/place/" & Uri.EscapeDataString(TxtAdresse1.Text + " " + TxtCodePostal.Text + " " + TxtVille.Text)
                     Process.Start(MonURL)
                     'Try
                     'Using form As New RadFWebBrowser

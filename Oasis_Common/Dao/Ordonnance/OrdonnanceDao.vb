@@ -566,7 +566,9 @@ Public Class OrdonnanceDao
                 OrdonnanceDetailDao.CreationOrdonnanceDetail(ordonnanceDetail)
             Next
         Catch ex As Exception
-            MsgBox(ex.Message())
+            ' Un DAO ne doit pas afficher de boîte de dialogue : côté serveur elle
+            ' bloque le thread. L'appelant décide de l'affichage.
+            Throw
         End Try
     End Sub
 

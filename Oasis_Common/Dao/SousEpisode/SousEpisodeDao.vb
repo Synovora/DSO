@@ -348,14 +348,22 @@ Public Class SousEpisodeDao
 
     End Sub
 
+    ''' <summary>
+    ''' Référence courte d'un sous-épisode. Générateur cryptographique et plage
+    ''' complète : System.Random est prévisible, et Next(Length - 1) ne tirait
+    ''' jamais le dernier caractère.
+    ''' </summary>
     Public Function GenerateBase33(Optional len As Integer = 6) As String
-        Dim rand As New Random()
         Dim allowableChars() As Char = "123456789ABCDEFGHJKLMNPQRSTUVWXYZ".ToCharArray()
-        Dim final As String = String.Empty
+        Dim final As New Text.StringBuilder(len)
+        Dim octets(len - 1) As Byte
+        Using rng = Security.Cryptography.RandomNumberGenerator.Create()
+            rng.GetBytes(octets)
+        End Using
         For i As Integer = 0 To len - 1
-            final += allowableChars(rand.Next(allowableChars.Length - 1))
+            final.Append(allowableChars(octets(i) Mod allowableChars.Length))
         Next
-        Return final
+        Return final.ToString()
     End Function
 
     Public Function FormatPrenom(prenom As String) As String

@@ -303,7 +303,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ApiRest\ApiOasis.vb" />
-    <Compile Include="ApiRest\Class1.vb" />
     <Compile Include="Bean\AnnuaireProfessionnel\AnnuaireEtatCivil.vb" />
     <Compile Include="Bean\AnnuaireProfessionnel\annuaireProfessionnel.vb" />
     <Compile Include="Bean\AnnuaireProfessionnel\AnnuaireProfessionnelReference.vb" />
