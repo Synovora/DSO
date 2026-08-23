@@ -1,4 +1,4 @@
-Imports System
+﻿Imports System
 Imports System.Web.Http
 Imports System.Web.Mvc
 Imports Oasis_Web.Areas.HelpPage.Models
@@ -8,6 +8,10 @@ Namespace Areas.HelpPage.Controllers
     ''' <summary>
     ''' The controller that will handle requests for the help page.
     ''' </summary>
+    ' Documentation de l'API : elle décrit les routes et les paramètres
+    ' attendus (login, upload, rename, envoi de mail). Réservée aux
+    ' administrateurs ; elle était accessible à tout internaute connecté.
+    <Authorize(Roles:="Admin")>
     Public Class HelpController
         Inherits Controller
 

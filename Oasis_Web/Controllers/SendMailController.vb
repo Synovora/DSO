@@ -15,10 +15,14 @@ Public Class SendMailController
     End Function
 
     Public Async Function SendMail() As Task(Of HttpResponseMessage)
+        Dim provider As MultipartFormDataStreamProvider = Nothing
         Try
-            Dim isOneFile As Boolean = False
             Dim fileuploadPath = ConfigurationManager.AppSettings("FileUploadLocation")
-            Dim provider = New MultipartFormDataStreamProvider(fileuploadPath)
+            ' Les pièces jointes transitent par un sous-dossier temporaire, jamais
+            ' directement dans la zone de dépôt des documents.
+            Dim dossierTemporaire = Path.Combine(fileuploadPath, "tmp")
+            Directory.CreateDirectory(dossierTemporaire)
+            provider = New MultipartFormDataStreamProvider(dossierTemporaire)
             Dim content = New StreamContent(HttpContext.Current.Request.GetBufferlessInputStream(True))
 
             For Each header In Request.Content.Headers
@@ -48,7 +52,9 @@ Public Class SendMailController
             End With
 
             For Each fileData As MultipartFileData In provider.FileData
-                mailOasis.Filename = fileData.Headers.ContentDisposition.FileName.Replace(Chr(34), "")
+                ' Path.GetFileName : le nom annoncé par le client ne doit pas pouvoir
+                ' désigner un chemin.
+                mailOasis.Filename = Path.GetFileName(fileData.Headers.ContentDisposition.FileName.Replace(Chr(34), ""))
                 mailOasis.Contenu = File.ReadAllBytes(fileData.LocalFileName)
             Next
 
@@ -70,27 +76,39 @@ Public Class SendMailController
 
                 Return Request.CreateResponse(HttpStatusCode.Accepted, "true")
             Catch e As Exception
+                ' Ni le message d'exception ni l'adresse du serveur SMTP ne doivent
+                ' remonter au client.
                 Dim resp = New HttpResponseMessage(HttpStatusCode.InternalServerError) With {
-                .Content = New StringContent(e.Message),
-                .ReasonPhrase = "Erreur interne au server lors de l'envoie du mail: (" + smtpServer + ")" + e.Message
+                .Content = New StringContent("Erreur interne au serveur lors de l'envoi du mail"),
+                .ReasonPhrase = "Erreur interne au serveur lors de l'envoi du mail"
             }
                 Return resp
             End Try
 
         Catch e As UnauthorizedAccessException
                 Dim resp = New HttpResponseMessage(HttpStatusCode.Unauthorized) With {
-                    .Content = New StringContent(e.Message),
+                    .Content = New StringContent("Identifiant et/ou mot de passe erroné !"),
                     .ReasonPhrase = "Utilisateur introuvable"
                 }
                 Return resp
 
             Catch e As Exception
                 Dim resp = New HttpResponseMessage(HttpStatusCode.InternalServerError) With {
-                .Content = New StringContent(e.Message),
-                .ReasonPhrase = "Erreur interne au server : " + e.Message
+                .Content = New StringContent("Erreur interne au serveur"),
+                .ReasonPhrase = "Erreur interne au serveur"
             }
 
             Return resp
+        Finally
+            ' Les pièces jointes temporaires ne doivent pas rester sur le disque.
+            If provider IsNot Nothing AndAlso provider.FileData IsNot Nothing Then
+                For Each fileData As MultipartFileData In provider.FileData
+                    Try
+                        If File.Exists(fileData.LocalFileName) Then File.Delete(fileData.LocalFileName)
+                    Catch
+                    End Try
+                Next
+            End If
         End Try
 
     End Function

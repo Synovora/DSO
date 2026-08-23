@@ -20,36 +20,46 @@ Public Class RenameController
     Public Function PostValue(<FromBody()> ByVal renameRequest As RenameRequest) As HttpResponseMessage
         Try
             verifPassword(renameRequest.LoginRequest.login, renameRequest.LoginRequest.password)
-            Dim response As HttpResponseMessage = Request.CreateResponse(HttpStatusCode.Accepted)
 
-            Dim oldPath = ConfigurationManager.AppSettings("FileUploadLocation") & "\" & renameRequest.OldName
-            Dim newPath = ConfigurationManager.AppSettings("FileUploadLocation") & "\" & renameRequest.NewName
+            ' Les deux noms viennent du client : ils doivent rester sous la zone de
+            ' dépôt, sinon l'appel déplace n'importe quel fichier du serveur.
+            Dim oldPath As String
+            Dim newPath As String
+            Try
+                oldPath = ResoudreCheminDocument(renameRequest.OldName)
+                newPath = ResoudreCheminDocument(renameRequest.NewName)
+            Catch exNom As ArgumentException
+                Return New HttpResponseMessage(HttpStatusCode.BadRequest) With {
+                    .Content = New StringContent("Nom de fichier invalide"),
+                    .ReasonPhrase = "Nom de fichier invalide"
+                }
+            End Try
 
             If Not File.Exists(oldPath) Then
-                response.StatusCode = HttpStatusCode.NotFound
-                response.ReasonPhrase = String.Format("File not found: {0} .", renameRequest.OldName)
                 Dim resp = New HttpResponseMessage(HttpStatusCode.NotFound) With {
                     .Content = New StringContent("Fichier demandé inexistant"),
-                    .ReasonPhrase = String.Format("Fichier demandé inexistant: {0} .", renameRequest.OldName)
+                    .ReasonPhrase = "Fichier demande inexistant"
                 }
                 Return resp
             End If
 
+            Directory.CreateDirectory(Path.GetDirectoryName(newPath))
             File.Move(oldPath, newPath)
 
             Return Request.CreateResponse(HttpStatusCode.Accepted, "true")
 
         Catch e As ArgumentException
             Dim response = New HttpResponseMessage(HttpStatusCode.Unauthorized) With {
-                .Content = New StringContent(e.Message),
-                .ReasonPhrase = "Utilisateur introuvable"
+                .Content = New StringContent("Requête refusée"),
+                .ReasonPhrase = "Requete refusee"
             }
             Return response
 
         Catch e As Exception
+            ' Ne jamais renvoyer e.Message : il expose la configuration serveur.
             Dim response = New HttpResponseMessage(HttpStatusCode.InternalServerError) With {
-                .Content = New StringContent(e.Message),
-                .ReasonPhrase = "Erreur interne au server: " & e.Message
+                .Content = New StringContent("Erreur interne au serveur"),
+                .ReasonPhrase = "Erreur interne au serveur"
             }
 
             Return response

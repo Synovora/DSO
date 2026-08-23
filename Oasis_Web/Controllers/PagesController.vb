@@ -7,16 +7,6 @@ Imports System.Web.Mvc
 Namespace Oasis_Web.Controllers
     Public Class PagesController
         Inherits Controller
-        <HttpPost>
-        Public Function ValidateLogin(ByVal email As String, ByVal password As String) As ActionResult
-            Dim dbEmail As String = "Test"
-            Dim dbPassword As String = "123"
-            Dim IsValidUser As Boolean = False
-            If email = dbEmail AndAlso password = dbPassword Then IsValidUser = True
-            Return Json(New With {Key .IsValidUser = IsValidUser
-            })
-        End Function
-
         <ActionName("pages-login-2")>
         Public Function pageslogin2() As ActionResult
             Return View()

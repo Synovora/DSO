@@ -10,9 +10,15 @@ Imports System.Text.RegularExpressions
 ''' </summary>
 Public Module CheminsDocuments
 
-    ' Dossiers et motifs légitimes produits par getFilenameServer / GetFilenameServer.
+    ' Dossiers et motifs légitimes produits par getFilenameServer / GetFilenameServer :
+    '   SousEpisode\Episode_1_SousEpisode_2_SousEpisodeSousType_3.DOCX
+    '   SousEpisodeReponse\Episode_1_SousEpisode_2_SousEpisodeReponse_3.pdf
+    '   Templates\SousEpisodeType_1_SousType_2.DOCX
+    ' La pièce jointe d'une réponse conserve l'extension d'origine, d'où la liste
+    ' d'extensions ci-dessous plutôt qu'un couple DOCX/PDF figé.
     Private ReadOnly NomValide As New Regex(
-        "^(SousEpisode|SousEpisodeReponse|Templates)\\[A-Za-z0-9_\-]+\.(DOCX|PDF)$",
+        "^(SousEpisode|SousEpisodeReponse|Templates)\\[A-Za-z0-9_\-]+\." &
+        "(DOCX?|PDF|ODT|RTF|TXT|CSV|XLSX?|PPTX?|JPE?G|PNG|GIF|BMP|TIFF?|HTML?|XML|ZIP)$",
         RegexOptions.IgnoreCase Or RegexOptions.Compiled)
 
     ''' <summary>

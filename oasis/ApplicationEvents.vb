@@ -8,7 +8,17 @@
     Partial Friend Class MyApplication
 
         Private Sub MyApplication_Startup(sender As Object, e As Microsoft.VisualBasic.ApplicationServices.StartupEventArgs) Handles Me.Startup
-
+            ' Le client lourd est interactif : il peut proposer de réessayer une
+            ' connexion à la base. StandardDao ne le fait plus de lui-même, car la
+            ' même classe sert au portail web où une boîte de dialogue bloque le
+            ' thread IIS indéfiniment.
+            Oasis_Common.StandardDao.DemanderNouvelEssaiConnexion =
+                Function(messageErreur As String) As Boolean
+                    Return MsgBox("Problème de connexion à la base de données (" & messageErreur & ")" & vbCrLf &
+                                  "Voulez-vous réessayer ?",
+                                  MsgBoxStyle.RetryCancel Or MsgBoxStyle.Exclamation,
+                                  "Oasis") = MsgBoxResult.Retry
+                End Function
         End Sub
 
     End Class

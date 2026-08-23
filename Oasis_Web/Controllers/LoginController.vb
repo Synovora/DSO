@@ -22,15 +22,17 @@ Public Class LoginController
 
         Catch e As ArgumentException
             Dim resp = New HttpResponseMessage(HttpStatusCode.Unauthorized) With {
-                .Content = New StringContent(e.Message),
+                .Content = New StringContent("Identifiant et/ou mot de passe erroné !"),
                 .ReasonPhrase = "Utilisateur introuvable"
             }
             Return resp
 
         Catch e As Exception
+            ' Ne jamais renvoyer e.Message : sur cette route il peut contenir la
+            ' chaîne de connexion ou le détail de l'erreur SQL.
             Dim resp = New HttpResponseMessage(HttpStatusCode.InternalServerError) With {
-                .Content = New StringContent(e.Message),
-                .ReasonPhrase = "Erreur interne au server"
+                .Content = New StringContent("Erreur interne au serveur"),
+                .ReasonPhrase = "Erreur interne au serveur"
             }
 
             Return resp
