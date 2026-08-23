@@ -137,6 +137,32 @@ Public Module ModuleUtilsBase
         Return memoryStream.ToArray()
     End Function
 
+    ''' <summary>
+    ''' Compare une saisie à une empreinte SHA-256 attendue (hexadécimal), à temps
+    ''' constant. Sert aux mots de passe de maintenance stockés en configuration :
+    ''' l'empreinte peut être lue par qui accède au poste, la saisie reste secrète.
+    ''' </summary>
+    Public Function EmpreinteSha256Egale(saisie As String, empreinteAttendue As String) As Boolean
+        If saisie Is Nothing OrElse String.IsNullOrWhiteSpace(empreinteAttendue) Then Return False
+
+        Dim calculee As String
+        Using sha As SHA256 = SHA256.Create()
+            calculee = BitConverter.ToString(
+                sha.ComputeHash(Encoding.UTF8.GetBytes(saisie))).Replace("-", "")
+        End Using
+
+        Dim attendue = empreinteAttendue.Trim().Replace("-", "")
+        If calculee.Length <> attendue.Length Then Return False
+
+        ' Comparaison à temps constant : ne pas révéler la position du premier écart.
+        Dim ecart As Integer = 0
+        For i = 0 To calculee.Length - 1
+            ecart = ecart Or (Asc(Char.ToUpperInvariant(calculee(i))) Xor
+                              Asc(Char.ToUpperInvariant(attendue(i))))
+        Next
+        Return ecart = 0
+    End Function
+
     Public Function verifPassword(login As String, password As String) As Utilisateur
 
         Dim userDao As UserDao = New UserDao

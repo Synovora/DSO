@@ -67,9 +67,22 @@ Public Class FrmLogin
         ' -- permet de voir si on vient du label "Changer mon mot de passe" ou du bouton "Valider"
         Dim isChgtVolontaire = Not TryCast(sender, RadLabel) Is Nothing
 
-        If isChgtVolontaire AndAlso Me.TxtPassword.Text = "*" AndAlso Me.TxtLogin.Text = "" Then
-            Dim frm As New FAuthentificattion
-            frm.ShowDialog()
+        ' -- accès à l'écran de maintenance : login vide et mot de passe de
+        '    maintenance. Le mot de passe n'est plus la constante "*" présente dans
+        '    le source : il est propre à chaque déploiement et vit en configuration
+        '    (empreinte SHA-256 dans MaintenancePasswordSha256). Non renseigné, ou
+        '    laissé à sa valeur d'exemple, l'écran est inaccessible.
+        If isChgtVolontaire AndAlso Me.TxtLogin.Text = "" AndAlso Me.TxtPassword.Text <> "" Then
+            If EstMotDePasseMaintenance(Me.TxtPassword.Text) Then
+                Dim frm As New FAuthentificattion
+                frm.ShowDialog()
+            Else
+                ' Compté comme un échec d'authentification : l'écran de maintenance
+                ' ne doit pas offrir un oracle de test illimité.
+                If IsPermission(True) = False Then PasLeDroitLala()
+                Dim unused = MessageBox.Show("Identifiant et/ou mot de passe erroné !", "Authentification",
+                                             MessageBoxButtons.OK, MessageBoxIcon.Error)
+            End If
             Return
         End If
 
@@ -144,6 +157,24 @@ Public Class FrmLogin
         TxtLogin.Focus()
 
     End Sub
+
+    ''' <summary>
+    ''' Vrai si la saisie correspond au mot de passe de maintenance configuré.
+    ''' La configuration porte l'empreinte SHA-256, jamais le mot de passe en clair :
+    ''' App.config est distribué à tous les postes par ClickOnce.
+    '''
+    ''' Générer l'empreinte :
+    '''   PowerShell : (Get-FileHash -Algorithm SHA256 -InputStream ([IO.MemoryStream]::new([Text.Encoding]::UTF8.GetBytes('MOT_DE_PASSE')))).Hash
+    '''   macOS      : printf %s 'MOT_DE_PASSE' | shasum -a 256
+    ''' </summary>
+    Private Shared Function EstMotDePasseMaintenance(saisie As String) As Boolean
+        Dim empreinteAttendue = ConfigurationManager.AppSettings("MaintenancePasswordSha256")
+        If String.IsNullOrWhiteSpace(empreinteAttendue) OrElse
+           empreinteAttendue.Trim().StartsWith("CHANGE_ME", StringComparison.OrdinalIgnoreCase) Then
+            Return False
+        End If
+        Return EmpreinteSha256Egale(saisie, empreinteAttendue)
+    End Function
 
     Private Sub PasLeDroitLala()
         MsgBox("SECURITÉ - POSTE BLOQUÉ" & vbCrLf & "Contactez votre administrateur !", MsgBoxStyle.OkOnly Or MessageBoxIcon.Stop, "Contrôle de Sécurité")

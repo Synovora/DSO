@@ -59,7 +59,7 @@ Public Class FAuthentificattion
 
     Private Sub BtnValidation_Click(sender As Object, e As EventArgs) Handles BtnValidation.Click
 
-        InitAppelForm()
+        If InitAppelForm() = False Then Return
         Application.DoEvents()
         Cursor.Current = Cursors.WaitCursor
         Try
@@ -78,7 +78,7 @@ Public Class FAuthentificattion
     End Sub
 
     Private Sub BtnListePatient_Click(sender As Object, e As EventArgs) Handles BtnListePatient.Click
-        InitAppelForm()
+        If InitAppelForm() = False Then Return
         Application.DoEvents()
         Cursor.Current = Cursors.WaitCursor
         Using form As New RadFPatientListe 'FrmAgendaMedecin
@@ -89,7 +89,7 @@ Public Class FAuthentificattion
     End Sub
 
     Private Sub BtnAdmin_Click(sender As Object, e As EventArgs) Handles BtnAdmin.Click
-        InitAppelForm()
+        If InitAppelForm() = False Then Return
         Application.DoEvents()
         Me.Cursor = Cursors.WaitCursor
         Me.Enabled = False
@@ -100,7 +100,11 @@ Public Class FAuthentificattion
         Me.Enabled = True
     End Sub
 
-    Private Sub InitAppelForm()
+    ''' <summary>
+    ''' Prépare la session de maintenance. Renvoie False si elle ne peut pas
+    ''' être établie : l'appelant doit alors renoncer à ouvrir l'écran.
+    ''' </summary>
+    Private Function InitAppelForm() As Boolean
         Select Case CbxUtilisateur.Text
             Case "Informaticien"
                 UtilisateurId = 7
@@ -139,29 +143,15 @@ Public Class FAuthentificattion
             Admin = False
         End If
 
-        ' -- pour test api rest
-        loginRequestLog = New LoginRequest() With {
-                .login = "Bertrand.Gambet",
-                .password = "a"
-        }
-
+        ' La connexion à la base exige une authentification nominative : cet écran
+        ' embarquait un identifiant et un mot de passe de praticien écrits dans le
+        ' source, utilisables par quiconque disposait du binaire.
         If StandardDao.IsConnectionStringFixed() = False Then
-            Me.Cursor = Cursors.WaitCursor
-            Try
-                Using apiOasis As New ApiOasis()
-                    StandardDao.FixConnectionString(apiOasis.loginRest(loginRequestLog))
-                End Using
-
-            Catch ex As Exception
-                If MsgBox("" & ex.Message & vbCrLf & "Réessayer ?", MsgBoxStyle.YesNo Or MessageBoxIcon.Error, "Authentification Api") = MsgBoxResult.Yes Then
-                    Return
-                Else
-                    Close()
-                    End
-                End If
-            Finally
-                Me.Cursor = Cursors.Default
-            End Try
+            MsgBox("Aucune session ouverte." & vbCrLf &
+                   "Utilisez le bouton « Connexion » pour vous authentifier avec votre " &
+                   "propre compte avant d'utiliser cet écran.",
+                   MsgBoxStyle.Exclamation, "Maintenance")
+            Return False
         End If
 
         Me.Cursor = Cursors.WaitCursor
@@ -178,9 +168,8 @@ Public Class FAuthentificattion
             Me.Cursor = Cursors.Default
         End Try
 
-
-
-    End Sub
+        Return True
+    End Function
 
     Private Sub BtnAbandon_Click(sender As Object, e As EventArgs) Handles BtnAbandon.Click
         Close()
@@ -202,7 +191,7 @@ Public Class FAuthentificattion
 
     Private Sub BtnTheriaque_Click(sender As Object, e As EventArgs) Handles BtnTest.Click
         Try
-            InitAppelForm()
+            If InitAppelForm() = False Then Return
             Application.DoEvents()
             Me.Cursor = Cursors.WaitCursor
             Me.Enabled = False
@@ -219,7 +208,7 @@ Public Class FAuthentificattion
 
     Private Sub BtnTemplateSsEpisode_Click(sender As Object, e As EventArgs) Handles BtnTemplateSsEpisode.Click
         Try
-            InitAppelForm()
+            If InitAppelForm() = False Then Return
             Application.DoEvents()
             Me.Cursor = Cursors.WaitCursor
             Me.Enabled = False
