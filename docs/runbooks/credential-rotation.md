@@ -82,7 +82,7 @@ ALTER LOGIN sa DISABLE;
 GO
 ```
 
-The old value `Oasis-689` is public. Treat it as compromised on every system where it was reused,
+The old value (see the previous credential store) is public. Treat it as compromised on every system where it was reused,
 not only this database.
 
 - [ ] Update the SSIS package connection in `Oasis_IS`, which also connects as `sa`
