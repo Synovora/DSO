@@ -91,7 +91,8 @@ sequenceDiagram
 
 1. The client POSTs a `LoginRequest` to `https://{ServeurOasis}/api/login`.
 2. `LoginController` verifies the password against the database, then returns the AES-encrypted
-   connection string. Encryption is `EncryptString`, keyed by a constant in `ModuleUtilsBase`.
+   connection string. Encryption is `EncryptString`, keyed by the `OasisCryptoKey` setting, which
+   the server and every client must share. See [Cryptographic key](#cryptographic-key).
 3. `StandardDao.FixConnectionString` decrypts it and injects it into the read-only
    `ConfigurationManager` entry by reflection, clearing the private `_bReadOnly` field.
 4. Every DAO from then on opens a direct `SqlConnection`.
@@ -367,11 +368,15 @@ ones worth knowing:
 | `ChaineEpisodePeriode` | Episode-chaining window in months. |
 | `SpecialiteDelaiPriseEnCharge` | Target time to treatment for a speciality, in days. |
 | `TelerikWinFormsThemeName` | Telerik theme applied at startup. |
-| `UriProcedureTutorielle` | Base URL of the documentation wiki. |
+| `UriProcedureTutorielle` | Base URL of the documentation wiki. No fallback: unset, the tutorial screen reports a configuration error. |
 | `ContactAdministrateur` | Support message shown in error dialogs. |
+| `MaintenancePasswordSha256` | SHA-256 of the password that opens the maintenance screen from the login form (empty login plus this password). Left at its `CHANGE_ME` value, the screen is unreachable. |
+| `UrlPortailPublique` | Public address used in prescription QR codes and password recovery links. Empty falls back to `ServeurOasis`. |
+| `GemBoxLicense` | GemBox.Document licence key. Empty means evaluation mode, which stamps a notice on generated documents. |
+| `CheminTelechargement` | Obsolete. Documents received from correspondents now go to `%LOCALAPPDATA%\Oasis\cache` and are purged on exit. |
 
-`Oasis_Web/Web.config` needs `ServeurOasis`, `FileUploadLocation`, `OasisCryptoKey` and the
-connection string. See [`Web.config.example`](Oasis_Web/Web.config.example).
+`Oasis_Web/Web.config` needs `ServeurOasis`, `FileUploadLocation`, `OasisCryptoKey`, the mail
+service account (`MailServiceLogin` / `MailServicePassword`) and the connection string. See [`Web.config.example`](Oasis_Web/Web.config.example).
 
 ### Cryptographic key
 
@@ -481,21 +486,21 @@ anywhere in the repository. The schema lives only in deployed databases, so it c
 diffed or recreated. Extracting a `.dacpac` into the repo would be the single highest-value
 improvement available.
 
-**`OasisAdmini` hardcodes its admin password** in `OasisAdmini/Form/FrmAdministrateur.vb`. It is a
-literal string compared directly against the input, and it is the same value historically used for
-the database account. It should move to configuration, or become a hashed check.
-
 **Signing keys are stored in plaintext** in `oasis.oa_utilisateur.cle_privee`. Anyone with read
-access to that column can sign prescriptions as any clinician. Fixing it needs a migration, see
+access to that column can sign prescriptions as any clinician. Ordinary reads no longer load the
+column, and only the user who just authenticated receives their own key, but the database itself
+still holds it in the clear. Fixing that needs a migration, see
 [`docs/runbooks/credential-rotation.md`](docs/runbooks/credential-rotation.md) step 6.
 
-**The PBKDF2 parameters are weak.** `Rfc2898DeriveBytes` is used with its default iteration count
-and a fixed salt, and the salt is not stored per ciphertext. Changing either breaks every existing
-ciphertext, so it needs a migration rather than an edit.
+**Clients hold the database credentials.** `/api/login` hands every desktop client the connection
+string, so authorisation in the client is presentation only: a determined user can open the
+database directly with the same rights. Per-role SQL logins, or moving data access behind the API,
+is the real fix. Until then, treat the desktop application as trusted code run by trusted staff.
 
-**`StandardDao.GetConnection` retries in an infinite loop**, showing a `MsgBox` on each failure.
-Tolerable in WinForms, but the same base class serves the web app, where a blocked dialog would
-hang a request thread.
+**`EncryptString` derives its IV from the key.** `Rfc2898DeriveBytes` produces both key and IV from
+the same passphrase and a fixed salt, so identical plaintext gives identical ciphertext. It is used
+for the connection string in the `/api/login` response, not for stored data. Changing it breaks
+every deployed client at once, so it belongs in the same release as a key rotation.
 
 **Telerik is a commercial dependency** and is not distributed with this repository. See
 [Telerik setup](#telerik-setup).

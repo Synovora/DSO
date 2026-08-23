@@ -3,7 +3,10 @@
 Written 2026-08-23, after the repository was made public with a live `sa` password,
 a hardcoded encryption key, and a publicly known fallback signing key in its history.
 
-**Nothing in this runbook has been executed.** It needs SQL Server access and a maintenance
+**Nothing in this runbook has been executed.** The application-side changes it depends on have
+been made (see `docs/audits/2026-08-23-security-audit.md` and the migration script
+`docs/migrations/2026-08-23-durcissement-securite.sql`); the credential changes below still need a
+database, a maintenance window and a client release. It needs SQL Server access and a maintenance
 window. Read the whole thing before starting: the order matters, and the wrong order takes the
 system down for every clinician.
 
@@ -136,13 +139,16 @@ WHERE  cle_privee = '0x000000000000000000000000000000000000000000000000000000000
 -- Prescriptions signed by anyone in that second set. These signatures are forgeable
 -- and should be treated as unverified.
 SELECT o.oa_ordonnance_id, o.oa_ordonnance_signature, u.oa_utilisateur_login
-FROM   oasis.oa_ordonnance o
+FROM   oasis.oa_patient_ordonnance o
 JOIN   oasis.oa_utilisateur u ON u.oa_utilisateur_id = o.oa_ordonnance_user_validation
 WHERE  u.cle_publique = '0x7E5F4552091A69125d5DfCb7b8C2659029395Bdf';
 ```
 
-- [ ] Generate a fresh key for every affected user, from the user record screen in the desktop
-      client (`oasis/Form/utilisateur/FrmUtilisateur.vb` does this).
+- [ ] Generate a fresh key for every affected user. The user record screen
+      (`oasis/Form/utilisateur/FrmUtilisateur.vb`) creates a key only when the account has none, so
+      clear `cle_privee` and `cle_publique` for those users first, then reopen and save each record.
+      Note that rotating a key does not invalidate signatures already made with the old one:
+      `oa_ordonnance_signature_adresse` records the address used at signing time.
 - [ ] Decide what to do about prescriptions already signed with the compromised key. They cannot
       be made trustworthy retroactively. At minimum, record which ones they are.
 
