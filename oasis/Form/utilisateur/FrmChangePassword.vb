@@ -36,7 +36,7 @@ Public Class FrmChangePassword
             Exit Sub
         End If
         ' --- sauve nouveau mot de passe
-        userLog.Password = Utilisateur.CryptePwd(userLog.UtilisateurLogin, TxtPassword1.Text.Trim)
+        userLog.Password = MotDePasse.Hacher(TxtPassword1.Text.Trim)
         userLog.IsPasswordUniqueUsage = False
         Dim userDao As UserDao = New UserDao
         userDao.UpdateSansChangerEtatEtDates(userLog)

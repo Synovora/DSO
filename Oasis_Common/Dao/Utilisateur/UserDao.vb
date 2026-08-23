@@ -86,8 +86,9 @@ Public Class UserDao
                                      ",oa_utilisateur_siege_id=@oa_utilisateur_siege_id, oa_utilisateur_unite_sanitaire_id=@oa_utilisateur_unite_sanitaire_id" & vbCrLf &
                                      ", oa_utilisateur_site_id=@oa_utilisateur_site_id" & vbCrLf &
                                      ", oa_utilisateur_admin=@oa_utilisateur_admin, oa_utilisateur_telephone=@oa_utilisateur_telephone" & vbCrLf &
-                                     ", oa_utilisateur_fax=oa_utilisateur_fax, oa_utilisateur_mail=@oa_utilisateur_mail, oa_utilisateur_rpps=@oa_utilisateur_rpps" & vbCrLf &
+                                     ", oa_utilisateur_fax=@oa_utilisateur_fax, oa_utilisateur_mail=@oa_utilisateur_mail, oa_utilisateur_rpps=@oa_utilisateur_rpps" & vbCrLf &
                                      ", oa_password=@oa_password, oa_utilisateur_password_is_unique_usage=@oa_utilisateur_password_is_unique_usage" & vbCrLf &
+                                     ", cle_privee=@oa_utilisateur_cle_privee, cle_publique=@oa_utilisateur_cle_publique" & vbCrLf &
                                      "WHERE oa_utilisateur_id = @oa_utilisateur_id "
 
             Dim cmd As New SqlCommand(SQLstring, con, transaction)
@@ -106,6 +107,10 @@ Public Class UserDao
                 .AddWithValue("@oa_utilisateur_rpps", utilisateur.UtilisateurRPPS)
                 .AddWithValue("@oa_password", utilisateur.Password)
                 .AddWithValue("@oa_utilisateur_password_is_unique_usage", utilisateur.IsPasswordUniqueUsage)
+                ' Les clés de signature n'étaient jamais écrites par cette requête :
+                ' un utilisateur créé sans clé ne pouvait plus jamais en obtenir.
+                .AddWithValue("@oa_utilisateur_cle_privee", If(utilisateur.UtilisateurClePrivee, ""))
+                .AddWithValue("@oa_utilisateur_cle_publique", If(utilisateur.UtilisateurAddress, ""))
                 ' -- pour le where
                 .AddWithValue("@oa_utilisateur_id", utilisateur.UtilisateurId)
             End With
@@ -151,7 +156,6 @@ Public Class UserDao
                 Using reader As SqlDataReader = command.ExecuteReader()
                     If reader.Read() Then
                         user = buildBean(reader)
-                        controlPassword(user, password)
                     Else
                         Throw New ArgumentException("Identifiant et/ou mot de passe erroné !")
                     End If
@@ -161,6 +165,13 @@ Public Class UserDao
             End Try
         End Using
 
+        ' Verrouillage côté serveur : le compteur du poste (base de registre) est
+        ' effaçable par l'utilisateur, celui-ci ne l'est pas.
+        If user.VerrouJusqua.HasValue AndAlso user.VerrouJusqua.Value > DateTime.Now Then
+            Throw New ArgumentException("Compte temporairement verrouillé suite à plusieurs échecs. Réessayez plus tard.")
+        End If
+
+        controlPassword(user, password)
         Return user
     End Function
 
@@ -236,6 +247,13 @@ Public Class UserDao
         ' Une clé absente doit rester absente : Utilisateur.Sign lève alors une erreur.
         user.UtilisateurClePrivee = Coalesce(reader("cle_privee"), "")
         user.UtilisateurAddress = Coalesce(reader("cle_publique"), "")
+        If HasColumn(reader, "oa_utilisateur_tentatives") Then
+            user.Tentatives = Coalesce(reader("oa_utilisateur_tentatives"), 0)
+        End If
+        If HasColumn(reader, "oa_utilisateur_verrou_jusqua") Then
+            Dim verrou = Coalesce(reader("oa_utilisateur_verrou_jusqua"), Nothing)
+            user.VerrouJusqua = If(verrou Is Nothing, CType(Nothing, Date?), CDate(verrou))
+        End If
 
         ' --- recuperation des fonctions correspondant au profil de l'utilisateur
         addFonctions(user)
@@ -258,12 +276,84 @@ Public Class UserDao
     ''' <param name="user"></param>
     ''' <param name="password"></param>
     Private Sub controlPassword(user As Utilisateur, password As String)
-        If user.Password = Utilisateur.CryptePwd(user.UtilisateurLogin, password) Then
-            user.Password = password   ' on ne garde que le pasword crypté
-            Return
+        Dim doitEtreRehache As Boolean
+        Dim correct = MotDePasse.VerifierAvecMigration(
+            password, user.Password,
+            Utilisateur.CryptePwd(user.UtilisateurLogin, password), doitEtreRehache)
+
+        If Not correct Then
+            EnregistrerEchec(user.UtilisateurId)
+            Throw New ArgumentException("Identifiant et/ou mot de passe erroné !")
         End If
-        Throw New ArgumentException("Identifiant et/ou mot de passe erroné !")
+
+        ' Migration transparente : le compte passe au format courant dès que son
+        ' propriétaire se connecte, sans lui demander de changer de mot de passe.
+        If doitEtreRehache Then
+            Try
+                UpdateEmpreinteMotDePasse(user.UtilisateurId, MotDePasse.Hacher(password))
+            Catch ex As Exception
+                ' Une migration ratée ne doit pas empêcher la connexion : elle sera
+                ' retentée au prochain accès.
+            End Try
+        End If
+
+        ReinitialiserEchecs(user.UtilisateurId)
+
+        ' Le mot de passe en clair ne doit pas rester sur le bean : il vivait
+        ' jusqu'ici dans le global userLog pour toute la durée de la session.
+        user.Password = Nothing
     End Sub
+
+    ''' <summary>Réenregistre l'empreinte du mot de passe, sans rien changer d'autre.</summary>
+    Public Sub UpdateEmpreinteMotDePasse(userId As Integer, empreinte As String)
+        Using con As SqlConnection = GetConnection()
+            Using cmd As New SqlCommand(
+                "UPDATE oasis.oa_utilisateur SET oa_password = @password WHERE oa_utilisateur_id = @id;", con)
+                cmd.Parameters.AddWithValue("@password", empreinte)
+                cmd.Parameters.AddWithValue("@id", userId)
+                cmd.ExecuteNonQuery()
+            End Using
+        End Using
+    End Sub
+
+    ''' <summary>Incrémente le compteur d'échecs et verrouille au-delà du seuil.</summary>
+    Private Sub EnregistrerEchec(userId As Integer)
+        Try
+            Using con As SqlConnection = GetConnection()
+                Using cmd As New SqlCommand(
+                    "UPDATE oasis.oa_utilisateur" & vbCrLf &
+                    " SET oa_utilisateur_tentatives = COALESCE(oa_utilisateur_tentatives, 0) + 1," & vbCrLf &
+                    "     oa_utilisateur_verrou_jusqua = CASE WHEN COALESCE(oa_utilisateur_tentatives, 0) + 1 >= @seuil" & vbCrLf &
+                    "                                        THEN DATEADD(minute, @duree, SYSDATETIME())" & vbCrLf &
+                    "                                        ELSE oa_utilisateur_verrou_jusqua END" & vbCrLf &
+                    " WHERE oa_utilisateur_id = @id;", con)
+                    cmd.Parameters.AddWithValue("@id", userId)
+                    cmd.Parameters.AddWithValue("@seuil", MAX_TRY)
+                    cmd.Parameters.AddWithValue("@duree", DureeVerrouMinutes)
+                    cmd.ExecuteNonQuery()
+                End Using
+            End Using
+        Catch ex As Exception
+            ' Le comptage ne doit pas masquer l'échec d'authentification lui-même.
+        End Try
+    End Sub
+
+    ''' <summary>Remet le compteur d'échecs à zéro après une authentification réussie.</summary>
+    Private Sub ReinitialiserEchecs(userId As Integer)
+        Try
+            Using con As SqlConnection = GetConnection()
+                Using cmd As New SqlCommand(
+                    "UPDATE oasis.oa_utilisateur SET oa_utilisateur_tentatives = 0," &
+                    " oa_utilisateur_verrou_jusqua = NULL WHERE oa_utilisateur_id = @id;", con)
+                    cmd.Parameters.AddWithValue("@id", userId)
+                    cmd.ExecuteNonQuery()
+                End Using
+            End Using
+        Catch ex As Exception
+        End Try
+    End Sub
+
+    Private Const DureeVerrouMinutes As Integer = 15
 
     ''' <summary>
     ''' 

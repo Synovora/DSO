@@ -10,10 +10,12 @@ Public Class InternauteDao
         Dim Id As Long
 
         Try
+            ' Le mot de passe était haché puis jamais inséré : les comptes créés
+            ' repartaient avec une colonne password NULL.
             Dim SQLstring As String = "INSERT INTO oasis.oa_internaute (" & vbCrLf &
-                                     " username, email, recovery, code)" & vbCrLf &
+                                     " username, email, password, recovery, code)" & vbCrLf &
                                      " VALUES (" & vbCrLf &
-                                     " @username, @email, @recovery, @code);" & vbCrLf &
+                                     " @username, @email, @password, @recovery, @code);" & vbCrLf &
                                      " SELECT SCOPE_IDENTITY()"
 
             Dim cmd As New SqlCommand(SQLstring, con, transaction)
@@ -21,8 +23,9 @@ Public Class InternauteDao
             With cmd.Parameters
                 .AddWithValue("@username", internaute.Username)
                 .AddWithValue("@email", internaute.Email)
-                .AddWithValue("@recovery", internaute.Recovery)
-                .AddWithValue("@code", internaute.Code)
+                .AddWithValue("@password", If(internaute.Password, CObj(DBNull.Value)))
+                .AddWithValue("@recovery", If(internaute.Recovery, CObj(DBNull.Value)))
+                .AddWithValue("@code", If(internaute.Code, CObj(DBNull.Value)))
             End With
 
             da.InsertCommand = cmd
@@ -222,12 +225,55 @@ Public Class InternauteDao
         Return user
     End Function
 
+    Private Const SeuilVerrou As Integer = 5
+    Private Const DureeVerrouMinutes As Integer = 15
+
     Private Sub ControlPassword(user As Internaute, password As String)
-        If user.Password = Internaute.CryptePwd(user.Email.ToString(), password) Then
-            user.Password = password
-            Return
+        ' Verrouillage côté serveur : le portail n'avait aucune limite au nombre
+        ' d'essais.
+        If user.VerrouJusqua.HasValue AndAlso user.VerrouJusqua.Value > DateTime.Now Then
+            Throw New ArgumentException("Compte temporairement verrouillé suite à plusieurs échecs. Réessayez plus tard.")
         End If
-        Throw New ArgumentException("Identifiant et/ou mot de passe erroné !")
+
+        Dim doitEtreRehache As Boolean
+        Dim correct = MotDePasse.VerifierAvecMigration(
+            password, user.Password,
+            Internaute.CryptePwd(If(user.Email, "").ToString(), password), doitEtreRehache)
+
+        If Not correct Then
+            Try
+                EnregistrerEchec(user.Id, SeuilVerrou, DureeVerrouMinutes)
+            Catch ex As Exception
+            End Try
+            Throw New ArgumentException("Identifiant et/ou mot de passe erroné !")
+        End If
+
+        ' Migration transparente vers PBKDF2 à la première connexion réussie.
+        If doitEtreRehache Then
+            Try
+                UpdateEmpreinteMotDePasse(user.Id, MotDePasse.Hacher(password))
+            Catch ex As Exception
+            End Try
+        End If
+
+        Try
+            ReinitialiserEchecs(user.Id)
+        Catch ex As Exception
+        End Try
+
+        ' Le mot de passe en clair ne doit pas rester sur le bean.
+        user.Password = Nothing
+    End Sub
+
+    ''' <summary>Réenregistre l'empreinte du mot de passe, sans rien changer d'autre.</summary>
+    Public Sub UpdateEmpreinteMotDePasse(internauteId As Integer, empreinte As String)
+        Using con As SqlConnection = GetConnection()
+            Using cmd As New SqlCommand("UPDATE oasis.oa_internaute SET password = @password WHERE id = @id;", con)
+                cmd.Parameters.AddWithValue("@password", empreinte)
+                cmd.Parameters.AddWithValue("@id", internauteId)
+                cmd.ExecuteNonQuery()
+            End Using
+        End Using
     End Sub
 
 End Class

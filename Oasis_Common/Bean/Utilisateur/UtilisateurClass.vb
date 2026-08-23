@@ -24,6 +24,10 @@ Public Class Utilisateur
     Public Property UtilisateurMail As String
     Public Property UtilisateurClePrivee As String
     Public Property UtilisateurAddress As String
+    ''' <summary>Nombre d'échecs d'authentification consécutifs (verrouillage serveur).</summary>
+    Public Property Tentatives As Integer
+    ''' <summary>Date jusqu'à laquelle le compte est verrouillé. Nothing si non verrouillé.</summary>
+    Public Property VerrouJusqua As Date?
 
     Public Sub New()
         Me.UtilisateurId = 0
@@ -42,6 +46,12 @@ Public Class Utilisateur
         Me.UtilisateurAddress = ""
     End Sub
 
+    ''' <summary>
+    ''' Ancien calcul d'empreinte (SHA-1, poivre constant, sans sel). Conservé
+    ''' UNIQUEMENT pour vérifier les empreintes déjà en base et les migrer à la
+    ''' première connexion. Ne jamais l'utiliser pour enregistrer un mot de passe :
+    ''' voir MotDePasse.Hacher.
+    ''' </summary>
     Public Shared Function CryptePwd(login As String, pwd As String) As String
         Dim UniEnc As New Text.UnicodeEncoding
         Dim bitPass() As Byte = UniEnc.GetBytes("U23cGt'r8c" + login + pwd)
@@ -50,8 +60,12 @@ Public Class Utilisateur
         End Using
     End Function
 
+    ''' <summary>
+    ''' Remplace le mot de passe en clair porté par le bean par son empreinte
+    ''' PBKDF2, prête à être enregistrée.
+    ''' </summary>
     Public Function CryptePwd() As String
-        Me.Password = CryptePwd(UtilisateurLogin, Password)
+        Me.Password = MotDePasse.Hacher(Password)
         Return Password
     End Function
 

@@ -212,13 +212,19 @@ Public Class FrmUtilisateur
             .UtilisateurSiegeId = DirectCast(Me.DropDownSiege.SelectedItem.Value, Siege).SiegeId
             .FonctionParDefautId = DirectCast(Me.DropDownProfil.SelectedItem.Value, Profil).FonctionParDefautId
             If isNoChangePassword = False Then
-                .Password = Utilisateur.CryptePwd(.UtilisateurLogin, TxtPassword1.Text.Trim)
+                .Password = MotDePasse.Hacher(TxtPassword1.Text.Trim)
                 .IsPasswordUniqueUsage = True
             End If
             .UtilisateurRPPS = If(isProfilMedicalOrParamedical(), TxtRPPS.Text, "")
-            Dim ecKey As EthECKey = EthECKey.GenerateKey()
-            .UtilisateurClePrivee = "0x" & BitConverter.ToString(ecKey.GetPrivateKeyAsBytes()).Replace("-", "")
-            .UtilisateurAddress = ecKey.GetPublicAddress()
+            ' La clé de signature n'est générée que si l'utilisateur n'en a pas.
+            ' Elle était régénérée à chaque enregistrement : toute modification de
+            ' fiche aurait changé la clé et rompu le rattachement des ordonnances
+            ' déjà signées à leur prescripteur.
+            If String.IsNullOrWhiteSpace(.UtilisateurClePrivee) Then
+                Dim ecKey As EthECKey = EthECKey.GenerateKey()
+                .UtilisateurClePrivee = "0x" & BitConverter.ToString(ecKey.GetPrivateKeyAsBytes()).Replace("-", "")
+                .UtilisateurAddress = ecKey.GetPublicAddress()
+            End If
         End With
         ' --- enregistrement
         If isCreation Then
