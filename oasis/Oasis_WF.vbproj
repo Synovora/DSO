@@ -23,7 +23,9 @@
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
     <TargetFrameworkProfile />
-    <PublishUrl>ftp://ns3119889.ip-51-38-181.eu/</PublishUrl>
+    <!-- Publication par SFTP/HTTPS uniquement : FTP transporte les identifiants
+         et la charge utile en clair. -->
+    <PublishUrl>https://api.synovora.com/clickonce/</PublishUrl>
     <Install>true</Install>
     <InstallFrom>Web</InstallFrom>
     <UpdateEnabled>true</UpdateEnabled>
@@ -33,8 +35,10 @@
     <UpdatePeriodically>false</UpdatePeriodically>
     <UpdateRequired>true</UpdateRequired>
     <MapFileExtensions>true</MapFileExtensions>
-    <InstallUrl>http://ns3119889.ip-51-38-181.eu/clickonce/</InstallUrl>
-    <UpdateUrl>http://ns3119889.ip-51-38-181.eu/clickonce/</UpdateUrl>
+    <!-- HTTPS obligatoire : en HTTP, un intercepteur réseau sert un manifeste
+         modifié et exécute son code sur tous les postes au prochain démarrage. -->
+    <InstallUrl>https://api.synovora.com/clickonce/</InstallUrl>
+    <UpdateUrl>https://api.synovora.com/clickonce/</UpdateUrl>
     <ProductName>Oasis</ProductName>
     <PublisherName>Synovora</PublisherName>
     <SuiteName>Oasis</SuiteName>
@@ -90,7 +94,10 @@
     <GenerateManifests>true</GenerateManifests>
   </PropertyGroup>
   <PropertyGroup>
-    <SignManifests>false</SignManifests>
+    <!-- Les manifestes doivent être signés avec le certificat de signature de
+         code de l'organisation (horodaté). Renseigner le certificat dans les
+         propriétés du projet, onglet Signature, avant publication. -->
+    <SignManifests>true</SignManifests>
   </PropertyGroup>
   <PropertyGroup>
     <TargetZone>LocalIntranet</TargetZone>

@@ -138,6 +138,32 @@ Public Module ModuleUtilsBase
     End Function
 
     ''' <summary>
+    ''' URL de base du portail (https://hôte), construite à partir de ServeurOasis.
+    ''' Sert aux liens imprimés sur les ordonnances (QR code de vérification) et aux
+    ''' liens de récupération envoyés par mail. Ces adresses étaient figées sur
+    ''' l'adresse d'un serveur particulier : une ordonnance imprimée renvoyait vers
+    ''' cette machine même après un déménagement, ou vers son futur occupant.
+    ''' UrlPortailPublique permet de publier une adresse différente de celle de
+    ''' l'API si les deux ne coïncident pas.
+    ''' </summary>
+    Public Function UrlPortail() As String
+        Dim hote = ConfigurationManager.AppSettings("UrlPortailPublique")
+        If String.IsNullOrWhiteSpace(hote) Then
+            hote = ConfigurationManager.AppSettings("ServeurOasis")
+        End If
+        If String.IsNullOrWhiteSpace(hote) Then
+            Throw New ConfigurationErrorsException(
+                "Ni 'UrlPortailPublique' ni 'ServeurOasis' ne sont renseignés dans la configuration.")
+        End If
+        hote = hote.Trim().TrimEnd("/"c)
+        If hote.StartsWith("http://", StringComparison.OrdinalIgnoreCase) OrElse
+           hote.StartsWith("https://", StringComparison.OrdinalIgnoreCase) Then
+            Return hote
+        End If
+        Return "https://" & hote
+    End Function
+
+    ''' <summary>
     ''' Échappe les caractères jokers de SQL Server pour une valeur destinée à un
     ''' LIKE paramétré : sans cela, une saisie contenant % ou _ élargit la
     ''' recherche à l'insu de l'utilisateur.

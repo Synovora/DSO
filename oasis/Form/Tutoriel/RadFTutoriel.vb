@@ -37,8 +37,13 @@ Public Class RadFTutoriel
             'Récupération de l'URL du WiKi dans les paramètres de l'application
             Dim UriProcedureTutorielle As String = ConfigurationManager.AppSettings("UriProcedureTutorielle")
             If UriProcedureTutorielle = "" Then
+                ' Plus de repli sur une adresse IP en clair : le wiki serait chargé
+                ' en HTTP depuis une machine qui peut changer de propriétaire.
                 CreateLog("Paramètre application 'UriProcedureTutorielle' non trouvé !", "Procédure tutorielle", Log.EnumTypeLog.ERREUR.ToString, userLog)
-                UriProcedureTutorielle = "http://173.199.71.187/doku.php?id="
+                MsgBox("L'adresse du wiki n'est pas configurée (UriProcedureTutorielle)." & vbCrLf &
+                       "Contactez votre administrateur.", MsgBoxStyle.Exclamation, "Procédure tutorielle")
+                SplitPanel5.Hide()
+                Return
             End If
 
             Dim Url_ProcvedureTutorielle As String = UriProcedureTutorielle & Wiki

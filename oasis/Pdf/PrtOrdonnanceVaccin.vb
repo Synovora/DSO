@@ -25,7 +25,10 @@ Public Class PrtOrdonnanceVaccin
     ReadOnly profilDao As New ProfilDao
     ReadOnly theriaqueDao As New TheriaqueDao
     ReadOnly aldDao As New AldDao
-    ReadOnly SIGN_URL As String = "https://ns3119889.ip-51-38-181.eu/Sign/Check/"
+    ' Adresse du vérificateur imprimée dans le QR code des ordonnances. Construite
+    ' depuis la configuration : elle était figée sur un serveur particulier, et
+    ' une ordonnance imprimée conserve ce lien pour des années.
+    ReadOnly SIGN_URL As String = UrlPortail() & "/Sign/Check/"
 
     Dim ordonnance As Ordonnance
 

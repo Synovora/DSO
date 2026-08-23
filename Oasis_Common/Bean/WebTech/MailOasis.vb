@@ -75,8 +75,12 @@ Public Class MailOasis
         End If
 
         If Internaute IsNot Nothing Then
-            Body = Body.Replace("@InternauteRecovery", "https://ns3119889.ip-51-38-181.eu/Auth/Recover?key=" & Internaute.Recovery).Replace("@InternauteEmail", Internaute.Email).Replace("@InternauteUsername", Internaute.Username)
-            Subject = Subject.Replace("@InternauteRecovery", "https://ns3119889.ip-51-38-181.eu/Auth/Recover?key=" & Internaute.Recovery).Replace("@InternauteEmail", Internaute.Email).Replace("@InternauteUsername", Internaute.Username)
+            ' L'hôte vient de la configuration : il était figé sur l'adresse d'un
+            ' serveur particulier, que les liens de récupération suivaient encore
+            ' après tout déménagement.
+            Dim lienRecuperation = UrlPortail() & "/Auth/Recover?key=" & Internaute.Recovery
+            Body = Body.Replace("@InternauteRecovery", lienRecuperation).Replace("@InternauteEmail", Internaute.Email).Replace("@InternauteUsername", Internaute.Username)
+            Subject = Subject.Replace("@InternauteRecovery", lienRecuperation).Replace("@InternauteEmail", Internaute.Email).Replace("@InternauteUsername", Internaute.Username)
         End If
     End Sub
 
