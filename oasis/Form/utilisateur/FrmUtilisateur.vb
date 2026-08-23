@@ -220,10 +220,15 @@ Public Class FrmUtilisateur
             ' Elle était régénérée à chaque enregistrement : toute modification de
             ' fiche aurait changé la clé et rompu le rattachement des ordonnances
             ' déjà signées à leur prescripteur.
-            If String.IsNullOrWhiteSpace(.UtilisateurClePrivee) Then
+            ' La présence est demandée à la base : la fiche chargée ne porte plus la
+            ' clé privée. Laisser les deux champs vides signifie « ne pas toucher ».
+            If isCreation OrElse Not userDao.ACleSignature(.UtilisateurId) Then
                 Dim ecKey As EthECKey = EthECKey.GenerateKey()
                 .UtilisateurClePrivee = "0x" & BitConverter.ToString(ecKey.GetPrivateKeyAsBytes()).Replace("-", "")
                 .UtilisateurAddress = ecKey.GetPublicAddress()
+            Else
+                .UtilisateurClePrivee = ""
+                .UtilisateurAddress = ""
             End If
         End With
         ' --- enregistrement

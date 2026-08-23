@@ -15,18 +15,29 @@ Public Class MailUtil
 
     Public Sub SendMail(user As Utilisateur, mailOasis As MailOasis)
 
-        Dim paramMailDao As New ParametreMailDao
-        Dim paramSMTP = paramMailDao.GetParametreMailBySiegeIdTypeMailParam(user.UtilisateurSiegeId, TypeMailParams.SMTP_PARAMETERS)
-
-
+        ' Les paramètres SMTP sont fournis par l'appelant (le serveur). Cette
+        ' méthode les relisait en base sans jamais s'en servir, ce qui obligeait
+        ' tout poste appelant à pouvoir lire le mot de passe du compte d'envoi.
         Dim mimMessage = New MimeMessage()
 
         With mimMessage
             .From.Add(New MailboxAddress(mailOasis.AliasFrom, Me.SMTPFrom))
-            Dim tbl = mailOasis.AddressTo.Split(",")
+            ' Chaque destinataire est validé : la zone de saisie est libre et le
+            ' message peut porter des documents médicaux.
+            Dim tbl = If(mailOasis.AddressTo, "").Split(","c)
+            Dim nbDestinataires = 0
             For Each adr As String In tbl
-                .To.Add(MailboxAddress.Parse(adr))
+                Dim adresse = adr.Trim()
+                If adresse = "" Then Continue For
+                If adresse.IndexOfAny(New Char() {ChrW(13), ChrW(10), ChrW(0)}) >= 0 OrElse Not IsValidEmail(adresse) Then
+                    Throw New ArgumentException("Adresse de destinataire invalide : " & adresse)
+                End If
+                .To.Add(MailboxAddress.Parse(adresse))
+                nbDestinataires += 1
             Next
+            If nbDestinataires = 0 Then
+                Throw New ArgumentException("Aucun destinataire valide.")
+            End If
             .Subject = mailOasis.Subject
 
             Dim builder = New BodyBuilder()
