@@ -3,7 +3,7 @@ Imports Oasis_Common
 
 Namespace Oasis_Web.Controllers
     Public Class ResultatsController
-        Inherits Controller
+        Inherits PortailController
 
         ReadOnly sousEpisodeReponseDao As New SousEpisodeReponseDao
         ReadOnly fileExtensionDao As New FileExtensionDao
@@ -18,20 +18,34 @@ Namespace Oasis_Web.Controllers
         ReadOnly episodeDao As New EpisodeDao
         Dim episodeParametreDao As New EpisodeParametreDao
 
+        <Authorize>
         <ActionName("download")>
         Public Function Download(fileName As String) As ActionResult
-            Dim filePath = ConfigurationManager.AppSettings("FileUploadLocation") & "\" & fileName
+            Dim patient = GetPatientConnecte()
+            If patient Is Nothing Then Return AccesRefuse()
 
-            Response.Clear()
-            Response.ClearContent()
-            Response.ClearHeaders()
-            Response.ContentType = "application/pdf"
-            Response.Buffer = True
-            Response.AddHeader("Content-Disposition", String.Format("attachment;filename={0}", fileName))
-            Response.TransmitFile(filePath)
-            Response.End()
+            ' Le fichier demandé doit appartenir au patient connecté : on ne se fie
+            ' pas au nom fourni, on le compare à la liste des documents du patient.
+            Dim autorises = sousEpisodeReponseDao.GetReponseCompleteByUser(patient.PatientId) _
+                                .Select(Function(r) r.GetFilenameServer(r.EpisodeId)).ToList()
+            Dim demande = If(fileName, "").Trim().Replace("/"c, "\"c).TrimStart("\"c)
+            If Not autorises.Any(Function(n) String.Equals(n, demande, StringComparison.OrdinalIgnoreCase)) Then
+                Return New HttpStatusCodeResult(404, "Document introuvable")
+            End If
 
-            Return Nothing
+            Dim filePath As String
+            Try
+                filePath = ResoudreCheminDocument(demande)
+            Catch ex As ArgumentException
+                Return New HttpStatusCodeResult(404, "Document introuvable")
+            End Try
+            If Not System.IO.File.Exists(filePath) Then
+                Return New HttpStatusCodeResult(404, "Document introuvable")
+            End If
+
+            Dim nomTelechargement = System.IO.Path.GetFileName(filePath)
+            ' MyBase.File : System.IO.File est importé dans ce fichier.
+            Return MyBase.File(filePath, "application/pdf", nomTelechargement)
         End Function
 
         <Authorize>
@@ -47,11 +61,8 @@ Namespace Oasis_Web.Controllers
             ViewBag.ModeName = strName
             ViewBag.WelcomeText = strWelcomeText
 
-            If Request.Cookies("patientId") Is Nothing Then
-                Return View("~/Views/Pages/pages-500.cshtml")
-            End If
-
-            Dim patient = patientDao.GetPatient(Request.Cookies("patientId").Value)
+            Dim patient = GetPatientConnecte()
+            If patient Is Nothing Then Return AccesRefuse()
             ViewBag.Patient = patient
 
             Dim Extensions = fileExtensionDao.GetAllFileExtension()
@@ -93,9 +104,10 @@ Namespace Oasis_Web.Controllers
             Return View()
         End Function
 
+        <Authorize>
         Public Function Pagination(ByVal Page As Integer) As ActionResult
-
-            ViewBag("Page") = Page
+            ViewBag.Page = Page
+            Return New HttpStatusCodeResult(204)
         End Function
 
     End Class

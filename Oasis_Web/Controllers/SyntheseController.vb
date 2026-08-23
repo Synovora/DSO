@@ -12,7 +12,7 @@ Imports System.Globalization
 
 Namespace Oasis_Web.Controllers
     Public Class SyntheseController
-        Inherits Controller
+        Inherits PortailController
 
         ReadOnly parametreDao As New ParametreDao
         ReadOnly episodeProtocoleCollaboratifDao As New EpisodeProtocoleCollaboratifDao
@@ -30,11 +30,8 @@ Namespace Oasis_Web.Controllers
             ViewBag.ModeName = strName
             ViewBag.WelcomeText = strWelcomeText
 
-            If Request.Cookies("patientId") Is Nothing Then
-                Return View("~/Views/Pages/pages-500.cshtml")
-            End If
-
-            Dim patient = patientDao.GetPatient(Request.Cookies("patientId").Value)
+            Dim patient = GetPatientConnecte()
+            If patient Is Nothing Then Return AccesRefuse()
             ViewBag.Patient = patient
             ViewBag.Contexts = BuildContexte(patient.PatientId)
             ViewBag.Antecedents = BuildAntecedent(patient.PatientId)
@@ -901,7 +898,7 @@ Namespace Oasis_Web.Controllers
             Return result
         End Function
 
-        Public Function BuildVaccin(patientId As Integer) As List(Of List(Of String))
+        Private Function BuildVaccin(patientId As Integer) As List(Of List(Of String))
             Dim NotePatientDataTable As New DataTable
             Dim result As List(Of List(Of String)) = New List(Of List(Of String))
 

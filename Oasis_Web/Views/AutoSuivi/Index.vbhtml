@@ -37,7 +37,7 @@ End Section
                                     <div Class="d-flex flex-row">
                                         <div Class="">
                                             <div class="input-group">
-                                                <input type="text" class="form-control" maxlength="11" id=@("ParametreAutoSuivi-" & ViewBag.ParametresAutoSuivi(i).Id) name=@ViewBag.ParametresAutoSuivi(i).Id placeholder="">
+                                                <input type="text" class="form-control" maxlength="11" id="@("ParametreAutoSuivi-" & ViewBag.ParametresAutoSuivi(i)".Id) name="@ViewBag.ParametresAutoSuivi(i).Id" placeholder="">
                                                 @If (ViewBag.ParametresAutoSuivi(i).Description <> "PAS") Then
                                                     @<div class="input-group-append">
                                                         <span class="input-group-text" style="width: 80px" id="validationTooltipUsernamePrepend">@ViewBag.ParametresAutoSuivi(i).Unite</span>
@@ -52,7 +52,7 @@ End Section
                                                 </div>
                                                 <div Class="">
                                                     <div class="input-group">
-                                                        <input type="text" class="form-control" maxlength="11" id=@("ParametreAutoSuivi-7") name="7" placeholder="">
+                                                        <input type="text" class="form-control" maxlength="11" id="@("ParametreAutoSuivi-7")" name="7" placeholder="">
                                                         <div class="input-group-append">
                                                             <span class="input-group-text" style="width: 80px" id="validationTooltipUsernamePrepend">@ViewBag.ParametresAutoSuivi(i).Unite</span>
                                                         </div>

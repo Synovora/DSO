@@ -69,8 +69,10 @@ Public Class InternauteDao
         Using con As SqlConnection = GetConnection()
             Dim command As SqlCommand = con.CreateCommand()
             Try
-                command.CommandText = "SELECT * FROM oasis.oa_internaute WHERE recovery = @recovery;"
-                command.Parameters.AddWithValue("@recovery", recovery)
+                ' recovery <> '' : sinon une clé vide renvoie le premier compte ayant
+                ' déjà terminé une réinitialisation.
+                command.CommandText = "SELECT * FROM oasis.oa_internaute WHERE recovery = @recovery AND recovery <> '';"
+                command.Parameters.AddWithValue("@recovery", If(recovery, ""))
                 Using reader As SqlDataReader = command.ExecuteReader()
                     If reader.Read() Then
                         user = New Internaute(reader)
@@ -104,32 +106,81 @@ Public Class InternauteDao
     End Function
 
     Public Function Update(internaute As Internaute) As Long
-        Dim da As New SqlDataAdapter()
         Dim internauteId As Long
 
-        Dim SQLstring As String = "UPDATE oasis.oa_internaute SET password=@password, recovery=@recovery, code=@code WHERE id=@id;"
+        Dim SQLstring As String =
+            "UPDATE oasis.oa_internaute SET password=@password, recovery=@recovery, code=@code," & vbCrLf &
+            " recovery_expiration=@recovery_expiration WHERE id=@id;"
 
-        Dim con As SqlConnection = GetConnection()
-        Dim cmd As New SqlCommand(SQLstring, con)
-        With cmd.Parameters
-            .AddWithValue("@id", internaute.Id)
-            .AddWithValue("@password", internaute.Password)
-            .AddWithValue("@recovery", internaute.Recovery)
-            .AddWithValue("@code", internaute.Code)
-        End With
-
-        Try
-            da.InsertCommand = cmd
-            da.InsertCommand.ExecuteScalar()
-            internauteId = internaute.Id
-        Catch ex As Exception
-            Throw New Exception(ex.Message)
-        Finally
-            con.Close()
-        End Try
+        Using con As SqlConnection = GetConnection()
+            Using cmd As New SqlCommand(SQLstring, con)
+                With cmd.Parameters
+                    .AddWithValue("@id", internaute.Id)
+                    .AddWithValue("@password", If(internaute.Password, CObj(DBNull.Value)))
+                    .AddWithValue("@recovery", If(internaute.Recovery, CObj(DBNull.Value)))
+                    .AddWithValue("@code", If(internaute.Code, CObj(DBNull.Value)))
+                    .AddWithValue("@recovery_expiration", If(internaute.RecoveryExpiration.HasValue, CObj(internaute.RecoveryExpiration.Value), CObj(DBNull.Value)))
+                End With
+                cmd.ExecuteNonQuery()
+                internauteId = internaute.Id
+            End Using
+        End Using
 
         Return internauteId
     End Function
+
+    ''' <summary>
+    ''' Enregistre une demande de récupération de mot de passe SANS toucher au mot
+    ''' de passe existant. Effacer le mot de passe avant toute preuve de possession
+    ''' de la boîte mail permettait de bloquer n'importe quel compte à distance.
+    ''' </summary>
+    Public Function UpdateRecovery(internauteId As Integer, recovery As String, expiration As Date, code As String) As Long
+        Dim SQLstring As String =
+            "UPDATE oasis.oa_internaute SET recovery=@recovery, recovery_expiration=@expiration, code=@code WHERE id=@id;"
+
+        Using con As SqlConnection = GetConnection()
+            Using cmd As New SqlCommand(SQLstring, con)
+                With cmd.Parameters
+                    .AddWithValue("@id", internauteId)
+                    .AddWithValue("@recovery", recovery)
+                    .AddWithValue("@expiration", expiration)
+                    .AddWithValue("@code", If(code, CObj(DBNull.Value)))
+                End With
+                Return cmd.ExecuteNonQuery()
+            End Using
+        End Using
+    End Function
+
+    ''' <summary>
+    ''' Compteur de verrouillage côté serveur : le client ne peut pas le contourner,
+    ''' contrairement au compteur stocké dans la base de registre du poste.
+    ''' </summary>
+    Public Sub EnregistrerEchec(internauteId As Integer, seuil As Integer, dureeVerrouMinutes As Integer)
+        Dim SQLstring As String =
+            "UPDATE oasis.oa_internaute SET tentatives = COALESCE(tentatives, 0) + 1," & vbCrLf &
+            " verrou_jusqua = CASE WHEN COALESCE(tentatives, 0) + 1 >= @seuil" & vbCrLf &
+            "                      THEN DATEADD(minute, @duree, SYSDATETIME()) ELSE verrou_jusqua END" & vbCrLf &
+            " WHERE id=@id;"
+
+        Using con As SqlConnection = GetConnection()
+            Using cmd As New SqlCommand(SQLstring, con)
+                cmd.Parameters.AddWithValue("@id", internauteId)
+                cmd.Parameters.AddWithValue("@seuil", seuil)
+                cmd.Parameters.AddWithValue("@duree", dureeVerrouMinutes)
+                cmd.ExecuteNonQuery()
+            End Using
+        End Using
+    End Sub
+
+    ''' <summary>Remet le compteur d'échecs à zéro après une authentification réussie.</summary>
+    Public Sub ReinitialiserEchecs(internauteId As Integer)
+        Using con As SqlConnection = GetConnection()
+            Using cmd As New SqlCommand("UPDATE oasis.oa_internaute SET tentatives = 0, verrou_jusqua = NULL WHERE id=@id;", con)
+                cmd.Parameters.AddWithValue("@id", internauteId)
+                cmd.ExecuteNonQuery()
+            End Using
+        End Using
+    End Sub
 
     Public Function GetInternauteByNIR(nir As String) As Internaute
         Dim user As Internaute = Nothing

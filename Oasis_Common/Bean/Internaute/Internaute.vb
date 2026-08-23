@@ -9,6 +9,12 @@ Public Class Internaute
     Public Property Email As String
     Public Property Recovery As String
     Public Property Code As String
+    ''' <summary>Date d'expiration de la clé de récupération. Nothing si aucune demande en cours.</summary>
+    Public Property RecoveryExpiration As Date?
+    ''' <summary>Nombre d'échecs d'authentification consécutifs (verrouillage côté serveur).</summary>
+    Public Property Tentatives As Integer
+    ''' <summary>Date jusqu'à laquelle le compte est verrouillé. Nothing si non verrouillé.</summary>
+    Public Property VerrouJusqua As Date?
 
     Public Sub New()
     End Sub
@@ -20,6 +26,17 @@ Public Class Internaute
         Me.Email = reader("email")
         Me.Recovery = Coalesce(reader("recovery"), Nothing)
         Me.Code = Coalesce(reader("code"), Nothing)
+        If HasColumn(reader, "recovery_expiration") Then
+            Dim exp = Coalesce(reader("recovery_expiration"), Nothing)
+            Me.RecoveryExpiration = If(exp Is Nothing, CType(Nothing, Date?), CDate(exp))
+        End If
+        If HasColumn(reader, "tentatives") Then
+            Me.Tentatives = Coalesce(reader("tentatives"), 0)
+        End If
+        If HasColumn(reader, "verrou_jusqua") Then
+            Dim verrou = Coalesce(reader("verrou_jusqua"), Nothing)
+            Me.VerrouJusqua = If(verrou Is Nothing, CType(Nothing, Date?), CDate(verrou))
+        End If
     End Sub
 
     Public Shared Function CryptePwd(login As String, pwd As String) As String

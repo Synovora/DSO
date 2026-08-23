@@ -1659,6 +1659,8 @@
       <LastGenOutput>Settings.Designer.vb</LastGenOutput>
     </None>
     <None Include="packages.config" />
+    <Compile Include="Controllers\PortailController.vb" />
+    <Compile Include="CheminsDocuments.vb" />
     <Compile Include="Controllers\DashboardController.vb" />
     <Compile Include="Controllers\AuthController.vb" />
     <Compile Include="Controllers\LayoutsController.vb" />

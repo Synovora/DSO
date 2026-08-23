@@ -1,6 +1,8 @@
-﻿<script type="text/javascript">
+﻿@Html.AntiForgeryToken()
+<script type="text/javascript">
     function logout() {
-        $.post("/Auth/Logout").done(function (data) {
+        var token = $('input[name="__RequestVerificationToken"]').val();
+        $.post("/Auth/Logout", { __RequestVerificationToken: token }).done(function (data) {
             location.reload();
         });
     }
@@ -12,7 +14,7 @@
         <div class="d-flex">
             <!-- LOGO -->
             <div class="navbar-brand-box">
-                <a href=@Url.Action("Index", "Dashboard") class="">
+                <a href="@Url.Action("Index", "Dashboard")" class="">
                     <img src="http://synovora.com/wp-content/uploads/2020/05/logo-300x137.png" alt="" height="60" class="my-auto pt-2">
                 </a>
             </div>

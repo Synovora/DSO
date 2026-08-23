@@ -40,7 +40,7 @@ Namespace Oasis_Web.Controllers
             Dim internautePermissionDao As New InternautePermissionDao
 
             Try
-                If key Is Nothing OrElse Not Regex.IsMatch(key, "^[A-F0-9]{64}") Then
+                If key Is Nothing OrElse Not Regex.IsMatch(key, "^[A-F0-9]{64}$") Then
                     Throw New ArgumentException("La recovery key n'est pas valide.")
                 End If
 
@@ -49,10 +49,16 @@ Namespace Oasis_Web.Controllers
                     Throw New ArgumentException("Internaute introuvable.")
                 End If
 
+                If String.IsNullOrEmpty(internaute.Recovery) OrElse internaute.RecoveryExpiration < DateTime.Now Then
+                    Throw New ArgumentException("Lien de récupération invalide ou expiré.")
+                End If
+
                 ViewBag.Internaute = internaute
                 ViewBag.Recovery = key
-            Catch ex As Exception
+            Catch ex As ArgumentException
                 message = ex.Message
+            Catch ex As Exception
+                message = "Une erreur est survenue, veuillez réessayer."
             End Try
 
             ViewBag.Message = message
@@ -70,24 +76,41 @@ Namespace Oasis_Web.Controllers
         <ValidateAntiForgeryToken>
         <AllowAnonymous>
         Public Function Recover(user As UserRecover) As ActionResult
-            Dim message As String
+            Dim message As String = Nothing
             Dim internauteDao As New InternauteDao
-            Dim internautePermissionDao As New InternautePermissionDao
 
             Try
-                Dim internaute As Internaute = internauteDao.GetInternauteByRecoveryKey(user.Recovery)
-                If internaute.Code <> user.Code Then
-                    Throw New Exception("Le code SMS n'est pas le bon")
+                ' La clé de récupération doit être valide (comme au GET) : on ne
+                ' peut pas réinitialiser un mot de passe avec une clé vide, ce qui
+                ' permettait de prendre le contrôle du premier compte ayant déjà
+                ' effectué une réinitialisation.
+                If user.Recovery Is Nothing OrElse Not Regex.IsMatch(user.Recovery, "^[A-F0-9]{64}$") Then
+                    Throw New ArgumentException("Le lien de récupération n'est pas valide.")
                 End If
+                If Not ModelState.IsValid OrElse user.Password <> user.PasswordBis Then
+                    Throw New ArgumentException("Les deux mots de passe ne correspondent pas.")
+                End If
+                If Not isValidePassword(user.Password) Then
+                    Throw New ArgumentException("Le mot de passe est trop faible : " & messageFormatPassword)
+                End If
+
+                Dim internaute As Internaute = internauteDao.GetInternauteByRecoveryKey(user.Recovery)
+                If internaute Is Nothing OrElse String.IsNullOrEmpty(internaute.Recovery) OrElse internaute.RecoveryExpiration < DateTime.Now Then
+                    Throw New ArgumentException("Lien de récupération invalide ou expiré.")
+                End If
+
                 internaute.Password = user.Password
-                internaute.Recovery = ""
-                internaute.Code = ""
                 internaute.CryptePwd()
+                internaute.Recovery = Nothing
+                internaute.Code = Nothing
+                internaute.RecoveryExpiration = Nothing
                 internauteDao.Update(internaute)
                 Return RedirectToAction("Login", "Auth")
 
-            Catch ex As Exception
+            Catch ex As ArgumentException
                 message = ex.Message
+            Catch ex As Exception
+                message = "Une erreur est survenue, veuillez réessayer."
             End Try
 
             ViewBag.Message = message
@@ -105,39 +128,53 @@ Namespace Oasis_Web.Controllers
             Dim patientDao As New PatientDao
 
             Try
+                ' Réponse identique que le compte existe ou non (pas d'énumération).
                 Dim internaute = internauteDao.GetInternauteByEmail(user.Email)
                 If (internaute Is Nothing) Then
                     Return RedirectToAction("Login", "Auth")
                 End If
-                Dim internautePermission = internautePermissionDao.GetPermissionsByInternaute(internaute.Id)
+
+                ' Clé à usage unique, valable une heure. Le mot de passe existant
+                ' n'est PAS effacé : le compte reste utilisable tant que la
+                ' réinitialisation n'est pas confirmée.
                 Dim ecKey As String = BitConverter.ToString(EthECKey.GenerateKey().GetPrivateKeyAsBytes()).Replace("-", "")
-                Dim internautePermissions = internautePermissionDao.GetPermissionsByPatient(internautePermission(0).Patient)
-                Dim internauteId = internauteDao.Update(New Internaute With {
-                    .Id = internautePermissions(0).Internaute,
-                    .Password = "",
-                .Recovery = ecKey,
-                    .Code = "0000"
-                })
-                If internauteId > 0 Then
-                    Dim patient = patientDao.GetPatient(internautePermissions(0).Patient)
-                    Dim mailOasis As New MailOasis
-                    mailOasis.Type = ParametreMail.TypeMailParams.INTERNAUTE_RESET
-                    mailOasis.AddressTo = user.Email
-                    mailOasis.Internaute = internaute
-                    mailOasis.Send(New LoginRequest With {
-                                   .login = "Bertrand.Gambet",
-                                   .password = "a"})
-                End If
+                internauteDao.UpdateRecovery(internaute.Id, ecKey, DateTime.Now.AddHours(1), Nothing)
+
+                ' L'objet transmis au mail doit porter la NOUVELLE clé, sinon le lien
+                ' envoyé pointe sur l'ancienne demande.
+                internaute.Recovery = ecKey
+                internaute.RecoveryExpiration = DateTime.Now.AddHours(1)
+
+                ' Le constructeur charge le modèle de message et effectue les
+                ' substitutions (@InternauteRecovery, ...) ; New MailOasis seul
+                ' produisait un mail vide.
+                Dim mailOasis As New MailOasis(ParametreMail.TypeMailParams.INTERNAUTE_RESET, _Internaute:=internaute)
+                mailOasis.AddressTo = user.Email
+                EnvoyerMailService(mailOasis)
 
                 Return RedirectToAction("Login", "Auth")
             Catch ex As Exception
-                message = ex.Message
+                message = "Une erreur est survenue, veuillez réessayer."
             End Try
 
             ViewBag.Message = message
 
             Return View()
         End Function
+
+        ''' <summary>
+        ''' Envoi d'un mail par le serveur avec le compte de service configuré.
+        ''' Remplace les identifiants d'un praticien codés en dur dans le source.
+        ''' </summary>
+        Private Shared Sub EnvoyerMailService(mailOasis As MailOasis)
+            Dim login = ConfigurationManager.AppSettings("MailServiceLogin")
+            Dim password = ConfigurationManager.AppSettings("MailServicePassword")
+            If String.IsNullOrWhiteSpace(login) OrElse String.IsNullOrWhiteSpace(password) Then
+                Throw New ConfigurationErrorsException(
+                    "MailServiceLogin / MailServicePassword ne sont pas configurés dans Web.config.")
+            End If
+            mailOasis.Send(New LoginRequest With {.login = login, .password = password})
+        End Sub
 
         <AllowAnonymous>
         <ActionName("lock-screen")>
@@ -213,24 +250,18 @@ Namespace Oasis_Web.Controllers
 
             Try
                 Dim internaute As Internaute = internauteDao.GetInternauteByLoginPassword(user.Email, user.Password)
-                Dim timeout As Integer = If(user.RememberMe, 525600, 20)
-                Dim ticket = New FormsAuthenticationTicket(user.Email, user.RememberMe, timeout)
-                FormsAuthentication.SetAuthCookie(internaute.Id, True)
-                Dim internautePermission = internautePermissionDao.GetPermissionsByInternaute(internaute.Id)
-                Response.Cookies("patientId").Value = internautePermission(0).Patient
-                Response.Cookies("patientId").Expires = DateTime.Now.AddDays(90)
-                Response.Cookies("internauteId").Value = internaute.Id
-                Response.Cookies("internauteId").Expires = DateTime.Now.AddDays(90)
-                'Dim strHostName = System.Net.Dns.GetHostName()
-                Dim outputIP As String
-                Using wClient As New WebClient
-                    outputIP = Regex.Match(wClient.DownloadString("http://www.ip-adress.com/"), "(?<=<h2>My IP address is: )[0-9.]*?(?=</h2>)", RegexOptions.Compiled).Value
 
-                End Using
+                ' L'identité authentifiée est la seule source du patient affiché :
+                ' plus de cookie patientId/internauteId modifiable par le client.
+                FormsAuthentication.SetAuthCookie(internaute.Id.ToString(), user.RememberMe)
+
+                ' Adresse réelle de l'appelant. L'ancienne version interrogeait un
+                ' site externe en HTTP à chaque connexion et enregistrait l'IP du
+                ' serveur, pas celle du patient.
                 internauteConnectionDao.Create(New InternauteConnection With {
                     .Internaute = internaute.Id,
                     .Datetime = Date.Now(),
-                    .Ip = outputIP
+                    .Ip = AdresseAppelant()
                 })
                 If (Url.IsLocalUrl(ReturnUrl)) Then
                     Return Redirect(ReturnUrl)
@@ -238,19 +269,38 @@ Namespace Oasis_Web.Controllers
                     Return RedirectToAction("Index", "Dashboard")
                 End If
 
-            Catch ex As Exception
+            Catch ex As ArgumentException
+                ' Message identique pour compte inconnu et mot de passe erroné.
                 message = ex.Message
+            Catch ex As Exception
+                message = "Une erreur est survenue, veuillez réessayer."
             End Try
 
             ViewBag.Message = message
             Return View()
         End Function
 
+        ''' <summary>
+        ''' Adresse IP de l'appelant, en tenant compte d'un éventuel reverse proxy.
+        ''' </summary>
+        Private Function AdresseAppelant() As String
+            Dim transmise = Request.ServerVariables("HTTP_X_FORWARDED_FOR")
+            If Not String.IsNullOrWhiteSpace(transmise) Then
+                Return transmise.Split(","c)(0).Trim()
+            End If
+            Return Request.UserHostAddress
+        End Function
+
         <HttpPost>
+        <ValidateAntiForgeryToken>
         <Authorize>
         Public Function Logout() As ActionResult
             FormsAuthentication.SignOut()
             Session.Abandon()
+            ' Purge des anciens cookies chez les clients qui les ont encore.
+            For Each nom In {"patientId", "internauteId"}
+                Response.Cookies.Add(New HttpCookie(nom, "") With {.Expires = DateTime.Now.AddDays(-1)})
+            Next
             Return RedirectToAction("Login", "Auth")
         End Function
     End Class

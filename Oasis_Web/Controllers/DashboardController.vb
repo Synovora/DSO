@@ -2,7 +2,7 @@
 
 Namespace Oasis_Web.Controllers
     Public Class DashboardController
-        Inherits Controller
+        Inherits PortailController
 
         ReadOnly parametreDao As New ParametreDao
         ReadOnly ordonnanceDao As New OrdonnanceDao
@@ -26,14 +26,11 @@ Namespace Oasis_Web.Controllers
             ViewBag.ModeName = strName
             ViewBag.WelcomeText = strWelcomeText
 
-            If Request.Cookies("patientId") Is Nothing Then
-                Return View("~/Views/Pages/pages-500.cshtml")
-            End If
-
-            Dim patient = patientDao.GetPatient(Request.Cookies("patientId").Value)
+            Dim patient = GetPatientConnecte()
+            If patient Is Nothing Then Return AccesRefuse()
             ViewBag.Patient = patient
 
-            Dim internauteConnections = internauteConnectionDao.GetConnectionByInternaute(Request.Cookies("internauteId").Value)
+            Dim internauteConnections = internauteConnectionDao.GetConnectionByInternaute(GetInternauteIdConnecte().Value)
             ViewBag.Connections = internauteConnections
 
             ViewBag.ParcoursDeSoin = ChargementParcoursDeSoin(patient.PatientId)

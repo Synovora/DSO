@@ -1,0 +1,51 @@
+﻿Imports System.Configuration
+Imports System.IO
+Imports System.Text.RegularExpressions
+
+''' <summary>
+''' Résolution sûre des chemins de documents servis ou reçus par l'API.
+''' Empêche la traversée de répertoire (..\, chemins absolus, UNC) : un nom de
+''' fichier fourni par un client ne peut désigner que la zone de dépôt et
+''' seulement les dossiers et motifs attendus par l'application.
+''' </summary>
+Public Module CheminsDocuments
+
+    ' Dossiers et motifs légitimes produits par getFilenameServer / GetFilenameServer.
+    Private ReadOnly NomValide As New Regex(
+        "^(SousEpisode|SousEpisodeReponse|Templates)\\[A-Za-z0-9_\-]+\.(DOCX|PDF)$",
+        RegexOptions.IgnoreCase Or RegexOptions.Compiled)
+
+    ''' <summary>
+    ''' Renvoie le chemin absolu du document correspondant à nomRelatif, ou lève
+    ''' ArgumentException si le nom ne respecte pas le motif attendu ou tente de
+    ''' sortir de la zone de dépôt.
+    ''' </summary>
+    Public Function ResoudreCheminDocument(nomRelatif As String) As String
+        Dim racineConfig = ConfigurationManager.AppSettings("FileUploadLocation")
+        If String.IsNullOrWhiteSpace(racineConfig) Then
+            Throw New InvalidOperationException("FileUploadLocation n'est pas configuré.")
+        End If
+        Dim racine = Path.GetFullPath(racineConfig).TrimEnd(Path.DirectorySeparatorChar)
+
+        Dim nettoye = If(nomRelatif, "").Trim().Replace("/"c, "\"c).TrimStart("\"c)
+        If Not NomValide.IsMatch(nettoye) Then
+            Throw New ArgumentException("Nom de fichier invalide.")
+        End If
+
+        Dim complet = Path.GetFullPath(Path.Combine(racine, nettoye))
+        If Not complet.StartsWith(racine & Path.DirectorySeparatorChar, StringComparison.OrdinalIgnoreCase) Then
+            Throw New ArgumentException("Nom de fichier invalide.")
+        End If
+        Return complet
+    End Function
+
+    ''' <summary>
+    ''' True si nomRelatif est un nom de document acceptable (sans résoudre le
+    ''' chemin sur le disque). Utile pour valider avant écriture.
+    ''' </summary>
+    Public Function EstNomDocumentValide(nomRelatif As String) As Boolean
+        Dim nettoye = If(nomRelatif, "").Trim().Replace("/"c, "\"c).TrimStart("\"c)
+        Return NomValide.IsMatch(nettoye)
+    End Function
+
+End Module

@@ -56,17 +56,17 @@ End section
                             </h5>
                             <div class="d-flex p-2 gap-1 align-self-center align-items-center">
                                 @If ViewBag.Page = 0 Then
-                                                @<button name = "Page" value=@(0) id = "Button2" type="submit"><i Class="mdi mdi-chevron-double-left"></i></button>
+                                                @<button name = "Page" value="@(0)" id = "Button2" type="submit"><i Class="mdi mdi-chevron-double-left"></i></button>
                                 End If
                                     @If ViewBag.Page > 0 Then
-                                                    @<button name="Page" value=@(ViewBag.Page - 1) id="Button2" type="submit"><i Class="mdi mdi-chevron-left"></i></button>
+                                                    @<button name="Page" value="@(ViewBag.Page - 1)" id="Button2" type="submit"><i Class="mdi mdi-chevron-left"></i></button>
                                 End If
 
     <p Class="px-2 my-auto">Page @(ViewBag.Page + 1)</p>
 
-                                                                <Button name = "Page" value=@(ViewBag.Page + 1) id="Button1" type="submit"><i Class="mdi mdi-chevron-right"></i></Button>
+                                                                <Button name = "Page" value="@(ViewBag.Page + 1)" id="Button1" type="submit"><i Class="mdi mdi-chevron-right"></i></Button>
                             @If (ViewBag.Page + 1) * ViewBag.PageCount < ViewBag.PageTotal Then
-                            @<button name="Page" value=@(Math.Floor(ViewBag.PageTotal / 10)) id="Button2" type="submit"><i Class="mdi mdi-chevron-double-right"></i></button>
+                            @<button name="Page" value="@(Math.Floor(ViewBag.PageTotal / 10)") id="Button2" type="submit"><i Class="mdi mdi-chevron-double-right"></i></button>
                                                             End If
                                                         </div>
                                                     </div>
@@ -86,14 +86,14 @@ End section
                                                             <tbody>
                                                 @For Each item In ViewBag.Resultats
                             @<div id="accordionExample">
-                                <tr data-toggle="collapse" data-target=@("#accordion" + item.Value.ToString) class="clickable cursor-pointer">
+                                <tr data-toggle="collapse" data-target="@("#accordion" + item.Value.ToString)" class="clickable cursor-pointer">
                                     <td>@item.Element(0).SousEpisodeLibelle</td>
                                     <td>@item.Element(0).SousEpisodeSousLibelle</td>
                                     <td>@Format(item.Element(0).HorodateCreation, "dd/MM/yyyy")</td>
                                     <td>@item.Element(0).TypeActivite</td>
                                     <td>@item.Element(0).Conclusion</td>
                                 </tr>
-                                <tr id=@("accordion" + item.Value.ToString()) class="collapse" data-parent="#accordionExample">
+                                <tr id="@("accordion" + item.Value.ToString()") class="collapse" data-parent="#accordionExample">
                                     <td colspan="6" class="bg-light">
                                         <table class="table mb-0">
                                             <thead>

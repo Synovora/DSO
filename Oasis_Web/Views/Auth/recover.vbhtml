@@ -46,7 +46,7 @@ End Code
                                         @<form Class="form-horizontal" action="@Url.Action("Recover", "Auth")" method="post">
                                             <div class="form-group">
                                                 <label for="useremail">Email:</label>
-                                                <input type="email" class="form-control" id="email" placeholder=@ViewBag.Internaute.Email disabled>
+                                                <input type="email" class="form-control" id="email" placeholder="@ViewBag.Internaute.Email" disabled>
                                             </div>
                                             <div Class="form-group">
                                                 <label for="userpassword">Recovery Key:</label>

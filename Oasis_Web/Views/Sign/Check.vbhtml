@@ -51,14 +51,14 @@ End Code
                     <div Class="row">
                         <div Class="col-md-6 mb-3">
                             <Label for="firstName">Nom</Label>
-                            <input type="text" Class="form-control" id="firstName" placeholder="" value=@ViewBag.Patient.PatientNom required disabled>
+                            <input type="text" Class="form-control" id="firstName" placeholder="" value="@ViewBag.Patient.PatientNom" required disabled>
                             <div Class="invalid-feedback">
                                 Valid first name Is required.
                             </div>
                         </div>
                         <div Class="col-md-6 mb-3">
                             <Label for="lastName">Prenom</Label>
-                            <input type="text" Class="form-control" id="lastName" placeholder="" value=@ViewBag.Patient.PatientPrenom required disabled>
+                            <input type="text" Class="form-control" id="lastName" placeholder="" value="@ViewBag.Patient.PatientPrenom" required disabled>
                             <div Class="invalid-feedback">
                                 Valid last name Is required.
                             </div>
@@ -67,14 +67,14 @@ End Code
                     <div Class="row">
                         <div Class="col-md-6 mb-3">
                             <Label for="birthDate">Date de naissance</Label>
-                            <input type="text" Class="form-control" id="birthDate" placeholder="" value=@Format(ViewBag.Patient.PatientDateNaissance, "dd/MM/yyyy") required disabled>
+                            <input type="text" Class="form-control" id="birthDate" placeholder="" value="@Format(ViewBag.Patient.PatientDateNaissance, "dd/MM/yyyy")" required disabled>
                             <div Class="invalid-feedback">
                                 Valid birthDate Is required.
                             </div>
                         </div>
                         <div Class="col-md-6 mb-3">
                             <Label for="CPAM">Immatriculation CPAM</Label>
-                            <input type="text" Class="form-control" id="CPAM" placeholder="" value=@ViewBag.Patient.PatientNir required disabled>
+                            <input type="text" Class="form-control" id="CPAM" placeholder="" value="@ViewBag.Patient.PatientNir" required disabled>
                             <div Class="invalid-feedback">
                                 Valid CPAM Is required.
                             </div>
@@ -87,14 +87,14 @@ End Code
                     <div Class="row">
                         <div Class="col-md-6 mb-3">
                             <Label for="firstName">Nom</Label>
-                            <input type="text" Class="form-control" id="firstName" placeholder="" value=@ViewBag.User.UtilisateurNom required disabled>
+                            <input type="text" Class="form-control" id="firstName" placeholder="" value="@ViewBag.User.UtilisateurNom" required disabled>
                             <div Class="invalid-feedback">
                                 Valid first name Is required.
                             </div>
                         </div>
                         <div Class="col-md-6 mb-3">
                             <Label for="lastName">Prenom</Label>
-                            <input type="text" Class="form-control" id="lastName" placeholder="" value=@ViewBag.User.UtilisateurPrenom required disabled>
+                            <input type="text" Class="form-control" id="lastName" placeholder="" value="@ViewBag.User.UtilisateurPrenom" required disabled>
                             <div Class="invalid-feedback">
                                 Valid last name Is required.
                             </div>
@@ -107,11 +107,11 @@ End Code
                     <div Class="row">
                         <div Class="col-md-6 mb-3">
                             <Label for="date">Date</Label>
-                            <input type="text" Class="form-control" id="date" placeholder="" value=@Format(ViewBag.Ordonnance.DateValidation, "dd/MM/yyyy") required disabled>
+                            <input type="text" Class="form-control" id="date" placeholder="" value="@Format(ViewBag.Ordonnance.DateValidation, "dd/MM/yyyy")" required disabled>
                         </div>
                         <div Class="col-md-6 mb-3">
                             <Label for="renouvelable">Renouvelable</Label>
-                            <input type="text" Class="form-control" id="renouvelable" placeholder="" value=@(If(ViewBag.Ordonnance.Renouvellement, ViewBag.Ordonnance.Renouvellement, "Non")) required disabled>
+                            <input type="text" Class="form-control" id="renouvelable" placeholder="" value="@(If(ViewBag.Ordonnance.Renouvellement, ViewBag.Ordonnance.Renouvellement, "Non")") required disabled>
                         </div>
                     </div>
                 </div>
