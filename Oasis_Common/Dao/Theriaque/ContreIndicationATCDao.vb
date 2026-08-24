@@ -31,18 +31,22 @@ Public Class ContreIndicationATCDao
         Return contreIndication
     End Function
 
-    Private Function BuildBean(reader As SqlDataReader) As ContreIndicationATC
+    ''' <summary>
+    ''' Lit une ligne telle quelle, sans toucher à la base. IDataRecord plutôt que
+    ''' SqlDataReader pour qu'un test puisse fournir la ligne.
+    ''' </summary>
+    Public Shared Function BuildBean(record As System.Data.IDataRecord) As ContreIndicationATC
         Dim contreIndication As New ContreIndicationATC
 
-        contreIndication.ContreIndicationId = reader("contre_indication_id")
-        contreIndication.PatientId = Coalesce(reader("patient_id"), 0)
-        contreIndication.ATCId = Coalesce(reader("code_atc"), "")
-        contreIndication.DenominationATC = Coalesce(reader("Denomination_atc"), "")
-        contreIndication.UserCreation = Coalesce(reader("creation_user_id"), 0)
-        contreIndication.DateCreation = Coalesce(reader("creation_date"), Nothing)
-        contreIndication.UserAnnulation = Coalesce(reader("annulation_user_id"), 0)
-        contreIndication.DateAnnulation = Coalesce(reader("annulation_date"), Nothing)
-        contreIndication.Inactif = Coalesce(reader("inactif"), False)
+        contreIndication.ContreIndicationId = record("contre_indication_id")
+        contreIndication.PatientId = Coalesce(record("patient_id"), 0)
+        contreIndication.ATCId = Coalesce(record("code_atc"), "")
+        contreIndication.DenominationATC = Coalesce(record("Denomination_atc"), "")
+        contreIndication.UserCreation = Coalesce(record("creation_user_id"), 0)
+        contreIndication.DateCreation = Coalesce(record("creation_date"), Nothing)
+        contreIndication.UserAnnulation = Coalesce(record("annulation_user_id"), 0)
+        contreIndication.DateAnnulation = Coalesce(record("annulation_date"), Nothing)
+        contreIndication.Inactif = Coalesce(record("inactif"), False)
 
         Return contreIndication
     End Function

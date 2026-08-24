@@ -62,14 +62,18 @@ Public Class EpisodeContexteDao
         Return episodeContexte
     End Function
 
-    Private Function BuildBean(reader As SqlDataReader) As EpisodeContexte
+    ''' <summary>
+    ''' Lit une ligne telle quelle, sans toucher à la base. IDataRecord plutôt que
+    ''' SqlDataReader pour qu'un test puisse fournir la ligne.
+    ''' </summary>
+    Public Shared Function BuildBean(record As System.Data.IDataRecord) As EpisodeContexte
         Dim episodeContexte As New EpisodeContexte With {
-            .EpisodeContexteId = reader("episode_contexte_id"),
-            .EpisodeId = Coalesce(reader("episode_id"), 0),
-            .PatientId = Coalesce(reader("patient_id"), 0),
-            .ContexteId = Coalesce(reader("contexte_id"), 0),
-            .UserCreation = Coalesce(reader("user_creation"), 0),
-            .DateCreation = Coalesce(reader("date_creation"), Nothing)
+            .EpisodeContexteId = record("episode_contexte_id"),
+            .EpisodeId = Coalesce(record("episode_id"), 0),
+            .PatientId = Coalesce(record("patient_id"), 0),
+            .ContexteId = Coalesce(record("contexte_id"), 0),
+            .UserCreation = Coalesce(record("user_creation"), 0),
+            .DateCreation = Coalesce(record("date_creation"), Nothing)
         }
         Return episodeContexte
     End Function

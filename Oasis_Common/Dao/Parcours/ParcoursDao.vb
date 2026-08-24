@@ -57,24 +57,28 @@ Public Class ParcoursDao
         Return parcours
     End Function
 
-    Private Function BuildBean(reader As SqlDataReader) As Parcours
+    ''' <summary>
+    ''' Lit une ligne telle quelle, sans toucher à la base. IDataRecord plutôt que
+    ''' SqlDataReader pour qu'un test puisse fournir la ligne.
+    ''' </summary>
+    Public Shared Function BuildBean(record As System.Data.IDataRecord) As Parcours
         Dim parcours As New Parcours With {
-            .Id = reader("oa_parcours_id"),
-            .PatientId = Coalesce(reader("oa_parcours_patient_id"), 0),
-            .SpecialiteId = Coalesce(reader("oa_parcours_specialite"), 0),
-            .CategorieId = Coalesce(reader("oa_parcours_categorie_id"), 0),
-            .SousCategorieId = Coalesce(reader("oa_parcours_sous_categorie_id"), 0),
-            .IntervenantOasis = Coalesce(reader("oa_parcours_intervenant_oasis"), False),
-            .RorId = Coalesce(reader("oa_parcours_ror_id"), 0),
-            .Commentaire = Coalesce(reader("oa_parcours_commentaire"), ""),
-            .Base = Coalesce(reader("oa_parcours_base"), ""),
-            .Rythme = Coalesce(reader("oa_parcours_rythme"), 0),
-            .Cacher = Coalesce(reader("oa_parcours_cacher"), False),
-            .Inactif = Coalesce(reader("oa_parcours_inactif"), False),
-            .UserCreation = Coalesce(reader("oa_parcours_utilisateur_creation"), 0),
-            .DateCreation = Coalesce(reader("oa_parcours_date_creation"), Nothing),
-            .UserModification = Coalesce(reader("oa_parcours_utilisateur_modification"), 0),
-            .DateModification = Coalesce(reader("oa_parcours_date_modification"), Nothing)
+            .Id = record("oa_parcours_id"),
+            .PatientId = Coalesce(record("oa_parcours_patient_id"), 0),
+            .SpecialiteId = Coalesce(record("oa_parcours_specialite"), 0),
+            .CategorieId = Coalesce(record("oa_parcours_categorie_id"), 0),
+            .SousCategorieId = Coalesce(record("oa_parcours_sous_categorie_id"), 0),
+            .IntervenantOasis = Coalesce(record("oa_parcours_intervenant_oasis"), False),
+            .RorId = Coalesce(record("oa_parcours_ror_id"), 0),
+            .Commentaire = Coalesce(record("oa_parcours_commentaire"), ""),
+            .Base = Coalesce(record("oa_parcours_base"), ""),
+            .Rythme = Coalesce(record("oa_parcours_rythme"), 0),
+            .Cacher = Coalesce(record("oa_parcours_cacher"), False),
+            .Inactif = Coalesce(record("oa_parcours_inactif"), False),
+            .UserCreation = Coalesce(record("oa_parcours_utilisateur_creation"), 0),
+            .DateCreation = Coalesce(record("oa_parcours_date_creation"), Nothing),
+            .UserModification = Coalesce(record("oa_parcours_utilisateur_modification"), 0),
+            .DateModification = Coalesce(record("oa_parcours_date_modification"), Nothing)
         }
         Return parcours
     End Function

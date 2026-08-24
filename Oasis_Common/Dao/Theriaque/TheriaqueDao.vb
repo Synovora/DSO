@@ -60,12 +60,16 @@ Public Class TheriaqueDao
         Return specialite
     End Function
 
-    Private Function BuildBean(dt As DataTable) As SpecialiteTheriaque
+    ''' <summary>
+    ''' Lit la première ligne d'un résultat Theriaque. Un nom absent donnait un
+    ''' appel de Replace sur DBNull, donc une MissingMemberException à la lecture.
+    ''' </summary>
+    Public Shared Function BuildBean(dt As DataTable) As SpecialiteTheriaque
         Dim specialite As New SpecialiteTheriaque
 
         specialite.Id = dt.Rows(0)("SP_CODE_SQ_PK")
         specialite.CodeAtc = Coalesce(dt.Rows(0)("SP_CODE_SQ_PK"), "")
-        specialite.Dci = Coalesce(dt.Rows(0)("SP_NOM").Replace("§", ""), "")
+        specialite.Dci = Coalesce(dt.Rows(0)("SP_NOM"), "").Replace("§", "")
         specialite.DciLongue = Coalesce(dt.Rows(0)("SP_NOMLONG"), "")
 
         Return specialite

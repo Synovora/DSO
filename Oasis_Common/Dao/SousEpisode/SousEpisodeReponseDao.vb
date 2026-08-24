@@ -426,22 +426,26 @@ Public Class SousEpisodeReponseDao
         Return seType
     End Function
 
-    Shared Function BuildBean(reader As SqlDataReader) As SousEpisodeReponse
+    ''' <summary>
+    ''' Lit une ligne telle quelle, sans toucher à la base. IDataRecord plutôt que
+    ''' SqlDataReader pour qu'un test puisse fournir la ligne.
+    ''' </summary>
+    Public Shared Function BuildBean(record As System.Data.IDataRecord) As SousEpisodeReponse
         Dim episode As New SousEpisodeReponse With {
-            .Id = reader("id"),
-            .EpisodeId = Coalesce(reader("episode_id"), 0),
-            .IdSousEpisode = Coalesce(reader("id_sous_episode"), 0),
-            .CreateUserId = Coalesce(reader("create_user_id"), 0),
-            .HorodateCreation = Coalesce(reader("horodate_creation"), Nothing),
-            .NomFichier = Coalesce(reader("nom_fichier"), ""),
-            .Commentaire = Coalesce(reader("commentaire"), ""),
-            .ValidateState = Coalesce(reader("validate_state"), ""),
-            .ValidateUserId = Coalesce(reader("validate_user_id"), 0),
-            .ValidateDate = Coalesce(reader("validate_date"), Nothing),
-               .SousEpisodeLibelle = Coalesce(reader("sous_episode_libelle"), Nothing),
-        .SousEpisodeSousLibelle = Coalesce(reader("sous_episode_sous_libelle"), Nothing),
-        .Conclusion = Coalesce(reader("conclusion"), Nothing),
-        .TypeActivite = Coalesce(reader("type_activite"), Nothing)
+            .Id = record("id"),
+            .EpisodeId = Coalesce(record("episode_id"), 0),
+            .IdSousEpisode = Coalesce(record("id_sous_episode"), 0),
+            .CreateUserId = Coalesce(record("create_user_id"), 0),
+            .HorodateCreation = Coalesce(record("horodate_creation"), Nothing),
+            .NomFichier = Coalesce(record("nom_fichier"), ""),
+            .Commentaire = Coalesce(record("commentaire"), ""),
+            .ValidateState = Coalesce(record("validate_state"), ""),
+            .ValidateUserId = Coalesce(record("validate_user_id"), 0),
+            .ValidateDate = Coalesce(record("validate_date"), Nothing),
+               .SousEpisodeLibelle = Coalesce(record("sous_episode_libelle"), Nothing),
+        .SousEpisodeSousLibelle = Coalesce(record("sous_episode_sous_libelle"), Nothing),
+        .Conclusion = Coalesce(record("conclusion"), Nothing),
+        .TypeActivite = Coalesce(record("type_activite"), Nothing)
         }
         Return episode
     End Function

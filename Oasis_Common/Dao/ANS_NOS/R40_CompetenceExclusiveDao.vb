@@ -3,11 +3,15 @@
 Public Class NosCompetenceExclusiveDao
     Inherits StandardDao
 
-    Private Function BuildBean(reader As SqlDataReader) As R40_CompetenceExclusive
+    ''' <summary>
+    ''' Lit une ligne telle quelle, sans toucher à la base. IDataRecord plutôt que
+    ''' SqlDataReader pour qu'un test puisse fournir la ligne.
+    ''' </summary>
+    Public Shared Function BuildBean(record As System.Data.IDataRecord) As R40_CompetenceExclusive
         Dim CompetenceExclusive As New R40_CompetenceExclusive With {
-            .Oid = reader("oid"),
-            .Code = Coalesce(reader("code"), ""),
-            .Libelle = Coalesce(reader("libelle"), "")
+            .Oid = record("oid"),
+            .Code = Coalesce(record("code"), ""),
+            .Libelle = Coalesce(record("libelle"), "")
         }
         Return CompetenceExclusive
     End Function

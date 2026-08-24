@@ -59,17 +59,21 @@ Public Class PatientNoteDao
         Return patientNote
     End Function
 
-    Private Function buildBean(reader As SqlDataReader) As PatientNote
+    ''' <summary>
+    ''' Lit une ligne telle quelle, sans toucher à la base. IDataRecord plutôt que
+    ''' SqlDataReader pour qu'un test puisse fournir la ligne.
+    ''' </summary>
+    Public Shared Function buildBean(record As System.Data.IDataRecord) As PatientNote
         Dim patientNote As New PatientNote
 
-        patientNote.NoteId = reader("oa_patient_note_id")
-        patientNote.PatientId = Coalesce(reader("oa_patient_id"), 0)
-        patientNote.PatientNote = Coalesce(reader("oa_patient_note"), "")
-        patientNote.UserCreation = Coalesce(reader("oa_patient_note_utilisateur_creation"), 0)
-        patientNote.DateCreation = Coalesce(reader("oa_patient_note_date_creation"), Nothing)
-        patientNote.UserModification = Coalesce(reader("oa_patient_note_utilisateur_modification"), 0)
-        patientNote.DateModification = Coalesce(reader("oa_patient_note_date_modification"), Nothing)
-        patientNote.Invalide = Coalesce(reader("oa_patient_note_invalide"), False)
+        patientNote.NoteId = record("oa_patient_note_id")
+        patientNote.PatientId = Coalesce(record("oa_patient_id"), 0)
+        patientNote.PatientNote = Coalesce(record("oa_patient_note"), "")
+        patientNote.UserCreation = Coalesce(record("oa_patient_note_utilisateur_creation"), 0)
+        patientNote.DateCreation = Coalesce(record("oa_patient_note_date_creation"), Nothing)
+        patientNote.UserModification = Coalesce(record("oa_patient_note_utilisateur_modification"), 0)
+        patientNote.DateModification = Coalesce(record("oa_patient_note_date_modification"), Nothing)
+        patientNote.Invalide = Coalesce(record("oa_patient_note_invalide"), False)
         Return patientNote
     End Function
 

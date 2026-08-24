@@ -4,21 +4,25 @@ Public Class ParametreDao
 
     Inherits StandardDao
 
-    Private Function BuildBean(reader As SqlDataReader) As Parametre
+    ''' <summary>
+    ''' Lit une ligne telle quelle, sans toucher à la base. IDataRecord plutôt que
+    ''' SqlDataReader pour qu'un test puisse fournir la ligne.
+    ''' </summary>
+    Public Shared Function BuildBean(record As System.Data.IDataRecord) As Parametre
         Dim parametre As New Parametre With {
-            .Id = reader("id"),
-            .Description = Coalesce(reader("description"), ""),
-            .DescriptionPatient = Coalesce(reader("description_patient"), ""),
-            .Entier = Coalesce(reader("entier"), 0),
-            .Decimal = Coalesce(reader("decimal"), 0),
-            .Unite = Coalesce(reader("unite"), ""),
-            .ValeurMin = Coalesce(reader("valeur_min"), 0),
-            .ValeurMax = Coalesce(reader("valeur_max"), 0),
-            .Ordre = Coalesce(reader("ordre"), 0),
-            .Inactif = Coalesce(reader("inactif"), False),
-            .ExclusionAutoSuivi = Coalesce(reader("exclusion_auto_suivi"), False),
-            .AideAssociee = Coalesce(reader("aide_associee"), ""),
-            .Wiki = Coalesce(reader("wiki"), "")
+            .Id = record("id"),
+            .Description = Coalesce(record("description"), ""),
+            .DescriptionPatient = Coalesce(record("description_patient"), ""),
+            .Entier = Coalesce(record("entier"), 0),
+            .Decimal = Coalesce(record("decimal"), 0),
+            .Unite = Coalesce(record("unite"), ""),
+            .ValeurMin = Coalesce(record("valeur_min"), 0),
+            .ValeurMax = Coalesce(record("valeur_max"), 0),
+            .Ordre = Coalesce(record("ordre"), 0),
+            .Inactif = Coalesce(record("inactif"), False),
+            .ExclusionAutoSuivi = Coalesce(record("exclusion_auto_suivi"), False),
+            .AideAssociee = Coalesce(record("aide_associee"), ""),
+            .Wiki = Coalesce(record("wiki"), "")
         }
         Return parametre
     End Function

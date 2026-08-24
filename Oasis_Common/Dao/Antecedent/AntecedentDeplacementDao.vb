@@ -31,16 +31,20 @@ Public Class AntecedentDeplacementDao
         Return antecedent
     End Function
 
-    Private Function BuildBean(reader As SqlDataReader) As AntecedentDeplacement
+    ''' <summary>
+    ''' Lit une ligne telle quelle, sans toucher à la base. IDataRecord plutôt que
+    ''' SqlDataReader pour qu'un test puisse fournir la ligne.
+    ''' </summary>
+    Public Shared Function BuildBean(record As System.Data.IDataRecord) As AntecedentDeplacement
         Dim antecedent As New AntecedentDeplacement
 
-        antecedent.Id = reader("oa_antecedent_id")
-        antecedent.Niveau = Coalesce(reader("oa_antecedent_niveau"), 0)
-        antecedent.Niveau1Id = Coalesce(reader("oa_antecedent_id_niveau1"), 0)
-        antecedent.Niveau2Id = Coalesce(reader("oa_antecedent_id_niveau2"), 0)
-        antecedent.Ordre1 = Coalesce(reader("oa_antecedent_ordre_affichage1"), 0)
-        antecedent.Ordre2 = Coalesce(reader("oa_antecedent_ordre_affichage2"), 0)
-        antecedent.Ordre3 = Coalesce(reader("oa_antecedent_ordre_affichage3"), 0)
+        antecedent.Id = record("oa_antecedent_id")
+        antecedent.Niveau = Coalesce(record("oa_antecedent_niveau"), 0)
+        antecedent.Niveau1Id = Coalesce(record("oa_antecedent_id_niveau1"), 0)
+        antecedent.Niveau2Id = Coalesce(record("oa_antecedent_id_niveau2"), 0)
+        antecedent.Ordre1 = Coalesce(record("oa_antecedent_ordre_affichage1"), 0)
+        antecedent.Ordre2 = Coalesce(record("oa_antecedent_ordre_affichage2"), 0)
+        antecedent.Ordre3 = Coalesce(record("oa_antecedent_ordre_affichage3"), 0)
         Return antecedent
     End Function
 End Class

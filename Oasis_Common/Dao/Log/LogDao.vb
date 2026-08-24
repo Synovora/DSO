@@ -3,14 +3,18 @@
 Public Class LogDao
     Inherits StandardDao
 
-    Private Function BuildBean(reader As SqlDataReader) As Log
+    ''' <summary>
+    ''' Lit une ligne telle quelle, sans toucher à la base. IDataRecord plutôt que
+    ''' SqlDataReader pour qu'un test puisse fournir la ligne.
+    ''' </summary>
+    Public Shared Function BuildBean(record As System.Data.IDataRecord) As Log
         Dim log As New Log With {
-            .Id = reader("id"),
-            .Description = Coalesce(reader("description"), ""),
-            .Origine = Coalesce(reader("origine"), ""),
-            .TypeLog = Coalesce(reader("type_log"), ""),
-            .UserLog = Coalesce(reader("user_creation"), 0),
-            .DateLog = Coalesce(reader("date_creation"), Nothing)
+            .Id = record("id"),
+            .Description = Coalesce(record("description"), ""),
+            .Origine = Coalesce(record("origine"), ""),
+            .TypeLog = Coalesce(record("type_log"), ""),
+            .UserLog = Coalesce(record("user_creation"), 0),
+            .DateLog = Coalesce(record("date_creation"), Nothing)
         }
         Return log
     End Function

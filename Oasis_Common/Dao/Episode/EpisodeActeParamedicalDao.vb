@@ -31,19 +31,23 @@ Public Class EpisodeActeParamedicalDao
         Return episodeActeParamedical
     End Function
 
-    Private Function BuildBean(reader As SqlDataReader) As EpisodeActeParamedical
+    ''' <summary>
+    ''' Lit une ligne telle quelle, sans toucher à la base. IDataRecord plutôt que
+    ''' SqlDataReader pour qu'un test puisse fournir la ligne.
+    ''' </summary>
+    Public Shared Function BuildBean(record As System.Data.IDataRecord) As EpisodeActeParamedical
         Dim episodeActeParamedical As New EpisodeActeParamedical
 
-        episodeActeParamedical.Id = reader("oa_episode_acte_paramedical_id")
-        episodeActeParamedical.PatientId = Coalesce(reader("patient_id"), 0)
-        episodeActeParamedical.EpisodeId = Coalesce(reader("episode_id"), 0)
-        episodeActeParamedical.DrcId = Coalesce(reader("drc_id"), 0)
-        episodeActeParamedical.Observation = Coalesce(reader("observation"), "")
-        episodeActeParamedical.TypeObservation = Coalesce(reader("type_observation"), "")
-        episodeActeParamedical.UserId = Coalesce(reader("user_id"), 0)
-        episodeActeParamedical.DateObservation = Coalesce(reader("date_saisie_observation"), Nothing)
-        episodeActeParamedical.DateModification = Coalesce(reader("date_modification_observation"), Nothing)
-        episodeActeParamedical.Inactif = Coalesce(reader("inactif"), False)
+        episodeActeParamedical.Id = record("oa_episode_acte_paramedical_id")
+        episodeActeParamedical.PatientId = Coalesce(record("patient_id"), 0)
+        episodeActeParamedical.EpisodeId = Coalesce(record("episode_id"), 0)
+        episodeActeParamedical.DrcId = Coalesce(record("drc_id"), 0)
+        episodeActeParamedical.Observation = Coalesce(record("observation"), "")
+        episodeActeParamedical.TypeObservation = Coalesce(record("type_observation"), "")
+        episodeActeParamedical.UserId = Coalesce(record("user_id"), 0)
+        episodeActeParamedical.DateObservation = Coalesce(record("date_saisie_observation"), Nothing)
+        episodeActeParamedical.DateModification = Coalesce(record("date_modification_observation"), Nothing)
+        episodeActeParamedical.Inactif = Coalesce(record("inactif"), False)
         Return episodeActeParamedical
     End Function
 

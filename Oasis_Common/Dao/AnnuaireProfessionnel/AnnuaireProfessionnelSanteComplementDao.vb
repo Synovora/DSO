@@ -3,15 +3,19 @@
 Public Class AnnuaireProfessionnelSanteComplementDao
     Inherits StandardDao
 
-    Private Function BuildBean(reader As SqlDataReader) As AnnuaireProfessionnelReferenceComplement
+    ''' <summary>
+    ''' Lit une ligne telle quelle, sans toucher à la base. IDataRecord plutôt que
+    ''' SqlDataReader pour qu'un test puisse fournir la ligne.
+    ''' </summary>
+    Public Shared Function BuildBean(record As System.Data.IDataRecord) As AnnuaireProfessionnelReferenceComplement
         Dim annuaireComplement As New AnnuaireProfessionnelReferenceComplement With {
-            .Cle_entree = reader("Cle_entree"),
-            .RaisonSociale = Coalesce(reader("raison_sociale"), ""),
-            .Adresse1 = Coalesce(reader("adresse1"), ""),
-            .Adresse2 = Coalesce(reader("adresse2"), ""),
-            .Telephone = Coalesce(reader("telephone"), ""),
-            .Telecopie = Coalesce(reader("telecopie"), ""),
-            .EmailStructure = Coalesce(reader("email_structure"), "")
+            .Cle_entree = record("Cle_entree"),
+            .RaisonSociale = Coalesce(record("raison_sociale"), ""),
+            .Adresse1 = Coalesce(record("adresse1"), ""),
+            .Adresse2 = Coalesce(record("adresse2"), ""),
+            .Telephone = Coalesce(record("telephone"), ""),
+            .Telecopie = Coalesce(record("telecopie"), ""),
+            .EmailStructure = Coalesce(record("email_structure"), "")
         }
         Return annuaireComplement
     End Function

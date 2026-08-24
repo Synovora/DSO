@@ -3,11 +3,15 @@
 Public Class NosSpecialiteOrdinaleDao
     Inherits StandardDao
 
-    Private Function BuildBean(reader As SqlDataReader) As R38_SpecialiteOrdinale
+    ''' <summary>
+    ''' Lit une ligne telle quelle, sans toucher à la base. IDataRecord plutôt que
+    ''' SqlDataReader pour qu'un test puisse fournir la ligne.
+    ''' </summary>
+    Public Shared Function BuildBean(record As System.Data.IDataRecord) As R38_SpecialiteOrdinale
         Dim SpecialiteOrdinale As New R38_SpecialiteOrdinale With {
-            .Oid = reader("oid"),
-            .Code = Coalesce(reader("code"), ""),
-            .Libelle = Coalesce(reader("libelle"), "")
+            .Oid = record("oid"),
+            .Code = Coalesce(record("code"), ""),
+            .Libelle = Coalesce(record("libelle"), "")
         }
         Return SpecialiteOrdinale
     End Function

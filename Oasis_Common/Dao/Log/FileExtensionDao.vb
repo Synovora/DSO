@@ -3,11 +3,15 @@
 Public Class FileExtensionDao
     Inherits StandardDao
 
-    Private Function BuildBean(reader As SqlDataReader) As FileExtension
+    ''' <summary>
+    ''' Lit une ligne telle quelle, sans toucher à la base. IDataRecord plutôt que
+    ''' SqlDataReader pour qu'un test puisse fournir la ligne.
+    ''' </summary>
+    Public Shared Function BuildBean(record As System.Data.IDataRecord) As FileExtension
         Dim extension As New FileExtension With {
-            .Id = reader("id"),
-            .Extension = Coalesce(reader("ext"), ""),
-            .Description = Coalesce(reader("description"), "")
+            .Id = record("id"),
+            .Extension = Coalesce(record("ext"), ""),
+            .Description = Coalesce(record("description"), "")
         }
         Return extension
     End Function

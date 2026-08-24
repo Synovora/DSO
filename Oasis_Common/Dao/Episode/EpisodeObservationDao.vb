@@ -31,19 +31,23 @@ Public Class EpisodeObservationDao
         Return episodeObservation
     End Function
 
-    Private Function BuildBean(reader As SqlDataReader) As EpisodeObservation
+    ''' <summary>
+    ''' Lit une ligne telle quelle, sans toucher à la base. IDataRecord plutôt que
+    ''' SqlDataReader pour qu'un test puisse fournir la ligne.
+    ''' </summary>
+    Public Shared Function BuildBean(record As System.Data.IDataRecord) As EpisodeObservation
         Dim episodeObservation As New EpisodeObservation With {
-            .Id = reader("episode_observation_id"),
-            .EpisodeId = Coalesce(reader("episode_id"), 0),
-            .PatientId = Coalesce(reader("patient_id"), 0),
-            .TypeObservation = Coalesce(reader("type_observation"), ""),
-            .NatureObservation = Coalesce(reader("nature_observation"), ""),
-            .NaturePresence = Coalesce(reader("nature_presence"), ""),
-            .Observation = Coalesce(reader("observation"), ""),
-            .UserCreation = Coalesce(reader("user_id"), 0),
-            .DateCreation = Coalesce(reader("date_creation"), Nothing),
-            .DateModification = Coalesce(reader("date_modification"), Nothing),
-            .Inactif = Coalesce(reader("inactif"), False)
+            .Id = record("episode_observation_id"),
+            .EpisodeId = Coalesce(record("episode_id"), 0),
+            .PatientId = Coalesce(record("patient_id"), 0),
+            .TypeObservation = Coalesce(record("type_observation"), ""),
+            .NatureObservation = Coalesce(record("nature_observation"), ""),
+            .NaturePresence = Coalesce(record("nature_presence"), ""),
+            .Observation = Coalesce(record("observation"), ""),
+            .UserCreation = Coalesce(record("user_id"), 0),
+            .DateCreation = Coalesce(record("date_creation"), Nothing),
+            .DateModification = Coalesce(record("date_modification"), Nothing),
+            .Inactif = Coalesce(record("inactif"), False)
         }
         Return episodeObservation
     End Function

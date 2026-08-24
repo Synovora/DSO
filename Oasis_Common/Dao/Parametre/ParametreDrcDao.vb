@@ -4,11 +4,15 @@ Public Class ParametreDrcDao
 
     Inherits StandardDao
 
-    Private Function BuildBean(reader As SqlDataReader) As ParametreDrc
+    ''' <summary>
+    ''' Lit une ligne telle quelle, sans toucher à la base. IDataRecord plutôt que
+    ''' SqlDataReader pour qu'un test puisse fournir la ligne.
+    ''' </summary>
+    Public Shared Function BuildBean(record As System.Data.IDataRecord) As ParametreDrc
         Dim parametreDrc As New ParametreDrc With {
-            .Id = reader("id"),
-            .DrcId = Coalesce(reader("drc_id"), 0),
-            .ParametreId = Coalesce(reader("parametre_id"), 0)
+            .Id = record("id"),
+            .DrcId = Coalesce(record("drc_id"), 0),
+            .ParametreId = Coalesce(record("parametre_id"), 0)
         }
         Return parametreDrc
     End Function

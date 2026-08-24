@@ -97,21 +97,25 @@ Public Class SiteDao
     ''' </summary>
     ''' <param name="reader"></param>
     ''' <returns></returns>
-    Private Function buildBean(reader As SqlDataReader) As Site
+    ''' <summary>
+    ''' Lit une ligne telle quelle, sans toucher à la base. IDataRecord plutôt que
+    ''' SqlDataReader pour qu'un test puisse fournir la ligne.
+    ''' </summary>
+    Public Shared Function buildBean(record As System.Data.IDataRecord) As Site
         Dim bean As New Site
 
-        bean.Oa_site_id = reader("oa_site_id")
-        bean.Oa_site_description = Coalesce(reader("oa_site_description"), "")
-        bean.Oa_site_territoire_id = Coalesce(reader("oa_site_territoire_id"), 0)
-        bean.Oa_site_unite_sanitaire_id = Coalesce(reader("oa_site_unite_sanitaire_id"), 0)
-        bean.Oa_site_adresse1 = Coalesce(reader("oa_site_adresse1"), "")
-        bean.Oa_site_adresse2 = Coalesce(reader("oa_site_adresse2"), "")
-        bean.Oa_site_ville = Coalesce(reader("oa_site_ville"), "")
-        bean.Oa_site_code_postal = Coalesce(reader("oa_site_code_postal"), "")
-        bean.Telephone = Coalesce(reader("telephone"), "")
-        bean.Mail = Coalesce(reader("mail"), "")
-        bean.Fax = Coalesce(reader("fax"), "")
-        bean.Oa_site_inactif = Coalesce(reader("oa_site_inactif"), False)
+        bean.Oa_site_id = record("oa_site_id")
+        bean.Oa_site_description = Coalesce(record("oa_site_description"), "")
+        bean.Oa_site_territoire_id = Coalesce(record("oa_site_territoire_id"), 0)
+        bean.Oa_site_unite_sanitaire_id = Coalesce(record("oa_site_unite_sanitaire_id"), 0)
+        bean.Oa_site_adresse1 = Coalesce(record("oa_site_adresse1"), "")
+        bean.Oa_site_adresse2 = Coalesce(record("oa_site_adresse2"), "")
+        bean.Oa_site_ville = Coalesce(record("oa_site_ville"), "")
+        bean.Oa_site_code_postal = Coalesce(record("oa_site_code_postal"), "")
+        bean.Telephone = Coalesce(record("telephone"), "")
+        bean.Mail = Coalesce(record("mail"), "")
+        bean.Fax = Coalesce(record("fax"), "")
+        bean.Oa_site_inactif = Coalesce(record("oa_site_inactif"), False)
 
         Return bean
     End Function

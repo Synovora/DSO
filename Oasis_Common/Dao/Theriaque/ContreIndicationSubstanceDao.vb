@@ -31,20 +31,24 @@ Public Class ContreIndicationSubstanceDao
         Return contreIndication
     End Function
 
-    Private Function BuildBean(reader As SqlDataReader) As ContreIndicationSubstance
+    ''' <summary>
+    ''' Lit une ligne telle quelle, sans toucher à la base. IDataRecord plutôt que
+    ''' SqlDataReader pour qu'un test puisse fournir la ligne.
+    ''' </summary>
+    Public Shared Function BuildBean(record As System.Data.IDataRecord) As ContreIndicationSubstance
         Dim contreIndication As New ContreIndicationSubstance
 
-        contreIndication.ContreIndicationId = reader("contre_indication_id")
-        contreIndication.PatientId = Coalesce(reader("patient_id"), 0)
-        contreIndication.SubstanceId = Coalesce(reader("substance_id"), 0)
-        contreIndication.SubstancePereId = Coalesce(reader("substance_pere_id"), 0)
-        contreIndication.DenominationSubstance = Coalesce(reader("denomination_substance"), "")
-        contreIndication.DenominationSubstancePere = Coalesce(reader("denomination_substance_pere"), "")
-        contreIndication.UserCreation = Coalesce(reader("creation_user_id"), 0)
-        contreIndication.DateCreation = Coalesce(reader("creation_date"), Nothing)
-        contreIndication.UserAnnulation = Coalesce(reader("annulation_user_id"), 0)
-        contreIndication.DateAnnulation = Coalesce(reader("annulation_date"), Nothing)
-        contreIndication.Inactif = Coalesce(reader("inactif"), False)
+        contreIndication.ContreIndicationId = record("contre_indication_id")
+        contreIndication.PatientId = Coalesce(record("patient_id"), 0)
+        contreIndication.SubstanceId = Coalesce(record("substance_id"), 0)
+        contreIndication.SubstancePereId = Coalesce(record("substance_pere_id"), 0)
+        contreIndication.DenominationSubstance = Coalesce(record("denomination_substance"), "")
+        contreIndication.DenominationSubstancePere = Coalesce(record("denomination_substance_pere"), "")
+        contreIndication.UserCreation = Coalesce(record("creation_user_id"), 0)
+        contreIndication.DateCreation = Coalesce(record("creation_date"), Nothing)
+        contreIndication.UserAnnulation = Coalesce(record("annulation_user_id"), 0)
+        contreIndication.DateAnnulation = Coalesce(record("annulation_date"), Nothing)
+        contreIndication.Inactif = Coalesce(record("inactif"), False)
 
         Return contreIndication
     End Function

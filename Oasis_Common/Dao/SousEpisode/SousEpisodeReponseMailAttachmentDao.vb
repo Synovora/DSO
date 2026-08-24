@@ -62,12 +62,16 @@ Public Class SousEpisodeReponseMailAttachmentDao
         Return patientNote
     End Function
 
-    Private Function BuildBean(reader As SqlDataReader) As SousEpisodeReponseMailAttachment
+    ''' <summary>
+    ''' Lit une ligne telle quelle, sans toucher à la base. IDataRecord plutôt que
+    ''' SqlDataReader pour qu'un test puisse fournir la ligne.
+    ''' </summary>
+    Public Shared Function BuildBean(record As System.Data.IDataRecord) As SousEpisodeReponseMailAttachment
         Dim sousEpisode As New SousEpisodeReponseMailAttachment With {
-            .Id = reader("id"),
-            .MailId = reader("mailId"),
-            .Filename = Coalesce(reader("filename"), Nothing),
-            .Part = reader("part")
+            .Id = record("id"),
+            .MailId = record("mailId"),
+            .Filename = Coalesce(record("filename"), Nothing),
+            .Part = record("part")
             }
         Return sousEpisode
     End Function

@@ -94,19 +94,23 @@ Public Class SiegeDao
 
 
 
-    Private Function BuildBean(reader As Object) As Siege
+    ''' <summary>
+    ''' Lit une ligne telle quelle, sans toucher à la base. IDataRecord plutôt que
+    ''' SqlDataReader pour qu'un test puisse fournir la ligne.
+    ''' </summary>
+    Public Shared Function BuildBean(record As System.Data.IDataRecord) As Siege
         Dim bean As New Siege
 
-        bean.SiegeId = reader("oa_siege_id")
-        bean.SiegeDescription = Coalesce(reader("oa_siege_description"), "")
-        bean.SiegeAdresse1 = Coalesce(reader("oa_siege_adresse1"), "")
-        bean.SiegeAdresse2 = Coalesce(reader("oa_siege_adresse2"), "")
-        bean.SiegeVille = Coalesce(reader("oa_siege_ville"), "")
-        bean.SiegeCodePostal = Coalesce(reader("oa_siege_code_postal"), "")
-        bean.SiegeTelephone = Coalesce(reader("oa_siege_telephone"), "")
-        bean.SiegeMail = Coalesce(reader("oa_siege_mail"), "")
-        bean.SiegeFax = Coalesce(reader("oa_siege_fax"), "")
-        bean.SiegeStatut = Coalesce(reader("oa_siege_statut"), False)
+        bean.SiegeId = record("oa_siege_id")
+        bean.SiegeDescription = Coalesce(record("oa_siege_description"), "")
+        bean.SiegeAdresse1 = Coalesce(record("oa_siege_adresse1"), "")
+        bean.SiegeAdresse2 = Coalesce(record("oa_siege_adresse2"), "")
+        bean.SiegeVille = Coalesce(record("oa_siege_ville"), "")
+        bean.SiegeCodePostal = Coalesce(record("oa_siege_code_postal"), "")
+        bean.SiegeTelephone = Coalesce(record("oa_siege_telephone"), "")
+        bean.SiegeMail = Coalesce(record("oa_siege_mail"), "")
+        bean.SiegeFax = Coalesce(record("oa_siege_fax"), "")
+        bean.SiegeStatut = Coalesce(record("oa_siege_statut"), False)
 
         Return bean
     End Function

@@ -9,14 +9,14 @@ Public Class SousEpisodeReponseMail
     Property Objet As String
     Property Corps As String
 
-    Public Sub New(reader As SqlDataReader)
-        Me.Id = reader("id")
-        Me.HorodateCreation = reader("horodate_creation")
-        Me.PatientId = Coalesce(reader("patient_id"), Nothing)
-        Me.Status = reader("status")
-        Me.Auteur = reader("auteur")
-        Me.Objet = Coalesce(reader("objet"), "")
-        Me.Corps = If(HasColumn(reader, "corps"), Coalesce(reader("corps"), ""), Nothing)
+    Public Sub New(record As System.Data.Common.DbDataReader)
+        Me.Id = record("id")
+        Me.HorodateCreation = record("horodate_creation")
+        Me.PatientId = Coalesce(record("patient_id"), Nothing)
+        Me.Status = record("status")
+        Me.Auteur = record("auteur")
+        Me.Objet = Coalesce(record("objet"), "")
+        Me.Corps = If(HasColumn(record, "corps"), Coalesce(record("corps"), ""), Nothing)
     End Sub
 
 End Class

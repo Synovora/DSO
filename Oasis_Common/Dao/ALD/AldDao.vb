@@ -3,11 +3,15 @@
 Public Class AldDao
     Inherits StandardDao
 
-    Private Function BuildBean(reader As SqlDataReader) As Ald
+    ''' <summary>
+    ''' Lit une ligne telle quelle, sans toucher à la base. IDataRecord plutôt que
+    ''' SqlDataReader pour qu'un test puisse fournir la ligne.
+    ''' </summary>
+    Public Shared Function BuildBean(record As System.Data.IDataRecord) As Ald
         Dim ald As New Ald With {
-            .AldId = reader("oa_ald_id"),
-            .AldCode = Coalesce(reader("oa_ald_code"), ""),
-            .AldDescription = Coalesce(reader("oa_ald_description"), "")
+            .AldId = record("oa_ald_id"),
+            .AldCode = Coalesce(record("oa_ald_code"), ""),
+            .AldDescription = Coalesce(record("oa_ald_description"), "")
         }
         Return ald
     End Function

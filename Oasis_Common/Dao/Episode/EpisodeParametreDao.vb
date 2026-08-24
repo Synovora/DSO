@@ -65,20 +65,24 @@ Public Class EpisodeParametreDao
         Return episodeParametre
     End Function
 
-    Private Function BuildBean(reader As SqlDataReader) As EpisodeParametre
+    ''' <summary>
+    ''' Lit une ligne telle quelle, sans toucher à la base. IDataRecord plutôt que
+    ''' SqlDataReader pour qu'un test puisse fournir la ligne.
+    ''' </summary>
+    Public Shared Function BuildBean(record As System.Data.IDataRecord) As EpisodeParametre
         Dim episodeParametre As New EpisodeParametre With {
-            .Id = reader("episode_parametre_id"),
-            .ParametreId = Coalesce(reader("parametre_id"), 0),
-            .EpisodeId = Coalesce(reader("episode_id"), 0),
-            .PatientId = Coalesce(reader("patient_id"), 0),
-            .Valeur = Coalesce(reader("valeur"), 0),
-            .Description = Coalesce(reader("description"), ""),
-            .Entier = Coalesce(reader("entier"), 0),
-            .Decimal = Coalesce(reader("decimal"), 0),
-            .Unite = Coalesce(reader("unite"), ""),
-            .ParametreAjoute = Coalesce(reader("parametre_ajoute"), False),
-            .Ordre = Coalesce(reader("ordre"), 0),
-            .Inactif = Coalesce(reader("inactif"), False)
+            .Id = record("episode_parametre_id"),
+            .ParametreId = Coalesce(record("parametre_id"), 0),
+            .EpisodeId = Coalesce(record("episode_id"), 0),
+            .PatientId = Coalesce(record("patient_id"), 0),
+            .Valeur = Coalesce(record("valeur"), 0),
+            .Description = Coalesce(record("description"), ""),
+            .Entier = Coalesce(record("entier"), 0),
+            .Decimal = Coalesce(record("decimal"), 0),
+            .Unite = Coalesce(record("unite"), ""),
+            .ParametreAjoute = Coalesce(record("parametre_ajoute"), False),
+            .Ordre = Coalesce(record("ordre"), 0),
+            .Inactif = Coalesce(record("inactif"), False)
         }
         Return episodeParametre
     End Function

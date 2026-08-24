@@ -2,20 +2,24 @@
 Public Class MailDao
     Inherits StandardDao
 
-    Private Function BuildBean(reader As SqlDataReader) As MailDB
+    ''' <summary>
+    ''' Lit une ligne telle quelle, sans toucher à la base. IDataRecord plutôt que
+    ''' SqlDataReader pour qu'un test puisse fournir la ligne.
+    ''' </summary>
+    Public Shared Function BuildBean(record As System.Data.IDataRecord) As MailDB
         Dim mail As New MailDB With {
-            .sendMailKey = reader("sendMailKey"),
-            .sendMailTo = reader("sendMailTo"),
-            .sendMailCc = reader("sendMailCc"),
-            .sendMailBcc = reader("sendMailBcc"),
-            .sendMailFrom = reader("sendMailFrom"),
-            .sendMailSender = reader("sendMailSender"),
-            .sendMailSubject = reader("sendMailSubject"),
-            .sendMailMessage = reader("sendMailMessage"),
-            .sendMailPath = reader("sendMailPath"),
-            .dateCreation = reader("date_creation"),
-            .userCreation = reader("user_creation"),
-            .sendMailSent = reader("sendMailSent")
+            .sendMailKey = record("sendMailKey"),
+            .sendMailTo = record("sendMailTo"),
+            .sendMailCc = record("sendMailCc"),
+            .sendMailBcc = record("sendMailBcc"),
+            .sendMailFrom = record("sendMailFrom"),
+            .sendMailSender = record("sendMailSender"),
+            .sendMailSubject = record("sendMailSubject"),
+            .sendMailMessage = record("sendMailMessage"),
+            .sendMailPath = record("sendMailPath"),
+            .dateCreation = record("date_creation"),
+            .userCreation = record("user_creation"),
+            .sendMailSent = record("sendMailSent")
         }
         Return mail
     End Function

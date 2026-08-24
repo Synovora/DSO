@@ -32,4 +32,25 @@ Friend Module LigneDeTest
         Return lecteur
     End Function
 
+    ''' <summary>
+    ''' La même ligne, sous forme de DataRow, pour les constructeurs qui lisent
+    ''' une ligne de DataTable plutôt qu'un lecteur.
+    ''' </summary>
+    Friend Function Rangee(colonnes As IEnumerable(Of String), valeurs As IDictionary(Of String, Object)) As DataRow
+        Dim table As New DataTable()
+        For Each colonne In colonnes
+            table.Columns.Add(colonne, GetType(Object))
+        Next
+        Dim rangee = table.NewRow()
+        For Each colonne In colonnes
+            If valeurs IsNot Nothing AndAlso valeurs.ContainsKey(colonne) Then
+                rangee(colonne) = valeurs(colonne)
+            Else
+                rangee(colonne) = DBNull.Value
+            End If
+        Next
+        table.Rows.Add(rangee)
+        Return rangee
+    End Function
+
 End Module

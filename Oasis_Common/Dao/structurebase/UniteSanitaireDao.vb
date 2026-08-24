@@ -98,20 +98,24 @@ Public Class UniteSanitaireDao
     ''' </summary>
     ''' <param name="reader"></param>
     ''' <returns></returns>
-    Private Function buildBean(reader As SqlDataReader) As UniteSanitaire
+    ''' <summary>
+    ''' Lit une ligne telle quelle, sans toucher à la base. IDataRecord plutôt que
+    ''' SqlDataReader pour qu'un test puisse fournir la ligne.
+    ''' </summary>
+    Public Shared Function buildBean(record As System.Data.IDataRecord) As UniteSanitaire
         Dim bean As New UniteSanitaire With {
-            .Oa_unite_sanitaire_id = reader("oa_unite_sanitaire_id"),
-            .Oa_unite_sanitaire_description = Coalesce(reader("oa_unite_sanitaire_description"), ""),
-            .Oa_unite_sanitaire_siege_id = Coalesce(reader("oa_unite_sanitaire_siege_id"), 0),
-            .Oa_unite_sanitaire_adresse1 = Coalesce(reader("oa_unite_sanitaire_adresse1"), ""),
-            .Oa_unite_sanitaire_adresse2 = Coalesce(reader("oa_unite_sanitaire_adresse2"), ""),
-            .Oa_unite_sanitaire_ville = Coalesce(reader("oa_unite_sanitaire_ville"), ""),
-            .Oa_unite_sanitaire_code_postal = Coalesce(reader("oa_unite_sanitaire_code_postal"), ""),
-            .Telephone = Coalesce(reader("telephone"), ""),
-            .Mail = Coalesce(reader("mail"), ""),
-            .Fax = Coalesce(reader("fax"), ""),
-            .Oa_unite_sanitaire_inactif = Coalesce(reader("oa_unite_sanitaire_inactif"), False),
-            .NumeroStructure = Coalesce(reader("numero_structure"), 0)
+            .Oa_unite_sanitaire_id = record("oa_unite_sanitaire_id"),
+            .Oa_unite_sanitaire_description = Coalesce(record("oa_unite_sanitaire_description"), ""),
+            .Oa_unite_sanitaire_siege_id = Coalesce(record("oa_unite_sanitaire_siege_id"), 0),
+            .Oa_unite_sanitaire_adresse1 = Coalesce(record("oa_unite_sanitaire_adresse1"), ""),
+            .Oa_unite_sanitaire_adresse2 = Coalesce(record("oa_unite_sanitaire_adresse2"), ""),
+            .Oa_unite_sanitaire_ville = Coalesce(record("oa_unite_sanitaire_ville"), ""),
+            .Oa_unite_sanitaire_code_postal = Coalesce(record("oa_unite_sanitaire_code_postal"), ""),
+            .Telephone = Coalesce(record("telephone"), ""),
+            .Mail = Coalesce(record("mail"), ""),
+            .Fax = Coalesce(record("fax"), ""),
+            .Oa_unite_sanitaire_inactif = Coalesce(record("oa_unite_sanitaire_inactif"), False),
+            .NumeroStructure = Coalesce(record("numero_structure"), 0)
         }
 
         Return bean

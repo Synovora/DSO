@@ -8,10 +8,10 @@ Public Class ChaineEpisode
     Public Sub New()
     End Sub
 
-    Public Sub New(reader As SqlDataReader)
-        Me.Id = reader("id")
-        Me.AntecedentId = reader("antecedent_id")
-        Me.ChaineId = reader("chaine_id")
+    Public Sub New(record As System.Data.IDataRecord)
+        Me.Id = record("id")
+        Me.AntecedentId = record("antecedent_id")
+        Me.ChaineId = record("chaine_id")
     End Sub
 
 End Class

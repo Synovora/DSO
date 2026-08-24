@@ -32,13 +32,17 @@ Public Class EpisodeTypeActiviteDao
         Return episodeActivite
     End Function
 
-    Private Function BuildBean(reader As SqlDataReader) As EpisodeTypeActivite
+    ''' <summary>
+    ''' Lit une ligne telle quelle, sans toucher à la base. IDataRecord plutôt que
+    ''' SqlDataReader pour qu'un test puisse fournir la ligne.
+    ''' </summary>
+    Public Shared Function BuildBean(record As System.Data.IDataRecord) As EpisodeTypeActivite
         Dim episodeActivite As New EpisodeTypeActivite
 
-        episodeActivite.Type = reader("oa_activite_type")
-        episodeActivite.Nature = Coalesce(reader("oa_activite_nature"), "")
-        episodeActivite.Description = Coalesce(reader("oa_activite_description"), "")
-        episodeActivite.Inactif = Coalesce(reader("oa_activite_inactif"), False)
+        episodeActivite.Type = record("oa_activite_type")
+        episodeActivite.Nature = Coalesce(record("oa_activite_nature"), "")
+        episodeActivite.Description = Coalesce(record("oa_activite_description"), "")
+        episodeActivite.Inactif = Coalesce(record("oa_activite_inactif"), False)
         Return episodeActivite
     End Function
 

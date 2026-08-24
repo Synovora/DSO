@@ -133,24 +133,28 @@ Public Class PpsDao
         Return False
     End Function
 
-    Private Function BuildBean(reader As SqlDataReader) As Pps
+    ''' <summary>
+    ''' Lit une ligne telle quelle, sans toucher à la base. IDataRecord plutôt que
+    ''' SqlDataReader pour qu'un test puisse fournir la ligne.
+    ''' </summary>
+    Public Shared Function BuildBean(record As System.Data.IDataRecord) As Pps
         Dim pps As New Pps With {
-            .Id = reader("oa_pps_id"),
-            .PatientId = Coalesce(reader("oa_pps_patient_id"), 0),
-            .CategorieId = Coalesce(reader("oa_pps_categorie"), 0),
-            .SousCategorieId = Coalesce(reader("oa_pps_sous_categorie"), 0),
-            .Priorite = Coalesce(reader("oa_pps_priorite"), 0),
-            .DrcId = Coalesce(reader("oa_pps_drc_id"), 0),
-            .AffichageSynthese = Coalesce(reader("oa_pps_affichage_synthese"), False),
-            .Commentaire = Coalesce(reader("oa_pps_commentaire"), ""),
-            .DateDebut = Coalesce(reader("oa_pps_date_debut"), Nothing),
-            .DateFin = Coalesce(reader("oa_pps_date_fin"), Nothing),
-            .Arret = Coalesce(reader("oa_pps_arret"), False),
-            .ArretCommentaire = Coalesce(reader("oa_pps_commentaire_arret"), ""),
-            .UserCreation = Coalesce(reader("oa_pps_utilisateur_creation"), 0),
-            .DateCreation = Coalesce(reader("oa_pps_date_creation"), Nothing),
-            .UserModification = Coalesce(reader("oa_pps_utilisateur_modification"), 0),
-            .DateModification = Coalesce(reader("oa_pps_date_modification"), Nothing)
+            .Id = record("oa_pps_id"),
+            .PatientId = Coalesce(record("oa_pps_patient_id"), 0),
+            .CategorieId = Coalesce(record("oa_pps_categorie"), 0),
+            .SousCategorieId = Coalesce(record("oa_pps_sous_categorie"), 0),
+            .Priorite = Coalesce(record("oa_pps_priorite"), 0),
+            .DrcId = Coalesce(record("oa_pps_drc_id"), 0),
+            .AffichageSynthese = Coalesce(record("oa_pps_affichage_synthese"), False),
+            .Commentaire = Coalesce(record("oa_pps_commentaire"), ""),
+            .DateDebut = Coalesce(record("oa_pps_date_debut"), Nothing),
+            .DateFin = Coalesce(record("oa_pps_date_fin"), Nothing),
+            .Arret = Coalesce(record("oa_pps_arret"), False),
+            .ArretCommentaire = Coalesce(record("oa_pps_commentaire_arret"), ""),
+            .UserCreation = Coalesce(record("oa_pps_utilisateur_creation"), 0),
+            .DateCreation = Coalesce(record("oa_pps_date_creation"), Nothing),
+            .UserModification = Coalesce(record("oa_pps_utilisateur_modification"), 0),
+            .DateModification = Coalesce(record("oa_pps_date_modification"), Nothing)
         }
         Return pps
     End Function

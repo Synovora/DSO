@@ -3,21 +3,25 @@
 Public Class ParcoursConsigneDao
     Inherits StandardDao
 
-    Private Function BuildBean(reader As SqlDataReader) As ParcoursConsigne
+    ''' <summary>
+    ''' Lit une ligne telle quelle, sans toucher à la base. IDataRecord plutôt que
+    ''' SqlDataReader pour qu'un test puisse fournir la ligne.
+    ''' </summary>
+    Public Shared Function BuildBean(record As System.Data.IDataRecord) As ParcoursConsigne
         Dim parcoursConsigne As New ParcoursConsigne With {
-            .Id = reader("oa_parcours_consigne_id"),
-            .PatientId = Coalesce(reader("oa_parcours_consigne_patient_id"), 0),
-            .ParcoursId = Coalesce(reader("oa_parcours_id"), 0),
-            .DrcId = Coalesce(reader("oa_parcours_consigne_drc_id"), 0),
-            .TypeEpisode = Coalesce(reader("activite_type_episode"), ""),
-            .Commentaire = Coalesce(reader("oa_parcours_consigne_commentaire"), ""),
-            .Ordre = Coalesce(reader("oa_parcours_consigne_ordre"), 0),
-            .AgeMin = Coalesce(reader("oa_parcours_age_min"), 0),
-            .AgeMax = Coalesce(reader("oa_parcours_age_max"), 0),
-            .AgeUnite = Coalesce(reader("oa_parcours_age_unite"), ""),
-            .DateDebut = Coalesce(reader("oa_parcours_consigne_date_debut"), Nothing),
-            .DateFin = Coalesce(reader("oa_parcours_consigne_date_fin"), Nothing),
-            .Inactif = Coalesce(reader("oa_parcours_consigne_inactif"), False)
+            .Id = record("oa_parcours_consigne_id"),
+            .PatientId = Coalesce(record("oa_parcours_consigne_patient_id"), 0),
+            .ParcoursId = Coalesce(record("oa_parcours_id"), 0),
+            .DrcId = Coalesce(record("oa_parcours_consigne_drc_id"), 0),
+            .TypeEpisode = Coalesce(record("activite_type_episode"), ""),
+            .Commentaire = Coalesce(record("oa_parcours_consigne_commentaire"), ""),
+            .Ordre = Coalesce(record("oa_parcours_consigne_ordre"), 0),
+            .AgeMin = Coalesce(record("oa_parcours_age_min"), 0),
+            .AgeMax = Coalesce(record("oa_parcours_age_max"), 0),
+            .AgeUnite = Coalesce(record("oa_parcours_age_unite"), ""),
+            .DateDebut = Coalesce(record("oa_parcours_consigne_date_debut"), Nothing),
+            .DateFin = Coalesce(record("oa_parcours_consigne_date_fin"), Nothing),
+            .Inactif = Coalesce(record("oa_parcours_consigne_inactif"), False)
         }
         Return parcoursConsigne
     End Function

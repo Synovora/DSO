@@ -3,11 +3,15 @@
 Public Class NosProfessionSanteDao
     Inherits StandardDao
 
-    Private Function BuildBean(reader As SqlDataReader) As G15_ProfessionSante
+    ''' <summary>
+    ''' Lit une ligne telle quelle, sans toucher à la base. IDataRecord plutôt que
+    ''' SqlDataReader pour qu'un test puisse fournir la ligne.
+    ''' </summary>
+    Public Shared Function BuildBean(record As System.Data.IDataRecord) As G15_ProfessionSante
         Dim ProfessionSante As New G15_ProfessionSante With {
-            .Oid = reader("oid"),
-            .Code = Coalesce(reader("code"), 0),
-            .Libelle = Coalesce(reader("libelle"), "")
+            .Oid = record("oid"),
+            .Code = Coalesce(record("code"), 0),
+            .Libelle = Coalesce(record("libelle"), "")
         }
         Return ProfessionSante
     End Function

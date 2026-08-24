@@ -2,13 +2,17 @@
 
 Public Class AldCim10Dao
     Inherits StandardDao
-    Private Function BuildBean(reader As SqlDataReader) As AldCim10
+    ''' <summary>
+    ''' Lit une ligne telle quelle, sans toucher à la base. IDataRecord plutôt que
+    ''' SqlDataReader pour qu'un test puisse fournir la ligne.
+    ''' </summary>
+    Public Shared Function BuildBean(record As System.Data.IDataRecord) As AldCim10
         Dim aldCim10 As New AldCim10 With {
-            .AldCim10Id = Convert.ToInt64(reader("oa_ald_cim10_id")),
-            .AldCim10AldId = Coalesce(reader("oa_ald_cim10_ald_id"), 0),
-            .AldCim10AldCode = Coalesce(reader("oa_ald_cim10_ald_code"), ""),
-            .AldCim10Code = Coalesce(reader("oa_ald_cim10_code"), ""),
-            .AldCim10Description = Coalesce(reader("oa_ald_cim10_description"), "")
+            .AldCim10Id = Convert.ToInt64(record("oa_ald_cim10_id")),
+            .AldCim10AldId = Coalesce(record("oa_ald_cim10_ald_id"), 0),
+            .AldCim10AldCode = Coalesce(record("oa_ald_cim10_ald_code"), ""),
+            .AldCim10Code = Coalesce(record("oa_ald_cim10_code"), ""),
+            .AldCim10Description = Coalesce(record("oa_ald_cim10_description"), "")
         }
         Return aldCim10
     End Function

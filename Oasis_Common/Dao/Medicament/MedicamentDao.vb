@@ -3,13 +3,17 @@
 Public Class MedicamentDao
     Inherits StandardDao
 
-    Private Function BuildBean(reader As SqlDataReader) As Medicament
+    ''' <summary>
+    ''' Lit une ligne telle quelle, sans toucher à la base. IDataRecord plutôt que
+    ''' SqlDataReader pour qu'un test puisse fournir la ligne.
+    ''' </summary>
+    Public Shared Function BuildBean(record As System.Data.IDataRecord) As Medicament
         Dim medicament As New Medicament With {
-            .MedicamentCis = reader("oa_medicament_cis"),
-            .MedicamentDci = Coalesce(reader("oa_medicament_dci"), ""),
-            .Forme = Coalesce(reader("oa_medicament_forme"), ""),
-            .Titulaire = Coalesce(reader("oa_medicament_titulaire"), ""),
-            .VoieAdministration = Coalesce(reader("oa_medicament_voie_administration"), "")
+            .MedicamentCis = record("oa_medicament_cis"),
+            .MedicamentDci = Coalesce(record("oa_medicament_dci"), ""),
+            .Forme = Coalesce(record("oa_medicament_forme"), ""),
+            .Titulaire = Coalesce(record("oa_medicament_titulaire"), ""),
+            .VoieAdministration = Coalesce(record("oa_medicament_voie_administration"), "")
         }
         Return medicament
     End Function

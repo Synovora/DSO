@@ -114,14 +114,18 @@ Public Class FonctionDao
     ''' </summary>
     ''' <param name="reader"></param>
     ''' <returns></returns>
-    Public Function BuildBean(reader As SqlDataReader) As Fonction
+    ''' <summary>
+    ''' Lit une ligne telle quelle, sans toucher à la base. IDataRecord plutôt que
+    ''' SqlDataReader pour qu'un test puisse fournir la ligne.
+    ''' </summary>
+    Public Shared Function BuildBean(record As System.Data.IDataRecord) As Fonction
         Dim fonction As New Fonction With {
-            .Id = reader("oa_r_fonction_id"),
-            .Designation = Coalesce(reader("oa_r_fonction_designation"), ""),
-            .Libelle = Coalesce(reader("oa_r_fonction_libelle"), ""),
-            .Type = Coalesce(reader("oa_r_fonction_type"), ""),
-            .RorId = Coalesce(reader("oa_r_fonction_ror_id"), 0),
-            .IsInactif = Coalesce(reader("oa_r_fonction_inactif"), False)
+            .Id = record("oa_r_fonction_id"),
+            .Designation = Coalesce(record("oa_r_fonction_designation"), ""),
+            .Libelle = Coalesce(record("oa_r_fonction_libelle"), ""),
+            .Type = Coalesce(record("oa_r_fonction_type"), ""),
+            .RorId = Coalesce(record("oa_r_fonction_ror_id"), 0),
+            .IsInactif = Coalesce(record("oa_r_fonction_inactif"), False)
         }
         Return fonction
     End Function

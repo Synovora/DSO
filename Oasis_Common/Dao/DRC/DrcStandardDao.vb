@@ -31,16 +31,20 @@ Public Class DrcStandardDao
         Return drcStandard
     End Function
 
-    Private Function BuildBean(reader As SqlDataReader) As DrcStandard
+    ''' <summary>
+    ''' Lit une ligne telle quelle, sans toucher à la base. IDataRecord plutôt que
+    ''' SqlDataReader pour qu'un test puisse fournir la ligne.
+    ''' </summary>
+    Public Shared Function BuildBean(record As System.Data.IDataRecord) As DrcStandard
         Dim drcStandard As New DrcStandard With {
-            .Id = reader("id"),
-            .TypeActivite = Coalesce(reader("type_activite_episode"), ""),
-            .DrcId = Coalesce(reader("drc_id"), 0),
-            .CategorieOasis = Coalesce(reader("categorie_oasis"), 0),
-            .AgeMin = Coalesce(reader("age_min"), 0),
-            .AgeMax = Coalesce(reader("age_max"), 0),
-            .DateModification = Coalesce(reader("date_modification"), Nothing),
-            .Inactif = Coalesce(reader("inactif"), False)
+            .Id = record("id"),
+            .TypeActivite = Coalesce(record("type_activite_episode"), ""),
+            .DrcId = Coalesce(record("drc_id"), 0),
+            .CategorieOasis = Coalesce(record("categorie_oasis"), 0),
+            .AgeMin = Coalesce(record("age_min"), 0),
+            .AgeMax = Coalesce(record("age_max"), 0),
+            .DateModification = Coalesce(record("date_modification"), Nothing),
+            .Inactif = Coalesce(record("inactif"), False)
         }
 
         Return drcStandard

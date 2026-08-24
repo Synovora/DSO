@@ -88,16 +88,23 @@ Public Class ProfilDao
     ''' <param name="con"></param>
     ''' <param name="reader"></param>
     ''' <returns></returns>
-    Public Function buildBean(con As SqlConnection, reader As SqlDataReader) As Profil
+    ''' <summary>
+    ''' Lit une ligne de profil telle quelle, sans toucher à la base.
+    ''' </summary>
+    Public Shared Function LireLigne(record As System.Data.IDataRecord) As Profil
         Dim profil As New Profil
 
-        profil.Id = reader("oa_r_profil_id")
-        profil.Designation = Coalesce(reader("oa_r_profil_designation"), "")
-        profil.Type = Coalesce(reader("oa_r_profil_type"), "")
-        profil.FonctionParDefautId = Coalesce(reader("oa_r_profil_fonction_id_defaut"), 0)
-        profil.NiveauAcces = Coalesce(reader("oa_r_profil_niveau_acces"), 0)
-        profil.Inactif = Coalesce(reader("oa_r_profil_inactif"), False)
+        profil.Id = record("oa_r_profil_id")
+        profil.Designation = Coalesce(record("oa_r_profil_designation"), "")
+        profil.Type = Coalesce(record("oa_r_profil_type"), "")
+        profil.FonctionParDefautId = Coalesce(record("oa_r_profil_fonction_id_defaut"), 0)
+        profil.NiveauAcces = Coalesce(record("oa_r_profil_niveau_acces"), 0)
+        profil.Inactif = Coalesce(record("oa_r_profil_inactif"), False)
 
         Return profil
+    End Function
+
+    Public Function buildBean(con As SqlConnection, reader As SqlDataReader) As Profil
+        Return LireLigne(reader)
     End Function
 End Class

@@ -4,10 +4,14 @@ Public Class AutoSuiviDao
 
     Inherits StandardDao
 
-    Private Function BuildBean(reader As SqlDataReader) As AutoSuivi
+    ''' <summary>
+    ''' Lit une ligne telle quelle, sans toucher à la base. IDataRecord plutôt que
+    ''' SqlDataReader pour qu'un test puisse fournir la ligne.
+    ''' </summary>
+    Public Shared Function BuildBean(record As System.Data.IDataRecord) As AutoSuivi
         Return New AutoSuivi With {
-            .PatientId = Coalesce(reader("patient_id"), 0),
-            .ParametreId = Coalesce(reader("parametre_id"), 0)
+            .PatientId = Coalesce(record("patient_id"), 0),
+            .ParametreId = Coalesce(record("parametre_id"), 0)
         }
     End Function
 

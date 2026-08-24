@@ -57,11 +57,15 @@ Public Class DrcActeParamedicalAssoDao
         Return drcActeParamedicalAsso
     End Function
 
-    Private Function BuildBean(reader As SqlDataReader) As DrcActeParamedicalAsso
+    ''' <summary>
+    ''' Lit une ligne telle quelle, sans toucher à la base. IDataRecord plutôt que
+    ''' SqlDataReader pour qu'un test puisse fournir la ligne.
+    ''' </summary>
+    Public Shared Function BuildBean(record As System.Data.IDataRecord) As DrcActeParamedicalAsso
         Dim drcActeParamedicalAsso As New DrcActeParamedicalAsso With {
-            .Id = reader("id"),
-            .ProtocleCollabaratifDrcId = Coalesce(reader("drc_protocole_collaboratif_id"), 0),
-            .ActeParamedicalDrcId = Coalesce(reader("drc_acte_paramedical_id"), 0)
+            .Id = record("id"),
+            .ProtocleCollabaratifDrcId = Coalesce(record("drc_protocole_collaboratif_id"), 0),
+            .ActeParamedicalDrcId = Coalesce(record("drc_acte_paramedical_id"), 0)
         }
         Return drcActeParamedicalAsso
     End Function

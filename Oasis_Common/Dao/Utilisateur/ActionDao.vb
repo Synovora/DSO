@@ -94,16 +94,20 @@ Public Class ActionDao
         Return action
     End Function
 
-    Private Function buildBean(reader As SqlDataReader) As Action
+    ''' <summary>
+    ''' Lit une ligne telle quelle, sans toucher à la base. IDataRecord plutôt que
+    ''' SqlDataReader pour qu'un test puisse fournir la ligne.
+    ''' </summary>
+    Public Shared Function buildBean(record As System.Data.IDataRecord) As Action
         Dim action As New Action
 
-        action.ActionId = reader("action_id")
-        action.PatientId = Coalesce(reader("patient_id"), 0)
-        action.UtilisateurId = Coalesce(reader("utilisateur_id"), 0)
-        action.Horodatage = Coalesce(reader("horodatage"), Nothing)
-        action.Action = Coalesce(reader("action"), "")
-        action.Fonction = Coalesce(reader("fonction"), "")
-        action.FonctionId = Coalesce(reader("fonction_id"), 0)
+        action.ActionId = record("action_id")
+        action.PatientId = Coalesce(record("patient_id"), 0)
+        action.UtilisateurId = Coalesce(record("utilisateur_id"), 0)
+        action.Horodatage = Coalesce(record("horodatage"), Nothing)
+        action.Action = Coalesce(record("action"), "")
+        action.Fonction = Coalesce(record("fonction"), "")
+        action.FonctionId = Coalesce(record("fonction_id"), 0)
         Return action
     End Function
 
