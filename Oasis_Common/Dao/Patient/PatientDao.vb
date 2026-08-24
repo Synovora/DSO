@@ -4,40 +4,56 @@ Imports System.Data.SqlClient
 Public Class PatientDao
     Inherits StandardDao
 
-    Shared Function BuildBean(reader As SqlDataReader) As Patient
+    ''' <summary>
+    ''' Lit une ligne de oa_patient telle quelle, sans toucher à la base.
+    ''' IDataRecord plutôt que SqlDataReader pour qu'un test puisse fournir la
+    ''' ligne lui-même. Les champs dérivés (libellé du genre, âge) viennent de
+    ''' Completer, qui a besoin du référentiel.
+    ''' </summary>
+    Public Shared Function LireLigne(record As System.Data.IDataRecord) As Patient
         Dim patient As New Patient With {
-            .PatientId = Convert.ToInt64(reader("oa_patient_id")),
-            .PatientNir = Coalesce(reader("oa_patient_nir"), 0),
-            .PatientNom = Coalesce(reader("oa_patient_nom"), ""),
-            .PatientPrenom = Coalesce(reader("oa_patient_prenom"), ""),
-            .PatientDateNaissance = Coalesce((reader("oa_patient_date_naissance")), Nothing),
-            .PatientGenreId = Coalesce(reader("oa_patient_genre_id"), ""),
-            .PatientAdresse1 = Coalesce(reader("oa_patient_adresse1"), ""),
-            .PatientAdresse2 = Coalesce(reader("oa_patient_adresse2"), ""),
-            .PatientCodePostal = Coalesce(reader("oa_patient_code_postal"), ""),
-            .PatientVille = Coalesce(reader("oa_patient_ville"), ""),
-            .PatientTel1 = Coalesce(reader("oa_patient_tel1"), ""),
-            .PatientTel2 = Coalesce(reader("oa_patient_tel2"), ""),
-            .PatientEmail = Coalesce(reader("oa_patient_email"), ""),
-            .PatientNomMarital = Coalesce(reader("oa_patient_nom_marital"), ""),
-            .PatientDateEntree = Coalesce((reader("oa_patient_date_entree_oasis")), Nothing),
-            .PatientDateSortie = Coalesce((reader("oa_patient_date_sortie_oasis")), Nothing),
-            .PatientCommentaireSortie = Coalesce(reader("oa_patient_commentaire_sortie"), ""),
-            .PatientDateDeces = Coalesce((reader("oa_patient_date_deces")), Nothing),
-            .PatientSiteId = Coalesce(reader("oa_patient_site_id"), 0),
-            .PatientSiegeId = Coalesce(reader("oa_patient_siege_id"), 0),
-            .PatientInternet = Coalesce((reader("oa_patient_couverture_internet")), False),
-            .PatientUniteSanitaireId = Coalesce((reader("oa_patient_unite_sanitaire_id")), 0),
-            .PatientSyntheseDateMaj = Coalesce((reader("oa_patient_synthese_date_maj")), Nothing),
-            .Profession = Coalesce(reader("oa_patient_profession"), ""),
-            .PharmacienId = Coalesce(reader("oa_patient_pharmacie_id"), 0),
-            .Taille = Coalesce(reader("oa_patient_taille"), 0),
-            .BlocageMedical = Coalesce(reader("oa_patient_blocage_medical"), False),
-            .INS = Coalesce(reader("oa_patient_INS"), 0)
+            .PatientId = Convert.ToInt64(record("oa_patient_id")),
+            .PatientNir = Coalesce(record("oa_patient_nir"), 0),
+            .PatientNom = Coalesce(record("oa_patient_nom"), ""),
+            .PatientPrenom = Coalesce(record("oa_patient_prenom"), ""),
+            .PatientDateNaissance = Coalesce((record("oa_patient_date_naissance")), Nothing),
+            .PatientGenreId = Coalesce(record("oa_patient_genre_id"), ""),
+            .PatientAdresse1 = Coalesce(record("oa_patient_adresse1"), ""),
+            .PatientAdresse2 = Coalesce(record("oa_patient_adresse2"), ""),
+            .PatientCodePostal = Coalesce(record("oa_patient_code_postal"), ""),
+            .PatientVille = Coalesce(record("oa_patient_ville"), ""),
+            .PatientTel1 = Coalesce(record("oa_patient_tel1"), ""),
+            .PatientTel2 = Coalesce(record("oa_patient_tel2"), ""),
+            .PatientEmail = Coalesce(record("oa_patient_email"), ""),
+            .PatientNomMarital = Coalesce(record("oa_patient_nom_marital"), ""),
+            .PatientDateEntree = Coalesce((record("oa_patient_date_entree_oasis")), Nothing),
+            .PatientDateSortie = Coalesce((record("oa_patient_date_sortie_oasis")), Nothing),
+            .PatientCommentaireSortie = Coalesce(record("oa_patient_commentaire_sortie"), ""),
+            .PatientDateDeces = Coalesce((record("oa_patient_date_deces")), Nothing),
+            .PatientSiteId = Coalesce(record("oa_patient_site_id"), 0),
+            .PatientSiegeId = Coalesce(record("oa_patient_siege_id"), 0),
+            .PatientInternet = Coalesce((record("oa_patient_couverture_internet")), False),
+            .PatientUniteSanitaireId = Coalesce((record("oa_patient_unite_sanitaire_id")), 0),
+            .PatientSyntheseDateMaj = Coalesce((record("oa_patient_synthese_date_maj")), Nothing),
+            .Profession = Coalesce(record("oa_patient_profession"), ""),
+            .PharmacienId = Coalesce(record("oa_patient_pharmacie_id"), 0),
+            .Taille = Coalesce(record("oa_patient_taille"), 0),
+            .BlocageMedical = Coalesce(record("oa_patient_blocage_medical"), False),
+            .INS = Coalesce(record("oa_patient_INS"), 0)
         }
+        Return patient
+    End Function
+
+    ''' <summary>Champs dérivés : libellé du genre (référentiel) et âge.</summary>
+    Public Shared Sub Completer(patient As Patient)
         patient.PatientGenre = Coalesce(CType(Table_genre.GetGenreDescription(patient.PatientGenreId), String), "genre ?")
         patient.PatientAge = Coalesce(CalculAgeEnAnneeEtMoisString(patient.PatientDateNaissance), "Inconnu")
         patient.PatientAgeEnAnnee = Coalesce(CalculAgeEnAnnee(patient.PatientDateNaissance), "Inconnu")
+    End Sub
+
+    Shared Function BuildBean(reader As SqlDataReader) As Patient
+        Dim patient = LireLigne(reader)
+        Completer(patient)
         Return patient
     End Function
 
