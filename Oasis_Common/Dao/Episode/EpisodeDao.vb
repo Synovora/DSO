@@ -83,33 +83,37 @@ Public Class EpisodeDao
         Return episode
     End Function
 
-    Private Function BuildBean(reader As SqlDataReader) As Episode
+    ''' <summary>
+    ''' Lit une ligne d'épisode telle quelle, sans toucher à la base.
+    ''' IDataRecord plutôt que SqlDataReader pour qu'un test puisse fournir la ligne.
+    ''' </summary>
+    Public Shared Function BuildBean(record As System.Data.IDataRecord) As Episode
         Dim episode As New Episode With {
-            .Id = reader("episode_id"),
-            .PatientId = Coalesce(reader("patient_id"), 0),
-            .Type = Coalesce(reader("type"), ""),
-            .TypeActivite = Coalesce(reader("type_activite"), ""),
-            .TypeProfil = Coalesce(reader("type_profil"), ""),
-            .DescriptionActivite = Coalesce(reader("description_activite"), ""),
-            .Commentaire = Coalesce(reader("commentaire"), ""),
-            .ObservationMedical = Coalesce(reader("observation_medical"), ""),
-            .ObservationParamedical = Coalesce(reader("observation_paramedical"), ""),
-            .Decision = Coalesce(reader("decision"), ""),
-            .ConclusionIdeType = Coalesce(reader("conclusion_ide_type"), ""),
-            .ConclusionMedConsigneDrcId = Coalesce(reader("conclusion_med_consigne_drc_id"), 0),
-            .ConclusionMedConsigneDenomination = Coalesce(reader("conclusion_med_consigne_denomination"), ""),
-            .ConclusionMedContexte1DrcId = Coalesce(reader("conclusion_med_contexte1_drc_id"), 0),
-            .ConclusionMedContexte1AntecedentId = Coalesce(reader("conclusion_med_contexte1_antecedent_id"), 0),
-            .ConclusionMedContexte2DrcId = Coalesce(reader("conclusion_med_contexte2_drc_id"), 0),
-            .ConclusionMedContexte2AntecedentId = Coalesce(reader("conclusion_med_contexte2_antecedent_id"), 0),
-            .ConclusionMedContexte3DrcId = Coalesce(reader("conclusion_med_contexte3_drc_id"), 0),
-            .ConclusionMedContexte3AntecedentId = Coalesce(reader("conclusion_med_contexte3_antecedent_id"), 0),
-            .UserCreation = Coalesce(reader("user_creation"), 0),
-            .DateCreation = Coalesce(reader("date_creation"), Nothing),
-            .UserModification = Coalesce(reader("user_modification"), 0),
-            .DateModification = Coalesce(reader("date_modification"), Nothing),
-            .Etat = Coalesce(reader("etat"), ""),
-            .Inactif = Coalesce(reader("inactif"), False)
+            .Id = record("episode_id"),
+            .PatientId = Coalesce(record("patient_id"), 0),
+            .Type = Coalesce(record("type"), ""),
+            .TypeActivite = Coalesce(record("type_activite"), ""),
+            .TypeProfil = Coalesce(record("type_profil"), ""),
+            .DescriptionActivite = Coalesce(record("description_activite"), ""),
+            .Commentaire = Coalesce(record("commentaire"), ""),
+            .ObservationMedical = Coalesce(record("observation_medical"), ""),
+            .ObservationParamedical = Coalesce(record("observation_paramedical"), ""),
+            .Decision = Coalesce(record("decision"), ""),
+            .ConclusionIdeType = Coalesce(record("conclusion_ide_type"), ""),
+            .ConclusionMedConsigneDrcId = Coalesce(record("conclusion_med_consigne_drc_id"), 0),
+            .ConclusionMedConsigneDenomination = Coalesce(record("conclusion_med_consigne_denomination"), ""),
+            .ConclusionMedContexte1DrcId = Coalesce(record("conclusion_med_contexte1_drc_id"), 0),
+            .ConclusionMedContexte1AntecedentId = Coalesce(record("conclusion_med_contexte1_antecedent_id"), 0),
+            .ConclusionMedContexte2DrcId = Coalesce(record("conclusion_med_contexte2_drc_id"), 0),
+            .ConclusionMedContexte2AntecedentId = Coalesce(record("conclusion_med_contexte2_antecedent_id"), 0),
+            .ConclusionMedContexte3DrcId = Coalesce(record("conclusion_med_contexte3_drc_id"), 0),
+            .ConclusionMedContexte3AntecedentId = Coalesce(record("conclusion_med_contexte3_antecedent_id"), 0),
+            .UserCreation = Coalesce(record("user_creation"), 0),
+            .DateCreation = Coalesce(record("date_creation"), Nothing),
+            .UserModification = Coalesce(record("user_modification"), 0),
+            .DateModification = Coalesce(record("date_modification"), Nothing),
+            .Etat = Coalesce(record("etat"), ""),
+            .Inactif = Coalesce(record("inactif"), False)
         }
         Return episode
     End Function

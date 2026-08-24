@@ -616,7 +616,12 @@ Public Class SousEpisodeDao
     '    Return sousEpisode
     'End Function
 
-    Shared Function BuildBean(reader As SqlDataReader) As SousEpisode
+    ''' <summary>
+    ''' Lit une ligne de sous-épisode telle quelle, sans toucher à la base.
+    ''' DbDataReader plutôt que SqlDataReader : HasColumn en a besoin, et un
+    ''' DataTableReader en est un, ce qui permet de tester sans SQL Server.
+    ''' </summary>
+    Public Shared Function BuildBean(reader As System.Data.Common.DbDataReader) As SousEpisode
         Dim sousEpisode As New SousEpisode With {
             .Id = reader("id"),
             .EpisodeId = reader("episode_id"),

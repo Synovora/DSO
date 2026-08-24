@@ -4,7 +4,12 @@ Imports System.Data.SqlClient
 Public Class OrdonnanceDao
     Inherits StandardDao
 
-    Private Function BuildBean(reader As SqlDataReader) As Ordonnance
+    ''' <summary>
+    ''' Lit une ligne d'ordonnance telle quelle, sans toucher à la base.
+    ''' DbDataReader plutôt que SqlDataReader : HasColumn en a besoin, et un
+    ''' DataTableReader en est un, ce qui permet de tester sans SQL Server.
+    ''' </summary>
+    Public Shared Function BuildBean(reader As System.Data.Common.DbDataReader) As Ordonnance
         Dim ordonnance As New Ordonnance With {
             .Id = reader("oa_ordonnance_id"),
             .PatientId = Coalesce(reader("oa_ordonnance_patient_id"), 0),

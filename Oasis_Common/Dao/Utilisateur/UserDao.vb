@@ -251,47 +251,58 @@ Public Class UserDao
     ''' s'exécute que sur le serveur. Partout ailleurs les deux champs restent
     ''' vides, et la requête ne les demande même pas à la base.
     ''' </summary>
-    Public Function buildBean(reader As SqlDataReader, Optional inclureSecrets As Boolean = False) As Utilisateur
+    ''' <summary>
+    ''' Lit une ligne de oa_utilisateur jointe à oa_r_profil, sans toucher à la
+    ''' base. Les fonctions du profil sont ajoutées par buildBean. Les colonnes
+    ''' secrètes ne sont lues que si inclureSecrets est vrai : côté client elles
+    ''' ne figurent même pas dans le SELECT.
+    ''' </summary>
+    Public Shared Function LireLigne(record As System.Data.IDataRecord, Optional inclureSecrets As Boolean = False) As Utilisateur
         Dim user As New Utilisateur
 
-        user.UtilisateurId = reader("oa_utilisateur_id")
-        user.UtilisateurNom = Coalesce(reader("oa_utilisateur_nom"), "")
-        user.UtilisateurPrenom = Coalesce(reader("oa_utilisateur_prenom"), "")
-        user.UtilisateurTelephone = Coalesce(reader("oa_utilisateur_telephone"), "")
-        user.UtilisateurFax = Coalesce(reader("oa_utilisateur_fax"), "")
-        user.UtilisateurMail = Coalesce(reader("oa_utilisateur_mail"), "")
+        user.UtilisateurId = record("oa_utilisateur_id")
+        user.UtilisateurNom = Coalesce(record("oa_utilisateur_nom"), "")
+        user.UtilisateurPrenom = Coalesce(record("oa_utilisateur_prenom"), "")
+        user.UtilisateurTelephone = Coalesce(record("oa_utilisateur_telephone"), "")
+        user.UtilisateurFax = Coalesce(record("oa_utilisateur_fax"), "")
+        user.UtilisateurMail = Coalesce(record("oa_utilisateur_mail"), "")
         ' Profil porté par la fiche utilisateur : c'est la valeur qui fait foi.
-        user.UtilisateurProfilId = Coalesce(reader("oa_utilisateur_profil_id"), "")
-        user.UtilisateurAdmin = Coalesce(reader("oa_utilisateur_admin"), False)
-        user.UtilisateurLogin = Coalesce(reader("oa_utilisateur_login"), "")
-        user.UtilisateurSiteId = Coalesce(reader("oa_utilisateur_site_id"), 0)
-        user.UtilisateurUniteSanitaireId = Coalesce(reader("oa_utilisateur_unite_sanitaire_id"), 0)
-        user.UtilisateurSiegeId = Coalesce(reader("oa_utilisateur_siege_id"), 0)
+        user.UtilisateurProfilId = Coalesce(record("oa_utilisateur_profil_id"), "")
+        user.UtilisateurAdmin = Coalesce(record("oa_utilisateur_admin"), False)
+        user.UtilisateurLogin = Coalesce(record("oa_utilisateur_login"), "")
+        user.UtilisateurSiteId = Coalesce(record("oa_utilisateur_site_id"), 0)
+        user.UtilisateurUniteSanitaireId = Coalesce(record("oa_utilisateur_unite_sanitaire_id"), 0)
+        user.UtilisateurSiegeId = Coalesce(record("oa_utilisateur_siege_id"), 0)
         ' Ne pas réaffecter le profil depuis la jointure : la condition de jointure
         ' est justement l'égalité des deux colonnes, donc la valeur est soit identique,
         ' soit NULL quand le profil est absent ou inactif. Le repli "ADMINISTRATIF"
         ' attribuait alors silencieusement un profil, et ses fonctions, à un
         ' utilisateur dont le profil réel est inconnu.
-        user.FonctionParDefautId = Coalesce(reader("oa_r_profil_fonction_id_defaut"), 0)
-        user.UtilisateurNiveauAcces = Coalesce(reader("oa_r_profil_niveau_acces"), 3)
-        user.TypeProfil = Coalesce(reader("oa_r_profil_type"), "")
-        user.UtilisateurRPPS = Coalesce(reader("oa_utilisateur_rpps"), "")
-        user.IsPasswordUniqueUsage = Coalesce(reader("oa_utilisateur_password_is_unique_usage"), False)
+        user.FonctionParDefautId = Coalesce(record("oa_r_profil_fonction_id_defaut"), 0)
+        user.UtilisateurNiveauAcces = Coalesce(record("oa_r_profil_niveau_acces"), 3)
+        user.TypeProfil = Coalesce(record("oa_r_profil_type"), "")
+        user.UtilisateurRPPS = Coalesce(record("oa_utilisateur_rpps"), "")
+        user.IsPasswordUniqueUsage = Coalesce(record("oa_utilisateur_password_is_unique_usage"), False)
         ' Aucune valeur de repli sur la clé. Les versions précédentes retombaient sur la
         ' clé privée 0x...01 et son adresse dérivée, toutes deux publiquement connues, ce
         ' qui rendait falsifiable toute signature émise par un utilisateur sans clé en base.
         ' Une clé absente doit rester absente : Utilisateur.Sign lève alors une erreur.
         If inclureSecrets Then
-            user.Password = Trim(Coalesce(reader("oa_password"), ""))
-            user.UtilisateurClePrivee = Coalesce(reader("cle_privee"), "")
+            user.Password = Trim(Coalesce(record("oa_password"), ""))
+            user.UtilisateurClePrivee = Coalesce(record("cle_privee"), "")
         Else
             user.Password = Nothing
             user.UtilisateurClePrivee = ""
         End If
-        user.UtilisateurAddress = Coalesce(reader("cle_publique"), "")
-        user.Tentatives = Coalesce(reader("oa_utilisateur_tentatives"), 0)
-        Dim verrou = Coalesce(reader("oa_utilisateur_verrou_jusqua"), Nothing)
+        user.UtilisateurAddress = Coalesce(record("cle_publique"), "")
+        user.Tentatives = Coalesce(record("oa_utilisateur_tentatives"), 0)
+        Dim verrou = Coalesce(record("oa_utilisateur_verrou_jusqua"), Nothing)
         user.VerrouJusqua = If(verrou Is Nothing, CType(Nothing, Date?), CDate(verrou))
+        Return user
+    End Function
+
+    Public Function buildBean(reader As SqlDataReader, Optional inclureSecrets As Boolean = False) As Utilisateur
+        Dim user = LireLigne(reader, inclureSecrets)
 
         ' --- recuperation des fonctions correspondant au profil de l'utilisateur
         addFonctions(user)

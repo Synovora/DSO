@@ -25,21 +25,8 @@ Imports Oasis_Common
         "oa_patient_profession", "oa_patient_pharmacie_id", "oa_patient_taille",
         "oa_patient_blocage_medical", "oa_patient_INS"}
 
-    ''' <summary>Une ligne où tout ce qui n'est pas fourni vaut DBNull.</summary>
     Private Shared Function Ligne(valeurs As Dictionary(Of String, Object)) As IDataRecord
-        Dim table As New DataTable()
-        For Each colonne In Colonnes
-            table.Columns.Add(colonne, GetType(Object))
-        Next
-        Dim rangee = table.NewRow()
-        For Each colonne In Colonnes
-            rangee(colonne) = If(valeurs.ContainsKey(colonne), valeurs(colonne), DBNull.Value)
-        Next
-        table.Rows.Add(rangee)
-
-        Dim lecteur = table.CreateDataReader()
-        Assert.IsTrue(lecteur.Read())
-        Return lecteur
+        Return LigneDeTest.Ligne(Colonnes, valeurs)
     End Function
 
     <TestMethod()> Public Sub UneLigneCompleteEstLueChampParChamp()
