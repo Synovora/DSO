@@ -4,9 +4,10 @@ Written 2026-08-23, after the repository was made public with a live `sa` passwo
 a hardcoded encryption key, and a publicly known fallback signing key in its history.
 
 **Nothing in this runbook has been executed.** The application-side changes it depends on have
-been made (see `docs/audits/2026-08-23-security-audit.md` and the migration script
-`docs/migrations/2026-08-23-durcissement-securite.sql`); the credential changes below still need a
-database, a maintenance window and a client release. It needs SQL Server access and a maintenance
+been made (see the migration script `docs/migrations/2026-08-23-durcissement-securite.sql` and the
+commits of 2026-08-23); the credential changes below still need a database, a maintenance window
+and a client release. The audit report behind this work is held outside the repository until the
+steps below are done, because publishing it describes holes that are still open in production. It needs SQL Server access and a maintenance
 window. Read the whole thing before starting: the order matters, and the wrong order takes the
 system down for every clinician.
 
