@@ -22,7 +22,7 @@ Open source dependencies
   Newtonsoft.Json                              MIT
   QRCoder                                      MIT
   X.PagedList                                  MIT
-  BouncyCastle / Portable.BouncyCastle         MIT
+  Portable.BouncyCastle                        MIT
   Microsoft ASP.NET MVC, Web API, Razor        Apache-2.0
   Microsoft.Extensions.*                       MIT
 

@@ -582,7 +582,7 @@ every deployed client at once, so it belongs in the same release as a key rotati
 **`oasis/Form/Obsolete/` is still compiled** into the build, despite the name.
 
 **Dependencies are pinned to 2019-2021 releases** (ASP.NET Core 2.2 packages, Newtonsoft.Json
-12.0.3, BouncyCastle 1.8.9) and carry known advisories. See the repository's Dependabot alerts.
+12.0.3, BouncyCastle 1.8.10) and carry known advisories. See the repository's Dependabot alerts.
 
 **`AutomateTraitementOasis` is a stub.** `Main` prints a line and opens a message box.
 
