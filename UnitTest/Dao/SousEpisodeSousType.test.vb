@@ -65,7 +65,7 @@
             {"redaction_profil_types", "valeur_6"},
             {"is_ald_possible", True}}
         valeurs.Remove("id")
-        New SousEpisodeSousType(LigneDeTest.Rangee(Colonnes, valeurs))
+        Dim ignore = New SousEpisodeSousType(LigneDeTest.Rangee(Colonnes, valeurs))
     End Sub
 
 End Class

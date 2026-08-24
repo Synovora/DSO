@@ -35,7 +35,7 @@
             {"libelle", "valeur_4"},
             {"is_with_destinataire", True}}
         valeurs.Remove("id")
-        New SousEpisodeType(LigneDeTest.Rangee(Colonnes, valeurs))
+        Dim ignore = New SousEpisodeType(LigneDeTest.Rangee(Colonnes, valeurs))
     End Sub
 
 End Class

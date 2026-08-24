@@ -147,7 +147,7 @@
             {"oa_antecedent_type", "valeur_3"},
             {"oa_antecedent_drc_id", 104}}
         valeurs.Remove("oa_antecedent_id")
-        New Antecedent(LigneDeTest.Ligne(Colonnes, valeurs))
+        Dim ignore = New Antecedent(LigneDeTest.Ligne(Colonnes, valeurs))
     End Sub
 
 End Class

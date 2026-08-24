@@ -29,7 +29,7 @@
             {"episode_id", 102L},
             {"chaine_id", 103L}}
         valeurs.Remove("id")
-        New RelationChaineEpisode(LigneDeTest.Ligne(Colonnes, valeurs))
+        Dim ignore = New RelationChaineEpisode(LigneDeTest.Ligne(Colonnes, valeurs))
     End Sub
 
 End Class

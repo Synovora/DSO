@@ -32,7 +32,7 @@
             {"id_sous_episode_sous_sous_type", 103L},
             {"is_ald", True}}
         valeurs.Remove("id")
-        New SousEpisodeDetailSousType(LigneDeTest.Rangee(Colonnes, valeurs))
+        Dim ignore = New SousEpisodeDetailSousType(LigneDeTest.Rangee(Colonnes, valeurs))
     End Sub
 
 End Class

@@ -47,7 +47,7 @@
             {"status", "valeur_3"},
             {"auteur", "valeur_4"}}
         valeurs.Remove("id")
-        New SousEpisodeReponseMail(LigneDeTest.Ligne(Colonnes, valeurs))
+        Dim ignore = New SousEpisodeReponseMail(LigneDeTest.Ligne(Colonnes, valeurs))
     End Sub
 
 End Class

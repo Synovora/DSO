@@ -40,7 +40,7 @@
             {"mailId", 102L},
             {"part", 103L}}
         valeurs.Remove("id")
-        New SousEpisodeReponseMailAttachment(LigneDeTest.Rangee(Colonnes, valeurs))
+        Dim ignore = New SousEpisodeReponseMailAttachment(LigneDeTest.Rangee(Colonnes, valeurs))
     End Sub
 
 End Class

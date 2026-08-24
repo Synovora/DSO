@@ -60,7 +60,7 @@
             {"create_user_id", 103L},
             {"horodate_creation", New Date(2024, 5, 5)}}
         valeurs.Remove("id")
-        New SousEpisodeReponse(LigneDeTest.Rangee(Colonnes, valeurs))
+        Dim ignore = New SousEpisodeReponse(LigneDeTest.Rangee(Colonnes, valeurs))
     End Sub
 
 End Class

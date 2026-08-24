@@ -44,7 +44,7 @@
             {"horodate_creation", New Date(2024, 4, 4)},
             {"libelle", "valeur_4"}}
         valeurs.Remove("id")
-        New SousEpisodeSousSousType(LigneDeTest.Rangee(Colonnes, valeurs))
+        Dim ignore = New SousEpisodeSousSousType(LigneDeTest.Rangee(Colonnes, valeurs))
     End Sub
 
 End Class
