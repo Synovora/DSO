@@ -22,7 +22,12 @@ Public Class MailOasis
         Dim parametreMailDao As New ParametreMailDao
         Dim parametreMail = parametreMailDao.GetParametreMailBySiegeIdTypeMailParam(Nothing, Me.Type)
 
-        Me.IsHTML = Me.IsHTML
+        ' Me.IsHTML = Me.IsHTML : l'affectation se recopiait sur elle-même, donc le
+        ' format annoncé par le modèle n'était jamais lu et IsHTML gardait False.
+        ' Les mails dont le modèle est en HTML partaient avec leurs balises
+        ' visibles, et Process() insérait des sauts de ligne là où le modèle
+        ' attend des <br />. À affecter avant Process, qui s'en sert.
+        Me.IsHTML = parametreMail.IsBodyHtml
         Me.Body = parametreMail.Body
         Me.Subject = parametreMail.Objet
 

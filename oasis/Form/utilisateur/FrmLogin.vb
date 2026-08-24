@@ -95,36 +95,31 @@ Public Class FrmLogin
                 .password = Me.TxtPassword.Text
             }
 
-        ' --- recherche chaine de connextion / api rest
-        If StandardDao.IsConnectionStringFixed() = False Then
-            Me.Cursor = Cursors.WaitCursor
-            Try
-                Using apiOasis As New ApiOasis()
-                    StandardDao.FixConnectionString(apiOasis.loginRest(loginRequestLog))
-                End Using
-            Catch ex As Exception
-                If ex.Message = "Identifiant et/ou mot de passe erroné !" AndAlso IsPermission(True) = False Then PasLeDroitLala()
-                If MsgBox("" & ex.Message & vbCrLf & "Réessayer ?", MsgBoxStyle.YesNo Or MessageBoxIcon.Error, "Authentification Api") = MsgBoxResult.Yes Then
-                    Return
-                Else
-                    If isChgtVolontaire Then Return
-                    Close()
-                    End
-                End If
-            Finally
-                Me.Cursor = Cursors.Default
-            End Try
-        End If
-
-        Dim userDao As UserDao = New UserDao
+        ' --- authentification et ouverture de session par l'api rest
+        '
+        ' L'appel a lieu à chaque connexion, y compris quand la chaîne est déjà
+        ' fixée. Le mot de passe n'était sinon vérifié que par le poste lui-même,
+        ' contre la base, à partir de la seconde connexion : c'est le serveur qui
+        ' compte les échecs et verrouille, et lui seul doit décider qui entre.
+        ' Le serveur renvoie l'utilisateur, le poste n'a donc plus à relire
+        ' l'empreinte du mot de passe ni la clé de signature.
         Me.Cursor = Cursors.WaitCursor
         Try
-            userLog = userDao.getUserByLoginPassword(Me.TxtLogin.Text, Me.TxtPassword.Text)
+            Using apiOasis As New ApiOasis()
+                Dim reponse = apiOasis.loginRest(loginRequestLog)
+                StandardDao.FixConnectionString(reponse.ChaineConnexion)
+                userLog = reponse.Utilisateur
+            End Using
         Catch ex As Exception
             Me.Cursor = Cursors.Default
             If ex.Message = "Identifiant et/ou mot de passe erroné !" AndAlso IsPermission(True) = False Then PasLeDroitLala()
-            Dim unused = MessageBox.Show("" & ex.Message, "Authentification", MessageBoxButtons.OK, MessageBoxIcon.Error)
-            Return
+            If MsgBox("" & ex.Message & vbCrLf & "Réessayer ?", MsgBoxStyle.YesNo Or MessageBoxIcon.Error, "Authentification Api") = MsgBoxResult.Yes Then
+                Return
+            Else
+                If isChgtVolontaire Then Return
+                Close()
+                End
+            End If
         Finally
             Me.Cursor = Cursors.Default
         End Try

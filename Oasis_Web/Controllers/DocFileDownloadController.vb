@@ -7,36 +7,59 @@ Imports Oasis_Common
 
 Namespace Controllers
     Public Class DocFileDownloadController
-        Inherits ApiController
+        Inherits ApiControllerOasis
 
         Public Function PostValue(<FromBody()> ByVal downloadRequest As DownloadRequest) As HttpResponseMessage
             Try
-                ' --- verification droits
-                verifPassword(downloadRequest.LoginRequest.login, downloadRequest.LoginRequest.password)
+                If downloadRequest Is Nothing Then
+                    Return Refus(HttpStatusCode.BadRequest, "Requête incomplète")
+                End If
 
-                Dim response As HttpResponseMessage = Request.CreateResponse(HttpStatusCode.Accepted)
-                ' Le nom vient du client : il doit correspondre au motif attendu et
-                ' rester sous la zone de dépôt (sinon ..\..\Web.config est lisible).
+                ' L'identité vient du filtre d'authentification, plus du corps de la
+                ' requête. Vérifier un mot de passe ne disait rien du droit d'accès
+                ' au document demandé : les noms sont prévisibles, donc n'importe
+                ' quel compte lisait l'ensemble du fonds documentaire.
+                If Not PeutAccederAuxDocuments(UtilisateurConnecte) Then
+                    Return Refus(HttpStatusCode.Forbidden, "Accès refusé")
+                End If
+
+                Dim document As HabilitationsDocuments.DocumentDemande
+                Try
+                    document = ResoudreDocument(downloadRequest.FileName)
+                Catch exAcces As UnauthorizedAccessException
+                    ' Nom qui ne correspond à aucun document enregistré : même
+                    ' réponse qu'un fichier absent, pour ne pas confirmer quels
+                    ' identifiants d'épisode existent.
+                    Return Refus(HttpStatusCode.NotFound, "Document introuvable")
+                End Try
+
+                If Not document.EstModele AndAlso
+                   Not PeutAccederAuPatient(UtilisateurConnecte, document.PatientId) Then
+                    Return Refus(HttpStatusCode.Forbidden, "Accès refusé")
+                End If
+
                 Dim filePath As String
                 Try
-                    filePath = ResoudreCheminDocument(downloadRequest.FileName)
+                    filePath = ResoudreCheminDocument(document.Nom)
                 Catch exNom As ArgumentException
-                    Return New HttpResponseMessage(HttpStatusCode.BadRequest) With {
-                        .Content = New StringContent("Nom de fichier invalide"),
-                        .ReasonPhrase = "Nom de fichier invalide"
-                    }
+                    Return Refus(HttpStatusCode.BadRequest, "Nom de fichier invalide")
                 End Try
 
                 If Not File.Exists(filePath) Then
-                    Dim resp = New HttpResponseMessage(HttpStatusCode.NotFound) With {
-                        .Content = New StringContent("Fichier demandé inexistant"),
-                        .ReasonPhrase = "Fichier demande inexistant"
-                    }
-                    Return resp
+                    Return Refus(HttpStatusCode.NotFound, "Document introuvable")
+                End If
+
+                ' Consultation d'un document de dossier : tracée avec le patient
+                ' concerné. Tant que la règle de périmètre patient n'est pas
+                ' arrêtée, la trace est ce qui rend un accès indu constatable.
+                If Not document.EstModele Then
+                    JournalAcces.Consultation(UtilisateurConnecte, document.PatientId,
+                                              "Téléchargement document " & document.Nom)
                 End If
 
                 Dim nomFichier = Path.GetFileName(filePath)
                 Dim bytes As Byte() = File.ReadAllBytes(filePath)
+                Dim response As HttpResponseMessage = Request.CreateResponse(HttpStatusCode.Accepted)
                 response.Content = New ByteArrayContent(bytes)
                 response.Content.Headers.ContentLength = bytes.LongLength
                 response.Content.Headers.ContentDisposition = New ContentDispositionHeaderValue("attachment") With {
@@ -45,25 +68,12 @@ Namespace Controllers
                 response.Content.Headers.ContentType = New MediaTypeHeaderValue(MimeMapping.GetMimeMapping(nomFichier))
                 Return response
 
-            Catch e As ArgumentException
-                Dim resp = New HttpResponseMessage(HttpStatusCode.Unauthorized) With {
-                    .Content = New StringContent("Identifiant et/ou mot de passe erroné !"),
-                    .ReasonPhrase = "Utilisateur introuvable"
-                }
-                Return resp
-
             Catch e As Exception
                 ' Ne jamais renvoyer e.Message : il expose la configuration serveur.
-                Dim resp = New HttpResponseMessage(HttpStatusCode.InternalServerError) With {
-                .Content = New StringContent("Erreur interne au serveur"),
-                .ReasonPhrase = "Erreur interne au serveur"
-                }
-                Return resp
-
+                Return Refus(HttpStatusCode.InternalServerError, "Erreur interne au serveur")
             End Try
 
         End Function
-
 
     End Class
 End Namespace

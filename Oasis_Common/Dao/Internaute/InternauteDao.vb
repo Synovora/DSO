@@ -205,6 +205,30 @@ Public Class InternauteDao
         Return user
     End Function
 
+    ''' <summary>
+    ''' Vrai si un compte portail existe déjà pour cette adresse.
+    '''
+    ''' Le client lourd posait la question en chargeant le compte entier, ce qui
+    ''' l'obligeait à lire l'empreinte du mot de passe et la clé de récupération
+    ''' du patient. La base lui refuse désormais ces deux colonnes : il ne lui
+    ''' faut ici qu'une réponse par oui ou par non.
+    ''' </summary>
+    Public Function ExisteInternautePourEmail(email As String) As Boolean
+        If String.IsNullOrWhiteSpace(email) Then Return False
+
+        Using con As SqlConnection = GetConnection()
+            Using cmd As New SqlCommand(
+                "SELECT COUNT(1) FROM oasis.oa_internaute WHERE email = @email;", con)
+                cmd.Parameters.AddWithValue("@email", email)
+                Return CInt(cmd.ExecuteScalar()) > 0
+            End Using
+        End Using
+    End Function
+
+    ''' <summary>
+    ''' Charge un compte portail complet, secrets compris. Réservé au serveur :
+    ''' la base refuse au compte du client lourd la lecture de password et recovery.
+    ''' </summary>
     Public Function GetInternauteByEmail(email As String) As Internaute
         Dim user As Internaute = Nothing
 

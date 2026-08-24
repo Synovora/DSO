@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <!--
   Web.config.example: the settings you must supply locally.
 
@@ -40,20 +40,39 @@
          Must exist and be writable by the IIS app pool identity.
          Sub-episode documents land in a "SousEpisode" subfolder. -->
     <add key="FileUploadLocation" value="c:\db\oasis\upload" />
+    <!-- Domaines vers lesquels /api/sendMail accepte d'écrire, séparés par des
+         points-virgules. Les adresses déjà connues de la base (patient du
+         dossier, annuaire professionnel) passent quel que soit leur domaine.
+         Vide, seules ces adresses connues sont acceptées. -->
+    <add key="MailDomainesAutorises" value="" />
   </appSettings>
 
   <connectionStrings>
-    <!-- SQL Server holding the `oasis` schema.
+    <!-- Two SQL logins, and the difference matters.
 
-         This is the single most sensitive value in the repository. The web API
-         hands an AES-encrypted copy of this exact string to every desktop
-         client that authenticates via /api/login, so the desktop app never
-         needs its own credentials. See "How authentication works" in the README.
+         oasis_web is the server's own. It stays on this machine. It is the only
+         account allowed to read password hashes, prescriber signing keys, portal
+         credentials and the SMTP password.
 
-         Use a least-privilege SQL login scoped to the `oasis` schema.
-         Do not use `sa`. -->
+         oasis_client is what /api/login hands to every desktop client that
+         authenticates, AES-encrypted with OasisCryptoKey. Since that key also
+         ships to every workstation, assume anything oasis_client can read is
+         readable by any user. The column-level denials in
+         docs/migrations/2026-08-24-comptes-sql-separes.sql are what keep that
+         acceptable. Never put the server's account in this second entry.
+
+         See "How authentication works" in the README.
+
+         encrypt=true;trustServerCertificate=false : the link to SQL Server must
+         be authenticated, not merely encrypted. SQL Server needs a certificate
+         the machine trusts. Setting trustServerCertificate=true is a development
+         convenience only: this string reaches every workstation, so anyone able
+         to answer on port 1433 would collect the credentials. -->
     <add name="Oasis_WF.My.MySettings.oasisConnection"
-         connectionString="Data Source=SQLSERVER_HOST;Initial Catalog=oasis;persist security info=True;user id=DB_USER;password=DB_PASSWORD;encrypt=true;trustServerCertificate=true;MultipleActiveResultSets=True"
+         connectionString="Data Source=SQLSERVER_HOST;Initial Catalog=oasis;persist security info=True;user id=oasis_web;password=DB_PASSWORD_WEB;encrypt=true;trustServerCertificate=false;MultipleActiveResultSets=True"
+         providerName="System.Data.SqlClient" />
+    <add name="Oasis_WF.My.MySettings.oasisConnectionClient"
+         connectionString="Data Source=SQLSERVER_HOST;Initial Catalog=oasis;persist security info=True;user id=oasis_client;password=DB_PASSWORD_CLIENT;encrypt=true;trustServerCertificate=false;MultipleActiveResultSets=True"
          providerName="System.Data.SqlClient" />
   </connectionStrings>
 

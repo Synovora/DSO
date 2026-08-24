@@ -41,4 +41,24 @@ Public Class AnnuaireProfessionnelBalDao
             End Using
         End Using
     End Function
+
+    ''' <summary>
+    ''' Vrai si cette adresse figure dans l'annuaire professionnel importé.
+    '''
+    ''' Sert au contrôle des destinataires de courriel : une adresse déjà connue
+    ''' comme boîte aux lettres d'un correspondant est un destinataire légitime.
+    ''' </summary>
+    Public Function ExisteAdresse(adresse As String) As Boolean
+        If String.IsNullOrWhiteSpace(adresse) Then Return False
+
+        Using con As SqlConnection = GetConnection()
+            Using cmd As New SqlCommand(
+                "SELECT COUNT(1) FROM oasis.ans_annuaire_professionnel_sante_bal" &
+                " WHERE adresse_bal = @adresse;", con)
+                cmd.Parameters.AddWithValue("@adresse", adresse.Trim())
+                Return CInt(cmd.ExecuteScalar()) > 0
+            End Using
+        End Using
+    End Function
+
 End Class

@@ -134,6 +134,8 @@ End Class
 
     <TestMethod()> <ExpectedException(GetType(InvalidOperationException))>
     Public Sub SignerSansCleLeveUneErreur()
+        ' Aucun crochet installé : le poste ne doit pas produire de signature.
+        Utilisateur.SignataireDistant = Nothing
         Dim sansCle = New Utilisateur With {.UtilisateurLogin = "test", .UtilisateurClePrivee = ""}
         sansCle.Sign(New Byte() {1, 2, 3})
     End Sub
@@ -235,6 +237,123 @@ End Class
     <TestMethod()> Public Sub LesSeparateursSontNormalises()
         Assert.AreEqual("SousEpisode\a.DOCX", NormaliserNomDocument("/SousEpisode/a.DOCX"))
         Assert.AreEqual("", NormaliserNomDocument(Nothing))
+    End Sub
+
+End Class
+
+''' <summary>
+''' Signature déléguée au serveur.
+'''
+''' Le poste ne détient plus la clé privée du prescripteur : Utilisateur.Sign
+''' passe par le crochet SignataireDistant, que le client lourd branche sur
+''' /api/signature. Les tests remplacent ce crochet par une signature locale,
+''' ce qui vérifie le chemin sans serveur.
+''' </summary>
+<TestClass()> Public Class TestSignatureDeleguee
+
+    <TestCleanup()> Public Sub Nettoyer()
+        ' Le crochet est partagé par tout le processus : le laisser en place
+        ' ferait passer des tests voisins pour de mauvaises raisons.
+        Utilisateur.SignataireDistant = Nothing
+    End Sub
+
+    <TestMethod()> Public Sub SansCleLocaleLaSignatureEstDemandeeAuServeur()
+        Dim serveur = EthECKey.GenerateKey()
+        Dim adresseServeur = serveur.GetPublicAddress()
+        Dim clePriveeServeur = "0x" & BitConverter.ToString(serveur.GetPrivateKeyAsBytes()).Replace("-", "")
+        Dim appels = 0
+
+        Utilisateur.SignataireDistant =
+            Function(charge As Byte()) As SignatureResponse
+                appels += 1
+                Return New SignatureResponse With {
+                    .Signature = New MessageSigner().HashAndSign(charge, clePriveeServeur),
+                    .Adresse = adresseServeur
+                }
+            End Function
+
+        ' Le poste porte l'adresse publique mais aucune clé privée.
+        Dim poste = New Utilisateur With {
+            .UtilisateurLogin = "test",
+            .UtilisateurClePrivee = "",
+            .UtilisateurAddress = adresseServeur
+        }
+        Dim payload = New Byte() {1, 2, 3, 4, 5}
+        Dim ordonnance = New Ordonnance With {
+            .Signature = poste.Sign(payload),
+            .SignaturePayload = payload
+        }
+        ordonnance.SignatureAdresse = poste.UtilisateurAddress
+
+        Assert.AreEqual(1, appels)
+        Assert.AreEqual(VerificationSignature.ResultatVerification.Valide,
+                        VerificationSignature.Verifier(ordonnance))
+    End Sub
+
+    <TestMethod()> Public Sub LAdresseRenvoyeeParLeServeurRemplaceCelleDuPoste()
+        ' Cas d'une clé changée entre la connexion et la signature : c'est
+        ' l'adresse du signataire réel qui doit être enregistrée.
+        Dim serveur = EthECKey.GenerateKey()
+        Dim clePriveeServeur = "0x" & BitConverter.ToString(serveur.GetPrivateKeyAsBytes()).Replace("-", "")
+
+        Utilisateur.SignataireDistant =
+            Function(charge As Byte()) As SignatureResponse
+                Return New SignatureResponse With {
+                    .Signature = New MessageSigner().HashAndSign(charge, clePriveeServeur),
+                    .Adresse = serveur.GetPublicAddress()
+                }
+            End Function
+
+        Dim poste = New Utilisateur With {
+            .UtilisateurLogin = "test",
+            .UtilisateurClePrivee = "",
+            .UtilisateurAddress = EthECKey.GenerateKey().GetPublicAddress()
+        }
+        Dim payload = New Byte() {9, 9, 9}
+        Dim signature = poste.Sign(payload)
+
+        Assert.IsTrue(AddressUtil.Current.AreAddressesTheSame(serveur.GetPublicAddress(),
+                                                              poste.UtilisateurAddress))
+        Assert.AreEqual(VerificationSignature.ResultatVerification.Valide,
+                        VerificationSignature.Verifier(New Ordonnance With {
+                            .Signature = signature,
+                            .SignaturePayload = payload,
+                            .SignatureAdresse = poste.UtilisateurAddress
+                        }))
+    End Sub
+
+    <TestMethod()> <ExpectedException(GetType(InvalidOperationException))>
+    Public Sub UneReponseVideDuServeurEstRefusee()
+        Utilisateur.SignataireDistant =
+            Function(charge As Byte()) As SignatureResponse
+                Return New SignatureResponse With {.Signature = "", .Adresse = ""}
+            End Function
+
+        Dim poste = New Utilisateur With {.UtilisateurLogin = "test", .UtilisateurClePrivee = ""}
+        poste.Sign(New Byte() {1})
+    End Sub
+
+    <TestMethod()> Public Sub UneCleLocaleResteUtiliseeCoteServeur()
+        ' Le serveur, lui, a la clé en main : il ne doit pas appeler le crochet.
+        Utilisateur.SignataireDistant =
+            Function(charge As Byte()) As SignatureResponse
+                Throw New InvalidOperationException("Le crochet ne doit pas etre appele.")
+            End Function
+
+        Dim k = EthECKey.GenerateKey()
+        Dim serveur = New Utilisateur With {
+            .UtilisateurLogin = "test",
+            .UtilisateurClePrivee = "0x" & BitConverter.ToString(k.GetPrivateKeyAsBytes()).Replace("-", ""),
+            .UtilisateurAddress = k.GetPublicAddress()
+        }
+        Dim payload = New Byte() {7, 7}
+
+        Assert.AreEqual(VerificationSignature.ResultatVerification.Valide,
+                        VerificationSignature.Verifier(New Ordonnance With {
+                            .Signature = serveur.Sign(payload),
+                            .SignaturePayload = payload,
+                            .SignatureAdresse = serveur.UtilisateurAddress
+                        }))
     End Sub
 
 End Class

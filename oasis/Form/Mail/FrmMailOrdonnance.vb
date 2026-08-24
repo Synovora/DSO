@@ -131,9 +131,7 @@ Public Class FrmMailOrdonnance
                 .AddressTo = TxtTo.Text
             End With
             Using apiOasis As New ApiOasis()
-                Dim ret = apiOasis.sendMailRest(loginRequestLog.login,
-                              loginRequestLog.password,
-                              mailOasis)
+                Dim ret = apiOasis.sendMailRest(loginRequestLog, mailOasis, patient.PatientId)
                 Notification.show("Emission Email", "Email envoyé !")
             End Using
         Catch ex As Exception

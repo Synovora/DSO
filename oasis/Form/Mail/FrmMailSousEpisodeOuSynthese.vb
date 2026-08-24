@@ -106,7 +106,9 @@ Public Class FrmMailSousEpisodeOuSynthese
                 .Subject = TxtObjet.Text
                 .AddressTo = TxtTo.Text
             End With
-            mailOasis.Send(loginRequestLog)
+            ' Le dossier concerné accompagne l'envoi : le serveur s'en sert pour
+            ' reconnaître les destinataires légitimes et pour tracer.
+            mailOasis.Send(loginRequestLog, If(mailOasis.Patient Is Nothing, 0L, mailOasis.Patient.PatientId))
             Notification.show("Emission Email", "Email envoyé !")
         Catch ex As Exception
             MessageBox.Show(ex.Message, "Erreur Envoi Email")

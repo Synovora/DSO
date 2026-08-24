@@ -4,6 +4,31 @@ Public Class UserDao
     Inherits StandardDao
 
     ''' <summary>
+    ''' Colonnes de oa_utilisateur et oa_r_profil lues par buildBean, hors secrets.
+    '''
+    ''' Les requêtes disaient "select U.*, p.*". Un SELECT * échoue en bloc dès
+    ''' qu'une seule colonne est refusée à l'appelant : impossible, donc, de
+    ''' retirer au client le droit de lire oa_password et cle_privee sans lister
+    ''' les colonnes explicitement. C'est aussi la seule façon de garantir qu'une
+    ''' colonne ajoutée plus tard à la table ne parte pas d'elle-même vers le poste.
+    ''' </summary>
+    Private Const ColonnesUtilisateur As String =
+        " u.oa_utilisateur_id, u.oa_utilisateur_nom, u.oa_utilisateur_prenom," &
+        " u.oa_utilisateur_telephone, u.oa_utilisateur_fax, u.oa_utilisateur_mail," &
+        " u.oa_utilisateur_profil_id, u.oa_utilisateur_admin, u.oa_utilisateur_login," &
+        " u.oa_utilisateur_site_id, u.oa_utilisateur_unite_sanitaire_id, u.oa_utilisateur_siege_id," &
+        " u.oa_utilisateur_rpps, u.oa_utilisateur_password_is_unique_usage," &
+        " u.oa_utilisateur_tentatives, u.oa_utilisateur_verrou_jusqua, u.cle_publique," &
+        " p.oa_r_profil_fonction_id_defaut, p.oa_r_profil_niveau_acces, p.oa_r_profil_type"
+
+    ''' <summary>
+    ''' Colonnes secrètes : empreinte du mot de passe et clé privée de signature.
+    ''' Réservées au serveur, qui seul a besoin de vérifier un mot de passe et de
+    ''' signer. La base refuse leur lecture au compte utilisé par le client lourd.
+    ''' </summary>
+    Private Const ColonnesSecretes As String = " u.oa_password, u.cle_privee"
+
+    ''' <summary>
     ''' 
     ''' </summary>
     ''' <param name="utilisateur"></param>
@@ -17,18 +42,21 @@ Public Class UserDao
         Dim transaction As SqlClient.SqlTransaction = con.BeginTransaction
 
         Try
+            ' Les colonnes de clé ne sont plus alimentées ici : la paire est générée
+            ' par le serveur (/api/signature/cle) une fois la fiche créée, de sorte
+            ' que la clé privée n'existe jamais sur le poste qui saisit la fiche.
             Dim SQLstring As String = "INSERT INTO oasis.oa_utilisateur (" & vbCrLf &
                                      " oa_utilisateur_prenom, oa_utilisateur_nom, oa_utilisateur_profil_id, oa_utilisateur_login,oa_utilisateur_siege_id " &
                                      ",oa_utilisateur_unite_sanitaire_id, oa_utilisateur_site_id, oa_utilisateur_date_entree, oa_utilisateur_date_sortie " &
                                      ",oa_utilisateur_etat, oa_password, oa_utilisateur_admin, oa_utilisateur_telephone, oa_utilisateur_fax " &
                                      ",oa_utilisateur_mail, oa_utilisateur_rpps " &
-                                     ",oa_utilisateur_password_is_unique_usage, cle_privee, cle_publique)" & vbCrLf &
+                                     ",oa_utilisateur_password_is_unique_usage)" & vbCrLf &
                                      " VALUES (" & vbCrLf &
                                      " @oa_utilisateur_prenom, @oa_utilisateur_nom, @oa_utilisateur_profil_id, @oa_utilisateur_login,@oa_utilisateur_siege_id " &
                                      ",@oa_utilisateur_unite_sanitaire_id, @oa_utilisateur_site_id, @oa_utilisateur_date_entree, @oa_utilisateur_date_sortie " &
                                      ",@oa_utilisateur_etat, @oa_password, @oa_utilisateur_admin, @oa_utilisateur_telephone, @oa_utilisateur_fax " &
                                      ",@oa_utilisateur_mail, @oa_utilisateur_rpps " &
-                                     ",@oa_utilisateur_password_is_unique_usage, @oa_utilisateur_cle_privee, @oa_utilisateur_cle_publique);" & vbCrLf &
+                                     ",@oa_utilisateur_password_is_unique_usage);" & vbCrLf &
                                      "SELECT SCOPE_IDENTITY()"
 
             Dim cmd As New SqlCommand(SQLstring, con, transaction)
@@ -50,8 +78,6 @@ Public Class UserDao
                 .AddWithValue("@oa_utilisateur_mail", utilisateur.UtilisateurMail)
                 .AddWithValue("@oa_utilisateur_rpps", utilisateur.UtilisateurRPPS)
                 .AddWithValue("@oa_utilisateur_password_is_unique_usage", utilisateur.IsPasswordUniqueUsage)
-                .AddWithValue("@oa_utilisateur_cle_privee", utilisateur.UtilisateurClePrivee)
-                .AddWithValue("@oa_utilisateur_cle_publique", utilisateur.UtilisateurAddress)
             End With
 
             da.InsertCommand = cmd
@@ -80,8 +106,10 @@ Public Class UserDao
         Dim transaction As SqlClient.SqlTransaction = con.BeginTransaction
 
         Try
-            ' Pour les clés de signature, une valeur vide signifie « ne pas toucher » :
-            ' les fiches chargées sans clé privée ne doivent pas l'effacer en base.
+            ' Cette requête ne touche plus ni au mot de passe ni aux clés de
+            ' signature : les trois colonnes appartiennent au serveur, qui les écrit
+            ' par /api/motdepasse et /api/signature/cle. La base refuse d'ailleurs
+            ' leur écriture au compte du client lourd.
             Dim SQLstring As String = "UPDATE oasis.oa_utilisateur SET " & vbCrLf &
                                      " oa_utilisateur_prenom=@oa_utilisateur_prenom, oa_utilisateur_nom=@oa_utilisateur_nom " & vbCrLf &
                                      ",oa_utilisateur_profil_id=@oa_utilisateur_profil_id, oa_utilisateur_login=@oa_utilisateur_login" & vbCrLf &
@@ -89,9 +117,6 @@ Public Class UserDao
                                      ", oa_utilisateur_site_id=@oa_utilisateur_site_id" & vbCrLf &
                                      ", oa_utilisateur_admin=@oa_utilisateur_admin, oa_utilisateur_telephone=@oa_utilisateur_telephone" & vbCrLf &
                                      ", oa_utilisateur_fax=@oa_utilisateur_fax, oa_utilisateur_mail=@oa_utilisateur_mail, oa_utilisateur_rpps=@oa_utilisateur_rpps" & vbCrLf &
-                                     ", oa_password=@oa_password, oa_utilisateur_password_is_unique_usage=@oa_utilisateur_password_is_unique_usage" & vbCrLf &
-                                     ", cle_privee = CASE WHEN @oa_utilisateur_cle_privee = '' THEN cle_privee ELSE @oa_utilisateur_cle_privee END" & vbCrLf &
-                                     ", cle_publique = CASE WHEN @oa_utilisateur_cle_publique = '' THEN cle_publique ELSE @oa_utilisateur_cle_publique END" & vbCrLf &
                                      "WHERE oa_utilisateur_id = @oa_utilisateur_id "
 
             Dim cmd As New SqlCommand(SQLstring, con, transaction)
@@ -108,12 +133,6 @@ Public Class UserDao
                 .AddWithValue("@oa_utilisateur_fax", utilisateur.UtilisateurFax)
                 .AddWithValue("@oa_utilisateur_mail", utilisateur.UtilisateurMail)
                 .AddWithValue("@oa_utilisateur_rpps", utilisateur.UtilisateurRPPS)
-                .AddWithValue("@oa_password", utilisateur.Password)
-                .AddWithValue("@oa_utilisateur_password_is_unique_usage", utilisateur.IsPasswordUniqueUsage)
-                ' Les clés de signature n'étaient jamais écrites par cette requête :
-                ' un utilisateur créé sans clé ne pouvait plus jamais en obtenir.
-                .AddWithValue("@oa_utilisateur_cle_privee", If(utilisateur.UtilisateurClePrivee, ""))
-                .AddWithValue("@oa_utilisateur_cle_publique", If(utilisateur.UtilisateurAddress, ""))
                 ' -- pour le where
                 .AddWithValue("@oa_utilisateur_id", utilisateur.UtilisateurId)
             End With
@@ -150,16 +169,17 @@ Public Class UserDao
         Using con As SqlConnection = GetConnection()
             Dim command As SqlCommand = con.CreateCommand()
             Try
+                ' Requête serveur : elle est la seule à lire les colonnes secrètes,
+                ' parce qu'elle est la seule à vérifier un mot de passe.
                 command.CommandText =
-                   "select U.*, p.* " &
+                   "select " & ColonnesUtilisateur & "," & ColonnesSecretes & " " &
                    "from oasis.oa_utilisateur u " &
                    "inner join oasis.oa_r_profil p on p.oa_r_profil_id = oa_utilisateur_profil_id And COALESCE(oa_r_profil_inactif,'false')='false' " &
                    "where oa_utilisateur_login = @login AND oa_utilisateur_etat='A'"
                 command.Parameters.AddWithValue("@login", login)
                 Using reader As SqlDataReader = command.ExecuteReader()
                     If reader.Read() Then
-                        ' Seul l'utilisateur qui s'authentifie repart avec sa clé de signature.
-                        user = buildBean(reader, inclureClePrivee:=True)
+                        user = buildBean(reader, inclureSecrets:=True)
                     Else
                         Throw New ArgumentException("Identifiant et/ou mot de passe erroné !")
                     End If
@@ -195,7 +215,7 @@ Public Class UserDao
             Dim command As SqlCommand = con.CreateCommand()
 
             command.CommandText =
-               "select U.*, p.* " &
+               "select " & ColonnesUtilisateur & " " &
                "from oasis.oa_utilisateur u " &
                "left join oasis.oa_r_profil p on p.oa_r_profil_id = oa_utilisateur_profil_id " &
                "where oa_utilisateur_id = @id"
@@ -226,12 +246,12 @@ Public Class UserDao
     ''' <summary>
     ''' Construit un Utilisateur à partir d'une ligne lue.
     '''
-    ''' La clé privée de signature n'est chargée que pour l'utilisateur qui vient
-    ''' de s'authentifier, car lui seul en a besoin (pour signer ses ordonnances).
-    ''' Elle était auparavant chargée pour tout utilisateur lu, y compris dans les
-    ''' listes et côté portail, où elle a déjà fini dans une vue.
+    ''' inclureSecrets vaut True pour la seule requête qui sélectionne l'empreinte
+    ''' du mot de passe et la clé privée, c'est-à-dire l'authentification, qui ne
+    ''' s'exécute que sur le serveur. Partout ailleurs les deux champs restent
+    ''' vides, et la requête ne les demande même pas à la base.
     ''' </summary>
-    Public Function buildBean(reader As SqlDataReader, Optional inclureClePrivee As Boolean = False) As Utilisateur
+    Public Function buildBean(reader As SqlDataReader, Optional inclureSecrets As Boolean = False) As Utilisateur
         Dim user As New Utilisateur
 
         user.UtilisateurId = reader("oa_utilisateur_id")
@@ -247,7 +267,6 @@ Public Class UserDao
         user.UtilisateurSiteId = Coalesce(reader("oa_utilisateur_site_id"), 0)
         user.UtilisateurUniteSanitaireId = Coalesce(reader("oa_utilisateur_unite_sanitaire_id"), 0)
         user.UtilisateurSiegeId = Coalesce(reader("oa_utilisateur_siege_id"), 0)
-        user.Password = Trim(Coalesce(reader("oa_password"), ""))
         ' Ne pas réaffecter le profil depuis la jointure : la condition de jointure
         ' est justement l'égalité des deux colonnes, donc la valeur est soit identique,
         ' soit NULL quand le profil est absent ou inactif. Le repli "ADMINISTRATIF"
@@ -258,23 +277,21 @@ Public Class UserDao
         user.TypeProfil = Coalesce(reader("oa_r_profil_type"), "")
         user.UtilisateurRPPS = Coalesce(reader("oa_utilisateur_rpps"), "")
         user.IsPasswordUniqueUsage = Coalesce(reader("oa_utilisateur_password_is_unique_usage"), False)
-        ' Aucune valeur de repli ici. Les versions précédentes retombaient sur la clé
-        ' privée 0x...01 et son adresse dérivée, toutes deux publiquement connues, ce qui
-        ' rendait falsifiable toute signature émise par un utilisateur sans clé en base.
+        ' Aucune valeur de repli sur la clé. Les versions précédentes retombaient sur la
+        ' clé privée 0x...01 et son adresse dérivée, toutes deux publiquement connues, ce
+        ' qui rendait falsifiable toute signature émise par un utilisateur sans clé en base.
         ' Une clé absente doit rester absente : Utilisateur.Sign lève alors une erreur.
-        If inclureClePrivee Then
+        If inclureSecrets Then
+            user.Password = Trim(Coalesce(reader("oa_password"), ""))
             user.UtilisateurClePrivee = Coalesce(reader("cle_privee"), "")
         Else
+            user.Password = Nothing
             user.UtilisateurClePrivee = ""
         End If
         user.UtilisateurAddress = Coalesce(reader("cle_publique"), "")
-        If HasColumn(reader, "oa_utilisateur_tentatives") Then
-            user.Tentatives = Coalesce(reader("oa_utilisateur_tentatives"), 0)
-        End If
-        If HasColumn(reader, "oa_utilisateur_verrou_jusqua") Then
-            Dim verrou = Coalesce(reader("oa_utilisateur_verrou_jusqua"), Nothing)
-            user.VerrouJusqua = If(verrou Is Nothing, CType(Nothing, Date?), CDate(verrou))
-        End If
+        user.Tentatives = Coalesce(reader("oa_utilisateur_tentatives"), 0)
+        Dim verrou = Coalesce(reader("oa_utilisateur_verrou_jusqua"), Nothing)
+        user.VerrouJusqua = If(verrou Is Nothing, CType(Nothing, Date?), CDate(verrou))
 
         ' --- recuperation des fonctions correspondant au profil de l'utilisateur
         addFonctions(user)
@@ -323,6 +340,33 @@ Public Class UserDao
         ' Le mot de passe en clair ne doit pas rester sur le bean : il vivait
         ' jusqu'ici dans le global userLog pour toute la durée de la session.
         user.Password = Nothing
+    End Sub
+
+    ''' <summary>
+    ''' Change le mot de passe d'un compte. Appelée par le serveur seul
+    ''' (/api/motdepasse) : la base refuse au compte du client lourd l'écriture de
+    ''' oa_password, faute de quoi un poste pourrait s'attribuer l'accès au compte
+    ''' d'un autre soignant.
+    ''' </summary>
+    ''' <param name="usageUnique">
+    ''' True quand un administrateur pose le mot de passe d'un tiers : le titulaire
+    ''' devra le changer dès sa prochaine connexion.
+    ''' </param>
+    Public Sub UpdateMotDePasse(userId As Integer, empreinte As String, usageUnique As Boolean)
+        Using con As SqlConnection = GetConnection()
+            Using cmd As New SqlCommand(
+                "UPDATE oasis.oa_utilisateur SET oa_password = @password," &
+                " oa_utilisateur_password_is_unique_usage = @usageUnique," &
+                " oa_utilisateur_tentatives = 0, oa_utilisateur_verrou_jusqua = NULL" &
+                " WHERE oa_utilisateur_id = @id;", con)
+                cmd.Parameters.AddWithValue("@password", empreinte)
+                cmd.Parameters.AddWithValue("@usageUnique", usageUnique)
+                cmd.Parameters.AddWithValue("@id", userId)
+                If cmd.ExecuteNonQuery() <> 1 Then
+                    Throw New ArgumentException("Utilisateur introuvable.")
+                End If
+            End Using
+        End Using
     End Sub
 
     ''' <summary>Réenregistre l'empreinte du mot de passe, sans rien changer d'autre.</summary>
@@ -467,22 +511,42 @@ Public Class UserDao
     End Sub
 
     ''' <summary>
-    ''' Clé privée de signature d'un utilisateur. Accès délibérément isolé : aucun
-    ''' chargement de fiche ne doit ramener cette valeur en mémoire.
+    ''' Vrai si l'utilisateur possède déjà une clé de signature.
+    '''
+    ''' La question se pose depuis le poste client, qui n'a pas le droit de lire
+    ''' cle_privee. On interroge donc cle_publique, écrite en même temps que la
+    ''' clé privée et publique par nature.
     ''' </summary>
-    Public Function GetCleSignature(userId As Integer) As String
+    Public Function ACleSignature(userId As Integer) As Boolean
         Using con As SqlConnection = GetConnection()
-            Using cmd As New SqlCommand("SELECT cle_privee FROM oasis.oa_utilisateur WHERE oa_utilisateur_id = @id;", con)
+            Using cmd As New SqlCommand(
+                "SELECT CASE WHEN COALESCE(cle_publique, '') = '' THEN 0 ELSE 1 END" &
+                " FROM oasis.oa_utilisateur WHERE oa_utilisateur_id = @id;", con)
                 cmd.Parameters.AddWithValue("@id", userId)
                 Dim valeur = cmd.ExecuteScalar()
-                If valeur Is Nothing OrElse valeur Is DBNull.Value Then Return ""
-                Return CStr(valeur)
+                If valeur Is Nothing OrElse valeur Is DBNull.Value Then Return False
+                Return CInt(valeur) = 1
             End Using
         End Using
     End Function
 
-    ''' <summary>Vrai si l'utilisateur possède déjà une clé de signature.</summary>
-    Public Function ACleSignature(userId As Integer) As Boolean
-        Return Not String.IsNullOrWhiteSpace(GetCleSignature(userId))
-    End Function
+    ''' <summary>
+    ''' Enregistre une paire de clés de signature. Appelée par le serveur seul :
+    ''' c'est lui qui génère la clé, et la base refuse au compte du client lourd
+    ''' l'écriture de ces deux colonnes.
+    ''' </summary>
+    Public Sub EnregistrerCleSignature(userId As Integer, clePrivee As String, adresse As String)
+        Using con As SqlConnection = GetConnection()
+            Using cmd As New SqlCommand(
+                "UPDATE oasis.oa_utilisateur SET cle_privee = @cle, cle_publique = @adresse" &
+                " WHERE oa_utilisateur_id = @id;", con)
+                cmd.Parameters.AddWithValue("@cle", clePrivee)
+                cmd.Parameters.AddWithValue("@adresse", adresse)
+                cmd.Parameters.AddWithValue("@id", userId)
+                If cmd.ExecuteNonQuery() <> 1 Then
+                    Throw New ArgumentException("Utilisateur introuvable.")
+                End If
+            End Using
+        End Using
+    End Sub
 End Class

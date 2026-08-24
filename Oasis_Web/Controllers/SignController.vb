@@ -1,5 +1,4 @@
-﻿Imports Microsoft.IdentityModel.Tokens
-Imports Oasis_Common
+﻿Imports Oasis_Common
 
 Namespace Controllers
     Public Class SignController
@@ -16,7 +15,9 @@ Namespace Controllers
             ViewBag.traitementDao = traitementDao
 
             Try
-                Dim signatue As Byte() = Base64UrlEncoder.DecodeBytes(id)
+                ' Entrée anonyme : Base64Url lève FormatException, le Catch global
+                ' rend alors la page « ordonnance inactive » plutôt qu'une erreur serveur.
+                Dim signatue As Byte() = Base64Url.DecoderEnOctets(id)
                 Dim sigHex As String = "0x" & LCase(BitConverter.ToString(signatue).Replace("-", String.Empty))
                 Dim ordonnance = ordonnanceDao.GetOrdonnaceBySignature(sigHex)
 

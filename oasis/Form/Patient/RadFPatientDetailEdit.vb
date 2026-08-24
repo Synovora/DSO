@@ -110,7 +110,9 @@ Public Class RadFPatientDetailEdit
         End If
         BtnCreateInternaute.Enabled = False
         BtnInitInternaute.Enabled = False
-        If SelectedPatient.PatientEmail IsNot Nothing And internauteDao.GetInternauteByEmail(SelectedPatient.PatientEmail) Is Nothing Then
+        ' Existence seule : charger le compte entier obligeait le poste à lire
+        ' l'empreinte du mot de passe et la clé de récupération du patient.
+        If SelectedPatient.PatientEmail IsNot Nothing And Not internauteDao.ExisteInternautePourEmail(SelectedPatient.PatientEmail) Then
             BtnCreateInternaute.Enabled = True
         Else
             BtnInitInternaute.Enabled = True
@@ -1172,7 +1174,7 @@ Public Class RadFPatientDetailEdit
                 mailOasis.Patient = SelectedPatient
                 mailOasis.Internaute = internaute
                 mailOasis.AddressTo = SelectedPatient.PatientEmail
-                mailOasis.Send(loginRequestLog)
+                mailOasis.Send(loginRequestLog, SelectedPatient.PatientId)
 
 
                 Dim form As New RadFNotification()
@@ -1208,7 +1210,7 @@ Public Class RadFPatientDetailEdit
                 mailOasis.Internaute = internaute
                 mailOasis.Patient = SelectedPatient
                 mailOasis.AddressTo = SelectedPatient.PatientEmail
-                mailOasis.Send(loginRequestLog)
+                mailOasis.Send(loginRequestLog, SelectedPatient.PatientId)
 
 
                 Dim form As New RadFNotification()

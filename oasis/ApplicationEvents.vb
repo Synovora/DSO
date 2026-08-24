@@ -20,6 +20,20 @@
                                   "Oasis") = MsgBoxResult.Retry
                 End Function
 
+            ' La clé de signature du prescripteur ne descend plus sur le poste :
+            ' elle reste sur le serveur, qui signe pour le compte authentifié.
+            ' Utilisateur.Sign passe donc par ce crochet côté client.
+            Oasis_Common.Utilisateur.SignataireDistant =
+                Function(charge As Byte()) As Oasis_Common.SignatureResponse
+                    If loginRequestLog Is Nothing Then
+                        Throw New InvalidOperationException(
+                            "Aucune session ouverte : impossible de demander une signature au serveur.")
+                    End If
+                    Using apiOasis As New Oasis_Common.ApiOasis()
+                        Return apiOasis.signerRest(loginRequestLog, charge)
+                    End Using
+                End Function
+
             ' Documents éventuellement laissés par une session précédente qui
             ' s'est terminée anormalement.
             FichiersRecus.PurgerCache()

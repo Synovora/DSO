@@ -53,11 +53,13 @@ Public Class Mail
         End Using
     End Sub
 
-    Public Sub Send(loginRequestLog As LoginRequest)
+    ''' <param name="patientId">
+    ''' Dossier concerné, 0 si l'envoi n'en vise aucun. Le serveur restreint les
+    ''' destinataires aux adresses connues de ce dossier et de l'annuaire.
+    ''' </param>
+    Public Sub Send(loginRequestLog As LoginRequest, Optional patientId As Long = 0)
         Using apiOasis As New ApiOasis()
-            Dim ret = apiOasis.sendMailRest(loginRequestLog.login,
-                              loginRequestLog.password,
-                              Me)
+            Dim ret = apiOasis.sendMailRest(loginRequestLog, Me, patientId)
         End Using
     End Sub
 End Class

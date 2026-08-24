@@ -395,6 +395,12 @@
     <Compile Include="Bean\WebTech\RenameRequest.vb" />
     <Compile Include="Bean\WebTech\DownloadRequest.vb" />
     <Compile Include="Bean\WebTech\LoginRequest.vb" />
+    <Compile Include="Bean\WebTech\LoginResponse.vb" />
+    <Compile Include="Bean\WebTech\SignatureRequest.vb" />
+    <Compile Include="Bean\WebTech\SignatureResponse.vb" />
+    <Compile Include="Bean\WebTech\CleSignatureRequest.vb" />
+    <Compile Include="Bean\WebTech\CleSignatureResponse.vb" />
+    <Compile Include="Bean\WebTech\MotDePasseRequest.vb" />
     <Compile Include="Bean\Utilisateur\Profil.vb" />
     <Compile Include="Bean\Utilisateur\UtilisateurClass.vb" />
     <Compile Include="Dao\Agenda\AppointmentDao.vb" />
@@ -488,7 +494,11 @@
     <Compile Include="Dao\Utilisateur\UserDao.vb" />
     <Compile Include="MailUtils\MailUtil.vb" />
     <Compile Include="Module\EnvironnementBase.vb" />
+    <Compile Include="Module\Base64Url.vb" />
     <Compile Include="Module\CheminsDocuments.vb" />
+    <Compile Include="Module\HabilitationsDocuments.vb" />
+    <Compile Include="Module\DestinatairesMail.vb" />
+    <Compile Include="Module\JournalAcces.vb" />
     <Compile Include="Module\MotDePasse.vb" />
     <Compile Include="Module\VerificationSignature.vb" />
     <Compile Include="Module\ModuleUtilsBase.vb" />

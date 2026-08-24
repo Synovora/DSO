@@ -1,5 +1,4 @@
-﻿Imports Nethereum.Signer
-Imports Oasis_Common
+﻿Imports Oasis_Common
 Imports Telerik.WinControls.UI
 
 Public Class FrmUtilisateur
@@ -211,41 +210,92 @@ Public Class FrmUtilisateur
             .UtilisateurUniteSanitaireId = DirectCast(Me.DropDownUS.SelectedItem.Value, UniteSanitaire).Oa_unite_sanitaire_id
             .UtilisateurSiegeId = DirectCast(Me.DropDownSiege.SelectedItem.Value, Siege).SiegeId
             .FonctionParDefautId = DirectCast(Me.DropDownProfil.SelectedItem.Value, Profil).FonctionParDefautId
-            If isNoChangePassword = False Then
+            ' À la création, l'empreinte part avec l'INSERT. Sur une fiche existante,
+            ' elle ne passe plus par cette requête : le poste n'a plus le droit
+            ' d'écrire oa_password, sans quoi il pourrait s'attribuer le compte d'un
+            ' confrère. Voir AppliquerMotDePasse.
+            If isCreation AndAlso isNoChangePassword = False Then
                 .Password = MotDePasse.Hacher(TxtPassword1.Text.Trim)
                 .IsPasswordUniqueUsage = True
             End If
             .UtilisateurRPPS = If(isProfilMedicalOrParamedical(), TxtRPPS.Text, "")
-            ' La clé de signature n'est générée que si l'utilisateur n'en a pas.
-            ' Elle était régénérée à chaque enregistrement : toute modification de
-            ' fiche aurait changé la clé et rompu le rattachement des ordonnances
-            ' déjà signées à leur prescripteur.
-            ' La présence est demandée à la base : la fiche chargée ne porte plus la
-            ' clé privée. Laisser les deux champs vides signifie « ne pas toucher ».
-            If isCreation OrElse Not userDao.ACleSignature(.UtilisateurId) Then
-                Dim ecKey As EthECKey = EthECKey.GenerateKey()
-                .UtilisateurClePrivee = "0x" & BitConverter.ToString(ecKey.GetPrivateKeyAsBytes()).Replace("-", "")
-                .UtilisateurAddress = ecKey.GetPublicAddress()
-            Else
-                .UtilisateurClePrivee = ""
-                .UtilisateurAddress = ""
-            End If
         End With
         ' --- enregistrement
         If isCreation Then
             If userDao.Create(utilisateur) Then
+                If Not AssurerCleSignature() Then Return
                 Notification.show("Création Utilisateur", "Utilisateur créé avec succès !", 1)
                 Me.Tag = utilisateur.UtilisateurId
                 Close()
             End If
         Else
             If userDao.UpdateSansChangerEtatEtDates(utilisateur) Then
+                If Not AppliquerMotDePasse() Then Return
+                If Not AssurerCleSignature() Then Return
                 Notification.show("Modification Utilisateur", "Utilisateur modifié avec succès !", 1)
                 Me.Tag = utilisateur.UtilisateurId
                 Close()
             End If
         End If
     End Sub
+
+    ''' <summary>
+    ''' Applique le mot de passe saisi sur une fiche existante, par le serveur.
+    ''' Renvoie True si rien n'était à faire ou si le changement a abouti.
+    ''' </summary>
+    Private Function AppliquerMotDePasse() As Boolean
+        If isNoChangePassword Then Return True
+
+        Try
+            Using apiOasis As New ApiOasis()
+                apiOasis.changerMotDePasseRest(loginRequestLog, New MotDePasseRequest With {
+                    .UtilisateurId = utilisateur.UtilisateurId,
+                    .NouveauMotDePasse = TxtPassword1.Text.Trim
+                })
+            End Using
+            utilisateur.IsPasswordUniqueUsage = (utilisateur.UtilisateurId <> userLog.UtilisateurId)
+            Return True
+
+        Catch ex As Exception
+            MsgBox("La fiche est enregistrée, mais le mot de passe n'a pas pu être changé :" & vbCrLf &
+                   ex.Message, MsgBoxStyle.Exclamation, "Mot de passe")
+            Return False
+        End Try
+    End Function
+
+    ''' <summary>
+    ''' Dote l'utilisateur d'une clé de signature s'il n'en a pas encore.
+    '''
+    ''' La paire était produite ici même, sur le poste qui saisit la fiche, puis
+    ''' écrite en base : la clé privée d'un prescripteur existait donc en clair sur
+    ''' une machine cliente. Elle est maintenant générée par le serveur, qui ne
+    ''' renvoie que l'adresse publique. Une clé existante n'est jamais remplacée :
+    ''' la remplacer romprait le rattachement des ordonnances déjà signées.
+    '''
+    ''' Renvoie False si la clé n'a pas pu être obtenue. La fiche est enregistrée
+    ''' dans tous les cas ; seule la signature reste indisponible.
+    ''' </summary>
+    Private Function AssurerCleSignature() As Boolean
+        Try
+            If userDao.ACleSignature(utilisateur.UtilisateurId) Then Return True
+
+            Using apiOasis As New ApiOasis()
+                Dim reponse = apiOasis.genererCleRest(loginRequestLog, New CleSignatureRequest With {
+                    .UtilisateurId = utilisateur.UtilisateurId,
+                    .Remplacer = False
+                })
+                utilisateur.UtilisateurAddress = reponse.Adresse
+            End Using
+            Return True
+
+        Catch ex As Exception
+            MsgBox("La fiche est enregistrée, mais la clé de signature n'a pas pu être créée :" & vbCrLf &
+                   ex.Message & vbCrLf &
+                   "Cet utilisateur ne pourra pas signer d'ordonnance tant que la clé manque.",
+                   MsgBoxStyle.Exclamation, "Clé de signature")
+            Return False
+        End Try
+    End Function
 
     Private Sub TxtRPPS_KeyPress(sender As Object, e As KeyPressEventArgs) Handles TxtRPPS.KeyPress
         If e.KeyChar <> Chr(8) AndAlso (e.KeyChar < Chr(48) OrElse e.KeyChar > Chr(57)) Then

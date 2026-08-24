@@ -96,11 +96,8 @@ Public Class SousEpisode
         Dim filename = getFilenameServer()
         ' -- download
         Using apiOasis As New ApiOasis()
-            Dim downloadRequest As New DownloadRequest With {
-               .LoginRequest = loginRequestLog,
-               .FileName = filename
-               }
-            Return apiOasis.downloadFileRest(downloadRequest)
+            Dim downloadRequest As New DownloadRequest With {.FileName = filename}
+            Return apiOasis.downloadFileRest(loginRequestLog, downloadRequest)
         End Using
 
     End Function
@@ -108,10 +105,7 @@ Public Class SousEpisode
     Public Sub WriteContenuModel(tblContenu As Byte(), loginRequestLog As Object)
         ' --- tentative d'upload
         Using apiOasis As New ApiOasis()
-            apiOasis.uploadFileRest(loginRequestLog.login,
-                                        loginRequestLog.password,
-                                        getFilenameServer(),
-                                        tblContenu)
+            apiOasis.uploadFileRest(loginRequestLog, getFilenameServer(), tblContenu)
         End Using
 
     End Sub

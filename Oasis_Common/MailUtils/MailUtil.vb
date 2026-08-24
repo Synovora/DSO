@@ -5,7 +5,14 @@ Public Class MailUtil
 
     Dim SMTPServerURL As String, SMTPport As Integer, SMTPUser As String, SMTPPassword As String, SMTPFrom As String
 
-    Public Sub New(SMTPServerURL As String, SMPTPort As Integer, SMTPUser As String, SMTPPassword As String, SMTPFrom As String)
+    ''' <param name="SMTPport">
+    ''' Le paramètre s'appelait SMPTPort, avec les lettres interverties, alors que
+    ''' le champ s'appelle SMTPport : l'affectation recopiait donc le champ sur
+    ''' lui-même et le port configuré était perdu. MailKit interprète 0 comme
+    ''' « port par défaut pour l'option de sécurité », d'où un envoi qui
+    ''' fonctionnait tant que le fournisseur écoutait sur 465.
+    ''' </param>
+    Public Sub New(SMTPServerURL As String, SMTPport As Integer, SMTPUser As String, SMTPPassword As String, SMTPFrom As String)
         Me.SMTPServerURL = SMTPServerURL
         Me.SMTPport = SMTPport
         Me.SMTPUser = SMTPUser
@@ -54,7 +61,10 @@ Public Class MailUtil
         End With
 
         Using client = New MailKit.Net.Smtp.SmtpClient()
-            client.Connect(Me.SMTPServerURL, Me.SMTPport, True)
+            ' Auto : SSL implicite sur 465, STARTTLS sur 587. Le forçage à True
+            ' rendait tout fournisseur en STARTTLS impossible à configurer.
+            client.Connect(Me.SMTPServerURL, Me.SMTPport,
+                           MailKit.Security.SecureSocketOptions.Auto)
             client.Authenticate(Me.SMTPUser, Me.SMTPPassword)
             client.Send(mimMessage)
             client.Disconnect(True)

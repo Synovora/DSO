@@ -309,10 +309,9 @@ Public Class SousEpisodeReponseDao
 
             Using apiOasis As New ApiOasis()
                 Dim renameRequest As New RenameRequest With {
-                   .LoginRequest = loginRequestLog,
                    .OldName = filenameSrc,
                    .NewName = sousEpisodeReponse.GetFilenameServer(sousEpisode.EpisodeId, idSEReponse)}
-                apiOasis.renameFileRest(renameRequest)
+                apiOasis.renameFileRest(loginRequestLog, renameRequest)
             End Using
             ' -- renane ok => on fixe l'id de la reponse
             sousEpisodeReponse.Id = idSEReponse
@@ -372,8 +371,7 @@ Public Class SousEpisodeReponseDao
 
             ' --- tentative d'upload
             Using apiOasis As New ApiOasis()
-                apiOasis.uploadFileRest(loginRequestLog.login,
-                                        loginRequestLog.password,
+                apiOasis.uploadFileRest(loginRequestLog,
                                         sousEpisodeReponse.GetFilenameServer(sousEpisode.EpisodeId, idSEReponse),
                                         File.ReadAllBytes(filenameSrc))
             End Using
@@ -398,11 +396,8 @@ Public Class SousEpisodeReponseDao
 
         ' -- download
         Using apiOasis As New ApiOasis()
-            Dim downloadRequest As New DownloadRequest With {
-               .LoginRequest = loginRequestLog,
-               .FileName = filename
-               }
-            Return apiOasis.downloadFileRest(downloadRequest)
+            Dim downloadRequest As New DownloadRequest With {.FileName = filename}
+            Return apiOasis.downloadFileRest(loginRequestLog, downloadRequest)
         End Using
 
     End Function
@@ -411,11 +406,8 @@ Public Class SousEpisodeReponseDao
         Dim filename = sousEpisodeReponse.GetFilenameServer(idEpisode)
         ' -- download
         Using apiOasis As New ApiOasis()
-            Dim downloadRequest As New DownloadRequest With {
-               .LoginRequest = loginRequestLog,
-               .FileName = filename
-               }
-            Return apiOasis.downloadFileRest(downloadRequest)
+            Dim downloadRequest As New DownloadRequest With {.FileName = filename}
+            Return apiOasis.downloadFileRest(loginRequestLog, downloadRequest)
         End Using
 
     End Function

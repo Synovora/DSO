@@ -648,4 +648,26 @@ Public Class SousEpisodeDao
         Return sousEpisode
     End Function
 
+
+    ''' <summary>
+    ''' Vrai si ce sous-épisode appartient bien à cet épisode.
+    '''
+    ''' Sert à valider un nom de document reçu d'un client : les noms encodent les
+    ''' deux identifiants, et rien n'obligeait jusqu'ici la paire à correspondre à
+    ''' un enregistrement réel.
+    ''' </summary>
+    Public Function AppartientAEpisode(sousEpisodeId As Long, episodeId As Long) As Boolean
+        If sousEpisodeId <= 0 OrElse episodeId <= 0 Then Return False
+
+        Using con As SqlConnection = GetConnection()
+            Using cmd As New SqlCommand(
+                "SELECT COUNT(1) FROM oasis.oa_sous_episode" &
+                " WHERE id = @id AND episode_id = @episode;", con)
+                cmd.Parameters.AddWithValue("@id", sousEpisodeId)
+                cmd.Parameters.AddWithValue("@episode", episodeId)
+                Return CInt(cmd.ExecuteScalar()) > 0
+            End Using
+        End Using
+    End Function
+
 End Class

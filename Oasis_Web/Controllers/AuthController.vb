@@ -163,17 +163,30 @@ Namespace Oasis_Web.Controllers
         End Function
 
         ''' <summary>
-        ''' Envoi d'un mail par le serveur avec le compte de service configuré.
-        ''' Remplace les identifiants d'un praticien codés en dur dans le source.
+        ''' Envoi d'un mail par le serveur.
+        '''
+        ''' Le serveur passait par MailOasis.Send, c'est-à-dire par une requête HTTP
+        ''' vers sa propre API, émise sur le thread de la requête en cours et bloquée
+        ''' sur .Result : un aller-retour réseau vers lui-même, dans le contexte de
+        ''' synchronisation d'ASP.NET, avec le risque d'interblocage que cela comporte
+        ''' et sans délai maximal. Le serveur a MailUtil et les paramètres SMTP sous la
+        ''' main : il envoie directement.
+        '''
+        ''' Cela supprime du même coup le compte de service : plus personne n'a besoin
+        ''' de s'authentifier auprès de l'API pour que le portail envoie un courriel,
+        ''' et MailServiceLogin / MailServicePassword deviennent inutiles.
         ''' </summary>
         Private Shared Sub EnvoyerMailService(mailOasis As MailOasis)
-            Dim login = ConfigurationManager.AppSettings("MailServiceLogin")
-            Dim password = ConfigurationManager.AppSettings("MailServicePassword")
-            If String.IsNullOrWhiteSpace(login) OrElse String.IsNullOrWhiteSpace(password) Then
-                Throw New ConfigurationErrorsException(
-                    "MailServiceLogin / MailServicePassword ne sont pas configurés dans Web.config.")
-            End If
-            mailOasis.Send(New LoginRequest With {.login = login, .password = password})
+            Dim parametreMailDao As New ParametreMailDao
+            Dim parametreMail = parametreMailDao.GetParametreMailBySiegeIdTypeMailParam(
+                Nothing, ParametreMail.TypeMailParams.SMTP_PARAMETERS, inclureSmtp:=True)
+
+            Dim mailUtil As New MailUtil(parametreMail.GetSMTPServerUrl(),
+                                         parametreMail.GetSMTPPort(),
+                                         parametreMail.GetSMTPUser(False),
+                                         parametreMail.GetSMTPPassword(False),
+                                         parametreMail.GetSMTPFrom(False))
+            mailUtil.SendMail(Nothing, mailOasis)
         End Sub
 
         <AllowAnonymous>

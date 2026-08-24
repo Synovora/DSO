@@ -2,7 +2,6 @@
 Imports Telerik.WinForms.Documents.Layout
 Imports Telerik.WinControls.RichTextEditor.UI
 Imports Oasis_Common
-Imports Microsoft.IdentityModel.Tokens
 Imports Nethereum.Hex.HexConvertors.Extensions
 Imports QRCoder
 Imports System.Globalization

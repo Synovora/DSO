@@ -2,7 +2,6 @@
 Imports Telerik.WinForms.Documents.Layout
 Imports Telerik.WinControls.RichTextEditor.UI
 Imports Oasis_Common
-Imports Microsoft.IdentityModel.Tokens
 Imports Nethereum.Hex.HexConvertors.Extensions
 Imports QRCoder
 
@@ -344,7 +343,7 @@ Public Class PrtOrdonnance
         Try
             Dim ordonnance As Ordonnance = ordonnanceDao.GetOrdonnaceById(SelectedOrdonnanceId)
             Dim QG As QRCodeGenerator = New QRCoder.QRCodeGenerator()
-            Dim Data As QRCodeData = QG.CreateQrCode(SIGN_URL & Base64UrlEncoder.Encode(ordonnance.Signature.HexToByteArray()), QRCodeGenerator.ECCLevel.L)
+            Dim Data As QRCodeData = QG.CreateQrCode(SIGN_URL & Base64Url.Encoder(ordonnance.Signature.HexToByteArray()), QRCodeGenerator.ECCLevel.L)
             Dim my_qrCode = New QRCode(Data)
             With EditTools
                 .CreateParagraphIntoSection(section,, RadTextAlignment.Right)

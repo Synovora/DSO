@@ -59,14 +59,27 @@ GO
 If the application turns out to need more, add it explicitly rather than granting `db_owner`.
 Watch the error log during the window and grant what actually fails.
 
-## Step 2: Move the application onto the new login
+## Step 2: Move the application onto the new logins
 
-- [ ] Update `connectionStrings` in the server's `Oasis_Web/Web.config` to `user id=oasis_app`
-      with the new password.
+There are two now, and they are not interchangeable. `oasis_web` is the server's own account and
+never leaves the machine. `oasis_client` is what `/api/login` distributes to every workstation, and
+it is denied the credential columns. Putting the server's account in the client entry undoes the
+whole separation, so check that line twice.
+
+- [ ] Run [`../migrations/2026-08-24-comptes-sql-separes.sql`](../migrations/2026-08-24-comptes-sql-separes.sql)
+      after creating both logins. It grants the schema and applies the column-level denials.
+- [ ] Update both `connectionStrings` entries in the server's `Oasis_Web/Web.config`:
+      `oasisConnection` to `user id=oasis_web`, `oasisConnectionClient` to `user id=oasis_client`.
+- [ ] Set `trustServerCertificate=false` in both, and install a certificate SQL Server can present.
 - [ ] Recycle the IIS application pool.
 - [ ] Confirm the patient portal loads and a patient can sign in.
 - [ ] Confirm one desktop client can log in, which proves `/api/login` still returns a working
       connection string.
+- [ ] Confirm a prescriber can sign a prescription, which proves `/api/signature` works and that the
+      client no longer needs the key column.
+- [ ] Confirm a user can change their own password, which proves `/api/motdepasse` works.
+- [ ] Verify the denials took, as `oasis_client`:
+      `SELECT TOP 1 cle_privee FROM oasis.oa_utilisateur;` must fail.
 
 Do not continue until both work. Rolling back at this point is just restoring the old
 `Web.config` and recycling.
@@ -145,9 +158,10 @@ JOIN   oasis.oa_utilisateur u ON u.oa_utilisateur_id = o.oa_ordonnance_user_vali
 WHERE  u.cle_publique = '0x7E5F4552091A69125d5DfCb7b8C2659029395Bdf';
 ```
 
-- [ ] Generate a fresh key for every affected user. The user record screen
-      (`oasis/Form/utilisateur/FrmUtilisateur.vb`) creates a key only when the account has none, so
-      clear `cle_privee` and `cle_publique` for those users first, then reopen and save each record.
+- [ ] Generate a fresh key for every affected user. Keys are now made by the server: post to
+      `/api/signature/cle` with `Remplacer = true` and an administrator's credentials, or clear
+      `cle_privee` and `cle_publique` for those users and reopen each record, which makes the
+      desktop client request a key for any account that has none.
       Note that rotating a key does not invalidate signatures already made with the old one:
       `oa_ordonnance_signature_adresse` records the address used at signing time.
 - [ ] Decide what to do about prescriptions already signed with the compromised key. They cannot
@@ -157,16 +171,20 @@ WHERE  u.cle_publique = '0x7E5F4552091A69125d5DfCb7b8C2659029395Bdf';
 
 Not done, and not safe to do without a migration.
 
-`cle_privee` holds raw private keys in plaintext. Anyone with read access to that one column can
-sign prescriptions as any clinician. Encrypting the column means migrating existing rows, and a
-half-applied change (code expecting ciphertext, database holding plaintext) destroys every
-signing key in the system.
+Option 1 below is done: signing moved to `/api/signature` on 2026-08-24, and the `oasis_client`
+login is denied both read and write on `cle_privee`. A workstation can no longer steal or replace a
+prescriber's key. What remains is that the column still holds plaintext, so anyone with `oasis_web`
+rights, a database backup, or `sa` can sign as any clinician.
+
+Encrypting the column means migrating existing rows, and a half-applied change (code expecting
+ciphertext, database holding plaintext) destroys every signing key in the system.
 
 Options, roughly in order of preference:
 
-1. Move signing behind an API so private keys never leave the server, and clients send data to be
-   signed. Largest change, correct outcome.
-2. SQL Server Always Encrypted on that column, so the database never sees plaintext.
+1. ~~Move signing behind an API so private keys never leave the server.~~ Done 2026-08-24.
+2. SQL Server Always Encrypted on that column, so the database never sees plaintext. Randomized
+   encryption is fine, nothing searches or joins on the column. The column master key belongs in
+   the web server's certificate store, which also puts the DBA outside the trust boundary.
 3. Application-level encryption under a key held outside the database. Cheapest, and the weakest,
    since anyone with the application config plus the database has both halves.
 

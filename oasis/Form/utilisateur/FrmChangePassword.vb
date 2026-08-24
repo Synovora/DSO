@@ -36,12 +36,27 @@ Public Class FrmChangePassword
             Exit Sub
         End If
         ' --- sauve nouveau mot de passe
-        userLog.Password = MotDePasse.Hacher(TxtPassword1.Text.Trim)
+        '
+        ' L'empreinte était calculée ici et écrite directement en base. Tout poste
+        ' pouvait donc réécrire celle d'un autre compte. Le serveur s'en charge, et
+        ' n'accepte le changement que sur présentation du mot de passe actuel.
+        Dim nouveau = TxtPassword1.Text.Trim
+        Try
+            Using apiOasis As New ApiOasis()
+                apiOasis.changerMotDePasseRest(loginRequestLog, New MotDePasseRequest With {
+                    .UtilisateurId = 0,
+                    .NouveauMotDePasse = nouveau
+                })
+            End Using
+        Catch ex As Exception
+            MsgBox("Le mot de passe n'a pas pu être changé :" & vbCrLf & ex.Message,
+                   MsgBoxStyle.Exclamation, "Modification Mot de Passe")
+            Exit Sub
+        End Try
+
         userLog.IsPasswordUniqueUsage = False
-        Dim userDao As UserDao = New UserDao
-        userDao.UpdateSansChangerEtatEtDates(userLog)
         ' -- maj pour Api
-        loginRequestLog.password = TxtPassword1.Text.Trim
+        loginRequestLog.password = nouveau
         ' -- indique chgt effectué
         Me.Tag = True
         Notification.show("Modification Mot de Passe", "Mot de Passe modifié avec succès !", 1)

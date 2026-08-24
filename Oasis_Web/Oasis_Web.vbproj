@@ -181,12 +181,6 @@
     <Reference Include="Microsoft.Extensions.WebEncoders, Version=2.2.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.Extensions.WebEncoders.2.2.0\lib\netstandard2.0\Microsoft.Extensions.WebEncoders.dll</HintPath>
     </Reference>
-    <Reference Include="Microsoft.IdentityModel.Logging, Version=6.7.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.IdentityModel.Logging.6.7.1\lib\net461\Microsoft.IdentityModel.Logging.dll</HintPath>
-    </Reference>
-    <Reference Include="Microsoft.IdentityModel.Tokens, Version=6.7.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.IdentityModel.Tokens.6.7.1\lib\net461\Microsoft.IdentityModel.Tokens.dll</HintPath>
-    </Reference>
     <Reference Include="Microsoft.Net.Http.Headers, Version=2.2.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.Net.Http.Headers.2.2.0\lib\netstandard2.0\Microsoft.Net.Http.Headers.dll</HintPath>
     </Reference>
@@ -364,34 +358,6 @@
     <Compile Include="App_Start\FilterConfig.vb" />
     <Compile Include="App_Start\RouteConfig.vb" />
     <Compile Include="App_Start\WebApiConfig.vb" />
-    <Compile Include="Areas\HelpPage\ApiDescriptionExtensions.vb" />
-    <Compile Include="Areas\HelpPage\App_Start\HelpPageConfig.vb" />
-    <Compile Include="Areas\HelpPage\Controllers\HelpController.vb" />
-    <Compile Include="Areas\HelpPage\HelpPageAreaRegistration.vb" />
-    <Compile Include="Areas\HelpPage\HelpPageConfigurationExtensions.vb" />
-    <Compile Include="Areas\HelpPage\ModelDescriptions\CollectionModelDescription.vb" />
-    <Compile Include="Areas\HelpPage\ModelDescriptions\ComplexTypeModelDescription.vb" />
-    <Compile Include="Areas\HelpPage\ModelDescriptions\DictionaryModelDescription.vb" />
-    <Compile Include="Areas\HelpPage\ModelDescriptions\EnumTypeModelDescription.vb" />
-    <Compile Include="Areas\HelpPage\ModelDescriptions\EnumValueDescription.vb" />
-    <Compile Include="Areas\HelpPage\ModelDescriptions\IModelDocumentationProvider.vb" />
-    <Compile Include="Areas\HelpPage\ModelDescriptions\KeyValuePairModelDescription.vb" />
-    <Compile Include="Areas\HelpPage\ModelDescriptions\ModelDescription.vb" />
-    <Compile Include="Areas\HelpPage\ModelDescriptions\ModelDescriptionGenerator.vb" />
-    <Compile Include="Areas\HelpPage\ModelDescriptions\ModelNameAttribute.vb" />
-    <Compile Include="Areas\HelpPage\ModelDescriptions\ModelNameHelper.vb" />
-    <Compile Include="Areas\HelpPage\ModelDescriptions\ParameterAnnotation.vb" />
-    <Compile Include="Areas\HelpPage\ModelDescriptions\ParameterDescription.vb" />
-    <Compile Include="Areas\HelpPage\ModelDescriptions\SimpleTypeModelDescription.vb" />
-    <Compile Include="Areas\HelpPage\Models\HelpPageApiModel.vb" />
-    <Compile Include="Areas\HelpPage\SampleGeneration\HelpPageSampleGenerator.vb" />
-    <Compile Include="Areas\HelpPage\SampleGeneration\HelpPageSampleKey.vb" />
-    <Compile Include="Areas\HelpPage\SampleGeneration\ImageSample.vb" />
-    <Compile Include="Areas\HelpPage\SampleGeneration\InvalidSample.vb" />
-    <Compile Include="Areas\HelpPage\SampleGeneration\ObjectGenerator.vb" />
-    <Compile Include="Areas\HelpPage\SampleGeneration\SampleDirection.vb" />
-    <Compile Include="Areas\HelpPage\SampleGeneration\TextSample.vb" />
-    <Compile Include="Areas\HelpPage\XmlDocumentationProvider.vb" />
     <Compile Include="Constants.vb" />
     <Compile Include="Controllers\AutoSuiviController.vb" />
     <Compile Include="Controllers\CarnetVaccinalController.vb" />
@@ -400,7 +366,11 @@
     <Compile Include="Controllers\RenameController.vb" />
     <Compile Include="Controllers\DocFileUploadController.vb" />
     <Compile Include="Controllers\DocFileDownloadController.vb" />
+    <Compile Include="Controllers\ApiControllerOasis.vb" />
+    <Compile Include="Filters\AuthentificationApi.vb" />
     <Compile Include="Controllers\LoginController.vb" />
+    <Compile Include="Controllers\SignatureController.vb" />
+    <Compile Include="Controllers\MotDePasseController.vb" />
     <Compile Include="Controllers\SendMailController.vb" />
     <Compile Include="Controllers\SignController.vb" />
     <Compile Include="Controllers\SyntheseController.vb" />
@@ -438,26 +408,6 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Areas\HelpPage\HelpPage.css" />
-    <Content Include="Areas\HelpPage\Views\Web.config" />
-    <Content Include="Areas\HelpPage\Views\Shared\_Layout.vbhtml" />
-    <Content Include="Areas\HelpPage\Views\Help\ResourceModel.vbhtml" />
-    <Content Include="Areas\HelpPage\Views\Help\Index.vbhtml" />
-    <Content Include="Areas\HelpPage\Views\Help\DisplayTemplates\TextSample.vbhtml" />
-    <Content Include="Areas\HelpPage\Views\Help\DisplayTemplates\SimpleTypeModelDescription.vbhtml" />
-    <Content Include="Areas\HelpPage\Views\Help\DisplayTemplates\Samples.vbhtml" />
-    <Content Include="Areas\HelpPage\Views\Help\DisplayTemplates\Parameters.vbhtml" />
-    <Content Include="Areas\HelpPage\Views\Help\DisplayTemplates\ModelDescriptionLink.vbhtml" />
-    <Content Include="Areas\HelpPage\Views\Help\DisplayTemplates\KeyValuePairModelDescription.vbhtml" />
-    <Content Include="Areas\HelpPage\Views\Help\DisplayTemplates\InvalidSample.vbhtml" />
-    <Content Include="Areas\HelpPage\Views\Help\DisplayTemplates\ImageSample.vbhtml" />
-    <Content Include="Areas\HelpPage\Views\Help\DisplayTemplates\HelpPageApiModel.vbhtml" />
-    <Content Include="Areas\HelpPage\Views\Help\DisplayTemplates\EnumTypeModelDescription.vbhtml" />
-    <Content Include="Areas\HelpPage\Views\Help\DisplayTemplates\DictionaryModelDescription.vbhtml" />
-    <Content Include="Areas\HelpPage\Views\Help\DisplayTemplates\ComplexTypeModelDescription.vbhtml" />
-    <Content Include="Areas\HelpPage\Views\Help\DisplayTemplates\CollectionModelDescription.vbhtml" />
-    <Content Include="Areas\HelpPage\Views\Help\DisplayTemplates\ApiGroup.vbhtml" />
-    <Content Include="Areas\HelpPage\Views\Help\Api.vbhtml" />
     <Content Include="Assets\css\app-dark.css" />
     <Content Include="Assets\css\app-dark.min.css" />
     <Content Include="Assets\css\app-rtl.min.css" />
@@ -1803,7 +1753,6 @@
     <Content Include="Web.Release.config">
       <DependentUpon>Web.config</DependentUpon>
     </Content>
-    <Content Include="Areas\HelpPage\Views\_ViewStart.vbhtml" />
     <Content Include="Content\Site.css" />
   </ItemGroup>
   <ItemGroup>

@@ -84,25 +84,53 @@ sequenceDiagram
 
     C->>A: POST /api/login  { login, password }
     A->>D: verify password (verifPassword)
-    A-->>C: 202 Accepted, AES-encrypted connection string
+    A-->>C: 202 Accepted, LoginResponse<br/>{ encrypted oasis_client string, Utilisateur }
     Note over C: DecryptString(...)<br/>StandardDao.FixConnectionString(...)
     C->>D: direct SqlConnection for every query thereafter
 ```
 
 1. The client POSTs a `LoginRequest` to `https://{ServeurOasis}/api/login`.
-2. `LoginController` verifies the password against the database, then returns the AES-encrypted
-   connection string. Encryption is `EncryptString`, keyed by the `OasisCryptoKey` setting, which
-   the server and every client must share. See [Cryptographic key](#cryptographic-key).
+2. `LoginController` verifies the password against the database, then returns a `LoginResponse`
+   carrying the AES-encrypted connection string and the authenticated `Utilisateur`. The bean is
+   stripped of its password hash and signing key before it leaves the server. Encryption is
+   `EncryptString`, keyed by the `OasisCryptoKey` setting, which the server and every client must
+   share. See [Cryptographic key](#cryptographic-key).
 3. `StandardDao.FixConnectionString` decrypts it and injects it into the read-only
    `ConfigurationManager` entry by reflection, clearing the private `_bReadOnly` field.
 4. Every DAO from then on opens a direct `SqlConnection`.
 
-Two things follow from this. The desktop app talks to SQL Server directly, so the web API is
-only doing authentication plus relaying file uploads, downloads and mail. And changing the shape
-of the `/api/login` response will break every deployed client.
+Two things follow from this. The desktop app talks to SQL Server directly, so the web API does
+authentication, signing, password changes, and relays file uploads, downloads and mail. And
+changing the shape of the `/api/login` response will break every deployed client, so it ships with
+a ClickOnce release.
 
 See `Oasis_Common/ApiRest/ApiOasis.vb`, `Oasis_Web/Controllers/LoginController.vb`,
 `Oasis_Common/Dao/StandardDao.vb` and `oasis/Menu/FAuthentification.vb`.
+
+#### Two database accounts
+
+The string handed out at step 2 is not the one the server uses. `Web.config` holds both:
+
+| Entry | SQL login | Who gets it |
+|---|---|---|
+| `Oasis_WF.My.MySettings.oasisConnection` | `oasis_web` | the server only, never leaves the machine |
+| `Oasis_WF.My.MySettings.oasisConnectionClient` | `oasis_client` | distributed to every workstation by `/api/login` |
+
+`OasisCryptoKey` also ships to every workstation, so the encryption protects the string on the wire
+and nothing else. Anything `oasis_client` can read, assume any user can read. That account is
+therefore denied the columns that would let one user become another:
+
+- `oa_utilisateur.cle_privee` and `.cle_publique`, the prescriber signing keys
+- `oa_utilisateur.oa_password`, the password hashes
+- `oa_internaute.password` and `.recovery`, the patient portal credentials
+- `oa_r_mail_parameter.smtp_params`, the mail account
+
+Signing, key generation and password changes go through `/api/signature`, `/api/signature/cle` and
+`/api/motdepasse` instead. `Utilisateur.Sign` picks the route itself: it signs locally when a
+private key is loaded (server) and calls the `SignataireDistant` hook otherwise (client).
+
+Run `docs/migrations/2026-08-24-comptes-sql-separes.sql` before deploying, and note that a `SELECT *`
+against any of those tables now fails for the client. List columns explicitly.
 
 ### Data access
 
@@ -263,12 +291,23 @@ nuget restore Oasis_WF.sln
 
 ```xml
 <add name="Oasis_WF.My.MySettings.oasisConnection"
-     connectionString="Data Source=localhost\SQLEXPRESS;Initial Catalog=oasis;persist security info=True;user id=oasis_app;password=…;encrypt=true;trustServerCertificate=true;MultipleActiveResultSets=True"
+     connectionString="Data Source=localhost\SQLEXPRESS;Initial Catalog=oasis;persist security info=True;user id=oasis_web;password=…;encrypt=true;trustServerCertificate=false;MultipleActiveResultSets=True"
+     providerName="System.Data.SqlClient" />
+<add name="Oasis_WF.My.MySettings.oasisConnectionClient"
+     connectionString="Data Source=localhost\SQLEXPRESS;Initial Catalog=oasis;persist security info=True;user id=oasis_client;password=…;encrypt=true;trustServerCertificate=false;MultipleActiveResultSets=True"
      providerName="System.Data.SqlClient" />
 ```
 
-Use a least-privilege login scoped to the `oasis` schema, not `sa`. Do not commit the filled-in
-file: it is tracked, so a real password would be published.
+Two logins, neither of them `sa`: `oasis_web` for the server, `oasis_client` for what `/api/login`
+hands to workstations. Create both, then run
+[`docs/migrations/2026-08-24-comptes-sql-separes.sql`](docs/migrations/2026-08-24-comptes-sql-separes.sql)
+to apply the column-level denials. Do not commit the filled-in file: it is tracked, so a real
+password would be published.
+
+`trustServerCertificate=false` means SQL Server has to present a certificate the machine trusts.
+On a development box without one, set it to `true` locally and never in production: the client
+connection string travels to every workstation, so an unauthenticated TLS session hands the
+credentials to anyone who can answer on port 1433.
 
 **3. Create the document directory**
 
@@ -375,8 +414,15 @@ ones worth knowing:
 | `GemBoxLicense` | GemBox.Document licence key. Empty means evaluation mode, which stamps a notice on generated documents. |
 | `CheminTelechargement` | Obsolete. Documents received from correspondents now go to `%LOCALAPPDATA%\Oasis\cache` and are purged on exit. |
 
-`Oasis_Web/Web.config` needs `ServeurOasis`, `FileUploadLocation`, `OasisCryptoKey`, the mail
-service account (`MailServiceLogin` / `MailServicePassword`) and the connection string. See [`Web.config.example`](Oasis_Web/Web.config.example).
+`Oasis_Web/Web.config` needs `ServeurOasis`, `FileUploadLocation`, `OasisCryptoKey`,
+`MailDomainesAutorises` and both connection strings. See
+[`Web.config.example`](Oasis_Web/Web.config.example).
+
+`MailDomainesAutorises` is a semicolon-separated list of domains `/api/sendMail` will write to.
+Addresses already known to the database, meaning the patient on the record and the entries in the
+professional directory, are accepted whatever their domain, so an empty list is a usable starting
+point. Without it, any authenticated account could send mail with an attachment to any address in
+the world from the organisation's SMTP account.
 
 ### Cryptographic key
 
@@ -486,16 +532,19 @@ anywhere in the repository. The schema lives only in deployed databases, so it c
 diffed or recreated. Extracting a `.dacpac` into the repo would be the single highest-value
 improvement available.
 
-**Signing keys are stored in plaintext** in `oasis.oa_utilisateur.cle_privee`. Anyone with read
-access to that column can sign prescriptions as any clinician. Ordinary reads no longer load the
-column, and only the user who just authenticated receives their own key, but the database itself
-still holds it in the clear. Fixing that needs a migration, see
+**Signing keys are stored in plaintext** in `oasis.oa_utilisateur.cle_privee`. The key no longer
+leaves the server, and the `oasis_client` login is denied both read and write on the column, so a
+workstation can neither steal a prescriber's key nor replace it. The database still holds it in the
+clear, which leaves anyone with `oasis_web` rights, or a backup, able to sign as any clinician.
+Closing that means encrypting the column, see
 [`docs/runbooks/credential-rotation.md`](docs/runbooks/credential-rotation.md) step 6.
 
-**Clients hold the database credentials.** `/api/login` hands every desktop client the connection
-string, so authorisation in the client is presentation only: a determined user can open the
-database directly with the same rights. Per-role SQL logins, or moving data access behind the API,
-is the real fix. Until then, treat the desktop application as trusted code run by trusted staff.
+**Clients hold database credentials.** `/api/login` hands every desktop client a connection string,
+so authorisation in the client is presentation only: a determined user can open the database
+directly with the rights of `oasis_client`. Those rights now exclude every credential in the
+schema, but they still cover the clinical tables, so one user can read what their profile does not
+show them on screen. Per-profile SQL logins, then moving data access behind the API, is the real
+fix. Until then, treat the desktop application as trusted code run by trusted staff.
 
 **`EncryptString` derives its IV from the key.** `Rfc2898DeriveBytes` produces both key and IV from
 the same passphrase and a fixed salt, so identical plaintext gives identical ciphertext. It is used

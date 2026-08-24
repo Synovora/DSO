@@ -83,19 +83,50 @@ Public Class Utilisateur
     End Function
 
     ''' <summary>
-    ''' Signe les données avec la clé privée de l'utilisateur.
-    ''' Échoue si aucune clé n'est enregistrée : signer avec une clé de repli
-    ''' rendrait la signature falsifiable par quiconque connaît cette clé.
+    ''' Signature confiée au serveur, installée par le client lourd au démarrage.
+    ''' Reçoit la charge à signer, renvoie la signature et l'adresse du signataire.
+    '''
+    ''' Le client n'a plus la clé privée : elle ne figure plus dans la réponse de
+    ''' /api/login et la lecture de la colonne lui est refusée par la base. C'est
+    ''' le même mécanisme de crochet que StandardDao.DemanderNouvelEssaiConnexion,
+    ''' de sorte que les appelants de Sign n'ont pas à savoir où la clé se trouve.
+    ''' </summary>
+    Public Shared Property SignataireDistant As Func(Of Byte(), SignatureResponse) = Nothing
+
+    ''' <summary>
+    ''' Signe les données au nom de l'utilisateur.
+    '''
+    ''' Côté serveur, la clé privée est chargée et la signature calculée sur place.
+    ''' Côté client, elle est demandée à /api/signature via SignataireDistant.
+    ''' Échoue dans tous les cas si aucune clé n'est disponible : signer avec une
+    ''' clé de repli rendrait la signature falsifiable par quiconque la connaît.
     ''' </summary>
     Public Function Sign(data As Byte()) As String
-        If String.IsNullOrWhiteSpace(UtilisateurClePrivee) Then
+        If Not String.IsNullOrWhiteSpace(UtilisateurClePrivee) Then
+            Dim signer As MessageSigner = New MessageSigner()
+            Return signer.HashAndSign(data, UtilisateurClePrivee)
+        End If
+
+        Dim distant = SignataireDistant
+        If distant Is Nothing Then
             Throw New InvalidOperationException(
-                "Aucune clé de signature n'est enregistrée pour l'utilisateur " &
+                "Aucune clé de signature n'est disponible pour l'utilisateur " &
                 UtilisateurLogin & " (id " & UtilisateurId & "). " &
                 "Générez une clé depuis la fiche utilisateur avant de signer.")
         End If
-        Dim signer As MessageSigner = New MessageSigner()
-        Return signer.HashAndSign(data, UtilisateurClePrivee)
+
+        Dim reponse = distant(data)
+        If reponse Is Nothing OrElse String.IsNullOrWhiteSpace(reponse.Signature) Then
+            Throw New InvalidOperationException(
+                "Le serveur n'a pas pu signer pour l'utilisateur " & UtilisateurLogin & ".")
+        End If
+
+        ' L'adresse renvoyée par le serveur fait foi : c'est celle de la clé qui
+        ' vient effectivement de signer. Elle est enregistrée à côté de la
+        ' signature, donc une rotation entre la connexion et la signature ne rend
+        ' pas l'ordonnance invérifiable.
+        Me.UtilisateurAddress = reponse.Adresse
+        Return reponse.Signature
     End Function
 
 End Class

@@ -7,12 +7,10 @@ Imports Oasis_Common
 Imports Oasis_Common.ParametreMail
 
 Public Class SendMailController
-    Inherits ApiController
+    Inherits ApiControllerOasis
 
-    ' GET api/<controller>
-    Public Function GetValues() As String
-        Return "API Oasis - Send Mail controleur "
-    End Function
+    ''' <summary>Taille maximale d'une pièce jointe.</summary>
+    Private Const TailleMaxiOctets As Long = 25L * 1024L * 1024L
 
     Public Async Function SendMail() As Task(Of HttpResponseMessage)
         Dim provider As MultipartFormDataStreamProvider = Nothing
@@ -31,16 +29,6 @@ Public Class SendMailController
 
             Await content.ReadAsMultipartAsync(provider)
 
-            Dim login As String = provider.FormData.Item("login")
-            Dim password As String = provider.FormData.Item("password")
-
-            Dim user As Utilisateur = Nothing
-            Try
-                user = ModuleUtilsBase.verifPassword(login, password)
-            Catch ex As Exception
-                Throw New UnauthorizedAccessException
-            End Try
-
             Dim mailOasis = New MailOasis
             With provider.FormData
                 mailOasis.AliasFrom = .Item("aliasFrom")
@@ -51,7 +39,32 @@ Public Class SendMailController
                 mailOasis.IsHTML = .Item("isHTML")
             End With
 
+            ' Dossier concerné, quand l'envoi en vise un. Sert au contrôle des
+            ' destinataires et à la trace.
+            Dim patientId As Long = 0
+            Long.TryParse(If(provider.FormData.Item("patientId"), ""), patientId)
+
+            ' Tout compte authentifié pouvait écrire à n'importe quelle adresse,
+            ' avec une pièce jointe, depuis le compte SMTP de la structure. Les
+            ' destinataires sont désormais restreints aux adresses connues du
+            ' dossier et de l'annuaire, plus les domaines déclarés en configuration.
+            Dim destinataires = DestinatairesMail.Separer(mailOasis.AddressTo)
+            If destinataires.Count = 0 Then
+                Return Refus(HttpStatusCode.BadRequest, "Aucun destinataire")
+            End If
+            For Each destinataire In destinataires
+                If Not DestinatairesMail.EstAutorise(destinataire, patientId) Then
+                    JournalAcces.AccesRefuse(UtilisateurConnecte, patientId,
+                                       "Envoi refusé vers " & destinataire)
+                    Return Refus(HttpStatusCode.Forbidden,
+                                 "Destinataire non autorisé : " & destinataire)
+                End If
+            Next
+
             For Each fileData As MultipartFileData In provider.FileData
+                If New FileInfo(fileData.LocalFileName).Length > TailleMaxiOctets Then
+                    Return Refus(HttpStatusCode.RequestEntityTooLarge, "Pièce jointe trop volumineuse")
+                End If
                 ' Path.GetFileName : le nom annoncé par le client ne doit pas pouvoir
                 ' désigner un chemin.
                 mailOasis.Filename = Path.GetFileName(fileData.Headers.ContentDisposition.FileName.Replace(Chr(34), ""))
@@ -59,46 +72,35 @@ Public Class SendMailController
             Next
 
             ' ------------------------------------ params mail
-            Dim smtpServer As String = Nothing
             Try
-
                 Dim parametreMailDao As New ParametreMailDao
-                Dim parametreMail = parametreMailDao.GetParametreMailBySiegeIdTypeMailParam(Nothing, TypeMailParams.SMTP_PARAMETERS)
-                smtpServer = parametreMail.GetSMTPServerUrl()
-
+                ' Seul le serveur lit les identifiants SMTP, et seulement ici.
+                Dim parametreMail = parametreMailDao.GetParametreMailBySiegeIdTypeMailParam(
+                    Nothing, TypeMailParams.SMTP_PARAMETERS, inclureSmtp:=True)
 
                 Dim mailUtil = New MailUtil(parametreMail.GetSMTPServerUrl(),
                                            parametreMail.GetSMTPPort(),
                                            parametreMail.GetSMTPUser(mailOasis.IsSousEpisode),
                                            parametreMail.GetSMTPPassword(mailOasis.IsSousEpisode),
                                            parametreMail.GetSMTPFrom(mailOasis.IsSousEpisode))
-                mailUtil.SendMail(user, mailOasis)
+                mailUtil.SendMail(UtilisateurConnecte, mailOasis)
+
+                ' Un envoi sortant fait quitter la structure à des données de santé :
+                ' il est tracé avec ses destinataires et le nom de la pièce jointe.
+                JournalAcces.Sortie(UtilisateurConnecte, patientId,
+                                    "Courriel vers " & String.Join(", ", destinataires) &
+                                    If(mailOasis.IsWithContenu(), " avec piece jointe " & mailOasis.Filename, ""))
 
                 Return Request.CreateResponse(HttpStatusCode.Accepted, "true")
             Catch e As Exception
                 ' Ni le message d'exception ni l'adresse du serveur SMTP ne doivent
                 ' remonter au client.
-                Dim resp = New HttpResponseMessage(HttpStatusCode.InternalServerError) With {
-                .Content = New StringContent("Erreur interne au serveur lors de l'envoi du mail"),
-                .ReasonPhrase = "Erreur interne au serveur lors de l'envoi du mail"
-            }
-                Return resp
+                Return Refus(HttpStatusCode.InternalServerError,
+                             "Erreur interne au serveur lors de l'envoi du mail")
             End Try
 
-        Catch e As UnauthorizedAccessException
-                Dim resp = New HttpResponseMessage(HttpStatusCode.Unauthorized) With {
-                    .Content = New StringContent("Identifiant et/ou mot de passe erroné !"),
-                    .ReasonPhrase = "Utilisateur introuvable"
-                }
-                Return resp
-
-            Catch e As Exception
-                Dim resp = New HttpResponseMessage(HttpStatusCode.InternalServerError) With {
-                .Content = New StringContent("Erreur interne au serveur"),
-                .ReasonPhrase = "Erreur interne au serveur"
-            }
-
-            Return resp
+        Catch e As Exception
+            Return Refus(HttpStatusCode.InternalServerError, "Erreur interne au serveur")
         Finally
             ' Les pièces jointes temporaires ne doivent pas rester sur le disque.
             If provider IsNot Nothing AndAlso provider.FileData IsNot Nothing Then
@@ -112,7 +114,5 @@ Public Class SendMailController
         End Try
 
     End Function
-
-
 
 End Class
