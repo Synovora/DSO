@@ -1,4 +1,5 @@
-﻿Imports MimeKit
+﻿Imports System.Configuration
+Imports MimeKit
 Imports Oasis_Common.ParametreMail
 
 Public Class MailUtil
@@ -61,10 +62,7 @@ Public Class MailUtil
         End With
 
         Using client = New MailKit.Net.Smtp.SmtpClient()
-            ' Auto : SSL implicite sur 465, STARTTLS sur 587. Le forçage à True
-            ' rendait tout fournisseur en STARTTLS impossible à configurer.
-            client.Connect(Me.SMTPServerURL, Me.SMTPport,
-                           MailKit.Security.SecureSocketOptions.Auto)
+            client.Connect(Me.SMTPServerURL, Me.SMTPport, SecuriteSmtp())
             client.Authenticate(Me.SMTPUser, Me.SMTPPassword)
             client.Send(mimMessage)
             client.Disconnect(True)
@@ -72,5 +70,37 @@ Public Class MailUtil
 
 
     End Sub
+
+    ''' <summary>
+    ''' Mode de sécurité de la liaison SMTP, réglé par MailSecuriteSmtp.
+    '''
+    ''' Par défaut SslOnConnect : TLS dès l'ouverture de la connexion, sans
+    ''' négociation en clair. C'était le comportement obtenu jusqu'ici, et il faut
+    ''' le conserver par défaut tant que MailKit n'est pas monté de version.
+    '''
+    ''' MailKit 2.13 est concerné par une injection de réponse pendant STARTTLS,
+    ''' qui permet à un intercepteur de forcer le choix d'un mécanisme SASL plus
+    ''' faible (GHSA, alerte Dependabot ouverte sur Oasis_Common). Le passage à
+    ''' Auto, motivé par les fournisseurs qui n'écoutent qu'en 587, place la
+    ''' liaison sur ce chemin de négociation : c'est un réglage à faire
+    ''' délibérément, pas une valeur par défaut, et la vraie réponse est de monter
+    ''' MailKit et MimeKit en 4.x sur les deux projets.
+    '''
+    ''' Valeurs acceptées : SslOnConnect, StartTls, StartTlsWhenAvailable, Auto,
+    ''' None. Valeur absente ou non reconnue : SslOnConnect.
+    ''' </summary>
+    Private Shared Function SecuriteSmtp() As MailKit.Security.SecureSocketOptions
+        Dim configure = ConfigurationManager.AppSettings("MailSecuriteSmtp")
+        If String.IsNullOrWhiteSpace(configure) Then
+            Return MailKit.Security.SecureSocketOptions.SslOnConnect
+        End If
+
+        Dim choisi As MailKit.Security.SecureSocketOptions
+        If Not [Enum].TryParse(configure.Trim(), True, choisi) OrElse
+           Not [Enum].IsDefined(GetType(MailKit.Security.SecureSocketOptions), choisi) Then
+            Return MailKit.Security.SecureSocketOptions.SslOnConnect
+        End If
+        Return choisi
+    End Function
 
 End Class

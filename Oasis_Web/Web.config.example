@@ -45,6 +45,13 @@
          dossier, annuaire professionnel) passent quel que soit leur domaine.
          Vide, seules ces adresses connues sont acceptées. -->
     <add key="MailDomainesAutorises" value="" />
+    <!-- Mode de sécurité de la liaison SMTP : SslOnConnect (défaut), StartTls,
+         StartTlsWhenAvailable, Auto, None. SslOnConnect ouvre la connexion en TLS
+         sans négociation en clair. Ne passer à Auto ou StartTls que si le
+         fournisseur n'écoute qu'en 587, et de préférence après la montée de
+         MailKit en 4.x : la version 2.13 est concernée par une injection de
+         réponse pendant STARTTLS. -->
+    <add key="MailSecuriteSmtp" value="SslOnConnect" />
   </appSettings>
 
   <connectionStrings>
