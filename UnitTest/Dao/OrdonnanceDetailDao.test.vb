@@ -8,18 +8,18 @@
 ''' </summary>
 <TestClass()> Public Class TestOrdonnanceDetailDaoLecture
 
-    Private Shared ReadOnly Colonnes As String() = {
-        "oa_ordonnance_ligne_id", "oa_ordonnance_traitement", "oa_traitement_id",
-        "oa_traitement_ordre_affichage", "oa_traitement_ald", "oa_traitement_a_delivrer",
-        "oa_traitement_medicament_cis", "oa_traitement_medicament_dci", "oa_traitement_date_debut",
-        "oa_traitement_date_fin", "oa_traitement_duree", "oa_traitement_posologie",
-        "oa_traitement_posologie_base", "oa_traitement_posologie_rythme",
-        "oa_traitement_posologie_matin", "oa_traitement_posologie_midi",
-        "oa_traitement_posologie_apres_midi", "oa_traitement_posologie_soir",
-        "oa_traitement_fraction_matin", "oa_traitement_fraction_midi",
-        "oa_traitement_fraction_apres_midi", "oa_traitement_fraction_soir",
-        "oa_traitement_posologie_commentaire", "oa_traitement_commentaire",
-        "oa_traitement_fenetre", "oa_traitement_fenetre_date_debut",
+    Private Shared ReadOnly Colonnes As String() = {
+        "oa_ordonnance_ligne_id", "oa_ordonnance_traitement", "oa_traitement_id",
+        "oa_traitement_ordre_affichage", "oa_traitement_ald", "oa_traitement_a_delivrer",
+        "oa_traitement_medicament_cis", "oa_traitement_medicament_dci", "oa_traitement_date_debut",
+        "oa_traitement_date_fin", "oa_traitement_duree", "oa_traitement_posologie",
+        "oa_traitement_posologie_base", "oa_traitement_posologie_rythme",
+        "oa_traitement_posologie_matin", "oa_traitement_posologie_midi",
+        "oa_traitement_posologie_apres_midi", "oa_traitement_posologie_soir",
+        "oa_traitement_fraction_matin", "oa_traitement_fraction_midi",
+        "oa_traitement_fraction_apres_midi", "oa_traitement_fraction_soir",
+        "oa_traitement_posologie_commentaire", "oa_traitement_commentaire",
+        "oa_traitement_fenetre", "oa_traitement_fenetre_date_debut",
         "oa_traitement_fenetre_date_fin", "oa_traitement_inactif"}
 
     <TestMethod()> Public Sub UneLigneCompleteEstLueChampParChamp()

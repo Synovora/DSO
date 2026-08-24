@@ -6,23 +6,23 @@
 ''' </summary>
 <TestClass()> Public Class TestTraitementDaoLecture
 
-    Private Shared ReadOnly Colonnes As String() = {
-        "oa_traitement_id", "oa_traitement_patient_id", "oa_traitement_medicament_cis",
-        "oa_traitement_medicament_dci", "oa_traitement_classe_atc",
-        "oa_traitement_denomination_longue", "oa_traitement_identifiant_creation",
-        "oa_traitement_date_creation", "oa_traitement_identifiant_modification",
-        "oa_traitement_date_modification", "oa_traitement_date_debut", "oa_traitement_date_fin",
-        "oa_traitement_ordre_affichage", "oa_traitement_posologie_base",
-        "oa_traitement_posologie_rythme", "oa_traitement_posologie_matin",
-        "oa_traitement_posologie_midi", "oa_traitement_posologie_apres_midi",
-        "oa_traitement_posologie_soir", "oa_traitement_fraction_matin",
-        "oa_traitement_fraction_midi", "oa_traitement_fraction_apres_midi",
-        "oa_traitement_fraction_soir", "oa_traitement_posologie_commentaire",
-        "oa_traitement_fenetre", "oa_traitement_fenetre_date_debut",
-        "oa_traitement_fenetre_date_fin", "oa_traitement_fenetre_commentaire",
-        "oa_traitement_commentaire", "oa_traitement_arret", "oa_traitement_arret_commentaire",
-        "oa_traitement_allergie", "oa_traitement_contre_indication",
-        "oa_traitement_declaratif_hors_traitement", "oa_traitement_annulation",
+    Private Shared ReadOnly Colonnes As String() = {
+        "oa_traitement_id", "oa_traitement_patient_id", "oa_traitement_medicament_cis",
+        "oa_traitement_medicament_dci", "oa_traitement_classe_atc",
+        "oa_traitement_denomination_longue", "oa_traitement_identifiant_creation",
+        "oa_traitement_date_creation", "oa_traitement_identifiant_modification",
+        "oa_traitement_date_modification", "oa_traitement_date_debut", "oa_traitement_date_fin",
+        "oa_traitement_ordre_affichage", "oa_traitement_posologie_base",
+        "oa_traitement_posologie_rythme", "oa_traitement_posologie_matin",
+        "oa_traitement_posologie_midi", "oa_traitement_posologie_apres_midi",
+        "oa_traitement_posologie_soir", "oa_traitement_fraction_matin",
+        "oa_traitement_fraction_midi", "oa_traitement_fraction_apres_midi",
+        "oa_traitement_fraction_soir", "oa_traitement_posologie_commentaire",
+        "oa_traitement_fenetre", "oa_traitement_fenetre_date_debut",
+        "oa_traitement_fenetre_date_fin", "oa_traitement_fenetre_commentaire",
+        "oa_traitement_commentaire", "oa_traitement_arret", "oa_traitement_arret_commentaire",
+        "oa_traitement_allergie", "oa_traitement_contre_indication",
+        "oa_traitement_declaratif_hors_traitement", "oa_traitement_annulation",
         "oa_traitement_annulation_commentaire"}
 
     <TestMethod()> Public Sub UneLigneCompleteEstLueChampParChamp()

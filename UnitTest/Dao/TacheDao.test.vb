@@ -5,12 +5,12 @@
 ''' </summary>
 <TestClass()> Public Class TestTacheDaoLecture
 
-    Private Shared ReadOnly Colonnes As String() = {
-        "id", "parent_id", "emetteur_user_id", "emetteur_fonction_id", "unite_sanitaire_id",
-        "site_id", "patient_id", "parcours_id", "episode_id", "sous_episode_id", "traite_user_id",
-        "traite_fonction_id", "destinataire_fonction_id", "priorite", "ordre_affichage",
-        "categorie", "type", "nature", "duree_mn", "emetteur_commentaire", "horodate_creation",
-        "horodate_attrib", "horodate_cloture", "etat", "cloture", "type_demande_rendez_vous",
+    Private Shared ReadOnly Colonnes As String() = {
+        "id", "parent_id", "emetteur_user_id", "emetteur_fonction_id", "unite_sanitaire_id",
+        "site_id", "patient_id", "parcours_id", "episode_id", "sous_episode_id", "traite_user_id",
+        "traite_fonction_id", "destinataire_fonction_id", "priorite", "ordre_affichage",
+        "categorie", "type", "nature", "duree_mn", "emetteur_commentaire", "horodate_creation",
+        "horodate_attrib", "horodate_cloture", "etat", "cloture", "type_demande_rendez_vous",
         "date_rendez_vous", "date_traitement_demande_rendez_vous"}
 
     <TestMethod()> Public Sub UneLigneCompleteEstLueChampParChamp()

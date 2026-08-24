@@ -9,26 +9,26 @@
 ''' </summary>
 <TestClass()> Public Class TestAnnuaireProfessionnelDaoLecture
 
-    Private Shared ReadOnly Colonnes As String() = {
-        "Cle_entree", "type_identifiant_pp", "identifiant_pp", "identifiant_national_pp",
-        "code_civilite_exercice", "libelle_civilite_exercice", "code_civilite", "liblle_civilite",
-        "nom_exercice", "prenom_exercice", "code_profression", "libelle_profession",
-        "code_categorie_professionnelle", "libelle_categorie_professionnelle",
-        "code_type_savoir_faire", "libelle_type_savoir_faire", "code_savoir_faire",
-        "libellé_savoir_faire", "code_mode_exercice", "libelle_mode_exercice", "numero_siret_site",
-        "numero_siren_site", "numero_finess_site", "numero_finess_etablissement_juridique",
-        "identifiant_technique_structure", "raison_sociale_site", "enseigne_commerciale_site",
-        "complement_destinataire_coord_structure", "complement_point_geographique_coord_structure",
-        "numero_voie_coord_structure", "indice_repetition_voie_coord_structure",
-        "code_type_voie_coord_structure", "libelle_type_voie_coord_structure",
-        "libelle_voie_coord_structure", "mention_distribution_coord_structure",
-        "bureau_cedex_coord_structure", "code_postal_coord_structure",
-        "code_commune_coord_structure", "libelle_commune_coord_structure",
-        "code_pays_coord_structure", "libelle_pays_coord_structure", "telephone_coord_structure",
-        "telephone2_coord_structure", "telecopie_coord_structure", "adresse_email_coord_structure",
-        "code_departement_structure", "libelle_departement_structure",
-        "ancien_identifiant_structure", "autorite_enregistrement", "code_secteur_activite",
-        "libelle_secteur_activite", "code_section_tableau_pharmaciens",
+    Private Shared ReadOnly Colonnes As String() = {
+        "Cle_entree", "type_identifiant_pp", "identifiant_pp", "identifiant_national_pp",
+        "code_civilite_exercice", "libelle_civilite_exercice", "code_civilite", "liblle_civilite",
+        "nom_exercice", "prenom_exercice", "code_profression", "libelle_profession",
+        "code_categorie_professionnelle", "libelle_categorie_professionnelle",
+        "code_type_savoir_faire", "libelle_type_savoir_faire", "code_savoir_faire",
+        "libellé_savoir_faire", "code_mode_exercice", "libelle_mode_exercice", "numero_siret_site",
+        "numero_siren_site", "numero_finess_site", "numero_finess_etablissement_juridique",
+        "identifiant_technique_structure", "raison_sociale_site", "enseigne_commerciale_site",
+        "complement_destinataire_coord_structure", "complement_point_geographique_coord_structure",
+        "numero_voie_coord_structure", "indice_repetition_voie_coord_structure",
+        "code_type_voie_coord_structure", "libelle_type_voie_coord_structure",
+        "libelle_voie_coord_structure", "mention_distribution_coord_structure",
+        "bureau_cedex_coord_structure", "code_postal_coord_structure",
+        "code_commune_coord_structure", "libelle_commune_coord_structure",
+        "code_pays_coord_structure", "libelle_pays_coord_structure", "telephone_coord_structure",
+        "telephone2_coord_structure", "telecopie_coord_structure", "adresse_email_coord_structure",
+        "code_departement_structure", "libelle_departement_structure",
+        "ancien_identifiant_structure", "autorite_enregistrement", "code_secteur_activite",
+        "libelle_secteur_activite", "code_section_tableau_pharmaciens",
         "libelle_section_tableau_pharmaciens"}
 
     <TestMethod()> Public Sub LesChampsDIdentiteEtDeContactSontLus()

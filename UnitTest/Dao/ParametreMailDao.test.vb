@@ -8,7 +8,7 @@
 ''' </summary>
 <TestClass()> Public Class TestParametreMailDaoLecture
 
-    Private Shared ReadOnly Colonnes As String() = {
+    Private Shared ReadOnly Colonnes As String() = {
         "id", "siege_id", "type_mail_param", "smtp_params", "objet", "body", "is_body_html"}
 
     Private Shared Function Complet() As Dictionary(Of String, Object)
