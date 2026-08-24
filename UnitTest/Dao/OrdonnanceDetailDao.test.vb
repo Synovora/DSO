@@ -96,7 +96,9 @@
         Dim d = OrdonnanceDetailDao.BuildBean(LigneDeTest.Ligne(Colonnes, New Dictionary(Of String, Object) From {
             {"oa_ordonnance_ligne_id", 5}, {"oa_traitement_medicament_dci", "IBUPROFENE"}, {"oa_traitement_duree", 7}}))
         Dim relu = OrdonnanceDetail.Deserialize(d.Serialize())
-        Assert.AreEqual(d.LigneId, relu.LigneId)
+        ' L'identifiant de ligne n'entre pas dans la charge signée : c'est une
+        ' clé technique, et la signature doit survivre à une réinsertion.
+        Assert.AreEqual(0, relu.LigneId)
         Assert.AreEqual("IBUPROFENE", relu.MedicamentDci)
         Assert.AreEqual(7, relu.Duree)
         CollectionAssert.AreEqual(d.Serialize(), relu.Serialize())
