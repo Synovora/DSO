@@ -177,15 +177,18 @@ Namespace Oasis_Web.Controllers
         ''' et MailServiceLogin / MailServicePassword deviennent inutiles.
         ''' </summary>
         Private Shared Sub EnvoyerMailService(mailOasis As MailOasis)
+            ' La variable ne peut pas s'appeler parametreMail : VB ne distingue pas
+            ' la casse, donc ParametreMail dans l'initialiseur désignerait la
+            ' variable en cours de déclaration et non le type.
             Dim parametreMailDao As New ParametreMailDao
-            Dim parametreMail = parametreMailDao.GetParametreMailBySiegeIdTypeMailParam(
+            Dim parametresSmtp = parametreMailDao.GetParametreMailBySiegeIdTypeMailParam(
                 Nothing, ParametreMail.TypeMailParams.SMTP_PARAMETERS, inclureSmtp:=True)
 
-            Dim mailUtil As New MailUtil(parametreMail.GetSMTPServerUrl(),
-                                         parametreMail.GetSMTPPort(),
-                                         parametreMail.GetSMTPUser(False),
-                                         parametreMail.GetSMTPPassword(False),
-                                         parametreMail.GetSMTPFrom(False))
+            Dim mailUtil As New MailUtil(parametresSmtp.GetSMTPServerUrl(),
+                                         parametresSmtp.GetSMTPPort(),
+                                         parametresSmtp.GetSMTPUser(False),
+                                         parametresSmtp.GetSMTPPassword(False),
+                                         parametresSmtp.GetSMTPFrom(False))
             mailUtil.SendMail(Nothing, mailOasis)
         End Sub
 
