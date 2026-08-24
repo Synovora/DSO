@@ -229,6 +229,7 @@
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.ComponentModel.Primitives" />
     <Reference Include="System.ComponentModel.TypeConverter" />
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Data" />
     <Reference Include="System.Data.OracleClient" />
     <Reference Include="System.Diagnostics.DiagnosticSource, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
@@ -298,7 +299,12 @@
     <Import Include="Microsoft.VisualStudio.TestTools.UnitTesting" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Module\Base64Url.test.vb" />
+    <Compile Include="Module\CheminsDocuments.test.vb" />
+    <Compile Include="Module\DestinatairesMail.test.vb" />
+    <Compile Include="Module\HabilitationsDocuments.test.vb" />
     <Compile Include="Module\ModuleUtils.test.vb" />
+    <Compile Include="Module\ModuleUtilsBase.test.vb" />
     <Compile Include="Module\Outils.test.vb" />
     <Compile Include="Ordonnance.test.vb" />
     <Compile Include="Securite.test.vb" />
