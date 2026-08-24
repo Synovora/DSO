@@ -100,37 +100,50 @@ jobs:
   # a fork or an outside contributor should still get a green build for
   # everything above.
   #
-  # To enable it, publish your Bin40 folder somewhere the runner can fetch and
-  # set the repository secret TELERIK_BIN40_URL to a URL it can read. A
-  # self-hosted runner with Telerik installed works too: Directory.Build.props
+  # The assemblies come from Telerik's own NuGet feed, so nothing commercial is
+  # ever re-hosted. Set two repository secrets:
+  #
+  #   TELERIK_NUGET_USERNAME   your Telerik account e-mail, or the literal
+  #                            api-key when using a generated key
+  #   TELERIK_NUGET_PASSWORD   the account password, or the key itself
+  #
+  # Generate a key at account.telerik.com under Downloads, NuGet feed. See the
+  # README section "Telerik setup".
+  #
+  # The package is restored into a scratch folder rather than added to
+  # packages.config, and TELERIK_WINFORMS_DIR then points the build at it. That
+  # keeps Directory.Build.props and the HintPaths in Oasis_WF.vbproj as they
+  # are, so a developer with a Control Panel install is unaffected. The lib
+  # folder of the package is not a complete Bin40 and lacks the design-time
+  # assemblies, which is why OASIS003 may be warned here. That only affects the
+  # Visual Studio designer and is irrelevant on a runner.
+  #
+  # A self-hosted runner with Telerik installed works too: Directory.Build.props
   # already picks up the Control Panel default location.
   desktop:
     name: Desktop client (needs Telerik)
     runs-on: windows-latest
     if: ${{ github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name == github.repository }}
 
+    env:
+      # Matches the 2022.2.622.40 assemblies the project references. The Trial
+      # suffix is dropped from the package id for a licensed account:
+      # Telerik.UI.for.WinForms.AllControls.
+      TELERIK_PACKAGE_ID: Telerik.UI.for.WinForms.AllControls.Trial
+      TELERIK_PACKAGE_VERSION: 2022.2.622
+
     steps:
       - uses: actions/checkout@v4
 
-      - name: Check whether Telerik is available
+      - name: Check whether Telerik credentials are available
         id: telerik
         shell: pwsh
         run: |
-          if ("${{ secrets.TELERIK_BIN40_URL }}") { "available=true" >> $env:GITHUB_OUTPUT }
+          if ("${{ secrets.TELERIK_NUGET_PASSWORD }}") { "available=true" >> $env:GITHUB_OUTPUT }
           else {
-            Write-Host "TELERIK_BIN40_URL is not set. Skipping the desktop client build."
+            Write-Host "TELERIK_NUGET_PASSWORD is not set. Skipping the desktop client build."
             "available=false" >> $env:GITHUB_OUTPUT
           }
-
-      - name: Fetch Telerik
-        if: steps.telerik.outputs.available == 'true'
-        shell: pwsh
-        run: |
-          Invoke-WebRequest -Uri "${{ secrets.TELERIK_BIN40_URL }}" -OutFile telerik.zip
-          Expand-Archive telerik.zip -DestinationPath telerik
-          $bin40 = (Get-ChildItem -Path telerik -Recurse -Filter Telerik.WinControls.dll | Select-Object -First 1).DirectoryName
-          if (-not $bin40) { throw "Telerik.WinControls.dll was not found in the downloaded archive." }
-          "TELERIK_WINFORMS_DIR=$bin40" >> $env:GITHUB_ENV
 
       - name: Set up MSBuild
         if: steps.telerik.outputs.available == 'true'
@@ -139,6 +152,58 @@ jobs:
       - name: Set up NuGet
         if: steps.telerik.outputs.available == 'true'
         uses: NuGet/setup-nuget@v2
+
+      # The credentials are stored in clear text because the encrypted store is
+      # per-user and per-machine, and an ephemeral runner is neither. The file
+      # dies with the runner.
+      - name: Add the Telerik NuGet feed
+        if: steps.telerik.outputs.available == 'true'
+        shell: pwsh
+        run: |
+          nuget sources add -Name telerik `
+            -Source "https://nuget.telerik.com/v3/index.json" `
+            -Username "${{ secrets.TELERIK_NUGET_USERNAME }}" `
+            -Password "${{ secrets.TELERIK_NUGET_PASSWORD }}" `
+            -StorePasswordInClearText -NonInteractive
+
+      # The feed splits the assemblies across several packages, and each ships
+      # one folder per target framework, so no single lib folder holds all ten
+      # references. Everything is flattened into one staging folder that stands
+      # in for a Bin40, preferring the highest .NET Framework 4.x build of any
+      # assembly that appears more than once. The list of what must end up there
+      # is read out of the project, so it cannot drift from the references.
+      - name: Fetch Telerik
+        if: steps.telerik.outputs.available == 'true'
+        shell: pwsh
+        run: |
+          nuget install $env:TELERIK_PACKAGE_ID -Version $env:TELERIK_PACKAGE_VERSION `
+            -OutputDirectory telerik -NonInteractive
+          if ($LASTEXITCODE -ne 0) { throw "Restoring $env:TELERIK_PACKAGE_ID $env:TELERIK_PACKAGE_VERSION failed." }
+
+          $bin40 = Join-Path $PWD 'telerik-bin40'
+          New-Item -ItemType Directory -Path $bin40 -Force | Out-Null
+
+          function Get-FrameworkRank($path) {
+            if ($path -match '\\net(\d{2,3})\\') { return [int]$Matches[1] }
+            return 0
+          }
+
+          Get-ChildItem -Path telerik -Recurse -Filter *.dll |
+            Group-Object Name |
+            ForEach-Object {
+              $best = $_.Group | Sort-Object { Get-FrameworkRank $_.FullName } -Descending | Select-Object -First 1
+              Copy-Item $best.FullName -Destination $bin40 -Force
+            }
+
+          $required = Select-String -Path oasis\Oasis_WF.vbproj -Pattern '\$\(TelerikWinFormsDir\)\\([^<]+\.dll)' -AllMatches |
+            ForEach-Object { $_.Matches } | ForEach-Object { $_.Groups[1].Value } | Sort-Object -Unique
+          $missing = $required | Where-Object { -not (Test-Path (Join-Path $bin40 $_)) }
+          if ($missing) {
+            throw "$env:TELERIK_PACKAGE_ID does not provide: $($missing -join ', '). Check the package id and version."
+          }
+
+          Write-Host "Staged $($required.Count) referenced assemblies in $bin40"
+          "TELERIK_WINFORMS_DIR=$bin40" >> $env:GITHUB_ENV
 
       - name: Restore packages
         if: steps.telerik.outputs.available == 'true'

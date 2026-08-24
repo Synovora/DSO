@@ -267,6 +267,34 @@ If Telerik cannot be found the build stops with one message rather than hundreds
 
 Resolution lives in `Directory.Build.props` at the repository root, and applies to `Oasis_WF` only.
 
+**In continuous integration.** The `desktop` job in `.github/workflows/build.yml` restores Telerik
+from Telerik's own NuGet feed, so no commercial assembly is ever re-hosted. It needs two repository
+secrets:
+
+| Secret | Value |
+|---|---|
+| `TELERIK_NUGET_USERNAME` | Your Telerik account e-mail, or the literal `api-key` if you use a generated key |
+| `TELERIK_NUGET_PASSWORD` | The account password, or the key itself |
+
+Generate a key at [account.telerik.com](https://account.telerik.com) under Downloads, NuGet feed,
+then:
+
+```bash
+gh secret set TELERIK_NUGET_USERNAME --repo Synovora/DSO --body "api-key"
+gh secret set TELERIK_NUGET_PASSWORD --repo Synovora/DSO   # paste the key when prompted
+```
+
+Without them the job skips itself and says so, which is what keeps forks green. The package id and
+version are the `TELERIK_PACKAGE_ID` and `TELERIK_PACKAGE_VERSION` variables at the top of the job;
+a licensed account drops the `.Trial` suffix from the id.
+
+The packages split the assemblies across several ids and target frameworks, so the job flattens
+what it restores into one staging folder and points `TELERIK_WINFORMS_DIR` at that. It checks the
+ten names read out of `Oasis_WF.vbproj` are all present and fails with the missing ones named,
+rather than letting the compiler produce hundreds of type errors. The staging folder carries no
+design-time assemblies, so `OASIS003` is expected there: that only affects the Visual Studio
+designer, and nothing on a runner uses it.
+
 > **Not yet verified against a real build.** The Telerik indirection was written on a machine
 > without MSBuild. Someone should complete the checklist in
 > `docs/specs/2026-08-23-agpl-relicensing-and-telerik-externalisation.md` on Windows before this
@@ -405,8 +433,9 @@ them:
 
 The build job needs nothing commercial, which is why `ItemUniteSite` was moved out of
 `Oasis_Common`. The desktop client is a second, optional job: it builds only where Telerik can be
-supplied, through the repository secret `TELERIK_BIN40_URL` or a self-hosted runner with Telerik
-installed, and is skipped rather than failed elsewhere.
+supplied, through the `TELERIK_NUGET_USERNAME` and `TELERIK_NUGET_PASSWORD` secrets or a
+self-hosted runner with Telerik installed, and is skipped rather than failed elsewhere. See
+[Telerik setup](#telerik-setup).
 
 `Oasis_IS` (SSIS) and `OasisSetup` (`.vdproj`) are not built by CI. Both need Visual Studio
 extensions that no hosted runner carries.
