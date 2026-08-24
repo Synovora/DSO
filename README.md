@@ -244,7 +244,10 @@ Visual Studio WinForms designer loads design-time assemblies that the compiler n
 A minimal copy compiles fine while every `RadForm` fails to open in the designer, which is a
 frustrating failure to diagnose.
 
-Ten assemblies are referenced, by `Oasis_WF` (all ten) and `Oasis_Common` (the first two):
+Ten assemblies are referenced, and only by `Oasis_WF`. `Oasis_Common` used to need the first two
+for a single view-model class, `ItemUniteSite`, which is bound to one screen and now lives beside
+it in `oasis/Form/tache/`. That leaves the library, the web application, the admin tool and the
+tests free of any commercial dependency, which is what lets them build in continuous integration:
 
 ```
 Telerik.WinControls.dll                          TelerikCommon.dll
@@ -262,7 +265,7 @@ If Telerik cannot be found the build stops with one message rather than hundreds
 | `OASIS002` | The path resolved but `Telerik.WinControls.dll` is not in it. It is probably not a `Bin40` folder |
 | `OASIS003` | Warning only. Runtime assemblies found but design-time ones missing, so builds work and designers do not |
 
-Resolution lives in `Directory.Build.props` at the repository root.
+Resolution lives in `Directory.Build.props` at the repository root, and applies to `Oasis_WF` only.
 
 > **Not yet verified against a real build.** The Telerik indirection was written on a machine
 > without MSBuild. Someone should complete the checklist in
@@ -386,8 +389,30 @@ vstest.console.exe UnitTest\bin\Debug\UnitTest.dll /Tests:IsValidEmail   # a sin
 ```
 
 The suite covers `Oasis_Common` helpers (`Coalesce`, the encryption round-trip, email and password
-validation, date arithmetic) and `Ordonnance` binary serialization. It does not need a database.
-Coverage of the DAO and UI layers is minimal.
+validation, date arithmetic), `Ordonnance` binary serialization, password hashing, the delegated
+signing hook and document name validation. It does not need a database. Coverage of the DAO and UI
+layers is minimal.
+
+### Continuous integration
+
+Two workflows in `.github/workflows`, running on `main` and `dev` and on pull requests between
+them:
+
+| Workflow | What it does |
+|---|---|
+| `build.yml` | Restores packages, builds `Oasis_Common`, `Oasis_Web`, `OasisAdmini`, `AutomateTraitementOasis` and `UnitTest` on a Windows runner, then runs the test suite and uploads the results |
+| `dependency-review.yml` | Fails a pull request that introduces a dependency carrying an advisory at moderate severity or above |
+
+The build job needs nothing commercial, which is why `ItemUniteSite` was moved out of
+`Oasis_Common`. The desktop client is a second, optional job: it builds only where Telerik can be
+supplied, through the repository secret `TELERIK_BIN40_URL` or a self-hosted runner with Telerik
+installed, and is skipped rather than failed elsewhere.
+
+`Oasis_IS` (SSIS) and `OasisSetup` (`.vdproj`) are not built by CI. Both need Visual Studio
+extensions that no hosted runner carries.
+
+Dependency review only runs on pull requests. Work that goes straight onto a branch never passes
+through it, which is the reason to merge `dev` into `main` through a PR rather than pushing.
 
 ## Configuration reference
 

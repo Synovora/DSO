@@ -1,0 +1,145 @@
+name: Build and test
+
+# The security work of 2026-08-23 and 2026-08-24 was written, reviewed and pushed
+# without ever being compiled: there was no continuous integration and no
+# development machine able to build the solution. One change in that batch
+# (SecureSocketOptions.Auto in MailUtil) put SMTP onto a code path with a known
+# advisory, and nothing caught it until Dependabot happened to rescan on push.
+#
+# This workflow exists so that does not happen again.
+
+on:
+  push:
+    branches: [main, dev]
+  pull_request:
+    branches: [main, dev]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+
+  # Everything except the Telerik desktop client. Oasis_Common no longer
+  # references Telerik, so this job needs nothing commercial and runs on a stock
+  # runner. It covers the whole server side and the entire test suite, which is
+  # where the security-sensitive code lives.
+  build:
+    name: Server, library and tests
+    runs-on: windows-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up MSBuild
+        uses: microsoft/setup-msbuild@v2
+
+      - name: Set up NuGet
+        uses: NuGet/setup-nuget@v2
+
+      # packages/ is gitignored, so nothing builds before this. Restoring the
+      # solution also covers the SSIS and installer projects, which NuGet skips
+      # with a warning rather than an error.
+      - name: Restore packages
+        run: nuget restore Oasis_WF.sln -NonInteractive
+
+      # Built one project at a time rather than through the solution: the
+      # solution also holds Oasis_IS (SSIS, needs SSDT), OasisSetup (.vdproj,
+      # needs the Installer Projects extension) and Oasis_WF (needs Telerik),
+      # none of which a stock runner can build.
+      - name: Build Oasis_Common
+        run: msbuild Oasis_Common\Oasis_Common.vbproj /p:Configuration=Release /p:Platform=AnyCPU /nologo /v:minimal
+
+      - name: Build Oasis_Web
+        run: msbuild Oasis_Web\Oasis_Web.vbproj /p:Configuration=Release /p:Platform=AnyCPU /nologo /v:minimal
+
+      - name: Build OasisAdmini
+        run: msbuild OasisAdmini\OasisAdmini.vbproj /p:Configuration=Release /p:Platform=AnyCPU /nologo /v:minimal
+
+      - name: Build AutomateTraitementOasis
+        run: msbuild AutomateTraitementOasis\AutomateTraitementOasis.vbproj /p:Configuration=Release /p:Platform=AnyCPU /nologo /v:minimal
+
+      - name: Build UnitTest
+        run: msbuild UnitTest\UnitTest.vbproj /p:Configuration=Release /p:Platform=AnyCPU /nologo /v:minimal
+
+      # setup-msbuild puts msbuild on PATH but not vstest. vswhere is the
+      # supported way to find the test platform on a runner image.
+      - name: Locate vstest.console
+        id: vstest
+        shell: pwsh
+        run: |
+          $vswhere = "${env:ProgramFiles(x86)}\Microsoft Visual Studio\Installer\vswhere.exe"
+          $vs = & $vswhere -latest -products * -requires Microsoft.VisualStudio.PackageGroup.TestTools.Core -property installationPath
+          if (-not $vs) { throw "No Visual Studio installation with the test tools was found on this runner." }
+          $exe = Join-Path $vs "Common7\IDE\Extensions\TestPlatform\vstest.console.exe"
+          if (-not (Test-Path $exe)) { throw "vstest.console.exe not found under $vs" }
+          "path=$exe" >> $env:GITHUB_OUTPUT
+
+      # The suite covers password hashing, prescription signature round-trips,
+      # the delegated signing hook and document name validation. A failure here
+      # means a security control has stopped working, not merely a broken test.
+      - name: Run tests
+        run: '& "${{ steps.vstest.outputs.path }}" UnitTest\bin\Release\UnitTest.dll /logger:trx /ResultsDirectory:TestResults'
+        shell: pwsh
+
+      - name: Publish test results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: test-results
+          path: TestResults/*.trx
+          if-no-files-found: warn
+
+  # The desktop client needs Telerik UI for WinForms, which is commercial and
+  # deliberately absent from this repository. The job runs only where the
+  # licensed assemblies can be provided, and is skipped, not failed, elsewhere:
+  # a fork or an outside contributor should still get a green build for
+  # everything above.
+  #
+  # To enable it, publish your Bin40 folder somewhere the runner can fetch and
+  # set the repository secret TELERIK_BIN40_URL to a URL it can read. A
+  # self-hosted runner with Telerik installed works too: Directory.Build.props
+  # already picks up the Control Panel default location.
+  desktop:
+    name: Desktop client (needs Telerik)
+    runs-on: windows-latest
+    if: ${{ github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name == github.repository }}
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Check whether Telerik is available
+        id: telerik
+        shell: pwsh
+        run: |
+          if ("${{ secrets.TELERIK_BIN40_URL }}") { "available=true" >> $env:GITHUB_OUTPUT }
+          else {
+            Write-Host "TELERIK_BIN40_URL is not set. Skipping the desktop client build."
+            "available=false" >> $env:GITHUB_OUTPUT
+          }
+
+      - name: Fetch Telerik
+        if: steps.telerik.outputs.available == 'true'
+        shell: pwsh
+        run: |
+          Invoke-WebRequest -Uri "${{ secrets.TELERIK_BIN40_URL }}" -OutFile telerik.zip
+          Expand-Archive telerik.zip -DestinationPath telerik
+          $bin40 = (Get-ChildItem -Path telerik -Recurse -Filter Telerik.WinControls.dll | Select-Object -First 1).DirectoryName
+          if (-not $bin40) { throw "Telerik.WinControls.dll was not found in the downloaded archive." }
+          "TELERIK_WINFORMS_DIR=$bin40" >> $env:GITHUB_ENV
+
+      - name: Set up MSBuild
+        if: steps.telerik.outputs.available == 'true'
+        uses: microsoft/setup-msbuild@v2
+
+      - name: Set up NuGet
+        if: steps.telerik.outputs.available == 'true'
+        uses: NuGet/setup-nuget@v2
+
+      - name: Restore packages
+        if: steps.telerik.outputs.available == 'true'
+        run: nuget restore Oasis_WF.sln -NonInteractive
+
+      - name: Build Oasis_WF
+        if: steps.telerik.outputs.available == 'true'
+        run: msbuild oasis\Oasis_WF.vbproj /p:Configuration=Release /p:Platform=AnyCPU /nologo /v:minimal

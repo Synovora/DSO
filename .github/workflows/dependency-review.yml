@@ -1,0 +1,29 @@
+name: Dependency review
+
+# Blocks a pull request that introduces a dependency with a known advisory.
+#
+# This is the check that would have caught the MailKit STARTTLS advisory before
+# it reached main rather than after. It only runs on pull requests, which is the
+# reason the work goes dev -> main through a PR: pushing straight to a branch
+# skips this check entirely.
+
+on:
+  pull_request:
+    branches: [main, dev]
+
+permissions:
+  contents: read
+  pull-requests: write
+
+jobs:
+  review:
+    name: Review dependency changes
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/dependency-review-action@v4
+        with:
+          # Health data. Anything at moderate or above deserves a decision
+          # rather than a silent merge.
+          fail-on-severity: moderate
+          comment-summary-in-pr: always

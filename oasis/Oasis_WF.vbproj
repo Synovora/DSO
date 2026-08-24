@@ -901,6 +901,7 @@
     <Compile Include="Form\tache\FrmFiltreTacheATraiter.Designer.vb">
       <DependentUpon>FrmFiltreTacheATraiter.vb</DependentUpon>
     </Compile>
+    <Compile Include="Form\tache\ItemUniteSite.vb" />
     <Compile Include="Form\tache\FrmFiltreTacheATraiter.vb">
       <SubType>Form</SubType>
     </Compile>

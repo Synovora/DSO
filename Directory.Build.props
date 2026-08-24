@@ -1,4 +1,4 @@
-<Project>
+﻿<Project>
 
   <!--
     Telerik UI for WinForms resolution.
@@ -47,7 +47,7 @@
   -->
   <Target Name="ValidateTelerik"
           BeforeTargets="CoreCompile"
-          Condition="'$(MSBuildProjectName)' == 'Oasis_WF' OR '$(MSBuildProjectName)' == 'Oasis_Common'">
+          Condition="'$(MSBuildProjectName)' == 'Oasis_WF'">
 
     <Error Condition="'$(TelerikWinFormsDir)' == ''"
            Code="OASIS001"
