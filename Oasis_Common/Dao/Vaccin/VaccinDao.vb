@@ -395,7 +395,7 @@ Public Class VaccinDao
     End Function
 
     Public Function GetVaccinProgramAdministrationByRelation(vaccinProgramRelationId As Integer) As VaccinProgramAdmin
-        Dim vaccinProgramAdmin As VaccinProgramAdmin
+        Dim vaccinProgramAdmin As VaccinProgramAdmin = Nothing
         Dim con As SqlConnection = GetConnection()
 
         Try

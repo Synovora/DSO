@@ -203,6 +203,7 @@ Public Class EpisodeDao
         Dim RechercherTypeEpisode, RechercherActiviteEpisode, RechercherprofilEpisode As Boolean
         Dim dateDebutRecherche As Date = dateDebut.AddDays(1)
 
+        CEString = ""
         For i As Integer = 0 To chaineEpisode.Count - 1 Step 1
             CEString += String.Format("{0}{1}", chaineEpisode(i), If(i = chaineEpisode.Count - 1, "", ","))
         Next

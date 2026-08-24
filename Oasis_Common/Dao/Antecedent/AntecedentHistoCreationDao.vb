@@ -76,7 +76,7 @@ Public Class AntecedentHistoCreationDao
         Return codeRetour
     End Function
 
-    Public Shared Function InitAntecedentHistorisation(antecedent As Antecedent, UtilisateurConnecte As Utilisateur, AntecedentHistoACreer As AntecedentHisto)
+    Public Shared Sub InitAntecedentHistorisation(antecedent As Antecedent, UtilisateurConnecte As Utilisateur, AntecedentHistoACreer As AntecedentHisto)
         AntecedentHistoACreer.HistorisationDate = Date.Now()
         AntecedentHistoACreer.UtilisateurId = UtilisateurConnecte.UtilisateurId
         AntecedentHistoACreer.Etat = 0
@@ -112,9 +112,9 @@ Public Class AntecedentHistoCreationDao
         AntecedentHistoACreer.AldDemandeEnCours = antecedent.AldDemandeEnCours
         AntecedentHistoACreer.AldDateDemande = antecedent.AldDateDemande
         AntecedentHistoACreer.ChaineEpisodeDateFin = antecedent.ChaineEpisodeDateFin
-    End Function
+    End Sub
 
-    Public Shared Function InitClasseAntecedentHistorisation(antecedentDataReader As SqlDataReader, UtilisateurConnecte As Utilisateur, AntecedentHistoACreer As AntecedentHisto)
+    Public Shared Sub InitClasseAntecedentHistorisation(antecedentDataReader As SqlDataReader, UtilisateurConnecte As Utilisateur, AntecedentHistoACreer As AntecedentHisto)
         'Initialisation classe Historisation antecedent
         AntecedentHistoACreer.HistorisationDate = Date.Now()
         AntecedentHistoACreer.UtilisateurId = UtilisateurConnecte.UtilisateurId
@@ -231,6 +231,6 @@ Public Class AntecedentHistoCreationDao
         AntecedentHistoACreer.AldDemandeEnCours = Coalesce(antecedentDataReader("oa_antecedent_ald_demande_en_cours"), False)
         AntecedentHistoACreer.AldDateDemande = Coalesce(antecedentDataReader("oa_antecedent_ald_demande_date"), Date.Now())
         AntecedentHistoACreer.ChaineEpisodeDateFin = Coalesce(antecedentDataReader("oa_chaine_episode_date_fin"), Nothing)
-    End Function
+    End Sub
 
 End Class

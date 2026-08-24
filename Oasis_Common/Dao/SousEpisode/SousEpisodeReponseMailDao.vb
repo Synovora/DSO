@@ -78,7 +78,7 @@ Public Class SousEpisodeReponseMailDao
         End Try
     End Sub
 
-    Public Function ProcessSousEpisodeReponseMailById(id As Long)
+    Public Sub ProcessSousEpisodeReponseMailById(id As Long)
         Dim da As SqlDataAdapter = New SqlDataAdapter()
         Dim con As SqlConnection = GetConnection()
         Dim SQLstring As String = "UPDATE oasis.oa_sous_episode_reponse_mail SET" &
@@ -98,7 +98,7 @@ Public Class SousEpisodeReponseMailDao
         Finally
             con.Close()
         End Try
-    End Function
+    End Sub
 
     Public Function BuildBean(reader As SqlDataReader) As SousEpisodeReponseMail
         Dim seType As New SousEpisodeReponseMail(reader)
