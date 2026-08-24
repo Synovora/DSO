@@ -25,7 +25,7 @@ End Code
             <div class="row">
                 <div class="col-sm-4">
                     <div class="avatar-md profile-user-wid mb-4">
-                        <img src="https://th.bing.com/th/id/R.dc8b1732c919ca17845aab44dc3afb27?rik=qOkrlNPk9Y4cBg&pid=ImgRaw&r=0" alt="" class="img-thumbnail rounded-circle">
+                        <img src="~/assets/images/users/avatar-1.jpg" alt="" class="img-thumbnail rounded-circle">
                     </div>
                     <h5 class="font-size-15 text-truncate">@ViewBag.Patient.PatientPrenom @ViewBag.Patient.PatientNom</h5>
                     <p class="text-muted mb-0 text-truncate">Profil Patient Nº @Request.Cookies("patientId").Value</p>

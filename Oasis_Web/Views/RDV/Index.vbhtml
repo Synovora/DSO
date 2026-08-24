@@ -19,7 +19,7 @@ End Section
             <div class="d-flex gap-2 justify-content-between align-items-center">
                 <div class="">
                     <div class="avatar-md profile-user-wid m-auto">
-                        <img src="https://th.bing.com/th/id/R.dc8b1732c919ca17845aab44dc3afb27?rik=qOkrlNPk9Y4cBg&pid=ImgRaw&r=0" alt="" class="img-thumbnail rounded-circle">
+                        <img src="~/assets/images/users/avatar-1.jpg" alt="" class="img-thumbnail rounded-circle">
                     </div>
                 </div>
                 <div class="">

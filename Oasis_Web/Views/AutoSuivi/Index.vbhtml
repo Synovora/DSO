@@ -86,9 +86,11 @@ End Section
 End section
 
 <script type="text/javascript">
-    var att = '@Session["AutoSuivi"]'
-    console.log(att)
-    if (att === true) {
+    @* Session("autosuivi") côté serveur : la comparaison portait sur "AutoSuivi",
+       une autre clé, et comparait une chaîne à un booléen. La condition n'était
+       donc jamais vraie et l'écran ne se mettait jamais à jour après un envoi. *@
+    var att = '@Session("autosuivi")'
+    if (att === 'True') {
         $("#autoSuiviCard").hide();
         $("#btnParametreAutoSuiviAdd").removeAttr("disabled");
     }

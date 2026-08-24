@@ -240,14 +240,19 @@ Public Class UserDao
         user.UtilisateurTelephone = Coalesce(reader("oa_utilisateur_telephone"), "")
         user.UtilisateurFax = Coalesce(reader("oa_utilisateur_fax"), "")
         user.UtilisateurMail = Coalesce(reader("oa_utilisateur_mail"), "")
-        user.UtilisateurProfilId = Coalesce(reader("oa_utilisateur_profil_id"))
+        ' Profil porté par la fiche utilisateur : c'est la valeur qui fait foi.
+        user.UtilisateurProfilId = Coalesce(reader("oa_utilisateur_profil_id"), "")
         user.UtilisateurAdmin = Coalesce(reader("oa_utilisateur_admin"), False)
         user.UtilisateurLogin = Coalesce(reader("oa_utilisateur_login"), "")
         user.UtilisateurSiteId = Coalesce(reader("oa_utilisateur_site_id"), 0)
         user.UtilisateurUniteSanitaireId = Coalesce(reader("oa_utilisateur_unite_sanitaire_id"), 0)
         user.UtilisateurSiegeId = Coalesce(reader("oa_utilisateur_siege_id"), 0)
         user.Password = Trim(Coalesce(reader("oa_password"), ""))
-        user.UtilisateurProfilId = Coalesce(reader("oa_r_profil_id"), "ADMINISTRATIF")
+        ' Ne pas réaffecter le profil depuis la jointure : la condition de jointure
+        ' est justement l'égalité des deux colonnes, donc la valeur est soit identique,
+        ' soit NULL quand le profil est absent ou inactif. Le repli "ADMINISTRATIF"
+        ' attribuait alors silencieusement un profil, et ses fonctions, à un
+        ' utilisateur dont le profil réel est inconnu.
         user.FonctionParDefautId = Coalesce(reader("oa_r_profil_fonction_id_defaut"), 0)
         user.UtilisateurNiveauAcces = Coalesce(reader("oa_r_profil_niveau_acces"), 3)
         user.TypeProfil = Coalesce(reader("oa_r_profil_type"), "")

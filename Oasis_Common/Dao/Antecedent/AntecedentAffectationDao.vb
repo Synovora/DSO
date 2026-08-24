@@ -101,115 +101,125 @@ Public Class AntecedentAffectationDao
         'Déclaration des données de connexion
         Dim con As SqlConnection
         con = GetConnection()
+        Try
 
-        Dim antecedentDataAdapter As SqlDataAdapter = New SqlDataAdapter()
-        Dim antecedentDataTable As DataTable = New DataTable()
-        Dim SQLString As String
+            Dim antecedentDataAdapter As SqlDataAdapter = New SqlDataAdapter()
+            Dim antecedentDataTable As DataTable = New DataTable()
+            Dim SQLString As String
 
-        Select Case niveau
-            Case 1
-                SQLString = "SELECT * FROM oasis.oa_antecedent" &
-                            " WHERE oa_antecedent_type = 'A'" &
-                            " AND (oa_antecedent_statut_affichage = 'P' OR oa_antecedent_statut_affichage = '" & Cacher & "')" &
-                            " AND (oa_antecedent_inactif = '0' or oa_antecedent_inactif is Null)" &
-                            " AND oa_antecedent_patient_id = " & SelectedPatientId.ToString &
-                            " AND oa_antecedent_niveau = 1" &
-                            " ORDER BY oa_antecedent_ordre_affichage1;"
-            Case 2
-                SQLString = "SELECT * FROM oasis.oa_antecedent" &
-                            " WHERE oa_antecedent_type = 'A'" &
-                            " AND (oa_antecedent_statut_affichage = 'P' OR oa_antecedent_statut_affichage = '" & Cacher & "')" &
-                            " AND (oa_antecedent_inactif = '0' or oa_antecedent_inactif is Null)" &
-                            " AND oa_antecedent_patient_id = " & SelectedPatientId.ToString &
-                            " AND oa_antecedent_id_niveau1 = " & AntecedentId.ToString &
-                            " AND oa_antecedent_niveau = 2" &
-                            " ORDER BY oa_antecedent_ordre_affichage2;"
-            Case 3
-                SQLString = "SELECT * FROM oasis.oa_antecedent" &
-                            " WHERE oa_antecedent_type = 'A'" &
-                            " AND (oa_antecedent_statut_affichage = 'P' OR oa_antecedent_statut_affichage = '" & Cacher & "')" &
-                            " AND (oa_antecedent_inactif = '0' or oa_antecedent_inactif is Null)" &
-                            " AND oa_antecedent_patient_id = " & SelectedPatientId.ToString &
-                            " AND oa_antecedent_id_niveau2 = " & AntecedentId.ToString &
-                            " AND oa_antecedent_niveau = 3" &
-                            " ORDER BY oa_antecedent_ordre_affichage3;"
-            Case Else
-                Return False
-        End Select
+            Select Case niveau
+                Case 1
+                    SQLString = "SELECT * FROM oasis.oa_antecedent" &
+                                " WHERE oa_antecedent_type = 'A'" &
+                                " AND (oa_antecedent_statut_affichage = 'P' OR oa_antecedent_statut_affichage = '" & Cacher & "')" &
+                                " AND (oa_antecedent_inactif = '0' or oa_antecedent_inactif is Null)" &
+                                " AND oa_antecedent_patient_id = " & SelectedPatientId.ToString &
+                                " AND oa_antecedent_niveau = 1" &
+                                " ORDER BY oa_antecedent_ordre_affichage1;"
+                Case 2
+                    SQLString = "SELECT * FROM oasis.oa_antecedent" &
+                                " WHERE oa_antecedent_type = 'A'" &
+                                " AND (oa_antecedent_statut_affichage = 'P' OR oa_antecedent_statut_affichage = '" & Cacher & "')" &
+                                " AND (oa_antecedent_inactif = '0' or oa_antecedent_inactif is Null)" &
+                                " AND oa_antecedent_patient_id = " & SelectedPatientId.ToString &
+                                " AND oa_antecedent_id_niveau1 = " & AntecedentId.ToString &
+                                " AND oa_antecedent_niveau = 2" &
+                                " ORDER BY oa_antecedent_ordre_affichage2;"
+                Case 3
+                    SQLString = "SELECT * FROM oasis.oa_antecedent" &
+                                " WHERE oa_antecedent_type = 'A'" &
+                                " AND (oa_antecedent_statut_affichage = 'P' OR oa_antecedent_statut_affichage = '" & Cacher & "')" &
+                                " AND (oa_antecedent_inactif = '0' or oa_antecedent_inactif is Null)" &
+                                " AND oa_antecedent_patient_id = " & SelectedPatientId.ToString &
+                                " AND oa_antecedent_id_niveau2 = " & AntecedentId.ToString &
+                                " AND oa_antecedent_niveau = 3" &
+                                " ORDER BY oa_antecedent_ordre_affichage3;"
+                Case Else
+                    Return False
+            End Select
 
-        'Lecture des données en base
-        antecedentDataAdapter.SelectCommand = New SqlCommand(SQLString, con)
-        antecedentDataAdapter.Fill(antecedentDataTable)
+            'Lecture des données en base
+            antecedentDataAdapter.SelectCommand = New SqlCommand(SQLString, con)
+            antecedentDataAdapter.Fill(antecedentDataTable)
 
-        Dim CodeRetour As Boolean = True
+            Dim CodeRetour As Boolean = True
 
-        'Déclaration des variables pour réaliser le parcours du DataTable pour alimenter le DataGridView
-        Dim i As Integer
-        Dim rowCount As Integer = antecedentDataTable.Rows.Count - 1
-        Dim ordreAffichage As Integer = 0
+            'Déclaration des variables pour réaliser le parcours du DataTable pour alimenter le DataGridView
+            Dim i As Integer
+            Dim rowCount As Integer = antecedentDataTable.Rows.Count - 1
+            Dim ordreAffichage As Integer = 0
 
-        'Parcours du DataTable pour alimenter le DataGridView
-        For i = 0 To rowCount Step 1
-            'Ajout d'une ligne au DataGridView
-            ordreAffichage += 20
-            Dim AntecedentIdAModifier As Integer = CInt(antecedentDataTable.Rows(i)("oa_antecedent_id"))
-            UpdateOrdreAffichageAntecedent(AntecedentIdAModifier, niveau, ordreAffichage)
-            AffectationOrdreAntecedenetsLies(AntecedentIdAModifier, niveau, ordreAffichage, SelectedPatientId, Cacher)
-        Next
+            'Parcours du DataTable pour alimenter le DataGridView
+            For i = 0 To rowCount Step 1
+                'Ajout d'une ligne au DataGridView
+                ordreAffichage += 20
+                Dim AntecedentIdAModifier As Integer = CInt(antecedentDataTable.Rows(i)("oa_antecedent_id"))
+                UpdateOrdreAffichageAntecedent(AntecedentIdAModifier, niveau, ordreAffichage)
+                AffectationOrdreAntecedenetsLies(AntecedentIdAModifier, niveau, ordreAffichage, SelectedPatientId, Cacher)
+            Next
 
-        con.Close()
 
-        Return CodeRetour
+            Return CodeRetour
+        Finally
+            ' La connexion était fermée uniquement sur le chemin nominal :
+            ' toute exception en cours de route la laissait ouverte.
+            con.Close()
+        End Try
     End Function
 
     Public Function AffectationOrdreAntecedenetsLies(antecedentIdRef As Integer, niveau As Integer, OrdreAffichageRef As Integer, selectedPatientId As Long, Cacher As String) As Boolean
         'Déclaration des données de connexion
         Dim con As SqlConnection
         con = GetConnection()
+        Try
 
-        Dim antecedentDataAdapter As SqlDataAdapter = New SqlDataAdapter()
-        Dim antecedentDataTable As DataTable = New DataTable()
-        Dim SQLString As String
+            Dim antecedentDataAdapter As SqlDataAdapter = New SqlDataAdapter()
+            Dim antecedentDataTable As DataTable = New DataTable()
+            Dim SQLString As String
 
-        Select Case niveau
-            Case 1
-                SQLString = "SELECT * FROM oasis.oa_antecedent" &
-                            " WHERE oa_antecedent_type = 'A'" &
-                            " AND (oa_antecedent_statut_affichage = 'P' OR oa_antecedent_statut_affichage = '" & Cacher & "')" &
-                            " AND (oa_antecedent_inactif = '0' or oa_antecedent_inactif is Null)" &
-                            " AND oa_antecedent_patient_id = " & selectedPatientId.ToString &
-                            " AND (oa_antecedent_niveau = 2 Or oa_antecedent_niveau = 3)" &
-                            " AND oa_antecedent_id_niveau1 = " & antecedentIdRef.ToString + ";"
-            Case 2
-                SQLString = "SELECT * FROM oasis.oa_antecedent" &
-                            " WHERE oa_antecedent_type = 'A'" &
-                            " AND (oa_antecedent_statut_affichage = 'P' OR oa_antecedent_statut_affichage = '" & Cacher & "')" &
-                            " AND (oa_antecedent_inactif = '0' or oa_antecedent_inactif is Null)" &
-                            " AND oa_antecedent_patient_id = " & selectedPatientId.ToString &
-                            " AND oa_antecedent_niveau = 3" &
-                            " AND oa_antecedent_id_niveau2 = " & antecedentIdRef.ToString + ";"
-            Case Else
-                Return False
-        End Select
+            Select Case niveau
+                Case 1
+                    SQLString = "SELECT * FROM oasis.oa_antecedent" &
+                                " WHERE oa_antecedent_type = 'A'" &
+                                " AND (oa_antecedent_statut_affichage = 'P' OR oa_antecedent_statut_affichage = '" & Cacher & "')" &
+                                " AND (oa_antecedent_inactif = '0' or oa_antecedent_inactif is Null)" &
+                                " AND oa_antecedent_patient_id = " & selectedPatientId.ToString &
+                                " AND (oa_antecedent_niveau = 2 Or oa_antecedent_niveau = 3)" &
+                                " AND oa_antecedent_id_niveau1 = " & antecedentIdRef.ToString + ";"
+                Case 2
+                    SQLString = "SELECT * FROM oasis.oa_antecedent" &
+                                " WHERE oa_antecedent_type = 'A'" &
+                                " AND (oa_antecedent_statut_affichage = 'P' OR oa_antecedent_statut_affichage = '" & Cacher & "')" &
+                                " AND (oa_antecedent_inactif = '0' or oa_antecedent_inactif is Null)" &
+                                " AND oa_antecedent_patient_id = " & selectedPatientId.ToString &
+                                " AND oa_antecedent_niveau = 3" &
+                                " AND oa_antecedent_id_niveau2 = " & antecedentIdRef.ToString + ";"
+                Case Else
+                    Return False
+            End Select
 
-        'Lecture des données en base
-        antecedentDataAdapter.SelectCommand = New SqlCommand(SQLString, con)
-        antecedentDataAdapter.Fill(antecedentDataTable)
-        Dim CodeRetour As Boolean = True
+            'Lecture des données en base
+            antecedentDataAdapter.SelectCommand = New SqlCommand(SQLString, con)
+            antecedentDataAdapter.Fill(antecedentDataTable)
+            Dim CodeRetour As Boolean = True
 
 
-        'Déclaration des variables pour réaliser le parcours du DataTable pour alimenter le DataGridView
-        Dim i As Integer
-        Dim rowCount As Integer = antecedentDataTable.Rows.Count - 1
-        'Parcours du DataTable pour mettre à jour l'ordre d'affichage
-        For i = 0 To rowCount Step 1
-            Dim AntecedentIdaTraiter As Integer = CInt(antecedentDataTable.Rows(i)("oa_antecedent_id"))
-            UpdateOrdreAffichageAntecedent(AntecedentIdaTraiter, niveau, OrdreAffichageRef)
-        Next
+            'Déclaration des variables pour réaliser le parcours du DataTable pour alimenter le DataGridView
+            Dim i As Integer
+            Dim rowCount As Integer = antecedentDataTable.Rows.Count - 1
+            'Parcours du DataTable pour mettre à jour l'ordre d'affichage
+            For i = 0 To rowCount Step 1
+                Dim AntecedentIdaTraiter As Integer = CInt(antecedentDataTable.Rows(i)("oa_antecedent_id"))
+                UpdateOrdreAffichageAntecedent(AntecedentIdaTraiter, niveau, OrdreAffichageRef)
+            Next
 
-        con.Close()
 
-        Return CodeRetour
+            Return CodeRetour
+        Finally
+            ' La connexion était fermée uniquement sur le chemin nominal :
+            ' toute exception en cours de route la laissait ouverte.
+            con.Close()
+        End Try
     End Function
 
     Private Function UpdateOrdreAffichageAntecedent(antecedentId As Integer, niveau As Integer, OrdreAffichage As Integer) As Boolean
@@ -267,68 +277,73 @@ Public Class AntecedentAffectationDao
         'Déclaration des données de connexion
         Dim con As SqlConnection
         con = GetConnection()
+        Try
 
-        Dim CodeRetour As Boolean = False
+            Dim CodeRetour As Boolean = False
 
-        'Dim conxn3 As New SqlConnection(getConnectionString())
-        Dim antecedentDataAdapter As SqlDataAdapter = New SqlDataAdapter()
-        Dim antecedentDataTable As DataTable = New DataTable()
-        Dim SQLString As String
+            'Dim conxn3 As New SqlConnection(getConnectionString())
+            Dim antecedentDataAdapter As SqlDataAdapter = New SqlDataAdapter()
+            Dim antecedentDataTable As DataTable = New DataTable()
+            Dim SQLString As String
 
-        Select Case Traitement
-            Case 1, 4
-                SQLString = "SELECT * FROM oasis.oa_antecedent" &
-                            " WHERE oa_antecedent_type = 'A'" &
-                            " AND (oa_antecedent_statut_affichage = 'P' OR oa_antecedent_statut_affichage = '" & Cacher & "')" &
-                            " AND (oa_antecedent_inactif = '0' OR oa_antecedent_inactif is Null)" &
-                            " AND oa_antecedent_patient_id = " & selectedPatientId.ToString &
-                            " AND oa_antecedent_niveau = 2" &
-                            " AND oa_antecedent_id_niveau1 = " & antecedentIdaAffecter.ToString & ";"
-            Case 2, 3, 6
-                SQLString = "SELECT * FROM oasis.oa_antecedent" &
-                            " WHERE oa_antecedent_type = 'A'" &
-                            " AND (oa_antecedent_statut_affichage = 'P' OR oa_antecedent_statut_affichage = '" & Cacher & "')" &
-                            " AND (oa_antecedent_inactif = '0' OR oa_antecedent_inactif is Null)" &
-                            " AND oa_antecedent_patient_id = " & selectedPatientId.ToString &
-                            " AND oa_antecedent_niveau = 3" &
-                            " AND oa_antecedent_id_niveau2 = " & antecedentIdaAffecter.ToString & ";"
-            Case 5
-                SQLString = "SELECT * FROM oasis.oa_antecedent" &
-                            " WHERE oa_antecedent_type = 'A'" &
-                            " AND (oa_antecedent_statut_affichage = 'P' OR oa_antecedent_statut_affichage = '" & Cacher & "')" &
-                            " AND (oa_antecedent_inactif = '0' OR oa_antecedent_inactif is Null)" &
-                            " AND oa_antecedent_patient_id = " & selectedPatientId.ToString &
-                            " AND oa_antecedent_niveau = 3" &
-                            " AND oa_antecedent_id_niveau1 = " & antecedentIdaAffecter.ToString & ";"
-            Case Else
-                Return False
-        End Select
-
-        'Lecture des données en base
-        antecedentDataAdapter.SelectCommand = New SqlCommand(SQLString, con)
-        antecedentDataAdapter.Fill(antecedentDataTable)
-        'conxn3.Open()
-
-
-        'Déclaration des variables pour réaliser le parcours du DataTable pour alimenter le DataGridView
-        Dim i As Integer
-        Dim rowCount As Integer = antecedentDataTable.Rows.Count - 1
-        'Parcours du DataTable pour mettre à jour l'ordre d'affichage
-        For i = 0 To rowCount Step 1
-            Dim AntecedentIdaTraiter As Integer = CInt(antecedentDataTable.Rows(i)("oa_antecedent_id"))
             Select Case Traitement
-                Case 1, 2
-                    UpdateAntecedentaAffecter(AntecedentIdaTraiter, 3, antecedentIdCible, antecedentIdaAffecter, Ordre1, 990, 990)
-                Case 3
-                    UpdateAntecedentaAffecter(AntecedentIdaTraiter, 2, antecedentIdaAffecter, 0, 990, 990, 0)
-                Case 4, 5, 6
-                    UpdateOccultationAntecedent(AntecedentIdaTraiter)
+                Case 1, 4
+                    SQLString = "SELECT * FROM oasis.oa_antecedent" &
+                                " WHERE oa_antecedent_type = 'A'" &
+                                " AND (oa_antecedent_statut_affichage = 'P' OR oa_antecedent_statut_affichage = '" & Cacher & "')" &
+                                " AND (oa_antecedent_inactif = '0' OR oa_antecedent_inactif is Null)" &
+                                " AND oa_antecedent_patient_id = " & selectedPatientId.ToString &
+                                " AND oa_antecedent_niveau = 2" &
+                                " AND oa_antecedent_id_niveau1 = " & antecedentIdaAffecter.ToString & ";"
+                Case 2, 3, 6
+                    SQLString = "SELECT * FROM oasis.oa_antecedent" &
+                                " WHERE oa_antecedent_type = 'A'" &
+                                " AND (oa_antecedent_statut_affichage = 'P' OR oa_antecedent_statut_affichage = '" & Cacher & "')" &
+                                " AND (oa_antecedent_inactif = '0' OR oa_antecedent_inactif is Null)" &
+                                " AND oa_antecedent_patient_id = " & selectedPatientId.ToString &
+                                " AND oa_antecedent_niveau = 3" &
+                                " AND oa_antecedent_id_niveau2 = " & antecedentIdaAffecter.ToString & ";"
+                Case 5
+                    SQLString = "SELECT * FROM oasis.oa_antecedent" &
+                                " WHERE oa_antecedent_type = 'A'" &
+                                " AND (oa_antecedent_statut_affichage = 'P' OR oa_antecedent_statut_affichage = '" & Cacher & "')" &
+                                " AND (oa_antecedent_inactif = '0' OR oa_antecedent_inactif is Null)" &
+                                " AND oa_antecedent_patient_id = " & selectedPatientId.ToString &
+                                " AND oa_antecedent_niveau = 3" &
+                                " AND oa_antecedent_id_niveau1 = " & antecedentIdaAffecter.ToString & ";"
+                Case Else
+                    Return False
             End Select
-        Next
 
-        con.Close()
+            'Lecture des données en base
+            antecedentDataAdapter.SelectCommand = New SqlCommand(SQLString, con)
+            antecedentDataAdapter.Fill(antecedentDataTable)
+            'conxn3.Open()
 
-        Return CodeRetour
+
+            'Déclaration des variables pour réaliser le parcours du DataTable pour alimenter le DataGridView
+            Dim i As Integer
+            Dim rowCount As Integer = antecedentDataTable.Rows.Count - 1
+            'Parcours du DataTable pour mettre à jour l'ordre d'affichage
+            For i = 0 To rowCount Step 1
+                Dim AntecedentIdaTraiter As Integer = CInt(antecedentDataTable.Rows(i)("oa_antecedent_id"))
+                Select Case Traitement
+                    Case 1, 2
+                        UpdateAntecedentaAffecter(AntecedentIdaTraiter, 3, antecedentIdCible, antecedentIdaAffecter, Ordre1, 990, 990)
+                    Case 3
+                        UpdateAntecedentaAffecter(AntecedentIdaTraiter, 2, antecedentIdaAffecter, 0, 990, 990, 0)
+                    Case 4, 5, 6
+                        UpdateOccultationAntecedent(AntecedentIdaTraiter)
+                End Select
+            Next
+
+
+            Return CodeRetour
+        Finally
+            ' La connexion était fermée uniquement sur le chemin nominal :
+            ' toute exception en cours de route la laissait ouverte.
+            con.Close()
+        End Try
     End Function
 
     Private Function UpdateOccultationAntecedent(antecedentId As Integer) As Boolean

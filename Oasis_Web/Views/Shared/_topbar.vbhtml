@@ -15,7 +15,7 @@
             <!-- LOGO -->
             <div class="navbar-brand-box">
                 <a href="@Url.Action("Index", "Dashboard")" class="">
-                    <img src="http://synovora.com/wp-content/uploads/2020/05/logo-300x137.png" alt="" height="60" class="my-auto pt-2">
+                    <img src="~/assets/images/logo-dark.png" alt="" height="60" class="my-auto pt-2">
                 </a>
             </div>
 
@@ -56,7 +56,7 @@
 
             <div class="dropdown d-inline-block">
                 <button class="btn header-item waves-effect" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    <img class="rounded-circle header-profile-user" src="https://th.bing.com/th/id/R.dc8b1732c919ca17845aab44dc3afb27?rik=qOkrlNPk9Y4cBg&pid=ImgRaw&r=0"
+                    <img class="rounded-circle header-profile-user" src="~/assets/images/users/avatar-1.jpg"
                          alt="Header Avatar">
                     @*<span class="d-none d-xl-inline-block ms-1" key="t-henry">---</span>*@
                     <i class="mdi mdi-chevron-down d-none d-xl-inline-block"></i>
