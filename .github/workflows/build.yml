@@ -8,11 +8,15 @@ name: Build and test
 #
 # This workflow exists so that does not happen again.
 
+# develop is listed alongside dev: pushing dev produced a GitHub notice saying
+# the branch had been renamed to develop, so a rename rule may be in force on
+# this repository. Covering both names means the pipeline runs whichever one the
+# branch ends up under.
 on:
   push:
-    branches: [main, dev]
+    branches: [main, dev, develop]
   pull_request:
-    branches: [main, dev]
+    branches: [main, dev, develop]
   workflow_dispatch:
 
 permissions:
