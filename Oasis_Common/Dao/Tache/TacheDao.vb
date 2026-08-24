@@ -948,36 +948,40 @@ Public Class TacheDao
 
     End Function
 
-    Private Function BuildBean(reader As SqlDataReader) As Tache
+    ''' <summary>
+    ''' Lit une ligne de tâche telle quelle, sans toucher à la base.
+    ''' IDataRecord plutôt que SqlDataReader pour qu'un test puisse fournir la ligne.
+    ''' </summary>
+    Public Shared Function BuildBean(record As System.Data.IDataRecord) As Tache
         Dim tache As New Tache With {
-            .Id = reader("id"),
-            .ParentId = Coalesce(reader("parent_id"), 0),
-            .EmetteurUserId = Coalesce(reader("emetteur_user_id"), 0),
-            .EmetteurFonctionId = Coalesce(reader("emetteur_fonction_id"), 0),
-            .UniteSanitaireId = Coalesce(reader("unite_sanitaire_id"), 0),
-            .SiteId = Coalesce(reader("site_id"), 0),
-            .PatientId = Coalesce(reader("patient_id"), 0),
-            .ParcoursId = Coalesce(reader("parcours_id"), 0),
-            .EpisodeId = Coalesce(reader("episode_id"), 0),
-            .SousEpisodeId = Coalesce(reader("sous_episode_id"), 0),
-            .TraiteUserId = Coalesce(reader("traite_user_id"), 0),
-            .TraiteFonctionId = Coalesce(reader("traite_fonction_id"), 0),
-            .DestinataireFonctionId = Coalesce(reader("destinataire_fonction_id"), 0),
-            .Priorite = Coalesce(reader("priorite"), 0),
-            .OrdreAffichage = Coalesce(reader("ordre_affichage"), 0),
-            .Categorie = Coalesce(reader("categorie"), ""),
-            .Type = Coalesce(reader("type"), ""),
-            .Nature = Coalesce(reader("nature"), ""),
-            .Duree = Coalesce(reader("duree_mn"), 0),
-            .EmetteurCommentaire = Coalesce(reader("emetteur_commentaire"), ""),
-            .HorodatageCreation = Coalesce(reader("horodate_creation"), Nothing),
-            .HorodatageAttribution = Coalesce(reader("horodate_attrib"), Nothing),
-            .HorodatageCloture = Coalesce(reader("horodate_cloture"), Nothing),
-            .Etat = Coalesce(reader("etat"), ""),
-            .Cloture = Coalesce(reader("cloture"), False),
-            .TypedemandeRendezVous = Coalesce(reader("type_demande_rendez_vous"), ""),
-            .DateRendezVous = Coalesce(reader("date_rendez_vous"), Nothing),
-            .DateTraitementDemandeRendezVous = Coalesce(reader("date_traitement_demande_rendez_vous"), Nothing)
+            .Id = record("id"),
+            .ParentId = Coalesce(record("parent_id"), 0),
+            .EmetteurUserId = Coalesce(record("emetteur_user_id"), 0),
+            .EmetteurFonctionId = Coalesce(record("emetteur_fonction_id"), 0),
+            .UniteSanitaireId = Coalesce(record("unite_sanitaire_id"), 0),
+            .SiteId = Coalesce(record("site_id"), 0),
+            .PatientId = Coalesce(record("patient_id"), 0),
+            .ParcoursId = Coalesce(record("parcours_id"), 0),
+            .EpisodeId = Coalesce(record("episode_id"), 0),
+            .SousEpisodeId = Coalesce(record("sous_episode_id"), 0),
+            .TraiteUserId = Coalesce(record("traite_user_id"), 0),
+            .TraiteFonctionId = Coalesce(record("traite_fonction_id"), 0),
+            .DestinataireFonctionId = Coalesce(record("destinataire_fonction_id"), 0),
+            .Priorite = Coalesce(record("priorite"), 0),
+            .OrdreAffichage = Coalesce(record("ordre_affichage"), 0),
+            .Categorie = Coalesce(record("categorie"), ""),
+            .Type = Coalesce(record("type"), ""),
+            .Nature = Coalesce(record("nature"), ""),
+            .Duree = Coalesce(record("duree_mn"), 0),
+            .EmetteurCommentaire = Coalesce(record("emetteur_commentaire"), ""),
+            .HorodatageCreation = Coalesce(record("horodate_creation"), Nothing),
+            .HorodatageAttribution = Coalesce(record("horodate_attrib"), Nothing),
+            .HorodatageCloture = Coalesce(record("horodate_cloture"), Nothing),
+            .Etat = Coalesce(record("etat"), ""),
+            .Cloture = Coalesce(record("cloture"), False),
+            .TypedemandeRendezVous = Coalesce(record("type_demande_rendez_vous"), ""),
+            .DateRendezVous = Coalesce(record("date_rendez_vous"), Nothing),
+            .DateTraitementDemandeRendezVous = Coalesce(record("date_traitement_demande_rendez_vous"), Nothing)
         }
         Return tache
     End Function

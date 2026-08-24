@@ -9,15 +9,20 @@ Public Class ParametreMailDao
     ''' besoin, et lui seul a le droit de lire la colonne : les postes clients ne
     ''' viennent chercher ici que le modèle de message (objet, corps, format).
     ''' </summary>
-    Private Function BuildBean(reader As SqlDataReader, inclureSmtp As Boolean) As ParametreMail
+    ''' <summary>
+    ''' Lit une ligne de paramètre de courriel telle quelle, sans toucher à la base.
+    ''' Le compte SMTP n'est restitué que si inclureSmtp est vrai : le client lourd
+    ''' n'a pas à le connaître, et la base lui en refuse d'ailleurs la lecture.
+    ''' </summary>
+    Public Shared Function BuildBean(record As System.Data.IDataRecord, inclureSmtp As Boolean) As ParametreMail
         Dim parametre As New ParametreMail With {
-            .Id = reader("id"),
-            .SiegeId = Coalesce(reader("siege_id"), 0L),
-            .TypeMailParam = DirectCast([Enum].Parse(GetType(TypeMailParams), reader("type_mail_param")), TypeMailParams),
-            .SmtpParams = If(inclureSmtp, Coalesce(reader("smtp_params"), ""), ""),
-            .Objet = Coalesce(reader("objet"), ""),
-            .Body = Coalesce(reader("body"), ""),
-            .IsBodyHtml = reader("is_body_html")
+            .Id = record("id"),
+            .SiegeId = Coalesce(record("siege_id"), 0L),
+            .TypeMailParam = DirectCast([Enum].Parse(GetType(TypeMailParams), record("type_mail_param")), TypeMailParams),
+            .SmtpParams = If(inclureSmtp, Coalesce(record("smtp_params"), ""), ""),
+            .Objet = Coalesce(record("objet"), ""),
+            .Body = Coalesce(record("body"), ""),
+            .IsBodyHtml = record("is_body_html")
          }
         Return parametre
     End Function

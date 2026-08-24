@@ -3,36 +3,40 @@
 Public Class OrdonnanceDetailDao
     Inherits StandardDao
 
-    Private Function BuildBean(reader As SqlDataReader) As OrdonnanceDetail
+    ''' <summary>
+    ''' Lit une ligne d'ordonnance (détail) telle quelle, sans toucher à la base.
+    ''' IDataRecord plutôt que SqlDataReader pour qu'un test puisse fournir la ligne.
+    ''' </summary>
+    Public Shared Function BuildBean(record As System.Data.IDataRecord) As OrdonnanceDetail
         Dim ordonnanceDetail As New OrdonnanceDetail With {
-            .LigneId = reader("oa_ordonnance_ligne_id"),
-            .Traitement = Coalesce(reader("oa_ordonnance_traitement"), False),
-            .TraitementId = Coalesce(reader("oa_traitement_id"), 0),
-            .OrdreAffichage = Coalesce(reader("oa_traitement_ordre_affichage"), 0),
-            .Ald = Coalesce(reader("oa_traitement_ald"), False),
-            .ADelivrer = Coalesce(reader("oa_traitement_a_delivrer"), False),
-            .MedicamentCis = Coalesce(reader("oa_traitement_medicament_cis"), 0),
-            .MedicamentDci = Coalesce(reader("oa_traitement_medicament_dci"), ""),
-            .DateDebut = Coalesce(reader("oa_traitement_date_debut"), Nothing),
-            .DateFin = Coalesce(reader("oa_traitement_date_fin"), Nothing),
-            .Duree = Coalesce(reader("oa_traitement_duree"), 0),
-            .Posologie = Coalesce(reader("oa_traitement_posologie"), ""),
-            .PosologieBase = Coalesce(reader("oa_traitement_posologie_base"), ""),
-            .PosologieRythme = Coalesce(reader("oa_traitement_posologie_rythme"), 0),
-            .PosologieMatin = Coalesce(reader("oa_traitement_posologie_matin"), 0),
-            .PosologieMidi = Coalesce(reader("oa_traitement_posologie_midi"), 0),
-            .PosologieApresMidi = Coalesce(reader("oa_traitement_posologie_apres_midi"), 0),
-            .PosologieSoir = Coalesce(reader("oa_traitement_posologie_soir"), 0),
-            .FractionMatin = Coalesce(reader("oa_traitement_fraction_matin"), ""),
-            .FractionMidi = Coalesce(reader("oa_traitement_fraction_midi"), ""),
-            .FractionApresMidi = Coalesce(reader("oa_traitement_fraction_apres_midi"), ""),
-            .FractionSoir = Coalesce(reader("oa_traitement_fraction_soir"), ""),
-            .PosologieCommentaire = Coalesce(reader("oa_traitement_posologie_commentaire"), ""),
-            .Commentaire = Coalesce(reader("oa_traitement_commentaire"), ""),
-            .Fenetre = Coalesce(reader("oa_traitement_fenetre"), False),
-            .FenetreDateDebut = Coalesce(reader("oa_traitement_fenetre_date_debut"), Nothing),
-            .FenetreDateFin = Coalesce(reader("oa_traitement_fenetre_date_fin"), Nothing),
-            .Inactif = Coalesce(reader("oa_traitement_inactif"), False)
+            .LigneId = record("oa_ordonnance_ligne_id"),
+            .Traitement = Coalesce(record("oa_ordonnance_traitement"), False),
+            .TraitementId = Coalesce(record("oa_traitement_id"), 0),
+            .OrdreAffichage = Coalesce(record("oa_traitement_ordre_affichage"), 0),
+            .Ald = Coalesce(record("oa_traitement_ald"), False),
+            .ADelivrer = Coalesce(record("oa_traitement_a_delivrer"), False),
+            .MedicamentCis = Coalesce(record("oa_traitement_medicament_cis"), 0),
+            .MedicamentDci = Coalesce(record("oa_traitement_medicament_dci"), ""),
+            .DateDebut = Coalesce(record("oa_traitement_date_debut"), Nothing),
+            .DateFin = Coalesce(record("oa_traitement_date_fin"), Nothing),
+            .Duree = Coalesce(record("oa_traitement_duree"), 0),
+            .Posologie = Coalesce(record("oa_traitement_posologie"), ""),
+            .PosologieBase = Coalesce(record("oa_traitement_posologie_base"), ""),
+            .PosologieRythme = Coalesce(record("oa_traitement_posologie_rythme"), 0),
+            .PosologieMatin = Coalesce(record("oa_traitement_posologie_matin"), 0),
+            .PosologieMidi = Coalesce(record("oa_traitement_posologie_midi"), 0),
+            .PosologieApresMidi = Coalesce(record("oa_traitement_posologie_apres_midi"), 0),
+            .PosologieSoir = Coalesce(record("oa_traitement_posologie_soir"), 0),
+            .FractionMatin = Coalesce(record("oa_traitement_fraction_matin"), ""),
+            .FractionMidi = Coalesce(record("oa_traitement_fraction_midi"), ""),
+            .FractionApresMidi = Coalesce(record("oa_traitement_fraction_apres_midi"), ""),
+            .FractionSoir = Coalesce(record("oa_traitement_fraction_soir"), ""),
+            .PosologieCommentaire = Coalesce(record("oa_traitement_posologie_commentaire"), ""),
+            .Commentaire = Coalesce(record("oa_traitement_commentaire"), ""),
+            .Fenetre = Coalesce(record("oa_traitement_fenetre"), False),
+            .FenetreDateDebut = Coalesce(record("oa_traitement_fenetre_date_debut"), Nothing),
+            .FenetreDateFin = Coalesce(record("oa_traitement_fenetre_date_fin"), Nothing),
+            .Inactif = Coalesce(record("oa_traitement_inactif"), False)
         }
         Return ordonnanceDetail
     End Function
