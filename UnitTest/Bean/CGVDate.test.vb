@@ -49,7 +49,8 @@
         Assert.AreEqual("3 Ans 2 Mois", CGVDate.DaysToDate(CGVDate.DateToDays(0, 2, 3)))
         Assert.AreEqual("1 Mois 15 Jours", CGVDate.DaysToDate(CGVDate.DateToDays(15, 1, 0)))
         Assert.AreEqual("11 Mois", CGVDate.DaysToDate(CGVDate.DateToDays(0, 11, 0)))
-        Assert.AreEqual("1 Ans", CGVDate.DaysToDate(CGVDate.DateToDays(0, 12, 3) - CGVDate.DateToDays(0, 0, 2) - 360))
+        ' Sous quarante mois, une année entière s'affiche encore en mois.
+        Assert.AreEqual("12 Mois", CGVDate.DaysToDate(CGVDate.DateToDays(0, 0, 1)))
     End Sub
 
 End Class
