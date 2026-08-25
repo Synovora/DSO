@@ -46,7 +46,8 @@
     End Sub
 
     <TestMethod()> Public Sub LesDeuxSensSeRepondent()
-        Assert.AreEqual("3 Ans 2 Mois", CGVDate.DaysToDate(CGVDate.DateToDays(0, 2, 3)))
+        Assert.AreEqual("4 Ans 2 Mois", CGVDate.DaysToDate(CGVDate.DateToDays(0, 2, 4)))
+        Assert.AreEqual("38 Mois", CGVDate.DaysToDate(CGVDate.DateToDays(0, 2, 3)))
         Assert.AreEqual("1 Mois 15 Jours", CGVDate.DaysToDate(CGVDate.DateToDays(15, 1, 0)))
         Assert.AreEqual("11 Mois", CGVDate.DaysToDate(CGVDate.DateToDays(0, 11, 0)))
         ' Sous quarante mois, une année entière s'affiche encore en mois.
