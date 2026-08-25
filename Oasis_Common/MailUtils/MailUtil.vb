@@ -26,6 +26,24 @@ Public Class MailUtil
         ' Les paramètres SMTP sont fournis par l'appelant (le serveur). Cette
         ' méthode les relisait en base sans jamais s'en servir, ce qui obligeait
         ' tout poste appelant à pouvoir lire le mot de passe du compte d'envoi.
+        Dim mimMessage = ComposerMessage(mailOasis)
+
+        Using client = New MailKit.Net.Smtp.SmtpClient()
+            client.Connect(Me.SMTPServerURL, Me.SMTPport, SecuriteSmtp())
+            client.Authenticate(Me.SMTPUser, Me.SMTPPassword)
+            client.Send(mimMessage)
+            client.Disconnect(True)
+        End Using
+
+
+    End Sub
+
+    ''' <summary>
+    ''' Compose le message sans l'envoyer : expéditeur, destinataires validés un
+    ''' par un, objet, corps texte ou HTML, pièce jointe. Séparé de l'envoi pour
+    ''' être vérifiable sans serveur SMTP.
+    ''' </summary>
+    Public Function ComposerMessage(mailOasis As MailOasis) As MimeMessage
         Dim mimMessage = New MimeMessage()
 
         With mimMessage
@@ -61,15 +79,8 @@ Public Class MailUtil
             .Body = builder.ToMessageBody
         End With
 
-        Using client = New MailKit.Net.Smtp.SmtpClient()
-            client.Connect(Me.SMTPServerURL, Me.SMTPport, SecuriteSmtp())
-            client.Authenticate(Me.SMTPUser, Me.SMTPPassword)
-            client.Send(mimMessage)
-            client.Disconnect(True)
-        End Using
-
-
-    End Sub
+        Return mimMessage
+    End Function
 
     ''' <summary>
     ''' Mode de sécurité de la liaison SMTP, réglé par MailSecuriteSmtp.
@@ -89,7 +100,7 @@ Public Class MailUtil
     ''' Valeurs acceptées : SslOnConnect, StartTls, StartTlsWhenAvailable, Auto,
     ''' None. Valeur absente ou non reconnue : SslOnConnect.
     ''' </summary>
-    Private Shared Function SecuriteSmtp() As MailKit.Security.SecureSocketOptions
+    Public Shared Function SecuriteSmtp() As MailKit.Security.SecureSocketOptions
         Dim configure = ConfigurationManager.AppSettings("MailSecuriteSmtp")
         If String.IsNullOrWhiteSpace(configure) Then
             Return MailKit.Security.SecureSocketOptions.SslOnConnect

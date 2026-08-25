@@ -19,7 +19,16 @@ Public Class ApiOasis
     Private identifiants As LoginRequest
 
     Public Sub New(ByVal _serveurDomain As String)
-        init(_serveurDomain)
+        init(_serveurDomain, Nothing)
+    End Sub
+
+    ''' <summary>
+    ''' Même client, mais sur un transport fourni par l'appelant. Sert aux tests,
+    ''' qui remplacent le réseau par un HttpMessageHandler qui enregistre la
+    ''' requête et rend une réponse préparée. Aucun autre usage prévu.
+    ''' </summary>
+    Public Sub New(ByVal _serveurDomain As String, transport As HttpMessageHandler)
+        init(_serveurDomain, transport)
     End Sub
 
     Public Sub New()
@@ -27,7 +36,7 @@ Public Class ApiOasis
         If serveurDomain Is Nothing OrElse serveurDomain.Trim().Length < 3 Then
             Throw New Exception("Serveur non paramétré dans le fichier de configuration")
         End If
-        init(serveurDomain)
+        init(serveurDomain, Nothing)
     End Sub
 
     ''' <summary>
@@ -104,9 +113,15 @@ Public Class ApiOasis
         renameFile(renameRequest).GetAwaiter.GetResult()
     End Sub
 
-    Private Sub init(_serveurDomain As String)
+    Private Sub init(_serveurDomain As String, transport As HttpMessageHandler)
         serveurDomain = _serveurDomain
 
+
+        If transport IsNot Nothing Then
+            client = New HttpClient(transport)
+            client.Timeout = TimeSpan.FromSeconds(30)
+            Exit Sub
+        End If
         ' La validation du certificat serveur est active par défaut. La réponse de
         ' /api/login transporte la chaîne de connexion à la base : sans validation,
         ' un intercepteur sur le trajet réseau peut se faire passer pour le serveur
