@@ -11,9 +11,9 @@ Imports Oasis_Web.Filters
 <TestClass()> Public Class TestAuthentificationApi
 
     Private Shared Function Requete(Optional entete As AuthenticationHeaderValue = Nothing) As HttpRequestMessage
-        Dim requete = New HttpRequestMessage(HttpMethod.Post, "https://serveur/api/login")
-        requete.Headers.Authorization = entete
-        Return requete
+        Dim message = New HttpRequestMessage(HttpMethod.Post, "https://serveur/api/login")
+        message.Headers.Authorization = entete
+        Return message
     End Function
 
     Private Shared Function Basic(texte As String) As AuthenticationHeaderValue
