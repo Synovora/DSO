@@ -91,16 +91,23 @@ Public Class Patient
         Return newInstance
     End Function
 
-    Shared Function CalculModuloNIR(NIR As Int64) As Integer
-        Dim Reste As Integer
-        Reste = NIR Mod 97
-        Return 97 - Reste
+    ''' <summary>
+    ''' Clé de contrôle d'un NIR : 97 moins le reste de la division par 97 des
+    ''' treize chiffres du numéro, sans la clé. Les NIR corses (2A, 2B) ne
+    ''' tiennent pas dans un entier et ne passent pas par ici.
+    ''' </summary>
+    Shared Function CalculModuloNIR(nirSansCle As Int64) As Integer
+        Return 97 - CInt(nirSansCle Mod 97)
     End Function
 
-    Shared Function IsValidNIR(NIR As Int64) As Boolean
-        Dim calculedKey As Integer = CalculModuloNIR(NIR)
-        Dim key As Integer = NIR Mod 100
-        Return calculedKey = key
+    ''' <summary>
+    ''' Vrai si les deux derniers chiffres du NIR complet (quinze chiffres) sont
+    ''' la clé des treize premiers. La clé était calculée sur les quinze chiffres,
+    ''' clé comprise, ce qui rejetait tout NIR réel.
+    ''' </summary>
+    Shared Function IsValidNIR(nirComplet As Int64) As Boolean
+        If nirComplet < 100 Then Return False
+        Return CalculModuloNIR(nirComplet \ 100) = CInt(nirComplet Mod 100)
     End Function
 
 End Class

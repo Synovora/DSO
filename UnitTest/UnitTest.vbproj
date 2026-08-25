@@ -312,6 +312,11 @@
     <Compile Include="ApiRest\ApiOasis.test.vb" />
     <Compile Include="ApiRest\FauxServeur.vb" />
     <Compile Include="Bean\CGVDate.test.vb" />
+    <Compile Include="Bean\ParametreMail.test.vb" />
+    <Compile Include="Bean\Patient.test.vb" />
+    <Compile Include="Bean\SousEpisodeFichiers.test.vb" />
+    <Compile Include="Bean\Structure.test.vb" />
+    <Compile Include="Bean\Tache.test.vb" />
     <Compile Include="Dao\AnnuaireProfessionnelDao.test.vb" />
     <Compile Include="Dao\EpisodeDao.test.vb" />
     <Compile Include="Dao\LigneDeTest.vb" />
@@ -395,6 +400,7 @@
     <Compile Include="Module\HabilitationsDocuments.test.vb" />
     <Compile Include="Module\ModuleUtils.test.vb" />
     <Compile Include="Module\ModuleUtilsBase.test.vb" />
+    <Compile Include="Module\OutilsComplements.test.vb" />
     <Compile Include="Module\Outils.test.vb" />
     <Compile Include="Ordonnance.test.vb" />
     <Compile Include="Securite.test.vb" />
