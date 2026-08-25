@@ -10,7 +10,7 @@
         "oid", "code", "libelle"}
 
     <TestMethod()> Public Sub UneLigneCompleteEstLueChampParChamp()
-        Dim b = G15_ProfessionSanteDao.BuildBean(LigneDeTest.Ligne(Colonnes, New Dictionary(Of String, Object) From {
+        Dim b = NosProfessionSanteDao.BuildBean(LigneDeTest.Ligne(Colonnes, New Dictionary(Of String, Object) From {
             {"oid", "valeur_1"},
             {"code", 102},
             {"libelle", "valeur_3"}}))
@@ -21,7 +21,7 @@
     End Sub
 
     <TestMethod()> Public Sub UneLigneVideDonneLesValeursParDefaut()
-        Dim b = G15_ProfessionSanteDao.BuildBean(LigneDeTest.Ligne(Colonnes, New Dictionary(Of String, Object) From {
+        Dim b = NosProfessionSanteDao.BuildBean(LigneDeTest.Ligne(Colonnes, New Dictionary(Of String, Object) From {
             {"oid", "valeur_1"}}))
 
         Assert.AreEqual(0, b.Code)
@@ -34,7 +34,7 @@
         Dim valeurs = New Dictionary(Of String, Object) From {
             {"oid", "valeur_1"}}
         valeurs.Remove("oid")
-        G15_ProfessionSanteDao.BuildBean(LigneDeTest.Ligne(Colonnes, valeurs))
+        NosProfessionSanteDao.BuildBean(LigneDeTest.Ligne(Colonnes, valeurs))
     End Sub
 
 End Class

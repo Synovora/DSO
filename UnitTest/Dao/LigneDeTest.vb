@@ -41,16 +41,16 @@ Friend Module LigneDeTest
         For Each colonne In colonnes
             table.Columns.Add(colonne, GetType(Object))
         Next
-        Dim rangee = table.NewRow()
+        Dim ligne = table.NewRow()
         For Each colonne In colonnes
             If valeurs IsNot Nothing AndAlso valeurs.ContainsKey(colonne) Then
-                rangee(colonne) = valeurs(colonne)
+                ligne(colonne) = valeurs(colonne)
             Else
-                rangee(colonne) = DBNull.Value
+                ligne(colonne) = DBNull.Value
             End If
         Next
-        table.Rows.Add(rangee)
-        Return rangee
+        table.Rows.Add(ligne)
+        Return ligne
     End Function
 
 End Module
