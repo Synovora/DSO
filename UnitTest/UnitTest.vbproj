@@ -403,6 +403,7 @@
     <Compile Include="Dao\UniteSanitaireDao.test.vb" />
     <Compile Include="Module\Base64Url.test.vb" />
     <Compile Include="Module\CheminsDocuments.test.vb" />
+    <Compile Include="Module\ControleAcces.test.vb" />
     <Compile Include="Module\DestinatairesMail.test.vb" />
     <Compile Include="Module\FichiersRecus.test.vb" />
     <Compile Include="Module\HabilitationsDocuments.test.vb" />

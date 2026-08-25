@@ -83,13 +83,13 @@ Public Class RadFSynthese
 
     Private Sub RadFSynthese_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         'Contrôle d'accès aux écran Synthèse, épisode et ligne de vie
-        Environnement.ControleAccesForm.AddFormToControl(EnumForm.SYNTHESE.ToString)
+        ControleAccesForm.AddFormToControl(EnumForm.SYNTHESE.ToString)
 
-        If Environnement.ControleAccesForm.IsAccessToFormOK(EnumForm.LIGNE_DE_VIE.ToString) = False Then
+        If ControleAccesForm.IsAccessToFormOK(EnumForm.LIGNE_DE_VIE.ToString) = False Then
             RadBtnLigneDeVie.Hide()
         End If
 
-        If Environnement.ControleAccesForm.IsAccessToFormOK(EnumForm.EPISODE.ToString) = False Then
+        If ControleAccesForm.IsAccessToFormOK(EnumForm.EPISODE.ToString) = False Then
             RadBtnEpisode.Hide()
         End If
 
@@ -2818,7 +2818,7 @@ Public Class RadFSynthese
     End Sub
 
     Private Sub RadFSynthese_FormClosed(sender As Object, e As FormClosedEventArgs) Handles MyBase.FormClosed
-        Environnement.ControleAccesForm.RemoveFormToControl(EnumForm.SYNTHESE.ToString)
+        ControleAccesForm.RemoveFormToControl(EnumForm.SYNTHESE.ToString)
     End Sub
 
     Private Sub BtnMail_Click(sender As Object, e As EventArgs) Handles BtnMail.Click

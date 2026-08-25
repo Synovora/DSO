@@ -75,8 +75,8 @@ Public Class RadFEpisodeLigneDeVie
     Private Sub RadFEpisodeListe_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         'Contrôle d'accès aux écran Synthèse, épisode et ligne de vie
         RadChkCEPublie.Checked = True
-        Environnement.ControleAccesForm.AddFormToControl(EnumForm.LIGNE_DE_VIE.ToString)
-        If Environnement.ControleAccesForm.IsAccessToFormOK(EnumForm.EPISODE.ToString) = False Then
+        ControleAccesForm.AddFormToControl(EnumForm.LIGNE_DE_VIE.ToString)
+        If ControleAccesForm.IsAccessToFormOK(EnumForm.EPISODE.ToString) = False Then
             RadBtnEpisode.Hide()
         End If
 
@@ -763,7 +763,7 @@ Public Class RadFEpisodeLigneDeVie
     End Sub
 
     Private Sub RadFEpisodeLigneDeVie_FormClosed(sender As Object, e As FormClosedEventArgs) Handles MyBase.FormClosed
-        Environnement.ControleAccesForm.RemoveFormToControl(EnumForm.LIGNE_DE_VIE.ToString)
+        ControleAccesForm.RemoveFormToControl(EnumForm.LIGNE_DE_VIE.ToString)
     End Sub
 
     Private Sub MasterTemplate_CellFormatting(sender As Object, e As CellFormattingEventArgs) Handles RadGridViewEpisode.CellFormatting

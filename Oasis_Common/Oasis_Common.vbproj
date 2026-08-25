@@ -487,6 +487,7 @@
     <Compile Include="Module\EnvironnementBase.vb" />
     <Compile Include="Module\Base64Url.vb" />
     <Compile Include="Module\CheminsDocuments.vb" />
+    <Compile Include="Module\ControleAcces.vb" />
     <Compile Include="Module\FichiersRecus.vb" />
     <Compile Include="Module\HabilitationsDocuments.vb" />
     <Compile Include="Module\DestinatairesMail.vb" />

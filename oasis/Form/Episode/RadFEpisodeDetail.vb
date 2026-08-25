@@ -154,17 +154,17 @@ Public Class RadFEpisodeDetail
         End If
 
         'Contrôle d'accès aux écran Synthèse, épisode et ligne de vie
-        Environnement.ControleAccesForm.AddFormToControl(EnumForm.EPISODE.ToString)
-        If Environnement.ControleAccesForm.IsAccessToFormOK(EnumForm.LIGNE_DE_VIE.ToString) = False Then
+        ControleAccesForm.AddFormToControl(EnumForm.EPISODE.ToString)
+        If ControleAccesForm.IsAccessToFormOK(EnumForm.LIGNE_DE_VIE.ToString) = False Then
             RadBtnLigneDeVie.Hide()
         End If
-        If Environnement.ControleAccesForm.IsAccessToFormOK(EnumForm.SYNTHESE.ToString) = False Then
+        If ControleAccesForm.IsAccessToFormOK(EnumForm.SYNTHESE.ToString) = False Then
             RadBtnSynthèse.Hide()
         End If
 
         'Contrôle d'accès épisode
-        If Environnement.ControleAccesEpisode.IsAccessToEpisodeOK(SelectedEpisodeId) Then
-            Environnement.ControleAccesEpisode.AddEpisodeToControl(SelectedEpisodeId)
+        If ControleAccesEpisode.IsAccessToEpisodeOK(SelectedEpisodeId) Then
+            ControleAccesEpisode.AddEpisodeToControl(SelectedEpisodeId)
             RemoveEpisode = True
         Else
             MessageBox.Show("Accès interdit, cet épisode est déjà ouvert !", "Alerte", MessageBoxButtons.OK, MessageBoxIcon.Error)
@@ -1967,9 +1967,9 @@ Public Class RadFEpisodeDetail
         'Mise à jour base de données si bouton radio type conclusion médicale modifiée
         ModificationRadioTypeConclusionIDE()
 
-        Environnement.ControleAccesForm.RemoveFormToControl(EnumForm.EPISODE.ToString)
+        ControleAccesForm.RemoveFormToControl(EnumForm.EPISODE.ToString)
         If RemoveEpisode = True Then
-            Environnement.ControleAccesEpisode.RemoveEpisodeToControl(SelectedEpisodeId)
+            ControleAccesEpisode.RemoveEpisodeToControl(SelectedEpisodeId)
         End If
     End Sub
 
