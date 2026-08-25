@@ -250,6 +250,9 @@
     <Reference Include="System.Net.Http.Formatting, Version=5.2.7.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.AspNet.WebApi.Client.5.2.7\lib\net45\System.Net.Http.Formatting.dll</HintPath>
     </Reference>
+    <Reference Include="System.Web.Http, Version=5.2.7.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Core.5.2.7\lib\net45\System.Web.Http.dll</HintPath>
+    </Reference>
     <Reference Include="System.Numerics" />
     <Reference Include="System.Numerics.Vectors, Version=4.1.4.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Numerics.Vectors.4.5.0\lib\net46\System.Numerics.Vectors.dll</HintPath>
@@ -401,7 +404,9 @@
     <Compile Include="Module\Base64Url.test.vb" />
     <Compile Include="Module\CheminsDocuments.test.vb" />
     <Compile Include="Module\DestinatairesMail.test.vb" />
+    <Compile Include="Module\FichiersRecus.test.vb" />
     <Compile Include="Module\HabilitationsDocuments.test.vb" />
+    <Compile Include="Web\AuthentificationApi.test.vb" />
     <Compile Include="Module\ModuleUtils.test.vb" />
     <Compile Include="Module\ModuleUtilsBase.test.vb" />
     <Compile Include="Module\OutilsComplements.test.vb" />
@@ -449,6 +454,10 @@
     <ProjectReference Include="..\Oasis_Common\Oasis_Common.vbproj">
       <Project>{2dac58a3-f441-4561-93ea-b093cf6f982a}</Project>
       <Name>Oasis_Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Oasis_Web\Oasis_Web.vbproj">
+      <Project>{b0cb83e9-bcf3-4820-ae48-4c1e0fa3918b}</Project>
+      <Name>Oasis_Web</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets" Condition="Exists('$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets')" />

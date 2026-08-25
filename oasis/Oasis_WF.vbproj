@@ -962,7 +962,6 @@
     <Compile Include="Menu\SplashForm.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Module\FichiersRecus.vb" />
     <Compile Include="Module\CacheGlobal.vb" />
     <Compile Include="DS_Ordonnance.Designer.vb">
       <AutoGen>True</AutoGen>

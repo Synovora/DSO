@@ -7,6 +7,9 @@ Imports System.Threading.Tasks
 Imports System.Web.Http.Filters
 Imports System.Web.Http.Results
 Imports Oasis_Common
+Imports System.Runtime.CompilerServices
+
+<Assembly: InternalsVisibleTo("UnitTest")>
 
 Namespace Filters
 
@@ -120,7 +123,7 @@ Namespace Filters
         ''' Login et mot de passe de l'en-tête Authorization: Basic, ou Nothing si
         ''' l'en-tête est absent ou illisible.
         ''' </summary>
-        Private Shared Function LireIdentifiants(requete As HttpRequestMessage) As Tuple(Of String, String)
+        Friend Shared Function LireIdentifiants(requete As HttpRequestMessage) As Tuple(Of String, String)
             Dim entete = requete.Headers.Authorization
             If entete Is Nothing OrElse
                Not String.Equals(entete.Scheme, "Basic", StringComparison.OrdinalIgnoreCase) OrElse

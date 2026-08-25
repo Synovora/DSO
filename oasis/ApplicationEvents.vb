@@ -1,4 +1,6 @@
-﻿Namespace My
+﻿Imports Oasis_Common
+
+Namespace My
     ' Les événements suivants sont disponibles pour MyApplication :
     ' Startup : Déclenché au démarrage de l'application avant la création du formulaire de démarrage.
     ' Shutdown : Déclenché après la fermeture de tous les formulaires de l'application.  Cet événement n'est pas déclenché si l'application se termine de façon anormale.
