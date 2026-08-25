@@ -13,7 +13,7 @@ Public Class LogDao
             .Description = Coalesce(record("description"), ""),
             .Origine = Coalesce(record("origine"), ""),
             .TypeLog = Coalesce(record("type_log"), ""),
-            .UserLog = Coalesce(record("user_creation"), 0),
+            .UserLog = New Utilisateur With {.UtilisateurId = Coalesce(record("user_creation"), 0)},
             .DateLog = Coalesce(record("date_creation"), Nothing)
         }
         Return log

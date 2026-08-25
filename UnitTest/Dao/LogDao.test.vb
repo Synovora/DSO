@@ -15,12 +15,14 @@
             {"description", "valeur_2"},
             {"origine", "valeur_3"},
             {"type_log", "valeur_4"},
+            {"user_creation", 105},
             {"date_creation", New Date(2024, 7, 7)}}))
 
         Assert.AreEqual(101L, b.Id)
         Assert.AreEqual("valeur_2", b.Description)
         Assert.AreEqual("valeur_3", b.Origine)
         Assert.AreEqual("valeur_4", b.TypeLog)
+        Assert.AreEqual(105, b.UserLog.UtilisateurId)
         Assert.AreEqual(New Date(2024, 7, 7), b.DateLog)
     End Sub
 
@@ -31,6 +33,9 @@
         Assert.AreEqual("", b.Description)
         Assert.AreEqual("", b.Origine)
         Assert.AreEqual("", b.TypeLog)
+        ' L'entier de la colonne était affecté tel quel à une propriété Utilisateur :
+        ' la lecture d'un journal échouait à chaque ligne.
+        Assert.AreEqual(0, b.UserLog.UtilisateurId)
         Assert.AreEqual(Date.MinValue, b.DateLog)
     End Sub
 

@@ -30,7 +30,6 @@
             {"oa_drc_ald_code", "valeur_12"},
             {"oa_drc_dur_prob_epis", "valeur_13"},
             {"oa_drc_url", "valeur_14"},
-            {"oa_drc_typ_epi", "valeur_15"},
             {"oa_drc_date_creation", New Date(2024, 5, 17)},
             {"oa_drc_utilisateur_creation", 117L},
             {"oa_drc_date_modification", New Date(2024, 7, 19)},
@@ -50,7 +49,7 @@
         Assert.AreEqual("valeur_12", b.AldCode)
         Assert.AreEqual("valeur_13", b.Commentaire)
         Assert.AreEqual("valeur_14", b.Wiki)
-        Assert.AreEqual("valeur_15", b.ReponseCommentee)
+        Assert.AreEqual("valeur_4", b.ReponseCommentee)
         Assert.AreEqual(New Date(2024, 5, 17), b.DateCreation)
         Assert.AreEqual(117L, b.UserCreation)
         Assert.AreEqual(New Date(2024, 7, 19), b.DateModification)

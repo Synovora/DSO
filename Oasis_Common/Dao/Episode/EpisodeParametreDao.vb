@@ -75,7 +75,7 @@ Public Class EpisodeParametreDao
             .ParametreId = Coalesce(record("parametre_id"), 0),
             .EpisodeId = Coalesce(record("episode_id"), 0),
             .PatientId = Coalesce(record("patient_id"), 0),
-            .Valeur = Coalesce(record("valeur"), 0),
+            .Valeur = Coalesce(record("valeur"), 0D),
             .Description = Coalesce(record("description"), ""),
             .Entier = Coalesce(record("entier"), 0),
             .Decimal = Coalesce(record("decimal"), 0),

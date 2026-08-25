@@ -17,6 +17,7 @@
             {"episode_id", 103L},
             {"patient_id", 104L},
             {"description", "valeur_6"},
+            {"valeur", 12.5D},
             {"entier", 107},
             {"decimal", 108},
             {"unite", "valeur_9"},
@@ -29,6 +30,7 @@
         Assert.AreEqual(103L, b.EpisodeId)
         Assert.AreEqual(104L, b.PatientId)
         Assert.AreEqual("valeur_6", b.Description)
+        Assert.AreEqual(12.5D, b.Valeur)
         Assert.AreEqual(107, b.Entier)
         Assert.AreEqual(108, b.[Decimal])
         Assert.AreEqual("valeur_9", b.Unite)
@@ -45,6 +47,9 @@
         Assert.AreEqual(0L, b.EpisodeId)
         Assert.AreEqual(0L, b.PatientId)
         Assert.AreEqual("", b.Description)
+        ' Le repli était l'entier 0, que le déballage en Decimal? refuse : toute
+        ' valeur NULL faisait échouer la lecture.
+        Assert.AreEqual(0D, b.Valeur)
         Assert.AreEqual(0, b.Entier)
         Assert.AreEqual(0, b.[Decimal])
         Assert.AreEqual("", b.Unite)
