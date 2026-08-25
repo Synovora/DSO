@@ -10,14 +10,14 @@ Public Class Vaccin
     Public Sub New()
     End Sub
 
-    Public Sub New(reader As SqlDataReader)
-        Me.Id = reader("id")
-        Me.Code = reader("code")
-        Me.CodeAtc = reader("code_atc")
-        Me.Dci = reader("dci")
-        Me.DciLongue = reader("dci_longue")
-        Me.DateImport = reader("date_import")
-        Me.UtilisateurImport = reader("utilisateur_import")
+    Public Sub New(record As System.Data.IDataRecord)
+        Me.Id = record("id")
+        Me.Code = record("code")
+        Me.CodeAtc = record("code_atc")
+        Me.Dci = record("dci")
+        Me.DciLongue = record("dci_longue")
+        Me.DateImport = record("date_import")
+        Me.UtilisateurImport = record("utilisateur_import")
     End Sub
 
 End Class
@@ -30,15 +30,15 @@ Public Class VaccinValence
     Public Sub New()
     End Sub
 
-    Public Sub New(reader As SqlDataReader)
-        Me.Valence = reader("valence")
-        Me.Id = reader("id")
-        Me.Code = reader("code")
-        Me.CodeAtc = reader("code_atc")
-        Me.Dci = reader("dci")
-        Me.DciLongue = reader("dci_longue")
-        Me.DateImport = reader("date_import")
-        Me.UtilisateurImport = reader("utilisateur_import")
+    Public Sub New(record As System.Data.IDataRecord)
+        Me.Valence = record("valence")
+        Me.Id = record("id")
+        Me.Code = record("code")
+        Me.CodeAtc = record("code_atc")
+        Me.Dci = record("dci")
+        Me.DciLongue = record("dci_longue")
+        Me.DateImport = record("date_import")
+        Me.UtilisateurImport = record("utilisateur_import")
     End Sub
 
 End Class
@@ -57,16 +57,16 @@ Public Class VaccinProgramRelation
     Public Sub New()
     End Sub
 
-    Public Sub New(reader As SqlDataReader)
-        Me.Id = reader("id")
-        Me.Patient = reader("patient")
-        Me.Date = reader("date")
-        Me.Vaccin = reader("vaccin")
-        Me.RelationVaccinValence = reader("relation_vaccin_valence")
-        Me.RealisationDate = Coalesce(reader("realisation_date"), Nothing)
-        Me.RealisationOperator = Coalesce(reader("realisation_operator"), Nothing)
-        Me.RealisationOperatorRor = Coalesce(reader("realisation_operator_ror"), Nothing)
-        Me.RealisationOperatorText = Coalesce(reader("realisation_operator_text"), Nothing)
+    Public Sub New(record As System.Data.IDataRecord)
+        Me.Id = record("id")
+        Me.Patient = record("patient")
+        Me.Date = record("date")
+        Me.Vaccin = record("vaccin")
+        Me.RelationVaccinValence = record("relation_vaccin_valence")
+        Me.RealisationDate = Coalesce(record("realisation_date"), Nothing)
+        Me.RealisationOperator = Coalesce(record("realisation_operator"), Nothing)
+        Me.RealisationOperatorRor = Coalesce(record("realisation_operator_ror"), Nothing)
+        Me.RealisationOperatorText = Coalesce(record("realisation_operator_text"), Nothing)
     End Sub
 
 End Class

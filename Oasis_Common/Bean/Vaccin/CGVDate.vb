@@ -14,26 +14,45 @@ Public Class CGVDate
     Public Sub New()
     End Sub
 
-    Public Sub New(reader As SqlDataReader)
-        Me.Id = reader("id")
-        Me.Days = reader("days")
-        Me.Patient = reader("patient")
-        Me.OperatedBy = Coalesce(reader("operated_by"), Nothing)
-        Me.OperatedDate = Coalesce(reader("operated_date"), Nothing)
-        Me.SignedBy = Coalesce(reader("signed_by"), Nothing)
-        Me.SignedDate = Coalesce(reader("signed_date"), Nothing)
+    Public Sub New(record As System.Data.IDataRecord)
+        Me.Id = record("id")
+        Me.Days = record("days")
+        Me.Patient = record("patient")
+        Me.OperatedBy = Coalesce(record("operated_by"), Nothing)
+        Me.OperatedDate = Coalesce(record("operated_date"), Nothing)
+        Me.SignedBy = Coalesce(record("signed_by"), Nothing)
+        Me.SignedDate = Coalesce(record("signed_date"), Nothing)
     End Sub
 
+    ''' <summary>
+    ''' Libellé d'un âge en jours : jours seuls sous un mois, mois et jours
+    ''' jusqu'à 40 mois, ans et mois au-delà. Mois de 30 jours, année de 12 mois,
+    ''' comme DateToDays.
+    '''
+    ''' Les mois étaient obtenus par Math.Round sur days / 30 : 45 jours
+    ''' donnaient « 2 Mois 15 Jours », soit 75 jours, et 105 jours « 4 Mois 15
+    ''' Jours ». Un calendrier vaccinal ne doit pas surestimer l'âge d'un mois.
+    ''' </summary>
     Shared Function DaysToDate(days As Long) As String
-        Dim dayPerMonth = 30
-        Dim monthPerYear = 12
-        Dim showMaxMonths = 40
+        Const dayPerMonth As Long = 30
+        Const monthPerYear As Long = 12
+        Const showMaxMonths As Long = 40
+
+        Dim mois As Long = days \ dayPerMonth
+        Dim joursRestants As Long = days Mod dayPerMonth
+
         If days < dayPerMonth Then
-            Return String.Format("{0} Jours", Math.Round(days))
-        ElseIf days / dayPerMonth < showMaxMonths Then
-            Return If(Math.Round(days Mod dayPerMonth) > 0, String.Format("{0} Mois {1} Jours", Math.Round(days / dayPerMonth), Math.Round(days Mod dayPerMonth)), String.Format("{0} Mois", Math.Round(days / dayPerMonth)))
+            Return String.Format("{0} Jours", days)
+        ElseIf mois < showMaxMonths Then
+            Return If(joursRestants > 0,
+                      String.Format("{0} Mois {1} Jours", mois, joursRestants),
+                      String.Format("{0} Mois", mois))
         Else
-            Return If(Math.Round(days / dayPerMonth Mod monthPerYear) > 0, String.Format("{0} Ans {1} Mois", Math.Round(days / dayPerMonth / monthPerYear), Math.Round(days / dayPerMonth Mod monthPerYear)), String.Format("{0} Ans", Math.Round(days / dayPerMonth / monthPerYear)))
+            Dim ans As Long = mois \ monthPerYear
+            Dim moisRestants As Long = mois Mod monthPerYear
+            Return If(moisRestants > 0,
+                      String.Format("{0} Ans {1} Mois", ans, moisRestants),
+                      String.Format("{0} Ans", ans))
         End If
     End Function
 
@@ -57,12 +76,12 @@ Public Class RelationValenceDate
     Public Sub New()
     End Sub
 
-    Public Sub New(reader As SqlDataReader)
-        Me.Id = reader("id")
-        Me.Valence = reader("valence")
-        Me.Date = reader("date")
-        Me.Patient = reader("patient")
-        Me.Status = reader("status")
+    Public Sub New(record As System.Data.IDataRecord)
+        Me.Id = record("id")
+        Me.Valence = record("valence")
+        Me.Date = record("date")
+        Me.Patient = record("patient")
+        Me.Status = record("status")
     End Sub
 
 End Class

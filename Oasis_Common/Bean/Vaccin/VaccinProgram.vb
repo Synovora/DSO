@@ -10,12 +10,12 @@ Public Class VaccinProgramAdmin
     Public Sub New()
     End Sub
 
-    Public Sub New(reader As SqlDataReader)
-        Me.Id = reader("id")
-        Me.VaccinProgramRelation = reader("vaccin_program_relation")
-        Me.Lot = reader("lot")
-        Me.Expiration = reader("expiration")
-        Me.Comment = reader("comment")
+    Public Sub New(record As System.Data.IDataRecord)
+        Me.Id = record("id")
+        Me.VaccinProgramRelation = record("vaccin_program_relation")
+        Me.Lot = record("lot")
+        Me.Expiration = record("expiration")
+        Me.Comment = record("comment")
     End Sub
 
 End Class

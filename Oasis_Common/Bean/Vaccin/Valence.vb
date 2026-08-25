@@ -17,18 +17,18 @@ Public Class Valence
     Public Sub New()
     End Sub
 
-    Public Sub New(reader As SqlDataReader)
-        Me.Id = reader("id")
-        Me.Code = reader("code")
-        Me.Description = reader("description")
-        Me.Precaution = reader("precaution")
-        Me.DateCreation = reader("date_creation")
-        Me.DateModification = reader("date_modification")
-        Me.UtilisateurCreation = reader("utilisateur_creation")
-        Me.UtilisateurModification = reader("utilisateur_modification")
-        Me.Actif = reader("actif")
-        Me.Visible = reader("visible")
-        Me.Ordre = reader("ordre")
+    Public Sub New(record As System.Data.IDataRecord)
+        Me.Id = record("id")
+        Me.Code = record("code")
+        Me.Description = record("description")
+        Me.Precaution = record("precaution")
+        Me.DateCreation = record("date_creation")
+        Me.DateModification = record("date_modification")
+        Me.UtilisateurCreation = record("utilisateur_creation")
+        Me.UtilisateurModification = record("utilisateur_modification")
+        Me.Actif = record("actif")
+        Me.Visible = record("visible")
+        Me.Ordre = record("ordre")
     End Sub
 
 End Class
@@ -42,10 +42,10 @@ Public Class RelationVaccinValence
     Public Sub New()
     End Sub
 
-    Public Sub New(reader As SqlDataReader)
-        Me.Id = reader("id")
-        Me.Vaccin = reader("vaccin")
-        Me.Valence = reader("valence")
+    Public Sub New(record As System.Data.IDataRecord)
+        Me.Id = record("id")
+        Me.Vaccin = record("vaccin")
+        Me.Valence = record("valence")
     End Sub
 
 End Class

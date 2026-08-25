@@ -311,6 +311,7 @@
   <ItemGroup>
     <Compile Include="ApiRest\ApiOasis.test.vb" />
     <Compile Include="ApiRest\FauxServeur.vb" />
+    <Compile Include="Bean\CGVDate.test.vb" />
     <Compile Include="Dao\AnnuaireProfessionnelDao.test.vb" />
     <Compile Include="Dao\EpisodeDao.test.vb" />
     <Compile Include="Dao\LigneDeTest.vb" />
@@ -324,6 +325,15 @@
     <Compile Include="Dao\TheriaqueDao.test.vb" />
     <Compile Include="Dao\TraitementDao.test.vb" />
     <Compile Include="Dao\UserDao.test.vb" />
+    <Compile Include="Dao\Vaccin.test.vb" />
+    <Compile Include="Dao\VaccinValence.test.vb" />
+    <Compile Include="Dao\CGVDate.test.vb" />
+    <Compile Include="Dao\CGVValence.test.vb" />
+    <Compile Include="Dao\RelationVaccinValence.test.vb" />
+    <Compile Include="Dao\RelationValenceDate.test.vb" />
+    <Compile Include="Dao\VaccinProgramAdmin.test.vb" />
+    <Compile Include="Dao\VaccinProgramRelation.test.vb" />
+    <Compile Include="Dao\Valence.test.vb" />
     <Compile Include="MailUtils\MailUtil.test.vb" />
     <Compile Include="Dao\ActionDao.test.vb" />
     <Compile Include="Dao\AldCim10Dao.test.vb" />

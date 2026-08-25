@@ -13,14 +13,14 @@ Public Class CGVValence
     Public Sub New()
     End Sub
 
-    Public Sub New(reader As SqlDataReader)
-        Me.Id = reader("id")
-        Me.Code = reader("code")
-        Me.Description = reader("description")
-        Me.Precaution = reader("precaution")
-        Me.Valence = reader("valence")
-        Me.Ordre = reader("ordre")
-        Me.Patient = reader("patient")
+    Public Sub New(record As System.Data.IDataRecord)
+        Me.Id = record("id")
+        Me.Code = record("code")
+        Me.Description = record("description")
+        Me.Precaution = record("precaution")
+        Me.Valence = record("valence")
+        Me.Ordre = record("ordre")
+        Me.Patient = record("patient")
     End Sub
 
 End Class
