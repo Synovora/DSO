@@ -35,7 +35,7 @@
             {"patient", 104L},
             {"status", 105S}}
         valeurs.Remove("id")
-        New RelationValenceDate(LigneDeTest.Ligne(Colonnes, valeurs))
+        Dim ignore = New RelationValenceDate(LigneDeTest.Ligne(Colonnes, valeurs))
     End Sub
 
 End Class

@@ -54,7 +54,7 @@
             {"visible", True},
             {"ordre", 111}}
         valeurs.Remove("id")
-        New Valence(LigneDeTest.Ligne(Colonnes, valeurs))
+        Dim ignore = New Valence(LigneDeTest.Ligne(Colonnes, valeurs))
     End Sub
 
 End Class

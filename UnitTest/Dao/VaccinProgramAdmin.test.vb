@@ -35,7 +35,7 @@
             {"expiration", New Date(2024, 5, 5)},
             {"comment", "valeur_5"}}
         valeurs.Remove("id")
-        New VaccinProgramAdmin(LigneDeTest.Ligne(Colonnes, valeurs))
+        Dim ignore = New VaccinProgramAdmin(LigneDeTest.Ligne(Colonnes, valeurs))
     End Sub
 
 End Class

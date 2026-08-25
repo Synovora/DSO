@@ -29,7 +29,7 @@
             {"vaccin", 102L},
             {"valence", 103L}}
         valeurs.Remove("id")
-        New RelationVaccinValence(LigneDeTest.Ligne(Colonnes, valeurs))
+        Dim ignore = New RelationVaccinValence(LigneDeTest.Ligne(Colonnes, valeurs))
     End Sub
 
 End Class

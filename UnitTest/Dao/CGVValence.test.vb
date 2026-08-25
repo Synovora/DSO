@@ -41,7 +41,7 @@
             {"ordre", 106},
             {"patient", 107L}}
         valeurs.Remove("id")
-        New CGVValence(LigneDeTest.Ligne(Colonnes, valeurs))
+        Dim ignore = New CGVValence(LigneDeTest.Ligne(Colonnes, valeurs))
     End Sub
 
 End Class

@@ -49,7 +49,7 @@
             {"days", 102L},
             {"patient", 103L}}
         valeurs.Remove("id")
-        New CGVDate(LigneDeTest.Ligne(Colonnes, valeurs))
+        Dim ignore = New CGVDate(LigneDeTest.Ligne(Colonnes, valeurs))
     End Sub
 
 End Class

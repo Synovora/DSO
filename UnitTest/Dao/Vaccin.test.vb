@@ -41,7 +41,7 @@
             {"date_import", New Date(2024, 7, 7)},
             {"utilisateur_import", 107L}}
         valeurs.Remove("id")
-        New Vaccin(LigneDeTest.Ligne(Colonnes, valeurs))
+        Dim ignore = New Vaccin(LigneDeTest.Ligne(Colonnes, valeurs))
     End Sub
 
 End Class
