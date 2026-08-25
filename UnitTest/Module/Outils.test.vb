@@ -81,4 +81,23 @@ Imports Oasis_WF
     '    Dim userLog = GenerateUserLog()
     '    Assert.AreEqual("", GetProfilUserString(userLog))
     'End Sub
+    <TestMethod()> Public Sub SeulLeProfilMedicalAccedeAuxFonctionsMedicales()
+        Assert.IsTrue(AccesFonctionMedicale(New Utilisateur With {.TypeProfil = "MEDICAL"}))
+        For Each p In {"PARAMEDICAL", "GESTION", "ACCUEIL", "PATIENT", "medical", ""}
+            Assert.IsFalse(AccesFonctionMedicale(New Utilisateur With {.TypeProfil = p}), p)
+        Next
+        Assert.IsFalse(AccesFonctionMedicale(New Utilisateur With {.TypeProfil = Nothing}), "profil absent")
+    End Sub
+
+    <TestMethod()> Public Sub LaSyntheseSOuvreAuParamedicalSaufBlocageMedical()
+        Dim libre = New Patient With {.BlocageMedical = False}
+        Dim bloque = New Patient With {.BlocageMedical = True}
+
+        Assert.IsTrue(AccesFonctionMedicaleSynthese(bloque, New Utilisateur With {.TypeProfil = "MEDICAL"}), "le médical passe malgré le blocage")
+        Assert.IsTrue(AccesFonctionMedicaleSynthese(libre, New Utilisateur With {.TypeProfil = "PARAMEDICAL"}))
+        Assert.IsFalse(AccesFonctionMedicaleSynthese(bloque, New Utilisateur With {.TypeProfil = "PARAMEDICAL"}), "blocage médical")
+        Assert.IsFalse(AccesFonctionMedicaleSynthese(libre, New Utilisateur With {.TypeProfil = "GESTION"}))
+        Assert.IsFalse(AccesFonctionMedicaleSynthese(libre, New Utilisateur With {.TypeProfil = "ACCUEIL"}))
+    End Sub
+
 End Class

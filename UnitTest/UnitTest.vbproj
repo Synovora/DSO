@@ -312,6 +312,10 @@
     <Compile Include="ApiRest\ApiOasis.test.vb" />
     <Compile Include="ApiRest\FauxServeur.vb" />
     <Compile Include="Bean\CGVDate.test.vb" />
+    <Compile Include="Bean\Antecedent.test.vb" />
+    <Compile Include="Bean\Mail.test.vb" />
+    <Compile Include="Bean\SousEpisode.test.vb" />
+    <Compile Include="Bean\SousEpisodeSousType.test.vb" />
     <Compile Include="Bean\ParametreMail.test.vb" />
     <Compile Include="Bean\Patient.test.vb" />
     <Compile Include="Bean\SousEpisodeFichiers.test.vb" />

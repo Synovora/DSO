@@ -92,4 +92,60 @@
         Assert.IsFalse((New Tache With {.TraiteUserId = 5, .Etat = "ANNULEE"}).IsDesattribuable(Compte(9, admin:=True)))
     End Sub
 
+    Private Shared Function CompteAvecFonctions(id As Integer, ParamArray fonctions As Long()) As Utilisateur
+        Dim u = Compte(id)
+        u.LstFonction = fonctions.Select(Function(f) New Fonction With {.Id = f}).ToList()
+        Return u
+    End Function
+
+    <TestMethod()> Public Sub LaTacheEstLaMienneSiJEnSuisLEmetteur()
+        Dim tache = New Tache With {.EmetteurUserId = 5}
+        Assert.IsTrue(tache.IsMyTacheEmetteur(Compte(5)))
+        Assert.IsFalse(tache.IsMyTacheEmetteur(Compte(6)))
+    End Sub
+
+    <TestMethod()> Public Sub LEmetteurAnnuleSaTacheTantQuElleNEstPasAttribuee()
+        Dim tache = New Tache With {.EmetteurUserId = 5, .TraiteUserId = 0, .Etat = "EN_COURS"}
+        Assert.IsTrue(tache.IsAnnulable(Compte(5)))
+        tache.TraiteUserId = 7
+        Assert.IsFalse(tache.IsAnnulable(Compte(5)), "attribuée à quelqu'un d'autre")
+        Assert.IsTrue(tache.IsAnnulable(Compte(7)), "le traitant peut toujours annuler")
+    End Sub
+
+    <TestMethod()> Public Sub PersonneNAnnuleUneTacheClose()
+        Dim tache = New Tache With {.EmetteurUserId = 5, .TraiteUserId = 5, .Etat = "TERMINEE"}
+        Assert.IsFalse(tache.IsAnnulable(Compte(5)))
+        tache.Etat = "ANNULEE"
+        Assert.IsFalse(tache.IsAnnulable(Compte(5)))
+        Assert.IsFalse((New Tache With {.EmetteurUserId = 1, .TraiteUserId = 0, .Etat = "EN_COURS"}).IsAnnulable(Compte(6)), "ni émetteur ni traitant")
+    End Sub
+
+    <TestMethod()> Public Sub UneTacheLibreEstAttribuableAQuiExerceLaFonction()
+        Dim tache = New Tache With {.TraiteUserId = 0, .TraiteFonctionId = 3, .Etat = "EN_COURS"}
+        Assert.IsTrue(tache.IsAttribuable(CompteAvecFonctions(5, 1, 3)))
+        Assert.IsTrue(tache.IsFonctionPossiblePourUser(CompteAvecFonctions(5, 3)))
+        Assert.IsFalse(tache.IsAttribuable(CompteAvecFonctions(5, 1, 2)), "pas la bonne fonction")
+        Assert.IsFalse(tache.IsFonctionPossiblePourUser(Compte(5)), "sans aucune fonction")
+    End Sub
+
+    <TestMethod()> Public Sub UneTacheAttribueeOuCloseNEstPlusAttribuable()
+        Assert.IsFalse((New Tache With {.TraiteUserId = 9, .TraiteFonctionId = 3, .Etat = "EN_COURS"}).IsAttribuable(CompteAvecFonctions(5, 3)), "déjà attribuée")
+        Assert.IsFalse((New Tache With {.TraiteUserId = 0, .TraiteFonctionId = 3, .Etat = "TERMINEE"}).IsAttribuable(CompteAvecFonctions(5, 3)), "terminée")
+        Assert.IsFalse((New Tache With {.TraiteUserId = 0, .TraiteFonctionId = 3, .Etat = "ANNULEE"}).IsAttribuable(CompteAvecFonctions(5, 3)), "annulée")
+    End Sub
+
+    <TestMethod()> Public Sub LesRendezVousSontLesQuatreTypesFixes()
+        For Each t In {"RDV", "RDV_MISSION", "RDV_SPECIALISTE", "REUNION_STAFF"}
+            Assert.IsTrue((New Tache With {.Type = t}).IsUnRdv(), t)
+        Next
+        For Each t In {"RDV_DEMANDE", "MISSION_DEMANDE", "AVIS_EPISODE", "AVIS_SOUS_EPISODE", ""}
+            Assert.IsFalse((New Tache With {.Type = t}).IsUnRdv(), t)
+        Next
+    End Sub
+
+    <TestMethod()> Public Sub LeLibelleDInstanceReprendSonTypeEtSaNature()
+        Assert.AreEqual("Demande d'avis sur épisode", (New Tache With {.Type = "AVIS_EPISODE", .Nature = "DEMANDE"}).GetLibelleTacheNature())
+        Assert.AreEqual("Rendez-vous", (New Tache With {.Type = "RDV"}).GetLibelleTacheNature())
+    End Sub
+
 End Class

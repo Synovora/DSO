@@ -72,4 +72,26 @@
         Assert.IsFalse(New Utilisateur().IsFonctionIdPossible(3), "sans liste, rien n'est possible")
     End Sub
 
+    <TestMethod()> Public Sub LeFiltreAjouteSesUnitesEtLeursSites()
+        Dim filtre As New FiltreTache
+        Dim nord = Unite(1, "Nord")
+        filtre.AddUniteSanitaire(nord)
+        filtre.AddSiteToUniteSanitaire(nord, LeSite(10, "Lille"))
+        filtre.AddSiteToUniteSanitaire(nord, LeSite(11, "Roubaix"))
+
+        Assert.AreEqual(1, filtre.LstUniteSanitaire.Count)
+        Assert.AreEqual("NORD : Lille, Roubaix", filtre.ResumeFiltre())
+        CollectionAssert.AreEqual({10L, 11L}, filtre.GetListAllSite().Select(Function(s) s.Oa_site_id).ToArray())
+    End Sub
+
+    <TestMethod()> Public Sub ClearVideLeFiltre()
+        Dim filtre As New FiltreTache
+        filtre.AddUniteSanitaire(Unite(1, "Nord", LeSite(10, "Lille")))
+        filtre.Clear()
+
+        Assert.AreEqual(0, filtre.LstUniteSanitaire.Count)
+        Assert.AreEqual(0, filtre.GetListAllSite().Count)
+        Assert.AreEqual("", filtre.ResumeFiltre())
+    End Sub
+
 End Class
