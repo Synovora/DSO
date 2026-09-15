@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  Everything continuous integration builds without Telerik, in one MSBuild call.
+
+  The three projects listed here are leaves: UnitTest pulls in Oasis_Common and
+  Oasis_Web through its project references, and the other two only reference
+  Oasis_Common. Handing them to MSBuild together lets it build Oasis_Common once
+  and the rest side by side, instead of paying for five separate msbuild
+  processes that each re-evaluate the same project graph.
+
+  The solution is not used because it also holds Oasis_IS (SSIS), OasisSetup
+  (.vdproj) and Oasis_WF (Telerik), none of which a stock runner can build.
+
+  Usage, from the repository root:
+
+      msbuild .github\ci.proj /m /p:Configuration=Release
+-->
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+
+  <PropertyGroup>
+    <Configuration Condition="'$(Configuration)' == ''">Release</Configuration>
+    <Platform Condition="'$(Platform)' == ''">AnyCPU</Platform>
+    <RepositoryRoot>$(MSBuildThisFileDirectory)..\</RepositoryRoot>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ServerProject Include="$(RepositoryRoot)UnitTest\UnitTest.vbproj" />
+    <ServerProject Include="$(RepositoryRoot)OasisAdmini\OasisAdmini.vbproj" />
+    <ServerProject Include="$(RepositoryRoot)AutomateTraitementOasis\AutomateTraitementOasis.vbproj" />
+  </ItemGroup>
+
+  <Target Name="Build">
+    <MSBuild Projects="@(ServerProject)"
+             Targets="Build"
+             BuildInParallel="true"
+             Properties="Configuration=$(Configuration);Platform=$(Platform)" />
+  </Target>
+
+</Project>

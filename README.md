@@ -268,13 +268,14 @@ If Telerik cannot be found the build stops with one message rather than hundreds
 Resolution lives in `Directory.Build.props` at the repository root, and applies to `Oasis_WF` only.
 
 **In continuous integration.** The `desktop` job in `.github/workflows/build.yml` restores Telerik
-from Telerik's own NuGet feed, so no commercial assembly is ever re-hosted. It needs two repository
-secrets:
+from Telerik's own NuGet feed, so no commercial assembly is ever re-hosted. It needs one repository
+variable and two repository secrets:
 
-| Secret | Value |
+| Setting | Value |
 |---|---|
-| `TELERIK_NUGET_USERNAME` | Your Telerik account e-mail, or the literal `api-key` if you use a generated key |
-| `TELERIK_NUGET_PASSWORD` | The account password, or the key itself |
+| `TELERIK_CI` (variable) | The literal `true`. A job condition can read variables but not secrets, so this is what stops the job before a runner is started when Telerik is not configured |
+| `TELERIK_NUGET_USERNAME` (secret) | Your Telerik account e-mail, or the literal `api-key` if you use a generated key |
+| `TELERIK_NUGET_PASSWORD` (secret) | The account password, or the key itself |
 
 Generate a key at [account.telerik.com](https://account.telerik.com) under Downloads, NuGet feed,
 then:
@@ -282,11 +283,15 @@ then:
 ```bash
 gh secret set TELERIK_NUGET_USERNAME --repo Synovora/DSO --body "api-key"
 gh secret set TELERIK_NUGET_PASSWORD --repo Synovora/DSO   # paste the key when prompted
+gh variable set TELERIK_CI --repo Synovora/DSO --body "true"
 ```
 
-Without them the job skips itself and says so, which is what keeps forks green. The package id and
-version are the `TELERIK_PACKAGE_ID` and `TELERIK_PACKAGE_VERSION` variables at the top of the job;
-a licensed account drops the `.Trial` suffix from the id.
+Without the variable the job is skipped outright, which is what keeps forks green and costs no
+runner time. With the variable but without the secrets it fails and says which one is missing.
+The package id and version are the `TELERIK_PACKAGE_ID` and `TELERIK_PACKAGE_VERSION` variables at
+the top of the job; a licensed account drops the `.Trial` suffix from the id. The restored Telerik
+folder is never put in the Actions cache: the repository is public and a fork's pull request can
+read caches made on the base branch.
 
 The packages split the assemblies across several ids and target frameworks, so the job flattens
 what it restores into one staging folder and points `TELERIK_WINFORMS_DIR` at that. It checks the
@@ -428,14 +433,14 @@ them:
 
 | Workflow | What it does |
 |---|---|
-| `build.yml` | Restores packages, builds `Oasis_Common`, `Oasis_Web`, `OasisAdmini`, `AutomateTraitementOasis` and `UnitTest` on a Windows runner, then runs the test suite and uploads the results |
+| `build.yml` | Restores packages (cached between runs on the hash of every `packages.config`), builds `Oasis_Common`, `Oasis_Web`, `OasisAdmini`, `AutomateTraitementOasis` and `UnitTest` in one MSBuild call through `.github/ci.proj` on a Windows runner, then runs the test suite and uploads the results. Documentation-only changes do not trigger it, and a newer push cancels the previous run on every branch except `main` |
 | `dependency-review.yml` | Fails a pull request that introduces a dependency carrying an advisory at moderate severity or above |
 
 The build job needs nothing commercial, which is why `ItemUniteSite` was moved out of
 `Oasis_Common`. The desktop client is a second, optional job: it builds only where Telerik can be
-supplied, through the `TELERIK_NUGET_USERNAME` and `TELERIK_NUGET_PASSWORD` secrets or a
-self-hosted runner with Telerik installed, and is skipped rather than failed elsewhere. See
-[Telerik setup](#telerik-setup).
+supplied, through the `TELERIK_CI` variable plus the `TELERIK_NUGET_USERNAME` and
+`TELERIK_NUGET_PASSWORD` secrets, or a self-hosted runner with Telerik installed, and is skipped
+rather than failed elsewhere. See [Telerik setup](#telerik-setup).
 
 `Oasis_IS` (SSIS) and `OasisSetup` (`.vdproj`) are not built by CI. Both need Visual Studio
 extensions that no hosted runner carries.

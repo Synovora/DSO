@@ -12,15 +12,41 @@ name: Build and test
 # the branch had been renamed to develop, so a rename rule may be in force on
 # this repository. Covering both names means the pipeline runs whichever one the
 # branch ends up under.
+#
+# The ignored paths are the ones nothing in this workflow reads: documentation,
+# licences, and the two projects (SSIS, installer) that no hosted runner can
+# build. A change confined to them gets no run and no check.
 on:
   push:
     branches: [main, dev, develop]
+    paths-ignore:
+      - '**.md'
+      - 'docs/**'
+      - 'LICENSE'
+      - 'NOTICE'
+      - 'Oasis_IS/**'
+      - 'OasisSetup/**'
   pull_request:
     branches: [main, dev, develop]
+    paths-ignore:
+      - '**.md'
+      - 'docs/**'
+      - 'LICENSE'
+      - 'NOTICE'
+      - 'Oasis_IS/**'
+      - 'OasisSetup/**'
   workflow_dispatch:
 
 permissions:
   contents: read
+
+# A newer push to the same branch or pull request makes the running build
+# obsolete, so it is cancelled. main is the exception: every commit that lands
+# there keeps its own complete result, since nothing deploys from it yet and
+# the run history is the audit trail.
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: ${{ github.ref != 'refs/heads/main' }}
 
 jobs:
 
@@ -31,40 +57,42 @@ jobs:
   build:
     name: Server, library and tests
     runs-on: windows-latest
+    timeout-minutes: 20
 
     steps:
       - uses: actions/checkout@v5
 
       - name: Set up MSBuild
-        uses: microsoft/setup-msbuild@v2
+        uses: microsoft/setup-msbuild@v3
 
       - name: Set up NuGet
-        uses: NuGet/setup-nuget@v2
+        uses: NuGet/setup-nuget@v4
 
-      # packages/ is gitignored, so nothing builds before this. Restoring the
-      # solution also covers the SSIS and installer projects, which NuGet skips
-      # with a warning rather than an error.
+      # packages/ is gitignored, so nothing builds before the restore. Every
+      # packages.config pins exact versions, so their combined hash names the
+      # exact package set and the folder can be kept between runs. A partial
+      # match (restore-keys) hands over the previous set and the restore below
+      # fetches only what changed.
+      - name: Cache NuGet packages
+        uses: actions/cache@v5
+        with:
+          path: packages
+          key: nuget-${{ runner.os }}-${{ hashFiles('*/packages.config') }}
+          restore-keys: |
+            nuget-${{ runner.os }}-
+
+      # Restoring the solution also covers the SSIS and installer projects,
+      # which NuGet skips with a warning rather than an error. With the cache
+      # warm this only verifies what is already on disk.
       - name: Restore packages
         run: nuget restore Oasis_WF.sln -NonInteractive
 
-      # Built one project at a time rather than through the solution: the
-      # solution also holds Oasis_IS (SSIS, needs SSDT), OasisSetup (.vdproj,
-      # needs the Installer Projects extension) and Oasis_WF (needs Telerik),
-      # none of which a stock runner can build.
-      - name: Build Oasis_Common
-        run: msbuild Oasis_Common\Oasis_Common.vbproj /p:Configuration=Release /p:Platform=AnyCPU /nologo /v:minimal
-
-      - name: Build Oasis_Web
-        run: msbuild Oasis_Web\Oasis_Web.vbproj /p:Configuration=Release /p:Platform=AnyCPU /nologo /v:minimal
-
-      - name: Build OasisAdmini
-        run: msbuild OasisAdmini\OasisAdmini.vbproj /p:Configuration=Release /p:Platform=AnyCPU /nologo /v:minimal
-
-      - name: Build AutomateTraitementOasis
-        run: msbuild AutomateTraitementOasis\AutomateTraitementOasis.vbproj /p:Configuration=Release /p:Platform=AnyCPU /nologo /v:minimal
-
-      - name: Build UnitTest
-        run: msbuild UnitTest\UnitTest.vbproj /p:Configuration=Release /p:Platform=AnyCPU /nologo /v:minimal
+      # One MSBuild call for the whole Telerik-free graph. ci.proj lists the
+      # three leaf projects; their references bring in Oasis_Common and
+      # Oasis_Web, built once and shared. /m lets independent projects build
+      # side by side.
+      - name: Build server, library, tools and tests
+        run: msbuild .github\ci.proj /m /p:Configuration=Release /p:Platform=AnyCPU /nologo /v:minimal
 
       # setup-msbuild puts msbuild on PATH but not vstest. vswhere is the
       # supported way to find the test platform on a runner image.
@@ -101,8 +129,13 @@ jobs:
   # everything above.
   #
   # The assemblies come from Telerik's own NuGet feed, so nothing commercial is
-  # ever re-hosted. Set two repository secrets:
+  # ever re-hosted. Set one repository variable and two repository secrets:
   #
+  #   TELERIK_CI               variable, the literal true. Secrets cannot be
+  #                            read in a job condition, so this is what lets
+  #                            the job be skipped before a runner is even
+  #                            started. Without it a Windows runner used to be
+  #                            billed on every push just to find no secret.
   #   TELERIK_NUGET_USERNAME   your Telerik account e-mail, or the literal
   #                            api-key when using a generated key
   #   TELERIK_NUGET_PASSWORD   the account password, or the key itself
@@ -118,12 +151,17 @@ jobs:
   # assemblies, which is why OASIS003 may be warned here. That only affects the
   # Visual Studio designer and is irrelevant on a runner.
   #
+  # The Telerik folder is deliberately not cached. This repository is public,
+  # and a pull request from a fork can read caches made on the base branch,
+  # which would hand the licensed assemblies to anyone who opens one.
+  #
   # A self-hosted runner with Telerik installed works too: Directory.Build.props
   # already picks up the Control Panel default location.
   desktop:
     name: Desktop client (needs Telerik)
     runs-on: windows-latest
-    if: ${{ github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name == github.repository }}
+    timeout-minutes: 30
+    if: ${{ vars.TELERIK_CI == 'true' && (github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name == github.repository) }}
 
     env:
       # Matches the 2022.2.622.40 assemblies the project references. The Trial
@@ -135,35 +173,37 @@ jobs:
     steps:
       - uses: actions/checkout@v5
 
-      - name: Check whether Telerik credentials are available
-        id: telerik
+      # TELERIK_CI says the secrets exist. If they do not, that is a
+      # misconfiguration worth a red build, not a silent skip.
+      - name: Check that the Telerik credentials are set
         shell: pwsh
+        env:
+          TELERIK_NUGET_USERNAME: ${{ secrets.TELERIK_NUGET_USERNAME }}
+          TELERIK_NUGET_PASSWORD: ${{ secrets.TELERIK_NUGET_PASSWORD }}
         run: |
-          if ("${{ secrets.TELERIK_NUGET_PASSWORD }}") { "available=true" >> $env:GITHUB_OUTPUT }
-          else {
-            Write-Host "TELERIK_NUGET_PASSWORD is not set. Skipping the desktop client build."
-            "available=false" >> $env:GITHUB_OUTPUT
+          if (-not $env:TELERIK_NUGET_USERNAME -or -not $env:TELERIK_NUGET_PASSWORD) {
+            throw "The TELERIK_CI variable is true but TELERIK_NUGET_USERNAME or TELERIK_NUGET_PASSWORD is not set."
           }
 
       - name: Set up MSBuild
-        if: steps.telerik.outputs.available == 'true'
-        uses: microsoft/setup-msbuild@v2
+        uses: microsoft/setup-msbuild@v3
 
       - name: Set up NuGet
-        if: steps.telerik.outputs.available == 'true'
-        uses: NuGet/setup-nuget@v2
+        uses: NuGet/setup-nuget@v4
 
       # The credentials are stored in clear text because the encrypted store is
       # per-user and per-machine, and an ephemeral runner is neither. The file
       # dies with the runner.
       - name: Add the Telerik NuGet feed
-        if: steps.telerik.outputs.available == 'true'
         shell: pwsh
+        env:
+          TELERIK_NUGET_USERNAME: ${{ secrets.TELERIK_NUGET_USERNAME }}
+          TELERIK_NUGET_PASSWORD: ${{ secrets.TELERIK_NUGET_PASSWORD }}
         run: |
           nuget sources add -Name telerik `
             -Source "https://nuget.telerik.com/v3/index.json" `
-            -Username "${{ secrets.TELERIK_NUGET_USERNAME }}" `
-            -Password "${{ secrets.TELERIK_NUGET_PASSWORD }}" `
+            -Username $env:TELERIK_NUGET_USERNAME `
+            -Password $env:TELERIK_NUGET_PASSWORD `
             -StorePasswordInClearText -NonInteractive
 
       # The feed splits the assemblies across several packages, and each ships
@@ -173,7 +213,6 @@ jobs:
       # assembly that appears more than once. The list of what must end up there
       # is read out of the project, so it cannot drift from the references.
       - name: Fetch Telerik
-        if: steps.telerik.outputs.available == 'true'
         shell: pwsh
         run: |
           nuget install $env:TELERIK_PACKAGE_ID -Version $env:TELERIK_PACKAGE_VERSION `
@@ -205,10 +244,19 @@ jobs:
           Write-Host "Staged $($required.Count) referenced assemblies in $bin40"
           "TELERIK_WINFORMS_DIR=$bin40" >> $env:GITHUB_ENV
 
+      # Same key as the build job, so whichever job runs first fills the cache
+      # for the other. Only public nuget.org packages live here; Telerik stays
+      # in its own folder, outside the cache.
+      - name: Cache NuGet packages
+        uses: actions/cache@v5
+        with:
+          path: packages
+          key: nuget-${{ runner.os }}-${{ hashFiles('*/packages.config') }}
+          restore-keys: |
+            nuget-${{ runner.os }}-
+
       - name: Restore packages
-        if: steps.telerik.outputs.available == 'true'
         run: nuget restore Oasis_WF.sln -NonInteractive
 
       - name: Build Oasis_WF
-        if: steps.telerik.outputs.available == 'true'
-        run: msbuild oasis\Oasis_WF.vbproj /p:Configuration=Release /p:Platform=AnyCPU /nologo /v:minimal
+        run: msbuild oasis\Oasis_WF.vbproj /m /p:Configuration=Release /p:Platform=AnyCPU /nologo /v:minimal
