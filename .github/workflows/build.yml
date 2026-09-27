@@ -122,6 +122,210 @@ jobs:
           path: TestResults/*.trx
           if-no-files-found: warn
 
+  # The DAOs, the Oasis_Web controllers and the column-level DENYs on
+  # oasis_client only mean something against a real SQL Server, so this job
+  # builds one. It runs beside the build job, not after it: it compiles its own
+  # project, and the concurrency group and read-only permissions above apply to
+  # it like to every other job.
+  #
+  # SQL Server Express with mixed-mode authentication, not LocalDB. LocalDB only
+  # accepts Windows logins, so it cannot connect as oasis_client and cannot show
+  # that the desktop client's code survives the DENYs, which is the whole point.
+  #
+  # The database is built from the production schema export in
+  # IntegrationTest/Schema/00-schema.sql, then docs/migrations/*.sql, then
+  # 20-reference.sql. Until the export is committed there is nothing to build,
+  # and the job says so and stays green.
+  #
+  # The paths-ignore list above excludes docs/**, so a commit that only touches
+  # docs/migrations does not start this job. Run the workflow by hand
+  # (workflow_dispatch) after changing a migration on its own.
+  integration:
+    name: Integration tests (SQL Server)
+    runs-on: windows-latest
+    timeout-minutes: 35
+
+    steps:
+      - uses: actions/checkout@v5
+
+      # Every later step is conditional on this output, so a missing export
+      # skips the job's work without failing it.
+      - name: Look for the schema export
+        id: schema
+        shell: pwsh
+        run: |
+          if (Test-Path -LiteralPath 'IntegrationTest/Schema/00-schema.sql') {
+            "present=true" >> $env:GITHUB_OUTPUT
+          } else {
+            Write-Output "::notice title=Integration tests skipped::IntegrationTest/Schema/00-schema.sql is not in the repository yet, so there is no schema to build a test database from. Nothing was run."
+            "present=false" >> $env:GITHUB_OUTPUT
+          }
+
+      # A fresh sa password on every run. It never leaves the runner, and
+      # add-mask replaces it with *** wherever it would otherwise be logged.
+      # The alphabet avoids quotes, ; and = so the value can go into an INI
+      # file and a connection string unescaped.
+      - name: Generate the sa password
+        if: steps.schema.outputs.present == 'true'
+        shell: pwsh
+        run: |
+          $alphabet = 'ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz23456789'
+          $bytes = [byte[]]::new(64)
+          [Security.Cryptography.RandomNumberGenerator]::Fill($bytes)
+          $limit = 256 - (256 % $alphabet.Length)
+          $body = -join ($bytes | Where-Object { $_ -lt $limit } | Select-Object -First 28 | ForEach-Object { $alphabet[$_ % $alphabet.Length] })
+          # Fixed prefix guarantees the four character classes the default
+          # password policy asks for, whatever the random part draws.
+          $password = "Sa9-$body"
+          Write-Output "::add-mask::$password"
+          "SQL_SA_PASSWORD=$password" >> $env:GITHUB_ENV
+
+      # windows-latest carries LocalDB but no SQL Server engine. The
+      # sql-server-express Chocolatey package installs SQL Server 2022 Express
+      # as the SQLEXPRESS instance, and its one documented parameter,
+      # /ConfigurationFile, hands setup an INI file. That is where mixed mode,
+      # the sa password and TCP go, instead of relying on how the package
+      # splices extra arguments into its own setup command line.
+      #
+      # SQL Browser is switched on because a client that cannot use shared
+      # memory (go-sqlcmd, for one) finds a named instance's dynamic port
+      # through it. BUILTIN\Administrators is sysadmin so the runner account
+      # keeps Windows access as well.
+      - name: Install SQL Server Express
+        if: steps.schema.outputs.present == 'true'
+        shell: pwsh
+        run: |
+          $ini = Join-Path $env:RUNNER_TEMP 'sqlexpress.ini'
+          @(
+            '[OPTIONS]'
+            'ACTION="Install"'
+            'FEATURES=SQLENGINE'
+            'INSTANCENAME="SQLEXPRESS"'
+            'INSTANCEID="SQLEXPRESS"'
+            'SECURITYMODE="SQL"'
+            "SAPWD=""$env:SQL_SA_PASSWORD"""
+            'SQLSYSADMINACCOUNTS="BUILTIN\Administrators"'
+            'TCPENABLED="1"'
+            'BROWSERSVCSTARTUPTYPE="Automatic"'
+            'UPDATEENABLED="False"'
+          ) | Set-Content -LiteralPath $ini -Encoding ascii
+          try {
+            choco install sql-server-express -y --no-progress --params "'/ConfigurationFile:$ini'"
+            if ($LASTEXITCODE -ne 0 -and $LASTEXITCODE -ne 3010) { throw "SQL Server Express setup failed with exit code $LASTEXITCODE." }
+          } finally {
+            Remove-Item -LiteralPath $ini -Force -ErrorAction SilentlyContinue
+          }
+          $service = Get-Service -Name 'MSSQL$SQLEXPRESS'
+          if ($service.Status -ne 'Running') { Start-Service -Name 'MSSQL$SQLEXPRESS' }
+          $browser = Get-Service -Name 'SQLBrowser' -ErrorAction SilentlyContinue
+          if ($browser -and $browser.Status -ne 'Running') { Start-Service -Name 'SQLBrowser' }
+          # 3010 (reboot pending) is success here, but the step would still
+          # exit with it.
+          $global:LASTEXITCODE = 0
+
+      # The image lists the Visual Studio command-line utilities component
+      # (sqlcmd over ODBC), and SQL Server setup may add its own copy, but
+      # neither is guaranteed to be on PATH. Look for one first; install
+      # go-sqlcmd only if nothing turns up. Preparer-Base.ps1 relies only on
+      # options both flavours support.
+      - name: Make sure sqlcmd is available
+        if: steps.schema.outputs.present == 'true'
+        shell: pwsh
+        run: |
+          if (Get-Command sqlcmd -CommandType Application -ErrorAction SilentlyContinue) {
+            Write-Output "sqlcmd already on PATH: $((Get-Command sqlcmd -CommandType Application | Select-Object -First 1).Path)"
+            exit 0
+          }
+          $found = Get-ChildItem -Path "$env:ProgramFiles\Microsoft SQL Server" -Recurse -Filter SQLCMD.EXE -ErrorAction SilentlyContinue |
+            Sort-Object FullName -Descending | Select-Object -First 1
+          if ($found) {
+            Write-Output "Using $($found.FullName)"
+            $found.DirectoryName >> $env:GITHUB_PATH
+          } else {
+            choco install sqlcmd -y --no-progress
+            if ($LASTEXITCODE -ne 0) { throw "Installing sqlcmd failed with exit code $LASTEXITCODE." }
+          }
+
+      # Setup returns once the service is registered, which is not always the
+      # moment it accepts logins. Poll for up to two minutes rather than let
+      # the first real script fail on a race.
+      - name: Wait for SQL Server
+        if: steps.schema.outputs.present == 'true'
+        shell: pwsh
+        run: |
+          $env:SQLCMDPASSWORD = $env:SQL_SA_PASSWORD
+          for ($i = 1; $i -le 24; $i++) {
+            sqlcmd -S 'localhost\SQLEXPRESS' -U sa -C -b -l 5 -Q 'SELECT @@VERSION' | Out-Host
+            if ($LASTEXITCODE -eq 0) { exit 0 }
+            Start-Sleep -Seconds 5
+          }
+          throw "SQL Server did not accept a connection as sa within two minutes."
+
+      # Creates the database and the oasis_web and oasis_client logins, replays
+      # schema, migrations and reference data, and passes the OASIS_IT_*
+      # variables the test harness reads to the steps below.
+      - name: Prepare the test database
+        if: steps.schema.outputs.present == 'true'
+        shell: pwsh
+        run: ./IntegrationTest/Schema/Preparer-Base.ps1 -Serveur 'localhost\SQLEXPRESS' -Base 'oasis_it' -MotDePasseAdmin $env:SQL_SA_PASSWORD
+
+      - name: Set up MSBuild
+        if: steps.schema.outputs.present == 'true'
+        uses: microsoft/setup-msbuild@v3
+
+      - name: Set up NuGet
+        if: steps.schema.outputs.present == 'true'
+        uses: NuGet/setup-nuget@v4
+
+      # Same key as the build job, so the two share one package cache.
+      - name: Cache NuGet packages
+        if: steps.schema.outputs.present == 'true'
+        uses: actions/cache@v5
+        with:
+          path: packages
+          key: nuget-${{ runner.os }}-${{ hashFiles('*/packages.config') }}
+          restore-keys: |
+            nuget-${{ runner.os }}-
+
+      - name: Restore packages
+        if: steps.schema.outputs.present == 'true'
+        run: nuget restore Oasis_WF.sln -NonInteractive
+
+      # Its project references bring in Oasis_Common and Oasis_Web.
+      - name: Build IntegrationTest
+        if: steps.schema.outputs.present == 'true'
+        run: msbuild IntegrationTest\IntegrationTest.vbproj /m /p:Configuration=Release /p:Platform=AnyCPU /nologo /v:minimal
+
+      - name: Locate vstest.console
+        if: steps.schema.outputs.present == 'true'
+        id: vstest
+        shell: pwsh
+        run: |
+          $vswhere = "${env:ProgramFiles(x86)}\Microsoft Visual Studio\Installer\vswhere.exe"
+          $vs = & $vswhere -latest -products * -requires Microsoft.VisualStudio.PackageGroup.TestTools.Core -property installationPath
+          if (-not $vs) { throw "No Visual Studio installation with the test tools was found on this runner." }
+          $exe = Join-Path $vs "Common7\IDE\Extensions\TestPlatform\vstest.console.exe"
+          if (-not (Test-Path $exe)) { throw "vstest.console.exe not found under $vs" }
+          "path=$exe" >> $env:GITHUB_OUTPUT
+
+      # On a developer machine with no database the harness marks every test
+      # Inconclusive. Here a database was just built, so an unreachable one is
+      # a failure, and OASIS_IT_REQUIRED=1 says exactly that.
+      - name: Run integration tests
+        if: steps.schema.outputs.present == 'true'
+        env:
+          OASIS_IT_REQUIRED: '1'
+        run: '& "${{ steps.vstest.outputs.path }}" IntegrationTest\bin\Release\IntegrationTest.dll /logger:trx /ResultsDirectory:IntegrationTestResults'
+        shell: pwsh
+
+      - name: Publish integration test results
+        if: always() && steps.schema.outputs.present == 'true'
+        uses: actions/upload-artifact@v5
+        with:
+          name: integration-test-results
+          path: IntegrationTestResults/*.trx
+          if-no-files-found: warn
+
   # The desktop client needs Telerik UI for WinForms, which is commercial and
   # deliberately absent from this repository. The job runs only where the
   # licensed assemblies can be provided, and is skipped, not failed, elsewhere:
