@@ -193,3 +193,46 @@ de plus le signale au lieu de toucher le `.vbproj`.
   ce qu'ils lisent doit venir de `20-reference.sql`, donc de l'instantané, jamais d'un test.
 - Fichiers VB : UTF-8 avec BOM et fins de ligne CRLF ; VB ne distingue pas la casse, un local ne peut
   pas porter le nom de sa fonction.
+
+## Étape 2 : cœur clinique
+
+Même harnais, mêmes règles. Une classe de test par DAO, nommée
+`IntegrationTest/Dao/<NomDuDao>.test.vb`, chaque méthode publique couverte (cas nominal et cas
+limites), sous le compte qui l'appelle en production (`Client` pour le client lourd, `Web` pour
+`Oasis_Web`, déterminé en cherchant les appelants).
+
+Données de référence : chaque lot qui en a besoin avant l'instantané écrit son propre
+`IntegrationTest/Schema/2N-reference-<domaine>.sql` (numéro donné dans le tableau) ;
+`Preparer-Base.ps1` rejoue tous les `2*-reference*.sql` par ordre de nom.
+
+Nouveaux jeux partagés. Même règle que pour l'étape 1 : paramètres optionnels en plus permis,
+jamais en moins.
+
+```vb
+' Infrastructure/JeuxEpisode.vb (lot G)
+Public Module JeuxEpisode
+    ' Épisode ouvert pour ce patient, créé comme le fait l'application. Renvoie l'id.
+    Function CreerEpisode(patientId As Long, utilisateurId As Long) As Long
+End Module
+
+' Infrastructure/JeuxSousEpisode.vb (lot H)
+Public Module JeuxSousEpisode
+    Function CreerSousEpisode(episodeId As Long, utilisateurId As Long) As Long
+End Module
+
+' Infrastructure/JeuxDrc.vb (lot I)
+Public Module JeuxDrc
+    Function CreerDrc(Optional libelle As String = Nothing) As Long
+End Module
+```
+
+| Lot | DAO (dossier `Oasis_Common/Dao/`) | Jeux | Référence |
+|---|---|---|---|
+| F | `Patient/*` (6) | enrichit `JeuxPatient.vb` sans changer `CreerPatient` | `21-reference-patient.sql` |
+| G | `Episode/*` (7) | `JeuxEpisode.vb` | `22-reference-episode.sql` |
+| H | `SousEpisode/*` (9) | `JeuxSousEpisode.vb` | `23-reference-sousepisode.sql` |
+| I | `Traitement/*`, `DRC/*` (8) | `JeuxDrc.vb`, `JeuxTraitement.vb` | `24-reference-drc.sql` |
+| J | `Antecedent/*`, `PPS/*` (9) | `JeuxAntecedent.vb` | `25-reference-antecedent.sql` |
+| K | `Vaccin/*` (4) | `JeuxVaccin.vb` | `26-reference-vaccin.sql` |
+
+Aucun lot ne touche au `.vbproj` : les fichiers y sont inscrits à la fin, en une fois.

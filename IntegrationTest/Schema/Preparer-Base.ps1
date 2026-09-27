@@ -8,7 +8,8 @@
 
         IntegrationTest/Schema/00-schema.sql   export SSMS du schéma de production
         docs/migrations/*.sql                  par ordre de nom
-        IntegrationTest/Schema/20-reference.sql
+        IntegrationTest/Schema/2*-reference*.sql   par ordre de nom, 20-reference.sql
+                                               d'abord, puis un fichier par domaine
 
     Chaque script passe par sqlcmd -b : la première erreur arrête tout.
 
@@ -68,6 +69,9 @@ if (-not (Test-Path -LiteralPath $fichierReference)) {
     throw "$fichierReference est absent."
 }
 $migrations = @(Get-ChildItem -LiteralPath $dossierMigrations -Filter '*.sql' | Sort-Object Name)
+# Un fichier de référence par domaine, pour que deux jeux de tests n'aient pas
+# à se partager le même fichier.
+$references = @(Get-ChildItem -LiteralPath $PSScriptRoot -Filter '2*-reference*.sql' | Sort-Object Name)
 
 # ---------------------------------------------------------------------------
 # sqlcmd
@@ -297,7 +301,9 @@ GO
     foreach ($migration in $migrations) {
         Invoke-FichierSql (New-CopiePourBase $migration.FullName) $Base "Migration $($migration.Name)"
     }
-    Invoke-FichierSql (New-CopiePourBase $fichierReference) $Base 'Données de référence (20-reference.sql)'
+    foreach ($reference in $references) {
+        Invoke-FichierSql (New-CopiePourBase $reference.FullName) $Base "Données de référence ($($reference.Name))"
+    }
 } finally {
     $env:SQLCMDPASSWORD = $ancienSqlcmdPassword
     Remove-Item -LiteralPath $dossierTemporaire -Recurse -Force -ErrorAction SilentlyContinue
