@@ -2,11 +2,12 @@
 <!--
   Everything continuous integration builds without Telerik, in one MSBuild call.
 
-  The three projects listed here are leaves: UnitTest pulls in Oasis_Common and
-  Oasis_Web through its project references, and the other two only reference
-  Oasis_Common. Handing them to MSBuild together lets it build Oasis_Common once
-  and the rest side by side, instead of paying for five separate msbuild
-  processes that each re-evaluate the same project graph.
+  The four projects listed here are leaves: UnitTest and IntegrationTest pull in
+  Oasis_Common and Oasis_Web through their project references, and the other two
+  only reference Oasis_Common. Handing them to MSBuild together lets it build
+  Oasis_Common and Oasis_Web once and the rest side by side, instead of paying
+  for six separate msbuild processes that each re-evaluate the same project graph.
+  Building IntegrationTest needs no database; only running its tests does.
 
   The solution is not used because it also holds Oasis_IS (SSIS), OasisSetup
   (.vdproj) and Oasis_WF (Telerik), none of which a stock runner can build.
@@ -25,6 +26,7 @@
 
   <ItemGroup>
     <ServerProject Include="$(RepositoryRoot)UnitTest\UnitTest.vbproj" />
+    <ServerProject Include="$(RepositoryRoot)IntegrationTest\IntegrationTest.vbproj" />
     <ServerProject Include="$(RepositoryRoot)OasisAdmini\OasisAdmini.vbproj" />
     <ServerProject Include="$(RepositoryRoot)AutomateTraitementOasis\AutomateTraitementOasis.vbproj" />
   </ItemGroup>

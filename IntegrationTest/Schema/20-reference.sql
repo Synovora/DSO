@@ -1,0 +1,26 @@
+-- Données de référence des tests d'intégration.
+--
+-- Preparer-Base.ps1 exécute ce script après le schéma (00-schema.sql) et les
+-- migrations de docs/migrations, sur une base vide. Tout ce qu'il insère fait
+-- donc partie de l'instantané oasis_it_instantane que le harnais prend au
+-- démarrage et restaure avant chaque test.
+--
+-- Pourquoi un fichier à part plutôt que des jeux de données créés par les tests.
+-- Les singletons déclarés dans Oasis_Common/Module/EnvironnementBase.vb (genres,
+-- sites, unités sanitaires, spécialités, ALD...) lisent leur table une seule fois,
+-- au premier usage, et gardent ce résultat pour toute la durée du processus de
+-- test. Une ligne de référence insérée par un test serait vue ou non selon l'ordre
+-- d'exécution, puis effacée par la restauration de l'instantané alors que le cache
+-- la garde encore. Ce que ces singletons lisent doit venir d'ici, jamais d'un test.
+--
+-- Règles :
+--   * uniquement des données fictives : le dépôt est public ;
+--   * le strict nécessaire aux tests, avec un commentaire qui dit lequel en dépend ;
+--   * des identifiants explicites (SET IDENTITY_INSERT) quand un test s'appuie sur
+--     une valeur précise ;
+--   * des instructions rejouables sur une base neuve : sqlcmd -b arrête tout à la
+--     première erreur.
+--
+-- Vide au départ. À compléter quand un test en a besoin.
+
+SET NOCOUNT ON;
