@@ -261,7 +261,8 @@ Imports Oasis_Common
     End Sub
 
     ' ---------------------------------------------------------------------
-    ' Suppression : retirée au client sur tout le schéma, rendue sur dix tables
+    ' Suppression : retirée au client sur tout le schéma, rendue sur vingt tables
+    ' (dix le 2026-08-24, dix oubliées le 2026-09-27)
     ' ---------------------------------------------------------------------
 
     <DataTestMethod()>
@@ -275,6 +276,16 @@ Imports Oasis_Common
     <DataRow("oa_vaccin_cgv_relation_valence_date")>
     <DataRow("oa_vaccin_program")>
     <DataRow("oa_vaccin_program_relation")>
+    <DataRow("oa_patient_ordonnance_detail")>
+    <DataRow("oa_episode_parametre")>
+    <DataRow("oa_episode_acte_paramedical")>
+    <DataRow("oa_episode_contexte")>
+    <DataRow("oa_sous_episode_reponse")>
+    <DataRow("oa_drc_acte_paramedical")>
+    <DataRow("oa_drc_standard")>
+    <DataRow("oa_drc_parametre")>
+    <DataRow("oa_r_autosuivi")>
+    <DataRow("oa_drc_synonyme")>
     Public Sub SuppressionSurTableAutorisee_SousClient_EstPermise(table As String)
         ' WHERE 1 = 0 : le droit est vérifié à la compilation de l'instruction,
         ' aucune ligne n'a besoin d'exister.
@@ -335,11 +346,11 @@ Imports Oasis_Common
                         "un refus inattendu est posé sur oasis_client")
     End Sub
 
-    <TestMethod()> Public Sub Catalogue_LaSuppressionNEstRendueQueSurLesDixTables()
+    <TestMethod()> Public Sub Catalogue_LaSuppressionNEstRendueQueSurLesVingtTables()
         Assert.AreEqual(0, CInt(Scalaire(PermissionsClient &
             " AND p.class_desc = 'SCHEMA' AND p.permission_name = 'DELETE' AND p.state_desc = 'GRANT'")),
             "DELETE ne doit plus être accordé sur le schéma")
-        Assert.AreEqual(10, CInt(Scalaire(PermissionsClient &
+        Assert.AreEqual(20, CInt(Scalaire(PermissionsClient &
             " AND p.class_desc = 'OBJECT_OR_COLUMN' AND p.permission_name = 'DELETE' AND p.state_desc = 'GRANT'")))
     End Sub
 

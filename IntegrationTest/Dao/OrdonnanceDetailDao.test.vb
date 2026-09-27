@@ -300,10 +300,9 @@
 
     <TestMethod()> Public Sub LeClientSupprimeUneLigneEtGardeLesAutres()
         ' Appelée par l'écran d'ordonnance du client lourd, donc sous oasis_client.
-        ' La migration retrait-suppression-client n'a rendu DELETE qu'aux tables dont
-        ' le code contenait « DELETE FROM » ; cette requête s'écrit « DELETE oasis... »
-        ' sans FROM. Une erreur 229 ici signale un droit manquant sur
-        ' oa_patient_ordonnance_detail, pas un défaut du test.
+        ' La requête s'écrit « DELETE oasis... » sans FROM, et le relevé de
+        ' retrait-suppression-client l'avait manquée ; suppression-client-complement
+        ' rend le droit. Une erreur 229 ici signale que ce droit a de nouveau disparu.
         Dim idOrdonnance = OrdonnanceVide()
         Dim supprimee = AjouterLigne(idOrdonnance, 1)
         Dim gardee = AjouterLigne(idOrdonnance, 2)
