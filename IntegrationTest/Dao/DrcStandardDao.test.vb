@@ -110,13 +110,45 @@
         Assert.ThrowsException(Of InvalidCastException)(Sub() dao.GetDrcStandardCreated(Standard(Chronique, idDrc)))
     End Sub
 
-    <TestMethod()> Public Sub GetDrcStandardCreated_ApostropheDansLeType_ErreurSql()
-        ' Comportement actuel : le type d'activité est concaténé au texte SQL au lieu
-        ' d'être passé en paramètre. Les types réels n'ont pas d'apostrophe, mais la
-        ' requête casse (et resterait injectable) dès qu'une valeur en contient une.
+    <TestMethod()> Public Sub GetDrcStandardCreated_ApostropheDansLeType_RetrouveLaLigne()
         Dim idDrc = CreerDrc()
-        Assert.ThrowsException(Of System.Data.SqlClient.SqlException)(
-            Sub() dao.GetDrcStandardCreated(Standard("SUIVI'CHRONIQUE", idDrc)))
+        Dim saisi = Standard("SUIVI'CHRONIQUE", idDrc)
+        dao.CreationDrcStandard(saisi)
+
+        Dim id = dao.GetDrcStandardCreated(saisi)
+
+        Assert.AreEqual(CLng(Scalaire("SELECT MAX(id) FROM oasis.oa_drc_standard WHERE drc_id = @p0", idDrc)), id)
+        Assert.AreEqual("SUIVI'CHRONIQUE", dao.GetDrcStandardById(CInt(id)).TypeActivite)
+    End Sub
+
+    Private Const Injection As String = "x' OR '1'='1"
+
+    <TestMethod()> Public Sub GetDrcStandardCreated_TentativeInjection_NeRetientQueLeTypeExact()
+        ' La ligne Chronique, plus récente, est celle que l'injection ramènerait.
+        Dim idDrc = CreerDrc()
+        Dim litteral = Enregistrer(Injection, idDrc)
+        Dim chronique = Enregistrer(Chronique, idDrc)
+        Assert.IsTrue(chronique > litteral)
+
+        Assert.AreEqual(litteral, dao.GetDrcStandardCreated(Standard(Injection, idDrc)))
+        Assert.AreEqual(Injection, dao.GetDrcStandardById(CInt(litteral)).TypeActivite)
+    End Sub
+
+    <TestMethod()> Public Sub GetDrcStandardCreated_TentativeInjectionSansCorrespondance_NeRamenePasAutreLigne()
+        Dim idDrc = CreerDrc()
+        Dim chronique = Enregistrer(Chronique, idDrc)
+
+        ' Rien ne correspond : l'échec de conversion de MAX(id) NULL est couvert par
+        ' GetDrcStandardCreated_PlusDeLigneActive_EchoueEnConversion.
+        Dim trouve As Long = 0
+        Try
+            trouve = dao.GetDrcStandardCreated(Standard(Injection, idDrc))
+        Catch ex As InvalidCastException
+        Catch ex As ArgumentException
+        End Try
+
+        Assert.AreNotEqual(chronique, trouve)
+        Assert.AreEqual(0L, trouve)
     End Sub
 
     ' --- Lectures -------------------------------------------------------------------------

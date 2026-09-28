@@ -160,10 +160,12 @@ Public Class DrcStandardDao
             Dim command As SqlCommand = con.CreateCommand()
 
             command.CommandText =
-                "SELECT MAX(id) FROM oasis.oa_drc_standard WHERE type_activite_episode = '" & drcStandard.TypeActivite & "'" &
-                " AND drc_id = " & drcStandard.DrcId &
+                "SELECT MAX(id) FROM oasis.oa_drc_standard WHERE type_activite_episode = @typeActivite" &
+                " AND drc_id = @drcId" &
                 " AND (inactif = 'False' or inactif is Null)"
             command.Parameters.AddWithValue("@id", DrcStandardId)
+            command.Parameters.AddWithValue("@typeActivite", If(drcStandard.TypeActivite, ""))
+            command.Parameters.AddWithValue("@drcId", drcStandard.DrcId)
             Using reader As SqlDataReader = command.ExecuteReader()
                 If reader.HasRows Then
                     reader.Read()
