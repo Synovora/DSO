@@ -368,7 +368,33 @@
             IdsTaches(dao.GetAllTacheATraiter(FonctionsTache(f1), FiltreTacheDe(UnitePourFiltreTache(u1, s1, s2)))))
     End Sub
 
-    <TestMethod()> Public Sub ATraiter_UnSiteRetenuMasqueLesAutresUnites()
+    <TestMethod()> Public Sub ATraiter_SitesRetenusParUnite_UniteSansSiteGardeToutesSesTaches()
+        Dim idEmetteur = CreerUtilisateur(avecCle:=False)
+        Dim idPatient = CreerPatient()
+        Dim f1 = CreerFonction("IT f1")
+        Dim u1 = CreerUniteSanitaire("Unite 1")
+        Dim u2 = CreerUniteSanitaire("Unite 2")
+        Dim u3 = CreerUniteSanitaire("Unite 3")
+        Dim s1 = CreerSite("Site 1", u1)
+        Dim s1bis = CreerSite("Site 1 bis", u1)
+        Dim s2 = CreerSite("Site 2", u2)
+        Dim s3 = CreerSite("Site 3", u3)
+        Dim surS1 = Demande(idPatient, idEmetteur, f1, uniteSanitaireId:=u1, siteId:=s1, horodatage:=New Date(2026, 1, 1))
+        Demande(idPatient, idEmetteur, f1, uniteSanitaireId:=u1, siteId:=s1bis, horodatage:=New Date(2026, 1, 2))
+        Demande(idPatient, idEmetteur, f1, uniteSanitaireId:=u1, horodatage:=New Date(2026, 1, 3))
+        Dim surS2 = Demande(idPatient, idEmetteur, f1, uniteSanitaireId:=u2, siteId:=s2, horodatage:=New Date(2026, 1, 4))
+        Dim u2SansSite = Demande(idPatient, idEmetteur, f1, uniteSanitaireId:=u2, horodatage:=New Date(2026, 1, 5))
+        Demande(idPatient, idEmetteur, f1, uniteSanitaireId:=u3, siteId:=s3, horodatage:=New Date(2026, 1, 6))
+
+        ' Unité 1 : seulement le site retenu (pas le site bis, pas la tâche sans site).
+        ' Unité 2, cochée sans site : tous ses sites, et ses tâches sans site comme
+        ' lorsqu'elle est seule dans le filtre. Unité 3, non cochée : rien.
+        Dim filtre = FiltreTacheDe(UnitePourFiltreTache(u1, s1), UnitePourFiltreTache(u2))
+        CollectionAssert.AreEqual({surS1, surS2, u2SansSite}, IdsTaches(dao.GetAllTacheATraiter(FonctionsTache(f1), filtre)))
+        Assert.AreEqual(Checksum(surS1, surS2, u2SansSite), dao.GetAllTacheATraiterChk(FonctionsTache(f1), filtre))
+    End Sub
+
+    <TestMethod()> Public Sub ATraiter_ChaqueUniteAvecSonSiteRetenu()
         Dim idEmetteur = CreerUtilisateur(avecCle:=False)
         Dim idPatient = CreerPatient()
         Dim f1 = CreerFonction("IT f1")
@@ -376,14 +402,12 @@
         Dim u2 = CreerUniteSanitaire("Unite 2")
         Dim s1 = CreerSite("Site 1", u1)
         Dim s2 = CreerSite("Site 2", u2)
-        Dim surS1 = Demande(idPatient, idEmetteur, f1, uniteSanitaireId:=u1, siteId:=s1)
-        Demande(idPatient, idEmetteur, f1, uniteSanitaireId:=u2, siteId:=s2)
+        Dim surS1 = Demande(idPatient, idEmetteur, f1, uniteSanitaireId:=u1, siteId:=s1, horodatage:=New Date(2026, 1, 1))
+        Dim surS2 = Demande(idPatient, idEmetteur, f1, uniteSanitaireId:=u2, siteId:=s2, horodatage:=New Date(2026, 1, 2))
 
-        ' Comportement actuel : la clause site_id IN porte sur tous les sites retenus,
-        ' toutes unités confondues. Une unité cochée sans site (« tous les sites »)
-        ' perd donc ses tâches dès qu'une autre unité a un site retenu.
-        Dim filtre = FiltreTacheDe(UnitePourFiltreTache(u1, s1), UnitePourFiltreTache(u2))
-        CollectionAssert.AreEqual({surS1}, IdsTaches(dao.GetAllTacheATraiter(FonctionsTache(f1), filtre)))
+        Dim filtre = FiltreTacheDe(UnitePourFiltreTache(u1, s1), UnitePourFiltreTache(u2, s2))
+        CollectionAssert.AreEqual({surS1, surS2}, IdsTaches(dao.GetAllTacheATraiter(FonctionsTache(f1), filtre)))
+        Assert.AreEqual(Checksum(surS1, surS2), dao.GetAllTacheATraiterChk(FonctionsTache(f1), filtre))
     End Sub
 
     <TestMethod()> Public Sub ATraiterChk_EgalAuChecksumDesTachesListees()
@@ -514,6 +538,9 @@
             IdsTaches(dao.GetAllTacheEnCours(False, FonctionsTache(f1), FiltreTacheDe(UnitePourFiltreTache(u1, s2)), True, moi)))
         CollectionAssert.AreEqual({surS1, surS2, surS3},
             IdsTaches(dao.GetAllTacheEnCours(False, FonctionsTache(f1), FiltreTacheDe(UnitePourFiltreTache(u1), UnitePourFiltreTache(u2)), True, moi)))
+        ' Le site retenu de l'unité 1 ne masque pas l'unité 2, cochée sans site.
+        CollectionAssert.AreEqual({surS2, surS3},
+            IdsTaches(dao.GetAllTacheEnCours(False, FonctionsTache(f1), FiltreTacheDe(UnitePourFiltreTache(u1, s2), UnitePourFiltreTache(u2)), True, moi)))
     End Sub
 
     <TestMethod()> Public Sub EnCours_OrdreParPrioriteOrdreAffichagePuisDate()
@@ -638,6 +665,28 @@
             IdsTaches(dao.GetAgendaMyRDV(jour.Date, jour.Date, False, FonctionsTache(f1), FiltreTacheDe(UnitePourFiltreTache(u1)), True, moi)))
         Assert.AreEqual(0, dao.GetAgendaMyRDV(jour.Date, jour.Date, False, New List(Of Fonction), FiltreTacheDe(), True, moi).Rows.Count)
         Assert.AreEqual(0, dao.GetAgendaMyRDV(jour.Date, jour.Date, False, FonctionsTache(f1), Nothing, True, moi).Rows.Count)
+    End Sub
+
+    <TestMethod()> Public Sub Agenda_SiteRetenuDuneUniteNeMasquePasUneAutreUnite()
+        Dim idEmetteur = CreerUtilisateur(avecCle:=False)
+        Dim idPatient = CreerPatient()
+        Dim f1 = CreerFonction("IT f1")
+        Dim u1 = CreerUniteSanitaire("Unite 1")
+        Dim u2 = CreerUniteSanitaire("Unite 2")
+        Dim s1 = CreerSite("Site 1", u1)
+        Dim s1bis = CreerSite("Site 1 bis", u1)
+        Dim s2 = CreerSite("Site 2", u2)
+        Dim jour As New Date(2030, 7, 1, 9, 0, 0)
+        Dim surS1 = Demande(idPatient, idEmetteur, f1, typeDeTache:=Tache.TypeTache.RDV, dateRendezVous:=jour,
+                            uniteSanitaireId:=u1, siteId:=s1)
+        Demande(idPatient, idEmetteur, f1, typeDeTache:=Tache.TypeTache.RDV, dateRendezVous:=jour.AddHours(1),
+                uniteSanitaireId:=u1, siteId:=s1bis)
+        Dim surS2 = Demande(idPatient, idEmetteur, f1, typeDeTache:=Tache.TypeTache.RDV, dateRendezVous:=jour.AddHours(2),
+                            uniteSanitaireId:=u2, siteId:=s2)
+        Dim moi = CompteDe(idEmetteur)
+
+        Dim filtre = FiltreTacheDe(UnitePourFiltreTache(u1, s1), UnitePourFiltreTache(u2))
+        CollectionAssert.AreEqual({surS1, surS2}, IdsTaches(dao.GetAgendaMyRDV(jour.Date, jour.Date, False, FonctionsTache(f1), filtre, True, moi)))
     End Sub
 
     ''' <summary>Attribue la tâche à ce compte et renvoie son id.</summary>

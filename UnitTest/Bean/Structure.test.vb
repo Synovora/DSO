@@ -84,6 +84,37 @@
         CollectionAssert.AreEqual({10L, 11L}, filtre.GetListAllSite().Select(Function(s) s.Oa_site_id).ToArray())
     End Sub
 
+    <TestMethod()> Public Sub SansUniteLaClauseUniteSiteEstVide()
+        Assert.AreEqual("", New FiltreTache().GetClauseSqlUniteSite())
+    End Sub
+
+    <TestMethod()> Public Sub UnitesSansSiteRetenu_ClauseSurLesUnitesSeules()
+        Dim filtre As New FiltreTache
+        filtre.AddUniteSanitaire(Unite(1, "Nord"))
+        filtre.AddUniteSanitaire(Unite(2, "Sud"))
+
+        Assert.AreEqual("AND (unite_sanitaire_id  in ( 1,2) )" & vbCrLf, filtre.GetClauseSqlUniteSite())
+    End Sub
+
+    <TestMethod()> Public Sub LesSitesRetenusNePortentQueSurLeurUnite()
+        Dim filtre As New FiltreTache
+        filtre.AddUniteSanitaire(Unite(1, "Nord", LeSite(10, "Lille"), LeSite(11, "Roubaix")))
+        filtre.AddUniteSanitaire(Unite(2, "Sud"))
+        filtre.AddUniteSanitaire(Unite(3, "Est", LeSite(30, "Metz")))
+
+        Assert.AreEqual("AND (unite_sanitaire_id  in ( 2)  OR " &
+                        "(unite_sanitaire_id = 1 AND site_id  in ( 10,11) ) OR " &
+                        "(unite_sanitaire_id = 3 AND site_id  in ( 30) ))" & vbCrLf,
+                        filtre.GetClauseSqlUniteSite())
+    End Sub
+
+    <TestMethod()> Public Sub UneUniteSansListeDeSitesGardeTousSesSites()
+        Dim filtre As New FiltreTache
+        filtre.AddUniteSanitaire(New UniteSanitaire With {.Oa_unite_sanitaire_id = 4})
+
+        Assert.AreEqual("AND (unite_sanitaire_id  in ( 4) )" & vbCrLf, filtre.GetClauseSqlUniteSite())
+    End Sub
+
     <TestMethod()> Public Sub ClearVideLeFiltre()
         Dim filtre As New FiltreTache
         filtre.AddUniteSanitaire(Unite(1, "Nord", LeSite(10, "Lille")))

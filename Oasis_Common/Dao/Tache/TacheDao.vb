@@ -166,16 +166,8 @@ Public Class TacheDao
         Else
             SQLString += "AND traite_fonction_id " & Fonction.GetQueryInForIds(lstFonction) & vbCrLf
         End If
-        ' --- filtre unités sanitaire
-        If filtreTache.LstUniteSanitaire.Count > 0 Then
-            SQLString += "AND unite_sanitaire_id " & UniteSanitaire.GetQueryInForIds(filtreTache.LstUniteSanitaire) & vbCrLf
-        End If
-        ' --- filtre sites
-        Dim lstAllSite As List(Of Site)
-        lstAllSite = filtreTache.GetListAllSite()
-        If lstAllSite.Count > 0 Then
-            SQLString += "AND site_id " & Site.GetQueryInForIds(lstAllSite) & vbCrLf
-        End If
+        ' --- filtre unités sanitaire et sites
+        SQLString += filtreTache.GetClauseSqlUniteSite()
         Return SQLString
     End Function
 
@@ -225,14 +217,8 @@ Public Class TacheDao
             Else
                 ' --- filtre fonction
                 SQLString += "AND traite_fonction_id " & Fonction.GetQueryInForIds(lstFonctionChoisie) & vbCrLf
-                ' --- filtre unités sanitaire
-                If filtre.LstUniteSanitaire.Count > 0 Then
-                    SQLString += "AND unite_sanitaire_id " & UniteSanitaire.GetQueryInForIds(filtre.LstUniteSanitaire) & vbCrLf
-                End If
-                ' --- filtre sites
-                If filtre.GetListAllSite().Count > 0 Then
-                    SQLString += "AND site_id " & Site.GetQueryInForIds(filtre.GetListAllSite()) & vbCrLf
-                End If
+                ' --- filtre unités sanitaire et sites
+                SQLString += filtre.GetClauseSqlUniteSite()
             End If
         End If
 
@@ -354,14 +340,8 @@ Public Class TacheDao
             Else
                 ' --- filtre fonction
                 SQLString += "AND traite_fonction_id " & Fonction.GetQueryInForIds(lstFonctionChoisie) & vbCrLf
-                ' --- filtre unités sanitaire
-                If filtre.LstUniteSanitaire.Count > 0 Then
-                    SQLString += "AND unite_sanitaire_id " & UniteSanitaire.GetQueryInForIds(filtre.LstUniteSanitaire) & vbCrLf
-                End If
-                ' --- filtre sites
-                If filtre.GetListAllSite().Count > 0 Then
-                    SQLString += "AND site_id " & Site.GetQueryInForIds(filtre.GetListAllSite()) & vbCrLf
-                End If
+                ' --- filtre unités sanitaire et sites
+                SQLString += filtre.GetClauseSqlUniteSite()
             End If
         End If
 
