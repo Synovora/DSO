@@ -127,8 +127,8 @@
         ' La ligne Chronique, plus récente, est celle que l'injection ramènerait.
         Dim idDrc = CreerDrc()
         Dim litteral = Enregistrer(Injection, idDrc)
-        Dim chronique = Enregistrer(Chronique, idDrc)
-        Assert.IsTrue(chronique > litteral)
+        Dim idChronique = Enregistrer(Chronique, idDrc)
+        Assert.IsTrue(idChronique > litteral)
 
         Assert.AreEqual(litteral, dao.GetDrcStandardCreated(Standard(Injection, idDrc)))
         Assert.AreEqual(Injection, dao.GetDrcStandardById(CInt(litteral)).TypeActivite)
@@ -136,7 +136,7 @@
 
     <TestMethod()> Public Sub GetDrcStandardCreated_TentativeInjectionSansCorrespondance_NeRamenePasAutreLigne()
         Dim idDrc = CreerDrc()
-        Dim chronique = Enregistrer(Chronique, idDrc)
+        Dim idChronique = Enregistrer(Chronique, idDrc)
 
         ' Rien ne correspond : l'échec de conversion de MAX(id) NULL est couvert par
         ' GetDrcStandardCreated_PlusDeLigneActive_EchoueEnConversion.
@@ -147,7 +147,7 @@
         Catch ex As ArgumentException
         End Try
 
-        Assert.AreNotEqual(chronique, trouve)
+        Assert.AreNotEqual(idChronique, trouve)
         Assert.AreEqual(0L, trouve)
     End Sub
 
