@@ -24,8 +24,7 @@ SET XACT_ABORT ON;
 --    OasisAdmini :
 --
 --      OrdonnanceDetailDao           oa_patient_ordonnance_detail
---      EpisodeParametreDao           oa_episode_parametre (aussi la copie de
---                                    oasis/Form/Episode)
+--      EpisodeParametreDao           oa_episode_parametre
 --      EpisodeActeParamedicalDao     oa_episode_acte_paramedical
 --      EpisodeContexteDao            oa_episode_contexte
 --      SousEpisodeReponseDao         oa_sous_episode_reponse

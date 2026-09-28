@@ -264,10 +264,17 @@ jobs:
       # Creates the database and the oasis_web and oasis_client logins, replays
       # schema, migrations and reference data, and passes the OASIS_IT_*
       # variables the test harness reads to the steps below.
+      #
+      # The database is named oasis here, not oasis_it as on a workstation.
+      # Fifty-six table references in ten DAOs name it outright ([oasis].[oasis].table),
+      # so on any other name they read a database that is not there and their
+      # tests end Inconclusive. The runner is thrown away after the job, so the
+      # name clashes with nothing. Locally the default stays oasis_it, because
+      # the script drops the database it is given.
       - name: Prepare the test database
         if: steps.schema.outputs.present == 'true'
         shell: pwsh
-        run: ./IntegrationTest/Schema/Preparer-Base.ps1 -Serveur 'localhost\SQLEXPRESS' -Base 'oasis_it' -MotDePasseAdmin $env:SQL_SA_PASSWORD
+        run: ./IntegrationTest/Schema/Preparer-Base.ps1 -Serveur 'localhost\SQLEXPRESS' -Base 'oasis' -MotDePasseAdmin $env:SQL_SA_PASSWORD
 
       - name: Set up MSBuild
         if: steps.schema.outputs.present == 'true'
