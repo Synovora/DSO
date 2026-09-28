@@ -1,4 +1,5 @@
-﻿Imports System.Data.SqlClient
+﻿Imports System.Configuration
+Imports System.Data.SqlClient
 
 Public Class InternauteDao
     Inherits StandardDao
@@ -13,19 +14,26 @@ Public Class InternauteDao
             ' Le mot de passe était haché puis jamais inséré : les comptes créés
             ' repartaient avec une colonne password NULL.
             Dim SQLstring As String = "INSERT INTO oasis.oa_internaute (" & vbCrLf &
-                                     " username, email, password, recovery, code)" & vbCrLf &
+                                     " username, email, password, recovery, code, recovery_expiration)" & vbCrLf &
                                      " VALUES (" & vbCrLf &
-                                     " @username, @email, @password, @recovery, @code);" & vbCrLf &
+                                     " @username, @email, @password, @recovery, @code, @recovery_expiration);" & vbCrLf &
                                      " SELECT SCOPE_IDENTITY()"
 
             Dim cmd As New SqlCommand(SQLstring, con, transaction)
-            internaute.CryptePwd()
+            ' Le poste crée le compte sans mot de passe : password reste NULL et le
+            ' compte ne s'active que par le lien envoyé au patient.
+            If String.IsNullOrEmpty(internaute.Password) Then
+                internaute.Password = Nothing
+            Else
+                internaute.CryptePwd()
+            End If
             With cmd.Parameters
                 .AddWithValue("@username", internaute.Username)
                 .AddWithValue("@email", internaute.Email)
                 .AddWithValue("@password", If(internaute.Password, CObj(DBNull.Value)))
                 .AddWithValue("@recovery", If(internaute.Recovery, CObj(DBNull.Value)))
                 .AddWithValue("@code", If(internaute.Code, CObj(DBNull.Value)))
+                .AddWithValue("@recovery_expiration", ExpirationRecuperation(internaute))
             End With
 
             da.InsertCommand = cmd
@@ -41,6 +49,19 @@ Public Class InternauteDao
             con.Close()
         End Try
         Return Id
+    End Function
+
+    ''' <summary>
+    ''' Expiration de la clé de récupération, prête pour le paramètre SQL. Une clé
+    ''' posée sans date (création ou réinitialisation depuis le poste) expire après
+    ''' DureeLienPortailHeures (appSettings), 72 heures par défaut. Le bean reçoit
+    ''' la date retenue.
+    ''' </summary>
+    Private Shared Function ExpirationRecuperation(fiche As Internaute) As Object
+        fiche.RecoveryExpiration = Internaute.ExpirationAEnregistrer(
+            fiche.Recovery, fiche.RecoveryExpiration, DateTime.Now,
+            Internaute.DureeLienPosteHeures(ConfigurationManager.AppSettings("DureeLienPortailHeures")))
+        Return If(fiche.RecoveryExpiration.HasValue, CObj(fiche.RecoveryExpiration.Value), CObj(DBNull.Value))
     End Function
 
     Public Function GetInternauteByLoginPassword(email As String, password As String) As Internaute
@@ -122,7 +143,7 @@ Public Class InternauteDao
                     .AddWithValue("@password", If(internaute.Password, CObj(DBNull.Value)))
                     .AddWithValue("@recovery", If(internaute.Recovery, CObj(DBNull.Value)))
                     .AddWithValue("@code", If(internaute.Code, CObj(DBNull.Value)))
-                    .AddWithValue("@recovery_expiration", If(internaute.RecoveryExpiration.HasValue, CObj(internaute.RecoveryExpiration.Value), CObj(DBNull.Value)))
+                    .AddWithValue("@recovery_expiration", ExpirationRecuperation(internaute))
                 End With
                 cmd.ExecuteNonQuery()
                 internauteId = internaute.Id

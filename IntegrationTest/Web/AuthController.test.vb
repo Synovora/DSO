@@ -342,11 +342,12 @@ Imports Oasis_Web.Oasis_Web.Controllers
     <TestMethod()> Public Sub UneAdresseInconnueRedirigeSansRienEcrire()
         InterdireCourriel()
         Dim idAutre = CreerComptePortail(CreerPatient(), AdresseDeTest())
+        Dim expirationAvant = Colonne("recovery_expiration", idAutre)
 
         Dim resultat = ControleurPortailAnonyme(Of AuthController)("POST").Forgot(New UserForgot With {.Email = AdresseDeTest()})
 
         VerifierRedirectionPortail(resultat, "Auth", "Login")
-        Assert.AreEqual(0, CInt(Scalaire("SELECT COUNT(*) FROM oasis.oa_internaute WHERE recovery_expiration IS NOT NULL")))
+        Assert.AreEqual(expirationAvant, Colonne("recovery_expiration", idAutre))
         Assert.AreEqual("cle-recuperation-test", ChaineLue(Colonne("recovery", idAutre)))
     End Sub
 
@@ -433,18 +434,39 @@ Imports Oasis_Web.Oasis_Web.Controllers
         Assert.IsNull(vue.ViewData("Internaute"))
     End Sub
 
-    <TestMethod()> Public Sub UneCleSansDateDExpirationResteValable()
-        ' Le client lourd crée le compte portail avec une clé et sans date
-        ' d'expiration (RadFPatientDetailEdit.BtnCreateInternaute_Click).
+    <TestMethod()> Public Sub UneCleSansDateDExpirationEstRefusee()
+        ' Clé enregistrée sans date, comme le faisait le poste avant correction.
+        Dim cle = NouvelleCle()
+        Dim idInternaute = CreerComptePortail(CreerPatient(), AdresseDeTest())
+        PoserRecuperationInternaute(idInternaute, cle, Nothing)
+
+        Dim vue = OuvrirLien(cle)
+
+        Assert.AreEqual(MessageLienExpire, CStr(vue.ViewData("Message")))
+        Assert.IsNull(vue.ViewData("Internaute"))
+    End Sub
+
+    <TestMethod()> Public Sub LeLienDeCreationDuCompteOuvreLeFormulaire()
+        ' Comme RadFPatientDetailEdit.BtnCreateInternaute_Click : clé posée par
+        ' InternauteDao.Create, qui fixe l'expiration par défaut.
         Dim cle = NouvelleCle()
         Dim idInternaute = CreerComptePortail(CreerPatient(), AdresseDeTest(), cle)
 
         Dim vue = OuvrirLien(cle)
 
-        ' Comportement actuel : RecoveryExpiration à Nothing rend la comparaison
-        ' « < Now » indéterminée, donc fausse ; le lien de création n'expire jamais.
         Assert.IsNull(vue.ViewData("Message"))
         Assert.AreEqual(CInt(idInternaute), DirectCast(vue.ViewData("Internaute"), Internaute).Id)
+    End Sub
+
+    <TestMethod()> Public Sub LeLienDeCreationDuCompteExpireApresLeDelai()
+        Dim cle = NouvelleCle()
+        Dim idInternaute = CreerComptePortail(CreerPatient(), AdresseDeTest(), cle)
+        Executer("UPDATE oasis.oa_internaute SET recovery_expiration = DATEADD(minute, -1, SYSDATETIME()) WHERE id = @p0",
+                 idInternaute)
+
+        Assert.AreEqual(MessageLienExpire, CStr(OuvrirLien(cle).ViewData("Message")))
+        Assert.AreEqual(MessageLienExpire, MessageDe(ReinitialiserMotDePasse(cle, NouveauMotDePasse)))
+        Assert.AreEqual(cle, ChaineLue(Colonne("recovery", idInternaute)))
     End Sub
 
     ' --- Réinitialisation (POST) ------------------------------------------------------
@@ -545,14 +567,40 @@ Imports Oasis_Web.Oasis_Web.Controllers
         Assert.AreEqual(cle, ChaineLue(Colonne("recovery", idInternaute)))
     End Sub
 
-    <TestMethod()> Public Sub LeLienDeCreationDuCompteSansExpirationFixeLeMotDePasse()
+    <TestMethod()> Public Sub LeLienDeCreationDuCompteFixeLeMotDePasse()
         Dim cle = NouvelleCle()
         Dim idInternaute = CreerComptePortail(CreerPatient(), AdresseDeTest(), cle)
 
-        ' Comportement actuel : accepté, faute de date d'expiration (voir
-        ' UneCleSansDateDExpirationResteValable).
         VerifierRedirectionPortail(ReinitialiserMotDePasse(cle, NouveauMotDePasse), "Auth", "Login")
         Assert.IsTrue(Oasis_Common.MotDePasse.Verifier(NouveauMotDePasse, Empreinte(idInternaute)))
+        Assert.AreEqual(DBNull.Value, Colonne("recovery_expiration", idInternaute))
+    End Sub
+
+    <TestMethod()> Public Sub UneCleSansDateDExpirationNeFixePasLeMotDePasse()
+        Dim cle = NouvelleCle()
+        Dim idInternaute = CreerComptePortail(CreerPatient(), AdresseDeTest())
+        PoserRecuperationInternaute(idInternaute, cle, Nothing)
+        Dim empreinteAvant = Empreinte(idInternaute)
+
+        Assert.AreEqual(MessageLienExpire, MessageDe(ReinitialiserMotDePasse(cle, NouveauMotDePasse)))
+        Assert.AreEqual(empreinteAvant, Empreinte(idInternaute))
+    End Sub
+
+    <TestMethod()> Public Sub UnCompteCreeSansMotDePasseSActiveParSonLien()
+        ' Parcours complet du bouton « Créer compte internaute » : compte sans mot
+        ' de passe, fermé tant que le patient n'a pas suivi le lien.
+        Dim adresse = AdresseDeTest()
+        Dim cle = NouvelleCle()
+        Dim dao As New InternauteDao
+        Dim idInternaute = dao.Create(New Internaute With {
+            .Username = "DURAND", .Email = adresse, .Recovery = cle, .Code = "0000"})
+        AutoriserPatientPortail(idInternaute, CreerPatient())
+        Assert.AreEqual(DBNull.Value, Colonne("password", idInternaute))
+        Assert.AreEqual(MessageRefus, MessageDe(Connecter(adresse, "")))
+
+        VerifierRedirectionPortail(ReinitialiserMotDePasse(cle, NouveauMotDePasse), "Auth", "Login")
+
+        VerifierRedirectionPortail(Connecter(adresse, NouveauMotDePasse), "Dashboard", "Index")
     End Sub
 
     <TestMethod()> Public Sub LaReinitialisationNeLevePasLeVerrou()

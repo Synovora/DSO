@@ -1,4 +1,5 @@
 ﻿Imports System.Data.SqlClient
+Imports System.Globalization
 Imports System.Security.Cryptography
 
 Public Class Internaute
@@ -60,6 +61,50 @@ Public Class Internaute
     Public Function CryptePwd() As String
         Me.Password = MotDePasse.Hacher(Password)
         Return Password
+    End Function
+
+    ''' <summary>
+    ''' Durée de validité, en heures, du lien d'activation ou de réinitialisation
+    ''' qu'envoie le poste, quand le réglage DureeLienPortailHeures est absent ou
+    ''' invalide. Le lien part par courriel et le patient ne le lit pas forcément
+    ''' dans l'heure, d'où un délai plus long que l'heure du « mot de passe oublié ».
+    ''' </summary>
+    Public Const DureeLienPosteParDefautHeures As Integer = 72
+
+    ''' <summary>
+    ''' Durée lue dans la configuration : un entier strictement positif, sinon
+    ''' DureeLienPosteParDefautHeures.
+    ''' </summary>
+    Public Shared Function DureeLienPosteHeures(valeurConfiguree As String) As Integer
+        Dim duree As Integer
+        If Integer.TryParse(If(valeurConfiguree, "").Trim(), NumberStyles.None, CultureInfo.InvariantCulture, duree) AndAlso duree > 0 Then
+            Return duree
+        End If
+        Return DureeLienPosteParDefautHeures
+    End Function
+
+    ''' <summary>
+    ''' Date d'expiration à enregistrer avec la clé de récupération. Une date déjà
+    ''' fixée est conservée ; une clé sans date reçoit maintenant + dureeHeures, car
+    ''' une clé sans expiration resterait valable indéfiniment. Sans clé, pas de date.
+    ''' </summary>
+    Public Shared Function ExpirationAEnregistrer(recovery As String, expiration As Date?,
+                                                  maintenant As Date, dureeHeures As Integer) As Date?
+        If expiration.HasValue Then Return expiration
+        If String.IsNullOrEmpty(recovery) Then Return Nothing
+        Return maintenant.AddHours(dureeHeures)
+    End Function
+
+    ''' <summary>
+    ''' Vrai si la clé de récupération peut encore servir à fixer le mot de passe.
+    ''' Une clé sans date d'expiration est refusée : « RecoveryExpiration &lt; maintenant »
+    ''' ne vaut jamais True sur un Date? vide, ce qui laissait ces liens valables
+    ''' indéfiniment.
+    ''' </summary>
+    Public Function CleRecuperationValide(maintenant As Date) As Boolean
+        Return Not String.IsNullOrEmpty(Recovery) AndAlso
+               RecoveryExpiration.HasValue AndAlso
+               RecoveryExpiration.Value >= maintenant
     End Function
 
     Public Function Clone() As Internaute

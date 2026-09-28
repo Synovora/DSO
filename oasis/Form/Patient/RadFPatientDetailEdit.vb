@@ -1197,7 +1197,6 @@ Public Class RadFPatientDetailEdit
         Dim internautePermissions = internautePermissionDao.GetPermissionsByPatient(Me.SelectedPatientId)
         Dim internaute = New Internaute With {
             .Id = internautePermissions(0).Internaute,
-            .Password = "",
             .Recovery = ecKey,
             .Code = "0000"
         }

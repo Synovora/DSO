@@ -217,8 +217,8 @@ Friend Module PortailDeTest
     ''' Compte portail rattaché à un patient, comme le bouton « Créer l'internaute »
     ''' de la fiche patient (RadFPatientDetailEdit) : InternauteDao.Create puis
     ''' InternautePermissionDao.Create, permission 1, sous le compte courant. Mot de
-    ''' passe : MotDePasseParDefaut. recovery est écrit sans date d'expiration, comme
-    ''' le fait le client lourd. Renvoie l'id de l'internaute.
+    ''' passe : MotDePasseParDefaut. recovery reçoit l'expiration par défaut du poste
+    ''' (72 heures), comme le fait le client lourd. Renvoie l'id de l'internaute.
     ''' </summary>
     Friend Function CreerComptePortail(patientId As Long,
                                        Optional email As String = Nothing,

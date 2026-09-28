@@ -49,7 +49,7 @@ Namespace Oasis_Web.Controllers
                     Throw New ArgumentException("Internaute introuvable.")
                 End If
 
-                If String.IsNullOrEmpty(internaute.Recovery) OrElse internaute.RecoveryExpiration < DateTime.Now Then
+                If Not internaute.CleRecuperationValide(DateTime.Now) Then
                     Throw New ArgumentException("Lien de récupération invalide ou expiré.")
                 End If
 
@@ -95,7 +95,7 @@ Namespace Oasis_Web.Controllers
                 End If
 
                 Dim internaute As Internaute = internauteDao.GetInternauteByRecoveryKey(user.Recovery)
-                If internaute Is Nothing OrElse String.IsNullOrEmpty(internaute.Recovery) OrElse internaute.RecoveryExpiration < DateTime.Now Then
+                If internaute Is Nothing OrElse Not internaute.CleRecuperationValide(DateTime.Now) Then
                     Throw New ArgumentException("Lien de récupération invalide ou expiré.")
                 End If
 

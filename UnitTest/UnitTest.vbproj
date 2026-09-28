@@ -324,6 +324,7 @@
     <Compile Include="Bean\SousEpisodeFichiers.test.vb" />
     <Compile Include="Bean\Structure.test.vb" />
     <Compile Include="Bean\Tache.test.vb" />
+    <Compile Include="Bean\Internaute.test.vb" />
     <Compile Include="Dao\AnnuaireProfessionnelDao.test.vb" />
     <Compile Include="Dao\EpisodeDao.test.vb" />
     <Compile Include="Dao\LigneDeTest.vb" />

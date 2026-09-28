@@ -32,6 +32,13 @@ Imports Oasis_Common
         Return NouveauLogin() & "@exemple.fr"
     End Function
 
+    ''' <summary>Vérifie que la clé du compte expire dans le délai par défaut (72 heures).</summary>
+    Private Shared Sub VerifierExpirationParDefaut(id As Long)
+        Dim secondes = CInt(Scalaire("SELECT DATEDIFF(second, SYSDATETIME(), recovery_expiration) FROM oasis.oa_internaute WHERE id = @p0", id))
+        Dim attendu = Internaute.DureeLienPosteParDefautHeures * 3600
+        Assert.IsTrue(secondes > attendu - 60 AndAlso secondes <= attendu, "expire dans 72 heures, reste " & secondes & " s")
+    End Sub
+
     ' ---------------------------------------------------------------------
     ' Create (client)
     ' ---------------------------------------------------------------------
@@ -55,9 +62,8 @@ Imports Oasis_Common
         Assert.AreEqual(empreinte, fiche.Password, "Create remplace le mot de passe du bean par son empreinte")
         Assert.AreEqual(0, CInt(ValeurInternaute("tentatives", id)))
         Assert.AreEqual(DBNull.Value, ValeurInternaute("verrou_jusqua", id))
-        ' Comportement actuel : Create n'écrit pas recovery_expiration. La clé
-        ' remise par le client lourd à la création du compte n'expire donc pas.
-        Assert.AreEqual(DBNull.Value, ValeurInternaute("recovery_expiration", id))
+        VerifierExpirationParDefaut(id)
+        Assert.IsTrue(fiche.RecoveryExpiration.HasValue, "Create reporte l'expiration retenue sur le bean")
     End Sub
 
     <TestMethod()> Public Sub Create_SousClient_CodeEtRecoveryAbsents_DonnentNull()
@@ -66,20 +72,41 @@ Imports Oasis_Common
 
         Assert.AreEqual(DBNull.Value, ValeurInternaute("recovery", id))
         Assert.AreEqual(DBNull.Value, ValeurInternaute("code", id))
+        Assert.AreEqual(DBNull.Value, ValeurInternaute("recovery_expiration", id), "sans clé, pas d'expiration")
     End Sub
 
-    <TestMethod()> Public Sub Create_SousClient_SansMotDePasse_EchoueSansRienEcrire()
-        ' Comportement actuel, bug de production : le bouton « Créer compte
-        ' internaute » de RadFPatientDetailEdit construit l'Internaute sans mot de
-        ' passe. Create hache alors Nothing (MotDePasse.Hacher), ce qui lève une
-        ' exception : la création de compte portail depuis le poste échoue toujours.
+    <TestMethod()> Public Sub Create_SousClient_SansMotDePasse_EnregistreLeCompteSansMotDePasseAvecUnLienQuiExpire()
+        ' Comme le bouton « Créer compte internaute » de RadFPatientDetailEdit.
         Dim adresse = NouvelleAdresse()
         Dim fiche As New Internaute With {
             .Email = adresse, .Recovery = CleRecuperation, .Code = "0000", .Username = "DURAND"}
 
-        Assert.ThrowsException(Of Exception)(Sub() dao.Create(fiche))
+        Dim id = dao.Create(fiche)
 
-        Assert.AreEqual(0, CInt(Scalaire("SELECT COUNT(*) FROM oasis.oa_internaute WHERE email = @p0", adresse)))
+        Assert.IsTrue(id > 0)
+        Assert.AreEqual(adresse, CStr(ValeurInternaute("email", id)))
+        Assert.AreEqual(DBNull.Value, ValeurInternaute("password", id), "le compte ne s'ouvre que par le lien")
+        Assert.IsNull(fiche.Password)
+        Assert.AreEqual(CleRecuperation, CStr(ValeurInternaute("recovery", id)))
+        Assert.AreEqual("0000", CStr(ValeurInternaute("code", id)))
+        VerifierExpirationParDefaut(id)
+    End Sub
+
+    <TestMethod()> Public Sub Create_SousClient_MotDePasseVide_DonneNull()
+        Dim id = dao.Create(New Internaute With {
+            .Username = "DURAND", .Email = NouvelleAdresse(), .Password = "", .Recovery = CleRecuperation})
+
+        Assert.AreEqual(DBNull.Value, ValeurInternaute("password", id))
+    End Sub
+
+    <TestMethod()> Public Sub Create_SousClient_ExpirationFournie_EstConservee()
+        Dim expiration = New Date(2031, 5, 6, 7, 8, 9)
+
+        Dim id = dao.Create(New Internaute With {
+            .Username = "DURAND", .Email = NouvelleAdresse(), .Recovery = CleRecuperation,
+            .RecoveryExpiration = expiration})
+
+        Assert.AreEqual(expiration, CDate(ValeurInternaute("recovery_expiration", id)))
     End Sub
 
     ' ---------------------------------------------------------------------
@@ -87,23 +114,20 @@ Imports Oasis_Common
     ' fin de récupération)
     ' ---------------------------------------------------------------------
 
-    <TestMethod()> Public Sub Update_SousClient_CommeLaFichePatient_VideLeMotDePasseEtPoseUneCleSansExpiration()
+    <TestMethod()> Public Sub Update_SousClient_CommeLaFichePatient_EffaceLeMotDePasseEtPoseUneCleQuiExpire()
         Dim adresse = NouvelleAdresse()
         Dim id = CreerInternaute(email:=adresse)
-        PoserRecuperationInternaute(id, Nothing, Date.Now.AddHours(1))
+        PoserRecuperationInternaute(id, Nothing, Nothing)
 
-        ' Comme BtnInitInternaute_Click : mot de passe vide, nouvelle clé, code 0000.
+        ' Comme BtnInitInternaute_Click : pas de mot de passe, nouvelle clé, code 0000.
         Dim retour = dao.Update(New Internaute With {
-            .Id = CInt(id), .Password = "", .Recovery = CleRecuperation, .Code = "0000"})
+            .Id = CInt(id), .Recovery = CleRecuperation, .Code = "0000"})
 
         Assert.AreEqual(id, retour)
-        ' Comportement actuel : le mot de passe devient une chaîne vide (ni NULL, ni
-        ' empreinte), et recovery_expiration repasse à NULL : la clé envoyée au
-        ' patient n'expire pas.
-        Assert.AreEqual("", CStr(ValeurInternaute("password", id)))
+        Assert.AreEqual(DBNull.Value, ValeurInternaute("password", id), "l'ancien mot de passe ne sert plus")
         Assert.AreEqual(CleRecuperation, CStr(ValeurInternaute("recovery", id)))
         Assert.AreEqual("0000", CStr(ValeurInternaute("code", id)))
-        Assert.AreEqual(DBNull.Value, ValeurInternaute("recovery_expiration", id))
+        VerifierExpirationParDefaut(id)
         ' Colonnes que l'UPDATE ne touche pas.
         Assert.AreEqual(adresse, CStr(ValeurInternaute("username", id)))
         Assert.AreEqual(adresse, CStr(ValeurInternaute("email", id)))
@@ -314,18 +338,29 @@ Imports Oasis_Common
         Assert.IsTrue(lu.RecoveryExpiration.Value < Date.Now, "la date d'expiration passée doit revenir telle quelle")
     End Sub
 
-    <TestMethod()> Public Sub GetInternauteByRecoveryKey_SousWeb_CleSansExpiration_RevientSansDate()
-        ' Comportement actuel : une clé posée par le client lourd (Create ou Update)
-        ' n'a pas d'expiration. AuthController.Recover teste
-        ' « RecoveryExpiration < DateTime.Now » sur un Date? vide, ce qui ne vaut
-        ' pas True : un tel lien reste accepté indéfiniment.
+    <TestMethod()> Public Sub GetInternauteByRecoveryKey_SousWeb_CleSansExpiration_RevientSansDateEtNestPasValide()
+        ' Clé sans date, comme en posait le poste avant correction : le DAO la
+        ' renvoie telle quelle, c'est CleRecuperationValide qui la refuse.
+        UtiliserCompte(Compte.Web)
+        Dim id = CreerInternaute(recovery:=CleRecuperation)
+        PoserRecuperationInternaute(id, CleRecuperation, Nothing)
+
+        Dim lu = dao.GetInternauteByRecoveryKey(CleRecuperation)
+
+        Assert.AreEqual(CInt(id), lu.Id)
+        Assert.IsFalse(lu.RecoveryExpiration.HasValue)
+        Assert.IsFalse(lu.CleRecuperationValide(Date.Now))
+    End Sub
+
+    <TestMethod()> Public Sub GetInternauteByRecoveryKey_SousWeb_ClePoseeParLePoste_EstValide()
         UtiliserCompte(Compte.Web)
         Dim id = CreerInternaute(recovery:=CleRecuperation)
 
         Dim lu = dao.GetInternauteByRecoveryKey(CleRecuperation)
 
         Assert.AreEqual(CInt(id), lu.Id)
-        Assert.IsFalse(lu.RecoveryExpiration.HasValue)
+        Assert.IsTrue(lu.CleRecuperationValide(Date.Now))
+        Assert.IsFalse(lu.CleRecuperationValide(Date.Now.AddHours(Internaute.DureeLienPosteParDefautHeures + 1)))
     End Sub
 
     <TestMethod()> Public Sub GetInternauteByRecoveryKey_SousWeb_CleInconnueVideOuAbsente_RenvoieNothing()
