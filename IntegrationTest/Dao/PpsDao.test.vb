@@ -429,6 +429,52 @@ Imports Oasis_Common
         CollectionAssert.AreEqual(New Long() {p(0), p(1), p(2)}, IdsTable(dao.getAllPPSbyPatient(CInt(idPatient))))
     End Sub
 
+    Private Shared Function ParcoursIde(idPatient As Long) As Long
+        Return CreerParcoursPatient(idPatient, RorIdeOasis, specialiteId:=SpecialiteIdeOasis,
+                                    sousCategorieId:=SousCategorieParcoursIde, categorieId:=CategorieParcoursSuivi)
+    End Function
+
+    <TestMethod()> Public Sub GetAllPPSbyPatient_UnParcoursDuPatientNeRameneQueSesPropresPps()
+        ExigerBaseNommeeOasis()
+        Dim idUtilisateur = CreerUtilisateur(avecCle:=False)
+        AssurerSousCategoriePps(CategorieParcoursSuivi, SousCategorieParcoursIde, 1)
+        Dim idAlice = CreerPatient("PPS", "Alice")
+        Dim idBruno = CreerPatient("PPS", "Bruno")
+        Dim parcoursAlice = ParcoursIde(idAlice)
+        Dim ppsBruno = CreerPps(idBruno, idUtilisateur, CategorieParcoursSuivi, SousCategorieParcoursIde)
+        Dim parcoursBruno = ParcoursIde(idBruno)
+
+        Dim alice = dao.getAllPPSbyPatient(CInt(idAlice))
+        Assert.AreEqual(1, alice.Rows.Count)
+        Assert.IsTrue(IsDBNull(alice.Rows(0)("oa_pps_id")), "aucun PPS d'Alice")
+        Assert.AreEqual(parcoursAlice, CLng(alice.Rows(0)("oa_parcours_id")))
+
+        Dim bruno = dao.getAllPPSbyPatient(CInt(idBruno))
+        Assert.AreEqual(1, bruno.Rows.Count)
+        Assert.AreEqual(ppsBruno, CLng(bruno.Rows(0)("oa_pps_id")))
+        Assert.AreEqual(parcoursBruno, CLng(bruno.Rows(0)("oa_parcours_id")))
+    End Sub
+
+    <TestMethod()> Public Sub GetAllPPSbyPatient_UnPpsDuPatientNeSeJointQuASesPropresParcours()
+        ExigerBaseNommeeOasis()
+        Dim idUtilisateur = CreerUtilisateur(avecCle:=False)
+        AssurerSousCategoriePps(CategorieParcoursSuivi, SousCategorieParcoursIde, 1)
+        Dim idAlice = CreerPatient("PPS", "Alice")
+        Dim ppsAlice = CreerPps(idAlice, idUtilisateur, CategorieParcoursSuivi, SousCategorieParcoursIde)
+        ParcoursIde(CreerPatient("PPS", "Bruno"))
+
+        Dim sansParcours = dao.getAllPPSbyPatient(CInt(idAlice))
+        Assert.AreEqual(1, sansParcours.Rows.Count)
+        Assert.AreEqual(ppsAlice, CLng(sansParcours.Rows(0)("oa_pps_id")))
+        Assert.IsTrue(IsDBNull(sansParcours.Rows(0)("oa_parcours_id")), "le parcours de Bruno ne se joint pas")
+
+        Dim parcoursAlice = ParcoursIde(idAlice)
+        Dim avecParcours = dao.getAllPPSbyPatient(CInt(idAlice))
+        Assert.AreEqual(1, avecParcours.Rows.Count)
+        Assert.AreEqual(ppsAlice, CLng(avecParcours.Rows(0)("oa_pps_id")))
+        Assert.AreEqual(parcoursAlice, CLng(avecParcours.Rows(0)("oa_parcours_id")))
+    End Sub
+
     <TestMethod()> Public Sub GetAllPPSbyPatient_HorsBaseNommeeOasis_Echoue()
         ' Comportement actuel : oasis.oasis.* impose le nom de base « oasis », pour
         ' la synthèse du client lourd comme pour celle du portail.

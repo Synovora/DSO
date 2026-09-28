@@ -261,32 +261,69 @@ Imports Oasis_Common
         Assert.AreEqual("Bienvenue", CStr(page.ViewData("WelcomeText")))
     End Sub
 
-    ' --- Comportements actuels à corriger ---------------------------------------------
+    ' --- Cloisonnement des PPS -----------------------------------------------------
 
-    <TestMethod()> Public Sub UnParcoursDuPatientFaitApparaitreLesPpsDeSuiviDUnAutrePatient()
+    <TestMethod()> Public Sub UnParcoursDuPatientNeFaitPasApparaitreLesPpsDeSuiviDUnAutrePatient()
         ExigerBaseOasis()
         Dim idUtilisateur = CreerUtilisateur(avecCle:=False)
         AssurerSousCategoriePps(3, 3, 1)
         Dim idAlice = CreerPatient("SYNTHESE", "Alice")
         Dim idBruno = CreerPatient("SYNTHESE", "Bruno")
         Dim idParcoursAlice = CreerParcoursSyntheseDeTest(idAlice, idUtilisateur, 3, "Parcours IDE de Alice")
-        Dim idPpsBruno = CreerPps(idBruno, idUtilisateur, 3, 3, commentaire:="Suivi IDE de Bruno")
+        CreerPps(idBruno, idUtilisateur, 3, 3, commentaire:="Suivi IDE de Bruno")
         Dim idInternaute = CreerAccesPortailDeTest(idAlice)
 
         Dim page = Vue(Consulter(idInternaute))
 
-        ' Le parcours d'Alice est bien le sien.
         CollectionAssert.AreEqual({idParcoursAlice.ToString()}, Colonne(page, "PS", 0))
         Assert.AreEqual("Parcours IDE de Alice", Liste(page, "PS")(0)(7))
 
-        ' Comportement actuel : fuite entre dossiers. PpsDao.getAllPPSbyPatient joint
-        ' oa_patient_pps et oa_patient_parcours sur la seule sous-catégorie, sans
-        ' condition de patient dans les jointures, puis garde la ligne dès que le PPS
-        ' OU le parcours appartient au patient. Le parcours IDE d'Alice ramène donc le
-        ' PPS de suivi IDE de Bruno, commentaire compris, dans la synthèse d'Alice.
-        CollectionAssert.AreEqual({idPpsBruno.ToString()}, Colonne(page, "PPS", 1))
-        Assert.AreEqual("Suivi IDE : 1 / Par mois Suivi IDE de Bruno", Liste(page, "PPS")(0)(0))
+        ' Le suivi IDE d'Alice reste affiché, porté par son seul parcours.
+        CollectionAssert.AreEqual({"0"}, Colonne(page, "PPS", 1))
+        CollectionAssert.AreEqual({idParcoursAlice.ToString()}, Colonne(page, "PPS", 2))
+        Assert.AreEqual("Suivi IDE : 1 / Par mois ", Liste(page, "PPS")(0)(0))
+        Assert.IsFalse(TexteAffiche(page).Contains("Bruno"), "rien du dossier de Bruno")
     End Sub
+
+    <TestMethod()> Public Sub LeParcoursDUnAutrePatientNeSeJointPasAuxPpsDuPatient()
+        ExigerBaseOasis()
+        Dim idUtilisateur = CreerUtilisateur(avecCle:=False)
+        AssurerSousCategoriePps(3, 3, 1)
+        Dim idAlice = CreerPatient("SYNTHESE", "Alice")
+        CreerPps(idAlice, idUtilisateur, 3, 3, commentaire:="Suivi IDE de Alice")
+        CreerParcoursSyntheseDeTest(CreerPatient("SYNTHESE", "Bruno"), idUtilisateur, 3, "Parcours IDE de Bruno")
+        Dim idInternaute = CreerAccesPortailDeTest(idAlice)
+
+        Dim page = Vue(Consulter(idInternaute))
+
+        ' Sans parcours à elle, le suivi d'Alice n'a pas de rythme et n'est pas affiché.
+        Assert.AreEqual(0, Liste(page, "PPS").Count)
+        Assert.AreEqual(0, Liste(page, "PS").Count)
+    End Sub
+
+    <TestMethod()> Public Sub ChaquePatientVoitSonSuiviAvecSonParcours()
+        ExigerBaseOasis()
+        Dim idUtilisateur = CreerUtilisateur(avecCle:=False)
+        AssurerSousCategoriePps(3, 3, 1)
+        Dim idAlice = CreerPatient("SYNTHESE", "Alice")
+        Dim idBruno = CreerPatient("SYNTHESE", "Bruno")
+        Dim idPpsAlice = CreerPps(idAlice, idUtilisateur, 3, 3, commentaire:="Suivi IDE de Alice")
+        Dim idParcoursAlice = CreerParcoursSyntheseDeTest(idAlice, idUtilisateur, 3, "Parcours IDE de Alice")
+        Dim idPpsBruno = CreerPps(idBruno, idUtilisateur, 3, 3, commentaire:="Suivi IDE de Bruno")
+        Dim idParcoursBruno = CreerParcoursSyntheseDeTest(idBruno, idUtilisateur, 3, "Parcours IDE de Bruno")
+
+        Dim alice = Vue(Consulter(CreerAccesPortailDeTest(idAlice)))
+        CollectionAssert.AreEqual({idPpsAlice.ToString()}, Colonne(alice, "PPS", 1))
+        CollectionAssert.AreEqual({idParcoursAlice.ToString()}, Colonne(alice, "PPS", 2))
+        Assert.AreEqual("Suivi IDE : 1 / Par mois Suivi IDE de Alice", Liste(alice, "PPS")(0)(0))
+
+        Dim bruno = Vue(Consulter(CreerAccesPortailDeTest(idBruno)))
+        CollectionAssert.AreEqual({idPpsBruno.ToString()}, Colonne(bruno, "PPS", 1))
+        CollectionAssert.AreEqual({idParcoursBruno.ToString()}, Colonne(bruno, "PPS", 2))
+        Assert.AreEqual("Suivi IDE : 1 / Par mois Suivi IDE de Bruno", Liste(bruno, "PPS")(0)(0))
+    End Sub
+
+    ' --- Comportements actuels à corriger ---------------------------------------------
 
     <TestMethod()> Public Sub UnContexteSansDateDeFinSAfficheEnFrancais()
         ExigerBaseOasis()

@@ -12,6 +12,9 @@ Public Class PpsDao
     ''' construit par l'appelant. Ils sont désormais typés :
     '''  - actifsAu : ne renvoyer que les PPS encore en cours à cette date ;
     '''  - finEntre / finEt : ne renvoyer que les PPS terminés dans cet intervalle.
+    '''
+    ''' Les deux jointures portent la condition de patient : sans elle, un PPS ou un
+    ''' parcours d'un autre dossier de la même sous-catégorie sortait avec ceux du patient.
     ''' </summary>
     Public Function getAllPPSbyPatient(patientId As Integer,
                                        Optional actifsAu As Date? = Nothing,
@@ -34,7 +37,9 @@ Public Class PpsDao
         " oa_parcours_date_modification, oa_parcours_cacher" &
         " From oasis.oasis.oa_r_pps_sous_categorie" &
         " Left outer join oasis.oasis.oa_patient_pps On oa_r_pps_categorie_id = oa_pps_categorie And oa_r_pps_sous_categorie_id = oa_pps_sous_categorie" &
+        " And oa_pps_patient_id = @patientId" &
         " Left outer join oasis.oasis.oa_patient_parcours on oa_r_pps_categorie_id = oa_parcours_categorie_id And oa_r_pps_sous_categorie_id = oa_parcours_sous_categorie_id" &
+        " And oa_parcours_patient_id = @patientId" &
         " Where (((oa_pps_inactif = 0 Or oa_pps_inactif Is NULL) And oa_pps_patient_id = @patientId) Or" &
         " ((oa_parcours_inactif = 0 Or oa_parcours_inactif Is NULL) And oa_parcours_patient_id = @patientId))" &
         filter &
