@@ -236,3 +236,25 @@ End Module
 | K | `Vaccin/*` (4) | `JeuxVaccin.vb` | `26-reference-vaccin.sql` |
 
 Aucun lot ne touche au `.vbproj` : les fichiers y sont inscrits à la fin, en une fois.
+
+## Étape 3 : le reste
+
+Mêmes règles qu'à l'étape 2. Les requêtes qui nomment la base (`[oasis].[oasis]`) sont gardées par
+`BaseDeTest.ExigerBaseOasis()`, et la CI nomme sa base `oasis` pour qu'elles tournent.
+
+| Lot | Portée | Jeux | Référence |
+|---|---|---|---|
+| L | `Dao/Tache/TacheDao` | `JeuxTache.vb` | `27-reference-tache.sql` |
+| M | `Dao/Parcours/*`, `Dao/ROR`, `Dao/ChaineEpisode`, `Dao/Contexte`, `Dao/LigneDeVie` | `JeuxParcours.vb` | `28-reference-parcours.sql` |
+| N | `Dao/Theriaque/*`, `Dao/Medicament`, `Dao/ALD/*`, `Dao/ANS_NOS/*` | `JeuxTheriaque.vb` | `29-reference-theriaque.sql` |
+| O | `Dao/Internaute/*`, `Dao/Log/*`, `Dao/Mail`, `Dao/Parametre/*` (sauf `ParametreMailDao 2.vb`), `Dao/General`, `Dao/Agenda` | `JeuxInternaute.vb` | `30-reference-parametre.sql` |
+| P | `Dao/AnnuaireProfessionnel/*`, `Dao/structurebase/*`, singletons d'`EnvironnementBase` | `JeuxStructure.vb` | `31-reference-structure.sql` |
+| Q | contrôleurs du portail : `Auth`, `Portail`, `Dashboard`, `Pages`, `Layouts`, `Home`, `RDV`, `Resultats`, `AutoSuivi`, `CarnetVaccinal` | aides privées dans les classes de test | `32-reference-portail.sql` |
+| R | `Synthese`, `DocFileUpload`, `DocFileDownload`, `Rename`, `SendMail` | aides privées dans les classes de test | `33-reference-documents.sql` |
+
+Les singletons d'`EnvironnementBase` gardent leur première lecture pour tout le processus : leurs
+tests ne font que lire ce que les scripts `2N-reference-*.sql` ont chargé avant l'instantané, et
+n'écrivent jamais dans leurs tables. Les contrôleurs MVC sont appelés directement, avec un
+`ControllerContext` construit à la main ; la vue n'est pas rendue, le test porte sur le modèle et le
+type de résultat. Aucun courriel ne part : `SendMail` est testé jusqu'à la composition et au refus
+des destinataires.

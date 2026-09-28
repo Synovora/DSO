@@ -43,6 +43,18 @@ Public Module BaseDeTest
         End Get
     End Property
 
+    ''' <summary>
+    ''' Une cinquantaine de requêtes des DAO nomment la base en toutes lettres
+    ''' ([oasis].[oasis].table). Elles ne tournent que si la base de test s'appelle
+    ''' oasis, ce que fait la CI ; ailleurs le test qui les exerce devient Inconclusive.
+    ''' </summary>
+    Public Sub ExigerBaseOasis()
+        If Not String.Equals(NomBase, "oasis", StringComparison.OrdinalIgnoreCase) Then
+            Microsoft.VisualStudio.TestTools.UnitTesting.Assert.Inconclusive(
+                "Requête en [oasis].[oasis] : relancer avec OASIS_IT_DATABASE=oasis (base actuelle : " & NomBase & ").")
+        End If
+    End Sub
+
     ''' <summary>Chaîne de connexion à la base de test sous le compte donné.</summary>
     Public Function ChaineConnexion(quelCompte As Compte) As String
         Return Construire(quelCompte, NomBase, 15)
