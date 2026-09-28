@@ -51,9 +51,13 @@ Public Class SiegeDao
     Public Function getLstSiege(Optional isWithInactif As Boolean = False) As List(Of Siege)
         Dim lst As List(Of Siege) = New List(Of Siege)
         Dim data As DataTable = getTableSiege(isWithInactif)
-        For Each row In data.Rows
-            lst.Add(BuildBean(row))
-        Next
+        ' BuildBean lit un IDataRecord : une DataRow n'en est pas un, un
+        ' DataTableReader sur la même table si, avec les mêmes colonnes.
+        Using lignes = data.CreateDataReader()
+            While lignes.Read()
+                lst.Add(BuildBean(lignes))
+            End While
+        End Using
         Return lst
     End Function
 
