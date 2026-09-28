@@ -490,20 +490,58 @@ Imports Oasis_Common
         CollectionAssert.AreEquivalent(p, Filtrer(True, True).ToArray())
     End Sub
 
-    <TestMethod()> Public Sub GetAllPatientWithFilter_HorsOasis_LesSortisEchappentAuxAutresCriteres()
-        ' Comportement actuel : le filtre « hors Oasis » ajoute « ... OR sortie <= aujourd'hui »
-        ' sans parenthèses. Tout patient sorti est renvoyé, quels que soient le nom, le
-        ' prénom, la date de naissance et les sites demandés.
+    ''' <summary>Enregistre un patient sorti du dispositif hier.</summary>
+    Private Function PatientSorti(fiche As Patient) As Long
+        Dim id = EnregistrerPatient(fiche)
+        PoserDatesOasisPatient(id, EntreeOasis, Date.Today.AddDays(-1))
+        Return id
+    End Function
+
+    <TestMethod()> Public Sub GetAllPatientWithFilter_HorsOasis_TousLesCriteresRestreignentAussiLesSortis()
         Dim dupontHors = EnregistrerPatient(PatientDeTest("DUPONT", siteId:=9101))
-        Dim martinSorti = EnregistrerPatient(PatientDeTest("MARTIN", siteId:=9102))
-        PoserDatesOasisPatient(martinSorti, EntreeOasis, Date.Today.AddDays(-1))
+        Dim dupontSorti = PatientSorti(PatientDeTest("DUPONT", siteId:=9101))
+        PatientSorti(PatientDeTest("MARTIN", siteId:=9102))
+        PatientSorti(PatientDeTest("DUPONT", siteId:=9102))
         Dim dupontDans = EnregistrerPatient(PatientDeTest("DUPONT", siteId:=9101))
         PoserDatesOasisPatient(dupontDans, EntreeOasis, DateNonRenseignee)
         EnregistrerPatient(PatientDeTest("MARTIN", siteId:=9102))
 
         Dim ids = Filtrer(False, False, nom:="dupont", sites:=New List(Of Long) From {9101})
 
-        CollectionAssert.AreEquivalent(New Long() {dupontHors, martinSorti}, ids.ToArray())
+        CollectionAssert.AreEquivalent(New Long() {dupontHors, dupontSorti}, ids.ToArray())
+    End Sub
+
+    <TestMethod()> Public Sub GetAllPatientWithFilter_HorsOasis_NomRestreintLesSortis()
+        Dim dupontSorti = PatientSorti(PatientDeTest("DUPONT"))
+        PatientSorti(PatientDeTest("MARTIN"))
+
+        CollectionAssert.AreEquivalent(New Long() {dupontSorti}, Filtrer(False, False, nom:="dupont").ToArray())
+    End Sub
+
+    <TestMethod()> Public Sub GetAllPatientWithFilter_HorsOasis_PrenomRestreintLesSortis()
+        Dim amina = PatientSorti(PatientDeTest("DUPONT", "Amina"))
+        PatientSorti(PatientDeTest("DUPONT", "Jean"))
+
+        CollectionAssert.AreEquivalent(New Long() {amina}, Filtrer(False, False, prenom:="amina").ToArray())
+    End Sub
+
+    <TestMethod()> Public Sub GetAllPatientWithFilter_HorsOasis_DateDeNaissanceRestreintLesSortis()
+        Dim ne1985 = PatientSorti(PatientDeTest("UN", dateNaissance:=New Date(1985, 6, 30)))
+        PatientSorti(PatientDeTest("DEUX", dateNaissance:=New Date(1990, 1, 1)))
+
+        CollectionAssert.AreEquivalent(New Long() {ne1985}, Filtrer(False, False, dateNaissance:=New Date(1985, 6, 30)).ToArray())
+    End Sub
+
+    <TestMethod()> Public Sub GetAllPatientWithFilter_HorsOasis_SitesAutorisesRestreignentLesSortis()
+        ' Un utilisateur ne doit pas voir les patients sortis d'un site qui ne lui est pas ouvert.
+        Dim sortiAutorise = PatientSorti(PatientDeTest("UN", siteId:=9101))
+        Dim horsAutorise = EnregistrerPatient(PatientDeTest("DEUX", siteId:=9101))
+        PatientSorti(PatientDeTest("TROIS", siteId:=9102))
+        PatientSorti(PatientDeTest("QUATRE", siteId:=9103))
+        EnregistrerPatient(PatientDeTest("CINQ", siteId:=9102))
+
+        CollectionAssert.AreEquivalent(New Long() {sortiAutorise, horsAutorise},
+                                       Filtrer(False, False, sites:=New List(Of Long) From {9101}).ToArray())
     End Sub
 
     <TestMethod()> Public Sub GetAllPatient_LesTroisFiltres()

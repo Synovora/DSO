@@ -410,9 +410,11 @@ Public Class PatientDao
                     " AND oa_patient_date_entree_oasis <> '9998-12-31'" &
                     " AND (oa_patient_date_sortie_oasis Is NULL OR oa_patient_date_sortie_oasis > @aujourdhui)"
 
+        ' Parenthèses englobantes : sans elles, le OR laissait passer tout patient sorti
+        ' quels que soient le nom, le prénom, la date de naissance et les sites autorisés.
         Dim FiltrePatientNonOasis As String =
-                    " AND (oa_patient_date_entree_oasis is NULL OR oa_patient_date_entree_oasis = '9998-12-31')" &
-                    " OR oa_patient_date_sortie_oasis <= @aujourdhui"
+                    " AND ((oa_patient_date_entree_oasis is NULL OR oa_patient_date_entree_oasis = '9998-12-31')" &
+                    " OR oa_patient_date_sortie_oasis <= @aujourdhui)"
 
         If Tous = False Then
             If PatientOasis = True Then
