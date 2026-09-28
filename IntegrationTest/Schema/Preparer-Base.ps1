@@ -8,7 +8,7 @@
 
         IntegrationTest/Schema/00-schema.sql   export SSMS du schéma de production
         docs/migrations/*.sql                  par ordre de nom
-        IntegrationTest/Schema/2*-reference*.sql   par ordre de nom, 20-reference.sql
+        IntegrationTest/Schema/*-reference*.sql    par ordre de nom, 20-reference.sql
                                                d'abord, puis un fichier par domaine
 
     Chaque script passe par sqlcmd -b : la première erreur arrête tout.
@@ -71,7 +71,7 @@ if (-not (Test-Path -LiteralPath $fichierReference)) {
 $migrations = @(Get-ChildItem -LiteralPath $dossierMigrations -Filter '*.sql' | Sort-Object Name)
 # Un fichier de référence par domaine, pour que deux jeux de tests n'aient pas
 # à se partager le même fichier.
-$references = @(Get-ChildItem -LiteralPath $PSScriptRoot -Filter '2*-reference*.sql' | Sort-Object Name)
+$references = @(Get-ChildItem -LiteralPath $PSScriptRoot -Filter '*-reference*.sql' | Sort-Object Name)
 
 # ---------------------------------------------------------------------------
 # sqlcmd
